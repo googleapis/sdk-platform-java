@@ -172,8 +172,14 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
     Duration timeout = callOptions.getTimeout();
     // Check that the call options has a timeout value and start it (behavior copied from gRPC)
     if (timeout != null) {
+      // If timeout has been calculated as a negative value, we cancel the call immediately
+      // as the deadline has already been exceeded
+      long timeoutMs = 0;
+      if (!timeout.isNegative()) {
+        timeoutMs = timeout.toMillis();
+      }
       this.deadlineCancellationExecutor.schedule(
-          this::closeAndNotifyListeners, timeout.toNanos(), TimeUnit.NANOSECONDS);
+          this::closeAndNotifyListeners, timeoutMs, TimeUnit.NANOSECONDS);
     }
   }
 

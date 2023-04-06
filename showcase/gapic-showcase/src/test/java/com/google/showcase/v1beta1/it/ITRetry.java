@@ -17,10 +17,18 @@ package com.google.showcase.v1beta1.it;
 
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.NoCredentialsProvider;
-import com.google.api.gax.retrying.ExponentialRetryAlgorithm;
+import com.google.api.gax.httpjson.HttpJsonCallContext;
 import com.google.api.gax.retrying.RetrySettings;
+import com.google.api.gax.retrying.RetryingFuture;
+import com.google.api.gax.retrying.TimedAttemptSettings;
+import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.DeadlineExceededException;
 import com.google.api.gax.rpc.StatusCode;
+import com.google.api.gax.rpc.UnaryCallable;
+import com.google.api.gax.tracing.ApiTracer;
+import com.google.api.gax.tracing.ApiTracerFactory;
+import com.google.api.gax.tracing.BaseApiTracerFactory;
+import com.google.api.gax.tracing.SpanName;
 import com.google.showcase.v1beta1.BlockRequest;
 import com.google.showcase.v1beta1.BlockResponse;
 import com.google.showcase.v1beta1.EchoClient;
@@ -38,6 +46,7 @@ import static org.junit.Assert.assertThrows;
 
 public class ITRetry {
 
+  // Request is set to block for 6 seconds to allow the RPC to timeout
   @Test
   public void testGRPC_unaryCallableNoRetry_exceedsDefaultTimeout_throwsDeadlineExceededException() throws IOException {
     RetrySettings defaultNoRetrySettings = RetrySettings.newBuilder()
@@ -45,6 +54,8 @@ public class ITRetry {
             .setRpcTimeoutMultiplier(1.0)
             .setMaxRpcTimeout(Duration.ofMillis(5000L))
             .setTotalTimeout(Duration.ofMillis(5000L))
+            // Explicitly set retries as disabled (maxAttempts == 1)
+            .setMaxAttempts(1)
             .build();
     EchoStubSettings.Builder grpcEchoSettingsBuilder = EchoStubSettings.newBuilder();
     grpcEchoSettingsBuilder.blockSettings().setRetrySettings(defaultNoRetrySettings);
@@ -59,8 +70,8 @@ public class ITRetry {
     try (EchoClient grpcClient = EchoClient.create(grpcEchoSettings)) {
       BlockRequest blockRequest =
               BlockRequest.newBuilder()
-                      .setSuccess(BlockResponse.newBuilder().setContent("gRPCBlockContent_10sDelay_noRetry"))
-                      .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(10).build())
+                      .setSuccess(BlockResponse.newBuilder().setContent("gRPCBlockContent_6sDelay_noRetry"))
+                      .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(6).build())
                       .build();
       DeadlineExceededException exception =
               assertThrows(DeadlineExceededException.class, () -> grpcClient.block(blockRequest));
@@ -68,6 +79,7 @@ public class ITRetry {
     }
   }
 
+  // Request is set to block for 6 seconds to allow the RPC to timeout
   @Test
   public void testHttpJson_unaryCallableNoRetry_exceedsDefaultTimeout_throwsDeadlineExceededException() throws IOException, GeneralSecurityException {
     RetrySettings defaultNoRetrySettings = RetrySettings.newBuilder()
@@ -75,6 +87,8 @@ public class ITRetry {
             .setRpcTimeoutMultiplier(1.0)
             .setMaxRpcTimeout(Duration.ofMillis(5000L))
             .setTotalTimeout(Duration.ofMillis(5000L))
+            // Explicitly set retries as disabled (maxAttempts == 1)
+            .setMaxAttempts(1)
             .build();
     EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
     httpJsonEchoSettingsBuilder.blockSettings().setRetrySettings(defaultNoRetrySettings);
@@ -91,8 +105,8 @@ public class ITRetry {
     try (EchoClient httpJsonClient = EchoClient.create(httpJsonEchoSettings)) {
       BlockRequest blockRequest =
               BlockRequest.newBuilder()
-                      .setSuccess(BlockResponse.newBuilder().setContent("httpjsonBlockContent_10sDelay_noRetry"))
-                      .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(10).build())
+                      .setSuccess(BlockResponse.newBuilder().setContent("httpjsonBlockContent_6sDelay_noRetry"))
+                      .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(6).build())
                       .build();
       DeadlineExceededException exception =
               assertThrows(DeadlineExceededException.class, () -> httpJsonClient.block(blockRequest));
@@ -100,16 +114,23 @@ public class ITRetry {
     }
   }
 
+  // We should expect that there are four calls (three retry attempts)
+  // Attempt #  | Milli Start Time  | Milli End Time  | Retry Delay | RPC Timeout
+  // 1          | 0                 | 500             | 200         | 500
+  // 2 (Retry)  | 700               | 1700            | 400         | 1000
+  // 3 (Retry)  | 2100              | 4100            | 500 (cap)   | 2000
+  // 4 (Retry)  | 4600              | 5000 (cap)      | 500         | 400
+  // Values are an approximation due to system jitter
   @Test
   public void testGRPC_unaryCallableRetry_exceedsDefaultTimeout_throwsDeadlineExceededException() throws IOException {
     RetrySettings defaultRetrySettings = RetrySettings.newBuilder()
-            .setInitialRetryDelay(Duration.ofMillis(100L))
+            .setInitialRetryDelay(Duration.ofMillis(200L))
             .setRetryDelayMultiplier(2.0)
-            .setMaxRetryDelay(Duration.ofMillis(1000L))
-            .setInitialRpcTimeout(Duration.ofMillis(1000L))
-            .setRpcTimeoutMultiplier(1.5)
-            .setMaxRpcTimeout(Duration.ofMillis(5000L))
-            .setTotalTimeout(Duration.ofMillis(10000L))
+            .setMaxRetryDelay(Duration.ofMillis(500L))
+            .setInitialRpcTimeout(Duration.ofMillis(500L))
+            .setRpcTimeoutMultiplier(2.0)
+            .setMaxRpcTimeout(Duration.ofMillis(2000L))
+            .setTotalTimeout(Duration.ofMillis(5000L))
             .build();
     EchoStubSettings.Builder grpcEchoSettingsBuilder = EchoStubSettings.newBuilder();
     // Manually set DEADLINE_EXCEEDED as showcase tests do not have that as a retryable code
@@ -125,8 +146,8 @@ public class ITRetry {
     try (EchoClient grpcClient = EchoClient.create(grpcEchoSettings)) {
       BlockRequest blockRequest =
               BlockRequest.newBuilder()
-                      .setSuccess(BlockResponse.newBuilder().setContent("gRPCBlockContent_15sDelay_Retry"))
-                      .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(15).build())
+                      .setSuccess(BlockResponse.newBuilder().setContent("gRPCBlockContent_3sDelay_Retry"))
+                      .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(3).build())
                       .build();
       DeadlineExceededException exception =
               assertThrows(DeadlineExceededException.class, () -> grpcClient.block(blockRequest));
@@ -134,16 +155,23 @@ public class ITRetry {
     }
   }
 
+  // We should expect that there are four calls (three retry attempts)
+  // Attempt #  | Milli Start Time  | Milli End Time  | Retry Delay | RPC Timeout
+  // 1          | 0                 | 500             | 200         | 500
+  // 2 (Retry)  | 700               | 1700            | 400         | 1000
+  // 3 (Retry)  | 2100              | 4100            | 500 (cap)   | 2000
+  // 4 (Retry)  | 4600              | 5000 (cap)      | 500         | 400
+  // Values are an approximation due to system jitter
   @Test
   public void testHttpJson_unaryCallableRetry_exceedsDefaultTimeout_throwsDeadlineExceededException() throws IOException, GeneralSecurityException {
     RetrySettings defaultRetrySettings = RetrySettings.newBuilder()
-            .setInitialRetryDelay(Duration.ofMillis(100L))
+            .setInitialRetryDelay(Duration.ofMillis(200L))
             .setRetryDelayMultiplier(2.0)
-            .setMaxRetryDelay(Duration.ofMillis(1000L))
-            .setInitialRpcTimeout(Duration.ofMillis(1000L))
-            .setRpcTimeoutMultiplier(1.5)
-            .setMaxRpcTimeout(Duration.ofMillis(5000L))
-            .setTotalTimeout(Duration.ofMillis(10000L))
+            .setMaxRetryDelay(Duration.ofMillis(500L))
+            .setInitialRpcTimeout(Duration.ofMillis(500L))
+            .setRpcTimeoutMultiplier(2.0)
+            .setMaxRpcTimeout(Duration.ofMillis(2000L))
+            .setTotalTimeout(Duration.ofMillis(5000L))
             .build();
     EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
     // Manually set DEADLINE_EXCEEDED as showcase tests do not have that as a retryable code
@@ -161,8 +189,8 @@ public class ITRetry {
     try (EchoClient httpJsonClient = EchoClient.create(httpJsonEchoSettings)) {
       BlockRequest blockRequest =
               BlockRequest.newBuilder()
-                      .setSuccess(BlockResponse.newBuilder().setContent("httpjsonBlockContent_15sDelay_Retry"))
-                      .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(15).build())
+                      .setSuccess(BlockResponse.newBuilder().setContent("httpjsonBlockContent_5sDelay_Retry"))
+                      .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(3).build())
                       .build();
       DeadlineExceededException exception =
               assertThrows(DeadlineExceededException.class, () -> httpJsonClient.block(blockRequest));
