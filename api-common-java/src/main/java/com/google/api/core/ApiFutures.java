@@ -46,7 +46,7 @@ public final class ApiFutures {
   private ApiFutures() {}
 
   /**
-   * Registers separate success and failure callbacks to be run when the {@link ApiFuture}'s
+   * Registers a callback to be run when the {@link ApiFuture}'s
    * computation is complete or, if the computation is already complete, immediately.
    *
    * @param future The future attach the callback to
@@ -63,7 +63,7 @@ public final class ApiFutures {
   }
 
   /**
-   * Registers separate success and failure callbacks to be run when the {@link ApiFuture}'s
+   * Registers a callback to be run when the {@link ApiFuture}'s
    * computation is complete or, if the computation is already complete, immediately.
    *
    * <p>Note that this method is a delegate of {@link Futures#addCallback(ListenableFuture,
