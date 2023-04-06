@@ -17,18 +17,9 @@ package com.google.showcase.v1beta1.it;
 
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.NoCredentialsProvider;
-import com.google.api.gax.httpjson.HttpJsonCallContext;
 import com.google.api.gax.retrying.RetrySettings;
-import com.google.api.gax.retrying.RetryingFuture;
-import com.google.api.gax.retrying.TimedAttemptSettings;
-import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.DeadlineExceededException;
 import com.google.api.gax.rpc.StatusCode;
-import com.google.api.gax.rpc.UnaryCallable;
-import com.google.api.gax.tracing.ApiTracer;
-import com.google.api.gax.tracing.ApiTracerFactory;
-import com.google.api.gax.tracing.BaseApiTracerFactory;
-import com.google.api.gax.tracing.SpanName;
 import com.google.showcase.v1beta1.BlockRequest;
 import com.google.showcase.v1beta1.BlockResponse;
 import com.google.showcase.v1beta1.EchoClient;
@@ -46,7 +37,8 @@ import static org.junit.Assert.assertThrows;
 
 public class ITRetry {
 
-  // Request is set to block for 6 seconds to allow the RPC to timeout
+  // Request is set to block for 6 seconds to allow the RPC to timeout. If retries are
+  // disabled, the RPC timeout is set to be the totalTimeout (5s).
   @Test
   public void testGRPC_unaryCallableNoRetry_exceedsDefaultTimeout_throwsDeadlineExceededException() throws IOException {
     RetrySettings defaultNoRetrySettings = RetrySettings.newBuilder()
@@ -79,7 +71,8 @@ public class ITRetry {
     }
   }
 
-  // Request is set to block for 6 seconds to allow the RPC to timeout
+  // Request is set to block for 6 seconds to allow the RPC to timeout. If retries are
+  // disabled, the RPC timeout is set to be the totalTimeout (5s).
   @Test
   public void testHttpJson_unaryCallableNoRetry_exceedsDefaultTimeout_throwsDeadlineExceededException() throws IOException, GeneralSecurityException {
     RetrySettings defaultNoRetrySettings = RetrySettings.newBuilder()
@@ -120,7 +113,10 @@ public class ITRetry {
   // 2 (Retry)  | 700               | 1700            | 400         | 1000
   // 3 (Retry)  | 2100              | 4100            | 500 (cap)   | 2000
   // 4 (Retry)  | 4600              | 5000 (cap)      | 500         | 400
-  // Values are an approximation due to system jitter
+  // Note: Values are an approximation due to system jitter
+  // There isn't a way to properly count the number of attempts. We ensure that retries
+  // occur by setting the responseDelay value (3s) to be longer than the RPC timeout (2s)
+  // and smaller than the totalTimeout (5).
   @Test
   public void testGRPC_unaryCallableRetry_exceedsDefaultTimeout_throwsDeadlineExceededException() throws IOException {
     RetrySettings defaultRetrySettings = RetrySettings.newBuilder()
@@ -161,7 +157,10 @@ public class ITRetry {
   // 2 (Retry)  | 700               | 1700            | 400         | 1000
   // 3 (Retry)  | 2100              | 4100            | 500 (cap)   | 2000
   // 4 (Retry)  | 4600              | 5000 (cap)      | 500         | 400
-  // Values are an approximation due to system jitter
+  // Note: Values are an approximation due to system jitter
+  // There isn't a way to properly count the number of attempts. We ensure that retries
+  // occur by setting the responseDelay value (3s) to be longer than the RPC timeout (2s)
+  // and smaller than the totalTimeout (5).
   @Test
   public void testHttpJson_unaryCallableRetry_exceedsDefaultTimeout_throwsDeadlineExceededException() throws IOException, GeneralSecurityException {
     RetrySettings defaultRetrySettings = RetrySettings.newBuilder()
