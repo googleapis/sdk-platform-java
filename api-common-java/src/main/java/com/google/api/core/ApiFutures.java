@@ -46,8 +46,8 @@ public final class ApiFutures {
   private ApiFutures() {}
 
   /**
-   * Registers a callback to be run when the {@link ApiFuture}'s
-   * computation is complete or, if the computation is already complete, immediately.
+   * Registers a callback to be run when the {@link ApiFuture}'s computation is complete or, if the
+   * computation is already complete, immediately.
    *
    * @param future The future attach the callback to
    * @param callback The callback to invoke when future is completed
@@ -63,8 +63,8 @@ public final class ApiFutures {
   }
 
   /**
-   * Registers a callback to be run when the {@link ApiFuture}'s
-   * computation is complete or, if the computation is already complete, immediately.
+   * Registers a callback to be run when the {@link ApiFuture}'s computation is complete or, if the
+   * computation is already complete, immediately.
    *
    * <p>Note that this method is a delegate of {@link Futures#addCallback(ListenableFuture,
    * FutureCallback, Executor)}.
