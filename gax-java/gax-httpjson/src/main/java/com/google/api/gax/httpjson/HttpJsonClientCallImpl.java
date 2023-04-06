@@ -176,7 +176,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
       // as the deadline has already been exceeded
       long timeoutMs = 0;
       if (!timeout.isNegative()) {
-        timeoutMs = timeout.toMillis();
+        timeoutMs = timeout.toNanos();
       }
       this.deadlineCancellationExecutor.schedule(
           this::closeAndNotifyListeners, timeoutMs, TimeUnit.NANOSECONDS);
