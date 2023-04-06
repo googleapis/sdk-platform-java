@@ -196,7 +196,11 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
       // Read timeout is the timeout between reading two data packets and not total timeout
       // HttpJsonClientCallsImpl implements a deadlineCancellationExecutor to cancel the
       // RPC when it exceeds the RPC timeout
-      httpRequest.setReadTimeout((int) readTimeoutMs);
+      if (httpRequest.getReadTimeout() > 0
+          && httpRequest.getReadTimeout() < readTimeoutMs
+          && readTimeoutMs < Integer.MAX_VALUE) {
+        httpRequest.setReadTimeout((int) readTimeoutMs);
+      }
     }
 
     for (Map.Entry<String, Object> entry : headers.getHeaders().entrySet()) {

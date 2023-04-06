@@ -35,7 +35,6 @@ import com.google.api.gax.rpc.ApiExceptionFactory;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.common.collect.ImmutableSet;
-import java.net.SocketTimeoutException;
 import java.util.Set;
 import java.util.concurrent.CancellationException;
 
@@ -63,12 +62,6 @@ class HttpJsonApiExceptionFactory {
           throwable, HttpJsonStatusCode.of(Code.CANCELLED), false);
     } else if (throwable instanceof ApiException) {
       return (ApiException) throwable;
-    } else if (throwable instanceof SocketTimeoutException) {
-      // SocketTimeoutException being thrown signifies no response back within the RPC timeout
-      // This may be thrown connection before the deadlineScheduler is able to cancel the Runnable
-      boolean canRetry = retryableCodes.contains(Code.DEADLINE_EXCEEDED);
-      return ApiExceptionFactory.createException(
-          throwable, HttpJsonStatusCode.of(Code.DEADLINE_EXCEEDED), canRetry);
     } else {
       // Do not retry on unknown throwable, even when UNKNOWN is in retryableCodes
       return ApiExceptionFactory.createException(
