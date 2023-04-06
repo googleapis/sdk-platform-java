@@ -169,11 +169,13 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
       this.requestHeaders = requestHeaders;
     }
 
+    // Use the timeout duration value instead of calculating the future Instant
     Duration timeout = callOptions.getTimeout();
-    // Check that the call options has a timeout value and start it (behavior copied from gRPC)
     if (timeout != null) {
-      // If timeout has been calculated as a negative value, we cancel the call immediately
-      // as the deadline has already been exceeded
+      // If the future timeout amount has been calculated as a negative value,
+      // we cancel the call immediately as the deadline has already been exceeded.
+      // The RetryAlgorithm should for this value and not run schedule a run
+      // if this is negative.
       long timeoutMs = 0;
       if (!timeout.isNegative()) {
         timeoutMs = timeout.toNanos();
