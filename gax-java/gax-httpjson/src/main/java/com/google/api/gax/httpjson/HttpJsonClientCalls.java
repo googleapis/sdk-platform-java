@@ -48,11 +48,13 @@ class HttpJsonClientCalls {
 
     HttpJsonCallContext httpJsonContext = HttpJsonCallContext.createDefault().nullToSelf(context);
 
-    // Use the context's timeout instead of calculating a future deadline with the System clock
+    // Use the context's timeout instead of calculating a future deadline with the System clock.
     // The timeout value is calculated from TimedAttemptSettings which accounts for the
-    // TotalTimeout value set in the RetrySettings
+    // TotalTimeout value set in the RetrySettings.
     if (httpJsonContext.getTimeout() != null) {
       HttpJsonCallOptions callOptions = httpJsonContext.getCallOptions();
+      // HttpJsonChannel expects the HttpJsonCallOptions and we store the timeout duration
+      // inside the HttpJsonCallOptions
       if (callOptions.getTimeout() == null
           || httpJsonContext.getTimeout().compareTo(callOptions.getTimeout()) < 0) {
         callOptions = callOptions.toBuilder().setTimeout(httpJsonContext.getTimeout()).build();

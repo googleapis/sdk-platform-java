@@ -192,14 +192,25 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
 
     Duration timeout = httpJsonCallOptions.getTimeout();
     if (timeout != null) {
-      long readTimeoutMs = timeout.toMillis();
+      long timeoutMs = timeout.toMillis();
+
       // Read timeout is the timeout between reading two data packets and not total timeout
       // HttpJsonClientCallsImpl implements a deadlineCancellationExecutor to cancel the
       // RPC when it exceeds the RPC timeout
       if (httpRequest.getReadTimeout() > 0
-          && httpRequest.getReadTimeout() < readTimeoutMs
-          && readTimeoutMs < Integer.MAX_VALUE) {
-        httpRequest.setReadTimeout((int) readTimeoutMs);
+          && httpRequest.getReadTimeout() < timeoutMs
+          && timeoutMs < Integer.MAX_VALUE) {
+        httpRequest.setReadTimeout((int) timeoutMs);
+      }
+
+      // Connect timeout is the time allowed for establishing the connection.
+      // This is updated to match the RPC timeout as we do not want a shorter
+      // connect timeout to preemptively throw a ConnectExcepetion before
+      // we've reached the RPC timeout
+      if (httpRequest.getConnectTimeout() > 0
+          && httpRequest.getConnectTimeout() < timeoutMs
+          && timeoutMs < Integer.MAX_VALUE) {
+        httpRequest.setConnectTimeout((int) timeoutMs);
       }
     }
 

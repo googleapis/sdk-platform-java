@@ -176,12 +176,12 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
       // we cancel the call immediately as the deadline has already been exceeded.
       // The RetryAlgorithm should for this value and not run schedule a run
       // if this is negative.
-      long timeoutMs = 0;
+      long timeoutNanos = 0;
       if (!timeout.isNegative()) {
-        timeoutMs = timeout.toNanos();
+        timeoutNanos = timeout.toNanos();
       }
       this.deadlineCancellationExecutor.schedule(
-          this::closeAndNotifyListeners, timeoutMs, TimeUnit.NANOSECONDS);
+          this::closeAndNotifyListeners, timeoutNanos, TimeUnit.NANOSECONDS);
     }
   }
 
