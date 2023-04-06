@@ -36,6 +36,162 @@ import org.threeten.bp.Duration;
 
 public class ITRetry {
 
+  @Test
+  public void testGRPC_unaryCallableNoRetry() throws IOException {
+    RetrySettings defaultNoRetrySettings =
+        RetrySettings.newBuilder()
+            .setInitialRpcTimeout(Duration.ofMillis(5000L))
+            .setRpcTimeoutMultiplier(1.0)
+            .setMaxRpcTimeout(Duration.ofMillis(5000L))
+            .setTotalTimeout(Duration.ofMillis(5000L))
+            // Explicitly set retries as disabled (maxAttempts == 1)
+            .setMaxAttempts(1)
+            .build();
+    EchoStubSettings.Builder grpcEchoSettingsBuilder = EchoStubSettings.newBuilder();
+    grpcEchoSettingsBuilder.blockSettings().setRetrySettings(defaultNoRetrySettings);
+    EchoSettings grpcEchoSettings = EchoSettings.create(grpcEchoSettingsBuilder.build());
+    grpcEchoSettings =
+        grpcEchoSettings
+            .toBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultGrpcTransportProviderBuilder()
+                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .build())
+            .build();
+    try (EchoClient grpcClient = EchoClient.create(grpcEchoSettings)) {
+      BlockRequest blockRequest =
+          BlockRequest.newBuilder()
+              .setSuccess(BlockResponse.newBuilder().setContent("gRPCBlockContent_3sDelay_noRetry"))
+              .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(3).build())
+              .build();
+      BlockResponse blockResponse = grpcClient.block(blockRequest);
+      assertThat(blockResponse.getContent()).isEqualTo("gRPCBlockContent_3sDelay_noRetry");
+    }
+  }
+
+  @Test
+  public void testHttpJson_unaryCallableNoRetry() throws IOException, GeneralSecurityException {
+    RetrySettings defaultNoRetrySettings =
+        RetrySettings.newBuilder()
+            .setInitialRpcTimeout(Duration.ofMillis(5000L))
+            .setRpcTimeoutMultiplier(1.0)
+            .setMaxRpcTimeout(Duration.ofMillis(5000L))
+            .setTotalTimeout(Duration.ofMillis(5000L))
+            // Explicitly set retries as disabled (maxAttempts == 1)
+            .setMaxAttempts(1)
+            .build();
+    EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
+    httpJsonEchoSettingsBuilder.blockSettings().setRetrySettings(defaultNoRetrySettings);
+    EchoSettings httpJsonEchoSettings = EchoSettings.create(httpJsonEchoSettingsBuilder.build());
+    httpJsonEchoSettings =
+        httpJsonEchoSettings
+            .toBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultHttpJsonTransportProviderBuilder()
+                    .setHttpTransport(
+                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
+                    .setEndpoint("http://localhost:7469")
+                    .build())
+            .build();
+    try (EchoClient httpJsonClient = EchoClient.create(httpJsonEchoSettings)) {
+      BlockRequest blockRequest =
+          BlockRequest.newBuilder()
+              .setSuccess(
+                  BlockResponse.newBuilder().setContent("httpjsonBlockContent_3sDelay_noRetry"))
+              .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(3).build())
+              .build();
+      BlockResponse blockResponse = httpJsonClient.block(blockRequest);
+      assertThat(blockResponse.getContent()).isEqualTo("httpjsonBlockContent_3sDelay_noRetry");
+    }
+  }
+
+  // Retry is configured by setting the initial RPC timeout (1.5s) to be less than
+  // the RPC delay (2s). The next RPC timeout (3s) will wait long enough for the delay.
+  @Test
+  public void testGRPC_unaryCallableRetry() throws IOException {
+    RetrySettings defaultRetrySettings =
+        RetrySettings.newBuilder()
+            .setInitialRetryDelay(Duration.ofMillis(200L))
+            .setRetryDelayMultiplier(2.0)
+            .setMaxRetryDelay(Duration.ofMillis(500L))
+            .setInitialRpcTimeout(Duration.ofMillis(1500L))
+            .setRpcTimeoutMultiplier(2.0)
+            .setMaxRpcTimeout(Duration.ofMillis(3000L))
+            .setTotalTimeout(Duration.ofMillis(5000L))
+            .build();
+    EchoStubSettings.Builder grpcEchoSettingsBuilder = EchoStubSettings.newBuilder();
+    // Manually set DEADLINE_EXCEEDED as showcase tests do not have that as a retryable code
+    grpcEchoSettingsBuilder
+        .blockSettings()
+        .setRetrySettings(defaultRetrySettings)
+        .setRetryableCodes(StatusCode.Code.DEADLINE_EXCEEDED);
+    EchoSettings grpcEchoSettings = EchoSettings.create(grpcEchoSettingsBuilder.build());
+    grpcEchoSettings =
+        grpcEchoSettings
+            .toBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultGrpcTransportProviderBuilder()
+                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .build())
+            .build();
+    try (EchoClient grpcClient = EchoClient.create(grpcEchoSettings)) {
+      BlockRequest blockRequest =
+          BlockRequest.newBuilder()
+              .setSuccess(BlockResponse.newBuilder().setContent("gRPCBlockContent_2sDelay_Retry"))
+              .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(2).build())
+              .build();
+      BlockResponse blockResponse = grpcClient.block(blockRequest);
+      assertThat(blockResponse.getContent()).isEqualTo("gRPCBlockContent_2sDelay_Retry");
+    }
+  }
+
+  // Retry is configured by setting the initial RPC timeout (1.5s) to be less than
+  // the RPC delay (2s). The next RPC timeout (3s) will wait long enough for the delay.
+  @Test
+  public void testHttpJson_unaryCallableRetry() throws IOException, GeneralSecurityException {
+    RetrySettings defaultRetrySettings =
+        RetrySettings.newBuilder()
+            .setInitialRetryDelay(Duration.ofMillis(200L))
+            .setRetryDelayMultiplier(2.0)
+            .setMaxRetryDelay(Duration.ofMillis(500L))
+            .setInitialRpcTimeout(Duration.ofMillis(1500L))
+            .setRpcTimeoutMultiplier(2.0)
+            .setMaxRpcTimeout(Duration.ofMillis(3000L))
+            .setTotalTimeout(Duration.ofMillis(5000L))
+            .build();
+    EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
+    // Manually set DEADLINE_EXCEEDED as showcase tests do not have that as a retryable code
+    httpJsonEchoSettingsBuilder
+        .blockSettings()
+        .setRetrySettings(defaultRetrySettings)
+        .setRetryableCodes(StatusCode.Code.DEADLINE_EXCEEDED);
+    EchoSettings httpJsonEchoSettings = EchoSettings.create(httpJsonEchoSettingsBuilder.build());
+    httpJsonEchoSettings =
+        httpJsonEchoSettings
+            .toBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultHttpJsonTransportProviderBuilder()
+                    .setHttpTransport(
+                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
+                    .setEndpoint("http://localhost:7469")
+                    .build())
+            .build();
+    try (EchoClient httpJsonClient = EchoClient.create(httpJsonEchoSettings)) {
+      BlockRequest blockRequest =
+          BlockRequest.newBuilder()
+              .setSuccess(
+                  BlockResponse.newBuilder().setContent("httpjsonBlockContent_2sDelay_Retry"))
+              .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(2).build())
+              .build();
+      BlockResponse blockResponse = httpJsonClient.block(blockRequest);
+      assertThat(blockResponse.getContent()).isEqualTo("httpjsonBlockContent_2sDelay_Retry");
+    }
+  }
+
   // Request is set to block for 6 seconds to allow the RPC to timeout. If retries are
   // disabled, the RPC timeout is set to be the totalTimeout (5s).
   @Test
