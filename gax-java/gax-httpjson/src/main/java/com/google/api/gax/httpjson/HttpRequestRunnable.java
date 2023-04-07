@@ -190,30 +190,6 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
 
     HttpRequest httpRequest = buildRequest(requestFactory, url, jsonHttpContent);
 
-    Duration timeout = httpJsonCallOptions.getTimeout();
-    if (timeout != null) {
-      long timeoutMs = timeout.toMillis();
-
-      // Read timeout is the timeout between reading two data packets and not total timeout
-      // HttpJsonClientCallsImpl implements a deadlineCancellationExecutor to cancel the
-      // RPC when it exceeds the RPC timeout
-      if (httpRequest.getReadTimeout() > 0
-          && httpRequest.getReadTimeout() < timeoutMs
-          && timeoutMs < Integer.MAX_VALUE) {
-        httpRequest.setReadTimeout((int) timeoutMs);
-      }
-
-      // Connect timeout is the time allowed for establishing the connection.
-      // This is updated to match the RPC timeout as we do not want a shorter
-      // connect timeout to preemptively throw a ConnectExcepetion before
-      // we've reached the RPC timeout
-      if (httpRequest.getConnectTimeout() > 0
-          && httpRequest.getConnectTimeout() < timeoutMs
-          && timeoutMs < Integer.MAX_VALUE) {
-        httpRequest.setConnectTimeout((int) timeoutMs);
-      }
-    }
-
     for (Map.Entry<String, Object> entry : headers.getHeaders().entrySet()) {
       HttpHeadersUtils.setHeader(
           httpRequest.getHeaders(), entry.getKey(), (String) entry.getValue());
@@ -256,7 +232,33 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
       HttpHeadersUtils.setHeader(
           httpRequest.getHeaders(), "X-HTTP-Method-Override", originalHttpMethod);
     }
+
+    Duration timeout = httpJsonCallOptions.getTimeout();
+    if (timeout != null) {
+      long timeoutMs = timeout.toMillis();
+
+      // Read timeout is the timeout between reading two data packets and not total timeout
+      // HttpJsonClientCallsImpl implements a deadlineCancellationExecutor to cancel the
+      // RPC when it exceeds the RPC timeout
+      if (shouldUpdateTimeout(httpRequest.getReadTimeout(), timeoutMs)) {
+        httpRequest.setReadTimeout((int) timeoutMs);
+      }
+
+      // Connect timeout is the time allowed for establishing the connection.
+      // This is updated to match the RPC timeout as we do not want a shorter
+      // connect timeout to preemptively throw a ConnectExcepetion before
+      // we've reached the RPC timeout
+      if (shouldUpdateTimeout(httpRequest.getConnectTimeout(), timeoutMs)) {
+        httpRequest.setConnectTimeout((int) timeoutMs);
+      }
+    }
     return httpRequest;
+  }
+
+  private boolean shouldUpdateTimeout(int currentTimeoutMs, long newTimeoutMs) {
+    return currentTimeoutMs > 0
+        && currentTimeoutMs < newTimeoutMs
+        && newTimeoutMs < Integer.MAX_VALUE;
   }
 
   // This will be frequently executed, so avoiding using regexps if not necessary.
