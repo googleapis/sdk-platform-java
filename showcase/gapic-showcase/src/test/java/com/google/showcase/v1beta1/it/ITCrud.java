@@ -38,6 +38,15 @@ import org.junit.Test;
 
 public class ITCrud {
 
+  private static final User DEFAULT_USER =
+      User.newBuilder()
+          .setDisplayName("Jane Doe")
+          .setEmail("janedoe@example.com")
+          .setNickname("Doe")
+          .setHeightFeet(5)
+          .setAge(25)
+          .build();
+
   private IdentityClient httpJsonClient;
 
   @Before
@@ -72,55 +81,60 @@ public class ITCrud {
         identityClient.deleteUser(user.getName());
       }
     }
+    pagedResponse = httpJsonClient.listUsers(ListUsersRequest.newBuilder().setPageSize(5).build());
+    assertThat(pagedResponse.getPage().getResponse().getUsersList().size()).isEqualTo(0);
   }
 
-  // This test runs through the four CRUD operations. The operations are
-  // set to build off each other and live inside this one test case.
-  // The tests run in the order of: Create -> List -> Update -> Delete
-  @Test
-  public void testHttpJson_CRUD() {
-    User user =
-        User.newBuilder()
-            .setDisplayName("Jane Doe")
-            .setEmail("janedoe@example.com")
-            .setNickname("Doe")
-            .setHeightFeet(5)
-            .setAge(25)
-            .build();
-    User createUserResponse =
-        httpJsonClient.createUser(CreateUserRequest.newBuilder().setUser(user).build());
+  // Helper method to create a user with the DEFAULT_USER configs. Server returns
+  // a generated name (not username) that is used to identify the individual user
+  // and each test uses the name for the RPC
+  private User createDefaultUser() {
+    return httpJsonClient.createUser(CreateUserRequest.newBuilder().setUser(DEFAULT_USER).build());
+  }
 
-    assertThat(createUserResponse.getDisplayName()).isEqualTo(user.getDisplayName());
-    assertThat(createUserResponse.getEmail()).isEqualTo(user.getEmail());
-    assertThat(createUserResponse.getNickname()).isEqualTo(user.getNickname());
-    assertThat(createUserResponse.getHeightFeet()).isEqualTo(user.getHeightFeet());
-    assertThat(createUserResponse.getAge()).isEqualTo(user.getAge());
+  @Test
+  public void testHttpJson_Create() {
+    User userResponse = createDefaultUser();
+
+    // These properties should be the same
+    assertThat(userResponse.getDisplayName()).isEqualTo(DEFAULT_USER.getDisplayName());
+    assertThat(userResponse.getEmail()).isEqualTo(DEFAULT_USER.getEmail());
+    assertThat(userResponse.getNickname()).isEqualTo(DEFAULT_USER.getNickname());
+    assertThat(userResponse.getHeightFeet()).isEqualTo(DEFAULT_USER.getHeightFeet());
+    assertThat(userResponse.getAge()).isEqualTo(DEFAULT_USER.getAge());
 
     // Assert that the server populates these fields
-    assertThat(createUserResponse.getName()).isNotEmpty();
-    assertThat(createUserResponse.getCreateTime()).isNotNull();
-    assertThat(createUserResponse.getUpdateTime()).isNotNull();
-    assertThat(createUserResponse.getEnableNotifications()).isNotNull();
+    assertThat(userResponse.getName()).isNotEmpty();
+    assertThat(userResponse.getCreateTime()).isNotNull();
+    assertThat(userResponse.getUpdateTime()).isNotNull();
+    assertThat(userResponse.getEnableNotifications()).isNotNull();
+  }
 
+  @Test
+  public void testHttpJson_Read() {
+    User userResponse = createDefaultUser();
     // Assert that only one User exists
     IdentityClient.ListUsersPagedResponse listUsersPagedResponse =
         httpJsonClient.listUsers(ListUsersRequest.newBuilder().setPageSize(5).build());
     ListUsersResponse listUsersResponse = listUsersPagedResponse.getPage().getResponse();
     assertThat(listUsersResponse.getUsersList().size()).isEqualTo(1);
 
-    // Assert that the user that exists is Jane Doe. Check that the response
-    // from both List (pagination) and Get returns Jane Doe
+    // Check that the response from both List (pagination) and Get
     // List Users
     User listUserResponse = listUsersResponse.getUsers(0);
-    assertThat(listUserResponse).isEqualTo(createUserResponse);
+    assertThat(listUserResponse).isEqualTo(userResponse);
 
     // Get User
-    User getUserResponse = httpJsonClient.getUser(createUserResponse.getName());
-    assertThat(getUserResponse).isEqualTo(createUserResponse);
+    User getUserResponse = httpJsonClient.getUser(userResponse.getName());
+    assertThat(getUserResponse).isEqualTo(userResponse);
+  }
 
+  @Test
+  public void testHttpJson_Update() {
+    User userResponse = createDefaultUser();
     // Update multiple fields in the User. Age + Nickname are not included in the FieldMask
     User updateUser =
-        getUserResponse
+        userResponse
             .toBuilder()
             .setAge(50)
             .setNickname("Smith")
@@ -139,20 +153,24 @@ public class ITCrud {
                 .build());
 
     // Assert that only the fields in the FieldMask are updated correctly
-    assertThat(updateUserResponse).isNotEqualTo(getUserResponse);
-    assertThat(updateUserResponse.getAge()).isEqualTo(getUserResponse.getAge());
-    assertThat(updateUserResponse.getNickname()).isEqualTo(getUserResponse.getNickname());
+    assertThat(updateUserResponse).isNotEqualTo(userResponse);
+    assertThat(updateUserResponse.getAge()).isEqualTo(userResponse.getAge());
+    assertThat(updateUserResponse.getNickname()).isEqualTo(userResponse.getNickname());
 
     assertThat(updateUserResponse.getEmail()).isEqualTo(updateUser.getEmail());
     assertThat(updateUserResponse.getHeightFeet()).isEqualTo(updateUser.getHeightFeet());
     assertThat(updateUserResponse.getEnableNotifications())
         .isEqualTo(updateUser.getEnableNotifications());
+  }
 
-    // Delete the User
+  @Test
+  public void testHttpJson_Delete() {
+    User userResponse = createDefaultUser();
+
     httpJsonClient.deleteUser(
-        DeleteUserRequest.newBuilder().setName(getUserResponse.getName()).build());
+        DeleteUserRequest.newBuilder().setName(userResponse.getName()).build());
 
-    listUsersPagedResponse =
+    IdentityClient.ListUsersPagedResponse listUsersPagedResponse =
         httpJsonClient.listUsers(ListUsersRequest.newBuilder().setPageSize(5).build());
     assertThat(listUsersPagedResponse.getPage().getResponse().getUsersList().size()).isEqualTo(0);
   }
