@@ -120,6 +120,7 @@ public abstract class AbstractRetryingExecutorTest {
     RetryingExecutorWithContext<String> executor =
         getExecutor(getAlgorithm(getDefaultRetrySettings(), 0, null));
     RetryingFuture<String> future = executor.createFuture(callable, retryingContext);
+    callable.setExternalFuture(future);
     future.setAttemptFuture(executor.submit(future));
 
     assertFutureSuccess(future);
@@ -136,6 +137,7 @@ public abstract class AbstractRetryingExecutorTest {
     RetryingExecutorWithContext<String> executor =
         getExecutor(getAlgorithm(getDefaultRetrySettings(), 0, null));
     RetryingFuture<String> future = executor.createFuture(callable, retryingContext);
+    callable.setExternalFuture(future);
     future.setAttemptFuture(executor.submit(future));
 
     assertFutureSuccess(future);
@@ -153,6 +155,7 @@ public abstract class AbstractRetryingExecutorTest {
     RetryingExecutorWithContext<String> executor =
         getExecutor(getAlgorithm(getDefaultRetrySettings(), 0, null));
     RetryingFuture<String> future = executor.createFuture(callable, retryingContext);
+    callable.setExternalFuture(future);
 
     assertNull(future.peekAttemptResult());
     assertSame(future.peekAttemptResult(), future.peekAttemptResult());
@@ -179,6 +182,7 @@ public abstract class AbstractRetryingExecutorTest {
     RetryingExecutorWithContext<String> executor =
         getExecutor(getAlgorithm(getDefaultRetrySettings(), 0, null));
     RetryingFuture<String> future = executor.createFuture(callable, retryingContext);
+    callable.setExternalFuture(future);
     future.setAttemptFuture(executor.submit(future));
 
     assertFutureFail(future, CustomException.class);
@@ -211,6 +215,7 @@ public abstract class AbstractRetryingExecutorTest {
       context = FakeCallContext.createDefault().withTracer(tracer);
     }
     RetryingFuture<String> future = executor.createFuture(callable, context);
+    callable.setExternalFuture(future);
     future.setAttemptFuture(executor.submit(future));
 
     assertFutureFail(future, CustomException.class);
@@ -223,10 +228,7 @@ public abstract class AbstractRetryingExecutorTest {
 
   @Test
   public void testCancelOuterFutureBeforeStart() {
-    // Use MockCallable instead of FailingCallable as we do not need the request to be re-tried.
-    // For this test, the callable should attempt to run and then see that the external future
-    // is cancelled and that the callable's execution has ended.
-    MockCallable callable = new MockCallable("SUCCESS");
+    FailingCallable callable = new FailingCallable(0, "request", "FAILURE", tracer);
 
     RetrySettings retrySettings =
         FAST_RETRY_SETTINGS
@@ -238,11 +240,12 @@ public abstract class AbstractRetryingExecutorTest {
     RetryingExecutorWithContext<String> executor =
         getExecutor(getAlgorithm(retrySettings, 0, null));
     RetryingFuture<String> future = executor.createFuture(callable, retryingContext);
+    callable.setExternalFuture(future);
     boolean res = future.cancel(false);
+    verifyNoMoreInteractions(tracer);
     assertTrue(res);
     assertTrue(future.isCancelled());
 
-    callable.setExternalFuture(future);
     future.setAttemptFuture(executor.submit(future));
     assertEquals(0, future.getAttemptSettings().getAttemptCount());
   }
@@ -253,6 +256,7 @@ public abstract class AbstractRetryingExecutorTest {
     RetryingExecutorWithContext<String> executor =
         getExecutor(getAlgorithm(getDefaultRetrySettings(), 5, new CancellationException()));
     RetryingFuture<String> future = executor.createFuture(callable, retryingContext);
+    callable.setExternalFuture(future);
     future.setAttemptFuture(executor.submit(future));
 
     assertFutureCancel(future);
@@ -272,6 +276,7 @@ public abstract class AbstractRetryingExecutorTest {
     RetryingExecutorWithContext<String> executor =
         getExecutor(getAlgorithm(getDefaultRetrySettings(), 5, new RuntimeException()));
     RetryingFuture<String> future = executor.createFuture(callable, retryingContext);
+    callable.setExternalFuture(future);
     future.setAttemptFuture(executor.submit(future));
 
     assertFutureFail(future, RuntimeException.class);
@@ -311,6 +316,7 @@ public abstract class AbstractRetryingExecutorTest {
       context = FakeCallContext.createDefault().withTracer(tracer);
     }
     RetryingFuture<String> future = executor.createFuture(callable, context);
+    callable.setExternalFuture(future);
     future.setAttemptFuture(executor.submit(future));
 
     assertFutureFail(future, PollException.class);

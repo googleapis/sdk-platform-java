@@ -30,6 +30,7 @@
 package com.google.api.gax.retrying;
 
 import com.google.api.gax.tracing.ApiTracer;
+import com.google.common.base.Preconditions;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -66,11 +67,17 @@ class FailingCallable implements Callable<String> {
   private final String result;
   private final CountDownLatch firstAttemptFinished = new CountDownLatch(1);
 
+  private volatile RetryingFuture<String> externalFuture;
+
   FailingCallable(int expectedFailuresCount, String request, String result, ApiTracer tracer) {
     this.request = request;
     this.tracer = tracer;
     this.expectedFailuresCount = expectedFailuresCount;
     this.result = result;
+  }
+
+  public void setExternalFuture(RetryingFuture<String> externalFuture) {
+    this.externalFuture = Preconditions.checkNotNull(externalFuture);
   }
 
   CountDownLatch getFirstAttemptFinishedLatch() {
@@ -80,6 +87,9 @@ class FailingCallable implements Callable<String> {
   @Override
   public String call() throws Exception {
     try {
+      if (externalFuture.isDone()) {
+        return null;
+      }
       int attemptNumber = attemptsCount.getAndIncrement();
 
       tracer.attemptStarted(request, attemptNumber);
