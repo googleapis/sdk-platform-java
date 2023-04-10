@@ -66,8 +66,6 @@ class FailingCallable implements Callable<String> {
   private final String result;
   private final CountDownLatch firstAttemptFinished = new CountDownLatch(1);
 
-  private volatile RetryingFuture<String> externalFuture;
-
   FailingCallable(int expectedFailuresCount, String request, String result, ApiTracer tracer) {
     this.request = request;
     this.tracer = tracer;

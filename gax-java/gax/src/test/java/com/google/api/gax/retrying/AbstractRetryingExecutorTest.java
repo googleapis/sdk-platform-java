@@ -42,7 +42,6 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import com.google.api.core.ApiFuture;
@@ -227,7 +226,7 @@ public abstract class AbstractRetryingExecutorTest {
     // Use MockCallable instead of FailingCallable as we do not need the request to be re-tried.
     // For this test, the callable should attempt to run and then see that the external future
     // is cancelled and that the callable's execution has ended.
-    MockCallable callable = new MockCallable(tracer, "request", "SUCCESS");
+    MockCallable callable = new MockCallable("SUCCESS");
 
     RetrySettings retrySettings =
         FAST_RETRY_SETTINGS
@@ -246,9 +245,6 @@ public abstract class AbstractRetryingExecutorTest {
     callable.setExternalFuture(future);
     future.setAttemptFuture(executor.submit(future));
     assertEquals(0, future.getAttemptSettings().getAttemptCount());
-
-    // Assert that no tracer attempt has run
-    verifyNoInteractions(tracer);
   }
 
   @Test

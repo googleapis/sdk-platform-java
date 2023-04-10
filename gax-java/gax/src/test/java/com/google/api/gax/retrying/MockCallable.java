@@ -29,21 +29,16 @@
  */
 package com.google.api.gax.retrying;
 
-import com.google.api.gax.tracing.ApiTracer;
 import com.google.common.base.Preconditions;
 import java.util.concurrent.Callable;
 
 // This Callable class attempts to run the callable once
 public class MockCallable implements Callable<String> {
 
-  private final ApiTracer tracer;
-  private final String request;
   private final String result;
   private volatile RetryingFuture<String> externalFuture;
 
-  public MockCallable(ApiTracer tracer, String request, String result) {
-    this.tracer = tracer;
-    this.request = request;
+  public MockCallable(String result) {
     this.result = result;
   }
 
@@ -56,7 +51,6 @@ public class MockCallable implements Callable<String> {
     if (externalFuture.isDone()) {
       return null;
     }
-    tracer.attemptStarted(request, 0);
     return result;
   }
 }
