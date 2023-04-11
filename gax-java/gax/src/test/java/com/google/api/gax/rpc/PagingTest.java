@@ -134,7 +134,7 @@ public class PagingTest {
   }
 
   @Test
-  public void streamedByPage() {
+  public void streamValues_streamIsCorrectPerPage() {
     ArgumentCaptor<Integer> requestCapture = ArgumentCaptor.forClass(Integer.class);
     Mockito.when(callIntList.futureCall(requestCapture.capture(), Mockito.any()))
         .thenReturn(ApiFutures.immediateFuture(Arrays.asList(0, 1, 2)))
@@ -163,7 +163,7 @@ public class PagingTest {
   }
 
   @Test
-  public void streamedAll() {
+  public void streamAll_streamIsCorrectInAllPages() {
     ArgumentCaptor<Integer> requestCapture = ArgumentCaptor.forClass(Integer.class);
     Mockito.when(callIntList.futureCall(requestCapture.capture(), Mockito.any()))
         .thenReturn(ApiFutures.immediateFuture(Arrays.asList(0, 1, 2)))
