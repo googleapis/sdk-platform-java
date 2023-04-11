@@ -17,21 +17,16 @@ package com.google.showcase.v1beta1.it;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.common.collect.ImmutableList;
 import com.google.protobuf.FieldMask;
 import com.google.showcase.v1beta1.CreateUserRequest;
 import com.google.showcase.v1beta1.DeleteUserRequest;
-import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.IdentityClient;
-import com.google.showcase.v1beta1.IdentitySettings;
 import com.google.showcase.v1beta1.ListUsersRequest;
 import com.google.showcase.v1beta1.ListUsersResponse;
 import com.google.showcase.v1beta1.UpdateUserRequest;
 import com.google.showcase.v1beta1.User;
-import java.io.IOException;
-import java.security.GeneralSecurityException;
+import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.After;
@@ -49,22 +44,15 @@ public class ITCrud {
           .setAge(25)
           .build();
 
+  private IdentityClient grpcClient;
   private IdentityClient httpJsonClient;
 
   @Before
-  public void setup() throws GeneralSecurityException, IOException {
+  public void setup() throws Exception {
+    // Create gRPC IdentityClient
+    grpcClient = TestClientInitializer.createGrpcIdentityClient();
     // Create HttpJson IdentityClient
-    IdentitySettings httpJsonIdentitySettings =
-        IdentitySettings.newHttpJsonBuilder()
-            .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTransportChannelProvider(
-                EchoSettings.defaultHttpJsonTransportProviderBuilder()
-                    .setHttpTransport(
-                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
-                    .setEndpoint("http://localhost:7469")
-                    .build())
-            .build();
-    httpJsonClient = IdentityClient.create(httpJsonIdentitySettings);
+    httpJsonClient = TestClientInitializer.createHttpJsonIdentityClient();
 
     // Ensure an empty state before each run
     cleanupData(httpJsonClient);

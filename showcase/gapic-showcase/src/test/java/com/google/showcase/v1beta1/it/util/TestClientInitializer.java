@@ -20,34 +20,61 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoSettings;
+import com.google.showcase.v1beta1.IdentityClient;
+import com.google.showcase.v1beta1.IdentitySettings;
 import io.grpc.ManagedChannelBuilder;
 
 public class TestClientInitializer {
 
-    public static EchoClient createGrpcEchoClient() throws Exception {
-        EchoSettings grpcEchoSettings =
-                EchoSettings.newBuilder()
-                        .setCredentialsProvider(NoCredentialsProvider.create())
-                        .setTransportChannelProvider(
-                                EchoSettings.defaultGrpcTransportProviderBuilder()
-                                        .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
-                                        .build())
+  public static EchoClient createGrpcEchoClient() throws Exception {
+    EchoSettings grpcEchoSettings =
+        EchoSettings.newBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultGrpcTransportProviderBuilder()
+                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .build())
+            .build();
+    return EchoClient.create(grpcEchoSettings);
+  }
 
-                        .build();
-        return EchoClient.create(grpcEchoSettings);
-    }
+  public static EchoClient createHttpJsonEchoClient() throws Exception {
+    EchoSettings httpJsonEchoSettings =
+        EchoSettings.newHttpJsonBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultHttpJsonTransportProviderBuilder()
+                    .setHttpTransport(
+                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
+                    .setEndpoint("http://localhost:7469")
+                    .build())
+            .build();
+    return EchoClient.create(httpJsonEchoSettings);
+  }
 
-    public static EchoClient createHttpJsonEchoClient() throws Exception{
-        EchoSettings httpJsonEchoSettings =
-                EchoSettings.newHttpJsonBuilder()
-                        .setCredentialsProvider(NoCredentialsProvider.create())
-                        .setTransportChannelProvider(
-                                EchoSettings.defaultHttpJsonTransportProviderBuilder()
-                                        .setHttpTransport(
-                                                new NetHttpTransport.Builder().doNotValidateCertificate().build())
-                                        .setEndpoint("http://localhost:7469")
-                                        .build())
-                        .build();
-        return EchoClient.create(httpJsonEchoSettings);
-    }
+  public static IdentityClient createGrpcIdentityClient() throws Exception {
+    IdentitySettings grpcIdentitySettings =
+        IdentitySettings.newHttpJsonBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                IdentitySettings.defaultGrpcTransportProviderBuilder()
+                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .build())
+            .build();
+    return IdentityClient.create(grpcIdentitySettings);
+  }
+
+  public static IdentityClient createHttpJsonIdentityClient() throws Exception {
+    IdentitySettings httpjsonIdentitySettings =
+        IdentitySettings.newHttpJsonBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultHttpJsonTransportProviderBuilder()
+                    .setHttpTransport(
+                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
+                    .setEndpoint("http://localhost:7469")
+                    .build())
+            .build();
+    return IdentityClient.create(httpjsonIdentitySettings);
+  }
 }
