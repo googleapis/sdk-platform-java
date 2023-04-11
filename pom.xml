@@ -81,10 +81,22 @@
     </profile>
 
     <profile>
-      <id>activate-test-coverage</id>
+      <id>full-project-coverage</id>
       <activation>
         <property>
-          <name>enableTestCoverage</name>
+          <name>enableFullTestCoverage</name>
+        </property>
+      </activation>
+      <modules>
+        <module>showcase</module>
+      </modules>
+    </profile>
+
+    <profile>
+      <id>activate-showcase-coverage</id>
+      <activation>
+        <property>
+          <name>enableShowcaseTestCoverage</name>
         </property>
       </activation>
       <modules>
