@@ -19,6 +19,7 @@ import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.NoCredentialsProvider;
+import com.google.common.collect.ImmutableList;
 import com.google.protobuf.FieldMask;
 import com.google.showcase.v1beta1.CreateUserRequest;
 import com.google.showcase.v1beta1.DeleteUserRequest;
@@ -32,6 +33,7 @@ import com.google.showcase.v1beta1.User;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
+import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -93,14 +95,15 @@ public class ITCrud {
 
   @Test
   public void testHttpJson_Read() {
-    User defaultUser = createDefaultUser();
-    User otherUser =
-        createUser(
-            DEFAULT_USER
-                .toBuilder()
-                .setNickname("John Smith")
-                .setEmail("johnsmith@example.com")
-                .build());
+    List<User> expectedUsersList =
+        ImmutableList.of(
+            createDefaultUser(),
+            createUser(
+                DEFAULT_USER
+                    .toBuilder()
+                    .setNickname("John Smith")
+                    .setEmail("johnsmith@example.com")
+                    .build()));
     // Assert that only one User exists
     IdentityClient.ListUsersPagedResponse listUsersPagedResponse =
         httpJsonClient.listUsers(ListUsersRequest.newBuilder().setPageSize(5).build());
@@ -109,12 +112,10 @@ public class ITCrud {
 
     // Check that the response from both List (pagination) and Get
     // List Users
-    User listDefaultUserResponse = listUsersResponse.getUsers(0);
-    assertThat(listDefaultUserResponse).isEqualTo(defaultUser);
-    User listOtherUserResponse = listUsersResponse.getUsers(1);
-    assertThat(listOtherUserResponse).isEqualTo(otherUser);
+    assertThat(listUsersResponse.getUsersList()).containsExactlyElementsIn(expectedUsersList);
 
     // Get User
+    User defaultUser = expectedUsersList.get(0);
     User getUserResponse = httpJsonClient.getUser(defaultUser.getName());
     assertThat(getUserResponse).isEqualTo(defaultUser);
   }
