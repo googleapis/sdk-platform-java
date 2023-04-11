@@ -73,25 +73,6 @@ public class ITCrud {
     httpJsonClient.close();
   }
 
-  private void cleanupData(IdentityClient identityClient) {
-    IdentityClient.ListUsersPagedResponse pagedResponse =
-        identityClient.listUsers(ListUsersRequest.newBuilder().setPageSize(5).build());
-    for (IdentityClient.ListUsersPage listUsersPage : pagedResponse.iteratePages()) {
-      for (User user : listUsersPage.getResponse().getUsersList()) {
-        identityClient.deleteUser(user.getName());
-      }
-    }
-    pagedResponse = httpJsonClient.listUsers(ListUsersRequest.newBuilder().setPageSize(5).build());
-    assertThat(pagedResponse.getPage().getResponse().getUsersList().size()).isEqualTo(0);
-  }
-
-  // Helper method to create a user with the DEFAULT_USER configs. Server returns
-  // a generated name (not username) that is used to identify the individual user
-  // and each test uses the name for the RPC
-  private User createDefaultUser() {
-    return httpJsonClient.createUser(CreateUserRequest.newBuilder().setUser(DEFAULT_USER).build());
-  }
-
   @Test
   public void testHttpJson_Create() {
     User userResponse = createDefaultUser();
@@ -112,21 +93,30 @@ public class ITCrud {
 
   @Test
   public void testHttpJson_Read() {
-    User userResponse = createDefaultUser();
+    User defaultUser = createDefaultUser();
+    User otherUser =
+        createUser(
+            DEFAULT_USER
+                .toBuilder()
+                .setNickname("John Smith")
+                .setEmail("johnsmith@example.com")
+                .build());
     // Assert that only one User exists
     IdentityClient.ListUsersPagedResponse listUsersPagedResponse =
         httpJsonClient.listUsers(ListUsersRequest.newBuilder().setPageSize(5).build());
     ListUsersResponse listUsersResponse = listUsersPagedResponse.getPage().getResponse();
-    assertThat(listUsersResponse.getUsersList().size()).isEqualTo(1);
+    assertThat(listUsersResponse.getUsersList().size()).isEqualTo(2);
 
     // Check that the response from both List (pagination) and Get
     // List Users
-    User listUserResponse = listUsersResponse.getUsers(0);
-    assertThat(listUserResponse).isEqualTo(userResponse);
+    User listDefaultUserResponse = listUsersResponse.getUsers(0);
+    assertThat(listDefaultUserResponse).isEqualTo(defaultUser);
+    User listOtherUserResponse = listUsersResponse.getUsers(1);
+    assertThat(listOtherUserResponse).isEqualTo(otherUser);
 
     // Get User
-    User getUserResponse = httpJsonClient.getUser(userResponse.getName());
-    assertThat(getUserResponse).isEqualTo(userResponse);
+    User getUserResponse = httpJsonClient.getUser(defaultUser.getName());
+    assertThat(getUserResponse).isEqualTo(defaultUser);
   }
 
   @Test
@@ -173,5 +163,28 @@ public class ITCrud {
     IdentityClient.ListUsersPagedResponse listUsersPagedResponse =
         httpJsonClient.listUsers(ListUsersRequest.newBuilder().setPageSize(5).build());
     assertThat(listUsersPagedResponse.getPage().getResponse().getUsersList().size()).isEqualTo(0);
+  }
+
+  private void cleanupData(IdentityClient identityClient) {
+    IdentityClient.ListUsersPagedResponse pagedResponse =
+        identityClient.listUsers(ListUsersRequest.newBuilder().setPageSize(5).build());
+    for (IdentityClient.ListUsersPage listUsersPage : pagedResponse.iteratePages()) {
+      for (User user : listUsersPage.getResponse().getUsersList()) {
+        identityClient.deleteUser(user.getName());
+      }
+    }
+    pagedResponse = httpJsonClient.listUsers(ListUsersRequest.newBuilder().setPageSize(5).build());
+    assertThat(pagedResponse.getPage().getResponse().getUsersList().size()).isEqualTo(0);
+  }
+
+  // Helper method to create a user with the DEFAULT_USER configs. Server returns
+  // a generated name (not username) that is used to identify the individual user
+  // and each test uses the name for the RPC
+  private User createDefaultUser() {
+    return createUser(DEFAULT_USER);
+  }
+
+  private User createUser(User user) {
+    return httpJsonClient.createUser(CreateUserRequest.newBuilder().setUser(user).build());
   }
 }
