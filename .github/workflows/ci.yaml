@@ -5,7 +5,7 @@ on:
   pull_request:
 name: ci
 env:
-  SHOWCASE_VERSION: 0.26.0
+  SHOWCASE_VERSION: 0.26.1
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -165,6 +165,15 @@ jobs:
         #  package jar so that gapic-generator-java module can use
         #  testlib modules of gax
         run: mvn package clirr:check -DskipTests
+
+  requirements-kokoro:
+    runs-on: ubuntu-latest
+    container: gcr.io/cloud-devrel-public-resources/java11
+    steps:
+      - uses: actions/checkout@v3
+      - run: python3 --version
+      - run: python3 -m pip install --require-hashes -r .kokoro/requirements.txt
+      - run: python3 -m releasetool publish-reporter-script > /dev/null
 
   showcase:
     runs-on: ubuntu-22.04

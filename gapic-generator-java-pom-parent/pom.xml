@@ -100,7 +100,7 @@
       <id>test-coverage</id>
       <activation>
         <property>
-          <name>enableTestCoverage</name>
+          <name>enableShowcaseTestCoverage</name>
         </property>
       </activation>
       <build>
