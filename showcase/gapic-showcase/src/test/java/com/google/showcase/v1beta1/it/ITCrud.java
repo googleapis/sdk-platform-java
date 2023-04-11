@@ -124,6 +124,7 @@ public class ITCrud {
   public void testHttpJson_Update() {
     User userResponse = createDefaultUser();
     // Update multiple fields in the User. Age + Nickname are not included in the FieldMask
+    // userResponse's enableNotifications field is populated from the server
     User updateUser =
         userResponse
             .toBuilder()
@@ -178,13 +179,19 @@ public class ITCrud {
     assertThat(pagedResponse.getPage().getResponse().getUsersList().size()).isEqualTo(0);
   }
 
-  // Helper method to create a user with the DEFAULT_USER configs. Server returns
-  // a generated name (not username) that is used to identify the individual user
-  // and each test uses the name for the RPC
   private User createDefaultUser() {
     return createUser(DEFAULT_USER);
   }
 
+  /**
+   * Helper method to create a user with the DEFAULT_USER configs. Server returns a generated name
+   * (not username) that is used to identify the individual user and each test uses the name for the
+   * RPC. Server also populates a few additional fields (Create Time, Updated Time, and Enable
+   * Notifications).
+   *
+   * @param user User to be created
+   * @return newly created user
+   */
   private User createUser(User user) {
     return httpJsonClient.createUser(CreateUserRequest.newBuilder().setUser(user).build());
   }
