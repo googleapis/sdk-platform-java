@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.google.cloud</groupId>
   <artifactId>gapic-showcase</artifactId>
-  <version>0.0.1-SHAPSHOT</version>
+  <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
   <name>GAPIC Showcase Client</name>
   <description>
@@ -19,7 +19,7 @@
   </parent>
 
   <properties>
-    <fmt.skip>true</fmt.skip>
+    <gapic-showcase.version>0.26.1</gapic-showcase.version>
   </properties>
 
   <profiles>
@@ -102,6 +102,36 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>com.coveo</groupId>
+        <artifactId>fmt-maven-plugin</artifactId>
+        <version>2.9</version>
+        <configuration>
+          <filesNamePattern>(IT.*\.java)|(.*Test.java)</filesNamePattern>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.googlecode.maven-download-plugin</groupId>
+        <artifactId>download-maven-plugin</artifactId>
+        <version>1.6.8</version>
+        <executions>
+          <execution>
+            <id>download-compliance-suite</id>
+            <phase>generate-test-resources</phase>
+            <goals>
+              <goal>wget</goal>
+            </goals>
+            <configuration>
+              <url>
+                https://raw.githubusercontent.com/googleapis/gapic-showcase/v${gapic-showcase.version}/server/services/compliance_suite.json
+              </url>
+              <outputDirectory>src/test/resources</outputDirectory>
+              <!-- Set this to always download the latest version and overwrite the existing file -->
+              <overwrite>true</overwrite>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
@@ -161,6 +191,12 @@
       <artifactId>junit</artifactId>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>com.google.truth</groupId>
+      <artifactId>truth</artifactId>
+      <version>1.1.3</version>
+      <scope>test</scope>
+    </dependency>
 
     <dependency>
       <groupId>com.google.api.grpc</groupId>
@@ -171,18 +207,21 @@
     <dependency>
       <groupId>com.google.api</groupId>
       <artifactId>gax</artifactId>
+      <type>test-jar</type>
       <classifier>testlib</classifier>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.google.api</groupId>
       <artifactId>gax-grpc</artifactId>
+      <type>test-jar</type>
       <classifier>testlib</classifier>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.google.api</groupId>
       <artifactId>gax-httpjson</artifactId>
+      <type>test-jar</type>
       <classifier>testlib</classifier>
       <scope>test</scope>
     </dependency>

@@ -100,15 +100,7 @@ public abstract class BidiStreamingCallable<RequestT, ResponseT> {
   /** Listens to server responses and send requests when the network is free. */
   public void call(
       final BidiStreamObserver<RequestT, ResponseT> bidiObserver, ApiCallContext context) {
-    internalCall(
-        bidiObserver,
-        new ClientStreamReadyObserver<RequestT>() {
-          @Override
-          public void onReady(ClientStream<RequestT> stream) {
-            bidiObserver.onReady(stream);
-          }
-        },
-        context);
+    internalCall(bidiObserver, bidiObserver, context);
   }
 
   /**
@@ -183,11 +175,8 @@ public abstract class BidiStreamingCallable<RequestT, ResponseT> {
       ResponseObserver<ResponseT> responseObserver, ApiCallContext context) {
     return internalCall(
         responseObserver,
-        new ClientStreamReadyObserver<RequestT>() {
-          @Override
-          public void onReady(ClientStream<RequestT> stream) {
-            // no op
-          }
+        stream -> {
+          // no op
         },
         context);
   }

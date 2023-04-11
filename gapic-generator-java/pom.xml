@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.google.api</groupId>
   <artifactId>gapic-generator-java</artifactId>
-  <version>2.15.3-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
+  <version>2.16.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
   <name>GAPIC Generator Java</name>
   <description>GAPIC generator Java</description>
 
@@ -23,7 +23,7 @@
   <parent>
     <groupId>com.google.api</groupId>
     <artifactId>gapic-generator-java-pom-parent</artifactId>
-    <version>2.15.3-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
+    <version>2.16.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
     <relativePath>../gapic-generator-java-pom-parent</relativePath>
   </parent>
 
@@ -32,7 +32,7 @@
       <dependency>
         <groupId>com.google.api</groupId>
         <artifactId>gapic-generator-java-bom</artifactId>
-        <version>2.15.3-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
+        <version>2.16.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -75,6 +75,19 @@
           </plugin>
         </plugins>
       </build>
+    </profile>
+
+    <!-- Skip gapic-generator-java when analyzing showcase test coverage on SonarCloud   -->
+    <profile>
+      <id>showcase-sonar-analysis</id>
+      <activation>
+        <property>
+          <name>enableShowcaseTestCoverage</name>
+        </property>
+      </activation>
+      <properties>
+        <sonar.skip>true</sonar.skip>
+      </properties>
     </profile>
   </profiles>
 
@@ -301,7 +314,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>3.0.0-M9</version>
+        <version>3.0.0</version>
         <configuration>
           <additionalClasspathElements>
             <additionalClasspathElement>
@@ -374,6 +387,8 @@
     <dependency>
       <groupId>com.google.api</groupId>
       <artifactId>gax</artifactId>
+      <!-- import the test code, https://maven.apache.org/plugins/maven-jar-plugin/examples/create-test-jar.html -->
+      <type>test-jar</type>
       <classifier>testlib</classifier>
     </dependency>
     <dependency>
@@ -383,6 +398,8 @@
     <dependency>
       <groupId>com.google.api</groupId>
       <artifactId>gax-grpc</artifactId>
+      <!-- import the test code, https://maven.apache.org/plugins/maven-jar-plugin/examples/create-test-jar.html -->
+      <type>test-jar</type>
       <classifier>testlib</classifier>
     </dependency>
     <dependency>
@@ -392,6 +409,8 @@
     <dependency>
       <groupId>com.google.api</groupId>
       <artifactId>gax-httpjson</artifactId>
+      <!-- import the test code, https://maven.apache.org/plugins/maven-jar-plugin/examples/create-test-jar.html -->
+      <type>test-jar</type>
       <classifier>testlib</classifier>
     </dependency>
     <dependency>

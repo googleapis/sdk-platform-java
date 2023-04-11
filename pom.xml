@@ -20,7 +20,9 @@
     <module>gapic-generator-java</module>
     <module>java-common-protos</module>
     <module>java-iam</module>
+    <module>java-core</module>
     <module>gapic-generator-java-bom</module>
+    <module>java-shared-dependencies</module>
   </modules>
   <!-- Do not deploy the aggregator POM -->
   <build>
@@ -33,7 +35,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-deploy-plugin</artifactId>
-        <version>3.1.0</version>
+        <version>3.1.1</version>
         <configuration>
           <skip>true</skip>
         </configuration>
@@ -76,6 +78,34 @@
           </plugin>
         </plugins>
       </build>
+    </profile>
+
+    <profile>
+      <id>full-project-coverage</id>
+      <activation>
+        <property>
+          <name>enableFullTestCoverage</name>
+        </property>
+      </activation>
+      <modules>
+        <module>showcase</module>
+      </modules>
+    </profile>
+
+    <profile>
+      <id>activate-showcase-coverage</id>
+      <activation>
+        <property>
+          <name>enableShowcaseTestCoverage</name>
+        </property>
+      </activation>
+      <modules>
+        <module>showcase</module>
+        <module>coverage-report</module>
+      </modules>
+      <properties>
+        <sonar.coverage.jacoco.xmlReportPaths>${maven.multiModuleProjectDirectory}/coverage-report/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+      </properties>
     </profile>
   </profiles>
 

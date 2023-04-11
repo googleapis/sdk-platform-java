@@ -140,6 +140,12 @@ This repository contains the following java packages.
 
 ### gax
 
+Transport-independent part of GAX for Java.
+The term "transport" in this context usually means the distinction between gRPC or REST.
+Basically all logic, which does not depend explicitly on gRPC or REST goes to this package.
+The examples of such transport-agnostic logic, which is in this package:
+retries, pagination, batching, utilities and core logic.
+
 - `com.google.api.gax.batching` - Contains general-purpose batching logic.
 - `com.google.api.gax.core` - Contains core interfaces and classes that are not
   specific to grpc and could be used in other contexts.
@@ -152,12 +158,20 @@ This repository contains the following java packages.
 
 ### gax-grpc
 
+This depends on gax module from the above, and has all the gRPC-specific logic,
+which could not go to the gax module because of this dependency on gRPC.
+Basically it has gRPC-specific implementations of the interfaces and abstract classes defined in gax.
+
 - `com.google.api.gax.grpc` - Contains classes that provide functionality on top
   of gRPC calls.
 - `com.google.longrunning` - Contains the mix-in client for long-running operations
   which is implemented by a number of Google APIs.
 
 ### gax-httpjson
+
+This module is very similar to gax-grpc, but depends on REST-specific implementation.
+It enables the generated libraries to communicate with the backend services based on HTTP
+1.1 protocol.
 
 - `com.google.api.gax.httpjson` - Contains classes that provide functionality on
   top of http/json calls.

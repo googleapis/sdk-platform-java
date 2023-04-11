@@ -28,7 +28,8 @@ public interface BackendRuleOrBuilder
    *
    * <pre>
    * Selects the methods to which this rule applies.
-   * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+   * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+   * details.
    * </pre>
    *
    * <code>string selector = 1;</code>
@@ -41,7 +42,8 @@ public interface BackendRuleOrBuilder
    *
    * <pre>
    * Selects the methods to which this rule applies.
-   * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+   * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+   * details.
    * </pre>
    *
    * <code>string selector = 1;</code>
@@ -127,7 +129,7 @@ public interface BackendRuleOrBuilder
    * <code>double min_deadline = 4 [deprecated = true];</code>
    *
    * @deprecated google.api.BackendRule.min_deadline is deprecated. See
-   *     google/api/backend.proto;l=123
+   *     google/api/backend.proto;l=124
    * @return The minDeadline.
    */
   @java.lang.Deprecated
@@ -288,6 +290,64 @@ public interface BackendRuleOrBuilder
    * @return The bytes for protocol.
    */
   com.google.protobuf.ByteString getProtocolBytes();
+
+  /**
+   *
+   *
+   * <pre>
+   * The map between request protocol and the backend address.
+   * </pre>
+   *
+   * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
+   */
+  int getOverridesByRequestProtocolCount();
+  /**
+   *
+   *
+   * <pre>
+   * The map between request protocol and the backend address.
+   * </pre>
+   *
+   * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
+   */
+  boolean containsOverridesByRequestProtocol(java.lang.String key);
+  /** Use {@link #getOverridesByRequestProtocolMap()} instead. */
+  @java.lang.Deprecated
+  java.util.Map<java.lang.String, com.google.api.BackendRule> getOverridesByRequestProtocol();
+  /**
+   *
+   *
+   * <pre>
+   * The map between request protocol and the backend address.
+   * </pre>
+   *
+   * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
+   */
+  java.util.Map<java.lang.String, com.google.api.BackendRule> getOverridesByRequestProtocolMap();
+  /**
+   *
+   *
+   * <pre>
+   * The map between request protocol and the backend address.
+   * </pre>
+   *
+   * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
+   */
+  /* nullable */
+  com.google.api.BackendRule getOverridesByRequestProtocolOrDefault(
+      java.lang.String key,
+      /* nullable */
+      com.google.api.BackendRule defaultValue);
+  /**
+   *
+   *
+   * <pre>
+   * The map between request protocol and the backend address.
+   * </pre>
+   *
+   * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
+   */
+  com.google.api.BackendRule getOverridesByRequestProtocolOrThrow(java.lang.String key);
 
   public com.google.api.BackendRule.AuthenticationCase getAuthenticationCase();
 }

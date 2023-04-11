@@ -14,6 +14,7 @@
 
 package com.google.api.generator.gapic.composer.grpcrest;
 
+import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -26,6 +27,7 @@ import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.gapic.protoparser.ServiceConfigParser;
+import com.google.api.generator.gapic.protoparser.ServiceYamlParser;
 import com.google.longrunning.OperationsProto;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
@@ -58,6 +60,13 @@ public class GrpcRestTestProtoLoader extends TestProtoLoader {
     ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);
     assertEquals("Echo", echoServiceDescriptor.getName());
 
+    String serviceYamlFileName = "echo_v1beta1.yaml";
+    Path serviceYamlPath = Paths.get(getTestFilesDirectory(), serviceYamlFileName);
+    Optional<com.google.api.Service> serviceYamlOpt =
+        ServiceYamlParser.parse(serviceYamlPath.toString());
+    assertThat(serviceYamlOpt.isPresent()).isTrue();
+    com.google.api.Service service = serviceYamlOpt.get();
+
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     messageTypes.putAll(Parser.parseMessages(OperationsProto.getDescriptor()));
     messageTypes.putAll(Parser.parseMessages(StructProto.getDescriptor()));
@@ -66,7 +75,7 @@ public class GrpcRestTestProtoLoader extends TestProtoLoader {
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
         Parser.parseService(
-            echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
+            echoFileDescriptor, messageTypes, resourceNames, serviceYamlOpt, outputResourceNames);
 
     String jsonFilename = "showcase_grpc_service_config.json";
     Path jsonPath = Paths.get(getTestFilesDirectory(), jsonFilename);
@@ -79,6 +88,7 @@ public class GrpcRestTestProtoLoader extends TestProtoLoader {
         .setResourceNames(resourceNames)
         .setServices(services)
         .setServiceConfig(config)
+        .setServiceYamlProto(service)
         .setHelperResourceNames(outputResourceNames)
         .setTransport(getTransport())
         .build();

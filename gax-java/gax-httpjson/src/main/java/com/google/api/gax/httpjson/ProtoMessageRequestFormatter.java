@@ -95,10 +95,30 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
     return requestBodyExtractor.extract(apiMessage);
   }
 
-  /* {@inheritDoc} */
+  /**
+   * Returns the relative URL path created from the path parameters from the given message. Attempts
+   * to match the with the default PathTemplate. If there is not match, it attempts to match with
+   * the templates in the additionalPathTemplates.
+   *
+   * @param apiMessage Request object to extract fields from
+   * @return Path of a matching valid URL or the default Path URL
+   */
   @Override
   public String getPath(RequestT apiMessage) {
-    return pathTemplate.instantiate(pathVarsExtractor.extract(apiMessage));
+    Map<String, String> pathVarsMap = pathVarsExtractor.extract(apiMessage);
+    String path = pathTemplate.instantiate(pathVarsMap);
+    if (pathTemplate.matches(path)) {
+      return path;
+    }
+    for (PathTemplate additionalPathTemplate : additionalPathTemplates) {
+      String additionalPath = additionalPathTemplate.instantiate(pathVarsMap);
+      if (additionalPathTemplate.matches(additionalPath)) {
+        return additionalPath;
+      }
+    }
+    // If there are no matches, we return the default path, this is for backwards compatibility.
+    // TODO: Log this scenario once we implemented the Cloud SDK logging.
+    return path;
   }
 
   @BetaApi
@@ -144,6 +164,12 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
     @BetaApi
     public Builder<RequestT> setAdditionalPaths(String... rawAdditionalPaths) {
       this.rawAdditionalPaths = Arrays.asList(rawAdditionalPaths);
+      return this;
+    }
+
+    @InternalApi
+    public Builder<RequestT> updateRawPath(String rawPath) {
+      this.rawPath = rawPath;
       return this;
     }
 

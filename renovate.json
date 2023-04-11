@@ -2,9 +2,48 @@
   "extends": [
     "config:base"
   ],
-  "ignorePaths": [".kokoro/requirements.txt"],
   "ignoreDeps": ["rules_pkg"],
+  "regexManagers": [
+    {
+      "fileMatch": ["^gax-java/dependencies\\.properties$"],
+      "matchStrings": ["=(?<depName>.+\\:.+?):(?<currentValue>.+?)\\n"],
+      "datasourceTemplate": "maven"
+    },
+    {
+      "fileMatch": ["^gax-java/dependencies\\.properties$"],
+      "matchStrings": ["version\\.com_google_protobuf=(?<currentValue>.+?)\\n"],
+      "depNameTemplate": "com.google.protobuf:protobuf-java",
+      "datasourceTemplate": "maven"
+    },
+    {
+      "fileMatch": ["^gax-java/dependencies\\.properties$"],
+      "matchStrings": ["version\\.google_java_format=(?<currentValue>.+?)\\n"],
+      "depNameTemplate": "com.google.googlejavaformat:google-java-format",
+      "datasourceTemplate": "maven"
+    },
+    {
+      "fileMatch": ["^gax-java/dependencies\\.properties$"],
+      "matchStrings": ["version\\.io_grpc=(?<currentValue>.+?)\\n"],
+      "depNameTemplate": "io.grpc:grpc-core",
+      "datasourceTemplate": "maven"
+    },
+    {
+      "fileMatch": ["^\\.github/workflows/.*\\.yaml$"],
+      "matchStrings": ["SHOWCASE_VERSION: (?<currentValue>.+?)\\n"],
+      "datasourceTemplate": "go"
+    },
+    {
+      "fileMatch": ["^showcase/gapic-showcase/pom\\.xml$"],
+      "matchStrings": ["<gapic-showcase.version>(?<currentValue>.+?)</gapic-showcase.version>\\n"],
+      "datasourceTemplate": "go"
+    }
+  ],
   "packageRules": [
+     {
+      "matchUpdateTypes": ["major"],
+      "matchPackagePatterns": ["*"],
+      "enabled": false
+    },
     {
       "packagePatterns": [
         "^com.google.guava:"
@@ -67,6 +106,42 @@
         "^com.google.protobuf"
       ],
       "groupName": "Protobuf dependencies"
+    },
+    {
+      "packagePatterns": [
+        "^io.grpc"
+      ],
+      "groupName": "gRPC dependencies"
+    },
+    {
+      "packagePatterns": [
+        "^com.google.auth"
+      ],
+      "groupName": "Google Auth Library dependencies"
+    },
+    {
+      "packagePatterns": [
+        "^com.google.api"
+      ],
+      "groupName": "Google API dependencies"
+    },
+    {
+      "packagePatterns": [
+        "^com.google.http-client"
+      ],
+      "groupName": "Google HTTP Client dependencies"
+    },
+    {
+      "packagePatterns": [
+        "^io.opencensus"
+      ],
+      "groupName": "OpenCensus dependencies"
+    },
+    {
+      "packagePatterns": [
+        "^io.netty"
+      ],
+      "groupName": "Netty dependencies"
     }
-  ],
+  ]
 }

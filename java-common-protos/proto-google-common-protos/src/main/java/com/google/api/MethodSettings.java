@@ -1641,8 +1641,8 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
    * google/longrunning/operations.proto.
    * Example of a YAML configuration::
    *  publishing:
-   *    method_behavior:
-   *      - selector: CreateAdDomain
+   *    method_settings:
+   *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
    *        long_running:
    *          initial_poll_delay:
    *            seconds: 60 # 1 minute
@@ -1670,8 +1670,8 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
    * google/longrunning/operations.proto.
    * Example of a YAML configuration::
    *  publishing:
-   *    method_behavior:
-   *      - selector: CreateAdDomain
+   *    method_settings:
+   *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
    *        long_running:
    *          initial_poll_delay:
    *            seconds: 60 # 1 minute
@@ -1701,8 +1701,8 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
    * google/longrunning/operations.proto.
    * Example of a YAML configuration::
    *  publishing:
-   *    method_behavior:
-   *      - selector: CreateAdDomain
+   *    method_settings:
+   *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
    *        long_running:
    *          initial_poll_delay:
    *            seconds: 60 # 1 minute
@@ -2214,8 +2214,8 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * google/longrunning/operations.proto.
      * Example of a YAML configuration::
      *  publishing:
-     *    method_behavior:
-     *      - selector: CreateAdDomain
+     *    method_settings:
+     *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
      *        long_running:
      *          initial_poll_delay:
      *            seconds: 60 # 1 minute
@@ -2242,8 +2242,8 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * google/longrunning/operations.proto.
      * Example of a YAML configuration::
      *  publishing:
-     *    method_behavior:
-     *      - selector: CreateAdDomain
+     *    method_settings:
+     *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
      *        long_running:
      *          initial_poll_delay:
      *            seconds: 60 # 1 minute
@@ -2276,8 +2276,8 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * google/longrunning/operations.proto.
      * Example of a YAML configuration::
      *  publishing:
-     *    method_behavior:
-     *      - selector: CreateAdDomain
+     *    method_settings:
+     *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
      *        long_running:
      *          initial_poll_delay:
      *            seconds: 60 # 1 minute
@@ -2312,8 +2312,8 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * google/longrunning/operations.proto.
      * Example of a YAML configuration::
      *  publishing:
-     *    method_behavior:
-     *      - selector: CreateAdDomain
+     *    method_settings:
+     *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
      *        long_running:
      *          initial_poll_delay:
      *            seconds: 60 # 1 minute
@@ -2346,8 +2346,8 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * google/longrunning/operations.proto.
      * Example of a YAML configuration::
      *  publishing:
-     *    method_behavior:
-     *      - selector: CreateAdDomain
+     *    method_settings:
+     *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
      *        long_running:
      *          initial_poll_delay:
      *            seconds: 60 # 1 minute
@@ -2385,8 +2385,8 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * google/longrunning/operations.proto.
      * Example of a YAML configuration::
      *  publishing:
-     *    method_behavior:
-     *      - selector: CreateAdDomain
+     *    method_settings:
+     *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
      *        long_running:
      *          initial_poll_delay:
      *            seconds: 60 # 1 minute
@@ -2418,8 +2418,8 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * google/longrunning/operations.proto.
      * Example of a YAML configuration::
      *  publishing:
-     *    method_behavior:
-     *      - selector: CreateAdDomain
+     *    method_settings:
+     *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
      *        long_running:
      *          initial_poll_delay:
      *            seconds: 60 # 1 minute
@@ -2446,8 +2446,8 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * google/longrunning/operations.proto.
      * Example of a YAML configuration::
      *  publishing:
-     *    method_behavior:
-     *      - selector: CreateAdDomain
+     *    method_settings:
+     *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
      *        long_running:
      *          initial_poll_delay:
      *            seconds: 60 # 1 minute
@@ -2478,8 +2478,8 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * google/longrunning/operations.proto.
      * Example of a YAML configuration::
      *  publishing:
-     *    method_behavior:
-     *      - selector: CreateAdDomain
+     *    method_settings:
+     *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
      *        long_running:
      *          initial_poll_delay:
      *            seconds: 60 # 1 minute

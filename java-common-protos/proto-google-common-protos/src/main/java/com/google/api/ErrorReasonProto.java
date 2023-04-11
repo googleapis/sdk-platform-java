@@ -36,7 +36,7 @@ public final class ErrorReasonProto {
   static {
     java.lang.String[] descriptorData = {
       "\n\035google/api/error_reason.proto\022\ngoogle."
-          + "api*\300\006\n\013ErrorReason\022\034\n\030ERROR_REASON_UNSP"
+          + "api*\354\006\n\013ErrorReason\022\034\n\030ERROR_REASON_UNSP"
           + "ECIFIED\020\000\022\024\n\020SERVICE_DISABLED\020\001\022\024\n\020BILLI"
           + "NG_DISABLED\020\002\022\023\n\017API_KEY_INVALID\020\003\022\033\n\027AP"
           + "I_KEY_SERVICE_BLOCKED\020\004\022!\n\035API_KEY_HTTP_"
@@ -56,10 +56,12 @@ public final class ErrorReasonProto {
           + "OCKED_BY_ADMIN\020\030\022\'\n#RESOURCE_USAGE_RESTR"
           + "ICTION_VIOLATED\020\031\022 \n\034SYSTEM_PARAMETER_UN"
           + "SUPPORTED\020\032\022\035\n\031ORG_RESTRICTION_VIOLATION"
-          + "\020\033\022\"\n\036ORG_RESTRICTION_HEADER_INVALID\020\034Bp"
-          + "\n\016com.google.apiB\020ErrorReasonProtoP\001ZCgo"
-          + "ogle.golang.org/genproto/googleapis/api/"
-          + "error_reason;error_reason\242\002\004GAPIb\006proto3"
+          + "\020\033\022\"\n\036ORG_RESTRICTION_HEADER_INVALID\020\034\022\027"
+          + "\n\023SERVICE_NOT_VISIBLE\020\035\022\021\n\rGCP_SUSPENDED"
+          + "\020\036Bp\n\016com.google.apiB\020ErrorReasonProtoP\001"
+          + "ZCgoogle.golang.org/genproto/googleapis/"
+          + "api/error_reason;error_reason\242\002\004GAPIb\006pr"
+          + "oto3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(

@@ -522,13 +522,15 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
-     * Deprecated. Must use the [MetricDescriptor.launch_stage][google.api.MetricDescriptor.launch_stage] instead.
+     * Deprecated. Must use the
+     * [MetricDescriptor.launch_stage][google.api.MetricDescriptor.launch_stage]
+     * instead.
      * </pre>
      *
      * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
      *
      * @deprecated google.api.MetricDescriptor.MetricDescriptorMetadata.launch_stage is deprecated.
-     *     See google/api/metric.proto;l=83
+     *     See google/api/metric.proto;l=85
      * @return The enum numeric value on the wire for launchStage.
      */
     @java.lang.Deprecated
@@ -537,13 +539,15 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
-     * Deprecated. Must use the [MetricDescriptor.launch_stage][google.api.MetricDescriptor.launch_stage] instead.
+     * Deprecated. Must use the
+     * [MetricDescriptor.launch_stage][google.api.MetricDescriptor.launch_stage]
+     * instead.
      * </pre>
      *
      * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
      *
      * @deprecated google.api.MetricDescriptor.MetricDescriptorMetadata.launch_stage is deprecated.
-     *     See google/api/metric.proto;l=83
+     *     See google/api/metric.proto;l=85
      * @return The launchStage.
      */
     @java.lang.Deprecated
@@ -689,13 +693,15 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
-     * Deprecated. Must use the [MetricDescriptor.launch_stage][google.api.MetricDescriptor.launch_stage] instead.
+     * Deprecated. Must use the
+     * [MetricDescriptor.launch_stage][google.api.MetricDescriptor.launch_stage]
+     * instead.
      * </pre>
      *
      * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
      *
      * @deprecated google.api.MetricDescriptor.MetricDescriptorMetadata.launch_stage is deprecated.
-     *     See google/api/metric.proto;l=83
+     *     See google/api/metric.proto;l=85
      * @return The enum numeric value on the wire for launchStage.
      */
     @java.lang.Override
@@ -707,13 +713,15 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      *
      *
      * <pre>
-     * Deprecated. Must use the [MetricDescriptor.launch_stage][google.api.MetricDescriptor.launch_stage] instead.
+     * Deprecated. Must use the
+     * [MetricDescriptor.launch_stage][google.api.MetricDescriptor.launch_stage]
+     * instead.
      * </pre>
      *
      * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
      *
      * @deprecated google.api.MetricDescriptor.MetricDescriptorMetadata.launch_stage is deprecated.
-     *     See google/api/metric.proto;l=83
+     *     See google/api/metric.proto;l=85
      * @return The launchStage.
      */
     @java.lang.Override
@@ -1252,13 +1260,15 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * Deprecated. Must use the [MetricDescriptor.launch_stage][google.api.MetricDescriptor.launch_stage] instead.
+       * Deprecated. Must use the
+       * [MetricDescriptor.launch_stage][google.api.MetricDescriptor.launch_stage]
+       * instead.
        * </pre>
        *
        * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
        *
        * @deprecated google.api.MetricDescriptor.MetricDescriptorMetadata.launch_stage is
-       *     deprecated. See google/api/metric.proto;l=83
+       *     deprecated. See google/api/metric.proto;l=85
        * @return The enum numeric value on the wire for launchStage.
        */
       @java.lang.Override
@@ -1270,13 +1280,15 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * Deprecated. Must use the [MetricDescriptor.launch_stage][google.api.MetricDescriptor.launch_stage] instead.
+       * Deprecated. Must use the
+       * [MetricDescriptor.launch_stage][google.api.MetricDescriptor.launch_stage]
+       * instead.
        * </pre>
        *
        * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
        *
        * @deprecated google.api.MetricDescriptor.MetricDescriptorMetadata.launch_stage is
-       *     deprecated. See google/api/metric.proto;l=83
+       *     deprecated. See google/api/metric.proto;l=85
        * @param value The enum numeric value on the wire for launchStage to set.
        * @return This builder for chaining.
        */
@@ -1291,13 +1303,15 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * Deprecated. Must use the [MetricDescriptor.launch_stage][google.api.MetricDescriptor.launch_stage] instead.
+       * Deprecated. Must use the
+       * [MetricDescriptor.launch_stage][google.api.MetricDescriptor.launch_stage]
+       * instead.
        * </pre>
        *
        * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
        *
        * @deprecated google.api.MetricDescriptor.MetricDescriptorMetadata.launch_stage is
-       *     deprecated. See google/api/metric.proto;l=83
+       *     deprecated. See google/api/metric.proto;l=85
        * @return The launchStage.
        */
       @java.lang.Override
@@ -1310,13 +1324,15 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * Deprecated. Must use the [MetricDescriptor.launch_stage][google.api.MetricDescriptor.launch_stage] instead.
+       * Deprecated. Must use the
+       * [MetricDescriptor.launch_stage][google.api.MetricDescriptor.launch_stage]
+       * instead.
        * </pre>
        *
        * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
        *
        * @deprecated google.api.MetricDescriptor.MetricDescriptorMetadata.launch_stage is
-       *     deprecated. See google/api/metric.proto;l=83
+       *     deprecated. See google/api/metric.proto;l=85
        * @param value The launchStage to set.
        * @return This builder for chaining.
        */
@@ -1334,13 +1350,15 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
        *
        *
        * <pre>
-       * Deprecated. Must use the [MetricDescriptor.launch_stage][google.api.MetricDescriptor.launch_stage] instead.
+       * Deprecated. Must use the
+       * [MetricDescriptor.launch_stage][google.api.MetricDescriptor.launch_stage]
+       * instead.
        * </pre>
        *
        * <code>.google.api.LaunchStage launch_stage = 1 [deprecated = true];</code>
        *
        * @deprecated google.api.MetricDescriptor.MetricDescriptorMetadata.launch_stage is
-       *     deprecated. See google/api/metric.proto;l=83
+       *     deprecated. See google/api/metric.proto;l=85
        * @return This builder for chaining.
        */
       @java.lang.Deprecated
@@ -2527,9 +2545,10 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    * <pre>
    * Read-only. If present, then a [time
    * series][google.monitoring.v3.TimeSeries], which is identified partially by
-   * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
-   * with this metric type can only be associated with one of the monitored
-   * resource types listed here.
+   * a metric type and a
+   * [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that
+   * is associated with this metric type can only be associated with one of the
+   * monitored resource types listed here.
    * </pre>
    *
    * <code>repeated string monitored_resource_types = 13;</code>
@@ -2545,9 +2564,10 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    * <pre>
    * Read-only. If present, then a [time
    * series][google.monitoring.v3.TimeSeries], which is identified partially by
-   * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
-   * with this metric type can only be associated with one of the monitored
-   * resource types listed here.
+   * a metric type and a
+   * [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that
+   * is associated with this metric type can only be associated with one of the
+   * monitored resource types listed here.
    * </pre>
    *
    * <code>repeated string monitored_resource_types = 13;</code>
@@ -2563,9 +2583,10 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    * <pre>
    * Read-only. If present, then a [time
    * series][google.monitoring.v3.TimeSeries], which is identified partially by
-   * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
-   * with this metric type can only be associated with one of the monitored
-   * resource types listed here.
+   * a metric type and a
+   * [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that
+   * is associated with this metric type can only be associated with one of the
+   * monitored resource types listed here.
    * </pre>
    *
    * <code>repeated string monitored_resource_types = 13;</code>
@@ -2582,9 +2603,10 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    * <pre>
    * Read-only. If present, then a [time
    * series][google.monitoring.v3.TimeSeries], which is identified partially by
-   * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
-   * with this metric type can only be associated with one of the monitored
-   * resource types listed here.
+   * a metric type and a
+   * [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that
+   * is associated with this metric type can only be associated with one of the
+   * monitored resource types listed here.
    * </pre>
    *
    * <code>repeated string monitored_resource_types = 13;</code>
@@ -5144,9 +5166,10 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * <pre>
      * Read-only. If present, then a [time
      * series][google.monitoring.v3.TimeSeries], which is identified partially by
-     * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
-     * with this metric type can only be associated with one of the monitored
-     * resource types listed here.
+     * a metric type and a
+     * [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that
+     * is associated with this metric type can only be associated with one of the
+     * monitored resource types listed here.
      * </pre>
      *
      * <code>repeated string monitored_resource_types = 13;</code>
@@ -5162,9 +5185,10 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * <pre>
      * Read-only. If present, then a [time
      * series][google.monitoring.v3.TimeSeries], which is identified partially by
-     * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
-     * with this metric type can only be associated with one of the monitored
-     * resource types listed here.
+     * a metric type and a
+     * [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that
+     * is associated with this metric type can only be associated with one of the
+     * monitored resource types listed here.
      * </pre>
      *
      * <code>repeated string monitored_resource_types = 13;</code>
@@ -5180,9 +5204,10 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * <pre>
      * Read-only. If present, then a [time
      * series][google.monitoring.v3.TimeSeries], which is identified partially by
-     * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
-     * with this metric type can only be associated with one of the monitored
-     * resource types listed here.
+     * a metric type and a
+     * [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that
+     * is associated with this metric type can only be associated with one of the
+     * monitored resource types listed here.
      * </pre>
      *
      * <code>repeated string monitored_resource_types = 13;</code>
@@ -5199,9 +5224,10 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * <pre>
      * Read-only. If present, then a [time
      * series][google.monitoring.v3.TimeSeries], which is identified partially by
-     * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
-     * with this metric type can only be associated with one of the monitored
-     * resource types listed here.
+     * a metric type and a
+     * [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that
+     * is associated with this metric type can only be associated with one of the
+     * monitored resource types listed here.
      * </pre>
      *
      * <code>repeated string monitored_resource_types = 13;</code>
@@ -5218,9 +5244,10 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * <pre>
      * Read-only. If present, then a [time
      * series][google.monitoring.v3.TimeSeries], which is identified partially by
-     * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
-     * with this metric type can only be associated with one of the monitored
-     * resource types listed here.
+     * a metric type and a
+     * [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that
+     * is associated with this metric type can only be associated with one of the
+     * monitored resource types listed here.
      * </pre>
      *
      * <code>repeated string monitored_resource_types = 13;</code>
@@ -5244,9 +5271,10 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * <pre>
      * Read-only. If present, then a [time
      * series][google.monitoring.v3.TimeSeries], which is identified partially by
-     * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
-     * with this metric type can only be associated with one of the monitored
-     * resource types listed here.
+     * a metric type and a
+     * [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that
+     * is associated with this metric type can only be associated with one of the
+     * monitored resource types listed here.
      * </pre>
      *
      * <code>repeated string monitored_resource_types = 13;</code>
@@ -5269,9 +5297,10 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * <pre>
      * Read-only. If present, then a [time
      * series][google.monitoring.v3.TimeSeries], which is identified partially by
-     * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
-     * with this metric type can only be associated with one of the monitored
-     * resource types listed here.
+     * a metric type and a
+     * [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that
+     * is associated with this metric type can only be associated with one of the
+     * monitored resource types listed here.
      * </pre>
      *
      * <code>repeated string monitored_resource_types = 13;</code>
@@ -5291,9 +5320,10 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * <pre>
      * Read-only. If present, then a [time
      * series][google.monitoring.v3.TimeSeries], which is identified partially by
-     * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
-     * with this metric type can only be associated with one of the monitored
-     * resource types listed here.
+     * a metric type and a
+     * [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that
+     * is associated with this metric type can only be associated with one of the
+     * monitored resource types listed here.
      * </pre>
      *
      * <code>repeated string monitored_resource_types = 13;</code>
@@ -5312,9 +5342,10 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * <pre>
      * Read-only. If present, then a [time
      * series][google.monitoring.v3.TimeSeries], which is identified partially by
-     * a metric type and a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that is associated
-     * with this metric type can only be associated with one of the monitored
-     * resource types listed here.
+     * a metric type and a
+     * [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor], that
+     * is associated with this metric type can only be associated with one of the
+     * monitored resource types listed here.
      * </pre>
      *
      * <code>repeated string monitored_resource_types = 13;</code>
