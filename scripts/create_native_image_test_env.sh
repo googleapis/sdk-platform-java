@@ -80,7 +80,7 @@ pushd gapic-generator-java
 SHARED_DEPS_VERSION=$(sed -e 's/xmlns=".*"//' java-shared-dependencies/pom.xml | xmllint --xpath '/project/version/text()' -)
 echo $SHARED_DEPS_VERSION
 
-if [ ! "$(git branch --list $(GRAALVM_BRANCH))" ]
+if [ ! "$(git branch --list "$GRAALVM_BRANCH")" ]
 then
    git diff
    git checkout -b "${GRAALVM_BRANCH}"
