@@ -242,12 +242,15 @@ public abstract class AbstractRetryingExecutorTest {
     RetryingFuture<String> future = executor.createFuture(callable, retryingContext);
     callable.setExternalFuture(future);
     boolean res = future.cancel(false);
-    verifyNoMoreInteractions(tracer);
     assertTrue(res);
     assertTrue(future.isCancelled());
 
     future.setAttemptFuture(executor.submit(future));
     assertEquals(0, future.getAttemptSettings().getAttemptCount());
+
+    // Tracer should have 0 interactions as the externalFuture has already been cancelled
+    // FailingCallable should exit immediately and no tracer logic should be invoked
+    verifyNoMoreInteractions(tracer);
   }
 
   @Test
