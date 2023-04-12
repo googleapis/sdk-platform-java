@@ -76,6 +76,10 @@ class FailingCallable implements Callable<String> {
     this.result = result;
   }
 
+  // ExternalFuture should always be passed in when using the FailingCallable
+  // to accurately mimic the behavior of AttemptCallable. We use the external
+  // future to check that the future is done and that none of the callable's
+  // logic is run.
   public void setExternalFuture(RetryingFuture<String> externalFuture) {
     this.externalFuture = Preconditions.checkNotNull(externalFuture);
   }
@@ -87,6 +91,9 @@ class FailingCallable implements Callable<String> {
   @Override
   public String call() throws Exception {
     try {
+      // Assumption is that externalFuture is always passed in.
+      // No null check to confirm so that the test will fail if
+      // the externalFuture is not passed in
       if (externalFuture.isDone()) {
         return null;
       }
