@@ -70,7 +70,6 @@ RETURN_CODE=0
 setup_application_credentials
 setup_cloud "$MODULES_UNDER_TEST"
 run_graalvm_tests "$MODULES_UNDER_TEST"
-exit $RETURN_CODE
 
 
 # Round 4
@@ -90,3 +89,5 @@ tar -xf showcase-*
 sudo apt update -y
 sudo apt install libxml2-utils
 mvn test -Pnative,-showcase -Denforcer.skip=true -ntp -B
+
+exit $RETURN_CODE
