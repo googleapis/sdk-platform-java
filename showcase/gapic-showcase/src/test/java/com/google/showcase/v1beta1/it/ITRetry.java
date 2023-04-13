@@ -21,6 +21,7 @@ import static org.junit.Assert.assertThrows;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.retrying.RetrySettings;
+import com.google.api.gax.retrying.RetryingFuture;
 import com.google.api.gax.rpc.DeadlineExceededException;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.showcase.v1beta1.BlockRequest;
@@ -31,13 +32,23 @@ import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import io.grpc.ManagedChannelBuilder;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.concurrent.ExecutionException;
 import org.junit.Test;
 import org.threeten.bp.Duration;
 
+/**
+ * For this test, we test a combination of various retry situations and try to ensure that the calls
+ * are: - being retried if needed/ not retried if set not to be retried - respecting the timeouts
+ * set by the customer - cancelled when timeouts have exceeded their limits
+ *
+ * <p>Each test attempts to get the number of attempts done in each call. The attemptCount is
+ * incremented by 1 as the first attempt is zero indexed.
+ */
 public class ITRetry {
 
   @Test
-  public void testGRPC_unaryCallableNoRetry() throws IOException {
+  public void testGRPC_unaryCallableNoRetry()
+      throws IOException, ExecutionException, InterruptedException {
     RetrySettings defaultNoRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRpcTimeout(Duration.ofMillis(5000L))
@@ -65,13 +76,19 @@ public class ITRetry {
               .setSuccess(BlockResponse.newBuilder().setContent("gRPCBlockContent_3sDelay_noRetry"))
               .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(3).build())
               .build();
-      BlockResponse blockResponse = grpcClient.block(blockRequest);
+      RetryingFuture<BlockResponse> retryingFuture =
+          (RetryingFuture<BlockResponse>) grpcClient.blockCallable().futureCall(blockRequest);
+      BlockResponse blockResponse = retryingFuture.get();
       assertThat(blockResponse.getContent()).isEqualTo("gRPCBlockContent_3sDelay_noRetry");
+      // We can guarantee that this only runs once
+      int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
+      assertThat(attemptCount).isEqualTo(1);
     }
   }
 
   @Test
-  public void testHttpJson_unaryCallableNoRetry() throws IOException, GeneralSecurityException {
+  public void testHttpJson_unaryCallableNoRetry()
+      throws IOException, GeneralSecurityException, ExecutionException, InterruptedException {
     RetrySettings defaultNoRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRpcTimeout(Duration.ofMillis(5000L))
@@ -102,15 +119,21 @@ public class ITRetry {
                   BlockResponse.newBuilder().setContent("httpjsonBlockContent_3sDelay_noRetry"))
               .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(3).build())
               .build();
-      BlockResponse blockResponse = httpJsonClient.block(blockRequest);
+      RetryingFuture<BlockResponse> retryingFuture =
+          (RetryingFuture<BlockResponse>) httpJsonClient.blockCallable().futureCall(blockRequest);
+      BlockResponse blockResponse = retryingFuture.get();
       assertThat(blockResponse.getContent()).isEqualTo("httpjsonBlockContent_3sDelay_noRetry");
+      // We can guarantee that this only runs once
+      int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
+      assertThat(attemptCount).isEqualTo(1);
     }
   }
 
   // Retry is configured by setting the initial RPC timeout (1.5s) to be less than
   // the RPC delay (2s). The next RPC timeout (3s) will wait long enough for the delay.
   @Test
-  public void testGRPC_unaryCallableRetry() throws IOException {
+  public void testGRPC_unaryCallableRetry()
+      throws IOException, ExecutionException, InterruptedException {
     RetrySettings defaultRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRetryDelay(Duration.ofMillis(200L))
@@ -143,15 +166,21 @@ public class ITRetry {
               .setSuccess(BlockResponse.newBuilder().setContent("gRPCBlockContent_2sDelay_Retry"))
               .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(2).build())
               .build();
-      BlockResponse blockResponse = grpcClient.block(blockRequest);
+      RetryingFuture<BlockResponse> retryingFuture =
+          (RetryingFuture<BlockResponse>) grpcClient.blockCallable().futureCall(blockRequest);
+      BlockResponse blockResponse = retryingFuture.get();
       assertThat(blockResponse.getContent()).isEqualTo("gRPCBlockContent_2sDelay_Retry");
+      // We can guarantee that this only runs once
+      int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
+      assertThat(attemptCount).isEqualTo(2);
     }
   }
 
   // Retry is configured by setting the initial RPC timeout (1.5s) to be less than
   // the RPC delay (2s). The next RPC timeout (3s) will wait long enough for the delay.
   @Test
-  public void testHttpJson_unaryCallableRetry() throws IOException, GeneralSecurityException {
+  public void testHttpJson_unaryCallableRetry()
+      throws IOException, GeneralSecurityException, ExecutionException, InterruptedException {
     RetrySettings defaultRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRetryDelay(Duration.ofMillis(200L))
@@ -187,8 +216,13 @@ public class ITRetry {
                   BlockResponse.newBuilder().setContent("httpjsonBlockContent_2sDelay_Retry"))
               .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(2).build())
               .build();
-      BlockResponse blockResponse = httpJsonClient.block(blockRequest);
+      RetryingFuture<BlockResponse> retryingFuture =
+          (RetryingFuture<BlockResponse>) httpJsonClient.blockCallable().futureCall(blockRequest);
+      BlockResponse blockResponse = retryingFuture.get();
       assertThat(blockResponse.getContent()).isEqualTo("httpjsonBlockContent_2sDelay_Retry");
+      // We can guarantee that this only runs once
+      int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
+      assertThat(attemptCount).isEqualTo(2);
     }
   }
 
@@ -224,9 +258,17 @@ public class ITRetry {
               .setSuccess(BlockResponse.newBuilder().setContent("gRPCBlockContent_6sDelay_noRetry"))
               .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(6).build())
               .build();
-      DeadlineExceededException exception =
-          assertThrows(DeadlineExceededException.class, () -> grpcClient.block(blockRequest));
-      assertThat(exception.getStatusCode().getCode()).isEqualTo(StatusCode.Code.DEADLINE_EXCEEDED);
+      RetryingFuture<BlockResponse> retryingFuture =
+          (RetryingFuture<BlockResponse>) grpcClient.blockCallable().futureCall(blockRequest);
+      ExecutionException exception = assertThrows(ExecutionException.class, retryingFuture::get);
+      assertThat(exception.getCause()).isInstanceOf(DeadlineExceededException.class);
+      DeadlineExceededException deadlineExceededException =
+          (DeadlineExceededException) exception.getCause();
+      assertThat(deadlineExceededException.getStatusCode().getCode())
+          .isEqualTo(StatusCode.Code.DEADLINE_EXCEEDED);
+      // We can guarantee that this only runs once
+      int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
+      assertThat(attemptCount).isEqualTo(1);
     }
   }
 
@@ -266,9 +308,17 @@ public class ITRetry {
                   BlockResponse.newBuilder().setContent("httpjsonBlockContent_6sDelay_noRetry"))
               .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(6).build())
               .build();
-      DeadlineExceededException exception =
-          assertThrows(DeadlineExceededException.class, () -> httpJsonClient.block(blockRequest));
-      assertThat(exception.getStatusCode().getCode()).isEqualTo(StatusCode.Code.DEADLINE_EXCEEDED);
+      RetryingFuture<BlockResponse> retryingFuture =
+          (RetryingFuture<BlockResponse>) httpJsonClient.blockCallable().futureCall(blockRequest);
+      ExecutionException exception = assertThrows(ExecutionException.class, retryingFuture::get);
+      assertThat(exception.getCause()).isInstanceOf(DeadlineExceededException.class);
+      DeadlineExceededException deadlineExceededException =
+          (DeadlineExceededException) exception.getCause();
+      assertThat(deadlineExceededException.getStatusCode().getCode())
+          .isEqualTo(StatusCode.Code.DEADLINE_EXCEEDED);
+      // We can guarantee that this only runs once
+      int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
+      assertThat(attemptCount).isEqualTo(1);
     }
   }
 
@@ -316,9 +366,20 @@ public class ITRetry {
               .setSuccess(BlockResponse.newBuilder().setContent("gRPCBlockContent_3sDelay_Retry"))
               .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(3).build())
               .build();
-      DeadlineExceededException exception =
-          assertThrows(DeadlineExceededException.class, () -> grpcClient.block(blockRequest));
-      assertThat(exception.getStatusCode().getCode()).isEqualTo(StatusCode.Code.DEADLINE_EXCEEDED);
+      RetryingFuture<BlockResponse> retryingFuture =
+          (RetryingFuture<BlockResponse>) grpcClient.blockCallable().futureCall(blockRequest);
+      ExecutionException exception = assertThrows(ExecutionException.class, retryingFuture::get);
+      assertThat(exception.getCause()).isInstanceOf(DeadlineExceededException.class);
+      DeadlineExceededException deadlineExceededException =
+          (DeadlineExceededException) exception.getCause();
+      assertThat(deadlineExceededException.getStatusCode().getCode())
+          .isEqualTo(StatusCode.Code.DEADLINE_EXCEEDED);
+      // Due to jitter, we cannot guarantee the number of attempts.
+      // The RetrySettings should be configured such that there should always
+      // 2 - 4 overall attempts
+      int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
+      assertThat(attemptCount).isGreaterThan(1);
+      assertThat(attemptCount).isLessThan(5);
     }
   }
 
@@ -370,9 +431,78 @@ public class ITRetry {
                   BlockResponse.newBuilder().setContent("httpjsonBlockContent_5sDelay_Retry"))
               .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(3).build())
               .build();
-      DeadlineExceededException exception =
-          assertThrows(DeadlineExceededException.class, () -> httpJsonClient.block(blockRequest));
-      assertThat(exception.getStatusCode().getCode()).isEqualTo(StatusCode.Code.DEADLINE_EXCEEDED);
+      RetryingFuture<BlockResponse> retryingFuture =
+          (RetryingFuture<BlockResponse>) httpJsonClient.blockCallable().futureCall(blockRequest);
+      ExecutionException exception = assertThrows(ExecutionException.class, retryingFuture::get);
+      assertThat(exception.getCause()).isInstanceOf(DeadlineExceededException.class);
+      DeadlineExceededException deadlineExceededException =
+          (DeadlineExceededException) exception.getCause();
+      assertThat(deadlineExceededException.getStatusCode().getCode())
+          .isEqualTo(StatusCode.Code.DEADLINE_EXCEEDED);
+      // Due to jitter, we cannot guarantee the number of attempts.
+      // The RetrySettings should be configured such that there should always
+      // 2 - 4 overall attempts
+      int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
+      assertThat(attemptCount).isGreaterThan(1);
+      assertThat(attemptCount).isLessThan(5);
+    }
+  }
+
+  // The purpose of this test is to ensure that the deadlineScheduleExecutor is able
+  // to properly cancel the HttpRequest for each retry attempt. This test attempts to
+  // make a call every 100ms for 10 seconds.
+  @Test
+  public void testHttpJson_unaryCallableRetry_multipleCancellationsViaDeadlineExecutor()
+      throws IOException, GeneralSecurityException {
+    RetrySettings defaultRetrySettings =
+        RetrySettings.newBuilder()
+            .setInitialRpcTimeout(Duration.ofMillis(100L))
+            .setRpcTimeoutMultiplier(1.0)
+            .setMaxRpcTimeout(Duration.ofMillis(100L))
+            .setTotalTimeout(Duration.ofMillis(10000L))
+            .build();
+    EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
+    // Manually set DEADLINE_EXCEEDED as showcase tests do not have that as a retryable code
+    httpJsonEchoSettingsBuilder
+        .blockSettings()
+        .setRetrySettings(defaultRetrySettings)
+        .setRetryableCodes(StatusCode.Code.DEADLINE_EXCEEDED);
+    EchoSettings httpJsonEchoSettings = EchoSettings.create(httpJsonEchoSettingsBuilder.build());
+    httpJsonEchoSettings =
+        httpJsonEchoSettings
+            .toBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultHttpJsonTransportProviderBuilder()
+                    .setHttpTransport(
+                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
+                    .setEndpoint("http://localhost:7469")
+                    .build())
+            .build();
+    try (EchoClient httpJsonClient = EchoClient.create(httpJsonEchoSettings)) {
+      BlockRequest blockRequest =
+          BlockRequest.newBuilder()
+              .setSuccess(
+                  BlockResponse.newBuilder().setContent("httpjsonBlockContent_110msDelay_Retry"))
+              // Set the timeout to be slightly longer than the RPC timeout
+              .setResponseDelay(
+                      com.google.protobuf.Duration.newBuilder().setSeconds(1).build())
+//                  com.google.protobuf.Duration.newBuilder().setNanos(110000000).build())
+              .build();
+      RetryingFuture<BlockResponse> retryingFuture =
+          (RetryingFuture<BlockResponse>) httpJsonClient.blockCallable().futureCall(blockRequest);
+      ExecutionException exception = assertThrows(ExecutionException.class, retryingFuture::get);
+      assertThat(exception.getCause()).isInstanceOf(DeadlineExceededException.class);
+      DeadlineExceededException deadlineExceededException =
+          (DeadlineExceededException) exception.getCause();
+      assertThat(deadlineExceededException.getStatusCode().getCode())
+          .isEqualTo(StatusCode.Code.DEADLINE_EXCEEDED);
+      // We cannot guarantee the number of attempts. The RetrySettings should be configured
+      // such that there is no delay between the attempts, but the execution takes time
+      // to run. Theoretically this should run exactly 100 times.
+      int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
+      assertThat(attemptCount).isGreaterThan(80);
+      assertThat(attemptCount).isLessThan(100);
     }
   }
 }

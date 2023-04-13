@@ -43,7 +43,6 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Nullable;
@@ -127,14 +126,15 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
       String endpoint,
       HttpJsonCallOptions callOptions,
       HttpTransport httpTransport,
-      Executor executor) {
+      Executor executor,
+      ScheduledExecutorService deadlineCancellationExecutor) {
     this.methodDescriptor = methodDescriptor;
     this.endpoint = endpoint;
     this.callOptions = callOptions;
     this.httpTransport = httpTransport;
     this.executor = executor;
     this.closed = false;
-    this.deadlineCancellationExecutor = Executors.newScheduledThreadPool(1);
+    this.deadlineCancellationExecutor = deadlineCancellationExecutor;
   }
 
   @Override

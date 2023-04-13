@@ -69,6 +69,7 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
   private final ResultListener resultListener;
 
   private volatile boolean cancelled = false;
+  private HttpRequest httpRequest;
 
   HttpRequestRunnable(
       RequestT request,
@@ -95,6 +96,10 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
   //   - response construction.
   void cancel() {
     cancelled = true;
+    if (httpRequest != null) {
+//      httpRequest.disconnect();
+      httpRequest = null;
+    }
   }
 
   @Override
@@ -102,7 +107,6 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
     HttpResponse httpResponse = null;
     RunnableResult.Builder result = RunnableResult.builder();
     HttpJsonMetadata.Builder trailers = HttpJsonMetadata.newBuilder();
-    HttpRequest httpRequest = null;
     try {
       // Check if already cancelled before even creating a request
       if (cancelled) {
