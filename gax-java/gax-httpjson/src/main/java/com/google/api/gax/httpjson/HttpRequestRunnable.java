@@ -97,7 +97,7 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
   void cancel() {
     cancelled = true;
     if (httpRequest != null) {
-//      httpRequest.disconnect();
+      //      httpRequest.disconnect();
       httpRequest = null;
     }
   }
