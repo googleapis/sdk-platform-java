@@ -78,7 +78,7 @@ popd
 pushd showcase
 
 # Start showcase server
-sudo mkdir -p /usr/src/showcase
+mkdir -p /usr/src/showcase
 #sudo chown -R ${USER} /usr/src/
 curl --location https://github.com/googleapis/gapic-showcase/releases/download/v"${SHOWCASE_VERSION}"/gapic-showcase-"${SHOWCASE_VERSION}"-linux-amd64.tar.gz --output /usr/src/showcase/showcase-"${SHOWCASE_VERSION}"-linux-amd64.tar.gz
 cd /usr/src/showcase/
@@ -86,8 +86,8 @@ tar -xf showcase-*
 ./gapic-showcase run
 
 # Run showcase tests with `native` profile
-sudo apt update -y
-sudo apt install libxml2-utils
+apt update -y
+apt install libxml2-utils
 mvn test -Pnative,-showcase -Denforcer.skip=true -ntp -B
 
 exit $RETURN_CODE
