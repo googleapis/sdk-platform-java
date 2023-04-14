@@ -69,7 +69,9 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
   private final ResultListener resultListener;
 
   private volatile boolean cancelled = false;
-  private volatile HttpResponse httpResponse;
+  private volatile boolean connectionEstablished = false;
+  private volatile boolean connectionDisconnected = false;
+  private HttpResponse httpResponse;
 
   HttpRequestRunnable(
       RequestT request,
@@ -96,13 +98,19 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
   //   - response construction.
   void cancel() throws IOException {
     cancelled = true;
-    // Disconnecting the connection is to free up network resources and prevent
-    // resource leaking. Cancellation may occur before connection was established
-    // (though unlikely). The null check is added there to safeguard that as
-    // httpResponse is constructed after connection is established.
-    if (httpResponse != null) {
+    disconnectConnection();
+  }
+
+  // Disconnecting the connection is to free up network resources and prevent
+  // resource leaking.
+  private synchronized void disconnectConnection() throws IOException {
+    // Cancellation may occur before connection was established (though unlikely).
+    // This check is added there to safeguard that as httpResponse is constructed
+    // after connection is established.
+    if (connectionEstablished && !connectionDisconnected) {
       httpResponse.disconnect();
       httpResponse = null;
+      connectionDisconnected = true;
     }
   }
 
@@ -122,9 +130,13 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
       }
 
       httpResponse = httpRequest.execute();
+      connectionEstablished = true;
 
-      // Check if already cancelled before tyring to read and construct the response
+      // Check if already cancelled before trying to read and construct the response
       if (cancelled) {
+        // cancel() may have been called while creating the HttpResponse
+        // but not connection was established. Check again..
+        disconnectConnection();
         return;
       }
       result.setResponseHeaders(
@@ -151,9 +163,15 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
       trailers.setException(e);
     } finally {
       // If cancelled, `close()` in HttpJsonClientCallImpl has already been invoked
-      // and returned a DEADLINE_EXCEEDED error back.
+      // and returned a DEADLINE_EXCEEDED error back so there is no need to set
+      // a result back.
       if (!cancelled) {
         resultListener.setResult(result.setTrailers(trailers.build()).build());
+      }
+      try {
+        disconnectConnection();
+      } catch (IOException e) {
+        // Suppress the IOException from closing the connection
       }
     }
   }

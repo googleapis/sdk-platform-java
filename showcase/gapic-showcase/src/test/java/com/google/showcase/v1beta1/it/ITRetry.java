@@ -442,17 +442,17 @@ public class ITRetry {
 
   // The purpose of this test is to ensure that the deadlineScheduleExecutor is able
   // to properly cancel the HttpRequest for each retry attempt. This test attempts to
-  // make a call every 100ms for 10 seconds. If the runnable blocks until we receive
-  // a response from the server (1s) regardless of it was cancelled, then we would expect
-  // a maximum of 10 attempts.
+  // make a call every 1s for 10 seconds. If the runnable blocks until we receive
+  // a response from the server (2s) regardless of it was cancelled, then we would expect
+  // a maximum of 5 attempts.
   @Test
   public void testHttpJson_unaryCallableRetry_multipleCancellationsViaDeadlineExecutor()
       throws IOException, GeneralSecurityException {
     RetrySettings defaultRetrySettings =
         RetrySettings.newBuilder()
-            .setInitialRpcTimeout(Duration.ofMillis(500L))
+            .setInitialRpcTimeout(Duration.ofMillis(1000L))
             .setRpcTimeoutMultiplier(1.0)
-            .setMaxRpcTimeout(Duration.ofMillis(500L))
+            .setMaxRpcTimeout(Duration.ofMillis(1000L))
             .setTotalTimeout(Duration.ofMillis(10000L))
             .build();
     EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
@@ -477,9 +477,9 @@ public class ITRetry {
       BlockRequest blockRequest =
           BlockRequest.newBuilder()
               .setSuccess(
-                  BlockResponse.newBuilder().setContent("httpjsonBlockContent_1sDelay_Retry"))
+                  BlockResponse.newBuilder().setContent("httpjsonBlockContent_2sDelay_Retry"))
               // Set the timeout to be longer than the RPC timeout
-              .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(1).build())
+              .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(2).build())
               .build();
       RetryingFuture<BlockResponse> retryingFuture =
           (RetryingFuture<BlockResponse>) httpJsonClient.blockCallable().futureCall(blockRequest);
@@ -491,10 +491,10 @@ public class ITRetry {
           .isEqualTo(StatusCode.Code.DEADLINE_EXCEEDED);
       // We cannot guarantee the number of attempts. The RetrySettings should be configured
       // such that there is no delay between the attempts, but the execution takes time
-      // to run. Theoretically this should run exactly 20 times.
+      // to run. Theoretically this should run exactly 10 times.
       int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
-      assertThat(attemptCount).isGreaterThan(10);
-      assertThat(attemptCount).isAtMost(20);
+      assertThat(attemptCount).isGreaterThan(5);
+      assertThat(attemptCount).isAtMost(10);
     }
   }
 }
