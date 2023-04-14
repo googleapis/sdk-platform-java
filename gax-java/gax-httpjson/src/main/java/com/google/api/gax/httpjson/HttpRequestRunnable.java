@@ -69,6 +69,9 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
   private final ResultListener resultListener;
 
   private volatile boolean cancelled = false;
+  private volatile boolean connectionEstablished = false;
+  private volatile boolean connectionDisconnected = false;
+  private HttpResponse httpResponse;
 
   HttpRequestRunnable(
       RequestT request,
@@ -95,11 +98,21 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
   //   - response construction.
   void cancel() throws IOException {
     cancelled = true;
+    disconnectConnection();
+  }
+
+  private synchronized void disconnectConnection() throws IOException {
+    if (connectionEstablished && !connectionDisconnected) {
+      if (httpResponse.getContent() != null) {
+        httpResponse.getContent().close();
+      }
+      httpResponse.disconnect();
+      connectionDisconnected = true;
+    }
   }
 
   @Override
   public void run() {
-    HttpResponse httpResponse = null;
     RunnableResult.Builder result = RunnableResult.builder();
     HttpJsonMetadata.Builder trailers = HttpJsonMetadata.newBuilder();
     try {
@@ -114,10 +127,11 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
       }
 
       httpResponse = httpRequest.execute();
+      connectionEstablished = true;
 
       // Check if already cancelled before trying to read and construct the response
       if (cancelled) {
-        httpResponse.disconnect();
+        disconnectConnection();
         return;
       }
       result.setResponseHeaders(

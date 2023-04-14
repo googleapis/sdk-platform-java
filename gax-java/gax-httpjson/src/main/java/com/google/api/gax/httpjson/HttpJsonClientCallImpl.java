@@ -391,7 +391,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
     boolean allMessagesConsumed;
     Reader responseReader;
     if (methodDescriptor.getType() == MethodType.SERVER_STREAMING) {
-      // Lazily initialize responseStreamIterator in case if it is a server steraming response
+      // Lazily initialize responseStreamIterator in case if it is a server streaming response
       if (responseStreamIterator == null) {
         responseStreamIterator =
             new ProtoMessageJsonStreamIterator(
