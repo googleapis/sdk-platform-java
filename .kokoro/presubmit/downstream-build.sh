@@ -83,7 +83,7 @@ mkdir -p /usr/src/showcase
 curl --location https://github.com/googleapis/gapic-showcase/releases/download/v"${SHOWCASE_VERSION}"/gapic-showcase-"${SHOWCASE_VERSION}"-linux-amd64.tar.gz --output /usr/src/showcase/showcase-"${SHOWCASE_VERSION}"-linux-amd64.tar.gz
 cd /usr/src/showcase/
 tar -xf showcase-*
-./gapic-showcase run
+./gapic-showcase run &
 
 # Run showcase tests with `native` profile
 apt update -y
