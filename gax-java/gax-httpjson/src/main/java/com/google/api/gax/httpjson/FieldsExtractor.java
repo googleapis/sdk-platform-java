@@ -33,6 +33,7 @@ package com.google.api.gax.httpjson;
  * A functional interface to be implemented for each request message to extract specific fields from
  * it. For advanced usage only.
  */
+@FunctionalInterface
 public interface FieldsExtractor<RequestT, ParamsT> {
   ParamsT extract(RequestT request);
 }
