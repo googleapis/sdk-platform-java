@@ -88,9 +88,9 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
       return;
     }
     try {
+      deadlineScheduledExecutorService.shutdown();
       httpTransport.shutdown();
       isTransportShutdown = true;
-      deadlineScheduledExecutorService.shutdown();
     } catch (IOException e) {
       e.printStackTrace();
     }

@@ -322,15 +322,11 @@ public class ITRetry {
     }
   }
 
-  // We should expect that there are three calls (two retry attempts)
+  // Assuming that jitter sets the retry delay to the max possible value:
   // Attempt #  | Milli Start Time  | Milli End Time  | Retry Delay | RPC Timeout
   // 1          | 0                 | 500             | 200         | 500
   // 2 (Retry)  | 700               | 1700            | 400         | 1000
   // 3 (Retry)  | 2100              | 4100            | 500 (cap)   | 1900
-  // Note: Values are an approximation due to system jitter
-  // There isn't a way to properly count the number of attempts. We ensure that retries
-  // occur by setting the responseDelay value (3s) to be longer than the RPC timeout (2s)
-  // and smaller than the totalTimeout (4).
   @Test
   public void testGRPC_unaryCallableRetry_exceedsDefaultTimeout_throwsDeadlineExceededException()
       throws IOException {
@@ -383,15 +379,11 @@ public class ITRetry {
     }
   }
 
-  // We should expect that there are three calls (two retry attempts)
+  // Assuming that jitter sets the retry delay to the max possible value:
   // Attempt #  | Milli Start Time  | Milli End Time  | Retry Delay | RPC Timeout
   // 1          | 0                 | 500             | 200         | 500
   // 2 (Retry)  | 700               | 1700            | 400         | 1000
   // 3 (Retry)  | 2100              | 4100            | 500 (cap)   | 1900
-  // Note: Values are an approximation due to system jitter
-  // There isn't a way to properly count the number of attempts. We ensure that retries
-  // occur by setting the responseDelay value (3s) to be longer than the RPC timeout (2s)
-  // and smaller than the totalTimeout (4).
   @Test
   public void
       testHttpJson_unaryCallableRetry_exceedsDefaultTimeout_throwsDeadlineExceededException()
@@ -450,7 +442,9 @@ public class ITRetry {
 
   // The purpose of this test is to ensure that the deadlineScheduleExecutor is able
   // to properly cancel the HttpRequest for each retry attempt. This test attempts to
-  // make a call every 100ms for 10 seconds.
+  // make a call every 100ms for 10 seconds. If the runnable blocks until we receive
+  // a response from the server (500ms) regardless of it was cancelled, then we would expect
+  // a maximum of 20 attempts.
   @Test
   public void testHttpJson_unaryCallableRetry_multipleCancellationsViaDeadlineExecutor()
       throws IOException, GeneralSecurityException {
@@ -483,11 +477,10 @@ public class ITRetry {
       BlockRequest blockRequest =
           BlockRequest.newBuilder()
               .setSuccess(
-                  BlockResponse.newBuilder().setContent("httpjsonBlockContent_110msDelay_Retry"))
-              // Set the timeout to be slightly longer than the RPC timeout
+                  BlockResponse.newBuilder().setContent("httpjsonBlockContent_500msDelay_Retry"))
+              // Set the timeout to be longer than the RPC timeout
               .setResponseDelay(
-                      com.google.protobuf.Duration.newBuilder().setSeconds(1).build())
-//                  com.google.protobuf.Duration.newBuilder().setNanos(110000000).build())
+                  com.google.protobuf.Duration.newBuilder().setNanos(500000000).build())
               .build();
       RetryingFuture<BlockResponse> retryingFuture =
           (RetryingFuture<BlockResponse>) httpJsonClient.blockCallable().futureCall(blockRequest);

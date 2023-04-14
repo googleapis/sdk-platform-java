@@ -69,7 +69,7 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
   private final ResultListener resultListener;
 
   private volatile boolean cancelled = false;
-  private HttpRequest httpRequest;
+  private volatile HttpResponse httpResponse;
 
   HttpRequestRunnable(
       RequestT request,
@@ -94,17 +94,20 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
   //   - request construction;
   //   - request execution (the most time consuming, taking);
   //   - response construction.
-  void cancel() {
+  void cancel() throws IOException {
     cancelled = true;
-    if (httpRequest != null) {
-      //      httpRequest.disconnect();
-      httpRequest = null;
+    // Disconnecting the connection is to free up network resources and prevent
+    // resource leaking. Cancellation may occur before connection was established
+    // (though unlikely). The null check is added there to safeguard that as
+    // httpResponse is constructed after connection is established.
+    if (httpResponse != null) {
+      httpResponse.disconnect();
+      httpResponse = null;
     }
   }
 
   @Override
   public void run() {
-    HttpResponse httpResponse = null;
     RunnableResult.Builder result = RunnableResult.builder();
     HttpJsonMetadata.Builder trailers = HttpJsonMetadata.newBuilder();
     try {
@@ -112,7 +115,7 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
       if (cancelled) {
         return;
       }
-      httpRequest = createHttpRequest();
+      HttpRequest httpRequest = createHttpRequest();
       // Check if already cancelled before sending the request;
       if (cancelled) {
         return;
@@ -120,9 +123,8 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
 
       httpResponse = httpRequest.execute();
 
-      // Check if already cancelled before sending the request;
+      // Check if already cancelled before tyring to read and construct the response
       if (cancelled) {
-        httpResponse.disconnect();
         return;
       }
       result.setResponseHeaders(
@@ -148,6 +150,8 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
       }
       trailers.setException(e);
     } finally {
+      // If cancelled, `close()` in HttpJsonClientCallImpl has already been invoked
+      // and returned a DEADLINE_EXCEEDED error back.
       if (!cancelled) {
         resultListener.setResult(result.setTrailers(trailers.build()).build());
       }
