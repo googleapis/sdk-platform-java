@@ -34,7 +34,6 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import com.google.common.base.Stopwatch;
 import java.time.Duration;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Blocks the current thread to poll the given assertion until it's successful or the timeout is
