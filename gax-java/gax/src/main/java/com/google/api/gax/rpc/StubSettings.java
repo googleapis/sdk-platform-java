@@ -73,6 +73,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   private final String endpoint;
   private final String mtlsEndpoint;
   private final String quotaProjectId;
+  @Nullable private final String gdchApiAudience;
   @Nullable private final WatchdogProvider streamWatchdogProvider;
   @Nonnull private final Duration streamWatchdogCheckInterval;
   @Nonnull private final ApiTracerFactory tracerFactory;
@@ -103,6 +104,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     this.streamWatchdogCheckInterval = builder.streamWatchdogCheckInterval;
     this.tracerFactory = builder.tracerFactory;
     this.deprecatedExecutorProviderSet = builder.deprecatedExecutorProviderSet;
+    this.gdchApiAudience = builder.gdchApiAudience;
   }
 
   /** @deprecated Please use {@link #getBackgroundExecutorProvider()}. */
@@ -172,6 +174,9 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     return tracerFactory;
   }
 
+  @Nullable
+  public final String getGdchApiAudience() { return gdchApiAudience; }
+
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this)
@@ -188,6 +193,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         .add("streamWatchdogProvider", streamWatchdogProvider)
         .add("streamWatchdogCheckInterval", streamWatchdogCheckInterval)
         .add("tracerFactory", tracerFactory)
+        .add("gdchApiAudience", gdchApiAudience)
         .toString();
   }
 
@@ -205,6 +211,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     private String endpoint;
     private String mtlsEndpoint;
     private String quotaProjectId;
+    @Nullable private String gdchApiAudience;
     @Nullable private WatchdogProvider streamWatchdogProvider;
     @Nonnull private Duration streamWatchdogCheckInterval;
     @Nonnull private ApiTracerFactory tracerFactory;
@@ -234,6 +241,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       this.streamWatchdogCheckInterval = settings.streamWatchdogCheckInterval;
       this.tracerFactory = settings.tracerFactory;
       this.deprecatedExecutorProviderSet = settings.deprecatedExecutorProviderSet;
+      this.gdchApiAudience = settings.gdchApiAudience;
     }
 
     /** Get Quota Project ID from Client Context * */
@@ -268,6 +276,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.streamWatchdogCheckInterval = Duration.ofSeconds(10);
         this.tracerFactory = BaseApiTracerFactory.getInstance();
         this.deprecatedExecutorProviderSet = false;
+        this.gdchApiAudience = null;
       } else {
         ExecutorProvider fixedExecutorProvider =
             FixedExecutorProvider.create(clientContext.getExecutor());
@@ -289,6 +298,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.streamWatchdogCheckInterval = clientContext.getStreamWatchdogCheckInterval();
         this.tracerFactory = clientContext.getTracerFactory();
         this.quotaProjectId = getQuotaProjectIdFromClientContext(clientContext);
+        this.gdchApiAudience = clientContext.getGdchApiAudience();
       }
     }
 
@@ -435,6 +445,11 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       return self();
     }
 
+    public B setGdchApiAudience(String gdchApiAudience) {
+      this.gdchApiAudience = gdchApiAudience;
+      return self();
+    }
+
     /**
      * Configures the {@link ApiTracerFactory} that will be used to generate traces.
      *
@@ -513,6 +528,8 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       return tracerFactory;
     }
 
+    public String getGdchApiAudience() { return gdchApiAudience; }
+
     /** Applies the given settings updater function to the given method settings builders. */
     protected static void applyToAllUnaryMethods(
         Iterable<UnaryCallSettings.Builder<?, ?>> methodSettingsBuilders,
@@ -540,6 +557,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
           .add("streamWatchdogProvider", streamWatchdogProvider)
           .add("streamWatchdogCheckInterval", streamWatchdogCheckInterval)
           .add("tracerFactory", tracerFactory)
+          .add("gdchApiAudience", gdchApiAudience)
           .toString();
     }
   }

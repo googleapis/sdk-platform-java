@@ -40,11 +40,13 @@ import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.api.gax.tracing.BaseApiTracerFactory;
 import com.google.auth.Credentials;
+import com.google.auth.oauth2.GdchCredentials;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 import java.io.IOException;
+import java.net.URI;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -109,6 +111,9 @@ public abstract class ClientContext {
   @Nonnull
   public abstract ApiTracerFactory getTracerFactory();
 
+  @Nullable
+  public abstract String getGdchApiAudience();
+
   public static Builder newBuilder() {
     return new AutoValue_ClientContext.Builder()
         .setBackgroundResources(Collections.<BackgroundResource>emptyList())
@@ -119,7 +124,8 @@ public abstract class ClientContext {
         .setStreamWatchdog(null)
         .setStreamWatchdogCheckInterval(Duration.ZERO)
         .setTracerFactory(BaseApiTracerFactory.getInstance())
-        .setQuotaProjectId(null);
+        .setQuotaProjectId(null)
+        .setCredentialsApiAudience(null);
   }
 
   public abstract Builder toBuilder();
@@ -166,6 +172,22 @@ public abstract class ClientContext {
     final ScheduledExecutorService backgroundExecutor = backgroundExecutorProvider.getExecutor();
 
     Credentials credentials = settings.getCredentialsProvider().getCredentials();
+
+    String gdhcApiAudience = settings.getGdchApiAudience();
+    if (gdhcApiAudience != null && credentials instanceof GdchCredentials) {
+      URI gdchAudienceUri;
+      try {
+        gdchAudienceUri = URI.create(gdhcApiAudience);
+      } catch (IllegalArgumentException ex) { // thrown when passing a malformed uri string
+        throw new IllegalArgumentException("The GDC-H API audience string is not a valid URI", ex);
+      }
+      credentials = GdchCredentials
+              .newBuilder()
+              .setGdchAudience(gdchAudienceUri)
+              .build();
+    } else if (gdhcApiAudience != null) {
+      throw new IllegalArgumentException("GDC-H API audience can only be set when using GdchCredentials");
+    }
 
     if (settings.getQuotaProjectId() != null) {
       // If the quotaProjectId is set, wrap original credentials with correct quotaProjectId as
@@ -324,6 +346,8 @@ public abstract class ClientContext {
      */
     @BetaApi("The surface for tracing is not stable yet and may change in the future.")
     public abstract Builder setTracerFactory(ApiTracerFactory tracerFactory);
+
+    public abstract Builder setCredentialsApiAudience(String credentialsApiAudience);
 
     public abstract ClientContext build();
   }
