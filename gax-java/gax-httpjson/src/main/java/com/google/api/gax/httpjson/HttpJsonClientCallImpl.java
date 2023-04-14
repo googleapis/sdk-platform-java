@@ -198,8 +198,8 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
           new HttpJsonStatusRuntimeException(
               StatusCode.Code.DEADLINE_EXCEEDED.getHttpStatusCode(), "Deadline exceeded", null),
           true);
+      notifyListeners();
     }
-    notifyListeners();
   }
 
   @Override

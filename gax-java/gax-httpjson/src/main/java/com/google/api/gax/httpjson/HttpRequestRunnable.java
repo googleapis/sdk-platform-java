@@ -118,7 +118,6 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
       // Check if already cancelled before trying to read and construct the response
       if (cancelled) {
         httpResponse.disconnect();
-        httpResponse = null;
         return;
       }
       result.setResponseHeaders(
@@ -149,13 +148,6 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
       // a result back.
       if (!cancelled) {
         resultListener.setResult(result.setTrailers(trailers.build()).build());
-      }
-      try {
-        if (httpResponse != null) {
-          httpResponse.disconnect();
-        }
-      } catch (IOException e) {
-        // Suppress the IOException from disconnecting the connection
       }
     }
   }
