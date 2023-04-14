@@ -218,3 +218,14 @@ jobs:
             -P enable-integration-tests \
             --batch-mode \
             --no-transfer-progress
+  gapic-generator-java-bom:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install maven modules
+      run: |
+        mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+    - name: Validate gapic-generator-java-bom
+      # Replace bom-canary-project with main once the pull request is marged
+      uses: googleapis/java-cloud-bom/tests/validate-bom@bom-canary-project
+      with:
+        bom-path: gapic-generator-java-bom/pom.xml
