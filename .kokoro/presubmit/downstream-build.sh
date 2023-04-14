@@ -86,8 +86,8 @@ tar -xf showcase-*
 ./gapic-showcase run &
 
 # Run showcase tests with `native` profile
-apt update -y
-apt install libxml2-utils
+#apt-get update -y
+#apt-get install libxml2-utils
 mvn test -Pnative,-showcase -Denforcer.skip=true -ntp -B
 
 exit $RETURN_CODE
