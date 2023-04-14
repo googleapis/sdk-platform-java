@@ -118,6 +118,7 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
       // Check if already cancelled before trying to read and construct the response
       if (cancelled) {
         httpResponse.disconnect();
+        httpResponse = null;
         return;
       }
       result.setResponseHeaders(
