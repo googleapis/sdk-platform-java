@@ -187,7 +187,9 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
 
   // No need to trigger the deliver() loop again as we have already closed the runnable
   // task and added the OnCloseNotificationTask. We notify the FutureListener that the
-  // there is a timeout exception from this RPC call (DEADLINE_EXCEEDED)
+  // there is a timeout exception from this RPC call (DEADLINE_EXCEEDED). For retrying
+  // RPCs, this code is returned for every attempt that exceeds the timeout. The
+  // RetryAlgorithm will check both the timing and code to ensure another attempt is made.
   private void closeAndNotifyListeners() {
     synchronized (lock) {
       close(
