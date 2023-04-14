@@ -60,6 +60,7 @@ public class ITCrud {
 
   @After
   public void cleanup() {
+    grpcClient.close();
     httpJsonClient.close();
   }
 
