@@ -39,11 +39,20 @@ import org.junit.Test;
 
 public class AssertByPollingTest {
 
-  @Test(expected = AssertionError.class)
-  public void testFailsWhenTimeoutExceeded() throws InterruptedException {
-    assertByPollingEvery(1, TimeUnit.MILLISECONDS)
-        .withTimeout(2, TimeUnit.NANOSECONDS)
-        .thatEventually(Assert::fail);
+  @Test
+  public void testFailsWhenTimeoutExceeded() {
+    AssertionError error =
+        Assert.assertThrows(
+            AssertionError.class,
+            () ->
+                assertByPollingEvery(1, TimeUnit.MILLISECONDS)
+                    .withTimeout(2, TimeUnit.NANOSECONDS)
+                    .thatEventually(() -> Truth.assertThat(1).isAtLeast(2)));
+
+    Throwable cause = error.getCause();
+    Truth.assertThat(cause).isInstanceOf(AssertionError.class);
+    // Error provides original assertion failure that never came true.
+    Truth.assertThat(cause.getMessage()).contains("expected to be at least");
   }
 
   @Test
