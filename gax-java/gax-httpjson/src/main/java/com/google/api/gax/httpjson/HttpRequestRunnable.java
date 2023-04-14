@@ -96,18 +96,21 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
   //   - request construction;
   //   - request execution (the most time consuming, taking);
   //   - response construction.
-  void cancel() throws IOException {
+  void cancel() {
     cancelled = true;
-    disconnectConnection();
+    disconnect();
   }
 
-  private synchronized void disconnectConnection() throws IOException {
-    if (connectionEstablished && !connectionDisconnected) {
-      if (httpResponse.getContent() != null) {
-        httpResponse.getContent().close();
+  private synchronized void disconnect() {
+    if (connectionEstablished) {
+      try {
+        if (!connectionDisconnected) {
+          httpResponse.disconnect();
+          connectionDisconnected = true;
+        }
+      } catch (IOException e) {
+        // Suppress IO exception when disconnecting connection
       }
-      httpResponse.disconnect();
-      connectionDisconnected = true;
     }
   }
 
@@ -125,13 +128,12 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
       if (cancelled) {
         return;
       }
-
       httpResponse = httpRequest.execute();
       connectionEstablished = true;
 
-      // Check if already cancelled before trying to read and construct the response
+      // Check if already cancelled before trying to construct and read the response
       if (cancelled) {
-        disconnectConnection();
+        disconnect();
         return;
       }
       result.setResponseHeaders(
