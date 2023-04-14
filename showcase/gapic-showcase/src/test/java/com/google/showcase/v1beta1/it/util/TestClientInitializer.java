@@ -52,18 +52,6 @@ public class TestClientInitializer {
     return EchoClient.create(httpJsonEchoSettings);
   }
 
-  public static IdentityClient createGrpcIdentityClient() throws Exception {
-    IdentitySettings grpcIdentitySettings =
-        IdentitySettings.newHttpJsonBuilder()
-            .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTransportChannelProvider(
-                IdentitySettings.defaultGrpcTransportProviderBuilder()
-                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
-                    .build())
-            .build();
-    return IdentityClient.create(grpcIdentitySettings);
-  }
-
   public static IdentityClient createHttpJsonIdentityClient() throws Exception {
     IdentitySettings httpjsonIdentitySettings =
         IdentitySettings.newHttpJsonBuilder()

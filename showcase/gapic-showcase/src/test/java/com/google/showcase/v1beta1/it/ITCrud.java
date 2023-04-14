@@ -33,6 +33,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+// This test does is for HttpJson. gRPC Identity Client is not created for this test.
 public class ITCrud {
 
   private static final User DEFAULT_USER =
@@ -44,13 +45,10 @@ public class ITCrud {
           .setAge(25)
           .build();
 
-  private IdentityClient grpcClient;
   private IdentityClient httpJsonClient;
 
   @Before
   public void setup() throws Exception {
-    // Create gRPC IdentityClient
-    grpcClient = TestClientInitializer.createGrpcIdentityClient();
     // Create HttpJson IdentityClient
     httpJsonClient = TestClientInitializer.createHttpJsonIdentityClient();
 
