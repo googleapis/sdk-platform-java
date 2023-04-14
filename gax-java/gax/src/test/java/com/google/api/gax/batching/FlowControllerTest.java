@@ -29,7 +29,7 @@
  */
 package com.google.api.gax.batching;
 
-import static com.google.api.gax.batching.AssertByPolling.assertByPollingEvery;
+import static com.google.api.gax.batching.AssertByPolling.assertByPolling;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -42,6 +42,7 @@ import com.google.api.gax.batching.FlowController.FlowControlException;
 import com.google.api.gax.batching.FlowController.LimitExceededBehavior;
 import com.google.common.util.concurrent.SettableFuture;
 import java.lang.Thread.State;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -607,9 +608,7 @@ public class FlowControllerTest {
     t.start();
 
     // wait for thread to start, and check it should be blocked
-    assertByPollingEvery(10, TimeUnit.MILLISECONDS)
-        .withTimeout(200, TimeUnit.MILLISECONDS)
-        .thatEventually(() -> assertEquals(State.WAITING, t.getState()));
+    assertByPolling(Duration.ofMillis(200), () -> assertEquals(State.WAITING, t.getState()));
 
     // increase and decrease should not be blocked
     int increase = 5, decrease = 20;
@@ -653,9 +652,7 @@ public class FlowControllerTest {
     t.start();
 
     // wait for thread to start, and check it should be blocked
-    assertByPollingEvery(10, TimeUnit.MILLISECONDS)
-        .withTimeout(200, TimeUnit.MILLISECONDS)
-        .thatEventually(() -> assertEquals(State.WAITING, t.getState()));
+    assertByPolling(Duration.ofMillis(200), () -> assertEquals(State.WAITING, t.getState()));
 
     // increase and decrease should not be blocked
     int increase = 5, decrease = 20;
