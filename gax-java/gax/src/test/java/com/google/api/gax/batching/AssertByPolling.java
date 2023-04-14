@@ -36,13 +36,11 @@ import java.time.Duration;
 import java.util.Objects;
 
 /**
- * Blocks the current thread to poll the given assertion until it's successful or the timeout is
- * exceeded. Expected usage:
+ * Blocks the current thread to poll the given assertion every 10ms until it's successful or the
+ * timeout is exceeded. Expected usage:
  *
  * <pre>{@code
- * assertByPollingEvery(10, MILLISECONDS)
- *     .withTimeout(2, SECONDS)
- *     .thatEventually(() -> assertThat(...));
+ * assertByPolling(Duration.ofSeconds(2), () -> assertThat(...));
  * }</pre>
  */
 public class AssertByPolling {
