@@ -119,7 +119,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
   private ProtoMessageJsonStreamIterator responseStreamIterator;
 
   @GuardedBy("lock")
-  private boolean closed;
+  private volatile boolean closed;
 
   private volatile boolean deadlineExceeded = false;
 
@@ -193,7 +193,6 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
   // RetryAlgorithm will check both the timing and code to ensure another attempt is made.
   private void closeAndNotifyListeners() {
     deadlineExceeded = true;
-    // Take the lock and try to override any new notifications (responses)
     synchronized (lock) {
       close(
           StatusCode.Code.DEADLINE_EXCEEDED.getHttpStatusCode(),
@@ -351,7 +350,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
               inDelivery = false;
               break;
             } else {
-              // We still have some stuff in notiticationTasksQueue so continue the loop, most
+              // We still have some stuff in notificationTasksQueue so continue the loop, most
               // likely we will finally terminate on the next cycle.
               continue;
             }
