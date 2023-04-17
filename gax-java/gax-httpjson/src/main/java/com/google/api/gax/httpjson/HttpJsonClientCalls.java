@@ -148,7 +148,7 @@ class HttpJsonClientCalls {
         // in the trailer indicates an error in the request
         future.setException(trailers.getException());
       } else {
-        // Message has been received
+        // Message has been received and there is no exception
         future.set(message);
       }
     }

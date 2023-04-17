@@ -121,7 +121,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
   @GuardedBy("lock")
   private boolean closed;
 
-  private volatile boolean timeExceeded = false;
+  private volatile boolean deadlineExceeded = false;
 
   HttpJsonClientCallImpl(
       ApiMethodDescriptor<RequestT, ResponseT> methodDescriptor,
@@ -192,7 +192,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
   // RPCs, this code is returned for every attempt that exceeds the timeout. The
   // RetryAlgorithm will check both the timing and code to ensure another attempt is made.
   private void closeAndNotifyListeners() {
-    timeExceeded = true;
+    deadlineExceeded = true;
     // Take the lock and try to override any new notifications (responses)
     synchronized (lock) {
       close(
@@ -302,7 +302,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
           throw new InterruptedException("Message delivery has been interrupted");
         }
 
-        if (timeExceeded) {
+        if (deadlineExceeded) {
           return;
         }
         // All listeners must be called under delivery loop (but outside the lock) to ensure that
@@ -314,7 +314,10 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
         // The synchronized block around message reading and cancellation notification processing
         // logic
         synchronized (lock) {
-          if (allMessagesConsumed && !timeExceeded) {
+          if (deadlineExceeded) {
+            return;
+          }
+          if (allMessagesConsumed) {
             // allMessagesProcessed was set to true on previous loop iteration. We do it this
             // way to make sure that notifyListeners() is called in between consuming the last
             // message in a stream and closing the call.
@@ -445,12 +448,12 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
         requestRunnable = null;
       }
 
-      HttpJsonMetadata.Builder meatadaBuilder = HttpJsonMetadata.newBuilder();
+      HttpJsonMetadata.Builder metadataBuilder = HttpJsonMetadata.newBuilder();
       if (runnableResult != null && runnableResult.getTrailers() != null) {
-        meatadaBuilder = runnableResult.getTrailers().toBuilder();
+        metadataBuilder = runnableResult.getTrailers().toBuilder();
       }
-      meatadaBuilder.setException(cause);
-      meatadaBuilder.setStatusMessage(message);
+      metadataBuilder.setException(cause);
+      metadataBuilder.setStatusMessage(message);
       if (responseStreamIterator != null) {
         responseStreamIterator.close();
       }
@@ -469,7 +472,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
       }
 
       pendingNotifications.offer(
-          new OnCloseNotificationTask<>(listener, statusCode, meatadaBuilder.build()));
+          new OnCloseNotificationTask<>(listener, statusCode, metadataBuilder.build()));
 
     } catch (Throwable e) {
       // suppress stream closing exceptions in favor of the actual call closing cause. This method
