@@ -121,7 +121,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
   @GuardedBy("lock")
   private volatile boolean closed;
 
-  private volatile boolean deadlineExceeded = false;
+  private volatile boolean deadlineExceeded;
 
   HttpJsonClientCallImpl(
       ApiMethodDescriptor<RequestT, ResponseT> methodDescriptor,
@@ -136,6 +136,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
     this.httpTransport = httpTransport;
     this.executor = executor;
     this.closed = false;
+    this.deadlineExceeded = false;
     this.deadlineCancellationExecutor = deadlineCancellationExecutor;
   }
 
@@ -432,7 +433,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
 
   @GuardedBy("lock")
   private void close(
-      int statusCode, String message, Throwable cause, boolean terminateImmediatelly) {
+      int statusCode, String message, Throwable cause, boolean terminateImmediately) {
     try {
       if (closed) {
         return;
@@ -463,7 +464,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
       // onClose() suppresses all other pending notifications.
       // there should be no place in the code which inserts something in this queue before checking
       // the `closed` flag under the lock and refusing to insert anything if `closed == true`.
-      if (terminateImmediatelly) {
+      if (terminateImmediately) {
         // This usually means we are cancelling the call before processing the response in full.
         // It may happen if a user explicitly cancels the call or in response to an unexpected
         // exception either from server or a call listener execution.
