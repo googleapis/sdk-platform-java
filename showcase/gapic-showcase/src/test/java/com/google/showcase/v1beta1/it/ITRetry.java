@@ -35,7 +35,6 @@ import java.security.GeneralSecurityException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-
 import org.junit.Test;
 import org.threeten.bp.Duration;
 
@@ -51,7 +50,7 @@ public class ITRetry {
 
   @Test
   public void testGRPC_unaryCallableNoRetry()
-          throws IOException, ExecutionException, InterruptedException, TimeoutException {
+      throws IOException, ExecutionException, InterruptedException, TimeoutException {
     RetrySettings defaultNoRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRpcTimeout(Duration.ofMillis(5000L))
@@ -91,7 +90,8 @@ public class ITRetry {
 
   @Test
   public void testHttpJson_unaryCallableNoRetry()
-          throws IOException, GeneralSecurityException, ExecutionException, InterruptedException, TimeoutException {
+      throws IOException, GeneralSecurityException, ExecutionException, InterruptedException,
+          TimeoutException {
     RetrySettings defaultNoRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRpcTimeout(Duration.ofMillis(5000L))
@@ -136,7 +136,7 @@ public class ITRetry {
   // the RPC delay (2s). The next RPC timeout (3s) will wait long enough for the delay.
   @Test
   public void testGRPC_unaryCallableRetry()
-          throws IOException, ExecutionException, InterruptedException, TimeoutException {
+      throws IOException, ExecutionException, InterruptedException, TimeoutException {
     RetrySettings defaultRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRetryDelay(Duration.ofMillis(200L))
@@ -183,7 +183,8 @@ public class ITRetry {
   // the RPC delay (2s). The next RPC timeout (3s) will wait long enough for the delay.
   @Test
   public void testHttpJson_unaryCallableRetry()
-          throws IOException, GeneralSecurityException, ExecutionException, InterruptedException, TimeoutException {
+      throws IOException, GeneralSecurityException, ExecutionException, InterruptedException,
+          TimeoutException {
     RetrySettings defaultRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRetryDelay(Duration.ofMillis(200L))
@@ -263,7 +264,8 @@ public class ITRetry {
               .build();
       RetryingFuture<BlockResponse> retryingFuture =
           (RetryingFuture<BlockResponse>) grpcClient.blockCallable().futureCall(blockRequest);
-      ExecutionException exception = assertThrows(ExecutionException.class, () -> retryingFuture.get(10, TimeUnit.SECONDS));
+      ExecutionException exception =
+          assertThrows(ExecutionException.class, () -> retryingFuture.get(10, TimeUnit.SECONDS));
       assertThat(exception.getCause()).isInstanceOf(DeadlineExceededException.class);
       DeadlineExceededException deadlineExceededException =
           (DeadlineExceededException) exception.getCause();
@@ -313,7 +315,8 @@ public class ITRetry {
               .build();
       RetryingFuture<BlockResponse> retryingFuture =
           (RetryingFuture<BlockResponse>) httpJsonClient.blockCallable().futureCall(blockRequest);
-      ExecutionException exception = assertThrows(ExecutionException.class, () -> retryingFuture.get(10, TimeUnit.SECONDS));
+      ExecutionException exception =
+          assertThrows(ExecutionException.class, () -> retryingFuture.get(10, TimeUnit.SECONDS));
       assertThat(exception.getCause()).isInstanceOf(DeadlineExceededException.class);
       DeadlineExceededException deadlineExceededException =
           (DeadlineExceededException) exception.getCause();
@@ -367,7 +370,8 @@ public class ITRetry {
               .build();
       RetryingFuture<BlockResponse> retryingFuture =
           (RetryingFuture<BlockResponse>) grpcClient.blockCallable().futureCall(blockRequest);
-      ExecutionException exception = assertThrows(ExecutionException.class, () -> retryingFuture.get(10, TimeUnit.SECONDS));
+      ExecutionException exception =
+          assertThrows(ExecutionException.class, () -> retryingFuture.get(10, TimeUnit.SECONDS));
       assertThat(exception.getCause()).isInstanceOf(DeadlineExceededException.class);
       DeadlineExceededException deadlineExceededException =
           (DeadlineExceededException) exception.getCause();
@@ -428,7 +432,8 @@ public class ITRetry {
               .build();
       RetryingFuture<BlockResponse> retryingFuture =
           (RetryingFuture<BlockResponse>) httpJsonClient.blockCallable().futureCall(blockRequest);
-      ExecutionException exception = assertThrows(ExecutionException.class, () -> retryingFuture.get(10, TimeUnit.SECONDS));
+      ExecutionException exception =
+          assertThrows(ExecutionException.class, () -> retryingFuture.get(10, TimeUnit.SECONDS));
       assertThat(exception.getCause()).isInstanceOf(DeadlineExceededException.class);
       DeadlineExceededException deadlineExceededException =
           (DeadlineExceededException) exception.getCause();
@@ -487,7 +492,8 @@ public class ITRetry {
               .build();
       RetryingFuture<BlockResponse> retryingFuture =
           (RetryingFuture<BlockResponse>) httpJsonClient.blockCallable().futureCall(blockRequest);
-      ExecutionException exception = assertThrows(ExecutionException.class, () -> retryingFuture.get(10, TimeUnit.SECONDS));
+      ExecutionException exception =
+          assertThrows(ExecutionException.class, () -> retryingFuture.get(10, TimeUnit.SECONDS));
       assertThat(exception.getCause()).isInstanceOf(DeadlineExceededException.class);
       DeadlineExceededException deadlineExceededException =
           (DeadlineExceededException) exception.getCause();
