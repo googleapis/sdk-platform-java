@@ -231,7 +231,6 @@ jobs:
       run: |
         mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
     - name: Validate gapic-generator-java-bom
-      # Replace bom-canary-project with main once the pull request is merged
-      uses: googleapis/java-cloud-bom/tests/validate-bom@bom-canary-project
+      uses: googleapis/java-cloud-bom/tests/validate-bom@main
       with:
         bom-path: gapic-generator-java-bom/pom.xml
