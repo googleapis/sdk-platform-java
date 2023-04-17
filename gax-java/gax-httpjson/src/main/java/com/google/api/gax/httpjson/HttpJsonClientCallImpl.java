@@ -183,7 +183,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
         timeoutNanos = timeout.toNanos();
       }
       this.deadlineCancellationExecutor.schedule(
-          this::closeAndDeliver, timeoutNanos, TimeUnit.NANOSECONDS);
+          this::closeAndNotifyListeners, timeoutNanos, TimeUnit.NANOSECONDS);
     }
   }
 
@@ -191,7 +191,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
   // there is a timeout exception from this RPC call (DEADLINE_EXCEEDED). For retrying
   // RPCs, this code is returned for every attempt that exceeds the timeout. The
   // RetryAlgorithm will check both the timing and code to ensure another attempt is made.
-  private void closeAndDeliver() {
+  private void closeAndNotifyListeners() {
     timeExceeded = true;
     // Take the lock and try to override any new notifications (responses)
     synchronized (lock) {
@@ -201,9 +201,8 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
           new HttpJsonStatusRuntimeException(
               StatusCode.Code.DEADLINE_EXCEEDED.getHttpStatusCode(), "Deadline exceeded", null),
           true);
-      inDelivery = false;
-      deliver();
     }
+    notifyListeners();
   }
 
   @Override
@@ -303,13 +302,14 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
           throw new InterruptedException("Message delivery has been interrupted");
         }
 
-        if (!timeExceeded) {
-          // All listeners must be called under delivery loop (but outside the lock) to ensure that
-          // no two notifications come simultaneously from two different threads and that we do not
-          // go indefinitely deep in the stack if delivery logic is called recursively via
-          // listeners.
-          notifyListeners();
+        if (timeExceeded) {
+          return;
         }
+        // All listeners must be called under delivery loop (but outside the lock) to ensure that
+        // no two notifications come simultaneously from two different threads and that we do not
+        // go indefinitely deep in the stack if delivery logic is called recursively via
+        // listeners.
+        notifyListeners();
 
         // The synchronized block around message reading and cancellation notification processing
         // logic
