@@ -134,7 +134,6 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
     this.httpTransport = httpTransport;
     this.executor = executor;
     this.closed = false;
-    this.deadlineExceeded = false;
     this.deadlineCancellationExecutor = deadlineCancellationExecutor;
   }
 
