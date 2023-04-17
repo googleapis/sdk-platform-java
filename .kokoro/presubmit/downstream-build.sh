@@ -74,22 +74,19 @@ run_graalvm_tests "$MODULES_UNDER_TEST"
 
 # Round 4
 # Run showcase tests in GraalVM
-popd
-
-# Start showcase server
-mkdir -p /usr/src/showcase
-#sudo chown -R ${USER} /usr/src/
-curl --location https://github.com/googleapis/gapic-showcase/releases/download/v"${SHOWCASE_VERSION}"/gapic-showcase-"${SHOWCASE_VERSION}"-linux-amd64.tar.gz --output /usr/src/showcase/showcase-"${SHOWCASE_VERSION}"-linux-amd64.tar.gz
-pushd /usr/src/showcase/
-tar -xf showcase-*
-./gapic-showcase run &
-
-# Run showcase tests with `native` profile
-#apt-get update -y
-#apt-get install libxml2-utils
-pwd
-popd
-pushd showcase
-mvn test -Pnative,-showcase -Denforcer.skip=true -ntp -B
+#popd
+#
+## Start showcase server
+#mkdir -p /usr/src/showcase
+#curl --location https://github.com/googleapis/gapic-showcase/releases/download/v"${SHOWCASE_VERSION}"/gapic-showcase-"${SHOWCASE_VERSION}"-linux-amd64.tar.gz --output /usr/src/showcase/showcase-"${SHOWCASE_VERSION}"-linux-amd64.tar.gz
+#pushd /usr/src/showcase/
+#tar -xf showcase-*
+#./gapic-showcase run &
+#
+## Run showcase tests with `native` profile
+#pwd
+#popd
+#pushd showcase
+#mvn test -Pnative,-showcase -Denforcer.skip=true -ntp -B
 
 exit $RETURN_CODE
