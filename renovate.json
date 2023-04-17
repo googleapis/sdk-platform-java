@@ -28,8 +28,8 @@
       "datasourceTemplate": "maven"
     },
     {
-      "fileMatch": ["^\\.github/workflows/.*\\.yaml$"],
-      "matchStrings": ["SHOWCASE_VERSION: (?<currentValue>.+?)\\n"],
+      "fileMatch": ["^\\.kokoro/presubmit/.*\\.sh"],
+      "matchStrings": ["SHOWCASE_VERSION=(?<currentValue>.+?)\\n"],
       "datasourceTemplate": "go"
     },
     {
