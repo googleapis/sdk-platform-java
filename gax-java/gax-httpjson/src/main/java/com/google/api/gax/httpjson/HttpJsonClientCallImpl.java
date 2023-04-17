@@ -303,10 +303,12 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
           throw new InterruptedException("Message delivery has been interrupted");
         }
 
-        // All listeners must be called under delivery loop (but outside the lock) to ensure that no
-        // two notifications come simultaneously from two different threads and that we do not go
-        // indefinitely deep in the stack if delivery logic is called recursively via listeners.
-        notifyListeners();
+        if (!timeExceeded) {
+          // All listeners must be called under delivery loop (but outside the lock) to ensure that no
+          // two notifications come simultaneously from two different threads and that we do not go
+          // indefinitely deep in the stack if delivery logic is called recursively via listeners.
+          notifyListeners();
+        }
 
         // The synchronized block around message reading and cancellation notification processing
         // logic
