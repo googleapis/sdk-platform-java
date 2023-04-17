@@ -487,8 +487,7 @@ public class ITRetry {
               .setSuccess(
                   BlockResponse.newBuilder().setContent("httpjsonBlockContent_1sDelay_Retry"))
               // Set the timeout to be longer than the RPC timeout
-              .setResponseDelay(
-                  com.google.protobuf.Duration.newBuilder().setSeconds(1).build())
+              .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(1).build())
               .build();
       RetryingFuture<BlockResponse> retryingFuture =
           (RetryingFuture<BlockResponse>) httpJsonClient.blockCallable().futureCall(blockRequest);
