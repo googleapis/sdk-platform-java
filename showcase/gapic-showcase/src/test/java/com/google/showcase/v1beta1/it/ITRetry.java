@@ -442,18 +442,18 @@ public class ITRetry {
 
   // The purpose of this test is to ensure that the deadlineScheduleExecutor is able
   // to properly cancel the HttpRequest for each retry attempt. This test attempts to
-  // make a call every 1s for 6 seconds. If the requestRunnable blocks until we receive
-  // a response from the server (3s) regardless of it was cancelled, then we would expect
-  // a maximum of 2 attempts.
+  // make a call every 1s for 10 seconds. If the requestRunnable blocks until we receive
+  // a response from the server (150ms) regardless of it was cancelled, then we would expect
+  // a maximum of 5 attempts.
   @Test
   public void testHttpJson_unaryCallableRetry_multipleCancellationsViaDeadlineExecutor()
       throws IOException, GeneralSecurityException {
     RetrySettings defaultRetrySettings =
         RetrySettings.newBuilder()
-            .setInitialRpcTimeout(Duration.ofMillis(1000L))
+            .setInitialRpcTimeout(Duration.ofMillis(100L))
             .setRpcTimeoutMultiplier(1.0)
-            .setMaxRpcTimeout(Duration.ofMillis(1000L))
-            .setTotalTimeout(Duration.ofMillis(6000L))
+            .setMaxRpcTimeout(Duration.ofMillis(100L))
+            .setTotalTimeout(Duration.ofMillis(1000L))
             .build();
     EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
     // Manually set DEADLINE_EXCEEDED as showcase tests do not have that as a retryable code
@@ -477,9 +477,9 @@ public class ITRetry {
       BlockRequest blockRequest =
           BlockRequest.newBuilder()
               .setSuccess(
-                  BlockResponse.newBuilder().setContent("httpjsonBlockContent_3sDelay_Retry"))
+                  BlockResponse.newBuilder().setContent("httpjsonBlockContent_150msDelay_Retry"))
               // Set the timeout to be longer than the RPC timeout
-              .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(3).build())
+              .setResponseDelay(com.google.protobuf.Duration.newBuilder().setNanos(200000000).build())
               .build();
       RetryingFuture<BlockResponse> retryingFuture =
           (RetryingFuture<BlockResponse>) httpJsonClient.blockCallable().futureCall(blockRequest);
@@ -493,8 +493,8 @@ public class ITRetry {
       // such that there is no delay between the attempts, but the execution takes time
       // to run. Theoretically this should run exactly 10 times.
       int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
-      assertThat(attemptCount).isGreaterThan(2);
-      assertThat(attemptCount).isAtMost(6);
+      assertThat(attemptCount).isGreaterThan(5);
+      assertThat(attemptCount).isAtMost(10);
     }
   }
 }
