@@ -304,9 +304,10 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
         }
 
         if (!timeExceeded) {
-          // All listeners must be called under delivery loop (but outside the lock) to ensure that no
-          // two notifications come simultaneously from two different threads and that we do not go
-          // indefinitely deep in the stack if delivery logic is called recursively via listeners.
+          // All listeners must be called under delivery loop (but outside the lock) to ensure that
+          // no two notifications come simultaneously from two different threads and that we do not
+          // go indefinitely deep in the stack if delivery logic is called recursively via
+          // listeners.
           notifyListeners();
         }
 
