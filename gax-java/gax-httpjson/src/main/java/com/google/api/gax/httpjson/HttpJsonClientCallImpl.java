@@ -121,6 +121,8 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
   @GuardedBy("lock")
   private boolean closed;
 
+  private volatile boolean timeExceeded = false;
+
   HttpJsonClientCallImpl(
       ApiMethodDescriptor<RequestT, ResponseT> methodDescriptor,
       String endpoint,
@@ -190,6 +192,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
   // RPCs, this code is returned for every attempt that exceeds the timeout. The
   // RetryAlgorithm will check both the timing and code to ensure another attempt is made.
   private void closeAndDeliver() {
+    timeExceeded = true;
     // Take the lock and try to override any new notifications (responses)
     synchronized (lock) {
       close(
@@ -198,7 +201,6 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
           new HttpJsonStatusRuntimeException(
               StatusCode.Code.DEADLINE_EXCEEDED.getHttpStatusCode(), "Deadline exceeded", null),
           true);
-      // Set this new deliver() loop with the DEADLINE_EXCEEDED as the latest
       inDelivery = false;
       deliver();
     }
@@ -309,7 +311,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
         // The synchronized block around message reading and cancellation notification processing
         // logic
         synchronized (lock) {
-          if (allMessagesConsumed) {
+          if (allMessagesConsumed && !timeExceeded) {
             // allMessagesProcessed was set to true on previous loop iteration. We do it this
             // way to make sure that notifyListeners() is called in between consuming the last
             // message in a stream and closing the call.
