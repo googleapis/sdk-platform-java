@@ -136,7 +136,7 @@ class HttpJsonClientCalls {
 
     @Override
     public void onClose(int statusCode, HttpJsonMetadata trailers) {
-      if (trailers == null || trailers.getException() == null) {
+      if (!isMessageReceived && (trailers == null || trailers.getException() == null)) {
         future.setException(
             new HttpJsonStatusRuntimeException(
                 statusCode,
@@ -144,8 +144,11 @@ class HttpJsonClientCalls {
                 new NullPointerException(
                     "Both response message and response exception were null")));
       } else if (trailers.getException() != null) {
+        // Does not matter if a message has been received or not. An exception
+        // in the trailer indicates an error in the request
         future.setException(trailers.getException());
       } else {
+        // Message has been received
         future.set(message);
       }
     }
