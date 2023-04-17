@@ -180,26 +180,27 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
       if (!timeout.isNegative()) {
         timeoutNanos = timeout.toNanos();
       }
-      this.deadlineCancellationExecutor.schedule(this::timeout, timeoutNanos, TimeUnit.NANOSECONDS);
+      this.deadlineCancellationExecutor.schedule(
+          () -> {
+            // We notify the FutureListener that the
+            // there is a timeout exception from this RPC call (DEADLINE_EXCEEDED). For retrying
+            // RPCs, this code is returned for every attempt that exceeds the timeout. The
+            // RetryAlgorithm will check both the timing and code to ensure another attempt is made.
+            synchronized (lock) {
+              close(
+                  StatusCode.Code.DEADLINE_EXCEEDED.getHttpStatusCode(),
+                  "Deadline exceeded",
+                  new HttpJsonStatusRuntimeException(
+                      StatusCode.Code.DEADLINE_EXCEEDED.getHttpStatusCode(),
+                      "Deadline exceeded",
+                      null),
+                  true);
+            }
+            notifyListeners();
+          },
+          timeoutNanos,
+          TimeUnit.NANOSECONDS);
     }
-  }
-
-  // We notify the FutureListener that the
-  // there is a timeout exception from this RPC call (DEADLINE_EXCEEDED). For retrying
-  // RPCs, this code is returned for every attempt that exceeds the timeout. The
-  // RetryAlgorithm will check both the timing and code to ensure another attempt is made.
-  private void timeout() {
-    synchronized (lock) {
-      close(
-          StatusCode.Code.DEADLINE_EXCEEDED.getHttpStatusCode(),
-          "Deadline exceeded",
-          new HttpJsonStatusRuntimeException(
-              StatusCode.Code.DEADLINE_EXCEEDED.getHttpStatusCode(), "Deadline exceeded", null),
-          true);
-    }
-
-    // trigger delivery loop if not already running
-    deliver();
   }
 
   @Override

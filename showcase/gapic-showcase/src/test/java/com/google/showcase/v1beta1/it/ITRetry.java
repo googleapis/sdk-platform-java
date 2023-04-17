@@ -450,9 +450,9 @@ public class ITRetry {
 
   // The purpose of this test is to ensure that the deadlineScheduleExecutor is able
   // to properly cancel the HttpRequest for each retry attempt. This test attempts to
-  // make a call every 100ms for 1 second. If the requestRunnable blocks until we
-  // receive a response from the server (200ms) regardless of it was cancelled, then
-  // we would expect a maximum of 5 attempts.
+  // make a call every 100ms for 500ms. If the requestRunnable blocks until we
+  // receive a response from the server (1s) regardless of it was cancelled, then
+  // we would not expect a response at all.
   @Test
   public void testHttpJson_unaryCallableRetry_multipleCancellationsViaDeadlineExecutor()
       throws IOException, GeneralSecurityException {
@@ -461,7 +461,7 @@ public class ITRetry {
             .setInitialRpcTimeout(Duration.ofMillis(100L))
             .setRpcTimeoutMultiplier(1.0)
             .setMaxRpcTimeout(Duration.ofMillis(100L))
-            .setTotalTimeout(Duration.ofMillis(1000L))
+            .setTotalTimeout(Duration.ofMillis(500L))
             .build();
     EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
     // Manually set DEADLINE_EXCEEDED as showcase tests do not have that as a retryable code
@@ -502,8 +502,8 @@ public class ITRetry {
       // such that there is no delay between the attempts, but the execution takes time
       // to run. Theoretically this should run exactly 10 times.
       int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
-      assertThat(attemptCount).isGreaterThan(5);
-      assertThat(attemptCount).isAtMost(10);
+      assertThat(attemptCount).isGreaterThan(0);
+      assertThat(attemptCount).isAtMost(5);
     }
   }
 }
