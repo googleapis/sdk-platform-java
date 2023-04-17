@@ -442,9 +442,9 @@ public class ITRetry {
 
   // The purpose of this test is to ensure that the deadlineScheduleExecutor is able
   // to properly cancel the HttpRequest for each retry attempt. This test attempts to
-  // make a call every 1s for 10 seconds. If the requestRunnable blocks until we receive
-  // a response from the server (150ms) regardless of it was cancelled, then we would expect
-  // a maximum of 5 attempts.
+  // make a call every 100ms for 1 second. If the requestRunnable blocks until we
+  // receive a response from the server (200ms) regardless of it was cancelled, then
+  // we would expect a maximum of 5 attempts.
   @Test
   public void testHttpJson_unaryCallableRetry_multipleCancellationsViaDeadlineExecutor()
       throws IOException, GeneralSecurityException {
@@ -477,7 +477,7 @@ public class ITRetry {
       BlockRequest blockRequest =
           BlockRequest.newBuilder()
               .setSuccess(
-                  BlockResponse.newBuilder().setContent("httpjsonBlockContent_150msDelay_Retry"))
+                  BlockResponse.newBuilder().setContent("httpjsonBlockContent_200msDelay_Retry"))
               // Set the timeout to be longer than the RPC timeout
               .setResponseDelay(
                   com.google.protobuf.Duration.newBuilder().setNanos(200000000).build())

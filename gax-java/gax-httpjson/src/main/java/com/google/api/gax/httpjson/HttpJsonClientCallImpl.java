@@ -181,16 +181,16 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
         timeoutNanos = timeout.toNanos();
       }
       this.deadlineCancellationExecutor.schedule(
-          this::closeAndNotifyListeners, timeoutNanos, TimeUnit.NANOSECONDS);
+          this::closeAndDeliver, timeoutNanos, TimeUnit.NANOSECONDS);
     }
   }
 
-  // No need to trigger the deliver() loop again as we have already closed the runnable
-  // task and added the OnCloseNotificationTask. We notify the FutureListener that the
+  // We notify the FutureListener that the
   // there is a timeout exception from this RPC call (DEADLINE_EXCEEDED). For retrying
   // RPCs, this code is returned for every attempt that exceeds the timeout. The
   // RetryAlgorithm will check both the timing and code to ensure another attempt is made.
-  private void closeAndNotifyListeners() {
+  private void closeAndDeliver() {
+    // Take the lock and try to override any new notifications (responses)
     synchronized (lock) {
       close(
           StatusCode.Code.DEADLINE_EXCEEDED.getHttpStatusCode(),
@@ -198,7 +198,9 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
           new HttpJsonStatusRuntimeException(
               StatusCode.Code.DEADLINE_EXCEEDED.getHttpStatusCode(), "Deadline exceeded", null),
           true);
-      notifyListeners();
+      // Set this new deliver() loop with the DEADLINE_EXCEEDED as the latest
+      inDelivery = false;
+      deliver();
     }
   }
 
