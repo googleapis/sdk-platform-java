@@ -111,11 +111,6 @@
         <artifactId>grpc-google-iam-v2beta</artifactId>
         <version>1.11.1-SNAPSHOT</version><!-- {x-version-update:grpc-google-iam-v2beta:current} -->
       </dependency>
-      <dependency>
-        <groupId>foocom.google.api.grpc</groupId>
-        <artifactId>grpc-google-iam-v2beta</artifactId>
-        <version>1.11.1-SNAPSHOT</version><!-- {x-version-update:grpc-google-iam-v2beta:current} -->
-      </dependency>
     </dependencies>
 
   </dependencyManagement>
