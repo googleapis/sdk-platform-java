@@ -32,6 +32,7 @@ package com.google.api.gax.httpjson;
 import com.google.api.core.AbstractApiFuture;
 import com.google.api.core.ApiFuture;
 import com.google.api.gax.rpc.ApiCallContext;
+import com.google.common.base.Preconditions;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -136,22 +137,18 @@ class HttpJsonClientCalls {
 
     @Override
     public void onClose(int statusCode, HttpJsonMetadata trailers) {
-      if (!isMessageReceived && (trailers == null || trailers.getException() == null)) {
-        // Exceptional case where there is no message received and no exception raised
-        // from the response
+      Preconditions.checkNotNull(trailers);
+      if (trailers.getException() != null) {
+        future.setException(trailers.getException());
+      } else if (isMessageReceived) {
+        future.set(message);
+      } else {
         future.setException(
             new HttpJsonStatusRuntimeException(
                 statusCode,
                 "Exception during a client call closure",
                 new NullPointerException(
                     "Both response message and response exception were null")));
-      } else if (trailers.getException() != null) {
-        // Does not matter if a message has been received or not. An exception
-        // in the trailer indicates an error in the request
-        future.setException(trailers.getException());
-      } else {
-        // Message has been received and there is no exception
-        future.set(message);
       }
     }
   }
