@@ -121,8 +121,6 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
   @GuardedBy("lock")
   private volatile boolean closed;
 
-  private volatile boolean deadlineExceeded;
-
   HttpJsonClientCallImpl(
       ApiMethodDescriptor<RequestT, ResponseT> methodDescriptor,
       String endpoint,
@@ -183,8 +181,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
       if (!timeout.isNegative()) {
         timeoutNanos = timeout.toNanos();
       }
-      this.deadlineCancellationExecutor.schedule(
-          this::closeAndNotifyListeners, timeoutNanos, TimeUnit.NANOSECONDS);
+      this.deadlineCancellationExecutor.schedule(this::timeout, timeoutNanos, TimeUnit.NANOSECONDS);
     }
   }
 
@@ -192,7 +189,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
   // there is a timeout exception from this RPC call (DEADLINE_EXCEEDED). For retrying
   // RPCs, this code is returned for every attempt that exceeds the timeout. The
   // RetryAlgorithm will check both the timing and code to ensure another attempt is made.
-  private void closeAndNotifyListeners() {
+  private void timeout() {
     deadlineExceeded = true;
     synchronized (lock) {
       close(
@@ -202,7 +199,9 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
               StatusCode.Code.DEADLINE_EXCEEDED.getHttpStatusCode(), "Deadline exceeded", null),
           true);
     }
-    notifyListeners();
+
+    // trigger delivery loop if not already running
+    deliver();
   }
 
   @Override
@@ -302,9 +301,6 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
           throw new InterruptedException("Message delivery has been interrupted");
         }
 
-        if (deadlineExceeded) {
-          return;
-        }
         // All listeners must be called under delivery loop (but outside the lock) to ensure that
         // no two notifications come simultaneously from two different threads and that we do not
         // go indefinitely deep in the stack if delivery logic is called recursively via
@@ -314,9 +310,6 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
         // The synchronized block around message reading and cancellation notification processing
         // logic
         synchronized (lock) {
-          if (deadlineExceeded) {
-            return;
-          }
           if (allMessagesConsumed) {
             // allMessagesProcessed was set to true on previous loop iteration. We do it this
             // way to make sure that notifyListeners() is called in between consuming the last
