@@ -136,17 +136,15 @@ class HttpJsonClientCalls {
 
     @Override
     public void onClose(int statusCode, HttpJsonMetadata trailers) {
-      if (!isMessageReceived) {
-        if (trailers == null || trailers.getException() == null) {
-          future.setException(
-              new HttpJsonStatusRuntimeException(
-                  statusCode,
-                  "Exception during a client call closure",
-                  new NullPointerException(
-                      "Both response message and response exception were null")));
-        } else {
-          future.setException(trailers.getException());
-        }
+      if (trailers == null || trailers.getException() == null) {
+        future.setException(
+            new HttpJsonStatusRuntimeException(
+                statusCode,
+                "Exception during a client call closure",
+                new NullPointerException(
+                    "Both response message and response exception were null")));
+      } else if (trailers.getException() != null) {
+        future.setException(trailers.getException());
       } else {
         future.set(message);
       }
