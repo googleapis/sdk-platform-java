@@ -189,7 +189,6 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
   // RPCs, this code is returned for every attempt that exceeds the timeout. The
   // RetryAlgorithm will check both the timing and code to ensure another attempt is made.
   private void timeout() {
-    deadlineExceeded = true;
     synchronized (lock) {
       close(
           StatusCode.Code.DEADLINE_EXCEEDED.getHttpStatusCode(),
