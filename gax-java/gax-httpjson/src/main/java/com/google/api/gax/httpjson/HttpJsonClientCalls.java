@@ -137,6 +137,8 @@ class HttpJsonClientCalls {
     @Override
     public void onClose(int statusCode, HttpJsonMetadata trailers) {
       if (!isMessageReceived && (trailers == null || trailers.getException() == null)) {
+        // Exception case where there is no message received and no exception raised
+        // from the response.
         future.setException(
             new HttpJsonStatusRuntimeException(
                 statusCode,
