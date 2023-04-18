@@ -19,8 +19,6 @@ package com.google.showcase.v1beta1.it;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.rpc.CancelledException;
 import com.google.api.gax.rpc.ServerStream;
 import com.google.api.gax.rpc.StatusCode;
@@ -28,13 +26,11 @@ import com.google.common.collect.ImmutableList;
 import com.google.rpc.Status;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoResponse;
-import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.ExpandRequest;
-import io.grpc.ManagedChannelBuilder;
-import java.io.IOException;
-import java.security.GeneralSecurityException;
+import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.stream.Collectors;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -46,29 +42,11 @@ public class ITServerSideStreaming {
   private EchoClient httpjsonClient;
 
   @Before
-  public void createClients() throws IOException, GeneralSecurityException {
+  public void createClients() throws Exception {
     // Create gRPC Echo Client
-    EchoSettings grpcEchoSettings =
-        EchoSettings.newBuilder()
-            .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTransportChannelProvider(
-                EchoSettings.defaultGrpcTransportProviderBuilder()
-                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
-                    .build())
-            .build();
-    grpcClient = EchoClient.create(grpcEchoSettings);
+    grpcClient = TestClientInitializer.createGrpcEchoClient();
     // Create Http JSON Echo Client
-    EchoSettings httpJsonEchoSettings =
-        EchoSettings.newHttpJsonBuilder()
-            .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTransportChannelProvider(
-                EchoSettings.defaultHttpJsonTransportProviderBuilder()
-                    .setHttpTransport(
-                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
-                    .setEndpoint("http://localhost:7469")
-                    .build())
-            .build();
-    httpjsonClient = EchoClient.create(httpJsonEchoSettings);
+    httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
   }
 
   @After
@@ -88,6 +66,18 @@ public class ITServerSideStreaming {
     }
 
     assertThat(responses)
+        .containsExactlyElementsIn(
+            ImmutableList.of(
+                "The", "rain", "in", "Spain", "stays", "mainly", "on", "the", "plain!"))
+        .inOrder();
+  }
+
+  @Test
+  public void testGrpc_receiveStreamedContentStreamAPI() {
+    String content = "The rain in Spain stays mainly on the plain!";
+    ServerStream<EchoResponse> responseStream =
+        grpcClient.expandCallable().call(ExpandRequest.newBuilder().setContent(content).build());
+    assertThat(responseStream.stream().map(EchoResponse::getContent).collect(Collectors.toList()))
         .containsExactlyElementsIn(
             ImmutableList.of(
                 "The", "rain", "in", "Spain", "stays", "mainly", "on", "the", "plain!"))

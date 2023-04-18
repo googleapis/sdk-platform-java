@@ -107,7 +107,7 @@
         <artifactId>fmt-maven-plugin</artifactId>
         <version>2.9</version>
         <configuration>
-          <filesNamePattern>(IT.*\.java)|(.*Test.java)</filesNamePattern>
+          <filesNamePattern>(IT.*\.java)|(.*Test.java)|(TestClientInitializer.java)</filesNamePattern>
         </configuration>
       </plugin>
       <plugin>

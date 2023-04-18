@@ -134,6 +134,54 @@ public class PagingTest {
   }
 
   @Test
+  public void streamValues_streamIsCorrectPerPage() {
+    ArgumentCaptor<Integer> requestCapture = ArgumentCaptor.forClass(Integer.class);
+    Mockito.when(callIntList.futureCall(requestCapture.capture(), Mockito.any()))
+        .thenReturn(ApiFutures.immediateFuture(Arrays.asList(0, 1, 2)))
+        .thenReturn(ApiFutures.immediateFuture(Arrays.asList(3, 4)))
+        .thenReturn(ApiFutures.immediateFuture(Collections.emptyList()));
+
+    Page<Integer> page =
+        FakeCallableFactory.createPagedCallable(
+                callIntList,
+                PagedCallSettings.newBuilder(new ListIntegersPagedResponseFactory()).build(),
+                clientContext)
+            .call(0)
+            .getPage();
+
+    Truth.assertThat(page.streamValues().count()).isEqualTo(3);
+    Truth.assertThat(page.hasNextPage()).isTrue();
+
+    page = page.getNextPage();
+    Truth.assertThat(page.streamValues().count()).isEqualTo(2);
+    Truth.assertThat(page.hasNextPage()).isTrue();
+
+    page = page.getNextPage();
+    Truth.assertThat(page.streamValues().count()).isEqualTo(0);
+    Truth.assertThat(page.hasNextPage()).isFalse();
+    Truth.assertThat(page.getNextPage()).isNull();
+  }
+
+  @Test
+  public void streamAll_streamIsCorrectInAllPages() {
+    ArgumentCaptor<Integer> requestCapture = ArgumentCaptor.forClass(Integer.class);
+    Mockito.when(callIntList.futureCall(requestCapture.capture(), Mockito.any()))
+        .thenReturn(ApiFutures.immediateFuture(Arrays.asList(0, 1, 2)))
+        .thenReturn(ApiFutures.immediateFuture(Arrays.asList(3, 4)))
+        .thenReturn(ApiFutures.immediateFuture(Collections.emptyList()));
+
+    Page<Integer> page =
+        FakeCallableFactory.createPagedCallable(
+                callIntList,
+                PagedCallSettings.newBuilder(new ListIntegersPagedResponseFactory()).build(),
+                clientContext)
+            .call(0)
+            .getPage();
+
+    Truth.assertThat(page.streamAll().count()).isEqualTo(5);
+  }
+
+  @Test
   public void pagedByFixedSizeCollection() {
     ArgumentCaptor<Integer> requestCapture = ArgumentCaptor.forClass(Integer.class);
     Mockito.when(callIntList.futureCall(requestCapture.capture(), (ApiCallContext) Mockito.any()))

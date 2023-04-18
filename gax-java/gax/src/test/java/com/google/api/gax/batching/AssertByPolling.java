@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -27,13 +27,40 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.google.api.gax.httpjson;
+package com.google.api.gax.batching;
+
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
+
+import com.google.common.base.Stopwatch;
+import java.time.Duration;
+import java.util.Objects;
 
 /**
- * A functional interface to be implemented for each request message to extract specific fields from
- * it. For advanced usage only.
+ * Blocks the current thread to poll the given assertion every 10ms until it's successful or the
+ * timeout is exceeded. Expected usage:
+ *
+ * <pre>{@code
+ * assertByPolling(Duration.ofSeconds(2), () -> assertThat(...));
+ * }</pre>
  */
-@FunctionalInterface
-public interface FieldsExtractor<RequestT, ParamsT> {
-  ParamsT extract(RequestT request);
+public class AssertByPolling {
+
+  public static void assertByPolling(Duration timeout, Runnable assertion)
+      throws InterruptedException {
+    Objects.requireNonNull(timeout, "Timeout must not be null");
+    Stopwatch stopwatch = Stopwatch.createStarted();
+    while (true) {
+      try {
+        assertion.run();
+        return; // Success
+
+      } catch (AssertionError err) {
+        if (stopwatch.elapsed(MILLISECONDS) < timeout.toMillis()) {
+          MILLISECONDS.sleep(10);
+        } else {
+          throw new AssertionError("Timeout waiting for successful assertion.", err);
+        }
+      }
+    }
+  }
 }

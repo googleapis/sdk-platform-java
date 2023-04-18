@@ -20,7 +20,6 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
 import com.google.api.core.SettableApiFuture;
-import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.rpc.ApiStreamObserver;
 import com.google.api.gax.rpc.CancelledException;
 import com.google.api.gax.rpc.StatusCode;
@@ -28,9 +27,7 @@ import com.google.rpc.Status;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
-import com.google.showcase.v1beta1.EchoSettings;
-import io.grpc.ManagedChannelBuilder;
-import java.io.IOException;
+import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -43,17 +40,9 @@ public class ITClientSideStreaming {
   private EchoClient grpcClient;
 
   @Before
-  public void createClients() throws IOException {
+  public void createClients() throws Exception {
     // Create gRPC Echo Client
-    EchoSettings grpcEchoSettings =
-        EchoSettings.newBuilder()
-            .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTransportChannelProvider(
-                EchoSettings.defaultGrpcTransportProviderBuilder()
-                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
-                    .build())
-            .build();
-    grpcClient = EchoClient.create(grpcEchoSettings);
+    grpcClient = TestClientInitializer.createGrpcEchoClient();
   }
 
   @After
