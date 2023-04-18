@@ -180,27 +180,29 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
       if (!timeout.isNegative()) {
         timeoutNanos = timeout.toNanos();
       }
-      this.deadlineCancellationExecutor.schedule(
-          () -> {
-            // We notify the FutureListener that the
-            // there is a timeout exception from this RPC call (DEADLINE_EXCEEDED). For retrying
-            // RPCs, this code is returned for every attempt that exceeds the timeout. The
-            // RetryAlgorithm will check both the timing and code to ensure another attempt is made.
-            synchronized (lock) {
-              close(
-                  StatusCode.Code.DEADLINE_EXCEEDED.getHttpStatusCode(),
-                  "Deadline exceeded",
-                  new HttpJsonStatusRuntimeException(
-                      StatusCode.Code.DEADLINE_EXCEEDED.getHttpStatusCode(),
-                      "Deadline exceeded",
-                      null),
-                  true);
-            }
-            notifyListeners();
-          },
-          timeoutNanos,
-          TimeUnit.NANOSECONDS);
+      this.deadlineCancellationExecutor.schedule(this::timeout, timeoutNanos, TimeUnit.NANOSECONDS);
     }
+  }
+
+  // No need to trigger the deliver() loop again as we have already closed the runnable
+  // task and added the OnCloseNotificationTask. We notify the FutureListener that the
+  // there is a timeout exception from this RPC call (DEADLINE_EXCEEDED). For retrying
+  // RPCs, this code is returned for every attempt that exceeds the timeout. The
+  // RetryAlgorithm will check both the timing and code to ensure another attempt is made.
+  private void timeout() {
+    // There is a race between the deadline scheduler and response being returned from
+    // the server. The deadline scheduler has priority as it will clear out the pending
+    // notifications queue and add the DEADLINE_EXCEEDED event once it is able to obtain
+    // the lock.
+    synchronized (lock) {
+      close(
+          StatusCode.Code.DEADLINE_EXCEEDED.getHttpStatusCode(),
+          "Deadline exceeded",
+          new HttpJsonStatusRuntimeException(
+              StatusCode.Code.DEADLINE_EXCEEDED.getHttpStatusCode(), "Deadline exceeded", null),
+          true);
+    }
+    notifyListeners();
   }
 
   @Override
