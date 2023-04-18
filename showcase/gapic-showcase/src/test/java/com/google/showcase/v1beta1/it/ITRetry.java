@@ -504,6 +504,9 @@ public class ITRetry {
       int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
       assertThat(attemptCount).isGreaterThan(0);
       assertThat(attemptCount).isAtMost(5);
+      Thread.sleep(10000);
+    } catch (InterruptedException e) {
+      throw new RuntimeException(e);
     }
   }
 }

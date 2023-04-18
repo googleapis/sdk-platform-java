@@ -178,6 +178,7 @@ jobs:
   showcase:
     runs-on: ubuntu-22.04
     strategy:
+      max-parallel: 1
       matrix:
         java: [ 11, 17 ]
     steps:
