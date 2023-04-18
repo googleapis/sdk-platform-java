@@ -483,30 +483,27 @@ public class ITRetry {
             .build();
     try (EchoClient httpJsonClient = EchoClient.create(httpJsonEchoSettings)) {
       BlockRequest blockRequest =
-          BlockRequest.newBuilder()
-              .setSuccess(
-                  BlockResponse.newBuilder().setContent("httpjsonBlockContent_5sDelay_Retry"))
-              // Set the timeout to be longer than the RPC timeout
-              .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(5).build())
-              .build();
+              BlockRequest.newBuilder()
+                      .setSuccess(
+                              BlockResponse.newBuilder().setContent("httpjsonBlockContent_5sDelay_Retry"))
+                      // Set the timeout to be longer than the RPC timeout
+                      .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(5).build())
+                      .build();
       RetryingFuture<BlockResponse> retryingFuture =
-          (RetryingFuture<BlockResponse>) httpJsonClient.blockCallable().futureCall(blockRequest);
+              (RetryingFuture<BlockResponse>) httpJsonClient.blockCallable().futureCall(blockRequest);
       ExecutionException exception =
-          assertThrows(ExecutionException.class, () -> retryingFuture.get(10, TimeUnit.SECONDS));
+              assertThrows(ExecutionException.class, () -> retryingFuture.get(10, TimeUnit.SECONDS));
       assertThat(exception.getCause()).isInstanceOf(DeadlineExceededException.class);
       DeadlineExceededException deadlineExceededException =
-          (DeadlineExceededException) exception.getCause();
+              (DeadlineExceededException) exception.getCause();
       assertThat(deadlineExceededException.getStatusCode().getCode())
-          .isEqualTo(StatusCode.Code.DEADLINE_EXCEEDED);
+              .isEqualTo(StatusCode.Code.DEADLINE_EXCEEDED);
       // We cannot guarantee the number of attempts. The RetrySettings should be configured
       // such that there is no delay between the attempts, but the execution takes time
       // to run. Theoretically this should run exactly 10 times.
       int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
       assertThat(attemptCount).isGreaterThan(0);
       assertThat(attemptCount).isAtMost(5);
-      Thread.sleep(10000);
-    } catch (InterruptedException e) {
-      throw new RuntimeException(e);
     }
   }
 }
