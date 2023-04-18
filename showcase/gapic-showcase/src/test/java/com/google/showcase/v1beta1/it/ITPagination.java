@@ -82,7 +82,8 @@ public class ITPagination {
     int numPages = 0;
     for (EchoClient.PagedExpandPage page : pagedExpandPagedResponse.iteratePages()) {
       for (EchoResponse echoResponse : page.getValues()) {
-        assertThat(echoResponse.getContent()).isEqualTo(expected[numResponses]);
+        // Add pageToken as offset to the expected array to start indexing at the pageToken
+        assertThat(echoResponse.getContent()).isEqualTo(expected[numResponses + pageToken]);
         numResponses++;
       }
       numPages++;
