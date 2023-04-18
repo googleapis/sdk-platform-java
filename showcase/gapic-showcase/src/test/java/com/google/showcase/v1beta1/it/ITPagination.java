@@ -9,7 +9,6 @@ import com.google.showcase.v1beta1.ExpandRequest;
 import com.google.showcase.v1beta1.PagedExpandRequest;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import org.junit.After;
 import org.junit.Before;
@@ -55,16 +54,15 @@ public class ITPagination {
     assertThat(response).isEqualTo(content);
   }
 
-  /*
-  This tests that pagination returns the correct number of pages + responses and the content is
-  correct. It tests pagination from ServerSideStreaming.
-
-  The pageToken is where the streaming responses come back from and the page size denotes
-  how many of the responses come back together. i.e for PageSize = 2 and PageToken = 1, see below:
-          | A | Series  | Of  | Words | That  | Will  | Be  | Send  | Back  | One | By  | One
-  Page #  | X | 1       | 1   | 2     | 2     | 3     | 3   | 4     | 4     | 5   | 5   | 6
-  Token # | 0 | 1       | 2   | 3     | 4     | 5     | 6   | 7     | 8     | 9   | 10  | 11
-  */
+  // This tests that pagination returns the correct number of pages + responses and the content is
+  // correct. It tests pagination from ServerSideStreaming.
+  //
+  // The pageToken is where the streaming responses come back from and the page size denotes
+  // how many of the responses come back together. i.e for PageSize = 2 and PageToken = 1, see
+  // below:
+  //         | A | Series  | Of  | Words | That  | Will  | Be  | Sent  | Back  | One | By  | One
+  // Page #  | X | 1       | 1   | 2     | 2     | 3     | 3   | 4     | 4     | 5   | 5   | 6
+  // Token # | 0 | 1       | 2   | 3     | 4     | 5     | 6   | 7     | 8     | 9   | 10  | 11
   @Test
   public void testPagedExpandWithTokenHttpJson() {
     int pageSize = 2;
@@ -79,8 +77,7 @@ public class ITPagination {
                 .setPageSize(pageSize)
                 .setPageToken(String.valueOf(pageToken))
                 .build());
-    String[] words = content.split(" ");
-    String[] expected = Arrays.copyOfRange(words, pageToken, words.length);
+    String[] expected = content.split(" ");
     int numResponses = 0;
     int numPages = 0;
     for (EchoClient.PagedExpandPage page : pagedExpandPagedResponse.iteratePages()) {
