@@ -45,7 +45,7 @@ import org.threeten.bp.Duration;
 public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext {
 
   private final RetrySettings globalSettings;
-  protected final ApiClock clock;
+  private final ApiClock clock;
 
   /**
    * Creates a new exponential retry algorithm instance.

@@ -173,8 +173,8 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
     // Only schedule the deadline if the RPC timeout has been set in the RetrySettings
     Duration timeout = callOptions.getTimeout();
     if (timeout != null) {
-      // If the future timeout amount is guaranteed to not be a negative value.
-      // The RetryAlgorithm checks that the timeout is not negative.
+      // The future timeout value is guaranteed to not be a negative value as the
+      // RetryAlgorithm will not retry
       long timeoutNanos = timeout.toNanos();
       this.deadlineCancellationExecutor.schedule(this::timeout, timeoutNanos, TimeUnit.NANOSECONDS);
     }

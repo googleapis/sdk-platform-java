@@ -138,11 +138,22 @@ class HttpJsonClientCalls {
     @Override
     public void onClose(int statusCode, HttpJsonMetadata trailers) {
       Preconditions.checkNotNull(trailers);
+      // onClose() in invoked via HttpJsonClientCallImpl's close() method and
+      // the trailer exceptions are set via parameters in there.
+      //
+      // A successful response will have a null exception in the trailers.
+      // The trailer's exception CAN be a DEADLINE_EXCEEDED exception set
+      // from the deadlineScheduler and we must return it as an exception.
+      //
+      // Note: An exception has the highest priority. We must respect the timeout
+      // value set in the RetrySettings even if the message barely misses the
+      // cutoff time.
       if (trailers.getException() != null) {
         future.setException(trailers.getException());
       } else if (isMessageReceived) {
         future.set(message);
       } else {
+        // Exceptional case: No message received and no error in the trailers
         future.setException(
             new HttpJsonStatusRuntimeException(
                 statusCode,
