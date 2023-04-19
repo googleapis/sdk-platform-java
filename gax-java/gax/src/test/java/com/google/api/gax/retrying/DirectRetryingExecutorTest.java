@@ -30,11 +30,9 @@
 package com.google.api.gax.retrying;
 
 import com.google.api.core.CurrentMillisClock;
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
-@Ignore
 @RunWith(MockitoJUnitRunner.class)
 public class DirectRetryingExecutorTest extends AbstractRetryingExecutorTest {
 

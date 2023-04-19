@@ -34,12 +34,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-@Ignore
 @SuppressWarnings({"unchecked", "deprecation"})
 @RunWith(JUnit4.class)
 public class RetryAlgorithmTest {
