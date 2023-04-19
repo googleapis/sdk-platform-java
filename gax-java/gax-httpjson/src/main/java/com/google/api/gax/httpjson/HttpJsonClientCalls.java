@@ -138,6 +138,7 @@ class HttpJsonClientCalls {
     @Override
     public void onClose(int statusCode, HttpJsonMetadata trailers) {
       Preconditions.checkNotNull(trailers);
+      System.out.println(trailers.getException() + " " + isMessageReceived);
       if (trailers.getException() != null) {
         future.setException(trailers.getException());
       } else if (isMessageReceived) {
