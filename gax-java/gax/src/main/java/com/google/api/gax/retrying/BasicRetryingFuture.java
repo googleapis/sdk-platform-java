@@ -171,6 +171,7 @@ class BasicRetryingFuture<ResponseT> extends AbstractFuture<ResponseT>
             retryAlgorithm.createNextAttempt(retryingContext, throwable, response, attemptSettings);
         boolean shouldRetry =
             retryAlgorithm.shouldRetry(retryingContext, throwable, response, nextAttemptSettings);
+        System.out.println("Should Retry: " + shouldRetry + " Throwable: " + throwable);
         if (shouldRetry) {
           // Log retry info
           if (LOG.isLoggable(Level.FINEST)) {
