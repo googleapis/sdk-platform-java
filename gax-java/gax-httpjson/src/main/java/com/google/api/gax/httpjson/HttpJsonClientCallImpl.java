@@ -240,7 +240,6 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
   @Override
   public void sendMessage(RequestT message) {
     Preconditions.checkNotNull(message);
-    HttpRequestRunnable<RequestT, ResponseT> localRunnable;
     synchronized (lock) {
       if (closed) {
         return;
@@ -259,9 +258,8 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
               httpTransport,
               requestHeaders,
               this);
-      localRunnable = requestRunnable;
+      executor.execute(requestRunnable);
     }
-    executor.execute(localRunnable);
   }
 
   @Override
