@@ -32,6 +32,7 @@ package com.google.api.gax.retrying;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.api.core.ApiClock;
+import com.google.api.core.InternalApi;
 import java.util.concurrent.ThreadLocalRandom;
 import org.threeten.bp.Duration;
 
@@ -204,11 +205,11 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
       return false;
     }
 
-    // For RPCs, do not attempt to retry if the timeout has either passed (negative)
-    // or will pass immediately (zero). For any positive timeout value, the
-    // deadlineScheduler will terminate in the future (even if the timeout is small).
+    // If totalTimeout limit is defined, check that it hasn't been crossed.
+    // Use the timeout value that was calculated in `createNextAttempt()` as that
+    // already factors in the timeElapsed and the randomRetryDelay.
     Duration rpcTimeout = nextAttemptSettings.getRpcTimeout();
-    if (totalTimeout > 0 && (rpcTimeout.isNegative() || rpcTimeout.isZero())) {
+    if (totalTimeout > 0 && shouldRPCTerminate(rpcTimeout)) {
       return false;
     }
 
@@ -219,6 +220,14 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
 
     // No limits crossed
     return true;
+  }
+
+  // For non-LRO RPCs, do not attempt to retry if the timeout has either passed (negative)
+  // or will pass immediately (zero). For any positive timeout value, the
+  // deadlineScheduler will terminate in the future (even if the timeout is small).
+  @InternalApi
+  protected boolean shouldRPCTerminate(Duration rpcTimeout) {
+    return rpcTimeout.isNegative() || rpcTimeout.isZero();
   }
 
   /**
