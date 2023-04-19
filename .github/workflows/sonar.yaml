@@ -44,42 +44,42 @@ jobs:
             tar -xf showcase-*
             ./gapic-showcase run &
             cd -
-#      - name: Build and analyze for full test coverage
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-#        run: |
-#          mvn -B verify -Dcheckstyle.skip \
-#              -DenableFullTestCoverage \
-#              -Penable-integration-tests \
-#              org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-#              -Dsonar.projectKey=googleapis_gapic-generator-java \
-#              -Dsonar.organization=googleapis \
-#              -Dsonar.host.url=https://sonarcloud.io
-#
-#      - name: Build and analyze Showcase Integration Tests Coverage
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-#        run: |
-#          mvn -B clean verify -Dcheckstyle.skip \
-#              -DskipUnitTests \
-#              -Penable-integration-tests \
-#              -DenableShowcaseTestCoverage \
-#              org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-#              -Dsonar.projectKey=googleapis_gapic-generator-java_integration_tests \
-#              -Dsonar.organization=googleapis \
-#              -Dsonar.host.url=https://sonarcloud.io \
-#              -Dsonar.projectName=java_showcase_integration_tests
-#      - name: Build and analyze Showcase Unit Tests Coverage
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-#        run: |
-#          mvn -B clean test -Dcheckstyle.skip \
-#              -DenableShowcaseTestCoverage \
-#              org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
-#              -Dsonar.projectKey=googleapis_gapic-generator-java_unit_tests \
-#              -Dsonar.organization=googleapis \
-#              -Dsonar.host.url=https://sonarcloud.io \
-#              -Dsonar.projectName=java_showcase_unit_tests
+      - name: Build and analyze for full test coverage
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn -B verify -Dcheckstyle.skip \
+              -DenableFullTestCoverage \
+              -Penable-integration-tests \
+              org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+              -Dsonar.projectKey=googleapis_gapic-generator-java \
+              -Dsonar.organization=googleapis \
+              -Dsonar.host.url=https://sonarcloud.io
+
+      - name: Build and analyze Showcase Integration Tests Coverage
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn -B clean verify -Dcheckstyle.skip \
+              -DskipUnitTests \
+              -Penable-integration-tests \
+              -DenableShowcaseTestCoverage \
+              org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+              -Dsonar.projectKey=googleapis_gapic-generator-java_integration_tests \
+              -Dsonar.organization=googleapis \
+              -Dsonar.host.url=https://sonarcloud.io \
+              -Dsonar.projectName=java_showcase_integration_tests
+      - name: Build and analyze Showcase Unit Tests Coverage
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          mvn -B clean test -Dcheckstyle.skip \
+              -DenableShowcaseTestCoverage \
+              org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+              -Dsonar.projectKey=googleapis_gapic-generator-java_unit_tests \
+              -Dsonar.organization=googleapis \
+              -Dsonar.host.url=https://sonarcloud.io \
+              -Dsonar.projectName=java_showcase_unit_tests

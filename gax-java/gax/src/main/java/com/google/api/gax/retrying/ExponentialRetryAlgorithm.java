@@ -204,6 +204,9 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
       return false;
     }
 
+    // For RPCs, do not attempt to retry if the timeout has either passed (negative)
+    // or will pass immediately (zero). For any positive timeout value, the
+    // deadlineScheduler will terminate in the future (even if the timeout is small).
     Duration rpcTimeout = nextAttemptSettings.getRpcTimeout();
     if (totalTimeout > 0 && (rpcTimeout.isNegative() || rpcTimeout.isZero())) {
       return false;
