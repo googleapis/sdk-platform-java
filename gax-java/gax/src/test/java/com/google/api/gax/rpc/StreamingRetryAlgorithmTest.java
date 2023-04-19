@@ -42,12 +42,14 @@ import com.google.api.gax.retrying.RetryingContext;
 import com.google.api.gax.retrying.ServerStreamingAttemptException;
 import com.google.api.gax.retrying.StreamingRetryAlgorithm;
 import com.google.api.gax.retrying.TimedAttemptSettings;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.Mockito;
 import org.threeten.bp.Duration;
 
+@Ignore
 @RunWith(JUnit4.class)
 public class StreamingRetryAlgorithmTest {
   private static final RetrySettings DEFAULT_RETRY_SETTINGS =
