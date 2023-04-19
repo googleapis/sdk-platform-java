@@ -204,6 +204,10 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
       return false;
     }
 
+    if (nextAttemptSettings.getRpcTimeout().isNegative()) {
+      return false;
+    }
+
     long totalTimeSpentNanos =
         clock.nanoTime()
             - nextAttemptSettings.getFirstAttemptStartTimeNanos()
@@ -219,9 +223,9 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
     // totalTimeout, the LRO would be canceled prematurely. The problem here is that
     // totalTimeout doubles as the polling threshold and also the time limit for an
     // operation to finish.
-    if (totalTimeout > 0 && totalTimeSpentNanos > totalTimeout) {
-      return false;
-    }
+    //    if (totalTimeout > 0 && totalTimeSpentNanos > totalTimeout) {
+    //      return false;
+    //    }
 
     // If maxAttempts limit is defined, check that it hasn't been crossed
     if (maxAttempts > 0 && nextAttemptSettings.getAttemptCount() >= maxAttempts) {

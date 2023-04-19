@@ -451,17 +451,17 @@ public class ITRetry {
   // The purpose of this test is to ensure that the deadlineScheduleExecutor is able
   // to properly cancel the HttpRequest for each retry attempt. This test attempts to
   // make a call that last 1s. If the requestRunnable blocks until we receive a response
-  // from the server (5s) regardless of it was cancelled, then we would not expect a
+  // from the server (110ms) regardless of it was cancelled, then we would not expect a
   // response at all.
   @Test
   public void testHttpJson_unaryCallableRetry_deadlineExecutorTimesOutRequest()
       throws IOException, GeneralSecurityException {
     RetrySettings defaultRetrySettings =
         RetrySettings.newBuilder()
-            .setInitialRpcTimeout(Duration.ofMillis(1000L))
+            .setInitialRpcTimeout(Duration.ofMillis(100L))
             .setRpcTimeoutMultiplier(1.0)
-            .setMaxRpcTimeout(Duration.ofMillis(1000L))
-            .setTotalTimeout(Duration.ofMillis(2000L))
+            .setMaxRpcTimeout(Duration.ofMillis(100L))
+            .setTotalTimeout(Duration.ofMillis(500L))
             .build();
     EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
     // Manually set DEADLINE_EXCEEDED as showcase tests do not have that as a retryable code
@@ -485,9 +485,10 @@ public class ITRetry {
       BlockRequest blockRequest =
           BlockRequest.newBuilder()
               .setSuccess(
-                  BlockResponse.newBuilder().setContent("httpjsonBlockContent_5sDelay_Retry"))
+                  BlockResponse.newBuilder().setContent("httpjsonBlockContent_110msDelay_Retry"))
               // Set the timeout to be longer than the RPC timeout
-              .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(5).build())
+              .setResponseDelay(
+                  com.google.protobuf.Duration.newBuilder().setNanos(110000000).build())
               .build();
       RetryingFuture<BlockResponse> retryingFuture =
           (RetryingFuture<BlockResponse>) httpJsonClient.blockCallable().futureCall(blockRequest);
