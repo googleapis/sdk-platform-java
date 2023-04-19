@@ -44,7 +44,7 @@ import org.threeten.bp.Duration;
 public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext {
 
   private final RetrySettings globalSettings;
-  private final ApiClock clock;
+  protected final ApiClock clock;
 
   /**
    * Creates a new exponential retry algorithm instance.
@@ -152,7 +152,7 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
       // the attempt from being made as it would exceed the totalTimeout. A negative RPC timeout
       // will result in a deadline in the past, which should will always fail prior to making a
       // network call.
-      newRpcTimeout = Math.max(1, Math.min(newRpcTimeout, timeLeft.toMillis()));
+      newRpcTimeout = Math.min(newRpcTimeout, timeLeft.toMillis());
     }
 
     return TimedAttemptSettings.newBuilder()
@@ -205,28 +205,9 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
     }
 
     Duration rpcTimeout = nextAttemptSettings.getRpcTimeout();
-    if (totalTimeout > 0 && rpcTimeout.isNegative()) {
+    if (totalTimeout > 0 && (rpcTimeout.isNegative() || rpcTimeout.isZero())) {
       return false;
     }
-
-    long totalTimeSpentNanos =
-        clock.nanoTime()
-            - nextAttemptSettings.getFirstAttemptStartTimeNanos()
-            + nextAttemptSettings.getRandomizedRetryDelay().toNanos();
-
-    // If totalTimeout limit is defined, check that it hasn't been crossed.
-    //
-    // Note: if the potential time spent is exactly equal to the totalTimeout,
-    // the attempt will still be allowed. This might not be desired, but if we
-    // enforce it, it could have potentially negative side effects on LRO polling.
-    // Specifically, if a polling retry attempt is denied, the LRO is canceled, and
-    // if a polling retry attempt is denied because its delay would *reach* the
-    // totalTimeout, the LRO would be canceled prematurely. The problem here is that
-    // totalTimeout doubles as the polling threshold and also the time limit for an
-    // operation to finish.
-    //    if (totalTimeout > 0 && totalTimeSpentNanos > totalTimeout) {
-    //      return false;
-    //    }
 
     // If maxAttempts limit is defined, check that it hasn't been crossed
     if (maxAttempts > 0 && nextAttemptSettings.getAttemptCount() >= maxAttempts) {

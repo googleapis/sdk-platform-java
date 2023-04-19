@@ -73,9 +73,36 @@ public class OperationTimedPollAlgorithm extends ExponentialRetryAlgorithm {
   @Override
   public boolean shouldRetry(TimedAttemptSettings nextAttemptSettings)
       throws CancellationException {
-    if (super.shouldRetry(nextAttemptSettings)) {
-      return true;
+    RetrySettings globalSettings = nextAttemptSettings.getGlobalSettings();
+
+    int maxAttempts = globalSettings.getMaxAttempts();
+    long totalTimeout = globalSettings.getTotalTimeout().toNanos();
+
+    // If total timeout and maxAttempts is not set then do not attempt retry.
+    if (totalTimeout == 0 && maxAttempts == 0) {
+      throw new CancellationException();
     }
-    throw new CancellationException();
+
+    // If totalTimeout limit is defined, check that it hasn't been crossed.
+    //
+    // Note: if the potential time spent is exactly equal to the totalTimeout,
+    // the attempt will still be allowed. This might not be desired, but if we
+    // enforce it, it could have potentially negative side effects on LRO polling.
+    // Specifically, if a polling retry attempt is denied, the LRO is canceled, and
+    // if a polling retry attempt is denied because its delay would *reach* the
+    // totalTimeout, the LRO would be canceled prematurely. The problem here is that
+    // totalTimeout doubles as the polling threshold and also the time limit for an
+    // operation to finish.
+    if (totalTimeout > 0 && nextAttemptSettings.getRpcTimeout().isNegative()) {
+      throw new CancellationException();
+    }
+
+    // If maxAttempts limit is defined, check that it hasn't been crossed
+    if (maxAttempts > 0 && nextAttemptSettings.getAttemptCount() >= maxAttempts) {
+      throw new CancellationException();
+    }
+
+    // No limits crossed
+    return true;
   }
 }
