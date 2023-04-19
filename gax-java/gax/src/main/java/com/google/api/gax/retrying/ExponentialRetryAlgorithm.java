@@ -152,7 +152,7 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
       // the attempt from being made as it would exceed the totalTimeout. A negative RPC timeout
       // will result in a deadline in the past, which should will always fail prior to making a
       // network call.
-      newRpcTimeout = Math.min(newRpcTimeout, timeLeft.toMillis());
+      newRpcTimeout = Math.max(1, Math.min(newRpcTimeout, timeLeft.toMillis()));
     }
 
     return TimedAttemptSettings.newBuilder()
@@ -204,7 +204,8 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
       return false;
     }
 
-    if (nextAttemptSettings.getRpcTimeout().isNegative()) {
+    Duration rpcTimeout = nextAttemptSettings.getRpcTimeout();
+    if (totalTimeout > 0 && rpcTimeout.isNegative()) {
       return false;
     }
 

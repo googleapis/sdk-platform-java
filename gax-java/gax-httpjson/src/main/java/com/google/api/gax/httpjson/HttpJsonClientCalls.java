@@ -56,6 +56,8 @@ class HttpJsonClientCalls {
       HttpJsonCallOptions callOptions = httpJsonContext.getCallOptions();
       // HttpJsonChannel expects the HttpJsonCallOptions and we store the timeout duration
       // inside the HttpJsonCallOptions
+      System.out.println("Context Timeout: " + httpJsonContext.getTimeout());
+      System.out.println("Call Options Timeout: " + callOptions.getTimeout());
       if (callOptions.getTimeout() == null
           || httpJsonContext.getTimeout().compareTo(callOptions.getTimeout()) < 0) {
         callOptions = callOptions.toBuilder().setTimeout(httpJsonContext.getTimeout()).build();
