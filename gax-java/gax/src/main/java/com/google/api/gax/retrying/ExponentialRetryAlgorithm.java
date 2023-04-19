@@ -204,11 +204,7 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
       return false;
     }
 
-    if (nextAttemptSettings.getRpcTimeout().isNegative()
-        || nextAttemptSettings
-                .getRpcTimeout()
-                .compareTo(nextAttemptSettings.getRandomizedRetryDelay())
-            < 0) {
+    if (nextAttemptSettings.getRpcTimeout().isNegative()) {
       return false;
     }
 
