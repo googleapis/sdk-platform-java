@@ -155,9 +155,9 @@ public class RetryAlgorithm<ResponseT> {
       TimedAttemptSettings previousSettings) {
     // a small optimization that avoids calling relatively heavy methods
     // like timedAlgorithm.createNextAttempt(), when it is not necessary.
-    if (!shouldRetryBasedOnResult(context, previousThrowable, previousResponse)) {
-      return null;
-    }
+    //    if (!shouldRetryBasedOnResult(context, previousThrowable, previousResponse)) {
+    //      return null;
+    //    }
 
     TimedAttemptSettings newSettings =
         createNextAttemptBasedOnResult(
