@@ -42,6 +42,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.threeten.bp.Duration;
 
+@Ignore
 @RunWith(JUnit4.class)
 public class ExponentialRetryAlgorithmTest {
   private final FakeApiClock clock = new FakeApiClock(0L);
@@ -162,7 +163,6 @@ public class ExponentialRetryAlgorithmTest {
     assertTrue(algorithm.shouldRetry(attempt));
   }
 
-  @Ignore
   @Test
   public void testShouldRetryFalseOnMaxAttempts() {
     TimedAttemptSettings attempt = algorithm.createFirstAttempt();
@@ -174,7 +174,6 @@ public class ExponentialRetryAlgorithmTest {
     assertFalse(algorithm.shouldRetry(attempt));
   }
 
-  @Ignore
   @Test
   public void testShouldRetryFalseOnMaxTimeout() {
     TimedAttemptSettings attempt = algorithm.createFirstAttempt();

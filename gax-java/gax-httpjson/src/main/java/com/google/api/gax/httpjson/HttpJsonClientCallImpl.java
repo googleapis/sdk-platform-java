@@ -170,12 +170,14 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
     }
 
     // Use the timeout duration value instead of calculating the future Instant
+    // Only schedule the deadline if the RPC timeout has been set in the RetrySettings
     Duration timeout = callOptions.getTimeout();
-    // If the future timeout amount is guaranteed to not be a negative value.
-    // The RetryAlgorithm checks that the timeout is not negative.
-    Preconditions.checkNotNull(timeout, "Timeout was not set in the Call Options");
-    long timeoutNanos = timeout.toNanos();
-    this.deadlineCancellationExecutor.schedule(this::timeout, timeoutNanos, TimeUnit.NANOSECONDS);
+    if (timeout != null) {
+      // If the future timeout amount is guaranteed to not be a negative value.
+      // The RetryAlgorithm checks that the timeout is not negative.
+      long timeoutNanos = timeout.toNanos();
+      this.deadlineCancellationExecutor.schedule(this::timeout, timeoutNanos, TimeUnit.NANOSECONDS);
+    }
   }
 
   // Notify the FutureListener that the there is a timeout exception from this RPC

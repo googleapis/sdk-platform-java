@@ -156,6 +156,7 @@ public class RetryAlgorithm<ResponseT> {
     // a small optimization that avoids calling relatively heavy methods
     // like timedAlgorithm.createNextAttempt(), when it is not necessary.
     if (!shouldRetryBasedOnResult(context, previousThrowable, previousResponse)) {
+      System.out.println("Not retrying because of result: " + previousThrowable);
       return null;
     }
 
