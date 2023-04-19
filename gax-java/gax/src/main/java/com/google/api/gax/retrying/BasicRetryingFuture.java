@@ -169,9 +169,9 @@ class BasicRetryingFuture<ResponseT> extends AbstractFuture<ResponseT>
 
         TimedAttemptSettings nextAttemptSettings =
             retryAlgorithm.createNextAttempt(retryingContext, throwable, response, attemptSettings);
-        System.out.println("RPC Timeout: " + nextAttemptSettings.getRpcTimeout().toMillis());
         boolean shouldRetry =
             retryAlgorithm.shouldRetry(retryingContext, throwable, response, nextAttemptSettings);
+        System.out.println("RPC Timeout: " + nextAttemptSettings);
         System.out.println("Should Retry: " + shouldRetry + " Throwable: " + throwable);
         if (shouldRetry) {
           // Log retry info
