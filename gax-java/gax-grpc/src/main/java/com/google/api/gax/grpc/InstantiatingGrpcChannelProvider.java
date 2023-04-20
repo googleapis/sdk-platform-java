@@ -333,13 +333,15 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     ManagedChannelBuilder<?> builder;
 
     // Check DirectPath traffic.
+    boolean useDirectPathXds = false;
     if (isDirectPathEnabled(serviceAddress)
         && isNonDefaultServiceAccountAllowed()
         && isOnComputeEngine()) {
       CallCredentials callCreds = MoreCallCredentials.from(credentials);
       ChannelCredentials channelCreds =
           GoogleDefaultChannelCredentials.newBuilder().callCredentials(callCreds).build();
-      if (isDirectPathXdsEnabled()) {
+      useDirectPathXds = isDirectPathXdsEnabled();
+      if (useDirectPathXds) {
         // google-c2p: CloudToProd(C2P) Directpath. This scheme is defined in
         // io.grpc.googleapis.GoogleCloudToProdNameResolverProvider.
         // This resolver target must not have a port number.
@@ -366,7 +368,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       }
     }
     // google-c2p resolver requires service config lookup
-    if (!isDirectPathXdsEnabled) {
+    if (!useDirectPathXds) {
       // See https://github.com/googleapis/gapic-generator/issues/2816
       builder.disableServiceConfigLookUp();
     }
