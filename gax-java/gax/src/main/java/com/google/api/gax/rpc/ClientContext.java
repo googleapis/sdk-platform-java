@@ -125,7 +125,7 @@ public abstract class ClientContext {
         .setStreamWatchdogCheckInterval(Duration.ZERO)
         .setTracerFactory(BaseApiTracerFactory.getInstance())
         .setQuotaProjectId(null)
-        .setCredentialsApiAudience(null);
+        .setGdchApiAudience(null);
   }
 
   public abstract Builder toBuilder();
@@ -181,8 +181,9 @@ public abstract class ClientContext {
       } catch (IllegalArgumentException ex) { // thrown when passing a malformed uri string
         throw new IllegalArgumentException("The GDC-H API audience string is not a valid URI", ex);
       }
-      credentials = GdchCredentials
-              .newBuilder()
+      GdchCredentials.Builder builder = ((GdchCredentials) credentials)
+              .toBuilder();
+      credentials = builder
               .setGdchAudience(gdchAudienceUri)
               .build();
     } else if (gdhcApiAudience != null) {
@@ -347,7 +348,7 @@ public abstract class ClientContext {
     @BetaApi("The surface for tracing is not stable yet and may change in the future.")
     public abstract Builder setTracerFactory(ApiTracerFactory tracerFactory);
 
-    public abstract Builder setCredentialsApiAudience(String credentialsApiAudience);
+    public abstract Builder setGdchApiAudience(String credentialsApiAudience);
 
     public abstract ClientContext build();
   }
