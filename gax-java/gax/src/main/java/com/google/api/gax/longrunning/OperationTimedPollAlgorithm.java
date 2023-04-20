@@ -36,7 +36,6 @@ import com.google.api.gax.retrying.ExponentialRetryAlgorithm;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.retrying.TimedAttemptSettings;
 import java.util.concurrent.CancellationException;
-import org.threeten.bp.Duration;
 
 /**
  * Operation timed polling algorithm, which uses exponential backoff factor for determining when the
@@ -91,7 +90,8 @@ public class OperationTimedPollAlgorithm extends ExponentialRetryAlgorithm {
   // operation to finish.
   @InternalApi
   @Override
-  protected boolean shouldRPCTerminate(Duration rpcTimeout) {
-    return rpcTimeout.isNegative();
+  protected boolean shouldRPCTerminate(
+          long totalTimeSpentNanos, long totalTimeout) {
+    return totalTimeSpentNanos > totalTimeout;
   }
 }

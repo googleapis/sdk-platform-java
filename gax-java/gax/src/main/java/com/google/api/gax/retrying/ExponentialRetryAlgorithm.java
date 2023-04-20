@@ -45,7 +45,7 @@ import org.threeten.bp.Duration;
 public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext {
 
   private final RetrySettings globalSettings;
-  private final ApiClock clock;
+  protected final ApiClock clock;
 
   /**
    * Creates a new exponential retry algorithm instance.
@@ -205,11 +205,12 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
       return false;
     }
 
+    long totalTimeSpentNanos =
+            clock.nanoTime()
+                    - nextAttemptSettings.getFirstAttemptStartTimeNanos()
+                    + nextAttemptSettings.getRandomizedRetryDelay().toNanos();
     // If totalTimeout limit is defined, check that it hasn't been crossed.
-    // Use the timeout value that was calculated in `createNextAttempt()` as that
-    // already factors in the timeElapsed and the randomRetryDelay.
-    Duration rpcTimeout = nextAttemptSettings.getRpcTimeout();
-    if (totalTimeout > 0 && shouldRPCTerminate(rpcTimeout)) {
+    if (totalTimeout > 0 && shouldRPCTerminate(totalTimeSpentNanos, totalTimeout)) {
       return false;
     }
 
@@ -222,12 +223,14 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
     return true;
   }
 
-  // For non-LRO RPCs, do not attempt to retry if the timeout has either passed (negative)
-  // or will pass immediately (zero). For any positive timeout value, the
-  // deadlineScheduler will terminate in the future (even if the timeout is small).
+  // For non-LRO RPCs, do not attempt to retry if the totalTime spend is over
+  // the totalTimeout (timeout is in the past) or at the totalTimeout (timeout
+  // will occur immediately). For any other value, the deadlineScheduler will
+  // terminate in the future (even if the timeout is small).
   @InternalApi
-  protected boolean shouldRPCTerminate(Duration rpcTimeout) {
-    return rpcTimeout.isNegative() || rpcTimeout.isZero();
+  protected boolean shouldRPCTerminate(
+          long totalTimeSpentNanos, long totalTimeout) {
+    return totalTimeSpentNanos >= totalTimeout;
   }
 
   /**
