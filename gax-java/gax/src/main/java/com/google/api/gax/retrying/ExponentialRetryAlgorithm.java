@@ -206,9 +206,9 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
     }
 
     long totalTimeSpentNanos =
-            clock.nanoTime()
-                    - nextAttemptSettings.getFirstAttemptStartTimeNanos()
-                    + nextAttemptSettings.getRandomizedRetryDelay().toNanos();
+        clock.nanoTime()
+            - nextAttemptSettings.getFirstAttemptStartTimeNanos()
+            + nextAttemptSettings.getRandomizedRetryDelay().toNanos();
     // If totalTimeout limit is defined, check that it hasn't been crossed.
     if (totalTimeout > 0 && shouldRPCTerminate(totalTimeSpentNanos, totalTimeout)) {
       return false;
@@ -228,8 +228,7 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
   // will occur immediately). For any other value, the deadlineScheduler will
   // terminate in the future (even if the timeout is small).
   @InternalApi
-  protected boolean shouldRPCTerminate(
-          long totalTimeSpentNanos, long totalTimeout) {
+  protected boolean shouldRPCTerminate(long totalTimeSpentNanos, long totalTimeout) {
     return totalTimeSpentNanos >= totalTimeout;
   }
 

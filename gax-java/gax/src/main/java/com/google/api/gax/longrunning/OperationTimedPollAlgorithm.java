@@ -90,8 +90,7 @@ public class OperationTimedPollAlgorithm extends ExponentialRetryAlgorithm {
   // operation to finish.
   @InternalApi
   @Override
-  protected boolean shouldRPCTerminate(
-          long totalTimeSpentNanos, long totalTimeout) {
+  protected boolean shouldRPCTerminate(long totalTimeSpentNanos, long totalTimeout) {
     return totalTimeSpentNanos > totalTimeout;
   }
 }
