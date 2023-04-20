@@ -15,9 +15,6 @@
  */
 package com.google.showcase.v1beta1.it;
 
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertThrows;
-
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.retrying.RetrySettings;
@@ -29,20 +26,16 @@ import com.google.showcase.v1beta1.BlockResponse;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.stub.EchoStubSettings;
-import io.grpc.ManagedChannelBuilder;
+import org.junit.Test;
+import org.threeten.bp.Duration;
+
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import org.slf4j.bridge.SLF4JBridgeHandler;
-import org.threeten.bp.Duration;
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertThrows;
 
 /**
  * For this test, we test a combination of various retry situations and try to ensure that the calls
