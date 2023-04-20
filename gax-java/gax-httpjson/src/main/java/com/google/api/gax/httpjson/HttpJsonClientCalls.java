@@ -56,15 +56,17 @@ class HttpJsonClientCalls {
       HttpJsonCallOptions callOptions = httpJsonContext.getCallOptions();
       // HttpJsonChannel expects the HttpJsonCallOptions and we store the timeout duration
       // inside the HttpJsonCallOptions
+      // Note: There is manual conversion between threetenbp's Duration and java.util.Duration
+      // This is temporary here as we plan to migrate to java.util.Duration
       if (callOptions.getTimeout() == null
           || httpJsonContext
                   .getTimeout()
-                  .compareTo(Duration.ofNanos(callOptions.getTimeout().getNano()))
+                  .compareTo(Duration.ofNanos(callOptions.getTimeout().toNanos()))
               < 0) {
         callOptions =
             callOptions
                 .toBuilder()
-                .setTimeout(java.time.Duration.ofNanos(httpJsonContext.getTimeout().getNano()))
+                .setTimeout(java.time.Duration.ofNanos(httpJsonContext.getTimeout().toNanos()))
                 .build();
         httpJsonContext = httpJsonContext.withCallOptions(callOptions);
       }

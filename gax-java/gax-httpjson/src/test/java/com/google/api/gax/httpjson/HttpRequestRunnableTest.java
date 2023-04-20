@@ -48,7 +48,6 @@ import java.util.Map;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
 public class HttpRequestRunnableTest {
   private static Field requestMessage;
@@ -260,7 +259,7 @@ public class HttpRequestRunnableTest {
             requestMessage,
             methodDescriptor,
             "www.googleapis.com/animals/v1/projects",
-            HttpJsonCallOptions.newBuilder().setTimeout(Duration.ofMillis(5000L)).build(),
+            HttpJsonCallOptions.newBuilder().setTimeout(java.time.Duration.ofMillis(5000L)).build(),
             new MockHttpTransport(),
             HttpJsonMetadata.newBuilder().build(),
             (result) -> {});
@@ -285,7 +284,9 @@ public class HttpRequestRunnableTest {
             requestMessage,
             methodDescriptor,
             "www.googleapis.com/animals/v1/projects",
-            HttpJsonCallOptions.newBuilder().setTimeout(Duration.ofMillis(30000L)).build(),
+            HttpJsonCallOptions.newBuilder()
+                .setTimeout(java.time.Duration.ofMillis(30000L))
+                .build(),
             new MockHttpTransport(),
             HttpJsonMetadata.newBuilder().build(),
             (result) -> {});
