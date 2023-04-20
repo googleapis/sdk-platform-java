@@ -151,10 +151,11 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
 
       // If timeLeft at this point is < 0, the shouldRetry logic will prevent
       // the attempt from being made as it would exceed the totalTimeout. A negative RPC timeout
-      // will result in a deadline in the past, which should will always fail prior to making a
+      // will result in a deadline in the past, which will always fail prior to making a
       // network call.
       newRpcTimeout = Math.min(newRpcTimeout, timeLeft.toMillis());
     }
+    System.out.println("New RPC Timeout: " + newRpcTimeout);
 
     return TimedAttemptSettings.newBuilder()
         .setGlobalSettings(previousSettings.getGlobalSettings())
@@ -198,10 +199,10 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
     RetrySettings globalSettings = nextAttemptSettings.getGlobalSettings();
 
     int maxAttempts = globalSettings.getMaxAttempts();
-    long totalTimeout = globalSettings.getTotalTimeout().toNanos();
+    long totalTimeoutNanos = globalSettings.getTotalTimeout().toNanos();
 
     // If total timeout and maxAttempts is not set then do not attempt retry.
-    if (totalTimeout == 0 && maxAttempts == 0) {
+    if (totalTimeoutNanos == 0 && maxAttempts == 0) {
       return false;
     }
 
@@ -210,7 +211,7 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
             - nextAttemptSettings.getFirstAttemptStartTimeNanos()
             + nextAttemptSettings.getRandomizedRetryDelay().toNanos();
     // If totalTimeout limit is defined, check that it hasn't been crossed.
-    if (totalTimeout > 0 && shouldRPCTerminate(totalTimeSpentNanos, totalTimeout)) {
+    if (totalTimeoutNanos > 0 && shouldRPCTerminate(totalTimeSpentNanos, totalTimeoutNanos)) {
       return false;
     }
 
@@ -228,8 +229,8 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
   // will occur immediately). For any other value, the deadlineScheduler will
   // terminate in the future (even if the timeout is small).
   @InternalApi
-  protected boolean shouldRPCTerminate(long totalTimeSpentNanos, long totalTimeout) {
-    return totalTimeSpentNanos >= totalTimeout;
+  protected boolean shouldRPCTerminate(long totalTimeSpentNanos, long totalTimeoutNanos) {
+    return totalTimeSpentNanos >= totalTimeoutNanos;
   }
 
   /**

@@ -185,10 +185,10 @@ public class ITLongRunningOperation {
                     .build())
             .build();
     try (EchoClient grpcClient = EchoClient.create(grpcEchoSettings)) {
-      long epochSecondsInFuture = Instant.now().plus(6, ChronoUnit.SECONDS).getEpochSecond();
+      long epochSecondsInFuture = Instant.now().plus(10, ChronoUnit.SECONDS).getEpochSecond();
       WaitRequest waitRequest =
           WaitRequest.newBuilder()
-              .setSuccess(WaitResponse.newBuilder().setContent("gRPCWaitContent_6sDelay_noRetry"))
+              .setSuccess(WaitResponse.newBuilder().setContent("gRPCWaitContent_10sDelay_noRetry"))
               .setEndTime(Timestamp.newBuilder().setSeconds(epochSecondsInFuture).build())
               .build();
       OperationFuture<WaitResponse, WaitMetadata> operationFuture =
@@ -238,11 +238,11 @@ public class ITLongRunningOperation {
                     .build())
             .build();
     try (EchoClient httpJsonClient = EchoClient.create(httpJsonEchoSettings)) {
-      long epochSecondsInFuture = Instant.now().plus(6, ChronoUnit.SECONDS).getEpochSecond();
+      long epochSecondsInFuture = Instant.now().plus(10, ChronoUnit.SECONDS).getEpochSecond();
       WaitRequest waitRequest =
           WaitRequest.newBuilder()
               .setSuccess(
-                  WaitResponse.newBuilder().setContent("httpjsonWaitContent_6sDelay_noRetry"))
+                  WaitResponse.newBuilder().setContent("httpjsonWaitContent_10sDelay_noRetry"))
               .setEndTime(Timestamp.newBuilder().setSeconds(epochSecondsInFuture).build())
               .build();
       OperationFuture<WaitResponse, WaitMetadata> operationFuture =
