@@ -92,7 +92,6 @@ public class ITRetry {
   public void testHttpJson_unaryCallableNoRetry()
       throws IOException, GeneralSecurityException, ExecutionException, InterruptedException,
           TimeoutException {
-    Logger.getLogger(ITRetry.class.getName()).log(Level.INFO, "hello");
     RetrySettings defaultNoRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRpcTimeout(Duration.ofMillis(5000L))
