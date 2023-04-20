@@ -33,8 +33,8 @@ import com.google.api.core.BetaApi;
 import com.google.auth.Credentials;
 import com.google.auto.value.AutoValue;
 import com.google.protobuf.TypeRegistry;
+import java.time.Duration;
 import javax.annotation.Nullable;
-import org.threeten.bp.Duration;
 
 /** Options for an http-json call, including deadline and credentials. */
 @BetaApi
@@ -43,7 +43,7 @@ public abstract class HttpJsonCallOptions {
   public static final HttpJsonCallOptions DEFAULT = newBuilder().build();
 
   @Nullable
-  public abstract Duration getTimeout();
+  public abstract java.time.Duration getTimeout();
 
   @Nullable
   public abstract Credentials getCredentials();
@@ -64,9 +64,11 @@ public abstract class HttpJsonCallOptions {
 
     Builder builder = this.toBuilder();
 
-    Duration newTimeout = inputOptions.getTimeout();
-    if (newTimeout != null) {
-      builder.setTimeout(newTimeout);
+    if (inputOptions.getTimeout() != null) {
+      Duration newTimeout = java.time.Duration.ofNanos(inputOptions.getTimeout().getNano());
+      if (newTimeout != null) {
+        builder.setTimeout(newTimeout);
+      }
     }
 
     Credentials newCredentials = inputOptions.getCredentials();
@@ -84,7 +86,7 @@ public abstract class HttpJsonCallOptions {
 
   @AutoValue.Builder
   public abstract static class Builder {
-    public abstract Builder setTimeout(Duration value);
+    public abstract Builder setTimeout(java.time.Duration value);
 
     public abstract Builder setCredentials(Credentials value);
 

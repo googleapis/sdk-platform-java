@@ -155,7 +155,6 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
       // network call.
       newRpcTimeout = Math.min(newRpcTimeout, timeLeft.toMillis());
     }
-    System.out.println("New RPC Timeout: " + newRpcTimeout);
 
     return TimedAttemptSettings.newBuilder()
         .setGlobalSettings(previousSettings.getGlobalSettings())
@@ -211,7 +210,9 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
             - nextAttemptSettings.getFirstAttemptStartTimeNanos()
             + nextAttemptSettings.getRandomizedRetryDelay().toNanos();
     // If totalTimeout limit is defined, check that it hasn't been crossed.
-    if (totalTimeoutNanos > 0 && shouldRPCTerminate(totalTimeSpentNanos, totalTimeoutNanos)) {
+    if (totalTimeoutNanos > 0
+        && shouldRPCTerminate(
+            totalTimeSpentNanos, totalTimeoutNanos, nextAttemptSettings.getRpcTimeout())) {
       return false;
     }
 
@@ -229,8 +230,11 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
   // will occur immediately). For any other value, the deadlineScheduler will
   // terminate in the future (even if the timeout is small).
   @InternalApi
-  protected boolean shouldRPCTerminate(long totalTimeSpentNanos, long totalTimeoutNanos) {
-    return totalTimeSpentNanos >= totalTimeoutNanos;
+  protected boolean shouldRPCTerminate(
+      long totalTimeSpentNanos, long totalTimeoutNanos, Duration rpcTimeout) {
+    return totalTimeSpentNanos >= totalTimeoutNanos
+        || rpcTimeout.isNegative()
+        || rpcTimeout.isZero();
   }
 
   /**

@@ -32,9 +32,9 @@ package com.google.api.gax.httpjson;
 import com.google.api.core.AbstractApiFuture;
 import com.google.api.core.ApiFuture;
 import com.google.api.gax.rpc.ApiCallContext;
-import com.google.common.base.Preconditions;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.threeten.bp.Duration;
 
 /**
  * {@code HttpJsonClientCalls} creates a new {@code HttpJsonClientCAll} from the given call context.
@@ -57,8 +57,15 @@ class HttpJsonClientCalls {
       // HttpJsonChannel expects the HttpJsonCallOptions and we store the timeout duration
       // inside the HttpJsonCallOptions
       if (callOptions.getTimeout() == null
-          || httpJsonContext.getTimeout().compareTo(callOptions.getTimeout()) < 0) {
-        callOptions = callOptions.toBuilder().setTimeout(httpJsonContext.getTimeout()).build();
+          || httpJsonContext
+                  .getTimeout()
+                  .compareTo(Duration.ofNanos(callOptions.getTimeout().getNano()))
+              < 0) {
+        callOptions =
+            callOptions
+                .toBuilder()
+                .setTimeout(java.time.Duration.ofNanos(httpJsonContext.getTimeout().getNano()))
+                .build();
         httpJsonContext = httpJsonContext.withCallOptions(callOptions);
       }
     }
@@ -137,29 +144,19 @@ class HttpJsonClientCalls {
 
     @Override
     public void onClose(int statusCode, HttpJsonMetadata trailers) {
-      Preconditions.checkNotNull(trailers);
-      // onClose() in invoked via HttpJsonClientCallImpl's close() method and
-      // the trailer exceptions are set via parameters in there.
-      //
-      // A successful response will have a null exception in the trailers.
-      // The trailer's exception CAN be a DEADLINE_EXCEEDED exception set
-      // from the deadlineScheduler and we must return it as an exception.
-      //
-      // Note: An exception has the highest priority. We must respect the timeout
-      // value set in the RetrySettings even if the message barely misses the
-      // cutoff time.
-      if (trailers.getException() != null) {
-        future.setException(trailers.getException());
-      } else if (isMessageReceived) {
-        future.set(message);
+      if (!isMessageReceived) {
+        if (trailers == null || trailers.getException() == null) {
+          future.setException(
+              new HttpJsonStatusRuntimeException(
+                  statusCode,
+                  "Exception during a client call closure",
+                  new NullPointerException(
+                      "Both response message and response exception were null")));
+        } else {
+          future.setException(trailers.getException());
+        }
       } else {
-        // Exceptional case: No message received and no error in the trailers
-        future.setException(
-            new HttpJsonStatusRuntimeException(
-                statusCode,
-                "Exception during a client call closure",
-                new NullPointerException(
-                    "Both response message and response exception were null")));
+        future.set(message);
       }
     }
   }
