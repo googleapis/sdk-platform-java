@@ -45,7 +45,7 @@ import org.threeten.bp.Duration;
 public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext {
 
   private final RetrySettings globalSettings;
-  protected final ApiClock clock;
+  private final ApiClock clock;
 
   /**
    * Creates a new exponential retry algorithm instance.
@@ -232,9 +232,24 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
   @InternalApi
   protected boolean shouldRPCTerminate(
       long totalTimeSpentNanos, long totalTimeoutNanos, Duration rpcTimeout) {
-    return totalTimeSpentNanos >= totalTimeoutNanos
-        || rpcTimeout.isNegative()
-        || rpcTimeout.isZero();
+    // For RPC Retry Requests, the rpcTimeout is `createNextAttempt()` is calculated with
+    // millisecond precision.
+    // It is possible that there are a few nanoseconds before the totalTimeout (which would allow
+    // for a retry),
+    // but the RPC Timeout would be 0 (as 999999ns or less is calculated as 0ms). For an RPC Timeout
+    // value of 0,
+    // it would mean that the Callable does not set an explicit timeout and that the request would
+    // continue
+    // until it either receives a response or an exception from the socket.
+    //
+    // This is *hopefully* a rare case that may only occur when there it is close to the
+    // totalTimeout deadline,
+    // but this should try to account for the differences in units being used for calculations
+    // (nanos vs ms).
+    // An RPC Timeout may not need nanosecond precision as it is possible that it would send the
+    // request and
+    // then immediately timing out.
+    return totalTimeSpentNanos >= totalTimeoutNanos || rpcTimeout.isZero();
   }
 
   /**
