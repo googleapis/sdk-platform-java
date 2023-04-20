@@ -449,7 +449,6 @@ public class ITRetry {
       // to run. Theoretically this should run exactly 4 times.
       int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
       assertThat(attemptCount).isEqualTo(4);
-
     }
   }
 
