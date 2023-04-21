@@ -60,10 +60,10 @@ public class ITLongRunningOperation {
             UnaryCallSettings.<WaitRequest, OperationSnapshot>newUnaryCallSettingsBuilder()
                 .setRetrySettings(
                     RetrySettings.newBuilder()
-                        .setInitialRpcTimeout(Duration.ofMillis(5000L))
+                        .setInitialRpcTimeout(Duration.ofMillis(1000L))
                         .setRpcTimeoutMultiplier(1.0)
-                        .setMaxRpcTimeout(Duration.ofMillis(5000L))
-                        .setTotalTimeout(Duration.ofMillis(5000L))
+                        .setMaxRpcTimeout(Duration.ofMillis(1000L))
+                        .setTotalTimeout(Duration.ofMillis(1000L))
                         .build())
                 .build())
         .setPollingAlgorithm(
@@ -115,10 +115,10 @@ public class ITLongRunningOperation {
             UnaryCallSettings.<WaitRequest, OperationSnapshot>newUnaryCallSettingsBuilder()
                 .setRetrySettings(
                     RetrySettings.newBuilder()
-                        .setInitialRpcTimeout(Duration.ofMillis(5000L))
+                        .setInitialRpcTimeout(Duration.ofMillis(1000L))
                         .setRpcTimeoutMultiplier(1.0)
-                        .setMaxRpcTimeout(Duration.ofMillis(5000L))
-                        .setTotalTimeout(Duration.ofMillis(5000L))
+                        .setMaxRpcTimeout(Duration.ofMillis(1000L))
+                        .setTotalTimeout(Duration.ofMillis(1000L))
                         .build())
                 .build())
         .setPollingAlgorithm(
@@ -173,10 +173,10 @@ public class ITLongRunningOperation {
             UnaryCallSettings.<WaitRequest, OperationSnapshot>newUnaryCallSettingsBuilder()
                 .setRetrySettings(
                     RetrySettings.newBuilder()
-                        .setInitialRpcTimeout(Duration.ofMillis(5000L))
+                        .setInitialRpcTimeout(Duration.ofMillis(1000L))
                         .setRpcTimeoutMultiplier(1.0)
-                        .setMaxRpcTimeout(Duration.ofMillis(5000L))
-                        .setTotalTimeout(Duration.ofMillis(5000L))
+                        .setMaxRpcTimeout(Duration.ofMillis(1000L))
+                        .setTotalTimeout(Duration.ofMillis(1000L))
                         .build())
                 .build())
         .setPollingAlgorithm(
@@ -227,10 +227,10 @@ public class ITLongRunningOperation {
             UnaryCallSettings.<WaitRequest, OperationSnapshot>newUnaryCallSettingsBuilder()
                 .setRetrySettings(
                     RetrySettings.newBuilder()
-                        .setInitialRpcTimeout(Duration.ofMillis(5000L))
+                        .setInitialRpcTimeout(Duration.ofMillis(1000L))
                         .setRpcTimeoutMultiplier(1.0)
-                        .setMaxRpcTimeout(Duration.ofMillis(5000L))
-                        .setTotalTimeout(Duration.ofMillis(5000L))
+                        .setMaxRpcTimeout(Duration.ofMillis(1000L))
+                        .setTotalTimeout(Duration.ofMillis(1000L))
                         .build())
                 .build())
         .setPollingAlgorithm(
