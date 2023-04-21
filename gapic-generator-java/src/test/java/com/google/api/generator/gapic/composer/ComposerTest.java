@@ -30,7 +30,7 @@ import com.google.api.generator.gapic.model.RegionTag;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
-import com.google.api.generator.test.framework.Utils;
+import com.google.api.generator.test.framework.GoldenTestHelper;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -65,9 +65,11 @@ public class ComposerTest {
         Composer.addApacheLicense(Arrays.asList(GapicClass.create(Kind.TEST, classDef)));
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     gapicClassWithHeaderList.get(0).classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "ComposerPostProcOnFooBar.golden", visitor.write());
+    GoldenTestHelper.saveCodegenToFile(
+        this.getClass(), "ComposerPostProcOnFooBar.golden", visitor.write());
     Path goldenFilePath =
-        Paths.get(Utils.getGoldenDir(this.getClass()), "ComposerPostProcOnFooBar.golden");
+        Paths.get(
+            GoldenTestHelper.getGoldenDir(this.getClass()), "ComposerPostProcOnFooBar.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 

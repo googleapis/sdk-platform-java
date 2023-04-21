@@ -38,7 +38,7 @@ import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.protoparser.BatchingSettingsConfigParser;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.gapic.protoparser.ServiceConfigParser;
-import com.google.api.generator.testutils.LineFormatter;
+import com.google.api.generator.test.utils.LineFormatter;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.protobuf.Descriptors.FileDescriptor;

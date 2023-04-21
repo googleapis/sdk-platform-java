@@ -20,7 +20,7 @@ import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
-import com.google.api.generator.test.framework.Utils;
+import com.google.api.generator.test.framework.GoldenTestHelper;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.junit.Test;
@@ -34,8 +34,9 @@ public class GrpcServiceStubClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "GrpcEchoStub.golden", visitor.write());
-    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "GrpcEchoStub.golden");
+    GoldenTestHelper.saveCodegenToFile(this.getClass(), "GrpcEchoStub.golden", visitor.write());
+    Path goldenFilePath =
+        Paths.get(GoldenTestHelper.getGoldenDir(this.getClass()), "GrpcEchoStub.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 
@@ -48,8 +49,9 @@ public class GrpcServiceStubClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "GrpcWickedStub.golden", visitor.write());
-    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "GrpcWickedStub.golden");
+    GoldenTestHelper.saveCodegenToFile(this.getClass(), "GrpcWickedStub.golden", visitor.write());
+    Path goldenFilePath =
+        Paths.get(GoldenTestHelper.getGoldenDir(this.getClass()), "GrpcWickedStub.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 }

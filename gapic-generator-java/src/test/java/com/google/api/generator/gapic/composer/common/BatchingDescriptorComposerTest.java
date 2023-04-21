@@ -29,7 +29,7 @@ import com.google.api.generator.gapic.protoparser.BatchingSettingsConfigParser;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.gapic.protoparser.ServiceConfigParser;
 import com.google.api.generator.test.framework.Assert;
-import com.google.api.generator.test.framework.Utils;
+import com.google.api.generator.test.framework.GoldenTestHelper;
 import com.google.logging.v2.LogEntryProto;
 import com.google.logging.v2.LoggingConfigProto;
 import com.google.logging.v2.LoggingMetricsProto;
@@ -104,11 +104,11 @@ public class BatchingDescriptorComposerTest {
             method, batchingSetting, messageTypes);
 
     batchingDescriptorExpr.accept(writerVisitor);
-    Utils.saveCodegenToFile(
+    GoldenTestHelper.saveCodegenToFile(
         this.getClass(), "BatchingDescriptorComposerTestSubresponse.golden", writerVisitor.write());
     Path goldenFilePath =
         Paths.get(
-            Utils.getGoldenDir(this.getClass()),
+            GoldenTestHelper.getGoldenDir(this.getClass()),
             "BatchingDescriptorComposerTestSubresponse.golden");
     Assert.assertCodeEquals(goldenFilePath, writerVisitor.write());
   }
@@ -166,13 +166,13 @@ public class BatchingDescriptorComposerTest {
             method, batchingSetting, messageTypes);
 
     batchingDescriptorExpr.accept(writerVisitor);
-    Utils.saveCodegenToFile(
+    GoldenTestHelper.saveCodegenToFile(
         this.getClass(),
         "BatchingDescriptorComposerTestNoSubresponse.golden",
         writerVisitor.write());
     Path goldenFilePath =
         Paths.get(
-            Utils.getGoldenDir(this.getClass()),
+            GoldenTestHelper.getGoldenDir(this.getClass()),
             "BatchingDescriptorComposerTestNoSubresponse.golden");
     Assert.assertCodeEquals(goldenFilePath, writerVisitor.write());
   }

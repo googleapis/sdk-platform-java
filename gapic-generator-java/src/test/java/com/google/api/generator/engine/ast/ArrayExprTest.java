@@ -17,7 +17,7 @@ package com.google.api.generator.engine.ast;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
-import com.google.api.generator.util.TestUtils;
+import com.google.api.generator.testutils.TestUtils;
 import org.junit.Test;
 
 public class ArrayExprTest {

@@ -19,7 +19,7 @@ import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
-import com.google.api.generator.test.framework.Utils;
+import com.google.api.generator.test.framework.GoldenTestHelper;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.junit.Test;
@@ -34,9 +34,10 @@ public class ServiceStubSettingsClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "ComplianceStubSettings.golden", visitor.write());
+    GoldenTestHelper.saveCodegenToFile(
+        this.getClass(), "ComplianceStubSettings.golden", visitor.write());
     Path goldenFilePath =
-        Paths.get(Utils.getGoldenDir(this.getClass()), "ComplianceStubSettings.golden");
+        Paths.get(GoldenTestHelper.getGoldenDir(this.getClass()), "ComplianceStubSettings.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 }
