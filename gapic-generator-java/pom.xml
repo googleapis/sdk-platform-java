@@ -306,7 +306,11 @@
               <goal>test-jar</goal>
             </goals>
             <configuration>
-              <skip>true</skip>
+              <skip>false</skip>
+              <classifier>testlib</classifier>
+              <includes>
+                <include>com/google/api/generator/test/**</include>
+              </includes>
             </configuration>
           </execution>
         </executions>
