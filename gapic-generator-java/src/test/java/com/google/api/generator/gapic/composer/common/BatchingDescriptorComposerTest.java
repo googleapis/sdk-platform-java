@@ -30,6 +30,7 @@ import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.gapic.protoparser.ServiceConfigParser;
 import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.framework.GoldenTestHelper;
+import com.google.api.generator.test.protoloader.TestProtoLoader;
 import com.google.logging.v2.LogEntryProto;
 import com.google.logging.v2.LoggingConfigProto;
 import com.google.logging.v2.LoggingMetricsProto;

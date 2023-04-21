@@ -15,11 +15,11 @@
 package com.google.api.generator.gapic.composer;
 
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
-import com.google.api.generator.gapic.composer.common.TestProtoLoader;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.test.framework.Assert;
 import com.google.api.generator.test.framework.GoldenTestHelper;
+import com.google.api.generator.test.protoloader.TestProtoLoader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.junit.Test;
