@@ -336,4 +336,126 @@ public class ITUnaryDeadline {
       httpJsonClient.awaitTermination(10, TimeUnit.SECONDS);
     }
   }
+
+  // The purpose of this test is to ensure that the deadlineScheduleExecutor is able
+  // to properly cancel the HttpRequest for each retry attempt. This test attempts to
+  // make a call every 100ms for 1 second. If the requestRunnable blocks until we
+  // receive a response from the server (200ms) regardless of it was cancelled, then
+  // we would expect at most 5 responses.
+  @Test
+  public void testGRPC_unaryCallableRetry_deadlineExecutorTimesOutRequest()
+      throws IOException, InterruptedException {
+    RetrySettings defaultRetrySettings =
+        RetrySettings.newBuilder()
+            .setInitialRpcTimeout(Duration.ofMillis(100L))
+            .setRpcTimeoutMultiplier(1.0)
+            .setMaxRpcTimeout(Duration.ofMillis(100L))
+            .setTotalTimeout(Duration.ofMillis(1000L))
+            .setJittered(false)
+            .build();
+    EchoStubSettings.Builder gRPCEchoSettingsBuilder = EchoStubSettings.newBuilder();
+    // Manually set DEADLINE_EXCEEDED as showcase tests do not have that as a retryable code
+    gRPCEchoSettingsBuilder
+        .blockSettings()
+        .setRetrySettings(defaultRetrySettings)
+        .setRetryableCodes(StatusCode.Code.DEADLINE_EXCEEDED);
+    EchoSettings gRPCEchoSettings = EchoSettings.create(gRPCEchoSettingsBuilder.build());
+    gRPCEchoSettings =
+        gRPCEchoSettings
+            .toBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultGrpcTransportProviderBuilder()
+                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .build())
+            .build();
+    try (EchoClient grpcClient = EchoClient.create(gRPCEchoSettings)) {
+      BlockRequest blockRequest =
+          BlockRequest.newBuilder()
+              .setSuccess(
+                  BlockResponse.newBuilder().setContent("gRPCBlockContent_200msDelay_Retry"))
+              // Set the timeout to be longer than the RPC timeout
+              .setResponseDelay(
+                  com.google.protobuf.Duration.newBuilder().setNanos(200000000).build())
+              .build();
+      RetryingFuture<BlockResponse> retryingFuture =
+          (RetryingFuture<BlockResponse>) grpcClient.blockCallable().futureCall(blockRequest);
+      ExecutionException exception =
+          assertThrows(ExecutionException.class, () -> retryingFuture.get(10, TimeUnit.SECONDS));
+      assertThat(exception.getCause()).isInstanceOf(DeadlineExceededException.class);
+      DeadlineExceededException deadlineExceededException =
+          (DeadlineExceededException) exception.getCause();
+      assertThat(deadlineExceededException.getStatusCode().getCode())
+          .isEqualTo(StatusCode.Code.DEADLINE_EXCEEDED);
+      // We cannot guarantee the number of attempts. The RetrySettings should be configured
+      // such that there is no delay between the attempts, but the execution takes time
+      // to run. Theoretically this should run exactly 10 times.
+      int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
+      assertThat(attemptCount).isGreaterThan(5);
+      assertThat(attemptCount).isAtMost(10);
+      grpcClient.awaitTermination(10, TimeUnit.SECONDS);
+    }
+  }
+
+  // The purpose of this test is to ensure that the deadlineScheduleExecutor is able
+  // to properly cancel the HttpRequest for each retry attempt. This test attempts to
+  // make a call every 100ms for 1 second. If the requestRunnable blocks until we
+  // receive a response from the server (200ms) regardless of it was cancelled, then
+  // we would expect at most 5 responses.
+  @Test
+  public void testHttpJson_unaryCallableRetry_deadlineExecutorTimesOutRequest()
+      throws IOException, GeneralSecurityException, InterruptedException {
+    RetrySettings defaultRetrySettings =
+        RetrySettings.newBuilder()
+            .setInitialRpcTimeout(Duration.ofMillis(100L))
+            .setRpcTimeoutMultiplier(1.0)
+            .setMaxRpcTimeout(Duration.ofMillis(100L))
+            .setTotalTimeout(Duration.ofMillis(1000L))
+            .setJittered(false)
+            .build();
+    EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
+    // Manually set DEADLINE_EXCEEDED as showcase tests do not have that as a retryable code
+    httpJsonEchoSettingsBuilder
+        .blockSettings()
+        .setRetrySettings(defaultRetrySettings)
+        .setRetryableCodes(StatusCode.Code.DEADLINE_EXCEEDED);
+    EchoSettings httpJsonEchoSettings = EchoSettings.create(httpJsonEchoSettingsBuilder.build());
+    httpJsonEchoSettings =
+        httpJsonEchoSettings
+            .toBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultHttpJsonTransportProviderBuilder()
+                    .setHttpTransport(
+                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
+                    .setEndpoint("http://localhost:7469")
+                    .build())
+            .build();
+    try (EchoClient httpJsonClient = EchoClient.create(httpJsonEchoSettings)) {
+      BlockRequest blockRequest =
+          BlockRequest.newBuilder()
+              .setSuccess(
+                  BlockResponse.newBuilder().setContent("httpjsonBlockContent_200msDelay_Retry"))
+              // Set the timeout to be longer than the RPC timeout
+              .setResponseDelay(
+                  com.google.protobuf.Duration.newBuilder().setNanos(200000000).build())
+              .build();
+      RetryingFuture<BlockResponse> retryingFuture =
+          (RetryingFuture<BlockResponse>) httpJsonClient.blockCallable().futureCall(blockRequest);
+      ExecutionException exception =
+          assertThrows(ExecutionException.class, () -> retryingFuture.get(10, TimeUnit.SECONDS));
+      assertThat(exception.getCause()).isInstanceOf(DeadlineExceededException.class);
+      DeadlineExceededException deadlineExceededException =
+          (DeadlineExceededException) exception.getCause();
+      assertThat(deadlineExceededException.getStatusCode().getCode())
+          .isEqualTo(StatusCode.Code.DEADLINE_EXCEEDED);
+      // We cannot guarantee the number of attempts. The RetrySettings should be configured
+      // such that there is no delay between the attempts, but the execution takes time
+      // to run. Theoretically this should run exactly 10 times.
+      int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
+      assertThat(attemptCount).isGreaterThan(5);
+      assertThat(attemptCount).isAtMost(10);
+      httpJsonClient.awaitTermination(10, TimeUnit.SECONDS);
+    }
+  }
 }

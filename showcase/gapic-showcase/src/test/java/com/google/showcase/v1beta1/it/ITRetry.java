@@ -20,8 +20,9 @@ import static com.google.common.truth.Truth.assertThat;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.retrying.RetrySettings;
+import com.google.common.collect.ImmutableList;
+import com.google.rpc.Status;
 import com.google.showcase.v1beta1.CreateSequenceRequest;
-import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.Sequence;
 import com.google.showcase.v1beta1.SequenceReport;
 import com.google.showcase.v1beta1.SequenceServiceClient;
@@ -31,6 +32,7 @@ import io.grpc.ManagedChannelBuilder;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.List;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.threeten.bp.Duration;
 import org.threeten.bp.Instant;
@@ -69,7 +71,7 @@ public class ITRetry {
         SequenceServiceSettings.newHttpJsonBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
             .setTransportChannelProvider(
-                EchoSettings.defaultHttpJsonTransportProviderBuilder()
+                SequenceServiceSettings.defaultHttpJsonTransportProviderBuilder()
                     .setHttpTransport(
                         new NetHttpTransport.Builder().doNotValidateCertificate().build())
                     .setEndpoint("http://localhost:7469")
@@ -94,7 +96,7 @@ public class ITRetry {
   }
 
   @Test
-  public void testGRPC_customSequence() throws IOException {
+  public void testGRPC_customTimeout() throws IOException {
     RetrySettings defaultRetrySettings =
         RetrySettings.newBuilder()
             .setRpcTimeoutMultiplier(1.0)
@@ -136,7 +138,7 @@ public class ITRetry {
   }
 
   @Test
-  public void testHttpJson_customSequence() throws IOException, GeneralSecurityException {
+  public void testHttpJson_customTimeout() throws IOException, GeneralSecurityException {
     RetrySettings defaultRetrySettings =
         RetrySettings.newBuilder()
             .setRpcTimeoutMultiplier(1.0)
@@ -155,7 +157,7 @@ public class ITRetry {
             .toBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
             .setTransportChannelProvider(
-                EchoSettings.defaultHttpJsonTransportProviderBuilder()
+                SequenceServiceSettings.defaultHttpJsonTransportProviderBuilder()
                     .setHttpTransport(
                         new NetHttpTransport.Builder().doNotValidateCertificate().build())
                     .setEndpoint("http://localhost:7469")
@@ -179,138 +181,135 @@ public class ITRetry {
     }
   }
 
-  //  // Assuming that jitter sets the retry delay to the max possible value:
-  //  // Attempt #  | Milli Start Time  | Milli End Time  | Retry Delay | RPC Timeout
-  //  // 1          | 0                 | 500             | 200         | 500
-  //  // 2 (Retry)  | 700               | 1700            | 400         | 1000
-  //  // 3 (Retry)  | 2100              | 4000            | 500 (cap)   | 1900
-  //  @Test
-  //  public void
-  //  testHttpJson_unaryCallableRetry_exceedsDefaultTimeout_throwsDeadlineExceededException() {
-  //    RetrySettings defaultRetrySettings =
-  //            RetrySettings.newBuilder()
-  //                    .setInitialRetryDelay(Duration.ofMillis(200L))
-  //                    .setRetryDelayMultiplier(2.0)
-  //                    .setMaxRetryDelay(Duration.ofMillis(500L))
-  //                    .setInitialRpcTimeout(Duration.ofMillis(500L))
-  //                    .setRpcTimeoutMultiplier(2.0)
-  //                    .setMaxRpcTimeout(Duration.ofMillis(2000L))
-  //                    .setTotalTimeout(Duration.ofMillis(4000L))
-  //                    .setJittered(false)
-  //                    .build();
-  //    EchoStubSettings.Builder httpJsonEchoSettingsBuilder =
-  // EchoStubSettings.newHttpJsonBuilder();
-  //    // Manually set DEADLINE_EXCEEDED as showcase tests do not have that as a retryable code
-  //    httpJsonEchoSettingsBuilder
-  //            .blockSettings()
-  //            .setRetrySettings(defaultRetrySettings)
-  //            .setRetryableCodes(StatusCode.Code.DEADLINE_EXCEEDED);
-  //    EchoSettings httpJsonEchoSettings =
-  // EchoSettings.create(httpJsonEchoSettingsBuilder.build());
-  //    httpJsonEchoSettings =
-  //            httpJsonEchoSettings
-  //                    .toBuilder()
-  //                    .setCredentialsProvider(NoCredentialsProvider.create())
-  //                    .setTransportChannelProvider(
-  //                            EchoSettings.defaultHttpJsonTransportProviderBuilder()
-  //                                    .setHttpTransport(
-  //                                            new
-  // NetHttpTransport.Builder().doNotValidateCertificate().build())
-  //                                    .setEndpoint("http://localhost:7469")
-  //                                    .build())
-  //                    .build();
-  //    try (EchoClient httpJsonClient = EchoClient.create(httpJsonEchoSettings)) {
-  //      BlockRequest blockRequest =
-  //              BlockRequest.newBuilder()
-  //                      .setSuccess(
-  //
-  // BlockResponse.newBuilder().setContent("httpjsonBlockContent_3sDelay_Retry"))
-  //
-  // .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(3).build())
-  //                      .build();
-  //      RetryingFuture<BlockResponse> retryingFuture =
-  //              (RetryingFuture<BlockResponse>)
-  // httpJsonClient.blockCallable().futureCall(blockRequest);
-  //      ExecutionException exception =
-  //              assertThrows(ExecutionException.class, () -> retryingFuture.get(10,
-  // TimeUnit.SECONDS));
-  //      assertThat(exception.getCause()).isInstanceOf(DeadlineExceededException.class);
-  //      DeadlineExceededException deadlineExceededException =
-  //              (DeadlineExceededException) exception.getCause();
-  //      assertThat(deadlineExceededException.getStatusCode().getCode())
-  //              .isEqualTo(StatusCode.Code.DEADLINE_EXCEEDED);
-  //      int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
-  //      assertThat(attemptCount).isEqualTo(3);
-  //      httpJsonClient.awaitTermination(10, TimeUnit.SECONDS);
-  //    }
-  //  }
-  //
-  //  // The purpose of this test is to ensure that the deadlineScheduleExecutor is able
-  //  // to properly cancel the HttpRequest for each retry attempt. This test attempts to
-  //  // make a call every 100ms for 10 seconds. If the requestRunnable blocks until we
-  //  // receive a response from the server (200ms) regardless of it was cancelled, then
-  //  // we would expect at most 50 responses.
-  //  @Test
-  //  public void testHttpJson_unaryCallableRetry_deadlineExecutorTimesOutRequest()
-  //          throws IOException, GeneralSecurityException, InterruptedException {
-  //    RetrySettings defaultRetrySettings =
-  //            RetrySettings.newBuilder()
-  //                    .setInitialRpcTimeout(Duration.ofMillis(100L))
-  //                    .setRpcTimeoutMultiplier(1.0)
-  //                    .setMaxRpcTimeout(Duration.ofMillis(100L))
-  //                    .setTotalTimeout(Duration.ofMillis(10000L))
-  //                    .setJittered(false)
-  //                    .build();
-  //    EchoStubSettings.Builder httpJsonEchoSettingsBuilder =
-  // EchoStubSettings.newHttpJsonBuilder();
-  //    // Manually set DEADLINE_EXCEEDED as showcase tests do not have that as a retryable code
-  //    httpJsonEchoSettingsBuilder
-  //            .blockSettings()
-  //            .setRetrySettings(defaultRetrySettings)
-  //            .setRetryableCodes(StatusCode.Code.DEADLINE_EXCEEDED);
-  //    EchoSettings httpJsonEchoSettings =
-  // EchoSettings.create(httpJsonEchoSettingsBuilder.build());
-  //    httpJsonEchoSettings =
-  //            httpJsonEchoSettings
-  //                    .toBuilder()
-  //                    .setCredentialsProvider(NoCredentialsProvider.create())
-  //                    .setTransportChannelProvider(
-  //                            EchoSettings.defaultHttpJsonTransportProviderBuilder()
-  //                                    .setHttpTransport(
-  //                                            new
-  // NetHttpTransport.Builder().doNotValidateCertificate().build())
-  //                                    .setEndpoint("http://localhost:7469")
-  //                                    .build())
-  //                    .build();
-  //    try (EchoClient httpJsonClient = EchoClient.create(httpJsonEchoSettings)) {
-  //      BlockRequest blockRequest =
-  //              BlockRequest.newBuilder()
-  //                      .setSuccess(
-  //
-  // BlockResponse.newBuilder().setContent("httpjsonBlockContent_200msDelay_Retry"))
-  //                      // Set the timeout to be longer than the RPC timeout
-  //                      .setResponseDelay(
-  //
-  // com.google.protobuf.Duration.newBuilder().setNanos(200000000).build())
-  //                      .build();
-  //      RetryingFuture<BlockResponse> retryingFuture =
-  //              (RetryingFuture<BlockResponse>)
-  // httpJsonClient.blockCallable().futureCall(blockRequest);
-  //      ExecutionException exception =
-  //              assertThrows(ExecutionException.class, () -> retryingFuture.get(20,
-  // TimeUnit.SECONDS));
-  //      assertThat(exception.getCause()).isInstanceOf(DeadlineExceededException.class);
-  //      DeadlineExceededException deadlineExceededException =
-  //              (DeadlineExceededException) exception.getCause();
-  //      assertThat(deadlineExceededException.getStatusCode().getCode())
-  //              .isEqualTo(StatusCode.Code.DEADLINE_EXCEEDED);
-  //      // We cannot guarantee the number of attempts. The RetrySettings should be configured
-  //      // such that there is no delay between the attempts, but the execution takes time
-  //      // to run. Theoretically this should run exactly 100 times.
-  //      int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
-  //      assertThat(attemptCount).isGreaterThan(80);
-  //      assertThat(attemptCount).isAtMost(100);
-  //      httpJsonClient.awaitTermination(10, TimeUnit.SECONDS);
-  //    }
-  //  }
+  @Test
+  public void testGRPC_retrySequence() throws IOException {
+    List<Sequence.Response> response =
+        ImmutableList.of(
+            Sequence.Response.newBuilder()
+                .setDelay(com.google.protobuf.Duration.newBuilder().setNanos(100000000))
+                .setStatus(Status.newBuilder().setCode(io.grpc.Status.Code.UNKNOWN.value()))
+                .build(),
+            Sequence.Response.newBuilder()
+                .setDelay(com.google.protobuf.Duration.newBuilder().setNanos(100000000))
+                .setStatus(Status.newBuilder().setCode(io.grpc.Status.Code.UNKNOWN.value()))
+                .build(),
+            Sequence.Response.newBuilder()
+                .setDelay(com.google.protobuf.Duration.newBuilder().setNanos(100000000))
+                .setStatus(Status.newBuilder().setCode(io.grpc.Status.Code.UNKNOWN.value()))
+                .build(),
+            Sequence.Response.newBuilder()
+                .setDelay(com.google.protobuf.Duration.newBuilder().setNanos(100000000))
+                .setStatus(Status.newBuilder().setCode(io.grpc.Status.Code.UNKNOWN.value()))
+                .build(),
+            Sequence.Response.newBuilder()
+                .setDelay(com.google.protobuf.Duration.newBuilder().setNanos(100000000))
+                .setStatus(Status.newBuilder().setCode(io.grpc.Status.Code.OK.value()))
+                .build());
+    SequenceServiceSettings grpcSequenceSettings =
+        SequenceServiceSettings.newBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                SequenceServiceStubSettings.defaultGrpcTransportProviderBuilder()
+                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .build())
+            .build();
+    try (SequenceServiceClient grpcClient = SequenceServiceClient.create(grpcSequenceSettings)) {
+      Sequence sequence =
+          grpcClient.createSequence(
+              CreateSequenceRequest.newBuilder()
+                  .setSequence(Sequence.newBuilder().addAllResponses(response))
+                  .build());
+      grpcClient.attemptSequence(sequence.getName());
+      String sequenceReportName = sequence.getName() + "/sequenceReport";
+      SequenceReport sequenceReport = grpcClient.getSequenceReport(sequenceReportName);
+      List<SequenceReport.Attempt> attemptList = sequenceReport.getAttemptsList();
+      assertThat(attemptList.size()).isEqualTo(response.size());
+      int attemptNumber = 0;
+      for (SequenceReport.Attempt attempt : attemptList) {
+        assertThat(attempt.getStatus()).isEqualTo(response.get(attemptNumber).getStatus());
+        if (attemptNumber > 0) {
+          Instant currentAttemptInstant =
+              Instant.ofEpochSecond(
+                  attempt.getAttemptDeadline().getSeconds(),
+                  attempt.getAttemptDeadline().getNanos());
+          SequenceReport.Attempt previousAttempt = attemptList.get(attemptNumber - 1);
+          Instant previousAttemptInstant =
+              Instant.ofEpochSecond(
+                  previousAttempt.getAttemptDeadline().getSeconds(),
+                  previousAttempt.getAttemptDeadline().getNanos());
+          Duration duration = Duration.between(previousAttemptInstant, currentAttemptInstant);
+          assertThat(duration).isLessThan(Duration.ofMillis(10));
+        }
+        attemptNumber++;
+      }
+    }
+  }
+
+  @Ignore
+  @Test
+  public void testHttpJson_retrySequence() throws IOException, GeneralSecurityException {
+    List<Sequence.Response> response =
+        ImmutableList.of(
+            Sequence.Response.newBuilder()
+                .setDelay(com.google.protobuf.Duration.newBuilder().setNanos(100000000))
+                .setStatus(Status.newBuilder().setCode(io.grpc.Status.Code.UNKNOWN.value()))
+                .build(),
+            Sequence.Response.newBuilder()
+                .setDelay(com.google.protobuf.Duration.newBuilder().setNanos(100000000))
+                .setStatus(Status.newBuilder().setCode(io.grpc.Status.Code.UNKNOWN.value()))
+                .build(),
+            Sequence.Response.newBuilder()
+                .setDelay(com.google.protobuf.Duration.newBuilder().setNanos(100000000))
+                .setStatus(Status.newBuilder().setCode(io.grpc.Status.Code.UNKNOWN.value()))
+                .build(),
+            Sequence.Response.newBuilder()
+                .setDelay(com.google.protobuf.Duration.newBuilder().setNanos(100000000))
+                .setStatus(Status.newBuilder().setCode(io.grpc.Status.Code.UNKNOWN.value()))
+                .build(),
+            Sequence.Response.newBuilder()
+                .setDelay(com.google.protobuf.Duration.newBuilder().setNanos(100000000))
+                .setStatus(Status.newBuilder().setCode(io.grpc.Status.Code.OK.value()))
+                .build());
+    SequenceServiceSettings httpJsonSequenceSettings =
+        SequenceServiceSettings.newHttpJsonBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                SequenceServiceSettings.defaultHttpJsonTransportProviderBuilder()
+                    .setHttpTransport(
+                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
+                    .setEndpoint("http://localhost:7469")
+                    .build())
+            .build();
+    try (SequenceServiceClient httpJsonClient =
+        SequenceServiceClient.create(httpJsonSequenceSettings)) {
+      Sequence sequence =
+          httpJsonClient.createSequence(
+              CreateSequenceRequest.newBuilder()
+                  .setSequence(Sequence.newBuilder().addAllResponses(response))
+                  .build());
+      httpJsonClient.attemptSequence(sequence.getName());
+      String sequenceReportName = sequence.getName() + "/sequenceReport";
+      SequenceReport sequenceReport = httpJsonClient.getSequenceReport(sequenceReportName);
+      List<SequenceReport.Attempt> attemptList = sequenceReport.getAttemptsList();
+      assertThat(attemptList.size()).isEqualTo(response.size());
+      int attemptNumber = 0;
+      for (SequenceReport.Attempt attempt : attemptList) {
+        assertThat(attempt.getStatus()).isEqualTo(response.get(attemptNumber).getStatus());
+        if (attemptNumber > 0) {
+          Instant currentAttemptInstant =
+              Instant.ofEpochSecond(
+                  attempt.getAttemptDeadline().getSeconds(),
+                  attempt.getAttemptDeadline().getNanos());
+          SequenceReport.Attempt previousAttempt = attemptList.get(attemptNumber - 1);
+          Instant previousAttemptInstant =
+              Instant.ofEpochSecond(
+                  previousAttempt.getAttemptDeadline().getSeconds(),
+                  previousAttempt.getAttemptDeadline().getNanos());
+          Duration duration = Duration.between(previousAttemptInstant, currentAttemptInstant);
+          assertThat(duration).isLessThan(Duration.ofMillis(10));
+        }
+        attemptNumber++;
+      }
+    }
+  }
 }
