@@ -139,14 +139,10 @@ public class ITRetry {
       throws IOException, ExecutionException, InterruptedException, TimeoutException {
     RetrySettings defaultRetrySettings =
         RetrySettings.newBuilder()
-            .setInitialRetryDelay(Duration.ofMillis(200L))
-            .setRetryDelayMultiplier(2.0)
-            .setMaxRetryDelay(Duration.ofMillis(500L))
             .setInitialRpcTimeout(Duration.ofMillis(1500L))
             .setRpcTimeoutMultiplier(2.0)
             .setMaxRpcTimeout(Duration.ofMillis(3000L))
             .setTotalTimeout(Duration.ofMillis(5000L))
-            .setJittered(false)
             .build();
     EchoStubSettings.Builder grpcEchoSettingsBuilder = EchoStubSettings.newBuilder();
     // Manually set DEADLINE_EXCEEDED as showcase tests do not have that as a retryable code
@@ -188,14 +184,10 @@ public class ITRetry {
           TimeoutException {
     RetrySettings defaultRetrySettings =
         RetrySettings.newBuilder()
-            .setInitialRetryDelay(Duration.ofMillis(200L))
-            .setRetryDelayMultiplier(2.0)
-            .setMaxRetryDelay(Duration.ofMillis(500L))
             .setInitialRpcTimeout(Duration.ofMillis(1500L))
             .setRpcTimeoutMultiplier(2.0)
             .setMaxRpcTimeout(Duration.ofMillis(3000L))
             .setTotalTimeout(Duration.ofMillis(5000L))
-            .setJittered(false)
             .build();
     EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
     // Manually set DEADLINE_EXCEEDED as showcase tests do not have that as a retryable code
@@ -334,8 +326,7 @@ public class ITRetry {
   // Attempt #  | Milli Start Time  | Milli End Time  | Retry Delay | RPC Timeout
   // 1          | 0                 | 500             | 200         | 500
   // 2 (Retry)  | 700               | 1700            | 400         | 1000
-  // 3 (Retry)  | 2100              | 4100            | 500 (cap)   | 2000
-  // 4 (Retry)  | 4600              | 5000            | 500 (cap)   | 2000
+  // 3 (Retry)  | 2100              | 4000            | 500 (cap)   | 1900
   @Test
   public void testGRPC_unaryCallableRetry_exceedsDefaultTimeout_throwsDeadlineExceededException()
       throws IOException {
@@ -347,7 +338,7 @@ public class ITRetry {
             .setInitialRpcTimeout(Duration.ofMillis(500L))
             .setRpcTimeoutMultiplier(2.0)
             .setMaxRpcTimeout(Duration.ofMillis(2000L))
-            .setTotalTimeout(Duration.ofMillis(5000L))
+            .setTotalTimeout(Duration.ofMillis(4000L))
             .setJittered(false)
             .build();
     EchoStubSettings.Builder grpcEchoSettingsBuilder = EchoStubSettings.newBuilder();
@@ -383,9 +374,9 @@ public class ITRetry {
           .isEqualTo(StatusCode.Code.DEADLINE_EXCEEDED);
       // We cannot guarantee the number of attempts. The RetrySettings should be configured
       // such that there is no delay between the attempts, but the execution takes time
-      // to run. Theoretically this should run exactly 4 times.
+      // to run. Theoretically this should run exactly 3 times.
       int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
-      assertThat(attemptCount).isEqualTo(4);
+      assertThat(attemptCount).isEqualTo(3);
     }
   }
 
@@ -393,8 +384,7 @@ public class ITRetry {
   // Attempt #  | Milli Start Time  | Milli End Time  | Retry Delay | RPC Timeout
   // 1          | 0                 | 500             | 200         | 500
   // 2 (Retry)  | 700               | 1700            | 400         | 1000
-  // 3 (Retry)  | 2100              | 4100            | 500 (cap)   | 2000
-  // 4 (Retry)  | 4600              | 5000            | 500 (cap)   | 2000
+  // 3 (Retry)  | 2100              | 4000            | 500 (cap)   | 1900
   @Test
   public void
       testHttpJson_unaryCallableRetry_exceedsDefaultTimeout_throwsDeadlineExceededException()
@@ -407,7 +397,7 @@ public class ITRetry {
             .setInitialRpcTimeout(Duration.ofMillis(500L))
             .setRpcTimeoutMultiplier(2.0)
             .setMaxRpcTimeout(Duration.ofMillis(2000L))
-            .setTotalTimeout(Duration.ofMillis(5000L))
+            .setTotalTimeout(Duration.ofMillis(4000L))
             .setJittered(false)
             .build();
     EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
@@ -446,9 +436,9 @@ public class ITRetry {
           .isEqualTo(StatusCode.Code.DEADLINE_EXCEEDED);
       // We cannot guarantee the number of attempts. The RetrySettings should be configured
       // such that there is no delay between the attempts, but the execution takes time
-      // to run. Theoretically this should run exactly 4 times.
+      // to run. Theoretically this should run exactly 3 times.
       int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
-      assertThat(attemptCount).isEqualTo(4);
+      assertThat(attemptCount).isEqualTo(3);
     }
   }
 

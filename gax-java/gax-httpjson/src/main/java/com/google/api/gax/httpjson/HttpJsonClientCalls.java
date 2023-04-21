@@ -61,12 +61,12 @@ class HttpJsonClientCalls {
       if (callOptions.getTimeout() == null
           || httpJsonContext
                   .getTimeout()
-                  .compareTo(Duration.ofNanos(callOptions.getTimeout().toNanos()))
+                  .compareTo(Duration.ofMillis(callOptions.getTimeout().toMillis()))
               < 0) {
         callOptions =
             callOptions
                 .toBuilder()
-                .setTimeout(java.time.Duration.ofNanos(httpJsonContext.getTimeout().toNanos()))
+                .setTimeout(java.time.Duration.ofMillis(httpJsonContext.getTimeout().toMillis()))
                 .build();
         httpJsonContext = httpJsonContext.withCallOptions(callOptions);
       }
