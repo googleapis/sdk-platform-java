@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 import org.junit.Test;
 import org.threeten.bp.Duration;
 import org.threeten.bp.Instant;
@@ -68,7 +69,7 @@ public class ITLongRunningOperation {
         .setPollingAlgorithm(
             OperationTimedPollAlgorithm.create(
                 RetrySettings.newBuilder()
-                    .setInitialRetryDelay(Duration.ofMillis(500L))
+                    .setInitialRetryDelay(Duration.ofMillis(1000L))
                     .setRetryDelayMultiplier(2.0)
                     .setMaxRetryDelay(Duration.ofMillis(5000L))
                     .setInitialRpcTimeout(Duration.ZERO)
@@ -88,18 +89,19 @@ public class ITLongRunningOperation {
                     .build())
             .build();
     try (EchoClient grpcClient = EchoClient.create(grpcEchoSettings)) {
-      long epochSecondsInFuture = Instant.now().plus(10, ChronoUnit.SECONDS).getEpochSecond();
+      long epochSecondsInFuture = Instant.now().plus(5, ChronoUnit.SECONDS).getEpochSecond();
       WaitRequest waitRequest =
           WaitRequest.newBuilder()
-              .setSuccess(WaitResponse.newBuilder().setContent("gRPCWaitContent_10sDelay_noRetry"))
+              .setSuccess(WaitResponse.newBuilder().setContent("gRPCWaitContent_5sDelay_noRetry"))
               .setEndTime(Timestamp.newBuilder().setSeconds(epochSecondsInFuture).build())
               .build();
       OperationFuture<WaitResponse, WaitMetadata> operationFuture =
           grpcClient.waitOperationCallable().futureCall(waitRequest);
       WaitResponse waitResponse = operationFuture.get();
-      assertThat(waitResponse.getContent()).isEqualTo("gRPCWaitContent_10sDelay_noRetry");
+      assertThat(waitResponse.getContent()).isEqualTo("gRPCWaitContent_5sDelay_noRetry");
       int attemptCount = operationFuture.getPollingFuture().getAttemptSettings().getAttemptCount();
-      assertThat(attemptCount).isEqualTo(5);
+      assertThat(attemptCount).isEqualTo(3);
+      grpcClient.awaitTermination(10, TimeUnit.SECONDS);
     }
   }
 
@@ -122,13 +124,125 @@ public class ITLongRunningOperation {
         .setPollingAlgorithm(
             OperationTimedPollAlgorithm.create(
                 RetrySettings.newBuilder()
-                    .setInitialRetryDelay(Duration.ofMillis(500L))
+                    .setInitialRetryDelay(Duration.ofMillis(1000L))
                     .setRetryDelayMultiplier(2.0)
                     .setMaxRetryDelay(Duration.ofMillis(5000L))
                     .setInitialRpcTimeout(Duration.ZERO)
                     .setRpcTimeoutMultiplier(1.0)
                     .setMaxRpcTimeout(Duration.ZERO)
                     .setTotalTimeout(Duration.ofMillis(15000L))
+                    .setJittered(false)
+                    .build()));
+    EchoSettings httpJsonEchoSettings = EchoSettings.create(httpJsonEchoSettingsBuilder.build());
+    httpJsonEchoSettings =
+        httpJsonEchoSettings
+            .toBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultHttpJsonTransportProviderBuilder()
+                    .setHttpTransport(
+                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
+                    .setEndpoint("http://localhost:7469")
+                    .build())
+            .build();
+    try (EchoClient httpJsonClient = EchoClient.create(httpJsonEchoSettings)) {
+      long epochSecondsInFuture = Instant.now().plus(5, ChronoUnit.SECONDS).getEpochSecond();
+      WaitRequest waitRequest =
+          WaitRequest.newBuilder()
+              .setSuccess(
+                  WaitResponse.newBuilder().setContent("httpjsonWaitContent_5sDelay_noRetry"))
+              .setEndTime(Timestamp.newBuilder().setSeconds(epochSecondsInFuture).build())
+              .build();
+      OperationFuture<WaitResponse, WaitMetadata> operationFuture =
+          httpJsonClient.waitOperationCallable().futureCall(waitRequest);
+      WaitResponse waitResponse = operationFuture.get();
+      assertThat(waitResponse.getContent()).isEqualTo("httpjsonWaitContent_5sDelay_noRetry");
+      int attemptCount = operationFuture.getPollingFuture().getAttemptSettings().getAttemptCount();
+      assertThat(attemptCount).isEqualTo(3);
+      httpJsonClient.awaitTermination(10, TimeUnit.SECONDS);
+    }
+  }
+
+  @Test
+  public void testGRPC_unaryCallableLRO_unsuccessfulResponse_retryPolling()
+      throws IOException, InterruptedException {
+    EchoStubSettings.Builder grpcEchoSettingsBuilder = EchoStubSettings.newBuilder();
+    grpcEchoSettingsBuilder
+        .waitOperationSettings()
+        .setInitialCallSettings(
+            UnaryCallSettings.<WaitRequest, OperationSnapshot>newUnaryCallSettingsBuilder()
+                .setRetrySettings(
+                    RetrySettings.newBuilder()
+                        .setInitialRpcTimeout(Duration.ofMillis(5000L))
+                        .setRpcTimeoutMultiplier(1.0)
+                        .setMaxRpcTimeout(Duration.ofMillis(5000L))
+                        .setTotalTimeout(Duration.ofMillis(5000L))
+                        .build())
+                .build())
+        .setPollingAlgorithm(
+            OperationTimedPollAlgorithm.create(
+                RetrySettings.newBuilder()
+                    .setInitialRetryDelay(Duration.ofMillis(1000L))
+                    .setRetryDelayMultiplier(2.0)
+                    .setMaxRetryDelay(Duration.ofMillis(3000L))
+                    .setInitialRpcTimeout(Duration.ZERO)
+                    .setRpcTimeoutMultiplier(1.0)
+                    .setMaxRpcTimeout(Duration.ZERO)
+                    .setTotalTimeout(Duration.ofMillis(5000L))
+                    .setJittered(false)
+                    .build()));
+    EchoSettings grpcEchoSettings = EchoSettings.create(grpcEchoSettingsBuilder.build());
+    grpcEchoSettings =
+        grpcEchoSettings
+            .toBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultGrpcTransportProviderBuilder()
+                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .build())
+            .build();
+    try (EchoClient grpcClient = EchoClient.create(grpcEchoSettings)) {
+      long epochSecondsInFuture = Instant.now().plus(10, ChronoUnit.SECONDS).getEpochSecond();
+      WaitRequest waitRequest =
+          WaitRequest.newBuilder()
+              .setSuccess(WaitResponse.newBuilder().setContent("gRPCWaitContent_10sDelay_noRetry"))
+              .setEndTime(Timestamp.newBuilder().setSeconds(epochSecondsInFuture).build())
+              .build();
+      OperationFuture<WaitResponse, WaitMetadata> operationFuture =
+          grpcClient.waitOperationCallable().futureCall(waitRequest);
+      assertThrows(CancellationException.class, operationFuture::get);
+      int attemptCount = operationFuture.getPollingFuture().getAttemptSettings().getAttemptCount();
+      assertThat(attemptCount).isEqualTo(2);
+      grpcClient.awaitTermination(10, TimeUnit.SECONDS);
+    }
+  }
+
+  @Test
+  public void testHttpJson_unaryCallableLRO_unsuccessfulResponse_retryPolling()
+      throws IOException, GeneralSecurityException, InterruptedException {
+    EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
+    httpJsonEchoSettingsBuilder
+        .waitOperationSettings()
+        .setInitialCallSettings(
+            UnaryCallSettings.<WaitRequest, OperationSnapshot>newUnaryCallSettingsBuilder()
+                .setRetrySettings(
+                    RetrySettings.newBuilder()
+                        .setInitialRpcTimeout(Duration.ofMillis(5000L))
+                        .setRpcTimeoutMultiplier(1.0)
+                        .setMaxRpcTimeout(Duration.ofMillis(5000L))
+                        .setTotalTimeout(Duration.ofMillis(5000L))
+                        .build())
+                .build())
+        .setPollingAlgorithm(
+            OperationTimedPollAlgorithm.create(
+                RetrySettings.newBuilder()
+                    .setInitialRetryDelay(Duration.ofMillis(1000L))
+                    .setRetryDelayMultiplier(2.0)
+                    .setMaxRetryDelay(Duration.ofMillis(3000L))
+                    .setInitialRpcTimeout(Duration.ZERO)
+                    .setRpcTimeoutMultiplier(1.0)
+                    .setMaxRpcTimeout(Duration.ZERO)
+                    .setTotalTimeout(Duration.ofMillis(5000L))
                     .setJittered(false)
                     .build()));
     EchoSettings httpJsonEchoSettings = EchoSettings.create(httpJsonEchoSettingsBuilder.build());
@@ -153,118 +267,10 @@ public class ITLongRunningOperation {
               .build();
       OperationFuture<WaitResponse, WaitMetadata> operationFuture =
           httpJsonClient.waitOperationCallable().futureCall(waitRequest);
-      WaitResponse waitResponse = operationFuture.get();
-      assertThat(waitResponse.getContent()).isEqualTo("httpjsonWaitContent_10sDelay_noRetry");
-      int attemptCount = operationFuture.getPollingFuture().getAttemptSettings().getAttemptCount();
-      assertThat(attemptCount).isEqualTo(5);
-    }
-  }
-
-  @Test
-  public void testGRPC_unaryCallableLRO_unsuccessfulResponse_retryPolling() throws IOException {
-    EchoStubSettings.Builder grpcEchoSettingsBuilder = EchoStubSettings.newBuilder();
-    grpcEchoSettingsBuilder
-        .waitOperationSettings()
-        .setInitialCallSettings(
-            UnaryCallSettings.<WaitRequest, OperationSnapshot>newUnaryCallSettingsBuilder()
-                .setRetrySettings(
-                    RetrySettings.newBuilder()
-                        .setInitialRpcTimeout(Duration.ofMillis(5000L))
-                        .setRpcTimeoutMultiplier(1.0)
-                        .setMaxRpcTimeout(Duration.ofMillis(5000L))
-                        .setTotalTimeout(Duration.ofMillis(5000L))
-                        .build())
-                .build())
-        .setPollingAlgorithm(
-            OperationTimedPollAlgorithm.create(
-                RetrySettings.newBuilder()
-                    .setInitialRetryDelay(Duration.ofMillis(500L))
-                    .setRetryDelayMultiplier(2.0)
-                    .setMaxRetryDelay(Duration.ofMillis(4000L))
-                    .setInitialRpcTimeout(Duration.ZERO)
-                    .setRpcTimeoutMultiplier(1.0)
-                    .setMaxRpcTimeout(Duration.ZERO)
-                    .setTotalTimeout(Duration.ofMillis(10000L))
-                    .setJittered(false)
-                    .build()));
-    EchoSettings grpcEchoSettings = EchoSettings.create(grpcEchoSettingsBuilder.build());
-    grpcEchoSettings =
-        grpcEchoSettings
-            .toBuilder()
-            .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTransportChannelProvider(
-                EchoSettings.defaultGrpcTransportProviderBuilder()
-                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
-                    .build())
-            .build();
-    try (EchoClient grpcClient = EchoClient.create(grpcEchoSettings)) {
-      long epochSecondsInFuture = Instant.now().plus(15, ChronoUnit.SECONDS).getEpochSecond();
-      WaitRequest waitRequest =
-          WaitRequest.newBuilder()
-              .setSuccess(WaitResponse.newBuilder().setContent("gRPCWaitContent_15sDelay_noRetry"))
-              .setEndTime(Timestamp.newBuilder().setSeconds(epochSecondsInFuture).build())
-              .build();
-      OperationFuture<WaitResponse, WaitMetadata> operationFuture =
-          grpcClient.waitOperationCallable().futureCall(waitRequest);
       assertThrows(CancellationException.class, operationFuture::get);
       int attemptCount = operationFuture.getPollingFuture().getAttemptSettings().getAttemptCount();
-      assertThat(attemptCount).isEqualTo(4);
-    }
-  }
-
-  @Test
-  public void testHttpJson_unaryCallableLRO_unsuccessfulResponse_retryPolling()
-      throws IOException, GeneralSecurityException {
-    EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
-    httpJsonEchoSettingsBuilder
-        .waitOperationSettings()
-        .setInitialCallSettings(
-            UnaryCallSettings.<WaitRequest, OperationSnapshot>newUnaryCallSettingsBuilder()
-                .setRetrySettings(
-                    RetrySettings.newBuilder()
-                        .setInitialRpcTimeout(Duration.ofMillis(5000L))
-                        .setRpcTimeoutMultiplier(1.0)
-                        .setMaxRpcTimeout(Duration.ofMillis(5000L))
-                        .setTotalTimeout(Duration.ofMillis(5000L))
-                        .build())
-                .build())
-        .setPollingAlgorithm(
-            OperationTimedPollAlgorithm.create(
-                RetrySettings.newBuilder()
-                    .setInitialRetryDelay(Duration.ofMillis(500L))
-                    .setRetryDelayMultiplier(2.0)
-                    .setMaxRetryDelay(Duration.ofMillis(4000L))
-                    .setInitialRpcTimeout(Duration.ZERO)
-                    .setRpcTimeoutMultiplier(1.0)
-                    .setMaxRpcTimeout(Duration.ZERO)
-                    .setTotalTimeout(Duration.ofMillis(10000L))
-                    .setJittered(false)
-                    .build()));
-    EchoSettings httpJsonEchoSettings = EchoSettings.create(httpJsonEchoSettingsBuilder.build());
-    httpJsonEchoSettings =
-        httpJsonEchoSettings
-            .toBuilder()
-            .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTransportChannelProvider(
-                EchoSettings.defaultHttpJsonTransportProviderBuilder()
-                    .setHttpTransport(
-                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
-                    .setEndpoint("http://localhost:7469")
-                    .build())
-            .build();
-    try (EchoClient httpJsonClient = EchoClient.create(httpJsonEchoSettings)) {
-      long epochSecondsInFuture = Instant.now().plus(15, ChronoUnit.SECONDS).getEpochSecond();
-      WaitRequest waitRequest =
-          WaitRequest.newBuilder()
-              .setSuccess(
-                  WaitResponse.newBuilder().setContent("httpjsonWaitContent_15sDelay_noRetry"))
-              .setEndTime(Timestamp.newBuilder().setSeconds(epochSecondsInFuture).build())
-              .build();
-      OperationFuture<WaitResponse, WaitMetadata> operationFuture =
-          httpJsonClient.waitOperationCallable().futureCall(waitRequest);
-      assertThrows(CancellationException.class, operationFuture::get);
-      int attemptCount = operationFuture.getPollingFuture().getAttemptSettings().getAttemptCount();
-      assertThat(attemptCount).isEqualTo(4);
+      assertThat(attemptCount).isEqualTo(2);
+      httpJsonClient.awaitTermination(10, TimeUnit.SECONDS);
     }
   }
 }
