@@ -51,7 +51,7 @@ import org.threeten.bp.temporal.ChronoUnit;
 public class ITLongRunningOperation {
 
   @Test
-  public void testGRPC_unaryCallableLRO_successfulResponse()
+  public void testGRPC_LROSuccessfulResponse()
       throws IOException, ExecutionException, InterruptedException {
     EchoStubSettings.Builder grpcEchoSettingsBuilder = EchoStubSettings.newBuilder();
     grpcEchoSettingsBuilder
@@ -106,7 +106,7 @@ public class ITLongRunningOperation {
   }
 
   @Test
-  public void testHttpJson_unaryCallableLRO_successfulResponse()
+  public void testHttpJson_LROSuccessfulResponse()
       throws IOException, GeneralSecurityException, ExecutionException, InterruptedException {
     EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
     httpJsonEchoSettingsBuilder
@@ -164,7 +164,7 @@ public class ITLongRunningOperation {
   }
 
   @Test
-  public void testGRPC_unaryCallableLRO_unsuccessfulResponse_retryPolling()
+  public void testGRPC_LROUnsuccessfulResponse_retryPolling()
       throws IOException, InterruptedException {
     EchoStubSettings.Builder grpcEchoSettingsBuilder = EchoStubSettings.newBuilder();
     grpcEchoSettingsBuilder
@@ -218,7 +218,7 @@ public class ITLongRunningOperation {
   }
 
   @Test
-  public void testHttpJson_unaryCallableLRO_unsuccessfulResponse_retryPolling()
+  public void testHttpJson_LROUnsuccessfulResponse_retryPolling()
       throws IOException, GeneralSecurityException, InterruptedException {
     EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
     httpJsonEchoSettingsBuilder
