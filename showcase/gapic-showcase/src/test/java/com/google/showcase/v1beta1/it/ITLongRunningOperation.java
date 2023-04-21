@@ -44,14 +44,14 @@ import org.threeten.bp.Instant;
 import org.threeten.bp.temporal.ChronoUnit;
 
 /**
- * For this test, we test a combination of various LRO situations and try to ensure that the calls
- * are polling correctly.Each test attempts to test the number of attempts done in each call. This
- * is done by ignoring the jitter factor to normalize the results for each test.
+ * For this test, we test a combination of various LRO RetrySettings and try to ensure that the
+ * calls are polling correctly. Each test attempts to test the number of attempts done in each call.
+ * This is done by ignoring the jitter factor to normalize the results for each test.
  */
 public class ITLongRunningOperation {
 
   @Test
-  public void testGRPC_LROSuccessfulResponse()
+  public void testGRPC_LROSuccessfulResponse_NoDeadlineExceeded()
       throws IOException, ExecutionException, InterruptedException {
     EchoStubSettings.Builder grpcEchoSettingsBuilder = EchoStubSettings.newBuilder();
     grpcEchoSettingsBuilder
@@ -106,7 +106,7 @@ public class ITLongRunningOperation {
   }
 
   @Test
-  public void testHttpJson_LROSuccessfulResponse()
+  public void testHttpJson_LROSuccessfulResponse_NoDeadlineExceeded()
       throws IOException, GeneralSecurityException, ExecutionException, InterruptedException {
     EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
     httpJsonEchoSettingsBuilder
@@ -164,7 +164,7 @@ public class ITLongRunningOperation {
   }
 
   @Test
-  public void testGRPC_LROUnsuccessfulResponse_retryPolling()
+  public void testGRPC_LROUnsuccessfulResponse_exceedsTotalTimeout_throwsDeadlineExceededException()
       throws IOException, InterruptedException {
     EchoStubSettings.Builder grpcEchoSettingsBuilder = EchoStubSettings.newBuilder();
     grpcEchoSettingsBuilder
@@ -218,8 +218,9 @@ public class ITLongRunningOperation {
   }
 
   @Test
-  public void testHttpJson_LROUnsuccessfulResponse_retryPolling()
-      throws IOException, GeneralSecurityException, InterruptedException {
+  public void
+      testHttpJson_LROUnsuccessfulResponse_exceedsTotalTimeout_throwsDeadlineExceededException()
+          throws IOException, GeneralSecurityException, InterruptedException {
     EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
     httpJsonEchoSettingsBuilder
         .waitOperationSettings()
