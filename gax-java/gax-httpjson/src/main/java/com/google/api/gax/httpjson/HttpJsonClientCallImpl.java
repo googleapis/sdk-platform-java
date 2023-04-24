@@ -360,7 +360,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
         // can do in such an unlikely situation (otherwise we would stay forever in the delivery
         // loop).
         synchronized (lock) {
-          // Close the call immediately marking it cancelled. If already closed close() will have no
+          // Close the call immediately marking it cancelled. If already closed, close() will have no
           // effect.
           close(ex.getStatusCode(), ex.getMessage(), ex, true);
         }
@@ -468,7 +468,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
 
     } catch (Throwable e) {
       // suppress stream closing exceptions in favor of the actual call closing cause. This method
-      // should not throw, otherwise we may stuck in an infinite loop of exception processing.
+      // should not throw, otherwise we may be stuck in an infinite loop of exception processing.
     }
   }
 
