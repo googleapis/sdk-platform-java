@@ -39,7 +39,7 @@ import org.threeten.bp.Instant;
 
 public class ITRetry {
   @Test
-  public void testGRPC_sequence() throws IOException {
+  public void testGRPC_defaultSequenceTimeout_oneAttempt() throws IOException {
     SequenceServiceSettings grpcSequenceSettings =
         SequenceServiceSettings.newBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
@@ -66,7 +66,8 @@ public class ITRetry {
   }
 
   @Test
-  public void testHttpJson_sequence() throws IOException, GeneralSecurityException {
+  public void testHttpJson_defaultSequenceTimeout_oneAttempt()
+      throws IOException, GeneralSecurityException {
     SequenceServiceSettings httpJsonSequenceSettings =
         SequenceServiceSettings.newHttpJsonBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
