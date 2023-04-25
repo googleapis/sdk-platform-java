@@ -30,6 +30,7 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.engine.lexicon.Keyword;
 import com.google.api.generator.gapic.composer.resourcename.ResourceNameTokenizer;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.HttpBindings;
@@ -149,6 +150,7 @@ public class DefaultValueComposer {
       Map<String, String> nestedValuePatterns = new HashMap<>();
       for (Map.Entry<String, String> entry : valuePatterns.entrySet()) {
         String lowerCamelNestedFieldName = JavaStyle.toLowerCamelCase(nestedFieldName);
+        lowerCamelNestedFieldName = Keyword.unescapeKeyword(lowerCamelNestedFieldName);
         if (entry.getKey().startsWith(lowerCamelNestedFieldName + '.')) {
           nestedValuePatterns.put(
               entry.getKey().substring(lowerCamelNestedFieldName.length() + 1), entry.getValue());
