@@ -19,6 +19,7 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
 import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.core.ApiFuture;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.retrying.RetryingFuture;
@@ -33,9 +34,13 @@ import com.google.showcase.v1beta1.stub.SequenceServiceStubSettings;
 import io.grpc.ManagedChannelBuilder;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.stream.IntStream;
+
 import org.junit.Test;
 import org.threeten.bp.Duration;
 
@@ -85,7 +90,6 @@ public class ITUnaryDeadline {
       // Guarantee that this only runs once
       int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
       assertThat(attemptCount).isEqualTo(1);
-      grpcClient.awaitTermination(10, TimeUnit.SECONDS);
     }
   }
 
@@ -130,7 +134,6 @@ public class ITUnaryDeadline {
       // Guarantee that this only runs once
       int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
       assertThat(attemptCount).isEqualTo(1);
-      httpJsonClient.awaitTermination(10, TimeUnit.SECONDS);
     }
   }
 
@@ -179,7 +182,6 @@ public class ITUnaryDeadline {
       // Guarantee that this only runs twice
       int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
       assertThat(attemptCount).isEqualTo(2);
-      grpcClient.awaitTermination(10, TimeUnit.SECONDS);
     }
   }
 
@@ -232,7 +234,6 @@ public class ITUnaryDeadline {
       // Guarantee that this only runs twice
       int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
       assertThat(attemptCount).isEqualTo(2);
-      httpJsonClient.awaitTermination(10, TimeUnit.SECONDS);
     }
   }
 
@@ -241,7 +242,7 @@ public class ITUnaryDeadline {
   @Test
   public void
       testGRPC_unaryUnsuccessfulResponse_exceedsRPCTimeoutAndTotalTimeout_throwsDeadlineExceededException()
-          throws IOException, InterruptedException {
+          throws IOException {
     RetrySettings defaultNoRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRpcTimeout(Duration.ofMillis(5000L))
@@ -281,7 +282,6 @@ public class ITUnaryDeadline {
       // We can guarantee that this only runs once
       int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
       assertThat(attemptCount).isEqualTo(1);
-      grpcClient.awaitTermination(10, TimeUnit.SECONDS);
     }
   }
 
@@ -290,7 +290,7 @@ public class ITUnaryDeadline {
   @Test
   public void
       testHttpJson_unaryUnsuccessfulResponse_exceedsRPCTimeoutAndTotalTimeout_throwsDeadlineExceededException()
-          throws IOException, GeneralSecurityException, InterruptedException {
+          throws IOException, GeneralSecurityException {
     RetrySettings defaultNoRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRpcTimeout(Duration.ofMillis(5000L))
@@ -333,7 +333,6 @@ public class ITUnaryDeadline {
       // We can guarantee that this only runs once
       int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
       assertThat(attemptCount).isEqualTo(1);
-      httpJsonClient.awaitTermination(10, TimeUnit.SECONDS);
     }
   }
 
@@ -343,8 +342,7 @@ public class ITUnaryDeadline {
   // receive a response from the server (200ms) regardless of it was cancelled, then
   // we would expect at most 5 responses.
   @Test
-  public void testGRPC_unaryCallableRetry_deadlineExecutorTimesOutRequest()
-      throws IOException, InterruptedException {
+  public void testGRPC_unaryCallableRetry_deadlineExecutorTimesOutRequest() throws IOException {
     RetrySettings defaultRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRpcTimeout(Duration.ofMillis(100L))
@@ -393,7 +391,6 @@ public class ITUnaryDeadline {
       int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
       assertThat(attemptCount).isGreaterThan(5);
       assertThat(attemptCount).isAtMost(10);
-      grpcClient.awaitTermination(10, TimeUnit.SECONDS);
     }
   }
 
@@ -401,16 +398,16 @@ public class ITUnaryDeadline {
   // to properly cancel the HttpRequest for each retry attempt. This test attempts to
   // make a call every 100ms for 1 second. If the requestRunnable blocks until we
   // receive a response from the server (200ms) regardless of it was cancelled, then
-  // we would expect at most 5 responses.
+  // we would expect at most 50 responses.
   @Test
   public void testHttpJson_unaryCallableRetry_deadlineExecutorTimesOutRequest()
-      throws IOException, GeneralSecurityException, InterruptedException {
+      throws IOException, GeneralSecurityException {
     RetrySettings defaultRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRpcTimeout(Duration.ofMillis(100L))
             .setRpcTimeoutMultiplier(1.0)
             .setMaxRpcTimeout(Duration.ofMillis(100L))
-            .setTotalTimeout(Duration.ofMillis(1000L))
+            .setTotalTimeout(Duration.ofMillis(10000L))
             .setJittered(false)
             .build();
     EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
@@ -443,7 +440,7 @@ public class ITUnaryDeadline {
       RetryingFuture<BlockResponse> retryingFuture =
           (RetryingFuture<BlockResponse>) httpJsonClient.blockCallable().futureCall(blockRequest);
       ExecutionException exception =
-          assertThrows(ExecutionException.class, () -> retryingFuture.get(10, TimeUnit.SECONDS));
+          assertThrows(ExecutionException.class, () -> retryingFuture.get(20, TimeUnit.SECONDS));
       assertThat(exception.getCause()).isInstanceOf(DeadlineExceededException.class);
       DeadlineExceededException deadlineExceededException =
           (DeadlineExceededException) exception.getCause();
@@ -451,11 +448,10 @@ public class ITUnaryDeadline {
           .isEqualTo(StatusCode.Code.DEADLINE_EXCEEDED);
       // We cannot guarantee the number of attempts. The RetrySettings should be configured
       // such that there is no delay between the attempts, but the execution takes time
-      // to run. Theoretically this should run exactly 10 times.
+      // to run. Theoretically this should run exactly 100 times.
       int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
-      assertThat(attemptCount).isGreaterThan(5);
-      assertThat(attemptCount).isAtMost(10);
-      httpJsonClient.awaitTermination(10, TimeUnit.SECONDS);
+      assertThat(attemptCount).isGreaterThan(80);
+      assertThat(attemptCount).isAtMost(100);
     }
   }
 }

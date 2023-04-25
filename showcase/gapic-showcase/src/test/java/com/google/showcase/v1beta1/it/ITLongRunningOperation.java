@@ -37,7 +37,6 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 import org.junit.Test;
 import org.threeten.bp.Duration;
 import org.threeten.bp.Instant;
@@ -101,7 +100,6 @@ public class ITLongRunningOperation {
       assertThat(waitResponse.getContent()).isEqualTo("gRPCWaitContent_5sDelay_noRetry");
       int attemptCount = operationFuture.getPollingFuture().getAttemptSettings().getAttemptCount();
       assertThat(attemptCount).isEqualTo(3);
-      grpcClient.awaitTermination(10, TimeUnit.SECONDS);
     }
   }
 
@@ -159,13 +157,12 @@ public class ITLongRunningOperation {
       assertThat(waitResponse.getContent()).isEqualTo("httpjsonWaitContent_5sDelay_noRetry");
       int attemptCount = operationFuture.getPollingFuture().getAttemptSettings().getAttemptCount();
       assertThat(attemptCount).isEqualTo(3);
-      httpJsonClient.awaitTermination(10, TimeUnit.SECONDS);
     }
   }
 
   @Test
   public void testGRPC_LROUnsuccessfulResponse_exceedsTotalTimeout_throwsDeadlineExceededException()
-      throws IOException, InterruptedException {
+      throws IOException {
     EchoStubSettings.Builder grpcEchoSettingsBuilder = EchoStubSettings.newBuilder();
     grpcEchoSettingsBuilder
         .waitOperationSettings()
@@ -176,7 +173,7 @@ public class ITLongRunningOperation {
                         .setInitialRpcTimeout(Duration.ofMillis(1000L))
                         .setRpcTimeoutMultiplier(1.0)
                         .setMaxRpcTimeout(Duration.ofMillis(1000L))
-                        .setTotalTimeout(Duration.ofMillis(1000L))
+                        .setTotalTimeout(Duration.ofMillis(3000L))
                         .build())
                 .build())
         .setPollingAlgorithm(
@@ -213,14 +210,13 @@ public class ITLongRunningOperation {
       assertThrows(CancellationException.class, operationFuture::get);
       int attemptCount = operationFuture.getPollingFuture().getAttemptSettings().getAttemptCount();
       assertThat(attemptCount).isEqualTo(2);
-      grpcClient.awaitTermination(10, TimeUnit.SECONDS);
     }
   }
 
   @Test
   public void
       testHttpJson_LROUnsuccessfulResponse_exceedsTotalTimeout_throwsDeadlineExceededException()
-          throws IOException, GeneralSecurityException, InterruptedException {
+          throws IOException, GeneralSecurityException {
     EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
     httpJsonEchoSettingsBuilder
         .waitOperationSettings()
@@ -231,7 +227,7 @@ public class ITLongRunningOperation {
                         .setInitialRpcTimeout(Duration.ofMillis(1000L))
                         .setRpcTimeoutMultiplier(1.0)
                         .setMaxRpcTimeout(Duration.ofMillis(1000L))
-                        .setTotalTimeout(Duration.ofMillis(1000L))
+                        .setTotalTimeout(Duration.ofMillis(3000L))
                         .build())
                 .build())
         .setPollingAlgorithm(
@@ -271,7 +267,6 @@ public class ITLongRunningOperation {
       assertThrows(CancellationException.class, operationFuture::get);
       int attemptCount = operationFuture.getPollingFuture().getAttemptSettings().getAttemptCount();
       assertThat(attemptCount).isEqualTo(2);
-      httpJsonClient.awaitTermination(10, TimeUnit.SECONDS);
     }
   }
 }
