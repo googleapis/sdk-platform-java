@@ -116,6 +116,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
   private static final Money DEFAULTER_RESPONSE =
       Money.newBuilder().setCurrencyCode("UAH").setUnits(255).build();
 
+  private ManagedHttpJsonChannel channel;
   private ClientContext clientContext;
   private ServerStreamingCallSettings<Color, Money> streamingCallSettings;
   private ServerStreamingCallable<Color, Money> streamingCallable;
@@ -134,7 +135,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
 
   @Before
   public void setUp() {
-    ManagedHttpJsonChannel channel =
+    channel =
         new ManagedHttpJsonInterceptorChannel(
             ManagedHttpJsonChannel.newBuilder()
                 .setEndpoint("google.com:443")
@@ -160,6 +161,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
 
   @After
   public void tearDown() {
+    channel.shutdown();
     MOCK_SERVICE.reset();
   }
 

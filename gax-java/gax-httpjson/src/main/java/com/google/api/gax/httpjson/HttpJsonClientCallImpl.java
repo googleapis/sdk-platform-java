@@ -360,8 +360,8 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
         // can do in such an unlikely situation (otherwise we would stay forever in the delivery
         // loop).
         synchronized (lock) {
-          // Close the call immediately marking it cancelled. If already closed, close() will have no
-          // effect.
+          // Close the call immediately marking it cancelled. If already closed, close() will have
+          // no effect.
           close(ex.getStatusCode(), ex.getMessage(), ex, true);
         }
       }
