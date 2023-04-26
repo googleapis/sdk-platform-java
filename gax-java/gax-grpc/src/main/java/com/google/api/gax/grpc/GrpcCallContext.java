@@ -48,13 +48,13 @@ import io.grpc.Channel;
 import io.grpc.Deadline;
 import io.grpc.Metadata;
 import io.grpc.auth.MoreCallCredentials;
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.threeten.bp.Duration;
 
 /**
  * GrpcCallContext encapsulates context data used to make a grpc call.
