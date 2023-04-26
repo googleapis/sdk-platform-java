@@ -282,7 +282,6 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
             .setAttemptDirectPathXds()
             .build();
 
-
     assertThat(provider.isDirectPathXdsEnabled()).isTrue();
   }
 
