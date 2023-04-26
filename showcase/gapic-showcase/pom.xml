@@ -19,7 +19,7 @@
   </parent>
 
   <properties>
-    <gapic-showcase.version>0.26.1</gapic-showcase.version>
+    <gapic-showcase.version>0.27.0</gapic-showcase.version>
   </properties>
 
   <profiles>

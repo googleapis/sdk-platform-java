@@ -16,23 +16,22 @@
 
 package com.google.showcase.v1beta1.it;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import com.google.cloud.location.GetLocationRequest;
 import com.google.cloud.location.ListLocationsRequest;
 import com.google.cloud.location.Location;
 import com.google.common.collect.ImmutableList;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.google.common.truth.Truth.assertThat;
-
 public class ITCommonServiceMixins {
 
-  private static final ImmutableList<Location> expectedLocations =
+  private static final List<Location> expectedLocations =
       ImmutableList.of(
           Location.newBuilder()
               .setName("projects/showcase/locations/us-north")
