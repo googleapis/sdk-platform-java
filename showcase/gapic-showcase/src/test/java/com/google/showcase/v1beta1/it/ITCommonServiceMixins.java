@@ -16,19 +16,19 @@
 
 package com.google.showcase.v1beta1.it;
 
-import static com.google.common.truth.Truth.assertThat;
-
 import com.google.cloud.location.GetLocationRequest;
 import com.google.cloud.location.ListLocationsRequest;
 import com.google.cloud.location.Location;
 import com.google.common.collect.ImmutableList;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
+import org.junit.Before;
+import org.junit.Test;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+
+import static com.google.common.truth.Truth.assertThat;
 
 public class ITCommonServiceMixins {
 
@@ -92,8 +92,6 @@ public class ITCommonServiceMixins {
     assertThat(actualLocations).containsExactlyElementsIn(expectedLocations).inOrder();
   }
 
-  @Ignore(
-      "Ignoring until this is resolved: https://github.com/googleapis/gapic-showcase/issues/1299")
   @Test
   public void testHttpJson_getLocation() {
     GetLocationRequest request =
@@ -107,8 +105,6 @@ public class ITCommonServiceMixins {
                 .build());
   }
 
-  @Ignore(
-      "Ignoring until this is resolved: https://github.com/googleapis/gapic-showcase/issues/1299")
   @Test
   public void testHttpJson_listLocations() {
     ListLocationsRequest request =

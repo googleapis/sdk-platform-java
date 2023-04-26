@@ -57,12 +57,13 @@ java_gapic_library(
     test_deps = [
         ":showcase_java_grpc",
 #        ":showcase_java_grpc_extended",
+        "@com_google_googleapis//google/cloud/location:location_java_grpc"
     ],
     transport = "grpc+rest",
     deps = [
         ":showcase_java_proto",
         "@com_google_googleapis//google/api:api_java_proto",
-        "@com_google_api_grpc_proto_google_common_protos//:com_google_api_grpc_proto_google_common_protos"
+        "@com_google_googleapis//google/cloud/location:location_java_proto"
    ],
 )
 

@@ -18,12 +18,14 @@ import com.google.longrunning.Operation;
 import com.google.longrunning.stub.GrpcOperationsStub;
 import com.google.showcase.grpcrest.v1beta1.BlockRequest;
 import com.google.showcase.grpcrest.v1beta1.BlockResponse;
+import com.google.showcase.grpcrest.v1beta1.Case;
 import com.google.showcase.grpcrest.v1beta1.EchoRequest;
 import com.google.showcase.grpcrest.v1beta1.EchoResponse;
 import com.google.showcase.grpcrest.v1beta1.ExpandRequest;
 import com.google.showcase.grpcrest.v1beta1.Object;
 import com.google.showcase.grpcrest.v1beta1.PagedExpandRequest;
 import com.google.showcase.grpcrest.v1beta1.PagedExpandResponse;
+import com.google.showcase.grpcrest.v1beta1.UpdateCaseRequest;
 import com.google.showcase.grpcrest.v1beta1.WaitMetadata;
 import com.google.showcase.grpcrest.v1beta1.WaitRequest;
 import com.google.showcase.grpcrest.v1beta1.WaitResponse;
@@ -127,6 +129,14 @@ public class GrpcEchoStub extends EchoStub {
           .setResponseMarshaller(ProtoUtils.marshaller(EchoResponse.getDefaultInstance()))
           .build();
 
+  private static final MethodDescriptor<UpdateCaseRequest, Case> updateCaseMethodDescriptor =
+      MethodDescriptor.<UpdateCaseRequest, Case>newBuilder()
+          .setType(MethodDescriptor.MethodType.UNARY)
+          .setFullMethodName("google.showcase.grpcrest.v1beta1.Echo/UpdateCase")
+          .setRequestMarshaller(ProtoUtils.marshaller(UpdateCaseRequest.getDefaultInstance()))
+          .setResponseMarshaller(ProtoUtils.marshaller(Case.getDefaultInstance()))
+          .build();
+
   private final UnaryCallable<EchoRequest, EchoResponse> echoCallable;
   private final ServerStreamingCallable<ExpandRequest, EchoResponse> expandCallable;
   private final UnaryCallable<PagedExpandRequest, PagedExpandResponse> pagedExpandCallable;
@@ -142,6 +152,7 @@ public class GrpcEchoStub extends EchoStub {
   private final UnaryCallable<EchoRequest, Object> nestedBindingCallable;
   private final BidiStreamingCallable<EchoRequest, EchoResponse> chatCallable;
   private final UnaryCallable<EchoRequest, EchoResponse> noBindingCallable;
+  private final UnaryCallable<UpdateCaseRequest, Case> updateCaseCallable;
 
   private final BackgroundResource backgroundResources;
   private final GrpcOperationsStub operationsStub;
@@ -227,6 +238,16 @@ public class GrpcEchoStub extends EchoStub {
         GrpcCallSettings.<EchoRequest, EchoResponse>newBuilder()
             .setMethodDescriptor(noBindingMethodDescriptor)
             .build();
+    GrpcCallSettings<UpdateCaseRequest, Case> updateCaseTransportSettings =
+        GrpcCallSettings.<UpdateCaseRequest, Case>newBuilder()
+            .setMethodDescriptor(updateCaseMethodDescriptor)
+            .setParamsExtractor(
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("case.name", String.valueOf(request.getCase().getName()));
+                  return params.build();
+                })
+            .build();
 
     this.echoCallable =
         callableFactory.createUnaryCallable(
@@ -271,6 +292,9 @@ public class GrpcEchoStub extends EchoStub {
     this.noBindingCallable =
         callableFactory.createUnaryCallable(
             noBindingTransportSettings, settings.noBindingSettings(), clientContext);
+    this.updateCaseCallable =
+        callableFactory.createUnaryCallable(
+            updateCaseTransportSettings, settings.updateCaseSettings(), clientContext);
 
     this.backgroundResources =
         new BackgroundResourceAggregation(clientContext.getBackgroundResources());
@@ -344,6 +368,11 @@ public class GrpcEchoStub extends EchoStub {
   @Override
   public UnaryCallable<EchoRequest, EchoResponse> noBindingCallable() {
     return noBindingCallable;
+  }
+
+  @Override
+  public UnaryCallable<UpdateCaseRequest, Case> updateCaseCallable() {
+    return updateCaseCallable;
   }
 
   @Override

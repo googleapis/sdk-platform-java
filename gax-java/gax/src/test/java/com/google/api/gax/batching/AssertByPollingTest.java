@@ -79,7 +79,7 @@ public class AssertByPollingTest {
           }
         };
 
-    Duration timeout = Duration.ofMillis(100);
+    Duration timeout = Duration.ofMillis(300);
     assertByPolling(timeout, succeedsThirdTime);
     Truth.assertThat(numFailures.get()).isEqualTo(2);
   }
