@@ -16,7 +16,10 @@
 
 package com.google.showcase.v1beta1.stub;
 
+import static com.google.showcase.v1beta1.ComplianceClient.ListLocationsPagedResponse;
+
 import com.google.api.core.ApiFunction;
+import com.google.api.core.ApiFuture;
 import com.google.api.core.BetaApi;
 import com.google.api.gax.core.GaxProperties;
 import com.google.api.gax.core.GoogleCredentialsProvider;
@@ -28,12 +31,22 @@ import com.google.api.gax.httpjson.GaxHttpJsonProperties;
 import com.google.api.gax.httpjson.HttpJsonTransportChannel;
 import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
 import com.google.api.gax.retrying.RetrySettings;
+import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.PageContext;
+import com.google.api.gax.rpc.PagedCallSettings;
+import com.google.api.gax.rpc.PagedListDescriptor;
+import com.google.api.gax.rpc.PagedListResponseFactory;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
+import com.google.api.gax.rpc.UnaryCallable;
+import com.google.cloud.location.GetLocationRequest;
+import com.google.cloud.location.ListLocationsRequest;
+import com.google.cloud.location.ListLocationsResponse;
+import com.google.cloud.location.Location;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -100,6 +113,63 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
   private final UnaryCallSettings<RepeatRequest, RepeatResponse> repeatDataBodyPatchSettings;
   private final UnaryCallSettings<EnumRequest, EnumResponse> getEnumSettings;
   private final UnaryCallSettings<EnumResponse, EnumResponse> verifyEnumSettings;
+  private final PagedCallSettings<
+          ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
+      listLocationsSettings;
+  private final UnaryCallSettings<GetLocationRequest, Location> getLocationSettings;
+
+  private static final PagedListDescriptor<ListLocationsRequest, ListLocationsResponse, Location>
+      LIST_LOCATIONS_PAGE_STR_DESC =
+          new PagedListDescriptor<ListLocationsRequest, ListLocationsResponse, Location>() {
+            @Override
+            public String emptyToken() {
+              return "";
+            }
+
+            @Override
+            public ListLocationsRequest injectToken(ListLocationsRequest payload, String token) {
+              return ListLocationsRequest.newBuilder(payload).setPageToken(token).build();
+            }
+
+            @Override
+            public ListLocationsRequest injectPageSize(ListLocationsRequest payload, int pageSize) {
+              return ListLocationsRequest.newBuilder(payload).setPageSize(pageSize).build();
+            }
+
+            @Override
+            public Integer extractPageSize(ListLocationsRequest payload) {
+              return payload.getPageSize();
+            }
+
+            @Override
+            public String extractNextToken(ListLocationsResponse payload) {
+              return payload.getNextPageToken();
+            }
+
+            @Override
+            public Iterable<Location> extractResources(ListLocationsResponse payload) {
+              return payload.getLocationsList() == null
+                  ? ImmutableList.<Location>of()
+                  : payload.getLocationsList();
+            }
+          };
+
+  private static final PagedListResponseFactory<
+          ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
+      LIST_LOCATIONS_PAGE_STR_FACT =
+          new PagedListResponseFactory<
+              ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>() {
+            @Override
+            public ApiFuture<ListLocationsPagedResponse> getFuturePagedResponse(
+                UnaryCallable<ListLocationsRequest, ListLocationsResponse> callable,
+                ListLocationsRequest request,
+                ApiCallContext context,
+                ApiFuture<ListLocationsResponse> futureResponse) {
+              PageContext<ListLocationsRequest, ListLocationsResponse, Location> pageContext =
+                  PageContext.create(callable, LIST_LOCATIONS_PAGE_STR_DESC, request, context);
+              return ListLocationsPagedResponse.createAsync(pageContext, futureResponse);
+            }
+          };
 
   /** Returns the object with the settings used for calls to repeatDataBody. */
   public UnaryCallSettings<RepeatRequest, RepeatResponse> repeatDataBodySettings() {
@@ -149,6 +219,17 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
   /** Returns the object with the settings used for calls to verifyEnum. */
   public UnaryCallSettings<EnumResponse, EnumResponse> verifyEnumSettings() {
     return verifyEnumSettings;
+  }
+
+  /** Returns the object with the settings used for calls to listLocations. */
+  public PagedCallSettings<ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
+      listLocationsSettings() {
+    return listLocationsSettings;
+  }
+
+  /** Returns the object with the settings used for calls to getLocation. */
+  public UnaryCallSettings<GetLocationRequest, Location> getLocationSettings() {
+    return getLocationSettings;
   }
 
   public ComplianceStub createStub() throws IOException {
@@ -268,6 +349,8 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
     repeatDataBodyPatchSettings = settingsBuilder.repeatDataBodyPatchSettings().build();
     getEnumSettings = settingsBuilder.getEnumSettings().build();
     verifyEnumSettings = settingsBuilder.verifyEnumSettings().build();
+    listLocationsSettings = settingsBuilder.listLocationsSettings().build();
+    getLocationSettings = settingsBuilder.getLocationSettings().build();
   }
 
   /** Builder for ComplianceStubSettings. */
@@ -289,6 +372,10 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
         repeatDataBodyPatchSettings;
     private final UnaryCallSettings.Builder<EnumRequest, EnumResponse> getEnumSettings;
     private final UnaryCallSettings.Builder<EnumResponse, EnumResponse> verifyEnumSettings;
+    private final PagedCallSettings.Builder<
+            ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
+        listLocationsSettings;
+    private final UnaryCallSettings.Builder<GetLocationRequest, Location> getLocationSettings;
     private static final ImmutableMap<String, ImmutableSet<StatusCode.Code>>
         RETRYABLE_CODE_DEFINITIONS;
 
@@ -326,6 +413,8 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
       repeatDataBodyPatchSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       getEnumSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       verifyEnumSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      listLocationsSettings = PagedCallSettings.newBuilder(LIST_LOCATIONS_PAGE_STR_FACT);
+      getLocationSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
 
       unaryMethodSettingsBuilders =
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
@@ -338,7 +427,9 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
               repeatDataBodyPutSettings,
               repeatDataBodyPatchSettings,
               getEnumSettings,
-              verifyEnumSettings);
+              verifyEnumSettings,
+              listLocationsSettings,
+              getLocationSettings);
       initDefaults(this);
     }
 
@@ -356,6 +447,8 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
       repeatDataBodyPatchSettings = settings.repeatDataBodyPatchSettings.toBuilder();
       getEnumSettings = settings.getEnumSettings.toBuilder();
       verifyEnumSettings = settings.verifyEnumSettings.toBuilder();
+      listLocationsSettings = settings.listLocationsSettings.toBuilder();
+      getLocationSettings = settings.getLocationSettings.toBuilder();
 
       unaryMethodSettingsBuilders =
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
@@ -368,7 +461,9 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
               repeatDataBodyPutSettings,
               repeatDataBodyPatchSettings,
               getEnumSettings,
-              verifyEnumSettings);
+              verifyEnumSettings,
+              listLocationsSettings,
+              getLocationSettings);
     }
 
     private static Builder createDefault() {
@@ -448,6 +543,16 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_params"));
 
+      builder
+          .listLocationsSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_params"));
+
+      builder
+          .getLocationSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_params"));
+
       return builder;
     }
 
@@ -516,6 +621,18 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
     /** Returns the builder for the settings used for calls to verifyEnum. */
     public UnaryCallSettings.Builder<EnumResponse, EnumResponse> verifyEnumSettings() {
       return verifyEnumSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to listLocations. */
+    public PagedCallSettings.Builder<
+            ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
+        listLocationsSettings() {
+      return listLocationsSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to getLocation. */
+    public UnaryCallSettings.Builder<GetLocationRequest, Location> getLocationSettings() {
+      return getLocationSettings;
     }
 
     @Override
