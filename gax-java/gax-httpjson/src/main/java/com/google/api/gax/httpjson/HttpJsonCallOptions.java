@@ -33,8 +33,8 @@ import com.google.api.core.BetaApi;
 import com.google.auth.Credentials;
 import com.google.auto.value.AutoValue;
 import com.google.protobuf.TypeRegistry;
+import java.time.Instant;
 import javax.annotation.Nullable;
-import org.threeten.bp.Instant;
 
 /** Options for an http-json call, including deadline and credentials. */
 @BetaApi

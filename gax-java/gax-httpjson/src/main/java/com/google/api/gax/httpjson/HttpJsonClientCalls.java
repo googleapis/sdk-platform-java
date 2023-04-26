@@ -32,10 +32,10 @@ package com.google.api.gax.httpjson;
 import com.google.api.core.AbstractApiFuture;
 import com.google.api.core.ApiFuture;
 import com.google.api.gax.rpc.ApiCallContext;
+import java.time.Instant;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
-import org.threeten.bp.Instant;
 
 /**
  * {@code HttpJsonClientCalls} creates a new {@code HttpJsonClientCAll} from the given call context.
