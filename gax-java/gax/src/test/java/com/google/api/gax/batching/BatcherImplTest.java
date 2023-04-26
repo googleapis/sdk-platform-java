@@ -50,6 +50,7 @@ import com.google.api.gax.rpc.testing.FakeCallContext;
 import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Queues;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
@@ -79,7 +80,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
 public class BatcherImplTest {

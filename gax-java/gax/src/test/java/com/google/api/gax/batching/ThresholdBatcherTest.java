@@ -34,6 +34,7 @@ import static com.google.common.truth.Truth.assertThat;
 import com.google.api.core.ApiFutures;
 import com.google.api.gax.batching.FlowController.FlowControlException;
 import com.google.api.gax.batching.FlowController.LimitExceededBehavior;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -42,7 +43,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import org.junit.Assert;
 import org.junit.Test;
-import org.threeten.bp.Duration;
 
 public class ThresholdBatcherTest {
 

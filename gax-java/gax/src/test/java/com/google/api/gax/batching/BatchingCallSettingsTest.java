@@ -36,12 +36,12 @@ import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.testing.FakeBatchableApi.LabeledIntList;
 import com.google.common.collect.ImmutableSet;
+import java.time.Duration;
 import java.util.List;
 import java.util.Set;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
 public class BatchingCallSettingsTest {

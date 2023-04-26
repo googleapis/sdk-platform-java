@@ -39,13 +39,13 @@ import com.google.api.core.SettableApiFuture;
 import com.google.api.gax.batching.FlowController.FlowControlException;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
-import org.threeten.bp.Duration;
 
 /**
  * Queues up elements until either a duration of time has passed or any threshold in a given set of
