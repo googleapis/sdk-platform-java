@@ -275,8 +275,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
 
   @Test
   public void testDirectPathXds() throws IOException {
-
-    TransportChannelProvider provider =
+    InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(true)
             .setAttemptDirectPathXds()
