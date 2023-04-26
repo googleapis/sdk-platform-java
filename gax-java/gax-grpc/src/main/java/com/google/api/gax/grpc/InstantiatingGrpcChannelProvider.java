@@ -82,7 +82,6 @@ import org.threeten.bp.Duration;
  */
 @InternalExtensionOnly
 public final class InstantiatingGrpcChannelProvider implements TransportChannelProvider {
-  static final String DIRECT_PATH_ENV_VAR = "GOOGLE_CLOUD_ENABLE_DIRECT_PATH";
   private static final String DIRECT_PATH_ENV_DISABLE_DIRECT_PATH =
       "GOOGLE_CLOUD_DISABLE_DIRECT_PATH";
   private static final String DIRECT_PATH_ENV_ENABLE_XDS = "GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS";
@@ -237,9 +236,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
             channelPoolSettings, InstantiatingGrpcChannelProvider.this::createSingleChannel));
   }
 
-  // TODO(mohanli): Use attemptDirectPath as the only indicator once setAttemptDirectPath is adapted
-  //                and the env var is removed from client environment.
-  private boolean isDirectPathEnabled(String serviceAddress) {
+  private boolean isDirectPathEnabled() {
     String disableDirectPathEnv = envProvider.getenv(DIRECT_PATH_ENV_DISABLE_DIRECT_PATH);
     boolean isDirectPathDisabled = Boolean.parseBoolean(disableDirectPathEnv);
     if (isDirectPathDisabled) {
@@ -248,16 +245,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     // Only check attemptDirectPath when DIRECT_PATH_ENV_DISABLE_DIRECT_PATH is not set.
     if (attemptDirectPath != null) {
       return attemptDirectPath;
-    }
-    // Only check DIRECT_PATH_ENV_VAR when attemptDirectPath is not set.
-    String whiteList = envProvider.getenv(DIRECT_PATH_ENV_VAR);
-    if (whiteList == null) {
-      return false;
-    }
-    for (String service : whiteList.split(",")) {
-      if (!service.isEmpty() && serviceAddress.contains(service)) {
-        return true;
-      }
     }
     return false;
   }
@@ -318,7 +305,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
     // Check DirectPath traffic.
     boolean isDirectPathXdsEnabled = false;
-    if (isDirectPathEnabled(serviceAddress)
+    if (isDirectPathEnabled()
         && isNonDefaultServiceAccountAllowed()
         && isOnComputeEngine()) {
       CallCredentials callCreds = MoreCallCredentials.from(credentials);
