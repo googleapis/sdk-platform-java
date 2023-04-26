@@ -31,7 +31,9 @@ import org.junit.Test;
 
 public class ITCommonServiceMixins {
 
-  private static final List<Location> expectedLocations =
+  // The showcase server always returns a fixed list of locations. See
+  // https://github.com/googleapis/gapic-showcase/blob/main/server/services/locations_service.go
+  private static final List<Location> EXPECTED_LOCATIONS =
       ImmutableList.of(
           Location.newBuilder()
               .setName("projects/showcase/locations/us-north")
@@ -57,7 +59,7 @@ public class ITCommonServiceMixins {
     // Create gRPC Echo Client
     grpcClient = TestClientInitializer.createGrpcEchoClient();
 
-    // Create httpjson Echo Client
+    // Create HttpJson Echo Client
     httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
   }
 
@@ -81,14 +83,12 @@ public class ITCommonServiceMixins {
     EchoClient.ListLocationsPagedResponse locationsPagedResponse =
         grpcClient.listLocations(request);
 
-    // The showcase server always returns a fixed list of locations. See
-    // https://github.com/googleapis/gapic-showcase/blob/main/server/services/locations_service.go
     List<Location> actualLocations = new ArrayList<>();
     for (Location location : locationsPagedResponse.iterateAll()) {
       actualLocations.add(location);
     }
 
-    assertThat(actualLocations).containsExactlyElementsIn(expectedLocations).inOrder();
+    assertThat(actualLocations).containsExactlyElementsIn(EXPECTED_LOCATIONS).inOrder();
   }
 
   @Test
@@ -111,13 +111,11 @@ public class ITCommonServiceMixins {
     EchoClient.ListLocationsPagedResponse locationsPagedResponse =
         httpjsonClient.listLocations(request);
 
-    // The showcase server always returns a fixed list of locations. See
-    // https://github.com/googleapis/gapic-showcase/blob/main/server/services/locations_service.go
     List<Location> actualLocations = new ArrayList<>();
     for (Location location : locationsPagedResponse.iterateAll()) {
       actualLocations.add(location);
     }
 
-    assertThat(actualLocations).containsExactlyElementsIn(expectedLocations).inOrder();
+    assertThat(actualLocations).containsExactlyElementsIn(EXPECTED_LOCATIONS).inOrder();
   }
 }
