@@ -274,7 +274,15 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testDirectPathXds() throws IOException {
+  public void testDirectPathXdsDisableByDefault() throws IOException {
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder().setAttemptDirectPath(true).build();
+
+    assertThat(provider.isDirectPathXdsEnabled()).isFalse();
+  }
+
+  @Test
+  public void testDirectPathXdsEnabled() throws IOException {
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(true)
