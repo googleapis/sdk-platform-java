@@ -63,7 +63,7 @@ import com.google.longrunning.Operation;
 import com.google.longrunning.WaitOperationRequest;
 import com.google.protobuf.Empty;
 import java.io.IOException;
-import org.threeten.bp.Duration;
+import java.time.Duration;
 
 /** Settings class to configure an instance of {@link OperationsStub}. */
 public class OperationsStubSettings extends StubSettings<OperationsStubSettings> {
