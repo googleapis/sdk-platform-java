@@ -32,6 +32,7 @@ package com.google.api.gax.rpc;
 import com.google.api.core.ApiClock;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.common.base.Preconditions;
+import java.time.Duration;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.concurrent.CancellationException;
@@ -45,7 +46,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.GuardedBy;
-import org.threeten.bp.Duration;
 
 /**
  * Prevents the streams from hanging indefinitely. This middleware garbage collects idle streams in

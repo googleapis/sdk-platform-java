@@ -30,9 +30,9 @@
 package com.google.api.gax.rpc;
 
 import com.google.api.core.ApiClock;
+import java.time.Duration;
 import java.util.concurrent.ScheduledExecutorService;
 import javax.annotation.Nonnull;
-import org.threeten.bp.Duration;
 
 public interface WatchdogProvider {
   boolean needsClock();

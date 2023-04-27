@@ -37,9 +37,9 @@ import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import java.time.Duration;
 import java.util.Set;
 import javax.annotation.Nonnull;
-import org.threeten.bp.Duration;
 
 /**
  * A settings class to configure a {@link ServerStreamingCallable}.

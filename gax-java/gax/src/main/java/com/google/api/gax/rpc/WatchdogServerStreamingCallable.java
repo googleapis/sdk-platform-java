@@ -31,7 +31,7 @@ package com.google.api.gax.rpc;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
-import org.threeten.bp.Duration;
+import java.time.Duration;
 
 /**
  * A callable that uses a {@link Watchdog} to monitor streams.

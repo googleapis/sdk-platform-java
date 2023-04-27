@@ -34,8 +34,8 @@ import com.google.api.core.ApiFutures;
 import com.google.api.gax.retrying.NonCancellableFuture;
 import com.google.api.gax.retrying.RetryingFuture;
 import com.google.common.base.Preconditions;
+import java.time.Duration;
 import java.util.concurrent.Callable;
-import org.threeten.bp.Duration;
 
 /**
  * A callable representing an attempt to check the status of something by issuing a call to a

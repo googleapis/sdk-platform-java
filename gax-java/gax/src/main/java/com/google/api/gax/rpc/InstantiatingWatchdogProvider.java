@@ -32,10 +32,10 @@ package com.google.api.gax.rpc;
 import com.google.api.core.ApiClock;
 import com.google.api.core.InternalApi;
 import com.google.common.base.Preconditions;
+import java.time.Duration;
 import java.util.concurrent.ScheduledExecutorService;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.threeten.bp.Duration;
 
 /**
  * A watchdog provider which instantiates a new provider on every request.

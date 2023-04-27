@@ -34,8 +34,8 @@ import com.google.api.gax.retrying.RetrySettings;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import java.time.Duration;
 import java.util.Set;
-import org.threeten.bp.Duration;
 
 /**
  * A base settings class to configure a UnaryCallable. An instance of UnaryCallSettings is not

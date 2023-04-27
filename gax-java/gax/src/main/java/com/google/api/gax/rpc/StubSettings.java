@@ -45,10 +45,10 @@ import com.google.auth.oauth2.QuotaProjectIdProvider;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.concurrent.Executor;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.threeten.bp.Duration;
 
 /**
  * A base settings class to configure a client stub class.

@@ -34,10 +34,10 @@ import com.google.api.gax.retrying.RetryingFuture;
 import com.google.api.gax.retrying.ServerStreamingAttemptException;
 import com.google.api.gax.retrying.StreamResumptionStrategy;
 import com.google.common.base.Preconditions;
+import java.time.Duration;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CancellationException;
 import javax.annotation.concurrent.GuardedBy;
-import org.threeten.bp.Duration;
 
 /**
  * A callable that generates Server Streaming attempts. At any one time, it is responsible for at
