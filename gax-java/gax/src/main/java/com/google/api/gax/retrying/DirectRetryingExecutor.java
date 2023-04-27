@@ -35,8 +35,8 @@ import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutures;
 import java.io.InterruptedIOException;
 import java.nio.channels.ClosedByInterruptException;
+import java.time.Duration;
 import java.util.concurrent.Callable;
-import org.threeten.bp.Duration;
 
 /**
  * The retry executor which executes attempts in the current thread, potentially causing the current

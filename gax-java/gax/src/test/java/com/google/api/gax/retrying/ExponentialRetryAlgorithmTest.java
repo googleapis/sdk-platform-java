@@ -36,10 +36,10 @@ import static org.junit.Assert.assertTrue;
 
 import com.google.api.gax.core.FakeApiClock;
 import com.google.api.gax.rpc.testing.FakeCallContext;
+import java.time.Duration;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
 public class ExponentialRetryAlgorithmTest {

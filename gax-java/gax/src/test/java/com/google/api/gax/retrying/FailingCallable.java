@@ -31,10 +31,10 @@ package com.google.api.gax.retrying;
 
 import com.google.api.gax.tracing.ApiTracer;
 import com.google.common.base.Preconditions;
+import java.time.Duration;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
-import org.threeten.bp.Duration;
 
 class FailingCallable implements Callable<String> {
   static final RetrySettings FAST_RETRY_SETTINGS =

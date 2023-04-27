@@ -32,8 +32,8 @@ package com.google.api.gax.retrying;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.api.core.ApiClock;
+import java.time.Duration;
 import java.util.concurrent.ThreadLocalRandom;
-import org.threeten.bp.Duration;
 
 /**
  * The timed retry algorithm which uses jittered exponential backoff factor for calculating the next
