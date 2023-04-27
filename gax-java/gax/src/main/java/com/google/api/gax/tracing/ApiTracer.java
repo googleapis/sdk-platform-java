@@ -30,7 +30,7 @@
 package com.google.api.gax.tracing;
 
 import com.google.api.core.InternalApi;
-import org.threeten.bp.Duration;
+import java.time.Duration;
 
 /**
  * Implementations of this class trace the logical flow of a google cloud client.

@@ -30,7 +30,7 @@
 package com.google.api.gax.tracing;
 
 import com.google.api.core.InternalApi;
-import org.threeten.bp.Duration;
+import java.time.Duration;
 
 /**
  * A base implementation of {@link ApiTracer} that does nothing.

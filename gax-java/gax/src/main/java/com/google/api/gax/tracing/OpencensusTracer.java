@@ -43,11 +43,11 @@ import io.opencensus.trace.Span;
 import io.opencensus.trace.Status;
 import io.opencensus.trace.Status.CanonicalCode;
 import io.opencensus.trace.Tracer;
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.annotation.Nonnull;
-import org.threeten.bp.Duration;
 
 /**
  * Implementation of {@link ApiTracer} that uses OpenCensus.
