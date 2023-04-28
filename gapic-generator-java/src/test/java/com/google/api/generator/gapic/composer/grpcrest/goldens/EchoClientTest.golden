@@ -21,6 +21,7 @@ import com.google.longrunning.Operation;
 import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Any;
 import com.google.protobuf.Duration;
+import com.google.protobuf.FieldMask;
 import com.google.protobuf.Timestamp;
 import com.google.protobuf.Value;
 import com.google.rpc.Status;
@@ -895,6 +896,49 @@ public class EchoClientTest {
               .setFooBar(Foobar.newBuilder().build())
               .build();
       client.noBinding(request);
+      Assert.fail("No exception raised");
+    } catch (InvalidArgumentException e) {
+      // Expected exception.
+    }
+  }
+
+  @Test
+  public void updateCaseTest() throws Exception {
+    Case expectedResponse =
+        Case.newBuilder()
+            .setName("name3373707")
+            .setDisplayName("displayName1714148973")
+            .setDescription("description-1724546052")
+            .build();
+    mockEcho.addResponse(expectedResponse);
+
+    Case case_ = Case.newBuilder().build();
+    FieldMask updateMask = FieldMask.newBuilder().build();
+
+    Case actualResponse = client.updateCase(case_, updateMask);
+    Assert.assertEquals(expectedResponse, actualResponse);
+
+    List<AbstractMessage> actualRequests = mockEcho.getRequests();
+    Assert.assertEquals(1, actualRequests.size());
+    UpdateCaseRequest actualRequest = ((UpdateCaseRequest) actualRequests.get(0));
+
+    Assert.assertEquals(case_, actualRequest.getCase());
+    Assert.assertEquals(updateMask, actualRequest.getUpdateMask());
+    Assert.assertTrue(
+        channelProvider.isHeaderSent(
+            ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
+            GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
+  }
+
+  @Test
+  public void updateCaseExceptionTest() throws Exception {
+    StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
+    mockEcho.addException(exception);
+
+    try {
+      Case case_ = Case.newBuilder().build();
+      FieldMask updateMask = FieldMask.newBuilder().build();
+      client.updateCase(case_, updateMask);
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
