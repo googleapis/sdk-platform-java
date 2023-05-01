@@ -321,7 +321,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     ManagedChannelBuilder<?> builder;
 
     // Check DirectPath traffic.
-    boolean isDirectPathXdsEnabled = false;
+    boolean useDirectPathXds = false;
     if (isDirectPathEnabled() && isNonDefaultServiceAccountAllowed() && isOnComputeEngine()) {
       CallCredentials callCreds = MoreCallCredentials.from(credentials);
       ChannelCredentials channelCreds =
