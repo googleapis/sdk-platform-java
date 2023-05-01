@@ -59,22 +59,22 @@ public class ITLongRunningOperation {
             UnaryCallSettings.<WaitRequest, OperationSnapshot>newUnaryCallSettingsBuilder()
                 .setRetrySettings(
                     RetrySettings.newBuilder()
-                        .setInitialRpcTimeout(Duration.ofMillis(1000L))
+                        .setInitialRpcTimeout(Duration.ofMillis(3000L))
                         .setRpcTimeoutMultiplier(1.0)
-                        .setMaxRpcTimeout(Duration.ofMillis(1000L))
-                        .setTotalTimeout(Duration.ofMillis(1000L))
+                        .setMaxRpcTimeout(Duration.ofMillis(3000L))
+                        .setTotalTimeout(Duration.ofMillis(3000L))
                         .build())
                 .build())
         .setPollingAlgorithm(
             OperationTimedPollAlgorithm.create(
                 RetrySettings.newBuilder()
-                    .setInitialRetryDelay(Duration.ofMillis(1000L))
+                    .setInitialRetryDelay(Duration.ofMillis(3000L))
                     .setRetryDelayMultiplier(2.0)
-                    .setMaxRetryDelay(Duration.ofMillis(5000L))
+                    .setMaxRetryDelay(Duration.ofMillis(10000L))
                     .setInitialRpcTimeout(Duration.ZERO)
                     .setRpcTimeoutMultiplier(1.0)
                     .setMaxRpcTimeout(Duration.ZERO)
-                    .setTotalTimeout(Duration.ofMillis(15000L))
+                    .setTotalTimeout(Duration.ofMillis(10000L))
                     .setJittered(false)
                     .build()));
     EchoSettings grpcEchoSettings = EchoSettings.create(grpcEchoSettingsBuilder.build());
@@ -99,7 +99,7 @@ public class ITLongRunningOperation {
       WaitResponse waitResponse = operationFuture.get();
       assertThat(waitResponse.getContent()).isEqualTo("gRPCWaitContent_5sDelay_noRetry");
       int attemptCount = operationFuture.getPollingFuture().getAttemptSettings().getAttemptCount();
-      assertThat(attemptCount).isEqualTo(3);
+      assertThat(attemptCount).isEqualTo(2);
     }
   }
 
@@ -113,22 +113,22 @@ public class ITLongRunningOperation {
             UnaryCallSettings.<WaitRequest, OperationSnapshot>newUnaryCallSettingsBuilder()
                 .setRetrySettings(
                     RetrySettings.newBuilder()
-                        .setInitialRpcTimeout(Duration.ofMillis(1000L))
+                        .setInitialRpcTimeout(Duration.ofMillis(3000L))
                         .setRpcTimeoutMultiplier(1.0)
-                        .setMaxRpcTimeout(Duration.ofMillis(1000L))
-                        .setTotalTimeout(Duration.ofMillis(1000L))
+                        .setMaxRpcTimeout(Duration.ofMillis(3000L))
+                        .setTotalTimeout(Duration.ofMillis(3000L))
                         .build())
                 .build())
         .setPollingAlgorithm(
             OperationTimedPollAlgorithm.create(
                 RetrySettings.newBuilder()
-                    .setInitialRetryDelay(Duration.ofMillis(1000L))
+                    .setInitialRetryDelay(Duration.ofMillis(3000L))
                     .setRetryDelayMultiplier(2.0)
-                    .setMaxRetryDelay(Duration.ofMillis(5000L))
+                    .setMaxRetryDelay(Duration.ofMillis(10000L))
                     .setInitialRpcTimeout(Duration.ZERO)
                     .setRpcTimeoutMultiplier(1.0)
                     .setMaxRpcTimeout(Duration.ZERO)
-                    .setTotalTimeout(Duration.ofMillis(15000L))
+                    .setTotalTimeout(Duration.ofMillis(10000L))
                     .setJittered(false)
                     .build()));
     EchoSettings httpJsonEchoSettings = EchoSettings.create(httpJsonEchoSettingsBuilder.build());
@@ -156,7 +156,7 @@ public class ITLongRunningOperation {
       WaitResponse waitResponse = operationFuture.get();
       assertThat(waitResponse.getContent()).isEqualTo("httpjsonWaitContent_5sDelay_noRetry");
       int attemptCount = operationFuture.getPollingFuture().getAttemptSettings().getAttemptCount();
-      assertThat(attemptCount).isEqualTo(3);
+      assertThat(attemptCount).isEqualTo(2);
     }
   }
 
@@ -170,9 +170,9 @@ public class ITLongRunningOperation {
             UnaryCallSettings.<WaitRequest, OperationSnapshot>newUnaryCallSettingsBuilder()
                 .setRetrySettings(
                     RetrySettings.newBuilder()
-                        .setInitialRpcTimeout(Duration.ofMillis(1000L))
+                        .setInitialRpcTimeout(Duration.ofMillis(3000L))
                         .setRpcTimeoutMultiplier(1.0)
-                        .setMaxRpcTimeout(Duration.ofMillis(1000L))
+                        .setMaxRpcTimeout(Duration.ofMillis(3000L))
                         .setTotalTimeout(Duration.ofMillis(3000L))
                         .build())
                 .build())
@@ -185,7 +185,7 @@ public class ITLongRunningOperation {
                     .setInitialRpcTimeout(Duration.ZERO)
                     .setRpcTimeoutMultiplier(1.0)
                     .setMaxRpcTimeout(Duration.ZERO)
-                    .setTotalTimeout(Duration.ofMillis(10000L))
+                    .setTotalTimeout(Duration.ofMillis(5000L))
                     .setJittered(false)
                     .build()));
     EchoSettings grpcEchoSettings = EchoSettings.create(grpcEchoSettingsBuilder.build());
@@ -199,17 +199,17 @@ public class ITLongRunningOperation {
                     .build())
             .build();
     try (EchoClient grpcClient = EchoClient.create(grpcEchoSettings)) {
-      long epochSecondsInFuture = Instant.now().plus(10, ChronoUnit.SECONDS).getEpochSecond();
+      long epochSecondsInFuture = Instant.now().plus(6, ChronoUnit.SECONDS).getEpochSecond();
       WaitRequest waitRequest =
           WaitRequest.newBuilder()
-              .setSuccess(WaitResponse.newBuilder().setContent("gRPCWaitContent_10sDelay_noRetry"))
+              .setSuccess(WaitResponse.newBuilder().setContent("gRPCWaitContent_6sDelay"))
               .setEndTime(Timestamp.newBuilder().setSeconds(epochSecondsInFuture).build())
               .build();
       OperationFuture<WaitResponse, WaitMetadata> operationFuture =
           grpcClient.waitOperationCallable().futureCall(waitRequest);
       assertThrows(CancellationException.class, operationFuture::get);
       int attemptCount = operationFuture.getPollingFuture().getAttemptSettings().getAttemptCount();
-      assertThat(attemptCount).isEqualTo(2);
+      assertThat(attemptCount).isEqualTo(1);
     }
   }
 
@@ -224,9 +224,9 @@ public class ITLongRunningOperation {
             UnaryCallSettings.<WaitRequest, OperationSnapshot>newUnaryCallSettingsBuilder()
                 .setRetrySettings(
                     RetrySettings.newBuilder()
-                        .setInitialRpcTimeout(Duration.ofMillis(1000L))
+                        .setInitialRpcTimeout(Duration.ofMillis(3000L))
                         .setRpcTimeoutMultiplier(1.0)
-                        .setMaxRpcTimeout(Duration.ofMillis(1000L))
+                        .setMaxRpcTimeout(Duration.ofMillis(3000L))
                         .setTotalTimeout(Duration.ofMillis(3000L))
                         .build())
                 .build())
@@ -239,7 +239,7 @@ public class ITLongRunningOperation {
                     .setInitialRpcTimeout(Duration.ZERO)
                     .setRpcTimeoutMultiplier(1.0)
                     .setMaxRpcTimeout(Duration.ZERO)
-                    .setTotalTimeout(Duration.ofMillis(10000L))
+                    .setTotalTimeout(Duration.ofMillis(5000L))
                     .setJittered(false)
                     .build()));
     EchoSettings httpJsonEchoSettings = EchoSettings.create(httpJsonEchoSettingsBuilder.build());
@@ -255,18 +255,18 @@ public class ITLongRunningOperation {
                     .build())
             .build();
     try (EchoClient httpJsonClient = EchoClient.create(httpJsonEchoSettings)) {
-      long epochSecondsInFuture = Instant.now().plus(10, ChronoUnit.SECONDS).getEpochSecond();
+      long epochSecondsInFuture = Instant.now().plus(6, ChronoUnit.SECONDS).getEpochSecond();
       WaitRequest waitRequest =
           WaitRequest.newBuilder()
               .setSuccess(
-                  WaitResponse.newBuilder().setContent("httpjsonWaitContent_10sDelay_noRetry"))
+                  WaitResponse.newBuilder().setContent("httpjsonWaitContent_6sDelay"))
               .setEndTime(Timestamp.newBuilder().setSeconds(epochSecondsInFuture).build())
               .build();
       OperationFuture<WaitResponse, WaitMetadata> operationFuture =
           httpJsonClient.waitOperationCallable().futureCall(waitRequest);
       assertThrows(CancellationException.class, operationFuture::get);
       int attemptCount = operationFuture.getPollingFuture().getAttemptSettings().getAttemptCount();
-      assertThat(attemptCount).isEqualTo(2);
+      assertThat(attemptCount).isEqualTo(1);
     }
   }
 }
