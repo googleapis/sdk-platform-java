@@ -258,8 +258,7 @@ public class ITLongRunningOperation {
       long epochSecondsInFuture = Instant.now().plus(6, ChronoUnit.SECONDS).getEpochSecond();
       WaitRequest waitRequest =
           WaitRequest.newBuilder()
-              .setSuccess(
-                  WaitResponse.newBuilder().setContent("httpjsonWaitContent_6sDelay"))
+              .setSuccess(WaitResponse.newBuilder().setContent("httpjsonWaitContent_6sDelay"))
               .setEndTime(Timestamp.newBuilder().setSeconds(epochSecondsInFuture).build())
               .build();
       OperationFuture<WaitResponse, WaitMetadata> operationFuture =
