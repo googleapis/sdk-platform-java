@@ -357,7 +357,7 @@ public class HttpJsonDirectCallableTest {
         HttpJsonCallContext.createDefault().withChannel(channel).withTimeout(Duration.ofSeconds(3));
 
     Field response = createTestMessage(10);
-    MOCK_SERVICE.addResponse(response, Duration.ofSeconds(5));
+    MOCK_SERVICE.addResponse(response, java.time.Duration.ofSeconds(5));
 
     try {
       callable.futureCall(createTestMessage(10), callContext).get();

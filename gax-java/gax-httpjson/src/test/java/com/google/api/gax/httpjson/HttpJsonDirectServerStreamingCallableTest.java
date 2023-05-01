@@ -336,7 +336,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
   @Test
   public void testDeadlineExceededServerStreaming() throws InterruptedException {
     MOCK_SERVICE.addResponse(
-        new Money[] {DEFAULT_RESPONSE, DEFAULTER_RESPONSE}, Duration.ofSeconds(5));
+        new Money[] {DEFAULT_RESPONSE, DEFAULTER_RESPONSE}, java.time.Duration.ofSeconds(5));
     Color request = Color.newBuilder().setRed(0.5f).build();
     CountDownLatch latch = new CountDownLatch(1);
     MoneyObserver moneyObserver = new MoneyObserver(false, latch);
