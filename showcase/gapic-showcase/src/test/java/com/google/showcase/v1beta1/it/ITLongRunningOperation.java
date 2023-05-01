@@ -179,13 +179,13 @@ public class ITLongRunningOperation {
         .setPollingAlgorithm(
             OperationTimedPollAlgorithm.create(
                 RetrySettings.newBuilder()
-                    .setInitialRetryDelay(Duration.ofMillis(1000L))
+                    .setInitialRetryDelay(Duration.ofMillis(3000L))
                     .setRetryDelayMultiplier(2.0)
-                    .setMaxRetryDelay(Duration.ofMillis(3000L))
+                    .setMaxRetryDelay(Duration.ofMillis(5000L))
                     .setInitialRpcTimeout(Duration.ZERO)
                     .setRpcTimeoutMultiplier(1.0)
                     .setMaxRpcTimeout(Duration.ZERO)
-                    .setTotalTimeout(Duration.ofMillis(5000L))
+                    .setTotalTimeout(Duration.ofMillis(10000L))
                     .setJittered(false)
                     .build()));
     EchoSettings grpcEchoSettings = EchoSettings.create(grpcEchoSettingsBuilder.build());
@@ -233,13 +233,13 @@ public class ITLongRunningOperation {
         .setPollingAlgorithm(
             OperationTimedPollAlgorithm.create(
                 RetrySettings.newBuilder()
-                    .setInitialRetryDelay(Duration.ofMillis(1000L))
+                    .setInitialRetryDelay(Duration.ofMillis(3000L))
                     .setRetryDelayMultiplier(2.0)
-                    .setMaxRetryDelay(Duration.ofMillis(3000L))
+                    .setMaxRetryDelay(Duration.ofMillis(5000L))
                     .setInitialRpcTimeout(Duration.ZERO)
                     .setRpcTimeoutMultiplier(1.0)
                     .setMaxRpcTimeout(Duration.ZERO)
-                    .setTotalTimeout(Duration.ofMillis(5000L))
+                    .setTotalTimeout(Duration.ofMillis(10000L))
                     .setJittered(false)
                     .build()));
     EchoSettings httpJsonEchoSettings = EchoSettings.create(httpJsonEchoSettingsBuilder.build());
