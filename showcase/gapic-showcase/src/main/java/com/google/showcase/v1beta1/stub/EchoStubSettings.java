@@ -16,6 +16,7 @@
 
 package com.google.showcase.v1beta1.stub;
 
+import static com.google.showcase.v1beta1.EchoClient.ListLocationsPagedResponse;
 import static com.google.showcase.v1beta1.EchoClient.PagedExpandLegacyMappedPagedResponse;
 import static com.google.showcase.v1beta1.EchoClient.PagedExpandPagedResponse;
 
@@ -50,6 +51,10 @@ import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.cloud.location.GetLocationRequest;
+import com.google.cloud.location.ListLocationsRequest;
+import com.google.cloud.location.ListLocationsResponse;
+import com.google.cloud.location.Location;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -133,6 +138,10 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
   private final OperationCallSettings<WaitRequest, WaitResponse, WaitMetadata>
       waitOperationSettings;
   private final UnaryCallSettings<BlockRequest, BlockResponse> blockSettings;
+  private final PagedCallSettings<
+          ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
+      listLocationsSettings;
+  private final UnaryCallSettings<GetLocationRequest, Location> getLocationSettings;
 
   private static final PagedListDescriptor<PagedExpandRequest, PagedExpandResponse, EchoResponse>
       PAGED_EXPAND_PAGE_STR_DESC =
@@ -213,6 +222,42 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
             }
           };
 
+  private static final PagedListDescriptor<ListLocationsRequest, ListLocationsResponse, Location>
+      LIST_LOCATIONS_PAGE_STR_DESC =
+          new PagedListDescriptor<ListLocationsRequest, ListLocationsResponse, Location>() {
+            @Override
+            public String emptyToken() {
+              return "";
+            }
+
+            @Override
+            public ListLocationsRequest injectToken(ListLocationsRequest payload, String token) {
+              return ListLocationsRequest.newBuilder(payload).setPageToken(token).build();
+            }
+
+            @Override
+            public ListLocationsRequest injectPageSize(ListLocationsRequest payload, int pageSize) {
+              return ListLocationsRequest.newBuilder(payload).setPageSize(pageSize).build();
+            }
+
+            @Override
+            public Integer extractPageSize(ListLocationsRequest payload) {
+              return payload.getPageSize();
+            }
+
+            @Override
+            public String extractNextToken(ListLocationsResponse payload) {
+              return payload.getNextPageToken();
+            }
+
+            @Override
+            public Iterable<Location> extractResources(ListLocationsResponse payload) {
+              return payload.getLocationsList() == null
+                  ? ImmutableList.<Location>of()
+                  : payload.getLocationsList();
+            }
+          };
+
   private static final PagedListResponseFactory<
           PagedExpandRequest, PagedExpandResponse, PagedExpandPagedResponse>
       PAGED_EXPAND_PAGE_STR_FACT =
@@ -251,6 +296,23 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
                       PageContext.create(
                           callable, PAGED_EXPAND_LEGACY_MAPPED_PAGE_STR_DESC, request, context);
               return PagedExpandLegacyMappedPagedResponse.createAsync(pageContext, futureResponse);
+            }
+          };
+
+  private static final PagedListResponseFactory<
+          ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
+      LIST_LOCATIONS_PAGE_STR_FACT =
+          new PagedListResponseFactory<
+              ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>() {
+            @Override
+            public ApiFuture<ListLocationsPagedResponse> getFuturePagedResponse(
+                UnaryCallable<ListLocationsRequest, ListLocationsResponse> callable,
+                ListLocationsRequest request,
+                ApiCallContext context,
+                ApiFuture<ListLocationsResponse> futureResponse) {
+              PageContext<ListLocationsRequest, ListLocationsResponse, Location> pageContext =
+                  PageContext.create(callable, LIST_LOCATIONS_PAGE_STR_DESC, request, context);
+              return ListLocationsPagedResponse.createAsync(pageContext, futureResponse);
             }
           };
 
@@ -306,6 +368,17 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
   /** Returns the object with the settings used for calls to block. */
   public UnaryCallSettings<BlockRequest, BlockResponse> blockSettings() {
     return blockSettings;
+  }
+
+  /** Returns the object with the settings used for calls to listLocations. */
+  public PagedCallSettings<ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
+      listLocationsSettings() {
+    return listLocationsSettings;
+  }
+
+  /** Returns the object with the settings used for calls to getLocation. */
+  public UnaryCallSettings<GetLocationRequest, Location> getLocationSettings() {
+    return getLocationSettings;
   }
 
   public EchoStub createStub() throws IOException {
@@ -422,6 +495,8 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
     waitSettings = settingsBuilder.waitSettings().build();
     waitOperationSettings = settingsBuilder.waitOperationSettings().build();
     blockSettings = settingsBuilder.blockSettings().build();
+    listLocationsSettings = settingsBuilder.listLocationsSettings().build();
+    getLocationSettings = settingsBuilder.getLocationSettings().build();
   }
 
   /** Builder for EchoStubSettings. */
@@ -445,6 +520,10 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
     private final OperationCallSettings.Builder<WaitRequest, WaitResponse, WaitMetadata>
         waitOperationSettings;
     private final UnaryCallSettings.Builder<BlockRequest, BlockResponse> blockSettings;
+    private final PagedCallSettings.Builder<
+            ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
+        listLocationsSettings;
+    private final UnaryCallSettings.Builder<GetLocationRequest, Location> getLocationSettings;
     private static final ImmutableMap<String, ImmutableSet<StatusCode.Code>>
         RETRYABLE_CODE_DEFINITIONS;
 
@@ -506,6 +585,8 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
       waitSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       waitOperationSettings = OperationCallSettings.newBuilder();
       blockSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      listLocationsSettings = PagedCallSettings.newBuilder(LIST_LOCATIONS_PAGE_STR_FACT);
+      getLocationSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
 
       unaryMethodSettingsBuilders =
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
@@ -514,7 +595,9 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
               pagedExpandLegacySettings,
               pagedExpandLegacyMappedSettings,
               waitSettings,
-              blockSettings);
+              blockSettings,
+              listLocationsSettings,
+              getLocationSettings);
       initDefaults(this);
     }
 
@@ -531,6 +614,8 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
       waitSettings = settings.waitSettings.toBuilder();
       waitOperationSettings = settings.waitOperationSettings.toBuilder();
       blockSettings = settings.blockSettings.toBuilder();
+      listLocationsSettings = settings.listLocationsSettings.toBuilder();
+      getLocationSettings = settings.getLocationSettings.toBuilder();
 
       unaryMethodSettingsBuilders =
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
@@ -539,7 +624,9 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
               pagedExpandLegacySettings,
               pagedExpandLegacyMappedSettings,
               waitSettings,
-              blockSettings);
+              blockSettings,
+              listLocationsSettings,
+              getLocationSettings);
     }
 
     private static Builder createDefault() {
@@ -601,6 +688,16 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
 
       builder
           .blockSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
+
+      builder
+          .listLocationsSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
+
+      builder
+          .getLocationSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
 
@@ -703,6 +800,18 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
     /** Returns the builder for the settings used for calls to block. */
     public UnaryCallSettings.Builder<BlockRequest, BlockResponse> blockSettings() {
       return blockSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to listLocations. */
+    public PagedCallSettings.Builder<
+            ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
+        listLocationsSettings() {
+      return listLocationsSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to getLocation. */
+    public UnaryCallSettings.Builder<GetLocationRequest, Location> getLocationSettings() {
+      return getLocationSettings;
     }
 
     @Override

@@ -1,5 +1,77 @@
 # Changelog
 
+## [2.18.0](https://github.com/googleapis/gapic-generator-java/compare/v2.17.0...v2.18.0) (2023-04-25)
+
+
+### Features
+
+* **deps:** Add gapic-generator-java to bom ([#1645](https://github.com/googleapis/gapic-generator-java/issues/1645)) ([3e85c4b](https://github.com/googleapis/gapic-generator-java/commit/3e85c4b0e7c7e7fe1df14f2ace6130ac85039368))
+
+
+### Bug Fixes
+
+* Unescape Java keyword field names when generating HttpJson unit tests. ([#1654](https://github.com/googleapis/gapic-generator-java/issues/1654)) ([5fd79ea](https://github.com/googleapis/gapic-generator-java/commit/5fd79ea433d74d27d6115d91e2e0947e7b247b5d))
+
+## [2.17.0](https://github.com/googleapis/gapic-generator-java/compare/v2.16.0...v2.17.0) (2023-04-11)
+
+
+### Features
+
+* Add `FunctionalInterface` annotation ([#1515](https://github.com/googleapis/gapic-generator-java/issues/1515)) ([66c0509](https://github.com/googleapis/gapic-generator-java/commit/66c05093b5c56208c3f785e9cf0f5b50f5ad16d4))
+* Add stream method for `ServerStream` ([#1575](https://github.com/googleapis/gapic-generator-java/issues/1575)) ([e38c8ec](https://github.com/googleapis/gapic-generator-java/commit/e38c8ec4c2fca131c91e264c7b3e2cad9243a6e5))
+* Add stream methods for `Page` ([#1425](https://github.com/googleapis/gapic-generator-java/issues/1425)) ([cf0e01a](https://github.com/googleapis/gapic-generator-java/commit/cf0e01a47258c46a1b4431920b8d7cd24ae9b801))
+
+
+### Bug Fixes
+
+* Add javadoc for `ApiFutures` ([#1609](https://github.com/googleapis/gapic-generator-java/issues/1609)) ([4bb0a5e](https://github.com/googleapis/gapic-generator-java/commit/4bb0a5e3ce78878841e87a47cd457995ea9ed87e))
+* **deps:** Remove unnecessary auto-value in api-common-java ([#1621](https://github.com/googleapis/gapic-generator-java/issues/1621)) ([ffeb820](https://github.com/googleapis/gapic-generator-java/commit/ffeb820ab5a530ca0f8a91d873b07b4ebaea320b))
+
+
+### Dependencies
+
+* Update dependency cryptography to v39.0.2 ([#1592](https://github.com/googleapis/gapic-generator-java/issues/1592)) ([74cf36e](https://github.com/googleapis/gapic-generator-java/commit/74cf36e628a7f0d2e00c3bf1426be9b8089df8af))
+* Update dependency gcp-docuploader to v0.6.5 ([#1593](https://github.com/googleapis/gapic-generator-java/issues/1593)) ([501ee9c](https://github.com/googleapis/gapic-generator-java/commit/501ee9c61bd3f0091bf07d0e60c1dcd2319d1a17))
+* Update dependency google-cloud-core to v2.3.2 ([#1595](https://github.com/googleapis/gapic-generator-java/issues/1595)) ([335a104](https://github.com/googleapis/gapic-generator-java/commit/335a104d4846623a25497f5650ea553d5cca677a))
+* Update dependency net.bytebuddy:byte-buddy to v1.14.3 ([#1567](https://github.com/googleapis/gapic-generator-java/issues/1567)) ([a270ceb](https://github.com/googleapis/gapic-generator-java/commit/a270cebfeb8d1bb2270cef93f19c44935ed980cf))
+* Update dependency org.threeten:threetenbp to v1.6.8 ([#1590](https://github.com/googleapis/gapic-generator-java/issues/1590)) ([26d1c3e](https://github.com/googleapis/gapic-generator-java/commit/26d1c3e511c6fa3a353c3205c06fa8dad6019715))
+* Update dependency org.threeten:threetenbp to v1.6.8 ([#1591](https://github.com/googleapis/gapic-generator-java/issues/1591)) ([c3bed81](https://github.com/googleapis/gapic-generator-java/commit/c3bed81d540db51aaaa6e057133efa96b0f814a8))
+* Update dependency urllib3 to v1.26.15 ([#1596](https://github.com/googleapis/gapic-generator-java/issues/1596)) ([3288fb3](https://github.com/googleapis/gapic-generator-java/commit/3288fb323d957b182bf246540f9f17157afc5285))
+* Update google api dependencies ([#1578](https://github.com/googleapis/gapic-generator-java/issues/1578)) ([c537aba](https://github.com/googleapis/gapic-generator-java/commit/c537aba9d1c6cd4ecdcdc7ce0914a6c605c58b68))
+
+## [2.16.0](https://github.com/googleapis/gapic-generator-java/compare/v2.15.3...v2.16.0) (2023-03-28)
+
+
+### Features
+
+* [common-protos] add audit_context.proto Bazel targets ([#1493](https://github.com/googleapis/gapic-generator-java/issues/1493)) ([408dba8](https://github.com/googleapis/gapic-generator-java/commit/408dba8fcfa1cbc87acf9bf6fce29ae7e7af739e))
+* Install compatibility check ([#1508](https://github.com/googleapis/gapic-generator-java/issues/1508)) ([960067a](https://github.com/googleapis/gapic-generator-java/commit/960067ab60702b50e386cbc413aee2614eebf6d0))
+
+
+### Bug Fixes
+
+* **deps:** Update dependency com.google.api:gapic-generator-java-bom to v2.15.3 ([#9217](https://github.com/googleapis/gapic-generator-java/issues/9217)) ([4b6157c](https://github.com/googleapis/gapic-generator-java/commit/4b6157c482113ecec02959ad9b84242b116f3f43))
+* **deps:** Update dependency com.google.http-client:google-http-client-bom to v1.43.1 ([#9213](https://github.com/googleapis/gapic-generator-java/issues/9213)) ([5d1a0e5](https://github.com/googleapis/gapic-generator-java/commit/5d1a0e54f4681ef8ff55df1da517f9a3876c57bc))
+* Fix race condition in GrpcDirectStreamController ([#1537](https://github.com/googleapis/gapic-generator-java/issues/1537)) ([17d133b](https://github.com/googleapis/gapic-generator-java/commit/17d133bd625a9fe203019514aedf63e9fdad97f8))
+* Use UTF-8 as default charset for HttpJson requests ([#1477](https://github.com/googleapis/gapic-generator-java/issues/1477)) ([79d986b](https://github.com/googleapis/gapic-generator-java/commit/79d986bd35b49a819dc875cfec69ec8685517930)), closes [#1437](https://github.com/googleapis/gapic-generator-java/issues/1437)
+* Validate paths and check additionalPathTemplates ([#1522](https://github.com/googleapis/gapic-generator-java/issues/1522)) ([5173014](https://github.com/googleapis/gapic-generator-java/commit/5173014b041001bf6c95209404f31db39347717d))
+
+
+### Dependencies
+
+* Update dependency com.google.cloud:google-iam-policy to v1.11.0 ([#1505](https://github.com/googleapis/gapic-generator-java/issues/1505)) ([56a1104](https://github.com/googleapis/gapic-generator-java/commit/56a11046f4349f97e3c272a92cd75acfb5c9e74c))
+* Update dependency org.threeten:threetenbp to v1.6.6 ([#1543](https://github.com/googleapis/gapic-generator-java/issues/1543)) ([4afc5d8](https://github.com/googleapis/gapic-generator-java/commit/4afc5d80b9a89f0b3241ce62a2348894afd34e1b))
+* Update dependency org.threeten:threetenbp to v1.6.6 ([#1544](https://github.com/googleapis/gapic-generator-java/issues/1544)) ([4591e5b](https://github.com/googleapis/gapic-generator-java/commit/4591e5bb8aa99acb1719422313ca3f53345a52dd))
+* Update dependency org.threeten:threetenbp to v1.6.7 ([#1550](https://github.com/googleapis/gapic-generator-java/issues/1550)) ([1df3dd2](https://github.com/googleapis/gapic-generator-java/commit/1df3dd255e4af0028f9010267a45e1cf82a85f31))
+* Update dependency org.threeten:threetenbp to v1.6.7 ([#1551](https://github.com/googleapis/gapic-generator-java/issues/1551)) ([b11395d](https://github.com/googleapis/gapic-generator-java/commit/b11395dd113555e91897ca78f4eaf7277c870892))
+* Update google api dependencies ([#1526](https://github.com/googleapis/gapic-generator-java/issues/1526)) ([750d4f5](https://github.com/googleapis/gapic-generator-java/commit/750d4f5e489ce517d9b9a09969038556c112ebeb))
+* Update netty dependencies to v4.1.90.final ([#1490](https://github.com/googleapis/gapic-generator-java/issues/1490)) ([894ba37](https://github.com/googleapis/gapic-generator-java/commit/894ba379201fe1fa8afe80ad58d17b69554b82d5))
+
+
+### Documentation
+
+* Update steps to generate a library locally ([#1539](https://github.com/googleapis/gapic-generator-java/issues/1539)) ([0ed1359](https://github.com/googleapis/gapic-generator-java/commit/0ed1359f7e07a6d231e562ef6cc9426319286bee))
+
 ## [2.15.3](https://github.com/googleapis/gapic-generator-java/compare/v2.15.2...v2.15.3) (2023-03-14)
 
 

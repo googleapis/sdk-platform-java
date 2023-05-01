@@ -1,6 +1,6 @@
 name: SonarCloud Build
 env:
-  SHOWCASE_VERSION: 0.25.0
+  SHOWCASE_VERSION: 0.27.0
 on:
   push:
     branches:
@@ -32,26 +32,28 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
-      - name: Build and analyze
+      - name: Install showcase server
+        run: |
+            sudo mkdir -p /usr/src/showcase
+            sudo chown -R ${USER} /usr/src/
+            curl --location https://github.com/googleapis/gapic-showcase/releases/download/v${SHOWCASE_VERSION}/gapic-showcase-${SHOWCASE_VERSION}-linux-amd64.tar.gz --output /usr/src/showcase/showcase-${SHOWCASE_VERSION}-linux-amd64.tar.gz
+            cd /usr/src/showcase/
+            tar -xf showcase-*
+            ./gapic-showcase run &
+            cd -
+      - name: Build and analyze for full test coverage
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           mvn -B verify -Dcheckstyle.skip \
+              -DenableFullTestCoverage \
+              -Penable-integration-tests \
               org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
               -Dsonar.projectKey=googleapis_gapic-generator-java \
               -Dsonar.organization=googleapis \
               -Dsonar.host.url=https://sonarcloud.io
 
-      - name: Install showcase server
-        run: |
-          sudo mkdir -p /usr/src/showcase
-          sudo chown -R ${USER} /usr/src/
-          curl --location https://github.com/googleapis/gapic-showcase/releases/download/v${SHOWCASE_VERSION}/gapic-showcase-${SHOWCASE_VERSION}-linux-amd64.tar.gz --output /usr/src/showcase/showcase-${SHOWCASE_VERSION}-linux-amd64.tar.gz
-          cd /usr/src/showcase/
-          tar -xf showcase-*
-          ./gapic-showcase run &
-          cd -
       - name: Build and analyze Showcase Integration Tests Coverage
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
@@ -60,7 +62,7 @@ jobs:
           mvn -B clean verify -Dcheckstyle.skip \
               -DskipUnitTests \
               -Penable-integration-tests \
-              -DenableTestCoverage \
+              -DenableShowcaseTestCoverage \
               org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
               -Dsonar.projectKey=googleapis_gapic-generator-java_integration_tests \
               -Dsonar.organization=googleapis \
@@ -72,7 +74,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           mvn -B clean test -Dcheckstyle.skip \
-              -DenableTestCoverage \
+              -DenableShowcaseTestCoverage \
               org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
               -Dsonar.projectKey=googleapis_gapic-generator-java_unit_tests \
               -Dsonar.organization=googleapis \

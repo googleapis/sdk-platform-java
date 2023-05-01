@@ -16,9 +16,15 @@
 
 package com.google.showcase.v1beta1.stub;
 
+import static com.google.showcase.v1beta1.SequenceServiceClient.ListLocationsPagedResponse;
+
 import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.cloud.location.GetLocationRequest;
+import com.google.cloud.location.ListLocationsRequest;
+import com.google.cloud.location.ListLocationsResponse;
+import com.google.cloud.location.Location;
 import com.google.protobuf.Empty;
 import com.google.showcase.v1beta1.AttemptSequenceRequest;
 import com.google.showcase.v1beta1.CreateSequenceRequest;
@@ -47,6 +53,19 @@ public abstract class SequenceServiceStub implements BackgroundResource {
 
   public UnaryCallable<AttemptSequenceRequest, Empty> attemptSequenceCallable() {
     throw new UnsupportedOperationException("Not implemented: attemptSequenceCallable()");
+  }
+
+  public UnaryCallable<ListLocationsRequest, ListLocationsPagedResponse>
+      listLocationsPagedCallable() {
+    throw new UnsupportedOperationException("Not implemented: listLocationsPagedCallable()");
+  }
+
+  public UnaryCallable<ListLocationsRequest, ListLocationsResponse> listLocationsCallable() {
+    throw new UnsupportedOperationException("Not implemented: listLocationsCallable()");
+  }
+
+  public UnaryCallable<GetLocationRequest, Location> getLocationCallable() {
+    throw new UnsupportedOperationException("Not implemented: getLocationCallable()");
   }
 
   @Override

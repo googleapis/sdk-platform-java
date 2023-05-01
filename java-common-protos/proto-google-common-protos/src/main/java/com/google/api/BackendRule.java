@@ -59,6 +59,17 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     return com.google.api.BackendProto.internal_static_google_api_BackendRule_descriptor;
   }
 
+  @SuppressWarnings({"rawtypes"})
+  @java.lang.Override
+  protected com.google.protobuf.MapField internalGetMapField(int number) {
+    switch (number) {
+      case 10:
+        return internalGetOverridesByRequestProtocol();
+      default:
+        throw new RuntimeException("Invalid map field number: " + number);
+    }
+  }
+
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
@@ -327,7 +338,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Selects the methods to which this rule applies.
-   * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+   * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+   * details.
    * </pre>
    *
    * <code>string selector = 1;</code>
@@ -351,7 +363,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Selects the methods to which this rule applies.
-   * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+   * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+   * details.
    * </pre>
    *
    * <code>string selector = 1;</code>
@@ -481,7 +494,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    * <code>double min_deadline = 4 [deprecated = true];</code>
    *
    * @deprecated google.api.BackendRule.min_deadline is deprecated. See
-   *     google/api/backend.proto;l=123
+   *     google/api/backend.proto;l=124
    * @return The minDeadline.
    */
   @java.lang.Override
@@ -730,6 +743,117 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     }
   }
 
+  public static final int OVERRIDES_BY_REQUEST_PROTOCOL_FIELD_NUMBER = 10;
+
+  private static final class OverridesByRequestProtocolDefaultEntryHolder {
+    static final com.google.protobuf.MapEntry<java.lang.String, com.google.api.BackendRule>
+        defaultEntry =
+            com.google.protobuf.MapEntry
+                .<java.lang.String, com.google.api.BackendRule>newDefaultInstance(
+                    com.google.api.BackendProto
+                        .internal_static_google_api_BackendRule_OverridesByRequestProtocolEntry_descriptor,
+                    com.google.protobuf.WireFormat.FieldType.STRING,
+                    "",
+                    com.google.protobuf.WireFormat.FieldType.MESSAGE,
+                    com.google.api.BackendRule.getDefaultInstance());
+  }
+
+  @SuppressWarnings("serial")
+  private com.google.protobuf.MapField<java.lang.String, com.google.api.BackendRule>
+      overridesByRequestProtocol_;
+
+  private com.google.protobuf.MapField<java.lang.String, com.google.api.BackendRule>
+      internalGetOverridesByRequestProtocol() {
+    if (overridesByRequestProtocol_ == null) {
+      return com.google.protobuf.MapField.emptyMapField(
+          OverridesByRequestProtocolDefaultEntryHolder.defaultEntry);
+    }
+    return overridesByRequestProtocol_;
+  }
+
+  public int getOverridesByRequestProtocolCount() {
+    return internalGetOverridesByRequestProtocol().getMap().size();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The map between request protocol and the backend address.
+   * </pre>
+   *
+   * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
+   */
+  @java.lang.Override
+  public boolean containsOverridesByRequestProtocol(java.lang.String key) {
+    if (key == null) {
+      throw new NullPointerException("map key");
+    }
+    return internalGetOverridesByRequestProtocol().getMap().containsKey(key);
+  }
+  /** Use {@link #getOverridesByRequestProtocolMap()} instead. */
+  @java.lang.Override
+  @java.lang.Deprecated
+  public java.util.Map<java.lang.String, com.google.api.BackendRule>
+      getOverridesByRequestProtocol() {
+    return getOverridesByRequestProtocolMap();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The map between request protocol and the backend address.
+   * </pre>
+   *
+   * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
+   */
+  @java.lang.Override
+  public java.util.Map<java.lang.String, com.google.api.BackendRule>
+      getOverridesByRequestProtocolMap() {
+    return internalGetOverridesByRequestProtocol().getMap();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The map between request protocol and the backend address.
+   * </pre>
+   *
+   * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
+   */
+  @java.lang.Override
+  public /* nullable */ com.google.api.BackendRule getOverridesByRequestProtocolOrDefault(
+      java.lang.String key,
+      /* nullable */
+      com.google.api.BackendRule defaultValue) {
+    if (key == null) {
+      throw new NullPointerException("map key");
+    }
+    java.util.Map<java.lang.String, com.google.api.BackendRule> map =
+        internalGetOverridesByRequestProtocol().getMap();
+    return map.containsKey(key) ? map.get(key) : defaultValue;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The map between request protocol and the backend address.
+   * </pre>
+   *
+   * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
+   */
+  @java.lang.Override
+  public com.google.api.BackendRule getOverridesByRequestProtocolOrThrow(java.lang.String key) {
+    if (key == null) {
+      throw new NullPointerException("map key");
+    }
+    java.util.Map<java.lang.String, com.google.api.BackendRule> map =
+        internalGetOverridesByRequestProtocol().getMap();
+    if (!map.containsKey(key)) {
+      throw new java.lang.IllegalArgumentException();
+    }
+    return map.get(key);
+  }
+
   private byte memoizedIsInitialized = -1;
 
   @java.lang.Override
@@ -772,6 +896,11 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(protocol_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 9, protocol_);
     }
+    com.google.protobuf.GeneratedMessageV3.serializeStringMapTo(
+        output,
+        internalGetOverridesByRequestProtocol(),
+        OverridesByRequestProtocolDefaultEntryHolder.defaultEntry,
+        10);
     getUnknownFields().writeTo(output);
   }
 
@@ -811,6 +940,19 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(protocol_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(9, protocol_);
     }
+    for (java.util.Map.Entry<java.lang.String, com.google.api.BackendRule> entry :
+        internalGetOverridesByRequestProtocol().getMap().entrySet()) {
+      com.google.protobuf.MapEntry<java.lang.String, com.google.api.BackendRule>
+          overridesByRequestProtocol__ =
+              OverridesByRequestProtocolDefaultEntryHolder.defaultEntry
+                  .newBuilderForType()
+                  .setKey(entry.getKey())
+                  .setValue(entry.getValue())
+                  .build();
+      size +=
+          com.google.protobuf.CodedOutputStream.computeMessageSize(
+              10, overridesByRequestProtocol__);
+    }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
     return size;
@@ -836,6 +978,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
         != java.lang.Double.doubleToLongBits(other.getOperationDeadline())) return false;
     if (pathTranslation_ != other.pathTranslation_) return false;
     if (!getProtocol().equals(other.getProtocol())) return false;
+    if (!internalGetOverridesByRequestProtocol()
+        .equals(other.internalGetOverridesByRequestProtocol())) return false;
     if (!getAuthenticationCase().equals(other.getAuthenticationCase())) return false;
     switch (authenticationCase_) {
       case 7:
@@ -881,6 +1025,10 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     hash = (53 * hash) + pathTranslation_;
     hash = (37 * hash) + PROTOCOL_FIELD_NUMBER;
     hash = (53 * hash) + getProtocol().hashCode();
+    if (!internalGetOverridesByRequestProtocol().getMap().isEmpty()) {
+      hash = (37 * hash) + OVERRIDES_BY_REQUEST_PROTOCOL_FIELD_NUMBER;
+      hash = (53 * hash) + internalGetOverridesByRequestProtocol().hashCode();
+    }
     switch (authenticationCase_) {
       case 7:
         hash = (37 * hash) + JWT_AUDIENCE_FIELD_NUMBER;
@@ -1009,6 +1157,26 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       return com.google.api.BackendProto.internal_static_google_api_BackendRule_descriptor;
     }
 
+    @SuppressWarnings({"rawtypes"})
+    protected com.google.protobuf.MapField internalGetMapField(int number) {
+      switch (number) {
+        case 10:
+          return internalGetOverridesByRequestProtocol();
+        default:
+          throw new RuntimeException("Invalid map field number: " + number);
+      }
+    }
+
+    @SuppressWarnings({"rawtypes"})
+    protected com.google.protobuf.MapField internalGetMutableMapField(int number) {
+      switch (number) {
+        case 10:
+          return internalGetMutableOverridesByRequestProtocol();
+        default:
+          throw new RuntimeException("Invalid map field number: " + number);
+      }
+    }
+
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
@@ -1035,6 +1203,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       operationDeadline_ = 0D;
       pathTranslation_ = 0;
       protocol_ = "";
+      internalGetMutableOverridesByRequestProtocol().clear();
       authenticationCase_ = 0;
       authentication_ = null;
       return this;
@@ -1092,6 +1261,10 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       }
       if (((from_bitField0_ & 0x00000100) != 0)) {
         result.protocol_ = protocol_;
+      }
+      if (((from_bitField0_ & 0x00000200) != 0)) {
+        result.overridesByRequestProtocol_ = internalGetOverridesByRequestProtocol();
+        result.overridesByRequestProtocol_.makeImmutable();
       }
     }
 
@@ -1172,6 +1345,9 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
         bitField0_ |= 0x00000100;
         onChanged();
       }
+      internalGetMutableOverridesByRequestProtocol()
+          .mergeFrom(other.internalGetOverridesByRequestProtocol());
+      bitField0_ |= 0x00000200;
       switch (other.getAuthenticationCase()) {
         case JWT_AUDIENCE:
           {
@@ -1271,6 +1447,22 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
                 bitField0_ |= 0x00000100;
                 break;
               } // case 74
+            case 82:
+              {
+                com.google.protobuf.MapEntry<java.lang.String, com.google.api.BackendRule>
+                    overridesByRequestProtocol__ =
+                        input.readMessage(
+                            OverridesByRequestProtocolDefaultEntryHolder.defaultEntry
+                                .getParserForType(),
+                            extensionRegistry);
+                internalGetMutableOverridesByRequestProtocol()
+                    .getMutableMap()
+                    .put(
+                        overridesByRequestProtocol__.getKey(),
+                        overridesByRequestProtocol__.getValue());
+                bitField0_ |= 0x00000200;
+                break;
+              } // case 82
             default:
               {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
@@ -1310,7 +1502,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects the methods to which this rule applies.
-     * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+     * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+     * details.
      * </pre>
      *
      * <code>string selector = 1;</code>
@@ -1333,7 +1526,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects the methods to which this rule applies.
-     * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+     * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+     * details.
      * </pre>
      *
      * <code>string selector = 1;</code>
@@ -1356,7 +1550,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects the methods to which this rule applies.
-     * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+     * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+     * details.
      * </pre>
      *
      * <code>string selector = 1;</code>
@@ -1378,7 +1573,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects the methods to which this rule applies.
-     * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+     * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+     * details.
      * </pre>
      *
      * <code>string selector = 1;</code>
@@ -1396,7 +1592,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects the methods to which this rule applies.
-     * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+     * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+     * details.
      * </pre>
      *
      * <code>string selector = 1;</code>
@@ -1658,7 +1855,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * <code>double min_deadline = 4 [deprecated = true];</code>
      *
      * @deprecated google.api.BackendRule.min_deadline is deprecated. See
-     *     google/api/backend.proto;l=123
+     *     google/api/backend.proto;l=124
      * @return The minDeadline.
      */
     @java.lang.Override
@@ -1676,7 +1873,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * <code>double min_deadline = 4 [deprecated = true];</code>
      *
      * @deprecated google.api.BackendRule.min_deadline is deprecated. See
-     *     google/api/backend.proto;l=123
+     *     google/api/backend.proto;l=124
      * @param value The minDeadline to set.
      * @return This builder for chaining.
      */
@@ -1698,7 +1895,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * <code>double min_deadline = 4 [deprecated = true];</code>
      *
      * @deprecated google.api.BackendRule.min_deadline is deprecated. See
-     *     google/api/backend.proto;l=123
+     *     google/api/backend.proto;l=124
      * @return This builder for chaining.
      */
     @java.lang.Deprecated
@@ -2231,6 +2428,181 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       protocol_ = value;
       bitField0_ |= 0x00000100;
       onChanged();
+      return this;
+    }
+
+    private com.google.protobuf.MapField<java.lang.String, com.google.api.BackendRule>
+        overridesByRequestProtocol_;
+
+    private com.google.protobuf.MapField<java.lang.String, com.google.api.BackendRule>
+        internalGetOverridesByRequestProtocol() {
+      if (overridesByRequestProtocol_ == null) {
+        return com.google.protobuf.MapField.emptyMapField(
+            OverridesByRequestProtocolDefaultEntryHolder.defaultEntry);
+      }
+      return overridesByRequestProtocol_;
+    }
+
+    private com.google.protobuf.MapField<java.lang.String, com.google.api.BackendRule>
+        internalGetMutableOverridesByRequestProtocol() {
+      if (overridesByRequestProtocol_ == null) {
+        overridesByRequestProtocol_ =
+            com.google.protobuf.MapField.newMapField(
+                OverridesByRequestProtocolDefaultEntryHolder.defaultEntry);
+      }
+      if (!overridesByRequestProtocol_.isMutable()) {
+        overridesByRequestProtocol_ = overridesByRequestProtocol_.copy();
+      }
+      bitField0_ |= 0x00000200;
+      onChanged();
+      return overridesByRequestProtocol_;
+    }
+
+    public int getOverridesByRequestProtocolCount() {
+      return internalGetOverridesByRequestProtocol().getMap().size();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The map between request protocol and the backend address.
+     * </pre>
+     *
+     * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
+     */
+    @java.lang.Override
+    public boolean containsOverridesByRequestProtocol(java.lang.String key) {
+      if (key == null) {
+        throw new NullPointerException("map key");
+      }
+      return internalGetOverridesByRequestProtocol().getMap().containsKey(key);
+    }
+    /** Use {@link #getOverridesByRequestProtocolMap()} instead. */
+    @java.lang.Override
+    @java.lang.Deprecated
+    public java.util.Map<java.lang.String, com.google.api.BackendRule>
+        getOverridesByRequestProtocol() {
+      return getOverridesByRequestProtocolMap();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The map between request protocol and the backend address.
+     * </pre>
+     *
+     * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
+     */
+    @java.lang.Override
+    public java.util.Map<java.lang.String, com.google.api.BackendRule>
+        getOverridesByRequestProtocolMap() {
+      return internalGetOverridesByRequestProtocol().getMap();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The map between request protocol and the backend address.
+     * </pre>
+     *
+     * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
+     */
+    @java.lang.Override
+    public /* nullable */ com.google.api.BackendRule getOverridesByRequestProtocolOrDefault(
+        java.lang.String key,
+        /* nullable */
+        com.google.api.BackendRule defaultValue) {
+      if (key == null) {
+        throw new NullPointerException("map key");
+      }
+      java.util.Map<java.lang.String, com.google.api.BackendRule> map =
+          internalGetOverridesByRequestProtocol().getMap();
+      return map.containsKey(key) ? map.get(key) : defaultValue;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The map between request protocol and the backend address.
+     * </pre>
+     *
+     * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
+     */
+    @java.lang.Override
+    public com.google.api.BackendRule getOverridesByRequestProtocolOrThrow(java.lang.String key) {
+      if (key == null) {
+        throw new NullPointerException("map key");
+      }
+      java.util.Map<java.lang.String, com.google.api.BackendRule> map =
+          internalGetOverridesByRequestProtocol().getMap();
+      if (!map.containsKey(key)) {
+        throw new java.lang.IllegalArgumentException();
+      }
+      return map.get(key);
+    }
+
+    public Builder clearOverridesByRequestProtocol() {
+      bitField0_ = (bitField0_ & ~0x00000200);
+      internalGetMutableOverridesByRequestProtocol().getMutableMap().clear();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The map between request protocol and the backend address.
+     * </pre>
+     *
+     * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
+     */
+    public Builder removeOverridesByRequestProtocol(java.lang.String key) {
+      if (key == null) {
+        throw new NullPointerException("map key");
+      }
+      internalGetMutableOverridesByRequestProtocol().getMutableMap().remove(key);
+      return this;
+    }
+    /** Use alternate mutation accessors instead. */
+    @java.lang.Deprecated
+    public java.util.Map<java.lang.String, com.google.api.BackendRule>
+        getMutableOverridesByRequestProtocol() {
+      bitField0_ |= 0x00000200;
+      return internalGetMutableOverridesByRequestProtocol().getMutableMap();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The map between request protocol and the backend address.
+     * </pre>
+     *
+     * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
+     */
+    public Builder putOverridesByRequestProtocol(
+        java.lang.String key, com.google.api.BackendRule value) {
+      if (key == null) {
+        throw new NullPointerException("map key");
+      }
+      if (value == null) {
+        throw new NullPointerException("map value");
+      }
+      internalGetMutableOverridesByRequestProtocol().getMutableMap().put(key, value);
+      bitField0_ |= 0x00000200;
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The map between request protocol and the backend address.
+     * </pre>
+     *
+     * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
+     */
+    public Builder putAllOverridesByRequestProtocol(
+        java.util.Map<java.lang.String, com.google.api.BackendRule> values) {
+      internalGetMutableOverridesByRequestProtocol().getMutableMap().putAll(values);
+      bitField0_ |= 0x00000200;
       return this;
     }
 

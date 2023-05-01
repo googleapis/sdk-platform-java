@@ -41,6 +41,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -103,6 +104,31 @@ public class ServerStreamTest {
                 return Lists.newArrayList(stream);
               }
             });
+
+    producerFuture.get(60, TimeUnit.SECONDS);
+    List<Integer> results = consumerFuture.get();
+    Truth.assertThat(results).containsExactly(0, 1, 2, 3, 4);
+  }
+
+  @Test
+  public void testMultipleItemStreamMethod() throws Exception {
+    Future<Void> producerFuture =
+        executor.submit(
+            () -> {
+              for (int i = 0; i < 5; i++) {
+                int requestCount = controller.popLastPull();
+
+                Truth.assertWithMessage("ServerStream should request one item at a time")
+                    .that(requestCount)
+                    .isEqualTo(1);
+
+                stream.observer().onResponse(i);
+              }
+              stream.observer().onComplete();
+              return null;
+            });
+    Future<List<Integer>> consumerFuture =
+        executor.submit(() -> stream.stream().collect(Collectors.toList()));
 
     producerFuture.get(60, TimeUnit.SECONDS);
     List<Integer> results = consumerFuture.get();

@@ -142,10 +142,10 @@ public interface ServiceOrBuilder
    *
    * <pre>
    * A list of API interfaces exported by this service. Only the `name` field
-   * of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by the configuration
-   * author, as the remaining fields will be derived from the IDL during the
-   * normalization process. It is an error to specify an API interface here
-   * which cannot be resolved against the associated IDL files.
+   * of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by
+   * the configuration author, as the remaining fields will be derived from the
+   * IDL during the normalization process. It is an error to specify an API
+   * interface here which cannot be resolved against the associated IDL files.
    * </pre>
    *
    * <code>repeated .google.protobuf.Api apis = 3;</code>
@@ -156,10 +156,10 @@ public interface ServiceOrBuilder
    *
    * <pre>
    * A list of API interfaces exported by this service. Only the `name` field
-   * of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by the configuration
-   * author, as the remaining fields will be derived from the IDL during the
-   * normalization process. It is an error to specify an API interface here
-   * which cannot be resolved against the associated IDL files.
+   * of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by
+   * the configuration author, as the remaining fields will be derived from the
+   * IDL during the normalization process. It is an error to specify an API
+   * interface here which cannot be resolved against the associated IDL files.
    * </pre>
    *
    * <code>repeated .google.protobuf.Api apis = 3;</code>
@@ -170,10 +170,10 @@ public interface ServiceOrBuilder
    *
    * <pre>
    * A list of API interfaces exported by this service. Only the `name` field
-   * of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by the configuration
-   * author, as the remaining fields will be derived from the IDL during the
-   * normalization process. It is an error to specify an API interface here
-   * which cannot be resolved against the associated IDL files.
+   * of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by
+   * the configuration author, as the remaining fields will be derived from the
+   * IDL during the normalization process. It is an error to specify an API
+   * interface here which cannot be resolved against the associated IDL files.
    * </pre>
    *
    * <code>repeated .google.protobuf.Api apis = 3;</code>
@@ -184,10 +184,10 @@ public interface ServiceOrBuilder
    *
    * <pre>
    * A list of API interfaces exported by this service. Only the `name` field
-   * of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by the configuration
-   * author, as the remaining fields will be derived from the IDL during the
-   * normalization process. It is an error to specify an API interface here
-   * which cannot be resolved against the associated IDL files.
+   * of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by
+   * the configuration author, as the remaining fields will be derived from the
+   * IDL during the normalization process. It is an error to specify an API
+   * interface here which cannot be resolved against the associated IDL files.
    * </pre>
    *
    * <code>repeated .google.protobuf.Api apis = 3;</code>
@@ -198,10 +198,10 @@ public interface ServiceOrBuilder
    *
    * <pre>
    * A list of API interfaces exported by this service. Only the `name` field
-   * of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by the configuration
-   * author, as the remaining fields will be derived from the IDL during the
-   * normalization process. It is an error to specify an API interface here
-   * which cannot be resolved against the associated IDL files.
+   * of the [google.protobuf.Api][google.protobuf.Api] needs to be provided by
+   * the configuration author, as the remaining fields will be derived from the
+   * IDL during the normalization process. It is an error to specify an API
+   * interface here which cannot be resolved against the associated IDL files.
    * </pre>
    *
    * <code>repeated .google.protobuf.Api apis = 3;</code>
@@ -813,7 +813,8 @@ public interface ServiceOrBuilder
    *
    * <pre>
    * Defines the monitored resources used by this service. This is required
-   * by the [Service.monitoring][google.api.Service.monitoring] and [Service.logging][google.api.Service.logging] configurations.
+   * by the [Service.monitoring][google.api.Service.monitoring] and
+   * [Service.logging][google.api.Service.logging] configurations.
    * </pre>
    *
    * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
@@ -824,7 +825,8 @@ public interface ServiceOrBuilder
    *
    * <pre>
    * Defines the monitored resources used by this service. This is required
-   * by the [Service.monitoring][google.api.Service.monitoring] and [Service.logging][google.api.Service.logging] configurations.
+   * by the [Service.monitoring][google.api.Service.monitoring] and
+   * [Service.logging][google.api.Service.logging] configurations.
    * </pre>
    *
    * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
@@ -835,7 +837,8 @@ public interface ServiceOrBuilder
    *
    * <pre>
    * Defines the monitored resources used by this service. This is required
-   * by the [Service.monitoring][google.api.Service.monitoring] and [Service.logging][google.api.Service.logging] configurations.
+   * by the [Service.monitoring][google.api.Service.monitoring] and
+   * [Service.logging][google.api.Service.logging] configurations.
    * </pre>
    *
    * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
@@ -846,7 +849,8 @@ public interface ServiceOrBuilder
    *
    * <pre>
    * Defines the monitored resources used by this service. This is required
-   * by the [Service.monitoring][google.api.Service.monitoring] and [Service.logging][google.api.Service.logging] configurations.
+   * by the [Service.monitoring][google.api.Service.monitoring] and
+   * [Service.logging][google.api.Service.logging] configurations.
    * </pre>
    *
    * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>
@@ -858,7 +862,8 @@ public interface ServiceOrBuilder
    *
    * <pre>
    * Defines the monitored resources used by this service. This is required
-   * by the [Service.monitoring][google.api.Service.monitoring] and [Service.logging][google.api.Service.logging] configurations.
+   * by the [Service.monitoring][google.api.Service.monitoring] and
+   * [Service.logging][google.api.Service.logging] configurations.
    * </pre>
    *
    * <code>repeated .google.api.MonitoredResourceDescriptor monitored_resources = 25;</code>

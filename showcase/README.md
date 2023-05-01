@@ -16,7 +16,7 @@ versions is not guaranteed. If changing the version of the server, it may also b
 update to a compatible client version in `./WORKSPACE`.
 
 ```shell
-$ GAPIC_SHOWCASE_VERSION=0.26.0
+$ GAPIC_SHOWCASE_VERSION=0.27.0
 $ go install github.com/googleapis/gapic-showcase/cmd/gapic-showcase@v"$GAPIC_SHOWCASE_VERSION"
 $ PATH=$PATH:`go env GOPATH`/bin
 $ gapic-showcase --help

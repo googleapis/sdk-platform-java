@@ -29,6 +29,7 @@
  */
 package com.google.api.gax.batching;
 
+import static com.google.api.gax.batching.AssertByPolling.assertByPolling;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -41,6 +42,7 @@ import com.google.api.gax.batching.FlowController.FlowControlException;
 import com.google.api.gax.batching.FlowController.LimitExceededBehavior;
 import com.google.common.util.concurrent.SettableFuture;
 import java.lang.Thread.State;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -522,10 +524,10 @@ public class FlowControllerTest {
     final AtomicInteger totalDecreased = new AtomicInteger(0);
     final AtomicInteger releasedCounter = new AtomicInteger(0);
 
-    List<Future> reserveThreads =
+    List<Future<?>> reserveThreads =
         testConcurrentUpdates(
             flowController, 100, 100, 10, totalIncreased, totalDecreased, releasedCounter);
-    for (Future t : reserveThreads) {
+    for (Future<?> t : reserveThreads) {
       t.get(200, TimeUnit.MILLISECONDS);
     }
     assertEquals(reserveThreads.size(), releasedCounter.get());
@@ -555,10 +557,10 @@ public class FlowControllerTest {
     AtomicInteger totalIncreased = new AtomicInteger(0);
     AtomicInteger totalDecreased = new AtomicInteger(0);
     AtomicInteger releasedCounter = new AtomicInteger(0);
-    List<Future> reserveThreads =
+    List<Future<?>> reserveThreads =
         testConcurrentUpdates(
             flowController, 100, 100, 100, totalIncreased, totalDecreased, releasedCounter);
-    for (Future t : reserveThreads) {
+    for (Future<?> t : reserveThreads) {
       t.get(200, TimeUnit.MILLISECONDS);
     }
     assertEquals(reserveThreads.size(), releasedCounter.get());
@@ -596,19 +598,18 @@ public class FlowControllerTest {
     // will be blocked by reserve 10
     Thread t =
         new Thread(
-            new Runnable() {
-              @Override
-              public void run() {
-                try {
-                  flowController.reserve(0, 100);
-                } catch (FlowControlException e) {
-                }
+            () -> {
+              try {
+                flowController.reserve(0, 100);
+              } catch (FlowControlException e) {
+                throw new AssertionError(e);
               }
             });
     t.start();
+
     // wait for thread to start, and check it should be blocked
-    Thread.sleep(50);
-    assertEquals(State.WAITING, t.getState());
+    assertByPolling(Duration.ofMillis(200), () -> assertEquals(State.WAITING, t.getState()));
+
     // increase and decrease should not be blocked
     int increase = 5, decrease = 20;
     flowController.decreaseThresholds(0, decrease);
@@ -641,19 +642,18 @@ public class FlowControllerTest {
                 .build());
     Thread t =
         new Thread(
-            new Runnable() {
-              @Override
-              public void run() {
-                try {
-                  flowController.reserve(initial + 10, 10);
-                } catch (FlowControlException e) {
-                }
+            () -> {
+              try {
+                flowController.reserve(initial + 10, 10);
+              } catch (FlowControlException e) {
+                throw new AssertionError(e);
               }
             });
     t.start();
+
     // wait for thread to start, and check it should be blocked
-    Thread.sleep(50);
-    assertEquals(State.WAITING, t.getState());
+    assertByPolling(Duration.ofMillis(200), () -> assertEquals(State.WAITING, t.getState()));
+
     // increase and decrease should not be blocked
     int increase = 5, decrease = 20;
     flowController.decreaseThresholds(decrease, 0);
@@ -734,7 +734,7 @@ public class FlowControllerTest {
         .isAtLeast(currentTime);
   }
 
-  private List<Future> testConcurrentUpdates(
+  private List<Future<?>> testConcurrentUpdates(
       final FlowController flowController,
       final int increaseStepRange,
       final int decreaseStepRange,
@@ -774,8 +774,8 @@ public class FlowControllerTest {
             }
           }
         };
-    List<Future> updateFuture = new ArrayList<>();
-    List<Future> reserveReleaseFuture = new ArrayList<>();
+    List<Future<?>> updateFuture = new ArrayList<>();
+    List<Future<?>> reserveReleaseFuture = new ArrayList<>();
     ExecutorService executors = Executors.newFixedThreadPool(10);
     ExecutorService reserveExecutor = Executors.newFixedThreadPool(10);
     for (int i = 0; i < 5; i++) {
@@ -783,7 +783,7 @@ public class FlowControllerTest {
       updateFuture.add(executors.submit(decreaseRunnable));
       reserveReleaseFuture.add(reserveExecutor.submit(reserveReleaseRunnable));
     }
-    for (Future t : updateFuture) {
+    for (Future<?> t : updateFuture) {
       t.get(50, TimeUnit.MILLISECONDS);
     }
     executors.shutdown();
