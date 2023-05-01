@@ -43,10 +43,10 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
+import java.time.Duration;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import org.threeten.bp.Duration;
 
 /**
  * Mocks an HTTPTransport. Expected responses and exceptions can be added to a queue from which this
@@ -211,7 +211,10 @@ public final class MockHttpService extends MockHttpTransport {
       // We use Thread.sleep to mimic a long server response. Most tests should not
       // require a sleep and can return a response immediately.
       try {
-        Thread.sleep(delay.toMillis());
+        long delayMs = delay.toMillis();
+        if (delayMs > 0) {
+          Thread.sleep(delayMs);
+        }
       } catch (InterruptedException e) {
         throw new RuntimeException(e);
       }

@@ -43,7 +43,7 @@ public abstract class HttpJsonCallOptions {
   public static final HttpJsonCallOptions DEFAULT = newBuilder().build();
 
   @Nullable
-  public abstract java.time.Duration getTimeout();
+  public abstract Duration getTimeout();
 
   @Nullable
   public abstract Credentials getCredentials();
