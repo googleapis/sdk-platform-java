@@ -22,7 +22,7 @@ import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
-import com.google.api.generator.test.framework.GoldenTestHelper;
+import com.google.api.generator.test.framework.GoldenFileWriter;
 import com.google.api.generator.test.protoloader.GrpcRestTestProtoLoader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -38,11 +38,11 @@ public class HttpJsonServiceCallableFactoryClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    GoldenTestHelper.saveCodegenToFile(
+    GoldenFileWriter.saveCodegenToFile(
         this.getClass(), "HttpJsonEchoCallableFactory.golden", visitor.write());
     Path goldenFilePath =
         Paths.get(
-            GoldenTestHelper.getGoldenDir(this.getClass()), "HttpJsonEchoCallableFactory.golden");
+            GoldenFileWriter.getGoldenDir(this.getClass()), "HttpJsonEchoCallableFactory.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 

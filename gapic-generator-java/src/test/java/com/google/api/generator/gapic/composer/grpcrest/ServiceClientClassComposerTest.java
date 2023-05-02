@@ -19,7 +19,7 @@ import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
-import com.google.api.generator.test.framework.GoldenTestHelper;
+import com.google.api.generator.test.framework.GoldenFileWriter;
 import com.google.api.generator.test.protoloader.GrpcRestTestProtoLoader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -34,9 +34,9 @@ public class ServiceClientClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    GoldenTestHelper.saveCodegenToFile(this.getClass(), "EchoClient.golden", visitor.write());
+    GoldenFileWriter.saveCodegenToFile(this.getClass(), "EchoClient.golden", visitor.write());
     Path goldenFilePath =
-        Paths.get(GoldenTestHelper.getGoldenDir(this.getClass()), "EchoClient.golden");
+        Paths.get(GoldenFileWriter.getGoldenDir(this.getClass()), "EchoClient.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 
@@ -48,9 +48,9 @@ public class ServiceClientClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    GoldenTestHelper.saveCodegenToFile(this.getClass(), "EchoEmpty.golden", visitor.write());
+    GoldenFileWriter.saveCodegenToFile(this.getClass(), "EchoEmpty.golden", visitor.write());
     Path goldenFilePath =
-        Paths.get(GoldenTestHelper.getGoldenDir(this.getClass()), "EchoEmpty.golden");
+        Paths.get(GoldenFileWriter.getGoldenDir(this.getClass()), "EchoEmpty.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 
@@ -62,9 +62,9 @@ public class ServiceClientClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    GoldenTestHelper.saveCodegenToFile(this.getClass(), "WickedClient.golden", visitor.write());
+    GoldenFileWriter.saveCodegenToFile(this.getClass(), "WickedClient.golden", visitor.write());
     Path goldenFilePath =
-        Paths.get(GoldenTestHelper.getGoldenDir(this.getClass()), "WickedClient.golden");
+        Paths.get(GoldenFileWriter.getGoldenDir(this.getClass()), "WickedClient.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 }
