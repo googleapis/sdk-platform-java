@@ -51,6 +51,9 @@ public abstract class HttpJsonCallOptions {
   @Nullable
   public abstract TypeRegistry getTypeRegistry();
 
+  @Nullable
+  public abstract String getRequestParamsHeader();
+
   public abstract Builder toBuilder();
 
   public static Builder newBuilder() {
@@ -79,6 +82,11 @@ public abstract class HttpJsonCallOptions {
       builder.setTypeRegistry(newTypeRegistry);
     }
 
+    String newRequestParamsHeader = inputOptions.getRequestParamsHeader();
+    if (newRequestParamsHeader != null) {
+      builder.setRequestParamsHeader(newRequestParamsHeader);
+    }
+
     return builder.build();
   }
 
@@ -89,6 +97,8 @@ public abstract class HttpJsonCallOptions {
     public abstract Builder setCredentials(Credentials value);
 
     public abstract Builder setTypeRegistry(TypeRegistry value);
+
+    public abstract Builder setRequestParamsHeader(String value);
 
     public abstract HttpJsonCallOptions build();
   }

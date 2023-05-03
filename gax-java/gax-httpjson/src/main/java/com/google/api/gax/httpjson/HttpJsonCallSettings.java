@@ -88,7 +88,8 @@ public class HttpJsonCallSettings<RequestT, ResponseT> {
       return this;
     }
 
-    public Builder<RequestT, ResponseT> setParamsExtractor(RequestParamsExtractor<RequestT> paramsExtractor) {
+    public Builder<RequestT, ResponseT> setParamsExtractor(
+        RequestParamsExtractor<RequestT> paramsExtractor) {
       this.paramsExtractor = paramsExtractor;
       return this;
     }

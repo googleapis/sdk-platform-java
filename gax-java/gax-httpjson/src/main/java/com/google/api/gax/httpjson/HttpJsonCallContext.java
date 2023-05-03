@@ -470,8 +470,12 @@ public final class HttpJsonCallContext implements ApiCallContext {
   }
 
   public HttpJsonCallContext withRequestParamsDynamicHeaderOption(String requestParams) {
-    // TODO: Implement this to get the headers
-    return HttpJsonCallContext.createDefault();
+    HttpJsonCallOptions.Builder builder =
+        callOptions != null ? callOptions.toBuilder() : HttpJsonCallOptions.newBuilder();
+    if (!requestParams.isEmpty()) {
+      builder.setRequestParamsHeader(requestParams);
+    }
+    return withCallOptions(builder.build());
   }
 
   @Nonnull
