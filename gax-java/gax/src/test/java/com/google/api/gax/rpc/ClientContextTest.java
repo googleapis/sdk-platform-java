@@ -770,62 +770,84 @@ public class ClientContextTest {
     assertThat(transportChannel.getExecutor()).isSameInstanceAs(executorProvider.getExecutor());
   }
 
-  @Test
-  public void testGDCHCredentialsNoAudience() throws IOException {
-
-    ClientContext context;
-    CredentialsProvider provider;
+  private Credentials getMockGdchCredentials() {
     Credentials creds = Mockito.mock(GdchCredentials.class);
-    TransportChannelProvider transportChannelProvider =
-        new FakeTransportProvider(
-            FakeTransportChannel.create(new FakeChannel()), null, true, null, null);
 
     // GdchCredentials builder is mocked to accept a well-formed uri
     GdchCredentials.Builder gdchCredsBuilder = Mockito.mock(GdchCredentials.Builder.class);
     Mockito.when(gdchCredsBuilder.setGdchAudience(Mockito.any(URI.class)))
-        .thenReturn(gdchCredsBuilder);
+            .thenReturn(gdchCredsBuilder);
     Mockito.when(gdchCredsBuilder.build()).thenReturn((GdchCredentials) creds);
     Mockito.when(((GdchCredentials) creds).toBuilder()).thenReturn(gdchCredsBuilder);
+    return creds;
+  }
+
+  private TransportChannelProvider getFakeTransportChannelProvider() {
+    return new FakeTransportProvider(
+            FakeTransportChannel.create(new FakeChannel()), null,
+            true, null, null);
+  }
+
+  @Test
+  public void testGDCHCredentialsNoAudience() throws IOException {
+  }
+
+  @Test
+  public void testGdchCredentialNoAudience_correct() throws IOException {
+    TransportChannelProvider transportChannelProvider = getFakeTransportChannelProvider();
+    Credentials creds = getMockGdchCredentials();
 
     // it should correctly create a client context with gdch creds and null audience
-    provider = FixedCredentialsProvider.create(creds);
+    CredentialsProvider provider = FixedCredentialsProvider.create(creds);
     StubSettings settings = new FakeStubSettings.Builder().setGdchApiAudience(null).build();
     FakeClientSettings.Builder clientSettingsBuilder = new FakeClientSettings.Builder(settings);
     clientSettingsBuilder.setCredentialsProvider(provider);
     clientSettingsBuilder.setTransportChannelProvider(transportChannelProvider);
     // should not throw
-    context = ClientContext.create(clientSettingsBuilder.build());
+    ClientContext context = ClientContext.create(clientSettingsBuilder.build());
     assertThat(context.getCredentials()).isInstanceOf(GdchCredentials.class);
     assertNull(context.getGdchApiAudience());
+  }
+
+  @Test
+  public void testGdchCredentialInvalidAudience_throws() throws IOException {
+    TransportChannelProvider transportChannelProvider = getFakeTransportChannelProvider();
+    Credentials creds = getMockGdchCredentials();
+    CredentialsProvider provider = FixedCredentialsProvider.create(creds);
 
     // it should throw if both apiAudience and GDC-H creds are set but apiAudience is not a valid
     // uri
-    settings = settings.toBuilder().setGdchApiAudience("$invalid-uri:").build();
-    clientSettingsBuilder = new FakeClientSettings.Builder(settings);
+    StubSettings settings = new FakeStubSettings.Builder().setGdchApiAudience("$invalid-uri:").build();
+    ClientSettings.Builder clientSettingsBuilder = new FakeClientSettings.Builder(settings);
     clientSettingsBuilder.setCredentialsProvider(provider);
     clientSettingsBuilder.setTransportChannelProvider(transportChannelProvider);
     final ClientSettings withGdchCredentialsAndMalformedApiAudience = clientSettingsBuilder.build();
     // should throw
     String exMessage =
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> ClientContext.create(withGdchCredentialsAndMalformedApiAudience))
-            .getMessage();
+            assertThrows(
+                    IllegalArgumentException.class,
+                    () -> ClientContext.create(withGdchCredentialsAndMalformedApiAudience))
+                    .getMessage();
     assertThat(exMessage).contains("The GDC-H API audience string is not a valid URI");
+  }
+
+  @Test
+  public void testNonGdchCredentialAnyAudience_throws() throws IOException {
+    TransportChannelProvider transportChannelProvider = getFakeTransportChannelProvider();
 
     // it should throw if apiAudience is set but not using GDC-H creds
-    settings = settings.toBuilder().setGdchApiAudience("audience:test").build();
-    creds = Mockito.mock(ComputeEngineCredentials.class);
-    provider = FixedCredentialsProvider.create(creds);
-    clientSettingsBuilder = new FakeClientSettings.Builder(settings);
+    StubSettings settings = new FakeStubSettings.Builder().setGdchApiAudience("audience:test").build();
+    Credentials creds = Mockito.mock(ComputeEngineCredentials.class);
+    CredentialsProvider provider = FixedCredentialsProvider.create(creds);
+    ClientSettings.Builder clientSettingsBuilder = new FakeClientSettings.Builder(settings);
     clientSettingsBuilder.setCredentialsProvider(provider);
     clientSettingsBuilder.setTransportChannelProvider(transportChannelProvider);
     final ClientSettings withComputeCredentials = clientSettingsBuilder.build();
     // should throw
-    exMessage =
-        assertThrows(
-                IllegalArgumentException.class, () -> ClientContext.create(withComputeCredentials))
-            .getMessage();
+    String exMessage =
+            assertThrows(
+                    IllegalArgumentException.class, () -> ClientContext.create(withComputeCredentials))
+                    .getMessage();
     assertThat(exMessage).contains("GDC-H API audience can only be set when using GdchCredentials");
   }
 }
