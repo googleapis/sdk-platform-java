@@ -60,8 +60,13 @@ public class HttpJsonCallableFactory {
 
   private static <RequestT, ResponseT> UnaryCallable<RequestT, ResponseT> createDirectUnaryCallable(
       HttpJsonCallSettings<RequestT, ResponseT> httpJsonCallSettings) {
-    return new HttpJsonDirectCallable<RequestT, ResponseT>(
-        httpJsonCallSettings.getMethodDescriptor(), httpJsonCallSettings.getTypeRegistry());
+    UnaryCallable<RequestT, ResponseT> callable = new HttpJsonDirectCallable<>(
+            httpJsonCallSettings.getMethodDescriptor(), httpJsonCallSettings.getTypeRegistry());
+
+    if (httpJsonCallSettings.getParamsExtractor() != null) {
+      callable = new HttpJsonUnaryRequestParamCallable<>(callable, httpJsonCallSettings.getParamsExtractor());
+    }
+    return callable;
   }
 
   static <RequestT, ResponseT> UnaryCallable<RequestT, ResponseT> createUnaryCallable(
@@ -179,6 +184,10 @@ public class HttpJsonCallableFactory {
 
     ServerStreamingCallable<RequestT, ResponseT> callable =
         new HttpJsonDirectServerStreamingCallable<>(httpJsoncallSettings.getMethodDescriptor());
+
+    if (httpJsoncallSettings.getParamsExtractor() != null) {
+      callable = new HttpJsonServerStreamingRequestParamCallable<>(callable, httpJsoncallSettings.getParamsExtractor());
+    }
 
     callable =
         new HttpJsonExceptionServerStreamingCallable<>(
