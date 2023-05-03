@@ -146,7 +146,6 @@ public class ITUnaryDeadline {
             .setRpcTimeoutMultiplier(2.0)
             .setMaxRpcTimeout(Duration.ofMillis(3000L))
             .setTotalTimeout(Duration.ofMillis(5000L))
-            .setJittered(false)
             .build();
     EchoStubSettings.Builder grpcEchoSettingsBuilder = EchoStubSettings.newBuilder();
     // Manually set DEADLINE_EXCEEDED as showcase tests do not have that as a retryable code
@@ -195,7 +194,6 @@ public class ITUnaryDeadline {
             .setRpcTimeoutMultiplier(2.0)
             .setMaxRpcTimeout(Duration.ofMillis(3000L))
             .setTotalTimeout(Duration.ofMillis(5000L))
-            .setJittered(false)
             .build();
     EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
     // Manually set DEADLINE_EXCEEDED as showcase tests do not have that as a retryable code
@@ -344,7 +342,6 @@ public class ITUnaryDeadline {
             .setRpcTimeoutMultiplier(1.0)
             .setMaxRpcTimeout(Duration.ofMillis(100L))
             .setTotalTimeout(Duration.ofMillis(1000L))
-            .setJittered(false)
             .build();
     EchoStubSettings.Builder gRPCEchoSettingsBuilder = EchoStubSettings.newBuilder();
     // Manually set DEADLINE_EXCEEDED as showcase tests do not have that as a retryable code
@@ -403,7 +400,6 @@ public class ITUnaryDeadline {
             .setRpcTimeoutMultiplier(1.0)
             .setMaxRpcTimeout(Duration.ofMillis(100L))
             .setTotalTimeout(Duration.ofMillis(10000L))
-            .setJittered(false)
             .build();
     EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
     // Manually set DEADLINE_EXCEEDED as showcase tests do not have that as a retryable code

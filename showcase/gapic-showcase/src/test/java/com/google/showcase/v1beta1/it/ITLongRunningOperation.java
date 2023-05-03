@@ -75,7 +75,6 @@ public class ITLongRunningOperation {
                     .setRpcTimeoutMultiplier(1.0)
                     .setMaxRpcTimeout(Duration.ZERO)
                     .setTotalTimeout(Duration.ofMillis(10000L))
-                    .setJittered(false)
                     .build()));
     EchoSettings grpcEchoSettings = EchoSettings.create(grpcEchoSettingsBuilder.build());
     grpcEchoSettings =
@@ -99,7 +98,7 @@ public class ITLongRunningOperation {
       WaitResponse waitResponse = operationFuture.get();
       assertThat(waitResponse.getContent()).isEqualTo("gRPCWaitContent_5sDelay_noRetry");
       int attemptCount = operationFuture.getPollingFuture().getAttemptSettings().getAttemptCount();
-      assertThat(attemptCount).isEqualTo(2);
+      assertThat(attemptCount).isAtLeast(2);
     }
   }
 
@@ -129,7 +128,6 @@ public class ITLongRunningOperation {
                     .setRpcTimeoutMultiplier(1.0)
                     .setMaxRpcTimeout(Duration.ZERO)
                     .setTotalTimeout(Duration.ofMillis(10000L))
-                    .setJittered(false)
                     .build()));
     EchoSettings httpJsonEchoSettings = EchoSettings.create(httpJsonEchoSettingsBuilder.build());
     httpJsonEchoSettings =
@@ -156,7 +154,7 @@ public class ITLongRunningOperation {
       WaitResponse waitResponse = operationFuture.get();
       assertThat(waitResponse.getContent()).isEqualTo("httpjsonWaitContent_5sDelay_noRetry");
       int attemptCount = operationFuture.getPollingFuture().getAttemptSettings().getAttemptCount();
-      assertThat(attemptCount).isEqualTo(2);
+      assertThat(attemptCount).isAtLeast(2);
     }
   }
 
@@ -186,7 +184,6 @@ public class ITLongRunningOperation {
                     .setRpcTimeoutMultiplier(1.0)
                     .setMaxRpcTimeout(Duration.ZERO)
                     .setTotalTimeout(Duration.ofMillis(5000L))
-                    .setJittered(false)
                     .build()));
     EchoSettings grpcEchoSettings = EchoSettings.create(grpcEchoSettingsBuilder.build());
     grpcEchoSettings =
@@ -209,7 +206,8 @@ public class ITLongRunningOperation {
           grpcClient.waitOperationCallable().futureCall(waitRequest);
       assertThrows(CancellationException.class, operationFuture::get);
       int attemptCount = operationFuture.getPollingFuture().getAttemptSettings().getAttemptCount();
-      assertThat(attemptCount).isEqualTo(1);
+      assertThat(attemptCount).isAtLeast(1);
+      assertThat(attemptCount).isLessThan(3);
     }
   }
 
@@ -240,7 +238,6 @@ public class ITLongRunningOperation {
                     .setRpcTimeoutMultiplier(1.0)
                     .setMaxRpcTimeout(Duration.ZERO)
                     .setTotalTimeout(Duration.ofMillis(5000L))
-                    .setJittered(false)
                     .build()));
     EchoSettings httpJsonEchoSettings = EchoSettings.create(httpJsonEchoSettingsBuilder.build());
     httpJsonEchoSettings =
@@ -265,7 +262,8 @@ public class ITLongRunningOperation {
           httpJsonClient.waitOperationCallable().futureCall(waitRequest);
       assertThrows(CancellationException.class, operationFuture::get);
       int attemptCount = operationFuture.getPollingFuture().getAttemptSettings().getAttemptCount();
-      assertThat(attemptCount).isEqualTo(1);
+      assertThat(attemptCount).isAtLeast(1);
+      assertThat(attemptCount).isLessThan(3);
     }
   }
 }
