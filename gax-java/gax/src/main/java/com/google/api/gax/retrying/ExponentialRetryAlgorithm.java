@@ -214,6 +214,7 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
     // Otherwise, we would be using nanoseconds to determine if retries should be
     // attempted and milliseconds for retry delays and rpc timeouts
     long totalTimeSpentMs = Duration.ofNanos(totalTimeSpentNanos).toMillis();
+    System.out.println("TotalTimeSpentMs: " + totalTimeSpentMs);
     // If totalTimeout limit is defined, check that it hasn't been crossed.
     if (totalTimeoutMs > 0 && shouldRPCTerminate(totalTimeSpentMs, totalTimeoutMs)) {
       return false;
