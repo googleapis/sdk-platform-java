@@ -175,19 +175,20 @@ public abstract class ClientContext {
 
     String gdhcApiAudience = settings.getGdchApiAudience();
     if (gdhcApiAudience != null && credentials instanceof GdchCredentials) {
+      // We recompute the GdchCredentials with the audience
       URI gdchAudienceUri;
       try {
         gdchAudienceUri = URI.create(gdhcApiAudience);
       } catch (IllegalArgumentException ex) { // thrown when passing a malformed uri string
         throw new IllegalArgumentException("The GDC-H API audience string is not a valid URI", ex);
       }
-      GdchCredentials.Builder builder = ((GdchCredentials) credentials)
-              .toBuilder();
-      credentials = builder
-              .setGdchAudience(gdchAudienceUri)
-              .build();
+      credentials = ((GdchCredentials) credentials)
+              .toBuilder()
+              .setGdchAudience(gdchAudienceUri).build();
     } else if (gdhcApiAudience != null) {
-      throw new IllegalArgumentException("GDC-H API audience can only be set when using GdchCredentials");
+      // We have audience set for non-gdch credentials - this is not allowed
+      throw new IllegalArgumentException(
+          "GDC-H API audience can only be set when using GdchCredentials");
     }
 
     if (settings.getQuotaProjectId() != null) {

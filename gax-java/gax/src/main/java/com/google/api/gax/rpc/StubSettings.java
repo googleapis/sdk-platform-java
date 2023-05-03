@@ -175,7 +175,9 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   }
 
   @Nullable
-  public final String getGdchApiAudience() { return gdchApiAudience; }
+  public final String getGdchApiAudience() {
+    return gdchApiAudience;
+  }
 
   @Override
   public String toString() {
@@ -528,7 +530,9 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       return tracerFactory;
     }
 
-    public String getGdchApiAudience() { return gdchApiAudience; }
+    public String getGdchApiAudience() {
+      return gdchApiAudience;
+    }
 
     /** Applies the given settings updater function to the given method settings builders. */
     protected static void applyToAllUnaryMethods(
