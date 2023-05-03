@@ -175,9 +175,8 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
     if (timeout != null) {
       // The future timeout value is guaranteed to not be a negative value as the
       // RetryAlgorithm will not retry
-      long timeoutNanos = timeout.toMillis();
-      this.deadlineCancellationExecutor.schedule(
-          this::timeout, timeoutNanos, TimeUnit.MILLISECONDS);
+      long timeoutMs = timeout.toMillis();
+      this.deadlineCancellationExecutor.schedule(this::timeout, timeoutMs, TimeUnit.MILLISECONDS);
     }
   }
 
