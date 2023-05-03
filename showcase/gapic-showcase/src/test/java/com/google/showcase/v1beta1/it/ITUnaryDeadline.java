@@ -431,7 +431,7 @@ public class ITUnaryDeadline {
       RetryingFuture<BlockResponse> retryingFuture =
           (RetryingFuture<BlockResponse>) httpJsonClient.blockCallable().futureCall(blockRequest);
       ExecutionException exception =
-          assertThrows(ExecutionException.class, () -> retryingFuture.get(20, TimeUnit.SECONDS));
+          assertThrows(ExecutionException.class, () -> retryingFuture.get(15, TimeUnit.SECONDS));
       assertThat(exception.getCause()).isInstanceOf(DeadlineExceededException.class);
       DeadlineExceededException deadlineExceededException =
           (DeadlineExceededException) exception.getCause();

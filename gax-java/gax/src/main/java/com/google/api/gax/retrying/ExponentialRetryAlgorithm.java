@@ -213,9 +213,9 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
     // Convert time spent to ms to standardize the units being used for retries
     // Otherwise, we would be using ns to determine if retries should be attempted
     // and ms to retry delays and rpc timeouts
-    long totalTimeSpendMs = Duration.ofNanos(totalTimeSpentNanos).toMillis();
+    long totalTimeSpentMs = Duration.ofNanos(totalTimeSpentNanos).toMillis();
     // If totalTimeout limit is defined, check that it hasn't been crossed.
-    if (totalTimeoutMs > 0 && shouldRPCTerminate(totalTimeSpendMs, totalTimeoutMs)) {
+    if (totalTimeoutMs > 0 && shouldRPCTerminate(totalTimeSpentMs, totalTimeoutMs)) {
       return false;
     }
 

@@ -206,8 +206,7 @@ public class ITLongRunningOperation {
           grpcClient.waitOperationCallable().futureCall(waitRequest);
       assertThrows(CancellationException.class, operationFuture::get);
       int attemptCount = operationFuture.getPollingFuture().getAttemptSettings().getAttemptCount();
-      assertThat(attemptCount).isAtLeast(1);
-      assertThat(attemptCount).isLessThan(3);
+      assertThat(attemptCount).isGreaterThan(1);
     }
   }
 
@@ -262,8 +261,7 @@ public class ITLongRunningOperation {
           httpJsonClient.waitOperationCallable().futureCall(waitRequest);
       assertThrows(CancellationException.class, operationFuture::get);
       int attemptCount = operationFuture.getPollingFuture().getAttemptSettings().getAttemptCount();
-      assertThat(attemptCount).isAtLeast(1);
-      assertThat(attemptCount).isLessThan(3);
+      assertThat(attemptCount).isGreaterThan(1);
     }
   }
 }
