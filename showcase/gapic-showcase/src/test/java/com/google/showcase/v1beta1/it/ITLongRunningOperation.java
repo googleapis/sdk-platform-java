@@ -177,7 +177,7 @@ public class ITLongRunningOperation {
         .setPollingAlgorithm(
             OperationTimedPollAlgorithm.create(
                 RetrySettings.newBuilder()
-                    .setInitialRetryDelay(Duration.ofMillis(3000L))
+                    .setInitialRetryDelay(Duration.ofMillis(2000L))
                     .setRetryDelayMultiplier(2.0)
                     .setMaxRetryDelay(Duration.ofMillis(5000L))
                     .setInitialRpcTimeout(Duration.ZERO)
@@ -230,7 +230,7 @@ public class ITLongRunningOperation {
         .setPollingAlgorithm(
             OperationTimedPollAlgorithm.create(
                 RetrySettings.newBuilder()
-                    .setInitialRetryDelay(Duration.ofMillis(3000L))
+                    .setInitialRetryDelay(Duration.ofMillis(2000L))
                     .setRetryDelayMultiplier(2.0)
                     .setMaxRetryDelay(Duration.ofMillis(5000L))
                     .setInitialRpcTimeout(Duration.ZERO)
