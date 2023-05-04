@@ -13,6 +13,12 @@
             "GetEnum": {
               "methods": ["getEnum", "getEnumCallable"]
             },
+            "GetLocation": {
+              "methods": ["getLocation", "getLocationCallable"]
+            },
+            "ListLocations": {
+              "methods": ["listLocations", "listLocationsPagedCallable", "listLocationsCallable"]
+            },
             "RepeatDataBody": {
               "methods": ["repeatDataBody", "repeatDataBodyCallable"]
             },
@@ -64,6 +70,12 @@
             "Expand": {
               "methods": ["expandCallable"]
             },
+            "GetLocation": {
+              "methods": ["getLocation", "getLocationCallable"]
+            },
+            "ListLocations": {
+              "methods": ["listLocations", "listLocationsPagedCallable", "listLocationsCallable"]
+            },
             "PagedExpand": {
               "methods": ["pagedExpand", "pagedExpandPagedCallable", "pagedExpandCallable"]
             },
@@ -91,8 +103,14 @@
             "DeleteUser": {
               "methods": ["deleteUser", "deleteUser", "deleteUser", "deleteUserCallable"]
             },
+            "GetLocation": {
+              "methods": ["getLocation", "getLocationCallable"]
+            },
             "GetUser": {
               "methods": ["getUser", "getUser", "getUser", "getUserCallable"]
+            },
+            "ListLocations": {
+              "methods": ["listLocations", "listLocationsPagedCallable", "listLocationsCallable"]
             },
             "ListUsers": {
               "methods": ["listUsers", "listUsersPagedCallable", "listUsersCallable"]
@@ -127,11 +145,17 @@
             "GetBlurb": {
               "methods": ["getBlurb", "getBlurb", "getBlurb", "getBlurbCallable"]
             },
+            "GetLocation": {
+              "methods": ["getLocation", "getLocationCallable"]
+            },
             "GetRoom": {
               "methods": ["getRoom", "getRoom", "getRoom", "getRoomCallable"]
             },
             "ListBlurbs": {
               "methods": ["listBlurbs", "listBlurbs", "listBlurbs", "listBlurbs", "listBlurbsPagedCallable", "listBlurbsCallable"]
+            },
+            "ListLocations": {
+              "methods": ["listLocations", "listLocationsPagedCallable", "listLocationsCallable"]
             },
             "ListRooms": {
               "methods": ["listRooms", "listRoomsPagedCallable", "listRoomsCallable"]
@@ -166,8 +190,14 @@
             "CreateSequence": {
               "methods": ["createSequence", "createSequence", "createSequenceCallable"]
             },
+            "GetLocation": {
+              "methods": ["getLocation", "getLocationCallable"]
+            },
             "GetSequenceReport": {
               "methods": ["getSequenceReport", "getSequenceReport", "getSequenceReport", "getSequenceReportCallable"]
+            },
+            "ListLocations": {
+              "methods": ["listLocations", "listLocationsPagedCallable", "listLocationsCallable"]
             }
           }
         }
@@ -187,8 +217,14 @@
             "DeleteTest": {
               "methods": ["deleteTest", "deleteTestCallable"]
             },
+            "GetLocation": {
+              "methods": ["getLocation", "getLocationCallable"]
+            },
             "GetSession": {
               "methods": ["getSession", "getSessionCallable"]
+            },
+            "ListLocations": {
+              "methods": ["listLocations", "listLocationsPagedCallable", "listLocationsCallable"]
             },
             "ListSessions": {
               "methods": ["listSessions", "listSessionsPagedCallable", "listSessionsCallable"]

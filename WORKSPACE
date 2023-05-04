@@ -60,7 +60,7 @@ maven_install(
     repositories = ["https://repo.maven.apache.org/maven2/"],
 )
 
-_gapic_generator_java_version = "2.15.3-SNAPSHOT"  # {x-version-update:gapic-generator-java:current}
+_gapic_generator_java_version = "2.18.1-SNAPSHOT"  # {x-version-update:gapic-generator-java:current}
 
 maven_install(
     artifacts = [
@@ -107,9 +107,9 @@ http_archive(
 )
 
 # Showcase
-_showcase_commit = "90d73532a0cab753a85f45c158394f24fc21d91a"
+_showcase_commit = "656e5f46d125a69c82c0cb7edcfcd8b03ed77b89"
 
-_showcase_sha256 = "0f582541a379be0746e6b8bc5af3df511581d4b1f18f7dfb9ce203be1a64cef1"
+_showcase_sha256 = "26d4b71ac31cbca5e4ed4cdcb5bfeca185e405392d70d2020b4528b5b47c8022"
 
 http_archive(
     name = "com_google_gapic_showcase",

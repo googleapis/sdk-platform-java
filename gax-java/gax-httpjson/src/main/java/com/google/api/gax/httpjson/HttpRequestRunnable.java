@@ -172,7 +172,7 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
       jsonFactory.createJsonParser(requestBody).parse(tokenRequest);
       jsonHttpContent =
           new JsonHttpContent(jsonFactory, tokenRequest)
-              .setMediaType((new HttpMediaType("application/json")));
+              .setMediaType((new HttpMediaType("application/json; charset=utf-8")));
     } else {
       // Force underlying HTTP lib to set Content-Length header to avoid 411s.
       // See EmptyContent.java.

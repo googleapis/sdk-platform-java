@@ -84,8 +84,9 @@ public final class Metric extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * An existing metric type, see [google.api.MetricDescriptor][google.api.MetricDescriptor].
-   * For example, `custom.googleapis.com/invoice/paid/amount`.
+   * An existing metric type, see
+   * [google.api.MetricDescriptor][google.api.MetricDescriptor]. For example,
+   * `custom.googleapis.com/invoice/paid/amount`.
    * </pre>
    *
    * <code>string type = 3;</code>
@@ -108,8 +109,9 @@ public final class Metric extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * An existing metric type, see [google.api.MetricDescriptor][google.api.MetricDescriptor].
-   * For example, `custom.googleapis.com/invoice/paid/amount`.
+   * An existing metric type, see
+   * [google.api.MetricDescriptor][google.api.MetricDescriptor]. For example,
+   * `custom.googleapis.com/invoice/paid/amount`.
    * </pre>
    *
    * <code>string type = 3;</code>
@@ -630,8 +632,9 @@ public final class Metric extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * An existing metric type, see [google.api.MetricDescriptor][google.api.MetricDescriptor].
-     * For example, `custom.googleapis.com/invoice/paid/amount`.
+     * An existing metric type, see
+     * [google.api.MetricDescriptor][google.api.MetricDescriptor]. For example,
+     * `custom.googleapis.com/invoice/paid/amount`.
      * </pre>
      *
      * <code>string type = 3;</code>
@@ -653,8 +656,9 @@ public final class Metric extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * An existing metric type, see [google.api.MetricDescriptor][google.api.MetricDescriptor].
-     * For example, `custom.googleapis.com/invoice/paid/amount`.
+     * An existing metric type, see
+     * [google.api.MetricDescriptor][google.api.MetricDescriptor]. For example,
+     * `custom.googleapis.com/invoice/paid/amount`.
      * </pre>
      *
      * <code>string type = 3;</code>
@@ -676,8 +680,9 @@ public final class Metric extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * An existing metric type, see [google.api.MetricDescriptor][google.api.MetricDescriptor].
-     * For example, `custom.googleapis.com/invoice/paid/amount`.
+     * An existing metric type, see
+     * [google.api.MetricDescriptor][google.api.MetricDescriptor]. For example,
+     * `custom.googleapis.com/invoice/paid/amount`.
      * </pre>
      *
      * <code>string type = 3;</code>
@@ -698,8 +703,9 @@ public final class Metric extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * An existing metric type, see [google.api.MetricDescriptor][google.api.MetricDescriptor].
-     * For example, `custom.googleapis.com/invoice/paid/amount`.
+     * An existing metric type, see
+     * [google.api.MetricDescriptor][google.api.MetricDescriptor]. For example,
+     * `custom.googleapis.com/invoice/paid/amount`.
      * </pre>
      *
      * <code>string type = 3;</code>
@@ -716,8 +722,9 @@ public final class Metric extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * An existing metric type, see [google.api.MetricDescriptor][google.api.MetricDescriptor].
-     * For example, `custom.googleapis.com/invoice/paid/amount`.
+     * An existing metric type, see
+     * [google.api.MetricDescriptor][google.api.MetricDescriptor]. For example,
+     * `custom.googleapis.com/invoice/paid/amount`.
      * </pre>
      *
      * <code>string type = 3;</code>

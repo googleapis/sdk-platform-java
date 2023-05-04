@@ -34,6 +34,7 @@ package com.google.api.core;
  *
  * <p>It is similar to Guava's {@code Function}, redeclared so that Guava can be shaded.
  */
+@FunctionalInterface
 public interface ApiFunction<F, T> {
   T apply(F input);
 }

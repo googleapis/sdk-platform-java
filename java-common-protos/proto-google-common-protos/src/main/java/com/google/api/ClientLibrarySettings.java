@@ -75,7 +75,9 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
    *
    *
    * <pre>
-   * Version of the API to apply these settings to.
+   * Version of the API to apply these settings to. This is the full protobuf
+   * package for the API, ending in the version element.
+   * Examples: "google.cloud.speech.v1" and "google.spanner.admin.database.v1".
    * </pre>
    *
    * <code>string version = 1;</code>
@@ -98,7 +100,9 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
    *
    *
    * <pre>
-   * Version of the API to apply these settings to.
+   * Version of the API to apply these settings to. This is the full protobuf
+   * package for the API, ending in the version element.
+   * Examples: "google.cloud.speech.v1" and "google.spanner.admin.database.v1".
    * </pre>
    *
    * <code>string version = 1;</code>
@@ -1187,7 +1191,9 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
      *
      *
      * <pre>
-     * Version of the API to apply these settings to.
+     * Version of the API to apply these settings to. This is the full protobuf
+     * package for the API, ending in the version element.
+     * Examples: "google.cloud.speech.v1" and "google.spanner.admin.database.v1".
      * </pre>
      *
      * <code>string version = 1;</code>
@@ -1209,7 +1215,9 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
      *
      *
      * <pre>
-     * Version of the API to apply these settings to.
+     * Version of the API to apply these settings to. This is the full protobuf
+     * package for the API, ending in the version element.
+     * Examples: "google.cloud.speech.v1" and "google.spanner.admin.database.v1".
      * </pre>
      *
      * <code>string version = 1;</code>
@@ -1231,7 +1239,9 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
      *
      *
      * <pre>
-     * Version of the API to apply these settings to.
+     * Version of the API to apply these settings to. This is the full protobuf
+     * package for the API, ending in the version element.
+     * Examples: "google.cloud.speech.v1" and "google.spanner.admin.database.v1".
      * </pre>
      *
      * <code>string version = 1;</code>
@@ -1252,7 +1262,9 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
      *
      *
      * <pre>
-     * Version of the API to apply these settings to.
+     * Version of the API to apply these settings to. This is the full protobuf
+     * package for the API, ending in the version element.
+     * Examples: "google.cloud.speech.v1" and "google.spanner.admin.database.v1".
      * </pre>
      *
      * <code>string version = 1;</code>
@@ -1269,7 +1281,9 @@ public final class ClientLibrarySettings extends com.google.protobuf.GeneratedMe
      *
      *
      * <pre>
-     * Version of the API to apply these settings to.
+     * Version of the API to apply these settings to. This is the full protobuf
+     * package for the API, ending in the version element.
+     * Examples: "google.cloud.speech.v1" and "google.spanner.admin.database.v1".
      * </pre>
      *
      * <code>string version = 1;</code>

@@ -34,6 +34,7 @@ package com.google.api.core;
  *
  * <p>It is similar to Guava's {@code AsyncFunction}, redeclared so that Guava can be shaded.
  */
+@FunctionalInterface
 public interface ApiAsyncFunction<I, O> {
   /**
    * Returns an output Future to use in place of the given input. The output Future need not be

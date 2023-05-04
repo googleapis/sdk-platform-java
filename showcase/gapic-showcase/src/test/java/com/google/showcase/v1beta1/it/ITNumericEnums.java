@@ -23,10 +23,9 @@ import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.showcase.v1beta1.ComplianceClient;
 import com.google.showcase.v1beta1.ComplianceSettings;
 import com.google.showcase.v1beta1.EnumRequest;
+import com.google.showcase.v1beta1.EnumResponse;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-
-import com.google.showcase.v1beta1.EnumResponse;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

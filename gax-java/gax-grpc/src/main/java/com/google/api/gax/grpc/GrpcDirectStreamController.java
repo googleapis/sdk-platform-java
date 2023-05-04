@@ -53,7 +53,7 @@ class GrpcDirectStreamController<RequestT, ResponseT> implements StreamControlle
   private final ClientCall<RequestT, ResponseT> clientCall;
   private final ResponseObserver<ResponseT> responseObserver;
   private final Runnable onReady;
-  private boolean hasStarted;
+  private volatile boolean hasStarted;
   private boolean autoflowControl = true;
   private int numRequested;
   private volatile CancellationException cancellationException;
@@ -88,7 +88,6 @@ class GrpcDirectStreamController<RequestT, ResponseT> implements StreamControlle
   @Override
   public void request(int count) {
     Preconditions.checkState(!autoflowControl, "Autoflow control is enabled.");
-
     // Buffer the requested count in case the consumer requested responses in the onStart()
     if (!hasStarted) {
       numRequested += count;
@@ -110,9 +109,9 @@ class GrpcDirectStreamController<RequestT, ResponseT> implements StreamControlle
   private void startCommon() {
     responseObserver.onStart(this);
 
-    this.hasStarted = true;
-
     clientCall.start(new ResponseObserverAdapter(), new Metadata());
+
+    this.hasStarted = true;
 
     if (autoflowControl) {
       clientCall.request(1);
