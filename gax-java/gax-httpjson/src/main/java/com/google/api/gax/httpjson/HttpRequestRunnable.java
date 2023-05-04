@@ -206,6 +206,13 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
           httpRequest.getHeaders(), entry.getKey(), (String) entry.getValue());
     }
 
+    if (httpJsonCallOptions.getRequestParamsHeader() != null) {
+      HttpHeadersUtils.setHeader(
+          httpRequest.getHeaders(),
+          "x-goog-request-params",
+          httpJsonCallOptions.getRequestParamsHeader());
+    }
+
     httpRequest.setParser(new JsonObjectParser(jsonFactory));
 
     return httpRequest;
