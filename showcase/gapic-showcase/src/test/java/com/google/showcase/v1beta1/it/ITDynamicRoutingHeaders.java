@@ -15,42 +15,172 @@
  */
 package com.google.showcase.v1beta1.it;
 
+import static com.google.common.truth.Truth.assertThat;
+
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.gax.core.NoCredentialsProvider;
+import com.google.api.gax.httpjson.ApiMethodDescriptor;
+import com.google.api.gax.httpjson.ForwardingHttpJsonClientCall;
+import com.google.api.gax.httpjson.ForwardingHttpJsonClientCallListener;
+import com.google.api.gax.httpjson.HttpJsonCallOptions;
+import com.google.api.gax.httpjson.HttpJsonChannel;
+import com.google.api.gax.httpjson.HttpJsonClientCall;
+import com.google.api.gax.httpjson.HttpJsonClientInterceptor;
+import com.google.api.gax.httpjson.HttpJsonMetadata;
+import com.google.common.collect.ImmutableList;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
-import com.google.showcase.v1beta1.EchoResponse;
-import com.google.showcase.v1beta1.it.util.TestClientInitializer;
+import com.google.showcase.v1beta1.EchoSettings;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class ITDynamicRoutingHeaders {
-  private EchoClient grpcClient;
+
+  private static final String SPLIT_TOKEN = "&";
+
+  private static class CapturingClientInterceptor implements HttpJsonClientInterceptor {
+    private volatile String requestParam;
+
+    @Override
+    public <RequestT, ResponseT> HttpJsonClientCall<RequestT, ResponseT> interceptCall(
+        ApiMethodDescriptor<RequestT, ResponseT> method,
+        HttpJsonCallOptions callOptions,
+        HttpJsonChannel next) {
+      HttpJsonClientCall<RequestT, ResponseT> call = next.newCall(method, callOptions);
+      return new ForwardingHttpJsonClientCall.SimpleForwardingHttpJsonClientCall<
+          RequestT, ResponseT>(call) {
+        @Override
+        public void start(Listener<ResponseT> responseListener, HttpJsonMetadata requestHeaders) {
+          Listener<ResponseT> forwardingResponseListener =
+              new ForwardingHttpJsonClientCallListener.SimpleForwardingHttpJsonClientCallListener<
+                  ResponseT>(responseListener) {
+                @Override
+                public void onHeaders(HttpJsonMetadata responseHeaders) {
+                  super.onHeaders(responseHeaders);
+                }
+
+                @Override
+                public void onMessage(ResponseT message) {
+                  super.onMessage(message);
+                }
+
+                @Override
+                public void onClose(int statusCode, HttpJsonMetadata trailers) {
+                  super.onClose(statusCode, trailers);
+                }
+              };
+
+          super.start(forwardingResponseListener, requestHeaders);
+          requestParam = callOptions.getRequestParamsHeader();
+        }
+      };
+    }
+  }
+
+  private ITDynamicRoutingHeaders.CapturingClientInterceptor interceptor;
+
   private EchoClient httpJsonClient;
 
   @Before
   public void createClients() throws Exception {
-    // Create gRPC Echo Client
-    grpcClient = TestClientInitializer.createGrpcEchoClient();
+    interceptor = new ITDynamicRoutingHeaders.CapturingClientInterceptor();
     // Create Http JSON Echo Client
-    httpJsonClient = TestClientInitializer.createHttpJsonEchoClient();
+    EchoSettings httpJsonEchoSettings =
+        EchoSettings.newHttpJsonBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultHttpJsonTransportProviderBuilder()
+                    .setHttpTransport(
+                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
+                    .setEndpoint("http://localhost:7469")
+                    .setInterceptorProvider(() -> Collections.singletonList(interceptor))
+                    .build())
+            .build();
+    httpJsonClient = EchoClient.create(httpJsonEchoSettings);
   }
 
   @After
   public void destroyClient() {
-    grpcClient.close();
     httpJsonClient.close();
   }
 
-  @Ignore
   @Test
-  public void testGrpc_matchesHeaderName() {
-    EchoResponse response = grpcClient.echo(EchoRequest.newBuilder().setHeader("potato").build());
+  public void testHttpJson_noRoutingHeaderUsed() {
+    httpJsonClient.echo(EchoRequest.newBuilder().build());
+    assertThat(interceptor.requestParam).isNull();
+  }
+
+  @Test
+  public void testHttpJson_emptyHeader() {
+    httpJsonClient.echo(EchoRequest.newBuilder().setHeader("").build());
+    assertThat(interceptor.requestParam).isNull();
   }
 
   @Test
   public void testHttpJson_matchesHeaderName() {
-    EchoResponse response =
-        httpJsonClient.echo(EchoRequest.newBuilder().setHeader("potato").build());
+    httpJsonClient.echo(EchoRequest.newBuilder().setHeader("potato").build());
+    List<String> requestHeaders =
+        Arrays.stream(interceptor.requestParam.split(SPLIT_TOKEN)).collect(Collectors.toList());
+    List<String> expectedHeaders = ImmutableList.of("header=potato", "routing_id=potato");
+    assertThat(requestHeaders).containsExactlyElementsIn(expectedHeaders);
+  }
+
+  @Test
+  public void testHttpJson_matchesOtherHeaderName() {
+    httpJsonClient.echo(EchoRequest.newBuilder().setOtherHeader("instances/456").build());
+    List<String> requestHeaders =
+        Arrays.stream(interceptor.requestParam.split(SPLIT_TOKEN)).collect(Collectors.toList());
+    List<String> expectedHeaders = ImmutableList.of("baz=instances/456");
+    assertThat(requestHeaders).containsExactlyElementsIn(expectedHeaders);
+  }
+
+  @Test
+  public void testHttpJson_matchesMultipleOfSameRoutingHeader_usesHeader() {
+    httpJsonClient.echo(EchoRequest.newBuilder().setHeader("projects/123/instances/456").build());
+    List<String> requestHeaders =
+        Arrays.stream(interceptor.requestParam.split(SPLIT_TOKEN)).collect(Collectors.toList());
+    List<String> expectedHeaders =
+        ImmutableList.of(
+            "header=projects/123/instances/456",
+            "routing_id=projects/123/instances/456",
+            "super_id=projects/123",
+            "table_name=projects/123/instances/456",
+            "instance_id=instances/456");
+    assertThat(requestHeaders).containsExactlyElementsIn(expectedHeaders).inOrder();
+  }
+
+  @Test
+  public void testHttpJson_matchesMultipleOfSameRoutingHeader_usesOtherHeader() {
+    httpJsonClient.echo(
+        EchoRequest.newBuilder().setOtherHeader("projects/123/instances/456").build());
+    List<String> requestHeaders =
+        Arrays.stream(interceptor.requestParam.split(SPLIT_TOKEN)).collect(Collectors.toList());
+    List<String> expectedHeaders =
+        ImmutableList.of("baz=projects/123/instances/456", "qux=projects/123");
+    assertThat(requestHeaders).containsExactlyElementsIn(expectedHeaders);
+  }
+
+  @Test
+  public void testHttpJson_matchesMultipleRoutingHeaders() {
+    httpJsonClient.echo(
+        EchoRequest.newBuilder()
+            .setHeader("regions/123/zones/456")
+            .setOtherHeader("projects/123/instances/456")
+            .build());
+    List<String> requestHeaders =
+        Arrays.stream(interceptor.requestParam.split(SPLIT_TOKEN)).collect(Collectors.toList());
+    List<String> expectedHeaders =
+        ImmutableList.of(
+            "baz=projects/123/instances/456",
+            "qux=projects/123",
+            "table_name=regions/123/zones/456",
+            "header=regions/123/zones/456",
+            "routing_id=regions/123/zones/456");
+    assertThat(requestHeaders).containsExactlyElementsIn(expectedHeaders);
   }
 }
