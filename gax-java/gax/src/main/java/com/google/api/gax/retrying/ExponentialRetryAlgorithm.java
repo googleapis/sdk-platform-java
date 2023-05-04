@@ -198,10 +198,10 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
     RetrySettings globalSettings = nextAttemptSettings.getGlobalSettings();
 
     int maxAttempts = globalSettings.getMaxAttempts();
-    long totalTimeoutMs = globalSettings.getTotalTimeout().toMillis();
+    Duration totalTimeout = globalSettings.getTotalTimeout();
 
     // If total timeout and maxAttempts is not set then do not attempt retry.
-    if (totalTimeoutMs == 0 && maxAttempts == 0) {
+    if (totalTimeout.isZero() && maxAttempts == 0) {
       return false;
     }
 
@@ -210,13 +210,13 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
             - nextAttemptSettings.getFirstAttemptStartTimeNanos()
             + nextAttemptSettings.getRandomizedRetryDelay().toNanos();
 
-    // Convert time spent to ms to standardize the units being used for retries
-    // Otherwise, we would be using nanoseconds to determine if retries should be
-    // attempted and milliseconds for retry delays and rpc timeouts
-    long totalTimeSpentMs = Duration.ofNanos(totalTimeSpentNanos).toMillis();
-    System.out.println("TotalTimeSpentMs: " + totalTimeSpentMs);
+    Duration timeLeft = totalTimeout.minus(Duration.ofNanos(totalTimeSpentNanos));
+    // Convert time spent to milliseconds to standardize the units being used for
+    // retries. Otherwise, we would be using nanoseconds to determine if retries
+    // should be attempted and milliseconds for retry delays and rpc timeouts
+    long timeLeftMs = timeLeft.toMillis();
     // If totalTimeout limit is defined, check that it hasn't been crossed.
-    if (totalTimeoutMs > 0 && shouldRPCTerminate(totalTimeSpentMs, totalTimeoutMs)) {
+    if (!totalTimeout.isZero() && shouldRPCTerminate(timeLeftMs)) {
       return false;
     }
 
@@ -234,8 +234,8 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
   // will occur immediately). For any other value, the deadlineScheduler will
   // terminate in the future (even if the timeout is small).
   @InternalApi
-  protected boolean shouldRPCTerminate(long totalTimeSpentMs, long totalTimeoutMs) {
-    return totalTimeSpentMs >= totalTimeoutMs;
+  protected boolean shouldRPCTerminate(long timeLeftMs) {
+    return timeLeftMs <= 0;
   }
 
   /**

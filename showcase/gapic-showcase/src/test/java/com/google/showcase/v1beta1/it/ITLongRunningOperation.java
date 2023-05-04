@@ -45,7 +45,6 @@ import org.threeten.bp.temporal.ChronoUnit;
 /**
  * For this test, we test a combination of various LRO RetrySettings and try to ensure that the
  * calls are polling correctly. Each test attempts to test the number of attempts done in each call.
- * This is done by ignoring the jitter factor to normalize the results for each test.
  */
 public class ITLongRunningOperation {
 
@@ -70,7 +69,7 @@ public class ITLongRunningOperation {
                 RetrySettings.newBuilder()
                     .setInitialRetryDelay(Duration.ofMillis(3000L))
                     .setRetryDelayMultiplier(2.0)
-                    .setMaxRetryDelay(Duration.ofMillis(10000L))
+                    .setMaxRetryDelay(Duration.ofMillis(5000L))
                     .setInitialRpcTimeout(Duration.ZERO)
                     .setRpcTimeoutMultiplier(1.0)
                     .setMaxRpcTimeout(Duration.ZERO)
@@ -123,7 +122,7 @@ public class ITLongRunningOperation {
                 RetrySettings.newBuilder()
                     .setInitialRetryDelay(Duration.ofMillis(3000L))
                     .setRetryDelayMultiplier(2.0)
-                    .setMaxRetryDelay(Duration.ofMillis(10000L))
+                    .setMaxRetryDelay(Duration.ofMillis(5000L))
                     .setInitialRpcTimeout(Duration.ZERO)
                     .setRpcTimeoutMultiplier(1.0)
                     .setMaxRpcTimeout(Duration.ZERO)
