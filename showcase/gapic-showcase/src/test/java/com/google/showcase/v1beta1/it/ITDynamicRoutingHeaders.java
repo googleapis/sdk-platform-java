@@ -40,7 +40,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ITDynamicRoutingHeaders {
-
   private static final String SPLIT_TOKEN = "&";
 
   private static class CapturingClientInterceptor implements HttpJsonClientInterceptor {
@@ -135,7 +134,7 @@ public class ITDynamicRoutingHeaders {
     httpJsonClient.echo(EchoRequest.newBuilder().setOtherHeader("instances/456").build());
     List<String> requestHeaders =
         Arrays.stream(interceptor.requestParam.split(SPLIT_TOKEN)).collect(Collectors.toList());
-    List<String> expectedHeaders = ImmutableList.of("baz=instances/456");
+    List<String> expectedHeaders = ImmutableList.of("baz=instances%2F456");
     assertThat(requestHeaders).containsExactlyElementsIn(expectedHeaders);
   }
 
@@ -146,11 +145,11 @@ public class ITDynamicRoutingHeaders {
         Arrays.stream(interceptor.requestParam.split(SPLIT_TOKEN)).collect(Collectors.toList());
     List<String> expectedHeaders =
         ImmutableList.of(
-            "header=projects/123/instances/456",
-            "routing_id=projects/123/instances/456",
-            "super_id=projects/123",
-            "table_name=projects/123/instances/456",
-            "instance_id=instances/456");
+            "header=projects%2F123%2Finstances%2F456",
+            "routing_id=projects%2F123%2Finstances%2F456",
+            "super_id=projects%2F123",
+            "table_name=projects%2F123%2Finstances%2F456",
+            "instance_id=instances%2F456");
     assertThat(requestHeaders).containsExactlyElementsIn(expectedHeaders).inOrder();
   }
 
@@ -161,7 +160,7 @@ public class ITDynamicRoutingHeaders {
     List<String> requestHeaders =
         Arrays.stream(interceptor.requestParam.split(SPLIT_TOKEN)).collect(Collectors.toList());
     List<String> expectedHeaders =
-        ImmutableList.of("baz=projects/123/instances/456", "qux=projects/123");
+        ImmutableList.of("baz=projects%2F123%2Finstances%2F456", "qux=projects%2F123");
     assertThat(requestHeaders).containsExactlyElementsIn(expectedHeaders);
   }
 
@@ -176,11 +175,11 @@ public class ITDynamicRoutingHeaders {
         Arrays.stream(interceptor.requestParam.split(SPLIT_TOKEN)).collect(Collectors.toList());
     List<String> expectedHeaders =
         ImmutableList.of(
-            "baz=projects/123/instances/456",
-            "qux=projects/123",
-            "table_name=regions/123/zones/456",
-            "header=regions/123/zones/456",
-            "routing_id=regions/123/zones/456");
+            "baz=projects%2F123%2Finstances%2F456",
+            "qux=projects%2F123",
+            "table_name=regions%2F123%2Fzones%2F456",
+            "header=regions%2F123%2Fzones%2F456",
+            "routing_id=regions%2F123%2Fzones%2F456");
     assertThat(requestHeaders).containsExactlyElementsIn(expectedHeaders);
   }
 }

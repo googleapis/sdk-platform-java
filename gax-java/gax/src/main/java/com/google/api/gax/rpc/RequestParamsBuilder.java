@@ -32,6 +32,9 @@ package com.google.api.gax.rpc;
 import com.google.api.core.BetaApi;
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.common.collect.ImmutableMap;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 /**
@@ -68,7 +71,14 @@ public class RequestParamsBuilder {
     }
     Map<String, String> matchedValues = pathTemplate.match(fieldValue);
     if (matchedValues != null && matchedValues.containsKey(headerKey)) {
-      paramsBuilder.put(headerKey, matchedValues.get(headerKey));
+      String encodedValue;
+      try {
+        encodedValue =
+            URLEncoder.encode(matchedValues.get(headerKey), StandardCharsets.UTF_8.toString());
+      } catch (UnsupportedEncodingException e) {
+        encodedValue = matchedValues.get(headerKey);
+      }
+      paramsBuilder.put(headerKey, encodedValue);
     }
   }
 
