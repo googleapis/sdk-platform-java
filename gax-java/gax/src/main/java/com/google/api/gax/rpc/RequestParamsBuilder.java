@@ -63,7 +63,7 @@ public class RequestParamsBuilder {
    * @param pathTemplate {@link PathTemplate} the path template used for match-and-extract
    */
   public void add(String fieldValue, String headerKey, PathTemplate pathTemplate) {
-    if (fieldValue == null) {
+    if (fieldValue == null || fieldValue.isEmpty()) {
       return;
     }
     Map<String, String> matchedValues = pathTemplate.match(fieldValue);
