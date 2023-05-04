@@ -61,6 +61,7 @@ import org.threeten.bp.Instant;
 
 /** A runnable object that creates and executes an HTTP request. */
 class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
+  private static final String DYNAMIC_ROUTING_HEADER_KEY = "x-goog-request-params";
   private final RequestT request;
   private final ApiMethodDescriptor<RequestT, ResponseT> methodDescriptor;
   private final String endpoint;
@@ -209,7 +210,7 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
     if (httpJsonCallOptions.getRequestParamsHeader() != null) {
       HttpHeadersUtils.setHeader(
           httpRequest.getHeaders(),
-          "x-goog-request-params",
+          DYNAMIC_ROUTING_HEADER_KEY,
           httpJsonCallOptions.getRequestParamsHeader());
     }
 
