@@ -237,7 +237,7 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
             .setArguments(Arrays.asList(TYPE_REGISTRY_VAR_EXPR))
             .build();
 
-    if (method.shouldSetParamsExtractor()) {
+    if (method.hasRoutingHeaderParams()) {
       callSettingsBuilderExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(callSettingsBuilderExpr)

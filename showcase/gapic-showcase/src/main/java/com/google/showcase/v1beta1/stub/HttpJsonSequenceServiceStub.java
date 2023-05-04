@@ -34,7 +34,6 @@ import com.google.cloud.location.GetLocationRequest;
 import com.google.cloud.location.ListLocationsRequest;
 import com.google.cloud.location.ListLocationsResponse;
 import com.google.cloud.location.Location;
-import com.google.common.collect.ImmutableMap;
 import com.google.protobuf.Empty;
 import com.google.protobuf.TypeRegistry;
 import com.google.showcase.v1beta1.AttemptSequenceRequest;
@@ -291,46 +290,22 @@ public class HttpJsonSequenceServiceStub extends SequenceServiceStub {
             HttpJsonCallSettings.<GetSequenceReportRequest, SequenceReport>newBuilder()
                 .setMethodDescriptor(getSequenceReportMethodDescriptor)
                 .setTypeRegistry(typeRegistry)
-                .setParamsExtractor(
-                    request -> {
-                      ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                      params.put("name", String.valueOf(request.getName()));
-                      return params.build();
-                    })
                 .build();
     HttpJsonCallSettings<AttemptSequenceRequest, Empty> attemptSequenceTransportSettings =
         HttpJsonCallSettings.<AttemptSequenceRequest, Empty>newBuilder()
             .setMethodDescriptor(attemptSequenceMethodDescriptor)
             .setTypeRegistry(typeRegistry)
-            .setParamsExtractor(
-                request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
-                })
             .build();
     HttpJsonCallSettings<ListLocationsRequest, ListLocationsResponse>
         listLocationsTransportSettings =
             HttpJsonCallSettings.<ListLocationsRequest, ListLocationsResponse>newBuilder()
                 .setMethodDescriptor(listLocationsMethodDescriptor)
                 .setTypeRegistry(typeRegistry)
-                .setParamsExtractor(
-                    request -> {
-                      ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                      params.put("name", String.valueOf(request.getName()));
-                      return params.build();
-                    })
                 .build();
     HttpJsonCallSettings<GetLocationRequest, Location> getLocationTransportSettings =
         HttpJsonCallSettings.<GetLocationRequest, Location>newBuilder()
             .setMethodDescriptor(getLocationMethodDescriptor)
             .setTypeRegistry(typeRegistry)
-            .setParamsExtractor(
-                request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
-                })
             .build();
 
     this.createSequenceCallable =

@@ -50,6 +50,7 @@ public class ITDynamicRoutingHeaders {
 
   @Test
   public void testHttpJson_matchesHeaderName() {
-    EchoResponse response = httpJsonClient.echo(EchoRequest.newBuilder().setHeader("potato").build());
+    EchoResponse response =
+        httpJsonClient.echo(EchoRequest.newBuilder().setHeader("potato").build());
   }
 }

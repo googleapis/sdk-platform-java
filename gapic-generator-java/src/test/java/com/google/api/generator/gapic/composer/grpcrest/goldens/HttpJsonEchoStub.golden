@@ -514,23 +514,11 @@ public class HttpJsonEchoStub extends EchoStub {
         HttpJsonCallSettings.<EchoRequest, Object>newBuilder()
             .setMethodDescriptor(nestedBindingMethodDescriptor)
             .setTypeRegistry(typeRegistry)
-            .setParamsExtractor(
-                request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("foo_bar.name", String.valueOf(request.getFooBar().getName()));
-                  return params.build();
-                })
             .build();
     HttpJsonCallSettings<UpdateCaseRequest, Case> updateCaseTransportSettings =
         HttpJsonCallSettings.<UpdateCaseRequest, Case>newBuilder()
             .setMethodDescriptor(updateCaseMethodDescriptor)
             .setTypeRegistry(typeRegistry)
-            .setParamsExtractor(
-                request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("case.name", String.valueOf(request.getCase().getName()));
-                  return params.build();
-                })
             .build();
 
     this.echoCallable =
