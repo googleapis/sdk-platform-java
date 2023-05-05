@@ -81,13 +81,13 @@ public class ITDynamicRoutingHeaders {
     }
   }
 
-  private ITDynamicRoutingHeaders.CapturingClientInterceptor interceptor;
+  private ITDynamicRoutingHeaders.CapturingClientInterceptor httpJsonInterceptor;
 
   private EchoClient httpJsonClient;
 
   @Before
   public void createClients() throws Exception {
-    interceptor = new ITDynamicRoutingHeaders.CapturingClientInterceptor();
+    httpJsonInterceptor = new ITDynamicRoutingHeaders.CapturingClientInterceptor();
     // Create Http JSON Echo Client
     EchoSettings httpJsonEchoSettings =
         EchoSettings.newHttpJsonBuilder()
@@ -97,7 +97,7 @@ public class ITDynamicRoutingHeaders {
                     .setHttpTransport(
                         new NetHttpTransport.Builder().doNotValidateCertificate().build())
                     .setEndpoint("http://localhost:7469")
-                    .setInterceptorProvider(() -> Collections.singletonList(interceptor))
+                    .setInterceptorProvider(() -> Collections.singletonList(httpJsonInterceptor))
                     .build())
             .build();
     httpJsonClient = EchoClient.create(httpJsonEchoSettings);
@@ -111,20 +111,20 @@ public class ITDynamicRoutingHeaders {
   @Test
   public void testHttpJson_noRoutingHeaderUsed() {
     httpJsonClient.echo(EchoRequest.newBuilder().build());
-    assertThat(interceptor.requestParam).isNull();
+    assertThat(httpJsonInterceptor.requestParam).isNull();
   }
 
   @Test
   public void testHttpJson_emptyHeader() {
     httpJsonClient.echo(EchoRequest.newBuilder().setHeader("").build());
-    assertThat(interceptor.requestParam).isNull();
+    assertThat(httpJsonInterceptor.requestParam).isNull();
   }
 
   @Test
   public void testHttpJson_matchesHeaderName() {
     httpJsonClient.echo(EchoRequest.newBuilder().setHeader("potato").build());
     List<String> requestHeaders =
-        Arrays.stream(interceptor.requestParam.split(SPLIT_TOKEN)).collect(Collectors.toList());
+        Arrays.stream(httpJsonInterceptor.requestParam.split(SPLIT_TOKEN)).collect(Collectors.toList());
     List<String> expectedHeaders = ImmutableList.of("header=potato", "routing_id=potato");
     assertThat(requestHeaders).containsExactlyElementsIn(expectedHeaders);
   }
@@ -133,7 +133,7 @@ public class ITDynamicRoutingHeaders {
   public void testHttpJson_matchesOtherHeaderName() {
     httpJsonClient.echo(EchoRequest.newBuilder().setOtherHeader("instances/456").build());
     List<String> requestHeaders =
-        Arrays.stream(interceptor.requestParam.split(SPLIT_TOKEN)).collect(Collectors.toList());
+        Arrays.stream(httpJsonInterceptor.requestParam.split(SPLIT_TOKEN)).collect(Collectors.toList());
     List<String> expectedHeaders = ImmutableList.of("baz=instances%2F456");
     assertThat(requestHeaders).containsExactlyElementsIn(expectedHeaders);
   }
@@ -142,7 +142,7 @@ public class ITDynamicRoutingHeaders {
   public void testHttpJson_matchesMultipleOfSameRoutingHeader_usesHeader() {
     httpJsonClient.echo(EchoRequest.newBuilder().setHeader("projects/123/instances/456").build());
     List<String> requestHeaders =
-        Arrays.stream(interceptor.requestParam.split(SPLIT_TOKEN)).collect(Collectors.toList());
+        Arrays.stream(httpJsonInterceptor.requestParam.split(SPLIT_TOKEN)).collect(Collectors.toList());
     List<String> expectedHeaders =
         ImmutableList.of(
             "header=projects%2F123%2Finstances%2F456",
@@ -158,7 +158,7 @@ public class ITDynamicRoutingHeaders {
     httpJsonClient.echo(
         EchoRequest.newBuilder().setOtherHeader("projects/123/instances/456").build());
     List<String> requestHeaders =
-        Arrays.stream(interceptor.requestParam.split(SPLIT_TOKEN)).collect(Collectors.toList());
+        Arrays.stream(httpJsonInterceptor.requestParam.split(SPLIT_TOKEN)).collect(Collectors.toList());
     List<String> expectedHeaders =
         ImmutableList.of("baz=projects%2F123%2Finstances%2F456", "qux=projects%2F123");
     assertThat(requestHeaders).containsExactlyElementsIn(expectedHeaders);
@@ -172,7 +172,7 @@ public class ITDynamicRoutingHeaders {
             .setOtherHeader("projects/123/instances/456")
             .build());
     List<String> requestHeaders =
-        Arrays.stream(interceptor.requestParam.split(SPLIT_TOKEN)).collect(Collectors.toList());
+        Arrays.stream(httpJsonInterceptor.requestParam.split(SPLIT_TOKEN)).collect(Collectors.toList());
     List<String> expectedHeaders =
         ImmutableList.of(
             "baz=projects%2F123%2Finstances%2F456",
