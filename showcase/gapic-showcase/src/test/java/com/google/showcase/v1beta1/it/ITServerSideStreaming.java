@@ -44,9 +44,9 @@ public class ITServerSideStreaming {
   @Before
   public void createClients() throws Exception {
     // Create gRPC Echo Client
-    grpcClient = TestClientInitializer.createGrpcEchoClient();
+    grpcClient = TestClientInitializer.createGrpcEchoClientCustomBlockSettings();
     // Create Http JSON Echo Client
-    httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
+    httpjsonClient = TestClientInitializer.createHttpJsonEchoClientCustomBlockSettings();
   }
 
   @After

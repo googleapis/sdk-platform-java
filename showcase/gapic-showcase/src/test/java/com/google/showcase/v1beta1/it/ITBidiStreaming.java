@@ -40,7 +40,7 @@ public class ITBidiStreaming {
   @Before
   public void setUp() throws Exception {
     // Create gRPC Echo Client
-    grpcClient = TestClientInitializer.createGrpcEchoClient();
+    grpcClient = TestClientInitializer.createGrpcEchoClientCustomBlockSettings();
   }
 
   // The current implementation of BIDI streaming on Echo showcase server is that it would echo the
