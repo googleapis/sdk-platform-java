@@ -53,7 +53,7 @@ public class ITDynamicRoutingHeaders {
       Metadata.Key.of("x-goog-request-params", Metadata.ASCII_STRING_MARSHALLER);
 
   private static class GrpcCapturingClientInterceptor implements ClientInterceptor {
-    private volatile Metadata metadata;
+    private Metadata metadata;
 
     @Override
     public <RequestT, ResponseT> ClientCall<RequestT, ResponseT> interceptCall(
@@ -70,7 +70,7 @@ public class ITDynamicRoutingHeaders {
   }
 
   private static class HttpJsonCapturingClientInterceptor implements HttpJsonClientInterceptor {
-    private volatile String requestParam;
+    private String requestParam;
 
     @Override
     public <RequestT, ResponseT> HttpJsonClientCall<RequestT, ResponseT> interceptCall(
@@ -146,6 +146,7 @@ public class ITDynamicRoutingHeaders {
 
   @After
   public void destroyClient() {
+    grpcClient.close();
     httpJsonClient.close();
   }
 
