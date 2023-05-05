@@ -21,6 +21,7 @@ import com.google.api.Http;
 import com.google.api.HttpRule;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
+import com.google.api.generator.gapic.composer.grpc.GrpcServiceStubClassComposer;
 import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
@@ -192,5 +193,16 @@ public class HttpJsonServiceStubClassComposerTest {
     assertThrows(
         IllegalArgumentException.class,
         () -> composer.getOperationsURIValueFromHttpRule(customHttpRule));
+  }
+
+  @Test
+  public void generateGrpcServiceStubClass_routingHeaders() {
+    GapicContext context =
+        RestTestProtoLoader.instance().parseExplicitDynamicRoutingHeaderTesting();
+    Service service = context.services().get(0);
+    GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, service);
+
+    Assert.assertGoldenClass(this.getClass(), clazz, "HttpJsonRoutingHeadersStub.golden");
+    Assert.assertEmptySamples(clazz.samples());
   }
 }

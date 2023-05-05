@@ -55,7 +55,16 @@ public class RequestParamsBuilderTest {
         getRoutingHeaders(
             "projects/**/{table_location=instances/*}",
             "projects/my_cozy_home/instances/living_room");
-    assertThat(actual).containsExactly("table_location", "instances/living_room");
+    assertThat(actual).containsExactly("table_location", "instances%2Fliving_room");
+  }
+
+  @Test
+  public void add_encodedHeaderAndEncodedValue() {
+    PathTemplate pathTemplate = PathTemplate.create("projects/**/{table_++location=instances/*}");
+    requestParamsBuilder.add(
+        "projects/my_cozy_home/instances/living_room", "table_++location", pathTemplate);
+    Map<String, String> actual = requestParamsBuilder.build();
+    assertThat(actual).containsExactly("table_%2B%2Blocation", "instances%2Fliving_room");
   }
 
   @Test
@@ -79,9 +88,9 @@ public class RequestParamsBuilderTest {
     assertThat(actual)
         .containsExactly(
             "table_location",
-            "projects/my_cozy_home/instances/living_room",
+            "projects%2Fmy_cozy_home%2Finstances%2Fliving_room",
             "routing_id",
-            "projects/my_cozy_home/instances/living_room");
+            "projects%2Fmy_cozy_home%2Finstances%2Fliving_room");
   }
 
   @Test
@@ -100,6 +109,12 @@ public class RequestParamsBuilderTest {
   @Test
   public void add_nullFieldValue() {
     Map<String, String> actual = getRoutingHeaders("projects/**", null);
+    assertThat(actual).isEmpty();
+  }
+
+  @Test
+  public void add_emptyValue_noMatches() {
+    Map<String, String> actual = getRoutingHeaders("{projects=**}", "");
     assertThat(actual).isEmpty();
   }
 
