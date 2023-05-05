@@ -49,7 +49,7 @@ import org.threeten.bp.Duration;
 public class ITUnaryDeadline {
 
   @Test
-  public void testGRPC_unarySuccessfulResponse_NoDeadlineExceeded()
+  public void testGRPC_unarySuccessfulResponse_doesNotExceedTotalTimeout()
       throws IOException, ExecutionException, InterruptedException, TimeoutException {
     RetrySettings defaultNoRetrySettings =
         RetrySettings.newBuilder()
@@ -89,7 +89,7 @@ public class ITUnaryDeadline {
   }
 
   @Test
-  public void testHttpJson_unarySuccessfulResponse_NoDeadlineExceeded()
+  public void testHttpJson_unarySuccessfulResponse_doesNotExceedTotalTimeout()
       throws IOException, GeneralSecurityException, ExecutionException, InterruptedException,
           TimeoutException {
     RetrySettings defaultNoRetrySettings =
@@ -333,15 +333,17 @@ public class ITUnaryDeadline {
   // to properly cancel the HttpRequest for each retry attempt. This test attempts to
   // make a call every 100ms for 1 second. If the requestRunnable blocks until we
   // receive a response from the server (200ms) regardless of it was cancelled, then
-  // we would expect at most 5 responses.
+  // we would expect at most 50 responses.
   @Test
-  public void testGRPC_unaryCallableRetry_deadlineExecutorTimesOutRequest() throws IOException {
+  public void
+      testGRPC_unaryCallableRetry_deadlineExecutorTimesOutRequest_throwsDeadlineExceededException()
+          throws IOException {
     RetrySettings defaultRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRpcTimeout(Duration.ofMillis(100L))
             .setRpcTimeoutMultiplier(1.0)
             .setMaxRpcTimeout(Duration.ofMillis(100L))
-            .setTotalTimeout(Duration.ofMillis(1000L))
+            .setTotalTimeout(Duration.ofMillis(10000L))
             .build();
     EchoStubSettings.Builder gRPCEchoSettingsBuilder = EchoStubSettings.newBuilder();
     // Manually set DEADLINE_EXCEEDED as showcase tests do not have that as a retryable code
@@ -379,10 +381,10 @@ public class ITUnaryDeadline {
           .isEqualTo(StatusCode.Code.DEADLINE_EXCEEDED);
       // We cannot guarantee the number of attempts. The RetrySettings should be configured
       // such that there is no delay between the attempts, but the execution takes time
-      // to run. Theoretically this should run exactly 10 times.
+      // to run. Theoretically this should run exactly 100 times.
       int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
-      assertThat(attemptCount).isGreaterThan(5);
-      assertThat(attemptCount).isAtMost(10);
+      assertThat(attemptCount).isGreaterThan(80);
+      assertThat(attemptCount).isAtMost(100);
     }
   }
 
@@ -392,8 +394,9 @@ public class ITUnaryDeadline {
   // receive a response from the server (200ms) regardless of it was cancelled, then
   // we would expect at most 50 responses.
   @Test
-  public void testHttpJson_unaryCallableRetry_deadlineExecutorTimesOutRequest()
-      throws IOException, GeneralSecurityException {
+  public void
+      testHttpJson_unaryCallableRetry_deadlineExecutorTimesOutRequest_throwsDeadlineExceededException()
+          throws IOException, GeneralSecurityException {
     RetrySettings defaultRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRpcTimeout(Duration.ofMillis(100L))

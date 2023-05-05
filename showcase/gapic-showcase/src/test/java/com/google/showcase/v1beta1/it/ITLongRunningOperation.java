@@ -49,7 +49,7 @@ import org.threeten.bp.temporal.ChronoUnit;
 public class ITLongRunningOperation {
 
   @Test
-  public void testGRPC_LROSuccessfulResponse_NoDeadlineExceeded()
+  public void testGRPC_LROSuccessfulResponse_doesNotExceedTotalTimeout()
       throws IOException, ExecutionException, InterruptedException {
     EchoStubSettings.Builder grpcEchoSettingsBuilder = EchoStubSettings.newBuilder();
     grpcEchoSettingsBuilder
@@ -102,7 +102,7 @@ public class ITLongRunningOperation {
   }
 
   @Test
-  public void testHttpJson_LROSuccessfulResponse_NoDeadlineExceeded()
+  public void testHttpJson_LROSuccessfulResponse_doesNotExceedTotalTimeout()
       throws IOException, GeneralSecurityException, ExecutionException, InterruptedException {
     EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
     httpJsonEchoSettingsBuilder
