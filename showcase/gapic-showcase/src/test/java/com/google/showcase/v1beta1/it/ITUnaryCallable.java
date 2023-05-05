@@ -40,9 +40,9 @@ public class ITUnaryCallable {
   @Before
   public void createClients() throws Exception {
     // Create gRPC Echo Client
-    grpcClient = TestClientInitializer.createGrpcEchoClientCustomBlockSettings();
+    grpcClient = TestClientInitializer.createGrpcEchoClient();
     // Create Http JSON Echo Client
-    httpJsonClient = TestClientInitializer.createHttpJsonEchoClientCustomBlockSettings();
+    httpJsonClient = TestClientInitializer.createHttpJsonEchoClient();
   }
 
   @After

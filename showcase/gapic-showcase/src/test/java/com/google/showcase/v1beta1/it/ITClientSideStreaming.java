@@ -42,7 +42,7 @@ public class ITClientSideStreaming {
   @Before
   public void createClients() throws Exception {
     // Create gRPC Echo Client
-    grpcClient = TestClientInitializer.createGrpcEchoClientCustomBlockSettings();
+    grpcClient = TestClientInitializer.createGrpcEchoClient();
   }
 
   @After

@@ -34,7 +34,7 @@ import java.util.Set;
 
 public class TestClientInitializer {
 
-  public static EchoClient createGrpcEchoClientCustomBlockSettings() throws Exception {
+  public static EchoClient createGrpcEchoClient() throws Exception {
     EchoSettings grpcEchoSettings =
         EchoSettings.newBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
@@ -46,7 +46,7 @@ public class TestClientInitializer {
     return EchoClient.create(grpcEchoSettings);
   }
 
-  public static EchoClient createHttpJsonEchoClientCustomBlockSettings() throws Exception {
+  public static EchoClient createHttpJsonEchoClient() throws Exception {
     EchoSettings httpJsonEchoSettings =
         EchoSettings.newHttpJsonBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
