@@ -60,11 +60,11 @@ public class RequestParamsBuilderTest {
 
   @Test
   public void add_encodedHeaderAndEncodedValue() {
-    PathTemplate pathTemplate = PathTemplate.create("projects/**/{table_++location=instances/*}");
+    PathTemplate pathTemplate = PathTemplate.create("projects/**/{table$$_++location=instances/*}");
     requestParamsBuilder.add(
-        "projects/my_cozy_home/instances/living_room", "table_++location", pathTemplate);
+        "projects/my_cozy_home/instances/living_room", "table$$_++location", pathTemplate);
     Map<String, String> actual = requestParamsBuilder.build();
-    assertThat(actual).containsExactly("table_%2B%2Blocation", "instances%2Fliving_room");
+    assertThat(actual).containsExactly("table%24%24_%2B%2Blocation", "instances%2Fliving_room");
   }
 
   @Test

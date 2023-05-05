@@ -59,7 +59,7 @@ public class RequestParamsBuilder {
    * pre-configured path templates. This method is called repeatedly for each configured routing
    * rule parameter, it's possible that the incoming field value from request is null or there is no
    * matches found, we'll continue the match-and-extract process for the next routing rule parameter
-   * in such case.
+   * in such case. This method will percent encode both the header key and header value.
    *
    * @param fieldValue the field value from a request
    * @param headerKey the header key for the routing header param
@@ -71,13 +71,14 @@ public class RequestParamsBuilder {
     }
     Map<String, String> matchedValues = pathTemplate.match(fieldValue);
     if (matchedValues != null && matchedValues.containsKey(headerKey)) {
-      String encodedKey = getEncodedString(headerKey);
-      String encodedValue = getEncodedString(matchedValues.get(headerKey));
+      String encodedKey = percentEncodeString(headerKey);
+      String encodedValue = percentEncodeString(matchedValues.get(headerKey));
       paramsBuilder.put(encodedKey, encodedValue);
     }
   }
 
-  private String getEncodedString(String value) {
+  // Percent encode the value passed in
+  private String percentEncodeString(String value) {
     try {
       return URLEncoder.encode(value, StandardCharsets.UTF_8.toString());
     } catch (UnsupportedEncodingException e) {
