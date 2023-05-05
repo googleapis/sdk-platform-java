@@ -9,12 +9,9 @@
   <description>GAPIC Generator Java Testing Framework</description>
 
   <properties>
+    <!-- Should be in sync with WORKSPACE -->
+    <googleapis.commit>7438480b2a1bc6371d748e974f7a3647f90c4e8d</googleapis.commit>
     <checkstyle.skip>true</checkstyle.skip>
-<!--    <animal.sniffer.skip>true</animal.sniffer.skip>-->
-<!--    <clirr.skip>true</clirr.skip>-->
-<!--    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>-->
-<!--    &lt;!&ndash; Should be in sync with repositories.bzl &ndash;&gt;-->
-    <googleapis.commit>44d6bef0ca6db8bba3fb324c8186e694bcc4829c</googleapis.commit>
     <auto-value.version>1.10.1</auto-value.version>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
