@@ -237,7 +237,10 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
             .setArguments(Arrays.asList(TYPE_REGISTRY_VAR_EXPR))
             .build();
 
-    if (method.hasRoutingHeaderParams()) {
+    // This generates the Request Params Extractors twice (once in the APIMethodDescriptor
+    // and once in the CallSettings). This is to ensure backwards compatibility and allow
+    // for implicit routing headers with just HttpBindings.
+    if (method.shouldSetParamsExtractor()) {
       callSettingsBuilderExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(callSettingsBuilderExpr)

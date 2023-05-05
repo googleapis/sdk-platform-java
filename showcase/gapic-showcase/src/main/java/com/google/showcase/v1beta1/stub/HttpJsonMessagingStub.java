@@ -668,16 +668,34 @@ public class HttpJsonMessagingStub extends MessagingStub {
         HttpJsonCallSettings.<GetRoomRequest, Room>newBuilder()
             .setMethodDescriptor(getRoomMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("name", String.valueOf(request.getName()));
+                  return params.build();
+                })
             .build();
     HttpJsonCallSettings<UpdateRoomRequest, Room> updateRoomTransportSettings =
         HttpJsonCallSettings.<UpdateRoomRequest, Room>newBuilder()
             .setMethodDescriptor(updateRoomMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("room.name", String.valueOf(request.getRoom().getName()));
+                  return params.build();
+                })
             .build();
     HttpJsonCallSettings<DeleteRoomRequest, Empty> deleteRoomTransportSettings =
         HttpJsonCallSettings.<DeleteRoomRequest, Empty>newBuilder()
             .setMethodDescriptor(deleteRoomMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("name", String.valueOf(request.getName()));
+                  return params.build();
+                })
             .build();
     HttpJsonCallSettings<ListRoomsRequest, ListRoomsResponse> listRoomsTransportSettings =
         HttpJsonCallSettings.<ListRoomsRequest, ListRoomsResponse>newBuilder()
@@ -688,47 +706,101 @@ public class HttpJsonMessagingStub extends MessagingStub {
         HttpJsonCallSettings.<CreateBlurbRequest, Blurb>newBuilder()
             .setMethodDescriptor(createBlurbMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("parent", String.valueOf(request.getParent()));
+                  return params.build();
+                })
             .build();
     HttpJsonCallSettings<GetBlurbRequest, Blurb> getBlurbTransportSettings =
         HttpJsonCallSettings.<GetBlurbRequest, Blurb>newBuilder()
             .setMethodDescriptor(getBlurbMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("name", String.valueOf(request.getName()));
+                  return params.build();
+                })
             .build();
     HttpJsonCallSettings<UpdateBlurbRequest, Blurb> updateBlurbTransportSettings =
         HttpJsonCallSettings.<UpdateBlurbRequest, Blurb>newBuilder()
             .setMethodDescriptor(updateBlurbMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("blurb.name", String.valueOf(request.getBlurb().getName()));
+                  return params.build();
+                })
             .build();
     HttpJsonCallSettings<DeleteBlurbRequest, Empty> deleteBlurbTransportSettings =
         HttpJsonCallSettings.<DeleteBlurbRequest, Empty>newBuilder()
             .setMethodDescriptor(deleteBlurbMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("name", String.valueOf(request.getName()));
+                  return params.build();
+                })
             .build();
     HttpJsonCallSettings<ListBlurbsRequest, ListBlurbsResponse> listBlurbsTransportSettings =
         HttpJsonCallSettings.<ListBlurbsRequest, ListBlurbsResponse>newBuilder()
             .setMethodDescriptor(listBlurbsMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("parent", String.valueOf(request.getParent()));
+                  return params.build();
+                })
             .build();
     HttpJsonCallSettings<SearchBlurbsRequest, Operation> searchBlurbsTransportSettings =
         HttpJsonCallSettings.<SearchBlurbsRequest, Operation>newBuilder()
             .setMethodDescriptor(searchBlurbsMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("parent", String.valueOf(request.getParent()));
+                  return params.build();
+                })
             .build();
     HttpJsonCallSettings<StreamBlurbsRequest, StreamBlurbsResponse> streamBlurbsTransportSettings =
         HttpJsonCallSettings.<StreamBlurbsRequest, StreamBlurbsResponse>newBuilder()
             .setMethodDescriptor(streamBlurbsMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("name", String.valueOf(request.getName()));
+                  return params.build();
+                })
             .build();
     HttpJsonCallSettings<ListLocationsRequest, ListLocationsResponse>
         listLocationsTransportSettings =
             HttpJsonCallSettings.<ListLocationsRequest, ListLocationsResponse>newBuilder()
                 .setMethodDescriptor(listLocationsMethodDescriptor)
                 .setTypeRegistry(typeRegistry)
+                .setParamsExtractor(
+                    request -> {
+                      ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                      params.put("name", String.valueOf(request.getName()));
+                      return params.build();
+                    })
                 .build();
     HttpJsonCallSettings<GetLocationRequest, Location> getLocationTransportSettings =
         HttpJsonCallSettings.<GetLocationRequest, Location>newBuilder()
             .setMethodDescriptor(getLocationMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("name", String.valueOf(request.getName()));
+                  return params.build();
+                })
             .build();
 
     this.createRoomCallable =
