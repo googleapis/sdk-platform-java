@@ -31,7 +31,14 @@ import com.google.common.collect.ImmutableList;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoSettings;
-import com.google.showcase.v1beta1.it.util.TestClientInitializer;
+import io.grpc.CallOptions;
+import io.grpc.Channel;
+import io.grpc.ClientCall;
+import io.grpc.ClientInterceptor;
+import io.grpc.ForwardingClientCall;
+import io.grpc.ManagedChannelBuilder;
+import io.grpc.Metadata;
+import io.grpc.MethodDescriptor;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -42,8 +49,27 @@ import org.junit.Test;
 
 public class ITDynamicRoutingHeaders {
   private static final String SPLIT_TOKEN = "&";
+  private static final Metadata.Key<String> REQUEST_PARAMS_HEADER_KEY =
+      Metadata.Key.of("x-goog-request-params", Metadata.ASCII_STRING_MARSHALLER);
 
-  private static class CapturingClientInterceptor implements HttpJsonClientInterceptor {
+  private static class GrpcCapturingClientInterceptor implements ClientInterceptor {
+    private volatile Metadata metadata;
+
+    @Override
+    public <RequestT, ResponseT> ClientCall<RequestT, ResponseT> interceptCall(
+        MethodDescriptor<RequestT, ResponseT> method, final CallOptions callOptions, Channel next) {
+      ClientCall<RequestT, ResponseT> call = next.newCall(method, callOptions);
+      return new ForwardingClientCall.SimpleForwardingClientCall<RequestT, ResponseT>(call) {
+        @Override
+        public void start(ClientCall.Listener<ResponseT> responseListener, Metadata headers) {
+          metadata = headers;
+          super.start(responseListener, headers);
+        }
+      };
+    }
+  }
+
+  private static class HttpJsonCapturingClientInterceptor implements HttpJsonClientInterceptor {
     private volatile String requestParam;
 
     @Override
@@ -82,16 +108,27 @@ public class ITDynamicRoutingHeaders {
     }
   }
 
-  private ITDynamicRoutingHeaders.CapturingClientInterceptor httpJsonInterceptor;
+  private HttpJsonCapturingClientInterceptor httpJsonInterceptor;
+  private GrpcCapturingClientInterceptor grpcInterceptor;
 
   private EchoClient grpcClient;
   private EchoClient httpJsonClient;
 
   @Before
   public void createClients() throws Exception {
-    grpcClient = TestClientInitializer.createGrpcEchoClient();
+    grpcInterceptor = new GrpcCapturingClientInterceptor();
+    EchoSettings grpcEchoSettings =
+        EchoSettings.newBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultGrpcTransportProviderBuilder()
+                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .setInterceptorProvider(() -> Collections.singletonList(grpcInterceptor))
+                    .build())
+            .build();
+    grpcClient = EchoClient.create(grpcEchoSettings);
 
-    httpJsonInterceptor = new ITDynamicRoutingHeaders.CapturingClientInterceptor();
+    httpJsonInterceptor = new HttpJsonCapturingClientInterceptor();
     // Create Http JSON Echo Client
     EchoSettings httpJsonEchoSettings =
         EchoSettings.newHttpJsonBuilder()
@@ -115,6 +152,8 @@ public class ITDynamicRoutingHeaders {
   @Test
   public void testGrpc_noRoutingHeaderUsed() {
     grpcClient.echo(EchoRequest.newBuilder().build());
+    String headerValue = grpcInterceptor.metadata.get(REQUEST_PARAMS_HEADER_KEY);
+    assertThat(headerValue).isNull();
   }
 
   @Test
@@ -126,6 +165,8 @@ public class ITDynamicRoutingHeaders {
   @Test
   public void testGrpc_emptyHeader() {
     grpcClient.echo(EchoRequest.newBuilder().setHeader("").build());
+    String headerValue = grpcInterceptor.metadata.get(REQUEST_PARAMS_HEADER_KEY);
+    assertThat(headerValue).isNull();
   }
 
   @Test
@@ -137,6 +178,12 @@ public class ITDynamicRoutingHeaders {
   @Test
   public void testGrpc_matchesHeaderName() {
     grpcClient.echo(EchoRequest.newBuilder().setHeader("potato").build());
+    String headerValue = grpcInterceptor.metadata.get(REQUEST_PARAMS_HEADER_KEY);
+    assertThat(headerValue).isNotNull();
+    List<String> requestHeaders =
+        Arrays.stream(headerValue.split(SPLIT_TOKEN)).collect(Collectors.toList());
+    List<String> expectedHeaders = ImmutableList.of("header=potato", "routing_id=potato");
+    assertThat(requestHeaders).containsExactlyElementsIn(expectedHeaders);
   }
 
   @Test
@@ -152,6 +199,12 @@ public class ITDynamicRoutingHeaders {
   @Test
   public void testGrpc_matchesOtherHeaderName() {
     grpcClient.echo(EchoRequest.newBuilder().setOtherHeader("instances/456").build());
+    String headerValue = grpcInterceptor.metadata.get(REQUEST_PARAMS_HEADER_KEY);
+    assertThat(headerValue).isNotNull();
+    List<String> requestHeaders =
+        Arrays.stream(headerValue.split(SPLIT_TOKEN)).collect(Collectors.toList());
+    List<String> expectedHeaders = ImmutableList.of("baz=instances%2F456");
+    assertThat(requestHeaders).containsExactlyElementsIn(expectedHeaders);
   }
 
   @Test
@@ -167,6 +220,18 @@ public class ITDynamicRoutingHeaders {
   @Test
   public void testGrpc_matchesMultipleOfSameRoutingHeader_usesHeader() {
     grpcClient.echo(EchoRequest.newBuilder().setHeader("projects/123/instances/456").build());
+    String headerValue = grpcInterceptor.metadata.get(REQUEST_PARAMS_HEADER_KEY);
+    assertThat(headerValue).isNotNull();
+    List<String> requestHeaders =
+        Arrays.stream(headerValue.split(SPLIT_TOKEN)).collect(Collectors.toList());
+    List<String> expectedHeaders =
+        ImmutableList.of(
+            "header=projects%2F123%2Finstances%2F456",
+            "routing_id=projects%2F123%2Finstances%2F456",
+            "super_id=projects%2F123",
+            "table_name=projects%2F123%2Finstances%2F456",
+            "instance_id=instances%2F456");
+    assertThat(requestHeaders).containsExactlyElementsIn(expectedHeaders);
   }
 
   @Test
@@ -188,6 +253,13 @@ public class ITDynamicRoutingHeaders {
   @Test
   public void testGrpc_matchesMultipleOfSameRoutingHeader_usesOtherHeader() {
     grpcClient.echo(EchoRequest.newBuilder().setOtherHeader("projects/123/instances/456").build());
+    String headerValue = grpcInterceptor.metadata.get(REQUEST_PARAMS_HEADER_KEY);
+    assertThat(headerValue).isNotNull();
+    List<String> requestHeaders =
+        Arrays.stream(headerValue.split(SPLIT_TOKEN)).collect(Collectors.toList());
+    List<String> expectedHeaders =
+        ImmutableList.of("baz=projects%2F123%2Finstances%2F456", "qux=projects%2F123");
+    assertThat(requestHeaders).containsExactlyElementsIn(expectedHeaders);
   }
 
   @Test
@@ -209,6 +281,18 @@ public class ITDynamicRoutingHeaders {
             .setHeader("regions/123/zones/456")
             .setOtherHeader("projects/123/instances/456")
             .build());
+    String headerValue = grpcInterceptor.metadata.get(REQUEST_PARAMS_HEADER_KEY);
+    assertThat(headerValue).isNotNull();
+    List<String> requestHeaders =
+        Arrays.stream(headerValue.split(SPLIT_TOKEN)).collect(Collectors.toList());
+    List<String> expectedHeaders =
+        ImmutableList.of(
+            "baz=projects%2F123%2Finstances%2F456",
+            "qux=projects%2F123",
+            "table_name=regions%2F123%2Fzones%2F456",
+            "header=regions%2F123%2Fzones%2F456",
+            "routing_id=regions%2F123%2Fzones%2F456");
+    assertThat(requestHeaders).containsExactlyElementsIn(expectedHeaders);
   }
 
   @Test
