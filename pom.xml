@@ -18,6 +18,7 @@
     <module>api-common-java</module>
     <module>gax-java</module>
     <module>gapic-generator-java</module>
+    <module>gapic-generator-java-test</module>
     <module>java-common-protos</module>
     <module>java-iam</module>
     <module>java-core</module>
