@@ -71,9 +71,9 @@ public class RequestParamsBuilder {
     }
     Map<String, String> matchedValues = pathTemplate.match(fieldValue);
     if (matchedValues != null && matchedValues.containsKey(headerKey)) {
-      String encodedHeader = getEncodedString(headerKey);
+      String encodedKey = getEncodedString(headerKey);
       String encodedValue = getEncodedString(matchedValues.get(headerKey));
-      paramsBuilder.put(encodedHeader, encodedValue);
+      paramsBuilder.put(encodedKey, encodedValue);
     }
   }
 
@@ -81,7 +81,7 @@ public class RequestParamsBuilder {
     try {
       return URLEncoder.encode(value, StandardCharsets.UTF_8.toString());
     } catch (UnsupportedEncodingException e) {
-      // Use the un-encoded value if there is an encoding issue
+      // Default to use the un-encoded value if there is an encoding issue
       return value;
     }
   }
