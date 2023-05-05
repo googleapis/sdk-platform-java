@@ -82,7 +82,6 @@ import org.threeten.bp.Duration;
  */
 @InternalExtensionOnly
 public final class InstantiatingGrpcChannelProvider implements TransportChannelProvider {
-  static final String DIRECT_PATH_ENV_VAR = "GOOGLE_CLOUD_ENABLE_DIRECT_PATH";
   private static final String DIRECT_PATH_ENV_DISABLE_DIRECT_PATH =
       "GOOGLE_CLOUD_DISABLE_DIRECT_PATH";
   private static final String DIRECT_PATH_ENV_ENABLE_XDS = "GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS";
@@ -109,6 +108,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @Nullable private final Credentials credentials;
   @Nullable private final ChannelPrimer channelPrimer;
   @Nullable private final Boolean attemptDirectPath;
+  @Nullable private final Boolean attemptDirectPathXds;
   @Nullable private final Boolean allowNonDefaultServiceAccount;
   @VisibleForTesting final ImmutableMap<String, ?> directPathServiceConfig;
   @Nullable private final MtlsProvider mtlsProvider;
@@ -134,6 +134,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     this.credentials = builder.credentials;
     this.channelPrimer = builder.channelPrimer;
     this.attemptDirectPath = builder.attemptDirectPath;
+    this.attemptDirectPathXds = builder.attemptDirectPathXds;
     this.allowNonDefaultServiceAccount = builder.allowNonDefaultServiceAccount;
     this.directPathServiceConfig =
         builder.directPathServiceConfig == null
@@ -237,9 +238,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
             channelPoolSettings, InstantiatingGrpcChannelProvider.this::createSingleChannel));
   }
 
-  // TODO(mohanli): Use attemptDirectPath as the only indicator once setAttemptDirectPath is adapted
-  //                and the env var is removed from client environment.
-  private boolean isDirectPathEnabled(String serviceAddress) {
+  private boolean isDirectPathEnabled() {
     String disableDirectPathEnv = envProvider.getenv(DIRECT_PATH_ENV_DISABLE_DIRECT_PATH);
     boolean isDirectPathDisabled = Boolean.parseBoolean(disableDirectPathEnv);
     if (isDirectPathDisabled) {
@@ -249,15 +248,20 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     if (attemptDirectPath != null) {
       return attemptDirectPath;
     }
-    // Only check DIRECT_PATH_ENV_VAR when attemptDirectPath is not set.
-    String whiteList = envProvider.getenv(DIRECT_PATH_ENV_VAR);
-    if (whiteList == null) {
-      return false;
+    return false;
+  }
+
+  @VisibleForTesting
+  boolean isDirectPathXdsEnabled() {
+    // Method 1: Enable DirectPath xDS by option.
+    if (Boolean.TRUE.equals(attemptDirectPathXds)) {
+      return true;
     }
-    for (String service : whiteList.split(",")) {
-      if (!service.isEmpty() && serviceAddress.contains(service)) {
-        return true;
-      }
+    // Method 2: Enable DirectPath xDS by env.
+    String directPathXdsEnv = envProvider.getenv(DIRECT_PATH_ENV_ENABLE_XDS);
+    boolean isDirectPathXdsEnv = Boolean.parseBoolean(directPathXdsEnv);
+    if (isDirectPathXdsEnv) {
+      return true;
     }
     return false;
   }
@@ -317,15 +321,13 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     ManagedChannelBuilder<?> builder;
 
     // Check DirectPath traffic.
-    boolean isDirectPathXdsEnabled = false;
-    if (isDirectPathEnabled(serviceAddress)
-        && isNonDefaultServiceAccountAllowed()
-        && isOnComputeEngine()) {
+    boolean useDirectPathXds = false;
+    if (isDirectPathEnabled() && isNonDefaultServiceAccountAllowed() && isOnComputeEngine()) {
       CallCredentials callCreds = MoreCallCredentials.from(credentials);
       ChannelCredentials channelCreds =
           GoogleDefaultChannelCredentials.newBuilder().callCredentials(callCreds).build();
-      isDirectPathXdsEnabled = Boolean.parseBoolean(envProvider.getenv(DIRECT_PATH_ENV_ENABLE_XDS));
-      if (isDirectPathXdsEnabled) {
+      useDirectPathXds = isDirectPathXdsEnabled();
+      if (useDirectPathXds) {
         // google-c2p: CloudToProd(C2P) Directpath. This scheme is defined in
         // io.grpc.googleapis.GoogleCloudToProdNameResolverProvider.
         // This resolver target must not have a port number.
@@ -352,7 +354,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       }
     }
     // google-c2p resolver requires service config lookup
-    if (!isDirectPathXdsEnabled) {
+    if (!useDirectPathXds) {
       // See https://github.com/googleapis/gapic-generator/issues/2816
       builder.disableServiceConfigLookUp();
     }
@@ -450,6 +452,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     @Nullable private ChannelPrimer channelPrimer;
     private ChannelPoolSettings channelPoolSettings;
     @Nullable private Boolean attemptDirectPath;
+    @Nullable private Boolean attemptDirectPathXds;
     @Nullable private Boolean allowNonDefaultServiceAccount;
     @Nullable private ImmutableMap<String, ?> directPathServiceConfig;
 
@@ -476,6 +479,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       this.channelPrimer = provider.channelPrimer;
       this.channelPoolSettings = provider.channelPoolSettings;
       this.attemptDirectPath = provider.attemptDirectPath;
+      this.attemptDirectPathXds = provider.attemptDirectPathXds;
       this.allowNonDefaultServiceAccount = provider.allowNonDefaultServiceAccount;
       this.directPathServiceConfig = provider.directPathServiceConfig;
       this.mtlsProvider = provider.mtlsProvider;
@@ -681,6 +685,13 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     @InternalApi("For internal use by google-cloud-java clients only")
     public Builder setAllowNonDefaultServiceAccount(boolean allowNonDefaultServiceAccount) {
       this.allowNonDefaultServiceAccount = allowNonDefaultServiceAccount;
+      return this;
+    }
+
+    /** Use DirectPath xDS. Only valid if DirectPath is attempted. */
+    @InternalApi("For internal use by google-cloud-java clients only")
+    public Builder setAttemptDirectPathXds() {
+      this.attemptDirectPathXds = true;
       return this;
     }
 

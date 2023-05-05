@@ -23,6 +23,7 @@ import "google/protobuf/duration.proto";
 import "google/protobuf/struct.proto";
 import "google/protobuf/timestamp.proto";
 import "google/rpc/status.proto";
+import "google/protobuf/field_mask.proto";
 
 package google.showcase.grpcrest.v1beta1;
 
@@ -145,6 +146,20 @@ service Echo {
   }
 
   rpc NoBinding(EchoRequest) returns (EchoResponse);
+
+  //The request message contains a field name that is a Java keyword(case),
+  //the field is also a resource and used in http annotations
+  rpc UpdateCase(UpdateCaseRequest) returns (Case) {
+    option (google.api.http) = {
+      patch: "/v2beta/{case.name=projects/*/cases/*}"
+      body: "case"
+      additional_bindings {
+        patch: "/v2beta/{case.name=organizations/*/cases/*}"
+        body: "case"
+      }
+    };
+    option (google.api.method_signature) = "case,update_mask";
+  }
 }
 
 // Generator should not fail when encounter a service without methods
@@ -158,6 +173,27 @@ enum Severity {
   NECESSARY = 1;
   URGENT = 2;
   CRITICAL = 3;
+}
+
+message UpdateCaseRequest {
+  Case case = 1 [(google.api.field_behavior) = REQUIRED];
+
+  google.protobuf.FieldMask update_mask = 2;
+}
+
+message Case {
+  option (google.api.resource) = {
+    type: "cloudsupport.googleapis.com/Case"
+    pattern: "organizations/{organization}/cases/{case}"
+    pattern: "projects/{project}/cases/{case}"
+  };
+
+  // The resource name for the case.
+  string name = 1;
+
+  string display_name = 2;
+
+  string description = 3;
 }
 
 message Foobar {
