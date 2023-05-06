@@ -200,7 +200,7 @@ public class HttpJsonServiceStubClassComposerTest {
     GapicContext context =
         RestTestProtoLoader.instance().parseExplicitDynamicRoutingHeaderTesting();
     Service service = context.services().get(0);
-    GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, service);
+    GapicClass clazz = HttpJsonServiceStubClassComposer.instance().generate(context, service);
 
     Assert.assertGoldenClass(this.getClass(), clazz, "HttpJsonRoutingHeadersStub.golden");
     Assert.assertEmptySamples(clazz.samples());
