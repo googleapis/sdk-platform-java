@@ -38,6 +38,7 @@ import com.google.api.gax.rpc.BidiStreamingCallable;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.ClientStreamingCallable;
 import com.google.api.gax.rpc.OperationCallable;
+import com.google.api.gax.rpc.RequestParamsBuilder;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.location.GetLocationRequest;
@@ -670,9 +671,9 @@ public class HttpJsonMessagingStub extends MessagingStub {
             .setTypeRegistry(typeRegistry)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     HttpJsonCallSettings<UpdateRoomRequest, Room> updateRoomTransportSettings =
@@ -681,9 +682,9 @@ public class HttpJsonMessagingStub extends MessagingStub {
             .setTypeRegistry(typeRegistry)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("room.name", String.valueOf(request.getRoom().getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("room.name", String.valueOf(request.getRoom().getName()));
+                  return builder.build();
                 })
             .build();
     HttpJsonCallSettings<DeleteRoomRequest, Empty> deleteRoomTransportSettings =
@@ -692,9 +693,9 @@ public class HttpJsonMessagingStub extends MessagingStub {
             .setTypeRegistry(typeRegistry)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     HttpJsonCallSettings<ListRoomsRequest, ListRoomsResponse> listRoomsTransportSettings =
@@ -708,9 +709,9 @@ public class HttpJsonMessagingStub extends MessagingStub {
             .setTypeRegistry(typeRegistry)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("parent", String.valueOf(request.getParent()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("parent", String.valueOf(request.getParent()));
+                  return builder.build();
                 })
             .build();
     HttpJsonCallSettings<GetBlurbRequest, Blurb> getBlurbTransportSettings =
@@ -719,9 +720,9 @@ public class HttpJsonMessagingStub extends MessagingStub {
             .setTypeRegistry(typeRegistry)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     HttpJsonCallSettings<UpdateBlurbRequest, Blurb> updateBlurbTransportSettings =
@@ -730,9 +731,9 @@ public class HttpJsonMessagingStub extends MessagingStub {
             .setTypeRegistry(typeRegistry)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("blurb.name", String.valueOf(request.getBlurb().getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("blurb.name", String.valueOf(request.getBlurb().getName()));
+                  return builder.build();
                 })
             .build();
     HttpJsonCallSettings<DeleteBlurbRequest, Empty> deleteBlurbTransportSettings =
@@ -741,9 +742,9 @@ public class HttpJsonMessagingStub extends MessagingStub {
             .setTypeRegistry(typeRegistry)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     HttpJsonCallSettings<ListBlurbsRequest, ListBlurbsResponse> listBlurbsTransportSettings =
@@ -752,9 +753,9 @@ public class HttpJsonMessagingStub extends MessagingStub {
             .setTypeRegistry(typeRegistry)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("parent", String.valueOf(request.getParent()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("parent", String.valueOf(request.getParent()));
+                  return builder.build();
                 })
             .build();
     HttpJsonCallSettings<SearchBlurbsRequest, Operation> searchBlurbsTransportSettings =
@@ -763,9 +764,9 @@ public class HttpJsonMessagingStub extends MessagingStub {
             .setTypeRegistry(typeRegistry)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("parent", String.valueOf(request.getParent()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("parent", String.valueOf(request.getParent()));
+                  return builder.build();
                 })
             .build();
     HttpJsonCallSettings<StreamBlurbsRequest, StreamBlurbsResponse> streamBlurbsTransportSettings =
@@ -774,9 +775,9 @@ public class HttpJsonMessagingStub extends MessagingStub {
             .setTypeRegistry(typeRegistry)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     HttpJsonCallSettings<ListLocationsRequest, ListLocationsResponse>
@@ -786,9 +787,9 @@ public class HttpJsonMessagingStub extends MessagingStub {
                 .setTypeRegistry(typeRegistry)
                 .setParamsExtractor(
                     request -> {
-                      ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                      params.put("name", String.valueOf(request.getName()));
-                      return params.build();
+                      RequestParamsBuilder builder = RequestParamsBuilder.create();
+                      builder.add("name", String.valueOf(request.getName()));
+                      return builder.build();
                     })
                 .build();
     HttpJsonCallSettings<GetLocationRequest, Location> getLocationTransportSettings =
@@ -797,9 +798,9 @@ public class HttpJsonMessagingStub extends MessagingStub {
             .setTypeRegistry(typeRegistry)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
 

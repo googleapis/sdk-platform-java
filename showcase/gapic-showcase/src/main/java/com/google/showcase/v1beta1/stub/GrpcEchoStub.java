@@ -37,7 +37,6 @@ import com.google.cloud.location.GetLocationRequest;
 import com.google.cloud.location.ListLocationsRequest;
 import com.google.cloud.location.ListLocationsResponse;
 import com.google.cloud.location.Location;
-import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.Operation;
 import com.google.longrunning.stub.GrpcOperationsStub;
 import com.google.showcase.v1beta1.BlockRequest;
@@ -245,14 +244,21 @@ public class GrpcEchoStub extends EchoStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add(request.getHeader(), "header", ECHO_0_PATH_TEMPLATE);
-                  builder.add(request.getHeader(), "routing_id", ECHO_1_PATH_TEMPLATE);
-                  builder.add(request.getHeader(), "table_name", ECHO_2_PATH_TEMPLATE);
-                  builder.add(request.getHeader(), "super_id", ECHO_3_PATH_TEMPLATE);
-                  builder.add(request.getHeader(), "table_name", ECHO_4_PATH_TEMPLATE);
-                  builder.add(request.getHeader(), "instance_id", ECHO_5_PATH_TEMPLATE);
-                  builder.add(request.getOtherHeader(), "baz", ECHO_6_PATH_TEMPLATE);
-                  builder.add(request.getOtherHeader(), "qux", ECHO_7_PATH_TEMPLATE);
+                  builder.add(String.valueOf(request.getHeader()), "header", ECHO_0_PATH_TEMPLATE);
+                  builder.add(
+                      String.valueOf(request.getHeader()), "routing_id", ECHO_1_PATH_TEMPLATE);
+                  builder.add(
+                      String.valueOf(request.getHeader()), "table_name", ECHO_2_PATH_TEMPLATE);
+                  builder.add(
+                      String.valueOf(request.getHeader()), "super_id", ECHO_3_PATH_TEMPLATE);
+                  builder.add(
+                      String.valueOf(request.getHeader()), "table_name", ECHO_4_PATH_TEMPLATE);
+                  builder.add(
+                      String.valueOf(request.getHeader()), "instance_id", ECHO_5_PATH_TEMPLATE);
+                  builder.add(
+                      String.valueOf(request.getOtherHeader()), "baz", ECHO_6_PATH_TEMPLATE);
+                  builder.add(
+                      String.valueOf(request.getOtherHeader()), "qux", ECHO_7_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -295,9 +301,9 @@ public class GrpcEchoStub extends EchoStub {
             .setMethodDescriptor(listLocationsMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<GetLocationRequest, Location> getLocationTransportSettings =
@@ -305,9 +311,9 @@ public class GrpcEchoStub extends EchoStub {
             .setMethodDescriptor(getLocationMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
 

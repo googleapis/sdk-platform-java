@@ -30,12 +30,12 @@ import com.google.api.gax.httpjson.ProtoMessageRequestFormatter;
 import com.google.api.gax.httpjson.ProtoMessageResponseParser;
 import com.google.api.gax.httpjson.ProtoRestSerializer;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.RequestParamsBuilder;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.location.GetLocationRequest;
 import com.google.cloud.location.ListLocationsRequest;
 import com.google.cloud.location.ListLocationsResponse;
 import com.google.cloud.location.Location;
-import com.google.common.collect.ImmutableMap;
 import com.google.protobuf.Empty;
 import com.google.protobuf.TypeRegistry;
 import com.google.showcase.v1beta1.CreateUserRequest;
@@ -360,9 +360,9 @@ public class HttpJsonIdentityStub extends IdentityStub {
             .setTypeRegistry(typeRegistry)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     HttpJsonCallSettings<UpdateUserRequest, User> updateUserTransportSettings =
@@ -371,9 +371,9 @@ public class HttpJsonIdentityStub extends IdentityStub {
             .setTypeRegistry(typeRegistry)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("user.name", String.valueOf(request.getUser().getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("user.name", String.valueOf(request.getUser().getName()));
+                  return builder.build();
                 })
             .build();
     HttpJsonCallSettings<DeleteUserRequest, Empty> deleteUserTransportSettings =
@@ -382,9 +382,9 @@ public class HttpJsonIdentityStub extends IdentityStub {
             .setTypeRegistry(typeRegistry)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     HttpJsonCallSettings<ListUsersRequest, ListUsersResponse> listUsersTransportSettings =
@@ -399,9 +399,9 @@ public class HttpJsonIdentityStub extends IdentityStub {
                 .setTypeRegistry(typeRegistry)
                 .setParamsExtractor(
                     request -> {
-                      ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                      params.put("name", String.valueOf(request.getName()));
-                      return params.build();
+                      RequestParamsBuilder builder = RequestParamsBuilder.create();
+                      builder.add("name", String.valueOf(request.getName()));
+                      return builder.build();
                     })
                 .build();
     HttpJsonCallSettings<GetLocationRequest, Location> getLocationTransportSettings =
@@ -410,9 +410,9 @@ public class HttpJsonIdentityStub extends IdentityStub {
             .setTypeRegistry(typeRegistry)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
 

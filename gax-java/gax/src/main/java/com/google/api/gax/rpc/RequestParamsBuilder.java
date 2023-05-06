@@ -77,6 +77,15 @@ public class RequestParamsBuilder {
     }
   }
 
+  public void add(String headerKey, String fieldValue) {
+    if (fieldValue == null || fieldValue.isEmpty()) {
+      return;
+    }
+    String encodedKey = percentEncodeString(headerKey);
+    String encodedValue = percentEncodeString(fieldValue);
+    paramsBuilder.put(encodedKey, encodedValue);
+  }
+
   // Percent encode the value passed in
   private String percentEncodeString(String value) {
     try {

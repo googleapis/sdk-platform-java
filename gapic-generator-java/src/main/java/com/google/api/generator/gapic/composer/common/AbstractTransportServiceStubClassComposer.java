@@ -1217,28 +1217,32 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
       VariableExpr requestVarExpr,
       List<Statement> bodyStatements,
       MethodInvocationExpr.Builder returnExprBuilder) {
-    TypeNode paramsVarType =
+    TypeNode routingHeadersBuilderType =
         TypeNode.withReference(
-            ConcreteReference.builder()
-                .setClazz(ImmutableMap.Builder.class)
-                .setGenerics(TypeNode.STRING.reference(), TypeNode.STRING.reference())
-                .build());
-    VariableExpr paramsVarExpr =
-        VariableExpr.withVariable(
-            Variable.builder().setName("params").setType(paramsVarType).build());
-
-    Expr paramsAssignExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(paramsVarExpr.toBuilder().setIsDecl(true).build())
-            .setValueExpr(
-                MethodInvocationExpr.builder()
-                    .setStaticReferenceType(FIXED_TYPESTORE.get("ImmutableMap"))
-                    .setMethodName("builder")
-                    .setReturnType(paramsVarType)
-                    .build())
+            ConcreteReference.builder().setClazz(RequestParamsBuilder.class).build());
+    VariableExpr routingHeadersBuilderVarExpr =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder().setName("builder").setType(routingHeadersBuilderType).build())
+            .setIsDecl(true)
             .build();
-    bodyStatements.add(ExprStatement.withExpr(paramsAssignExpr));
-
+    MethodInvocationExpr routingHeaderBuilderInvokeExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(routingHeadersBuilderType)
+            .setMethodName("create")
+            .setReturnType(routingHeadersBuilderType)
+            .build();
+    Expr routingHeadersBuilderInitExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(routingHeadersBuilderVarExpr)
+            .setValueExpr(routingHeaderBuilderInvokeExpr)
+            .build();
+    bodyStatements.add(ExprStatement.withExpr(routingHeadersBuilderInitExpr));
+    VariableExpr routingHeadersBuilderVarNonDeclExpr =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder().setName("builder").setType(routingHeadersBuilderType).build())
+            .build();
     for (HttpBindings.HttpBinding httpBindingFieldBinding :
         method.httpBindings().pathParameters()) {
       MethodInvocationExpr requestBuilderExpr =
@@ -1250,18 +1254,20 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
               .setArguments(requestBuilderExpr)
               .build();
 
-      Expr paramsPutExpr =
+      Expr paramsAddExpr =
           MethodInvocationExpr.builder()
-              .setExprReferenceExpr(paramsVarExpr)
-              .setMethodName("put")
+              .setExprReferenceExpr(routingHeadersBuilderVarNonDeclExpr)
+              .setMethodName("add")
               .setArguments(
                   ValueExpr.withValue(StringObjectValue.withValue(httpBindingFieldBinding.name())),
                   valueOfExpr)
               .build();
-      bodyStatements.add(ExprStatement.withExpr(paramsPutExpr));
+      bodyStatements.add(ExprStatement.withExpr(paramsAddExpr));
     }
 
-    returnExprBuilder.setExprReferenceExpr(paramsVarExpr).setMethodName("build");
+    returnExprBuilder
+        .setExprReferenceExpr(routingHeadersBuilderVarNonDeclExpr)
+        .setMethodName("build");
   }
 
   private void createRequestParamsExtractorBodyForRoutingHeaders(
@@ -1302,6 +1308,12 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
       RoutingHeaderRule.RoutingHeaderParam routingHeaderParam = routingHeaderParams.get(i);
       MethodInvocationExpr requestFieldGetterExpr =
           createRequestFieldGetterExpr(requestVarExpr, routingHeaderParam.fieldName());
+      Expr valueOfExpr =
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(TypeNode.STRING)
+              .setMethodName("valueOf")
+              .setArguments(requestFieldGetterExpr)
+              .build();
       Expr routingHeaderKeyExpr =
           ValueExpr.withValue(StringObjectValue.withValue(routingHeaderParam.key()));
       String pathTemplateName =
@@ -1318,7 +1330,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(routingHeadersBuilderVarNonDeclExpr)
               .setMethodName("add")
-              .setArguments(requestFieldGetterExpr, routingHeaderKeyExpr, routingHeaderPatternExpr)
+              .setArguments(valueOfExpr, routingHeaderKeyExpr, routingHeaderPatternExpr)
               .build();
 
       ExprStatement addParamStatement = ExprStatement.withExpr(addParamMethodExpr);

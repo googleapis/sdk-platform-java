@@ -29,12 +29,12 @@ import com.google.api.gax.httpjson.ProtoMessageRequestFormatter;
 import com.google.api.gax.httpjson.ProtoMessageResponseParser;
 import com.google.api.gax.httpjson.ProtoRestSerializer;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.RequestParamsBuilder;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.location.GetLocationRequest;
 import com.google.cloud.location.ListLocationsRequest;
 import com.google.cloud.location.ListLocationsResponse;
 import com.google.cloud.location.Location;
-import com.google.common.collect.ImmutableMap;
 import com.google.protobuf.TypeRegistry;
 import com.google.showcase.v1beta1.EnumRequest;
 import com.google.showcase.v1beta1.EnumResponse;
@@ -657,13 +657,13 @@ public class HttpJsonComplianceStub extends ComplianceStub {
             .setTypeRegistry(typeRegistry)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("info.f_bool", String.valueOf(request.getInfo().getFBool()));
-                  params.put("info.f_double", String.valueOf(request.getInfo().getFDouble()));
-                  params.put("info.f_int32", String.valueOf(request.getInfo().getFInt32()));
-                  params.put("info.f_kingdom", String.valueOf(request.getInfo().getFKingdom()));
-                  params.put("info.f_string", String.valueOf(request.getInfo().getFString()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("info.f_bool", String.valueOf(request.getInfo().getFBool()));
+                  builder.add("info.f_double", String.valueOf(request.getInfo().getFDouble()));
+                  builder.add("info.f_int32", String.valueOf(request.getInfo().getFInt32()));
+                  builder.add("info.f_kingdom", String.valueOf(request.getInfo().getFKingdom()));
+                  builder.add("info.f_string", String.valueOf(request.getInfo().getFString()));
+                  return builder.build();
                 })
             .build();
     HttpJsonCallSettings<RepeatRequest, RepeatResponse> repeatDataPathResourceTransportSettings =
@@ -672,13 +672,13 @@ public class HttpJsonComplianceStub extends ComplianceStub {
             .setTypeRegistry(typeRegistry)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("info.f_bool", String.valueOf(request.getInfo().getFBool()));
-                  params.put(
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("info.f_bool", String.valueOf(request.getInfo().getFBool()));
+                  builder.add(
                       "info.f_child.f_string",
                       String.valueOf(request.getInfo().getFChild().getFString()));
-                  params.put("info.f_string", String.valueOf(request.getInfo().getFString()));
-                  return params.build();
+                  builder.add("info.f_string", String.valueOf(request.getInfo().getFString()));
+                  return builder.build();
                 })
             .build();
     HttpJsonCallSettings<RepeatRequest, RepeatResponse>
@@ -688,12 +688,12 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                 .setTypeRegistry(typeRegistry)
                 .setParamsExtractor(
                     request -> {
-                      ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                      params.put(
+                      RequestParamsBuilder builder = RequestParamsBuilder.create();
+                      builder.add(
                           "info.f_child.f_string",
                           String.valueOf(request.getInfo().getFChild().getFString()));
-                      params.put("info.f_string", String.valueOf(request.getInfo().getFString()));
-                      return params.build();
+                      builder.add("info.f_string", String.valueOf(request.getInfo().getFString()));
+                      return builder.build();
                     })
                 .build();
     HttpJsonCallSettings<RepeatRequest, RepeatResponse> repeatDataBodyPutTransportSettings =
@@ -723,9 +723,9 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                 .setTypeRegistry(typeRegistry)
                 .setParamsExtractor(
                     request -> {
-                      ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                      params.put("name", String.valueOf(request.getName()));
-                      return params.build();
+                      RequestParamsBuilder builder = RequestParamsBuilder.create();
+                      builder.add("name", String.valueOf(request.getName()));
+                      return builder.build();
                     })
                 .build();
     HttpJsonCallSettings<GetLocationRequest, Location> getLocationTransportSettings =
@@ -734,9 +734,9 @@ public class HttpJsonComplianceStub extends ComplianceStub {
             .setTypeRegistry(typeRegistry)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
 

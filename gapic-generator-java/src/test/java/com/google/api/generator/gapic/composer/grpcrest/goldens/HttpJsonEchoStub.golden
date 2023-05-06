@@ -20,6 +20,7 @@ import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.rpc.BidiStreamingCallable;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.OperationCallable;
+import com.google.api.gax.rpc.RequestParamsBuilder;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.common.collect.ImmutableMap;
@@ -516,9 +517,9 @@ public class HttpJsonEchoStub extends EchoStub {
             .setTypeRegistry(typeRegistry)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("foo_bar.name", String.valueOf(request.getFooBar().getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("foo_bar.name", String.valueOf(request.getFooBar().getName()));
+                  return builder.build();
                 })
             .build();
     HttpJsonCallSettings<UpdateCaseRequest, Case> updateCaseTransportSettings =
@@ -527,9 +528,9 @@ public class HttpJsonEchoStub extends EchoStub {
             .setTypeRegistry(typeRegistry)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("case.name", String.valueOf(request.getCase().getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("case.name", String.valueOf(request.getCase().getName()));
+                  return builder.build();
                 })
             .build();
 
