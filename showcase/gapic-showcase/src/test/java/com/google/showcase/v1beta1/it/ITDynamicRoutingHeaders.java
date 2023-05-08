@@ -52,6 +52,8 @@ public class ITDynamicRoutingHeaders {
   private static final Metadata.Key<String> REQUEST_PARAMS_HEADER_KEY =
       Metadata.Key.of("x-goog-request-params", Metadata.ASCII_STRING_MARSHALLER);
 
+  // Implement a request interceptor to retrieve the headers being sent on the request.
+  // The headers being set are part of the Metadata
   private static class GrpcCapturingClientInterceptor implements ClientInterceptor {
     private Metadata metadata;
 
@@ -69,6 +71,8 @@ public class ITDynamicRoutingHeaders {
     }
   }
 
+  // Implement a request interceptor to retrieve the headers being sent on the request
+  // The headers being set are part of the CallOptions
   private static class HttpJsonCapturingClientInterceptor implements HttpJsonClientInterceptor {
     private String requestParam;
 
