@@ -54,6 +54,7 @@ public class ProtoMessageRequestFormatterTest {
         Field.newBuilder()
             .setNumber(2)
             .setName("field_name1")
+            .setJsonName("json_name/this")
             .addOptions(Option.newBuilder().setName("opt_name1").build())
             .addOptions(Option.newBuilder().setName("opt_name2").build())
             .setCardinality(Cardinality.CARDINALITY_OPTIONAL)
@@ -97,6 +98,13 @@ public class ProtoMessageRequestFormatterTest {
                       Map<String, String> fields = new HashMap<>();
                       ProtoRestSerializer<Field> serializer = ProtoRestSerializer.create();
                       serializer.putPathParam(fields, "name", request.getName());
+                      return fields;
+                    },
+                    PathTemplate.create("/api/v2/project/{json_name=json_name/*}"),
+                    request -> {
+                      Map<String, String> fields = new HashMap<>();
+                      ProtoRestSerializer<Field> serializer = ProtoRestSerializer.create();
+                      serializer.putPathParam(fields, "json_name", request.getJsonName());
                       return fields;
                     }))
             .build();
@@ -146,6 +154,19 @@ public class ProtoMessageRequestFormatterTest {
     // Test toBuilder() case
     path = formatter.toBuilder().build().getPath(field);
     Truth.assertThat(path).isEqualTo("api/v1/names/field_name1/aggregated");
+  }
+
+  @Test
+  public void getPath_additionalBindings_differentFieldFromPath() {
+    Field field =
+        Field.newBuilder()
+            .setJsonName("json_name/this")
+            .addOptions(Option.newBuilder().setName("opt_name1").build())
+            .addOptions(Option.newBuilder().setName("opt_name2").build())
+            .setCardinality(Cardinality.CARDINALITY_OPTIONAL)
+            .build();
+    String path = formatter.getPath(field);
+    Truth.assertThat(path).isEqualTo("api/v2/project/json_name/this");
   }
 
   @Test
