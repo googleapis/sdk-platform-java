@@ -68,6 +68,11 @@ public abstract class HttpJsonCallOptions {
 
     Builder builder = this.toBuilder();
 
+    Instant newDeadline = inputOptions.getDeadline();
+    if (newDeadline != null) {
+      builder.setDeadline(newDeadline);
+    }
+
     if (inputOptions.getTimeout() != null) {
       Duration newTimeout = java.time.Duration.ofMillis(inputOptions.getTimeout().toMillis());
       if (newTimeout != null) {

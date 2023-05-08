@@ -49,6 +49,7 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import org.threeten.bp.Duration;
+import org.threeten.bp.Instant;
 
 /**
  * HttpJsonCallContext encapsulates context data used to make an http-json call.
@@ -383,6 +384,12 @@ public final class HttpJsonCallContext implements ApiCallContext {
 
   @Deprecated
   @Nullable
+  public Instant getDeadline() {
+    return getCallOptions() != null ? getCallOptions().getDeadline() : null;
+  }
+
+  @Deprecated
+  @Nullable
   public Credentials getCredentials() {
     return getCallOptions() != null ? getCallOptions().getCredentials() : null;
   }
@@ -453,6 +460,13 @@ public final class HttpJsonCallContext implements ApiCallContext {
         this.tracer,
         this.retrySettings,
         this.retryableCodes);
+  }
+
+  @Deprecated
+  public HttpJsonCallContext withDeadline(Instant newDeadline) {
+    HttpJsonCallOptions.Builder builder =
+        callOptions != null ? callOptions.toBuilder() : HttpJsonCallOptions.newBuilder();
+    return withCallOptions(builder.setDeadline(newDeadline).build());
   }
 
   @Nonnull
