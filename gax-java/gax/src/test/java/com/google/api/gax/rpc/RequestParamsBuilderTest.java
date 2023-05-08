@@ -59,10 +59,24 @@ public class RequestParamsBuilderTest {
   }
 
   @Test
+  public void add_twoParams_happyPath() {
+    requestParamsBuilder.add("table_location", "instances/living_room");
+    Map<String, String> actual = requestParamsBuilder.build();
+    assertThat(actual).containsExactly("table_location", "instances%2Fliving_room");
+  }
+
+  @Test
   public void add_encodedHeaderAndEncodedValue() {
     PathTemplate pathTemplate = PathTemplate.create("projects/**/{table$$_++location=instances/*}");
     requestParamsBuilder.add(
         "projects/my_cozy_home/instances/living_room", "table$$_++location", pathTemplate);
+    Map<String, String> actual = requestParamsBuilder.build();
+    assertThat(actual).containsExactly("table%24%24_%2B%2Blocation", "instances%2Fliving_room");
+  }
+
+  @Test
+  public void add_twoParams_encodedHeaderAndEncodedValue() {
+    requestParamsBuilder.add("table$$_++location", "instances/living_room");
     Map<String, String> actual = requestParamsBuilder.build();
     assertThat(actual).containsExactly("table%24%24_%2B%2Blocation", "instances%2Fliving_room");
   }
@@ -113,8 +127,35 @@ public class RequestParamsBuilderTest {
   }
 
   @Test
+  public void add_twoParams_nullFieldValue() {
+    requestParamsBuilder.add("test", null);
+    Map<String, String> actual = requestParamsBuilder.build();
+    assertThat(actual).isEmpty();
+  }
+
+  @Test
   public void add_emptyValue_noMatches() {
     Map<String, String> actual = getRoutingHeaders("{projects=**}", "");
+    assertThat(actual).isEmpty();
+  }
+
+  @Test
+  public void add_twoParams_emptyValue_noMatches() {
+    Map<String, String> actual = getRoutingHeaders("{projects=**}", "");
+    assertThat(actual).isEmpty();
+  }
+
+  @Test
+  public void add_twoParams_nullHeader_noMatches() {
+    requestParamsBuilder.add(null, "hello");
+    Map<String, String> actual = requestParamsBuilder.build();
+    assertThat(actual).isEmpty();
+  }
+
+  @Test
+  public void add_twoParams_emptyHeader_noMatches() {
+    requestParamsBuilder.add("", "hello");
+    Map<String, String> actual = requestParamsBuilder.build();
     assertThat(actual).isEmpty();
   }
 
