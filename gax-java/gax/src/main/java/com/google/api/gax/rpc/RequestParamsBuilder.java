@@ -77,6 +77,13 @@ public class RequestParamsBuilder {
     }
   }
 
+  /**
+   * Add an entry to paramsBuilder with key-value pairing of (headerKey, fieldValue). This method
+   * will percent encode both the header key and header value.
+   *
+   * @param headerKey the header key for the routing header param
+   * @param fieldValue the field value from a request
+   */
   public void add(String headerKey, String fieldValue) {
     if (fieldValue == null || fieldValue.isEmpty()) {
       return;
