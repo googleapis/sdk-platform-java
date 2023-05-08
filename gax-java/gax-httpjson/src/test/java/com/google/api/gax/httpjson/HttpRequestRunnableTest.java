@@ -243,4 +243,56 @@ public class HttpRequestRunnableTest {
       Truth.assertThat(result).isEqualTo(bodyRequestMessage);
     }
   }
+
+  @Test
+  public void testUpdateRunnableTimeout_shouldNotUpdate() throws IOException {
+    ApiMethodDescriptor<Field, Empty> methodDescriptor =
+        ApiMethodDescriptor.<Field, Empty>newBuilder()
+            .setFullMethodName("house.cat.get")
+            .setHttpMethod("POST")
+            .setRequestFormatter(requestFormatter)
+            .setResponseParser(responseParser)
+            .build();
+
+    HttpRequestRunnable<Field, Empty> httpRequestRunnable =
+        new HttpRequestRunnable<>(
+            requestMessage,
+            methodDescriptor,
+            "www.googleapis.com/animals/v1/projects",
+            HttpJsonCallOptions.newBuilder().setTimeout(java.time.Duration.ofMillis(5000L)).build(),
+            new MockHttpTransport(),
+            HttpJsonMetadata.newBuilder().build(),
+            (result) -> {});
+
+    HttpRequest httpRequest = httpRequestRunnable.createHttpRequest();
+    Truth.assertThat(httpRequest.getReadTimeout()).isEqualTo(20000L);
+    Truth.assertThat(httpRequest.getConnectTimeout()).isEqualTo(20000L);
+  }
+
+  @Test
+  public void testUpdateRunnableTimeout_shouldUpdate() throws IOException {
+    ApiMethodDescriptor<Field, Empty> methodDescriptor =
+        ApiMethodDescriptor.<Field, Empty>newBuilder()
+            .setFullMethodName("house.cat.get")
+            .setHttpMethod("POST")
+            .setRequestFormatter(requestFormatter)
+            .setResponseParser(responseParser)
+            .build();
+
+    HttpRequestRunnable<Field, Empty> httpRequestRunnable =
+        new HttpRequestRunnable<>(
+            requestMessage,
+            methodDescriptor,
+            "www.googleapis.com/animals/v1/projects",
+            HttpJsonCallOptions.newBuilder()
+                .setTimeout(java.time.Duration.ofMillis(30000L))
+                .build(),
+            new MockHttpTransport(),
+            HttpJsonMetadata.newBuilder().build(),
+            (result) -> {});
+
+    HttpRequest httpRequest = httpRequestRunnable.createHttpRequest();
+    Truth.assertThat(httpRequest.getReadTimeout()).isEqualTo(30000L);
+    Truth.assertThat(httpRequest.getConnectTimeout()).isEqualTo(30000L);
+  }
 }

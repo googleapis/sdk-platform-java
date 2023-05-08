@@ -181,7 +181,10 @@ public class HttpJsonDirectCallableTest {
     HttpJsonDirectCallable<Field, Field> callable =
         new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
 
-    HttpJsonCallContext callContext = HttpJsonCallContext.createDefault().withChannel(channel);
+    HttpJsonCallContext callContext =
+        HttpJsonCallContext.createDefault()
+            .withChannel(channel)
+            .withTimeout(Duration.ofSeconds(30));
 
     Field request = createTestMessage(2);
     Field expectedResponse = createTestMessage(2);
@@ -213,7 +216,10 @@ public class HttpJsonDirectCallableTest {
     HttpJsonDirectCallable<Field, Field> callable =
         new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
 
-    HttpJsonCallContext callContext = HttpJsonCallContext.createDefault().withChannel(channel);
+    HttpJsonCallContext callContext =
+        HttpJsonCallContext.createDefault()
+            .withChannel(channel)
+            .withTimeout(Duration.ofSeconds(30));
 
     Field request = createTestMessage(2);
     Field expectedResponse = createTestMessage(2);
@@ -242,7 +248,10 @@ public class HttpJsonDirectCallableTest {
     HttpJsonDirectCallable<Field, Field> callable =
         new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
 
-    HttpJsonCallContext callContext = HttpJsonCallContext.createDefault().withChannel(channel);
+    HttpJsonCallContext callContext =
+        HttpJsonCallContext.createDefault()
+            .withChannel(channel)
+            .withTimeout(Duration.ofSeconds(30));
 
     ApiException exception =
         ApiExceptionFactory.createException(
@@ -271,7 +280,10 @@ public class HttpJsonDirectCallableTest {
     HttpJsonDirectCallable<Field, Field> callable =
         new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
 
-    HttpJsonCallContext callContext = HttpJsonCallContext.createDefault().withChannel(channel);
+    HttpJsonCallContext callContext =
+        HttpJsonCallContext.createDefault()
+            .withChannel(channel)
+            .withTimeout(Duration.ofSeconds(30));
 
     MOCK_SERVICE.addNullResponse();
 
@@ -297,7 +309,10 @@ public class HttpJsonDirectCallableTest {
     HttpJsonDirectCallable<Field, Field> callable =
         new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
 
-    HttpJsonCallContext callContext = HttpJsonCallContext.createDefault().withChannel(channel);
+    HttpJsonCallContext callContext =
+        HttpJsonCallContext.createDefault()
+            .withChannel(channel)
+            .withTimeout(Duration.ofSeconds(30));
     MOCK_SERVICE.addNullResponse(400);
 
     try {
@@ -320,7 +335,10 @@ public class HttpJsonDirectCallableTest {
     HttpJsonDirectCallable<Field, Field> callable =
         new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
 
-    HttpJsonCallContext callContext = HttpJsonCallContext.createDefault().withChannel(channel);
+    HttpJsonCallContext callContext =
+        HttpJsonCallContext.createDefault()
+            .withChannel(channel)
+            .withTimeout(Duration.ofSeconds(30));
 
     ApiException exception =
         ApiExceptionFactory.createException(
@@ -334,6 +352,34 @@ public class HttpJsonDirectCallableTest {
       HttpResponseException respExp = (HttpResponseException) e.getCause();
       assertThat(respExp.getStatusCode()).isEqualTo(500);
       assertThat(respExp.getContent()).isEqualTo(exception.toString());
+    }
+  }
+
+  /**
+   * Expectation is that an RPC that exceeds the Timeout value set will receive a DEADLINE_EXCEEDED
+   * response back. In this test, the call has a timeout value that is smaller than the time it
+   * takes for the mock service to return a response.
+   *
+   * @throws InterruptedException
+   */
+  @Test
+  public void testDeadlineExceededResponse() throws InterruptedException {
+    HttpJsonDirectCallable<Field, Field> callable =
+        new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
+
+    HttpJsonCallContext callContext =
+        HttpJsonCallContext.createDefault().withChannel(channel).withTimeout(Duration.ofSeconds(3));
+
+    Field response = createTestMessage(10);
+    MOCK_SERVICE.addResponse(response, java.time.Duration.ofSeconds(5));
+
+    try {
+      callable.futureCall(createTestMessage(10), callContext).get();
+      Assert.fail("No exception raised");
+    } catch (ExecutionException e) {
+      HttpJsonStatusRuntimeException respExp = (HttpJsonStatusRuntimeException) e.getCause();
+      assertThat(respExp.getStatusCode()).isEqualTo(504);
+      assertThat(respExp.getMessage()).isEqualTo("Deadline exceeded");
     }
   }
 

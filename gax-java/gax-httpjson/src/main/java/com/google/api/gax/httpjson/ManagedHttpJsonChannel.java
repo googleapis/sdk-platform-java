@@ -38,6 +38,8 @@ import com.google.common.base.Preconditions;
 import java.io.IOException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Nullable;
 
@@ -51,6 +53,7 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
   private final Executor executor;
   private final String endpoint;
   private final HttpTransport httpTransport;
+  private final ScheduledExecutorService deadlineScheduledExecutorService;
 
   private boolean isTransportShutdown;
 
@@ -63,6 +66,7 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
     this.executor = executor;
     this.endpoint = endpoint;
     this.httpTransport = httpTransport == null ? new NetHttpTransport() : httpTransport;
+    this.deadlineScheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
   }
 
   @Override
@@ -70,7 +74,12 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
       ApiMethodDescriptor<RequestT, ResponseT> methodDescriptor, HttpJsonCallOptions callOptions) {
 
     return new HttpJsonClientCallImpl<>(
-        methodDescriptor, endpoint, callOptions, httpTransport, executor);
+        methodDescriptor,
+        endpoint,
+        callOptions,
+        httpTransport,
+        executor,
+        deadlineScheduledExecutorService);
   }
 
   @Override
@@ -79,6 +88,7 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
       return;
     }
     try {
+      deadlineScheduledExecutorService.shutdown();
       httpTransport.shutdown();
       isTransportShutdown = true;
     } catch (IOException e) {
