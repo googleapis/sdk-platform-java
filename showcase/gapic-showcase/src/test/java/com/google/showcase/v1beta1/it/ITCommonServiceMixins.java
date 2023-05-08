@@ -26,6 +26,8 @@ import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -61,6 +63,17 @@ public class ITCommonServiceMixins {
 
     // Create HttpJson Echo Client
     httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
+  }
+
+  @After
+  public void destroyClients() throws InterruptedException {
+    grpcClient.shutdown();
+    grpcClient.awaitTermination(5, TimeUnit.SECONDS);
+    grpcClient.close();
+
+    httpjsonClient.shutdown();
+    httpjsonClient.awaitTermination(5, TimeUnit.SECONDS);
+    httpjsonClient.close();
   }
 
   @Test

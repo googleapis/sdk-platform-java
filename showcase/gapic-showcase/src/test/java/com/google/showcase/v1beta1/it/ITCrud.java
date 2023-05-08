@@ -29,6 +29,7 @@ import com.google.showcase.v1beta1.User;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,23 +46,28 @@ public class ITCrud {
           .build();
 
   private IdentityClient grpcClient;
-  private IdentityClient httpJsonClient;
+  private IdentityClient httpjsonClient;
 
   @Before
   public void setup() throws Exception {
     // Create gRPC IdentityClient
     grpcClient = TestClientInitializer.createGrpcIdentityClient();
     // Create HttpJson IdentityClient
-    httpJsonClient = TestClientInitializer.createHttpJsonIdentityClient();
+    httpjsonClient = TestClientInitializer.createHttpJsonIdentityClient();
 
     // Ensure an empty state before each run
-    cleanupData(httpJsonClient);
+    cleanupData(httpjsonClient);
   }
 
   @After
-  public void cleanup() {
+  public void cleanup() throws InterruptedException {
+    grpcClient.shutdown();
+    grpcClient.awaitTermination(5, TimeUnit.SECONDS);
     grpcClient.close();
-    httpJsonClient.close();
+
+    httpjsonClient.shutdown();
+    httpjsonClient.awaitTermination(5, TimeUnit.SECONDS);
+    httpjsonClient.close();
   }
 
   @Test
@@ -95,7 +101,7 @@ public class ITCrud {
                     .build()));
     // Assert that only one User exists
     IdentityClient.ListUsersPagedResponse listUsersPagedResponse =
-        httpJsonClient.listUsers(ListUsersRequest.newBuilder().setPageSize(5).build());
+        httpjsonClient.listUsers(ListUsersRequest.newBuilder().setPageSize(5).build());
     ListUsersResponse listUsersResponse = listUsersPagedResponse.getPage().getResponse();
     assertThat(listUsersResponse.getUsersList().size()).isEqualTo(2);
 
@@ -105,7 +111,7 @@ public class ITCrud {
 
     // Get User
     User defaultUser = expectedUsersList.get(0);
-    User getUserResponse = httpJsonClient.getUser(defaultUser.getName());
+    User getUserResponse = httpjsonClient.getUser(defaultUser.getName());
     assertThat(getUserResponse).isEqualTo(defaultUser);
   }
 
@@ -124,7 +130,7 @@ public class ITCrud {
             .setEnableNotifications(true)
             .build();
     User updateUserResponse =
-        httpJsonClient.updateUser(
+        httpjsonClient.updateUser(
             UpdateUserRequest.newBuilder()
                 .setUser(updateUser)
                 .setUpdateMask(
@@ -148,11 +154,11 @@ public class ITCrud {
   public void testHttpJson_Delete() {
     User userResponse = createDefaultUser();
 
-    httpJsonClient.deleteUser(
+    httpjsonClient.deleteUser(
         DeleteUserRequest.newBuilder().setName(userResponse.getName()).build());
 
     IdentityClient.ListUsersPagedResponse listUsersPagedResponse =
-        httpJsonClient.listUsers(ListUsersRequest.newBuilder().setPageSize(5).build());
+        httpjsonClient.listUsers(ListUsersRequest.newBuilder().setPageSize(5).build());
     assertThat(listUsersPagedResponse.getPage().getResponse().getUsersList().size()).isEqualTo(0);
   }
 
@@ -164,7 +170,7 @@ public class ITCrud {
         identityClient.deleteUser(user.getName());
       }
     }
-    pagedResponse = httpJsonClient.listUsers(ListUsersRequest.newBuilder().setPageSize(5).build());
+    pagedResponse = httpjsonClient.listUsers(ListUsersRequest.newBuilder().setPageSize(5).build());
     assertThat(pagedResponse.getPage().getResponse().getUsersList().size()).isEqualTo(0);
   }
 
@@ -182,6 +188,6 @@ public class ITCrud {
    * @return newly created user
    */
   private User createUser(User user) {
-    return httpJsonClient.createUser(CreateUserRequest.newBuilder().setUser(user).build());
+    return httpjsonClient.createUser(CreateUserRequest.newBuilder().setUser(user).build());
   }
 }

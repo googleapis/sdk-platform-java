@@ -34,6 +34,7 @@ import java.security.GeneralSecurityException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import org.junit.After;
@@ -63,7 +64,7 @@ public class ITHttpAnnotation {
   public String groupName;
 
   private ComplianceSuite complianceSuite;
-  private ComplianceClient complianceClient;
+  private ComplianceClient httpjsonClient;
   private Map<String, Function<RepeatRequest, RepeatResponse>> validComplianceRpcMap;
 
   @Before
@@ -88,30 +89,32 @@ public class ITHttpAnnotation {
                     .setEndpoint("http://localhost:7469")
                     .build())
             .build();
-    complianceClient = ComplianceClient.create(httpjsonComplianceSettings);
+    httpjsonClient = ComplianceClient.create(httpjsonComplianceSettings);
 
     // Mapping of Compliance Suite file RPC Names to ComplianceClient methods
     validComplianceRpcMap =
         ImmutableMap.of(
             "Compliance.RepeatDataBody",
-            complianceClient::repeatDataBody,
+            httpjsonClient::repeatDataBody,
             "Compliance.RepeatDataBodyInfo",
-            complianceClient::repeatDataBodyInfo,
+            httpjsonClient::repeatDataBodyInfo,
             "Compliance.RepeatDataQuery",
-            complianceClient::repeatDataQuery,
+            httpjsonClient::repeatDataQuery,
             "Compliance.RepeatDataSimplePath",
-            complianceClient::repeatDataSimplePath,
+            httpjsonClient::repeatDataSimplePath,
             "Compliance.RepeatDataBodyPut",
-            complianceClient::repeatDataBodyPut,
+            httpjsonClient::repeatDataBodyPut,
             "Compliance.RepeatDataBodyPatch",
-            complianceClient::repeatDataBodyPatch,
+            httpjsonClient::repeatDataBodyPatch,
             "Compliance.RepeatDataPathResource",
-            complianceClient::repeatDataPathResource);
+            httpjsonClient::repeatDataPathResource);
   }
 
   @After
-  public void destroyClient() {
-    complianceClient.close();
+  public void destroyClient() throws InterruptedException {
+    httpjsonClient.shutdown();
+    httpjsonClient.awaitTermination(5, TimeUnit.SECONDS);
+    httpjsonClient.close();
   }
 
   // Verify that the input's info is the same as the response's info

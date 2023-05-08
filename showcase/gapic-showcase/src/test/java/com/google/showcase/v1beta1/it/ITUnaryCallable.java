@@ -27,6 +27,7 @@ import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
+import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,20 +36,25 @@ public class ITUnaryCallable {
 
   private EchoClient grpcClient;
 
-  private EchoClient httpJsonClient;
+  private EchoClient httpjsonClient;
 
   @Before
   public void createClients() throws Exception {
     // Create gRPC Echo Client
     grpcClient = TestClientInitializer.createGrpcEchoClient();
     // Create Http JSON Echo Client
-    httpJsonClient = TestClientInitializer.createHttpJsonEchoClient();
+    httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
   }
 
   @After
-  public void destroyClient() {
+  public void destroyClient() throws InterruptedException {
+    grpcClient.shutdown();
+    grpcClient.awaitTermination(5, TimeUnit.SECONDS);
     grpcClient.close();
-    httpJsonClient.close();
+
+    httpjsonClient.shutdown();
+    httpjsonClient.awaitTermination(5, TimeUnit.SECONDS);
+    httpjsonClient.close();
   }
 
   @Test
@@ -87,15 +93,15 @@ public class ITUnaryCallable {
             .setError(Status.newBuilder().setCode(StatusCode.Code.CANCELLED.ordinal()).build())
             .build();
     CancelledException exception =
-        assertThrows(CancelledException.class, () -> httpJsonClient.echo(requestWithServerError));
+        assertThrows(CancelledException.class, () -> httpjsonClient.echo(requestWithServerError));
     assertThat(exception.getStatusCode().getCode()).isEqualTo(StatusCode.Code.CANCELLED);
   }
 
   @Test
   public void testHttpJson_shutdown() {
-    assertThat(httpJsonClient.isShutdown()).isFalse();
-    httpJsonClient.shutdown();
-    assertThat(httpJsonClient.isShutdown()).isTrue();
+    assertThat(httpjsonClient.isShutdown()).isFalse();
+    httpjsonClient.shutdown();
+    assertThat(httpjsonClient.isShutdown()).isTrue();
   }
 
   private String echoGrpc(String value) {
@@ -104,7 +110,7 @@ public class ITUnaryCallable {
   }
 
   private String echoHttpJson(String value) {
-    EchoResponse response = httpJsonClient.echo(EchoRequest.newBuilder().setContent(value).build());
+    EchoResponse response = httpjsonClient.echo(EchoRequest.newBuilder().setContent(value).build());
     return response.getContent();
   }
 }

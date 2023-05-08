@@ -31,6 +31,7 @@ import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,7 +47,9 @@ public class ITClientSideStreaming {
   }
 
   @After
-  public void destroyClient() {
+  public void destroyClient() throws InterruptedException {
+    grpcClient.shutdown();
+    grpcClient.awaitTermination(5, TimeUnit.SECONDS);
     grpcClient.close();
   }
 

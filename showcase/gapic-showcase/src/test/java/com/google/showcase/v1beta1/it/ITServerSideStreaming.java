@@ -30,6 +30,7 @@ import com.google.showcase.v1beta1.ExpandRequest;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import org.junit.After;
 import org.junit.Before;
@@ -50,8 +51,13 @@ public class ITServerSideStreaming {
   }
 
   @After
-  public void destroyClient() {
+  public void destroyClient() throws InterruptedException {
+    grpcClient.shutdown();
+    grpcClient.awaitTermination(5, TimeUnit.SECONDS);
     grpcClient.close();
+
+    httpjsonClient.shutdown();
+    httpjsonClient.awaitTermination(5, TimeUnit.SECONDS);
     httpjsonClient.close();
   }
 

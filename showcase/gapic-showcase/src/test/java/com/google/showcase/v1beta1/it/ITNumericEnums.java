@@ -26,6 +26,7 @@ import com.google.showcase.v1beta1.EnumRequest;
 import com.google.showcase.v1beta1.EnumResponse;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,7 +51,9 @@ public class ITNumericEnums {
   }
 
   @After
-  public void destroyClient() {
+  public void destroyClient() throws InterruptedException {
+    client.shutdown();
+    client.awaitTermination(5, TimeUnit.SECONDS);
     client.close();
   }
 
