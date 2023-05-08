@@ -35,8 +35,10 @@ import com.google.api.pathtemplate.PathTemplate;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.protobuf.Message;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /** Creates parts of a HTTP request from a protobuf message. */
 public class ProtoMessageRequestFormatter<RequestT extends Message>
@@ -50,6 +52,8 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
   private final String rawPath;
   private final PathTemplate pathTemplate;
   private final FieldsExtractor<RequestT, Map<String, String>> pathVarsExtractor;
+  private final List<String> additionalRawPaths;
+  private final List<PathTemplate> additionalPathTemplates;
   private final Map<PathTemplate, FieldsExtractor<RequestT, Map<String, String>>>
       additionalPathsExtractorMap;
 
@@ -59,6 +63,8 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
       String rawPath,
       PathTemplate pathTemplate,
       FieldsExtractor<RequestT, Map<String, String>> pathVarsExtractor,
+      List<String> additionalRawPaths,
+      List<PathTemplate> additionalPathTemplates,
       Map<PathTemplate, FieldsExtractor<RequestT, Map<String, String>>>
           additionalPathsExtractorMap) {
     this.requestBodyExtractor = requestBodyExtractor;
@@ -66,6 +72,8 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
     this.rawPath = rawPath;
     this.pathTemplate = pathTemplate;
     this.pathVarsExtractor = pathVarsExtractor;
+    this.additionalRawPaths = additionalRawPaths;
+    this.additionalPathTemplates = additionalPathTemplates;
     // RPCs may not define additional bindings -- Set as an empty map
     this.additionalPathsExtractorMap =
         additionalPathsExtractorMap == null ? ImmutableMap.of() : additionalPathsExtractorMap;
@@ -73,12 +81,13 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
 
   public static <RequestT extends Message>
       ProtoMessageRequestFormatter.Builder<RequestT> newBuilder() {
-    return new Builder<>();
+    return new Builder<RequestT>().setAdditionalPaths();
   }
 
   public Builder<RequestT> toBuilder() {
     return new Builder<RequestT>()
         .setPath(rawPath, pathVarsExtractor)
+        .setAdditionalPaths(additionalRawPaths.toArray(new String[] {}))
         .setAdditionalPathsExtractorMap(additionalPathsExtractorMap)
         .setQueryParamsExtractor(queryParamsExtractor)
         .setRequestBodyExtractor(requestBodyExtractor);
@@ -144,6 +153,7 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
     private FieldsExtractor<RequestT, Map<String, List<String>>> queryParamsExtractor;
     private String rawPath;
     private FieldsExtractor<RequestT, Map<String, String>> pathVarsExtractor;
+    private List<String> rawAdditionalPaths;
     private Map<PathTemplate, FieldsExtractor<RequestT, Map<String, String>>>
         additionalPathsExtractorMap;
 
@@ -163,6 +173,12 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
         String rawPath, FieldsExtractor<RequestT, Map<String, String>> pathVarsExtractor) {
       this.rawPath = rawPath;
       this.pathVarsExtractor = pathVarsExtractor;
+      return this;
+    }
+
+    @BetaApi
+    public Builder<RequestT> setAdditionalPaths(String... rawAdditionalPaths) {
+      this.rawAdditionalPaths = Arrays.asList(rawAdditionalPaths);
       return this;
     }
 
@@ -192,6 +208,8 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
           rawPath,
           PathTemplate.create(rawPath),
           pathVarsExtractor,
+          rawAdditionalPaths,
+          rawAdditionalPaths.stream().map(PathTemplate::create).collect(Collectors.toList()),
           additionalPathsExtractorMap);
     }
   }
