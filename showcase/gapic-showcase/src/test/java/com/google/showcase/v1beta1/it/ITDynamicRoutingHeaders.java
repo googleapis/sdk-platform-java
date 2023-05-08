@@ -17,8 +17,6 @@ package com.google.showcase.v1beta1.it;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.httpjson.ApiMethodDescriptor;
 import com.google.api.gax.httpjson.ForwardingHttpJsonClientCall;
 import com.google.api.gax.httpjson.ForwardingHttpJsonClientCallListener;
@@ -30,17 +28,15 @@ import com.google.api.gax.httpjson.HttpJsonMetadata;
 import com.google.common.collect.ImmutableList;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
-import com.google.showcase.v1beta1.EchoSettings;
+import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import io.grpc.CallOptions;
 import io.grpc.Channel;
 import io.grpc.ClientCall;
 import io.grpc.ClientInterceptor;
 import io.grpc.ForwardingClientCall;
-import io.grpc.ManagedChannelBuilder;
 import io.grpc.Metadata;
 import io.grpc.MethodDescriptor;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.junit.After;
@@ -120,32 +116,14 @@ public class ITDynamicRoutingHeaders {
 
   @Before
   public void createClients() throws Exception {
+    // Create gRPC Interceptor and Client
     grpcInterceptor = new GrpcCapturingClientInterceptor();
-    EchoSettings grpcEchoSettings =
-        EchoSettings.newBuilder()
-            .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTransportChannelProvider(
-                EchoSettings.defaultGrpcTransportProviderBuilder()
-                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
-                    .setInterceptorProvider(() -> Collections.singletonList(grpcInterceptor))
-                    .build())
-            .build();
-    grpcClient = EchoClient.create(grpcEchoSettings);
+    grpcClient = TestClientInitializer.createGrpcEchoClient(ImmutableList.of(grpcInterceptor));
 
+    // Create HttpJson Interceptor and Client
     httpJsonInterceptor = new HttpJsonCapturingClientInterceptor();
-    // Create Http JSON Echo Client
-    EchoSettings httpJsonEchoSettings =
-        EchoSettings.newHttpJsonBuilder()
-            .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTransportChannelProvider(
-                EchoSettings.defaultHttpJsonTransportProviderBuilder()
-                    .setHttpTransport(
-                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
-                    .setEndpoint("http://localhost:7469")
-                    .setInterceptorProvider(() -> Collections.singletonList(httpJsonInterceptor))
-                    .build())
-            .build();
-    httpJsonClient = EchoClient.create(httpJsonEchoSettings);
+    httpJsonClient =
+        TestClientInitializer.createHttpJsonEchoClient(ImmutableList.of(httpJsonInterceptor));
   }
 
   @After
