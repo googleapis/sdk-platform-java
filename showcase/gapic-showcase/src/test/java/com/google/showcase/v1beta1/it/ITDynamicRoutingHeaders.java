@@ -142,7 +142,8 @@ public class ITDynamicRoutingHeaders {
   @Test
   public void testHttpJson_noRoutingHeaderUsed() {
     httpJsonClient.echo(EchoRequest.newBuilder().build());
-    assertThat(httpJsonInterceptor.requestParam).isNull();
+    String headerValue = httpJsonInterceptor.requestParam;
+    assertThat(headerValue).isNull();
   }
 
   @Test
@@ -155,7 +156,8 @@ public class ITDynamicRoutingHeaders {
   @Test
   public void testHttpJson_emptyHeader() {
     httpJsonClient.echo(EchoRequest.newBuilder().setHeader("").build());
-    assertThat(httpJsonInterceptor.requestParam).isNull();
+    String headerValue = httpJsonInterceptor.requestParam;
+    assertThat(headerValue).isNull();
   }
 
   @Test
@@ -172,9 +174,10 @@ public class ITDynamicRoutingHeaders {
   @Test
   public void testHttpJson_matchesHeaderName() {
     httpJsonClient.echo(EchoRequest.newBuilder().setHeader("potato").build());
+    String headerValue = httpJsonInterceptor.requestParam;
+    assertThat(headerValue).isNotNull();
     List<String> requestHeaders =
-        Arrays.stream(httpJsonInterceptor.requestParam.split(SPLIT_TOKEN))
-            .collect(Collectors.toList());
+        Arrays.stream(headerValue.split(SPLIT_TOKEN)).collect(Collectors.toList());
     List<String> expectedHeaders = ImmutableList.of("header=potato", "routing_id=potato");
     assertThat(requestHeaders).containsExactlyElementsIn(expectedHeaders);
   }
@@ -193,9 +196,10 @@ public class ITDynamicRoutingHeaders {
   @Test
   public void testHttpJson_matchesOtherHeaderName() {
     httpJsonClient.echo(EchoRequest.newBuilder().setOtherHeader("instances/456").build());
+    String headerValue = httpJsonInterceptor.requestParam;
+    assertThat(headerValue).isNotNull();
     List<String> requestHeaders =
-        Arrays.stream(httpJsonInterceptor.requestParam.split(SPLIT_TOKEN))
-            .collect(Collectors.toList());
+        Arrays.stream(headerValue.split(SPLIT_TOKEN)).collect(Collectors.toList());
     List<String> expectedHeaders = ImmutableList.of("baz=instances%2F456");
     assertThat(requestHeaders).containsExactlyElementsIn(expectedHeaders);
   }
@@ -220,9 +224,10 @@ public class ITDynamicRoutingHeaders {
   @Test
   public void testHttpJson_matchesMultipleOfSameRoutingHeader_usesHeader() {
     httpJsonClient.echo(EchoRequest.newBuilder().setHeader("projects/123/instances/456").build());
+    String headerValue = httpJsonInterceptor.requestParam;
+    assertThat(headerValue).isNotNull();
     List<String> requestHeaders =
-        Arrays.stream(httpJsonInterceptor.requestParam.split(SPLIT_TOKEN))
-            .collect(Collectors.toList());
+        Arrays.stream(headerValue.split(SPLIT_TOKEN)).collect(Collectors.toList());
     List<String> expectedHeaders =
         ImmutableList.of(
             "header=projects%2F123%2Finstances%2F456",
@@ -249,9 +254,10 @@ public class ITDynamicRoutingHeaders {
   public void testHttpJson_matchesMultipleOfSameRoutingHeader_usesOtherHeader() {
     httpJsonClient.echo(
         EchoRequest.newBuilder().setOtherHeader("projects/123/instances/456").build());
+    String headerValue = httpJsonInterceptor.requestParam;
+    assertThat(headerValue).isNotNull();
     List<String> requestHeaders =
-        Arrays.stream(httpJsonInterceptor.requestParam.split(SPLIT_TOKEN))
-            .collect(Collectors.toList());
+        Arrays.stream(headerValue.split(SPLIT_TOKEN)).collect(Collectors.toList());
     List<String> expectedHeaders =
         ImmutableList.of("baz=projects%2F123%2Finstances%2F456", "qux=projects%2F123");
     assertThat(requestHeaders).containsExactlyElementsIn(expectedHeaders);
@@ -285,9 +291,10 @@ public class ITDynamicRoutingHeaders {
             .setHeader("regions/123/zones/456")
             .setOtherHeader("projects/123/instances/456")
             .build());
+    String headerValue = httpJsonInterceptor.requestParam;
+    assertThat(headerValue).isNotNull();
     List<String> requestHeaders =
-        Arrays.stream(httpJsonInterceptor.requestParam.split(SPLIT_TOKEN))
-            .collect(Collectors.toList());
+        Arrays.stream(headerValue.split(SPLIT_TOKEN)).collect(Collectors.toList());
     List<String> expectedHeaders =
         ImmutableList.of(
             "baz=projects%2F123%2Finstances%2F456",

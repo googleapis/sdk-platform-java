@@ -100,6 +100,7 @@ public class RequestParamsBuilder {
       return URLEncoder.encode(value, StandardCharsets.UTF_8.toString());
     } catch (UnsupportedEncodingException e) {
       // Default to use the un-encoded value if there is an encoding issue
+      // TODO: Log this scenario once we implemented the Cloud SDK logging.
       return value;
     }
   }
