@@ -172,15 +172,26 @@ public class ExponentialRetryAlgorithmTest {
     assertFalse(algorithm.shouldRetry(attempt));
   }
 
+  // First attempt runs at 0ms
+  // Second attempt runs at 60ms if shouldRetry is true
+  // - RPC timeout is 2ms and Time Left is 140ms (shouldRetry == true)
+  // Third attempt runs at 60ms if shouldRetry is true
+  // - RPC timeout is 4ms and Time Left is 120ms (shouldRetry == true)
+  // Fourth attempt runs at 60ms if shouldRetry is true
+  // - RPC timeout is 8ms and Time Left is 20ms (shouldRetry == true)
+  // Fifth attempt runs at 60ms if shouldRetry is true
+  // - RPC timeout is 8ms and Time Left is -40ms (shouldRetry == false)
   @Test
   public void testShouldRetryFalseOnMaxTimeout() {
+    // Simulate each attempt with 60ms of clock time.
+    // "attempt" = RPC Timeout + createNextAttempt() and shouldRetry()
     TimedAttemptSettings attempt = algorithm.createFirstAttempt();
-    for (int i = 0; i < 4; i++) {
+    clock.incrementNanoTime(Duration.ofMillis(60L).toNanos());
+    for (int i = 0; i < 3; i++) {
       assertTrue(algorithm.shouldRetry(attempt));
       attempt = algorithm.createNextAttempt(attempt);
       clock.incrementNanoTime(Duration.ofMillis(60L).toNanos());
     }
-
     assertFalse(algorithm.shouldRetry(attempt));
   }
 }
