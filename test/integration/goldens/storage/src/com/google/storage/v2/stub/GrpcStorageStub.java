@@ -536,7 +536,8 @@ public class GrpcStorageStub extends StorageStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add(request.getName(), "bucket", DELETE_BUCKET_0_PATH_TEMPLATE);
+                  builder.add(
+                      String.valueOf(request.getName()), "bucket", DELETE_BUCKET_0_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -546,7 +547,8 @@ public class GrpcStorageStub extends StorageStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add(request.getName(), "bucket", GET_BUCKET_0_PATH_TEMPLATE);
+                  builder.add(
+                      String.valueOf(request.getName()), "bucket", GET_BUCKET_0_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -556,7 +558,10 @@ public class GrpcStorageStub extends StorageStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add(request.getParent(), "project", CREATE_BUCKET_0_PATH_TEMPLATE);
+                  builder.add(
+                      String.valueOf(request.getParent()),
+                      "project",
+                      CREATE_BUCKET_0_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -566,7 +571,8 @@ public class GrpcStorageStub extends StorageStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add(request.getParent(), "project", LIST_BUCKETS_0_PATH_TEMPLATE);
+                  builder.add(
+                      String.valueOf(request.getParent()), "project", LIST_BUCKETS_0_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -578,7 +584,7 @@ public class GrpcStorageStub extends StorageStub {
                     request -> {
                       RequestParamsBuilder builder = RequestParamsBuilder.create();
                       builder.add(
-                          request.getBucket(),
+                          String.valueOf(request.getBucket()),
                           "bucket",
                           LOCK_BUCKET_RETENTION_POLICY_0_PATH_TEMPLATE);
                       return builder.build();
@@ -590,8 +596,14 @@ public class GrpcStorageStub extends StorageStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add(request.getResource(), "bucket", GET_IAM_POLICY_0_PATH_TEMPLATE);
-                  builder.add(request.getResource(), "bucket", GET_IAM_POLICY_1_PATH_TEMPLATE);
+                  builder.add(
+                      String.valueOf(request.getResource()),
+                      "bucket",
+                      GET_IAM_POLICY_0_PATH_TEMPLATE);
+                  builder.add(
+                      String.valueOf(request.getResource()),
+                      "bucket",
+                      GET_IAM_POLICY_1_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -601,8 +613,14 @@ public class GrpcStorageStub extends StorageStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add(request.getResource(), "bucket", SET_IAM_POLICY_0_PATH_TEMPLATE);
-                  builder.add(request.getResource(), "bucket", SET_IAM_POLICY_1_PATH_TEMPLATE);
+                  builder.add(
+                      String.valueOf(request.getResource()),
+                      "bucket",
+                      SET_IAM_POLICY_0_PATH_TEMPLATE);
+                  builder.add(
+                      String.valueOf(request.getResource()),
+                      "bucket",
+                      SET_IAM_POLICY_1_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -614,9 +632,13 @@ public class GrpcStorageStub extends StorageStub {
                     request -> {
                       RequestParamsBuilder builder = RequestParamsBuilder.create();
                       builder.add(
-                          request.getResource(), "bucket", TEST_IAM_PERMISSIONS_0_PATH_TEMPLATE);
+                          String.valueOf(request.getResource()),
+                          "bucket",
+                          TEST_IAM_PERMISSIONS_0_PATH_TEMPLATE);
                       builder.add(
-                          request.getResource(), "bucket", TEST_IAM_PERMISSIONS_1_PATH_TEMPLATE);
+                          String.valueOf(request.getResource()),
+                          "bucket",
+                          TEST_IAM_PERMISSIONS_1_PATH_TEMPLATE);
                       return builder.build();
                     })
                 .build();
@@ -628,7 +650,9 @@ public class GrpcStorageStub extends StorageStub {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
                   if (request.getBucket() != null) {
                     builder.add(
-                        request.getBucket().getName(), "bucket", UPDATE_BUCKET_0_PATH_TEMPLATE);
+                        String.valueOf(request.getBucket().getName()),
+                        "bucket",
+                        UPDATE_BUCKET_0_PATH_TEMPLATE);
                   }
                   return builder.build();
                 })
@@ -639,7 +663,10 @@ public class GrpcStorageStub extends StorageStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add(request.getName(), "bucket", DELETE_NOTIFICATION_0_PATH_TEMPLATE);
+                  builder.add(
+                      String.valueOf(request.getName()),
+                      "bucket",
+                      DELETE_NOTIFICATION_0_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -649,7 +676,10 @@ public class GrpcStorageStub extends StorageStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add(request.getName(), "bucket", GET_NOTIFICATION_0_PATH_TEMPLATE);
+                  builder.add(
+                      String.valueOf(request.getName()),
+                      "bucket",
+                      GET_NOTIFICATION_0_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -659,7 +689,10 @@ public class GrpcStorageStub extends StorageStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add(request.getParent(), "bucket", CREATE_NOTIFICATION_0_PATH_TEMPLATE);
+                  builder.add(
+                      String.valueOf(request.getParent()),
+                      "bucket",
+                      CREATE_NOTIFICATION_0_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -671,7 +704,9 @@ public class GrpcStorageStub extends StorageStub {
                     request -> {
                       RequestParamsBuilder builder = RequestParamsBuilder.create();
                       builder.add(
-                          request.getParent(), "bucket", LIST_NOTIFICATIONS_0_PATH_TEMPLATE);
+                          String.valueOf(request.getParent()),
+                          "bucket",
+                          LIST_NOTIFICATIONS_0_PATH_TEMPLATE);
                       return builder.build();
                     })
                 .build();
@@ -683,7 +718,7 @@ public class GrpcStorageStub extends StorageStub {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
                   if (request.getDestination() != null) {
                     builder.add(
-                        request.getDestination().getBucket(),
+                        String.valueOf(request.getDestination().getBucket()),
                         "bucket",
                         COMPOSE_OBJECT_0_PATH_TEMPLATE);
                   }
@@ -696,7 +731,8 @@ public class GrpcStorageStub extends StorageStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add(request.getBucket(), "bucket", DELETE_OBJECT_0_PATH_TEMPLATE);
+                  builder.add(
+                      String.valueOf(request.getBucket()), "bucket", DELETE_OBJECT_0_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -708,7 +744,9 @@ public class GrpcStorageStub extends StorageStub {
                     request -> {
                       RequestParamsBuilder builder = RequestParamsBuilder.create();
                       builder.add(
-                          request.getUploadId(), "bucket", CANCEL_RESUMABLE_WRITE_0_PATH_TEMPLATE);
+                          String.valueOf(request.getUploadId()),
+                          "bucket",
+                          CANCEL_RESUMABLE_WRITE_0_PATH_TEMPLATE);
                       return builder.build();
                     })
                 .build();
@@ -718,7 +756,8 @@ public class GrpcStorageStub extends StorageStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add(request.getBucket(), "bucket", GET_OBJECT_0_PATH_TEMPLATE);
+                  builder.add(
+                      String.valueOf(request.getBucket()), "bucket", GET_OBJECT_0_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -728,7 +767,8 @@ public class GrpcStorageStub extends StorageStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add(request.getBucket(), "bucket", READ_OBJECT_0_PATH_TEMPLATE);
+                  builder.add(
+                      String.valueOf(request.getBucket()), "bucket", READ_OBJECT_0_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -740,7 +780,9 @@ public class GrpcStorageStub extends StorageStub {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
                   if (request.getObject() != null) {
                     builder.add(
-                        request.getObject().getBucket(), "bucket", UPDATE_OBJECT_0_PATH_TEMPLATE);
+                        String.valueOf(request.getObject().getBucket()),
+                        "bucket",
+                        UPDATE_OBJECT_0_PATH_TEMPLATE);
                   }
                   return builder.build();
                 })
@@ -755,7 +797,8 @@ public class GrpcStorageStub extends StorageStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add(request.getParent(), "bucket", LIST_OBJECTS_0_PATH_TEMPLATE);
+                  builder.add(
+                      String.valueOf(request.getParent()), "bucket", LIST_OBJECTS_0_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -766,9 +809,13 @@ public class GrpcStorageStub extends StorageStub {
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
                   builder.add(
-                      request.getSourceBucket(), "source_bucket", REWRITE_OBJECT_0_PATH_TEMPLATE);
+                      String.valueOf(request.getSourceBucket()),
+                      "source_bucket",
+                      REWRITE_OBJECT_0_PATH_TEMPLATE);
                   builder.add(
-                      request.getDestinationBucket(), "bucket", REWRITE_OBJECT_1_PATH_TEMPLATE);
+                      String.valueOf(request.getDestinationBucket()),
+                      "bucket",
+                      REWRITE_OBJECT_1_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -782,7 +829,7 @@ public class GrpcStorageStub extends StorageStub {
                       if (request.getWriteObjectSpec() != null
                           && request.getWriteObjectSpec().getResource() != null) {
                         builder.add(
-                            request.getWriteObjectSpec().getResource().getBucket(),
+                            String.valueOf(request.getWriteObjectSpec().getResource().getBucket()),
                             "bucket",
                             START_RESUMABLE_WRITE_0_PATH_TEMPLATE);
                       }
@@ -797,7 +844,9 @@ public class GrpcStorageStub extends StorageStub {
                     request -> {
                       RequestParamsBuilder builder = RequestParamsBuilder.create();
                       builder.add(
-                          request.getUploadId(), "bucket", QUERY_WRITE_STATUS_0_PATH_TEMPLATE);
+                          String.valueOf(request.getUploadId()),
+                          "bucket",
+                          QUERY_WRITE_STATUS_0_PATH_TEMPLATE);
                       return builder.build();
                     })
                 .build();
@@ -807,7 +856,10 @@ public class GrpcStorageStub extends StorageStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add(request.getProject(), "project", GET_SERVICE_ACCOUNT_0_PATH_TEMPLATE);
+                  builder.add(
+                      String.valueOf(request.getProject()),
+                      "project",
+                      GET_SERVICE_ACCOUNT_0_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -817,7 +869,10 @@ public class GrpcStorageStub extends StorageStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add(request.getProject(), "project", CREATE_HMAC_KEY_0_PATH_TEMPLATE);
+                  builder.add(
+                      String.valueOf(request.getProject()),
+                      "project",
+                      CREATE_HMAC_KEY_0_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -827,7 +882,10 @@ public class GrpcStorageStub extends StorageStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add(request.getProject(), "project", DELETE_HMAC_KEY_0_PATH_TEMPLATE);
+                  builder.add(
+                      String.valueOf(request.getProject()),
+                      "project",
+                      DELETE_HMAC_KEY_0_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -837,7 +895,10 @@ public class GrpcStorageStub extends StorageStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add(request.getProject(), "project", GET_HMAC_KEY_0_PATH_TEMPLATE);
+                  builder.add(
+                      String.valueOf(request.getProject()),
+                      "project",
+                      GET_HMAC_KEY_0_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -847,7 +908,10 @@ public class GrpcStorageStub extends StorageStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add(request.getProject(), "project", LIST_HMAC_KEYS_0_PATH_TEMPLATE);
+                  builder.add(
+                      String.valueOf(request.getProject()),
+                      "project",
+                      LIST_HMAC_KEYS_0_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -859,7 +923,7 @@ public class GrpcStorageStub extends StorageStub {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
                   if (request.getHmacKey() != null) {
                     builder.add(
-                        request.getHmacKey().getProject(),
+                        String.valueOf(request.getHmacKey().getProject()),
                         "project",
                         UPDATE_HMAC_KEY_0_PATH_TEMPLATE);
                   }

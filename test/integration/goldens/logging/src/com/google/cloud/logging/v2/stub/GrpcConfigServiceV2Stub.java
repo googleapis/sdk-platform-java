@@ -27,8 +27,8 @@ import com.google.api.gax.grpc.GrpcCallSettings;
 import com.google.api.gax.grpc.GrpcStubCallableFactory;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.OperationCallable;
+import com.google.api.gax.rpc.RequestParamsBuilder;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.common.collect.ImmutableMap;
 import com.google.logging.v2.CmekSettings;
 import com.google.logging.v2.CopyLogEntriesMetadata;
 import com.google.logging.v2.CopyLogEntriesRequest;
@@ -404,9 +404,9 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
             .setMethodDescriptor(listBucketsMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("parent", String.valueOf(request.getParent()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("parent", String.valueOf(request.getParent()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<GetBucketRequest, LogBucket> getBucketTransportSettings =
@@ -414,9 +414,9 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
             .setMethodDescriptor(getBucketMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<CreateBucketRequest, LogBucket> createBucketTransportSettings =
@@ -424,9 +424,9 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
             .setMethodDescriptor(createBucketMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("parent", String.valueOf(request.getParent()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("parent", String.valueOf(request.getParent()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<UpdateBucketRequest, LogBucket> updateBucketTransportSettings =
@@ -434,9 +434,9 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
             .setMethodDescriptor(updateBucketMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<DeleteBucketRequest, Empty> deleteBucketTransportSettings =
@@ -444,9 +444,9 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
             .setMethodDescriptor(deleteBucketMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<UndeleteBucketRequest, Empty> undeleteBucketTransportSettings =
@@ -454,9 +454,9 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
             .setMethodDescriptor(undeleteBucketMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<ListViewsRequest, ListViewsResponse> listViewsTransportSettings =
@@ -464,9 +464,9 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
             .setMethodDescriptor(listViewsMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("parent", String.valueOf(request.getParent()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("parent", String.valueOf(request.getParent()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<GetViewRequest, LogView> getViewTransportSettings =
@@ -474,9 +474,9 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
             .setMethodDescriptor(getViewMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<CreateViewRequest, LogView> createViewTransportSettings =
@@ -484,9 +484,9 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
             .setMethodDescriptor(createViewMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("parent", String.valueOf(request.getParent()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("parent", String.valueOf(request.getParent()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<UpdateViewRequest, LogView> updateViewTransportSettings =
@@ -494,9 +494,9 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
             .setMethodDescriptor(updateViewMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<DeleteViewRequest, Empty> deleteViewTransportSettings =
@@ -504,9 +504,9 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
             .setMethodDescriptor(deleteViewMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<ListSinksRequest, ListSinksResponse> listSinksTransportSettings =
@@ -514,9 +514,9 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
             .setMethodDescriptor(listSinksMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("parent", String.valueOf(request.getParent()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("parent", String.valueOf(request.getParent()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<GetSinkRequest, LogSink> getSinkTransportSettings =
@@ -524,9 +524,9 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
             .setMethodDescriptor(getSinkMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("sink_name", String.valueOf(request.getSinkName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("sink_name", String.valueOf(request.getSinkName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<CreateSinkRequest, LogSink> createSinkTransportSettings =
@@ -534,9 +534,9 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
             .setMethodDescriptor(createSinkMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("parent", String.valueOf(request.getParent()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("parent", String.valueOf(request.getParent()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<UpdateSinkRequest, LogSink> updateSinkTransportSettings =
@@ -544,9 +544,9 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
             .setMethodDescriptor(updateSinkMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("sink_name", String.valueOf(request.getSinkName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("sink_name", String.valueOf(request.getSinkName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<DeleteSinkRequest, Empty> deleteSinkTransportSettings =
@@ -554,9 +554,9 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
             .setMethodDescriptor(deleteSinkMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("sink_name", String.valueOf(request.getSinkName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("sink_name", String.valueOf(request.getSinkName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<ListExclusionsRequest, ListExclusionsResponse>
@@ -565,9 +565,9 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
                 .setMethodDescriptor(listExclusionsMethodDescriptor)
                 .setParamsExtractor(
                     request -> {
-                      ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                      params.put("parent", String.valueOf(request.getParent()));
-                      return params.build();
+                      RequestParamsBuilder builder = RequestParamsBuilder.create();
+                      builder.add("parent", String.valueOf(request.getParent()));
+                      return builder.build();
                     })
                 .build();
     GrpcCallSettings<GetExclusionRequest, LogExclusion> getExclusionTransportSettings =
@@ -575,9 +575,9 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
             .setMethodDescriptor(getExclusionMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<CreateExclusionRequest, LogExclusion> createExclusionTransportSettings =
@@ -585,9 +585,9 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
             .setMethodDescriptor(createExclusionMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("parent", String.valueOf(request.getParent()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("parent", String.valueOf(request.getParent()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<UpdateExclusionRequest, LogExclusion> updateExclusionTransportSettings =
@@ -595,9 +595,9 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
             .setMethodDescriptor(updateExclusionMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<DeleteExclusionRequest, Empty> deleteExclusionTransportSettings =
@@ -605,9 +605,9 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
             .setMethodDescriptor(deleteExclusionMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<GetCmekSettingsRequest, CmekSettings> getCmekSettingsTransportSettings =
@@ -615,9 +615,9 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
             .setMethodDescriptor(getCmekSettingsMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<UpdateCmekSettingsRequest, CmekSettings> updateCmekSettingsTransportSettings =
@@ -625,9 +625,9 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
             .setMethodDescriptor(updateCmekSettingsMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<GetSettingsRequest, Settings> getSettingsTransportSettings =
@@ -635,9 +635,9 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
             .setMethodDescriptor(getSettingsMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<UpdateSettingsRequest, Settings> updateSettingsTransportSettings =
@@ -645,9 +645,9 @@ public class GrpcConfigServiceV2Stub extends ConfigServiceV2Stub {
             .setMethodDescriptor(updateSettingsMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<CopyLogEntriesRequest, Operation> copyLogEntriesTransportSettings =

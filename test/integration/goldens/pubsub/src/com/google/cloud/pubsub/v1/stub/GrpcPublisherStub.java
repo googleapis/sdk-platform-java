@@ -25,8 +25,8 @@ import com.google.api.gax.core.BackgroundResourceAggregation;
 import com.google.api.gax.grpc.GrpcCallSettings;
 import com.google.api.gax.grpc.GrpcStubCallableFactory;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.RequestParamsBuilder;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.common.collect.ImmutableMap;
 import com.google.iam.v1.GetIamPolicyRequest;
 import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
@@ -242,9 +242,9 @@ public class GrpcPublisherStub extends PublisherStub {
             .setMethodDescriptor(createTopicMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<UpdateTopicRequest, Topic> updateTopicTransportSettings =
@@ -252,9 +252,9 @@ public class GrpcPublisherStub extends PublisherStub {
             .setMethodDescriptor(updateTopicMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("topic.name", String.valueOf(request.getTopic().getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("topic.name", String.valueOf(request.getTopic().getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<PublishRequest, PublishResponse> publishTransportSettings =
@@ -262,9 +262,9 @@ public class GrpcPublisherStub extends PublisherStub {
             .setMethodDescriptor(publishMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("topic", String.valueOf(request.getTopic()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("topic", String.valueOf(request.getTopic()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<GetTopicRequest, Topic> getTopicTransportSettings =
@@ -272,9 +272,9 @@ public class GrpcPublisherStub extends PublisherStub {
             .setMethodDescriptor(getTopicMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("topic", String.valueOf(request.getTopic()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("topic", String.valueOf(request.getTopic()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<ListTopicsRequest, ListTopicsResponse> listTopicsTransportSettings =
@@ -282,9 +282,9 @@ public class GrpcPublisherStub extends PublisherStub {
             .setMethodDescriptor(listTopicsMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("project", String.valueOf(request.getProject()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("project", String.valueOf(request.getProject()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<ListTopicSubscriptionsRequest, ListTopicSubscriptionsResponse>
@@ -294,9 +294,9 @@ public class GrpcPublisherStub extends PublisherStub {
                 .setMethodDescriptor(listTopicSubscriptionsMethodDescriptor)
                 .setParamsExtractor(
                     request -> {
-                      ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                      params.put("topic", String.valueOf(request.getTopic()));
-                      return params.build();
+                      RequestParamsBuilder builder = RequestParamsBuilder.create();
+                      builder.add("topic", String.valueOf(request.getTopic()));
+                      return builder.build();
                     })
                 .build();
     GrpcCallSettings<ListTopicSnapshotsRequest, ListTopicSnapshotsResponse>
@@ -305,9 +305,9 @@ public class GrpcPublisherStub extends PublisherStub {
                 .setMethodDescriptor(listTopicSnapshotsMethodDescriptor)
                 .setParamsExtractor(
                     request -> {
-                      ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                      params.put("topic", String.valueOf(request.getTopic()));
-                      return params.build();
+                      RequestParamsBuilder builder = RequestParamsBuilder.create();
+                      builder.add("topic", String.valueOf(request.getTopic()));
+                      return builder.build();
                     })
                 .build();
     GrpcCallSettings<DeleteTopicRequest, Empty> deleteTopicTransportSettings =
@@ -315,9 +315,9 @@ public class GrpcPublisherStub extends PublisherStub {
             .setMethodDescriptor(deleteTopicMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("topic", String.valueOf(request.getTopic()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("topic", String.valueOf(request.getTopic()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<DetachSubscriptionRequest, DetachSubscriptionResponse>
@@ -326,9 +326,9 @@ public class GrpcPublisherStub extends PublisherStub {
                 .setMethodDescriptor(detachSubscriptionMethodDescriptor)
                 .setParamsExtractor(
                     request -> {
-                      ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                      params.put("subscription", String.valueOf(request.getSubscription()));
-                      return params.build();
+                      RequestParamsBuilder builder = RequestParamsBuilder.create();
+                      builder.add("subscription", String.valueOf(request.getSubscription()));
+                      return builder.build();
                     })
                 .build();
     GrpcCallSettings<SetIamPolicyRequest, Policy> setIamPolicyTransportSettings =
@@ -336,9 +336,9 @@ public class GrpcPublisherStub extends PublisherStub {
             .setMethodDescriptor(setIamPolicyMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("resource", String.valueOf(request.getResource()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("resource", String.valueOf(request.getResource()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<GetIamPolicyRequest, Policy> getIamPolicyTransportSettings =
@@ -346,9 +346,9 @@ public class GrpcPublisherStub extends PublisherStub {
             .setMethodDescriptor(getIamPolicyMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("resource", String.valueOf(request.getResource()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("resource", String.valueOf(request.getResource()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<TestIamPermissionsRequest, TestIamPermissionsResponse>
@@ -357,9 +357,9 @@ public class GrpcPublisherStub extends PublisherStub {
                 .setMethodDescriptor(testIamPermissionsMethodDescriptor)
                 .setParamsExtractor(
                     request -> {
-                      ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                      params.put("resource", String.valueOf(request.getResource()));
-                      return params.build();
+                      RequestParamsBuilder builder = RequestParamsBuilder.create();
+                      builder.add("resource", String.valueOf(request.getResource()));
+                      return builder.build();
                     })
                 .build();
 

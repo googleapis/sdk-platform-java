@@ -29,6 +29,7 @@ import com.google.api.gax.httpjson.ProtoMessageRequestFormatter;
 import com.google.api.gax.httpjson.ProtoMessageResponseParser;
 import com.google.api.gax.httpjson.ProtoRestSerializer;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.RequestParamsBuilder;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.apigeeconnect.v1.ListConnectionsRequest;
 import com.google.cloud.apigeeconnect.v1.ListConnectionsResponse;
@@ -140,6 +141,12 @@ public class HttpJsonConnectionServiceStub extends ConnectionServiceStub {
             HttpJsonCallSettings.<ListConnectionsRequest, ListConnectionsResponse>newBuilder()
                 .setMethodDescriptor(listConnectionsMethodDescriptor)
                 .setTypeRegistry(typeRegistry)
+                .setParamsExtractor(
+                    request -> {
+                      RequestParamsBuilder builder = RequestParamsBuilder.create();
+                      builder.add("parent", String.valueOf(request.getParent()));
+                      return builder.build();
+                    })
                 .build();
 
     this.listConnectionsCallable =
