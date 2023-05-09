@@ -123,10 +123,10 @@ public class ITLongRunningOperation {
       throws Exception {
     RetrySettings initialUnaryRetrySettings =
         RetrySettings.newBuilder()
-            .setInitialRpcTimeout(Duration.ofMillis(2000L))
+            .setInitialRpcTimeout(Duration.ofMillis(3000L))
             .setRpcTimeoutMultiplier(1.0)
-            .setMaxRpcTimeout(Duration.ofMillis(2000L))
-            .setTotalTimeout(Duration.ofMillis(2000L))
+            .setMaxRpcTimeout(Duration.ofMillis(3000L))
+            .setTotalTimeout(Duration.ofMillis(3000L))
             .build();
     RetrySettings pollingRetrySettings =
         RetrySettings.newBuilder()
@@ -141,10 +141,10 @@ public class ITLongRunningOperation {
     try (EchoClient grpcClient =
         TestClientInitializer.createGrpcEchoClientCustomWaitSettings(
             initialUnaryRetrySettings, pollingRetrySettings)) {
-      long epochSecondsInFuture = Instant.now().plus(6, ChronoUnit.SECONDS).getEpochSecond();
+      long epochSecondsInFuture = Instant.now().plus(8, ChronoUnit.SECONDS).getEpochSecond();
       WaitRequest waitRequest =
           WaitRequest.newBuilder()
-              .setSuccess(WaitResponse.newBuilder().setContent("gRPCWaitContent_6sDelay"))
+              .setSuccess(WaitResponse.newBuilder().setContent("gRPCWaitContent_8sDelay"))
               .setEndTime(Timestamp.newBuilder().setSeconds(epochSecondsInFuture).build())
               .build();
       OperationFuture<WaitResponse, WaitMetadata> operationFuture =
@@ -163,10 +163,10 @@ public class ITLongRunningOperation {
           throws Exception {
     RetrySettings initialUnaryRetrySettings =
         RetrySettings.newBuilder()
-            .setInitialRpcTimeout(Duration.ofMillis(2000L))
+            .setInitialRpcTimeout(Duration.ofMillis(3000L))
             .setRpcTimeoutMultiplier(1.0)
-            .setMaxRpcTimeout(Duration.ofMillis(2000L))
-            .setTotalTimeout(Duration.ofMillis(2000L))
+            .setMaxRpcTimeout(Duration.ofMillis(3000L))
+            .setTotalTimeout(Duration.ofMillis(3000L))
             .build();
     RetrySettings pollingRetrySettings =
         RetrySettings.newBuilder()
@@ -181,10 +181,10 @@ public class ITLongRunningOperation {
     try (EchoClient httpjsonClient =
         TestClientInitializer.createHttpJsonEchoClientCustomWaitSettings(
             initialUnaryRetrySettings, pollingRetrySettings)) {
-      long epochSecondsInFuture = Instant.now().plus(6, ChronoUnit.SECONDS).getEpochSecond();
+      long epochSecondsInFuture = Instant.now().plus(8, ChronoUnit.SECONDS).getEpochSecond();
       WaitRequest waitRequest =
           WaitRequest.newBuilder()
-              .setSuccess(WaitResponse.newBuilder().setContent("httpjsonWaitContent_6sDelay"))
+              .setSuccess(WaitResponse.newBuilder().setContent("httpjsonWaitContent_8sDelay"))
               .setEndTime(Timestamp.newBuilder().setSeconds(epochSecondsInFuture).build())
               .build();
       OperationFuture<WaitResponse, WaitMetadata> operationFuture =
