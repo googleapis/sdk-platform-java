@@ -19,9 +19,9 @@ package com.google.showcase.v1beta1.it;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
+import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.CancelledException;
-import com.google.api.gax.rpc.DeadlineExceededException;
 import com.google.api.gax.rpc.ServerStream;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.WatchdogTimeoutException;
@@ -32,14 +32,10 @@ import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.ExpandRequest;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
-import com.google.api.gax.core.NoCredentialsProvider;
 import io.grpc.ManagedChannelBuilder;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.stream.Collectors;
-
-import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -116,29 +112,32 @@ public class ITServerSideStreaming {
 
   @Test
   public void testGrpc_serverWaitTimeout_watchdogCancelsStream() throws Exception {
-    EchoSettings.Builder settings = EchoSettings.newBuilder()
+    EchoSettings.Builder settings =
+        EchoSettings.newBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
             .setTransportChannelProvider(
-                    EchoSettings.defaultGrpcTransportProviderBuilder()
-                            .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
-                            .build());
+                EchoSettings.defaultGrpcTransportProviderBuilder()
+                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .build());
 
-    settings.expandSettings()
-            // set RPC timeout to be longer than waitTimeout
-            .setRetrySettings(RetrySettings.newBuilder()
-                    .setInitialRpcTimeout(Duration.ofSeconds(30))
-                    .setMaxRpcTimeout(Duration.ofSeconds(30))
-                    .setTotalTimeout(Duration.ofSeconds(30))
-                    .build())
-            .setIdleTimeout(Duration.ofSeconds(10))
-            .setWaitTimeout(Duration.ofSeconds(10));
+    settings
+        .expandSettings()
+        // set RPC timeout to be longer than waitTimeout
+        .setRetrySettings(
+            RetrySettings.newBuilder()
+                .setInitialRpcTimeout(Duration.ofSeconds(30))
+                .setMaxRpcTimeout(Duration.ofSeconds(30))
+                .setTotalTimeout(Duration.ofSeconds(30))
+                .build())
+        .setIdleTimeout(Duration.ofSeconds(10))
+        .setWaitTimeout(Duration.ofSeconds(10));
 
     EchoClient echoClient = EchoClient.create(settings.build());
 
     // Configure server interval for returning the next response
     String content = "The rain in Spain stays mainly on the plain!";
     ServerStream<EchoResponse> responseStream =
-            echoClient.expandCallable().call(ExpandRequest.newBuilder().setContent(content).build());
+        echoClient.expandCallable().call(ExpandRequest.newBuilder().setContent(content).build());
     ArrayList<String> responses = new ArrayList<>();
     try {
       for (EchoResponse response : responseStream) {
