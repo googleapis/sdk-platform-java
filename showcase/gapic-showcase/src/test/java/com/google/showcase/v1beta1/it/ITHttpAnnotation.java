@@ -28,6 +28,7 @@ import com.google.showcase.v1beta1.ComplianceSettings;
 import com.google.showcase.v1beta1.ComplianceSuite;
 import com.google.showcase.v1beta1.RepeatRequest;
 import com.google.showcase.v1beta1.RepeatResponse;
+import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
@@ -112,9 +113,9 @@ public class ITHttpAnnotation {
 
   @After
   public void destroyClient() throws InterruptedException {
-    httpjsonClient.shutdown();
-    httpjsonClient.awaitTermination(5, TimeUnit.SECONDS);
     httpjsonClient.close();
+    httpjsonClient.awaitTermination(
+        TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
   // Verify that the input's info is the same as the response's info

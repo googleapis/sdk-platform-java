@@ -24,6 +24,7 @@ import com.google.showcase.v1beta1.ComplianceClient;
 import com.google.showcase.v1beta1.ComplianceSettings;
 import com.google.showcase.v1beta1.EnumRequest;
 import com.google.showcase.v1beta1.EnumResponse;
+import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.concurrent.TimeUnit;
@@ -33,7 +34,7 @@ import org.junit.Test;
 
 public class ITNumericEnums {
 
-  private ComplianceClient client;
+  private ComplianceClient httpjsonClient;
 
   @Before
   public void createClient() throws GeneralSecurityException, IOException {
@@ -47,20 +48,20 @@ public class ITNumericEnums {
                     .setEndpoint("http://localhost:7469")
                     .build())
             .build();
-    client = ComplianceClient.create(complianceSettings);
+    httpjsonClient = ComplianceClient.create(complianceSettings);
   }
 
   @After
   public void destroyClient() throws InterruptedException {
-    client.shutdown();
-    client.awaitTermination(5, TimeUnit.SECONDS);
-    client.close();
+    httpjsonClient.close();
+    httpjsonClient.awaitTermination(
+        TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
   @Test
   public void verifyEnums() {
     EnumRequest request = EnumRequest.newBuilder().setUnknownEnum(true).build();
-    EnumResponse initialResponse = client.getEnum(request);
-    assertEquals(initialResponse, client.verifyEnum(initialResponse));
+    EnumResponse initialResponse = httpjsonClient.getEnum(request);
+    assertEquals(initialResponse, httpjsonClient.verifyEnum(initialResponse));
   }
 }

@@ -46,9 +46,8 @@ public class ITBidiStreaming {
 
   @After
   public void tearDown() throws Exception {
-    grpcClient.shutdown();
-    grpcClient.awaitTermination(5, TimeUnit.SECONDS);
     grpcClient.close();
+    grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
   // The current implementation of BIDI streaming on Echo showcase server is that it would echo the

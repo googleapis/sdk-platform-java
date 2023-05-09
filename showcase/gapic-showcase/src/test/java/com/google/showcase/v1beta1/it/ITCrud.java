@@ -61,13 +61,12 @@ public class ITCrud {
 
   @After
   public void cleanup() throws InterruptedException {
-    grpcClient.shutdown();
-    grpcClient.awaitTermination(5, TimeUnit.SECONDS);
     grpcClient.close();
+    grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
 
-    httpjsonClient.shutdown();
-    httpjsonClient.awaitTermination(5, TimeUnit.SECONDS);
     httpjsonClient.close();
+    httpjsonClient.awaitTermination(
+        TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
   @Test

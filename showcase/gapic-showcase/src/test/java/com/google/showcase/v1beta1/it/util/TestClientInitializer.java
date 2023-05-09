@@ -34,6 +34,8 @@ import java.util.Set;
 
 public class TestClientInitializer {
 
+  public static final int AWAIT_TERMINATION_SECONDS = 10;
+
   public static EchoClient createGrpcEchoClient() throws Exception {
     EchoSettings grpcEchoSettings =
         EchoSettings.newBuilder()

@@ -52,9 +52,10 @@ public class ITUnaryDeadline {
             // Explicitly set retries as disabled (maxAttempts == 1)
             .setMaxAttempts(1)
             .build();
-    try (EchoClient grpcClient =
+    EchoClient grpcClient =
         TestClientInitializer.createGrpcEchoClientCustomBlockSettings(
-            defaultNoRetrySettings, ImmutableSet.of(StatusCode.Code.DEADLINE_EXCEEDED))) {
+            defaultNoRetrySettings, ImmutableSet.of(StatusCode.Code.DEADLINE_EXCEEDED));
+    try {
       BlockRequest blockRequest =
           BlockRequest.newBuilder()
               .setSuccess(BlockResponse.newBuilder().setContent("gRPCBlockContent_3sDelay_noRetry"))
@@ -67,8 +68,10 @@ public class ITUnaryDeadline {
       // Guarantee that this only runs once
       int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
       assertThat(attemptCount).isEqualTo(1);
-      grpcClient.shutdown();
-      grpcClient.awaitTermination(5, TimeUnit.SECONDS);
+    } finally {
+      grpcClient.close();
+      grpcClient.awaitTermination(
+          TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
     }
   }
 
@@ -83,9 +86,10 @@ public class ITUnaryDeadline {
             // Explicitly set retries as disabled (maxAttempts == 1)
             .setMaxAttempts(1)
             .build();
-    try (EchoClient httpjsonClient =
+    EchoClient httpjsonClient =
         TestClientInitializer.createHttpJsonEchoClientCustomBlockSettings(
-            defaultNoRetrySettings, ImmutableSet.of(StatusCode.Code.DEADLINE_EXCEEDED))) {
+            defaultNoRetrySettings, ImmutableSet.of(StatusCode.Code.DEADLINE_EXCEEDED));
+    try {
       BlockRequest blockRequest =
           BlockRequest.newBuilder()
               .setSuccess(
@@ -99,8 +103,10 @@ public class ITUnaryDeadline {
       // Guarantee that this only runs once
       int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
       assertThat(attemptCount).isEqualTo(1);
-      httpjsonClient.shutdown();
-      httpjsonClient.awaitTermination(5, TimeUnit.SECONDS);
+    } finally {
+      httpjsonClient.close();
+      httpjsonClient.awaitTermination(
+          TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
     }
   }
 
@@ -116,9 +122,10 @@ public class ITUnaryDeadline {
             .setMaxRpcTimeout(Duration.ofMillis(3000L))
             .setTotalTimeout(Duration.ofMillis(5000L))
             .build();
-    try (EchoClient grpcClient =
+    EchoClient grpcClient =
         TestClientInitializer.createGrpcEchoClientCustomBlockSettings(
-            defaultRetrySettings, ImmutableSet.of(StatusCode.Code.DEADLINE_EXCEEDED))) {
+            defaultRetrySettings, ImmutableSet.of(StatusCode.Code.DEADLINE_EXCEEDED));
+    try {
       BlockRequest blockRequest =
           BlockRequest.newBuilder()
               .setSuccess(BlockResponse.newBuilder().setContent("gRPCBlockContent_2sDelay_Retry"))
@@ -131,8 +138,10 @@ public class ITUnaryDeadline {
       // Guarantee that this only runs twice
       int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
       assertThat(attemptCount).isEqualTo(2);
-      grpcClient.shutdown();
-      grpcClient.awaitTermination(5, TimeUnit.SECONDS);
+    } finally {
+      grpcClient.close();
+      grpcClient.awaitTermination(
+          TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
     }
   }
 
@@ -148,9 +157,10 @@ public class ITUnaryDeadline {
             .setMaxRpcTimeout(Duration.ofMillis(3000L))
             .setTotalTimeout(Duration.ofMillis(5000L))
             .build();
-    try (EchoClient httpjsonClient =
+    EchoClient httpjsonClient =
         TestClientInitializer.createHttpJsonEchoClientCustomBlockSettings(
-            defaultRetrySettings, ImmutableSet.of(StatusCode.Code.DEADLINE_EXCEEDED))) {
+            defaultRetrySettings, ImmutableSet.of(StatusCode.Code.DEADLINE_EXCEEDED));
+    try {
       BlockRequest blockRequest =
           BlockRequest.newBuilder()
               .setSuccess(
@@ -164,8 +174,10 @@ public class ITUnaryDeadline {
       // Guarantee that this only runs twice
       int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
       assertThat(attemptCount).isEqualTo(2);
-      httpjsonClient.shutdown();
-      httpjsonClient.awaitTermination(5, TimeUnit.SECONDS);
+    } finally {
+      httpjsonClient.close();
+      httpjsonClient.awaitTermination(
+          TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
     }
   }
 
@@ -184,9 +196,10 @@ public class ITUnaryDeadline {
             // Explicitly set retries as disabled (maxAttempts == 1)
             .setMaxAttempts(1)
             .build();
-    try (EchoClient grpcClient =
+    EchoClient grpcClient =
         TestClientInitializer.createGrpcEchoClientCustomBlockSettings(
-            defaultNoRetrySettings, ImmutableSet.of(StatusCode.Code.DEADLINE_EXCEEDED))) {
+            defaultNoRetrySettings, ImmutableSet.of(StatusCode.Code.DEADLINE_EXCEEDED));
+    try {
       BlockRequest blockRequest =
           BlockRequest.newBuilder()
               .setSuccess(BlockResponse.newBuilder().setContent("gRPCBlockContent_6sDelay_noRetry"))
@@ -204,8 +217,10 @@ public class ITUnaryDeadline {
       // We can guarantee that this only runs once
       int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
       assertThat(attemptCount).isEqualTo(1);
-      grpcClient.shutdown();
-      grpcClient.awaitTermination(5, TimeUnit.SECONDS);
+    } finally {
+      grpcClient.close();
+      grpcClient.awaitTermination(
+          TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
     }
   }
 
@@ -224,9 +239,10 @@ public class ITUnaryDeadline {
             // Explicitly set retries as disabled (maxAttempts == 1)
             .setMaxAttempts(1)
             .build();
-    try (EchoClient httpjsonClient =
+    EchoClient httpjsonClient =
         TestClientInitializer.createHttpJsonEchoClientCustomBlockSettings(
-            defaultNoRetrySettings, ImmutableSet.of(StatusCode.Code.DEADLINE_EXCEEDED))) {
+            defaultNoRetrySettings, ImmutableSet.of(StatusCode.Code.DEADLINE_EXCEEDED));
+    try {
       BlockRequest blockRequest =
           BlockRequest.newBuilder()
               .setSuccess(
@@ -245,8 +261,10 @@ public class ITUnaryDeadline {
       // We can guarantee that this only runs once
       int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
       assertThat(attemptCount).isEqualTo(1);
-      httpjsonClient.shutdown();
-      httpjsonClient.awaitTermination(5, TimeUnit.SECONDS);
+    } finally {
+      httpjsonClient.close();
+      httpjsonClient.awaitTermination(
+          TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
     }
   }
 
@@ -266,9 +284,10 @@ public class ITUnaryDeadline {
             .setMaxRpcTimeout(Duration.ofMillis(100L))
             .setTotalTimeout(Duration.ofMillis(1000L))
             .build();
-    try (EchoClient grpcClient =
+    EchoClient grpcClient =
         TestClientInitializer.createGrpcEchoClientCustomBlockSettings(
-            defaultRetrySettings, ImmutableSet.of(StatusCode.Code.DEADLINE_EXCEEDED))) {
+            defaultRetrySettings, ImmutableSet.of(StatusCode.Code.DEADLINE_EXCEEDED));
+    try {
       BlockRequest blockRequest =
           BlockRequest.newBuilder()
               .setSuccess(
@@ -292,8 +311,10 @@ public class ITUnaryDeadline {
       int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
       assertThat(attemptCount).isGreaterThan(5);
       assertThat(attemptCount).isAtMost(10);
-      grpcClient.shutdown();
-      grpcClient.awaitTermination(5, TimeUnit.SECONDS);
+    } finally {
+      grpcClient.close();
+      grpcClient.awaitTermination(
+          TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
     }
   }
 
@@ -313,9 +334,10 @@ public class ITUnaryDeadline {
             .setMaxRpcTimeout(Duration.ofMillis(100L))
             .setTotalTimeout(Duration.ofMillis(10000L))
             .build();
-    try (EchoClient httpjsonClient =
+    EchoClient httpjsonClient =
         TestClientInitializer.createHttpJsonEchoClientCustomBlockSettings(
-            defaultRetrySettings, ImmutableSet.of(StatusCode.Code.DEADLINE_EXCEEDED))) {
+            defaultRetrySettings, ImmutableSet.of(StatusCode.Code.DEADLINE_EXCEEDED));
+    try {
       BlockRequest blockRequest =
           BlockRequest.newBuilder()
               .setSuccess(
@@ -339,8 +361,10 @@ public class ITUnaryDeadline {
       int attemptCount = retryingFuture.getAttemptSettings().getAttemptCount() + 1;
       assertThat(attemptCount).isGreaterThan(80);
       assertThat(attemptCount).isAtMost(100);
-      httpjsonClient.shutdown();
-      httpjsonClient.awaitTermination(5, TimeUnit.SECONDS);
+    } finally {
+      httpjsonClient.close();
+      httpjsonClient.awaitTermination(
+          TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
     }
   }
 }

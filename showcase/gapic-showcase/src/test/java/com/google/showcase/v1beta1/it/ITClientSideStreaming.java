@@ -48,9 +48,8 @@ public class ITClientSideStreaming {
 
   @After
   public void destroyClient() throws InterruptedException {
-    grpcClient.shutdown();
-    grpcClient.awaitTermination(5, TimeUnit.SECONDS);
     grpcClient.close();
+    grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
   @Test
