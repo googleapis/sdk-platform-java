@@ -54,7 +54,6 @@ public class ProtoMessageRequestFormatterTest {
         Field.newBuilder()
             .setNumber(2)
             .setName("field_name1")
-            .setJsonName("json_name/this")
             .addOptions(Option.newBuilder().setName("opt_name1").build())
             .addOptions(Option.newBuilder().setName("opt_name2").build())
             .setCardinality(Cardinality.CARDINALITY_OPTIONAL)
@@ -210,7 +209,7 @@ public class ProtoMessageRequestFormatterTest {
   public void getAdditionalPathTemplates() {
     List<PathTemplate> additionalPathTemplates = formatter.getAdditionalPathTemplates();
 
-    Truth.assertThat(additionalPathTemplates.size()).isEqualTo(2);
+    Truth.assertThat(additionalPathTemplates.size()).isEqualTo(3);
 
     String path1 =
         additionalPathTemplates.get(0).instantiate(Collections.singletonMap("name", "field_name1"));
