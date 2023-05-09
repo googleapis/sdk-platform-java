@@ -154,7 +154,8 @@ public class ITLongRunningOperation {
       assertThat(attemptCount).isGreaterThan(1);
     } finally {
       grpcClient.close();
-      grpcClient.awaitTermination(10, TimeUnit.SECONDS);
+      grpcClient.awaitTermination(
+          TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
     }
   }
 
@@ -194,7 +195,8 @@ public class ITLongRunningOperation {
       httpjsonClient.shutdown();
     } finally {
       httpjsonClient.close();
-      httpjsonClient.awaitTermination(10, TimeUnit.SECONDS);
+      httpjsonClient.awaitTermination(
+          TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
     }
   }
 }
