@@ -307,7 +307,8 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Specifies the identities that do not cause logging for this type of
    * permission.
-   * Follows the same format of [Binding.members][google.iam.v1.Binding.members].
+   * Follows the same format of
+   * [Binding.members][google.iam.v1.Binding.members].
    * </pre>
    *
    * <code>repeated string exempted_members = 2;</code>
@@ -323,7 +324,8 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Specifies the identities that do not cause logging for this type of
    * permission.
-   * Follows the same format of [Binding.members][google.iam.v1.Binding.members].
+   * Follows the same format of
+   * [Binding.members][google.iam.v1.Binding.members].
    * </pre>
    *
    * <code>repeated string exempted_members = 2;</code>
@@ -339,7 +341,8 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Specifies the identities that do not cause logging for this type of
    * permission.
-   * Follows the same format of [Binding.members][google.iam.v1.Binding.members].
+   * Follows the same format of
+   * [Binding.members][google.iam.v1.Binding.members].
    * </pre>
    *
    * <code>repeated string exempted_members = 2;</code>
@@ -356,7 +359,8 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Specifies the identities that do not cause logging for this type of
    * permission.
-   * Follows the same format of [Binding.members][google.iam.v1.Binding.members].
+   * Follows the same format of
+   * [Binding.members][google.iam.v1.Binding.members].
    * </pre>
    *
    * <code>repeated string exempted_members = 2;</code>
@@ -867,7 +871,8 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Specifies the identities that do not cause logging for this type of
      * permission.
-     * Follows the same format of [Binding.members][google.iam.v1.Binding.members].
+     * Follows the same format of
+     * [Binding.members][google.iam.v1.Binding.members].
      * </pre>
      *
      * <code>repeated string exempted_members = 2;</code>
@@ -883,7 +888,8 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Specifies the identities that do not cause logging for this type of
      * permission.
-     * Follows the same format of [Binding.members][google.iam.v1.Binding.members].
+     * Follows the same format of
+     * [Binding.members][google.iam.v1.Binding.members].
      * </pre>
      *
      * <code>repeated string exempted_members = 2;</code>
@@ -899,7 +905,8 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Specifies the identities that do not cause logging for this type of
      * permission.
-     * Follows the same format of [Binding.members][google.iam.v1.Binding.members].
+     * Follows the same format of
+     * [Binding.members][google.iam.v1.Binding.members].
      * </pre>
      *
      * <code>repeated string exempted_members = 2;</code>
@@ -916,7 +923,8 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Specifies the identities that do not cause logging for this type of
      * permission.
-     * Follows the same format of [Binding.members][google.iam.v1.Binding.members].
+     * Follows the same format of
+     * [Binding.members][google.iam.v1.Binding.members].
      * </pre>
      *
      * <code>repeated string exempted_members = 2;</code>
@@ -933,7 +941,8 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Specifies the identities that do not cause logging for this type of
      * permission.
-     * Follows the same format of [Binding.members][google.iam.v1.Binding.members].
+     * Follows the same format of
+     * [Binding.members][google.iam.v1.Binding.members].
      * </pre>
      *
      * <code>repeated string exempted_members = 2;</code>
@@ -957,7 +966,8 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Specifies the identities that do not cause logging for this type of
      * permission.
-     * Follows the same format of [Binding.members][google.iam.v1.Binding.members].
+     * Follows the same format of
+     * [Binding.members][google.iam.v1.Binding.members].
      * </pre>
      *
      * <code>repeated string exempted_members = 2;</code>
@@ -980,7 +990,8 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Specifies the identities that do not cause logging for this type of
      * permission.
-     * Follows the same format of [Binding.members][google.iam.v1.Binding.members].
+     * Follows the same format of
+     * [Binding.members][google.iam.v1.Binding.members].
      * </pre>
      *
      * <code>repeated string exempted_members = 2;</code>
@@ -1000,7 +1011,8 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Specifies the identities that do not cause logging for this type of
      * permission.
-     * Follows the same format of [Binding.members][google.iam.v1.Binding.members].
+     * Follows the same format of
+     * [Binding.members][google.iam.v1.Binding.members].
      * </pre>
      *
      * <code>repeated string exempted_members = 2;</code>
@@ -1019,7 +1031,8 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Specifies the identities that do not cause logging for this type of
      * permission.
-     * Follows the same format of [Binding.members][google.iam.v1.Binding.members].
+     * Follows the same format of
+     * [Binding.members][google.iam.v1.Binding.members].
      * </pre>
      *
      * <code>repeated string exempted_members = 2;</code>
