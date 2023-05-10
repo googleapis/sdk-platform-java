@@ -107,7 +107,7 @@ http_archive(
 )
 
 # Showcase
-_showcase_version = "0.28.0"
+_showcase_version = "0.28.1"
 
 http_archive(
     name = "com_google_gapic_showcase",

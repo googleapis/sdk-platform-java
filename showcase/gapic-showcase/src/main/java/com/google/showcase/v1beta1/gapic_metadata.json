@@ -187,14 +187,23 @@
             "AttemptSequence": {
               "methods": ["attemptSequence", "attemptSequence", "attemptSequence", "attemptSequenceCallable"]
             },
+            "AttemptStreamingSequence": {
+              "methods": ["attemptStreamingSequenceCallable"]
+            },
             "CreateSequence": {
               "methods": ["createSequence", "createSequence", "createSequenceCallable"]
+            },
+            "CreateStreamingSequence": {
+              "methods": ["createStreamingSequence", "createStreamingSequence", "createStreamingSequenceCallable"]
             },
             "GetLocation": {
               "methods": ["getLocation", "getLocationCallable"]
             },
             "GetSequenceReport": {
               "methods": ["getSequenceReport", "getSequenceReport", "getSequenceReport", "getSequenceReportCallable"]
+            },
+            "GetStreamingSequenceReport": {
+              "methods": ["getStreamingSequenceReport", "getStreamingSequenceReport", "getStreamingSequenceReport", "getStreamingSequenceReportCallable"]
             },
             "ListLocations": {
               "methods": ["listLocations", "listLocationsPagedCallable", "listLocationsCallable"]
