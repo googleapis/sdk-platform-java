@@ -304,7 +304,7 @@ public final class OperationsGrpc {
    * so developers can have a consistent client experience.
    * </pre>
    */
-  public abstract static class OperationsImplBase implements io.grpc.BindableService {
+  public interface AsyncService {
 
     /**
      *
@@ -321,7 +321,7 @@ public final class OperationsGrpc {
      * is the parent resource, without the operations collection id.
      * </pre>
      */
-    public void listOperations(
+    default void listOperations(
         com.google.longrunning.ListOperationsRequest request,
         io.grpc.stub.StreamObserver<com.google.longrunning.ListOperationsResponse>
             responseObserver) {
@@ -338,7 +338,7 @@ public final class OperationsGrpc {
      * service.
      * </pre>
      */
-    public void getOperation(
+    default void getOperation(
         com.google.longrunning.GetOperationRequest request,
         io.grpc.stub.StreamObserver<com.google.longrunning.Operation> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(
@@ -355,7 +355,7 @@ public final class OperationsGrpc {
      * `google.rpc.Code.UNIMPLEMENTED`.
      * </pre>
      */
-    public void deleteOperation(
+    default void deleteOperation(
         com.google.longrunning.DeleteOperationRequest request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(
@@ -378,7 +378,7 @@ public final class OperationsGrpc {
      * corresponding to `Code.CANCELLED`.
      * </pre>
      */
-    public void cancelOperation(
+    default void cancelOperation(
         com.google.longrunning.CancelOperationRequest request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(
@@ -400,53 +400,38 @@ public final class OperationsGrpc {
      * immediate response is no guarantee that the operation is done.
      * </pre>
      */
-    public void waitOperation(
+    default void waitOperation(
         com.google.longrunning.WaitOperationRequest request,
         io.grpc.stub.StreamObserver<com.google.longrunning.Operation> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(
           getWaitOperationMethod(), responseObserver);
     }
+  }
+
+  /**
+   * Base class for the server implementation of the service Operations.
+   *
+   * <pre>
+   * Manages long-running operations with an API service.
+   * When an API method normally takes long time to complete, it can be designed
+   * to return [Operation][google.longrunning.Operation] to the client, and the client can use this
+   * interface to receive the real response asynchronously by polling the
+   * operation resource, or pass the operation resource to another API (such as
+   * Google Cloud Pub/Sub API) to receive the response.  Any API service that
+   * returns long-running operations should implement the `Operations` interface
+   * so developers can have a consistent client experience.
+   * </pre>
+   */
+  public abstract static class OperationsImplBase implements io.grpc.BindableService, AsyncService {
 
     @java.lang.Override
     public final io.grpc.ServerServiceDefinition bindService() {
-      return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
-          .addMethod(
-              getListOperationsMethod(),
-              io.grpc.stub.ServerCalls.asyncUnaryCall(
-                  new MethodHandlers<
-                      com.google.longrunning.ListOperationsRequest,
-                      com.google.longrunning.ListOperationsResponse>(
-                      this, METHODID_LIST_OPERATIONS)))
-          .addMethod(
-              getGetOperationMethod(),
-              io.grpc.stub.ServerCalls.asyncUnaryCall(
-                  new MethodHandlers<
-                      com.google.longrunning.GetOperationRequest, com.google.longrunning.Operation>(
-                      this, METHODID_GET_OPERATION)))
-          .addMethod(
-              getDeleteOperationMethod(),
-              io.grpc.stub.ServerCalls.asyncUnaryCall(
-                  new MethodHandlers<
-                      com.google.longrunning.DeleteOperationRequest, com.google.protobuf.Empty>(
-                      this, METHODID_DELETE_OPERATION)))
-          .addMethod(
-              getCancelOperationMethod(),
-              io.grpc.stub.ServerCalls.asyncUnaryCall(
-                  new MethodHandlers<
-                      com.google.longrunning.CancelOperationRequest, com.google.protobuf.Empty>(
-                      this, METHODID_CANCEL_OPERATION)))
-          .addMethod(
-              getWaitOperationMethod(),
-              io.grpc.stub.ServerCalls.asyncUnaryCall(
-                  new MethodHandlers<
-                      com.google.longrunning.WaitOperationRequest,
-                      com.google.longrunning.Operation>(this, METHODID_WAIT_OPERATION)))
-          .build();
+      return OperationsGrpc.bindService(this);
     }
   }
 
   /**
-   *
+   * A stub to allow clients to do asynchronous rpc calls to service Operations.
    *
    * <pre>
    * Manages long-running operations with an API service.
@@ -582,7 +567,7 @@ public final class OperationsGrpc {
   }
 
   /**
-   *
+   * A stub to allow clients to do synchronous rpc calls to service Operations.
    *
    * <pre>
    * Manages long-running operations with an API service.
@@ -704,7 +689,7 @@ public final class OperationsGrpc {
   }
 
   /**
-   *
+   * A stub to allow clients to do ListenableFuture-style rpc calls to service Operations.
    *
    * <pre>
    * Manages long-running operations with an API service.
@@ -836,10 +821,10 @@ public final class OperationsGrpc {
           io.grpc.stub.ServerCalls.ServerStreamingMethod<Req, Resp>,
           io.grpc.stub.ServerCalls.ClientStreamingMethod<Req, Resp>,
           io.grpc.stub.ServerCalls.BidiStreamingMethod<Req, Resp> {
-    private final OperationsImplBase serviceImpl;
+    private final AsyncService serviceImpl;
     private final int methodId;
 
-    MethodHandlers(OperationsImplBase serviceImpl, int methodId) {
+    MethodHandlers(AsyncService serviceImpl, int methodId) {
       this.serviceImpl = serviceImpl;
       this.methodId = methodId;
     }
@@ -888,6 +873,42 @@ public final class OperationsGrpc {
           throw new AssertionError();
       }
     }
+  }
+
+  public static final io.grpc.ServerServiceDefinition bindService(AsyncService service) {
+    return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
+        .addMethod(
+            getListOperationsMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+                new MethodHandlers<
+                    com.google.longrunning.ListOperationsRequest,
+                    com.google.longrunning.ListOperationsResponse>(
+                    service, METHODID_LIST_OPERATIONS)))
+        .addMethod(
+            getGetOperationMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+                new MethodHandlers<
+                    com.google.longrunning.GetOperationRequest, com.google.longrunning.Operation>(
+                    service, METHODID_GET_OPERATION)))
+        .addMethod(
+            getDeleteOperationMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+                new MethodHandlers<
+                    com.google.longrunning.DeleteOperationRequest, com.google.protobuf.Empty>(
+                    service, METHODID_DELETE_OPERATION)))
+        .addMethod(
+            getCancelOperationMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+                new MethodHandlers<
+                    com.google.longrunning.CancelOperationRequest, com.google.protobuf.Empty>(
+                    service, METHODID_CANCEL_OPERATION)))
+        .addMethod(
+            getWaitOperationMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+                new MethodHandlers<
+                    com.google.longrunning.WaitOperationRequest, com.google.longrunning.Operation>(
+                    service, METHODID_WAIT_OPERATION)))
+        .build();
   }
 
   private abstract static class OperationsBaseDescriptorSupplier
