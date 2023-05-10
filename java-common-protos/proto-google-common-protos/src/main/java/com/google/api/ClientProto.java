@@ -166,6 +166,14 @@ public final class ClientProto {
   static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_google_api_DotnetSettings_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
+      internal_static_google_api_DotnetSettings_RenamedServicesEntry_descriptor;
+  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_api_DotnetSettings_RenamedServicesEntry_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+      internal_static_google_api_DotnetSettings_RenamedResourcesEntry_descriptor;
+  static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_api_DotnetSettings_RenamedResourcesEntry_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
       internal_static_google_api_RubySettings_descriptor;
   static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_google_api_RubySettings_fieldAccessorTable;
@@ -231,32 +239,42 @@ public final class ClientProto {
           + "nSettings\0222\n\006common\030\001 \001(\0132\".google.api.C"
           + "ommonLanguageSettings\"B\n\014NodeSettings\0222\n"
           + "\006common\030\001 \001(\0132\".google.api.CommonLanguag"
-          + "eSettings\"D\n\016DotnetSettings\0222\n\006common\030\001 "
-          + "\001(\0132\".google.api.CommonLanguageSettings\""
-          + "B\n\014RubySettings\0222\n\006common\030\001 \001(\0132\".google"
-          + ".api.CommonLanguageSettings\"@\n\nGoSetting"
-          + "s\0222\n\006common\030\001 \001(\0132\".google.api.CommonLan"
-          + "guageSettings\"\260\002\n\016MethodSettings\022\020\n\010sele"
-          + "ctor\030\001 \001(\t\022<\n\014long_running\030\002 \001(\0132&.googl"
-          + "e.api.MethodSettings.LongRunning\032\315\001\n\013Lon"
-          + "gRunning\0225\n\022initial_poll_delay\030\001 \001(\0132\031.g"
-          + "oogle.protobuf.Duration\022\035\n\025poll_delay_mu"
-          + "ltiplier\030\002 \001(\002\0221\n\016max_poll_delay\030\003 \001(\0132\031"
-          + ".google.protobuf.Duration\0225\n\022total_poll_"
-          + "timeout\030\004 \001(\0132\031.google.protobuf.Duration"
-          + "*y\n\031ClientLibraryOrganization\022+\n\'CLIENT_"
+          + "eSettings\"\252\003\n\016DotnetSettings\0222\n\006common\030\001"
+          + " \001(\0132\".google.api.CommonLanguageSettings"
+          + "\022I\n\020renamed_services\030\002 \003(\0132/.google.api."
+          + "DotnetSettings.RenamedServicesEntry\022K\n\021r"
+          + "enamed_resources\030\003 \003(\01320.google.api.Dotn"
+          + "etSettings.RenamedResourcesEntry\022\031\n\021igno"
+          + "red_resources\030\004 \003(\t\022 \n\030forced_namespace_"
+          + "aliases\030\005 \003(\t\022\036\n\026handwritten_signatures\030"
+          + "\006 \003(\t\0326\n\024RenamedServicesEntry\022\013\n\003key\030\001 \001"
+          + "(\t\022\r\n\005value\030\002 \001(\t:\0028\001\0327\n\025RenamedResource"
+          + "sEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\"B"
+          + "\n\014RubySettings\0222\n\006common\030\001 \001(\0132\".google."
+          + "api.CommonLanguageSettings\"@\n\nGoSettings"
+          + "\0222\n\006common\030\001 \001(\0132\".google.api.CommonLang"
+          + "uageSettings\"\260\002\n\016MethodSettings\022\020\n\010selec"
+          + "tor\030\001 \001(\t\022<\n\014long_running\030\002 \001(\0132&.google"
+          + ".api.MethodSettings.LongRunning\032\315\001\n\013Long"
+          + "Running\0225\n\022initial_poll_delay\030\001 \001(\0132\031.go"
+          + "ogle.protobuf.Duration\022\035\n\025poll_delay_mul"
+          + "tiplier\030\002 \001(\002\0221\n\016max_poll_delay\030\003 \001(\0132\031."
+          + "google.protobuf.Duration\0225\n\022total_poll_t"
+          + "imeout\030\004 \001(\0132\031.google.protobuf.Duration*"
+          + "\243\001\n\031ClientLibraryOrganization\022+\n\'CLIENT_"
           + "LIBRARY_ORGANIZATION_UNSPECIFIED\020\000\022\t\n\005CL"
           + "OUD\020\001\022\007\n\003ADS\020\002\022\n\n\006PHOTOS\020\003\022\017\n\013STREET_VIE"
-          + "W\020\004*g\n\030ClientLibraryDestination\022*\n&CLIEN"
-          + "T_LIBRARY_DESTINATION_UNSPECIFIED\020\000\022\n\n\006G"
-          + "ITHUB\020\n\022\023\n\017PACKAGE_MANAGER\020\024:9\n\020method_s"
-          + "ignature\022\036.google.protobuf.MethodOptions"
-          + "\030\233\010 \003(\t:6\n\014default_host\022\037.google.protobu"
-          + "f.ServiceOptions\030\231\010 \001(\t:6\n\014oauth_scopes\022"
-          + "\037.google.protobuf.ServiceOptions\030\232\010 \001(\tB"
-          + "i\n\016com.google.apiB\013ClientProtoP\001ZAgoogle"
-          + ".golang.org/genproto/googleapis/api/anno"
-          + "tations;annotations\242\002\004GAPIb\006proto3"
+          + "W\020\004\022\014\n\010SHOPPING\020\005\022\007\n\003GEO\020\006\022\021\n\rGENERATIVE"
+          + "_AI\020\007*g\n\030ClientLibraryDestination\022*\n&CLI"
+          + "ENT_LIBRARY_DESTINATION_UNSPECIFIED\020\000\022\n\n"
+          + "\006GITHUB\020\n\022\023\n\017PACKAGE_MANAGER\020\024:9\n\020method"
+          + "_signature\022\036.google.protobuf.MethodOptio"
+          + "ns\030\233\010 \003(\t:6\n\014default_host\022\037.google.proto"
+          + "buf.ServiceOptions\030\231\010 \001(\t:6\n\014oauth_scope"
+          + "s\022\037.google.protobuf.ServiceOptions\030\232\010 \001("
+          + "\tBi\n\016com.google.apiB\013ClientProtoP\001ZAgoog"
+          + "le.golang.org/genproto/googleapis/api/an"
+          + "notations;annotations\242\002\004GAPIb\006proto3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(
@@ -357,6 +375,27 @@ public final class ClientProto {
             internal_static_google_api_DotnetSettings_descriptor,
             new java.lang.String[] {
               "Common",
+              "RenamedServices",
+              "RenamedResources",
+              "IgnoredResources",
+              "ForcedNamespaceAliases",
+              "HandwrittenSignatures",
+            });
+    internal_static_google_api_DotnetSettings_RenamedServicesEntry_descriptor =
+        internal_static_google_api_DotnetSettings_descriptor.getNestedTypes().get(0);
+    internal_static_google_api_DotnetSettings_RenamedServicesEntry_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_google_api_DotnetSettings_RenamedServicesEntry_descriptor,
+            new java.lang.String[] {
+              "Key", "Value",
+            });
+    internal_static_google_api_DotnetSettings_RenamedResourcesEntry_descriptor =
+        internal_static_google_api_DotnetSettings_descriptor.getNestedTypes().get(1);
+    internal_static_google_api_DotnetSettings_RenamedResourcesEntry_fieldAccessorTable =
+        new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+            internal_static_google_api_DotnetSettings_RenamedResourcesEntry_descriptor,
+            new java.lang.String[] {
+              "Key", "Value",
             });
     internal_static_google_api_RubySettings_descriptor = getDescriptor().getMessageTypes().get(9);
     internal_static_google_api_RubySettings_fieldAccessorTable =

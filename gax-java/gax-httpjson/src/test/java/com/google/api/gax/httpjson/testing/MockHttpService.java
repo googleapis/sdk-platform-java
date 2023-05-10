@@ -43,6 +43,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
+import java.time.Duration;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -85,6 +86,11 @@ public final class MockHttpService extends MockHttpTransport {
   /** Add an ApiMessage to the response queue. */
   public synchronized void addResponse(Object response) {
     responseHandlers.add(new MessageResponseFactory(endpoint, serviceMethodDescriptors, response));
+  }
+
+  public synchronized void addResponse(Object response, Duration delay) {
+    responseHandlers.add(
+        new MessageResponseFactory(endpoint, serviceMethodDescriptors, response, delay));
   }
 
   /** Add an expected null response (empty HTTP response body) with a custom status code. */
@@ -182,16 +188,36 @@ public final class MockHttpService extends MockHttpTransport {
     private final List<ApiMethodDescriptor> serviceMethodDescriptors;
     private final Object response;
     private final String endpoint;
+    private final Duration delay;
 
     public MessageResponseFactory(
         String endpoint, List<ApiMethodDescriptor> serviceMethodDescriptors, Object response) {
+      this(endpoint, serviceMethodDescriptors, response, Duration.ofNanos(0));
+    }
+
+    public MessageResponseFactory(
+        String endpoint,
+        List<ApiMethodDescriptor> serviceMethodDescriptors,
+        Object response,
+        Duration delay) {
       this.endpoint = endpoint;
       this.serviceMethodDescriptors = ImmutableList.copyOf(serviceMethodDescriptors);
       this.response = response;
+      this.delay = delay;
     }
 
     @Override
     public MockLowLevelHttpResponse getHttpResponse(String httpMethod, String fullTargetUrl) {
+      // We use Thread.sleep to mimic a long server response. Most tests should not
+      // require a sleep and can return a response immediately.
+      try {
+        long delayMs = delay.toMillis();
+        if (delayMs > 0) {
+          Thread.sleep(delayMs);
+        }
+      } catch (InterruptedException e) {
+        throw new RuntimeException(e);
+      }
       MockLowLevelHttpResponse httpResponse = new MockLowLevelHttpResponse();
 
       String relativePath = getRelativePath(fullTargetUrl);

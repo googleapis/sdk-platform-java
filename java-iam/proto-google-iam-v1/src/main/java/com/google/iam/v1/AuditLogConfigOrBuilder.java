@@ -54,7 +54,8 @@ public interface AuditLogConfigOrBuilder
    * <pre>
    * Specifies the identities that do not cause logging for this type of
    * permission.
-   * Follows the same format of [Binding.members][google.iam.v1.Binding.members].
+   * Follows the same format of
+   * [Binding.members][google.iam.v1.Binding.members].
    * </pre>
    *
    * <code>repeated string exempted_members = 2;</code>
@@ -68,7 +69,8 @@ public interface AuditLogConfigOrBuilder
    * <pre>
    * Specifies the identities that do not cause logging for this type of
    * permission.
-   * Follows the same format of [Binding.members][google.iam.v1.Binding.members].
+   * Follows the same format of
+   * [Binding.members][google.iam.v1.Binding.members].
    * </pre>
    *
    * <code>repeated string exempted_members = 2;</code>
@@ -82,7 +84,8 @@ public interface AuditLogConfigOrBuilder
    * <pre>
    * Specifies the identities that do not cause logging for this type of
    * permission.
-   * Follows the same format of [Binding.members][google.iam.v1.Binding.members].
+   * Follows the same format of
+   * [Binding.members][google.iam.v1.Binding.members].
    * </pre>
    *
    * <code>repeated string exempted_members = 2;</code>
@@ -97,7 +100,8 @@ public interface AuditLogConfigOrBuilder
    * <pre>
    * Specifies the identities that do not cause logging for this type of
    * permission.
-   * Follows the same format of [Binding.members][google.iam.v1.Binding.members].
+   * Follows the same format of
+   * [Binding.members][google.iam.v1.Binding.members].
    * </pre>
    *
    * <code>repeated string exempted_members = 2;</code>
