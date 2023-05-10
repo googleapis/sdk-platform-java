@@ -1,6 +1,6 @@
 name: SonarCloud Build
 env:
-  SHOWCASE_VERSION: 0.27.0
+  SHOWCASE_VERSION: 0.28.0
 on:
   push:
     branches:
