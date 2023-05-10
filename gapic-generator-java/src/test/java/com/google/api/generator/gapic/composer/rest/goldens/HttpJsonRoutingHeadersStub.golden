@@ -201,7 +201,7 @@ public class HttpJsonExplicitDynamicRoutingHeaderTestingStub
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
                   builder.add(
-                      String.valueOf(request.getTableName()),
+                      request.getTableName(),
                       "routing_id",
                       BACKWARDS_COMPATIBLE1_TEST_0_PATH_TEMPLATE);
                   return builder.build();
