@@ -1308,12 +1308,6 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
       RoutingHeaderRule.RoutingHeaderParam routingHeaderParam = routingHeaderParams.get(i);
       MethodInvocationExpr requestFieldGetterExpr =
           createRequestFieldGetterExpr(requestVarExpr, routingHeaderParam.fieldName());
-      Expr valueOfExpr =
-          MethodInvocationExpr.builder()
-              .setStaticReferenceType(TypeNode.STRING)
-              .setMethodName("valueOf")
-              .setArguments(requestFieldGetterExpr)
-              .build();
       Expr routingHeaderKeyExpr =
           ValueExpr.withValue(StringObjectValue.withValue(routingHeaderParam.key()));
       String pathTemplateName =
@@ -1330,7 +1324,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(routingHeadersBuilderVarNonDeclExpr)
               .setMethodName("add")
-              .setArguments(valueOfExpr, routingHeaderKeyExpr, routingHeaderPatternExpr)
+              .setArguments(requestFieldGetterExpr, routingHeaderKeyExpr, routingHeaderPatternExpr)
               .build();
 
       ExprStatement addParamStatement = ExprStatement.withExpr(addParamMethodExpr);

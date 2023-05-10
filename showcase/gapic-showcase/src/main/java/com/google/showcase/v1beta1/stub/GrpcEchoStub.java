@@ -244,21 +244,14 @@ public class GrpcEchoStub extends EchoStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add(String.valueOf(request.getHeader()), "header", ECHO_0_PATH_TEMPLATE);
-                  builder.add(
-                      String.valueOf(request.getHeader()), "routing_id", ECHO_1_PATH_TEMPLATE);
-                  builder.add(
-                      String.valueOf(request.getHeader()), "table_name", ECHO_2_PATH_TEMPLATE);
-                  builder.add(
-                      String.valueOf(request.getHeader()), "super_id", ECHO_3_PATH_TEMPLATE);
-                  builder.add(
-                      String.valueOf(request.getHeader()), "table_name", ECHO_4_PATH_TEMPLATE);
-                  builder.add(
-                      String.valueOf(request.getHeader()), "instance_id", ECHO_5_PATH_TEMPLATE);
-                  builder.add(
-                      String.valueOf(request.getOtherHeader()), "baz", ECHO_6_PATH_TEMPLATE);
-                  builder.add(
-                      String.valueOf(request.getOtherHeader()), "qux", ECHO_7_PATH_TEMPLATE);
+                  builder.add(request.getHeader(), "header", ECHO_0_PATH_TEMPLATE);
+                  builder.add(request.getHeader(), "routing_id", ECHO_1_PATH_TEMPLATE);
+                  builder.add(request.getHeader(), "table_name", ECHO_2_PATH_TEMPLATE);
+                  builder.add(request.getHeader(), "super_id", ECHO_3_PATH_TEMPLATE);
+                  builder.add(request.getHeader(), "table_name", ECHO_4_PATH_TEMPLATE);
+                  builder.add(request.getHeader(), "instance_id", ECHO_5_PATH_TEMPLATE);
+                  builder.add(request.getOtherHeader(), "baz", ECHO_6_PATH_TEMPLATE);
+                  builder.add(request.getOtherHeader(), "qux", ECHO_7_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();

@@ -210,14 +210,9 @@ public class GrpcBigtableStub extends BigtableStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add(request.getTableName(), "table_name", READ_ROWS_0_PATH_TEMPLATE);
                   builder.add(
-                      String.valueOf(request.getTableName()),
-                      "table_name",
-                      READ_ROWS_0_PATH_TEMPLATE);
-                  builder.add(
-                      String.valueOf(request.getAppProfileId()),
-                      "app_profile_id",
-                      READ_ROWS_1_PATH_TEMPLATE);
+                      request.getAppProfileId(), "app_profile_id", READ_ROWS_1_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -228,13 +223,9 @@ public class GrpcBigtableStub extends BigtableStub {
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
                   builder.add(
-                      String.valueOf(request.getTableName()),
-                      "table_name",
-                      SAMPLE_ROW_KEYS_0_PATH_TEMPLATE);
+                      request.getTableName(), "table_name", SAMPLE_ROW_KEYS_0_PATH_TEMPLATE);
                   builder.add(
-                      String.valueOf(request.getAppProfileId()),
-                      "app_profile_id",
-                      SAMPLE_ROW_KEYS_1_PATH_TEMPLATE);
+                      request.getAppProfileId(), "app_profile_id", SAMPLE_ROW_KEYS_1_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -244,14 +235,9 @@ public class GrpcBigtableStub extends BigtableStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add(request.getTableName(), "table_name", MUTATE_ROW_0_PATH_TEMPLATE);
                   builder.add(
-                      String.valueOf(request.getTableName()),
-                      "table_name",
-                      MUTATE_ROW_0_PATH_TEMPLATE);
-                  builder.add(
-                      String.valueOf(request.getAppProfileId()),
-                      "app_profile_id",
-                      MUTATE_ROW_1_PATH_TEMPLATE);
+                      request.getAppProfileId(), "app_profile_id", MUTATE_ROW_1_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -261,14 +247,9 @@ public class GrpcBigtableStub extends BigtableStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add(request.getTableName(), "table_name", MUTATE_ROWS_0_PATH_TEMPLATE);
                   builder.add(
-                      String.valueOf(request.getTableName()),
-                      "table_name",
-                      MUTATE_ROWS_0_PATH_TEMPLATE);
-                  builder.add(
-                      String.valueOf(request.getAppProfileId()),
-                      "app_profile_id",
-                      MUTATE_ROWS_1_PATH_TEMPLATE);
+                      request.getAppProfileId(), "app_profile_id", MUTATE_ROWS_1_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -280,11 +261,11 @@ public class GrpcBigtableStub extends BigtableStub {
                     request -> {
                       RequestParamsBuilder builder = RequestParamsBuilder.create();
                       builder.add(
-                          String.valueOf(request.getTableName()),
+                          request.getTableName(),
                           "table_name",
                           CHECK_AND_MUTATE_ROW_0_PATH_TEMPLATE);
                       builder.add(
-                          String.valueOf(request.getAppProfileId()),
+                          request.getAppProfileId(),
                           "app_profile_id",
                           CHECK_AND_MUTATE_ROW_1_PATH_TEMPLATE);
                       return builder.build();
@@ -296,12 +277,9 @@ public class GrpcBigtableStub extends BigtableStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add(request.getName(), "name", PING_AND_WARM_0_PATH_TEMPLATE);
                   builder.add(
-                      String.valueOf(request.getName()), "name", PING_AND_WARM_0_PATH_TEMPLATE);
-                  builder.add(
-                      String.valueOf(request.getAppProfileId()),
-                      "app_profile_id",
-                      PING_AND_WARM_1_PATH_TEMPLATE);
+                      request.getAppProfileId(), "app_profile_id", PING_AND_WARM_1_PATH_TEMPLATE);
                   return builder.build();
                 })
             .build();
@@ -313,11 +291,11 @@ public class GrpcBigtableStub extends BigtableStub {
                     request -> {
                       RequestParamsBuilder builder = RequestParamsBuilder.create();
                       builder.add(
-                          String.valueOf(request.getTableName()),
+                          request.getTableName(),
                           "table_name",
                           READ_MODIFY_WRITE_ROW_0_PATH_TEMPLATE);
                       builder.add(
-                          String.valueOf(request.getAppProfileId()),
+                          request.getAppProfileId(),
                           "app_profile_id",
                           READ_MODIFY_WRITE_ROW_1_PATH_TEMPLATE);
                       return builder.build();
