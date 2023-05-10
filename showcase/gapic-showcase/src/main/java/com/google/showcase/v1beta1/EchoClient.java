@@ -293,6 +293,7 @@ public class EchoClient implements BackgroundResource {
    *       ExpandRequest.newBuilder()
    *           .setContent("content951530617")
    *           .setError(Status.newBuilder().build())
+   *           .setStreamWaitTime(Duration.newBuilder().build())
    *           .build();
    *   ServerStream<EchoResponse> stream = echoClient.expandCallable().call(request);
    *   for (EchoResponse response : stream) {

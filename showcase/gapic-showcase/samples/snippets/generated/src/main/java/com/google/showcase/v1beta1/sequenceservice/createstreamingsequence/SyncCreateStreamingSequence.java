@@ -16,38 +16,30 @@
 
 package com.google.showcase.v1beta1.samples;
 
-// [START localhost7469_v1beta1_generated_Echo_Expand_async]
-import com.google.api.gax.rpc.ServerStream;
-import com.google.protobuf.Duration;
-import com.google.rpc.Status;
-import com.google.showcase.v1beta1.EchoClient;
-import com.google.showcase.v1beta1.EchoResponse;
-import com.google.showcase.v1beta1.ExpandRequest;
+// [START localhost7469_v1beta1_generated_SequenceService_CreateStreamingSequence_sync]
+import com.google.showcase.v1beta1.CreateStreamingSequenceRequest;
+import com.google.showcase.v1beta1.SequenceServiceClient;
+import com.google.showcase.v1beta1.StreamingSequence;
 
-public class AsyncExpand {
+public class SyncCreateStreamingSequence {
 
   public static void main(String[] args) throws Exception {
-    asyncExpand();
+    syncCreateStreamingSequence();
   }
 
-  public static void asyncExpand() throws Exception {
+  public static void syncCreateStreamingSequence() throws Exception {
     // This snippet has been automatically generated and should be regarded as a code template only.
     // It will require modifications to work:
     // - It may require correct/in-range values for request initialization.
     // - It may require specifying regional endpoints when creating the service client as shown in
     // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
-    try (EchoClient echoClient = EchoClient.create()) {
-      ExpandRequest request =
-          ExpandRequest.newBuilder()
-              .setContent("content951530617")
-              .setError(Status.newBuilder().build())
-              .setStreamWaitTime(Duration.newBuilder().build())
+    try (SequenceServiceClient sequenceServiceClient = SequenceServiceClient.create()) {
+      CreateStreamingSequenceRequest request =
+          CreateStreamingSequenceRequest.newBuilder()
+              .setStreamingSequence(StreamingSequence.newBuilder().build())
               .build();
-      ServerStream<EchoResponse> stream = echoClient.expandCallable().call(request);
-      for (EchoResponse response : stream) {
-        // Do something when a response is received.
-      }
+      StreamingSequence response = sequenceServiceClient.createStreamingSequence(request);
     }
   }
 }
-// [END localhost7469_v1beta1_generated_Echo_Expand_async]
+// [END localhost7469_v1beta1_generated_SequenceService_CreateStreamingSequence_sync]

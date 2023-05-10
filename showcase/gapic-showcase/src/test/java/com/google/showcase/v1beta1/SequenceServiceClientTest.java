@@ -23,8 +23,11 @@ import com.google.api.gax.grpc.GaxGrpcProperties;
 import com.google.api.gax.grpc.testing.LocalChannelProvider;
 import com.google.api.gax.grpc.testing.MockGrpcService;
 import com.google.api.gax.grpc.testing.MockServiceHelper;
+import com.google.api.gax.grpc.testing.MockStreamObserver;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.InvalidArgumentException;
+import com.google.api.gax.rpc.ServerStreamingCallable;
+import com.google.api.gax.rpc.StatusCode;
 import com.google.cloud.location.GetLocationRequest;
 import com.google.cloud.location.ListLocationsRequest;
 import com.google.cloud.location.ListLocationsResponse;
@@ -40,6 +43,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 import javax.annotation.Generated;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -129,6 +133,47 @@ public class SequenceServiceClientTest {
   }
 
   @Test
+  public void createStreamingSequenceTest() throws Exception {
+    StreamingSequence expectedResponse =
+        StreamingSequence.newBuilder()
+            .setName(StreamingSequenceName.of("[STREAMING_SEQUENCE]").toString())
+            .setContent("content951530617")
+            .addAllResponses(new ArrayList<StreamingSequence.Response>())
+            .build();
+    mockSequenceService.addResponse(expectedResponse);
+
+    StreamingSequence streamingSequence = StreamingSequence.newBuilder().build();
+
+    StreamingSequence actualResponse = client.createStreamingSequence(streamingSequence);
+    Assert.assertEquals(expectedResponse, actualResponse);
+
+    List<AbstractMessage> actualRequests = mockSequenceService.getRequests();
+    Assert.assertEquals(1, actualRequests.size());
+    CreateStreamingSequenceRequest actualRequest =
+        ((CreateStreamingSequenceRequest) actualRequests.get(0));
+
+    Assert.assertEquals(streamingSequence, actualRequest.getStreamingSequence());
+    Assert.assertTrue(
+        channelProvider.isHeaderSent(
+            ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
+            GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
+  }
+
+  @Test
+  public void createStreamingSequenceExceptionTest() throws Exception {
+    StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
+    mockSequenceService.addException(exception);
+
+    try {
+      StreamingSequence streamingSequence = StreamingSequence.newBuilder().build();
+      client.createStreamingSequence(streamingSequence);
+      Assert.fail("No exception raised");
+    } catch (InvalidArgumentException e) {
+      // Expected exception.
+    }
+  }
+
+  @Test
   public void getSequenceReportTest() throws Exception {
     SequenceReport expectedResponse =
         SequenceReport.newBuilder()
@@ -207,6 +252,86 @@ public class SequenceServiceClientTest {
   }
 
   @Test
+  public void getStreamingSequenceReportTest() throws Exception {
+    StreamingSequenceReport expectedResponse =
+        StreamingSequenceReport.newBuilder()
+            .setName(StreamingSequenceReportName.of("[STREAMING_SEQUENCE]").toString())
+            .addAllAttempts(new ArrayList<StreamingSequenceReport.Attempt>())
+            .build();
+    mockSequenceService.addResponse(expectedResponse);
+
+    StreamingSequenceReportName name = StreamingSequenceReportName.of("[STREAMING_SEQUENCE]");
+
+    StreamingSequenceReport actualResponse = client.getStreamingSequenceReport(name);
+    Assert.assertEquals(expectedResponse, actualResponse);
+
+    List<AbstractMessage> actualRequests = mockSequenceService.getRequests();
+    Assert.assertEquals(1, actualRequests.size());
+    GetStreamingSequenceReportRequest actualRequest =
+        ((GetStreamingSequenceReportRequest) actualRequests.get(0));
+
+    Assert.assertEquals(name.toString(), actualRequest.getName());
+    Assert.assertTrue(
+        channelProvider.isHeaderSent(
+            ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
+            GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
+  }
+
+  @Test
+  public void getStreamingSequenceReportExceptionTest() throws Exception {
+    StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
+    mockSequenceService.addException(exception);
+
+    try {
+      StreamingSequenceReportName name = StreamingSequenceReportName.of("[STREAMING_SEQUENCE]");
+      client.getStreamingSequenceReport(name);
+      Assert.fail("No exception raised");
+    } catch (InvalidArgumentException e) {
+      // Expected exception.
+    }
+  }
+
+  @Test
+  public void getStreamingSequenceReportTest2() throws Exception {
+    StreamingSequenceReport expectedResponse =
+        StreamingSequenceReport.newBuilder()
+            .setName(StreamingSequenceReportName.of("[STREAMING_SEQUENCE]").toString())
+            .addAllAttempts(new ArrayList<StreamingSequenceReport.Attempt>())
+            .build();
+    mockSequenceService.addResponse(expectedResponse);
+
+    String name = "name3373707";
+
+    StreamingSequenceReport actualResponse = client.getStreamingSequenceReport(name);
+    Assert.assertEquals(expectedResponse, actualResponse);
+
+    List<AbstractMessage> actualRequests = mockSequenceService.getRequests();
+    Assert.assertEquals(1, actualRequests.size());
+    GetStreamingSequenceReportRequest actualRequest =
+        ((GetStreamingSequenceReportRequest) actualRequests.get(0));
+
+    Assert.assertEquals(name, actualRequest.getName());
+    Assert.assertTrue(
+        channelProvider.isHeaderSent(
+            ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
+            GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
+  }
+
+  @Test
+  public void getStreamingSequenceReportExceptionTest2() throws Exception {
+    StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
+    mockSequenceService.addException(exception);
+
+    try {
+      String name = "name3373707";
+      client.getStreamingSequenceReport(name);
+      Assert.fail("No exception raised");
+    } catch (InvalidArgumentException e) {
+      // Expected exception.
+    }
+  }
+
+  @Test
   public void attemptSequenceTest() throws Exception {
     Empty expectedResponse = Empty.newBuilder().build();
     mockSequenceService.addResponse(expectedResponse);
@@ -271,6 +396,54 @@ public class SequenceServiceClientTest {
       Assert.fail("No exception raised");
     } catch (InvalidArgumentException e) {
       // Expected exception.
+    }
+  }
+
+  @Test
+  public void attemptStreamingSequenceTest() throws Exception {
+    AttemptStreamingSequenceResponse expectedResponse =
+        AttemptStreamingSequenceResponse.newBuilder().setContent("content951530617").build();
+    mockSequenceService.addResponse(expectedResponse);
+    AttemptStreamingSequenceRequest request =
+        AttemptStreamingSequenceRequest.newBuilder()
+            .setName(StreamingSequenceName.of("[STREAMING_SEQUENCE]").toString())
+            .build();
+
+    MockStreamObserver<AttemptStreamingSequenceResponse> responseObserver =
+        new MockStreamObserver<>();
+
+    ServerStreamingCallable<AttemptStreamingSequenceRequest, AttemptStreamingSequenceResponse>
+        callable = client.attemptStreamingSequenceCallable();
+    callable.serverStreamingCall(request, responseObserver);
+
+    List<AttemptStreamingSequenceResponse> actualResponses = responseObserver.future().get();
+    Assert.assertEquals(1, actualResponses.size());
+    Assert.assertEquals(expectedResponse, actualResponses.get(0));
+  }
+
+  @Test
+  public void attemptStreamingSequenceExceptionTest() throws Exception {
+    StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
+    mockSequenceService.addException(exception);
+    AttemptStreamingSequenceRequest request =
+        AttemptStreamingSequenceRequest.newBuilder()
+            .setName(StreamingSequenceName.of("[STREAMING_SEQUENCE]").toString())
+            .build();
+
+    MockStreamObserver<AttemptStreamingSequenceResponse> responseObserver =
+        new MockStreamObserver<>();
+
+    ServerStreamingCallable<AttemptStreamingSequenceRequest, AttemptStreamingSequenceResponse>
+        callable = client.attemptStreamingSequenceCallable();
+    callable.serverStreamingCall(request, responseObserver);
+
+    try {
+      List<AttemptStreamingSequenceResponse> actualResponses = responseObserver.future().get();
+      Assert.fail("No exception thrown");
+    } catch (ExecutionException e) {
+      Assert.assertTrue(e.getCause() instanceof InvalidArgumentException);
+      InvalidArgumentException apiException = ((InvalidArgumentException) e.getCause());
+      Assert.assertEquals(StatusCode.Code.INVALID_ARGUMENT, apiException.getStatusCode().getCode());
     }
   }
 

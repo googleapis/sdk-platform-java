@@ -129,6 +129,52 @@ public class SequenceServiceClientHttpJsonTest {
   }
 
   @Test
+  public void createStreamingSequenceTest() throws Exception {
+    StreamingSequence expectedResponse =
+        StreamingSequence.newBuilder()
+            .setName(StreamingSequenceName.of("[STREAMING_SEQUENCE]").toString())
+            .setContent("content951530617")
+            .addAllResponses(new ArrayList<StreamingSequence.Response>())
+            .build();
+    mockService.addResponse(expectedResponse);
+
+    StreamingSequence streamingSequence = StreamingSequence.newBuilder().build();
+
+    StreamingSequence actualResponse = client.createStreamingSequence(streamingSequence);
+    Assert.assertEquals(expectedResponse, actualResponse);
+
+    List<String> actualRequests = mockService.getRequestPaths();
+    Assert.assertEquals(1, actualRequests.size());
+
+    String apiClientHeaderKey =
+        mockService
+            .getRequestHeaders()
+            .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
+            .iterator()
+            .next();
+    Assert.assertTrue(
+        GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
+            .matcher(apiClientHeaderKey)
+            .matches());
+  }
+
+  @Test
+  public void createStreamingSequenceExceptionTest() throws Exception {
+    ApiException exception =
+        ApiExceptionFactory.createException(
+            new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
+    mockService.addException(exception);
+
+    try {
+      StreamingSequence streamingSequence = StreamingSequence.newBuilder().build();
+      client.createStreamingSequence(streamingSequence);
+      Assert.fail("No exception raised");
+    } catch (InvalidArgumentException e) {
+      // Expected exception.
+    }
+  }
+
+  @Test
   public void getSequenceReportTest() throws Exception {
     SequenceReport expectedResponse =
         SequenceReport.newBuilder()
@@ -219,6 +265,96 @@ public class SequenceServiceClientHttpJsonTest {
   }
 
   @Test
+  public void getStreamingSequenceReportTest() throws Exception {
+    StreamingSequenceReport expectedResponse =
+        StreamingSequenceReport.newBuilder()
+            .setName(StreamingSequenceReportName.of("[STREAMING_SEQUENCE]").toString())
+            .addAllAttempts(new ArrayList<StreamingSequenceReport.Attempt>())
+            .build();
+    mockService.addResponse(expectedResponse);
+
+    StreamingSequenceReportName name = StreamingSequenceReportName.of("[STREAMING_SEQUENCE]");
+
+    StreamingSequenceReport actualResponse = client.getStreamingSequenceReport(name);
+    Assert.assertEquals(expectedResponse, actualResponse);
+
+    List<String> actualRequests = mockService.getRequestPaths();
+    Assert.assertEquals(1, actualRequests.size());
+
+    String apiClientHeaderKey =
+        mockService
+            .getRequestHeaders()
+            .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
+            .iterator()
+            .next();
+    Assert.assertTrue(
+        GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
+            .matcher(apiClientHeaderKey)
+            .matches());
+  }
+
+  @Test
+  public void getStreamingSequenceReportExceptionTest() throws Exception {
+    ApiException exception =
+        ApiExceptionFactory.createException(
+            new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
+    mockService.addException(exception);
+
+    try {
+      StreamingSequenceReportName name = StreamingSequenceReportName.of("[STREAMING_SEQUENCE]");
+      client.getStreamingSequenceReport(name);
+      Assert.fail("No exception raised");
+    } catch (InvalidArgumentException e) {
+      // Expected exception.
+    }
+  }
+
+  @Test
+  public void getStreamingSequenceReportTest2() throws Exception {
+    StreamingSequenceReport expectedResponse =
+        StreamingSequenceReport.newBuilder()
+            .setName(StreamingSequenceReportName.of("[STREAMING_SEQUENCE]").toString())
+            .addAllAttempts(new ArrayList<StreamingSequenceReport.Attempt>())
+            .build();
+    mockService.addResponse(expectedResponse);
+
+    String name = "streamingSequences/streamingSequence-962/streamingSequenceReport";
+
+    StreamingSequenceReport actualResponse = client.getStreamingSequenceReport(name);
+    Assert.assertEquals(expectedResponse, actualResponse);
+
+    List<String> actualRequests = mockService.getRequestPaths();
+    Assert.assertEquals(1, actualRequests.size());
+
+    String apiClientHeaderKey =
+        mockService
+            .getRequestHeaders()
+            .get(ApiClientHeaderProvider.getDefaultApiClientHeaderKey())
+            .iterator()
+            .next();
+    Assert.assertTrue(
+        GaxHttpJsonProperties.getDefaultApiClientHeaderPattern()
+            .matcher(apiClientHeaderKey)
+            .matches());
+  }
+
+  @Test
+  public void getStreamingSequenceReportExceptionTest2() throws Exception {
+    ApiException exception =
+        ApiExceptionFactory.createException(
+            new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
+    mockService.addException(exception);
+
+    try {
+      String name = "streamingSequences/streamingSequence-962/streamingSequenceReport";
+      client.getStreamingSequenceReport(name);
+      Assert.fail("No exception raised");
+    } catch (InvalidArgumentException e) {
+      // Expected exception.
+    }
+  }
+
+  @Test
   public void attemptSequenceTest() throws Exception {
     Empty expectedResponse = Empty.newBuilder().build();
     mockService.addResponse(expectedResponse);
@@ -296,6 +432,17 @@ public class SequenceServiceClientHttpJsonTest {
     } catch (InvalidArgumentException e) {
       // Expected exception.
     }
+  }
+
+  @Test
+  public void attemptStreamingSequenceTest() throws Exception {}
+
+  @Test
+  public void attemptStreamingSequenceExceptionTest() throws Exception {
+    ApiException exception =
+        ApiExceptionFactory.createException(
+            new Exception(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false);
+    mockService.addException(exception);
   }
 
   @Test

@@ -20,6 +20,7 @@ import static com.google.showcase.v1beta1.SequenceServiceClient.ListLocationsPag
 
 import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
+import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.location.GetLocationRequest;
 import com.google.cloud.location.ListLocationsRequest;
@@ -27,10 +28,16 @@ import com.google.cloud.location.ListLocationsResponse;
 import com.google.cloud.location.Location;
 import com.google.protobuf.Empty;
 import com.google.showcase.v1beta1.AttemptSequenceRequest;
+import com.google.showcase.v1beta1.AttemptStreamingSequenceRequest;
+import com.google.showcase.v1beta1.AttemptStreamingSequenceResponse;
 import com.google.showcase.v1beta1.CreateSequenceRequest;
+import com.google.showcase.v1beta1.CreateStreamingSequenceRequest;
 import com.google.showcase.v1beta1.GetSequenceReportRequest;
+import com.google.showcase.v1beta1.GetStreamingSequenceReportRequest;
 import com.google.showcase.v1beta1.Sequence;
 import com.google.showcase.v1beta1.SequenceReport;
+import com.google.showcase.v1beta1.StreamingSequence;
+import com.google.showcase.v1beta1.StreamingSequenceReport;
 import javax.annotation.Generated;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
@@ -47,12 +54,28 @@ public abstract class SequenceServiceStub implements BackgroundResource {
     throw new UnsupportedOperationException("Not implemented: createSequenceCallable()");
   }
 
+  public UnaryCallable<CreateStreamingSequenceRequest, StreamingSequence>
+      createStreamingSequenceCallable() {
+    throw new UnsupportedOperationException("Not implemented: createStreamingSequenceCallable()");
+  }
+
   public UnaryCallable<GetSequenceReportRequest, SequenceReport> getSequenceReportCallable() {
     throw new UnsupportedOperationException("Not implemented: getSequenceReportCallable()");
   }
 
+  public UnaryCallable<GetStreamingSequenceReportRequest, StreamingSequenceReport>
+      getStreamingSequenceReportCallable() {
+    throw new UnsupportedOperationException(
+        "Not implemented: getStreamingSequenceReportCallable()");
+  }
+
   public UnaryCallable<AttemptSequenceRequest, Empty> attemptSequenceCallable() {
     throw new UnsupportedOperationException("Not implemented: attemptSequenceCallable()");
+  }
+
+  public ServerStreamingCallable<AttemptStreamingSequenceRequest, AttemptStreamingSequenceResponse>
+      attemptStreamingSequenceCallable() {
+    throw new UnsupportedOperationException("Not implemented: attemptStreamingSequenceCallable()");
   }
 
   public UnaryCallable<ListLocationsRequest, ListLocationsPagedResponse>
