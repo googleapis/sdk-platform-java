@@ -39,7 +39,7 @@ service HttpRuleParserTesting {
     };
   }
 
-  //TODO: Add more test cases once https://github.com/googleapis/gapic-generator-java/issues/1041 is fixed
+  //TODO: Add more test cases once https://github.com/googleapis/sdk-platform-java/issues/1041 is fixed
 }
 
 enum Continent {

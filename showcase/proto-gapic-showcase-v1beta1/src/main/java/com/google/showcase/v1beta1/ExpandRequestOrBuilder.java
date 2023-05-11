@@ -53,4 +53,31 @@ public interface ExpandRequestOrBuilder extends
    * <code>.google.rpc.Status error = 2;</code>
    */
   com.google.rpc.StatusOrBuilder getErrorOrBuilder();
+
+  /**
+   * <pre>
+   *The wait time between each server streaming messages
+   * </pre>
+   *
+   * <code>.google.protobuf.Duration stream_wait_time = 3;</code>
+   * @return Whether the streamWaitTime field is set.
+   */
+  boolean hasStreamWaitTime();
+  /**
+   * <pre>
+   *The wait time between each server streaming messages
+   * </pre>
+   *
+   * <code>.google.protobuf.Duration stream_wait_time = 3;</code>
+   * @return The streamWaitTime.
+   */
+  com.google.protobuf.Duration getStreamWaitTime();
+  /**
+   * <pre>
+   *The wait time between each server streaming messages
+   * </pre>
+   *
+   * <code>.google.protobuf.Duration stream_wait_time = 3;</code>
+   */
+  com.google.protobuf.DurationOrBuilder getStreamWaitTimeOrBuilder();
 }

@@ -137,7 +137,7 @@ public class HttpRuleParserTest {
   // will then serialize all sub fields to query params.
   // We need to either traverse all the leaf level fields and exclude field in the generator or pass
   // the excluded fields to gax-java. Re-enable this test once
-  // https://github.com/googleapis/gapic-generator-java/issues/1041 is fixed
+  // https://github.com/googleapis/sdk-platform-java/issues/1041 is fixed
   public void parseHttpAnnotation_shouldExcludeFieldsFromQueryParamsIfPathParamsAreConfigured() {
     FileDescriptor fileDescriptor = HttpRuleParserTestingOuterClass.getDescriptor();
     ServiceDescriptor serviceDescriptor = fileDescriptor.getServices().get(0);

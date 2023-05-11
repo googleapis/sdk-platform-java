@@ -1,6 +1,6 @@
 {
   "api_shortname": "google-cloud-core",
-  "client_documentation": "https://github.com/googleapis/gapic-generator-java/tree/main/java-core",
+  "client_documentation": "https://github.com/googleapis/sdk-platform-java/tree/main/java-core",
   "name_pretty": "Google Cloud Core",
   "release_level": "stable",
   "language": "java",

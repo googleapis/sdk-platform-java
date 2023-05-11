@@ -34,7 +34,8 @@ package com.google.iam.v1;
  * only if the expression evaluates to `true`. A condition can add constraints
  * based on attributes of the request, the resource, or both. To learn which
  * resources support conditions in their IAM policies, see the
- * [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
+ * [IAM
+ * documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
  * **JSON example:**
  *     {
  *       "bindings": [
@@ -55,7 +56,8 @@ package com.google.iam.v1;
  *           "condition": {
  *             "title": "expirable access",
  *             "description": "Does not grant access after Sep 2020",
- *             "expression": "request.time &lt; timestamp('2020-10-01T00:00:00.000Z')",
+ *             "expression": "request.time &lt;
+ *             timestamp('2020-10-01T00:00:00.000Z')",
  *           }
  *         }
  *       ],
@@ -147,7 +149,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
    * If a policy does not include any conditions, operations on that policy may
    * specify any valid version or leave the field unset.
    * To learn which resources support conditions in their IAM policies, see the
-   * [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
+   * [IAM
+   * documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
    * </pre>
    *
    * <code>int32 version = 1;</code>
@@ -572,7 +575,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
    * only if the expression evaluates to `true`. A condition can add constraints
    * based on attributes of the request, the resource, or both. To learn which
    * resources support conditions in their IAM policies, see the
-   * [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
+   * [IAM
+   * documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
    * **JSON example:**
    *     {
    *       "bindings": [
@@ -593,7 +597,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
    *           "condition": {
    *             "title": "expirable access",
    *             "description": "Does not grant access after Sep 2020",
-   *             "expression": "request.time &lt; timestamp('2020-10-01T00:00:00.000Z')",
+   *             "expression": "request.time &lt;
+   *             timestamp('2020-10-01T00:00:00.000Z')",
    *           }
    *         }
    *       ],
@@ -938,7 +943,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * If a policy does not include any conditions, operations on that policy may
      * specify any valid version or leave the field unset.
      * To learn which resources support conditions in their IAM policies, see the
-     * [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
+     * [IAM
+     * documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
      * </pre>
      *
      * <code>int32 version = 1;</code>
@@ -970,7 +976,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * If a policy does not include any conditions, operations on that policy may
      * specify any valid version or leave the field unset.
      * To learn which resources support conditions in their IAM policies, see the
-     * [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
+     * [IAM
+     * documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
      * </pre>
      *
      * <code>int32 version = 1;</code>
@@ -1006,7 +1013,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * If a policy does not include any conditions, operations on that policy may
      * specify any valid version or leave the field unset.
      * To learn which resources support conditions in their IAM policies, see the
-     * [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
+     * [IAM
+     * documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
      * </pre>
      *
      * <code>int32 version = 1;</code>

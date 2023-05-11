@@ -31,7 +31,6 @@ import com.google.api.gax.httpjson.ProtoMessageRequestFormatter;
 import com.google.api.gax.httpjson.ProtoMessageResponseParser;
 import com.google.api.gax.httpjson.ProtoRestSerializer;
 import com.google.api.gax.rpc.ClientContext;
-import com.google.api.gax.rpc.RequestParamsBuilder;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.location.GetLocationRequest;
 import com.google.cloud.location.ListLocationsRequest;
@@ -470,12 +469,6 @@ public class HttpJsonTestingStub extends TestingStub {
         HttpJsonCallSettings.<GetSessionRequest, Session>newBuilder()
             .setMethodDescriptor(getSessionMethodDescriptor)
             .setTypeRegistry(typeRegistry)
-            .setParamsExtractor(
-                request -> {
-                  RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add("name", String.valueOf(request.getName()));
-                  return builder.build();
-                })
             .build();
     HttpJsonCallSettings<ListSessionsRequest, ListSessionsResponse> listSessionsTransportSettings =
         HttpJsonCallSettings.<ListSessionsRequest, ListSessionsResponse>newBuilder()
@@ -486,80 +479,38 @@ public class HttpJsonTestingStub extends TestingStub {
         HttpJsonCallSettings.<DeleteSessionRequest, Empty>newBuilder()
             .setMethodDescriptor(deleteSessionMethodDescriptor)
             .setTypeRegistry(typeRegistry)
-            .setParamsExtractor(
-                request -> {
-                  RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add("name", String.valueOf(request.getName()));
-                  return builder.build();
-                })
             .build();
     HttpJsonCallSettings<ReportSessionRequest, ReportSessionResponse>
         reportSessionTransportSettings =
             HttpJsonCallSettings.<ReportSessionRequest, ReportSessionResponse>newBuilder()
                 .setMethodDescriptor(reportSessionMethodDescriptor)
                 .setTypeRegistry(typeRegistry)
-                .setParamsExtractor(
-                    request -> {
-                      RequestParamsBuilder builder = RequestParamsBuilder.create();
-                      builder.add("name", String.valueOf(request.getName()));
-                      return builder.build();
-                    })
                 .build();
     HttpJsonCallSettings<ListTestsRequest, ListTestsResponse> listTestsTransportSettings =
         HttpJsonCallSettings.<ListTestsRequest, ListTestsResponse>newBuilder()
             .setMethodDescriptor(listTestsMethodDescriptor)
             .setTypeRegistry(typeRegistry)
-            .setParamsExtractor(
-                request -> {
-                  RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add("parent", String.valueOf(request.getParent()));
-                  return builder.build();
-                })
             .build();
     HttpJsonCallSettings<DeleteTestRequest, Empty> deleteTestTransportSettings =
         HttpJsonCallSettings.<DeleteTestRequest, Empty>newBuilder()
             .setMethodDescriptor(deleteTestMethodDescriptor)
             .setTypeRegistry(typeRegistry)
-            .setParamsExtractor(
-                request -> {
-                  RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add("name", String.valueOf(request.getName()));
-                  return builder.build();
-                })
             .build();
     HttpJsonCallSettings<VerifyTestRequest, VerifyTestResponse> verifyTestTransportSettings =
         HttpJsonCallSettings.<VerifyTestRequest, VerifyTestResponse>newBuilder()
             .setMethodDescriptor(verifyTestMethodDescriptor)
             .setTypeRegistry(typeRegistry)
-            .setParamsExtractor(
-                request -> {
-                  RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add("name", String.valueOf(request.getName()));
-                  return builder.build();
-                })
             .build();
     HttpJsonCallSettings<ListLocationsRequest, ListLocationsResponse>
         listLocationsTransportSettings =
             HttpJsonCallSettings.<ListLocationsRequest, ListLocationsResponse>newBuilder()
                 .setMethodDescriptor(listLocationsMethodDescriptor)
                 .setTypeRegistry(typeRegistry)
-                .setParamsExtractor(
-                    request -> {
-                      RequestParamsBuilder builder = RequestParamsBuilder.create();
-                      builder.add("name", String.valueOf(request.getName()));
-                      return builder.build();
-                    })
                 .build();
     HttpJsonCallSettings<GetLocationRequest, Location> getLocationTransportSettings =
         HttpJsonCallSettings.<GetLocationRequest, Location>newBuilder()
             .setMethodDescriptor(getLocationMethodDescriptor)
             .setTypeRegistry(typeRegistry)
-            .setParamsExtractor(
-                request -> {
-                  RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add("name", String.valueOf(request.getName()));
-                  return builder.build();
-                })
             .build();
 
     this.createSessionCallable =
