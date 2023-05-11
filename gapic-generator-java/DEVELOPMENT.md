@@ -106,15 +106,15 @@ To generate a production GAPIC API:
     
     http_archive(
         name = "gapic_generator_java",
-        strip_prefix = "gapic-generator-java-%s" % _gapic_generator_java_version,
-        urls = ["https://github.com/googleapis/gapic-generator-java/archive/v%s.zip" % _gapic_generator_java_version],
+        strip_prefix = "sdk-platform-java-%s" % _gapic_generator_java_version,
+        urls = ["https://github.com/googleapis/sdk-platform-java/archive/v%s.zip" % _gapic_generator_java_version],
     )
     
-    # gax-java is part of gapic-generator-java repository
+    # gax-java is part of sdk-platform-java repository
     http_archive(
         name = "com_google_api_gax_java",
-        strip_prefix = "gapic-generator-java-%s/gax-java" % _gapic_generator_java_version,
-        urls = ["https://github.com/googleapis/gapic-generator-java/archive/v%s.zip" % _gapic_generator_java_version],
+        strip_prefix = "sdk-platform-java-%s/gax-java" % _gapic_generator_java_version,
+        urls = ["https://github.com/googleapis/sdk-platform-java/archive/v%s.zip" % _gapic_generator_java_version],
     )
    ```
 
@@ -139,7 +139,7 @@ To generate a production GAPIC API:
         path = "/absolute/path/to/your/local/gapic-generator-java",
     )
     
-    # gax-java is part of gapic-generator-java repository
+    # gax-java is part of sdk-platform-java repository
     local_repository(
         name = "com_google_api_gax_java",
         path = "/absolute/path/to/your/local/gapic-generator-java/gax-java",
