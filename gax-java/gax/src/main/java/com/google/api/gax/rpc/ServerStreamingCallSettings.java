@@ -282,8 +282,8 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
     }
 
     /**
-     * See the class documentation of {@link ServerStreamingCallSettings} for a description of what
-     * the {@link #idleTimeout} does. {@link Duration#ZERO} disables the watchdog.
+     * Set how long to wait before considering the stream orphaned by the user and closing it.
+     * {@link Duration#ZERO} disables the check for abandoned streams.
      */
     public Builder<RequestT, ResponseT> setIdleTimeout(@Nonnull Duration idleTimeout) {
       this.idleTimeout = Preconditions.checkNotNull(idleTimeout);
@@ -296,8 +296,8 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
     }
 
     /**
-     * See the class documentation of {@link ServerStreamingCallSettings} for a description of what
-     * the {@link #waitTimeout} does. {@link Duration#ZERO} disables the watchdog.
+     * Set the maximum amount of time to wait for the next message from the server. {@link
+     * Duration#ZERO} disables the check for abandoned streams.
      */
     public void setWaitTimeout(@Nonnull Duration waitTimeout) {
       this.waitTimeout = waitTimeout;

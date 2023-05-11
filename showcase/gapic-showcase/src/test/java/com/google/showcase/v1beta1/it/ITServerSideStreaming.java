@@ -20,7 +20,6 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
 import com.google.api.gax.core.NoCredentialsProvider;
-import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.CancelledException;
 import com.google.api.gax.rpc.ServerStream;
 import com.google.api.gax.rpc.StatusCode;
@@ -123,15 +122,10 @@ public class ITServerSideStreaming {
 
     settings
         .expandSettings()
-        // set RPC timeout to be longer than waitTimeout
-        .setRetrySettings(
-            RetrySettings.newBuilder()
-                .setInitialRpcTimeout(Duration.ofSeconds(30))
-                .setMaxRpcTimeout(Duration.ofSeconds(30))
-                .setTotalTimeout(Duration.ofSeconds(30))
-                .build())
-        .setIdleTimeout(Duration.ofSeconds(10))
-        .setWaitTimeout(Duration.ofSeconds(10));
+        .setIdleTimeout(Duration.ofMillis(100))
+        .setWaitTimeout(Duration.ofMillis(100));
+
+    settings.getStubSettingsBuilder().setStreamWatchdogCheckInterval(Duration.ofMillis(50));
 
     EchoClient echoClient = EchoClient.create(settings.build());
 
@@ -144,7 +138,7 @@ public class ITServerSideStreaming {
                     .setContent(content)
                     // Configure server interval for returning the next response
                     .setStreamWaitTime(
-                        com.google.protobuf.Duration.newBuilder().setSeconds(15).build())
+                        com.google.protobuf.Duration.newBuilder().setSeconds(1).build())
                     .build());
     ArrayList<String> responses = new ArrayList<>();
     try {
