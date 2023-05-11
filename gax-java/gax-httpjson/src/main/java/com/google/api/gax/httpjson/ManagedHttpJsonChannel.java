@@ -51,6 +51,7 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
       InstantiatingExecutorProvider.newBuilder().build().getExecutor();
 
   private final Executor executor;
+  private final boolean usingDefaultExecutor;
   private final String endpoint;
   private final HttpTransport httpTransport;
   private final ScheduledExecutorService deadlineScheduledExecutorService;
@@ -58,12 +59,16 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
   private boolean isTransportShutdown;
 
   protected ManagedHttpJsonChannel() {
-    this(null, null, null);
+    this(null, true, null, null);
   }
 
   private ManagedHttpJsonChannel(
-      Executor executor, String endpoint, @Nullable HttpTransport httpTransport) {
+      Executor executor,
+      boolean usingDefaultExecutor,
+      String endpoint,
+      @Nullable HttpTransport httpTransport) {
     this.executor = executor;
+    this.usingDefaultExecutor = usingDefaultExecutor;
     this.endpoint = endpoint;
     this.httpTransport = httpTransport == null ? new NetHttpTransport() : httpTransport;
     this.deadlineScheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
@@ -88,6 +93,11 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
       return;
     }
     try {
+      // Only shutdown the executor if it was created by Gax. External executors
+      // should be managed by the user.
+      if (usingDefaultExecutor) {
+        ((ExecutorService) executor).shutdown();
+      }
       deadlineScheduledExecutorService.shutdown();
       httpTransport.shutdown();
       isTransportShutdown = true;
@@ -113,12 +123,21 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
 
   @Override
   public boolean awaitTermination(long duration, TimeUnit unit) throws InterruptedException {
-    // TODO
-    return false;
+    long endTimeNanos = System.nanoTime() + unit.toNanos(duration);
+    long awaitTimeNanos = endTimeNanos - System.nanoTime();
+    // Only awaitTermination for the executor if it was created by Gax. External executors
+    // should be managed by the user.
+    if (usingDefaultExecutor && awaitTimeNanos > 0) {
+      ((ExecutorService) executor).awaitTermination(awaitTimeNanos, unit);
+    }
+    awaitTimeNanos = endTimeNanos - System.nanoTime();
+    return deadlineScheduledExecutorService.awaitTermination(awaitTimeNanos, unit);
   }
 
   @Override
-  public void close() {}
+  public void close() {
+    shutdown();
+  }
 
   public static Builder newBuilder() {
     return new Builder().setExecutor(DEFAULT_EXECUTOR);
@@ -150,8 +169,14 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
     public ManagedHttpJsonChannel build() {
       Preconditions.checkNotNull(endpoint);
 
+      executor = executor == null ? DEFAULT_EXECUTOR : executor;
+      boolean usingDefaultExecutor = executor.equals(DEFAULT_EXECUTOR);
+
       return new ManagedHttpJsonChannel(
-          executor, endpoint, httpTransport == null ? new NetHttpTransport() : httpTransport);
+          executor,
+          usingDefaultExecutor,
+          endpoint,
+          httpTransport == null ? new NetHttpTransport() : httpTransport);
     }
   }
 }
