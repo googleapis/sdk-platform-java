@@ -30,6 +30,7 @@ import com.google.api.gax.httpjson.ProtoMessageRequestFormatter;
 import com.google.api.gax.httpjson.ProtoMessageResponseParser;
 import com.google.api.gax.httpjson.ProtoRestSerializer;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.RequestParamsBuilder;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.location.GetLocationRequest;
 import com.google.cloud.location.ListLocationsRequest;
@@ -357,16 +358,34 @@ public class HttpJsonIdentityStub extends IdentityStub {
         HttpJsonCallSettings.<GetUserRequest, User>newBuilder()
             .setMethodDescriptor(getUserMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
+                })
             .build();
     HttpJsonCallSettings<UpdateUserRequest, User> updateUserTransportSettings =
         HttpJsonCallSettings.<UpdateUserRequest, User>newBuilder()
             .setMethodDescriptor(updateUserMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("user.name", String.valueOf(request.getUser().getName()));
+                  return builder.build();
+                })
             .build();
     HttpJsonCallSettings<DeleteUserRequest, Empty> deleteUserTransportSettings =
         HttpJsonCallSettings.<DeleteUserRequest, Empty>newBuilder()
             .setMethodDescriptor(deleteUserMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
+                })
             .build();
     HttpJsonCallSettings<ListUsersRequest, ListUsersResponse> listUsersTransportSettings =
         HttpJsonCallSettings.<ListUsersRequest, ListUsersResponse>newBuilder()
@@ -378,11 +397,23 @@ public class HttpJsonIdentityStub extends IdentityStub {
             HttpJsonCallSettings.<ListLocationsRequest, ListLocationsResponse>newBuilder()
                 .setMethodDescriptor(listLocationsMethodDescriptor)
                 .setTypeRegistry(typeRegistry)
+                .setParamsExtractor(
+                    request -> {
+                      RequestParamsBuilder builder = RequestParamsBuilder.create();
+                      builder.add("name", String.valueOf(request.getName()));
+                      return builder.build();
+                    })
                 .build();
     HttpJsonCallSettings<GetLocationRequest, Location> getLocationTransportSettings =
         HttpJsonCallSettings.<GetLocationRequest, Location>newBuilder()
             .setMethodDescriptor(getLocationMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
+                })
             .build();
 
     this.createUserCallable =
