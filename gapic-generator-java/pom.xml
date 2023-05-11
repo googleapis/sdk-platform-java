@@ -453,7 +453,7 @@
 
     <!--
       TODO: remove when dropping Java 8.
-      https://github.com/googleapis/gapic-generator-java/issues/888
+      https://github.com/googleapis/sdk-platform-java/issues/888
     -->
     <dependency>
       <groupId>javax.annotation</groupId>
