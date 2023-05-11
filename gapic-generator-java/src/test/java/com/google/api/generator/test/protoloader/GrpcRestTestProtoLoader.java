@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,11 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.composer.rest;
+package com.google.api.generator.test.protoloader;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-import com.google.api.generator.gapic.composer.common.TestProtoLoader;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicServiceConfig;
 import com.google.api.generator.gapic.model.Message;
@@ -30,8 +31,8 @@ import com.google.longrunning.OperationsProto;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.protobuf.StructProto;
-import com.google.showcase.v1beta1.ComplianceOuterClass;
-import com.google.showcase.v1beta1.EchoOuterClass;
+import com.google.showcase.grpcrest.v1beta1.EchoGrpcrest;
+import com.google.showcase.v1beta1.WickedOuterClass;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashSet;
@@ -40,54 +41,23 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-public class RestTestProtoLoader extends TestProtoLoader {
-  private static final RestTestProtoLoader INSTANCE = new RestTestProtoLoader();
+public class GrpcRestTestProtoLoader extends TestProtoLoader {
+  private static final GrpcRestTestProtoLoader INSTANCE = new GrpcRestTestProtoLoader();
 
-  protected RestTestProtoLoader() {
-    super(Transport.REST, "src/test/resources/");
+  protected GrpcRestTestProtoLoader() {
+    super(Transport.GRPC_REST, "src/test/resources/");
   }
 
-  public static RestTestProtoLoader instance() {
+  public static GrpcRestTestProtoLoader instance() {
     return INSTANCE;
   }
 
-  public GapicContext parseCompliance() {
-    FileDescriptor complianceFileDescriptor = ComplianceOuterClass.getDescriptor();
-    ServiceDescriptor complianceServiceDescriptor = complianceFileDescriptor.getServices().get(0);
-    assertThat(complianceServiceDescriptor.getName()).isEqualTo("Compliance");
+  @Override
+  public GapicContext parseShowcaseEcho() {
+    FileDescriptor echoFileDescriptor = EchoGrpcrest.getDescriptor();
 
-    Map<String, Message> messageTypes = Parser.parseMessages(complianceFileDescriptor);
-    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(complianceFileDescriptor);
-    Set<ResourceName> outputResourceNames = new HashSet<>();
-    List<Service> services =
-        Parser.parseService(
-            complianceFileDescriptor,
-            messageTypes,
-            resourceNames,
-            Optional.empty(),
-            outputResourceNames);
-
-    String jsonFilename = "showcase_grpc_service_config.json";
-    Path jsonPath = Paths.get(getTestFilesDirectory(), jsonFilename);
-    Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
-    assertThat(configOpt.isPresent()).isTrue();
-    GapicServiceConfig config = configOpt.get();
-
-    return GapicContext.builder()
-        .setMessages(messageTypes)
-        .setResourceNames(resourceNames)
-        .setServices(services)
-        .setServiceConfig(config)
-        .setHelperResourceNames(outputResourceNames)
-        .setTransport(getTransport())
-        .setRestNumericEnumsEnabled(true)
-        .build();
-  }
-
-  public GapicContext parseEcho() {
-    FileDescriptor echoFileDescriptor = EchoOuterClass.getDescriptor();
     ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);
-    assertThat(echoServiceDescriptor.getName()).isEqualTo("Echo");
+    assertEquals("Echo", echoServiceDescriptor.getName());
 
     String serviceYamlFileName = "echo_v1beta1.yaml";
     Path serviceYamlPath = Paths.get(getTestFilesDirectory(), serviceYamlFileName);
@@ -99,6 +69,7 @@ public class RestTestProtoLoader extends TestProtoLoader {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     messageTypes.putAll(Parser.parseMessages(OperationsProto.getDescriptor()));
     messageTypes.putAll(Parser.parseMessages(StructProto.getDescriptor()));
+
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
@@ -108,7 +79,7 @@ public class RestTestProtoLoader extends TestProtoLoader {
     String jsonFilename = "showcase_grpc_service_config.json";
     Path jsonPath = Paths.get(getTestFilesDirectory(), jsonFilename);
     Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
-    assertThat(configOpt.isPresent()).isTrue();
+    assertTrue(configOpt.isPresent());
     GapicServiceConfig config = configOpt.get();
 
     return GapicContext.builder()
@@ -119,7 +90,37 @@ public class RestTestProtoLoader extends TestProtoLoader {
         .setServiceYamlProto(service)
         .setHelperResourceNames(outputResourceNames)
         .setTransport(getTransport())
-        .setRestNumericEnumsEnabled(true)
+        .build();
+  }
+
+  public GapicContext parseShowcaseWicked() {
+    FileDescriptor fileDescriptor = WickedOuterClass.getDescriptor();
+    ServiceDescriptor messagingService = fileDescriptor.getServices().get(0);
+    assertEquals("Wicked", messagingService.getName());
+
+    Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
+    messageTypes.putAll(Parser.parseMessages(OperationsProto.getDescriptor()));
+    messageTypes.putAll(Parser.parseMessages(StructProto.getDescriptor()));
+
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(fileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(
+            fileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
+
+    String jsonFilename = "showcase_grpc_service_config.json";
+    Path jsonPath = Paths.get(getTestFilesDirectory(), jsonFilename);
+    Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
+    assertTrue(configOpt.isPresent());
+    GapicServiceConfig config = configOpt.get();
+
+    return GapicContext.builder()
+        .setMessages(messageTypes)
+        .setResourceNames(resourceNames)
+        .setServices(services)
+        .setServiceConfig(config)
+        .setHelperResourceNames(outputResourceNames)
+        .setTransport(getTransport())
         .build();
   }
 }

@@ -27,7 +27,8 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.HttpBindings.HttpBinding;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
-import com.google.api.generator.test.framework.Utils;
+import com.google.api.generator.test.framework.GoldenFileWriter;
+import com.google.api.generator.test.protoloader.RestTestProtoLoader;
 import com.google.common.collect.ImmutableList;
 import com.google.common.truth.Truth;
 import java.nio.file.Path;
@@ -54,9 +55,10 @@ public class HttpJsonServiceStubClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "HttpJsonComplianceStub.golden", visitor.write());
+    GoldenFileWriter.saveCodegenToFile(
+        this.getClass(), "HttpJsonComplianceStub.golden", visitor.write());
     Path goldenFilePath =
-        Paths.get(Utils.getGoldenDir(this.getClass()), "HttpJsonComplianceStub.golden");
+        Paths.get(GoldenFileWriter.getGoldenDir(this.getClass()), "HttpJsonComplianceStub.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 
@@ -68,8 +70,9 @@ public class HttpJsonServiceStubClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "HttpJsonEchoStub.golden", visitor.write());
-    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "HttpJsonEchoStub.golden");
+    GoldenFileWriter.saveCodegenToFile(this.getClass(), "HttpJsonEchoStub.golden", visitor.write());
+    Path goldenFilePath =
+        Paths.get(GoldenFileWriter.getGoldenDir(this.getClass()), "HttpJsonEchoStub.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 

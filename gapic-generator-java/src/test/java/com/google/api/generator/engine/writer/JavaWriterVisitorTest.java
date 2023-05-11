@@ -71,8 +71,8 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
-import com.google.api.generator.testutils.LineFormatter;
-import com.google.api.generator.util.TestUtils;
+import com.google.api.generator.test.utils.LineFormatter;
+import com.google.api.generator.test.utils.TestExprBuilder;
 import com.google.common.base.Function;
 import java.io.IOException;
 import java.util.Arrays;
@@ -321,8 +321,8 @@ public class JavaWriterVisitorTest {
             .setDescription(
                 ArrayExpr.builder()
                     .setType(TypeNode.createArrayTypeOf(TypeNode.CLASS_OBJECT))
-                    .addExpr(TestUtils.generateClassValueExpr("Class1"))
-                    .addExpr(TestUtils.generateClassValueExpr("Class2"))
+                    .addExpr(TestExprBuilder.generateClassValueExpr("Class1"))
+                    .addExpr(TestExprBuilder.generateClassValueExpr("Class2"))
                     .build())
             .build();
     annotation.accept(writerVisitor);
@@ -337,8 +337,8 @@ public class JavaWriterVisitorTest {
     ArrayExpr arrayExpr =
         ArrayExpr.builder()
             .setType(TypeNode.createArrayTypeOf(TypeNode.CLASS_OBJECT))
-            .addExpr(TestUtils.generateClassValueExpr("Class1"))
-            .addExpr(TestUtils.generateClassValueExpr("Class2"))
+            .addExpr(TestExprBuilder.generateClassValueExpr("Class1"))
+            .addExpr(TestExprBuilder.generateClassValueExpr("Class2"))
             .build();
     AssignmentExpr clazz1AssignExpr =
         AssignmentExpr.builder()
@@ -391,9 +391,9 @@ public class JavaWriterVisitorTest {
     ArrayExpr expr =
         ArrayExpr.builder()
             .setType(TypeNode.createArrayTypeOf(TypeNode.STRING))
-            .addExpr(TestUtils.generateStringValueExpr("test1"))
-            .addExpr(TestUtils.generateStringValueExpr("test2"))
-            .addExpr(TestUtils.generateStringValueExpr("test3"))
+            .addExpr(TestExprBuilder.generateStringValueExpr("test1"))
+            .addExpr(TestExprBuilder.generateStringValueExpr("test2"))
+            .addExpr(TestExprBuilder.generateStringValueExpr("test3"))
             .build();
     expr.accept(writerVisitor);
     assertEquals("{\"test1\", \"test2\", \"test3\"}", writerVisitor.write());
@@ -404,9 +404,9 @@ public class JavaWriterVisitorTest {
     ArrayExpr expr =
         ArrayExpr.builder()
             .setType(TypeNode.createArrayTypeOf(TypeNode.CLASS_OBJECT))
-            .addExpr(TestUtils.generateClassValueExpr("Class1"))
-            .addExpr(TestUtils.generateClassValueExpr("Class2"))
-            .addExpr(TestUtils.generateClassValueExpr("Class3"))
+            .addExpr(TestExprBuilder.generateClassValueExpr("Class1"))
+            .addExpr(TestExprBuilder.generateClassValueExpr("Class2"))
+            .addExpr(TestExprBuilder.generateClassValueExpr("Class3"))
             .build();
     expr.accept(writerVisitor);
     assertEquals("{Class1.class, Class2.class, Class3.class}", writerVisitor.write());
@@ -423,7 +423,7 @@ public class JavaWriterVisitorTest {
         ArrayExpr.builder()
             .setType(TypeNode.createArrayTypeOf(TypeNode.CLASS_OBJECT))
             .addExpr(clazzVar)
-            .addExpr(TestUtils.generateClassValueExpr("Class2"))
+            .addExpr(TestExprBuilder.generateClassValueExpr("Class2"))
             .build();
     expr.accept(writerVisitor);
     assertEquals("{clazz1Var, Class2.class}", writerVisitor.write());
@@ -443,8 +443,8 @@ public class JavaWriterVisitorTest {
     ArrayExpr expr =
         ArrayExpr.builder()
             .setType(TypeNode.createArrayTypeOf(TypeNode.STRING))
-            .addExpr(TestUtils.generateStringValueExpr("str1"))
-            .addExpr(TestUtils.generateStringValueExpr("str2"))
+            .addExpr(TestExprBuilder.generateStringValueExpr("str1"))
+            .addExpr(TestExprBuilder.generateStringValueExpr("str2"))
             .build();
     AssignmentExpr assignmentExpr =
         AssignmentExpr.builder().setVariableExpr(varExpr).setValueExpr(expr).build();

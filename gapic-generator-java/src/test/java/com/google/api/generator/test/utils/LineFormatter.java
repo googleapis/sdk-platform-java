@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.testutils;
+package com.google.api.generator.test.utils;
 
 public class LineFormatter {
   public static String lines(String... lines) {

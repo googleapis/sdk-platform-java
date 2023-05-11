@@ -12,9 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.composer.grpc;
+package com.google.api.generator.test.protoloader;
 
-import com.google.api.generator.gapic.composer.common.TestProtoLoader;
 import com.google.api.generator.gapic.model.Transport;
 
 public class GrpcTestProtoLoader extends TestProtoLoader {
