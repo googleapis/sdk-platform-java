@@ -166,6 +166,7 @@ public class EchoClientTest {
         ExpandRequest.newBuilder()
             .setContent("content951530617")
             .setError(Status.newBuilder().build())
+            .setStreamWaitTime(Duration.newBuilder().build())
             .build();
 
     MockStreamObserver<EchoResponse> responseObserver = new MockStreamObserver<>();
@@ -186,6 +187,7 @@ public class EchoClientTest {
         ExpandRequest.newBuilder()
             .setContent("content951530617")
             .setError(Status.newBuilder().build())
+            .setStreamWaitTime(Duration.newBuilder().build())
             .build();
 
     MockStreamObserver<EchoResponse> responseObserver = new MockStreamObserver<>();
