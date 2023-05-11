@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.stream.Collectors;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -134,19 +135,25 @@ public class ITServerSideStreaming {
 
     EchoClient echoClient = EchoClient.create(settings.build());
 
-    // Configure server interval for returning the next response
     String content = "The rain in Spain stays mainly on the plain!";
     ServerStream<EchoResponse> responseStream =
-        echoClient.expandCallable().call(ExpandRequest.newBuilder().setContent(content).build());
+        echoClient
+            .expandCallable()
+            .call(
+                ExpandRequest.newBuilder()
+                    .setContent(content)
+                    // Configure server interval for returning the next response
+                    .setStreamWaitTime(
+                        com.google.protobuf.Duration.newBuilder().setSeconds(15).build())
+                    .build());
     ArrayList<String> responses = new ArrayList<>();
     try {
       for (EchoResponse response : responseStream) {
-        // Sleep longer than echo
         responses.add(response.getContent());
-        Thread.sleep(20 * 1000);
       }
+      Assert.fail("No exception was thrown");
     } catch (WatchdogTimeoutException e) {
-      // assert error message contains: "Canceled due to timeout waiting for next response"
+      assertThat(e).hasMessageThat().contains("Canceled due to timeout waiting for next response");
     } finally {
       echoClient.close();
     }
