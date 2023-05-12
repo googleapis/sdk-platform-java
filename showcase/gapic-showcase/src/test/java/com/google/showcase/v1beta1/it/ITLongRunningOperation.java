@@ -123,17 +123,17 @@ public class ITLongRunningOperation {
       throws Exception {
     RetrySettings initialUnaryRetrySettings =
         RetrySettings.newBuilder()
-            .setInitialRpcTimeout(Duration.ofMillis(3000L))
+            .setInitialRpcTimeout(Duration.ofMillis(5000L))
             .setRpcTimeoutMultiplier(1.0)
-            .setMaxRpcTimeout(Duration.ofMillis(3000L))
-            .setTotalTimeout(Duration.ofMillis(3000L))
+            .setMaxRpcTimeout(Duration.ofMillis(5000L))
+            .setTotalTimeout(Duration.ofMillis(5000L))
             .build();
     RetrySettings pollingRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRetryDelay(Duration.ofMillis(1000L))
-            .setRetryDelayMultiplier(2.0)
-            .setMaxRetryDelay(Duration.ofMillis(3000L))
-            .setTotalTimeout(Duration.ofMillis(5000L))
+            .setRetryDelayMultiplier(1.0)
+            .setMaxRetryDelay(Duration.ofMillis(1000L))
+            .setTotalTimeout(Duration.ofMillis(3000L))
             .build();
     EchoClient grpcClient =
         TestClientInitializer.createGrpcEchoClientCustomWaitSettings(
@@ -162,17 +162,17 @@ public class ITLongRunningOperation {
           throws Exception {
     RetrySettings initialUnaryRetrySettings =
         RetrySettings.newBuilder()
-            .setInitialRpcTimeout(Duration.ofMillis(3000L))
+            .setInitialRpcTimeout(Duration.ofMillis(5000L))
             .setRpcTimeoutMultiplier(1.0)
-            .setMaxRpcTimeout(Duration.ofMillis(3000L))
-            .setTotalTimeout(Duration.ofMillis(3000L))
+            .setMaxRpcTimeout(Duration.ofMillis(5000L))
+            .setTotalTimeout(Duration.ofMillis(5000L))
             .build();
     RetrySettings pollingRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRetryDelay(Duration.ofMillis(1000L))
-            .setRetryDelayMultiplier(2.0)
-            .setMaxRetryDelay(Duration.ofMillis(3000L))
-            .setTotalTimeout(Duration.ofMillis(5000L))
+            .setRetryDelayMultiplier(1.0)
+            .setMaxRetryDelay(Duration.ofMillis(1000L))
+            .setTotalTimeout(Duration.ofMillis(3000L))
             .build();
     EchoClient httpjsonClient =
         TestClientInitializer.createHttpJsonEchoClientCustomWaitSettings(
