@@ -46,6 +46,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 import javax.annotation.Generated;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -78,6 +79,11 @@ public class EchoClientHttpJsonTest {
   @AfterClass
   public static void stopServer() {
     client.close();
+    try {
+      client.awaitTermination(5, TimeUnit.SECONDS);
+    } catch (InterruptedException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   @Before

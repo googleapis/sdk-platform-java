@@ -111,8 +111,6 @@ public class ITLongRunningOperation {
       assertThat(waitResponse.getContent()).isEqualTo("httpjsonWaitContent_5sDelay_noRetry");
       int attemptCount = operationFuture.getPollingFuture().getAttemptSettings().getAttemptCount();
       assertThat(attemptCount).isAtLeast(2);
-      httpjsonClient.awaitTermination(
-          TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
     } finally {
       httpjsonClient.close();
       httpjsonClient.awaitTermination(
@@ -192,7 +190,6 @@ public class ITLongRunningOperation {
       assertThrows(CancellationException.class, operationFuture::get);
       int attemptCount = operationFuture.getPollingFuture().getAttemptSettings().getAttemptCount();
       assertThat(attemptCount).isGreaterThan(1);
-      httpjsonClient.shutdown();
     } finally {
       httpjsonClient.close();
       httpjsonClient.awaitTermination(

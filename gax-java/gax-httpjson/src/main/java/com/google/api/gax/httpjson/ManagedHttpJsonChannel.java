@@ -47,7 +47,7 @@ import javax.annotation.Nullable;
 @BetaApi
 public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResource {
 
-  private static final ExecutorService DEFAULT_EXECUTOR =
+  private final ExecutorService DEFAULT_EXECUTOR =
       InstantiatingExecutorProvider.newBuilder().build().getExecutor();
 
   private final Executor executor;
@@ -140,7 +140,7 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
   }
 
   public static Builder newBuilder() {
-    return new Builder().setExecutor(DEFAULT_EXECUTOR);
+    return new Builder();
   }
 
   public static class Builder {
@@ -152,7 +152,7 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
     private Builder() {}
 
     public Builder setExecutor(Executor executor) {
-      this.executor = executor == null ? DEFAULT_EXECUTOR : executor;
+      this.executor = executor;
       return this;
     }
 
@@ -169,8 +169,10 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
     public ManagedHttpJsonChannel build() {
       Preconditions.checkNotNull(endpoint);
 
-      executor = executor == null ? DEFAULT_EXECUTOR : executor;
-      boolean usingDefaultExecutor = executor.equals(DEFAULT_EXECUTOR);
+      boolean usingDefaultExecutor = executor == null;
+      ScheduledExecutorService executorService =
+          InstantiatingExecutorProvider.newBuilder().build().getExecutor();
+      executor = executor == null ? executorService : executor;
 
       return new ManagedHttpJsonChannel(
           executor,
