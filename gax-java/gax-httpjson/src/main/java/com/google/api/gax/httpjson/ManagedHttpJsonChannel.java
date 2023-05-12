@@ -170,9 +170,11 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
       Preconditions.checkNotNull(endpoint);
 
       boolean usingDefaultExecutor = executor == null;
-      ScheduledExecutorService executorService =
-          InstantiatingExecutorProvider.newBuilder().build().getExecutor();
-      executor = executor == null ? executorService : executor;
+      if (usingDefaultExecutor) {
+        ScheduledExecutorService executorService =
+            InstantiatingExecutorProvider.newBuilder().build().getExecutor();
+        executor = executor == null ? executorService : executor;
+      }
 
       return new ManagedHttpJsonChannel(
           executor,
