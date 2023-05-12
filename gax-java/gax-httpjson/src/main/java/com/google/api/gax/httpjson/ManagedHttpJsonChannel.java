@@ -47,23 +47,24 @@ import javax.annotation.Nullable;
 @BetaApi
 public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResource {
 
-  private static final ExecutorService DEFAULT_EXECUTOR =
-      InstantiatingExecutorProvider.newBuilder().build().getExecutor();
-
   private final Executor executor;
+  private final boolean usingDefaultExecutor;
   private final String endpoint;
   private final HttpTransport httpTransport;
   private final ScheduledExecutorService deadlineScheduledExecutorService;
-
   private boolean isTransportShutdown;
 
   protected ManagedHttpJsonChannel() {
-    this(null, null, null);
+    this(null, true, null, null);
   }
 
   private ManagedHttpJsonChannel(
-      Executor executor, String endpoint, @Nullable HttpTransport httpTransport) {
+      Executor executor,
+      boolean usingDefaultExecutor,
+      String endpoint,
+      @Nullable HttpTransport httpTransport) {
     this.executor = executor;
+    this.usingDefaultExecutor = usingDefaultExecutor;
     this.endpoint = endpoint;
     this.httpTransport = httpTransport == null ? new NetHttpTransport() : httpTransport;
     this.deadlineScheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
@@ -84,10 +85,16 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
 
   @Override
   public synchronized void shutdown() {
+    // Calling shutdown() twice should no-op
     if (isTransportShutdown) {
       return;
     }
     try {
+      // Only shutdown the executor if it was created by Gax. External executors
+      // should be managed by the user.
+      if (usingDefaultExecutor) {
+        ((ExecutorService) executor).shutdown();
+      }
       deadlineScheduledExecutorService.shutdown();
       httpTransport.shutdown();
       isTransportShutdown = true;
@@ -98,12 +105,22 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
 
   @Override
   public boolean isShutdown() {
-    return isTransportShutdown;
+    boolean isShutdown = deadlineScheduledExecutorService.isShutdown();
+    // Check that the Gax's ExecutorService is shutdown as well
+    if (usingDefaultExecutor) {
+      isShutdown = isShutdown && ((ExecutorService) executor).isShutdown();
+    }
+    return isShutdown;
   }
 
   @Override
   public boolean isTerminated() {
-    return isTransportShutdown;
+    boolean isTerminated = deadlineScheduledExecutorService.isTerminated();
+    // Check that the Gax's ExecutorService is terminated as well
+    if (usingDefaultExecutor) {
+      isTerminated = isTerminated && ((ExecutorService) executor).isTerminated();
+    }
+    return isTerminated;
   }
 
   @Override
@@ -113,15 +130,28 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
 
   @Override
   public boolean awaitTermination(long duration, TimeUnit unit) throws InterruptedException {
-    // TODO
-    return false;
+    long endTimeNanos = System.nanoTime() + unit.toNanos(duration);
+    long awaitTimeNanos = endTimeNanos - System.nanoTime();
+    // Only awaitTermination for the executor if it was created by Gax. External executors
+    // should be managed by the user.
+    if (usingDefaultExecutor && awaitTimeNanos > 0) {
+      boolean terminated = ((ExecutorService) executor).awaitTermination(awaitTimeNanos, unit);
+      // Termination duration has elapsed
+      if (!terminated) {
+        return false;
+      }
+    }
+    awaitTimeNanos = endTimeNanos - System.nanoTime();
+    return deadlineScheduledExecutorService.awaitTermination(awaitTimeNanos, unit);
   }
 
   @Override
-  public void close() {}
+  public void close() {
+    shutdown();
+  }
 
   public static Builder newBuilder() {
-    return new Builder().setExecutor(DEFAULT_EXECUTOR);
+    return new Builder();
   }
 
   public static class Builder {
@@ -133,7 +163,7 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
     private Builder() {}
 
     public Builder setExecutor(Executor executor) {
-      this.executor = executor == null ? DEFAULT_EXECUTOR : executor;
+      this.executor = executor;
       return this;
     }
 
@@ -150,8 +180,16 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
     public ManagedHttpJsonChannel build() {
       Preconditions.checkNotNull(endpoint);
 
+      boolean usingDefaultExecutor = executor == null;
+      if (usingDefaultExecutor) {
+        executor = InstantiatingExecutorProvider.newBuilder().build().getExecutor();
+      }
+
       return new ManagedHttpJsonChannel(
-          executor, endpoint, httpTransport == null ? new NetHttpTransport() : httpTransport);
+          executor,
+          usingDefaultExecutor,
+          endpoint,
+          httpTransport == null ? new NetHttpTransport() : httpTransport);
     }
   }
 }
