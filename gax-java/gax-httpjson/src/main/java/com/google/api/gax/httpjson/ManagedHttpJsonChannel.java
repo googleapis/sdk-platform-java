@@ -47,15 +47,11 @@ import javax.annotation.Nullable;
 @BetaApi
 public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResource {
 
-  private final ExecutorService DEFAULT_EXECUTOR =
-      InstantiatingExecutorProvider.newBuilder().build().getExecutor();
-
   private final Executor executor;
   private final boolean usingDefaultExecutor;
   private final String endpoint;
   private final HttpTransport httpTransport;
   private final ScheduledExecutorService deadlineScheduledExecutorService;
-
   private boolean isTransportShutdown;
 
   protected ManagedHttpJsonChannel() {
@@ -89,6 +85,7 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
 
   @Override
   public synchronized void shutdown() {
+    // Calling shutdown() twice should no-op
     if (isTransportShutdown) {
       return;
     }
@@ -108,12 +105,20 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
 
   @Override
   public boolean isShutdown() {
-    return isTransportShutdown;
+    if (usingDefaultExecutor) {
+      return ((ExecutorService) executor).isShutdown()
+          && deadlineScheduledExecutorService.isShutdown();
+    }
+    return deadlineScheduledExecutorService.isShutdown();
   }
 
   @Override
   public boolean isTerminated() {
-    return isTransportShutdown;
+    if (usingDefaultExecutor) {
+      return ((ExecutorService) executor).isTerminated()
+          && deadlineScheduledExecutorService.isTerminated();
+    }
+    return deadlineScheduledExecutorService.isTerminated();
   }
 
   @Override
@@ -128,7 +133,10 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
     // Only awaitTermination for the executor if it was created by Gax. External executors
     // should be managed by the user.
     if (usingDefaultExecutor && awaitTimeNanos > 0) {
-      ((ExecutorService) executor).awaitTermination(awaitTimeNanos, unit);
+      boolean terminated = ((ExecutorService) executor).awaitTermination(awaitTimeNanos, unit);
+      if (!terminated) {
+        return false;
+      }
     }
     awaitTimeNanos = endTimeNanos - System.nanoTime();
     return deadlineScheduledExecutorService.awaitTermination(awaitTimeNanos, unit);
