@@ -34,12 +34,13 @@ import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -64,19 +65,20 @@ public class ITHttpAnnotation {
   @Parameterized.Parameter(0)
   public String groupName;
 
-  private ComplianceSuite complianceSuite;
-  private ComplianceClient httpjsonClient;
-  private Map<String, Function<RepeatRequest, RepeatResponse>> validComplianceRpcMap;
+  private static ComplianceClient httpjsonClient;
+  private static ComplianceSuite complianceSuite;
+  private static Map<String, Function<RepeatRequest, RepeatResponse>> validComplianceRpcMap;
 
-  @Before
-  public void createClient() throws IOException, GeneralSecurityException {
+  @BeforeClass
+  public static void createClients() throws IOException, GeneralSecurityException {
     ComplianceSuite.Builder builder = ComplianceSuite.newBuilder();
     JsonFormat.parser()
         .merge(
             new InputStreamReader(
-                ITHttpAnnotation.class
-                    .getClassLoader()
-                    .getResourceAsStream("compliance_suite.json")),
+                Objects.requireNonNull(
+                    ITHttpAnnotation.class
+                        .getClassLoader()
+                        .getResourceAsStream("compliance_suite.json"))),
             builder);
     complianceSuite = builder.build();
 
@@ -111,8 +113,8 @@ public class ITHttpAnnotation {
             httpjsonClient::repeatDataPathResource);
   }
 
-  @After
-  public void destroyClient() throws InterruptedException {
+  @AfterClass
+  public static void destroyClients() throws InterruptedException {
     httpjsonClient.close();
     httpjsonClient.awaitTermination(
         TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);

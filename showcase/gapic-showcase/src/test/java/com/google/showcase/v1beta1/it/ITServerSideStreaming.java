@@ -32,30 +32,30 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
 public class ITServerSideStreaming {
 
-  private EchoClient grpcClient;
-  private EchoClient httpjsonClient;
+  private static EchoClient grpcClient;
+  private static EchoClient httpjsonClient;
 
-  @Before
-  public void createClients() throws Exception {
+  @BeforeClass
+  public static void createClients() throws Exception {
     // Create gRPC Echo Client
     grpcClient = TestClientInitializer.createGrpcEchoClient();
     // Create Http JSON Echo Client
     httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
   }
 
-  @After
-  public void destroyClient() throws InterruptedException {
+  @AfterClass
+  public static void destroyClients() throws InterruptedException {
     grpcClient.close();
-    grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
-
     httpjsonClient.close();
+
+    grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
     httpjsonClient.awaitTermination(
         TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }

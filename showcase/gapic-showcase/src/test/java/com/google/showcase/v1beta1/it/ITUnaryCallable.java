@@ -28,30 +28,30 @@ import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.util.concurrent.TimeUnit;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class ITUnaryCallable {
 
-  private EchoClient grpcClient;
+  private static EchoClient grpcClient;
 
-  private EchoClient httpjsonClient;
+  private static EchoClient httpjsonClient;
 
-  @Before
-  public void createClients() throws Exception {
+  @BeforeClass
+  public static void createClients() throws Exception {
     // Create gRPC Echo Client
     grpcClient = TestClientInitializer.createGrpcEchoClient();
     // Create Http JSON Echo Client
     httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
   }
 
-  @After
-  public void destroyClient() throws InterruptedException {
+  @AfterClass
+  public static void destroyClients() throws InterruptedException {
     grpcClient.close();
-    grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
-
     httpjsonClient.close();
+
+    grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
     httpjsonClient.awaitTermination(
         TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
@@ -73,13 +73,6 @@ public class ITUnaryCallable {
   }
 
   @Test
-  public void testGrpc_shutdown() {
-    assertThat(grpcClient.isShutdown()).isFalse();
-    grpcClient.shutdown();
-    assertThat(grpcClient.isShutdown()).isTrue();
-  }
-
-  @Test
   public void testHttpJson_receiveContent() {
     assertThat(echoHttpJson("http-echo?")).isEqualTo("http-echo?");
     assertThat(echoHttpJson("http-echo!")).isEqualTo("http-echo!");
@@ -94,13 +87,6 @@ public class ITUnaryCallable {
     CancelledException exception =
         assertThrows(CancelledException.class, () -> httpjsonClient.echo(requestWithServerError));
     assertThat(exception.getStatusCode().getCode()).isEqualTo(StatusCode.Code.CANCELLED);
-  }
-
-  @Test
-  public void testHttpJson_shutdown() {
-    assertThat(httpjsonClient.isShutdown()).isFalse();
-    httpjsonClient.shutdown();
-    assertThat(httpjsonClient.isShutdown()).isTrue();
   }
 
   private String echoGrpc(String value) {

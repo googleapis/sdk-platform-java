@@ -28,16 +28,16 @@ import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.concurrent.TimeUnit;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class ITNumericEnums {
 
-  private ComplianceClient httpjsonClient;
+  private static ComplianceClient httpjsonClient;
 
-  @Before
-  public void createClient() throws GeneralSecurityException, IOException {
+  @BeforeClass
+  public static void createClients() throws GeneralSecurityException, IOException {
     ComplianceSettings complianceSettings =
         ComplianceSettings.newHttpJsonBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
@@ -51,8 +51,8 @@ public class ITNumericEnums {
     httpjsonClient = ComplianceClient.create(complianceSettings);
   }
 
-  @After
-  public void destroyClient() throws InterruptedException {
+  @AfterClass
+  public static void destroyClients() throws InterruptedException {
     httpjsonClient.close();
     httpjsonClient.awaitTermination(
         TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);

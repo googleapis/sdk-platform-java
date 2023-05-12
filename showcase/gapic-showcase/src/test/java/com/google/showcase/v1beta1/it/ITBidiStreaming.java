@@ -30,22 +30,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class ITBidiStreaming {
 
-  private EchoClient grpcClient;
+  private static EchoClient grpcClient;
 
-  @Before
-  public void setUp() throws Exception {
+  @BeforeClass
+  public static void createClients() throws Exception {
     // Create gRPC Echo Client
     grpcClient = TestClientInitializer.createGrpcEchoClient();
   }
 
-  @After
-  public void tearDown() throws Exception {
+  @AfterClass
+  public static void destroyClients() throws Exception {
     grpcClient.close();
     grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
