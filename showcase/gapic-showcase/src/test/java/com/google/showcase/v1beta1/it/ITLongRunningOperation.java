@@ -131,9 +131,9 @@ public class ITLongRunningOperation {
     RetrySettings pollingRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRetryDelay(Duration.ofMillis(1000L))
-            .setRetryDelayMultiplier(1.0)
-            .setMaxRetryDelay(Duration.ofMillis(1000L))
-            .setTotalTimeout(Duration.ofMillis(3000L))
+            .setRetryDelayMultiplier(2.0)
+            .setMaxRetryDelay(Duration.ofMillis(3000L))
+            .setTotalTimeout(Duration.ofMillis(5000L))
             .build();
     EchoClient grpcClient =
         TestClientInitializer.createGrpcEchoClientCustomWaitSettings(
@@ -170,9 +170,9 @@ public class ITLongRunningOperation {
     RetrySettings pollingRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRetryDelay(Duration.ofMillis(1000L))
-            .setRetryDelayMultiplier(1.0)
-            .setMaxRetryDelay(Duration.ofMillis(1000L))
-            .setTotalTimeout(Duration.ofMillis(3000L))
+            .setRetryDelayMultiplier(2.0)
+            .setMaxRetryDelay(Duration.ofMillis(3000L))
+            .setTotalTimeout(Duration.ofMillis(5000L))
             .build();
     EchoClient httpjsonClient =
         TestClientInitializer.createHttpJsonEchoClientCustomWaitSettings(
