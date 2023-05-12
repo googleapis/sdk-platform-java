@@ -17,7 +17,7 @@ package com.google.api.generator.engine.ast;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
-import com.google.api.generator.util.TestUtils;
+import com.google.api.generator.test.utils.TestExprBuilder;
 import org.junit.Test;
 
 public class ArrayExprTest {
@@ -27,9 +27,9 @@ public class ArrayExprTest {
     ArrayExpr.Builder exprBuilder =
         ArrayExpr.builder()
             .setType(TypeNode.createArrayTypeOf(TypeNode.STRING))
-            .addExpr(TestUtils.generateStringValueExpr("test1"))
-            .addExpr(TestUtils.generateStringValueExpr("test2"))
-            .addExpr(TestUtils.generateStringValueExpr("test3"))
+            .addExpr(TestExprBuilder.generateStringValueExpr("test1"))
+            .addExpr(TestExprBuilder.generateStringValueExpr("test2"))
+            .addExpr(TestExprBuilder.generateStringValueExpr("test3"))
             .addExpr(
                 ValueExpr.withValue(
                     PrimitiveValue.builder().setValue("1").setType(TypeNode.INT).build()));

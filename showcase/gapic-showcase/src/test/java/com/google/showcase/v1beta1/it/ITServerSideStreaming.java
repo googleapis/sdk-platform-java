@@ -19,23 +19,29 @@ package com.google.showcase.v1beta1.it;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
+import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.rpc.CancelledException;
 import com.google.api.gax.rpc.ServerStream;
 import com.google.api.gax.rpc.StatusCode;
+import com.google.api.gax.rpc.WatchdogTimeoutException;
 import com.google.common.collect.ImmutableList;
 import com.google.rpc.Status;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoResponse;
+import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.ExpandRequest;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
+import io.grpc.ManagedChannelBuilder;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.threeten.bp.Duration;
 
 public class ITServerSideStreaming {
 
@@ -107,6 +113,49 @@ public class ITServerSideStreaming {
     CancelledException cancelledException =
         assertThrows(CancelledException.class, echoResponseIterator::next);
     assertThat(cancelledException.getStatusCode().getCode()).isEqualTo(StatusCode.Code.CANCELLED);
+  }
+
+  @Test
+  public void testGrpc_serverWaitTimeout_watchdogCancelsStream() throws Exception {
+    EchoSettings.Builder settings =
+        EchoSettings.newBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultGrpcTransportProviderBuilder()
+                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .build());
+
+    settings
+        .expandSettings()
+        .setIdleTimeout(Duration.ofMillis(100))
+        .setWaitTimeout(Duration.ofMillis(100));
+
+    settings.getStubSettingsBuilder().setStreamWatchdogCheckInterval(Duration.ofMillis(50));
+
+    EchoClient echoClient = EchoClient.create(settings.build());
+
+    String content = "The rain in Spain stays mainly on the plain!";
+    ServerStream<EchoResponse> responseStream =
+        echoClient
+            .expandCallable()
+            .call(
+                ExpandRequest.newBuilder()
+                    .setContent(content)
+                    // Configure server interval for returning the next response
+                    .setStreamWaitTime(
+                        com.google.protobuf.Duration.newBuilder().setSeconds(1).build())
+                    .build());
+    ArrayList<String> responses = new ArrayList<>();
+    try {
+      for (EchoResponse response : responseStream) {
+        responses.add(response.getContent());
+      }
+      Assert.fail("No exception was thrown");
+    } catch (WatchdogTimeoutException e) {
+      assertThat(e).hasMessageThat().contains("Canceled due to timeout waiting for next response");
+    } finally {
+      echoClient.close();
+    }
   }
 
   @Test

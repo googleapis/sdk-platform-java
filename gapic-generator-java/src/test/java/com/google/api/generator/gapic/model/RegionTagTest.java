@@ -15,7 +15,7 @@
 package com.google.api.generator.gapic.model;
 
 import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
-import com.google.api.generator.testutils.LineFormatter;
+import com.google.api.generator.test.utils.LineFormatter;
 import java.util.Arrays;
 import org.junit.Assert;
 import org.junit.Test;
