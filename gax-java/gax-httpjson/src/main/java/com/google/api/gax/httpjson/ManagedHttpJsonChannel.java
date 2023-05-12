@@ -132,9 +132,12 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
   public boolean awaitTermination(long duration, TimeUnit unit) throws InterruptedException {
     long endTimeNanos = System.nanoTime() + unit.toNanos(duration);
     long awaitTimeNanos = endTimeNanos - System.nanoTime();
+    if (awaitTimeNanos <= 0) {
+      return false;
+    }
     // Only awaitTermination for the executor if it was created by Gax. External executors
     // should be managed by the user.
-    if (usingDefaultExecutor && awaitTimeNanos > 0) {
+    if (usingDefaultExecutor) {
       boolean terminated = ((ExecutorService) executor).awaitTermination(awaitTimeNanos, unit);
       // Termination duration has elapsed
       if (!terminated) {
