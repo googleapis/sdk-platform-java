@@ -131,19 +131,18 @@ public class ITLongRunningOperation {
     RetrySettings pollingRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRetryDelay(Duration.ofMillis(1000L))
-            .setRetryDelayMultiplier(1.0)
-            .setMaxRetryDelay(Duration.ofMillis(1000L))
+            .setRetryDelayMultiplier(2.0)
+            .setMaxRetryDelay(Duration.ofMillis(3000L))
             .setTotalTimeout(Duration.ofMillis(5000L))
             .build();
     EchoClient grpcClient =
         TestClientInitializer.createGrpcEchoClientCustomWaitSettings(
             initialUnaryRetrySettings, pollingRetrySettings);
     try {
-      long epochSecondsInFuture = Instant.now().plus(10, ChronoUnit.SECONDS).getEpochSecond();
       WaitRequest waitRequest =
           WaitRequest.newBuilder()
-              .setSuccess(WaitResponse.newBuilder().setContent("gRPCWaitContent_10sDelay"))
-              .setEndTime(Timestamp.newBuilder().setSeconds(epochSecondsInFuture).build())
+              .setSuccess(WaitResponse.newBuilder().setContent("httpjsonWaitContent_10sDelay"))
+              .setTtl(com.google.protobuf.Duration.newBuilder().setSeconds(10))
               .build();
       OperationFuture<WaitResponse, WaitMetadata> operationFuture =
           grpcClient.waitOperationCallable().futureCall(waitRequest);
@@ -171,19 +170,18 @@ public class ITLongRunningOperation {
     RetrySettings pollingRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRetryDelay(Duration.ofMillis(1000L))
-            .setRetryDelayMultiplier(1.0)
-            .setMaxRetryDelay(Duration.ofMillis(1000L))
+            .setRetryDelayMultiplier(2.0)
+            .setMaxRetryDelay(Duration.ofMillis(3000L))
             .setTotalTimeout(Duration.ofMillis(5000L))
             .build();
     EchoClient httpjsonClient =
         TestClientInitializer.createHttpJsonEchoClientCustomWaitSettings(
             initialUnaryRetrySettings, pollingRetrySettings);
     try {
-      long epochSecondsInFuture = Instant.now().plus(10, ChronoUnit.SECONDS).getEpochSecond();
       WaitRequest waitRequest =
           WaitRequest.newBuilder()
               .setSuccess(WaitResponse.newBuilder().setContent("httpjsonWaitContent_10sDelay"))
-              .setEndTime(Timestamp.newBuilder().setSeconds(epochSecondsInFuture).build())
+              .setTtl(com.google.protobuf.Duration.newBuilder().setSeconds(10))
               .build();
       OperationFuture<WaitResponse, WaitMetadata> operationFuture =
           httpjsonClient.waitOperationCallable().futureCall(waitRequest);
