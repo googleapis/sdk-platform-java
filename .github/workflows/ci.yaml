@@ -65,9 +65,9 @@ jobs:
       - run: echo "JAVA8_HOME=${JAVA_HOME}" >> $GITHUB_ENV
       - uses: actions/setup-java@v3
         with:
-          java-version: 11
+          java-version: 17
           distribution: temurin
-      - name: Compile with Java 11 and run tests with Java 8
+      - name: Compile with Java 17 and run tests with Java 8
         shell: bash
         run: |
           set -x
