@@ -1,5 +1,82 @@
 # Changelog
 
+## [2.19.0](https://github.com/googleapis/gapic-generator-java/compare/v2.18.0...v2.19.0) (2023-05-09)
+
+
+### Features
+
+* [common-protos] .NET library settings (for generator behavior tweaks) ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+* [common-protos] add GEO, SHOPPING, GENERATIVE_AI client orgs ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+* [common-protos] Log Analytics features of the Cloud Logging API ([#1573](https://github.com/googleapis/gapic-generator-java/issues/1573)) ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+* Add an option to enable DirectPath xDS ([#1643](https://github.com/googleapis/gapic-generator-java/issues/1643)) ([4054bc6](https://github.com/googleapis/gapic-generator-java/commit/4054bc668daf797a8fce798843e0ec4cda669faa))
+* Add ConfigServiceV2.CreateBucketAsync method for creating Log Buckets asynchronously ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+* Add ConfigServiceV2.CreateLink method for creating linked datasets for Log Analytics Buckets ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+* Add ConfigServiceV2.DeleteLink method for deleting linked datasets ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+* Add ConfigServiceV2.GetLink methods for describing linked datasets ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+* Add ConfigServiceV2.ListLinks method for listing linked datasets ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+* Add ConfigServiceV2.UpdateBucketAsync method for creating Log Buckets asynchronously ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+* Add LogBucket.analytics_enabled field that specifies whether Log Bucket's Analytics features are enabled ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+* Add LogBucket.index_configs field that contains a list of Log Bucket's indexed fields and related configuration data ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+* Remove directpath enable env ([#1657](https://github.com/googleapis/gapic-generator-java/issues/1657)) ([47851e8](https://github.com/googleapis/gapic-generator-java/commit/47851e877c868ddd6c3eb368591b4e6b635e21c1))
+
+
+### Bug Fixes
+
+* Unary Callables Deadline values respect the TotalTimeout in RetrySettings ([#1603](https://github.com/googleapis/gapic-generator-java/issues/1603)) ([d2fe520](https://github.com/googleapis/gapic-generator-java/commit/d2fe5203c4db1f8ddfd5a9566e6259b53441348a))
+
+
+### Dependencies
+
+* Update dependency org.graalvm.sdk:graal-sdk to v22.3.2 ([6107ff3](https://github.com/googleapis/gapic-generator-java/commit/6107ff316c544e4acb1d808a2ddaf9a805f9d7e7))
+
+
+### Documentation
+
+* [common-protos] mark ReservationResourceUsage field as deprecated ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+* [common-protos] use deprecated=true for deprecated fields ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+* Documentation for the Log Analytics features of the Cloud Logging API ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+* Fix new_issue_uri comment ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+* Separate paragraphs in linear/exponential distributions ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+
+## [2.18.0](https://github.com/googleapis/gapic-generator-java/compare/v2.17.0...v2.18.0) (2023-04-25)
+
+
+### Features
+
+* **deps:** Add gapic-generator-java to bom ([#1645](https://github.com/googleapis/gapic-generator-java/issues/1645)) ([3e85c4b](https://github.com/googleapis/gapic-generator-java/commit/3e85c4b0e7c7e7fe1df14f2ace6130ac85039368))
+
+
+### Bug Fixes
+
+* Unescape Java keyword field names when generating HttpJson unit tests. ([#1654](https://github.com/googleapis/gapic-generator-java/issues/1654)) ([5fd79ea](https://github.com/googleapis/gapic-generator-java/commit/5fd79ea433d74d27d6115d91e2e0947e7b247b5d))
+
+## [2.17.0](https://github.com/googleapis/gapic-generator-java/compare/v2.16.0...v2.17.0) (2023-04-11)
+
+
+### Features
+
+* Add `FunctionalInterface` annotation ([#1515](https://github.com/googleapis/gapic-generator-java/issues/1515)) ([66c0509](https://github.com/googleapis/gapic-generator-java/commit/66c05093b5c56208c3f785e9cf0f5b50f5ad16d4))
+* Add stream method for `ServerStream` ([#1575](https://github.com/googleapis/gapic-generator-java/issues/1575)) ([e38c8ec](https://github.com/googleapis/gapic-generator-java/commit/e38c8ec4c2fca131c91e264c7b3e2cad9243a6e5))
+* Add stream methods for `Page` ([#1425](https://github.com/googleapis/gapic-generator-java/issues/1425)) ([cf0e01a](https://github.com/googleapis/gapic-generator-java/commit/cf0e01a47258c46a1b4431920b8d7cd24ae9b801))
+
+
+### Bug Fixes
+
+* Add javadoc for `ApiFutures` ([#1609](https://github.com/googleapis/gapic-generator-java/issues/1609)) ([4bb0a5e](https://github.com/googleapis/gapic-generator-java/commit/4bb0a5e3ce78878841e87a47cd457995ea9ed87e))
+* **deps:** Remove unnecessary auto-value in api-common-java ([#1621](https://github.com/googleapis/gapic-generator-java/issues/1621)) ([ffeb820](https://github.com/googleapis/gapic-generator-java/commit/ffeb820ab5a530ca0f8a91d873b07b4ebaea320b))
+
+
+### Dependencies
+
+* Update dependency cryptography to v39.0.2 ([#1592](https://github.com/googleapis/gapic-generator-java/issues/1592)) ([74cf36e](https://github.com/googleapis/gapic-generator-java/commit/74cf36e628a7f0d2e00c3bf1426be9b8089df8af))
+* Update dependency gcp-docuploader to v0.6.5 ([#1593](https://github.com/googleapis/gapic-generator-java/issues/1593)) ([501ee9c](https://github.com/googleapis/gapic-generator-java/commit/501ee9c61bd3f0091bf07d0e60c1dcd2319d1a17))
+* Update dependency google-cloud-core to v2.3.2 ([#1595](https://github.com/googleapis/gapic-generator-java/issues/1595)) ([335a104](https://github.com/googleapis/gapic-generator-java/commit/335a104d4846623a25497f5650ea553d5cca677a))
+* Update dependency net.bytebuddy:byte-buddy to v1.14.3 ([#1567](https://github.com/googleapis/gapic-generator-java/issues/1567)) ([a270ceb](https://github.com/googleapis/gapic-generator-java/commit/a270cebfeb8d1bb2270cef93f19c44935ed980cf))
+* Update dependency org.threeten:threetenbp to v1.6.8 ([#1590](https://github.com/googleapis/gapic-generator-java/issues/1590)) ([26d1c3e](https://github.com/googleapis/gapic-generator-java/commit/26d1c3e511c6fa3a353c3205c06fa8dad6019715))
+* Update dependency org.threeten:threetenbp to v1.6.8 ([#1591](https://github.com/googleapis/gapic-generator-java/issues/1591)) ([c3bed81](https://github.com/googleapis/gapic-generator-java/commit/c3bed81d540db51aaaa6e057133efa96b0f814a8))
+* Update dependency urllib3 to v1.26.15 ([#1596](https://github.com/googleapis/gapic-generator-java/issues/1596)) ([3288fb3](https://github.com/googleapis/gapic-generator-java/commit/3288fb323d957b182bf246540f9f17157afc5285))
+* Update google api dependencies ([#1578](https://github.com/googleapis/gapic-generator-java/issues/1578)) ([c537aba](https://github.com/googleapis/gapic-generator-java/commit/c537aba9d1c6cd4ecdcdc7ce0914a6c605c58b68))
+
 ## [2.16.0](https://github.com/googleapis/gapic-generator-java/compare/v2.15.3...v2.16.0) (2023-03-28)
 
 

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.util;
+package com.google.api.generator.test.utils;
 
 import com.google.api.generator.engine.ast.StringObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -22,7 +22,7 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 
-public class TestUtils {
+public class TestExprBuilder {
 
   public static ValueExpr generateStringValueExpr(String value) {
     return ValueExpr.builder().setValue(StringObjectValue.withValue(value)).build();

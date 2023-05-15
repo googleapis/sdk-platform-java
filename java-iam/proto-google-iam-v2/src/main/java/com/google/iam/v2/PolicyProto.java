@@ -129,11 +129,10 @@ public final class PolicyProto {
           + "\033*\031/v2/{name=policies/*/*/*}\332A\004name\312A!\n\006"
           + "Policy\022\027PolicyOperationMetadata\032F\312A\022iam."
           + "googleapis.com\322A.https://www.googleapis."
-          + "com/auth/cloud-platformB\200\001\n\021com.google.i"
-          + "am.v2B\013PolicyProtoP\001Z0google.golang.org/"
-          + "genproto/googleapis/iam/v2;iam\252\002\023Google."
-          + "Cloud.Iam.V2\312\002\023Google\\Cloud\\Iam\\V2b\006prot"
-          + "o3"
+          + "com/auth/cloud-platformBy\n\021com.google.ia"
+          + "m.v2B\013PolicyProtoP\001Z)cloud.google.com/go"
+          + "/iam/apiv2/iampb;iampb\252\002\023Google.Cloud.Ia"
+          + "m.V2\312\002\023Google\\Cloud\\Iam\\V2b\006proto3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(

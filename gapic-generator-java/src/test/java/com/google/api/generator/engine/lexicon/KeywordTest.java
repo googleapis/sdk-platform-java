@@ -45,4 +45,34 @@ public class KeywordTest {
     assertThat(Keyword.isKeyword("class")).isTrue();
     assertThat(Keyword.isInvalidFieldName("class")).isFalse();
   }
+
+  @Test
+  public void unescapedKeyword_shouldReturnItselfIfEmpty() {
+    assertThat(Keyword.unescapeKeyword("")).isEqualTo("");
+  }
+
+  @Test
+  public void unescapedKeyword_shouldReturnItselfIfDoesNotEndWithEscapeChar() {
+    assertThat(Keyword.unescapeKeyword("hello")).isEqualTo("hello");
+  }
+
+  @Test
+  public void unescapedKeyword_shouldReturnItselfIfEndsWithEscapeCharButNotAKeyword() {
+    assertThat(Keyword.unescapeKeyword("important_")).isEqualTo("important_");
+  }
+
+  @Test
+  public void unescapedKeyword_shouldUnescapeIfEndsWithEscapeCharAndAKeyword() {
+    assertThat(Keyword.unescapeKeyword("import_")).isEqualTo("import");
+  }
+
+  @Test
+  public void escapeKeyword_shouldEscapeIfIsAKeyword() {
+    assertThat(Keyword.escapeKeyword("final")).isEqualTo("final_");
+  }
+
+  @Test
+  public void escapeKeyword_shouldNotEscapeIfIsNotAKeyword() {
+    assertThat(Keyword.escapeKeyword("fantasy")).isEqualTo("fantasy");
+  }
 }

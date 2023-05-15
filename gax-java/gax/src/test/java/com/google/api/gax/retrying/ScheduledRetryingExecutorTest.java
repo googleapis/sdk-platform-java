@@ -101,6 +101,7 @@ public class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest 
           getRetryingExecutor(getAlgorithm(retrySettings, 0, null), localExecutor);
       RetryingFuture<String> future =
           executor.createFuture(callable, FakeCallContext.createDefault().withTracer(tracer));
+      callable.setExternalFuture(future);
 
       assertNull(future.peekAttemptResult());
       assertSame(future.peekAttemptResult(), future.peekAttemptResult());
@@ -151,6 +152,7 @@ public class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest 
           getRetryingExecutor(getAlgorithm(retrySettings, 0, null), localExecutor);
       RetryingFuture<String> future =
           executor.createFuture(callable, FakeCallContext.createDefault().withTracer(tracer));
+      callable.setExternalFuture(future);
 
       assertNull(future.peekAttemptResult());
       assertSame(future.getAttemptResult(), future.getAttemptResult());
@@ -203,6 +205,7 @@ public class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest 
       RetryingExecutorWithContext<String> executor =
           getRetryingExecutor(getAlgorithm(retrySettings, 0, null), localExecutor);
       RetryingFuture<String> future = executor.createFuture(callable, retryingContext);
+      callable.setExternalFuture(future);
 
       assertNull(future.peekAttemptResult());
       assertSame(future.getAttemptResult(), future.getAttemptResult());
@@ -261,6 +264,7 @@ public class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest 
           getRetryingExecutor(getAlgorithm(retrySettings, 0, null), localExecutor);
       RetryingFuture<String> future =
           executor.createFuture(callable, FakeCallContext.createDefault().withTracer(tracer));
+      callable.setExternalFuture(future);
       future.setAttemptFuture(executor.submit(future));
 
       Thread.sleep(30L);
@@ -288,6 +292,7 @@ public class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest 
         getRetryingExecutor(getAlgorithm(retrySettings, 0, null), localExecutor);
     RetryingFuture<String> future =
         executor.createFuture(callable, FakeCallContext.createDefault().withTracer(tracer));
+    callable.setExternalFuture(future);
     future.setAttemptFuture(executor.submit(future));
 
     Thread.sleep(30L);
@@ -317,6 +322,7 @@ public class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest 
           getRetryingExecutor(getAlgorithm(retrySettings, 0, null), localExecutor);
       RetryingFuture<String> future =
           executor.createFuture(callable, FakeCallContext.createDefault().withTracer(tracer));
+      callable.setExternalFuture(future);
       future.setAttemptFuture(executor.submit(future));
 
       Thread.sleep(50L);

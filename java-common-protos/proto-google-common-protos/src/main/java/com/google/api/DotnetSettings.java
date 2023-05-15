@@ -37,7 +37,11 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     super(builder);
   }
 
-  private DotnetSettings() {}
+  private DotnetSettings() {
+    ignoredResources_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    forcedNamespaceAliases_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    handwrittenSignatures_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+  }
 
   @java.lang.Override
   @SuppressWarnings({"unused"})
@@ -52,6 +56,19 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.ClientProto.internal_static_google_api_DotnetSettings_descriptor;
+  }
+
+  @SuppressWarnings({"rawtypes"})
+  @java.lang.Override
+  protected com.google.protobuf.MapField internalGetMapField(int number) {
+    switch (number) {
+      case 2:
+        return internalGetRenamedServices();
+      case 3:
+        return internalGetRenamedResources();
+      default:
+        throw new RuntimeException("Invalid map field number: " + number);
+    }
   }
 
   @java.lang.Override
@@ -108,6 +125,463 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     return common_ == null ? com.google.api.CommonLanguageSettings.getDefaultInstance() : common_;
   }
 
+  public static final int RENAMED_SERVICES_FIELD_NUMBER = 2;
+
+  private static final class RenamedServicesDefaultEntryHolder {
+    static final com.google.protobuf.MapEntry<java.lang.String, java.lang.String> defaultEntry =
+        com.google.protobuf.MapEntry.<java.lang.String, java.lang.String>newDefaultInstance(
+            com.google.api.ClientProto
+                .internal_static_google_api_DotnetSettings_RenamedServicesEntry_descriptor,
+            com.google.protobuf.WireFormat.FieldType.STRING,
+            "",
+            com.google.protobuf.WireFormat.FieldType.STRING,
+            "");
+  }
+
+  @SuppressWarnings("serial")
+  private com.google.protobuf.MapField<java.lang.String, java.lang.String> renamedServices_;
+
+  private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+      internalGetRenamedServices() {
+    if (renamedServices_ == null) {
+      return com.google.protobuf.MapField.emptyMapField(
+          RenamedServicesDefaultEntryHolder.defaultEntry);
+    }
+    return renamedServices_;
+  }
+
+  public int getRenamedServicesCount() {
+    return internalGetRenamedServices().getMap().size();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Map from original service names to renamed versions.
+   * This is used when the default generated types
+   * would cause a naming conflict. (Neither name is
+   * fully-qualified.)
+   * Example: Subscriber to SubscriberServiceApi.
+   * </pre>
+   *
+   * <code>map&lt;string, string&gt; renamed_services = 2;</code>
+   */
+  @java.lang.Override
+  public boolean containsRenamedServices(java.lang.String key) {
+    if (key == null) {
+      throw new NullPointerException("map key");
+    }
+    return internalGetRenamedServices().getMap().containsKey(key);
+  }
+  /** Use {@link #getRenamedServicesMap()} instead. */
+  @java.lang.Override
+  @java.lang.Deprecated
+  public java.util.Map<java.lang.String, java.lang.String> getRenamedServices() {
+    return getRenamedServicesMap();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Map from original service names to renamed versions.
+   * This is used when the default generated types
+   * would cause a naming conflict. (Neither name is
+   * fully-qualified.)
+   * Example: Subscriber to SubscriberServiceApi.
+   * </pre>
+   *
+   * <code>map&lt;string, string&gt; renamed_services = 2;</code>
+   */
+  @java.lang.Override
+  public java.util.Map<java.lang.String, java.lang.String> getRenamedServicesMap() {
+    return internalGetRenamedServices().getMap();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Map from original service names to renamed versions.
+   * This is used when the default generated types
+   * would cause a naming conflict. (Neither name is
+   * fully-qualified.)
+   * Example: Subscriber to SubscriberServiceApi.
+   * </pre>
+   *
+   * <code>map&lt;string, string&gt; renamed_services = 2;</code>
+   */
+  @java.lang.Override
+  public /* nullable */ java.lang.String getRenamedServicesOrDefault(
+      java.lang.String key,
+      /* nullable */
+      java.lang.String defaultValue) {
+    if (key == null) {
+      throw new NullPointerException("map key");
+    }
+    java.util.Map<java.lang.String, java.lang.String> map = internalGetRenamedServices().getMap();
+    return map.containsKey(key) ? map.get(key) : defaultValue;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Map from original service names to renamed versions.
+   * This is used when the default generated types
+   * would cause a naming conflict. (Neither name is
+   * fully-qualified.)
+   * Example: Subscriber to SubscriberServiceApi.
+   * </pre>
+   *
+   * <code>map&lt;string, string&gt; renamed_services = 2;</code>
+   */
+  @java.lang.Override
+  public java.lang.String getRenamedServicesOrThrow(java.lang.String key) {
+    if (key == null) {
+      throw new NullPointerException("map key");
+    }
+    java.util.Map<java.lang.String, java.lang.String> map = internalGetRenamedServices().getMap();
+    if (!map.containsKey(key)) {
+      throw new java.lang.IllegalArgumentException();
+    }
+    return map.get(key);
+  }
+
+  public static final int RENAMED_RESOURCES_FIELD_NUMBER = 3;
+
+  private static final class RenamedResourcesDefaultEntryHolder {
+    static final com.google.protobuf.MapEntry<java.lang.String, java.lang.String> defaultEntry =
+        com.google.protobuf.MapEntry.<java.lang.String, java.lang.String>newDefaultInstance(
+            com.google.api.ClientProto
+                .internal_static_google_api_DotnetSettings_RenamedResourcesEntry_descriptor,
+            com.google.protobuf.WireFormat.FieldType.STRING,
+            "",
+            com.google.protobuf.WireFormat.FieldType.STRING,
+            "");
+  }
+
+  @SuppressWarnings("serial")
+  private com.google.protobuf.MapField<java.lang.String, java.lang.String> renamedResources_;
+
+  private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+      internalGetRenamedResources() {
+    if (renamedResources_ == null) {
+      return com.google.protobuf.MapField.emptyMapField(
+          RenamedResourcesDefaultEntryHolder.defaultEntry);
+    }
+    return renamedResources_;
+  }
+
+  public int getRenamedResourcesCount() {
+    return internalGetRenamedResources().getMap().size();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Map from full resource types to the effective short name
+   * for the resource. This is used when otherwise resource
+   * named from different services would cause naming collisions.
+   * Example entry:
+   * "datalabeling.googleapis.com/Dataset": "DataLabelingDataset"
+   * </pre>
+   *
+   * <code>map&lt;string, string&gt; renamed_resources = 3;</code>
+   */
+  @java.lang.Override
+  public boolean containsRenamedResources(java.lang.String key) {
+    if (key == null) {
+      throw new NullPointerException("map key");
+    }
+    return internalGetRenamedResources().getMap().containsKey(key);
+  }
+  /** Use {@link #getRenamedResourcesMap()} instead. */
+  @java.lang.Override
+  @java.lang.Deprecated
+  public java.util.Map<java.lang.String, java.lang.String> getRenamedResources() {
+    return getRenamedResourcesMap();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Map from full resource types to the effective short name
+   * for the resource. This is used when otherwise resource
+   * named from different services would cause naming collisions.
+   * Example entry:
+   * "datalabeling.googleapis.com/Dataset": "DataLabelingDataset"
+   * </pre>
+   *
+   * <code>map&lt;string, string&gt; renamed_resources = 3;</code>
+   */
+  @java.lang.Override
+  public java.util.Map<java.lang.String, java.lang.String> getRenamedResourcesMap() {
+    return internalGetRenamedResources().getMap();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Map from full resource types to the effective short name
+   * for the resource. This is used when otherwise resource
+   * named from different services would cause naming collisions.
+   * Example entry:
+   * "datalabeling.googleapis.com/Dataset": "DataLabelingDataset"
+   * </pre>
+   *
+   * <code>map&lt;string, string&gt; renamed_resources = 3;</code>
+   */
+  @java.lang.Override
+  public /* nullable */ java.lang.String getRenamedResourcesOrDefault(
+      java.lang.String key,
+      /* nullable */
+      java.lang.String defaultValue) {
+    if (key == null) {
+      throw new NullPointerException("map key");
+    }
+    java.util.Map<java.lang.String, java.lang.String> map = internalGetRenamedResources().getMap();
+    return map.containsKey(key) ? map.get(key) : defaultValue;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Map from full resource types to the effective short name
+   * for the resource. This is used when otherwise resource
+   * named from different services would cause naming collisions.
+   * Example entry:
+   * "datalabeling.googleapis.com/Dataset": "DataLabelingDataset"
+   * </pre>
+   *
+   * <code>map&lt;string, string&gt; renamed_resources = 3;</code>
+   */
+  @java.lang.Override
+  public java.lang.String getRenamedResourcesOrThrow(java.lang.String key) {
+    if (key == null) {
+      throw new NullPointerException("map key");
+    }
+    java.util.Map<java.lang.String, java.lang.String> map = internalGetRenamedResources().getMap();
+    if (!map.containsKey(key)) {
+      throw new java.lang.IllegalArgumentException();
+    }
+    return map.get(key);
+  }
+
+  public static final int IGNORED_RESOURCES_FIELD_NUMBER = 4;
+
+  @SuppressWarnings("serial")
+  private com.google.protobuf.LazyStringList ignoredResources_;
+  /**
+   *
+   *
+   * <pre>
+   * List of full resource types to ignore during generation.
+   * This is typically used for API-specific Location resources,
+   * which should be handled by the generator as if they were actually
+   * the common Location resources.
+   * Example entry: "documentai.googleapis.com/Location"
+   * </pre>
+   *
+   * <code>repeated string ignored_resources = 4;</code>
+   *
+   * @return A list containing the ignoredResources.
+   */
+  public com.google.protobuf.ProtocolStringList getIgnoredResourcesList() {
+    return ignoredResources_;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * List of full resource types to ignore during generation.
+   * This is typically used for API-specific Location resources,
+   * which should be handled by the generator as if they were actually
+   * the common Location resources.
+   * Example entry: "documentai.googleapis.com/Location"
+   * </pre>
+   *
+   * <code>repeated string ignored_resources = 4;</code>
+   *
+   * @return The count of ignoredResources.
+   */
+  public int getIgnoredResourcesCount() {
+    return ignoredResources_.size();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * List of full resource types to ignore during generation.
+   * This is typically used for API-specific Location resources,
+   * which should be handled by the generator as if they were actually
+   * the common Location resources.
+   * Example entry: "documentai.googleapis.com/Location"
+   * </pre>
+   *
+   * <code>repeated string ignored_resources = 4;</code>
+   *
+   * @param index The index of the element to return.
+   * @return The ignoredResources at the given index.
+   */
+  public java.lang.String getIgnoredResources(int index) {
+    return ignoredResources_.get(index);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * List of full resource types to ignore during generation.
+   * This is typically used for API-specific Location resources,
+   * which should be handled by the generator as if they were actually
+   * the common Location resources.
+   * Example entry: "documentai.googleapis.com/Location"
+   * </pre>
+   *
+   * <code>repeated string ignored_resources = 4;</code>
+   *
+   * @param index The index of the value to return.
+   * @return The bytes of the ignoredResources at the given index.
+   */
+  public com.google.protobuf.ByteString getIgnoredResourcesBytes(int index) {
+    return ignoredResources_.getByteString(index);
+  }
+
+  public static final int FORCED_NAMESPACE_ALIASES_FIELD_NUMBER = 5;
+
+  @SuppressWarnings("serial")
+  private com.google.protobuf.LazyStringList forcedNamespaceAliases_;
+  /**
+   *
+   *
+   * <pre>
+   * Namespaces which must be aliased in snippets due to
+   * a known (but non-generator-predictable) naming collision
+   * </pre>
+   *
+   * <code>repeated string forced_namespace_aliases = 5;</code>
+   *
+   * @return A list containing the forcedNamespaceAliases.
+   */
+  public com.google.protobuf.ProtocolStringList getForcedNamespaceAliasesList() {
+    return forcedNamespaceAliases_;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Namespaces which must be aliased in snippets due to
+   * a known (but non-generator-predictable) naming collision
+   * </pre>
+   *
+   * <code>repeated string forced_namespace_aliases = 5;</code>
+   *
+   * @return The count of forcedNamespaceAliases.
+   */
+  public int getForcedNamespaceAliasesCount() {
+    return forcedNamespaceAliases_.size();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Namespaces which must be aliased in snippets due to
+   * a known (but non-generator-predictable) naming collision
+   * </pre>
+   *
+   * <code>repeated string forced_namespace_aliases = 5;</code>
+   *
+   * @param index The index of the element to return.
+   * @return The forcedNamespaceAliases at the given index.
+   */
+  public java.lang.String getForcedNamespaceAliases(int index) {
+    return forcedNamespaceAliases_.get(index);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Namespaces which must be aliased in snippets due to
+   * a known (but non-generator-predictable) naming collision
+   * </pre>
+   *
+   * <code>repeated string forced_namespace_aliases = 5;</code>
+   *
+   * @param index The index of the value to return.
+   * @return The bytes of the forcedNamespaceAliases at the given index.
+   */
+  public com.google.protobuf.ByteString getForcedNamespaceAliasesBytes(int index) {
+    return forcedNamespaceAliases_.getByteString(index);
+  }
+
+  public static final int HANDWRITTEN_SIGNATURES_FIELD_NUMBER = 6;
+
+  @SuppressWarnings("serial")
+  private com.google.protobuf.LazyStringList handwrittenSignatures_;
+  /**
+   *
+   *
+   * <pre>
+   * Method signatures (in the form "service.method(signature)")
+   * which are provided separately, so shouldn't be generated.
+   * Snippets *calling* these methods are still generated, however.
+   * </pre>
+   *
+   * <code>repeated string handwritten_signatures = 6;</code>
+   *
+   * @return A list containing the handwrittenSignatures.
+   */
+  public com.google.protobuf.ProtocolStringList getHandwrittenSignaturesList() {
+    return handwrittenSignatures_;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Method signatures (in the form "service.method(signature)")
+   * which are provided separately, so shouldn't be generated.
+   * Snippets *calling* these methods are still generated, however.
+   * </pre>
+   *
+   * <code>repeated string handwritten_signatures = 6;</code>
+   *
+   * @return The count of handwrittenSignatures.
+   */
+  public int getHandwrittenSignaturesCount() {
+    return handwrittenSignatures_.size();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Method signatures (in the form "service.method(signature)")
+   * which are provided separately, so shouldn't be generated.
+   * Snippets *calling* these methods are still generated, however.
+   * </pre>
+   *
+   * <code>repeated string handwritten_signatures = 6;</code>
+   *
+   * @param index The index of the element to return.
+   * @return The handwrittenSignatures at the given index.
+   */
+  public java.lang.String getHandwrittenSignatures(int index) {
+    return handwrittenSignatures_.get(index);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Method signatures (in the form "service.method(signature)")
+   * which are provided separately, so shouldn't be generated.
+   * Snippets *calling* these methods are still generated, however.
+   * </pre>
+   *
+   * <code>repeated string handwritten_signatures = 6;</code>
+   *
+   * @param index The index of the value to return.
+   * @return The bytes of the handwrittenSignatures at the given index.
+   */
+  public com.google.protobuf.ByteString getHandwrittenSignaturesBytes(int index) {
+    return handwrittenSignatures_.getByteString(index);
+  }
+
   private byte memoizedIsInitialized = -1;
 
   @java.lang.Override
@@ -125,6 +599,21 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     if (common_ != null) {
       output.writeMessage(1, getCommon());
     }
+    com.google.protobuf.GeneratedMessageV3.serializeStringMapTo(
+        output, internalGetRenamedServices(), RenamedServicesDefaultEntryHolder.defaultEntry, 2);
+    com.google.protobuf.GeneratedMessageV3.serializeStringMapTo(
+        output, internalGetRenamedResources(), RenamedResourcesDefaultEntryHolder.defaultEntry, 3);
+    for (int i = 0; i < ignoredResources_.size(); i++) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, ignoredResources_.getRaw(i));
+    }
+    for (int i = 0; i < forcedNamespaceAliases_.size(); i++) {
+      com.google.protobuf.GeneratedMessageV3.writeString(
+          output, 5, forcedNamespaceAliases_.getRaw(i));
+    }
+    for (int i = 0; i < handwrittenSignatures_.size(); i++) {
+      com.google.protobuf.GeneratedMessageV3.writeString(
+          output, 6, handwrittenSignatures_.getRaw(i));
+    }
     getUnknownFields().writeTo(output);
   }
 
@@ -136,6 +625,50 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     size = 0;
     if (common_ != null) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(1, getCommon());
+    }
+    for (java.util.Map.Entry<java.lang.String, java.lang.String> entry :
+        internalGetRenamedServices().getMap().entrySet()) {
+      com.google.protobuf.MapEntry<java.lang.String, java.lang.String> renamedServices__ =
+          RenamedServicesDefaultEntryHolder.defaultEntry
+              .newBuilderForType()
+              .setKey(entry.getKey())
+              .setValue(entry.getValue())
+              .build();
+      size += com.google.protobuf.CodedOutputStream.computeMessageSize(2, renamedServices__);
+    }
+    for (java.util.Map.Entry<java.lang.String, java.lang.String> entry :
+        internalGetRenamedResources().getMap().entrySet()) {
+      com.google.protobuf.MapEntry<java.lang.String, java.lang.String> renamedResources__ =
+          RenamedResourcesDefaultEntryHolder.defaultEntry
+              .newBuilderForType()
+              .setKey(entry.getKey())
+              .setValue(entry.getValue())
+              .build();
+      size += com.google.protobuf.CodedOutputStream.computeMessageSize(3, renamedResources__);
+    }
+    {
+      int dataSize = 0;
+      for (int i = 0; i < ignoredResources_.size(); i++) {
+        dataSize += computeStringSizeNoTag(ignoredResources_.getRaw(i));
+      }
+      size += dataSize;
+      size += 1 * getIgnoredResourcesList().size();
+    }
+    {
+      int dataSize = 0;
+      for (int i = 0; i < forcedNamespaceAliases_.size(); i++) {
+        dataSize += computeStringSizeNoTag(forcedNamespaceAliases_.getRaw(i));
+      }
+      size += dataSize;
+      size += 1 * getForcedNamespaceAliasesList().size();
+    }
+    {
+      int dataSize = 0;
+      for (int i = 0; i < handwrittenSignatures_.size(); i++) {
+        dataSize += computeStringSizeNoTag(handwrittenSignatures_.getRaw(i));
+      }
+      size += dataSize;
+      size += 1 * getHandwrittenSignaturesList().size();
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -156,6 +689,12 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     if (hasCommon()) {
       if (!getCommon().equals(other.getCommon())) return false;
     }
+    if (!internalGetRenamedServices().equals(other.internalGetRenamedServices())) return false;
+    if (!internalGetRenamedResources().equals(other.internalGetRenamedResources())) return false;
+    if (!getIgnoredResourcesList().equals(other.getIgnoredResourcesList())) return false;
+    if (!getForcedNamespaceAliasesList().equals(other.getForcedNamespaceAliasesList()))
+      return false;
+    if (!getHandwrittenSignaturesList().equals(other.getHandwrittenSignaturesList())) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -170,6 +709,26 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     if (hasCommon()) {
       hash = (37 * hash) + COMMON_FIELD_NUMBER;
       hash = (53 * hash) + getCommon().hashCode();
+    }
+    if (!internalGetRenamedServices().getMap().isEmpty()) {
+      hash = (37 * hash) + RENAMED_SERVICES_FIELD_NUMBER;
+      hash = (53 * hash) + internalGetRenamedServices().hashCode();
+    }
+    if (!internalGetRenamedResources().getMap().isEmpty()) {
+      hash = (37 * hash) + RENAMED_RESOURCES_FIELD_NUMBER;
+      hash = (53 * hash) + internalGetRenamedResources().hashCode();
+    }
+    if (getIgnoredResourcesCount() > 0) {
+      hash = (37 * hash) + IGNORED_RESOURCES_FIELD_NUMBER;
+      hash = (53 * hash) + getIgnoredResourcesList().hashCode();
+    }
+    if (getForcedNamespaceAliasesCount() > 0) {
+      hash = (37 * hash) + FORCED_NAMESPACE_ALIASES_FIELD_NUMBER;
+      hash = (53 * hash) + getForcedNamespaceAliasesList().hashCode();
+    }
+    if (getHandwrittenSignaturesCount() > 0) {
+      hash = (37 * hash) + HANDWRITTEN_SIGNATURES_FIELD_NUMBER;
+      hash = (53 * hash) + getHandwrittenSignaturesList().hashCode();
     }
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
@@ -287,6 +846,30 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       return com.google.api.ClientProto.internal_static_google_api_DotnetSettings_descriptor;
     }
 
+    @SuppressWarnings({"rawtypes"})
+    protected com.google.protobuf.MapField internalGetMapField(int number) {
+      switch (number) {
+        case 2:
+          return internalGetRenamedServices();
+        case 3:
+          return internalGetRenamedResources();
+        default:
+          throw new RuntimeException("Invalid map field number: " + number);
+      }
+    }
+
+    @SuppressWarnings({"rawtypes"})
+    protected com.google.protobuf.MapField internalGetMutableMapField(int number) {
+      switch (number) {
+        case 2:
+          return internalGetMutableRenamedServices();
+        case 3:
+          return internalGetMutableRenamedResources();
+        default:
+          throw new RuntimeException("Invalid map field number: " + number);
+      }
+    }
+
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
@@ -311,6 +894,14 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
         commonBuilder_.dispose();
         commonBuilder_ = null;
       }
+      internalGetMutableRenamedServices().clear();
+      internalGetMutableRenamedResources().clear();
+      ignoredResources_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      bitField0_ = (bitField0_ & ~0x00000008);
+      forcedNamespaceAliases_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      bitField0_ = (bitField0_ & ~0x00000010);
+      handwrittenSignatures_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      bitField0_ = (bitField0_ & ~0x00000020);
       return this;
     }
 
@@ -336,6 +927,7 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.DotnetSettings buildPartial() {
       com.google.api.DotnetSettings result = new com.google.api.DotnetSettings(this);
+      buildPartialRepeatedFields(result);
       if (bitField0_ != 0) {
         buildPartial0(result);
       }
@@ -343,10 +935,36 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       return result;
     }
 
+    private void buildPartialRepeatedFields(com.google.api.DotnetSettings result) {
+      if (((bitField0_ & 0x00000008) != 0)) {
+        ignoredResources_ = ignoredResources_.getUnmodifiableView();
+        bitField0_ = (bitField0_ & ~0x00000008);
+      }
+      result.ignoredResources_ = ignoredResources_;
+      if (((bitField0_ & 0x00000010) != 0)) {
+        forcedNamespaceAliases_ = forcedNamespaceAliases_.getUnmodifiableView();
+        bitField0_ = (bitField0_ & ~0x00000010);
+      }
+      result.forcedNamespaceAliases_ = forcedNamespaceAliases_;
+      if (((bitField0_ & 0x00000020) != 0)) {
+        handwrittenSignatures_ = handwrittenSignatures_.getUnmodifiableView();
+        bitField0_ = (bitField0_ & ~0x00000020);
+      }
+      result.handwrittenSignatures_ = handwrittenSignatures_;
+    }
+
     private void buildPartial0(com.google.api.DotnetSettings result) {
       int from_bitField0_ = bitField0_;
       if (((from_bitField0_ & 0x00000001) != 0)) {
         result.common_ = commonBuilder_ == null ? common_ : commonBuilder_.build();
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.renamedServices_ = internalGetRenamedServices();
+        result.renamedServices_.makeImmutable();
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.renamedResources_ = internalGetRenamedResources();
+        result.renamedResources_.makeImmutable();
       }
     }
 
@@ -398,6 +1016,40 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       if (other.hasCommon()) {
         mergeCommon(other.getCommon());
       }
+      internalGetMutableRenamedServices().mergeFrom(other.internalGetRenamedServices());
+      bitField0_ |= 0x00000002;
+      internalGetMutableRenamedResources().mergeFrom(other.internalGetRenamedResources());
+      bitField0_ |= 0x00000004;
+      if (!other.ignoredResources_.isEmpty()) {
+        if (ignoredResources_.isEmpty()) {
+          ignoredResources_ = other.ignoredResources_;
+          bitField0_ = (bitField0_ & ~0x00000008);
+        } else {
+          ensureIgnoredResourcesIsMutable();
+          ignoredResources_.addAll(other.ignoredResources_);
+        }
+        onChanged();
+      }
+      if (!other.forcedNamespaceAliases_.isEmpty()) {
+        if (forcedNamespaceAliases_.isEmpty()) {
+          forcedNamespaceAliases_ = other.forcedNamespaceAliases_;
+          bitField0_ = (bitField0_ & ~0x00000010);
+        } else {
+          ensureForcedNamespaceAliasesIsMutable();
+          forcedNamespaceAliases_.addAll(other.forcedNamespaceAliases_);
+        }
+        onChanged();
+      }
+      if (!other.handwrittenSignatures_.isEmpty()) {
+        if (handwrittenSignatures_.isEmpty()) {
+          handwrittenSignatures_ = other.handwrittenSignatures_;
+          bitField0_ = (bitField0_ & ~0x00000020);
+        } else {
+          ensureHandwrittenSignaturesIsMutable();
+          handwrittenSignatures_.addAll(other.handwrittenSignatures_);
+        }
+        onChanged();
+      }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
       return this;
@@ -430,6 +1082,52 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
                 bitField0_ |= 0x00000001;
                 break;
               } // case 10
+            case 18:
+              {
+                com.google.protobuf.MapEntry<java.lang.String, java.lang.String> renamedServices__ =
+                    input.readMessage(
+                        RenamedServicesDefaultEntryHolder.defaultEntry.getParserForType(),
+                        extensionRegistry);
+                internalGetMutableRenamedServices()
+                    .getMutableMap()
+                    .put(renamedServices__.getKey(), renamedServices__.getValue());
+                bitField0_ |= 0x00000002;
+                break;
+              } // case 18
+            case 26:
+              {
+                com.google.protobuf.MapEntry<java.lang.String, java.lang.String>
+                    renamedResources__ =
+                        input.readMessage(
+                            RenamedResourcesDefaultEntryHolder.defaultEntry.getParserForType(),
+                            extensionRegistry);
+                internalGetMutableRenamedResources()
+                    .getMutableMap()
+                    .put(renamedResources__.getKey(), renamedResources__.getValue());
+                bitField0_ |= 0x00000004;
+                break;
+              } // case 26
+            case 34:
+              {
+                java.lang.String s = input.readStringRequireUtf8();
+                ensureIgnoredResourcesIsMutable();
+                ignoredResources_.add(s);
+                break;
+              } // case 34
+            case 42:
+              {
+                java.lang.String s = input.readStringRequireUtf8();
+                ensureForcedNamespaceAliasesIsMutable();
+                forcedNamespaceAliases_.add(s);
+                break;
+              } // case 42
+            case 50:
+              {
+                java.lang.String s = input.readStringRequireUtf8();
+                ensureHandwrittenSignaturesIsMutable();
+                handwrittenSignatures_.add(s);
+                break;
+              } // case 50
             default:
               {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
@@ -630,6 +1328,968 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
         common_ = null;
       }
       return commonBuilder_;
+    }
+
+    private com.google.protobuf.MapField<java.lang.String, java.lang.String> renamedServices_;
+
+    private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+        internalGetRenamedServices() {
+      if (renamedServices_ == null) {
+        return com.google.protobuf.MapField.emptyMapField(
+            RenamedServicesDefaultEntryHolder.defaultEntry);
+      }
+      return renamedServices_;
+    }
+
+    private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+        internalGetMutableRenamedServices() {
+      if (renamedServices_ == null) {
+        renamedServices_ =
+            com.google.protobuf.MapField.newMapField(
+                RenamedServicesDefaultEntryHolder.defaultEntry);
+      }
+      if (!renamedServices_.isMutable()) {
+        renamedServices_ = renamedServices_.copy();
+      }
+      bitField0_ |= 0x00000002;
+      onChanged();
+      return renamedServices_;
+    }
+
+    public int getRenamedServicesCount() {
+      return internalGetRenamedServices().getMap().size();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Map from original service names to renamed versions.
+     * This is used when the default generated types
+     * would cause a naming conflict. (Neither name is
+     * fully-qualified.)
+     * Example: Subscriber to SubscriberServiceApi.
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; renamed_services = 2;</code>
+     */
+    @java.lang.Override
+    public boolean containsRenamedServices(java.lang.String key) {
+      if (key == null) {
+        throw new NullPointerException("map key");
+      }
+      return internalGetRenamedServices().getMap().containsKey(key);
+    }
+    /** Use {@link #getRenamedServicesMap()} instead. */
+    @java.lang.Override
+    @java.lang.Deprecated
+    public java.util.Map<java.lang.String, java.lang.String> getRenamedServices() {
+      return getRenamedServicesMap();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Map from original service names to renamed versions.
+     * This is used when the default generated types
+     * would cause a naming conflict. (Neither name is
+     * fully-qualified.)
+     * Example: Subscriber to SubscriberServiceApi.
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; renamed_services = 2;</code>
+     */
+    @java.lang.Override
+    public java.util.Map<java.lang.String, java.lang.String> getRenamedServicesMap() {
+      return internalGetRenamedServices().getMap();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Map from original service names to renamed versions.
+     * This is used when the default generated types
+     * would cause a naming conflict. (Neither name is
+     * fully-qualified.)
+     * Example: Subscriber to SubscriberServiceApi.
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; renamed_services = 2;</code>
+     */
+    @java.lang.Override
+    public /* nullable */ java.lang.String getRenamedServicesOrDefault(
+        java.lang.String key,
+        /* nullable */
+        java.lang.String defaultValue) {
+      if (key == null) {
+        throw new NullPointerException("map key");
+      }
+      java.util.Map<java.lang.String, java.lang.String> map = internalGetRenamedServices().getMap();
+      return map.containsKey(key) ? map.get(key) : defaultValue;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Map from original service names to renamed versions.
+     * This is used when the default generated types
+     * would cause a naming conflict. (Neither name is
+     * fully-qualified.)
+     * Example: Subscriber to SubscriberServiceApi.
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; renamed_services = 2;</code>
+     */
+    @java.lang.Override
+    public java.lang.String getRenamedServicesOrThrow(java.lang.String key) {
+      if (key == null) {
+        throw new NullPointerException("map key");
+      }
+      java.util.Map<java.lang.String, java.lang.String> map = internalGetRenamedServices().getMap();
+      if (!map.containsKey(key)) {
+        throw new java.lang.IllegalArgumentException();
+      }
+      return map.get(key);
+    }
+
+    public Builder clearRenamedServices() {
+      bitField0_ = (bitField0_ & ~0x00000002);
+      internalGetMutableRenamedServices().getMutableMap().clear();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Map from original service names to renamed versions.
+     * This is used when the default generated types
+     * would cause a naming conflict. (Neither name is
+     * fully-qualified.)
+     * Example: Subscriber to SubscriberServiceApi.
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; renamed_services = 2;</code>
+     */
+    public Builder removeRenamedServices(java.lang.String key) {
+      if (key == null) {
+        throw new NullPointerException("map key");
+      }
+      internalGetMutableRenamedServices().getMutableMap().remove(key);
+      return this;
+    }
+    /** Use alternate mutation accessors instead. */
+    @java.lang.Deprecated
+    public java.util.Map<java.lang.String, java.lang.String> getMutableRenamedServices() {
+      bitField0_ |= 0x00000002;
+      return internalGetMutableRenamedServices().getMutableMap();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Map from original service names to renamed versions.
+     * This is used when the default generated types
+     * would cause a naming conflict. (Neither name is
+     * fully-qualified.)
+     * Example: Subscriber to SubscriberServiceApi.
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; renamed_services = 2;</code>
+     */
+    public Builder putRenamedServices(java.lang.String key, java.lang.String value) {
+      if (key == null) {
+        throw new NullPointerException("map key");
+      }
+      if (value == null) {
+        throw new NullPointerException("map value");
+      }
+      internalGetMutableRenamedServices().getMutableMap().put(key, value);
+      bitField0_ |= 0x00000002;
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Map from original service names to renamed versions.
+     * This is used when the default generated types
+     * would cause a naming conflict. (Neither name is
+     * fully-qualified.)
+     * Example: Subscriber to SubscriberServiceApi.
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; renamed_services = 2;</code>
+     */
+    public Builder putAllRenamedServices(java.util.Map<java.lang.String, java.lang.String> values) {
+      internalGetMutableRenamedServices().getMutableMap().putAll(values);
+      bitField0_ |= 0x00000002;
+      return this;
+    }
+
+    private com.google.protobuf.MapField<java.lang.String, java.lang.String> renamedResources_;
+
+    private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+        internalGetRenamedResources() {
+      if (renamedResources_ == null) {
+        return com.google.protobuf.MapField.emptyMapField(
+            RenamedResourcesDefaultEntryHolder.defaultEntry);
+      }
+      return renamedResources_;
+    }
+
+    private com.google.protobuf.MapField<java.lang.String, java.lang.String>
+        internalGetMutableRenamedResources() {
+      if (renamedResources_ == null) {
+        renamedResources_ =
+            com.google.protobuf.MapField.newMapField(
+                RenamedResourcesDefaultEntryHolder.defaultEntry);
+      }
+      if (!renamedResources_.isMutable()) {
+        renamedResources_ = renamedResources_.copy();
+      }
+      bitField0_ |= 0x00000004;
+      onChanged();
+      return renamedResources_;
+    }
+
+    public int getRenamedResourcesCount() {
+      return internalGetRenamedResources().getMap().size();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Map from full resource types to the effective short name
+     * for the resource. This is used when otherwise resource
+     * named from different services would cause naming collisions.
+     * Example entry:
+     * "datalabeling.googleapis.com/Dataset": "DataLabelingDataset"
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; renamed_resources = 3;</code>
+     */
+    @java.lang.Override
+    public boolean containsRenamedResources(java.lang.String key) {
+      if (key == null) {
+        throw new NullPointerException("map key");
+      }
+      return internalGetRenamedResources().getMap().containsKey(key);
+    }
+    /** Use {@link #getRenamedResourcesMap()} instead. */
+    @java.lang.Override
+    @java.lang.Deprecated
+    public java.util.Map<java.lang.String, java.lang.String> getRenamedResources() {
+      return getRenamedResourcesMap();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Map from full resource types to the effective short name
+     * for the resource. This is used when otherwise resource
+     * named from different services would cause naming collisions.
+     * Example entry:
+     * "datalabeling.googleapis.com/Dataset": "DataLabelingDataset"
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; renamed_resources = 3;</code>
+     */
+    @java.lang.Override
+    public java.util.Map<java.lang.String, java.lang.String> getRenamedResourcesMap() {
+      return internalGetRenamedResources().getMap();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Map from full resource types to the effective short name
+     * for the resource. This is used when otherwise resource
+     * named from different services would cause naming collisions.
+     * Example entry:
+     * "datalabeling.googleapis.com/Dataset": "DataLabelingDataset"
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; renamed_resources = 3;</code>
+     */
+    @java.lang.Override
+    public /* nullable */ java.lang.String getRenamedResourcesOrDefault(
+        java.lang.String key,
+        /* nullable */
+        java.lang.String defaultValue) {
+      if (key == null) {
+        throw new NullPointerException("map key");
+      }
+      java.util.Map<java.lang.String, java.lang.String> map =
+          internalGetRenamedResources().getMap();
+      return map.containsKey(key) ? map.get(key) : defaultValue;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Map from full resource types to the effective short name
+     * for the resource. This is used when otherwise resource
+     * named from different services would cause naming collisions.
+     * Example entry:
+     * "datalabeling.googleapis.com/Dataset": "DataLabelingDataset"
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; renamed_resources = 3;</code>
+     */
+    @java.lang.Override
+    public java.lang.String getRenamedResourcesOrThrow(java.lang.String key) {
+      if (key == null) {
+        throw new NullPointerException("map key");
+      }
+      java.util.Map<java.lang.String, java.lang.String> map =
+          internalGetRenamedResources().getMap();
+      if (!map.containsKey(key)) {
+        throw new java.lang.IllegalArgumentException();
+      }
+      return map.get(key);
+    }
+
+    public Builder clearRenamedResources() {
+      bitField0_ = (bitField0_ & ~0x00000004);
+      internalGetMutableRenamedResources().getMutableMap().clear();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Map from full resource types to the effective short name
+     * for the resource. This is used when otherwise resource
+     * named from different services would cause naming collisions.
+     * Example entry:
+     * "datalabeling.googleapis.com/Dataset": "DataLabelingDataset"
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; renamed_resources = 3;</code>
+     */
+    public Builder removeRenamedResources(java.lang.String key) {
+      if (key == null) {
+        throw new NullPointerException("map key");
+      }
+      internalGetMutableRenamedResources().getMutableMap().remove(key);
+      return this;
+    }
+    /** Use alternate mutation accessors instead. */
+    @java.lang.Deprecated
+    public java.util.Map<java.lang.String, java.lang.String> getMutableRenamedResources() {
+      bitField0_ |= 0x00000004;
+      return internalGetMutableRenamedResources().getMutableMap();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Map from full resource types to the effective short name
+     * for the resource. This is used when otherwise resource
+     * named from different services would cause naming collisions.
+     * Example entry:
+     * "datalabeling.googleapis.com/Dataset": "DataLabelingDataset"
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; renamed_resources = 3;</code>
+     */
+    public Builder putRenamedResources(java.lang.String key, java.lang.String value) {
+      if (key == null) {
+        throw new NullPointerException("map key");
+      }
+      if (value == null) {
+        throw new NullPointerException("map value");
+      }
+      internalGetMutableRenamedResources().getMutableMap().put(key, value);
+      bitField0_ |= 0x00000004;
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Map from full resource types to the effective short name
+     * for the resource. This is used when otherwise resource
+     * named from different services would cause naming collisions.
+     * Example entry:
+     * "datalabeling.googleapis.com/Dataset": "DataLabelingDataset"
+     * </pre>
+     *
+     * <code>map&lt;string, string&gt; renamed_resources = 3;</code>
+     */
+    public Builder putAllRenamedResources(
+        java.util.Map<java.lang.String, java.lang.String> values) {
+      internalGetMutableRenamedResources().getMutableMap().putAll(values);
+      bitField0_ |= 0x00000004;
+      return this;
+    }
+
+    private com.google.protobuf.LazyStringList ignoredResources_ =
+        com.google.protobuf.LazyStringArrayList.EMPTY;
+
+    private void ensureIgnoredResourcesIsMutable() {
+      if (!((bitField0_ & 0x00000008) != 0)) {
+        ignoredResources_ = new com.google.protobuf.LazyStringArrayList(ignoredResources_);
+        bitField0_ |= 0x00000008;
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * List of full resource types to ignore during generation.
+     * This is typically used for API-specific Location resources,
+     * which should be handled by the generator as if they were actually
+     * the common Location resources.
+     * Example entry: "documentai.googleapis.com/Location"
+     * </pre>
+     *
+     * <code>repeated string ignored_resources = 4;</code>
+     *
+     * @return A list containing the ignoredResources.
+     */
+    public com.google.protobuf.ProtocolStringList getIgnoredResourcesList() {
+      return ignoredResources_.getUnmodifiableView();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * List of full resource types to ignore during generation.
+     * This is typically used for API-specific Location resources,
+     * which should be handled by the generator as if they were actually
+     * the common Location resources.
+     * Example entry: "documentai.googleapis.com/Location"
+     * </pre>
+     *
+     * <code>repeated string ignored_resources = 4;</code>
+     *
+     * @return The count of ignoredResources.
+     */
+    public int getIgnoredResourcesCount() {
+      return ignoredResources_.size();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * List of full resource types to ignore during generation.
+     * This is typically used for API-specific Location resources,
+     * which should be handled by the generator as if they were actually
+     * the common Location resources.
+     * Example entry: "documentai.googleapis.com/Location"
+     * </pre>
+     *
+     * <code>repeated string ignored_resources = 4;</code>
+     *
+     * @param index The index of the element to return.
+     * @return The ignoredResources at the given index.
+     */
+    public java.lang.String getIgnoredResources(int index) {
+      return ignoredResources_.get(index);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * List of full resource types to ignore during generation.
+     * This is typically used for API-specific Location resources,
+     * which should be handled by the generator as if they were actually
+     * the common Location resources.
+     * Example entry: "documentai.googleapis.com/Location"
+     * </pre>
+     *
+     * <code>repeated string ignored_resources = 4;</code>
+     *
+     * @param index The index of the value to return.
+     * @return The bytes of the ignoredResources at the given index.
+     */
+    public com.google.protobuf.ByteString getIgnoredResourcesBytes(int index) {
+      return ignoredResources_.getByteString(index);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * List of full resource types to ignore during generation.
+     * This is typically used for API-specific Location resources,
+     * which should be handled by the generator as if they were actually
+     * the common Location resources.
+     * Example entry: "documentai.googleapis.com/Location"
+     * </pre>
+     *
+     * <code>repeated string ignored_resources = 4;</code>
+     *
+     * @param index The index to set the value at.
+     * @param value The ignoredResources to set.
+     * @return This builder for chaining.
+     */
+    public Builder setIgnoredResources(int index, java.lang.String value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      ensureIgnoredResourcesIsMutable();
+      ignoredResources_.set(index, value);
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * List of full resource types to ignore during generation.
+     * This is typically used for API-specific Location resources,
+     * which should be handled by the generator as if they were actually
+     * the common Location resources.
+     * Example entry: "documentai.googleapis.com/Location"
+     * </pre>
+     *
+     * <code>repeated string ignored_resources = 4;</code>
+     *
+     * @param value The ignoredResources to add.
+     * @return This builder for chaining.
+     */
+    public Builder addIgnoredResources(java.lang.String value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      ensureIgnoredResourcesIsMutable();
+      ignoredResources_.add(value);
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * List of full resource types to ignore during generation.
+     * This is typically used for API-specific Location resources,
+     * which should be handled by the generator as if they were actually
+     * the common Location resources.
+     * Example entry: "documentai.googleapis.com/Location"
+     * </pre>
+     *
+     * <code>repeated string ignored_resources = 4;</code>
+     *
+     * @param values The ignoredResources to add.
+     * @return This builder for chaining.
+     */
+    public Builder addAllIgnoredResources(java.lang.Iterable<java.lang.String> values) {
+      ensureIgnoredResourcesIsMutable();
+      com.google.protobuf.AbstractMessageLite.Builder.addAll(values, ignoredResources_);
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * List of full resource types to ignore during generation.
+     * This is typically used for API-specific Location resources,
+     * which should be handled by the generator as if they were actually
+     * the common Location resources.
+     * Example entry: "documentai.googleapis.com/Location"
+     * </pre>
+     *
+     * <code>repeated string ignored_resources = 4;</code>
+     *
+     * @return This builder for chaining.
+     */
+    public Builder clearIgnoredResources() {
+      ignoredResources_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      bitField0_ = (bitField0_ & ~0x00000008);
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * List of full resource types to ignore during generation.
+     * This is typically used for API-specific Location resources,
+     * which should be handled by the generator as if they were actually
+     * the common Location resources.
+     * Example entry: "documentai.googleapis.com/Location"
+     * </pre>
+     *
+     * <code>repeated string ignored_resources = 4;</code>
+     *
+     * @param value The bytes of the ignoredResources to add.
+     * @return This builder for chaining.
+     */
+    public Builder addIgnoredResourcesBytes(com.google.protobuf.ByteString value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      checkByteStringIsUtf8(value);
+      ensureIgnoredResourcesIsMutable();
+      ignoredResources_.add(value);
+      onChanged();
+      return this;
+    }
+
+    private com.google.protobuf.LazyStringList forcedNamespaceAliases_ =
+        com.google.protobuf.LazyStringArrayList.EMPTY;
+
+    private void ensureForcedNamespaceAliasesIsMutable() {
+      if (!((bitField0_ & 0x00000010) != 0)) {
+        forcedNamespaceAliases_ =
+            new com.google.protobuf.LazyStringArrayList(forcedNamespaceAliases_);
+        bitField0_ |= 0x00000010;
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Namespaces which must be aliased in snippets due to
+     * a known (but non-generator-predictable) naming collision
+     * </pre>
+     *
+     * <code>repeated string forced_namespace_aliases = 5;</code>
+     *
+     * @return A list containing the forcedNamespaceAliases.
+     */
+    public com.google.protobuf.ProtocolStringList getForcedNamespaceAliasesList() {
+      return forcedNamespaceAliases_.getUnmodifiableView();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Namespaces which must be aliased in snippets due to
+     * a known (but non-generator-predictable) naming collision
+     * </pre>
+     *
+     * <code>repeated string forced_namespace_aliases = 5;</code>
+     *
+     * @return The count of forcedNamespaceAliases.
+     */
+    public int getForcedNamespaceAliasesCount() {
+      return forcedNamespaceAliases_.size();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Namespaces which must be aliased in snippets due to
+     * a known (but non-generator-predictable) naming collision
+     * </pre>
+     *
+     * <code>repeated string forced_namespace_aliases = 5;</code>
+     *
+     * @param index The index of the element to return.
+     * @return The forcedNamespaceAliases at the given index.
+     */
+    public java.lang.String getForcedNamespaceAliases(int index) {
+      return forcedNamespaceAliases_.get(index);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Namespaces which must be aliased in snippets due to
+     * a known (but non-generator-predictable) naming collision
+     * </pre>
+     *
+     * <code>repeated string forced_namespace_aliases = 5;</code>
+     *
+     * @param index The index of the value to return.
+     * @return The bytes of the forcedNamespaceAliases at the given index.
+     */
+    public com.google.protobuf.ByteString getForcedNamespaceAliasesBytes(int index) {
+      return forcedNamespaceAliases_.getByteString(index);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Namespaces which must be aliased in snippets due to
+     * a known (but non-generator-predictable) naming collision
+     * </pre>
+     *
+     * <code>repeated string forced_namespace_aliases = 5;</code>
+     *
+     * @param index The index to set the value at.
+     * @param value The forcedNamespaceAliases to set.
+     * @return This builder for chaining.
+     */
+    public Builder setForcedNamespaceAliases(int index, java.lang.String value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      ensureForcedNamespaceAliasesIsMutable();
+      forcedNamespaceAliases_.set(index, value);
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Namespaces which must be aliased in snippets due to
+     * a known (but non-generator-predictable) naming collision
+     * </pre>
+     *
+     * <code>repeated string forced_namespace_aliases = 5;</code>
+     *
+     * @param value The forcedNamespaceAliases to add.
+     * @return This builder for chaining.
+     */
+    public Builder addForcedNamespaceAliases(java.lang.String value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      ensureForcedNamespaceAliasesIsMutable();
+      forcedNamespaceAliases_.add(value);
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Namespaces which must be aliased in snippets due to
+     * a known (but non-generator-predictable) naming collision
+     * </pre>
+     *
+     * <code>repeated string forced_namespace_aliases = 5;</code>
+     *
+     * @param values The forcedNamespaceAliases to add.
+     * @return This builder for chaining.
+     */
+    public Builder addAllForcedNamespaceAliases(java.lang.Iterable<java.lang.String> values) {
+      ensureForcedNamespaceAliasesIsMutable();
+      com.google.protobuf.AbstractMessageLite.Builder.addAll(values, forcedNamespaceAliases_);
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Namespaces which must be aliased in snippets due to
+     * a known (but non-generator-predictable) naming collision
+     * </pre>
+     *
+     * <code>repeated string forced_namespace_aliases = 5;</code>
+     *
+     * @return This builder for chaining.
+     */
+    public Builder clearForcedNamespaceAliases() {
+      forcedNamespaceAliases_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      bitField0_ = (bitField0_ & ~0x00000010);
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Namespaces which must be aliased in snippets due to
+     * a known (but non-generator-predictable) naming collision
+     * </pre>
+     *
+     * <code>repeated string forced_namespace_aliases = 5;</code>
+     *
+     * @param value The bytes of the forcedNamespaceAliases to add.
+     * @return This builder for chaining.
+     */
+    public Builder addForcedNamespaceAliasesBytes(com.google.protobuf.ByteString value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      checkByteStringIsUtf8(value);
+      ensureForcedNamespaceAliasesIsMutable();
+      forcedNamespaceAliases_.add(value);
+      onChanged();
+      return this;
+    }
+
+    private com.google.protobuf.LazyStringList handwrittenSignatures_ =
+        com.google.protobuf.LazyStringArrayList.EMPTY;
+
+    private void ensureHandwrittenSignaturesIsMutable() {
+      if (!((bitField0_ & 0x00000020) != 0)) {
+        handwrittenSignatures_ =
+            new com.google.protobuf.LazyStringArrayList(handwrittenSignatures_);
+        bitField0_ |= 0x00000020;
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Method signatures (in the form "service.method(signature)")
+     * which are provided separately, so shouldn't be generated.
+     * Snippets *calling* these methods are still generated, however.
+     * </pre>
+     *
+     * <code>repeated string handwritten_signatures = 6;</code>
+     *
+     * @return A list containing the handwrittenSignatures.
+     */
+    public com.google.protobuf.ProtocolStringList getHandwrittenSignaturesList() {
+      return handwrittenSignatures_.getUnmodifiableView();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Method signatures (in the form "service.method(signature)")
+     * which are provided separately, so shouldn't be generated.
+     * Snippets *calling* these methods are still generated, however.
+     * </pre>
+     *
+     * <code>repeated string handwritten_signatures = 6;</code>
+     *
+     * @return The count of handwrittenSignatures.
+     */
+    public int getHandwrittenSignaturesCount() {
+      return handwrittenSignatures_.size();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Method signatures (in the form "service.method(signature)")
+     * which are provided separately, so shouldn't be generated.
+     * Snippets *calling* these methods are still generated, however.
+     * </pre>
+     *
+     * <code>repeated string handwritten_signatures = 6;</code>
+     *
+     * @param index The index of the element to return.
+     * @return The handwrittenSignatures at the given index.
+     */
+    public java.lang.String getHandwrittenSignatures(int index) {
+      return handwrittenSignatures_.get(index);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Method signatures (in the form "service.method(signature)")
+     * which are provided separately, so shouldn't be generated.
+     * Snippets *calling* these methods are still generated, however.
+     * </pre>
+     *
+     * <code>repeated string handwritten_signatures = 6;</code>
+     *
+     * @param index The index of the value to return.
+     * @return The bytes of the handwrittenSignatures at the given index.
+     */
+    public com.google.protobuf.ByteString getHandwrittenSignaturesBytes(int index) {
+      return handwrittenSignatures_.getByteString(index);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Method signatures (in the form "service.method(signature)")
+     * which are provided separately, so shouldn't be generated.
+     * Snippets *calling* these methods are still generated, however.
+     * </pre>
+     *
+     * <code>repeated string handwritten_signatures = 6;</code>
+     *
+     * @param index The index to set the value at.
+     * @param value The handwrittenSignatures to set.
+     * @return This builder for chaining.
+     */
+    public Builder setHandwrittenSignatures(int index, java.lang.String value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      ensureHandwrittenSignaturesIsMutable();
+      handwrittenSignatures_.set(index, value);
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Method signatures (in the form "service.method(signature)")
+     * which are provided separately, so shouldn't be generated.
+     * Snippets *calling* these methods are still generated, however.
+     * </pre>
+     *
+     * <code>repeated string handwritten_signatures = 6;</code>
+     *
+     * @param value The handwrittenSignatures to add.
+     * @return This builder for chaining.
+     */
+    public Builder addHandwrittenSignatures(java.lang.String value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      ensureHandwrittenSignaturesIsMutable();
+      handwrittenSignatures_.add(value);
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Method signatures (in the form "service.method(signature)")
+     * which are provided separately, so shouldn't be generated.
+     * Snippets *calling* these methods are still generated, however.
+     * </pre>
+     *
+     * <code>repeated string handwritten_signatures = 6;</code>
+     *
+     * @param values The handwrittenSignatures to add.
+     * @return This builder for chaining.
+     */
+    public Builder addAllHandwrittenSignatures(java.lang.Iterable<java.lang.String> values) {
+      ensureHandwrittenSignaturesIsMutable();
+      com.google.protobuf.AbstractMessageLite.Builder.addAll(values, handwrittenSignatures_);
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Method signatures (in the form "service.method(signature)")
+     * which are provided separately, so shouldn't be generated.
+     * Snippets *calling* these methods are still generated, however.
+     * </pre>
+     *
+     * <code>repeated string handwritten_signatures = 6;</code>
+     *
+     * @return This builder for chaining.
+     */
+    public Builder clearHandwrittenSignatures() {
+      handwrittenSignatures_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      bitField0_ = (bitField0_ & ~0x00000020);
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Method signatures (in the form "service.method(signature)")
+     * which are provided separately, so shouldn't be generated.
+     * Snippets *calling* these methods are still generated, however.
+     * </pre>
+     *
+     * <code>repeated string handwritten_signatures = 6;</code>
+     *
+     * @param value The bytes of the handwrittenSignatures to add.
+     * @return This builder for chaining.
+     */
+    public Builder addHandwrittenSignaturesBytes(com.google.protobuf.ByteString value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      checkByteStringIsUtf8(value);
+      ensureHandwrittenSignaturesIsMutable();
+      handwrittenSignatures_.add(value);
+      onChanged();
+      return this;
     }
 
     @java.lang.Override

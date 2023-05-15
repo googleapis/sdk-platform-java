@@ -30,7 +30,7 @@ import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.model.RegionTag;
 import com.google.api.generator.gapic.model.Sample;
-import com.google.api.generator.testutils.LineFormatter;
+import com.google.api.generator.test.utils.LineFormatter;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Assert;

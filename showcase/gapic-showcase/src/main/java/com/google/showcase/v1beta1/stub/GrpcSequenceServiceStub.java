@@ -16,21 +16,34 @@
 
 package com.google.showcase.v1beta1.stub;
 
+import static com.google.showcase.v1beta1.SequenceServiceClient.ListLocationsPagedResponse;
+
 import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.BackgroundResourceAggregation;
 import com.google.api.gax.grpc.GrpcCallSettings;
 import com.google.api.gax.grpc.GrpcStubCallableFactory;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.cloud.location.GetLocationRequest;
+import com.google.cloud.location.ListLocationsRequest;
+import com.google.cloud.location.ListLocationsResponse;
+import com.google.cloud.location.Location;
 import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.stub.GrpcOperationsStub;
 import com.google.protobuf.Empty;
 import com.google.showcase.v1beta1.AttemptSequenceRequest;
+import com.google.showcase.v1beta1.AttemptStreamingSequenceRequest;
+import com.google.showcase.v1beta1.AttemptStreamingSequenceResponse;
 import com.google.showcase.v1beta1.CreateSequenceRequest;
+import com.google.showcase.v1beta1.CreateStreamingSequenceRequest;
 import com.google.showcase.v1beta1.GetSequenceReportRequest;
+import com.google.showcase.v1beta1.GetStreamingSequenceReportRequest;
 import com.google.showcase.v1beta1.Sequence;
 import com.google.showcase.v1beta1.SequenceReport;
+import com.google.showcase.v1beta1.StreamingSequence;
+import com.google.showcase.v1beta1.StreamingSequenceReport;
 import io.grpc.MethodDescriptor;
 import io.grpc.protobuf.ProtoUtils;
 import java.io.IOException;
@@ -57,6 +70,16 @@ public class GrpcSequenceServiceStub extends SequenceServiceStub {
               .setResponseMarshaller(ProtoUtils.marshaller(Sequence.getDefaultInstance()))
               .build();
 
+  private static final MethodDescriptor<CreateStreamingSequenceRequest, StreamingSequence>
+      createStreamingSequenceMethodDescriptor =
+          MethodDescriptor.<CreateStreamingSequenceRequest, StreamingSequence>newBuilder()
+              .setType(MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName("google.showcase.v1beta1.SequenceService/CreateStreamingSequence")
+              .setRequestMarshaller(
+                  ProtoUtils.marshaller(CreateStreamingSequenceRequest.getDefaultInstance()))
+              .setResponseMarshaller(ProtoUtils.marshaller(StreamingSequence.getDefaultInstance()))
+              .build();
+
   private static final MethodDescriptor<GetSequenceReportRequest, SequenceReport>
       getSequenceReportMethodDescriptor =
           MethodDescriptor.<GetSequenceReportRequest, SequenceReport>newBuilder()
@@ -65,6 +88,18 @@ public class GrpcSequenceServiceStub extends SequenceServiceStub {
               .setRequestMarshaller(
                   ProtoUtils.marshaller(GetSequenceReportRequest.getDefaultInstance()))
               .setResponseMarshaller(ProtoUtils.marshaller(SequenceReport.getDefaultInstance()))
+              .build();
+
+  private static final MethodDescriptor<GetStreamingSequenceReportRequest, StreamingSequenceReport>
+      getStreamingSequenceReportMethodDescriptor =
+          MethodDescriptor.<GetStreamingSequenceReportRequest, StreamingSequenceReport>newBuilder()
+              .setType(MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(
+                  "google.showcase.v1beta1.SequenceService/GetStreamingSequenceReport")
+              .setRequestMarshaller(
+                  ProtoUtils.marshaller(GetStreamingSequenceReportRequest.getDefaultInstance()))
+              .setResponseMarshaller(
+                  ProtoUtils.marshaller(StreamingSequenceReport.getDefaultInstance()))
               .build();
 
   private static final MethodDescriptor<AttemptSequenceRequest, Empty>
@@ -77,9 +112,52 @@ public class GrpcSequenceServiceStub extends SequenceServiceStub {
               .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
               .build();
 
+  private static final MethodDescriptor<
+          AttemptStreamingSequenceRequest, AttemptStreamingSequenceResponse>
+      attemptStreamingSequenceMethodDescriptor =
+          MethodDescriptor
+              .<AttemptStreamingSequenceRequest, AttemptStreamingSequenceResponse>newBuilder()
+              .setType(MethodDescriptor.MethodType.SERVER_STREAMING)
+              .setFullMethodName("google.showcase.v1beta1.SequenceService/AttemptStreamingSequence")
+              .setRequestMarshaller(
+                  ProtoUtils.marshaller(AttemptStreamingSequenceRequest.getDefaultInstance()))
+              .setResponseMarshaller(
+                  ProtoUtils.marshaller(AttemptStreamingSequenceResponse.getDefaultInstance()))
+              .build();
+
+  private static final MethodDescriptor<ListLocationsRequest, ListLocationsResponse>
+      listLocationsMethodDescriptor =
+          MethodDescriptor.<ListLocationsRequest, ListLocationsResponse>newBuilder()
+              .setType(MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName("google.cloud.location.Locations/ListLocations")
+              .setRequestMarshaller(
+                  ProtoUtils.marshaller(ListLocationsRequest.getDefaultInstance()))
+              .setResponseMarshaller(
+                  ProtoUtils.marshaller(ListLocationsResponse.getDefaultInstance()))
+              .build();
+
+  private static final MethodDescriptor<GetLocationRequest, Location> getLocationMethodDescriptor =
+      MethodDescriptor.<GetLocationRequest, Location>newBuilder()
+          .setType(MethodDescriptor.MethodType.UNARY)
+          .setFullMethodName("google.cloud.location.Locations/GetLocation")
+          .setRequestMarshaller(ProtoUtils.marshaller(GetLocationRequest.getDefaultInstance()))
+          .setResponseMarshaller(ProtoUtils.marshaller(Location.getDefaultInstance()))
+          .build();
+
   private final UnaryCallable<CreateSequenceRequest, Sequence> createSequenceCallable;
+  private final UnaryCallable<CreateStreamingSequenceRequest, StreamingSequence>
+      createStreamingSequenceCallable;
   private final UnaryCallable<GetSequenceReportRequest, SequenceReport> getSequenceReportCallable;
+  private final UnaryCallable<GetStreamingSequenceReportRequest, StreamingSequenceReport>
+      getStreamingSequenceReportCallable;
   private final UnaryCallable<AttemptSequenceRequest, Empty> attemptSequenceCallable;
+  private final ServerStreamingCallable<
+          AttemptStreamingSequenceRequest, AttemptStreamingSequenceResponse>
+      attemptStreamingSequenceCallable;
+  private final UnaryCallable<ListLocationsRequest, ListLocationsResponse> listLocationsCallable;
+  private final UnaryCallable<ListLocationsRequest, ListLocationsPagedResponse>
+      listLocationsPagedCallable;
+  private final UnaryCallable<GetLocationRequest, Location> getLocationCallable;
 
   private final BackgroundResource backgroundResources;
   private final GrpcOperationsStub operationsStub;
@@ -129,6 +207,11 @@ public class GrpcSequenceServiceStub extends SequenceServiceStub {
         GrpcCallSettings.<CreateSequenceRequest, Sequence>newBuilder()
             .setMethodDescriptor(createSequenceMethodDescriptor)
             .build();
+    GrpcCallSettings<CreateStreamingSequenceRequest, StreamingSequence>
+        createStreamingSequenceTransportSettings =
+            GrpcCallSettings.<CreateStreamingSequenceRequest, StreamingSequence>newBuilder()
+                .setMethodDescriptor(createStreamingSequenceMethodDescriptor)
+                .build();
     GrpcCallSettings<GetSequenceReportRequest, SequenceReport> getSequenceReportTransportSettings =
         GrpcCallSettings.<GetSequenceReportRequest, SequenceReport>newBuilder()
             .setMethodDescriptor(getSequenceReportMethodDescriptor)
@@ -139,9 +222,53 @@ public class GrpcSequenceServiceStub extends SequenceServiceStub {
                   return params.build();
                 })
             .build();
+    GrpcCallSettings<GetStreamingSequenceReportRequest, StreamingSequenceReport>
+        getStreamingSequenceReportTransportSettings =
+            GrpcCallSettings
+                .<GetStreamingSequenceReportRequest, StreamingSequenceReport>newBuilder()
+                .setMethodDescriptor(getStreamingSequenceReportMethodDescriptor)
+                .setParamsExtractor(
+                    request -> {
+                      ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                      params.put("name", String.valueOf(request.getName()));
+                      return params.build();
+                    })
+                .build();
     GrpcCallSettings<AttemptSequenceRequest, Empty> attemptSequenceTransportSettings =
         GrpcCallSettings.<AttemptSequenceRequest, Empty>newBuilder()
             .setMethodDescriptor(attemptSequenceMethodDescriptor)
+            .setParamsExtractor(
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("name", String.valueOf(request.getName()));
+                  return params.build();
+                })
+            .build();
+    GrpcCallSettings<AttemptStreamingSequenceRequest, AttemptStreamingSequenceResponse>
+        attemptStreamingSequenceTransportSettings =
+            GrpcCallSettings
+                .<AttemptStreamingSequenceRequest, AttemptStreamingSequenceResponse>newBuilder()
+                .setMethodDescriptor(attemptStreamingSequenceMethodDescriptor)
+                .setParamsExtractor(
+                    request -> {
+                      ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                      params.put("name", String.valueOf(request.getName()));
+                      return params.build();
+                    })
+                .build();
+    GrpcCallSettings<ListLocationsRequest, ListLocationsResponse> listLocationsTransportSettings =
+        GrpcCallSettings.<ListLocationsRequest, ListLocationsResponse>newBuilder()
+            .setMethodDescriptor(listLocationsMethodDescriptor)
+            .setParamsExtractor(
+                request -> {
+                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
+                  params.put("name", String.valueOf(request.getName()));
+                  return params.build();
+                })
+            .build();
+    GrpcCallSettings<GetLocationRequest, Location> getLocationTransportSettings =
+        GrpcCallSettings.<GetLocationRequest, Location>newBuilder()
+            .setMethodDescriptor(getLocationMethodDescriptor)
             .setParamsExtractor(
                 request -> {
                   ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
@@ -153,14 +280,38 @@ public class GrpcSequenceServiceStub extends SequenceServiceStub {
     this.createSequenceCallable =
         callableFactory.createUnaryCallable(
             createSequenceTransportSettings, settings.createSequenceSettings(), clientContext);
+    this.createStreamingSequenceCallable =
+        callableFactory.createUnaryCallable(
+            createStreamingSequenceTransportSettings,
+            settings.createStreamingSequenceSettings(),
+            clientContext);
     this.getSequenceReportCallable =
         callableFactory.createUnaryCallable(
             getSequenceReportTransportSettings,
             settings.getSequenceReportSettings(),
             clientContext);
+    this.getStreamingSequenceReportCallable =
+        callableFactory.createUnaryCallable(
+            getStreamingSequenceReportTransportSettings,
+            settings.getStreamingSequenceReportSettings(),
+            clientContext);
     this.attemptSequenceCallable =
         callableFactory.createUnaryCallable(
             attemptSequenceTransportSettings, settings.attemptSequenceSettings(), clientContext);
+    this.attemptStreamingSequenceCallable =
+        callableFactory.createServerStreamingCallable(
+            attemptStreamingSequenceTransportSettings,
+            settings.attemptStreamingSequenceSettings(),
+            clientContext);
+    this.listLocationsCallable =
+        callableFactory.createUnaryCallable(
+            listLocationsTransportSettings, settings.listLocationsSettings(), clientContext);
+    this.listLocationsPagedCallable =
+        callableFactory.createPagedCallable(
+            listLocationsTransportSettings, settings.listLocationsSettings(), clientContext);
+    this.getLocationCallable =
+        callableFactory.createUnaryCallable(
+            getLocationTransportSettings, settings.getLocationSettings(), clientContext);
 
     this.backgroundResources =
         new BackgroundResourceAggregation(clientContext.getBackgroundResources());
@@ -176,13 +327,47 @@ public class GrpcSequenceServiceStub extends SequenceServiceStub {
   }
 
   @Override
+  public UnaryCallable<CreateStreamingSequenceRequest, StreamingSequence>
+      createStreamingSequenceCallable() {
+    return createStreamingSequenceCallable;
+  }
+
+  @Override
   public UnaryCallable<GetSequenceReportRequest, SequenceReport> getSequenceReportCallable() {
     return getSequenceReportCallable;
   }
 
   @Override
+  public UnaryCallable<GetStreamingSequenceReportRequest, StreamingSequenceReport>
+      getStreamingSequenceReportCallable() {
+    return getStreamingSequenceReportCallable;
+  }
+
+  @Override
   public UnaryCallable<AttemptSequenceRequest, Empty> attemptSequenceCallable() {
     return attemptSequenceCallable;
+  }
+
+  @Override
+  public ServerStreamingCallable<AttemptStreamingSequenceRequest, AttemptStreamingSequenceResponse>
+      attemptStreamingSequenceCallable() {
+    return attemptStreamingSequenceCallable;
+  }
+
+  @Override
+  public UnaryCallable<ListLocationsRequest, ListLocationsResponse> listLocationsCallable() {
+    return listLocationsCallable;
+  }
+
+  @Override
+  public UnaryCallable<ListLocationsRequest, ListLocationsPagedResponse>
+      listLocationsPagedCallable() {
+    return listLocationsPagedCallable;
+  }
+
+  @Override
+  public UnaryCallable<GetLocationRequest, Location> getLocationCallable() {
+    return getLocationCallable;
   }
 
   @Override

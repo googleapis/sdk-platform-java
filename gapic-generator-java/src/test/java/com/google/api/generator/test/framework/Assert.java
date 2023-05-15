@@ -60,8 +60,8 @@ public class Assert {
   public static void assertGoldenClass(Class<?> clazz, GapicClass gapicClass, String fileName) {
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     gapicClass.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(clazz, fileName, visitor.write());
-    Path goldenFilePath = Paths.get(Utils.getGoldenDir(clazz), fileName);
+    GoldenFileWriter.saveCodegenToFile(clazz, fileName, visitor.write());
+    Path goldenFilePath = Paths.get(GoldenFileWriter.getGoldenDir(clazz), fileName);
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 
@@ -70,7 +70,7 @@ public class Assert {
     for (Sample sample : samples) {
       String fileName = sample.name() + ".golden";
       String goldenSampleDir =
-          Utils.getGoldenDir(clazz) + "/samples/" + sampleDirName.toLowerCase() + "/";
+          GoldenFileWriter.getGoldenDir(clazz) + "/samples/" + sampleDirName.toLowerCase() + "/";
       Path goldenFilePath = Paths.get(goldenSampleDir, fileName);
       sample =
           sample
@@ -79,7 +79,8 @@ public class Assert {
 
       String sampleString = SampleCodeWriter.writeExecutableSample(sample, packkage + ".samples");
 
-      Utils.saveSampleCodegenToFile(clazz, sampleDirName.toLowerCase(), fileName, sampleString);
+      GoldenFileWriter.saveSampleCodegenToFile(
+          clazz, sampleDirName.toLowerCase(), fileName, sampleString);
       assertCodeEquals(goldenFilePath, sampleString);
     }
   }
