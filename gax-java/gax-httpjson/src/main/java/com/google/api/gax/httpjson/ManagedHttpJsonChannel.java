@@ -105,7 +105,7 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
 
   @Override
   public boolean isShutdown() {
-    boolean isShutdown = deadlineScheduledExecutorService.isShutdown();
+    boolean isShutdown = isTransportShutdown && deadlineScheduledExecutorService.isShutdown();
     // Check that the Gax's ExecutorService is shutdown as well
     if (usingDefaultExecutor) {
       isShutdown = isShutdown && ((ExecutorService) executor).isShutdown();
