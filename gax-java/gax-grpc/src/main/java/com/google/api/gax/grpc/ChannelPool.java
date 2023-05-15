@@ -82,6 +82,10 @@ class ChannelPool extends ManagedChannel {
 
   static ChannelPool create(ChannelPoolSettings settings, ChannelFactory channelFactory)
       throws IOException {
+
+    // ProcessHandle was introduced in Java 9
+    System.out.println("ProcessHandle: " + ProcessHandle.current());
+
     return new ChannelPool(settings, channelFactory, Executors.newSingleThreadScheduledExecutor());
   }
 
