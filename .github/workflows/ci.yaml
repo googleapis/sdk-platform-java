@@ -20,6 +20,9 @@ jobs:
           java-version: ${{ matrix.java }}
           distribution: temurin
           cache: maven
+      - uses: stCarolas/setup-maven@v4.5
+        with:
+          maven-version: 3.8.6
       - run: java -version
       - name: Unit Tests
         run: |
