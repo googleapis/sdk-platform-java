@@ -39,7 +39,7 @@
                 </goals>
                 <phase>test</phase>
                 <configuration>
-                  <executable>bazel</executable>
+                  <executable>bazelisk</executable>
                   <arguments>
                     <argument>run</argument>
                     <argument>//showcase:verify_gapic</argument>
