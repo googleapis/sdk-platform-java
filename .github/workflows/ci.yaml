@@ -9,6 +9,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-22.04
+    container: gcr.io/gapic-images/googleapis:20230301
     strategy:
       matrix:
         java: [ 11, 17 ]
