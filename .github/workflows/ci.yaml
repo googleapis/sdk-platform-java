@@ -86,6 +86,7 @@ jobs:
   build-java8-gapic-generator-java:
     name: "build(8) for gapic-generator-java"
     runs-on: ubuntu-22.04
+    container: gcr.io/gapic-images/googleapis:20230301
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
@@ -93,6 +94,9 @@ jobs:
           java-version: 11
           distribution: temurin
           cache: maven
+      - uses: stCarolas/setup-maven@v4.5
+        with:
+          maven-version: 3.8.6
       - name: Install all modules using Java 11
         shell: bash
         run: |
@@ -170,6 +174,7 @@ jobs:
 
   showcase:
     runs-on: ubuntu-22.04
+    container: gcr.io/gapic-images/googleapis:20230301
     strategy:
       matrix:
         java: [ 11, 17 ]
@@ -179,6 +184,9 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
           distribution: temurin
+      - uses: stCarolas/setup-maven@v4.5
+        with:
+          maven-version: 3.8.6
       - run: mvn -version
       - name: Install Maven modules
         run: |
