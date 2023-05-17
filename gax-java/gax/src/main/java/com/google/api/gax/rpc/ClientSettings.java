@@ -111,6 +111,10 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     return stubSettings.getStreamWatchdogCheckInterval();
   }
 
+  public final String getGdchApiAudience() {
+    return stubSettings.getGdchApiAudience();
+  }
+
   public String toString() {
     return MoreObjects.toStringHelper(this)
         .add("executorProvider", getExecutorProvider())
@@ -124,6 +128,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
         .add("quotaProjectId", getQuotaProjectId())
         .add("watchdogProvider", getWatchdogProvider())
         .add("watchdogCheckInterval", getWatchdogCheckInterval())
+        .add("gdchApiAudience", getGdchApiAudience())
         .toString();
   }
 
@@ -255,6 +260,11 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
       return self();
     }
 
+    public B setGdchApiAudience(@Nullable String gdchApiAudience) {
+      stubSettings.setGdchApiAudience(gdchApiAudience);
+      return self();
+    }
+
     /**
      * Gets the ExecutorProvider that was previously set on this Builder. This ExecutorProvider is
      * to use for running asynchronous API call logic (such as retries and long-running operations),
@@ -322,6 +332,11 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
       return stubSettings.getStreamWatchdogCheckInterval();
     }
 
+    @Nullable
+    public String getGdchApiAudience() {
+      return stubSettings.getGdchApiAudience();
+    }
+
     /** Applies the given settings updater function to the given method settings builders. */
     protected static void applyToAllUnaryMethods(
         Iterable<UnaryCallSettings.Builder<?, ?>> methodSettingsBuilders,
@@ -344,6 +359,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
           .add("quotaProjectId", getQuotaProjectId())
           .add("watchdogProvider", getWatchdogProvider())
           .add("watchdogCheckInterval", getWatchdogCheckInterval())
+          .add("gdchApiAudience", getGdchApiAudience())
           .toString();
     }
   }
