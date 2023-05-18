@@ -12,6 +12,7 @@ import com.google.auth.oauth2.GdchCredentials;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoSettings;
 import java.io.*;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -33,12 +34,14 @@ public class ITGdch {
 
   @Rule public TemporaryFolder tempFolder = new TemporaryFolder();
 
+  private EchoClient client;
   private EchoSettings settings;
   private Credentials credentials;
 
   @Before
   public void setup() throws IOException, URISyntaxException {
     prepareCredentials();
+    client = null;
     tempFolder.create();
     settings =
         EchoSettings.newBuilder()
@@ -69,17 +72,33 @@ public class ITGdch {
     credentials = GdchCredentials.fromStream(new FileInputStream(tempGdchCredentialFile));
   }
 
+  /**
+   * {@link com.google.api.gax.rpc.ClientContext} sets a credentials object many times before
+   * concluding its creation. double check that they end up being the same
+   */
   @Test
-  public void testClientWithGdchCredentialNoAudience_correct() {
+  public void testClientWithGdchCredential_keepsCredentials() throws IOException {
     Exception unexpected = getExceptionFromClientCreation();
     assertNull(unexpected);
+    assertSame(credentials, client.getSettings().getCredentialsProvider().getCredentials());
   }
 
   @Test
-  public void testClientWithGdchCredentialWithValidAudience_correct() throws IOException {
-    settings = settings.toBuilder().setGdchApiAudience("valid-audience").build();
+  public void testClientWithGdchCredentialWithValidAudience_correct()
+      throws IOException, URISyntaxException {
+    String audience = "valid-audience";
+    settings = settings.toBuilder().setGdchApiAudience(audience).build();
     Exception unexpected = getExceptionFromClientCreation();
     assertNull(unexpected);
+    // should have created a new credentials object with api audience
+    GdchCredentials fromClient =
+        (GdchCredentials) client.getSettings().getCredentialsProvider().getCredentials();
+    URI audienceFromClient = fromClient.getApiAudience();
+    assertNotNull(audienceFromClient);
+    assertTrue(audienceFromClient.equals(new URI(audience)));
+    assertTrue(
+        "GDCH credentials with audience should be GdchCredentials",
+        credentials instanceof GdchCredentials);
   }
 
   @Test
@@ -108,7 +127,7 @@ public class ITGdch {
 
   private Exception getExceptionFromClientCreation() {
     try {
-      EchoClient.create(settings);
+      client = EchoClient.create(settings);
     } catch (Exception ex) {
       return ex;
     }
