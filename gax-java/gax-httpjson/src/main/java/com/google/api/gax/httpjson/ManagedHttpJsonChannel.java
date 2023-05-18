@@ -85,7 +85,7 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
 
   @Override
   public synchronized void shutdown() {
-    // Calling shutdown() twice should no-op
+    // Calling shutdown/ shutdownNow() twice should no-op
     if (isTransportShutdown) {
       return;
     }
@@ -126,7 +126,22 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
 
   @Override
   public void shutdownNow() {
-    shutdown();
+    // Calling shutdown/ shutdownNow() twice should no-op
+    if (isTransportShutdown) {
+      return;
+    }
+    try {
+      // Only shutdown the executor if it was created by Gax. External executors
+      // should be managed by the user.
+      if (usingDefaultExecutor && executor instanceof ExecutorService) {
+        ((ExecutorService) executor).shutdownNow();
+      }
+      deadlineScheduledExecutorService.shutdownNow();
+      httpTransport.shutdown();
+      isTransportShutdown = true;
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   @Override
@@ -163,8 +178,11 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
     private Executor executor;
     private String endpoint;
     private HttpTransport httpTransport;
+    private boolean usingDefaultExecutor;
 
-    private Builder() {}
+    private Builder() {
+      this.usingDefaultExecutor = false;
+    }
 
     public Builder setExecutor(Executor executor) {
       this.executor = executor;
@@ -188,9 +206,9 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
       // default executor to used for the calls. Only the default executor's
       // lifecycle will be managed by the channel. Any external executor needs to
       // managed by the user.
-      boolean usingDefaultExecutor = executor == null;
-      if (usingDefaultExecutor) {
+      if (executor == null) {
         executor = InstantiatingExecutorProvider.newBuilder().build().getExecutor();
+        usingDefaultExecutor = true;
       }
 
       return new ManagedHttpJsonChannel(
