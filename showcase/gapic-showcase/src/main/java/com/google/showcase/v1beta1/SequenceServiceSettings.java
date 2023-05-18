@@ -16,6 +16,8 @@
 
 package com.google.showcase.v1beta1;
 
+import static com.google.showcase.v1beta1.SequenceServiceClient.ListLocationsPagedResponse;
+
 import com.google.api.core.ApiFunction;
 import com.google.api.core.BetaApi;
 import com.google.api.gax.core.GoogleCredentialsProvider;
@@ -25,9 +27,15 @@ import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
 import com.google.api.gax.rpc.ApiClientHeaderProvider;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.ClientSettings;
+import com.google.api.gax.rpc.PagedCallSettings;
+import com.google.api.gax.rpc.ServerStreamingCallSettings;
 import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
+import com.google.cloud.location.GetLocationRequest;
+import com.google.cloud.location.ListLocationsRequest;
+import com.google.cloud.location.ListLocationsResponse;
+import com.google.cloud.location.Location;
 import com.google.protobuf.Empty;
 import com.google.showcase.v1beta1.stub.SequenceServiceStubSettings;
 import java.io.IOException;
@@ -80,14 +88,44 @@ public class SequenceServiceSettings extends ClientSettings<SequenceServiceSetti
     return ((SequenceServiceStubSettings) getStubSettings()).createSequenceSettings();
   }
 
+  /** Returns the object with the settings used for calls to createStreamingSequence. */
+  public UnaryCallSettings<CreateStreamingSequenceRequest, StreamingSequence>
+      createStreamingSequenceSettings() {
+    return ((SequenceServiceStubSettings) getStubSettings()).createStreamingSequenceSettings();
+  }
+
   /** Returns the object with the settings used for calls to getSequenceReport. */
   public UnaryCallSettings<GetSequenceReportRequest, SequenceReport> getSequenceReportSettings() {
     return ((SequenceServiceStubSettings) getStubSettings()).getSequenceReportSettings();
   }
 
+  /** Returns the object with the settings used for calls to getStreamingSequenceReport. */
+  public UnaryCallSettings<GetStreamingSequenceReportRequest, StreamingSequenceReport>
+      getStreamingSequenceReportSettings() {
+    return ((SequenceServiceStubSettings) getStubSettings()).getStreamingSequenceReportSettings();
+  }
+
   /** Returns the object with the settings used for calls to attemptSequence. */
   public UnaryCallSettings<AttemptSequenceRequest, Empty> attemptSequenceSettings() {
     return ((SequenceServiceStubSettings) getStubSettings()).attemptSequenceSettings();
+  }
+
+  /** Returns the object with the settings used for calls to attemptStreamingSequence. */
+  public ServerStreamingCallSettings<
+          AttemptStreamingSequenceRequest, AttemptStreamingSequenceResponse>
+      attemptStreamingSequenceSettings() {
+    return ((SequenceServiceStubSettings) getStubSettings()).attemptStreamingSequenceSettings();
+  }
+
+  /** Returns the object with the settings used for calls to listLocations. */
+  public PagedCallSettings<ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
+      listLocationsSettings() {
+    return ((SequenceServiceStubSettings) getStubSettings()).listLocationsSettings();
+  }
+
+  /** Returns the object with the settings used for calls to getLocation. */
+  public UnaryCallSettings<GetLocationRequest, Location> getLocationSettings() {
+    return ((SequenceServiceStubSettings) getStubSettings()).getLocationSettings();
   }
 
   public static final SequenceServiceSettings create(SequenceServiceStubSettings stub)
@@ -210,15 +248,46 @@ public class SequenceServiceSettings extends ClientSettings<SequenceServiceSetti
       return getStubSettingsBuilder().createSequenceSettings();
     }
 
+    /** Returns the builder for the settings used for calls to createStreamingSequence. */
+    public UnaryCallSettings.Builder<CreateStreamingSequenceRequest, StreamingSequence>
+        createStreamingSequenceSettings() {
+      return getStubSettingsBuilder().createStreamingSequenceSettings();
+    }
+
     /** Returns the builder for the settings used for calls to getSequenceReport. */
     public UnaryCallSettings.Builder<GetSequenceReportRequest, SequenceReport>
         getSequenceReportSettings() {
       return getStubSettingsBuilder().getSequenceReportSettings();
     }
 
+    /** Returns the builder for the settings used for calls to getStreamingSequenceReport. */
+    public UnaryCallSettings.Builder<GetStreamingSequenceReportRequest, StreamingSequenceReport>
+        getStreamingSequenceReportSettings() {
+      return getStubSettingsBuilder().getStreamingSequenceReportSettings();
+    }
+
     /** Returns the builder for the settings used for calls to attemptSequence. */
     public UnaryCallSettings.Builder<AttemptSequenceRequest, Empty> attemptSequenceSettings() {
       return getStubSettingsBuilder().attemptSequenceSettings();
+    }
+
+    /** Returns the builder for the settings used for calls to attemptStreamingSequence. */
+    public ServerStreamingCallSettings.Builder<
+            AttemptStreamingSequenceRequest, AttemptStreamingSequenceResponse>
+        attemptStreamingSequenceSettings() {
+      return getStubSettingsBuilder().attemptStreamingSequenceSettings();
+    }
+
+    /** Returns the builder for the settings used for calls to listLocations. */
+    public PagedCallSettings.Builder<
+            ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
+        listLocationsSettings() {
+      return getStubSettingsBuilder().listLocationsSettings();
+    }
+
+    /** Returns the builder for the settings used for calls to getLocation. */
+    public UnaryCallSettings.Builder<GetLocationRequest, Location> getLocationSettings() {
+      return getStubSettingsBuilder().getLocationSettings();
     }
 
     @Override

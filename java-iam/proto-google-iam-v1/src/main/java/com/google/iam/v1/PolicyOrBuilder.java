@@ -44,7 +44,8 @@ public interface PolicyOrBuilder
    * If a policy does not include any conditions, operations on that policy may
    * specify any valid version or leave the field unset.
    * To learn which resources support conditions in their IAM policies, see the
-   * [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
+   * [IAM
+   * documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
    * </pre>
    *
    * <code>int32 version = 1;</code>

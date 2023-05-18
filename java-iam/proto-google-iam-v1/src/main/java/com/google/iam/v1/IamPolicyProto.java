@@ -78,11 +78,11 @@ public final class IamPolicyProto {
           + "am.v1.TestIamPermissionsRequest\032).google"
           + ".iam.v1.TestIamPermissionsResponse\"/\202\323\344\223"
           + "\002)\"$/v1/{resource=**}:testIamPermissions"
-          + ":\001*\032\036\312A\033iam-meta-api.googleapis.comB\206\001\n\021"
-          + "com.google.iam.v1B\016IamPolicyProtoP\001Z0goo"
-          + "gle.golang.org/genproto/googleapis/iam/v"
-          + "1;iam\370\001\001\252\002\023Google.Cloud.Iam.V1\312\002\023Google\\"
-          + "Cloud\\Iam\\V1b\006proto3"
+          + ":\001*\032\036\312A\033iam-meta-api.googleapis.comB\177\n\021c"
+          + "om.google.iam.v1B\016IamPolicyProtoP\001Z)clou"
+          + "d.google.com/go/iam/apiv1/iampb;iampb\370\001\001"
+          + "\252\002\023Google.Cloud.Iam.V1\312\002\023Google\\Cloud\\Ia"
+          + "m\\V1b\006proto3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(

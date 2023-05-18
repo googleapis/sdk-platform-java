@@ -27,7 +27,7 @@ import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.protoparser.Parser;
-import com.google.api.generator.testutils.LineFormatter;
+import com.google.api.generator.test.utils.LineFormatter;
 import com.google.protobuf.Descriptors;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import java.util.Arrays;

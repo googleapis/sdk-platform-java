@@ -282,7 +282,7 @@ public final class PoliciesGrpc {
    * An interface for managing Identity and Access Management (IAM) policies.
    * </pre>
    */
-  public abstract static class PoliciesImplBase implements io.grpc.BindableService {
+  public interface AsyncService {
 
     /**
      *
@@ -294,7 +294,7 @@ public final class PoliciesGrpc {
      * omitted.
      * </pre>
      */
-    public void listPolicies(
+    default void listPolicies(
         com.google.iam.v2beta.ListPoliciesRequest request,
         io.grpc.stub.StreamObserver<com.google.iam.v2beta.ListPoliciesResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(
@@ -308,7 +308,7 @@ public final class PoliciesGrpc {
      * Gets a policy.
      * </pre>
      */
-    public void getPolicy(
+    default void getPolicy(
         com.google.iam.v2beta.GetPolicyRequest request,
         io.grpc.stub.StreamObserver<com.google.iam.v2beta.Policy> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetPolicyMethod(), responseObserver);
@@ -321,7 +321,7 @@ public final class PoliciesGrpc {
      * Creates a policy.
      * </pre>
      */
-    public void createPolicy(
+    default void createPolicy(
         com.google.iam.v2beta.CreatePolicyRequest request,
         io.grpc.stub.StreamObserver<com.google.longrunning.Operation> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(
@@ -341,7 +341,7 @@ public final class PoliciesGrpc {
      * This pattern helps prevent conflicts between concurrent updates.
      * </pre>
      */
-    public void updatePolicy(
+    default void updatePolicy(
         com.google.iam.v2beta.UpdatePolicyRequest request,
         io.grpc.stub.StreamObserver<com.google.longrunning.Operation> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(
@@ -355,52 +355,31 @@ public final class PoliciesGrpc {
      * Deletes a policy. This action is permanent.
      * </pre>
      */
-    public void deletePolicy(
+    default void deletePolicy(
         com.google.iam.v2beta.DeletePolicyRequest request,
         io.grpc.stub.StreamObserver<com.google.longrunning.Operation> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(
           getDeletePolicyMethod(), responseObserver);
     }
+  }
+
+  /**
+   * Base class for the server implementation of the service Policies.
+   *
+   * <pre>
+   * An interface for managing Identity and Access Management (IAM) policies.
+   * </pre>
+   */
+  public abstract static class PoliciesImplBase implements io.grpc.BindableService, AsyncService {
 
     @java.lang.Override
     public final io.grpc.ServerServiceDefinition bindService() {
-      return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
-          .addMethod(
-              getListPoliciesMethod(),
-              io.grpc.stub.ServerCalls.asyncUnaryCall(
-                  new MethodHandlers<
-                      com.google.iam.v2beta.ListPoliciesRequest,
-                      com.google.iam.v2beta.ListPoliciesResponse>(this, METHODID_LIST_POLICIES)))
-          .addMethod(
-              getGetPolicyMethod(),
-              io.grpc.stub.ServerCalls.asyncUnaryCall(
-                  new MethodHandlers<
-                      com.google.iam.v2beta.GetPolicyRequest, com.google.iam.v2beta.Policy>(
-                      this, METHODID_GET_POLICY)))
-          .addMethod(
-              getCreatePolicyMethod(),
-              io.grpc.stub.ServerCalls.asyncUnaryCall(
-                  new MethodHandlers<
-                      com.google.iam.v2beta.CreatePolicyRequest, com.google.longrunning.Operation>(
-                      this, METHODID_CREATE_POLICY)))
-          .addMethod(
-              getUpdatePolicyMethod(),
-              io.grpc.stub.ServerCalls.asyncUnaryCall(
-                  new MethodHandlers<
-                      com.google.iam.v2beta.UpdatePolicyRequest, com.google.longrunning.Operation>(
-                      this, METHODID_UPDATE_POLICY)))
-          .addMethod(
-              getDeletePolicyMethod(),
-              io.grpc.stub.ServerCalls.asyncUnaryCall(
-                  new MethodHandlers<
-                      com.google.iam.v2beta.DeletePolicyRequest, com.google.longrunning.Operation>(
-                      this, METHODID_DELETE_POLICY)))
-          .build();
+      return PoliciesGrpc.bindService(this);
     }
   }
 
   /**
-   *
+   * A stub to allow clients to do asynchronous rpc calls to service Policies.
    *
    * <pre>
    * An interface for managing Identity and Access Management (IAM) policies.
@@ -505,7 +484,7 @@ public final class PoliciesGrpc {
   }
 
   /**
-   *
+   * A stub to allow clients to do synchronous rpc calls to service Policies.
    *
    * <pre>
    * An interface for managing Identity and Access Management (IAM) policies.
@@ -597,7 +576,7 @@ public final class PoliciesGrpc {
   }
 
   /**
-   *
+   * A stub to allow clients to do ListenableFuture-style rpc calls to service Policies.
    *
    * <pre>
    * An interface for managing Identity and Access Management (IAM) policies.
@@ -701,10 +680,10 @@ public final class PoliciesGrpc {
           io.grpc.stub.ServerCalls.ServerStreamingMethod<Req, Resp>,
           io.grpc.stub.ServerCalls.ClientStreamingMethod<Req, Resp>,
           io.grpc.stub.ServerCalls.BidiStreamingMethod<Req, Resp> {
-    private final PoliciesImplBase serviceImpl;
+    private final AsyncService serviceImpl;
     private final int methodId;
 
-    MethodHandlers(PoliciesImplBase serviceImpl, int methodId) {
+    MethodHandlers(AsyncService serviceImpl, int methodId) {
       this.serviceImpl = serviceImpl;
       this.methodId = methodId;
     }
@@ -753,6 +732,41 @@ public final class PoliciesGrpc {
           throw new AssertionError();
       }
     }
+  }
+
+  public static final io.grpc.ServerServiceDefinition bindService(AsyncService service) {
+    return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
+        .addMethod(
+            getListPoliciesMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+                new MethodHandlers<
+                    com.google.iam.v2beta.ListPoliciesRequest,
+                    com.google.iam.v2beta.ListPoliciesResponse>(service, METHODID_LIST_POLICIES)))
+        .addMethod(
+            getGetPolicyMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+                new MethodHandlers<
+                    com.google.iam.v2beta.GetPolicyRequest, com.google.iam.v2beta.Policy>(
+                    service, METHODID_GET_POLICY)))
+        .addMethod(
+            getCreatePolicyMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+                new MethodHandlers<
+                    com.google.iam.v2beta.CreatePolicyRequest, com.google.longrunning.Operation>(
+                    service, METHODID_CREATE_POLICY)))
+        .addMethod(
+            getUpdatePolicyMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+                new MethodHandlers<
+                    com.google.iam.v2beta.UpdatePolicyRequest, com.google.longrunning.Operation>(
+                    service, METHODID_UPDATE_POLICY)))
+        .addMethod(
+            getDeletePolicyMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+                new MethodHandlers<
+                    com.google.iam.v2beta.DeletePolicyRequest, com.google.longrunning.Operation>(
+                    service, METHODID_DELETE_POLICY)))
+        .build();
   }
 
   private abstract static class PoliciesBaseDescriptorSupplier

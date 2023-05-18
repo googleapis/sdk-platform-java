@@ -18,6 +18,7 @@ import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
+import com.google.api.generator.test.protoloader.GrpcTestProtoLoader;
 import java.util.Arrays;
 import java.util.Collection;
 import org.junit.Test;

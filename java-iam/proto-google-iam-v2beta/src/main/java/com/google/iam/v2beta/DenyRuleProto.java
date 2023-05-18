@@ -46,11 +46,10 @@ public final class DenyRuleProto {
           + "eption_principals\030\002 \003(\t\022\032\n\022denied_permis"
           + "sions\030\003 \003(\t\022\035\n\025exception_permissions\030\004 \003"
           + "(\t\022+\n\020denial_condition\030\005 \001(\0132\021.google.ty"
-          + "pe.ExprB\222\001\n\025com.google.iam.v2betaB\rDenyR"
-          + "uleProtoP\001Z4google.golang.org/genproto/g"
-          + "oogleapis/iam/v2beta;iam\252\002\027Google.Cloud."
-          + "Iam.V2Beta\312\002\027Google\\Cloud\\Iam\\V2betab\006pr"
-          + "oto3"
+          + "pe.ExprB\213\001\n\025com.google.iam.v2betaB\rDenyR"
+          + "uleProtoP\001Z-cloud.google.com/go/iam/apiv"
+          + "2beta/iampb;iampb\252\002\027Google.Cloud.Iam.V2B"
+          + "eta\312\002\027Google\\Cloud\\Iam\\V2betab\006proto3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(

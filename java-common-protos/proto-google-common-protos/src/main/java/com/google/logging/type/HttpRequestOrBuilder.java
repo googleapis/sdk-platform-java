@@ -212,7 +212,7 @@ public interface HttpRequestOrBuilder
    * <pre>
    * The referer URL of the request, as defined in
    * [HTTP/1.1 Header Field
-   * Definitions](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
+   * Definitions](https://datatracker.ietf.org/doc/html/rfc2616#section-14.36).
    * </pre>
    *
    * <code>string referer = 8;</code>
@@ -226,7 +226,7 @@ public interface HttpRequestOrBuilder
    * <pre>
    * The referer URL of the request, as defined in
    * [HTTP/1.1 Header Field
-   * Definitions](http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html).
+   * Definitions](https://datatracker.ietf.org/doc/html/rfc2616#section-14.36).
    * </pre>
    *
    * <code>string referer = 8;</code>
