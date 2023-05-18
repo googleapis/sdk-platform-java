@@ -92,7 +92,7 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
     try {
       // Only shutdown the executor if it was created by Gax. External executors
       // should be managed by the user.
-      if (usingDefaultExecutor) {
+      if (usingDefaultExecutor && executor instanceof ExecutorService) {
         ((ExecutorService) executor).shutdown();
       }
       deadlineScheduledExecutorService.shutdown();
@@ -105,9 +105,10 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
 
   @Override
   public boolean isShutdown() {
+    // TODO(lawrenceqiu): Expose an isShutdown() method for HttpTransport
     boolean isShutdown = isTransportShutdown && deadlineScheduledExecutorService.isShutdown();
     // Check that the Gax's ExecutorService is shutdown as well
-    if (usingDefaultExecutor) {
+    if (usingDefaultExecutor && executor instanceof ExecutorService) {
       isShutdown = isShutdown && ((ExecutorService) executor).isShutdown();
     }
     return isShutdown;
@@ -117,7 +118,7 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
   public boolean isTerminated() {
     boolean isTerminated = deadlineScheduledExecutorService.isTerminated();
     // Check that the Gax's ExecutorService is terminated as well
-    if (usingDefaultExecutor) {
+    if (usingDefaultExecutor && executor instanceof ExecutorService) {
       isTerminated = isTerminated && ((ExecutorService) executor).isTerminated();
     }
     return isTerminated;
@@ -137,7 +138,7 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
     }
     // Only awaitTermination for the executor if it was created by Gax. External executors
     // should be managed by the user.
-    if (usingDefaultExecutor) {
+    if (usingDefaultExecutor && executor instanceof ExecutorService) {
       boolean terminated = ((ExecutorService) executor).awaitTermination(awaitTimeNanos, unit);
       // Termination duration has elapsed
       if (!terminated) {
