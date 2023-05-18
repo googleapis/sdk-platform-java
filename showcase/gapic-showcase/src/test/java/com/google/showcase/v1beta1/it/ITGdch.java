@@ -20,6 +20,10 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
+/**
+ * Test suite to confirm a client can be instantiated with GDCH credentials. No calls are made since
+ * it is not feasible to test against real GDCH servers (or replicate an environment)
+ */
 public class ITGdch {
 
   private static final String TEST_GDCH_CREDENTIAL_FILE = "/test_gdch_credential.json";

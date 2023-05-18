@@ -260,6 +260,11 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
       return self();
     }
 
+    /**
+     * Sets the GDC-H api audience. This is intended only to be used with {@link
+     * com.google.auth.oauth2.GdchCredentials} If this field is set and other type of {@link
+     * com.google.auth.Credentials} is used then an {@link IllegalArgumentException} will be thrown
+     */
     public B setGdchApiAudience(@Nullable String gdchApiAudience) {
       stubSettings.setGdchApiAudience(gdchApiAudience);
       return self();
