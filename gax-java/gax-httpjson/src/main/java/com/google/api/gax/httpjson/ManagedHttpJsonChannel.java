@@ -34,6 +34,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import java.io.IOException;
 import java.util.concurrent.Executor;
@@ -81,6 +82,11 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
         httpTransport,
         executor,
         deadlineScheduledExecutorService);
+  }
+
+  @VisibleForTesting
+  Executor getExecutor() {
+    return executor;
   }
 
   @Override
