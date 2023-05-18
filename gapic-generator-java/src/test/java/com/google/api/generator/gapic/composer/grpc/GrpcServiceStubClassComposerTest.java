@@ -82,4 +82,14 @@ public class GrpcServiceStubClassComposerTest {
     Assert.assertGoldenClass(this.getClass(), clazz, "GrpcLoggingStub.golden");
     Assert.assertEmptySamples(clazz.samples());
   }
+
+  @Test
+  public void generateGrpcServiceStubClass_ambiguousImport() {
+    GapicContext context = GrpcTestProtoLoader.instance().parseTypeConflictTesting();
+    Service testProtoService = context.services().get(0);
+    GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, testProtoService);
+
+    Assert.assertGoldenClass(this.getClass(), clazz, "GrpcTypeConflictTestingStub.golden");
+    Assert.assertEmptySamples(clazz.samples());
+  }
 }

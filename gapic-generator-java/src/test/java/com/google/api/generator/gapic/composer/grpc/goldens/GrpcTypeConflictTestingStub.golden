@@ -1,0 +1,154 @@
+package com.google.testgapic.v1beta1.stub;
+
+import com.google.api.core.BetaApi;
+import com.google.api.gax.core.BackgroundResource;
+import com.google.api.gax.core.BackgroundResourceAggregation;
+import com.google.api.gax.grpc.GrpcCallSettings;
+import com.google.api.gax.grpc.GrpcStubCallableFactory;
+import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.OperationCallable;
+import com.google.api.gax.rpc.UnaryCallable;
+import com.google.longrunning.Operation;
+import com.google.longrunning.stub.GrpcOperationsStub;
+import com.google.testgapic.v1beta1.Annotation;
+import com.google.testgapic.v1beta1.Metadata;
+import com.google.testgapic.v1beta1.Request;
+import io.grpc.MethodDescriptor;
+import io.grpc.protobuf.ProtoUtils;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+import javax.annotation.Generated;
+
+// AUTO-GENERATED DOCUMENTATION AND CLASS.
+/**
+ * gRPC stub implementation for the TypeConflictTesting service API.
+ *
+ * <p>This class is for advanced usage and reflects the underlying API directly.
+ */
+@BetaApi
+@Generated("by gapic-generator-java")
+public class GrpcTypeConflictTestingStub extends TypeConflictTestingStub {
+  private static final MethodDescriptor<Request, Operation> annotationTestMethodDescriptor =
+      MethodDescriptor.<Request, Operation>newBuilder()
+          .setType(MethodDescriptor.MethodType.UNARY)
+          .setFullMethodName("google.testgapic.v1beta1.TypeConflictTesting/annotationTest")
+          .setRequestMarshaller(ProtoUtils.marshaller(Request.getDefaultInstance()))
+          .setResponseMarshaller(ProtoUtils.marshaller(Operation.getDefaultInstance()))
+          .build();
+
+  private final UnaryCallable<Request, Operation> annotationTestCallable;
+  private final OperationCallable<Request, Annotation, Metadata> annotationTestOperationCallable;
+
+  private final BackgroundResource backgroundResources;
+  private final GrpcOperationsStub operationsStub;
+  private final GrpcStubCallableFactory callableFactory;
+
+  public static final GrpcTypeConflictTestingStub create(TypeConflictTestingStubSettings settings)
+      throws IOException {
+    return new GrpcTypeConflictTestingStub(settings, ClientContext.create(settings));
+  }
+
+  public static final GrpcTypeConflictTestingStub create(ClientContext clientContext)
+      throws IOException {
+    return new GrpcTypeConflictTestingStub(
+        TypeConflictTestingStubSettings.newBuilder().build(), clientContext);
+  }
+
+  public static final GrpcTypeConflictTestingStub create(
+      ClientContext clientContext, GrpcStubCallableFactory callableFactory) throws IOException {
+    return new GrpcTypeConflictTestingStub(
+        TypeConflictTestingStubSettings.newBuilder().build(), clientContext, callableFactory);
+  }
+
+  /**
+   * Constructs an instance of GrpcTypeConflictTestingStub, using the given settings. This is
+   * protected so that it is easy to make a subclass, but otherwise, the static factory methods
+   * should be preferred.
+   */
+  protected GrpcTypeConflictTestingStub(
+      TypeConflictTestingStubSettings settings, ClientContext clientContext) throws IOException {
+    this(settings, clientContext, new GrpcTypeConflictTestingCallableFactory());
+  }
+
+  /**
+   * Constructs an instance of GrpcTypeConflictTestingStub, using the given settings. This is
+   * protected so that it is easy to make a subclass, but otherwise, the static factory methods
+   * should be preferred.
+   */
+  protected GrpcTypeConflictTestingStub(
+      TypeConflictTestingStubSettings settings,
+      ClientContext clientContext,
+      GrpcStubCallableFactory callableFactory)
+      throws IOException {
+    this.callableFactory = callableFactory;
+    this.operationsStub = GrpcOperationsStub.create(clientContext, callableFactory);
+
+    GrpcCallSettings<Request, Operation> annotationTestTransportSettings =
+        GrpcCallSettings.<Request, Operation>newBuilder()
+            .setMethodDescriptor(annotationTestMethodDescriptor)
+            .build();
+
+    this.annotationTestCallable =
+        callableFactory.createUnaryCallable(
+            annotationTestTransportSettings, settings.annotationTestSettings(), clientContext);
+    this.annotationTestOperationCallable =
+        callableFactory.createOperationCallable(
+            annotationTestTransportSettings,
+            settings.annotationTestOperationSettings(),
+            clientContext,
+            operationsStub);
+
+    this.backgroundResources =
+        new BackgroundResourceAggregation(clientContext.getBackgroundResources());
+  }
+
+  public GrpcOperationsStub getOperationsStub() {
+    return operationsStub;
+  }
+
+  @Override
+  public UnaryCallable<Request, Operation> annotationTestCallable() {
+    return annotationTestCallable;
+  }
+
+  @Override
+  public OperationCallable<Request, Annotation, Metadata> annotationTestOperationCallable() {
+    return annotationTestOperationCallable;
+  }
+
+  @Override
+  public final void close() {
+    try {
+      backgroundResources.close();
+    } catch (RuntimeException e) {
+      throw e;
+    } catch (Exception e) {
+      throw new IllegalStateException("Failed to close resource", e);
+    }
+  }
+
+  @Override
+  public void shutdown() {
+    backgroundResources.shutdown();
+  }
+
+  @Override
+  public boolean isShutdown() {
+    return backgroundResources.isShutdown();
+  }
+
+  @Override
+  public boolean isTerminated() {
+    return backgroundResources.isTerminated();
+  }
+
+  @Override
+  public void shutdownNow() {
+    backgroundResources.shutdownNow();
+  }
+
+  @Override
+  public boolean awaitTermination(long duration, TimeUnit unit) throws InterruptedException {
+    return backgroundResources.awaitTermination(duration, unit);
+  }
+}

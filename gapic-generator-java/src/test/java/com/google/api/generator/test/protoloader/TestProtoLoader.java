@@ -41,6 +41,7 @@ import com.google.showcase.v1beta1.IdentityOuterClass;
 import com.google.showcase.v1beta1.MessagingOuterClass;
 import com.google.showcase.v1beta1.TestingOuterClass;
 import com.google.testdata.v1.DeprecatedServiceOuterClass;
+import com.google.testgapic.v1beta1.TypeConflictTestingOuterClass;
 import google.cloud.CommonResources;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -352,6 +353,31 @@ public class TestProtoLoader {
         .setResourceNames(resourceNames)
         .setServices(services)
         .setServiceConfig(config)
+        .setHelperResourceNames(outputResourceNames)
+        .setTransport(transport)
+        .build();
+  }
+
+  public GapicContext parseTypeConflictTesting() {
+    FileDescriptor testingFileDescriptor = TypeConflictTestingOuterClass.getDescriptor();
+    ServiceDescriptor testingService = testingFileDescriptor.getServices().get(0);
+    assertEquals(testingService.getName(), "TypeConflictTesting");
+
+    Map<String, Message> messageTypes = Parser.parseMessages(testingFileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(testingFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(
+            testingFileDescriptor,
+            messageTypes,
+            resourceNames,
+            Optional.empty(),
+            outputResourceNames);
+
+    return GapicContext.builder()
+        .setMessages(messageTypes)
+        .setResourceNames(resourceNames)
+        .setServices(services)
         .setHelperResourceNames(outputResourceNames)
         .setTransport(transport)
         .build();
