@@ -57,6 +57,6 @@ case $1 in
 
     unzip -q -c "$BAZEL_ROOT/$GAPIC_JAR" temp-codegen.srcjar | jar x
     delete_unneeded
-    diff -ru "$SHOWCASE_DIR/$GAPIC_PROJECT_DIR"/src "$GAPIC_UNPACK_DIR"/src --exclude=it --exclude=resources
+    diff -ru "$SHOWCASE_DIR/$GAPIC_PROJECT_DIR"/src "$GAPIC_UNPACK_DIR"/src --exclude=it --exclude=resources --exclude=*.iml
     ;;
 esac
