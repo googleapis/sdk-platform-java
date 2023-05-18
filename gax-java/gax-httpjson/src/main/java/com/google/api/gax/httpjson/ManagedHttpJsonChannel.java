@@ -183,6 +183,10 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
     public ManagedHttpJsonChannel build() {
       Preconditions.checkNotNull(endpoint);
 
+      // If the executor provided for this channel is null, gax will provide a
+      // default executor to used for the calls. Only the default executor's
+      // lifecycle will be managed by the channel. Any external executor needs to
+      // managed by the user.
       boolean usingDefaultExecutor = executor == null;
       if (usingDefaultExecutor) {
         executor = InstantiatingExecutorProvider.newBuilder().build().getExecutor();
