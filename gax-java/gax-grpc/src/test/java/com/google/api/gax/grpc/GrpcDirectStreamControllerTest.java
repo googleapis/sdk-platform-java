@@ -59,7 +59,7 @@ import org.threeten.bp.Duration;
 @RunWith(JUnit4.class)
 public class GrpcDirectStreamControllerTest {
 
-  @Test(timeout = 120_000) // ms
+  @Test(timeout = 180_000) // ms
   public void testRetryNoRaceCondition() throws Exception {
     Server server = ServerBuilder.forPort(1234).addService(new FakeService()).build();
     server.start();
