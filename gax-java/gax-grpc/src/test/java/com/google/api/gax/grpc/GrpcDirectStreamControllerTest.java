@@ -29,6 +29,7 @@
  */
 package com.google.api.gax.grpc;
 
+import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.grpc.testing.FakeServiceGrpc;
 import com.google.api.gax.retrying.RetrySettings;
@@ -49,8 +50,12 @@ import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -62,8 +67,6 @@ public class GrpcDirectStreamControllerTest {
   @Test
   public void testRetryNoRaceCondition() throws Exception {
     Server server = ServerBuilder.forPort(1234).addService(new FakeService()).build();
-    server.start();
-
     ManagedChannel channel =
         ManagedChannelBuilder.forAddress("localhost", 1234).usePlaintext().build();
 
@@ -96,17 +99,18 @@ public class GrpcDirectStreamControllerTest {
     // Set up retry settings. Set total timeout to 1 minute to limit the total runtime of this test.
     // Set retry delay to 1 ms so the retries will be scheduled in a loop with no delays.
     // Set max attempt to max so there could be as many retries as possible.
-    ServerStreamingCallSettings<Color, Money> callSettigs =
+    RetrySettings retrySettings =
+        RetrySettings.newBuilder()
+            .setTotalTimeout(Duration.ofSeconds(1))
+            .setMaxAttempts(Integer.MAX_VALUE)
+            .setInitialRetryDelay(Duration.ofMillis(1))
+            .setMaxRetryDelay(Duration.ofMillis(1))
+            .build();
+    ServerStreamingCallSettings<Color, Money> callSettings =
         ServerStreamingCallSettings.<Color, Money>newBuilder()
             .setResumptionStrategy(resumptionStrategy)
             .setRetryableCodes(StatusCode.Code.DEADLINE_EXCEEDED)
-            .setRetrySettings(
-                RetrySettings.newBuilder()
-                    .setTotalTimeout(Duration.ofMinutes(1))
-                    .setMaxAttempts(Integer.MAX_VALUE)
-                    .setInitialRetryDelay(Duration.ofMillis(1))
-                    .setMaxRetryDelay(Duration.ofMillis(1))
-                    .build())
+            .setRetrySettings(retrySettings)
             .build();
 
     StubSettings.Builder builder =
@@ -122,28 +126,37 @@ public class GrpcDirectStreamControllerTest {
           }
         };
 
+    GrpcTransportChannel transportChannel = GrpcTransportChannel.create(channel);
     builder
         .setEndpoint("localhost:1234")
         .setCredentialsProvider(NoCredentialsProvider.create())
         .setTransportChannelProvider(
-            FixedTransportChannelProvider.create(GrpcTransportChannel.create(channel)));
+            FixedTransportChannelProvider.create(transportChannel));
 
+    ClientContext clientContext = ClientContext.create(builder.build());
     ServerStreamingCallable<Color, Money> callable =
         GrpcCallableFactory.createServerStreamingCallable(
             GrpcCallSettings.create(FakeServiceGrpc.METHOD_SERVER_STREAMING_RECOGNIZE),
-            callSettigs,
-            ClientContext.create(builder.build()));
+            callSettings,
+            clientContext);
 
     ServerStreamingCallable<Color, Money> retrying =
-        Callables.retrying(callable, callSettigs, ClientContext.create(builder.build()));
+        Callables.retrying(callable, callSettings, clientContext);
 
     Color request = Color.newBuilder().getDefaultInstanceForType();
 
     try {
-      for (Money money : retrying.call(request, GrpcCallContext.createDefault())) {}
-
+      retrying.call(request, GrpcCallContext.createDefault().withRetrySettings(retrySettings));
     } catch (DeadlineExceededException e) {
       // Ignore this error
+    } finally {
+      server.shutdown();
+      server.awaitTermination(10, TimeUnit.SECONDS);
+      channel.shutdown();
+      channel.awaitTermination(10, TimeUnit.SECONDS);
+      transportChannel.shutdown();
+      transportChannel.awaitTermination(10, TimeUnit.SECONDS);
+      clientContext.getBackgroundResources().forEach(BackgroundResource::shutdown);
     }
   }
 
