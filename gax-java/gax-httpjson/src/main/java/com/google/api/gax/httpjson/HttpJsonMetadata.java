@@ -32,7 +32,7 @@ package com.google.api.gax.httpjson;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalExtensionOnly;
 import com.google.auto.value.AutoValue;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nullable;
 
@@ -51,7 +51,7 @@ public abstract class HttpJsonMetadata {
   public abstract Builder toBuilder();
 
   public static HttpJsonMetadata.Builder newBuilder() {
-    return new AutoValue_HttpJsonMetadata.Builder().setHeaders(Collections.emptyMap());
+    return new AutoValue_HttpJsonMetadata.Builder().setHeaders(new HashMap<>());
   }
 
   @AutoValue.Builder

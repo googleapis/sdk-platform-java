@@ -32,12 +32,14 @@ package com.google.api.gax.httpjson;
 import com.google.api.core.AbstractApiFuture;
 import com.google.api.core.ApiFuture;
 import com.google.api.gax.rpc.ApiCallContext;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.threeten.bp.Duration;
 
 /**
- * {@code HttpJsonClientCalls} creates a new {@code HttpJsonClientCAll} from the given call context.
+ * {@code HttpJsonClientCalls} creates a new {@code HttpJsonClientCall} from the given call context.
  *
  * <p>Package-private for internal use.
  */
@@ -48,12 +50,19 @@ class HttpJsonClientCalls {
       ApiMethodDescriptor<RequestT, ResponseT> methodDescriptor, ApiCallContext context) {
 
     HttpJsonCallContext httpJsonContext = HttpJsonCallContext.createDefault().nullToSelf(context);
+    HttpJsonCallOptions callOptions = httpJsonContext.getCallOptions();
+
+    Map<String, String> headerMap = callOptions.getRequestHeaderMap();
+    for (Map.Entry<String, List<String>> extraHeaderEntrySet :
+        httpJsonContext.getExtraHeaders().entrySet()) {
+      headerMap.put(extraHeaderEntrySet.getKey(), extraHeaderEntrySet.getValue().get(0));
+    }
+    callOptions = callOptions.toBuilder().setRequestHeaderMap(headerMap).build();
 
     // Use the context's timeout instead of calculating a future deadline with the System clock.
     // The timeout value is calculated from TimedAttemptSettings which accounts for the
     // TotalTimeout value set in the RetrySettings.
     if (httpJsonContext.getTimeout() != null) {
-      HttpJsonCallOptions callOptions = httpJsonContext.getCallOptions();
       // HttpJsonChannel expects the HttpJsonCallOptions and we store the timeout duration
       // inside the HttpJsonCallOptions
       // Note: There is manual conversion between threetenbp's Duration and java.util.Duration
@@ -68,9 +77,9 @@ class HttpJsonClientCalls {
                 .toBuilder()
                 .setTimeout(java.time.Duration.ofMillis(httpJsonContext.getTimeout().toMillis()))
                 .build();
-        httpJsonContext = httpJsonContext.withCallOptions(callOptions);
       }
     }
+    httpJsonContext = httpJsonContext.withCallOptions(callOptions);
 
     // TODO: add headers interceptor logic
     return httpJsonContext.getChannel().newCall(methodDescriptor, httpJsonContext.getCallOptions());

@@ -35,9 +35,12 @@ import com.google.api.gax.rpc.RequestUrlParamsEncoder;
 import com.google.api.gax.rpc.ResponseObserver;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 
 public class HttpJsonServerStreamingRequestParamCallable<RequestT, ResponseT>
     extends ServerStreamingCallable<RequestT, ResponseT> {
+  private static final String DYNAMIC_ROUTING_HEADER_KEY = "x-goog-request-params";
   private final ServerStreamingCallable<RequestT, ResponseT> callable;
   private final RequestUrlParamsEncoder<RequestT> paramsEncoder;
 
@@ -52,10 +55,15 @@ public class HttpJsonServerStreamingRequestParamCallable<RequestT, ResponseT>
   @Override
   public void call(
       RequestT request, ResponseObserver<ResponseT> responseObserver, ApiCallContext context) {
-    HttpJsonCallContext newCallContext =
-        HttpJsonCallContext.createDefault()
-            .nullToSelf(context)
-            .withRequestParamsDynamicHeaderOption(paramsEncoder.encode(request));
+    ApiCallContext newCallContext = context;
+    String encodedHeader = paramsEncoder.encode(request);
+    if (encodedHeader != null && !encodedHeader.isEmpty()) {
+      newCallContext =
+          HttpJsonCallContext.createDefault()
+              .nullToSelf(context)
+              .withExtraHeaders(
+                  ImmutableMap.of(DYNAMIC_ROUTING_HEADER_KEY, ImmutableList.of(encodedHeader)));
+    }
     callable.call(request, responseObserver, newCallContext);
   }
 }

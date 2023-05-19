@@ -41,6 +41,8 @@ import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.ArrayDeque;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.Executor;
@@ -166,7 +168,11 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
       }
       Preconditions.checkState(this.listener == null, "The call is already started");
       this.listener = responseListener;
-      this.requestHeaders = requestHeaders;
+
+      Map<String, Object> newHeaders = new HashMap<>();
+      newHeaders.putAll(requestHeaders.getHeaders());
+      newHeaders.putAll(callOptions.getRequestHeaderMap());
+      this.requestHeaders = requestHeaders.toBuilder().setHeaders(newHeaders).build();
     }
 
     // Use the timeout duration value instead of calculating the future Instant

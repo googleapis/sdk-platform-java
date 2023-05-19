@@ -60,7 +60,6 @@ import javax.annotation.Nullable;
 
 /** A runnable object that creates and executes an HTTP request. */
 class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
-  private static final String DYNAMIC_ROUTING_HEADER_KEY = "x-goog-request-params";
   private final RequestT request;
   private final ApiMethodDescriptor<RequestT, ResponseT> methodDescriptor;
   private final String endpoint;
@@ -195,13 +194,6 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
     for (Map.Entry<String, Object> entry : headers.getHeaders().entrySet()) {
       HttpHeadersUtils.setHeader(
           httpRequest.getHeaders(), entry.getKey(), (String) entry.getValue());
-    }
-
-    if (httpJsonCallOptions.getRequestParamsHeader() != null) {
-      HttpHeadersUtils.setHeader(
-          httpRequest.getHeaders(),
-          DYNAMIC_ROUTING_HEADER_KEY,
-          httpJsonCallOptions.getRequestParamsHeader());
     }
 
     httpRequest.setParser(new JsonObjectParser(jsonFactory));

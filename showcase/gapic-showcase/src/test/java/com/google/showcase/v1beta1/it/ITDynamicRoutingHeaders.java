@@ -45,8 +45,9 @@ import org.junit.Test;
 
 public class ITDynamicRoutingHeaders {
   private static final String SPLIT_TOKEN = "&";
+  private static final String DYNAMIC_ROUTING_HEADER_KEY = "x-goog-request-params";
   private static final Metadata.Key<String> REQUEST_PARAMS_HEADER_KEY =
-      Metadata.Key.of("x-goog-request-params", Metadata.ASCII_STRING_MARSHALLER);
+      Metadata.Key.of(DYNAMIC_ROUTING_HEADER_KEY, Metadata.ASCII_STRING_MARSHALLER);
 
   // Implement a request interceptor to retrieve the headers being sent on the request.
   // The headers being set are part of the Metadata
@@ -102,7 +103,7 @@ public class ITDynamicRoutingHeaders {
               };
 
           super.start(forwardingResponseListener, requestHeaders);
-          requestParam = callOptions.getRequestParamsHeader();
+          requestParam = callOptions.getRequestHeaderMap().get(DYNAMIC_ROUTING_HEADER_KEY);
         }
       };
     }

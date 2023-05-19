@@ -469,15 +469,6 @@ public final class HttpJsonCallContext implements ApiCallContext {
     return withCallOptions(builder.setDeadline(newDeadline).build());
   }
 
-  public HttpJsonCallContext withRequestParamsDynamicHeaderOption(String requestParams) {
-    HttpJsonCallOptions.Builder builder =
-        callOptions != null ? callOptions.toBuilder() : HttpJsonCallOptions.newBuilder();
-    if (!requestParams.isEmpty()) {
-      builder.setRequestParamsHeader(requestParams);
-    }
-    return withCallOptions(builder.build());
-  }
-
   @Nonnull
   @Override
   public ApiTracer getTracer() {
