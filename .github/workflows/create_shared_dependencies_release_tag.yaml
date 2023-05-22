@@ -1,4 +1,4 @@
-name: Create additional tag for each release with first_party_dependencies version
+name: Create additional tag for each release with google-cloud-shared-dependencies version
 
 on:
   release:
