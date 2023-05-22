@@ -34,7 +34,6 @@ import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.grpc.testing.FakeServiceGrpc;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.retrying.StreamResumptionStrategy;
-import com.google.api.gax.rpc.Callables;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.DeadlineExceededException;
 import com.google.api.gax.rpc.FixedTransportChannelProvider;
@@ -51,6 +50,8 @@ import io.grpc.ServerBuilder;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -64,12 +65,26 @@ import org.threeten.bp.Duration;
 @RunWith(JUnit4.class)
 public class GrpcDirectStreamControllerTest {
 
+  private Server server;
+  private ManagedChannel channel;
+
+  @Before
+  public void setup() throws IOException {
+    server = ServerBuilder.forPort(1234).addService(new FakeService()).build();
+    server.start();
+    channel = ManagedChannelBuilder.forAddress("localhost", 1234).usePlaintext().build();
+  }
+
+  @After
+  public void cleanup() throws InterruptedException {
+    server.shutdown();
+    server.awaitTermination(10, TimeUnit.SECONDS);
+    channel.shutdown();
+    channel.awaitTermination(10, TimeUnit.SECONDS);
+  }
+
   @Test
   public void testRetryNoRaceCondition() throws Exception {
-    Server server = ServerBuilder.forPort(1234).addService(new FakeService()).build();
-    ManagedChannel channel =
-        ManagedChannelBuilder.forAddress("localhost", 1234).usePlaintext().build();
-
     StreamResumptionStrategy<Color, Money> resumptionStrategy =
         new StreamResumptionStrategy<Color, Money>() {
           @Nonnull
@@ -95,68 +110,65 @@ public class GrpcDirectStreamControllerTest {
             return true;
           }
         };
-
-    // Set up retry settings. Set total timeout to 1 minute to limit the total runtime of this test.
-    // Set retry delay to 1 ms so the retries will be scheduled in a loop with no delays.
+    // Set up retry settings. Set total timeout to 1 minute to limit the total runtime of this
+    // test. Set retry delay to 1 ms so the retries will be scheduled in a loop with no delays.
     // Set max attempt to max so there could be as many retries as possible.
-    RetrySettings retrySettings =
-        RetrySettings.newBuilder()
-            .setTotalTimeout(Duration.ofSeconds(1))
-            .setMaxAttempts(Integer.MAX_VALUE)
-            .setInitialRetryDelay(Duration.ofMillis(1))
-            .setMaxRetryDelay(Duration.ofMillis(1))
-            .build();
     ServerStreamingCallSettings<Color, Money> callSettings =
         ServerStreamingCallSettings.<Color, Money>newBuilder()
             .setResumptionStrategy(resumptionStrategy)
             .setRetryableCodes(StatusCode.Code.DEADLINE_EXCEEDED)
-            .setRetrySettings(retrySettings)
+            .setRetrySettings(
+                RetrySettings.newBuilder()
+                    .setTotalTimeout(Duration.ofMinutes(1))
+                    .setInitialRetryDelay(Duration.ofMillis(1))
+                    .setMaxRetryDelay(Duration.ofMillis(1))
+                    .build())
             .build();
-
-    StubSettings.Builder builder =
-        new StubSettings.Builder() {
-          @Override
-          public StubSettings build() {
-            return new StubSettings(this) {
-              @Override
-              public Builder toBuilder() {
-                throw new IllegalStateException();
-              }
-            };
-          }
-        };
-
-    GrpcTransportChannel transportChannel = GrpcTransportChannel.create(channel);
-    builder
-        .setEndpoint("localhost:1234")
-        .setCredentialsProvider(NoCredentialsProvider.create())
-        .setTransportChannelProvider(
-            FixedTransportChannelProvider.create(transportChannel));
-
-    ClientContext clientContext = ClientContext.create(builder.build());
-    ServerStreamingCallable<Color, Money> callable =
-        GrpcCallableFactory.createServerStreamingCallable(
-            GrpcCallSettings.create(FakeServiceGrpc.METHOD_SERVER_STREAMING_RECOGNIZE),
-            callSettings,
-            clientContext);
-
-    ServerStreamingCallable<Color, Money> retrying =
-        Callables.retrying(callable, callSettings, clientContext);
-
-    Color request = Color.newBuilder().getDefaultInstanceForType();
-
+    // Store a list of resources to be closed at the end of the test
+    List<BackgroundResource> backgroundResourceList = new ArrayList<>();
     try {
-      retrying.call(request, GrpcCallContext.createDefault().withRetrySettings(retrySettings));
+      GrpcTransportChannel transportChannel = GrpcTransportChannel.create(channel);
+      backgroundResourceList.add(transportChannel);
+
+      StubSettings.Builder builder =
+          new StubSettings.Builder() {
+            @Override
+            public StubSettings build() {
+              return new StubSettings(this) {
+                @Override
+                public Builder toBuilder() {
+                  throw new IllegalStateException();
+                }
+              };
+            }
+          };
+
+      builder
+          .setEndpoint("localhost:1234")
+          .setCredentialsProvider(NoCredentialsProvider.create())
+          .setTransportChannelProvider(FixedTransportChannelProvider.create(transportChannel));
+
+      ClientContext clientContext = ClientContext.create(builder.build());
+      backgroundResourceList.addAll(clientContext.getBackgroundResources());
+      // GrpcCallableFactory's createServerStreamingCallable creates a retrying callable
+      ServerStreamingCallable<Color, Money> callable =
+          GrpcCallableFactory.createServerStreamingCallable(
+              GrpcCallSettings.create(FakeServiceGrpc.METHOD_SERVER_STREAMING_RECOGNIZE),
+              callSettings,
+              clientContext);
+
+      Color request = Color.newBuilder().getDefaultInstanceForType();
+      // Need to pass the ApiClientContext as RetryingServerStreamingCallable doesn't have the
+      // ClientContext
+      for (Money money : callable.call(request, clientContext.getDefaultCallContext())) {}
     } catch (DeadlineExceededException e) {
       // Ignore this error
     } finally {
-      server.shutdown();
-      server.awaitTermination(10, TimeUnit.SECONDS);
-      channel.shutdown();
-      channel.awaitTermination(10, TimeUnit.SECONDS);
-      transportChannel.shutdown();
-      transportChannel.awaitTermination(10, TimeUnit.SECONDS);
-      clientContext.getBackgroundResources().forEach(BackgroundResource::shutdown);
+      // Shutdown all the resources
+      for (BackgroundResource backgroundResource : backgroundResourceList) {
+        backgroundResource.shutdown();
+        backgroundResource.awaitTermination(10, TimeUnit.SECONDS);
+      }
     }
   }
 
