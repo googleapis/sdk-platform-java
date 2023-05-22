@@ -14,13 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-      with:
-        repository: googleapis/sdk-platform-java
-        ref: ${{ github.event.inputs.releaseTag }}
-        GH_TOKEN: ${{ github.token }}
-
     - name: Set up Git
       run: |
         git config --local user.email "action@github.com"
