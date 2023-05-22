@@ -65,6 +65,7 @@ import org.threeten.bp.Duration;
 @RunWith(JUnit4.class)
 public class GrpcDirectStreamControllerTest {
 
+  public static final int DEFAULT_AWAIT_TERMINATION_SEC = 5;
   private Server server;
   private ManagedChannel channel;
 
@@ -77,9 +78,9 @@ public class GrpcDirectStreamControllerTest {
   @After
   public void cleanup() throws InterruptedException {
     server.shutdown();
-    server.awaitTermination(10, TimeUnit.SECONDS);
+    server.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
     channel.shutdown();
-    channel.awaitTermination(10, TimeUnit.SECONDS);
+    channel.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 
   @Test
@@ -164,7 +165,7 @@ public class GrpcDirectStreamControllerTest {
       // Shutdown all the resources
       for (BackgroundResource backgroundResource : backgroundResourceList) {
         backgroundResource.shutdown();
-        backgroundResource.awaitTermination(10, TimeUnit.SECONDS);
+        backgroundResource.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
       }
     }
   }

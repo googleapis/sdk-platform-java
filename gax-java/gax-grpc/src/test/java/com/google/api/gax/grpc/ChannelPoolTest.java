@@ -72,6 +72,8 @@ import org.mockito.stubbing.Answer;
 
 @RunWith(JUnit4.class)
 public class ChannelPoolTest {
+  private static final int DEFAULT_AWAIT_TERMINATION_SEC = 5;
+
   @Test
   public void testAuthority() throws IOException, InterruptedException {
     ManagedChannel sub1 = Mockito.mock(ManagedChannel.class);
@@ -85,7 +87,7 @@ public class ChannelPoolTest {
             new FakeChannelFactory(Arrays.asList(sub1, sub2)));
     assertThat(pool.authority()).isEqualTo("myAuth");
     pool.shutdown();
-    pool.awaitTermination(5, TimeUnit.SECONDS);
+    pool.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 
   @Test
@@ -104,7 +106,7 @@ public class ChannelPoolTest {
     verifyTargetChannel(pool, channels, sub2);
     verifyTargetChannel(pool, channels, sub1);
     pool.shutdown();
-    pool.awaitTermination(5, TimeUnit.SECONDS);
+    pool.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 
   private void verifyTargetChannel(
@@ -180,7 +182,7 @@ public class ChannelPoolTest {
       assertThat(count.get()).isAnyOf(expectedCount, expectedCount + 1);
     }
     pool.shutdown();
-    pool.awaitTermination(5, TimeUnit.SECONDS);
+    pool.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 
   // Test channelPrimer is called same number of times as poolSize if executorService is set to null
@@ -200,7 +202,7 @@ public class ChannelPoolTest {
     Mockito.verify(mockChannelPrimer, Mockito.times(2))
         .primeChannel(Mockito.any(ManagedChannel.class));
     pool.shutdown();
-    pool.awaitTermination(5, TimeUnit.SECONDS);
+    pool.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 
   // Test channelPrimer is called periodically, if there's an executorService
@@ -252,7 +254,7 @@ public class ChannelPoolTest {
     Mockito.verify(mockChannelPrimer, Mockito.times(3))
         .primeChannel(Mockito.any(ManagedChannel.class));
     pool.shutdown();
-    pool.awaitTermination(5, TimeUnit.SECONDS);
+    pool.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 
   // ----
@@ -303,7 +305,7 @@ public class ChannelPoolTest {
     Mockito.verify(replacementChannel, Mockito.never()).shutdown();
     Mockito.verify(replacementChannel, Mockito.never()).newCall(Mockito.any(), Mockito.any());
     pool.shutdown();
-    pool.awaitTermination(5, TimeUnit.SECONDS);
+    pool.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 
   // call should be allowed to complete and the channel should not be shutdown
@@ -350,7 +352,7 @@ public class ChannelPoolTest {
     // shutdown is called because the outstanding call has completed
     Mockito.verify(underlyingChannel, Mockito.atLeastOnce()).shutdown();
     pool.shutdown();
-    pool.awaitTermination(5, TimeUnit.SECONDS);
+    pool.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 
   // Channel should be shutdown after a refresh all the calls have completed
@@ -396,7 +398,7 @@ public class ChannelPoolTest {
     // shutdown is called because the outstanding call has completed
     Mockito.verify(underlyingChannel, Mockito.atLeastOnce()).shutdown();
     pool.shutdown();
-    pool.awaitTermination(5, TimeUnit.SECONDS);
+    pool.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 
   @Test
@@ -438,7 +440,7 @@ public class ChannelPoolTest {
     Mockito.verify(underlyingChannel2, Mockito.only())
         .newCall(Mockito.<MethodDescriptor<String, Integer>>any(), Mockito.any(CallOptions.class));
     pool.shutdown();
-    pool.awaitTermination(5, TimeUnit.SECONDS);
+    pool.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 
   @Test
@@ -521,7 +523,7 @@ public class ChannelPoolTest {
     // range of channels is [2-3] rounded down average is 2
     assertThat(pool.entries.get()).hasSize(2);
     pool.shutdown();
-    pool.awaitTermination(5, TimeUnit.SECONDS);
+    pool.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 
   @Test
@@ -563,7 +565,7 @@ public class ChannelPoolTest {
     assertThat(pool.entries.get()).hasSize(1);
     Mockito.verify(channels.get(1), Mockito.times(1)).shutdown();
     pool.shutdown();
-    pool.awaitTermination(5, TimeUnit.SECONDS);
+    pool.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 
   @Test
@@ -627,7 +629,7 @@ public class ChannelPoolTest {
     // Now the channel should be closed
     Mockito.verify(channels.get(1), Mockito.times(1)).shutdown();
     pool.shutdown();
-    pool.awaitTermination(5, TimeUnit.SECONDS);
+    pool.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 
   @Test
@@ -675,6 +677,6 @@ public class ChannelPoolTest {
     assertThat(e.getCause()).isInstanceOf(CancellationException.class);
     assertThat(e.getMessage()).isEqualTo("Call is already cancelled");
     pool.shutdown();
-    pool.awaitTermination(5, TimeUnit.SECONDS);
+    pool.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 }
