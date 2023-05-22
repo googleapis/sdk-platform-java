@@ -25,9 +25,12 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
 
-    - name: Create additional tag
+    - name: Create additional tags
       run: |
-        ARTIFACT_ID='google-cloud-shared-dependencies'
-        VERSION=$(grep "${ARTIFACT_ID}" versions.txt | cut -d':' -f2)
-        git tag google-cloud-shared-dependencies/v$VERSION ${{ github.event.inputs.releaseTag }}
-        git push origin google-cloud-shared-dependencies/v$VERSION
+        ARTIFACT_IDS=('google-cloud-shared-dependencies' 'api-common' 'gax')
+        for ARTIFACT_ID in "${ARTIFACT_IDS[@]}"
+        do
+          VERSION=$(grep "${ARTIFACT_ID}" versions.txt | cut -d':' -f2)
+          git tag ${ARTIFACT_ID}/$VERSION ${{ github.event.inputs.releaseTag }}
+          git push origin ${ARTIFACT_ID}/$VERSION
+        done
