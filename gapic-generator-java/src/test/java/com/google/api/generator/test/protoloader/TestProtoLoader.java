@@ -33,6 +33,7 @@ import com.google.logging.v2.LogEntryProto;
 import com.google.logging.v2.LoggingConfigProto;
 import com.google.logging.v2.LoggingMetricsProto;
 import com.google.logging.v2.LoggingProto;
+import com.google.protobuf.DescriptorProtos;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.pubsub.v1.PubsubProto;
@@ -41,7 +42,7 @@ import com.google.showcase.v1beta1.IdentityOuterClass;
 import com.google.showcase.v1beta1.MessagingOuterClass;
 import com.google.showcase.v1beta1.TestingOuterClass;
 import com.google.testdata.v1.DeprecatedServiceOuterClass;
-import com.google.testgapic.v1beta1.TypeConflictTestingOuterClass;
+import com.google.testgapic.v1beta1.TypeConflictTestingProto;
 import google.cloud.CommonResources;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -359,12 +360,16 @@ public class TestProtoLoader {
   }
 
   public GapicContext parseTypeConflictTesting() {
-    FileDescriptor testingFileDescriptor = TypeConflictTestingOuterClass.getDescriptor();
+    FileDescriptor testingFileDescriptor = TypeConflictTestingProto.getDescriptor();
+    FileDescriptor descriptorProtoFileDescriptor = DescriptorProtos.getDescriptor();
     ServiceDescriptor testingService = testingFileDescriptor.getServices().get(0);
     assertEquals(testingService.getName(), "TypeConflictTesting");
 
     Map<String, Message> messageTypes = Parser.parseMessages(testingFileDescriptor);
+    messageTypes.putAll(Parser.parseMessages(descriptorProtoFileDescriptor));
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(testingFileDescriptor);
+    messageTypes = Parser.updateResourceNamesInMessages(messageTypes, resourceNames.values());
+
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
         Parser.parseService(

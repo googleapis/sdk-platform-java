@@ -39,6 +39,7 @@ import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import com.google.showcase.v1beta1.TestingOuterClass;
 import com.google.testgapic.v1beta1.LockerProto;
+import com.google.testgapic.v1beta1.TypeConflictTestingProto;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -192,6 +193,30 @@ public class ParserTest {
     TypeNode waitMetadataType = messageTypes.get("com.google.showcase.v1beta1.WaitMetadata").type();
     assertThat(waitMethod.lro().responseType()).isEqualTo(waitResponseType);
     assertThat(waitMethod.lro().metadataType()).isEqualTo(waitMetadataType);
+  }
+
+  @Test
+  public void parseMethods_typeConflictLro() {
+    String testPackage = "com.google.testgapic.v1beta1";
+    FileDescriptor testFileDescriptor = TypeConflictTestingProto.getDescriptor();
+    ServiceDescriptor testService = testFileDescriptor.getServices().get(0);
+    assertEquals("TypeConflictTesting", testService.getName());
+    Map<String, Message> messageTypes = Parser.parseMessages(testFileDescriptor);
+    Map<String, ResourceName> resourceNames = Parser.parseResourceNames(testFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Method> methods =
+        Parser.parseMethods(
+            testService,
+            testPackage,
+            messageTypes,
+            resourceNames,
+            Optional.empty(),
+            outputResourceNames,
+            Transport.GRPC);
+
+    Method firstMethod = methods.get(0);
+    TypeNode annotationType = messageTypes.get("com.google.testgapic.v1beta1.Annotation").type();
+    assertThat(firstMethod.lro().responseType()).isEqualTo(annotationType);
   }
 
   @Test

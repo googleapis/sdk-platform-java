@@ -84,7 +84,7 @@ public class GrpcServiceStubClassComposerTest {
   }
 
   @Test
-  public void generateGrpcServiceStubClass_ambiguousImport() {
+  public void generateGrpcServiceStubClass_typeConflict() {
     GapicContext context = GrpcTestProtoLoader.instance().parseTypeConflictTesting();
     Service testProtoService = context.services().get(0);
     GapicClass clazz = GrpcServiceStubClassComposer.instance().generate(context, testProtoService);

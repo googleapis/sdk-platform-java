@@ -14,13 +14,13 @@
 
 syntax = "proto3";
 
-import "google/api/resource.proto";
 import "google/api/client.proto";
 import "google/longrunning/operations.proto";
 
 package google.testgapic.v1beta1;
 
 option java_package = "com.google.testgapic.v1beta1";
+option java_outer_classname = "TypeConflictTestingProto";
 option java_multiple_files = true;
 
 service TypeConflictTesting {
@@ -30,19 +30,21 @@ service TypeConflictTesting {
   rpc annotationTest(Request) returns (google.longrunning.Operation) {
     option (google.longrunning.operation_info) = {
       response_type: "Annotation"
-      metadata_type: "Metadata"
+      metadata_type: "Location"
     };
   }
 }
 
 message Request {
-  string name = 1;
+  string parent = 1;
+  Annotation annotation = 2;
+  Location location = 3;
 }
 
 message Annotation {
   string name = 1;
 }
 
-message Metadata {
+message Location {
   string name = 1;
 }
