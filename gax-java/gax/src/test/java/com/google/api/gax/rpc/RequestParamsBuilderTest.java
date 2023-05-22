@@ -127,33 +127,44 @@ public class RequestParamsBuilderTest {
   }
 
   @Test
-  public void add_twoParams_nullFieldValue() {
+  public void addWithTwoParams_nullFieldValue() {
     requestParamsBuilder.add("test", null);
     Map<String, String> actual = requestParamsBuilder.build();
     assertThat(actual).isEmpty();
   }
 
   @Test
-  public void add_emptyValue_noMatches() {
-    Map<String, String> actual = getRoutingHeaders("{projects=**}", "");
+  public void add_emptyString_noMatches() {
+    // protobuf's default value for string is empty string. The `**` pathtemplate would match
+    // for empty string if it's not explicitly filtered out
+    Map<String, String> actual = getRoutingHeaders("{table_location=**}", "");
     assertThat(actual).isEmpty();
   }
 
   @Test
-  public void add_twoParams_emptyValue_noMatches() {
-    Map<String, String> actual = getRoutingHeaders("{projects=**}", "");
+  public void addWithTwoParams_emptyString_noMatches() {
+    // protobuf's default value for string is empty string. The `**` pathtemplate would match
+    // for empty string if it's not explicitly filtered out
+    Map<String, String> actual = getRoutingHeaders("{table_location=**}", "");
     assertThat(actual).isEmpty();
   }
 
   @Test
-  public void add_twoParams_nullHeader_noMatches() {
+  public void add_nullHeader_noMatches() {
+    requestParamsBuilder.add(null, "projects/does_not_matter");
+    Map<String, String> actual = requestParamsBuilder.build();
+    assertThat(actual).isEmpty();
+  }
+
+  @Test
+  public void addWithTwoParams_nullHeader_noMatches() {
     requestParamsBuilder.add(null, "hello");
     Map<String, String> actual = requestParamsBuilder.build();
     assertThat(actual).isEmpty();
   }
 
   @Test
-  public void add_twoParams_emptyHeader_noMatches() {
+  public void addWithTwoParams_emptyHeader_noMatches() {
     requestParamsBuilder.add("", "hello");
     Map<String, String> actual = requestParamsBuilder.build();
     assertThat(actual).isEmpty();
