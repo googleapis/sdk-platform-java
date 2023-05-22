@@ -3,7 +3,7 @@ name: Create additional tags for each release
 on:
   release:
     types: [published]
-  workflow_dispatch: # If manually triggered, clarify which release to create the additional tag for
+  workflow_dispatch: # If manually triggered, clarify which release to create the additional tags for
     inputs:
       releaseTag:
         description: 'Release Tag'
