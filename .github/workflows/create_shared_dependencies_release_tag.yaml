@@ -34,6 +34,7 @@ jobs:
 
     - name: Create additional tag
       run: |
-        VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout -f java-shared-dependencies/first-party-dependencies/pom.xml)
+        ARTIFACT_ID='google-cloud-shared-dependencies'
+        VERSION=$(grep "${ARTIFACT_ID}" versions.txt | cut -d':' -f2)
         git tag google-cloud-shared-dependencies/v$VERSION ${{ github.event.inputs.releaseTag }}
         git push origin google-cloud-shared-dependencies/v$VERSION
