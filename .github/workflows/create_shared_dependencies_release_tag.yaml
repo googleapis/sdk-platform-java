@@ -1,0 +1,35 @@
+name: Create additional tag for each release with first_party_dependencies version
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch: # If manually triggered, clarify which release to create the additional tag for
+    inputs:
+      releaseTag:
+        description: 'Release Tag'
+        required: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.inputs.releaseTag }}
+
+    - name: Set up Git
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v3
+      with:
+        java-version: 17
+
+    - name: Create additional tag
+      run: |
+        VERSION=$(mvn -f java-shared-dependencies/first-party-dependencies/pom.xml help:evaluate -Dexpression=project.dependencies.dependency[0].version -q -DforceStdout)
+        git tag google-cloud-shared-dependencies/v$VERSION ${{ github.event.inputs.releaseTag }}
+        git push origin google-cloud-shared-dependencies/v$VERSION
