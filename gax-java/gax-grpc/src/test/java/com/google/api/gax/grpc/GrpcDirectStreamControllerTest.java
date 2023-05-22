@@ -70,8 +70,7 @@ public class GrpcDirectStreamControllerTest {
 
   @Before
   public void setup() throws IOException {
-    server = ServerBuilder.forPort(1234).addService(new FakeService()).build();
-    server.start();
+    server = ServerBuilder.forPort(1234).addService(new FakeService()).build().start();
     channel = ManagedChannelBuilder.forAddress("localhost", 1234).usePlaintext().build();
   }
 
@@ -119,7 +118,7 @@ public class GrpcDirectStreamControllerTest {
             .setRetryableCodes(StatusCode.Code.DEADLINE_EXCEEDED)
             .setRetrySettings(
                 RetrySettings.newBuilder()
-                    .setTotalTimeout(Duration.ofMinutes(1))
+                    .setTotalTimeout(Duration.ofMillis(20))
                     .setInitialRetryDelay(Duration.ofMillis(1))
                     .setMaxRetryDelay(Duration.ofMillis(1))
                     .build())
