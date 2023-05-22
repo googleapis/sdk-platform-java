@@ -124,7 +124,7 @@ public class GrpcDirectStreamControllerTest {
                     .setMaxRetryDelay(Duration.ofMillis(1))
                     .build())
             .build();
-    // Store a list of resources to be closed at the end of the test
+    // Store a list of resources to manually close at the end of the test
     List<BackgroundResource> backgroundResourceList = new ArrayList<>();
     try {
       GrpcTransportChannel transportChannel = GrpcTransportChannel.create(channel);
@@ -158,8 +158,6 @@ public class GrpcDirectStreamControllerTest {
               clientContext);
 
       Color request = Color.newBuilder().getDefaultInstanceForType();
-      // Need to pass the ApiClientContext as RetryingServerStreamingCallable doesn't have the
-      // ClientContext
       for (Money money : callable.call(request, clientContext.getDefaultCallContext())) {}
     } catch (DeadlineExceededException e) {
       // Ignore this error
