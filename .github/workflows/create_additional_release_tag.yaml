@@ -23,15 +23,13 @@ jobs:
     - name: Create additional tags
       run: |
         ARTIFACT_IDS=('google-cloud-shared-dependencies' 'api-common' 'gax')
-        for ARTIFACT_ID in "${ARTIFACT_IDS[@]}"
-        do
+        for ARTIFACT_ID in "${ARTIFACT_IDS[@]}"; do
           VERSION=$(grep "^${ARTIFACT_ID}:" versions.txt | cut -d':' -f2 | tr -d '[:space:]')
           TAG_NAME="${ARTIFACT_ID}/v$VERSION"
-          if git show-ref --tags | grep -q "refs/tags/$TAG_NAME"
-            then
-              echo "Tag $TAG_NAME already exists. Skipping."
-              continue
-            fi
-          git tag $TAG_NAME ${{ github.event.inputs.releaseTag }}
+          if git show-ref --tags | grep -q "refs/tags/$TAG_NAME"; then
+            echo "Tag $TAG_NAME already exists. Skipping."
+            continue
+          fi
+          git tag $TAG_NAME
           git push origin $TAG_NAME
         done
