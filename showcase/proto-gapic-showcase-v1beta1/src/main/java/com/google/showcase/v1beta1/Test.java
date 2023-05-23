@@ -29,11 +29,6 @@ private static final long serialVersionUID = 0L;
     return new Test();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet
-  getUnknownFields() {
-    return this.unknownFields;
-  }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
     return com.google.showcase.v1beta1.TestingOuterClass.internal_static_google_showcase_v1beta1_Test_descriptor;
@@ -71,8 +66,10 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * This test is recommended.
+     *
      * If a generator explicitly ignores a recommended test (see `DeleteTest`),
      * then the report may still pass, but with a warning.
+     *
      * If a generator skips a recommended test and does not explicitly
      * express that intention, the report will fail.
      * </pre>
@@ -83,8 +80,10 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * This test is optional.
+     *
      * If a generator explicitly ignores an optional test (see `DeleteTest`),
      * then the report may still pass, and no warning will be issued.
+     *
      * If a generator skips an optional test and does not explicitly
      * express that intention, the report may still pass, but with a
      * warning.
@@ -111,8 +110,10 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * This test is recommended.
+     *
      * If a generator explicitly ignores a recommended test (see `DeleteTest`),
      * then the report may still pass, but with a warning.
+     *
      * If a generator skips a recommended test and does not explicitly
      * express that intention, the report will fail.
      * </pre>
@@ -123,8 +124,10 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * This test is optional.
+     *
      * If a generator explicitly ignores an optional test (see `DeleteTest`),
      * then the report may still pass, and no warning will be issued.
+     *
      * If a generator skips an optional test and does not explicitly
      * express that intention, the report may still pass, but with a
      * warning.
@@ -366,11 +369,6 @@ private static final long serialVersionUID = 0L;
       return new Blueprint();
     }
 
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return com.google.showcase.v1beta1.TestingOuterClass.internal_static_google_showcase_v1beta1_Test_Blueprint_descriptor;
@@ -446,11 +444,6 @@ private static final long serialVersionUID = 0L;
         return new Invocation();
       }
 
-      @java.lang.Override
-      public final com.google.protobuf.UnknownFieldSet
-      getUnknownFields() {
-        return this.unknownFields;
-      }
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
         return com.google.showcase.v1beta1.TestingOuterClass.internal_static_google_showcase_v1beta1_Test_Blueprint_Invocation_descriptor;
@@ -645,11 +638,13 @@ private static final long serialVersionUID = 0L;
         return com.google.protobuf.GeneratedMessageV3
             .parseWithIOException(PARSER, input, extensionRegistry);
       }
+
       public static com.google.showcase.v1beta1.Test.Blueprint.Invocation parseDelimitedFrom(java.io.InputStream input)
           throws java.io.IOException {
         return com.google.protobuf.GeneratedMessageV3
             .parseDelimitedWithIOException(PARSER, input);
       }
+
       public static com.google.showcase.v1beta1.Test.Blueprint.Invocation parseDelimitedFrom(
           java.io.InputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -772,38 +767,6 @@ private static final long serialVersionUID = 0L;
           }
         }
 
-        @java.lang.Override
-        public Builder clone() {
-          return super.clone();
-        }
-        @java.lang.Override
-        public Builder setField(
-            com.google.protobuf.Descriptors.FieldDescriptor field,
-            java.lang.Object value) {
-          return super.setField(field, value);
-        }
-        @java.lang.Override
-        public Builder clearField(
-            com.google.protobuf.Descriptors.FieldDescriptor field) {
-          return super.clearField(field);
-        }
-        @java.lang.Override
-        public Builder clearOneof(
-            com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-          return super.clearOneof(oneof);
-        }
-        @java.lang.Override
-        public Builder setRepeatedField(
-            com.google.protobuf.Descriptors.FieldDescriptor field,
-            int index, java.lang.Object value) {
-          return super.setRepeatedField(field, index, value);
-        }
-        @java.lang.Override
-        public Builder addRepeatedField(
-            com.google.protobuf.Descriptors.FieldDescriptor field,
-            java.lang.Object value) {
-          return super.addRepeatedField(field, value);
-        }
         @java.lang.Override
         public Builder mergeFrom(com.google.protobuf.Message other) {
           if (other instanceof com.google.showcase.v1beta1.Test.Blueprint.Invocation) {
@@ -1416,11 +1379,13 @@ private static final long serialVersionUID = 0L;
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
+
     public static com.google.showcase.v1beta1.Test.Blueprint parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
+
     public static com.google.showcase.v1beta1.Test.Blueprint parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1576,38 +1541,6 @@ private static final long serialVersionUID = 0L;
         }
       }
 
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.setField(field, value);
-      }
-      @java.lang.Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @java.lang.Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.google.showcase.v1beta1.Test.Blueprint) {
@@ -2787,11 +2720,13 @@ private static final long serialVersionUID = 0L;
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
+
   public static com.google.showcase.v1beta1.Test parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
+
   public static com.google.showcase.v1beta1.Test parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -2934,38 +2869,6 @@ private static final long serialVersionUID = 0L;
       }
     }
 
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return super.setField(field, value);
-    }
-    @java.lang.Override
-    public Builder clearField(
-        com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-    @java.lang.Override
-    public Builder clearOneof(
-        com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
       if (other instanceof com.google.showcase.v1beta1.Test) {
