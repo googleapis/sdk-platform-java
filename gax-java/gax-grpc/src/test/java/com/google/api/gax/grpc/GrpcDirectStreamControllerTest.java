@@ -119,7 +119,9 @@ public class GrpcDirectStreamControllerTest {
             .setRetryableCodes(StatusCode.Code.DEADLINE_EXCEEDED)
             .setRetrySettings(
                 RetrySettings.newBuilder()
-                    .setTotalTimeout(Duration.ofMillis(20))
+                    .setTotalTimeout(Duration.ofMinutes(1))
+                    .setInitialRpcTimeout(Duration.ofMillis(1))
+                    .setMaxRpcTimeout(Duration.ofMillis(1))
                     .setInitialRetryDelay(Duration.ofMillis(1))
                     .setMaxRetryDelay(Duration.ofMillis(1))
                     .build())

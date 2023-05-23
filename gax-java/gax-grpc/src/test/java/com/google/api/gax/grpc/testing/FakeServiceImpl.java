@@ -81,17 +81,14 @@ public class FakeServiceImpl extends FakeServiceImplBase {
     // because the InProcessServer uses a direct executor and will buffer the results ignoring
     // cancellation
     Runnable runnable =
-        new Runnable() {
-          @Override
-          public void run() {
-            try {
-              Thread.sleep((long) color.getGreen());
-            } catch (InterruptedException e) {
-              Thread.interrupted();
-              return;
-            }
+        () -> {
+          try {
+            Thread.sleep((long) color.getGreen());
             responseObserver.onNext(convert(color));
             responseObserver.onCompleted();
+          } catch (Exception e) {
+            Thread.interrupted();
+            responseObserver.onError(e);
           }
         };
 
@@ -107,9 +104,10 @@ public class FakeServiceImpl extends FakeServiceImplBase {
   }
 
   private static Money convert(Color color) {
-    Money result =
-        Money.newBuilder().setCurrencyCode("USD").setUnits((long) (color.getRed() * 255)).build();
-    return result;
+    return Money.newBuilder()
+        .setCurrencyCode("USD")
+        .setUnits((long) (color.getRed() * 255))
+        .build();
   }
 
   private static class RequestStreamObserver implements StreamObserver<Color> {
