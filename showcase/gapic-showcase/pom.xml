@@ -19,7 +19,7 @@
   </parent>
 
   <properties>
-    <gapic-showcase.version>0.26.1</gapic-showcase.version>
+    <gapic-showcase.version>0.28.0</gapic-showcase.version>
   </properties>
 
   <profiles>
@@ -159,6 +159,10 @@
     <dependency>
       <groupId>com.google.api.grpc</groupId>
       <artifactId>proto-google-common-protos</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.google.api.grpc</groupId>
+      <artifactId>grpc-google-common-protos</artifactId>
     </dependency>
     <dependency>
       <groupId>com.google.api.grpc</groupId>

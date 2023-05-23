@@ -83,7 +83,7 @@ public interface PublishingOrBuilder
    *
    *
    * <pre>
-   * Link to a place that API users can report issues.  Example:
+   * Link to a *public* URI where users can report issues.  Example:
    * https://issuetracker.google.com/issues/new?component=190865&amp;template=1161103
    * </pre>
    *
@@ -96,7 +96,7 @@ public interface PublishingOrBuilder
    *
    *
    * <pre>
-   * Link to a place that API users can report issues.  Example:
+   * Link to a *public* URI where users can report issues.  Example:
    * https://issuetracker.google.com/issues/new?component=190865&amp;template=1161103
    * </pre>
    *

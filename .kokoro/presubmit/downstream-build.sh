@@ -15,6 +15,8 @@
 
 set -eo pipefail
 
+SHOWCASE_VERSION=0.28.0
+
 ## Get the directory of the build script
 scriptDir=$(realpath "$(dirname "${BASH_SOURCE[0]}")")
 ## cd to the parent directory, i.e. the root of the git repo
@@ -61,6 +63,22 @@ echo
 popd
 
 ### Round 3
+# Run showcase tests in GraalVM
+
+# Start showcase server
+mkdir -p /usr/src/showcase
+curl --location https://github.com/googleapis/gapic-showcase/releases/download/v"${SHOWCASE_VERSION}"/gapic-showcase-"${SHOWCASE_VERSION}"-linux-amd64.tar.gz --output /usr/src/showcase/showcase-"${SHOWCASE_VERSION}"-linux-amd64.tar.gz
+pushd /usr/src/showcase/
+tar -xf showcase-*
+./gapic-showcase run &
+
+# Run showcase tests with `native` profile
+popd
+pushd showcase
+mvn test -Pnative,-showcase -Denforcer.skip=true -ntp -B
+popd
+
+### Round 4
 # Run the updated java-shared-dependencies BOM against google-cloud-java
 pushd google-cloud-java
 source ./.kokoro/common.sh
@@ -68,4 +86,7 @@ RETURN_CODE=0
 setup_application_credentials
 setup_cloud "$MODULES_UNDER_TEST"
 run_graalvm_tests "$MODULES_UNDER_TEST"
+
+
+
 exit $RETURN_CODE

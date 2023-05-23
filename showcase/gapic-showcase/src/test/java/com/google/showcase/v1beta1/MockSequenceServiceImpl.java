@@ -81,6 +81,27 @@ public class MockSequenceServiceImpl extends SequenceServiceImplBase {
   }
 
   @Override
+  public void createStreamingSequence(
+      CreateStreamingSequenceRequest request, StreamObserver<StreamingSequence> responseObserver) {
+    Object response = responses.poll();
+    if (response instanceof StreamingSequence) {
+      requests.add(request);
+      responseObserver.onNext(((StreamingSequence) response));
+      responseObserver.onCompleted();
+    } else if (response instanceof Exception) {
+      responseObserver.onError(((Exception) response));
+    } else {
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method CreateStreamingSequence, expected %s or %s",
+                  response == null ? "null" : response.getClass().getName(),
+                  StreamingSequence.class.getName(),
+                  Exception.class.getName())));
+    }
+  }
+
+  @Override
   public void getSequenceReport(
       GetSequenceReportRequest request, StreamObserver<SequenceReport> responseObserver) {
     Object response = responses.poll();
@@ -102,6 +123,28 @@ public class MockSequenceServiceImpl extends SequenceServiceImplBase {
   }
 
   @Override
+  public void getStreamingSequenceReport(
+      GetStreamingSequenceReportRequest request,
+      StreamObserver<StreamingSequenceReport> responseObserver) {
+    Object response = responses.poll();
+    if (response instanceof StreamingSequenceReport) {
+      requests.add(request);
+      responseObserver.onNext(((StreamingSequenceReport) response));
+      responseObserver.onCompleted();
+    } else if (response instanceof Exception) {
+      responseObserver.onError(((Exception) response));
+    } else {
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method GetStreamingSequenceReport, expected %s or %s",
+                  response == null ? "null" : response.getClass().getName(),
+                  StreamingSequenceReport.class.getName(),
+                  Exception.class.getName())));
+    }
+  }
+
+  @Override
   public void attemptSequence(
       AttemptSequenceRequest request, StreamObserver<Empty> responseObserver) {
     Object response = responses.poll();
@@ -118,6 +161,28 @@ public class MockSequenceServiceImpl extends SequenceServiceImplBase {
                   "Unrecognized response type %s for method AttemptSequence, expected %s or %s",
                   response == null ? "null" : response.getClass().getName(),
                   Empty.class.getName(),
+                  Exception.class.getName())));
+    }
+  }
+
+  @Override
+  public void attemptStreamingSequence(
+      AttemptStreamingSequenceRequest request,
+      StreamObserver<AttemptStreamingSequenceResponse> responseObserver) {
+    Object response = responses.poll();
+    if (response instanceof AttemptStreamingSequenceResponse) {
+      requests.add(request);
+      responseObserver.onNext(((AttemptStreamingSequenceResponse) response));
+      responseObserver.onCompleted();
+    } else if (response instanceof Exception) {
+      responseObserver.onError(((Exception) response));
+    } else {
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method AttemptStreamingSequence, expected %s or %s",
+                  response == null ? "null" : response.getClass().getName(),
+                  AttemptStreamingSequenceResponse.class.getName(),
                   Exception.class.getName())));
     }
   }

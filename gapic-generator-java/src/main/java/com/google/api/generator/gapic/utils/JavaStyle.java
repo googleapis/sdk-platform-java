@@ -39,7 +39,7 @@ public class JavaStyle {
 
     // Some APIs use legit java keywords as method names. Both protobuf and gGRPC add an underscore
     // in generated stubs to resolve name conflict, so we need to do the same.
-    return Keyword.isKeyword(name) ? name + '_' : name;
+    return Keyword.escapeKeyword(name);
   }
 
   public static String toUpperCamelCase(String s) {

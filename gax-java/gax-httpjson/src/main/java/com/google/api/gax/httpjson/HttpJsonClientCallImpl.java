@@ -33,15 +33,19 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.gax.httpjson.ApiMethodDescriptor.MethodType;
 import com.google.api.gax.httpjson.HttpRequestRunnable.ResultListener;
 import com.google.api.gax.httpjson.HttpRequestRunnable.RunnableResult;
+import com.google.api.gax.rpc.StatusCode;
 import com.google.common.base.Preconditions;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import javax.annotation.Nullable;
 import javax.annotation.concurrent.GuardedBy;
 
@@ -88,6 +92,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
   private final ApiMethodDescriptor<RequestT, ResponseT> methodDescriptor;
   private final HttpTransport httpTransport;
   private final Executor executor;
+  private final ScheduledExecutorService deadlineCancellationExecutor;
 
   //
   // Request-specific data (provided by client code) before we get a response.
@@ -114,19 +119,21 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
   private ProtoMessageJsonStreamIterator responseStreamIterator;
 
   @GuardedBy("lock")
-  private boolean closed;
+  private volatile boolean closed;
 
   HttpJsonClientCallImpl(
       ApiMethodDescriptor<RequestT, ResponseT> methodDescriptor,
       String endpoint,
       HttpJsonCallOptions callOptions,
       HttpTransport httpTransport,
-      Executor executor) {
+      Executor executor,
+      ScheduledExecutorService deadlineCancellationExecutor) {
     this.methodDescriptor = methodDescriptor;
     this.endpoint = endpoint;
     this.callOptions = callOptions;
     this.httpTransport = httpTransport;
     this.executor = executor;
+    this.deadlineCancellationExecutor = deadlineCancellationExecutor;
     this.closed = false;
   }
 
@@ -161,6 +168,38 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
       this.listener = responseListener;
       this.requestHeaders = requestHeaders;
     }
+
+    // Use the timeout duration value instead of calculating the future Instant
+    // Only schedule the deadline if the RPC timeout has been set in the RetrySettings
+    Duration timeout = callOptions.getTimeout();
+    if (timeout != null) {
+      // The future timeout value is guaranteed to not be a negative value as the
+      // RetryAlgorithm will not retry
+      long timeoutMs = timeout.toMillis();
+      this.deadlineCancellationExecutor.schedule(this::timeout, timeoutMs, TimeUnit.MILLISECONDS);
+    }
+  }
+
+  // Notify the FutureListener that the there is a timeout exception from this RPC
+  // call (DEADLINE_EXCEEDED). For retrying RPCs, this code is returned for every attempt
+  // that exceeds the timeout. The RetryAlgorithm will check both the timing and code to
+  // ensure another attempt is made.
+  private void timeout() {
+    // There is a race between the deadline scheduler and response being returned from
+    // the server. The deadline scheduler has priority as it will clear out the pending
+    // notifications queue and add the DEADLINE_EXCEEDED event once it is able to obtain
+    // the lock.
+    synchronized (lock) {
+      close(
+          StatusCode.Code.DEADLINE_EXCEEDED.getHttpStatusCode(),
+          "Deadline exceeded",
+          new HttpJsonStatusRuntimeException(
+              StatusCode.Code.DEADLINE_EXCEEDED.getHttpStatusCode(), "Deadline exceeded", null),
+          true);
+    }
+
+    // trigger delivery loop if not already running
+    deliver();
   }
 
   @Override
@@ -260,9 +299,10 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
           throw new InterruptedException("Message delivery has been interrupted");
         }
 
-        // All listeners must be called under delivery loop (but outside the lock) to ensure that no
-        // two notifications come simultaneously from two different threads and that we do not go
-        // indefinitely deep in the stack if delivery logic is called recursively via listeners.
+        // All listeners must be called under delivery loop (but outside the lock) to ensure that
+        // no two notifications come simultaneously from two different threads and that we do not
+        // go indefinitely deep in the stack if delivery logic is called recursively via
+        // listeners.
         notifyListeners();
 
         // The synchronized block around message reading and cancellation notification processing
@@ -302,7 +342,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
               inDelivery = false;
               break;
             } else {
-              // We still have some stuff in notiticationTasksQueue so continue the loop, most
+              // We still have some stuff in notificationTasksQueue so continue the loop, most
               // likely we will finally terminate on the next cycle.
               continue;
             }
@@ -319,8 +359,8 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
         // can do in such an unlikely situation (otherwise we would stay forever in the delivery
         // loop).
         synchronized (lock) {
-          // Close the call immediately marking it cancelled. If already closed close() will have no
-          // effect.
+          // Close the call immediately marking it cancelled. If already closed, close() will have
+          // no effect.
           close(ex.getStatusCode(), ex.getMessage(), ex, true);
         }
       }
@@ -352,7 +392,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
     boolean allMessagesConsumed;
     Reader responseReader;
     if (methodDescriptor.getType() == MethodType.SERVER_STREAMING) {
-      // Lazily initialize responseStreamIterator in case if it is a server steraming response
+      // Lazily initialize responseStreamIterator in case if it is a server streaming response
       if (responseStreamIterator == null) {
         responseStreamIterator =
             new ProtoMessageJsonStreamIterator(
@@ -384,7 +424,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
 
   @GuardedBy("lock")
   private void close(
-      int statusCode, String message, Throwable cause, boolean terminateImmediatelly) {
+      int statusCode, String message, Throwable cause, boolean terminateImmediately) {
     try {
       if (closed) {
         return;
@@ -399,12 +439,12 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
         requestRunnable = null;
       }
 
-      HttpJsonMetadata.Builder meatadaBuilder = HttpJsonMetadata.newBuilder();
+      HttpJsonMetadata.Builder metadataBuilder = HttpJsonMetadata.newBuilder();
       if (runnableResult != null && runnableResult.getTrailers() != null) {
-        meatadaBuilder = runnableResult.getTrailers().toBuilder();
+        metadataBuilder = runnableResult.getTrailers().toBuilder();
       }
-      meatadaBuilder.setException(cause);
-      meatadaBuilder.setStatusMessage(message);
+      metadataBuilder.setException(cause);
+      metadataBuilder.setStatusMessage(message);
       if (responseStreamIterator != null) {
         responseStreamIterator.close();
       }
@@ -415,7 +455,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
       // onClose() suppresses all other pending notifications.
       // there should be no place in the code which inserts something in this queue before checking
       // the `closed` flag under the lock and refusing to insert anything if `closed == true`.
-      if (terminateImmediatelly) {
+      if (terminateImmediately) {
         // This usually means we are cancelling the call before processing the response in full.
         // It may happen if a user explicitly cancels the call or in response to an unexpected
         // exception either from server or a call listener execution.
@@ -423,11 +463,11 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
       }
 
       pendingNotifications.offer(
-          new OnCloseNotificationTask<>(listener, statusCode, meatadaBuilder.build()));
+          new OnCloseNotificationTask<>(listener, statusCode, metadataBuilder.build()));
 
     } catch (Throwable e) {
       // suppress stream closing exceptions in favor of the actual call closing cause. This method
-      // should not throw, otherwise we may stuck in an infinite loop of exception processing.
+      // should not throw, otherwise we may be stuck in an infinite loop of exception processing.
     }
   }
 

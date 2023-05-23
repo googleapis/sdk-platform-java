@@ -16,7 +16,7 @@ package com.google.api.generator.engine.ast;
 
 import static org.junit.Assert.assertEquals;
 
-import com.google.api.generator.testutils.LineFormatter;
+import com.google.api.generator.test.utils.LineFormatter;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.Test;

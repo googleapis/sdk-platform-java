@@ -18,6 +18,7 @@ import com.google.api.resourcenames.ResourceName;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.google.longrunning.Operation;
 import com.google.protobuf.Duration;
+import com.google.protobuf.FieldMask;
 import com.google.protobuf.Timestamp;
 import com.google.rpc.Status;
 import com.google.showcase.grpcrest.v1beta1.stub.EchoStub;
@@ -1043,6 +1044,80 @@ public class EchoClient implements BackgroundResource {
    */
   public final UnaryCallable<EchoRequest, EchoResponse> noBindingCallable() {
     return stub.noBindingCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   Case case_ = Case.newBuilder().build();
+   *   FieldMask updateMask = FieldMask.newBuilder().build();
+   *   Case response = echoClient.updateCase(case_, updateMask);
+   * }
+   * }</pre>
+   *
+   * @param case_
+   * @param updateMask
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final Case updateCase(Case case_, FieldMask updateMask) {
+    UpdateCaseRequest request =
+        UpdateCaseRequest.newBuilder().setCase(case_).setUpdateMask(updateMask).build();
+    return updateCase(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   UpdateCaseRequest request =
+   *       UpdateCaseRequest.newBuilder().setCase(Case.newBuilder().build()).build();
+   *   Case response = echoClient.updateCase(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final Case updateCase(UpdateCaseRequest request) {
+    return updateCaseCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   UpdateCaseRequest request =
+   *       UpdateCaseRequest.newBuilder().setCase(Case.newBuilder().build()).build();
+   *   ApiFuture<Case> future = echoClient.updateCaseCallable().futureCall(request);
+   *   // Do something.
+   *   Case response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<UpdateCaseRequest, Case> updateCaseCallable() {
+    return stub.updateCaseCallable();
   }
 
   @Override

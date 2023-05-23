@@ -42,11 +42,10 @@ public final class OptionsProto {
     java.lang.String[] descriptorData = {
       "\n\033google/iam/v1/options.proto\022\rgoogle.ia"
           + "m.v1\"4\n\020GetPolicyOptions\022 \n\030requested_po"
-          + "licy_version\030\001 \001(\005B\204\001\n\021com.google.iam.v1"
-          + "B\014OptionsProtoP\001Z0google.golang.org/genp"
-          + "roto/googleapis/iam/v1;iam\370\001\001\252\002\023Google.C"
-          + "loud.Iam.V1\312\002\023Google\\Cloud\\Iam\\V1b\006proto"
-          + "3"
+          + "licy_version\030\001 \001(\005B}\n\021com.google.iam.v1B"
+          + "\014OptionsProtoP\001Z)cloud.google.com/go/iam"
+          + "/apiv1/iampb;iampb\370\001\001\252\002\023Google.Cloud.Iam"
+          + ".V1\312\002\023Google\\Cloud\\Iam\\V1b\006proto3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(
