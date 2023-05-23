@@ -65,7 +65,7 @@ import org.threeten.bp.Duration;
 @RunWith(JUnit4.class)
 public class GrpcDirectStreamControllerTest {
 
-  public static final int DEFAULT_AWAIT_TERMINATION_SEC = 5;
+  private static final int DEFAULT_AWAIT_TERMINATION_SEC = 5;
   private Server server;
   private ManagedChannel channel;
 
@@ -83,7 +83,7 @@ public class GrpcDirectStreamControllerTest {
     channel.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 
-  @Test
+  @Test(timeout = 180_000) // ms
   public void testRetryNoRaceCondition() throws Exception {
     StreamResumptionStrategy<Color, Money> resumptionStrategy =
         new StreamResumptionStrategy<Color, Money>() {

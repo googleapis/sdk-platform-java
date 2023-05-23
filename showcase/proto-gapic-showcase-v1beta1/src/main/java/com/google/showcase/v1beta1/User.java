@@ -33,11 +33,6 @@ private static final long serialVersionUID = 0L;
     return new User();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet
-  getUnknownFields() {
-    return this.unknownFields;
-  }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
     return com.google.showcase.v1beta1.IdentityOuterClass.internal_static_google_showcase_v1beta1_User_descriptor;
@@ -329,6 +324,7 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * The nickname of the user.
+   *
    * (-- aip.dev/not-precedent: An empty string is a valid nickname.
    *     Ordinarily, proto3_optional should not be used on a `string` field. --)
    * </pre>
@@ -343,6 +339,7 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * The nickname of the user.
+   *
    * (-- aip.dev/not-precedent: An empty string is a valid nickname.
    *     Ordinarily, proto3_optional should not be used on a `string` field. --)
    * </pre>
@@ -366,6 +363,7 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * The nickname of the user.
+   *
    * (-- aip.dev/not-precedent: An empty string is a valid nickname.
    *     Ordinarily, proto3_optional should not be used on a `string` field. --)
    * </pre>
@@ -393,6 +391,7 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * Enables the receiving of notifications. The default is true if unset.
+   *
    * (-- aip.dev/not-precedent: The default for the feature is true.
    *     Ordinarily, the default for a `bool` field should be false. --)
    * </pre>
@@ -407,6 +406,7 @@ private static final long serialVersionUID = 0L;
   /**
    * <pre>
    * Enables the receiving of notifications. The default is true if unset.
+   *
    * (-- aip.dev/not-precedent: The default for the feature is true.
    *     Ordinarily, the default for a `bool` field should be false. --)
    * </pre>
@@ -645,11 +645,13 @@ private static final long serialVersionUID = 0L;
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
+
   public static com.google.showcase.v1beta1.User parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
+
   public static com.google.showcase.v1beta1.User parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -818,38 +820,6 @@ private static final long serialVersionUID = 0L;
       result.bitField0_ |= to_bitField0_;
     }
 
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return super.setField(field, value);
-    }
-    @java.lang.Override
-    public Builder clearField(
-        com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-    @java.lang.Override
-    public Builder clearOneof(
-        com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field,
-        int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field,
-        java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
       if (other instanceof com.google.showcase.v1beta1.User) {
@@ -1610,7 +1580,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setAge(int value) {
-      
+
       age_ = value;
       bitField0_ |= 0x00000020;
       onChanged();
@@ -1666,7 +1636,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setHeightFeet(double value) {
-      
+
       heightFeet_ = value;
       bitField0_ |= 0x00000040;
       onChanged();
@@ -1691,6 +1661,7 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * The nickname of the user.
+     *
      * (-- aip.dev/not-precedent: An empty string is a valid nickname.
      *     Ordinarily, proto3_optional should not be used on a `string` field. --)
      * </pre>
@@ -1704,6 +1675,7 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * The nickname of the user.
+     *
      * (-- aip.dev/not-precedent: An empty string is a valid nickname.
      *     Ordinarily, proto3_optional should not be used on a `string` field. --)
      * </pre>
@@ -1726,6 +1698,7 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * The nickname of the user.
+     *
      * (-- aip.dev/not-precedent: An empty string is a valid nickname.
      *     Ordinarily, proto3_optional should not be used on a `string` field. --)
      * </pre>
@@ -1749,6 +1722,7 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * The nickname of the user.
+     *
      * (-- aip.dev/not-precedent: An empty string is a valid nickname.
      *     Ordinarily, proto3_optional should not be used on a `string` field. --)
      * </pre>
@@ -1768,6 +1742,7 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * The nickname of the user.
+     *
      * (-- aip.dev/not-precedent: An empty string is a valid nickname.
      *     Ordinarily, proto3_optional should not be used on a `string` field. --)
      * </pre>
@@ -1784,6 +1759,7 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * The nickname of the user.
+     *
      * (-- aip.dev/not-precedent: An empty string is a valid nickname.
      *     Ordinarily, proto3_optional should not be used on a `string` field. --)
      * </pre>
@@ -1806,6 +1782,7 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Enables the receiving of notifications. The default is true if unset.
+     *
      * (-- aip.dev/not-precedent: The default for the feature is true.
      *     Ordinarily, the default for a `bool` field should be false. --)
      * </pre>
@@ -1820,6 +1797,7 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Enables the receiving of notifications. The default is true if unset.
+     *
      * (-- aip.dev/not-precedent: The default for the feature is true.
      *     Ordinarily, the default for a `bool` field should be false. --)
      * </pre>
@@ -1834,6 +1812,7 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Enables the receiving of notifications. The default is true if unset.
+     *
      * (-- aip.dev/not-precedent: The default for the feature is true.
      *     Ordinarily, the default for a `bool` field should be false. --)
      * </pre>
@@ -1843,7 +1822,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setEnableNotifications(boolean value) {
-      
+
       enableNotifications_ = value;
       bitField0_ |= 0x00000100;
       onChanged();
@@ -1852,6 +1831,7 @@ private static final long serialVersionUID = 0L;
     /**
      * <pre>
      * Enables the receiving of notifications. The default is true if unset.
+     *
      * (-- aip.dev/not-precedent: The default for the feature is true.
      *     Ordinarily, the default for a `bool` field should be false. --)
      * </pre>
