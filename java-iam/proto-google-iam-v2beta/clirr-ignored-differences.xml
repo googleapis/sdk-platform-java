@@ -3,32 +3,32 @@
 <differences>
   <difference>
     <differenceType>7002</differenceType>
-    <className>com/google/iam/v1/*Builder</className>
+    <className>com/google/iam/v2beta/*Builder</className>
     <method>* addRepeatedField(*)</method>
   </difference>
   <difference>
     <differenceType>7002</differenceType>
-    <className>com/google/iam/v1/*Builder</className>
+    <className>com/google/iam/v2beta/*Builder</className>
     <method>* clearField(*)</method>
   </difference>
   <difference>
     <differenceType>7002</differenceType>
-    <className>com/google/iam/v1/*Builder</className>
+    <className>com/google/iam/v2beta/*Builder</className>
     <method>* clearOneof(*)</method>
   </difference>
   <difference>
     <differenceType>7002</differenceType>
-    <className>com/google/iam/v1/*Builder</className>
+    <className>com/google/iam/v2beta/*Builder</className>
     <method>* clone()</method>
   </difference>
   <difference>
     <differenceType>7002</differenceType>
-    <className>com/google/iam/v1/*Builder</className>
+    <className>com/google/iam/v2beta/*Builder</className>
     <method>* setField(*)</method>
   </difference>
   <difference>
     <differenceType>7002</differenceType>
-    <className>com/google/iam/v1/*Builder</className>
+    <className>com/google/iam/v2beta/*Builder</className>
     <method>* setRepeatedField(*)</method>
   </difference>
   <difference>
