@@ -23,19 +23,26 @@ package com.google.api;
  *
  * <pre>
  * Usage configuration rules for the service.
+ *
  * NOTE: Under development.
+ *
+ *
  * Use this rule to configure unregistered calls for the service. Unregistered
  * calls are calls that do not contain consumer project identity.
  * (Example: calls that do not contain an API key).
  * By default, API methods do not allow unregistered calls, and each method call
  * must be identified by a consumer project identity. Use this rule to
  * allow/disallow unregistered calls.
+ *
  * Example of an API that wants to allow unregistered calls for entire service.
+ *
  *     usage:
  *       rules:
  *       - selector: "*"
  *         allow_unregistered_calls: true
+ *
  * Example of a method that wants to allow unregistered calls.
+ *
  *     usage:
  *       rules:
  *       - selector: "google.example.library.v1.LibraryService.CreateBook"
@@ -64,11 +71,6 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
     return new UsageRule();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.UsageProto.internal_static_google_api_UsageRule_descriptor;
   }
@@ -91,6 +93,7 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Selects the methods to which this rule applies. Use '*' to indicate all
    * methods in all APIs.
+   *
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax
    * details.
    * </pre>
@@ -117,6 +120,7 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Selects the methods to which this rule applies. Use '*' to indicate all
    * methods in all APIs.
+   *
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax
    * details.
    * </pre>
@@ -358,19 +362,26 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Usage configuration rules for the service.
+   *
    * NOTE: Under development.
+   *
+   *
    * Use this rule to configure unregistered calls for the service. Unregistered
    * calls are calls that do not contain consumer project identity.
    * (Example: calls that do not contain an API key).
    * By default, API methods do not allow unregistered calls, and each method call
    * must be identified by a consumer project identity. Use this rule to
    * allow/disallow unregistered calls.
+   *
    * Example of an API that wants to allow unregistered calls for entire service.
+   *
    *     usage:
    *       rules:
    *       - selector: "*"
    *         allow_unregistered_calls: true
+   *
    * Example of a method that wants to allow unregistered calls.
+   *
    *     usage:
    *       rules:
    *       - selector: "google.example.library.v1.LibraryService.CreateBook"
@@ -452,39 +463,6 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
       if (((from_bitField0_ & 0x00000004) != 0)) {
         result.skipServiceControl_ = skipServiceControl_;
       }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
     }
 
     @java.lang.Override
@@ -580,6 +558,7 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Selects the methods to which this rule applies. Use '*' to indicate all
      * methods in all APIs.
+     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -605,6 +584,7 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Selects the methods to which this rule applies. Use '*' to indicate all
      * methods in all APIs.
+     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -630,6 +610,7 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Selects the methods to which this rule applies. Use '*' to indicate all
      * methods in all APIs.
+     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -654,6 +635,7 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Selects the methods to which this rule applies. Use '*' to indicate all
      * methods in all APIs.
+     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -674,6 +656,7 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Selects the methods to which this rule applies. Use '*' to indicate all
      * methods in all APIs.
+     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>

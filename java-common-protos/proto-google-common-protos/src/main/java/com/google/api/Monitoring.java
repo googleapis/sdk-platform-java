@@ -23,12 +23,14 @@ package com.google.api;
  *
  * <pre>
  * Monitoring configuration of the service.
+ *
  * The example below shows how to configure monitored resources and metrics
  * for monitoring. In the example, a monitored resource and two metrics are
  * defined. The `library.googleapis.com/book/returned_count` metric is sent
  * to both producer and consumer projects, whereas the
  * `library.googleapis.com/book/num_overdue` metric is only sent to the
  * consumer project.
+ *
  *     monitored_resources:
  *     - type: library.googleapis.com/Branch
  *       display_name: "Library Branch"
@@ -95,11 +97,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new Monitoring();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -229,18 +226,13 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
 
     private MonitoringDestination() {
       monitoredResource_ = "";
-      metrics_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      metrics_ = com.google.protobuf.LazyStringArrayList.emptyList();
     }
 
     @java.lang.Override
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
       return new MonitoringDestination();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-      return this.unknownFields;
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -316,7 +308,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
     public static final int METRICS_FIELD_NUMBER = 2;
 
     @SuppressWarnings("serial")
-    private com.google.protobuf.LazyStringList metrics_;
+    private com.google.protobuf.LazyStringArrayList metrics_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
     /**
      *
      *
@@ -602,8 +595,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         super.clear();
         bitField0_ = 0;
         monitoredResource_ = "";
-        metrics_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000002);
+        metrics_ = com.google.protobuf.LazyStringArrayList.emptyList();
         return this;
       }
 
@@ -631,7 +623,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       public com.google.api.Monitoring.MonitoringDestination buildPartial() {
         com.google.api.Monitoring.MonitoringDestination result =
             new com.google.api.Monitoring.MonitoringDestination(this);
-        buildPartialRepeatedFields(result);
         if (bitField0_ != 0) {
           buildPartial0(result);
         }
@@ -639,55 +630,15 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         return result;
       }
 
-      private void buildPartialRepeatedFields(
-          com.google.api.Monitoring.MonitoringDestination result) {
-        if (((bitField0_ & 0x00000002) != 0)) {
-          metrics_ = metrics_.getUnmodifiableView();
-          bitField0_ = (bitField0_ & ~0x00000002);
-        }
-        result.metrics_ = metrics_;
-      }
-
       private void buildPartial0(com.google.api.Monitoring.MonitoringDestination result) {
         int from_bitField0_ = bitField0_;
         if (((from_bitField0_ & 0x00000001) != 0)) {
           result.monitoredResource_ = monitoredResource_;
         }
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.setField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-
-      @java.lang.Override
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index,
-          java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.addRepeatedField(field, value);
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          metrics_.makeImmutable();
+          result.metrics_ = metrics_;
+        }
       }
 
       @java.lang.Override
@@ -711,7 +662,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         if (!other.metrics_.isEmpty()) {
           if (metrics_.isEmpty()) {
             metrics_ = other.metrics_;
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ |= 0x00000002;
           } else {
             ensureMetricsIsMutable();
             metrics_.addAll(other.metrics_);
@@ -892,14 +843,14 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         return this;
       }
 
-      private com.google.protobuf.LazyStringList metrics_ =
-          com.google.protobuf.LazyStringArrayList.EMPTY;
+      private com.google.protobuf.LazyStringArrayList metrics_ =
+          com.google.protobuf.LazyStringArrayList.emptyList();
 
       private void ensureMetricsIsMutable() {
-        if (!((bitField0_ & 0x00000002) != 0)) {
+        if (!metrics_.isModifiable()) {
           metrics_ = new com.google.protobuf.LazyStringArrayList(metrics_);
-          bitField0_ |= 0x00000002;
         }
+        bitField0_ |= 0x00000002;
       }
       /**
        *
@@ -915,7 +866,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
        * @return A list containing the metrics.
        */
       public com.google.protobuf.ProtocolStringList getMetricsList() {
-        return metrics_.getUnmodifiableView();
+        metrics_.makeImmutable();
+        return metrics_;
       }
       /**
        *
@@ -988,6 +940,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         }
         ensureMetricsIsMutable();
         metrics_.set(index, value);
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -1011,6 +964,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         }
         ensureMetricsIsMutable();
         metrics_.add(value);
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -1031,6 +985,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       public Builder addAllMetrics(java.lang.Iterable<java.lang.String> values) {
         ensureMetricsIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(values, metrics_);
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -1048,8 +1003,9 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearMetrics() {
-        metrics_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        metrics_ = com.google.protobuf.LazyStringArrayList.emptyList();
         bitField0_ = (bitField0_ & ~0x00000002);
+        ;
         onChanged();
         return this;
       }
@@ -1074,6 +1030,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         checkByteStringIsUtf8(value);
         ensureMetricsIsMutable();
         metrics_.add(value);
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -1515,12 +1472,14 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Monitoring configuration of the service.
+   *
    * The example below shows how to configure monitored resources and metrics
    * for monitoring. In the example, a monitored resource and two metrics are
    * defined. The `library.googleapis.com/book/returned_count` metric is sent
    * to both producer and consumer projects, whereas the
    * `library.googleapis.com/book/num_overdue` metric is only sent to the
    * consumer project.
+   *
    *     monitored_resources:
    *     - type: library.googleapis.com/Branch
    *       display_name: "Library Branch"
@@ -1665,39 +1624,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
 
     private void buildPartial0(com.google.api.Monitoring result) {
       int from_bitField0_ = bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
     }
 
     @java.lang.Override

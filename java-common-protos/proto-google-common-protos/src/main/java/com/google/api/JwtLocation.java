@@ -47,11 +47,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
     return new JwtLocation();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.AuthProto.internal_static_google_api_JwtLocation_descriptor;
   }
@@ -65,6 +60,8 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
   }
 
   private int inCase_ = 0;
+
+  @SuppressWarnings("serial")
   private java.lang.Object in_;
 
   public enum InCase
@@ -337,6 +334,7 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
    * If not empty, the header value has to match (case sensitive) this prefix.
    * If not matched, JWT will not be extracted. If matched, JWT will be
    * extracted after the prefix is removed.
+   *
    * For example, for "Authorization: Bearer {JWT}",
    * value_prefix="Bearer " with a space at the end.
    * </pre>
@@ -366,6 +364,7 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
    * If not empty, the header value has to match (case sensitive) this prefix.
    * If not matched, JWT will not be extracted. If matched, JWT will be
    * extracted after the prefix is removed.
+   *
    * For example, for "Authorization: Bearer {JWT}",
    * value_prefix="Bearer " with a space at the end.
    * </pre>
@@ -674,39 +673,6 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
     private void buildPartialOneofs(com.google.api.JwtLocation result) {
       result.inCase_ = inCase_;
       result.in_ = this.in_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
     }
 
     @java.lang.Override
@@ -1251,6 +1217,7 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      * If not empty, the header value has to match (case sensitive) this prefix.
      * If not matched, JWT will not be extracted. If matched, JWT will be
      * extracted after the prefix is removed.
+     *
      * For example, for "Authorization: Bearer {JWT}",
      * value_prefix="Bearer " with a space at the end.
      * </pre>
@@ -1279,6 +1246,7 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      * If not empty, the header value has to match (case sensitive) this prefix.
      * If not matched, JWT will not be extracted. If matched, JWT will be
      * extracted after the prefix is removed.
+     *
      * For example, for "Authorization: Bearer {JWT}",
      * value_prefix="Bearer " with a space at the end.
      * </pre>
@@ -1307,6 +1275,7 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      * If not empty, the header value has to match (case sensitive) this prefix.
      * If not matched, JWT will not be extracted. If matched, JWT will be
      * extracted after the prefix is removed.
+     *
      * For example, for "Authorization: Bearer {JWT}",
      * value_prefix="Bearer " with a space at the end.
      * </pre>
@@ -1334,6 +1303,7 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      * If not empty, the header value has to match (case sensitive) this prefix.
      * If not matched, JWT will not be extracted. If matched, JWT will be
      * extracted after the prefix is removed.
+     *
      * For example, for "Authorization: Bearer {JWT}",
      * value_prefix="Bearer " with a space at the end.
      * </pre>
@@ -1357,6 +1327,7 @@ public final class JwtLocation extends com.google.protobuf.GeneratedMessageV3
      * If not empty, the header value has to match (case sensitive) this prefix.
      * If not matched, JWT will not be extracted. If matched, JWT will be
      * extracted after the prefix is removed.
+     *
      * For example, for "Authorization: Bearer {JWT}",
      * value_prefix="Bearer " with a space at the end.
      * </pre>

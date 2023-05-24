@@ -26,6 +26,7 @@ package com.google.rpc;
  * different programming environments, including REST APIs and RPC APIs. It is
  * used by [gRPC](https://github.com/grpc). Each `Status` message contains
  * three pieces of data: error code, error message, and error details.
+ *
  * You can find out more about this error model and how to work with it in the
  * [API Design Guide](https://cloud.google.com/apis/design/errors).
  * </pre>
@@ -51,11 +52,6 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new Status();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -406,6 +402,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
    * different programming environments, including REST APIs and RPC APIs. It is
    * used by [gRPC](https://github.com/grpc). Each `Status` message contains
    * three pieces of data: error code, error message, and error details.
+   *
    * You can find out more about this error model and how to work with it in the
    * [API Design Guide](https://cloud.google.com/apis/design/errors).
    * </pre>
@@ -501,39 +498,6 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
       if (((from_bitField0_ & 0x00000002) != 0)) {
         result.message_ = message_;
       }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
     }
 
     @java.lang.Override

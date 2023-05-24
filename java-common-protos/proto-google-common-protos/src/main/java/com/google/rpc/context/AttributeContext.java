@@ -23,15 +23,19 @@ package com.google.rpc.context;
  *
  * <pre>
  * This message defines the standard attribute vocabulary for Google APIs.
+ *
  * An attribute is a piece of metadata that describes an activity on a network
  * service. For example, the size of an HTTP request, or the status code of
  * an HTTP response.
+ *
  * Each attribute has a type and a name, which is logically defined as
  * a proto message field in `AttributeContext`. The field type becomes the
  * attribute type, and the field path becomes the attribute name. For example,
  * the attribute `source.ip` maps to field `AttributeContext.source.ip`.
+ *
  * This message definition is guaranteed not to have any wire breaking change.
  * So you can use it directly for passing attributes across different systems.
+ *
  * NOTE: Different system may generate different subset of attributes. Please
  * verify the system specification before relying on an attribute generated
  * a system.
@@ -57,11 +61,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new AttributeContext();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -270,11 +269,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
       return new Peer();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-      return this.unknownFields;
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -908,41 +902,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         if (((from_bitField0_ & 0x00000010) != 0)) {
           result.regionCode_ = regionCode_;
         }
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.setField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-
-      @java.lang.Override
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index,
-          java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.addRepeatedField(field, value);
       }
 
       @java.lang.Override
@@ -1827,11 +1786,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       return new Api();
     }
 
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-      return this.unknownFields;
-    }
-
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
       return com.google.rpc.context.AttributeContextProto
           .internal_static_google_rpc_context_AttributeContext_Api_descriptor;
@@ -2344,41 +2298,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         if (((from_bitField0_ & 0x00000008) != 0)) {
           result.version_ = version_;
         }
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.setField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-
-      @java.lang.Override
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index,
-          java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.addRepeatedField(field, value);
       }
 
       @java.lang.Override
@@ -3046,12 +2965,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * the audience (`aud`) claim within a JWT. The audience
      * value(s) depends on the `issuer`, but typically include one or more of
      * the following pieces of information:
+     *
      * *  The services intended to receive the credential. For example,
      *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
      * *  A set of service-based scopes. For example,
      *    ["https://www.googleapis.com/auth/cloud-platform"].
      * *  The client id of an app, such as the Firebase project id for JWTs
      *    from Firebase Auth.
+     *
      * Consult the documentation for the credential issuer to determine the
      * information provided.
      * </pre>
@@ -3069,12 +2990,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * the audience (`aud`) claim within a JWT. The audience
      * value(s) depends on the `issuer`, but typically include one or more of
      * the following pieces of information:
+     *
      * *  The services intended to receive the credential. For example,
      *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
      * *  A set of service-based scopes. For example,
      *    ["https://www.googleapis.com/auth/cloud-platform"].
      * *  The client id of an app, such as the Firebase project id for JWTs
      *    from Firebase Auth.
+     *
      * Consult the documentation for the credential issuer to determine the
      * information provided.
      * </pre>
@@ -3092,12 +3015,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * the audience (`aud`) claim within a JWT. The audience
      * value(s) depends on the `issuer`, but typically include one or more of
      * the following pieces of information:
+     *
      * *  The services intended to receive the credential. For example,
      *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
      * *  A set of service-based scopes. For example,
      *    ["https://www.googleapis.com/auth/cloud-platform"].
      * *  The client id of an app, such as the Firebase project id for JWTs
      *    from Firebase Auth.
+     *
      * Consult the documentation for the credential issuer to determine the
      * information provided.
      * </pre>
@@ -3116,12 +3041,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * the audience (`aud`) claim within a JWT. The audience
      * value(s) depends on the `issuer`, but typically include one or more of
      * the following pieces of information:
+     *
      * *  The services intended to receive the credential. For example,
      *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
      * *  A set of service-based scopes. For example,
      *    ["https://www.googleapis.com/auth/cloud-platform"].
      * *  The client id of an app, such as the Firebase project id for JWTs
      *    from Firebase Auth.
+     *
      * Consult the documentation for the credential issuer to determine the
      * information provided.
      * </pre>
@@ -3172,6 +3099,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * `{key: value}` pairs for standard and private claims. The following
      * is a subset of the standard required and optional claims that would
      * typically be presented for a Google-based JWT:
+     *
      *    {'iss': 'accounts.google.com',
      *     'sub': '113289723416554971153',
      *     'aud': ['123456789012', 'pubsub.googleapis.com'],
@@ -3179,6 +3107,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *     'email': 'jsmith&#64;example.com',
      *     'iat': 1353601026,
      *     'exp': 1353604926}
+     *
      * SAML assertions are similarly specified, but with an identity provider
      * dependent structure.
      * </pre>
@@ -3196,6 +3125,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * `{key: value}` pairs for standard and private claims. The following
      * is a subset of the standard required and optional claims that would
      * typically be presented for a Google-based JWT:
+     *
      *    {'iss': 'accounts.google.com',
      *     'sub': '113289723416554971153',
      *     'aud': ['123456789012', 'pubsub.googleapis.com'],
@@ -3203,6 +3133,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *     'email': 'jsmith&#64;example.com',
      *     'iat': 1353601026,
      *     'exp': 1353604926}
+     *
      * SAML assertions are similarly specified, but with an identity provider
      * dependent structure.
      * </pre>
@@ -3220,6 +3151,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * `{key: value}` pairs for standard and private claims. The following
      * is a subset of the standard required and optional claims that would
      * typically be presented for a Google-based JWT:
+     *
      *    {'iss': 'accounts.google.com',
      *     'sub': '113289723416554971153',
      *     'aud': ['123456789012', 'pubsub.googleapis.com'],
@@ -3227,6 +3159,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *     'email': 'jsmith&#64;example.com',
      *     'iat': 1353601026,
      *     'exp': 1353604926}
+     *
      * SAML assertions are similarly specified, but with an identity provider
      * dependent structure.
      * </pre>
@@ -3243,6 +3176,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * accessed by authenticated requester. It is part of Secure GCP processing
      * for the incoming request. An access level string has the format:
      * "//{api_service_name}/accessPolicies/{policy_id}/accessLevels/{short_name}"
+     *
      * Example:
      * "//accesscontextmanager.googleapis.com/accessPolicies/MY_POLICY_ID/accessLevels/MY_LEVEL"
      * </pre>
@@ -3260,6 +3194,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * accessed by authenticated requester. It is part of Secure GCP processing
      * for the incoming request. An access level string has the format:
      * "//{api_service_name}/accessPolicies/{policy_id}/accessLevels/{short_name}"
+     *
      * Example:
      * "//accesscontextmanager.googleapis.com/accessPolicies/MY_POLICY_ID/accessLevels/MY_LEVEL"
      * </pre>
@@ -3277,6 +3212,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * accessed by authenticated requester. It is part of Secure GCP processing
      * for the incoming request. An access level string has the format:
      * "//{api_service_name}/accessPolicies/{policy_id}/accessLevels/{short_name}"
+     *
      * Example:
      * "//accesscontextmanager.googleapis.com/accessPolicies/MY_POLICY_ID/accessLevels/MY_LEVEL"
      * </pre>
@@ -3295,6 +3231,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * accessed by authenticated requester. It is part of Secure GCP processing
      * for the incoming request. An access level string has the format:
      * "//{api_service_name}/accessPolicies/{policy_id}/accessLevels/{short_name}"
+     *
      * Example:
      * "//accesscontextmanager.googleapis.com/accessPolicies/MY_POLICY_ID/accessLevels/MY_LEVEL"
      * </pre>
@@ -3329,20 +3266,15 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
 
     private Auth() {
       principal_ = "";
-      audiences_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      audiences_ = com.google.protobuf.LazyStringArrayList.emptyList();
       presenter_ = "";
-      accessLevels_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      accessLevels_ = com.google.protobuf.LazyStringArrayList.emptyList();
     }
 
     @java.lang.Override
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
       return new Auth();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-      return this.unknownFields;
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -3422,7 +3354,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public static final int AUDIENCES_FIELD_NUMBER = 2;
 
     @SuppressWarnings("serial")
-    private com.google.protobuf.LazyStringList audiences_;
+    private com.google.protobuf.LazyStringArrayList audiences_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
     /**
      *
      *
@@ -3431,12 +3364,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * the audience (`aud`) claim within a JWT. The audience
      * value(s) depends on the `issuer`, but typically include one or more of
      * the following pieces of information:
+     *
      * *  The services intended to receive the credential. For example,
      *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
      * *  A set of service-based scopes. For example,
      *    ["https://www.googleapis.com/auth/cloud-platform"].
      * *  The client id of an app, such as the Firebase project id for JWTs
      *    from Firebase Auth.
+     *
      * Consult the documentation for the credential issuer to determine the
      * information provided.
      * </pre>
@@ -3456,12 +3391,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * the audience (`aud`) claim within a JWT. The audience
      * value(s) depends on the `issuer`, but typically include one or more of
      * the following pieces of information:
+     *
      * *  The services intended to receive the credential. For example,
      *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
      * *  A set of service-based scopes. For example,
      *    ["https://www.googleapis.com/auth/cloud-platform"].
      * *  The client id of an app, such as the Firebase project id for JWTs
      *    from Firebase Auth.
+     *
      * Consult the documentation for the credential issuer to determine the
      * information provided.
      * </pre>
@@ -3481,12 +3418,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * the audience (`aud`) claim within a JWT. The audience
      * value(s) depends on the `issuer`, but typically include one or more of
      * the following pieces of information:
+     *
      * *  The services intended to receive the credential. For example,
      *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
      * *  A set of service-based scopes. For example,
      *    ["https://www.googleapis.com/auth/cloud-platform"].
      * *  The client id of an app, such as the Firebase project id for JWTs
      *    from Firebase Auth.
+     *
      * Consult the documentation for the credential issuer to determine the
      * information provided.
      * </pre>
@@ -3507,12 +3446,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * the audience (`aud`) claim within a JWT. The audience
      * value(s) depends on the `issuer`, but typically include one or more of
      * the following pieces of information:
+     *
      * *  The services intended to receive the credential. For example,
      *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
      * *  A set of service-based scopes. For example,
      *    ["https://www.googleapis.com/auth/cloud-platform"].
      * *  The client id of an app, such as the Firebase project id for JWTs
      *    from Firebase Auth.
+     *
      * Consult the documentation for the credential issuer to determine the
      * information provided.
      * </pre>
@@ -3593,6 +3534,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * `{key: value}` pairs for standard and private claims. The following
      * is a subset of the standard required and optional claims that would
      * typically be presented for a Google-based JWT:
+     *
      *    {'iss': 'accounts.google.com',
      *     'sub': '113289723416554971153',
      *     'aud': ['123456789012', 'pubsub.googleapis.com'],
@@ -3600,6 +3542,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *     'email': 'jsmith&#64;example.com',
      *     'iat': 1353601026,
      *     'exp': 1353604926}
+     *
      * SAML assertions are similarly specified, but with an identity provider
      * dependent structure.
      * </pre>
@@ -3620,6 +3563,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * `{key: value}` pairs for standard and private claims. The following
      * is a subset of the standard required and optional claims that would
      * typically be presented for a Google-based JWT:
+     *
      *    {'iss': 'accounts.google.com',
      *     'sub': '113289723416554971153',
      *     'aud': ['123456789012', 'pubsub.googleapis.com'],
@@ -3627,6 +3571,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *     'email': 'jsmith&#64;example.com',
      *     'iat': 1353601026,
      *     'exp': 1353604926}
+     *
      * SAML assertions are similarly specified, but with an identity provider
      * dependent structure.
      * </pre>
@@ -3647,6 +3592,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * `{key: value}` pairs for standard and private claims. The following
      * is a subset of the standard required and optional claims that would
      * typically be presented for a Google-based JWT:
+     *
      *    {'iss': 'accounts.google.com',
      *     'sub': '113289723416554971153',
      *     'aud': ['123456789012', 'pubsub.googleapis.com'],
@@ -3654,6 +3600,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      *     'email': 'jsmith&#64;example.com',
      *     'iat': 1353601026,
      *     'exp': 1353604926}
+     *
      * SAML assertions are similarly specified, but with an identity provider
      * dependent structure.
      * </pre>
@@ -3668,7 +3615,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     public static final int ACCESS_LEVELS_FIELD_NUMBER = 5;
 
     @SuppressWarnings("serial")
-    private com.google.protobuf.LazyStringList accessLevels_;
+    private com.google.protobuf.LazyStringArrayList accessLevels_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
     /**
      *
      *
@@ -3677,6 +3625,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * accessed by authenticated requester. It is part of Secure GCP processing
      * for the incoming request. An access level string has the format:
      * "//{api_service_name}/accessPolicies/{policy_id}/accessLevels/{short_name}"
+     *
      * Example:
      * "//accesscontextmanager.googleapis.com/accessPolicies/MY_POLICY_ID/accessLevels/MY_LEVEL"
      * </pre>
@@ -3696,6 +3645,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * accessed by authenticated requester. It is part of Secure GCP processing
      * for the incoming request. An access level string has the format:
      * "//{api_service_name}/accessPolicies/{policy_id}/accessLevels/{short_name}"
+     *
      * Example:
      * "//accesscontextmanager.googleapis.com/accessPolicies/MY_POLICY_ID/accessLevels/MY_LEVEL"
      * </pre>
@@ -3715,6 +3665,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * accessed by authenticated requester. It is part of Secure GCP processing
      * for the incoming request. An access level string has the format:
      * "//{api_service_name}/accessPolicies/{policy_id}/accessLevels/{short_name}"
+     *
      * Example:
      * "//accesscontextmanager.googleapis.com/accessPolicies/MY_POLICY_ID/accessLevels/MY_LEVEL"
      * </pre>
@@ -3735,6 +3686,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * accessed by authenticated requester. It is part of Secure GCP processing
      * for the incoming request. An access level string has the format:
      * "//{api_service_name}/accessPolicies/{policy_id}/accessLevels/{short_name}"
+     *
      * Example:
      * "//accesscontextmanager.googleapis.com/accessPolicies/MY_POLICY_ID/accessLevels/MY_LEVEL"
      * </pre>
@@ -4006,16 +3958,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         super.clear();
         bitField0_ = 0;
         principal_ = "";
-        audiences_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000002);
+        audiences_ = com.google.protobuf.LazyStringArrayList.emptyList();
         presenter_ = "";
         claims_ = null;
         if (claimsBuilder_ != null) {
           claimsBuilder_.dispose();
           claimsBuilder_ = null;
         }
-        accessLevels_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000010);
+        accessLevels_ = com.google.protobuf.LazyStringArrayList.emptyList();
         return this;
       }
 
@@ -4043,7 +3993,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public com.google.rpc.context.AttributeContext.Auth buildPartial() {
         com.google.rpc.context.AttributeContext.Auth result =
             new com.google.rpc.context.AttributeContext.Auth(this);
-        buildPartialRepeatedFields(result);
         if (bitField0_ != 0) {
           buildPartial0(result);
         }
@@ -4051,23 +4000,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return result;
       }
 
-      private void buildPartialRepeatedFields(com.google.rpc.context.AttributeContext.Auth result) {
-        if (((bitField0_ & 0x00000002) != 0)) {
-          audiences_ = audiences_.getUnmodifiableView();
-          bitField0_ = (bitField0_ & ~0x00000002);
-        }
-        result.audiences_ = audiences_;
-        if (((bitField0_ & 0x00000010) != 0)) {
-          accessLevels_ = accessLevels_.getUnmodifiableView();
-          bitField0_ = (bitField0_ & ~0x00000010);
-        }
-        result.accessLevels_ = accessLevels_;
-      }
-
       private void buildPartial0(com.google.rpc.context.AttributeContext.Auth result) {
         int from_bitField0_ = bitField0_;
         if (((from_bitField0_ & 0x00000001) != 0)) {
           result.principal_ = principal_;
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          audiences_.makeImmutable();
+          result.audiences_ = audiences_;
         }
         if (((from_bitField0_ & 0x00000004) != 0)) {
           result.presenter_ = presenter_;
@@ -4075,41 +4015,10 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         if (((from_bitField0_ & 0x00000008) != 0)) {
           result.claims_ = claimsBuilder_ == null ? claims_ : claimsBuilder_.build();
         }
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.setField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-
-      @java.lang.Override
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index,
-          java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.addRepeatedField(field, value);
+        if (((from_bitField0_ & 0x00000010) != 0)) {
+          accessLevels_.makeImmutable();
+          result.accessLevels_ = accessLevels_;
+        }
       }
 
       @java.lang.Override
@@ -4132,7 +4041,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         if (!other.audiences_.isEmpty()) {
           if (audiences_.isEmpty()) {
             audiences_ = other.audiences_;
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ |= 0x00000002;
           } else {
             ensureAudiencesIsMutable();
             audiences_.addAll(other.audiences_);
@@ -4150,7 +4059,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         if (!other.accessLevels_.isEmpty()) {
           if (accessLevels_.isEmpty()) {
             accessLevels_ = other.accessLevels_;
-            bitField0_ = (bitField0_ & ~0x00000010);
+            bitField0_ |= 0x00000010;
           } else {
             ensureAccessLevelsIsMutable();
             accessLevels_.addAll(other.accessLevels_);
@@ -4360,14 +4269,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return this;
       }
 
-      private com.google.protobuf.LazyStringList audiences_ =
-          com.google.protobuf.LazyStringArrayList.EMPTY;
+      private com.google.protobuf.LazyStringArrayList audiences_ =
+          com.google.protobuf.LazyStringArrayList.emptyList();
 
       private void ensureAudiencesIsMutable() {
-        if (!((bitField0_ & 0x00000002) != 0)) {
+        if (!audiences_.isModifiable()) {
           audiences_ = new com.google.protobuf.LazyStringArrayList(audiences_);
-          bitField0_ |= 0x00000002;
         }
+        bitField0_ |= 0x00000002;
       }
       /**
        *
@@ -4377,12 +4286,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * the audience (`aud`) claim within a JWT. The audience
        * value(s) depends on the `issuer`, but typically include one or more of
        * the following pieces of information:
+       *
        * *  The services intended to receive the credential. For example,
        *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
        * *  A set of service-based scopes. For example,
        *    ["https://www.googleapis.com/auth/cloud-platform"].
        * *  The client id of an app, such as the Firebase project id for JWTs
        *    from Firebase Auth.
+       *
        * Consult the documentation for the credential issuer to determine the
        * information provided.
        * </pre>
@@ -4392,7 +4303,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return A list containing the audiences.
        */
       public com.google.protobuf.ProtocolStringList getAudiencesList() {
-        return audiences_.getUnmodifiableView();
+        audiences_.makeImmutable();
+        return audiences_;
       }
       /**
        *
@@ -4402,12 +4314,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * the audience (`aud`) claim within a JWT. The audience
        * value(s) depends on the `issuer`, but typically include one or more of
        * the following pieces of information:
+       *
        * *  The services intended to receive the credential. For example,
        *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
        * *  A set of service-based scopes. For example,
        *    ["https://www.googleapis.com/auth/cloud-platform"].
        * *  The client id of an app, such as the Firebase project id for JWTs
        *    from Firebase Auth.
+       *
        * Consult the documentation for the credential issuer to determine the
        * information provided.
        * </pre>
@@ -4427,12 +4341,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * the audience (`aud`) claim within a JWT. The audience
        * value(s) depends on the `issuer`, but typically include one or more of
        * the following pieces of information:
+       *
        * *  The services intended to receive the credential. For example,
        *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
        * *  A set of service-based scopes. For example,
        *    ["https://www.googleapis.com/auth/cloud-platform"].
        * *  The client id of an app, such as the Firebase project id for JWTs
        *    from Firebase Auth.
+       *
        * Consult the documentation for the credential issuer to determine the
        * information provided.
        * </pre>
@@ -4453,12 +4369,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * the audience (`aud`) claim within a JWT. The audience
        * value(s) depends on the `issuer`, but typically include one or more of
        * the following pieces of information:
+       *
        * *  The services intended to receive the credential. For example,
        *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
        * *  A set of service-based scopes. For example,
        *    ["https://www.googleapis.com/auth/cloud-platform"].
        * *  The client id of an app, such as the Firebase project id for JWTs
        *    from Firebase Auth.
+       *
        * Consult the documentation for the credential issuer to determine the
        * information provided.
        * </pre>
@@ -4479,12 +4397,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * the audience (`aud`) claim within a JWT. The audience
        * value(s) depends on the `issuer`, but typically include one or more of
        * the following pieces of information:
+       *
        * *  The services intended to receive the credential. For example,
        *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
        * *  A set of service-based scopes. For example,
        *    ["https://www.googleapis.com/auth/cloud-platform"].
        * *  The client id of an app, such as the Firebase project id for JWTs
        *    from Firebase Auth.
+       *
        * Consult the documentation for the credential issuer to determine the
        * information provided.
        * </pre>
@@ -4501,6 +4421,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         }
         ensureAudiencesIsMutable();
         audiences_.set(index, value);
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -4512,12 +4433,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * the audience (`aud`) claim within a JWT. The audience
        * value(s) depends on the `issuer`, but typically include one or more of
        * the following pieces of information:
+       *
        * *  The services intended to receive the credential. For example,
        *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
        * *  A set of service-based scopes. For example,
        *    ["https://www.googleapis.com/auth/cloud-platform"].
        * *  The client id of an app, such as the Firebase project id for JWTs
        *    from Firebase Auth.
+       *
        * Consult the documentation for the credential issuer to determine the
        * information provided.
        * </pre>
@@ -4533,6 +4456,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         }
         ensureAudiencesIsMutable();
         audiences_.add(value);
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -4544,12 +4468,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * the audience (`aud`) claim within a JWT. The audience
        * value(s) depends on the `issuer`, but typically include one or more of
        * the following pieces of information:
+       *
        * *  The services intended to receive the credential. For example,
        *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
        * *  A set of service-based scopes. For example,
        *    ["https://www.googleapis.com/auth/cloud-platform"].
        * *  The client id of an app, such as the Firebase project id for JWTs
        *    from Firebase Auth.
+       *
        * Consult the documentation for the credential issuer to determine the
        * information provided.
        * </pre>
@@ -4562,6 +4488,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public Builder addAllAudiences(java.lang.Iterable<java.lang.String> values) {
         ensureAudiencesIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(values, audiences_);
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -4573,12 +4500,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * the audience (`aud`) claim within a JWT. The audience
        * value(s) depends on the `issuer`, but typically include one or more of
        * the following pieces of information:
+       *
        * *  The services intended to receive the credential. For example,
        *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
        * *  A set of service-based scopes. For example,
        *    ["https://www.googleapis.com/auth/cloud-platform"].
        * *  The client id of an app, such as the Firebase project id for JWTs
        *    from Firebase Auth.
+       *
        * Consult the documentation for the credential issuer to determine the
        * information provided.
        * </pre>
@@ -4588,8 +4517,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearAudiences() {
-        audiences_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        audiences_ = com.google.protobuf.LazyStringArrayList.emptyList();
         bitField0_ = (bitField0_ & ~0x00000002);
+        ;
         onChanged();
         return this;
       }
@@ -4601,12 +4531,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * the audience (`aud`) claim within a JWT. The audience
        * value(s) depends on the `issuer`, but typically include one or more of
        * the following pieces of information:
+       *
        * *  The services intended to receive the credential. For example,
        *    ["https://pubsub.googleapis.com/", "https://storage.googleapis.com/"].
        * *  A set of service-based scopes. For example,
        *    ["https://www.googleapis.com/auth/cloud-platform"].
        * *  The client id of an app, such as the Firebase project id for JWTs
        *    from Firebase Auth.
+       *
        * Consult the documentation for the credential issuer to determine the
        * information provided.
        * </pre>
@@ -4623,6 +4555,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         checkByteStringIsUtf8(value);
         ensureAudiencesIsMutable();
         audiences_.add(value);
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -4762,6 +4695,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * `{key: value}` pairs for standard and private claims. The following
        * is a subset of the standard required and optional claims that would
        * typically be presented for a Google-based JWT:
+       *
        *    {'iss': 'accounts.google.com',
        *     'sub': '113289723416554971153',
        *     'aud': ['123456789012', 'pubsub.googleapis.com'],
@@ -4769,6 +4703,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *     'email': 'jsmith&#64;example.com',
        *     'iat': 1353601026,
        *     'exp': 1353604926}
+       *
        * SAML assertions are similarly specified, but with an identity provider
        * dependent structure.
        * </pre>
@@ -4788,6 +4723,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * `{key: value}` pairs for standard and private claims. The following
        * is a subset of the standard required and optional claims that would
        * typically be presented for a Google-based JWT:
+       *
        *    {'iss': 'accounts.google.com',
        *     'sub': '113289723416554971153',
        *     'aud': ['123456789012', 'pubsub.googleapis.com'],
@@ -4795,6 +4731,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *     'email': 'jsmith&#64;example.com',
        *     'iat': 1353601026,
        *     'exp': 1353604926}
+       *
        * SAML assertions are similarly specified, but with an identity provider
        * dependent structure.
        * </pre>
@@ -4818,6 +4755,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * `{key: value}` pairs for standard and private claims. The following
        * is a subset of the standard required and optional claims that would
        * typically be presented for a Google-based JWT:
+       *
        *    {'iss': 'accounts.google.com',
        *     'sub': '113289723416554971153',
        *     'aud': ['123456789012', 'pubsub.googleapis.com'],
@@ -4825,6 +4763,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *     'email': 'jsmith&#64;example.com',
        *     'iat': 1353601026,
        *     'exp': 1353604926}
+       *
        * SAML assertions are similarly specified, but with an identity provider
        * dependent structure.
        * </pre>
@@ -4852,6 +4791,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * `{key: value}` pairs for standard and private claims. The following
        * is a subset of the standard required and optional claims that would
        * typically be presented for a Google-based JWT:
+       *
        *    {'iss': 'accounts.google.com',
        *     'sub': '113289723416554971153',
        *     'aud': ['123456789012', 'pubsub.googleapis.com'],
@@ -4859,6 +4799,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *     'email': 'jsmith&#64;example.com',
        *     'iat': 1353601026,
        *     'exp': 1353604926}
+       *
        * SAML assertions are similarly specified, but with an identity provider
        * dependent structure.
        * </pre>
@@ -4883,6 +4824,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * `{key: value}` pairs for standard and private claims. The following
        * is a subset of the standard required and optional claims that would
        * typically be presented for a Google-based JWT:
+       *
        *    {'iss': 'accounts.google.com',
        *     'sub': '113289723416554971153',
        *     'aud': ['123456789012', 'pubsub.googleapis.com'],
@@ -4890,6 +4832,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *     'email': 'jsmith&#64;example.com',
        *     'iat': 1353601026,
        *     'exp': 1353604926}
+       *
        * SAML assertions are similarly specified, but with an identity provider
        * dependent structure.
        * </pre>
@@ -4920,6 +4863,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * `{key: value}` pairs for standard and private claims. The following
        * is a subset of the standard required and optional claims that would
        * typically be presented for a Google-based JWT:
+       *
        *    {'iss': 'accounts.google.com',
        *     'sub': '113289723416554971153',
        *     'aud': ['123456789012', 'pubsub.googleapis.com'],
@@ -4927,6 +4871,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *     'email': 'jsmith&#64;example.com',
        *     'iat': 1353601026,
        *     'exp': 1353604926}
+       *
        * SAML assertions are similarly specified, but with an identity provider
        * dependent structure.
        * </pre>
@@ -4951,6 +4896,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * `{key: value}` pairs for standard and private claims. The following
        * is a subset of the standard required and optional claims that would
        * typically be presented for a Google-based JWT:
+       *
        *    {'iss': 'accounts.google.com',
        *     'sub': '113289723416554971153',
        *     'aud': ['123456789012', 'pubsub.googleapis.com'],
@@ -4958,6 +4904,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *     'email': 'jsmith&#64;example.com',
        *     'iat': 1353601026,
        *     'exp': 1353604926}
+       *
        * SAML assertions are similarly specified, but with an identity provider
        * dependent structure.
        * </pre>
@@ -4977,6 +4924,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * `{key: value}` pairs for standard and private claims. The following
        * is a subset of the standard required and optional claims that would
        * typically be presented for a Google-based JWT:
+       *
        *    {'iss': 'accounts.google.com',
        *     'sub': '113289723416554971153',
        *     'aud': ['123456789012', 'pubsub.googleapis.com'],
@@ -4984,6 +4932,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *     'email': 'jsmith&#64;example.com',
        *     'iat': 1353601026,
        *     'exp': 1353604926}
+       *
        * SAML assertions are similarly specified, but with an identity provider
        * dependent structure.
        * </pre>
@@ -5005,6 +4954,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * `{key: value}` pairs for standard and private claims. The following
        * is a subset of the standard required and optional claims that would
        * typically be presented for a Google-based JWT:
+       *
        *    {'iss': 'accounts.google.com',
        *     'sub': '113289723416554971153',
        *     'aud': ['123456789012', 'pubsub.googleapis.com'],
@@ -5012,6 +4962,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        *     'email': 'jsmith&#64;example.com',
        *     'iat': 1353601026,
        *     'exp': 1353604926}
+       *
        * SAML assertions are similarly specified, but with an identity provider
        * dependent structure.
        * </pre>
@@ -5035,14 +4986,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         return claimsBuilder_;
       }
 
-      private com.google.protobuf.LazyStringList accessLevels_ =
-          com.google.protobuf.LazyStringArrayList.EMPTY;
+      private com.google.protobuf.LazyStringArrayList accessLevels_ =
+          com.google.protobuf.LazyStringArrayList.emptyList();
 
       private void ensureAccessLevelsIsMutable() {
-        if (!((bitField0_ & 0x00000010) != 0)) {
+        if (!accessLevels_.isModifiable()) {
           accessLevels_ = new com.google.protobuf.LazyStringArrayList(accessLevels_);
-          bitField0_ |= 0x00000010;
         }
+        bitField0_ |= 0x00000010;
       }
       /**
        *
@@ -5052,6 +5003,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * accessed by authenticated requester. It is part of Secure GCP processing
        * for the incoming request. An access level string has the format:
        * "//{api_service_name}/accessPolicies/{policy_id}/accessLevels/{short_name}"
+       *
        * Example:
        * "//accesscontextmanager.googleapis.com/accessPolicies/MY_POLICY_ID/accessLevels/MY_LEVEL"
        * </pre>
@@ -5061,7 +5013,8 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return A list containing the accessLevels.
        */
       public com.google.protobuf.ProtocolStringList getAccessLevelsList() {
-        return accessLevels_.getUnmodifiableView();
+        accessLevels_.makeImmutable();
+        return accessLevels_;
       }
       /**
        *
@@ -5071,6 +5024,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * accessed by authenticated requester. It is part of Secure GCP processing
        * for the incoming request. An access level string has the format:
        * "//{api_service_name}/accessPolicies/{policy_id}/accessLevels/{short_name}"
+       *
        * Example:
        * "//accesscontextmanager.googleapis.com/accessPolicies/MY_POLICY_ID/accessLevels/MY_LEVEL"
        * </pre>
@@ -5090,6 +5044,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * accessed by authenticated requester. It is part of Secure GCP processing
        * for the incoming request. An access level string has the format:
        * "//{api_service_name}/accessPolicies/{policy_id}/accessLevels/{short_name}"
+       *
        * Example:
        * "//accesscontextmanager.googleapis.com/accessPolicies/MY_POLICY_ID/accessLevels/MY_LEVEL"
        * </pre>
@@ -5110,6 +5065,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * accessed by authenticated requester. It is part of Secure GCP processing
        * for the incoming request. An access level string has the format:
        * "//{api_service_name}/accessPolicies/{policy_id}/accessLevels/{short_name}"
+       *
        * Example:
        * "//accesscontextmanager.googleapis.com/accessPolicies/MY_POLICY_ID/accessLevels/MY_LEVEL"
        * </pre>
@@ -5130,6 +5086,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * accessed by authenticated requester. It is part of Secure GCP processing
        * for the incoming request. An access level string has the format:
        * "//{api_service_name}/accessPolicies/{policy_id}/accessLevels/{short_name}"
+       *
        * Example:
        * "//accesscontextmanager.googleapis.com/accessPolicies/MY_POLICY_ID/accessLevels/MY_LEVEL"
        * </pre>
@@ -5146,6 +5103,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         }
         ensureAccessLevelsIsMutable();
         accessLevels_.set(index, value);
+        bitField0_ |= 0x00000010;
         onChanged();
         return this;
       }
@@ -5157,6 +5115,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * accessed by authenticated requester. It is part of Secure GCP processing
        * for the incoming request. An access level string has the format:
        * "//{api_service_name}/accessPolicies/{policy_id}/accessLevels/{short_name}"
+       *
        * Example:
        * "//accesscontextmanager.googleapis.com/accessPolicies/MY_POLICY_ID/accessLevels/MY_LEVEL"
        * </pre>
@@ -5172,6 +5131,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         }
         ensureAccessLevelsIsMutable();
         accessLevels_.add(value);
+        bitField0_ |= 0x00000010;
         onChanged();
         return this;
       }
@@ -5183,6 +5143,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * accessed by authenticated requester. It is part of Secure GCP processing
        * for the incoming request. An access level string has the format:
        * "//{api_service_name}/accessPolicies/{policy_id}/accessLevels/{short_name}"
+       *
        * Example:
        * "//accesscontextmanager.googleapis.com/accessPolicies/MY_POLICY_ID/accessLevels/MY_LEVEL"
        * </pre>
@@ -5195,6 +5156,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       public Builder addAllAccessLevels(java.lang.Iterable<java.lang.String> values) {
         ensureAccessLevelsIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(values, accessLevels_);
+        bitField0_ |= 0x00000010;
         onChanged();
         return this;
       }
@@ -5206,6 +5168,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * accessed by authenticated requester. It is part of Secure GCP processing
        * for the incoming request. An access level string has the format:
        * "//{api_service_name}/accessPolicies/{policy_id}/accessLevels/{short_name}"
+       *
        * Example:
        * "//accesscontextmanager.googleapis.com/accessPolicies/MY_POLICY_ID/accessLevels/MY_LEVEL"
        * </pre>
@@ -5215,8 +5178,9 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * @return This builder for chaining.
        */
       public Builder clearAccessLevels() {
-        accessLevels_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        accessLevels_ = com.google.protobuf.LazyStringArrayList.emptyList();
         bitField0_ = (bitField0_ & ~0x00000010);
+        ;
         onChanged();
         return this;
       }
@@ -5228,6 +5192,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * accessed by authenticated requester. It is part of Secure GCP processing
        * for the incoming request. An access level string has the format:
        * "//{api_service_name}/accessPolicies/{policy_id}/accessLevels/{short_name}"
+       *
        * Example:
        * "//accesscontextmanager.googleapis.com/accessPolicies/MY_POLICY_ID/accessLevels/MY_LEVEL"
        * </pre>
@@ -5244,6 +5209,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         checkByteStringIsUtf8(value);
         ensureAccessLevelsIsMutable();
         accessLevels_.add(value);
+        bitField0_ |= 0x00000010;
         onChanged();
         return this;
       }
@@ -5724,11 +5690,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
       return new Request();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-      return this.unknownFields;
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -6841,41 +6802,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
         if (((from_bitField0_ & 0x00000800) != 0)) {
           result.auth_ = authBuilder_ == null ? auth_ : authBuilder_.build();
         }
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.setField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-
-      @java.lang.Override
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index,
-          java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.addRepeatedField(field, value);
       }
 
       @java.lang.Override
@@ -8833,11 +8759,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       return new Response();
     }
 
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-      return this.unknownFields;
-    }
-
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
       return com.google.rpc.context.AttributeContextProto
           .internal_static_google_rpc_context_AttributeContext_Response_descriptor;
@@ -9459,41 +9380,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
           result.backendLatency_ =
               backendLatencyBuilder_ == null ? backendLatency_ : backendLatencyBuilder_.build();
         }
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.setField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-
-      @java.lang.Override
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index,
-          java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.addRepeatedField(field, value);
       }
 
       @java.lang.Override
@@ -10393,12 +10279,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * The stable identifier (name) of a resource on the `service`. A resource
      * can be logically identified as "//{resource.service}/{resource.name}".
      * The differences between a resource name and a URI are:
+     *
      * *   Resource name is a logical identifier, independent of network
      *     protocol and API version. For example,
      *     `//pubsub.googleapis.com/projects/123/topics/news-feed`.
      * *   URI often includes protocol and version information, so it can
      *     be used directly by applications. For example,
      *     `https://pubsub.googleapis.com/v1/projects/123/topics/news-feed`.
+     *
      * See https://cloud.google.com/apis/design/resource_names for details.
      * </pre>
      *
@@ -10414,12 +10302,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * The stable identifier (name) of a resource on the `service`. A resource
      * can be logically identified as "//{resource.service}/{resource.name}".
      * The differences between a resource name and a URI are:
+     *
      * *   Resource name is a logical identifier, independent of network
      *     protocol and API version. For example,
      *     `//pubsub.googleapis.com/projects/123/topics/news-feed`.
      * *   URI often includes protocol and version information, so it can
      *     be used directly by applications. For example,
      *     `https://pubsub.googleapis.com/v1/projects/123/topics/news-feed`.
+     *
      * See https://cloud.google.com/apis/design/resource_names for details.
      * </pre>
      *
@@ -10435,6 +10325,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <pre>
      * The type of the resource. The syntax is platform-specific because
      * different platforms define their resources differently.
+     *
      * For Google APIs, the type format must be "{service}/{kind}", such as
      * "pubsub.googleapis.com/Topic".
      * </pre>
@@ -10450,6 +10341,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <pre>
      * The type of the resource. The syntax is platform-specific because
      * different platforms define their resources differently.
+     *
      * For Google APIs, the type format must be "{service}/{kind}", such as
      * "pubsub.googleapis.com/Topic".
      * </pre>
@@ -10563,6 +10455,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * Annotations is an unstructured key-value map stored with a resource that
      * may be set by external tools to store and retrieve arbitrary metadata.
      * They are not queryable and should be preserved when modifying objects.
+     *
      * More info: https://kubernetes.io/docs/user-guide/annotations
      * </pre>
      *
@@ -10576,6 +10469,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * Annotations is an unstructured key-value map stored with a resource that
      * may be set by external tools to store and retrieve arbitrary metadata.
      * They are not queryable and should be preserved when modifying objects.
+     *
      * More info: https://kubernetes.io/docs/user-guide/annotations
      * </pre>
      *
@@ -10592,6 +10486,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * Annotations is an unstructured key-value map stored with a resource that
      * may be set by external tools to store and retrieve arbitrary metadata.
      * They are not queryable and should be preserved when modifying objects.
+     *
      * More info: https://kubernetes.io/docs/user-guide/annotations
      * </pre>
      *
@@ -10605,6 +10500,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * Annotations is an unstructured key-value map stored with a resource that
      * may be set by external tools to store and retrieve arbitrary metadata.
      * They are not queryable and should be preserved when modifying objects.
+     *
      * More info: https://kubernetes.io/docs/user-guide/annotations
      * </pre>
      *
@@ -10622,6 +10518,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * Annotations is an unstructured key-value map stored with a resource that
      * may be set by external tools to store and retrieve arbitrary metadata.
      * They are not queryable and should be preserved when modifying objects.
+     *
      * More info: https://kubernetes.io/docs/user-guide/annotations
      * </pre>
      *
@@ -10807,6 +10704,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * Immutable. The location of the resource. The location encoding is
      * specific to the service provider, and new encoding may be introduced
      * as the service evolves.
+     *
      * For Google Cloud products, the encoding is what is used by Google Cloud
      * APIs, such as `us-east1`, `aws-us-east-1`, and `azure-eastus2`. The
      * semantics of `location` is identical to the
@@ -10825,6 +10723,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * Immutable. The location of the resource. The location encoding is
      * specific to the service provider, and new encoding may be introduced
      * as the service evolves.
+     *
      * For Google Cloud products, the encoding is what is used by Google Cloud
      * APIs, such as `us-east1`, `aws-us-east-1`, and `azure-eastus2`. The
      * semantics of `location` is identical to the
@@ -10872,11 +10771,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
       return new Resource();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-      return this.unknownFields;
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -10973,12 +10867,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * The stable identifier (name) of a resource on the `service`. A resource
      * can be logically identified as "//{resource.service}/{resource.name}".
      * The differences between a resource name and a URI are:
+     *
      * *   Resource name is a logical identifier, independent of network
      *     protocol and API version. For example,
      *     `//pubsub.googleapis.com/projects/123/topics/news-feed`.
      * *   URI often includes protocol and version information, so it can
      *     be used directly by applications. For example,
      *     `https://pubsub.googleapis.com/v1/projects/123/topics/news-feed`.
+     *
      * See https://cloud.google.com/apis/design/resource_names for details.
      * </pre>
      *
@@ -11005,12 +10901,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * The stable identifier (name) of a resource on the `service`. A resource
      * can be logically identified as "//{resource.service}/{resource.name}".
      * The differences between a resource name and a URI are:
+     *
      * *   Resource name is a logical identifier, independent of network
      *     protocol and API version. For example,
      *     `//pubsub.googleapis.com/projects/123/topics/news-feed`.
      * *   URI often includes protocol and version information, so it can
      *     be used directly by applications. For example,
      *     `https://pubsub.googleapis.com/v1/projects/123/topics/news-feed`.
+     *
      * See https://cloud.google.com/apis/design/resource_names for details.
      * </pre>
      *
@@ -11041,6 +10939,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <pre>
      * The type of the resource. The syntax is platform-specific because
      * different platforms define their resources differently.
+     *
      * For Google APIs, the type format must be "{service}/{kind}", such as
      * "pubsub.googleapis.com/Topic".
      * </pre>
@@ -11067,6 +10966,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * <pre>
      * The type of the resource. The syntax is platform-specific because
      * different platforms define their resources differently.
+     *
      * For Google APIs, the type format must be "{service}/{kind}", such as
      * "pubsub.googleapis.com/Topic".
      * </pre>
@@ -11288,6 +11188,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * Annotations is an unstructured key-value map stored with a resource that
      * may be set by external tools to store and retrieve arbitrary metadata.
      * They are not queryable and should be preserved when modifying objects.
+     *
      * More info: https://kubernetes.io/docs/user-guide/annotations
      * </pre>
      *
@@ -11313,6 +11214,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * Annotations is an unstructured key-value map stored with a resource that
      * may be set by external tools to store and retrieve arbitrary metadata.
      * They are not queryable and should be preserved when modifying objects.
+     *
      * More info: https://kubernetes.io/docs/user-guide/annotations
      * </pre>
      *
@@ -11329,6 +11231,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * Annotations is an unstructured key-value map stored with a resource that
      * may be set by external tools to store and retrieve arbitrary metadata.
      * They are not queryable and should be preserved when modifying objects.
+     *
      * More info: https://kubernetes.io/docs/user-guide/annotations
      * </pre>
      *
@@ -11352,6 +11255,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * Annotations is an unstructured key-value map stored with a resource that
      * may be set by external tools to store and retrieve arbitrary metadata.
      * They are not queryable and should be preserved when modifying objects.
+     *
      * More info: https://kubernetes.io/docs/user-guide/annotations
      * </pre>
      *
@@ -11636,6 +11540,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * Immutable. The location of the resource. The location encoding is
      * specific to the service provider, and new encoding may be introduced
      * as the service evolves.
+     *
      * For Google Cloud products, the encoding is what is used by Google Cloud
      * APIs, such as `us-east1`, `aws-us-east-1`, and `azure-eastus2`. The
      * semantics of `location` is identical to the
@@ -11665,6 +11570,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
      * Immutable. The location of the resource. The location encoding is
      * specific to the service provider, and new encoding may be introduced
      * as the service evolves.
+     *
      * For Google Cloud products, the encoding is what is used by Google Cloud
      * APIs, such as `us-east1`, `aws-us-east-1`, and `azure-eastus2`. The
      * semantics of `location` is identical to the
@@ -12148,41 +12054,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       }
 
       @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.setField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-
-      @java.lang.Override
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index,
-          java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.addRepeatedField(field, value);
-      }
-
-      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.google.rpc.context.AttributeContext.Resource) {
           return mergeFrom((com.google.rpc.context.AttributeContext.Resource) other);
@@ -12496,12 +12367,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * The stable identifier (name) of a resource on the `service`. A resource
        * can be logically identified as "//{resource.service}/{resource.name}".
        * The differences between a resource name and a URI are:
+       *
        * *   Resource name is a logical identifier, independent of network
        *     protocol and API version. For example,
        *     `//pubsub.googleapis.com/projects/123/topics/news-feed`.
        * *   URI often includes protocol and version information, so it can
        *     be used directly by applications. For example,
        *     `https://pubsub.googleapis.com/v1/projects/123/topics/news-feed`.
+       *
        * See https://cloud.google.com/apis/design/resource_names for details.
        * </pre>
        *
@@ -12527,12 +12400,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * The stable identifier (name) of a resource on the `service`. A resource
        * can be logically identified as "//{resource.service}/{resource.name}".
        * The differences between a resource name and a URI are:
+       *
        * *   Resource name is a logical identifier, independent of network
        *     protocol and API version. For example,
        *     `//pubsub.googleapis.com/projects/123/topics/news-feed`.
        * *   URI often includes protocol and version information, so it can
        *     be used directly by applications. For example,
        *     `https://pubsub.googleapis.com/v1/projects/123/topics/news-feed`.
+       *
        * See https://cloud.google.com/apis/design/resource_names for details.
        * </pre>
        *
@@ -12558,12 +12433,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * The stable identifier (name) of a resource on the `service`. A resource
        * can be logically identified as "//{resource.service}/{resource.name}".
        * The differences between a resource name and a URI are:
+       *
        * *   Resource name is a logical identifier, independent of network
        *     protocol and API version. For example,
        *     `//pubsub.googleapis.com/projects/123/topics/news-feed`.
        * *   URI often includes protocol and version information, so it can
        *     be used directly by applications. For example,
        *     `https://pubsub.googleapis.com/v1/projects/123/topics/news-feed`.
+       *
        * See https://cloud.google.com/apis/design/resource_names for details.
        * </pre>
        *
@@ -12588,12 +12465,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * The stable identifier (name) of a resource on the `service`. A resource
        * can be logically identified as "//{resource.service}/{resource.name}".
        * The differences between a resource name and a URI are:
+       *
        * *   Resource name is a logical identifier, independent of network
        *     protocol and API version. For example,
        *     `//pubsub.googleapis.com/projects/123/topics/news-feed`.
        * *   URI often includes protocol and version information, so it can
        *     be used directly by applications. For example,
        *     `https://pubsub.googleapis.com/v1/projects/123/topics/news-feed`.
+       *
        * See https://cloud.google.com/apis/design/resource_names for details.
        * </pre>
        *
@@ -12614,12 +12493,14 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * The stable identifier (name) of a resource on the `service`. A resource
        * can be logically identified as "//{resource.service}/{resource.name}".
        * The differences between a resource name and a URI are:
+       *
        * *   Resource name is a logical identifier, independent of network
        *     protocol and API version. For example,
        *     `//pubsub.googleapis.com/projects/123/topics/news-feed`.
        * *   URI often includes protocol and version information, so it can
        *     be used directly by applications. For example,
        *     `https://pubsub.googleapis.com/v1/projects/123/topics/news-feed`.
+       *
        * See https://cloud.google.com/apis/design/resource_names for details.
        * </pre>
        *
@@ -12646,6 +12527,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <pre>
        * The type of the resource. The syntax is platform-specific because
        * different platforms define their resources differently.
+       *
        * For Google APIs, the type format must be "{service}/{kind}", such as
        * "pubsub.googleapis.com/Topic".
        * </pre>
@@ -12671,6 +12553,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <pre>
        * The type of the resource. The syntax is platform-specific because
        * different platforms define their resources differently.
+       *
        * For Google APIs, the type format must be "{service}/{kind}", such as
        * "pubsub.googleapis.com/Topic".
        * </pre>
@@ -12696,6 +12579,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <pre>
        * The type of the resource. The syntax is platform-specific because
        * different platforms define their resources differently.
+       *
        * For Google APIs, the type format must be "{service}/{kind}", such as
        * "pubsub.googleapis.com/Topic".
        * </pre>
@@ -12720,6 +12604,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <pre>
        * The type of the resource. The syntax is platform-specific because
        * different platforms define their resources differently.
+       *
        * For Google APIs, the type format must be "{service}/{kind}", such as
        * "pubsub.googleapis.com/Topic".
        * </pre>
@@ -12740,6 +12625,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * <pre>
        * The type of the resource. The syntax is platform-specific because
        * different platforms define their resources differently.
+       *
        * For Google APIs, the type format must be "{service}/{kind}", such as
        * "pubsub.googleapis.com/Topic".
        * </pre>
@@ -13091,6 +12977,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * Annotations is an unstructured key-value map stored with a resource that
        * may be set by external tools to store and retrieve arbitrary metadata.
        * They are not queryable and should be preserved when modifying objects.
+       *
        * More info: https://kubernetes.io/docs/user-guide/annotations
        * </pre>
        *
@@ -13116,6 +13003,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * Annotations is an unstructured key-value map stored with a resource that
        * may be set by external tools to store and retrieve arbitrary metadata.
        * They are not queryable and should be preserved when modifying objects.
+       *
        * More info: https://kubernetes.io/docs/user-guide/annotations
        * </pre>
        *
@@ -13132,6 +13020,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * Annotations is an unstructured key-value map stored with a resource that
        * may be set by external tools to store and retrieve arbitrary metadata.
        * They are not queryable and should be preserved when modifying objects.
+       *
        * More info: https://kubernetes.io/docs/user-guide/annotations
        * </pre>
        *
@@ -13155,6 +13044,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * Annotations is an unstructured key-value map stored with a resource that
        * may be set by external tools to store and retrieve arbitrary metadata.
        * They are not queryable and should be preserved when modifying objects.
+       *
        * More info: https://kubernetes.io/docs/user-guide/annotations
        * </pre>
        *
@@ -13184,6 +13074,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * Annotations is an unstructured key-value map stored with a resource that
        * may be set by external tools to store and retrieve arbitrary metadata.
        * They are not queryable and should be preserved when modifying objects.
+       *
        * More info: https://kubernetes.io/docs/user-guide/annotations
        * </pre>
        *
@@ -13209,6 +13100,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * Annotations is an unstructured key-value map stored with a resource that
        * may be set by external tools to store and retrieve arbitrary metadata.
        * They are not queryable and should be preserved when modifying objects.
+       *
        * More info: https://kubernetes.io/docs/user-guide/annotations
        * </pre>
        *
@@ -13232,6 +13124,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * Annotations is an unstructured key-value map stored with a resource that
        * may be set by external tools to store and retrieve arbitrary metadata.
        * They are not queryable and should be preserved when modifying objects.
+       *
        * More info: https://kubernetes.io/docs/user-guide/annotations
        * </pre>
        *
@@ -14058,6 +13951,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * Immutable. The location of the resource. The location encoding is
        * specific to the service provider, and new encoding may be introduced
        * as the service evolves.
+       *
        * For Google Cloud products, the encoding is what is used by Google Cloud
        * APIs, such as `us-east1`, `aws-us-east-1`, and `azure-eastus2`. The
        * semantics of `location` is identical to the
@@ -14086,6 +13980,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * Immutable. The location of the resource. The location encoding is
        * specific to the service provider, and new encoding may be introduced
        * as the service evolves.
+       *
        * For Google Cloud products, the encoding is what is used by Google Cloud
        * APIs, such as `us-east1`, `aws-us-east-1`, and `azure-eastus2`. The
        * semantics of `location` is identical to the
@@ -14114,6 +14009,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * Immutable. The location of the resource. The location encoding is
        * specific to the service provider, and new encoding may be introduced
        * as the service evolves.
+       *
        * For Google Cloud products, the encoding is what is used by Google Cloud
        * APIs, such as `us-east1`, `aws-us-east-1`, and `azure-eastus2`. The
        * semantics of `location` is identical to the
@@ -14141,6 +14037,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * Immutable. The location of the resource. The location encoding is
        * specific to the service provider, and new encoding may be introduced
        * as the service evolves.
+       *
        * For Google Cloud products, the encoding is what is used by Google Cloud
        * APIs, such as `us-east1`, `aws-us-east-1`, and `azure-eastus2`. The
        * semantics of `location` is identical to the
@@ -14164,6 +14061,7 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
        * Immutable. The location of the resource. The location encoding is
        * specific to the service provider, and new encoding may be introduced
        * as the service evolves.
+       *
        * For Google Cloud products, the encoding is what is used by Google Cloud
        * APIs, such as `us-east1`, `aws-us-east-1`, and `azure-eastus2`. The
        * semantics of `location` is identical to the
@@ -14953,15 +14851,19 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
    *
    * <pre>
    * This message defines the standard attribute vocabulary for Google APIs.
+   *
    * An attribute is a piece of metadata that describes an activity on a network
    * service. For example, the size of an HTTP request, or the status code of
    * an HTTP response.
+   *
    * Each attribute has a type and a name, which is logically defined as
    * a proto message field in `AttributeContext`. The field type becomes the
    * attribute type, and the field path becomes the attribute name. For example,
    * the attribute `source.ip` maps to field `AttributeContext.source.ip`.
+   *
    * This message definition is guaranteed not to have any wire breaking change.
    * So you can use it directly for passing attributes across different systems.
+   *
    * NOTE: Different system may generate different subset of attributes. Please
    * verify the system specification before relying on an attribute generated
    * a system.
@@ -15112,39 +15014,6 @@ public final class AttributeContext extends com.google.protobuf.GeneratedMessage
       if (((from_bitField0_ & 0x00000040) != 0)) {
         result.api_ = apiBuilder_ == null ? api_ : apiBuilder_.build();
       }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
     }
 
     @java.lang.Override

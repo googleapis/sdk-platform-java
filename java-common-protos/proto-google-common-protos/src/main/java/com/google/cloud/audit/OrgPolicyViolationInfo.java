@@ -48,11 +48,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
     return new OrgPolicyViolationInfo();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.cloud.audit.AuditLogProto
         .internal_static_google_cloud_audit_OrgPolicyViolationInfo_descriptor;
@@ -219,6 +214,7 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
    * Optional. Tags referenced on the resource at the time of evaluation. These also
    * include the federated tags, if they are supplied in the CheckOrgPolicy
    * or CheckCustomConstraints Requests.
+   *
    * Optional field as of now. These tags are the Cloud tags that are
    * available on the resource during the policy evaluation and will
    * be available as part of the OrgPolicy check response for logging purposes.
@@ -247,6 +243,7 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
    * Optional. Tags referenced on the resource at the time of evaluation. These also
    * include the federated tags, if they are supplied in the CheckOrgPolicy
    * or CheckCustomConstraints Requests.
+   *
    * Optional field as of now. These tags are the Cloud tags that are
    * available on the resource during the policy evaluation and will
    * be available as part of the OrgPolicy check response for logging purposes.
@@ -266,6 +263,7 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
    * Optional. Tags referenced on the resource at the time of evaluation. These also
    * include the federated tags, if they are supplied in the CheckOrgPolicy
    * or CheckCustomConstraints Requests.
+   *
    * Optional field as of now. These tags are the Cloud tags that are
    * available on the resource during the policy evaluation and will
    * be available as part of the OrgPolicy check response for logging purposes.
@@ -292,6 +290,7 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
    * Optional. Tags referenced on the resource at the time of evaluation. These also
    * include the federated tags, if they are supplied in the CheckOrgPolicy
    * or CheckCustomConstraints Requests.
+   *
    * Optional field as of now. These tags are the Cloud tags that are
    * available on the resource during the policy evaluation and will
    * be available as part of the OrgPolicy check response for logging purposes.
@@ -726,39 +725,6 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
         result.resourceTags_ = internalGetResourceTags();
         result.resourceTags_.makeImmutable();
       }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
     }
 
     @java.lang.Override
@@ -1235,6 +1201,7 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * Optional. Tags referenced on the resource at the time of evaluation. These also
      * include the federated tags, if they are supplied in the CheckOrgPolicy
      * or CheckCustomConstraints Requests.
+     *
      * Optional field as of now. These tags are the Cloud tags that are
      * available on the resource during the policy evaluation and will
      * be available as part of the OrgPolicy check response for logging purposes.
@@ -1263,6 +1230,7 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * Optional. Tags referenced on the resource at the time of evaluation. These also
      * include the federated tags, if they are supplied in the CheckOrgPolicy
      * or CheckCustomConstraints Requests.
+     *
      * Optional field as of now. These tags are the Cloud tags that are
      * available on the resource during the policy evaluation and will
      * be available as part of the OrgPolicy check response for logging purposes.
@@ -1282,6 +1250,7 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * Optional. Tags referenced on the resource at the time of evaluation. These also
      * include the federated tags, if they are supplied in the CheckOrgPolicy
      * or CheckCustomConstraints Requests.
+     *
      * Optional field as of now. These tags are the Cloud tags that are
      * available on the resource during the policy evaluation and will
      * be available as part of the OrgPolicy check response for logging purposes.
@@ -1308,6 +1277,7 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * Optional. Tags referenced on the resource at the time of evaluation. These also
      * include the federated tags, if they are supplied in the CheckOrgPolicy
      * or CheckCustomConstraints Requests.
+     *
      * Optional field as of now. These tags are the Cloud tags that are
      * available on the resource during the policy evaluation and will
      * be available as part of the OrgPolicy check response for logging purposes.
@@ -1340,6 +1310,7 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * Optional. Tags referenced on the resource at the time of evaluation. These also
      * include the federated tags, if they are supplied in the CheckOrgPolicy
      * or CheckCustomConstraints Requests.
+     *
      * Optional field as of now. These tags are the Cloud tags that are
      * available on the resource during the policy evaluation and will
      * be available as part of the OrgPolicy check response for logging purposes.
@@ -1368,6 +1339,7 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * Optional. Tags referenced on the resource at the time of evaluation. These also
      * include the federated tags, if they are supplied in the CheckOrgPolicy
      * or CheckCustomConstraints Requests.
+     *
      * Optional field as of now. These tags are the Cloud tags that are
      * available on the resource during the policy evaluation and will
      * be available as part of the OrgPolicy check response for logging purposes.
@@ -1394,6 +1366,7 @@ public final class OrgPolicyViolationInfo extends com.google.protobuf.GeneratedM
      * Optional. Tags referenced on the resource at the time of evaluation. These also
      * include the federated tags, if they are supplied in the CheckOrgPolicy
      * or CheckCustomConstraints Requests.
+     *
      * Optional field as of now. These tags are the Cloud tags that are
      * available on the resource during the policy evaluation and will
      * be available as part of the OrgPolicy check response for logging purposes.

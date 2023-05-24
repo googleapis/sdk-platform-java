@@ -38,20 +38,15 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
   }
 
   private DotnetSettings() {
-    ignoredResources_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-    forcedNamespaceAliases_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-    handwrittenSignatures_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    ignoredResources_ = com.google.protobuf.LazyStringArrayList.emptyList();
+    forcedNamespaceAliases_ = com.google.protobuf.LazyStringArrayList.emptyList();
+    handwrittenSignatures_ = com.google.protobuf.LazyStringArrayList.emptyList();
   }
 
   @java.lang.Override
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new DotnetSettings();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -368,7 +363,8 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
   public static final int IGNORED_RESOURCES_FIELD_NUMBER = 4;
 
   @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringList ignoredResources_;
+  private com.google.protobuf.LazyStringArrayList ignoredResources_ =
+      com.google.protobuf.LazyStringArrayList.emptyList();
   /**
    *
    *
@@ -447,7 +443,8 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
   public static final int FORCED_NAMESPACE_ALIASES_FIELD_NUMBER = 5;
 
   @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringList forcedNamespaceAliases_;
+  private com.google.protobuf.LazyStringArrayList forcedNamespaceAliases_ =
+      com.google.protobuf.LazyStringArrayList.emptyList();
   /**
    *
    *
@@ -514,7 +511,8 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
   public static final int HANDWRITTEN_SIGNATURES_FIELD_NUMBER = 6;
 
   @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringList handwrittenSignatures_;
+  private com.google.protobuf.LazyStringArrayList handwrittenSignatures_ =
+      com.google.protobuf.LazyStringArrayList.emptyList();
   /**
    *
    *
@@ -896,12 +894,9 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       }
       internalGetMutableRenamedServices().clear();
       internalGetMutableRenamedResources().clear();
-      ignoredResources_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000008);
-      forcedNamespaceAliases_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000010);
-      handwrittenSignatures_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000020);
+      ignoredResources_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      forcedNamespaceAliases_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      handwrittenSignatures_ = com.google.protobuf.LazyStringArrayList.emptyList();
       return this;
     }
 
@@ -927,30 +922,11 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.DotnetSettings buildPartial() {
       com.google.api.DotnetSettings result = new com.google.api.DotnetSettings(this);
-      buildPartialRepeatedFields(result);
       if (bitField0_ != 0) {
         buildPartial0(result);
       }
       onBuilt();
       return result;
-    }
-
-    private void buildPartialRepeatedFields(com.google.api.DotnetSettings result) {
-      if (((bitField0_ & 0x00000008) != 0)) {
-        ignoredResources_ = ignoredResources_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000008);
-      }
-      result.ignoredResources_ = ignoredResources_;
-      if (((bitField0_ & 0x00000010) != 0)) {
-        forcedNamespaceAliases_ = forcedNamespaceAliases_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000010);
-      }
-      result.forcedNamespaceAliases_ = forcedNamespaceAliases_;
-      if (((bitField0_ & 0x00000020) != 0)) {
-        handwrittenSignatures_ = handwrittenSignatures_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000020);
-      }
-      result.handwrittenSignatures_ = handwrittenSignatures_;
     }
 
     private void buildPartial0(com.google.api.DotnetSettings result) {
@@ -966,39 +942,18 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
         result.renamedResources_ = internalGetRenamedResources();
         result.renamedResources_.makeImmutable();
       }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
+      if (((from_bitField0_ & 0x00000008) != 0)) {
+        ignoredResources_.makeImmutable();
+        result.ignoredResources_ = ignoredResources_;
+      }
+      if (((from_bitField0_ & 0x00000010) != 0)) {
+        forcedNamespaceAliases_.makeImmutable();
+        result.forcedNamespaceAliases_ = forcedNamespaceAliases_;
+      }
+      if (((from_bitField0_ & 0x00000020) != 0)) {
+        handwrittenSignatures_.makeImmutable();
+        result.handwrittenSignatures_ = handwrittenSignatures_;
+      }
     }
 
     @java.lang.Override
@@ -1023,7 +978,7 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       if (!other.ignoredResources_.isEmpty()) {
         if (ignoredResources_.isEmpty()) {
           ignoredResources_ = other.ignoredResources_;
-          bitField0_ = (bitField0_ & ~0x00000008);
+          bitField0_ |= 0x00000008;
         } else {
           ensureIgnoredResourcesIsMutable();
           ignoredResources_.addAll(other.ignoredResources_);
@@ -1033,7 +988,7 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       if (!other.forcedNamespaceAliases_.isEmpty()) {
         if (forcedNamespaceAliases_.isEmpty()) {
           forcedNamespaceAliases_ = other.forcedNamespaceAliases_;
-          bitField0_ = (bitField0_ & ~0x00000010);
+          bitField0_ |= 0x00000010;
         } else {
           ensureForcedNamespaceAliasesIsMutable();
           forcedNamespaceAliases_.addAll(other.forcedNamespaceAliases_);
@@ -1043,7 +998,7 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       if (!other.handwrittenSignatures_.isEmpty()) {
         if (handwrittenSignatures_.isEmpty()) {
           handwrittenSignatures_ = other.handwrittenSignatures_;
-          bitField0_ = (bitField0_ & ~0x00000020);
+          bitField0_ |= 0x00000020;
         } else {
           ensureHandwrittenSignaturesIsMutable();
           handwrittenSignatures_.addAll(other.handwrittenSignatures_);
@@ -1723,14 +1678,14 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       return this;
     }
 
-    private com.google.protobuf.LazyStringList ignoredResources_ =
-        com.google.protobuf.LazyStringArrayList.EMPTY;
+    private com.google.protobuf.LazyStringArrayList ignoredResources_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
 
     private void ensureIgnoredResourcesIsMutable() {
-      if (!((bitField0_ & 0x00000008) != 0)) {
+      if (!ignoredResources_.isModifiable()) {
         ignoredResources_ = new com.google.protobuf.LazyStringArrayList(ignoredResources_);
-        bitField0_ |= 0x00000008;
       }
+      bitField0_ |= 0x00000008;
     }
     /**
      *
@@ -1748,7 +1703,8 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * @return A list containing the ignoredResources.
      */
     public com.google.protobuf.ProtocolStringList getIgnoredResourcesList() {
-      return ignoredResources_.getUnmodifiableView();
+      ignoredResources_.makeImmutable();
+      return ignoredResources_;
     }
     /**
      *
@@ -1829,6 +1785,7 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       }
       ensureIgnoredResourcesIsMutable();
       ignoredResources_.set(index, value);
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -1854,6 +1811,7 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       }
       ensureIgnoredResourcesIsMutable();
       ignoredResources_.add(value);
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -1876,6 +1834,7 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     public Builder addAllIgnoredResources(java.lang.Iterable<java.lang.String> values) {
       ensureIgnoredResourcesIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(values, ignoredResources_);
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -1895,8 +1854,9 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearIgnoredResources() {
-      ignoredResources_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      ignoredResources_ = com.google.protobuf.LazyStringArrayList.emptyList();
       bitField0_ = (bitField0_ & ~0x00000008);
+      ;
       onChanged();
       return this;
     }
@@ -1923,19 +1883,20 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       checkByteStringIsUtf8(value);
       ensureIgnoredResourcesIsMutable();
       ignoredResources_.add(value);
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
 
-    private com.google.protobuf.LazyStringList forcedNamespaceAliases_ =
-        com.google.protobuf.LazyStringArrayList.EMPTY;
+    private com.google.protobuf.LazyStringArrayList forcedNamespaceAliases_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
 
     private void ensureForcedNamespaceAliasesIsMutable() {
-      if (!((bitField0_ & 0x00000010) != 0)) {
+      if (!forcedNamespaceAliases_.isModifiable()) {
         forcedNamespaceAliases_ =
             new com.google.protobuf.LazyStringArrayList(forcedNamespaceAliases_);
-        bitField0_ |= 0x00000010;
       }
+      bitField0_ |= 0x00000010;
     }
     /**
      *
@@ -1950,7 +1911,8 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * @return A list containing the forcedNamespaceAliases.
      */
     public com.google.protobuf.ProtocolStringList getForcedNamespaceAliasesList() {
-      return forcedNamespaceAliases_.getUnmodifiableView();
+      forcedNamespaceAliases_.makeImmutable();
+      return forcedNamespaceAliases_;
     }
     /**
      *
@@ -2019,6 +1981,7 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       }
       ensureForcedNamespaceAliasesIsMutable();
       forcedNamespaceAliases_.set(index, value);
+      bitField0_ |= 0x00000010;
       onChanged();
       return this;
     }
@@ -2041,6 +2004,7 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       }
       ensureForcedNamespaceAliasesIsMutable();
       forcedNamespaceAliases_.add(value);
+      bitField0_ |= 0x00000010;
       onChanged();
       return this;
     }
@@ -2060,6 +2024,7 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     public Builder addAllForcedNamespaceAliases(java.lang.Iterable<java.lang.String> values) {
       ensureForcedNamespaceAliasesIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(values, forcedNamespaceAliases_);
+      bitField0_ |= 0x00000010;
       onChanged();
       return this;
     }
@@ -2076,8 +2041,9 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearForcedNamespaceAliases() {
-      forcedNamespaceAliases_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      forcedNamespaceAliases_ = com.google.protobuf.LazyStringArrayList.emptyList();
       bitField0_ = (bitField0_ & ~0x00000010);
+      ;
       onChanged();
       return this;
     }
@@ -2101,19 +2067,20 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       checkByteStringIsUtf8(value);
       ensureForcedNamespaceAliasesIsMutable();
       forcedNamespaceAliases_.add(value);
+      bitField0_ |= 0x00000010;
       onChanged();
       return this;
     }
 
-    private com.google.protobuf.LazyStringList handwrittenSignatures_ =
-        com.google.protobuf.LazyStringArrayList.EMPTY;
+    private com.google.protobuf.LazyStringArrayList handwrittenSignatures_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
 
     private void ensureHandwrittenSignaturesIsMutable() {
-      if (!((bitField0_ & 0x00000020) != 0)) {
+      if (!handwrittenSignatures_.isModifiable()) {
         handwrittenSignatures_ =
             new com.google.protobuf.LazyStringArrayList(handwrittenSignatures_);
-        bitField0_ |= 0x00000020;
       }
+      bitField0_ |= 0x00000020;
     }
     /**
      *
@@ -2129,7 +2096,8 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * @return A list containing the handwrittenSignatures.
      */
     public com.google.protobuf.ProtocolStringList getHandwrittenSignaturesList() {
-      return handwrittenSignatures_.getUnmodifiableView();
+      handwrittenSignatures_.makeImmutable();
+      return handwrittenSignatures_;
     }
     /**
      *
@@ -2202,6 +2170,7 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       }
       ensureHandwrittenSignaturesIsMutable();
       handwrittenSignatures_.set(index, value);
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }
@@ -2225,6 +2194,7 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       }
       ensureHandwrittenSignaturesIsMutable();
       handwrittenSignatures_.add(value);
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }
@@ -2245,6 +2215,7 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
     public Builder addAllHandwrittenSignatures(java.lang.Iterable<java.lang.String> values) {
       ensureHandwrittenSignaturesIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(values, handwrittenSignatures_);
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }
@@ -2262,8 +2233,9 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearHandwrittenSignatures() {
-      handwrittenSignatures_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      handwrittenSignatures_ = com.google.protobuf.LazyStringArrayList.emptyList();
       bitField0_ = (bitField0_ & ~0x00000020);
+      ;
       onChanged();
       return this;
     }
@@ -2288,6 +2260,7 @@ public final class DotnetSettings extends com.google.protobuf.GeneratedMessageV3
       checkByteStringIsUtf8(value);
       ensureHandwrittenSignaturesIsMutable();
       handwrittenSignatures_.add(value);
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }

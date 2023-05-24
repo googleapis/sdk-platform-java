@@ -50,11 +50,6 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
     return new MonitoredResourceMetadata();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.MonitoredResourceProto
         .internal_static_google_api_MonitoredResourceMetadata_descriptor;
@@ -93,6 +88,7 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
    * "security_group", "name", etc.
    * System label values can be only strings, Boolean values, or a list of
    * strings. For example:
+   *
    *     { "name": "my-test-instance",
    *       "security_group": ["a", "b", "c"],
    *       "spot_instance": false }
@@ -116,6 +112,7 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
    * "security_group", "name", etc.
    * System label values can be only strings, Boolean values, or a list of
    * strings. For example:
+   *
    *     { "name": "my-test-instance",
    *       "security_group": ["a", "b", "c"],
    *       "spot_instance": false }
@@ -139,6 +136,7 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
    * "security_group", "name", etc.
    * System label values can be only strings, Boolean values, or a list of
    * strings. For example:
+   *
    *     { "name": "my-test-instance",
    *       "security_group": ["a", "b", "c"],
    *       "spot_instance": false }
@@ -550,39 +548,6 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
     }
 
     @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
       if (other instanceof com.google.api.MonitoredResourceMetadata) {
         return mergeFrom((com.google.api.MonitoredResourceMetadata) other);
@@ -678,6 +643,7 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
      * "security_group", "name", etc.
      * System label values can be only strings, Boolean values, or a list of
      * strings. For example:
+     *
      *     { "name": "my-test-instance",
      *       "security_group": ["a", "b", "c"],
      *       "spot_instance": false }
@@ -700,6 +666,7 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
      * "security_group", "name", etc.
      * System label values can be only strings, Boolean values, or a list of
      * strings. For example:
+     *
      *     { "name": "my-test-instance",
      *       "security_group": ["a", "b", "c"],
      *       "spot_instance": false }
@@ -728,6 +695,7 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
      * "security_group", "name", etc.
      * System label values can be only strings, Boolean values, or a list of
      * strings. For example:
+     *
      *     { "name": "my-test-instance",
      *       "security_group": ["a", "b", "c"],
      *       "spot_instance": false }
@@ -758,6 +726,7 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
      * "security_group", "name", etc.
      * System label values can be only strings, Boolean values, or a list of
      * strings. For example:
+     *
      *     { "name": "my-test-instance",
      *       "security_group": ["a", "b", "c"],
      *       "spot_instance": false }
@@ -785,6 +754,7 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
      * "security_group", "name", etc.
      * System label values can be only strings, Boolean values, or a list of
      * strings. For example:
+     *
      *     { "name": "my-test-instance",
      *       "security_group": ["a", "b", "c"],
      *       "spot_instance": false }
@@ -818,6 +788,7 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
      * "security_group", "name", etc.
      * System label values can be only strings, Boolean values, or a list of
      * strings. For example:
+     *
      *     { "name": "my-test-instance",
      *       "security_group": ["a", "b", "c"],
      *       "spot_instance": false }
@@ -845,6 +816,7 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
      * "security_group", "name", etc.
      * System label values can be only strings, Boolean values, or a list of
      * strings. For example:
+     *
      *     { "name": "my-test-instance",
      *       "security_group": ["a", "b", "c"],
      *       "spot_instance": false }
@@ -867,6 +839,7 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
      * "security_group", "name", etc.
      * System label values can be only strings, Boolean values, or a list of
      * strings. For example:
+     *
      *     { "name": "my-test-instance",
      *       "security_group": ["a", "b", "c"],
      *       "spot_instance": false }
@@ -893,6 +866,7 @@ public final class MonitoredResourceMetadata extends com.google.protobuf.Generat
      * "security_group", "name", etc.
      * System label values can be only strings, Boolean values, or a list of
      * strings. For example:
+     *
      *     { "name": "my-test-instance",
      *       "security_group": ["a", "b", "c"],
      *       "spot_instance": false }

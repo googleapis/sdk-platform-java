@@ -49,11 +49,6 @@ public final class SystemParameterRule extends com.google.protobuf.GeneratedMess
     return new SystemParameterRule();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.SystemParameterProto
         .internal_static_google_api_SystemParameterRule_descriptor;
@@ -79,6 +74,7 @@ public final class SystemParameterRule extends com.google.protobuf.GeneratedMess
    * <pre>
    * Selects the methods to which this rule applies. Use '*' to indicate all
    * methods in all APIs.
+   *
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax
    * details.
    * </pre>
@@ -105,6 +101,7 @@ public final class SystemParameterRule extends com.google.protobuf.GeneratedMess
    * <pre>
    * Selects the methods to which this rule applies. Use '*' to indicate all
    * methods in all APIs.
+   *
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax
    * details.
    * </pre>
@@ -487,39 +484,6 @@ public final class SystemParameterRule extends com.google.protobuf.GeneratedMess
     }
 
     @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
       if (other instanceof com.google.api.SystemParameterRule) {
         return mergeFrom((com.google.api.SystemParameterRule) other);
@@ -633,6 +597,7 @@ public final class SystemParameterRule extends com.google.protobuf.GeneratedMess
      * <pre>
      * Selects the methods to which this rule applies. Use '*' to indicate all
      * methods in all APIs.
+     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -658,6 +623,7 @@ public final class SystemParameterRule extends com.google.protobuf.GeneratedMess
      * <pre>
      * Selects the methods to which this rule applies. Use '*' to indicate all
      * methods in all APIs.
+     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -683,6 +649,7 @@ public final class SystemParameterRule extends com.google.protobuf.GeneratedMess
      * <pre>
      * Selects the methods to which this rule applies. Use '*' to indicate all
      * methods in all APIs.
+     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -707,6 +674,7 @@ public final class SystemParameterRule extends com.google.protobuf.GeneratedMess
      * <pre>
      * Selects the methods to which this rule applies. Use '*' to indicate all
      * methods in all APIs.
+     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -727,6 +695,7 @@ public final class SystemParameterRule extends com.google.protobuf.GeneratedMess
      * <pre>
      * Selects the methods to which this rule applies. Use '*' to indicate all
      * methods in all APIs.
+     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>

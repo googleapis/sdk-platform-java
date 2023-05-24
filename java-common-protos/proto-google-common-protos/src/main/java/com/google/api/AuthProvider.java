@@ -54,11 +54,6 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
     return new AuthProvider();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.AuthProto.internal_static_google_api_AuthProvider_descriptor;
   }
@@ -81,6 +76,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * The unique identifier of the auth provider. It will be referred to by
    * `AuthRequirement.provider_id`.
+   *
    * Example: "bookstore_auth".
    * </pre>
    *
@@ -106,6 +102,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * The unique identifier of the auth provider. It will be referred to by
    * `AuthRequirement.provider_id`.
+   *
    * Example: "bookstore_auth".
    * </pre>
    *
@@ -137,6 +134,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    * Identifies the principal that issued the JWT. See
    * https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.1
    * Usually a URL or an email address.
+   *
    * Example: https://securetoken.google.com
    * Example: 1234567-compute&#64;developer.gserviceaccount.com
    * </pre>
@@ -164,6 +162,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    * Identifies the principal that issued the JWT. See
    * https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.1
    * Usually a URL or an email address.
+   *
    * Example: https://securetoken.google.com
    * Example: 1234567-compute&#64;developer.gserviceaccount.com
    * </pre>
@@ -203,6 +202,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    *    of the issuer.
    *  - can be inferred from the email domain of the issuer (e.g. a Google
    *  service account).
+   *
    * Example: https://www.googleapis.com/oauth2/v1/certs
    * </pre>
    *
@@ -236,6 +236,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    *    of the issuer.
    *  - can be inferred from the email domain of the issuer (e.g. a Google
    *  service account).
+   *
    * Example: https://www.googleapis.com/oauth2/v1/certs
    * </pre>
    *
@@ -276,7 +277,9 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    *   -
    *   https://library-example.googleapis.com/google.example.library.v1.LibraryService
    *   - https://library-example.googleapis.com/
+   *
    * Example:
+   *
    *     audiences: bookstore_android.apps.googleusercontent.com,
    *                bookstore_web.apps.googleusercontent.com
    * </pre>
@@ -313,7 +316,9 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    *   -
    *   https://library-example.googleapis.com/google.example.library.v1.LibraryService
    *   - https://library-example.googleapis.com/
+   *
    * Example:
+   *
    *     audiences: bookstore_android.apps.googleusercontent.com,
    *                bookstore_web.apps.googleusercontent.com
    * </pre>
@@ -399,12 +404,15 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    * Defines the locations to extract the JWT.  For now it is only used by the
    * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
    * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+   *
    * JWT locations can be one of HTTP headers, URL query parameters or
    * cookies. The rule is that the first match wins.
+   *
    * If not specified,  default to use following 3 locations:
    *    1) Authorization: Bearer
    *    2) x-goog-iap-jwt-assertion
    *    3) access_token query parameter
+   *
    * Default locations can be specified as followings:
    *    jwt_locations:
    *    - header: Authorization
@@ -426,12 +434,15 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    * Defines the locations to extract the JWT.  For now it is only used by the
    * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
    * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+   *
    * JWT locations can be one of HTTP headers, URL query parameters or
    * cookies. The rule is that the first match wins.
+   *
    * If not specified,  default to use following 3 locations:
    *    1) Authorization: Bearer
    *    2) x-goog-iap-jwt-assertion
    *    3) access_token query parameter
+   *
    * Default locations can be specified as followings:
    *    jwt_locations:
    *    - header: Authorization
@@ -454,12 +465,15 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    * Defines the locations to extract the JWT.  For now it is only used by the
    * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
    * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+   *
    * JWT locations can be one of HTTP headers, URL query parameters or
    * cookies. The rule is that the first match wins.
+   *
    * If not specified,  default to use following 3 locations:
    *    1) Authorization: Bearer
    *    2) x-goog-iap-jwt-assertion
    *    3) access_token query parameter
+   *
    * Default locations can be specified as followings:
    *    jwt_locations:
    *    - header: Authorization
@@ -481,12 +495,15 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    * Defines the locations to extract the JWT.  For now it is only used by the
    * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
    * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+   *
    * JWT locations can be one of HTTP headers, URL query parameters or
    * cookies. The rule is that the first match wins.
+   *
    * If not specified,  default to use following 3 locations:
    *    1) Authorization: Bearer
    *    2) x-goog-iap-jwt-assertion
    *    3) access_token query parameter
+   *
    * Default locations can be specified as followings:
    *    jwt_locations:
    *    - header: Authorization
@@ -508,12 +525,15 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
    * Defines the locations to extract the JWT.  For now it is only used by the
    * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
    * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+   *
    * JWT locations can be one of HTTP headers, URL query parameters or
    * cookies. The rule is that the first match wins.
+   *
    * If not specified,  default to use following 3 locations:
    *    1) Authorization: Bearer
    *    2) x-goog-iap-jwt-assertion
    *    3) access_token query parameter
+   *
    * Default locations can be specified as followings:
    *    jwt_locations:
    *    - header: Authorization
@@ -848,39 +868,6 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
     }
 
     @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
       if (other instanceof com.google.api.AuthProvider) {
         return mergeFrom((com.google.api.AuthProvider) other);
@@ -1038,6 +1025,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The unique identifier of the auth provider. It will be referred to by
      * `AuthRequirement.provider_id`.
+     *
      * Example: "bookstore_auth".
      * </pre>
      *
@@ -1062,6 +1050,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The unique identifier of the auth provider. It will be referred to by
      * `AuthRequirement.provider_id`.
+     *
      * Example: "bookstore_auth".
      * </pre>
      *
@@ -1086,6 +1075,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The unique identifier of the auth provider. It will be referred to by
      * `AuthRequirement.provider_id`.
+     *
      * Example: "bookstore_auth".
      * </pre>
      *
@@ -1109,6 +1099,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The unique identifier of the auth provider. It will be referred to by
      * `AuthRequirement.provider_id`.
+     *
      * Example: "bookstore_auth".
      * </pre>
      *
@@ -1128,6 +1119,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The unique identifier of the auth provider. It will be referred to by
      * `AuthRequirement.provider_id`.
+     *
      * Example: "bookstore_auth".
      * </pre>
      *
@@ -1155,6 +1147,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * Identifies the principal that issued the JWT. See
      * https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.1
      * Usually a URL or an email address.
+     *
      * Example: https://securetoken.google.com
      * Example: 1234567-compute&#64;developer.gserviceaccount.com
      * </pre>
@@ -1181,6 +1174,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * Identifies the principal that issued the JWT. See
      * https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.1
      * Usually a URL or an email address.
+     *
      * Example: https://securetoken.google.com
      * Example: 1234567-compute&#64;developer.gserviceaccount.com
      * </pre>
@@ -1207,6 +1201,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * Identifies the principal that issued the JWT. See
      * https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.1
      * Usually a URL or an email address.
+     *
      * Example: https://securetoken.google.com
      * Example: 1234567-compute&#64;developer.gserviceaccount.com
      * </pre>
@@ -1232,6 +1227,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * Identifies the principal that issued the JWT. See
      * https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.1
      * Usually a URL or an email address.
+     *
      * Example: https://securetoken.google.com
      * Example: 1234567-compute&#64;developer.gserviceaccount.com
      * </pre>
@@ -1253,6 +1249,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * Identifies the principal that issued the JWT. See
      * https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.1
      * Usually a URL or an email address.
+     *
      * Example: https://securetoken.google.com
      * Example: 1234567-compute&#64;developer.gserviceaccount.com
      * </pre>
@@ -1288,6 +1285,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      *    of the issuer.
      *  - can be inferred from the email domain of the issuer (e.g. a Google
      *  service account).
+     *
      * Example: https://www.googleapis.com/oauth2/v1/certs
      * </pre>
      *
@@ -1320,6 +1318,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      *    of the issuer.
      *  - can be inferred from the email domain of the issuer (e.g. a Google
      *  service account).
+     *
      * Example: https://www.googleapis.com/oauth2/v1/certs
      * </pre>
      *
@@ -1352,6 +1351,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      *    of the issuer.
      *  - can be inferred from the email domain of the issuer (e.g. a Google
      *  service account).
+     *
      * Example: https://www.googleapis.com/oauth2/v1/certs
      * </pre>
      *
@@ -1383,6 +1383,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      *    of the issuer.
      *  - can be inferred from the email domain of the issuer (e.g. a Google
      *  service account).
+     *
      * Example: https://www.googleapis.com/oauth2/v1/certs
      * </pre>
      *
@@ -1410,6 +1411,7 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      *    of the issuer.
      *  - can be inferred from the email domain of the issuer (e.g. a Google
      *  service account).
+     *
      * Example: https://www.googleapis.com/oauth2/v1/certs
      * </pre>
      *
@@ -1446,7 +1448,9 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      *   -
      *   https://library-example.googleapis.com/google.example.library.v1.LibraryService
      *   - https://library-example.googleapis.com/
+     *
      * Example:
+     *
      *     audiences: bookstore_android.apps.googleusercontent.com,
      *                bookstore_web.apps.googleusercontent.com
      * </pre>
@@ -1482,7 +1486,9 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      *   -
      *   https://library-example.googleapis.com/google.example.library.v1.LibraryService
      *   - https://library-example.googleapis.com/
+     *
      * Example:
+     *
      *     audiences: bookstore_android.apps.googleusercontent.com,
      *                bookstore_web.apps.googleusercontent.com
      * </pre>
@@ -1518,7 +1524,9 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      *   -
      *   https://library-example.googleapis.com/google.example.library.v1.LibraryService
      *   - https://library-example.googleapis.com/
+     *
      * Example:
+     *
      *     audiences: bookstore_android.apps.googleusercontent.com,
      *                bookstore_web.apps.googleusercontent.com
      * </pre>
@@ -1553,7 +1561,9 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      *   -
      *   https://library-example.googleapis.com/google.example.library.v1.LibraryService
      *   - https://library-example.googleapis.com/
+     *
      * Example:
+     *
      *     audiences: bookstore_android.apps.googleusercontent.com,
      *                bookstore_web.apps.googleusercontent.com
      * </pre>
@@ -1584,7 +1594,9 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      *   -
      *   https://library-example.googleapis.com/google.example.library.v1.LibraryService
      *   - https://library-example.googleapis.com/
+     *
      * Example:
+     *
      *     audiences: bookstore_android.apps.googleusercontent.com,
      *                bookstore_web.apps.googleusercontent.com
      * </pre>
@@ -1739,12 +1751,15 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * Defines the locations to extract the JWT.  For now it is only used by the
      * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
      * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+     *
      * JWT locations can be one of HTTP headers, URL query parameters or
      * cookies. The rule is that the first match wins.
+     *
      * If not specified,  default to use following 3 locations:
      *    1) Authorization: Bearer
      *    2) x-goog-iap-jwt-assertion
      *    3) access_token query parameter
+     *
      * Default locations can be specified as followings:
      *    jwt_locations:
      *    - header: Authorization
@@ -1769,12 +1784,15 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * Defines the locations to extract the JWT.  For now it is only used by the
      * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
      * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+     *
      * JWT locations can be one of HTTP headers, URL query parameters or
      * cookies. The rule is that the first match wins.
+     *
      * If not specified,  default to use following 3 locations:
      *    1) Authorization: Bearer
      *    2) x-goog-iap-jwt-assertion
      *    3) access_token query parameter
+     *
      * Default locations can be specified as followings:
      *    jwt_locations:
      *    - header: Authorization
@@ -1799,12 +1817,15 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * Defines the locations to extract the JWT.  For now it is only used by the
      * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
      * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+     *
      * JWT locations can be one of HTTP headers, URL query parameters or
      * cookies. The rule is that the first match wins.
+     *
      * If not specified,  default to use following 3 locations:
      *    1) Authorization: Bearer
      *    2) x-goog-iap-jwt-assertion
      *    3) access_token query parameter
+     *
      * Default locations can be specified as followings:
      *    jwt_locations:
      *    - header: Authorization
@@ -1829,12 +1850,15 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * Defines the locations to extract the JWT.  For now it is only used by the
      * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
      * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+     *
      * JWT locations can be one of HTTP headers, URL query parameters or
      * cookies. The rule is that the first match wins.
+     *
      * If not specified,  default to use following 3 locations:
      *    1) Authorization: Bearer
      *    2) x-goog-iap-jwt-assertion
      *    3) access_token query parameter
+     *
      * Default locations can be specified as followings:
      *    jwt_locations:
      *    - header: Authorization
@@ -1865,12 +1889,15 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * Defines the locations to extract the JWT.  For now it is only used by the
      * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
      * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+     *
      * JWT locations can be one of HTTP headers, URL query parameters or
      * cookies. The rule is that the first match wins.
+     *
      * If not specified,  default to use following 3 locations:
      *    1) Authorization: Bearer
      *    2) x-goog-iap-jwt-assertion
      *    3) access_token query parameter
+     *
      * Default locations can be specified as followings:
      *    jwt_locations:
      *    - header: Authorization
@@ -1898,12 +1925,15 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * Defines the locations to extract the JWT.  For now it is only used by the
      * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
      * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+     *
      * JWT locations can be one of HTTP headers, URL query parameters or
      * cookies. The rule is that the first match wins.
+     *
      * If not specified,  default to use following 3 locations:
      *    1) Authorization: Bearer
      *    2) x-goog-iap-jwt-assertion
      *    3) access_token query parameter
+     *
      * Default locations can be specified as followings:
      *    jwt_locations:
      *    - header: Authorization
@@ -1934,12 +1964,15 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * Defines the locations to extract the JWT.  For now it is only used by the
      * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
      * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+     *
      * JWT locations can be one of HTTP headers, URL query parameters or
      * cookies. The rule is that the first match wins.
+     *
      * If not specified,  default to use following 3 locations:
      *    1) Authorization: Bearer
      *    2) x-goog-iap-jwt-assertion
      *    3) access_token query parameter
+     *
      * Default locations can be specified as followings:
      *    jwt_locations:
      *    - header: Authorization
@@ -1970,12 +2003,15 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * Defines the locations to extract the JWT.  For now it is only used by the
      * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
      * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+     *
      * JWT locations can be one of HTTP headers, URL query parameters or
      * cookies. The rule is that the first match wins.
+     *
      * If not specified,  default to use following 3 locations:
      *    1) Authorization: Bearer
      *    2) x-goog-iap-jwt-assertion
      *    3) access_token query parameter
+     *
      * Default locations can be specified as followings:
      *    jwt_locations:
      *    - header: Authorization
@@ -2003,12 +2039,15 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * Defines the locations to extract the JWT.  For now it is only used by the
      * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
      * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+     *
      * JWT locations can be one of HTTP headers, URL query parameters or
      * cookies. The rule is that the first match wins.
+     *
      * If not specified,  default to use following 3 locations:
      *    1) Authorization: Bearer
      *    2) x-goog-iap-jwt-assertion
      *    3) access_token query parameter
+     *
      * Default locations can be specified as followings:
      *    jwt_locations:
      *    - header: Authorization
@@ -2036,12 +2075,15 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * Defines the locations to extract the JWT.  For now it is only used by the
      * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
      * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+     *
      * JWT locations can be one of HTTP headers, URL query parameters or
      * cookies. The rule is that the first match wins.
+     *
      * If not specified,  default to use following 3 locations:
      *    1) Authorization: Bearer
      *    2) x-goog-iap-jwt-assertion
      *    3) access_token query parameter
+     *
      * Default locations can be specified as followings:
      *    jwt_locations:
      *    - header: Authorization
@@ -2070,12 +2112,15 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * Defines the locations to extract the JWT.  For now it is only used by the
      * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
      * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+     *
      * JWT locations can be one of HTTP headers, URL query parameters or
      * cookies. The rule is that the first match wins.
+     *
      * If not specified,  default to use following 3 locations:
      *    1) Authorization: Bearer
      *    2) x-goog-iap-jwt-assertion
      *    3) access_token query parameter
+     *
      * Default locations can be specified as followings:
      *    jwt_locations:
      *    - header: Authorization
@@ -2103,12 +2148,15 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * Defines the locations to extract the JWT.  For now it is only used by the
      * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
      * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+     *
      * JWT locations can be one of HTTP headers, URL query parameters or
      * cookies. The rule is that the first match wins.
+     *
      * If not specified,  default to use following 3 locations:
      *    1) Authorization: Bearer
      *    2) x-goog-iap-jwt-assertion
      *    3) access_token query parameter
+     *
      * Default locations can be specified as followings:
      *    jwt_locations:
      *    - header: Authorization
@@ -2136,12 +2184,15 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * Defines the locations to extract the JWT.  For now it is only used by the
      * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
      * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+     *
      * JWT locations can be one of HTTP headers, URL query parameters or
      * cookies. The rule is that the first match wins.
+     *
      * If not specified,  default to use following 3 locations:
      *    1) Authorization: Bearer
      *    2) x-goog-iap-jwt-assertion
      *    3) access_token query parameter
+     *
      * Default locations can be specified as followings:
      *    jwt_locations:
      *    - header: Authorization
@@ -2162,12 +2213,15 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * Defines the locations to extract the JWT.  For now it is only used by the
      * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
      * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+     *
      * JWT locations can be one of HTTP headers, URL query parameters or
      * cookies. The rule is that the first match wins.
+     *
      * If not specified,  default to use following 3 locations:
      *    1) Authorization: Bearer
      *    2) x-goog-iap-jwt-assertion
      *    3) access_token query parameter
+     *
      * Default locations can be specified as followings:
      *    jwt_locations:
      *    - header: Authorization
@@ -2192,12 +2246,15 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * Defines the locations to extract the JWT.  For now it is only used by the
      * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
      * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+     *
      * JWT locations can be one of HTTP headers, URL query parameters or
      * cookies. The rule is that the first match wins.
+     *
      * If not specified,  default to use following 3 locations:
      *    1) Authorization: Bearer
      *    2) x-goog-iap-jwt-assertion
      *    3) access_token query parameter
+     *
      * Default locations can be specified as followings:
      *    jwt_locations:
      *    - header: Authorization
@@ -2223,12 +2280,15 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * Defines the locations to extract the JWT.  For now it is only used by the
      * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
      * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+     *
      * JWT locations can be one of HTTP headers, URL query parameters or
      * cookies. The rule is that the first match wins.
+     *
      * If not specified,  default to use following 3 locations:
      *    1) Authorization: Bearer
      *    2) x-goog-iap-jwt-assertion
      *    3) access_token query parameter
+     *
      * Default locations can be specified as followings:
      *    jwt_locations:
      *    - header: Authorization
@@ -2250,12 +2310,15 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * Defines the locations to extract the JWT.  For now it is only used by the
      * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
      * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+     *
      * JWT locations can be one of HTTP headers, URL query parameters or
      * cookies. The rule is that the first match wins.
+     *
      * If not specified,  default to use following 3 locations:
      *    1) Authorization: Bearer
      *    2) x-goog-iap-jwt-assertion
      *    3) access_token query parameter
+     *
      * Default locations can be specified as followings:
      *    jwt_locations:
      *    - header: Authorization
@@ -2277,12 +2340,15 @@ public final class AuthProvider extends com.google.protobuf.GeneratedMessageV3
      * Defines the locations to extract the JWT.  For now it is only used by the
      * Cloud Endpoints to store the OpenAPI extension [x-google-jwt-locations]
      * (https://cloud.google.com/endpoints/docs/openapi/openapi-extensions#x-google-jwt-locations)
+     *
      * JWT locations can be one of HTTP headers, URL query parameters or
      * cookies. The rule is that the first match wins.
+     *
      * If not specified,  default to use following 3 locations:
      *    1) Authorization: Bearer
      *    2) x-goog-iap-jwt-assertion
      *    3) access_token query parameter
+     *
      * Default locations can be specified as followings:
      *    jwt_locations:
      *    - header: Authorization

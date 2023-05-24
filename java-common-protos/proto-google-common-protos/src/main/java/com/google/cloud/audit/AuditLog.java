@@ -50,11 +50,6 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
     return new AuditLog();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.cloud.audit.AuditLogProto
         .internal_static_google_cloud_audit_AuditLog_descriptor;
@@ -133,6 +128,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    * The name of the service method or operation.
    * For API calls, this should be the name of the API method.
    * For example,
+   *
    *     "google.cloud.bigquery.v2.TableService.InsertTable"
    *     "google.logging.v2.ConfigServiceV2.CreateSink"
    * </pre>
@@ -160,6 +156,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    * The name of the service method or operation.
    * For API calls, this should be the name of the API method.
    * For example,
+   *
    *     "google.cloud.bigquery.v2.TableService.InsertTable"
    *     "google.logging.v2.ConfigServiceV2.CreateSink"
    * </pre>
@@ -192,6 +189,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    * The resource or collection that is the target of the operation.
    * The name is a scheme-less URI, not including the API service name.
    * For example:
+   *
    *     "projects/PROJECT_ID/zones/us-central1-a/instances"
    *     "projects/PROJECT_ID/datasets/DATASET_ID"
    * </pre>
@@ -219,6 +217,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
    * The resource or collection that is the target of the operation.
    * The name is a scheme-less URI, not including the API service name.
    * For example:
+   *
    *     "projects/PROJECT_ID/zones/us-central1-a/instances"
    *     "projects/PROJECT_ID/datasets/DATASET_ID"
    * </pre>
@@ -1433,39 +1432,6 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
     }
 
     @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
       if (other instanceof com.google.cloud.audit.AuditLog) {
         return mergeFrom((com.google.cloud.audit.AuditLog) other);
@@ -1817,6 +1783,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      * The name of the service method or operation.
      * For API calls, this should be the name of the API method.
      * For example,
+     *
      *     "google.cloud.bigquery.v2.TableService.InsertTable"
      *     "google.logging.v2.ConfigServiceV2.CreateSink"
      * </pre>
@@ -1843,6 +1810,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      * The name of the service method or operation.
      * For API calls, this should be the name of the API method.
      * For example,
+     *
      *     "google.cloud.bigquery.v2.TableService.InsertTable"
      *     "google.logging.v2.ConfigServiceV2.CreateSink"
      * </pre>
@@ -1869,6 +1837,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      * The name of the service method or operation.
      * For API calls, this should be the name of the API method.
      * For example,
+     *
      *     "google.cloud.bigquery.v2.TableService.InsertTable"
      *     "google.logging.v2.ConfigServiceV2.CreateSink"
      * </pre>
@@ -1894,6 +1863,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      * The name of the service method or operation.
      * For API calls, this should be the name of the API method.
      * For example,
+     *
      *     "google.cloud.bigquery.v2.TableService.InsertTable"
      *     "google.logging.v2.ConfigServiceV2.CreateSink"
      * </pre>
@@ -1915,6 +1885,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      * The name of the service method or operation.
      * For API calls, this should be the name of the API method.
      * For example,
+     *
      *     "google.cloud.bigquery.v2.TableService.InsertTable"
      *     "google.logging.v2.ConfigServiceV2.CreateSink"
      * </pre>
@@ -1943,6 +1914,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      * The resource or collection that is the target of the operation.
      * The name is a scheme-less URI, not including the API service name.
      * For example:
+     *
      *     "projects/PROJECT_ID/zones/us-central1-a/instances"
      *     "projects/PROJECT_ID/datasets/DATASET_ID"
      * </pre>
@@ -1969,6 +1941,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      * The resource or collection that is the target of the operation.
      * The name is a scheme-less URI, not including the API service name.
      * For example:
+     *
      *     "projects/PROJECT_ID/zones/us-central1-a/instances"
      *     "projects/PROJECT_ID/datasets/DATASET_ID"
      * </pre>
@@ -1995,6 +1968,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      * The resource or collection that is the target of the operation.
      * The name is a scheme-less URI, not including the API service name.
      * For example:
+     *
      *     "projects/PROJECT_ID/zones/us-central1-a/instances"
      *     "projects/PROJECT_ID/datasets/DATASET_ID"
      * </pre>
@@ -2020,6 +1994,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      * The resource or collection that is the target of the operation.
      * The name is a scheme-less URI, not including the API service name.
      * For example:
+     *
      *     "projects/PROJECT_ID/zones/us-central1-a/instances"
      *     "projects/PROJECT_ID/datasets/DATASET_ID"
      * </pre>
@@ -2041,6 +2016,7 @@ public final class AuditLog extends com.google.protobuf.GeneratedMessageV3
      * The resource or collection that is the target of the operation.
      * The name is a scheme-less URI, not including the API service name.
      * For example:
+     *
      *     "projects/PROJECT_ID/zones/us-central1-a/instances"
      *     "projects/PROJECT_ID/datasets/DATASET_ID"
      * </pre>
