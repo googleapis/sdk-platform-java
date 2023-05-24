@@ -111,7 +111,10 @@ public abstract class ClientContext {
   @Nonnull
   public abstract ApiTracerFactory getTracerFactory();
 
-  /** Gets the API audience used when creating a Client that uses {@link com.google.auth.oauth2.GdchCredentials} */
+  /**
+   * Gets the API audience used when creating a Client that uses {@link
+   * com.google.auth.oauth2.GdchCredentials}
+   */
   @Nullable
   public abstract String getGdchApiAudience();
 
@@ -175,11 +178,11 @@ public abstract class ClientContext {
     Credentials credentials = settings.getCredentialsProvider().getCredentials();
 
     String gdhcApiAudience = settings.getGdchApiAudience();
-    if (gdhcApiAudience != null ) {
+    if (gdhcApiAudience != null) {
       if (!(credentials instanceof GdchCredentials)) {
         // We have audience set for non-gdch credentials - this is not allowed
         throw new IllegalArgumentException(
-                "GDC-H API audience can only be set when using GdchCredentials");
+            "GDC-H API audience can only be set when using GdchCredentials");
       }
       // We recompute the GdchCredentials with the audience
       URI gdchAudienceUri;
@@ -188,8 +191,7 @@ public abstract class ClientContext {
       } catch (IllegalArgumentException ex) { // thrown when passing a malformed uri string
         throw new IllegalArgumentException("The GDC-H API audience string is not a valid URI", ex);
       }
-      credentials =
-          ((GdchCredentials) credentials).createWithGdchAudience(gdchAudienceUri);
+      credentials = ((GdchCredentials) credentials).createWithGdchAudience(gdchAudienceUri);
     }
 
     if (settings.getQuotaProjectId() != null) {
@@ -351,8 +353,9 @@ public abstract class ClientContext {
     public abstract Builder setTracerFactory(ApiTracerFactory tracerFactory);
 
     /**
-     * Sets the API audience used by {@link com.google.auth.oauth2.GdchCredentials}
-     * It cannot be used if other type of {@link com.google.auth.Credentials} is used
+     * Sets the API audience used by {@link com.google.auth.oauth2.GdchCredentials} It cannot be
+     * used if other type of {@link com.google.auth.Credentials} is used
+     *
      * @param gdchApiAudience the audience to be used - must be a valid URI string
      */
     public abstract Builder setGdchApiAudience(String gdchApiAudience);
