@@ -431,7 +431,6 @@ public class ImportWriterVisitorTest {
 
   @Test
   public void writeImport_nestedClasses() {
-
     VaporReference nestedVaporReference =
         VaporReference.builder()
             .setName("Inner")
@@ -440,17 +439,14 @@ public class ImportWriterVisitorTest {
             .build();
 
     TypeNode.withReference(nestedVaporReference).accept(writerVisitor);
-    // TODO: The import below causes compilation errors,
-    // since JavaWriterVisitor writes the corresponding type as Outer.Middle.Inner
-    // Need to change either Writer's behavior to align with the other
-    assertEquals("import com.google.testgapic.v1beta1.Outer.Middle;\n\n", writerVisitor.write());
+    assertEquals("import com.google.testgapic.v1beta1.Outer;\n\n", writerVisitor.write());
 
     writerVisitor.clear();
 
     ConcreteReference nestedConcreteReference =
         ConcreteReference.withClazz(Outer.Middle.Inner.class);
     TypeNode.withReference(nestedConcreteReference).accept(writerVisitor);
-    assertEquals("import com.google.testgapic.v1beta1.Outer.Middle;\n\n", writerVisitor.write());
+    assertEquals("import com.google.testgapic.v1beta1.Outer;\n\n", writerVisitor.write());
   }
 
   @Test

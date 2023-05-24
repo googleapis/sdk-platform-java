@@ -132,7 +132,6 @@ public class JavaWriterVisitorTest {
 
   @Test
   public void writeReferenceType_nestedClasses() {
-
     VaporReference nestedVaporReference =
         VaporReference.builder()
             .setName("Inner")
@@ -140,9 +139,6 @@ public class JavaWriterVisitorTest {
             .setPakkage("com.google.testgapic.v1beta1")
             .build();
     TypeNode.withReference(nestedVaporReference).accept(writerVisitor);
-    // TODO: The behavior below causes compilation errors,
-    // since ImportWriterVisitor writes import of com.google.testgapic.v1beta1.Outer.Middle;
-    // Need to change either Writer's behavior to align with the other
     assertEquals("Outer.Middle.Inner", writerVisitor.write());
 
     writerVisitor.clear();
