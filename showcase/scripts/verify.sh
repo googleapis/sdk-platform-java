@@ -39,12 +39,12 @@ case $1 in
   grpc)
     GRPC_PROJECT_DIR=grpc-gapic-showcase-v1beta1
     GRPC_JAR=$(find . -name 'libshowcase_java_grpc-src.jar')
-#    GRPC_JAR_EXTENDED=$(find . -name 'libshowcase_java_grpc_extended-src.jar')
+    GRPC_JAR_EXTENDED=$(find . -name 'libshowcase_java_grpc_extended-src.jar')
     create_unpack_dir grpc_unpacked
     GRPC_UNPACK_DIR=$PWD
 
     jar xf "$BAZEL_ROOT/$GRPC_JAR"
-#    jar xf "$BAZEL_ROOT/$GRPC_JAR_EXTENDED"
+    jar xf "$BAZEL_ROOT/$GRPC_JAR_EXTENDED"
     delete_unneeded
     diff -ru "$SHOWCASE_DIR/$GRPC_PROJECT_DIR"/src/main/java/com "$GRPC_UNPACK_DIR"/com
     ;;

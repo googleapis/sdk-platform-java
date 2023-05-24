@@ -27,8 +27,8 @@ package(default_visibility = ["//visibility:public"])
 # gapic-showcase project is used to test the generated client behavior with a showcase server
 # gapic-showcase-extension project is used to test the generator's behavior
 
-#proto_library(
-#  name = "showcase_proto_extended",
-#  srcs = [],
-#  deps = []
-#)
+proto_library(
+  name = "showcase_proto_extended",
+  srcs = [],
+  deps = []
+)
