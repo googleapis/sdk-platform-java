@@ -20,6 +20,9 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
 
+    - name: Fetch all tags
+      run: git fetch --tags
+
     - name: Create additional tags
       run: |
         ARTIFACT_IDS=('google-cloud-shared-dependencies' 'api-common' 'gax')
