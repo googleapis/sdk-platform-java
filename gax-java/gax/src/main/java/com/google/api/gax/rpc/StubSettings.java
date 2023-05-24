@@ -174,6 +174,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     return tracerFactory;
   }
 
+  /** Gets the GDCH API audience to be used with {@link com.google.auth.oauth2.GdchCredentials} */
   @Nullable
   public final String getGdchApiAudience() {
     return gdchApiAudience;
@@ -447,6 +448,11 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       return self();
     }
 
+    /**
+     * Sets the API audience used by {@link com.google.auth.oauth2.GdchCredentials}
+     * It cannot be used if other type of {@link com.google.auth.Credentials} is used
+     * @param gdchApiAudience the audience to be used - must be a valid URI string
+     */
     public B setGdchApiAudience(String gdchApiAudience) {
       this.gdchApiAudience = gdchApiAudience;
       return self();
@@ -530,6 +536,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       return tracerFactory;
     }
 
+    /** Gets the GDCH API audience that was previously set in this Builder */
     public String getGdchApiAudience() {
       return gdchApiAudience;
     }

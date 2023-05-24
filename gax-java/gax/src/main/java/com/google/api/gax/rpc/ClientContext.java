@@ -111,6 +111,7 @@ public abstract class ClientContext {
   @Nonnull
   public abstract ApiTracerFactory getTracerFactory();
 
+  /** Gets the API audience used when creating a Client that uses {@link com.google.auth.oauth2.GdchCredentials} */
   @Nullable
   public abstract String getGdchApiAudience();
 
@@ -349,7 +350,12 @@ public abstract class ClientContext {
     @BetaApi("The surface for tracing is not stable yet and may change in the future.")
     public abstract Builder setTracerFactory(ApiTracerFactory tracerFactory);
 
-    public abstract Builder setGdchApiAudience(String credentialsApiAudience);
+    /**
+     * Sets the API audience used by {@link com.google.auth.oauth2.GdchCredentials}
+     * It cannot be used if other type of {@link com.google.auth.Credentials} is used
+     * @param gdchApiAudience the audience to be used - must be a valid URI string
+     */
+    public abstract Builder setGdchApiAudience(String gdchApiAudience);
 
     public abstract ClientContext build();
   }

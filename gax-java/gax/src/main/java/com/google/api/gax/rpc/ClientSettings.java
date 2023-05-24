@@ -111,6 +111,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     return stubSettings.getStreamWatchdogCheckInterval();
   }
 
+  /** Gets the GDCH API audience that was previously set in this Builder */
   public final String getGdchApiAudience() {
     return stubSettings.getGdchApiAudience();
   }
@@ -337,6 +338,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
       return stubSettings.getStreamWatchdogCheckInterval();
     }
 
+    /** Gets the GDCH API audience that was previously set in this Builder */
     @Nullable
     public String getGdchApiAudience() {
       return stubSettings.getGdchApiAudience();
