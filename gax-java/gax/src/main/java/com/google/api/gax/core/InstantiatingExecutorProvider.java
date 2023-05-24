@@ -54,6 +54,7 @@ public abstract class InstantiatingExecutorProvider implements ExecutorProvider 
           return thread;
         }
       };
+  private static final double IO_THREAD_MULTIPLIER = 1.5;
 
   // Package-private constructor prevents others from subclassing.
   InstantiatingExecutorProvider() {}
@@ -77,12 +78,30 @@ public abstract class InstantiatingExecutorProvider implements ExecutorProvider 
   public abstract Builder toBuilder();
 
   public static Builder newBuilder() {
-    int numCpus = Runtime.getRuntime().availableProcessors();
-    int numThreads = Math.max(4, numCpus);
+    // CPU tasks have a 1:1 mapping with number of CPUs
+    int numThreads = getNumCpus();
 
     return new AutoValue_InstantiatingExecutorProvider.Builder()
         .setExecutorThreadCount(numThreads)
         .setThreadFactory(DEFAULT_THREAD_FACTORY);
+  }
+
+  public static Builder newIOExecutorBuilder() {
+    // IO-bound tasks will require more threads
+    int numThreads = (int) (IO_THREAD_MULTIPLIER * getNumCpus());
+
+    return new AutoValue_InstantiatingExecutorProvider.Builder()
+        .setExecutorThreadCount(numThreads)
+        .setThreadFactory(DEFAULT_THREAD_FACTORY);
+  }
+
+  /**
+   * Get the number of CPUs on the machine. This value is set to be a minimum of 4 CPUs for Gax to
+   * try and use.
+   */
+  private static int getNumCpus() {
+    int numCpus = Runtime.getRuntime().availableProcessors();
+    return Math.max(4, numCpus);
   }
 
   @AutoValue.Builder

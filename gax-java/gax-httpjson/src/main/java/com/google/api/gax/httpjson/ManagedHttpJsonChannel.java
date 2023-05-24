@@ -48,7 +48,7 @@ import javax.annotation.Nullable;
 public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResource {
 
   private static final ExecutorService DEFAULT_EXECUTOR =
-      InstantiatingExecutorProvider.newBuilder().build().getExecutor();
+      InstantiatingExecutorProvider.newIOExecutorBuilder().build().getExecutor();
 
   private final Executor executor;
   private final String endpoint;
