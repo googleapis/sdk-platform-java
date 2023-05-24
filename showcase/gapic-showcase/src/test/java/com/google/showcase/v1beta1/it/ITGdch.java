@@ -4,6 +4,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 import com.google.api.client.json.GenericJson;
@@ -94,8 +95,7 @@ public class ITGdch {
    */
   @Test
   public void testClientWithGdchCredential_keepsCredentials() throws IOException {
-    Exception unexpected = getExceptionFromClientCreation();
-    assertNull(unexpected);
+    client = EchoClient.create(settings);
     assertSame(credentials, client.getSettings().getCredentialsProvider().getCredentials());
   }
 
@@ -112,8 +112,7 @@ public class ITGdch {
       throws IOException, URISyntaxException {
     String audience = "valid-audience";
     settings = settings.toBuilder().setGdchApiAudience(audience).build();
-    Exception unexpected = getExceptionFromClientCreation();
-    assertNull(unexpected);
+    client = EchoClient.create(settings);
     GdchCredentials fromClient =
             (GdchCredentials) client.getSettings().getCredentialsProvider().getCredentials();
 
@@ -133,8 +132,7 @@ public class ITGdch {
             .setCredentials(credentials)
             .build();
     settings = settings.newBuilder(context).build();
-    Exception unexpected = getExceptionFromClientCreation();
-    assertNull(unexpected);
+    client = EchoClient.create(settings);
     GdchCredentials fromClient =
             (GdchCredentials) client.getSettings().getCredentialsProvider().getCredentials();
     URI audienceFromClientProvider = fromClient.getApiAudience();
@@ -150,9 +148,8 @@ public class ITGdch {
   @Test
   public void testClientWithGdchCredentialWithInvalidAudience_throws() throws IOException {
     settings = settings.toBuilder().setGdchApiAudience("$invalid-audience:").build();
-    Exception expected = getExceptionFromClientCreation();
-    assertNotNull(expected);
-    assertTrue(expected instanceof IllegalArgumentException);
+    Exception expected =
+            assertThrows(IllegalArgumentException.class, () -> client = EchoClient.create(settings));
     assertTrue(expected.getMessage().contains("audience string is not a valid URI"));
   }
 
@@ -164,20 +161,10 @@ public class ITGdch {
             .setCredentialsProvider(NoCredentialsProvider.create())
             .setGdchApiAudience("any-audience")
             .build();
-    Exception expected = getExceptionFromClientCreation();
-    assertNotNull(expected);
-    assertTrue(expected instanceof IllegalArgumentException);
+    Exception expected =
+            assertThrows(IllegalArgumentException.class, () -> client = EchoClient.create(settings));
     assertTrue(
         expected.getMessage().contains("audience can only be set when using GdchCredentials"));
-  }
-
-  private Exception getExceptionFromClientCreation() {
-    try {
-      client = EchoClient.create(settings);
-    } catch (Exception ex) {
-      return ex;
-    }
-    return null;
   }
 
   private class EchoStubSettingsWithAccessibleContext extends EchoStubSettings {
