@@ -50,7 +50,6 @@ public class ITGdch {
   @Before
   public void setup() throws IOException, URISyntaxException {
     prepareCredentials();
-    client = null;
     tempFolder.create();
     settings =
         EchoSettings.newBuilder()
