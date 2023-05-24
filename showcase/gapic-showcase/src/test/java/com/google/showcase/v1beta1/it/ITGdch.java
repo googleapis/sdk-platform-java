@@ -1,6 +1,10 @@
 package com.google.showcase.v1beta1.it;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 import com.google.api.client.json.GenericJson;
 import com.google.api.client.json.JsonFactory;
@@ -12,12 +16,14 @@ import com.google.auth.Credentials;
 import com.google.auth.oauth2.GdchCredentials;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoSettings;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
 import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import org.junit.Before;
 import org.junit.Rule;
@@ -131,7 +137,7 @@ public class ITGdch {
             "GDCH credentials with audience should be GdchCredentials",
             credentials instanceof GdchCredentials);
     GdchCredentials fromContext = null;
-    assertNotSame(fromContext, );
+    assertNotSame(fromContext, audienceFromClientProvider);
   }
 
   @Test
