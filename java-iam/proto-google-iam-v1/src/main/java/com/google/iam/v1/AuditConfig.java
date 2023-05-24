@@ -26,11 +26,14 @@ package com.google.iam.v1;
  * The configuration determines which permission types are logged, and what
  * identities, if any, are exempted from logging.
  * An AuditConfig must have one or more AuditLogConfigs.
+ *
  * If there are AuditConfigs for both `allServices` and a specific service,
  * the union of the two AuditConfigs is used for that service: the log_types
  * specified in each AuditConfig are enabled, and the exempted_members in each
  * AuditLogConfig are exempted.
+ *
  * Example Policy with multiple AuditConfigs:
+ *
  *     {
  *       "audit_configs": [
  *         {
@@ -66,6 +69,7 @@ package com.google.iam.v1;
  *         }
  *       ]
  *     }
+ *
  * For sampleservice, this policy enables DATA_READ, DATA_WRITE and ADMIN_READ
  * logging. It also exempts jose&#64;example.com from DATA_READ logging, and
  * aliya&#64;example.com from DATA_WRITE logging.
@@ -92,11 +96,6 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new AuditConfig();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -414,11 +413,14 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
    * The configuration determines which permission types are logged, and what
    * identities, if any, are exempted from logging.
    * An AuditConfig must have one or more AuditLogConfigs.
+   *
    * If there are AuditConfigs for both `allServices` and a specific service,
    * the union of the two AuditConfigs is used for that service: the log_types
    * specified in each AuditConfig are enabled, and the exempted_members in each
    * AuditLogConfig are exempted.
+   *
    * Example Policy with multiple AuditConfigs:
+   *
    *     {
    *       "audit_configs": [
    *         {
@@ -454,6 +456,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
    *         }
    *       ]
    *     }
+   *
    * For sampleservice, this policy enables DATA_READ, DATA_WRITE and ADMIN_READ
    * logging. It also exempts jose&#64;example.com from DATA_READ logging, and
    * aliya&#64;example.com from DATA_WRITE logging.
@@ -547,39 +550,6 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
       if (((from_bitField0_ & 0x00000001) != 0)) {
         result.service_ = service_;
       }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
     }
 
     @java.lang.Override

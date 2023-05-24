@@ -24,6 +24,7 @@ package com.google.iam.v1;
  * <pre>
  * Provides the configuration for logging a type of permissions.
  * Example:
+ *
  *     {
  *       "audit_log_configs": [
  *         {
@@ -37,6 +38,7 @@ package com.google.iam.v1;
  *         }
  *       ]
  *     }
+ *
  * This enables 'DATA_READ' and 'DATA_WRITE' logging, while exempting
  * jose&#64;example.com from DATA_READ logging.
  * </pre>
@@ -55,18 +57,13 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
 
   private AuditLogConfig() {
     logType_ = 0;
-    exemptedMembers_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    exemptedMembers_ = com.google.protobuf.LazyStringArrayList.emptyList();
   }
 
   @java.lang.Override
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new AuditLogConfig();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -300,7 +297,8 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
   public static final int EXEMPTED_MEMBERS_FIELD_NUMBER = 2;
 
   @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringList exemptedMembers_;
+  private com.google.protobuf.LazyStringArrayList exemptedMembers_ =
+      com.google.protobuf.LazyStringArrayList.emptyList();
   /**
    *
    *
@@ -551,6 +549,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Provides the configuration for logging a type of permissions.
    * Example:
+   *
    *     {
    *       "audit_log_configs": [
    *         {
@@ -564,6 +563,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
    *         }
    *       ]
    *     }
+   *
    * This enables 'DATA_READ' and 'DATA_WRITE' logging, while exempting
    * jose&#64;example.com from DATA_READ logging.
    * </pre>
@@ -600,8 +600,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
       super.clear();
       bitField0_ = 0;
       logType_ = 0;
-      exemptedMembers_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000002);
+      exemptedMembers_ = com.google.protobuf.LazyStringArrayList.emptyList();
       return this;
     }
 
@@ -627,7 +626,6 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.iam.v1.AuditLogConfig buildPartial() {
       com.google.iam.v1.AuditLogConfig result = new com.google.iam.v1.AuditLogConfig(this);
-      buildPartialRepeatedFields(result);
       if (bitField0_ != 0) {
         buildPartial0(result);
       }
@@ -635,52 +633,15 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
       return result;
     }
 
-    private void buildPartialRepeatedFields(com.google.iam.v1.AuditLogConfig result) {
-      if (((bitField0_ & 0x00000002) != 0)) {
-        exemptedMembers_ = exemptedMembers_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000002);
-      }
-      result.exemptedMembers_ = exemptedMembers_;
-    }
-
     private void buildPartial0(com.google.iam.v1.AuditLogConfig result) {
       int from_bitField0_ = bitField0_;
       if (((from_bitField0_ & 0x00000001) != 0)) {
         result.logType_ = logType_;
       }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        exemptedMembers_.makeImmutable();
+        result.exemptedMembers_ = exemptedMembers_;
+      }
     }
 
     @java.lang.Override
@@ -701,7 +662,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
       if (!other.exemptedMembers_.isEmpty()) {
         if (exemptedMembers_.isEmpty()) {
           exemptedMembers_ = other.exemptedMembers_;
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ |= 0x00000002;
         } else {
           ensureExemptedMembersIsMutable();
           exemptedMembers_.addAll(other.exemptedMembers_);
@@ -856,14 +817,14 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
       return this;
     }
 
-    private com.google.protobuf.LazyStringList exemptedMembers_ =
-        com.google.protobuf.LazyStringArrayList.EMPTY;
+    private com.google.protobuf.LazyStringArrayList exemptedMembers_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
 
     private void ensureExemptedMembersIsMutable() {
-      if (!((bitField0_ & 0x00000002) != 0)) {
+      if (!exemptedMembers_.isModifiable()) {
         exemptedMembers_ = new com.google.protobuf.LazyStringArrayList(exemptedMembers_);
-        bitField0_ |= 0x00000002;
       }
+      bitField0_ |= 0x00000002;
     }
     /**
      *
@@ -880,7 +841,8 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      * @return A list containing the exemptedMembers.
      */
     public com.google.protobuf.ProtocolStringList getExemptedMembersList() {
-      return exemptedMembers_.getUnmodifiableView();
+      exemptedMembers_.makeImmutable();
+      return exemptedMembers_;
     }
     /**
      *
@@ -957,6 +919,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
       }
       ensureExemptedMembersIsMutable();
       exemptedMembers_.set(index, value);
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -981,6 +944,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
       }
       ensureExemptedMembersIsMutable();
       exemptedMembers_.add(value);
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1002,6 +966,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
     public Builder addAllExemptedMembers(java.lang.Iterable<java.lang.String> values) {
       ensureExemptedMembersIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(values, exemptedMembers_);
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1020,8 +985,9 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearExemptedMembers() {
-      exemptedMembers_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      exemptedMembers_ = com.google.protobuf.LazyStringArrayList.emptyList();
       bitField0_ = (bitField0_ & ~0x00000002);
+      ;
       onChanged();
       return this;
     }
@@ -1047,6 +1013,7 @@ public final class AuditLogConfig extends com.google.protobuf.GeneratedMessageV3
       checkByteStringIsUtf8(value);
       ensureExemptedMembersIsMutable();
       exemptedMembers_.add(value);
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }

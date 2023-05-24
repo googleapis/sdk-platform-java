@@ -48,11 +48,6 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
     return new CreatePolicyRequest();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.iam.v2.PolicyProto
         .internal_static_google_iam_v2_CreatePolicyRequest_descriptor;
@@ -78,10 +73,13 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
    * <pre>
    * Required. The resource that the policy is attached to, along with the kind of policy
    * to create. Format: `policies/{attachment_point}/denypolicies`
+   *
+   *
    * The attachment point is identified by its URL-encoded full resource name,
    * which means that the forward-slash character, `/`, must be written as
    * `%2F`. For example,
    * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies`.
+   *
    * For organizations and folders, use the numeric ID in the full resource
    * name. For projects, you can use the alphanumeric or the numeric ID.
    * </pre>
@@ -108,10 +106,13 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
    * <pre>
    * Required. The resource that the policy is attached to, along with the kind of policy
    * to create. Format: `policies/{attachment_point}/denypolicies`
+   *
+   *
    * The attachment point is identified by its URL-encoded full resource name,
    * which means that the forward-slash character, `/`, must be written as
    * `%2F`. For example,
    * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies`.
+   *
    * For organizations and folders, use the numeric ID in the full resource
    * name. For projects, you can use the alphanumeric or the numeric ID.
    * </pre>
@@ -510,39 +511,6 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
     }
 
     @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
       if (other instanceof com.google.iam.v2.CreatePolicyRequest) {
         return mergeFrom((com.google.iam.v2.CreatePolicyRequest) other);
@@ -637,10 +605,13 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
      * <pre>
      * Required. The resource that the policy is attached to, along with the kind of policy
      * to create. Format: `policies/{attachment_point}/denypolicies`
+     *
+     *
      * The attachment point is identified by its URL-encoded full resource name,
      * which means that the forward-slash character, `/`, must be written as
      * `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies`.
+     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, you can use the alphanumeric or the numeric ID.
      * </pre>
@@ -666,10 +637,13 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
      * <pre>
      * Required. The resource that the policy is attached to, along with the kind of policy
      * to create. Format: `policies/{attachment_point}/denypolicies`
+     *
+     *
      * The attachment point is identified by its URL-encoded full resource name,
      * which means that the forward-slash character, `/`, must be written as
      * `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies`.
+     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, you can use the alphanumeric or the numeric ID.
      * </pre>
@@ -695,10 +669,13 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
      * <pre>
      * Required. The resource that the policy is attached to, along with the kind of policy
      * to create. Format: `policies/{attachment_point}/denypolicies`
+     *
+     *
      * The attachment point is identified by its URL-encoded full resource name,
      * which means that the forward-slash character, `/`, must be written as
      * `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies`.
+     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, you can use the alphanumeric or the numeric ID.
      * </pre>
@@ -723,10 +700,13 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
      * <pre>
      * Required. The resource that the policy is attached to, along with the kind of policy
      * to create. Format: `policies/{attachment_point}/denypolicies`
+     *
+     *
      * The attachment point is identified by its URL-encoded full resource name,
      * which means that the forward-slash character, `/`, must be written as
      * `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies`.
+     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, you can use the alphanumeric or the numeric ID.
      * </pre>
@@ -747,10 +727,13 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
      * <pre>
      * Required. The resource that the policy is attached to, along with the kind of policy
      * to create. Format: `policies/{attachment_point}/denypolicies`
+     *
+     *
      * The attachment point is identified by its URL-encoded full resource name,
      * which means that the forward-slash character, `/`, must be written as
      * `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies`.
+     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, you can use the alphanumeric or the numeric ID.
      * </pre>

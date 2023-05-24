@@ -47,11 +47,6 @@ public final class SetIamPolicyRequest extends com.google.protobuf.GeneratedMess
     return new SetIamPolicyRequest();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.iam.v1.IamPolicyProto
         .internal_static_google_iam_v1_SetIamPolicyRequest_descriptor;
@@ -188,6 +183,7 @@ public final class SetIamPolicyRequest extends com.google.protobuf.GeneratedMess
    * OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
    * the fields in the mask will be modified. If no mask is provided, the
    * following default mask is used:
+   *
    * `paths: "bindings, etag"`
    * </pre>
    *
@@ -206,6 +202,7 @@ public final class SetIamPolicyRequest extends com.google.protobuf.GeneratedMess
    * OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
    * the fields in the mask will be modified. If no mask is provided, the
    * following default mask is used:
+   *
    * `paths: "bindings, etag"`
    * </pre>
    *
@@ -224,6 +221,7 @@ public final class SetIamPolicyRequest extends com.google.protobuf.GeneratedMess
    * OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
    * the fields in the mask will be modified. If no mask is provided, the
    * following default mask is used:
+   *
    * `paths: "bindings, etag"`
    * </pre>
    *
@@ -514,39 +512,6 @@ public final class SetIamPolicyRequest extends com.google.protobuf.GeneratedMess
       if (((from_bitField0_ & 0x00000004) != 0)) {
         result.updateMask_ = updateMaskBuilder_ == null ? updateMask_ : updateMaskBuilder_.build();
       }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
     }
 
     @java.lang.Override
@@ -974,6 +939,7 @@ public final class SetIamPolicyRequest extends com.google.protobuf.GeneratedMess
      * OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
      * the fields in the mask will be modified. If no mask is provided, the
      * following default mask is used:
+     *
      * `paths: "bindings, etag"`
      * </pre>
      *
@@ -991,6 +957,7 @@ public final class SetIamPolicyRequest extends com.google.protobuf.GeneratedMess
      * OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
      * the fields in the mask will be modified. If no mask is provided, the
      * following default mask is used:
+     *
      * `paths: "bindings, etag"`
      * </pre>
      *
@@ -1014,6 +981,7 @@ public final class SetIamPolicyRequest extends com.google.protobuf.GeneratedMess
      * OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
      * the fields in the mask will be modified. If no mask is provided, the
      * following default mask is used:
+     *
      * `paths: "bindings, etag"`
      * </pre>
      *
@@ -1039,6 +1007,7 @@ public final class SetIamPolicyRequest extends com.google.protobuf.GeneratedMess
      * OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
      * the fields in the mask will be modified. If no mask is provided, the
      * following default mask is used:
+     *
      * `paths: "bindings, etag"`
      * </pre>
      *
@@ -1061,6 +1030,7 @@ public final class SetIamPolicyRequest extends com.google.protobuf.GeneratedMess
      * OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
      * the fields in the mask will be modified. If no mask is provided, the
      * following default mask is used:
+     *
      * `paths: "bindings, etag"`
      * </pre>
      *
@@ -1089,6 +1059,7 @@ public final class SetIamPolicyRequest extends com.google.protobuf.GeneratedMess
      * OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
      * the fields in the mask will be modified. If no mask is provided, the
      * following default mask is used:
+     *
      * `paths: "bindings, etag"`
      * </pre>
      *
@@ -1111,6 +1082,7 @@ public final class SetIamPolicyRequest extends com.google.protobuf.GeneratedMess
      * OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
      * the fields in the mask will be modified. If no mask is provided, the
      * following default mask is used:
+     *
      * `paths: "bindings, etag"`
      * </pre>
      *
@@ -1128,6 +1100,7 @@ public final class SetIamPolicyRequest extends com.google.protobuf.GeneratedMess
      * OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
      * the fields in the mask will be modified. If no mask is provided, the
      * following default mask is used:
+     *
      * `paths: "bindings, etag"`
      * </pre>
      *
@@ -1149,6 +1122,7 @@ public final class SetIamPolicyRequest extends com.google.protobuf.GeneratedMess
      * OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
      * the fields in the mask will be modified. If no mask is provided, the
      * following default mask is used:
+     *
      * `paths: "bindings, etag"`
      * </pre>
      *
