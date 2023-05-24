@@ -74,6 +74,7 @@ import com.google.api.generator.engine.ast.WhileStatement;
 import com.google.api.generator.test.utils.LineFormatter;
 import com.google.api.generator.test.utils.TestExprBuilder;
 import com.google.common.base.Function;
+import com.google.testgapic.v1beta1.Outer;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
@@ -127,6 +128,31 @@ public class JavaWriterVisitorTest {
             VaporReference.builder().setName("FooBar").setPakkage("com.foo.bar").build())
         .accept(writerVisitor);
     assertEquals("FooBar", writerVisitor.write());
+  }
+
+  @Test
+  public void writeReferenceType_nestedClasses() {
+
+    VaporReference nestedVaporReference =
+        VaporReference.builder()
+            .setName("Inner")
+            .setEnclosingClassNames(Arrays.asList("Outer", "Middle"))
+            .setPakkage("com.google.testgapic.v1beta1")
+            .build();
+    TypeNode.withReference(nestedVaporReference).accept(writerVisitor);
+    // TODO: The behavior below causes compilation errors,
+    // since ImportWriterVisitor writes import of com.google.testgapic.v1beta1.Outer.Middle;
+    // Need to change either Writer's behavior to align with the other
+    assertEquals("Outer.Middle.Inner", writerVisitor.write());
+
+    writerVisitor.clear();
+
+    ConcreteReference nestedConcreteReference =
+        ConcreteReference.withClazz(Outer.Middle.Inner.class);
+    TypeNode.withReference(nestedConcreteReference).accept(writerVisitor);
+    // TODO: This is currently writing type as Middle.Outer.Inner;
+    // which is incorrect - update and uncomment assertion along with fix
+    // assertEquals("Outer.Middle.Inner", writerVisitor.write());
   }
 
   @Test

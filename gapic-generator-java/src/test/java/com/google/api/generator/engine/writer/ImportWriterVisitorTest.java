@@ -58,6 +58,7 @@ import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.test.utils.LineFormatter;
 import com.google.common.base.Function;
 import com.google.common.base.Strings;
+import com.google.testgapic.v1beta1.Outer;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -426,6 +427,32 @@ public class ImportWriterVisitorTest {
             "import java.lang.annotation.Repeatable;\n",
             "import java.util.List;\n\n"),
         writerVisitor.write());
+  }
+
+  @Test
+  public void writeImport_nestedClasses() {
+
+    VaporReference nestedVaporReference =
+        VaporReference.builder()
+            .setName("Inner")
+            .setEnclosingClassNames(Arrays.asList("Outer", "Middle"))
+            .setPakkage("com.google.testgapic.v1beta1")
+            .build();
+
+    TypeNode.withReference(nestedVaporReference).accept(writerVisitor);
+    // TODO: The import below causes compilation errors,
+    // since JavaWriterVisitor writes the corresponding type as Outer.Middle.Inner
+    // Need to change either Writer's behavior to align with the other
+    assertEquals("import com.google.testgapic.v1beta1.Outer.Middle;\n\n", writerVisitor.write());
+
+    writerVisitor.clear();
+
+    ConcreteReference nestedConcreteReference =
+        ConcreteReference.withClazz(Outer.Middle.Inner.class);
+    TypeNode.withReference(nestedConcreteReference).accept(writerVisitor);
+    // TODO: This is currently writing import com.google.testgapic.v1beta1.Middle.Outer;
+    // which is incorrect - uncomment assertion along with fix
+    // assertEquals("import com.google.testgapic.v1beta1.Outer.Middle;\n\n", writerVisitor.write());
   }
 
   @Test
