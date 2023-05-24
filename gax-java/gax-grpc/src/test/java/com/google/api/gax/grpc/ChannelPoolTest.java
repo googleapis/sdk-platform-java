@@ -72,8 +72,10 @@ import org.mockito.stubbing.Answer;
 
 @RunWith(JUnit4.class)
 public class ChannelPoolTest {
+  private static final int DEFAULT_AWAIT_TERMINATION_SEC = 5;
+
   @Test
-  public void testAuthority() throws IOException {
+  public void testAuthority() throws IOException, InterruptedException {
     ManagedChannel sub1 = Mockito.mock(ManagedChannel.class);
     ManagedChannel sub2 = Mockito.mock(ManagedChannel.class);
 
@@ -84,10 +86,12 @@ public class ChannelPoolTest {
             ChannelPoolSettings.staticallySized(2),
             new FakeChannelFactory(Arrays.asList(sub1, sub2)));
     assertThat(pool.authority()).isEqualTo("myAuth");
+    pool.shutdown();
+    pool.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 
   @Test
-  public void testRoundRobin() throws IOException {
+  public void testRoundRobin() throws IOException, InterruptedException {
     ManagedChannel sub1 = Mockito.mock(ManagedChannel.class);
     ManagedChannel sub2 = Mockito.mock(ManagedChannel.class);
 
@@ -101,6 +105,8 @@ public class ChannelPoolTest {
     verifyTargetChannel(pool, channels, sub1);
     verifyTargetChannel(pool, channels, sub2);
     verifyTargetChannel(pool, channels, sub1);
+    pool.shutdown();
+    pool.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 
   private void verifyTargetChannel(
@@ -175,28 +181,33 @@ public class ChannelPoolTest {
     for (AtomicInteger count : counts) {
       assertThat(count.get()).isAnyOf(expectedCount, expectedCount + 1);
     }
+    pool.shutdown();
+    pool.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 
   // Test channelPrimer is called same number of times as poolSize if executorService is set to null
   @Test
-  public void channelPrimerShouldCallPoolConstruction() throws IOException {
+  public void channelPrimerShouldCallPoolConstruction() throws IOException, InterruptedException {
     ChannelPrimer mockChannelPrimer = Mockito.mock(ChannelPrimer.class);
     ManagedChannel channel1 = Mockito.mock(ManagedChannel.class);
     ManagedChannel channel2 = Mockito.mock(ManagedChannel.class);
 
-    ChannelPool.create(
-        ChannelPoolSettings.staticallySized(2)
-            .toBuilder()
-            .setPreemptiveRefreshEnabled(true)
-            .build(),
-        new FakeChannelFactory(Arrays.asList(channel1, channel2), mockChannelPrimer));
+    ChannelPool pool =
+        ChannelPool.create(
+            ChannelPoolSettings.staticallySized(2)
+                .toBuilder()
+                .setPreemptiveRefreshEnabled(true)
+                .build(),
+            new FakeChannelFactory(Arrays.asList(channel1, channel2), mockChannelPrimer));
     Mockito.verify(mockChannelPrimer, Mockito.times(2))
         .primeChannel(Mockito.any(ManagedChannel.class));
+    pool.shutdown();
+    pool.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 
   // Test channelPrimer is called periodically, if there's an executorService
   @Test
-  public void channelPrimerIsCalledPeriodically() throws IOException {
+  public void channelPrimerIsCalledPeriodically() throws IOException, InterruptedException {
     ChannelPrimer mockChannelPrimer = Mockito.mock(ChannelPrimer.class);
     ManagedChannel channel1 = Mockito.mock(ManagedChannel.class);
     ManagedChannel channel2 = Mockito.mock(ManagedChannel.class);
@@ -221,13 +232,14 @@ public class ChannelPoolTest {
     FakeChannelFactory channelFactory =
         new FakeChannelFactory(Arrays.asList(channel1, channel2, channel3), mockChannelPrimer);
 
-    new ChannelPool(
-        ChannelPoolSettings.staticallySized(1)
-            .toBuilder()
-            .setPreemptiveRefreshEnabled(true)
-            .build(),
-        channelFactory,
-        scheduledExecutorService);
+    ChannelPool pool =
+        new ChannelPool(
+            ChannelPoolSettings.staticallySized(1)
+                .toBuilder()
+                .setPreemptiveRefreshEnabled(true)
+                .build(),
+            channelFactory,
+            scheduledExecutorService);
     // 1 call during the creation
     Mockito.verify(mockChannelPrimer, Mockito.times(1))
         .primeChannel(Mockito.any(ManagedChannel.class));
@@ -241,12 +253,14 @@ public class ChannelPoolTest {
     // 1 more call during channel refresh
     Mockito.verify(mockChannelPrimer, Mockito.times(3))
         .primeChannel(Mockito.any(ManagedChannel.class));
+    pool.shutdown();
+    pool.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 
   // ----
   // call should be allowed to complete and the channel should not be shutdown
   @Test
-  public void callShouldCompleteAfterCreation() throws IOException {
+  public void callShouldCompleteAfterCreation() throws IOException, InterruptedException {
     ManagedChannel underlyingChannel = Mockito.mock(ManagedChannel.class);
     ManagedChannel replacementChannel = Mockito.mock(ManagedChannel.class);
     FakeChannelFactory channelFactory =
@@ -290,11 +304,13 @@ public class ChannelPoolTest {
     // Replacement channel shouldn't be touched
     Mockito.verify(replacementChannel, Mockito.never()).shutdown();
     Mockito.verify(replacementChannel, Mockito.never()).newCall(Mockito.any(), Mockito.any());
+    pool.shutdown();
+    pool.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 
   // call should be allowed to complete and the channel should not be shutdown
   @Test
-  public void callShouldCompleteAfterStarted() throws IOException {
+  public void callShouldCompleteAfterStarted() throws IOException, InterruptedException {
     final ManagedChannel underlyingChannel = Mockito.mock(ManagedChannel.class);
     ManagedChannel replacementChannel = Mockito.mock(ManagedChannel.class);
 
@@ -335,11 +351,13 @@ public class ChannelPoolTest {
     call.sendMessage("message");
     // shutdown is called because the outstanding call has completed
     Mockito.verify(underlyingChannel, Mockito.atLeastOnce()).shutdown();
+    pool.shutdown();
+    pool.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 
   // Channel should be shutdown after a refresh all the calls have completed
   @Test
-  public void channelShouldShutdown() throws IOException {
+  public void channelShouldShutdown() throws IOException, InterruptedException {
     ManagedChannel underlyingChannel = Mockito.mock(ManagedChannel.class);
     ManagedChannel replacementChannel = Mockito.mock(ManagedChannel.class);
 
@@ -379,10 +397,12 @@ public class ChannelPoolTest {
     pool.refresh();
     // shutdown is called because the outstanding call has completed
     Mockito.verify(underlyingChannel, Mockito.atLeastOnce()).shutdown();
+    pool.shutdown();
+    pool.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 
   @Test
-  public void channelRefreshShouldSwapChannels() throws IOException {
+  public void channelRefreshShouldSwapChannels() throws IOException, InterruptedException {
     ManagedChannel underlyingChannel1 = Mockito.mock(ManagedChannel.class);
     ManagedChannel underlyingChannel2 = Mockito.mock(ManagedChannel.class);
 
@@ -419,6 +439,8 @@ public class ChannelPoolTest {
 
     Mockito.verify(underlyingChannel2, Mockito.only())
         .newCall(Mockito.<MethodDescriptor<String, Integer>>any(), Mockito.any(CallOptions.class));
+    pool.shutdown();
+    pool.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 
   @Test
@@ -500,6 +522,8 @@ public class ChannelPoolTest {
     assertThat(startedCalls).hasSize(3);
     // range of channels is [2-3] rounded down average is 2
     assertThat(pool.entries.get()).hasSize(2);
+    pool.shutdown();
+    pool.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 
   @Test
@@ -540,6 +564,8 @@ public class ChannelPoolTest {
     pool.resize();
     assertThat(pool.entries.get()).hasSize(1);
     Mockito.verify(channels.get(1), Mockito.times(1)).shutdown();
+    pool.shutdown();
+    pool.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 
   @Test
@@ -602,21 +628,23 @@ public class ChannelPoolTest {
     captor.getValue().onClose(Status.ABORTED, new Metadata());
     // Now the channel should be closed
     Mockito.verify(channels.get(1), Mockito.times(1)).shutdown();
+    pool.shutdown();
+    pool.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 
   @Test
-  public void testReleasingClientCallCancelEarly() throws IOException {
+  public void testReleasingClientCallCancelEarly() throws IOException, InterruptedException {
     ClientCall mockClientCall = Mockito.mock(ClientCall.class);
     Mockito.doAnswer(invocation -> null).when(mockClientCall).cancel(Mockito.any(), Mockito.any());
     ManagedChannel fakeChannel = Mockito.mock(ManagedChannel.class);
     Mockito.when(fakeChannel.newCall(Mockito.any(), Mockito.any())).thenReturn(mockClientCall);
     ChannelPoolSettings channelPoolSettings = ChannelPoolSettings.staticallySized(1);
     ChannelFactory factory = new FakeChannelFactory(ImmutableList.of(fakeChannel));
-    ChannelPool channelPool = ChannelPool.create(channelPoolSettings, factory);
+    ChannelPool pool = ChannelPool.create(channelPoolSettings, factory);
     ClientContext context =
         ClientContext.newBuilder()
-            .setTransportChannel(GrpcTransportChannel.create(channelPool))
-            .setDefaultCallContext(GrpcCallContext.of(channelPool, CallOptions.DEFAULT))
+            .setTransportChannel(GrpcTransportChannel.create(pool))
+            .setDefaultCallContext(GrpcCallContext.of(pool, CallOptions.DEFAULT))
             .build();
     ServerStreamingCallSettings settings =
         ServerStreamingCallSettings.<Color, Money>newBuilder().build();
@@ -648,5 +676,7 @@ public class ChannelPoolTest {
                     }));
     assertThat(e.getCause()).isInstanceOf(CancellationException.class);
     assertThat(e.getMessage()).isEqualTo("Call is already cancelled");
+    pool.shutdown();
+    pool.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 }
