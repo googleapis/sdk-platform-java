@@ -174,7 +174,12 @@ public abstract class ClientContext {
     Credentials credentials = settings.getCredentialsProvider().getCredentials();
 
     String gdhcApiAudience = settings.getGdchApiAudience();
-    if (gdhcApiAudience != null && credentials instanceof GdchCredentials) {
+    if (gdhcApiAudience != null ) {
+      if (!(credentials instanceof GdchCredentials)) {
+        // We have audience set for non-gdch credentials - this is not allowed
+        throw new IllegalArgumentException(
+                "GDC-H API audience can only be set when using GdchCredentials");
+      }
       // We recompute the GdchCredentials with the audience
       URI gdchAudienceUri;
       try {
@@ -184,10 +189,6 @@ public abstract class ClientContext {
       }
       credentials =
           ((GdchCredentials) credentials).createWithGdchAudience(gdchAudienceUri);
-    } else if (gdhcApiAudience != null) {
-      // We have audience set for non-gdch credentials - this is not allowed
-      throw new IllegalArgumentException(
-          "GDC-H API audience can only be set when using GdchCredentials");
     }
 
     if (settings.getQuotaProjectId() != null) {
