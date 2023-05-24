@@ -183,7 +183,7 @@ public abstract class ClientContext {
         throw new IllegalArgumentException("The GDC-H API audience string is not a valid URI", ex);
       }
       credentials =
-          ((GdchCredentials) credentials).toBuilder().setGdchAudience(gdchAudienceUri).build();
+          ((GdchCredentials) credentials).createWithGdchAudience(gdchAudienceUri);
     } else if (gdhcApiAudience != null) {
       // We have audience set for non-gdch credentials - this is not allowed
       throw new IllegalArgumentException(
