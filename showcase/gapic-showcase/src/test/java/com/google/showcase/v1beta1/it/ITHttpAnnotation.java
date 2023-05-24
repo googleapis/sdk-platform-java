@@ -28,16 +28,19 @@ import com.google.showcase.v1beta1.ComplianceSettings;
 import com.google.showcase.v1beta1.ComplianceSuite;
 import com.google.showcase.v1beta1.RepeatRequest;
 import com.google.showcase.v1beta1.RepeatResponse;
+import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -62,19 +65,20 @@ public class ITHttpAnnotation {
   @Parameterized.Parameter(0)
   public String groupName;
 
-  private ComplianceSuite complianceSuite;
-  private ComplianceClient complianceClient;
-  private Map<String, Function<RepeatRequest, RepeatResponse>> validComplianceRpcMap;
+  private static ComplianceClient httpjsonClient;
+  private static ComplianceSuite complianceSuite;
+  private static Map<String, Function<RepeatRequest, RepeatResponse>> validComplianceRpcMap;
 
-  @Before
-  public void createClient() throws IOException, GeneralSecurityException {
+  @BeforeClass
+  public static void createClients() throws IOException, GeneralSecurityException {
     ComplianceSuite.Builder builder = ComplianceSuite.newBuilder();
     JsonFormat.parser()
         .merge(
             new InputStreamReader(
-                ITHttpAnnotation.class
-                    .getClassLoader()
-                    .getResourceAsStream("compliance_suite.json")),
+                Objects.requireNonNull(
+                    ITHttpAnnotation.class
+                        .getClassLoader()
+                        .getResourceAsStream("compliance_suite.json"))),
             builder);
     complianceSuite = builder.build();
 
@@ -88,30 +92,32 @@ public class ITHttpAnnotation {
                     .setEndpoint("http://localhost:7469")
                     .build())
             .build();
-    complianceClient = ComplianceClient.create(httpjsonComplianceSettings);
+    httpjsonClient = ComplianceClient.create(httpjsonComplianceSettings);
 
     // Mapping of Compliance Suite file RPC Names to ComplianceClient methods
     validComplianceRpcMap =
         ImmutableMap.of(
             "Compliance.RepeatDataBody",
-            complianceClient::repeatDataBody,
+            httpjsonClient::repeatDataBody,
             "Compliance.RepeatDataBodyInfo",
-            complianceClient::repeatDataBodyInfo,
+            httpjsonClient::repeatDataBodyInfo,
             "Compliance.RepeatDataQuery",
-            complianceClient::repeatDataQuery,
+            httpjsonClient::repeatDataQuery,
             "Compliance.RepeatDataSimplePath",
-            complianceClient::repeatDataSimplePath,
+            httpjsonClient::repeatDataSimplePath,
             "Compliance.RepeatDataBodyPut",
-            complianceClient::repeatDataBodyPut,
+            httpjsonClient::repeatDataBodyPut,
             "Compliance.RepeatDataBodyPatch",
-            complianceClient::repeatDataBodyPatch,
+            httpjsonClient::repeatDataBodyPatch,
             "Compliance.RepeatDataPathResource",
-            complianceClient::repeatDataPathResource);
+            httpjsonClient::repeatDataPathResource);
   }
 
-  @After
-  public void destroyClient() {
-    complianceClient.close();
+  @AfterClass
+  public static void destroyClients() throws InterruptedException {
+    httpjsonClient.close();
+    httpjsonClient.awaitTermination(
+        TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
   // Verify that the input's info is the same as the response's info
