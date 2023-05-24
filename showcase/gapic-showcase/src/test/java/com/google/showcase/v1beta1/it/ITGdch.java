@@ -25,6 +25,7 @@ import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import com.google.showcase.v1beta1.stub.EchoStubSettings;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -55,6 +56,13 @@ public class ITGdch {
         EchoSettings.newBuilder()
             .setCredentialsProvider(FixedCredentialsProvider.create(credentials))
             .build();
+  }
+
+  @After
+  public void tearDown() {
+    if (client != null) {
+      client.close();
+    }
   }
 
   private void prepareCredentials() throws IOException, URISyntaxException {
