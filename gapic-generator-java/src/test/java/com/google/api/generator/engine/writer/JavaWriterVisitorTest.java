@@ -150,9 +150,7 @@ public class JavaWriterVisitorTest {
     ConcreteReference nestedConcreteReference =
         ConcreteReference.withClazz(Outer.Middle.Inner.class);
     TypeNode.withReference(nestedConcreteReference).accept(writerVisitor);
-    // TODO: This is currently writing type as Middle.Outer.Inner;
-    // which is incorrect - update and uncomment assertion along with fix
-    // assertEquals("Outer.Middle.Inner", writerVisitor.write());
+    assertEquals("Outer.Middle.Inner", writerVisitor.write());
   }
 
   @Test

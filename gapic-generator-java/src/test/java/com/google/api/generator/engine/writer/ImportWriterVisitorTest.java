@@ -450,9 +450,7 @@ public class ImportWriterVisitorTest {
     ConcreteReference nestedConcreteReference =
         ConcreteReference.withClazz(Outer.Middle.Inner.class);
     TypeNode.withReference(nestedConcreteReference).accept(writerVisitor);
-    // TODO: This is currently writing import com.google.testgapic.v1beta1.Middle.Outer;
-    // which is incorrect - uncomment assertion along with fix
-    // assertEquals("import com.google.testgapic.v1beta1.Outer.Middle;\n\n", writerVisitor.write());
+    assertEquals("import com.google.testgapic.v1beta1.Outer.Middle;\n\n", writerVisitor.write());
   }
 
   @Test
