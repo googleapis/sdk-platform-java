@@ -39,6 +39,7 @@ import com.google.api.gax.rpc.mtls.MtlsProvider;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
+import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -50,20 +51,22 @@ import org.mockito.Mockito;
 @RunWith(JUnit4.class)
 public class InstantiatingHttpJsonChannelProviderTest extends AbstractMtlsTransportChannelTest {
 
+  private static final String DEFAULT_ENDPOINT = "localhost:8080";
+  private static final Map<String, String> DEFAULT_HEADER_MAP = Collections.emptyMap();
+
   @Test
   public void basicTest() throws IOException {
-    String endpoint = "localhost:8080";
     ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
     executor.shutdown();
 
     TransportChannelProvider provider = InstantiatingHttpJsonChannelProvider.newBuilder().build();
 
     assertThat(provider.needsEndpoint()).isTrue();
-    provider = provider.withEndpoint(endpoint);
+    provider = provider.withEndpoint(DEFAULT_ENDPOINT);
     assertThat(provider.needsEndpoint()).isFalse();
 
     assertThat(provider.needsHeaders()).isTrue();
-    provider = provider.withHeaders(Collections.<String, String>emptyMap());
+    provider = provider.withHeaders(DEFAULT_HEADER_MAP);
     assertThat(provider.needsHeaders()).isFalse();
 
     // Make sure getTransportChannel works without setting executor
@@ -101,6 +104,56 @@ public class InstantiatingHttpJsonChannelProviderTest extends AbstractMtlsTransp
 
     // Make sure we can create channels OK.
     provider.getTransportChannel().shutdownNow();
+  }
+
+  // Ensure that a default executor is created by the ManagedHttpJsonChannel even
+  // if not provided by the TransportChannelProvider
+  @Test
+  public void managedChannelUsesDefaultChannelExecutor() throws IOException {
+    InstantiatingHttpJsonChannelProvider instantiatingHttpJsonChannelProvider =
+        InstantiatingHttpJsonChannelProvider.newBuilder().setEndpoint(DEFAULT_ENDPOINT).build();
+    instantiatingHttpJsonChannelProvider =
+        (InstantiatingHttpJsonChannelProvider)
+            instantiatingHttpJsonChannelProvider.withHeaders(DEFAULT_HEADER_MAP);
+    HttpJsonTransportChannel httpJsonTransportChannel =
+        instantiatingHttpJsonChannelProvider.getTransportChannel();
+
+    // By default, the channel will be wrapped with ManagedHttpJsonInterceptorChannel
+    ManagedHttpJsonInterceptorChannel interceptorChannel =
+        (ManagedHttpJsonInterceptorChannel) httpJsonTransportChannel.getManagedChannel();
+    ManagedHttpJsonChannel managedHttpJsonChannel = interceptorChannel.getChannel();
+    assertThat(managedHttpJsonChannel.getExecutor()).isNotNull();
+
+    // Clean up the resources (executor, deadlineScheduler, httpTransport)
+    instantiatingHttpJsonChannelProvider.getTransportChannel().shutdownNow();
+  }
+
+  // Ensure that the user's executor is used by the ManagedHttpJsonChannel
+  @Test
+  public void managedChannelUsesCustomExecutor() throws IOException {
+    // Custom executor to use
+    ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
+
+    InstantiatingHttpJsonChannelProvider instantiatingHttpJsonChannelProvider =
+        InstantiatingHttpJsonChannelProvider.newBuilder()
+            .setEndpoint(DEFAULT_ENDPOINT)
+            .setExecutor(executor)
+            .build();
+    instantiatingHttpJsonChannelProvider =
+        (InstantiatingHttpJsonChannelProvider)
+            instantiatingHttpJsonChannelProvider.withHeaders(DEFAULT_HEADER_MAP);
+    HttpJsonTransportChannel httpJsonTransportChannel =
+        instantiatingHttpJsonChannelProvider.getTransportChannel();
+
+    // By default, the channel will be wrapped with ManagedHttpJsonInterceptorChannel
+    ManagedHttpJsonInterceptorChannel interceptorChannel =
+        (ManagedHttpJsonInterceptorChannel) httpJsonTransportChannel.getManagedChannel();
+    ManagedHttpJsonChannel managedHttpJsonChannel = interceptorChannel.getChannel();
+    assertThat(managedHttpJsonChannel.getExecutor()).isNotNull();
+    assertThat(managedHttpJsonChannel.getExecutor()).isEqualTo(executor);
+
+    // Clean up the resources (executor, deadlineScheduler, httpTransport)
+    instantiatingHttpJsonChannelProvider.getTransportChannel().shutdownNow();
   }
 
   @Override
