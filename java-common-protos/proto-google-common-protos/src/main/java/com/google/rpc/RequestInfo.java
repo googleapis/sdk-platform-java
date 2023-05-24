@@ -49,11 +49,6 @@ public final class RequestInfo extends com.google.protobuf.GeneratedMessageV3
     return new RequestInfo();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_RequestInfo_descriptor;
   }
@@ -419,39 +414,6 @@ public final class RequestInfo extends com.google.protobuf.GeneratedMessageV3
       if (((from_bitField0_ & 0x00000002) != 0)) {
         result.servingData_ = servingData_;
       }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
     }
 
     @java.lang.Override

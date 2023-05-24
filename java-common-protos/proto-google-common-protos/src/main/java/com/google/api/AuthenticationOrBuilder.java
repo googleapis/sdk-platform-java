@@ -28,6 +28,7 @@ public interface AuthenticationOrBuilder
    *
    * <pre>
    * A list of authentication rules that apply to individual API methods.
+   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -39,6 +40,7 @@ public interface AuthenticationOrBuilder
    *
    * <pre>
    * A list of authentication rules that apply to individual API methods.
+   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -50,6 +52,7 @@ public interface AuthenticationOrBuilder
    *
    * <pre>
    * A list of authentication rules that apply to individual API methods.
+   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -61,6 +64,7 @@ public interface AuthenticationOrBuilder
    *
    * <pre>
    * A list of authentication rules that apply to individual API methods.
+   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -72,6 +76,7 @@ public interface AuthenticationOrBuilder
    *
    * <pre>
    * A list of authentication rules that apply to individual API methods.
+   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *

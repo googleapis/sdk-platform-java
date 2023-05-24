@@ -23,11 +23,13 @@ package com.google.api;
  *
  * <pre>
  * Defines project properties.
+ *
  * API services can define properties that can be assigned to consumer projects
  * so that backends can perform response customization without having to make
  * additional calls or maintain additional storage. For example, Maps API
  * defines properties that controls map tile cache period, or whether to embed a
  * watermark in a result.
+ *
  * These values can be set via API producer console. Only API providers can
  * define and set these properties.
  * </pre>
@@ -54,11 +56,6 @@ public final class Property extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new Property();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -591,11 +588,13 @@ public final class Property extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Defines project properties.
+   *
    * API services can define properties that can be assigned to consumer projects
    * so that backends can perform response customization without having to make
    * additional calls or maintain additional storage. For example, Maps API
    * defines properties that controls map tile cache period, or whether to embed a
    * watermark in a result.
+   *
    * These values can be set via API producer console. Only API providers can
    * define and set these properties.
    * </pre>
@@ -675,39 +674,6 @@ public final class Property extends com.google.protobuf.GeneratedMessageV3
       if (((from_bitField0_ & 0x00000004) != 0)) {
         result.description_ = description_;
       }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
     }
 
     @java.lang.Override

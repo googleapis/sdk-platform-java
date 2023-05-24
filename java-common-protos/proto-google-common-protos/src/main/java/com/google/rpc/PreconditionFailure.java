@@ -23,6 +23,7 @@ package com.google.rpc;
  *
  * <pre>
  * Describes what preconditions have failed.
+ *
  * For example, if an RPC failed because it required the Terms of Service to be
  * acknowledged, it could list the terms of service violation in the
  * PreconditionFailure message.
@@ -48,11 +49,6 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new PreconditionFailure();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -139,6 +135,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      * <pre>
      * A description of how the precondition failed. Developers can use this
      * description to understand how to fix the failure.
+     *
      * For example: "Terms of service not accepted".
      * </pre>
      *
@@ -153,6 +150,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      * <pre>
      * A description of how the precondition failed. Developers can use this
      * description to understand how to fix the failure.
+     *
      * For example: "Terms of service not accepted".
      * </pre>
      *
@@ -191,11 +189,6 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
       return new Violation();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-      return this.unknownFields;
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -333,6 +326,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      * <pre>
      * A description of how the precondition failed. Developers can use this
      * description to understand how to fix the failure.
+     *
      * For example: "Terms of service not accepted".
      * </pre>
      *
@@ -358,6 +352,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      * <pre>
      * A description of how the precondition failed. Developers can use this
      * description to understand how to fix the failure.
+     *
      * For example: "Terms of service not accepted".
      * </pre>
      *
@@ -644,41 +639,6 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
         if (((from_bitField0_ & 0x00000004) != 0)) {
           result.description_ = description_;
         }
-      }
-
-      @java.lang.Override
-      public Builder clone() {
-        return super.clone();
-      }
-
-      @java.lang.Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.setField(field, value);
-      }
-
-      @java.lang.Override
-      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-
-      @java.lang.Override
-      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-
-      @java.lang.Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index,
-          java.lang.Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-
-      @java.lang.Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-        return super.addRepeatedField(field, value);
       }
 
       @java.lang.Override
@@ -1010,6 +970,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        * <pre>
        * A description of how the precondition failed. Developers can use this
        * description to understand how to fix the failure.
+       *
        * For example: "Terms of service not accepted".
        * </pre>
        *
@@ -1034,6 +995,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        * <pre>
        * A description of how the precondition failed. Developers can use this
        * description to understand how to fix the failure.
+       *
        * For example: "Terms of service not accepted".
        * </pre>
        *
@@ -1058,6 +1020,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        * <pre>
        * A description of how the precondition failed. Developers can use this
        * description to understand how to fix the failure.
+       *
        * For example: "Terms of service not accepted".
        * </pre>
        *
@@ -1081,6 +1044,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        * <pre>
        * A description of how the precondition failed. Developers can use this
        * description to understand how to fix the failure.
+       *
        * For example: "Terms of service not accepted".
        * </pre>
        *
@@ -1100,6 +1064,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        * <pre>
        * A description of how the precondition failed. Developers can use this
        * description to understand how to fix the failure.
+       *
        * For example: "Terms of service not accepted".
        * </pre>
        *
@@ -1418,6 +1383,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
    *
    * <pre>
    * Describes what preconditions have failed.
+   *
    * For example, if an RPC failed because it required the Terms of Service to be
    * acknowledged, it could list the terms of service violation in the
    * PreconditionFailure message.
@@ -1510,39 +1476,6 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
 
     private void buildPartial0(com.google.rpc.PreconditionFailure result) {
       int from_bitField0_ = bitField0_;
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
     }
 
     @java.lang.Override

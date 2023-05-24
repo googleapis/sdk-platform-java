@@ -28,6 +28,7 @@ package com.google.api;
  * Google Compute Engine VM instances has a type of
  * `"gce_instance"` and specifies the use of the labels `"instance_id"` and
  * `"zone"` to identify particular VM instances.
+ *
  * Different APIs can support different monitored resource types. APIs generally
  * provide a `list` method that returns the monitored resource descriptors used
  * by the API.
@@ -58,11 +59,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new MonitoredResourceDescriptor();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -643,6 +639,7 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    * Google Compute Engine VM instances has a type of
    * `"gce_instance"` and specifies the use of the labels `"instance_id"` and
    * `"zone"` to identify particular VM instances.
+   *
    * Different APIs can support different monitored resource types. APIs generally
    * provide a `list` method that returns the monitored resource descriptors used
    * by the API.
@@ -756,39 +753,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
       if (((from_bitField0_ & 0x00000020) != 0)) {
         result.launchStage_ = launchStage_;
       }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
     }
 
     @java.lang.Override

@@ -26,13 +26,17 @@ package com.google.api;
  * there are scopes defined for "Read-only access to Google Calendar" and
  * "Access to Cloud Platform". Users can consent to a scope for an application,
  * giving it permission to access that data on their behalf.
+ *
  * OAuth scope specifications should be fairly coarse grained; a user will need
  * to see and understand the text description of what your scope means.
+ *
  * In most cases: use one or at most two OAuth scopes for an entire family of
  * products. If your product has multiple APIs, you should probably be sharing
  * the OAuth scope across all of those APIs.
+ *
  * When you need finer grained OAuth consent screens: talk with your product
  * management about how developers will use them in practice.
+ *
  * Please note that even though each of the canonical scopes is enough for a
  * request to be accepted and passed to the backend, a request can still fail
  * due to the backend requiring additional scopes or permissions.
@@ -60,11 +64,6 @@ public final class OAuthRequirements extends com.google.protobuf.GeneratedMessag
     return new OAuthRequirements();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.AuthProto.internal_static_google_api_OAuthRequirements_descriptor;
   }
@@ -87,7 +86,9 @@ public final class OAuthRequirements extends com.google.protobuf.GeneratedMessag
    * <pre>
    * The list of publicly documented OAuth scopes that are allowed access. An
    * OAuth token containing any of these scopes will be accepted.
+   *
    * Example:
+   *
    *      canonical_scopes: https://www.googleapis.com/auth/calendar,
    *                        https://www.googleapis.com/auth/calendar.read
    * </pre>
@@ -114,7 +115,9 @@ public final class OAuthRequirements extends com.google.protobuf.GeneratedMessag
    * <pre>
    * The list of publicly documented OAuth scopes that are allowed access. An
    * OAuth token containing any of these scopes will be accepted.
+   *
    * Example:
+   *
    *      canonical_scopes: https://www.googleapis.com/auth/calendar,
    *                        https://www.googleapis.com/auth/calendar.read
    * </pre>
@@ -301,13 +304,17 @@ public final class OAuthRequirements extends com.google.protobuf.GeneratedMessag
    * there are scopes defined for "Read-only access to Google Calendar" and
    * "Access to Cloud Platform". Users can consent to a scope for an application,
    * giving it permission to access that data on their behalf.
+   *
    * OAuth scope specifications should be fairly coarse grained; a user will need
    * to see and understand the text description of what your scope means.
+   *
    * In most cases: use one or at most two OAuth scopes for an entire family of
    * products. If your product has multiple APIs, you should probably be sharing
    * the OAuth scope across all of those APIs.
+   *
    * When you need finer grained OAuth consent screens: talk with your product
    * management about how developers will use them in practice.
+   *
    * Please note that even though each of the canonical scopes is enough for a
    * request to be accepted and passed to the backend, a request can still fail
    * due to the backend requiring additional scopes or permissions.
@@ -385,39 +392,6 @@ public final class OAuthRequirements extends com.google.protobuf.GeneratedMessag
     }
 
     @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
       if (other instanceof com.google.api.OAuthRequirements) {
         return mergeFrom((com.google.api.OAuthRequirements) other);
@@ -492,7 +466,9 @@ public final class OAuthRequirements extends com.google.protobuf.GeneratedMessag
      * <pre>
      * The list of publicly documented OAuth scopes that are allowed access. An
      * OAuth token containing any of these scopes will be accepted.
+     *
      * Example:
+     *
      *      canonical_scopes: https://www.googleapis.com/auth/calendar,
      *                        https://www.googleapis.com/auth/calendar.read
      * </pre>
@@ -518,7 +494,9 @@ public final class OAuthRequirements extends com.google.protobuf.GeneratedMessag
      * <pre>
      * The list of publicly documented OAuth scopes that are allowed access. An
      * OAuth token containing any of these scopes will be accepted.
+     *
      * Example:
+     *
      *      canonical_scopes: https://www.googleapis.com/auth/calendar,
      *                        https://www.googleapis.com/auth/calendar.read
      * </pre>
@@ -544,7 +522,9 @@ public final class OAuthRequirements extends com.google.protobuf.GeneratedMessag
      * <pre>
      * The list of publicly documented OAuth scopes that are allowed access. An
      * OAuth token containing any of these scopes will be accepted.
+     *
      * Example:
+     *
      *      canonical_scopes: https://www.googleapis.com/auth/calendar,
      *                        https://www.googleapis.com/auth/calendar.read
      * </pre>
@@ -569,7 +549,9 @@ public final class OAuthRequirements extends com.google.protobuf.GeneratedMessag
      * <pre>
      * The list of publicly documented OAuth scopes that are allowed access. An
      * OAuth token containing any of these scopes will be accepted.
+     *
      * Example:
+     *
      *      canonical_scopes: https://www.googleapis.com/auth/calendar,
      *                        https://www.googleapis.com/auth/calendar.read
      * </pre>
@@ -590,7 +572,9 @@ public final class OAuthRequirements extends com.google.protobuf.GeneratedMessag
      * <pre>
      * The list of publicly documented OAuth scopes that are allowed access. An
      * OAuth token containing any of these scopes will be accepted.
+     *
      * Example:
+     *
      *      canonical_scopes: https://www.googleapis.com/auth/calendar,
      *                        https://www.googleapis.com/auth/calendar.read
      * </pre>

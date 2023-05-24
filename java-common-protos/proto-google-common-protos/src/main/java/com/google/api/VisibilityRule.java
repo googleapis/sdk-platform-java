@@ -49,11 +49,6 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
     return new VisibilityRule();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.VisibilityProto.internal_static_google_api_VisibilityRule_descriptor;
   }
@@ -76,6 +71,7 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Selects methods, messages, fields, enums, etc. to which this rule applies.
+   *
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax
    * details.
    * </pre>
@@ -101,6 +97,7 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Selects methods, messages, fields, enums, etc. to which this rule applies.
+   *
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax
    * details.
    * </pre>
@@ -132,13 +129,17 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * A comma-separated list of visibility labels that apply to the `selector`.
    * Any of the listed labels can be used to grant the visibility.
+   *
    * If a rule has multiple labels, removing one of the labels but not all of
    * them can break clients.
+   *
    * Example:
+   *
    *     visibility:
    *       rules:
    *       - selector: google.calendar.Calendar.EnhancedSearch
    *         restriction: INTERNAL, PREVIEW
+   *
    * Removing INTERNAL from this restriction will break clients that rely on
    * this method and only had access to it through INTERNAL.
    * </pre>
@@ -165,13 +166,17 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * A comma-separated list of visibility labels that apply to the `selector`.
    * Any of the listed labels can be used to grant the visibility.
+   *
    * If a rule has multiple labels, removing one of the labels but not all of
    * them can break clients.
+   *
    * Example:
+   *
    *     visibility:
    *       rules:
    *       - selector: google.calendar.Calendar.EnhancedSearch
    *         restriction: INTERNAL, PREVIEW
+   *
    * Removing INTERNAL from this restriction will break clients that rely on
    * this method and only had access to it through INTERNAL.
    * </pre>
@@ -442,39 +447,6 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
     }
 
     @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
-    }
-
-    @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
       if (other instanceof com.google.api.VisibilityRule) {
         return mergeFrom((com.google.api.VisibilityRule) other);
@@ -559,6 +531,7 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects methods, messages, fields, enums, etc. to which this rule applies.
+     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -583,6 +556,7 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects methods, messages, fields, enums, etc. to which this rule applies.
+     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -607,6 +581,7 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects methods, messages, fields, enums, etc. to which this rule applies.
+     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -630,6 +605,7 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects methods, messages, fields, enums, etc. to which this rule applies.
+     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -649,6 +625,7 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects methods, messages, fields, enums, etc. to which this rule applies.
+     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -676,13 +653,17 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * A comma-separated list of visibility labels that apply to the `selector`.
      * Any of the listed labels can be used to grant the visibility.
+     *
      * If a rule has multiple labels, removing one of the labels but not all of
      * them can break clients.
+     *
      * Example:
+     *
      *     visibility:
      *       rules:
      *       - selector: google.calendar.Calendar.EnhancedSearch
      *         restriction: INTERNAL, PREVIEW
+     *
      * Removing INTERNAL from this restriction will break clients that rely on
      * this method and only had access to it through INTERNAL.
      * </pre>
@@ -708,13 +689,17 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * A comma-separated list of visibility labels that apply to the `selector`.
      * Any of the listed labels can be used to grant the visibility.
+     *
      * If a rule has multiple labels, removing one of the labels but not all of
      * them can break clients.
+     *
      * Example:
+     *
      *     visibility:
      *       rules:
      *       - selector: google.calendar.Calendar.EnhancedSearch
      *         restriction: INTERNAL, PREVIEW
+     *
      * Removing INTERNAL from this restriction will break clients that rely on
      * this method and only had access to it through INTERNAL.
      * </pre>
@@ -740,13 +725,17 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * A comma-separated list of visibility labels that apply to the `selector`.
      * Any of the listed labels can be used to grant the visibility.
+     *
      * If a rule has multiple labels, removing one of the labels but not all of
      * them can break clients.
+     *
      * Example:
+     *
      *     visibility:
      *       rules:
      *       - selector: google.calendar.Calendar.EnhancedSearch
      *         restriction: INTERNAL, PREVIEW
+     *
      * Removing INTERNAL from this restriction will break clients that rely on
      * this method and only had access to it through INTERNAL.
      * </pre>
@@ -771,13 +760,17 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * A comma-separated list of visibility labels that apply to the `selector`.
      * Any of the listed labels can be used to grant the visibility.
+     *
      * If a rule has multiple labels, removing one of the labels but not all of
      * them can break clients.
+     *
      * Example:
+     *
      *     visibility:
      *       rules:
      *       - selector: google.calendar.Calendar.EnhancedSearch
      *         restriction: INTERNAL, PREVIEW
+     *
      * Removing INTERNAL from this restriction will break clients that rely on
      * this method and only had access to it through INTERNAL.
      * </pre>
@@ -798,13 +791,17 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * A comma-separated list of visibility labels that apply to the `selector`.
      * Any of the listed labels can be used to grant the visibility.
+     *
      * If a rule has multiple labels, removing one of the labels but not all of
      * them can break clients.
+     *
      * Example:
+     *
      *     visibility:
      *       rules:
      *       - selector: google.calendar.Calendar.EnhancedSearch
      *         restriction: INTERNAL, PREVIEW
+     *
      * Removing INTERNAL from this restriction will break clients that rely on
      * this method and only had access to it through INTERNAL.
      * </pre>

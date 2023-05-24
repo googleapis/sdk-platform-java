@@ -136,6 +136,7 @@ public interface AuthenticationInfoOrBuilder
    * The name of the service account key used to create or exchange
    * credentials for authenticating the service account making the request.
    * This is a scheme-less URI full resource name. For example:
+   *
    * "//iam.googleapis.com/projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{key}"
    * </pre>
    *
@@ -151,6 +152,7 @@ public interface AuthenticationInfoOrBuilder
    * The name of the service account key used to create or exchange
    * credentials for authenticating the service account making the request.
    * This is a scheme-less URI full resource name. For example:
+   *
    * "//iam.googleapis.com/projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{key}"
    * </pre>
    *

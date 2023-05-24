@@ -45,7 +45,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     documentationUri_ = "";
     apiShortName_ = "";
     githubLabel_ = "";
-    codeownerGithubTeams_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    codeownerGithubTeams_ = com.google.protobuf.LazyStringArrayList.emptyList();
     docTagPrefix_ = "";
     organization_ = 0;
     librarySettings_ = java.util.Collections.emptyList();
@@ -56,11 +56,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new Publishing();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -366,7 +361,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
   public static final int CODEOWNER_GITHUB_TEAMS_FIELD_NUMBER = 105;
 
   @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringList codeownerGithubTeams_;
+  private com.google.protobuf.LazyStringArrayList codeownerGithubTeams_ =
+      com.google.protobuf.LazyStringArrayList.emptyList();
   /**
    *
    *
@@ -960,8 +956,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       documentationUri_ = "";
       apiShortName_ = "";
       githubLabel_ = "";
-      codeownerGithubTeams_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000020);
+      codeownerGithubTeams_ = com.google.protobuf.LazyStringArrayList.emptyList();
       docTagPrefix_ = "";
       organization_ = 0;
       if (librarySettingsBuilder_ == null) {
@@ -1015,11 +1010,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       } else {
         result.methodSettings_ = methodSettingsBuilder_.build();
       }
-      if (((bitField0_ & 0x00000020) != 0)) {
-        codeownerGithubTeams_ = codeownerGithubTeams_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000020);
-      }
-      result.codeownerGithubTeams_ = codeownerGithubTeams_;
       if (librarySettingsBuilder_ == null) {
         if (((bitField0_ & 0x00000100) != 0)) {
           librarySettings_ = java.util.Collections.unmodifiableList(librarySettings_);
@@ -1045,6 +1035,10 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       if (((from_bitField0_ & 0x00000010) != 0)) {
         result.githubLabel_ = githubLabel_;
       }
+      if (((from_bitField0_ & 0x00000020) != 0)) {
+        codeownerGithubTeams_.makeImmutable();
+        result.codeownerGithubTeams_ = codeownerGithubTeams_;
+      }
       if (((from_bitField0_ & 0x00000040) != 0)) {
         result.docTagPrefix_ = docTagPrefix_;
       }
@@ -1054,39 +1048,6 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       if (((from_bitField0_ & 0x00000200) != 0)) {
         result.protoReferenceDocumentationUri_ = protoReferenceDocumentationUri_;
       }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
     }
 
     @java.lang.Override
@@ -1151,7 +1112,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       if (!other.codeownerGithubTeams_.isEmpty()) {
         if (codeownerGithubTeams_.isEmpty()) {
           codeownerGithubTeams_ = other.codeownerGithubTeams_;
-          bitField0_ = (bitField0_ & ~0x00000020);
+          bitField0_ |= 0x00000020;
         } else {
           ensureCodeownerGithubTeamsIsMutable();
           codeownerGithubTeams_.addAll(other.codeownerGithubTeams_);
@@ -2130,14 +2091,14 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       return this;
     }
 
-    private com.google.protobuf.LazyStringList codeownerGithubTeams_ =
-        com.google.protobuf.LazyStringArrayList.EMPTY;
+    private com.google.protobuf.LazyStringArrayList codeownerGithubTeams_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
 
     private void ensureCodeownerGithubTeamsIsMutable() {
-      if (!((bitField0_ & 0x00000020) != 0)) {
+      if (!codeownerGithubTeams_.isModifiable()) {
         codeownerGithubTeams_ = new com.google.protobuf.LazyStringArrayList(codeownerGithubTeams_);
-        bitField0_ |= 0x00000020;
       }
+      bitField0_ |= 0x00000020;
     }
     /**
      *
@@ -2152,7 +2113,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return A list containing the codeownerGithubTeams.
      */
     public com.google.protobuf.ProtocolStringList getCodeownerGithubTeamsList() {
-      return codeownerGithubTeams_.getUnmodifiableView();
+      codeownerGithubTeams_.makeImmutable();
+      return codeownerGithubTeams_;
     }
     /**
      *
@@ -2221,6 +2183,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       }
       ensureCodeownerGithubTeamsIsMutable();
       codeownerGithubTeams_.set(index, value);
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }
@@ -2243,6 +2206,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       }
       ensureCodeownerGithubTeamsIsMutable();
       codeownerGithubTeams_.add(value);
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }
@@ -2262,6 +2226,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     public Builder addAllCodeownerGithubTeams(java.lang.Iterable<java.lang.String> values) {
       ensureCodeownerGithubTeamsIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(values, codeownerGithubTeams_);
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }
@@ -2278,8 +2243,9 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearCodeownerGithubTeams() {
-      codeownerGithubTeams_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      codeownerGithubTeams_ = com.google.protobuf.LazyStringArrayList.emptyList();
       bitField0_ = (bitField0_ & ~0x00000020);
+      ;
       onChanged();
       return this;
     }
@@ -2303,6 +2269,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       checkByteStringIsUtf8(value);
       ensureCodeownerGithubTeamsIsMutable();
       codeownerGithubTeams_.add(value);
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }

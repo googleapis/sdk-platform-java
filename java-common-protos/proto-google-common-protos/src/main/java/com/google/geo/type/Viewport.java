@@ -27,18 +27,26 @@ package com.google.geo.type;
  * its boundary. The latitude bounds must range between -90 to 90 degrees
  * inclusive, and the longitude bounds must range between -180 to 180 degrees
  * inclusive. Various cases include:
+ *
  *  - If `low` = `high`, the viewport consists of that single point.
+ *
  *  - If `low.longitude` &gt; `high.longitude`, the longitude range is inverted
  *    (the viewport crosses the 180 degree longitude line).
+ *
  *  - If `low.longitude` = -180 degrees and `high.longitude` = 180 degrees,
  *    the viewport includes all longitudes.
+ *
  *  - If `low.longitude` = 180 degrees and `high.longitude` = -180 degrees,
  *    the longitude range is empty.
+ *
  *  - If `low.latitude` &gt; `high.latitude`, the latitude range is empty.
+ *
  * Both `low` and `high` must be populated, and the represented box cannot be
  * empty (as specified by the definitions above). An empty viewport will result
  * in an error.
+ *
  * For example, this viewport fully encloses New York City:
+ *
  * {
  *     "low": {
  *         "latitude": 40.477398,
@@ -69,11 +77,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new Viewport();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -366,18 +369,26 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
    * its boundary. The latitude bounds must range between -90 to 90 degrees
    * inclusive, and the longitude bounds must range between -180 to 180 degrees
    * inclusive. Various cases include:
+   *
    *  - If `low` = `high`, the viewport consists of that single point.
+   *
    *  - If `low.longitude` &gt; `high.longitude`, the longitude range is inverted
    *    (the viewport crosses the 180 degree longitude line).
+   *
    *  - If `low.longitude` = -180 degrees and `high.longitude` = 180 degrees,
    *    the viewport includes all longitudes.
+   *
    *  - If `low.longitude` = 180 degrees and `high.longitude` = -180 degrees,
    *    the longitude range is empty.
+   *
    *  - If `low.latitude` &gt; `high.latitude`, the latitude range is empty.
+   *
    * Both `low` and `high` must be populated, and the represented box cannot be
    * empty (as specified by the definitions above). An empty viewport will result
    * in an error.
+   *
    * For example, this viewport fully encloses New York City:
+   *
    * {
    *     "low": {
    *         "latitude": 40.477398,
@@ -470,39 +481,6 @@ public final class Viewport extends com.google.protobuf.GeneratedMessageV3
       if (((from_bitField0_ & 0x00000002) != 0)) {
         result.high_ = highBuilder_ == null ? high_ : highBuilder_.build();
       }
-    }
-
-    @java.lang.Override
-    public Builder clone() {
-      return super.clone();
-    }
-
-    @java.lang.Override
-    public Builder setField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.setField(field, value);
-    }
-
-    @java.lang.Override
-    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
-      return super.clearField(field);
-    }
-
-    @java.lang.Override
-    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-      return super.clearOneof(oneof);
-    }
-
-    @java.lang.Override
-    public Builder setRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
-      return super.setRepeatedField(field, index, value);
-    }
-
-    @java.lang.Override
-    public Builder addRepeatedField(
-        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
-      return super.addRepeatedField(field, value);
     }
 
     @java.lang.Override
