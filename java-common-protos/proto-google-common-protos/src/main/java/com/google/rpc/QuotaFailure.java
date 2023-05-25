@@ -23,14 +23,12 @@ package com.google.rpc;
  *
  * <pre>
  * Describes how a quota check failed.
- *
  * For example if a daily limit was exceeded for the calling project,
  * a service could respond with a QuotaFailure detail containing the project
  * id and the description of the quota limit that was exceeded.  If the
  * calling project hasn't enabled the service in the developer console, then
  * a service could respond with the project id and set `service_disabled`
  * to true.
- *
  * Also see RetryInfo and Help types for other details about handling a
  * quota failure.
  * </pre>
@@ -55,6 +53,11 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new QuotaFailure();
+  }
+
+  @java.lang.Override
+  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -112,7 +115,6 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
      * description to find more about the quota configuration in the service's
      * public documentation, or find the relevant quota limit to adjust through
      * developer console.
-     *
      * For example: "Service disabled" or "Daily Limit for read operations
      * exceeded".
      * </pre>
@@ -130,7 +132,6 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
      * description to find more about the quota configuration in the service's
      * public documentation, or find the relevant quota limit to adjust through
      * developer console.
-     *
      * For example: "Service disabled" or "Daily Limit for read operations
      * exceeded".
      * </pre>
@@ -170,6 +171,11 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
       return new Violation();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+      return this.unknownFields;
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -254,7 +260,6 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
      * description to find more about the quota configuration in the service's
      * public documentation, or find the relevant quota limit to adjust through
      * developer console.
-     *
      * For example: "Service disabled" or "Daily Limit for read operations
      * exceeded".
      * </pre>
@@ -283,7 +288,6 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
      * description to find more about the quota configuration in the service's
      * public documentation, or find the relevant quota limit to adjust through
      * developer console.
-     *
      * For example: "Service disabled" or "Daily Limit for read operations
      * exceeded".
      * </pre>
@@ -561,6 +565,41 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
       }
 
       @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+        return super.setField(field, value);
+      }
+
+      @java.lang.Override
+      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+
+      @java.lang.Override
+      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index,
+          java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.google.rpc.QuotaFailure.Violation) {
           return mergeFrom((com.google.rpc.QuotaFailure.Violation) other);
@@ -764,7 +803,6 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
        * description to find more about the quota configuration in the service's
        * public documentation, or find the relevant quota limit to adjust through
        * developer console.
-       *
        * For example: "Service disabled" or "Daily Limit for read operations
        * exceeded".
        * </pre>
@@ -792,7 +830,6 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
        * description to find more about the quota configuration in the service's
        * public documentation, or find the relevant quota limit to adjust through
        * developer console.
-       *
        * For example: "Service disabled" or "Daily Limit for read operations
        * exceeded".
        * </pre>
@@ -820,7 +857,6 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
        * description to find more about the quota configuration in the service's
        * public documentation, or find the relevant quota limit to adjust through
        * developer console.
-       *
        * For example: "Service disabled" or "Daily Limit for read operations
        * exceeded".
        * </pre>
@@ -847,7 +883,6 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
        * description to find more about the quota configuration in the service's
        * public documentation, or find the relevant quota limit to adjust through
        * developer console.
-       *
        * For example: "Service disabled" or "Daily Limit for read operations
        * exceeded".
        * </pre>
@@ -870,7 +905,6 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
        * description to find more about the quota configuration in the service's
        * public documentation, or find the relevant quota limit to adjust through
        * developer console.
-       *
        * For example: "Service disabled" or "Daily Limit for read operations
        * exceeded".
        * </pre>
@@ -1190,14 +1224,12 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Describes how a quota check failed.
-   *
    * For example if a daily limit was exceeded for the calling project,
    * a service could respond with a QuotaFailure detail containing the project
    * id and the description of the quota limit that was exceeded.  If the
    * calling project hasn't enabled the service in the developer console, then
    * a service could respond with the project id and set `service_disabled`
    * to true.
-   *
    * Also see RetryInfo and Help types for other details about handling a
    * quota failure.
    * </pre>
@@ -1286,6 +1318,39 @@ public final class QuotaFailure extends com.google.protobuf.GeneratedMessageV3
 
     private void buildPartial0(com.google.rpc.QuotaFailure result) {
       int from_bitField0_ = bitField0_;
+    }
+
+    @java.lang.Override
+    public Builder clone() {
+      return super.clone();
+    }
+
+    @java.lang.Override
+    public Builder setField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.setField(field, value);
+    }
+
+    @java.lang.Override
+    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      return super.clearField(field);
+    }
+
+    @java.lang.Override
+    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      return super.clearOneof(oneof);
+    }
+
+    @java.lang.Override
+    public Builder setRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
+      return super.setRepeatedField(field, index, value);
+    }
+
+    @java.lang.Override
+    public Builder addRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.addRepeatedField(field, value);
     }
 
     @java.lang.Override

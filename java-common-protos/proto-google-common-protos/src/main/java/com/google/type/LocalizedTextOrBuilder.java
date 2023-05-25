@@ -53,7 +53,6 @@ public interface LocalizedTextOrBuilder
    *
    * <pre>
    * The text's BCP-47 language code, such as "en-US" or "sr-Latn".
-   *
    * For more information, see
    * http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
    * </pre>
@@ -68,7 +67,6 @@ public interface LocalizedTextOrBuilder
    *
    * <pre>
    * The text's BCP-47 language code, such as "en-US" or "sr-Latn".
-   *
    * For more information, see
    * http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
    * </pre>

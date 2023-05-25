@@ -26,23 +26,18 @@ package com.google.api;
  * such as whether an application can call a visibility-restricted method.
  * The restriction is expressed by applying visibility labels on service
  * elements. The visibility labels are elsewhere linked to service consumers.
- *
  * A service can define multiple visibility labels, but a service consumer
  * should be granted at most one visibility label. Multiple visibility
  * labels for a single service consumer are not supported.
- *
  * If an element and all its parents have no visibility label, its visibility
  * is unconditionally granted.
- *
  * Example:
- *
  *     visibility:
  *       rules:
  *       - selector: google.calendar.Calendar.EnhancedSearch
  *         restriction: PREVIEW
  *       - selector: google.calendar.Calendar.Delegate
  *         restriction: INTERNAL
- *
  * Here, all methods are publicly visible except for the restricted methods
  * EnhancedSearch and Delegate.
  * </pre>
@@ -69,6 +64,11 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
     return new Visibility();
   }
 
+  @java.lang.Override
+  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+    return this.unknownFields;
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.VisibilityProto.internal_static_google_api_Visibility_descriptor;
   }
@@ -90,7 +90,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A list of visibility rules that apply to individual API elements.
-   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -105,7 +104,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A list of visibility rules that apply to individual API elements.
-   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -120,7 +118,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A list of visibility rules that apply to individual API elements.
-   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -135,7 +132,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A list of visibility rules that apply to individual API elements.
-   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -150,7 +146,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A list of visibility rules that apply to individual API elements.
-   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -328,23 +323,18 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
    * such as whether an application can call a visibility-restricted method.
    * The restriction is expressed by applying visibility labels on service
    * elements. The visibility labels are elsewhere linked to service consumers.
-   *
    * A service can define multiple visibility labels, but a service consumer
    * should be granted at most one visibility label. Multiple visibility
    * labels for a single service consumer are not supported.
-   *
    * If an element and all its parents have no visibility label, its visibility
    * is unconditionally granted.
-   *
    * Example:
-   *
    *     visibility:
    *       rules:
    *       - selector: google.calendar.Calendar.EnhancedSearch
    *         restriction: PREVIEW
    *       - selector: google.calendar.Calendar.Delegate
    *         restriction: INTERNAL
-   *
    * Here, all methods are publicly visible except for the restricted methods
    * EnhancedSearch and Delegate.
    * </pre>
@@ -432,6 +422,39 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
 
     private void buildPartial0(com.google.api.Visibility result) {
       int from_bitField0_ = bitField0_;
+    }
+
+    @java.lang.Override
+    public Builder clone() {
+      return super.clone();
+    }
+
+    @java.lang.Override
+    public Builder setField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.setField(field, value);
+    }
+
+    @java.lang.Override
+    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      return super.clearField(field);
+    }
+
+    @java.lang.Override
+    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      return super.clearOneof(oneof);
+    }
+
+    @java.lang.Override
+    public Builder setRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
+      return super.setRepeatedField(field, index, value);
+    }
+
+    @java.lang.Override
+    public Builder addRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.addRepeatedField(field, value);
     }
 
     @java.lang.Override
@@ -551,7 +574,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of visibility rules that apply to individual API elements.
-     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -569,7 +591,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of visibility rules that apply to individual API elements.
-     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -587,7 +608,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of visibility rules that apply to individual API elements.
-     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -605,7 +625,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of visibility rules that apply to individual API elements.
-     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -629,7 +648,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of visibility rules that apply to individual API elements.
-     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -650,7 +668,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of visibility rules that apply to individual API elements.
-     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -674,7 +691,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of visibility rules that apply to individual API elements.
-     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -698,7 +714,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of visibility rules that apply to individual API elements.
-     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -719,7 +734,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of visibility rules that apply to individual API elements.
-     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -740,7 +754,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of visibility rules that apply to individual API elements.
-     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -761,7 +774,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of visibility rules that apply to individual API elements.
-     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -782,7 +794,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of visibility rules that apply to individual API elements.
-     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -803,7 +814,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of visibility rules that apply to individual API elements.
-     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -817,7 +827,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of visibility rules that apply to individual API elements.
-     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -835,7 +844,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of visibility rules that apply to individual API elements.
-     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -854,7 +862,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of visibility rules that apply to individual API elements.
-     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -868,7 +875,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of visibility rules that apply to individual API elements.
-     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -883,7 +889,6 @@ public final class Visibility extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of visibility rules that apply to individual API elements.
-     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *

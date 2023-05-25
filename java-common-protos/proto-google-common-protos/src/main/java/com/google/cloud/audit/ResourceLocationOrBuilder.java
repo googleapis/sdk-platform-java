@@ -31,7 +31,6 @@ public interface ResourceLocationOrBuilder
    * Requests to create or delete a location based resource must populate
    * the 'current_locations' field and not the 'original_locations' field.
    * For example:
-   *
    *     "europe-west1-a"
    *     "us-east1"
    *     "nam3"
@@ -50,7 +49,6 @@ public interface ResourceLocationOrBuilder
    * Requests to create or delete a location based resource must populate
    * the 'current_locations' field and not the 'original_locations' field.
    * For example:
-   *
    *     "europe-west1-a"
    *     "us-east1"
    *     "nam3"
@@ -69,7 +67,6 @@ public interface ResourceLocationOrBuilder
    * Requests to create or delete a location based resource must populate
    * the 'current_locations' field and not the 'original_locations' field.
    * For example:
-   *
    *     "europe-west1-a"
    *     "us-east1"
    *     "nam3"
@@ -89,7 +86,6 @@ public interface ResourceLocationOrBuilder
    * Requests to create or delete a location based resource must populate
    * the 'current_locations' field and not the 'original_locations' field.
    * For example:
-   *
    *     "europe-west1-a"
    *     "us-east1"
    *     "nam3"
@@ -110,7 +106,6 @@ public interface ResourceLocationOrBuilder
    * Requests that mutate the resource's location must populate both the
    * 'original_locations' as well as the 'current_locations' fields.
    * For example:
-   *
    *     "europe-west1-a"
    *     "us-east1"
    *     "nam3"
@@ -129,7 +124,6 @@ public interface ResourceLocationOrBuilder
    * Requests that mutate the resource's location must populate both the
    * 'original_locations' as well as the 'current_locations' fields.
    * For example:
-   *
    *     "europe-west1-a"
    *     "us-east1"
    *     "nam3"
@@ -148,7 +142,6 @@ public interface ResourceLocationOrBuilder
    * Requests that mutate the resource's location must populate both the
    * 'original_locations' as well as the 'current_locations' fields.
    * For example:
-   *
    *     "europe-west1-a"
    *     "us-east1"
    *     "nam3"
@@ -168,7 +161,6 @@ public interface ResourceLocationOrBuilder
    * Requests that mutate the resource's location must populate both the
    * 'original_locations' as well as the 'current_locations' fields.
    * For example:
-   *
    *     "europe-west1-a"
    *     "us-east1"
    *     "nam3"

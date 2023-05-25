@@ -49,6 +49,11 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
     return new RequestMetadata();
   }
 
+  @java.lang.Override
+  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+    return this.unknownFields;
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.cloud.audit.AuditLogProto
         .internal_static_google_cloud_audit_RequestMetadata_descriptor;
@@ -146,7 +151,6 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
    * The user agent of the caller.
    * This information is not authenticated and should be treated accordingly.
    * For example:
-   *
    * +   `google-api-python-client/1.4.0`:
    *     The request was made by the Google API client for Python.
    * +   `Cloud SDK Command Line Tool apitools-client/1.0 gcloud/0.9.62`:
@@ -179,7 +183,6 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
    * The user agent of the caller.
    * This information is not authenticated and should be treated accordingly.
    * For example:
-   *
    * +   `google-api-python-client/1.4.0`:
    *     The request was made by the Google API client for Python.
    * +   `Cloud SDK Command Line Tool apitools-client/1.0 gcloud/0.9.62`:
@@ -219,7 +222,6 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
    * (or project) as the accessed resource.
    * See https://cloud.google.com/compute/docs/vpc/ for more information.
    * This is a scheme-less URI full resource name. For example:
-   *
    *     "//compute.googleapis.com/projects/PROJECT_ID/global/networks/NETWORK_ID"
    * </pre>
    *
@@ -248,7 +250,6 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
    * (or project) as the accessed resource.
    * See https://cloud.google.com/compute/docs/vpc/ for more information.
    * This is a scheme-less URI full resource name. For example:
-   *
    *     "//compute.googleapis.com/projects/PROJECT_ID/global/networks/NETWORK_ID"
    * </pre>
    *
@@ -278,8 +279,6 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
    * Request attributes used in IAM condition evaluation. This field contains
    * request attributes like request time and access levels associated with
    * the request.
-   *
-   *
    * To get the whole view of the attributes used in IAM
    * condition evaluation, the user must also look into
    * `AuditLog.authentication_info.resource_attributes`.
@@ -300,8 +299,6 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
    * Request attributes used in IAM condition evaluation. This field contains
    * request attributes like request time and access levels associated with
    * the request.
-   *
-   *
    * To get the whole view of the attributes used in IAM
    * condition evaluation, the user must also look into
    * `AuditLog.authentication_info.resource_attributes`.
@@ -324,8 +321,6 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
    * Request attributes used in IAM condition evaluation. This field contains
    * request attributes like request time and access levels associated with
    * the request.
-   *
-   *
    * To get the whole view of the attributes used in IAM
    * condition evaluation, the user must also look into
    * `AuditLog.authentication_info.resource_attributes`.
@@ -719,6 +714,39 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
     }
 
     @java.lang.Override
+    public Builder clone() {
+      return super.clone();
+    }
+
+    @java.lang.Override
+    public Builder setField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.setField(field, value);
+    }
+
+    @java.lang.Override
+    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      return super.clearField(field);
+    }
+
+    @java.lang.Override
+    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      return super.clearOneof(oneof);
+    }
+
+    @java.lang.Override
+    public Builder setRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
+      return super.setRepeatedField(field, index, value);
+    }
+
+    @java.lang.Override
+    public Builder addRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.addRepeatedField(field, value);
+    }
+
+    @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
       if (other instanceof com.google.cloud.audit.RequestMetadata) {
         return mergeFrom((com.google.cloud.audit.RequestMetadata) other);
@@ -992,7 +1020,6 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * The user agent of the caller.
      * This information is not authenticated and should be treated accordingly.
      * For example:
-     *
      * +   `google-api-python-client/1.4.0`:
      *     The request was made by the Google API client for Python.
      * +   `Cloud SDK Command Line Tool apitools-client/1.0 gcloud/0.9.62`:
@@ -1024,7 +1051,6 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * The user agent of the caller.
      * This information is not authenticated and should be treated accordingly.
      * For example:
-     *
      * +   `google-api-python-client/1.4.0`:
      *     The request was made by the Google API client for Python.
      * +   `Cloud SDK Command Line Tool apitools-client/1.0 gcloud/0.9.62`:
@@ -1056,7 +1082,6 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * The user agent of the caller.
      * This information is not authenticated and should be treated accordingly.
      * For example:
-     *
      * +   `google-api-python-client/1.4.0`:
      *     The request was made by the Google API client for Python.
      * +   `Cloud SDK Command Line Tool apitools-client/1.0 gcloud/0.9.62`:
@@ -1087,7 +1112,6 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * The user agent of the caller.
      * This information is not authenticated and should be treated accordingly.
      * For example:
-     *
      * +   `google-api-python-client/1.4.0`:
      *     The request was made by the Google API client for Python.
      * +   `Cloud SDK Command Line Tool apitools-client/1.0 gcloud/0.9.62`:
@@ -1114,7 +1138,6 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * The user agent of the caller.
      * This information is not authenticated and should be treated accordingly.
      * For example:
-     *
      * +   `google-api-python-client/1.4.0`:
      *     The request was made by the Google API client for Python.
      * +   `Cloud SDK Command Line Tool apitools-client/1.0 gcloud/0.9.62`:
@@ -1150,7 +1173,6 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * (or project) as the accessed resource.
      * See https://cloud.google.com/compute/docs/vpc/ for more information.
      * This is a scheme-less URI full resource name. For example:
-     *
      *     "//compute.googleapis.com/projects/PROJECT_ID/global/networks/NETWORK_ID"
      * </pre>
      *
@@ -1178,7 +1200,6 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * (or project) as the accessed resource.
      * See https://cloud.google.com/compute/docs/vpc/ for more information.
      * This is a scheme-less URI full resource name. For example:
-     *
      *     "//compute.googleapis.com/projects/PROJECT_ID/global/networks/NETWORK_ID"
      * </pre>
      *
@@ -1206,7 +1227,6 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * (or project) as the accessed resource.
      * See https://cloud.google.com/compute/docs/vpc/ for more information.
      * This is a scheme-less URI full resource name. For example:
-     *
      *     "//compute.googleapis.com/projects/PROJECT_ID/global/networks/NETWORK_ID"
      * </pre>
      *
@@ -1233,7 +1253,6 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * (or project) as the accessed resource.
      * See https://cloud.google.com/compute/docs/vpc/ for more information.
      * This is a scheme-less URI full resource name. For example:
-     *
      *     "//compute.googleapis.com/projects/PROJECT_ID/global/networks/NETWORK_ID"
      * </pre>
      *
@@ -1256,7 +1275,6 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * (or project) as the accessed resource.
      * See https://cloud.google.com/compute/docs/vpc/ for more information.
      * This is a scheme-less URI full resource name. For example:
-     *
      *     "//compute.googleapis.com/projects/PROJECT_ID/global/networks/NETWORK_ID"
      * </pre>
      *
@@ -1289,8 +1307,6 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * Request attributes used in IAM condition evaluation. This field contains
      * request attributes like request time and access levels associated with
      * the request.
-     *
-     *
      * To get the whole view of the attributes used in IAM
      * condition evaluation, the user must also look into
      * `AuditLog.authentication_info.resource_attributes`.
@@ -1310,8 +1326,6 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * Request attributes used in IAM condition evaluation. This field contains
      * request attributes like request time and access levels associated with
      * the request.
-     *
-     *
      * To get the whole view of the attributes used in IAM
      * condition evaluation, the user must also look into
      * `AuditLog.authentication_info.resource_attributes`.
@@ -1337,8 +1351,6 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * Request attributes used in IAM condition evaluation. This field contains
      * request attributes like request time and access levels associated with
      * the request.
-     *
-     *
      * To get the whole view of the attributes used in IAM
      * condition evaluation, the user must also look into
      * `AuditLog.authentication_info.resource_attributes`.
@@ -1366,8 +1378,6 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * Request attributes used in IAM condition evaluation. This field contains
      * request attributes like request time and access levels associated with
      * the request.
-     *
-     *
      * To get the whole view of the attributes used in IAM
      * condition evaluation, the user must also look into
      * `AuditLog.authentication_info.resource_attributes`.
@@ -1393,8 +1403,6 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * Request attributes used in IAM condition evaluation. This field contains
      * request attributes like request time and access levels associated with
      * the request.
-     *
-     *
      * To get the whole view of the attributes used in IAM
      * condition evaluation, the user must also look into
      * `AuditLog.authentication_info.resource_attributes`.
@@ -1426,8 +1434,6 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * Request attributes used in IAM condition evaluation. This field contains
      * request attributes like request time and access levels associated with
      * the request.
-     *
-     *
      * To get the whole view of the attributes used in IAM
      * condition evaluation, the user must also look into
      * `AuditLog.authentication_info.resource_attributes`.
@@ -1452,8 +1458,6 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * Request attributes used in IAM condition evaluation. This field contains
      * request attributes like request time and access levels associated with
      * the request.
-     *
-     *
      * To get the whole view of the attributes used in IAM
      * condition evaluation, the user must also look into
      * `AuditLog.authentication_info.resource_attributes`.
@@ -1473,8 +1477,6 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * Request attributes used in IAM condition evaluation. This field contains
      * request attributes like request time and access levels associated with
      * the request.
-     *
-     *
      * To get the whole view of the attributes used in IAM
      * condition evaluation, the user must also look into
      * `AuditLog.authentication_info.resource_attributes`.
@@ -1499,8 +1501,6 @@ public final class RequestMetadata extends com.google.protobuf.GeneratedMessageV
      * Request attributes used in IAM condition evaluation. This field contains
      * request attributes like request time and access levels associated with
      * the request.
-     *
-     *
      * To get the whole view of the attributes used in IAM
      * condition evaluation, the user must also look into
      * `AuditLog.authentication_info.resource_attributes`.

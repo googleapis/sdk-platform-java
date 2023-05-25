@@ -23,9 +23,7 @@ package com.google.longrunning;
  *
  * <pre>
  * A message representing the message types used by a long-running operation.
- *
  * Example:
- *
  *   rpc LongRunningRecognize(LongRunningRecognizeRequest)
  *       returns (google.longrunning.Operation) {
  *     option (google.longrunning.operation_info) = {
@@ -58,6 +56,11 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
     return new OperationInfo();
   }
 
+  @java.lang.Override
+  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+    return this.unknownFields;
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.longrunning.OperationsProto
         .internal_static_google_longrunning_OperationInfo_descriptor;
@@ -84,10 +87,8 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
    * Required. The message name of the primary return type for this
    * long-running operation.
    * This type will be used to deserialize the LRO's response.
-   *
    * If the response is in a different package from the rpc, a fully-qualified
    * message name must be used (e.g. `google.protobuf.Struct`).
-   *
    * Note: Altering this value constitutes a breaking change.
    * </pre>
    *
@@ -114,10 +115,8 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
    * Required. The message name of the primary return type for this
    * long-running operation.
    * This type will be used to deserialize the LRO's response.
-   *
    * If the response is in a different package from the rpc, a fully-qualified
    * message name must be used (e.g. `google.protobuf.Struct`).
-   *
    * Note: Altering this value constitutes a breaking change.
    * </pre>
    *
@@ -148,10 +147,8 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Required. The message name of the metadata type for this long-running
    * operation.
-   *
    * If the response is in a different package from the rpc, a fully-qualified
    * message name must be used (e.g. `google.protobuf.Struct`).
-   *
    * Note: Altering this value constitutes a breaking change.
    * </pre>
    *
@@ -177,10 +174,8 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Required. The message name of the metadata type for this long-running
    * operation.
-   *
    * If the response is in a different package from the rpc, a fully-qualified
    * message name must be used (e.g. `google.protobuf.Struct`).
-   *
    * Note: Altering this value constitutes a breaking change.
    * </pre>
    *
@@ -372,9 +367,7 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A message representing the message types used by a long-running operation.
-   *
    * Example:
-   *
    *   rpc LongRunningRecognize(LongRunningRecognizeRequest)
    *       returns (google.longrunning.Operation) {
    *     option (google.longrunning.operation_info) = {
@@ -459,6 +452,39 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
       if (((from_bitField0_ & 0x00000002) != 0)) {
         result.metadataType_ = metadataType_;
       }
+    }
+
+    @java.lang.Override
+    public Builder clone() {
+      return super.clone();
+    }
+
+    @java.lang.Override
+    public Builder setField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.setField(field, value);
+    }
+
+    @java.lang.Override
+    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      return super.clearField(field);
+    }
+
+    @java.lang.Override
+    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      return super.clearOneof(oneof);
+    }
+
+    @java.lang.Override
+    public Builder setRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
+      return super.setRepeatedField(field, index, value);
+    }
+
+    @java.lang.Override
+    public Builder addRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.addRepeatedField(field, value);
     }
 
     @java.lang.Override
@@ -548,10 +574,8 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
      * Required. The message name of the primary return type for this
      * long-running operation.
      * This type will be used to deserialize the LRO's response.
-     *
      * If the response is in a different package from the rpc, a fully-qualified
      * message name must be used (e.g. `google.protobuf.Struct`).
-     *
      * Note: Altering this value constitutes a breaking change.
      * </pre>
      *
@@ -577,10 +601,8 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
      * Required. The message name of the primary return type for this
      * long-running operation.
      * This type will be used to deserialize the LRO's response.
-     *
      * If the response is in a different package from the rpc, a fully-qualified
      * message name must be used (e.g. `google.protobuf.Struct`).
-     *
      * Note: Altering this value constitutes a breaking change.
      * </pre>
      *
@@ -606,10 +628,8 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
      * Required. The message name of the primary return type for this
      * long-running operation.
      * This type will be used to deserialize the LRO's response.
-     *
      * If the response is in a different package from the rpc, a fully-qualified
      * message name must be used (e.g. `google.protobuf.Struct`).
-     *
      * Note: Altering this value constitutes a breaking change.
      * </pre>
      *
@@ -634,10 +654,8 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
      * Required. The message name of the primary return type for this
      * long-running operation.
      * This type will be used to deserialize the LRO's response.
-     *
      * If the response is in a different package from the rpc, a fully-qualified
      * message name must be used (e.g. `google.protobuf.Struct`).
-     *
      * Note: Altering this value constitutes a breaking change.
      * </pre>
      *
@@ -658,10 +676,8 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
      * Required. The message name of the primary return type for this
      * long-running operation.
      * This type will be used to deserialize the LRO's response.
-     *
      * If the response is in a different package from the rpc, a fully-qualified
      * message name must be used (e.g. `google.protobuf.Struct`).
-     *
      * Note: Altering this value constitutes a breaking change.
      * </pre>
      *
@@ -688,10 +704,8 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Required. The message name of the metadata type for this long-running
      * operation.
-     *
      * If the response is in a different package from the rpc, a fully-qualified
      * message name must be used (e.g. `google.protobuf.Struct`).
-     *
      * Note: Altering this value constitutes a breaking change.
      * </pre>
      *
@@ -716,10 +730,8 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Required. The message name of the metadata type for this long-running
      * operation.
-     *
      * If the response is in a different package from the rpc, a fully-qualified
      * message name must be used (e.g. `google.protobuf.Struct`).
-     *
      * Note: Altering this value constitutes a breaking change.
      * </pre>
      *
@@ -744,10 +756,8 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Required. The message name of the metadata type for this long-running
      * operation.
-     *
      * If the response is in a different package from the rpc, a fully-qualified
      * message name must be used (e.g. `google.protobuf.Struct`).
-     *
      * Note: Altering this value constitutes a breaking change.
      * </pre>
      *
@@ -771,10 +781,8 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Required. The message name of the metadata type for this long-running
      * operation.
-     *
      * If the response is in a different package from the rpc, a fully-qualified
      * message name must be used (e.g. `google.protobuf.Struct`).
-     *
      * Note: Altering this value constitutes a breaking change.
      * </pre>
      *
@@ -794,10 +802,8 @@ public final class OperationInfo extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Required. The message name of the metadata type for this long-running
      * operation.
-     *
      * If the response is in a different package from the rpc, a fully-qualified
      * message name must be used (e.g. `google.protobuf.Struct`).
-     *
      * Note: Altering this value constitutes a breaking change.
      * </pre>
      *

@@ -50,6 +50,11 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     return new BackendRule();
   }
 
+  @java.lang.Override
+  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+    return this.unknownFields;
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.BackendProto.internal_static_google_api_BackendRule_descriptor;
   }
@@ -80,7 +85,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    * Path Translation specifies how to combine the backend address with the
    * request path in order to produce the appropriate forwarding URL for the
    * request.
-   *
    * Path Translation is applicable only to HTTP-based backends. Backends which
    * do not accept requests over HTTP/HTTPS should leave `path_translation`
    * unspecified.
@@ -100,21 +104,15 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * appended to the query string. If a query string parameter and a URL
      * pattern variable have the same name, this may result in duplicate keys in
      * the query string.
-     *
      * # Examples
-     *
      * Given the following operation config:
-     *
      *     Method path:        /api/company/{cid}/user/{uid}
      *     Backend address:    https://example.cloudfunctions.net/getUser
-     *
      * Requests to the following request paths will call the backend at the
      * translated path:
-     *
      *     Request path: /api/company/widgetworks/user/johndoe
      *     Translated:
      *     https://example.cloudfunctions.net/getUser?cid=widgetworks&amp;uid=johndoe
-     *
      *     Request path: /api/company/widgetworks/user/johndoe?timezone=EST
      *     Translated:
      *     https://example.cloudfunctions.net/getUser?timezone=EST&amp;cid=widgetworks&amp;uid=johndoe
@@ -128,21 +126,15 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The request path will be appended to the backend address.
-     *
      * # Examples
-     *
      * Given the following operation config:
-     *
      *     Method path:        /api/company/{cid}/user/{uid}
      *     Backend address:    https://example.appspot.com
-     *
      * Requests to the following request paths will call the backend at the
      * translated path:
-     *
      *     Request path: /api/company/widgetworks/user/johndoe
      *     Translated:
      *     https://example.appspot.com/api/company/widgetworks/user/johndoe
-     *
      *     Request path: /api/company/widgetworks/user/johndoe?timezone=EST
      *     Translated:
      *     https://example.appspot.com/api/company/widgetworks/user/johndoe?timezone=EST
@@ -165,21 +157,15 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * appended to the query string. If a query string parameter and a URL
      * pattern variable have the same name, this may result in duplicate keys in
      * the query string.
-     *
      * # Examples
-     *
      * Given the following operation config:
-     *
      *     Method path:        /api/company/{cid}/user/{uid}
      *     Backend address:    https://example.cloudfunctions.net/getUser
-     *
      * Requests to the following request paths will call the backend at the
      * translated path:
-     *
      *     Request path: /api/company/widgetworks/user/johndoe
      *     Translated:
      *     https://example.cloudfunctions.net/getUser?cid=widgetworks&amp;uid=johndoe
-     *
      *     Request path: /api/company/widgetworks/user/johndoe?timezone=EST
      *     Translated:
      *     https://example.cloudfunctions.net/getUser?timezone=EST&amp;cid=widgetworks&amp;uid=johndoe
@@ -193,21 +179,15 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The request path will be appended to the backend address.
-     *
      * # Examples
-     *
      * Given the following operation config:
-     *
      *     Method path:        /api/company/{cid}/user/{uid}
      *     Backend address:    https://example.appspot.com
-     *
      * Requests to the following request paths will call the backend at the
      * translated path:
-     *
      *     Request path: /api/company/widgetworks/user/johndoe
      *     Translated:
      *     https://example.appspot.com/api/company/widgetworks/user/johndoe
-     *
      *     Request path: /api/company/widgetworks/user/johndoe?timezone=EST
      *     Translated:
      *     https://example.appspot.com/api/company/widgetworks/user/johndoe?timezone=EST
@@ -303,8 +283,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   private int authenticationCase_ = 0;
-
-  @SuppressWarnings("serial")
   private java.lang.Object authentication_;
 
   public enum AuthenticationCase
@@ -360,7 +338,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Selects the methods to which this rule applies.
-   *
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax
    * details.
    * </pre>
@@ -386,7 +363,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Selects the methods to which this rule applies.
-   *
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax
    * details.
    * </pre>
@@ -417,23 +393,18 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * The address of the API backend.
-   *
    * The scheme is used to determine the backend protocol and security.
    * The following schemes are accepted:
-   *
    *    SCHEME        PROTOCOL    SECURITY
    *    http://       HTTP        None
    *    https://      HTTP        TLS
    *    grpc://       gRPC        None
    *    grpcs://      gRPC        TLS
-   *
    * It is recommended to explicitly include a scheme. Leaving out the scheme
    * may cause constrasting behaviors across platforms.
-   *
    * If the port is unspecified, the default is:
    * - 80 for schemes without TLS
    * - 443 for schemes with TLS
-   *
    * For HTTP backends, use [protocol][google.api.BackendRule.protocol]
    * to specify the protocol version.
    * </pre>
@@ -459,23 +430,18 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * The address of the API backend.
-   *
    * The scheme is used to determine the backend protocol and security.
    * The following schemes are accepted:
-   *
    *    SCHEME        PROTOCOL    SECURITY
    *    http://       HTTP        None
    *    https://      HTTP        TLS
    *    grpc://       gRPC        None
    *    grpcs://      gRPC        TLS
-   *
    * It is recommended to explicitly include a scheme. Leaving out the scheme
    * may cause constrasting behaviors across platforms.
-   *
    * If the port is unspecified, the default is:
    * - 80 for schemes without TLS
    * - 443 for schemes with TLS
-   *
    * For HTTP backends, use [protocol][google.api.BackendRule.protocol]
    * to specify the protocol version.
    * </pre>
@@ -706,22 +672,17 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * The protocol used for sending a request to the backend.
    * The supported values are "http/1.1" and "h2".
-   *
    * The default value is inferred from the scheme in the
    * [address][google.api.BackendRule.address] field:
-   *
    *    SCHEME        PROTOCOL
    *    http://       http/1.1
    *    https://      http/1.1
    *    grpc://       h2
    *    grpcs://      h2
-   *
    * For secure HTTP backends (https://) that support HTTP/2, set this field
    * to "h2" for improved performance.
-   *
    * Configuring this field to non-default values is only supported for secure
    * HTTP backends. This field will be ignored for all other backends.
-   *
    * See
    * https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids
    * for more details on the supported values.
@@ -749,22 +710,17 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * The protocol used for sending a request to the backend.
    * The supported values are "http/1.1" and "h2".
-   *
    * The default value is inferred from the scheme in the
    * [address][google.api.BackendRule.address] field:
-   *
    *    SCHEME        PROTOCOL
    *    http://       http/1.1
    *    https://      http/1.1
    *    grpc://       h2
    *    grpcs://      h2
-   *
    * For secure HTTP backends (https://) that support HTTP/2, set this field
    * to "h2" for improved performance.
-   *
    * Configuring this field to non-default values is only supported for secure
    * HTTP backends. This field will be ignored for all other backends.
-   *
    * See
    * https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids
    * for more details on the supported values.
@@ -1318,6 +1274,39 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     }
 
     @java.lang.Override
+    public Builder clone() {
+      return super.clone();
+    }
+
+    @java.lang.Override
+    public Builder setField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.setField(field, value);
+    }
+
+    @java.lang.Override
+    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      return super.clearField(field);
+    }
+
+    @java.lang.Override
+    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      return super.clearOneof(oneof);
+    }
+
+    @java.lang.Override
+    public Builder setRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
+      return super.setRepeatedField(field, index, value);
+    }
+
+    @java.lang.Override
+    public Builder addRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.addRepeatedField(field, value);
+    }
+
+    @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
       if (other instanceof com.google.api.BackendRule) {
         return mergeFrom((com.google.api.BackendRule) other);
@@ -1513,7 +1502,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects the methods to which this rule applies.
-     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -1538,7 +1526,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects the methods to which this rule applies.
-     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -1563,7 +1550,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects the methods to which this rule applies.
-     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -1587,7 +1573,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects the methods to which this rule applies.
-     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -1607,7 +1592,6 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects the methods to which this rule applies.
-     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -1634,23 +1618,18 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The address of the API backend.
-     *
      * The scheme is used to determine the backend protocol and security.
      * The following schemes are accepted:
-     *
      *    SCHEME        PROTOCOL    SECURITY
      *    http://       HTTP        None
      *    https://      HTTP        TLS
      *    grpc://       gRPC        None
      *    grpcs://      gRPC        TLS
-     *
      * It is recommended to explicitly include a scheme. Leaving out the scheme
      * may cause constrasting behaviors across platforms.
-     *
      * If the port is unspecified, the default is:
      * - 80 for schemes without TLS
      * - 443 for schemes with TLS
-     *
      * For HTTP backends, use [protocol][google.api.BackendRule.protocol]
      * to specify the protocol version.
      * </pre>
@@ -1675,23 +1654,18 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The address of the API backend.
-     *
      * The scheme is used to determine the backend protocol and security.
      * The following schemes are accepted:
-     *
      *    SCHEME        PROTOCOL    SECURITY
      *    http://       HTTP        None
      *    https://      HTTP        TLS
      *    grpc://       gRPC        None
      *    grpcs://      gRPC        TLS
-     *
      * It is recommended to explicitly include a scheme. Leaving out the scheme
      * may cause constrasting behaviors across platforms.
-     *
      * If the port is unspecified, the default is:
      * - 80 for schemes without TLS
      * - 443 for schemes with TLS
-     *
      * For HTTP backends, use [protocol][google.api.BackendRule.protocol]
      * to specify the protocol version.
      * </pre>
@@ -1716,23 +1690,18 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The address of the API backend.
-     *
      * The scheme is used to determine the backend protocol and security.
      * The following schemes are accepted:
-     *
      *    SCHEME        PROTOCOL    SECURITY
      *    http://       HTTP        None
      *    https://      HTTP        TLS
      *    grpc://       gRPC        None
      *    grpcs://      gRPC        TLS
-     *
      * It is recommended to explicitly include a scheme. Leaving out the scheme
      * may cause constrasting behaviors across platforms.
-     *
      * If the port is unspecified, the default is:
      * - 80 for schemes without TLS
      * - 443 for schemes with TLS
-     *
      * For HTTP backends, use [protocol][google.api.BackendRule.protocol]
      * to specify the protocol version.
      * </pre>
@@ -1756,23 +1725,18 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The address of the API backend.
-     *
      * The scheme is used to determine the backend protocol and security.
      * The following schemes are accepted:
-     *
      *    SCHEME        PROTOCOL    SECURITY
      *    http://       HTTP        None
      *    https://      HTTP        TLS
      *    grpc://       gRPC        None
      *    grpcs://      gRPC        TLS
-     *
      * It is recommended to explicitly include a scheme. Leaving out the scheme
      * may cause constrasting behaviors across platforms.
-     *
      * If the port is unspecified, the default is:
      * - 80 for schemes without TLS
      * - 443 for schemes with TLS
-     *
      * For HTTP backends, use [protocol][google.api.BackendRule.protocol]
      * to specify the protocol version.
      * </pre>
@@ -1792,23 +1756,18 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The address of the API backend.
-     *
      * The scheme is used to determine the backend protocol and security.
      * The following schemes are accepted:
-     *
      *    SCHEME        PROTOCOL    SECURITY
      *    http://       HTTP        None
      *    https://      HTTP        TLS
      *    grpc://       gRPC        None
      *    grpcs://      gRPC        TLS
-     *
      * It is recommended to explicitly include a scheme. Leaving out the scheme
      * may cause constrasting behaviors across platforms.
-     *
      * If the port is unspecified, the default is:
      * - 80 for schemes without TLS
      * - 443 for schemes with TLS
-     *
      * For HTTP backends, use [protocol][google.api.BackendRule.protocol]
      * to specify the protocol version.
      * </pre>
@@ -2298,22 +2257,17 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The protocol used for sending a request to the backend.
      * The supported values are "http/1.1" and "h2".
-     *
      * The default value is inferred from the scheme in the
      * [address][google.api.BackendRule.address] field:
-     *
      *    SCHEME        PROTOCOL
      *    http://       http/1.1
      *    https://      http/1.1
      *    grpc://       h2
      *    grpcs://      h2
-     *
      * For secure HTTP backends (https://) that support HTTP/2, set this field
      * to "h2" for improved performance.
-     *
      * Configuring this field to non-default values is only supported for secure
      * HTTP backends. This field will be ignored for all other backends.
-     *
      * See
      * https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids
      * for more details on the supported values.
@@ -2340,22 +2294,17 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The protocol used for sending a request to the backend.
      * The supported values are "http/1.1" and "h2".
-     *
      * The default value is inferred from the scheme in the
      * [address][google.api.BackendRule.address] field:
-     *
      *    SCHEME        PROTOCOL
      *    http://       http/1.1
      *    https://      http/1.1
      *    grpc://       h2
      *    grpcs://      h2
-     *
      * For secure HTTP backends (https://) that support HTTP/2, set this field
      * to "h2" for improved performance.
-     *
      * Configuring this field to non-default values is only supported for secure
      * HTTP backends. This field will be ignored for all other backends.
-     *
      * See
      * https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids
      * for more details on the supported values.
@@ -2382,22 +2331,17 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The protocol used for sending a request to the backend.
      * The supported values are "http/1.1" and "h2".
-     *
      * The default value is inferred from the scheme in the
      * [address][google.api.BackendRule.address] field:
-     *
      *    SCHEME        PROTOCOL
      *    http://       http/1.1
      *    https://      http/1.1
      *    grpc://       h2
      *    grpcs://      h2
-     *
      * For secure HTTP backends (https://) that support HTTP/2, set this field
      * to "h2" for improved performance.
-     *
      * Configuring this field to non-default values is only supported for secure
      * HTTP backends. This field will be ignored for all other backends.
-     *
      * See
      * https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids
      * for more details on the supported values.
@@ -2423,22 +2367,17 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The protocol used for sending a request to the backend.
      * The supported values are "http/1.1" and "h2".
-     *
      * The default value is inferred from the scheme in the
      * [address][google.api.BackendRule.address] field:
-     *
      *    SCHEME        PROTOCOL
      *    http://       http/1.1
      *    https://      http/1.1
      *    grpc://       h2
      *    grpcs://      h2
-     *
      * For secure HTTP backends (https://) that support HTTP/2, set this field
      * to "h2" for improved performance.
-     *
      * Configuring this field to non-default values is only supported for secure
      * HTTP backends. This field will be ignored for all other backends.
-     *
      * See
      * https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids
      * for more details on the supported values.
@@ -2460,22 +2399,17 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The protocol used for sending a request to the backend.
      * The supported values are "http/1.1" and "h2".
-     *
      * The default value is inferred from the scheme in the
      * [address][google.api.BackendRule.address] field:
-     *
      *    SCHEME        PROTOCOL
      *    http://       http/1.1
      *    https://      http/1.1
      *    grpc://       h2
      *    grpcs://      h2
-     *
      * For secure HTTP backends (https://) that support HTTP/2, set this field
      * to "h2" for improved performance.
-     *
      * Configuring this field to non-default values is only supported for secure
      * HTTP backends. This field will be ignored for all other backends.
-     *
      * See
      * https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids
      * for more details on the supported values.

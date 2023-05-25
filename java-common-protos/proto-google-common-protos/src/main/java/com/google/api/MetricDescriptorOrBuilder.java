@@ -56,7 +56,6 @@ public interface MetricDescriptorOrBuilder
    * URL-encoded. All user-defined metric types have the DNS name
    * `custom.googleapis.com` or `external.googleapis.com`. Metric types should
    * use a natural hierarchical grouping. For example:
-   *
    *     "custom.googleapis.com/invoice/paid/amount"
    *     "external.googleapis.com/prometheus/up"
    *     "appengine.googleapis.com/http/server/response_latencies"
@@ -75,7 +74,6 @@ public interface MetricDescriptorOrBuilder
    * URL-encoded. All user-defined metric types have the DNS name
    * `custom.googleapis.com` or `external.googleapis.com`. Metric types should
    * use a natural hierarchical grouping. For example:
-   *
    *     "custom.googleapis.com/invoice/paid/amount"
    *     "external.googleapis.com/prometheus/up"
    *     "appengine.googleapis.com/http/server/response_latencies"
@@ -224,28 +222,22 @@ public interface MetricDescriptorOrBuilder
    * The units in which the metric value is reported. It is only applicable
    * if the `value_type` is `INT64`, `DOUBLE`, or `DISTRIBUTION`. The `unit`
    * defines the representation of the stored metric values.
-   *
    * Different systems might scale the values to be more easily displayed (so a
    * value of `0.02kBy` _might_ be displayed as `20By`, and a value of
    * `3523kBy` _might_ be displayed as `3.5MBy`). However, if the `unit` is
    * `kBy`, then the value of the metric is always in thousands of bytes, no
    * matter how it might be displayed.
-   *
    * If you want a custom metric to record the exact number of CPU-seconds used
    * by a job, you can create an `INT64 CUMULATIVE` metric whose `unit` is
    * `s{CPU}` (or equivalently `1s{CPU}` or just `s`). If the job uses 12,005
    * CPU-seconds, then the value is written as `12005`.
-   *
    * Alternatively, if you want a custom metric to record data in a more
    * granular way, you can create a `DOUBLE CUMULATIVE` metric whose `unit` is
    * `ks{CPU}`, and then write the value `12.005` (which is `12005/1000`),
    * or use `Kis{CPU}` and write `11.723` (which is `12005/1024`).
-   *
    * The supported units are a subset of [The Unified Code for Units of
    * Measure](https://unitsofmeasure.org/ucum.html) standard:
-   *
    * **Basic units (UNIT)**
-   *
    * * `bit`   bit
    * * `By`    byte
    * * `s`     second
@@ -253,9 +245,7 @@ public interface MetricDescriptorOrBuilder
    * * `h`     hour
    * * `d`     day
    * * `1`     dimensionless
-   *
    * **Prefixes (PREFIX)**
-   *
    * * `k`     kilo    (10^3)
    * * `M`     mega    (10^6)
    * * `G`     giga    (10^9)
@@ -264,7 +254,6 @@ public interface MetricDescriptorOrBuilder
    * * `E`     exa     (10^18)
    * * `Z`     zetta   (10^21)
    * * `Y`     yotta   (10^24)
-   *
    * * `m`     milli   (10^-3)
    * * `u`     micro   (10^-6)
    * * `n`     nano    (10^-9)
@@ -273,37 +262,27 @@ public interface MetricDescriptorOrBuilder
    * * `a`     atto    (10^-18)
    * * `z`     zepto   (10^-21)
    * * `y`     yocto   (10^-24)
-   *
    * * `Ki`    kibi    (2^10)
    * * `Mi`    mebi    (2^20)
    * * `Gi`    gibi    (2^30)
    * * `Ti`    tebi    (2^40)
    * * `Pi`    pebi    (2^50)
-   *
    * **Grammar**
-   *
    * The grammar also includes these connectors:
-   *
    * * `/`    division or ratio (as an infix operator). For examples,
    *          `kBy/{email}` or `MiBy/10ms` (although you should almost never
    *          have `/s` in a metric `unit`; rates should always be computed at
    *          query time from the underlying cumulative or delta value).
    * * `.`    multiplication or composition (as an infix operator). For
    *          examples, `GBy.d` or `k{watt}.h`.
-   *
    * The grammar for a unit is as follows:
-   *
    *     Expression = Component { "." Component } { "/" Component } ;
-   *
    *     Component = ( [ PREFIX ] UNIT | "%" ) [ Annotation ]
    *               | Annotation
    *               | "1"
    *               ;
-   *
    *     Annotation = "{" NAME "}" ;
-   *
    * Notes:
-   *
    * * `Annotation` is just a comment if it follows a `UNIT`. If the annotation
    *    is used alone, then the unit is equivalent to `1`. For examples,
    *    `{request}/s == 1/s`, `By{transmitted}/s == By/s`.
@@ -337,28 +316,22 @@ public interface MetricDescriptorOrBuilder
    * The units in which the metric value is reported. It is only applicable
    * if the `value_type` is `INT64`, `DOUBLE`, or `DISTRIBUTION`. The `unit`
    * defines the representation of the stored metric values.
-   *
    * Different systems might scale the values to be more easily displayed (so a
    * value of `0.02kBy` _might_ be displayed as `20By`, and a value of
    * `3523kBy` _might_ be displayed as `3.5MBy`). However, if the `unit` is
    * `kBy`, then the value of the metric is always in thousands of bytes, no
    * matter how it might be displayed.
-   *
    * If you want a custom metric to record the exact number of CPU-seconds used
    * by a job, you can create an `INT64 CUMULATIVE` metric whose `unit` is
    * `s{CPU}` (or equivalently `1s{CPU}` or just `s`). If the job uses 12,005
    * CPU-seconds, then the value is written as `12005`.
-   *
    * Alternatively, if you want a custom metric to record data in a more
    * granular way, you can create a `DOUBLE CUMULATIVE` metric whose `unit` is
    * `ks{CPU}`, and then write the value `12.005` (which is `12005/1000`),
    * or use `Kis{CPU}` and write `11.723` (which is `12005/1024`).
-   *
    * The supported units are a subset of [The Unified Code for Units of
    * Measure](https://unitsofmeasure.org/ucum.html) standard:
-   *
    * **Basic units (UNIT)**
-   *
    * * `bit`   bit
    * * `By`    byte
    * * `s`     second
@@ -366,9 +339,7 @@ public interface MetricDescriptorOrBuilder
    * * `h`     hour
    * * `d`     day
    * * `1`     dimensionless
-   *
    * **Prefixes (PREFIX)**
-   *
    * * `k`     kilo    (10^3)
    * * `M`     mega    (10^6)
    * * `G`     giga    (10^9)
@@ -377,7 +348,6 @@ public interface MetricDescriptorOrBuilder
    * * `E`     exa     (10^18)
    * * `Z`     zetta   (10^21)
    * * `Y`     yotta   (10^24)
-   *
    * * `m`     milli   (10^-3)
    * * `u`     micro   (10^-6)
    * * `n`     nano    (10^-9)
@@ -386,37 +356,27 @@ public interface MetricDescriptorOrBuilder
    * * `a`     atto    (10^-18)
    * * `z`     zepto   (10^-21)
    * * `y`     yocto   (10^-24)
-   *
    * * `Ki`    kibi    (2^10)
    * * `Mi`    mebi    (2^20)
    * * `Gi`    gibi    (2^30)
    * * `Ti`    tebi    (2^40)
    * * `Pi`    pebi    (2^50)
-   *
    * **Grammar**
-   *
    * The grammar also includes these connectors:
-   *
    * * `/`    division or ratio (as an infix operator). For examples,
    *          `kBy/{email}` or `MiBy/10ms` (although you should almost never
    *          have `/s` in a metric `unit`; rates should always be computed at
    *          query time from the underlying cumulative or delta value).
    * * `.`    multiplication or composition (as an infix operator). For
    *          examples, `GBy.d` or `k{watt}.h`.
-   *
    * The grammar for a unit is as follows:
-   *
    *     Expression = Component { "." Component } { "/" Component } ;
-   *
    *     Component = ( [ PREFIX ] UNIT | "%" ) [ Annotation ]
    *               | Annotation
    *               | "1"
    *               ;
-   *
    *     Annotation = "{" NAME "}" ;
-   *
    * Notes:
-   *
    * * `Annotation` is just a comment if it follows a `UNIT`. If the annotation
    *    is used alone, then the unit is equivalent to `1`. For examples,
    *    `{request}/s == 1/s`, `By{transmitted}/s == By/s`.

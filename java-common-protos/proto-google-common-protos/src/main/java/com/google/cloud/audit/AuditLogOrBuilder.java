@@ -57,7 +57,6 @@ public interface AuditLogOrBuilder
    * The name of the service method or operation.
    * For API calls, this should be the name of the API method.
    * For example,
-   *
    *     "google.cloud.bigquery.v2.TableService.InsertTable"
    *     "google.logging.v2.ConfigServiceV2.CreateSink"
    * </pre>
@@ -74,7 +73,6 @@ public interface AuditLogOrBuilder
    * The name of the service method or operation.
    * For API calls, this should be the name of the API method.
    * For example,
-   *
    *     "google.cloud.bigquery.v2.TableService.InsertTable"
    *     "google.logging.v2.ConfigServiceV2.CreateSink"
    * </pre>
@@ -92,7 +90,6 @@ public interface AuditLogOrBuilder
    * The resource or collection that is the target of the operation.
    * The name is a scheme-less URI, not including the API service name.
    * For example:
-   *
    *     "projects/PROJECT_ID/zones/us-central1-a/instances"
    *     "projects/PROJECT_ID/datasets/DATASET_ID"
    * </pre>
@@ -109,7 +106,6 @@ public interface AuditLogOrBuilder
    * The resource or collection that is the target of the operation.
    * The name is a scheme-less URI, not including the API service name.
    * For example:
-   *
    *     "projects/PROJECT_ID/zones/us-central1-a/instances"
    *     "projects/PROJECT_ID/datasets/DATASET_ID"
    * </pre>
