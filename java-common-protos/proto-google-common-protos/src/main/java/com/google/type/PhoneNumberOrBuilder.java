@@ -33,11 +33,9 @@ public interface PhoneNumberOrBuilder
    * additional spaces or formatting, e.g.:
    *  - correct: "+15552220123"
    *  - incorrect: "+1 (555) 222-01234 x123".
-   *
    * The ITU E.164 format limits the latter to 12 digits, but in practice not
    * all countries respect that, so we relax that restriction here.
    * National-only numbers are not allowed.
-   *
    * References:
    *  - https://www.itu.int/rec/T-REC-E.164-201011-I
    *  - https://en.wikipedia.org/wiki/E.164.
@@ -59,11 +57,9 @@ public interface PhoneNumberOrBuilder
    * additional spaces or formatting, e.g.:
    *  - correct: "+15552220123"
    *  - incorrect: "+1 (555) 222-01234 x123".
-   *
    * The ITU E.164 format limits the latter to 12 digits, but in practice not
    * all countries respect that, so we relax that restriction here.
    * National-only numbers are not allowed.
-   *
    * References:
    *  - https://www.itu.int/rec/T-REC-E.164-201011-I
    *  - https://en.wikipedia.org/wiki/E.164.
@@ -85,11 +81,9 @@ public interface PhoneNumberOrBuilder
    * additional spaces or formatting, e.g.:
    *  - correct: "+15552220123"
    *  - incorrect: "+1 (555) 222-01234 x123".
-   *
    * The ITU E.164 format limits the latter to 12 digits, but in practice not
    * all countries respect that, so we relax that restriction here.
    * National-only numbers are not allowed.
-   *
    * References:
    *  - https://www.itu.int/rec/T-REC-E.164-201011-I
    *  - https://en.wikipedia.org/wiki/E.164.
@@ -107,7 +101,6 @@ public interface PhoneNumberOrBuilder
    *
    * <pre>
    * A short code.
-   *
    * Reference(s):
    *  - https://en.wikipedia.org/wiki/Short_code
    * </pre>
@@ -122,7 +115,6 @@ public interface PhoneNumberOrBuilder
    *
    * <pre>
    * A short code.
-   *
    * Reference(s):
    *  - https://en.wikipedia.org/wiki/Short_code
    * </pre>
@@ -137,7 +129,6 @@ public interface PhoneNumberOrBuilder
    *
    * <pre>
    * A short code.
-   *
    * Reference(s):
    *  - https://en.wikipedia.org/wiki/Short_code
    * </pre>
@@ -154,7 +145,6 @@ public interface PhoneNumberOrBuilder
    * recommendations, except for being defined as a series of numbers with a
    * maximum length of 40 digits. Other than digits, some other dialing
    * characters such as ',' (indicating a wait) or '#' may be stored here.
-   *
    * Note that no regions currently use extensions with short codes, so this
    * field is normally only set in conjunction with an E.164 number. It is held
    * separately from the E.164 number to allow for short code extensions in the
@@ -174,7 +164,6 @@ public interface PhoneNumberOrBuilder
    * recommendations, except for being defined as a series of numbers with a
    * maximum length of 40 digits. Other than digits, some other dialing
    * characters such as ',' (indicating a wait) or '#' may be stored here.
-   *
    * Note that no regions currently use extensions with short codes, so this
    * field is normally only set in conjunction with an E.164 number. It is held
    * separately from the E.164 number to allow for short code extensions in the
@@ -187,5 +176,5 @@ public interface PhoneNumberOrBuilder
    */
   com.google.protobuf.ByteString getExtensionBytes();
 
-  com.google.type.PhoneNumber.KindCase getKindCase();
+  public com.google.type.PhoneNumber.KindCase getKindCase();
 }

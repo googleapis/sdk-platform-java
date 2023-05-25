@@ -53,11 +53,9 @@ public interface EndpointOrBuilder
    *
    * <pre>
    * Unimplemented. Dot not use.
-   *
    * DEPRECATED: This field is no longer supported. Instead of using aliases,
    * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
    * of the intended aliases.
-   *
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
@@ -73,11 +71,9 @@ public interface EndpointOrBuilder
    *
    * <pre>
    * Unimplemented. Dot not use.
-   *
    * DEPRECATED: This field is no longer supported. Instead of using aliases,
    * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
    * of the intended aliases.
-   *
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
@@ -93,11 +89,9 @@ public interface EndpointOrBuilder
    *
    * <pre>
    * Unimplemented. Dot not use.
-   *
    * DEPRECATED: This field is no longer supported. Instead of using aliases,
    * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
    * of the intended aliases.
-   *
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
@@ -114,11 +108,9 @@ public interface EndpointOrBuilder
    *
    * <pre>
    * Unimplemented. Dot not use.
-   *
    * DEPRECATED: This field is no longer supported. Instead of using aliases,
    * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
    * of the intended aliases.
-   *
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *

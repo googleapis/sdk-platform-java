@@ -24,7 +24,6 @@ package com.google.type;
  * <pre>
  * Represents a time interval, encoded as a Timestamp start (inclusive) and a
  * Timestamp end (exclusive).
- *
  * The start must be less than or equal to the end.
  * When the start equals the end, the interval is empty (matches no time).
  * When both start and end are unspecified, the interval matches any time.
@@ -50,6 +49,11 @@ public final class Interval extends com.google.protobuf.GeneratedMessageV3
     return new Interval();
   }
 
+  @java.lang.Override
+  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+    return this.unknownFields;
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.type.IntervalProto.internal_static_google_type_Interval_descriptor;
   }
@@ -69,7 +73,6 @@ public final class Interval extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Optional. Inclusive start of the interval.
-   *
    * If specified, a Timestamp matching this interval will have to be the same
    * or after the start.
    * </pre>
@@ -87,7 +90,6 @@ public final class Interval extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Optional. Inclusive start of the interval.
-   *
    * If specified, a Timestamp matching this interval will have to be the same
    * or after the start.
    * </pre>
@@ -105,7 +107,6 @@ public final class Interval extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Optional. Inclusive start of the interval.
-   *
    * If specified, a Timestamp matching this interval will have to be the same
    * or after the start.
    * </pre>
@@ -124,7 +125,6 @@ public final class Interval extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Optional. Exclusive end of the interval.
-   *
    * If specified, a Timestamp matching this interval will have to be before the
    * end.
    * </pre>
@@ -142,7 +142,6 @@ public final class Interval extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Optional. Exclusive end of the interval.
-   *
    * If specified, a Timestamp matching this interval will have to be before the
    * end.
    * </pre>
@@ -160,7 +159,6 @@ public final class Interval extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Optional. Exclusive end of the interval.
-   *
    * If specified, a Timestamp matching this interval will have to be before the
    * end.
    * </pre>
@@ -354,7 +352,6 @@ public final class Interval extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Represents a time interval, encoded as a Timestamp start (inclusive) and a
    * Timestamp end (exclusive).
-   *
    * The start must be less than or equal to the end.
    * When the start equals the end, the interval is empty (matches no time).
    * When both start and end are unspecified, the interval matches any time.
@@ -439,6 +436,39 @@ public final class Interval extends com.google.protobuf.GeneratedMessageV3
       if (((from_bitField0_ & 0x00000002) != 0)) {
         result.endTime_ = endTimeBuilder_ == null ? endTime_ : endTimeBuilder_.build();
       }
+    }
+
+    @java.lang.Override
+    public Builder clone() {
+      return super.clone();
+    }
+
+    @java.lang.Override
+    public Builder setField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.setField(field, value);
+    }
+
+    @java.lang.Override
+    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      return super.clearField(field);
+    }
+
+    @java.lang.Override
+    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      return super.clearOneof(oneof);
+    }
+
+    @java.lang.Override
+    public Builder setRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
+      return super.setRepeatedField(field, index, value);
+    }
+
+    @java.lang.Override
+    public Builder addRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.addRepeatedField(field, value);
     }
 
     @java.lang.Override
@@ -527,7 +557,6 @@ public final class Interval extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Optional. Inclusive start of the interval.
-     *
      * If specified, a Timestamp matching this interval will have to be the same
      * or after the start.
      * </pre>
@@ -544,7 +573,6 @@ public final class Interval extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Optional. Inclusive start of the interval.
-     *
      * If specified, a Timestamp matching this interval will have to be the same
      * or after the start.
      * </pre>
@@ -565,7 +593,6 @@ public final class Interval extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Optional. Inclusive start of the interval.
-     *
      * If specified, a Timestamp matching this interval will have to be the same
      * or after the start.
      * </pre>
@@ -590,7 +617,6 @@ public final class Interval extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Optional. Inclusive start of the interval.
-     *
      * If specified, a Timestamp matching this interval will have to be the same
      * or after the start.
      * </pre>
@@ -612,7 +638,6 @@ public final class Interval extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Optional. Inclusive start of the interval.
-     *
      * If specified, a Timestamp matching this interval will have to be the same
      * or after the start.
      * </pre>
@@ -640,7 +665,6 @@ public final class Interval extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Optional. Inclusive start of the interval.
-     *
      * If specified, a Timestamp matching this interval will have to be the same
      * or after the start.
      * </pre>
@@ -662,7 +686,6 @@ public final class Interval extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Optional. Inclusive start of the interval.
-     *
      * If specified, a Timestamp matching this interval will have to be the same
      * or after the start.
      * </pre>
@@ -679,7 +702,6 @@ public final class Interval extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Optional. Inclusive start of the interval.
-     *
      * If specified, a Timestamp matching this interval will have to be the same
      * or after the start.
      * </pre>
@@ -698,7 +720,6 @@ public final class Interval extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Optional. Inclusive start of the interval.
-     *
      * If specified, a Timestamp matching this interval will have to be the same
      * or after the start.
      * </pre>
@@ -733,7 +754,6 @@ public final class Interval extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Optional. Exclusive end of the interval.
-     *
      * If specified, a Timestamp matching this interval will have to be before the
      * end.
      * </pre>
@@ -750,7 +770,6 @@ public final class Interval extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Optional. Exclusive end of the interval.
-     *
      * If specified, a Timestamp matching this interval will have to be before the
      * end.
      * </pre>
@@ -771,7 +790,6 @@ public final class Interval extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Optional. Exclusive end of the interval.
-     *
      * If specified, a Timestamp matching this interval will have to be before the
      * end.
      * </pre>
@@ -796,7 +814,6 @@ public final class Interval extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Optional. Exclusive end of the interval.
-     *
      * If specified, a Timestamp matching this interval will have to be before the
      * end.
      * </pre>
@@ -818,7 +835,6 @@ public final class Interval extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Optional. Exclusive end of the interval.
-     *
      * If specified, a Timestamp matching this interval will have to be before the
      * end.
      * </pre>
@@ -846,7 +862,6 @@ public final class Interval extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Optional. Exclusive end of the interval.
-     *
      * If specified, a Timestamp matching this interval will have to be before the
      * end.
      * </pre>
@@ -868,7 +883,6 @@ public final class Interval extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Optional. Exclusive end of the interval.
-     *
      * If specified, a Timestamp matching this interval will have to be before the
      * end.
      * </pre>
@@ -885,7 +899,6 @@ public final class Interval extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Optional. Exclusive end of the interval.
-     *
      * If specified, a Timestamp matching this interval will have to be before the
      * end.
      * </pre>
@@ -904,7 +917,6 @@ public final class Interval extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Optional. Exclusive end of the interval.
-     *
      * If specified, a Timestamp matching this interval will have to be before the
      * end.
      * </pre>

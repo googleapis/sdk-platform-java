@@ -50,6 +50,11 @@ public final class AuthRequirement extends com.google.protobuf.GeneratedMessageV
     return new AuthRequirement();
   }
 
+  @java.lang.Override
+  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+    return this.unknownFields;
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.AuthProto.internal_static_google_api_AuthRequirement_descriptor;
   }
@@ -71,9 +76,7 @@ public final class AuthRequirement extends com.google.protobuf.GeneratedMessageV
    *
    * <pre>
    * [id][google.api.AuthProvider.id] from authentication provider.
-   *
    * Example:
-   *
    *     provider_id: bookstore_auth
    * </pre>
    *
@@ -98,9 +101,7 @@ public final class AuthRequirement extends com.google.protobuf.GeneratedMessageV
    *
    * <pre>
    * [id][google.api.AuthProvider.id] from authentication provider.
-   *
    * Example:
-   *
    *     provider_id: bookstore_auth
    * </pre>
    *
@@ -131,7 +132,6 @@ public final class AuthRequirement extends com.google.protobuf.GeneratedMessageV
    * <pre>
    * NOTE: This will be deprecated soon, once AuthProvider.audiences is
    * implemented and accepted in all the runtime components.
-   *
    * The list of JWT
    * [audiences](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.3).
    * that are allowed to access. A JWT containing any of these audiences will
@@ -140,9 +140,7 @@ public final class AuthRequirement extends com.google.protobuf.GeneratedMessageV
    * will be accepted. For example, if no audiences are in the setting,
    * LibraryService API will only accept JWTs with the following audience
    * "https://library-example.googleapis.com/google.example.library.v1.LibraryService".
-   *
    * Example:
-   *
    *     audiences: bookstore_android.apps.googleusercontent.com,
    *                bookstore_web.apps.googleusercontent.com
    * </pre>
@@ -169,7 +167,6 @@ public final class AuthRequirement extends com.google.protobuf.GeneratedMessageV
    * <pre>
    * NOTE: This will be deprecated soon, once AuthProvider.audiences is
    * implemented and accepted in all the runtime components.
-   *
    * The list of JWT
    * [audiences](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.3).
    * that are allowed to access. A JWT containing any of these audiences will
@@ -178,9 +175,7 @@ public final class AuthRequirement extends com.google.protobuf.GeneratedMessageV
    * will be accepted. For example, if no audiences are in the setting,
    * LibraryService API will only accept JWTs with the following audience
    * "https://library-example.googleapis.com/google.example.library.v1.LibraryService".
-   *
    * Example:
-   *
    *     audiences: bookstore_android.apps.googleusercontent.com,
    *                bookstore_web.apps.googleusercontent.com
    * </pre>
@@ -451,6 +446,39 @@ public final class AuthRequirement extends com.google.protobuf.GeneratedMessageV
     }
 
     @java.lang.Override
+    public Builder clone() {
+      return super.clone();
+    }
+
+    @java.lang.Override
+    public Builder setField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.setField(field, value);
+    }
+
+    @java.lang.Override
+    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      return super.clearField(field);
+    }
+
+    @java.lang.Override
+    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      return super.clearOneof(oneof);
+    }
+
+    @java.lang.Override
+    public Builder setRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
+      return super.setRepeatedField(field, index, value);
+    }
+
+    @java.lang.Override
+    public Builder addRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.addRepeatedField(field, value);
+    }
+
+    @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
       if (other instanceof com.google.api.AuthRequirement) {
         return mergeFrom((com.google.api.AuthRequirement) other);
@@ -535,9 +563,7 @@ public final class AuthRequirement extends com.google.protobuf.GeneratedMessageV
      *
      * <pre>
      * [id][google.api.AuthProvider.id] from authentication provider.
-     *
      * Example:
-     *
      *     provider_id: bookstore_auth
      * </pre>
      *
@@ -561,9 +587,7 @@ public final class AuthRequirement extends com.google.protobuf.GeneratedMessageV
      *
      * <pre>
      * [id][google.api.AuthProvider.id] from authentication provider.
-     *
      * Example:
-     *
      *     provider_id: bookstore_auth
      * </pre>
      *
@@ -587,9 +611,7 @@ public final class AuthRequirement extends com.google.protobuf.GeneratedMessageV
      *
      * <pre>
      * [id][google.api.AuthProvider.id] from authentication provider.
-     *
      * Example:
-     *
      *     provider_id: bookstore_auth
      * </pre>
      *
@@ -612,9 +634,7 @@ public final class AuthRequirement extends com.google.protobuf.GeneratedMessageV
      *
      * <pre>
      * [id][google.api.AuthProvider.id] from authentication provider.
-     *
      * Example:
-     *
      *     provider_id: bookstore_auth
      * </pre>
      *
@@ -633,9 +653,7 @@ public final class AuthRequirement extends com.google.protobuf.GeneratedMessageV
      *
      * <pre>
      * [id][google.api.AuthProvider.id] from authentication provider.
-     *
      * Example:
-     *
      *     provider_id: bookstore_auth
      * </pre>
      *
@@ -662,7 +680,6 @@ public final class AuthRequirement extends com.google.protobuf.GeneratedMessageV
      * <pre>
      * NOTE: This will be deprecated soon, once AuthProvider.audiences is
      * implemented and accepted in all the runtime components.
-     *
      * The list of JWT
      * [audiences](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.3).
      * that are allowed to access. A JWT containing any of these audiences will
@@ -671,9 +688,7 @@ public final class AuthRequirement extends com.google.protobuf.GeneratedMessageV
      * will be accepted. For example, if no audiences are in the setting,
      * LibraryService API will only accept JWTs with the following audience
      * "https://library-example.googleapis.com/google.example.library.v1.LibraryService".
-     *
      * Example:
-     *
      *     audiences: bookstore_android.apps.googleusercontent.com,
      *                bookstore_web.apps.googleusercontent.com
      * </pre>
@@ -699,7 +714,6 @@ public final class AuthRequirement extends com.google.protobuf.GeneratedMessageV
      * <pre>
      * NOTE: This will be deprecated soon, once AuthProvider.audiences is
      * implemented and accepted in all the runtime components.
-     *
      * The list of JWT
      * [audiences](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.3).
      * that are allowed to access. A JWT containing any of these audiences will
@@ -708,9 +722,7 @@ public final class AuthRequirement extends com.google.protobuf.GeneratedMessageV
      * will be accepted. For example, if no audiences are in the setting,
      * LibraryService API will only accept JWTs with the following audience
      * "https://library-example.googleapis.com/google.example.library.v1.LibraryService".
-     *
      * Example:
-     *
      *     audiences: bookstore_android.apps.googleusercontent.com,
      *                bookstore_web.apps.googleusercontent.com
      * </pre>
@@ -736,7 +748,6 @@ public final class AuthRequirement extends com.google.protobuf.GeneratedMessageV
      * <pre>
      * NOTE: This will be deprecated soon, once AuthProvider.audiences is
      * implemented and accepted in all the runtime components.
-     *
      * The list of JWT
      * [audiences](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.3).
      * that are allowed to access. A JWT containing any of these audiences will
@@ -745,9 +756,7 @@ public final class AuthRequirement extends com.google.protobuf.GeneratedMessageV
      * will be accepted. For example, if no audiences are in the setting,
      * LibraryService API will only accept JWTs with the following audience
      * "https://library-example.googleapis.com/google.example.library.v1.LibraryService".
-     *
      * Example:
-     *
      *     audiences: bookstore_android.apps.googleusercontent.com,
      *                bookstore_web.apps.googleusercontent.com
      * </pre>
@@ -772,7 +781,6 @@ public final class AuthRequirement extends com.google.protobuf.GeneratedMessageV
      * <pre>
      * NOTE: This will be deprecated soon, once AuthProvider.audiences is
      * implemented and accepted in all the runtime components.
-     *
      * The list of JWT
      * [audiences](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.3).
      * that are allowed to access. A JWT containing any of these audiences will
@@ -781,9 +789,7 @@ public final class AuthRequirement extends com.google.protobuf.GeneratedMessageV
      * will be accepted. For example, if no audiences are in the setting,
      * LibraryService API will only accept JWTs with the following audience
      * "https://library-example.googleapis.com/google.example.library.v1.LibraryService".
-     *
      * Example:
-     *
      *     audiences: bookstore_android.apps.googleusercontent.com,
      *                bookstore_web.apps.googleusercontent.com
      * </pre>
@@ -804,7 +810,6 @@ public final class AuthRequirement extends com.google.protobuf.GeneratedMessageV
      * <pre>
      * NOTE: This will be deprecated soon, once AuthProvider.audiences is
      * implemented and accepted in all the runtime components.
-     *
      * The list of JWT
      * [audiences](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32#section-4.1.3).
      * that are allowed to access. A JWT containing any of these audiences will
@@ -813,9 +818,7 @@ public final class AuthRequirement extends com.google.protobuf.GeneratedMessageV
      * will be accepted. For example, if no audiences are in the setting,
      * LibraryService API will only accept JWTs with the following audience
      * "https://library-example.googleapis.com/google.example.library.v1.LibraryService".
-     *
      * Example:
-     *
      *     audiences: bookstore_android.apps.googleusercontent.com,
      *                bookstore_web.apps.googleusercontent.com
      * </pre>

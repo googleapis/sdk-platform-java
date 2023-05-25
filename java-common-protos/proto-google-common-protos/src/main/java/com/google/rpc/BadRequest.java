@@ -48,6 +48,11 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
     return new BadRequest();
   }
 
+  @java.lang.Override
+  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+    return this.unknownFields;
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_BadRequest_descriptor;
   }
@@ -72,9 +77,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
      * A path that leads to a field in the request body. The value will be a
      * sequence of dot-separated identifiers that identify a protocol buffer
      * field.
-     *
      * Consider the following:
-     *
      *     message CreateContactRequest {
      *       message EmailAddress {
      *         enum Type {
@@ -82,25 +85,19 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
      *           HOME = 1;
      *           WORK = 2;
      *         }
-     *
      *         optional string email = 1;
      *         repeated EmailType type = 2;
      *       }
-     *
      *       string full_name = 1;
      *       repeated EmailAddress email_addresses = 2;
      *     }
-     *
      * In this example, in proto `field` could take one of the following values:
-     *
      * * `full_name` for a violation in the `full_name` value
      * * `email_addresses[1].email` for a violation in the `email` field of the
      *   first `email_addresses` message
      * * `email_addresses[3].type[2]` for a violation in the second `type`
      *   value in the third `email_addresses` message.
-     *
      * In JSON, the same values are represented as:
-     *
      * * `fullName` for a violation in the `fullName` value
      * * `emailAddresses[1].email` for a violation in the `email` field of the
      *   first `emailAddresses` message
@@ -120,9 +117,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
      * A path that leads to a field in the request body. The value will be a
      * sequence of dot-separated identifiers that identify a protocol buffer
      * field.
-     *
      * Consider the following:
-     *
      *     message CreateContactRequest {
      *       message EmailAddress {
      *         enum Type {
@@ -130,25 +125,19 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
      *           HOME = 1;
      *           WORK = 2;
      *         }
-     *
      *         optional string email = 1;
      *         repeated EmailType type = 2;
      *       }
-     *
      *       string full_name = 1;
      *       repeated EmailAddress email_addresses = 2;
      *     }
-     *
      * In this example, in proto `field` could take one of the following values:
-     *
      * * `full_name` for a violation in the `full_name` value
      * * `email_addresses[1].email` for a violation in the `email` field of the
      *   first `email_addresses` message
      * * `email_addresses[3].type[2]` for a violation in the second `type`
      *   value in the third `email_addresses` message.
-     *
      * In JSON, the same values are represented as:
-     *
      * * `fullName` for a violation in the `fullName` value
      * * `emailAddresses[1].email` for a violation in the `email` field of the
      *   first `emailAddresses` message
@@ -217,6 +206,11 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
       return new FieldViolation();
     }
 
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+      return this.unknownFields;
+    }
+
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
       return com.google.rpc.ErrorDetailsProto
           .internal_static_google_rpc_BadRequest_FieldViolation_descriptor;
@@ -243,9 +237,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
      * A path that leads to a field in the request body. The value will be a
      * sequence of dot-separated identifiers that identify a protocol buffer
      * field.
-     *
      * Consider the following:
-     *
      *     message CreateContactRequest {
      *       message EmailAddress {
      *         enum Type {
@@ -253,25 +245,19 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
      *           HOME = 1;
      *           WORK = 2;
      *         }
-     *
      *         optional string email = 1;
      *         repeated EmailType type = 2;
      *       }
-     *
      *       string full_name = 1;
      *       repeated EmailAddress email_addresses = 2;
      *     }
-     *
      * In this example, in proto `field` could take one of the following values:
-     *
      * * `full_name` for a violation in the `full_name` value
      * * `email_addresses[1].email` for a violation in the `email` field of the
      *   first `email_addresses` message
      * * `email_addresses[3].type[2]` for a violation in the second `type`
      *   value in the third `email_addresses` message.
-     *
      * In JSON, the same values are represented as:
-     *
      * * `fullName` for a violation in the `fullName` value
      * * `emailAddresses[1].email` for a violation in the `email` field of the
      *   first `emailAddresses` message
@@ -302,9 +288,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
      * A path that leads to a field in the request body. The value will be a
      * sequence of dot-separated identifiers that identify a protocol buffer
      * field.
-     *
      * Consider the following:
-     *
      *     message CreateContactRequest {
      *       message EmailAddress {
      *         enum Type {
@@ -312,25 +296,19 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
      *           HOME = 1;
      *           WORK = 2;
      *         }
-     *
      *         optional string email = 1;
      *         repeated EmailType type = 2;
      *       }
-     *
      *       string full_name = 1;
      *       repeated EmailAddress email_addresses = 2;
      *     }
-     *
      * In this example, in proto `field` could take one of the following values:
-     *
      * * `full_name` for a violation in the `full_name` value
      * * `email_addresses[1].email` for a violation in the `email` field of the
      *   first `email_addresses` message
      * * `email_addresses[3].type[2]` for a violation in the second `type`
      *   value in the third `email_addresses` message.
-     *
      * In JSON, the same values are represented as:
-     *
      * * `fullName` for a violation in the `fullName` value
      * * `emailAddresses[1].email` for a violation in the `email` field of the
      *   first `emailAddresses` message
@@ -662,6 +640,41 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
       }
 
       @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+        return super.setField(field, value);
+      }
+
+      @java.lang.Override
+      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+
+      @java.lang.Override
+      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index,
+          java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+        return super.addRepeatedField(field, value);
+      }
+
+      @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
         if (other instanceof com.google.rpc.BadRequest.FieldViolation) {
           return mergeFrom((com.google.rpc.BadRequest.FieldViolation) other);
@@ -748,9 +761,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
        * A path that leads to a field in the request body. The value will be a
        * sequence of dot-separated identifiers that identify a protocol buffer
        * field.
-       *
        * Consider the following:
-       *
        *     message CreateContactRequest {
        *       message EmailAddress {
        *         enum Type {
@@ -758,25 +769,19 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
        *           HOME = 1;
        *           WORK = 2;
        *         }
-       *
        *         optional string email = 1;
        *         repeated EmailType type = 2;
        *       }
-       *
        *       string full_name = 1;
        *       repeated EmailAddress email_addresses = 2;
        *     }
-       *
        * In this example, in proto `field` could take one of the following values:
-       *
        * * `full_name` for a violation in the `full_name` value
        * * `email_addresses[1].email` for a violation in the `email` field of the
        *   first `email_addresses` message
        * * `email_addresses[3].type[2]` for a violation in the second `type`
        *   value in the third `email_addresses` message.
-       *
        * In JSON, the same values are represented as:
-       *
        * * `fullName` for a violation in the `fullName` value
        * * `emailAddresses[1].email` for a violation in the `email` field of the
        *   first `emailAddresses` message
@@ -806,9 +811,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
        * A path that leads to a field in the request body. The value will be a
        * sequence of dot-separated identifiers that identify a protocol buffer
        * field.
-       *
        * Consider the following:
-       *
        *     message CreateContactRequest {
        *       message EmailAddress {
        *         enum Type {
@@ -816,25 +819,19 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
        *           HOME = 1;
        *           WORK = 2;
        *         }
-       *
        *         optional string email = 1;
        *         repeated EmailType type = 2;
        *       }
-       *
        *       string full_name = 1;
        *       repeated EmailAddress email_addresses = 2;
        *     }
-       *
        * In this example, in proto `field` could take one of the following values:
-       *
        * * `full_name` for a violation in the `full_name` value
        * * `email_addresses[1].email` for a violation in the `email` field of the
        *   first `email_addresses` message
        * * `email_addresses[3].type[2]` for a violation in the second `type`
        *   value in the third `email_addresses` message.
-       *
        * In JSON, the same values are represented as:
-       *
        * * `fullName` for a violation in the `fullName` value
        * * `emailAddresses[1].email` for a violation in the `email` field of the
        *   first `emailAddresses` message
@@ -864,9 +861,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
        * A path that leads to a field in the request body. The value will be a
        * sequence of dot-separated identifiers that identify a protocol buffer
        * field.
-       *
        * Consider the following:
-       *
        *     message CreateContactRequest {
        *       message EmailAddress {
        *         enum Type {
@@ -874,25 +869,19 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
        *           HOME = 1;
        *           WORK = 2;
        *         }
-       *
        *         optional string email = 1;
        *         repeated EmailType type = 2;
        *       }
-       *
        *       string full_name = 1;
        *       repeated EmailAddress email_addresses = 2;
        *     }
-       *
        * In this example, in proto `field` could take one of the following values:
-       *
        * * `full_name` for a violation in the `full_name` value
        * * `email_addresses[1].email` for a violation in the `email` field of the
        *   first `email_addresses` message
        * * `email_addresses[3].type[2]` for a violation in the second `type`
        *   value in the third `email_addresses` message.
-       *
        * In JSON, the same values are represented as:
-       *
        * * `fullName` for a violation in the `fullName` value
        * * `emailAddresses[1].email` for a violation in the `email` field of the
        *   first `emailAddresses` message
@@ -921,9 +910,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
        * A path that leads to a field in the request body. The value will be a
        * sequence of dot-separated identifiers that identify a protocol buffer
        * field.
-       *
        * Consider the following:
-       *
        *     message CreateContactRequest {
        *       message EmailAddress {
        *         enum Type {
@@ -931,25 +918,19 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
        *           HOME = 1;
        *           WORK = 2;
        *         }
-       *
        *         optional string email = 1;
        *         repeated EmailType type = 2;
        *       }
-       *
        *       string full_name = 1;
        *       repeated EmailAddress email_addresses = 2;
        *     }
-       *
        * In this example, in proto `field` could take one of the following values:
-       *
        * * `full_name` for a violation in the `full_name` value
        * * `email_addresses[1].email` for a violation in the `email` field of the
        *   first `email_addresses` message
        * * `email_addresses[3].type[2]` for a violation in the second `type`
        *   value in the third `email_addresses` message.
-       *
        * In JSON, the same values are represented as:
-       *
        * * `fullName` for a violation in the `fullName` value
        * * `emailAddresses[1].email` for a violation in the `email` field of the
        *   first `emailAddresses` message
@@ -974,9 +955,7 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
        * A path that leads to a field in the request body. The value will be a
        * sequence of dot-separated identifiers that identify a protocol buffer
        * field.
-       *
        * Consider the following:
-       *
        *     message CreateContactRequest {
        *       message EmailAddress {
        *         enum Type {
@@ -984,25 +963,19 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
        *           HOME = 1;
        *           WORK = 2;
        *         }
-       *
        *         optional string email = 1;
        *         repeated EmailType type = 2;
        *       }
-       *
        *       string full_name = 1;
        *       repeated EmailAddress email_addresses = 2;
        *     }
-       *
        * In this example, in proto `field` could take one of the following values:
-       *
        * * `full_name` for a violation in the `full_name` value
        * * `email_addresses[1].email` for a violation in the `email` field of the
        *   first `email_addresses` message
        * * `email_addresses[3].type[2]` for a violation in the second `type`
        *   value in the third `email_addresses` message.
-       *
        * In JSON, the same values are represented as:
-       *
        * * `fullName` for a violation in the `fullName` value
        * * `emailAddresses[1].email` for a violation in the `email` field of the
        *   first `emailAddresses` message
@@ -1518,6 +1491,39 @@ public final class BadRequest extends com.google.protobuf.GeneratedMessageV3
 
     private void buildPartial0(com.google.rpc.BadRequest result) {
       int from_bitField0_ = bitField0_;
+    }
+
+    @java.lang.Override
+    public Builder clone() {
+      return super.clone();
+    }
+
+    @java.lang.Override
+    public Builder setField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.setField(field, value);
+    }
+
+    @java.lang.Override
+    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      return super.clearField(field);
+    }
+
+    @java.lang.Override
+    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      return super.clearOneof(oneof);
+    }
+
+    @java.lang.Override
+    public Builder setRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
+      return super.setRepeatedField(field, index, value);
+    }
+
+    @java.lang.Override
+    public Builder addRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.addRepeatedField(field, value);
     }
 
     @java.lang.Override

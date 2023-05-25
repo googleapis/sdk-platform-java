@@ -49,13 +49,18 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     description_ = "";
     displayName_ = "";
     launchStage_ = 0;
-    monitoredResourceTypes_ = com.google.protobuf.LazyStringArrayList.emptyList();
+    monitoredResourceTypes_ = com.google.protobuf.LazyStringArrayList.EMPTY;
   }
 
   @java.lang.Override
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new MetricDescriptor();
+  }
+
+  @java.lang.Override
+  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -662,6 +667,11 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       return new MetricDescriptorMetadata();
     }
 
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+      return this.unknownFields;
+    }
+
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
       return com.google.api.MetricProto
           .internal_static_google_api_MetricDescriptor_MetricDescriptorMetadata_descriptor;
@@ -1123,6 +1133,41 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
           result.ingestDelay_ =
               ingestDelayBuilder_ == null ? ingestDelay_ : ingestDelayBuilder_.build();
         }
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+        return super.setField(field, value);
+      }
+
+      @java.lang.Override
+      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+
+      @java.lang.Override
+      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index,
+          java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+        return super.addRepeatedField(field, value);
       }
 
       @java.lang.Override
@@ -1862,7 +1907,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    * URL-encoded. All user-defined metric types have the DNS name
    * `custom.googleapis.com` or `external.googleapis.com`. Metric types should
    * use a natural hierarchical grouping. For example:
-   *
    *     "custom.googleapis.com/invoice/paid/amount"
    *     "external.googleapis.com/prometheus/up"
    *     "appengine.googleapis.com/http/server/response_latencies"
@@ -1892,7 +1936,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    * URL-encoded. All user-defined metric types have the DNS name
    * `custom.googleapis.com` or `external.googleapis.com`. Metric types should
    * use a natural hierarchical grouping. For example:
-   *
    *     "custom.googleapis.com/invoice/paid/amount"
    *     "external.googleapis.com/prometheus/up"
    *     "appengine.googleapis.com/http/server/response_latencies"
@@ -2096,28 +2139,22 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    * The units in which the metric value is reported. It is only applicable
    * if the `value_type` is `INT64`, `DOUBLE`, or `DISTRIBUTION`. The `unit`
    * defines the representation of the stored metric values.
-   *
    * Different systems might scale the values to be more easily displayed (so a
    * value of `0.02kBy` _might_ be displayed as `20By`, and a value of
    * `3523kBy` _might_ be displayed as `3.5MBy`). However, if the `unit` is
    * `kBy`, then the value of the metric is always in thousands of bytes, no
    * matter how it might be displayed.
-   *
    * If you want a custom metric to record the exact number of CPU-seconds used
    * by a job, you can create an `INT64 CUMULATIVE` metric whose `unit` is
    * `s{CPU}` (or equivalently `1s{CPU}` or just `s`). If the job uses 12,005
    * CPU-seconds, then the value is written as `12005`.
-   *
    * Alternatively, if you want a custom metric to record data in a more
    * granular way, you can create a `DOUBLE CUMULATIVE` metric whose `unit` is
    * `ks{CPU}`, and then write the value `12.005` (which is `12005/1000`),
    * or use `Kis{CPU}` and write `11.723` (which is `12005/1024`).
-   *
    * The supported units are a subset of [The Unified Code for Units of
    * Measure](https://unitsofmeasure.org/ucum.html) standard:
-   *
    * **Basic units (UNIT)**
-   *
    * * `bit`   bit
    * * `By`    byte
    * * `s`     second
@@ -2125,9 +2162,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    * * `h`     hour
    * * `d`     day
    * * `1`     dimensionless
-   *
    * **Prefixes (PREFIX)**
-   *
    * * `k`     kilo    (10^3)
    * * `M`     mega    (10^6)
    * * `G`     giga    (10^9)
@@ -2136,7 +2171,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    * * `E`     exa     (10^18)
    * * `Z`     zetta   (10^21)
    * * `Y`     yotta   (10^24)
-   *
    * * `m`     milli   (10^-3)
    * * `u`     micro   (10^-6)
    * * `n`     nano    (10^-9)
@@ -2145,37 +2179,27 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    * * `a`     atto    (10^-18)
    * * `z`     zepto   (10^-21)
    * * `y`     yocto   (10^-24)
-   *
    * * `Ki`    kibi    (2^10)
    * * `Mi`    mebi    (2^20)
    * * `Gi`    gibi    (2^30)
    * * `Ti`    tebi    (2^40)
    * * `Pi`    pebi    (2^50)
-   *
    * **Grammar**
-   *
    * The grammar also includes these connectors:
-   *
    * * `/`    division or ratio (as an infix operator). For examples,
    *          `kBy/{email}` or `MiBy/10ms` (although you should almost never
    *          have `/s` in a metric `unit`; rates should always be computed at
    *          query time from the underlying cumulative or delta value).
    * * `.`    multiplication or composition (as an infix operator). For
    *          examples, `GBy.d` or `k{watt}.h`.
-   *
    * The grammar for a unit is as follows:
-   *
    *     Expression = Component { "." Component } { "/" Component } ;
-   *
    *     Component = ( [ PREFIX ] UNIT | "%" ) [ Annotation ]
    *               | Annotation
    *               | "1"
    *               ;
-   *
    *     Annotation = "{" NAME "}" ;
-   *
    * Notes:
-   *
    * * `Annotation` is just a comment if it follows a `UNIT`. If the annotation
    *    is used alone, then the unit is equivalent to `1`. For examples,
    *    `{request}/s == 1/s`, `By{transmitted}/s == By/s`.
@@ -2220,28 +2244,22 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    * The units in which the metric value is reported. It is only applicable
    * if the `value_type` is `INT64`, `DOUBLE`, or `DISTRIBUTION`. The `unit`
    * defines the representation of the stored metric values.
-   *
    * Different systems might scale the values to be more easily displayed (so a
    * value of `0.02kBy` _might_ be displayed as `20By`, and a value of
    * `3523kBy` _might_ be displayed as `3.5MBy`). However, if the `unit` is
    * `kBy`, then the value of the metric is always in thousands of bytes, no
    * matter how it might be displayed.
-   *
    * If you want a custom metric to record the exact number of CPU-seconds used
    * by a job, you can create an `INT64 CUMULATIVE` metric whose `unit` is
    * `s{CPU}` (or equivalently `1s{CPU}` or just `s`). If the job uses 12,005
    * CPU-seconds, then the value is written as `12005`.
-   *
    * Alternatively, if you want a custom metric to record data in a more
    * granular way, you can create a `DOUBLE CUMULATIVE` metric whose `unit` is
    * `ks{CPU}`, and then write the value `12.005` (which is `12005/1000`),
    * or use `Kis{CPU}` and write `11.723` (which is `12005/1024`).
-   *
    * The supported units are a subset of [The Unified Code for Units of
    * Measure](https://unitsofmeasure.org/ucum.html) standard:
-   *
    * **Basic units (UNIT)**
-   *
    * * `bit`   bit
    * * `By`    byte
    * * `s`     second
@@ -2249,9 +2267,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    * * `h`     hour
    * * `d`     day
    * * `1`     dimensionless
-   *
    * **Prefixes (PREFIX)**
-   *
    * * `k`     kilo    (10^3)
    * * `M`     mega    (10^6)
    * * `G`     giga    (10^9)
@@ -2260,7 +2276,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    * * `E`     exa     (10^18)
    * * `Z`     zetta   (10^21)
    * * `Y`     yotta   (10^24)
-   *
    * * `m`     milli   (10^-3)
    * * `u`     micro   (10^-6)
    * * `n`     nano    (10^-9)
@@ -2269,37 +2284,27 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
    * * `a`     atto    (10^-18)
    * * `z`     zepto   (10^-21)
    * * `y`     yocto   (10^-24)
-   *
    * * `Ki`    kibi    (2^10)
    * * `Mi`    mebi    (2^20)
    * * `Gi`    gibi    (2^30)
    * * `Ti`    tebi    (2^40)
    * * `Pi`    pebi    (2^50)
-   *
    * **Grammar**
-   *
    * The grammar also includes these connectors:
-   *
    * * `/`    division or ratio (as an infix operator). For examples,
    *          `kBy/{email}` or `MiBy/10ms` (although you should almost never
    *          have `/s` in a metric `unit`; rates should always be computed at
    *          query time from the underlying cumulative or delta value).
    * * `.`    multiplication or composition (as an infix operator). For
    *          examples, `GBy.d` or `k{watt}.h`.
-   *
    * The grammar for a unit is as follows:
-   *
    *     Expression = Component { "." Component } { "/" Component } ;
-   *
    *     Component = ( [ PREFIX ] UNIT | "%" ) [ Annotation ]
    *               | Annotation
    *               | "1"
    *               ;
-   *
    *     Annotation = "{" NAME "}" ;
-   *
    * Notes:
-   *
    * * `Annotation` is just a comment if it follows a `UNIT`. If the annotation
    *    is used alone, then the unit is equivalent to `1`. For examples,
    *    `{request}/s == 1/s`, `By{transmitted}/s == By/s`.
@@ -2533,8 +2538,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
   public static final int MONITORED_RESOURCE_TYPES_FIELD_NUMBER = 13;
 
   @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringArrayList monitoredResourceTypes_ =
-      com.google.protobuf.LazyStringArrayList.emptyList();
+  private com.google.protobuf.LazyStringList monitoredResourceTypes_;
   /**
    *
    *
@@ -2940,7 +2944,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
         metadataBuilder_ = null;
       }
       launchStage_ = 0;
-      monitoredResourceTypes_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      monitoredResourceTypes_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      bitField0_ = (bitField0_ & ~0x00000400);
       return this;
     }
 
@@ -2984,6 +2989,11 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       } else {
         result.labels_ = labelsBuilder_.build();
       }
+      if (((bitField0_ & 0x00000400) != 0)) {
+        monitoredResourceTypes_ = monitoredResourceTypes_.getUnmodifiableView();
+        bitField0_ = (bitField0_ & ~0x00000400);
+      }
+      result.monitoredResourceTypes_ = monitoredResourceTypes_;
     }
 
     private void buildPartial0(com.google.api.MetricDescriptor result) {
@@ -3015,10 +3025,39 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       if (((from_bitField0_ & 0x00000200) != 0)) {
         result.launchStage_ = launchStage_;
       }
-      if (((from_bitField0_ & 0x00000400) != 0)) {
-        monitoredResourceTypes_.makeImmutable();
-        result.monitoredResourceTypes_ = monitoredResourceTypes_;
-      }
+    }
+
+    @java.lang.Override
+    public Builder clone() {
+      return super.clone();
+    }
+
+    @java.lang.Override
+    public Builder setField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.setField(field, value);
+    }
+
+    @java.lang.Override
+    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      return super.clearField(field);
+    }
+
+    @java.lang.Override
+    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      return super.clearOneof(oneof);
+    }
+
+    @java.lang.Override
+    public Builder setRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
+      return super.setRepeatedField(field, index, value);
+    }
+
+    @java.lang.Override
+    public Builder addRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.addRepeatedField(field, value);
     }
 
     @java.lang.Override
@@ -3100,7 +3139,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       if (!other.monitoredResourceTypes_.isEmpty()) {
         if (monitoredResourceTypes_.isEmpty()) {
           monitoredResourceTypes_ = other.monitoredResourceTypes_;
-          bitField0_ |= 0x00000400;
+          bitField0_ = (bitField0_ & ~0x00000400);
         } else {
           ensureMonitoredResourceTypesIsMutable();
           monitoredResourceTypes_.addAll(other.monitoredResourceTypes_);
@@ -3340,7 +3379,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * URL-encoded. All user-defined metric types have the DNS name
      * `custom.googleapis.com` or `external.googleapis.com`. Metric types should
      * use a natural hierarchical grouping. For example:
-     *
      *     "custom.googleapis.com/invoice/paid/amount"
      *     "external.googleapis.com/prometheus/up"
      *     "appengine.googleapis.com/http/server/response_latencies"
@@ -3369,7 +3407,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * URL-encoded. All user-defined metric types have the DNS name
      * `custom.googleapis.com` or `external.googleapis.com`. Metric types should
      * use a natural hierarchical grouping. For example:
-     *
      *     "custom.googleapis.com/invoice/paid/amount"
      *     "external.googleapis.com/prometheus/up"
      *     "appengine.googleapis.com/http/server/response_latencies"
@@ -3398,7 +3435,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * URL-encoded. All user-defined metric types have the DNS name
      * `custom.googleapis.com` or `external.googleapis.com`. Metric types should
      * use a natural hierarchical grouping. For example:
-     *
      *     "custom.googleapis.com/invoice/paid/amount"
      *     "external.googleapis.com/prometheus/up"
      *     "appengine.googleapis.com/http/server/response_latencies"
@@ -3426,7 +3462,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * URL-encoded. All user-defined metric types have the DNS name
      * `custom.googleapis.com` or `external.googleapis.com`. Metric types should
      * use a natural hierarchical grouping. For example:
-     *
      *     "custom.googleapis.com/invoice/paid/amount"
      *     "external.googleapis.com/prometheus/up"
      *     "appengine.googleapis.com/http/server/response_latencies"
@@ -3450,7 +3485,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * URL-encoded. All user-defined metric types have the DNS name
      * `custom.googleapis.com` or `external.googleapis.com`. Metric types should
      * use a natural hierarchical grouping. For example:
-     *
      *     "custom.googleapis.com/invoice/paid/amount"
      *     "external.googleapis.com/prometheus/up"
      *     "appengine.googleapis.com/http/server/response_latencies"
@@ -4106,28 +4140,22 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * The units in which the metric value is reported. It is only applicable
      * if the `value_type` is `INT64`, `DOUBLE`, or `DISTRIBUTION`. The `unit`
      * defines the representation of the stored metric values.
-     *
      * Different systems might scale the values to be more easily displayed (so a
      * value of `0.02kBy` _might_ be displayed as `20By`, and a value of
      * `3523kBy` _might_ be displayed as `3.5MBy`). However, if the `unit` is
      * `kBy`, then the value of the metric is always in thousands of bytes, no
      * matter how it might be displayed.
-     *
      * If you want a custom metric to record the exact number of CPU-seconds used
      * by a job, you can create an `INT64 CUMULATIVE` metric whose `unit` is
      * `s{CPU}` (or equivalently `1s{CPU}` or just `s`). If the job uses 12,005
      * CPU-seconds, then the value is written as `12005`.
-     *
      * Alternatively, if you want a custom metric to record data in a more
      * granular way, you can create a `DOUBLE CUMULATIVE` metric whose `unit` is
      * `ks{CPU}`, and then write the value `12.005` (which is `12005/1000`),
      * or use `Kis{CPU}` and write `11.723` (which is `12005/1024`).
-     *
      * The supported units are a subset of [The Unified Code for Units of
      * Measure](https://unitsofmeasure.org/ucum.html) standard:
-     *
      * **Basic units (UNIT)**
-     *
      * * `bit`   bit
      * * `By`    byte
      * * `s`     second
@@ -4135,9 +4163,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * * `h`     hour
      * * `d`     day
      * * `1`     dimensionless
-     *
      * **Prefixes (PREFIX)**
-     *
      * * `k`     kilo    (10^3)
      * * `M`     mega    (10^6)
      * * `G`     giga    (10^9)
@@ -4146,7 +4172,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * * `E`     exa     (10^18)
      * * `Z`     zetta   (10^21)
      * * `Y`     yotta   (10^24)
-     *
      * * `m`     milli   (10^-3)
      * * `u`     micro   (10^-6)
      * * `n`     nano    (10^-9)
@@ -4155,37 +4180,27 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * * `a`     atto    (10^-18)
      * * `z`     zepto   (10^-21)
      * * `y`     yocto   (10^-24)
-     *
      * * `Ki`    kibi    (2^10)
      * * `Mi`    mebi    (2^20)
      * * `Gi`    gibi    (2^30)
      * * `Ti`    tebi    (2^40)
      * * `Pi`    pebi    (2^50)
-     *
      * **Grammar**
-     *
      * The grammar also includes these connectors:
-     *
      * * `/`    division or ratio (as an infix operator). For examples,
      *          `kBy/{email}` or `MiBy/10ms` (although you should almost never
      *          have `/s` in a metric `unit`; rates should always be computed at
      *          query time from the underlying cumulative or delta value).
      * * `.`    multiplication or composition (as an infix operator). For
      *          examples, `GBy.d` or `k{watt}.h`.
-     *
      * The grammar for a unit is as follows:
-     *
      *     Expression = Component { "." Component } { "/" Component } ;
-     *
      *     Component = ( [ PREFIX ] UNIT | "%" ) [ Annotation ]
      *               | Annotation
      *               | "1"
      *               ;
-     *
      *     Annotation = "{" NAME "}" ;
-     *
      * Notes:
-     *
      * * `Annotation` is just a comment if it follows a `UNIT`. If the annotation
      *    is used alone, then the unit is equivalent to `1`. For examples,
      *    `{request}/s == 1/s`, `By{transmitted}/s == By/s`.
@@ -4229,28 +4244,22 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * The units in which the metric value is reported. It is only applicable
      * if the `value_type` is `INT64`, `DOUBLE`, or `DISTRIBUTION`. The `unit`
      * defines the representation of the stored metric values.
-     *
      * Different systems might scale the values to be more easily displayed (so a
      * value of `0.02kBy` _might_ be displayed as `20By`, and a value of
      * `3523kBy` _might_ be displayed as `3.5MBy`). However, if the `unit` is
      * `kBy`, then the value of the metric is always in thousands of bytes, no
      * matter how it might be displayed.
-     *
      * If you want a custom metric to record the exact number of CPU-seconds used
      * by a job, you can create an `INT64 CUMULATIVE` metric whose `unit` is
      * `s{CPU}` (or equivalently `1s{CPU}` or just `s`). If the job uses 12,005
      * CPU-seconds, then the value is written as `12005`.
-     *
      * Alternatively, if you want a custom metric to record data in a more
      * granular way, you can create a `DOUBLE CUMULATIVE` metric whose `unit` is
      * `ks{CPU}`, and then write the value `12.005` (which is `12005/1000`),
      * or use `Kis{CPU}` and write `11.723` (which is `12005/1024`).
-     *
      * The supported units are a subset of [The Unified Code for Units of
      * Measure](https://unitsofmeasure.org/ucum.html) standard:
-     *
      * **Basic units (UNIT)**
-     *
      * * `bit`   bit
      * * `By`    byte
      * * `s`     second
@@ -4258,9 +4267,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * * `h`     hour
      * * `d`     day
      * * `1`     dimensionless
-     *
      * **Prefixes (PREFIX)**
-     *
      * * `k`     kilo    (10^3)
      * * `M`     mega    (10^6)
      * * `G`     giga    (10^9)
@@ -4269,7 +4276,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * * `E`     exa     (10^18)
      * * `Z`     zetta   (10^21)
      * * `Y`     yotta   (10^24)
-     *
      * * `m`     milli   (10^-3)
      * * `u`     micro   (10^-6)
      * * `n`     nano    (10^-9)
@@ -4278,37 +4284,27 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * * `a`     atto    (10^-18)
      * * `z`     zepto   (10^-21)
      * * `y`     yocto   (10^-24)
-     *
      * * `Ki`    kibi    (2^10)
      * * `Mi`    mebi    (2^20)
      * * `Gi`    gibi    (2^30)
      * * `Ti`    tebi    (2^40)
      * * `Pi`    pebi    (2^50)
-     *
      * **Grammar**
-     *
      * The grammar also includes these connectors:
-     *
      * * `/`    division or ratio (as an infix operator). For examples,
      *          `kBy/{email}` or `MiBy/10ms` (although you should almost never
      *          have `/s` in a metric `unit`; rates should always be computed at
      *          query time from the underlying cumulative or delta value).
      * * `.`    multiplication or composition (as an infix operator). For
      *          examples, `GBy.d` or `k{watt}.h`.
-     *
      * The grammar for a unit is as follows:
-     *
      *     Expression = Component { "." Component } { "/" Component } ;
-     *
      *     Component = ( [ PREFIX ] UNIT | "%" ) [ Annotation ]
      *               | Annotation
      *               | "1"
      *               ;
-     *
      *     Annotation = "{" NAME "}" ;
-     *
      * Notes:
-     *
      * * `Annotation` is just a comment if it follows a `UNIT`. If the annotation
      *    is used alone, then the unit is equivalent to `1`. For examples,
      *    `{request}/s == 1/s`, `By{transmitted}/s == By/s`.
@@ -4352,28 +4348,22 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * The units in which the metric value is reported. It is only applicable
      * if the `value_type` is `INT64`, `DOUBLE`, or `DISTRIBUTION`. The `unit`
      * defines the representation of the stored metric values.
-     *
      * Different systems might scale the values to be more easily displayed (so a
      * value of `0.02kBy` _might_ be displayed as `20By`, and a value of
      * `3523kBy` _might_ be displayed as `3.5MBy`). However, if the `unit` is
      * `kBy`, then the value of the metric is always in thousands of bytes, no
      * matter how it might be displayed.
-     *
      * If you want a custom metric to record the exact number of CPU-seconds used
      * by a job, you can create an `INT64 CUMULATIVE` metric whose `unit` is
      * `s{CPU}` (or equivalently `1s{CPU}` or just `s`). If the job uses 12,005
      * CPU-seconds, then the value is written as `12005`.
-     *
      * Alternatively, if you want a custom metric to record data in a more
      * granular way, you can create a `DOUBLE CUMULATIVE` metric whose `unit` is
      * `ks{CPU}`, and then write the value `12.005` (which is `12005/1000`),
      * or use `Kis{CPU}` and write `11.723` (which is `12005/1024`).
-     *
      * The supported units are a subset of [The Unified Code for Units of
      * Measure](https://unitsofmeasure.org/ucum.html) standard:
-     *
      * **Basic units (UNIT)**
-     *
      * * `bit`   bit
      * * `By`    byte
      * * `s`     second
@@ -4381,9 +4371,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * * `h`     hour
      * * `d`     day
      * * `1`     dimensionless
-     *
      * **Prefixes (PREFIX)**
-     *
      * * `k`     kilo    (10^3)
      * * `M`     mega    (10^6)
      * * `G`     giga    (10^9)
@@ -4392,7 +4380,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * * `E`     exa     (10^18)
      * * `Z`     zetta   (10^21)
      * * `Y`     yotta   (10^24)
-     *
      * * `m`     milli   (10^-3)
      * * `u`     micro   (10^-6)
      * * `n`     nano    (10^-9)
@@ -4401,37 +4388,27 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * * `a`     atto    (10^-18)
      * * `z`     zepto   (10^-21)
      * * `y`     yocto   (10^-24)
-     *
      * * `Ki`    kibi    (2^10)
      * * `Mi`    mebi    (2^20)
      * * `Gi`    gibi    (2^30)
      * * `Ti`    tebi    (2^40)
      * * `Pi`    pebi    (2^50)
-     *
      * **Grammar**
-     *
      * The grammar also includes these connectors:
-     *
      * * `/`    division or ratio (as an infix operator). For examples,
      *          `kBy/{email}` or `MiBy/10ms` (although you should almost never
      *          have `/s` in a metric `unit`; rates should always be computed at
      *          query time from the underlying cumulative or delta value).
      * * `.`    multiplication or composition (as an infix operator). For
      *          examples, `GBy.d` or `k{watt}.h`.
-     *
      * The grammar for a unit is as follows:
-     *
      *     Expression = Component { "." Component } { "/" Component } ;
-     *
      *     Component = ( [ PREFIX ] UNIT | "%" ) [ Annotation ]
      *               | Annotation
      *               | "1"
      *               ;
-     *
      *     Annotation = "{" NAME "}" ;
-     *
      * Notes:
-     *
      * * `Annotation` is just a comment if it follows a `UNIT`. If the annotation
      *    is used alone, then the unit is equivalent to `1`. For examples,
      *    `{request}/s == 1/s`, `By{transmitted}/s == By/s`.
@@ -4474,28 +4451,22 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * The units in which the metric value is reported. It is only applicable
      * if the `value_type` is `INT64`, `DOUBLE`, or `DISTRIBUTION`. The `unit`
      * defines the representation of the stored metric values.
-     *
      * Different systems might scale the values to be more easily displayed (so a
      * value of `0.02kBy` _might_ be displayed as `20By`, and a value of
      * `3523kBy` _might_ be displayed as `3.5MBy`). However, if the `unit` is
      * `kBy`, then the value of the metric is always in thousands of bytes, no
      * matter how it might be displayed.
-     *
      * If you want a custom metric to record the exact number of CPU-seconds used
      * by a job, you can create an `INT64 CUMULATIVE` metric whose `unit` is
      * `s{CPU}` (or equivalently `1s{CPU}` or just `s`). If the job uses 12,005
      * CPU-seconds, then the value is written as `12005`.
-     *
      * Alternatively, if you want a custom metric to record data in a more
      * granular way, you can create a `DOUBLE CUMULATIVE` metric whose `unit` is
      * `ks{CPU}`, and then write the value `12.005` (which is `12005/1000`),
      * or use `Kis{CPU}` and write `11.723` (which is `12005/1024`).
-     *
      * The supported units are a subset of [The Unified Code for Units of
      * Measure](https://unitsofmeasure.org/ucum.html) standard:
-     *
      * **Basic units (UNIT)**
-     *
      * * `bit`   bit
      * * `By`    byte
      * * `s`     second
@@ -4503,9 +4474,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * * `h`     hour
      * * `d`     day
      * * `1`     dimensionless
-     *
      * **Prefixes (PREFIX)**
-     *
      * * `k`     kilo    (10^3)
      * * `M`     mega    (10^6)
      * * `G`     giga    (10^9)
@@ -4514,7 +4483,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * * `E`     exa     (10^18)
      * * `Z`     zetta   (10^21)
      * * `Y`     yotta   (10^24)
-     *
      * * `m`     milli   (10^-3)
      * * `u`     micro   (10^-6)
      * * `n`     nano    (10^-9)
@@ -4523,37 +4491,27 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * * `a`     atto    (10^-18)
      * * `z`     zepto   (10^-21)
      * * `y`     yocto   (10^-24)
-     *
      * * `Ki`    kibi    (2^10)
      * * `Mi`    mebi    (2^20)
      * * `Gi`    gibi    (2^30)
      * * `Ti`    tebi    (2^40)
      * * `Pi`    pebi    (2^50)
-     *
      * **Grammar**
-     *
      * The grammar also includes these connectors:
-     *
      * * `/`    division or ratio (as an infix operator). For examples,
      *          `kBy/{email}` or `MiBy/10ms` (although you should almost never
      *          have `/s` in a metric `unit`; rates should always be computed at
      *          query time from the underlying cumulative or delta value).
      * * `.`    multiplication or composition (as an infix operator). For
      *          examples, `GBy.d` or `k{watt}.h`.
-     *
      * The grammar for a unit is as follows:
-     *
      *     Expression = Component { "." Component } { "/" Component } ;
-     *
      *     Component = ( [ PREFIX ] UNIT | "%" ) [ Annotation ]
      *               | Annotation
      *               | "1"
      *               ;
-     *
      *     Annotation = "{" NAME "}" ;
-     *
      * Notes:
-     *
      * * `Annotation` is just a comment if it follows a `UNIT`. If the annotation
      *    is used alone, then the unit is equivalent to `1`. For examples,
      *    `{request}/s == 1/s`, `By{transmitted}/s == By/s`.
@@ -4592,28 +4550,22 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * The units in which the metric value is reported. It is only applicable
      * if the `value_type` is `INT64`, `DOUBLE`, or `DISTRIBUTION`. The `unit`
      * defines the representation of the stored metric values.
-     *
      * Different systems might scale the values to be more easily displayed (so a
      * value of `0.02kBy` _might_ be displayed as `20By`, and a value of
      * `3523kBy` _might_ be displayed as `3.5MBy`). However, if the `unit` is
      * `kBy`, then the value of the metric is always in thousands of bytes, no
      * matter how it might be displayed.
-     *
      * If you want a custom metric to record the exact number of CPU-seconds used
      * by a job, you can create an `INT64 CUMULATIVE` metric whose `unit` is
      * `s{CPU}` (or equivalently `1s{CPU}` or just `s`). If the job uses 12,005
      * CPU-seconds, then the value is written as `12005`.
-     *
      * Alternatively, if you want a custom metric to record data in a more
      * granular way, you can create a `DOUBLE CUMULATIVE` metric whose `unit` is
      * `ks{CPU}`, and then write the value `12.005` (which is `12005/1000`),
      * or use `Kis{CPU}` and write `11.723` (which is `12005/1024`).
-     *
      * The supported units are a subset of [The Unified Code for Units of
      * Measure](https://unitsofmeasure.org/ucum.html) standard:
-     *
      * **Basic units (UNIT)**
-     *
      * * `bit`   bit
      * * `By`    byte
      * * `s`     second
@@ -4621,9 +4573,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * * `h`     hour
      * * `d`     day
      * * `1`     dimensionless
-     *
      * **Prefixes (PREFIX)**
-     *
      * * `k`     kilo    (10^3)
      * * `M`     mega    (10^6)
      * * `G`     giga    (10^9)
@@ -4632,7 +4582,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * * `E`     exa     (10^18)
      * * `Z`     zetta   (10^21)
      * * `Y`     yotta   (10^24)
-     *
      * * `m`     milli   (10^-3)
      * * `u`     micro   (10^-6)
      * * `n`     nano    (10^-9)
@@ -4641,37 +4590,27 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * * `a`     atto    (10^-18)
      * * `z`     zepto   (10^-21)
      * * `y`     yocto   (10^-24)
-     *
      * * `Ki`    kibi    (2^10)
      * * `Mi`    mebi    (2^20)
      * * `Gi`    gibi    (2^30)
      * * `Ti`    tebi    (2^40)
      * * `Pi`    pebi    (2^50)
-     *
      * **Grammar**
-     *
      * The grammar also includes these connectors:
-     *
      * * `/`    division or ratio (as an infix operator). For examples,
      *          `kBy/{email}` or `MiBy/10ms` (although you should almost never
      *          have `/s` in a metric `unit`; rates should always be computed at
      *          query time from the underlying cumulative or delta value).
      * * `.`    multiplication or composition (as an infix operator). For
      *          examples, `GBy.d` or `k{watt}.h`.
-     *
      * The grammar for a unit is as follows:
-     *
      *     Expression = Component { "." Component } { "/" Component } ;
-     *
      *     Component = ( [ PREFIX ] UNIT | "%" ) [ Annotation ]
      *               | Annotation
      *               | "1"
      *               ;
-     *
      *     Annotation = "{" NAME "}" ;
-     *
      * Notes:
-     *
      * * `Annotation` is just a comment if it follows a `UNIT`. If the annotation
      *    is used alone, then the unit is equivalent to `1`. For examples,
      *    `{request}/s == 1/s`, `By{transmitted}/s == By/s`.
@@ -5211,15 +5150,15 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       return this;
     }
 
-    private com.google.protobuf.LazyStringArrayList monitoredResourceTypes_ =
-        com.google.protobuf.LazyStringArrayList.emptyList();
+    private com.google.protobuf.LazyStringList monitoredResourceTypes_ =
+        com.google.protobuf.LazyStringArrayList.EMPTY;
 
     private void ensureMonitoredResourceTypesIsMutable() {
-      if (!monitoredResourceTypes_.isModifiable()) {
+      if (!((bitField0_ & 0x00000400) != 0)) {
         monitoredResourceTypes_ =
             new com.google.protobuf.LazyStringArrayList(monitoredResourceTypes_);
+        bitField0_ |= 0x00000400;
       }
-      bitField0_ |= 0x00000400;
     }
     /**
      *
@@ -5238,8 +5177,7 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * @return A list containing the monitoredResourceTypes.
      */
     public com.google.protobuf.ProtocolStringList getMonitoredResourceTypesList() {
-      monitoredResourceTypes_.makeImmutable();
-      return monitoredResourceTypes_;
+      return monitoredResourceTypes_.getUnmodifiableView();
     }
     /**
      *
@@ -5324,7 +5262,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       }
       ensureMonitoredResourceTypesIsMutable();
       monitoredResourceTypes_.set(index, value);
-      bitField0_ |= 0x00000400;
       onChanged();
       return this;
     }
@@ -5351,7 +5288,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       }
       ensureMonitoredResourceTypesIsMutable();
       monitoredResourceTypes_.add(value);
-      bitField0_ |= 0x00000400;
       onChanged();
       return this;
     }
@@ -5375,7 +5311,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
     public Builder addAllMonitoredResourceTypes(java.lang.Iterable<java.lang.String> values) {
       ensureMonitoredResourceTypesIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(values, monitoredResourceTypes_);
-      bitField0_ |= 0x00000400;
       onChanged();
       return this;
     }
@@ -5396,9 +5331,8 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder clearMonitoredResourceTypes() {
-      monitoredResourceTypes_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      monitoredResourceTypes_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       bitField0_ = (bitField0_ & ~0x00000400);
-      ;
       onChanged();
       return this;
     }
@@ -5426,7 +5360,6 @@ public final class MetricDescriptor extends com.google.protobuf.GeneratedMessage
       checkByteStringIsUtf8(value);
       ensureMonitoredResourceTypesIsMutable();
       monitoredResourceTypes_.add(value);
-      bitField0_ |= 0x00000400;
       onChanged();
       return this;
     }

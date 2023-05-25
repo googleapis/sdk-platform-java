@@ -27,16 +27,13 @@ package com.google.type;
  * Box or similar.
  * It is not intended to model geographical locations (roads, towns,
  * mountains).
- *
  * In typical usage an address would be created via user input or from importing
  * existing data, depending on the type of process.
- *
  * Advice on address input / editing:
  *  - Use an i18n-ready address widget such as
  *    https://github.com/google/libaddressinput)
  * - Users should not be presented with UI elements for input or editing of
  *   fields outside countries where that field is used.
- *
  * For more guidance on how to use this schema, please see:
  * https://support.google.com/business/answer/6397478
  * </pre>
@@ -61,8 +58,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
     administrativeArea_ = "";
     locality_ = "";
     sublocality_ = "";
-    addressLines_ = com.google.protobuf.LazyStringArrayList.emptyList();
-    recipients_ = com.google.protobuf.LazyStringArrayList.emptyList();
+    addressLines_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    recipients_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     organization_ = "";
   }
 
@@ -70,6 +67,11 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new PostalAddress();
+  }
+
+  @java.lang.Override
+  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -93,7 +95,6 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * The schema revision of the `PostalAddress`. This must be set to 0, which is
    * the latest revision.
-   *
    * All new revisions **must** be backward compatible with old revisions.
    * </pre>
    *
@@ -180,10 +181,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    * This can affect formatting in certain countries, but is not critical
    * to the correctness of the data and will never affect any validation or
    * other non-formatting related operations.
-   *
    * If this value is not known, it should be omitted (rather than specifying a
    * possibly incorrect default).
-   *
    * Examples: "zh-Hant", "ja", "ja-Latn", "en".
    * </pre>
    *
@@ -214,10 +213,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    * This can affect formatting in certain countries, but is not critical
    * to the correctness of the data and will never affect any validation or
    * other non-formatting related operations.
-   *
    * If this value is not known, it should be omitted (rather than specifying a
    * possibly incorrect default).
-   *
    * Examples: "zh-Hant", "ja", "ja-Latn", "en".
    * </pre>
    *
@@ -530,14 +527,12 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
   public static final int ADDRESS_LINES_FIELD_NUMBER = 9;
 
   @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringArrayList addressLines_ =
-      com.google.protobuf.LazyStringArrayList.emptyList();
+  private com.google.protobuf.LazyStringList addressLines_;
   /**
    *
    *
    * <pre>
    * Unstructured address lines describing the lower levels of an address.
-   *
    * Because values in address_lines do not have type information and may
    * sometimes contain multiple values in a single field (e.g.
    * "Austin, TX"), it is important that the line order is clear. The order of
@@ -546,14 +541,12 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    * used to make it explicit (e.g. "ja" for large-to-small ordering and
    * "ja-Latn" or "en" for small-to-large). This way, the most specific line of
    * an address can be selected based on the language.
-   *
    * The minimum permitted structural representation of an address consists
    * of a region_code with all remaining information placed in the
    * address_lines. It would be possible to format such an address very
    * approximately without geocoding, but no semantic reasoning could be
    * made about any of the address components until it was at least
    * partially resolved.
-   *
    * Creating an address only containing a region_code and address_lines, and
    * then geocoding is the recommended way to handle completely unstructured
    * addresses (as opposed to guessing which parts of the address should be
@@ -572,7 +565,6 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Unstructured address lines describing the lower levels of an address.
-   *
    * Because values in address_lines do not have type information and may
    * sometimes contain multiple values in a single field (e.g.
    * "Austin, TX"), it is important that the line order is clear. The order of
@@ -581,14 +573,12 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    * used to make it explicit (e.g. "ja" for large-to-small ordering and
    * "ja-Latn" or "en" for small-to-large). This way, the most specific line of
    * an address can be selected based on the language.
-   *
    * The minimum permitted structural representation of an address consists
    * of a region_code with all remaining information placed in the
    * address_lines. It would be possible to format such an address very
    * approximately without geocoding, but no semantic reasoning could be
    * made about any of the address components until it was at least
    * partially resolved.
-   *
    * Creating an address only containing a region_code and address_lines, and
    * then geocoding is the recommended way to handle completely unstructured
    * addresses (as opposed to guessing which parts of the address should be
@@ -607,7 +597,6 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Unstructured address lines describing the lower levels of an address.
-   *
    * Because values in address_lines do not have type information and may
    * sometimes contain multiple values in a single field (e.g.
    * "Austin, TX"), it is important that the line order is clear. The order of
@@ -616,14 +605,12 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    * used to make it explicit (e.g. "ja" for large-to-small ordering and
    * "ja-Latn" or "en" for small-to-large). This way, the most specific line of
    * an address can be selected based on the language.
-   *
    * The minimum permitted structural representation of an address consists
    * of a region_code with all remaining information placed in the
    * address_lines. It would be possible to format such an address very
    * approximately without geocoding, but no semantic reasoning could be
    * made about any of the address components until it was at least
    * partially resolved.
-   *
    * Creating an address only containing a region_code and address_lines, and
    * then geocoding is the recommended way to handle completely unstructured
    * addresses (as opposed to guessing which parts of the address should be
@@ -643,7 +630,6 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Unstructured address lines describing the lower levels of an address.
-   *
    * Because values in address_lines do not have type information and may
    * sometimes contain multiple values in a single field (e.g.
    * "Austin, TX"), it is important that the line order is clear. The order of
@@ -652,14 +638,12 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    * used to make it explicit (e.g. "ja" for large-to-small ordering and
    * "ja-Latn" or "en" for small-to-large). This way, the most specific line of
    * an address can be selected based on the language.
-   *
    * The minimum permitted structural representation of an address consists
    * of a region_code with all remaining information placed in the
    * address_lines. It would be possible to format such an address very
    * approximately without geocoding, but no semantic reasoning could be
    * made about any of the address components until it was at least
    * partially resolved.
-   *
    * Creating an address only containing a region_code and address_lines, and
    * then geocoding is the recommended way to handle completely unstructured
    * addresses (as opposed to guessing which parts of the address should be
@@ -678,8 +662,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
   public static final int RECIPIENTS_FIELD_NUMBER = 10;
 
   @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringArrayList recipients_ =
-      com.google.protobuf.LazyStringArrayList.emptyList();
+  private com.google.protobuf.LazyStringList recipients_;
   /**
    *
    *
@@ -1068,16 +1051,13 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
    * Box or similar.
    * It is not intended to model geographical locations (roads, towns,
    * mountains).
-   *
    * In typical usage an address would be created via user input or from importing
    * existing data, depending on the type of process.
-   *
    * Advice on address input / editing:
    *  - Use an i18n-ready address widget such as
    *    https://github.com/google/libaddressinput)
    * - Users should not be presented with UI elements for input or editing of
    *   fields outside countries where that field is used.
-   *
    * For more guidance on how to use this schema, please see:
    * https://support.google.com/business/answer/6397478
    * </pre>
@@ -1121,8 +1101,10 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
       administrativeArea_ = "";
       locality_ = "";
       sublocality_ = "";
-      addressLines_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      recipients_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      addressLines_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      bitField0_ = (bitField0_ & ~0x00000100);
+      recipients_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      bitField0_ = (bitField0_ & ~0x00000200);
       organization_ = "";
       return this;
     }
@@ -1150,11 +1132,25 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.type.PostalAddress buildPartial() {
       com.google.type.PostalAddress result = new com.google.type.PostalAddress(this);
+      buildPartialRepeatedFields(result);
       if (bitField0_ != 0) {
         buildPartial0(result);
       }
       onBuilt();
       return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.type.PostalAddress result) {
+      if (((bitField0_ & 0x00000100) != 0)) {
+        addressLines_ = addressLines_.getUnmodifiableView();
+        bitField0_ = (bitField0_ & ~0x00000100);
+      }
+      result.addressLines_ = addressLines_;
+      if (((bitField0_ & 0x00000200) != 0)) {
+        recipients_ = recipients_.getUnmodifiableView();
+        bitField0_ = (bitField0_ & ~0x00000200);
+      }
+      result.recipients_ = recipients_;
     }
 
     private void buildPartial0(com.google.type.PostalAddress result) {
@@ -1183,17 +1179,42 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
       if (((from_bitField0_ & 0x00000080) != 0)) {
         result.sublocality_ = sublocality_;
       }
-      if (((from_bitField0_ & 0x00000100) != 0)) {
-        addressLines_.makeImmutable();
-        result.addressLines_ = addressLines_;
-      }
-      if (((from_bitField0_ & 0x00000200) != 0)) {
-        recipients_.makeImmutable();
-        result.recipients_ = recipients_;
-      }
       if (((from_bitField0_ & 0x00000400) != 0)) {
         result.organization_ = organization_;
       }
+    }
+
+    @java.lang.Override
+    public Builder clone() {
+      return super.clone();
+    }
+
+    @java.lang.Override
+    public Builder setField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.setField(field, value);
+    }
+
+    @java.lang.Override
+    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      return super.clearField(field);
+    }
+
+    @java.lang.Override
+    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      return super.clearOneof(oneof);
+    }
+
+    @java.lang.Override
+    public Builder setRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
+      return super.setRepeatedField(field, index, value);
+    }
+
+    @java.lang.Override
+    public Builder addRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.addRepeatedField(field, value);
     }
 
     @java.lang.Override
@@ -1249,7 +1270,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
       if (!other.addressLines_.isEmpty()) {
         if (addressLines_.isEmpty()) {
           addressLines_ = other.addressLines_;
-          bitField0_ |= 0x00000100;
+          bitField0_ = (bitField0_ & ~0x00000100);
         } else {
           ensureAddressLinesIsMutable();
           addressLines_.addAll(other.addressLines_);
@@ -1259,7 +1280,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
       if (!other.recipients_.isEmpty()) {
         if (recipients_.isEmpty()) {
           recipients_ = other.recipients_;
-          bitField0_ |= 0x00000200;
+          bitField0_ = (bitField0_ & ~0x00000200);
         } else {
           ensureRecipientsIsMutable();
           recipients_.addAll(other.recipients_);
@@ -1391,7 +1412,6 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The schema revision of the `PostalAddress`. This must be set to 0, which is
      * the latest revision.
-     *
      * All new revisions **must** be backward compatible with old revisions.
      * </pre>
      *
@@ -1409,7 +1429,6 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The schema revision of the `PostalAddress`. This must be set to 0, which is
      * the latest revision.
-     *
      * All new revisions **must** be backward compatible with old revisions.
      * </pre>
      *
@@ -1431,7 +1450,6 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The schema revision of the `PostalAddress`. This must be set to 0, which is
      * the latest revision.
-     *
      * All new revisions **must** be backward compatible with old revisions.
      * </pre>
      *
@@ -1584,10 +1602,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * This can affect formatting in certain countries, but is not critical
      * to the correctness of the data and will never affect any validation or
      * other non-formatting related operations.
-     *
      * If this value is not known, it should be omitted (rather than specifying a
      * possibly incorrect default).
-     *
      * Examples: "zh-Hant", "ja", "ja-Latn", "en".
      * </pre>
      *
@@ -1617,10 +1633,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * This can affect formatting in certain countries, but is not critical
      * to the correctness of the data and will never affect any validation or
      * other non-formatting related operations.
-     *
      * If this value is not known, it should be omitted (rather than specifying a
      * possibly incorrect default).
-     *
      * Examples: "zh-Hant", "ja", "ja-Latn", "en".
      * </pre>
      *
@@ -1650,10 +1664,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * This can affect formatting in certain countries, but is not critical
      * to the correctness of the data and will never affect any validation or
      * other non-formatting related operations.
-     *
      * If this value is not known, it should be omitted (rather than specifying a
      * possibly incorrect default).
-     *
      * Examples: "zh-Hant", "ja", "ja-Latn", "en".
      * </pre>
      *
@@ -1682,10 +1694,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * This can affect formatting in certain countries, but is not critical
      * to the correctness of the data and will never affect any validation or
      * other non-formatting related operations.
-     *
      * If this value is not known, it should be omitted (rather than specifying a
      * possibly incorrect default).
-     *
      * Examples: "zh-Hant", "ja", "ja-Latn", "en".
      * </pre>
      *
@@ -1710,10 +1720,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * This can affect formatting in certain countries, but is not critical
      * to the correctness of the data and will never affect any validation or
      * other non-formatting related operations.
-     *
      * If this value is not known, it should be omitted (rather than specifying a
      * possibly incorrect default).
-     *
      * Examples: "zh-Hant", "ja", "ja-Latn", "en".
      * </pre>
      *
@@ -2348,21 +2356,20 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
       return this;
     }
 
-    private com.google.protobuf.LazyStringArrayList addressLines_ =
-        com.google.protobuf.LazyStringArrayList.emptyList();
+    private com.google.protobuf.LazyStringList addressLines_ =
+        com.google.protobuf.LazyStringArrayList.EMPTY;
 
     private void ensureAddressLinesIsMutable() {
-      if (!addressLines_.isModifiable()) {
+      if (!((bitField0_ & 0x00000100) != 0)) {
         addressLines_ = new com.google.protobuf.LazyStringArrayList(addressLines_);
+        bitField0_ |= 0x00000100;
       }
-      bitField0_ |= 0x00000100;
     }
     /**
      *
      *
      * <pre>
      * Unstructured address lines describing the lower levels of an address.
-     *
      * Because values in address_lines do not have type information and may
      * sometimes contain multiple values in a single field (e.g.
      * "Austin, TX"), it is important that the line order is clear. The order of
@@ -2371,14 +2378,12 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * used to make it explicit (e.g. "ja" for large-to-small ordering and
      * "ja-Latn" or "en" for small-to-large). This way, the most specific line of
      * an address can be selected based on the language.
-     *
      * The minimum permitted structural representation of an address consists
      * of a region_code with all remaining information placed in the
      * address_lines. It would be possible to format such an address very
      * approximately without geocoding, but no semantic reasoning could be
      * made about any of the address components until it was at least
      * partially resolved.
-     *
      * Creating an address only containing a region_code and address_lines, and
      * then geocoding is the recommended way to handle completely unstructured
      * addresses (as opposed to guessing which parts of the address should be
@@ -2390,15 +2395,13 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return A list containing the addressLines.
      */
     public com.google.protobuf.ProtocolStringList getAddressLinesList() {
-      addressLines_.makeImmutable();
-      return addressLines_;
+      return addressLines_.getUnmodifiableView();
     }
     /**
      *
      *
      * <pre>
      * Unstructured address lines describing the lower levels of an address.
-     *
      * Because values in address_lines do not have type information and may
      * sometimes contain multiple values in a single field (e.g.
      * "Austin, TX"), it is important that the line order is clear. The order of
@@ -2407,14 +2410,12 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * used to make it explicit (e.g. "ja" for large-to-small ordering and
      * "ja-Latn" or "en" for small-to-large). This way, the most specific line of
      * an address can be selected based on the language.
-     *
      * The minimum permitted structural representation of an address consists
      * of a region_code with all remaining information placed in the
      * address_lines. It would be possible to format such an address very
      * approximately without geocoding, but no semantic reasoning could be
      * made about any of the address components until it was at least
      * partially resolved.
-     *
      * Creating an address only containing a region_code and address_lines, and
      * then geocoding is the recommended way to handle completely unstructured
      * addresses (as opposed to guessing which parts of the address should be
@@ -2433,7 +2434,6 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Unstructured address lines describing the lower levels of an address.
-     *
      * Because values in address_lines do not have type information and may
      * sometimes contain multiple values in a single field (e.g.
      * "Austin, TX"), it is important that the line order is clear. The order of
@@ -2442,14 +2442,12 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * used to make it explicit (e.g. "ja" for large-to-small ordering and
      * "ja-Latn" or "en" for small-to-large). This way, the most specific line of
      * an address can be selected based on the language.
-     *
      * The minimum permitted structural representation of an address consists
      * of a region_code with all remaining information placed in the
      * address_lines. It would be possible to format such an address very
      * approximately without geocoding, but no semantic reasoning could be
      * made about any of the address components until it was at least
      * partially resolved.
-     *
      * Creating an address only containing a region_code and address_lines, and
      * then geocoding is the recommended way to handle completely unstructured
      * addresses (as opposed to guessing which parts of the address should be
@@ -2469,7 +2467,6 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Unstructured address lines describing the lower levels of an address.
-     *
      * Because values in address_lines do not have type information and may
      * sometimes contain multiple values in a single field (e.g.
      * "Austin, TX"), it is important that the line order is clear. The order of
@@ -2478,14 +2475,12 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * used to make it explicit (e.g. "ja" for large-to-small ordering and
      * "ja-Latn" or "en" for small-to-large). This way, the most specific line of
      * an address can be selected based on the language.
-     *
      * The minimum permitted structural representation of an address consists
      * of a region_code with all remaining information placed in the
      * address_lines. It would be possible to format such an address very
      * approximately without geocoding, but no semantic reasoning could be
      * made about any of the address components until it was at least
      * partially resolved.
-     *
      * Creating an address only containing a region_code and address_lines, and
      * then geocoding is the recommended way to handle completely unstructured
      * addresses (as opposed to guessing which parts of the address should be
@@ -2505,7 +2500,6 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Unstructured address lines describing the lower levels of an address.
-     *
      * Because values in address_lines do not have type information and may
      * sometimes contain multiple values in a single field (e.g.
      * "Austin, TX"), it is important that the line order is clear. The order of
@@ -2514,14 +2508,12 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * used to make it explicit (e.g. "ja" for large-to-small ordering and
      * "ja-Latn" or "en" for small-to-large). This way, the most specific line of
      * an address can be selected based on the language.
-     *
      * The minimum permitted structural representation of an address consists
      * of a region_code with all remaining information placed in the
      * address_lines. It would be possible to format such an address very
      * approximately without geocoding, but no semantic reasoning could be
      * made about any of the address components until it was at least
      * partially resolved.
-     *
      * Creating an address only containing a region_code and address_lines, and
      * then geocoding is the recommended way to handle completely unstructured
      * addresses (as opposed to guessing which parts of the address should be
@@ -2540,7 +2532,6 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
       }
       ensureAddressLinesIsMutable();
       addressLines_.set(index, value);
-      bitField0_ |= 0x00000100;
       onChanged();
       return this;
     }
@@ -2549,7 +2540,6 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Unstructured address lines describing the lower levels of an address.
-     *
      * Because values in address_lines do not have type information and may
      * sometimes contain multiple values in a single field (e.g.
      * "Austin, TX"), it is important that the line order is clear. The order of
@@ -2558,14 +2548,12 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * used to make it explicit (e.g. "ja" for large-to-small ordering and
      * "ja-Latn" or "en" for small-to-large). This way, the most specific line of
      * an address can be selected based on the language.
-     *
      * The minimum permitted structural representation of an address consists
      * of a region_code with all remaining information placed in the
      * address_lines. It would be possible to format such an address very
      * approximately without geocoding, but no semantic reasoning could be
      * made about any of the address components until it was at least
      * partially resolved.
-     *
      * Creating an address only containing a region_code and address_lines, and
      * then geocoding is the recommended way to handle completely unstructured
      * addresses (as opposed to guessing which parts of the address should be
@@ -2583,7 +2571,6 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
       }
       ensureAddressLinesIsMutable();
       addressLines_.add(value);
-      bitField0_ |= 0x00000100;
       onChanged();
       return this;
     }
@@ -2592,7 +2579,6 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Unstructured address lines describing the lower levels of an address.
-     *
      * Because values in address_lines do not have type information and may
      * sometimes contain multiple values in a single field (e.g.
      * "Austin, TX"), it is important that the line order is clear. The order of
@@ -2601,14 +2587,12 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * used to make it explicit (e.g. "ja" for large-to-small ordering and
      * "ja-Latn" or "en" for small-to-large). This way, the most specific line of
      * an address can be selected based on the language.
-     *
      * The minimum permitted structural representation of an address consists
      * of a region_code with all remaining information placed in the
      * address_lines. It would be possible to format such an address very
      * approximately without geocoding, but no semantic reasoning could be
      * made about any of the address components until it was at least
      * partially resolved.
-     *
      * Creating an address only containing a region_code and address_lines, and
      * then geocoding is the recommended way to handle completely unstructured
      * addresses (as opposed to guessing which parts of the address should be
@@ -2623,7 +2607,6 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
     public Builder addAllAddressLines(java.lang.Iterable<java.lang.String> values) {
       ensureAddressLinesIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(values, addressLines_);
-      bitField0_ |= 0x00000100;
       onChanged();
       return this;
     }
@@ -2632,7 +2615,6 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Unstructured address lines describing the lower levels of an address.
-     *
      * Because values in address_lines do not have type information and may
      * sometimes contain multiple values in a single field (e.g.
      * "Austin, TX"), it is important that the line order is clear. The order of
@@ -2641,14 +2623,12 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * used to make it explicit (e.g. "ja" for large-to-small ordering and
      * "ja-Latn" or "en" for small-to-large). This way, the most specific line of
      * an address can be selected based on the language.
-     *
      * The minimum permitted structural representation of an address consists
      * of a region_code with all remaining information placed in the
      * address_lines. It would be possible to format such an address very
      * approximately without geocoding, but no semantic reasoning could be
      * made about any of the address components until it was at least
      * partially resolved.
-     *
      * Creating an address only containing a region_code and address_lines, and
      * then geocoding is the recommended way to handle completely unstructured
      * addresses (as opposed to guessing which parts of the address should be
@@ -2660,9 +2640,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearAddressLines() {
-      addressLines_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      addressLines_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       bitField0_ = (bitField0_ & ~0x00000100);
-      ;
       onChanged();
       return this;
     }
@@ -2671,7 +2650,6 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Unstructured address lines describing the lower levels of an address.
-     *
      * Because values in address_lines do not have type information and may
      * sometimes contain multiple values in a single field (e.g.
      * "Austin, TX"), it is important that the line order is clear. The order of
@@ -2680,14 +2658,12 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * used to make it explicit (e.g. "ja" for large-to-small ordering and
      * "ja-Latn" or "en" for small-to-large). This way, the most specific line of
      * an address can be selected based on the language.
-     *
      * The minimum permitted structural representation of an address consists
      * of a region_code with all remaining information placed in the
      * address_lines. It would be possible to format such an address very
      * approximately without geocoding, but no semantic reasoning could be
      * made about any of the address components until it was at least
      * partially resolved.
-     *
      * Creating an address only containing a region_code and address_lines, and
      * then geocoding is the recommended way to handle completely unstructured
      * addresses (as opposed to guessing which parts of the address should be
@@ -2706,19 +2682,18 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
       checkByteStringIsUtf8(value);
       ensureAddressLinesIsMutable();
       addressLines_.add(value);
-      bitField0_ |= 0x00000100;
       onChanged();
       return this;
     }
 
-    private com.google.protobuf.LazyStringArrayList recipients_ =
-        com.google.protobuf.LazyStringArrayList.emptyList();
+    private com.google.protobuf.LazyStringList recipients_ =
+        com.google.protobuf.LazyStringArrayList.EMPTY;
 
     private void ensureRecipientsIsMutable() {
-      if (!recipients_.isModifiable()) {
+      if (!((bitField0_ & 0x00000200) != 0)) {
         recipients_ = new com.google.protobuf.LazyStringArrayList(recipients_);
+        bitField0_ |= 0x00000200;
       }
-      bitField0_ |= 0x00000200;
     }
     /**
      *
@@ -2734,8 +2709,7 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return A list containing the recipients.
      */
     public com.google.protobuf.ProtocolStringList getRecipientsList() {
-      recipients_.makeImmutable();
-      return recipients_;
+      return recipients_.getUnmodifiableView();
     }
     /**
      *
@@ -2808,7 +2782,6 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
       }
       ensureRecipientsIsMutable();
       recipients_.set(index, value);
-      bitField0_ |= 0x00000200;
       onChanged();
       return this;
     }
@@ -2832,7 +2805,6 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
       }
       ensureRecipientsIsMutable();
       recipients_.add(value);
-      bitField0_ |= 0x00000200;
       onChanged();
       return this;
     }
@@ -2853,7 +2825,6 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
     public Builder addAllRecipients(java.lang.Iterable<java.lang.String> values) {
       ensureRecipientsIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(values, recipients_);
-      bitField0_ |= 0x00000200;
       onChanged();
       return this;
     }
@@ -2871,9 +2842,8 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearRecipients() {
-      recipients_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      recipients_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       bitField0_ = (bitField0_ & ~0x00000200);
-      ;
       onChanged();
       return this;
     }
@@ -2898,7 +2868,6 @@ public final class PostalAddress extends com.google.protobuf.GeneratedMessageV3
       checkByteStringIsUtf8(value);
       ensureRecipientsIsMutable();
       recipients_.add(value);
-      bitField0_ |= 0x00000200;
       onChanged();
       return this;
     }
