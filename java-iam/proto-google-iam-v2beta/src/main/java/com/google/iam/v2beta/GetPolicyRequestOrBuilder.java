@@ -29,12 +29,9 @@ public interface GetPolicyRequestOrBuilder
    * <pre>
    * Required. The resource name of the policy to retrieve. Format:
    * `policies/{attachment_point}/denypolicies/{policy_id}`
-   *
-   *
    * Use the URL-encoded full resource name, which means that the forward-slash
    * character, `/`, must be written as `%2F`. For example,
    * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`.
-   *
    * For organizations and folders, use the numeric ID in the full resource
    * name. For projects, you can use the alphanumeric or the numeric ID.
    * </pre>
@@ -50,12 +47,9 @@ public interface GetPolicyRequestOrBuilder
    * <pre>
    * Required. The resource name of the policy to retrieve. Format:
    * `policies/{attachment_point}/denypolicies/{policy_id}`
-   *
-   *
    * Use the URL-encoded full resource name, which means that the forward-slash
    * character, `/`, must be written as `%2F`. For example,
    * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`.
-   *
    * For organizations and folders, use the numeric ID in the full resource
    * name. For projects, you can use the alphanumeric or the numeric ID.
    * </pre>

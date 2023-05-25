@@ -45,6 +45,11 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
     return new UpdatePolicyRequest();
   }
 
+  @java.lang.Override
+  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+    return this.unknownFields;
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.iam.v2.PolicyProto
         .internal_static_google_iam_v2_UpdatePolicyRequest_descriptor;
@@ -67,7 +72,6 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
    *
    * <pre>
    * Required. The policy to update.
-   *
    * To prevent conflicting updates, the `etag` value must match the value that
    * is stored in IAM. If the `etag` values do not match, the request fails with
    * a `409` error code and `ABORTED` status.
@@ -86,7 +90,6 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
    *
    * <pre>
    * Required. The policy to update.
-   *
    * To prevent conflicting updates, the `etag` value must match the value that
    * is stored in IAM. If the `etag` values do not match, the request fails with
    * a `409` error code and `ABORTED` status.
@@ -105,7 +108,6 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
    *
    * <pre>
    * Required. The policy to update.
-   *
    * To prevent conflicting updates, the `etag` value must match the value that
    * is stored in IAM. If the `etag` values do not match, the request fails with
    * a `409` error code and `ABORTED` status.
@@ -366,6 +368,39 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
     }
 
     @java.lang.Override
+    public Builder clone() {
+      return super.clone();
+    }
+
+    @java.lang.Override
+    public Builder setField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.setField(field, value);
+    }
+
+    @java.lang.Override
+    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      return super.clearField(field);
+    }
+
+    @java.lang.Override
+    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      return super.clearOneof(oneof);
+    }
+
+    @java.lang.Override
+    public Builder setRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
+      return super.setRepeatedField(field, index, value);
+    }
+
+    @java.lang.Override
+    public Builder addRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.addRepeatedField(field, value);
+    }
+
+    @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
       if (other instanceof com.google.iam.v2.UpdatePolicyRequest) {
         return mergeFrom((com.google.iam.v2.UpdatePolicyRequest) other);
@@ -442,7 +477,6 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
      *
      * <pre>
      * Required. The policy to update.
-     *
      * To prevent conflicting updates, the `etag` value must match the value that
      * is stored in IAM. If the `etag` values do not match, the request fails with
      * a `409` error code and `ABORTED` status.
@@ -460,7 +494,6 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
      *
      * <pre>
      * Required. The policy to update.
-     *
      * To prevent conflicting updates, the `etag` value must match the value that
      * is stored in IAM. If the `etag` values do not match, the request fails with
      * a `409` error code and `ABORTED` status.
@@ -482,7 +515,6 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
      *
      * <pre>
      * Required. The policy to update.
-     *
      * To prevent conflicting updates, the `etag` value must match the value that
      * is stored in IAM. If the `etag` values do not match, the request fails with
      * a `409` error code and `ABORTED` status.
@@ -508,7 +540,6 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
      *
      * <pre>
      * Required. The policy to update.
-     *
      * To prevent conflicting updates, the `etag` value must match the value that
      * is stored in IAM. If the `etag` values do not match, the request fails with
      * a `409` error code and `ABORTED` status.
@@ -531,7 +562,6 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
      *
      * <pre>
      * Required. The policy to update.
-     *
      * To prevent conflicting updates, the `etag` value must match the value that
      * is stored in IAM. If the `etag` values do not match, the request fails with
      * a `409` error code and `ABORTED` status.
@@ -560,7 +590,6 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
      *
      * <pre>
      * Required. The policy to update.
-     *
      * To prevent conflicting updates, the `etag` value must match the value that
      * is stored in IAM. If the `etag` values do not match, the request fails with
      * a `409` error code and `ABORTED` status.
@@ -583,7 +612,6 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
      *
      * <pre>
      * Required. The policy to update.
-     *
      * To prevent conflicting updates, the `etag` value must match the value that
      * is stored in IAM. If the `etag` values do not match, the request fails with
      * a `409` error code and `ABORTED` status.
@@ -601,7 +629,6 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
      *
      * <pre>
      * Required. The policy to update.
-     *
      * To prevent conflicting updates, the `etag` value must match the value that
      * is stored in IAM. If the `etag` values do not match, the request fails with
      * a `409` error code and `ABORTED` status.
@@ -621,7 +648,6 @@ public final class UpdatePolicyRequest extends com.google.protobuf.GeneratedMess
      *
      * <pre>
      * Required. The policy to update.
-     *
      * To prevent conflicting updates, the `etag` value must match the value that
      * is stored in IAM. If the `etag` values do not match, the request fails with
      * a `409` error code and `ABORTED` status.
