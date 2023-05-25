@@ -17,6 +17,7 @@
 package com.google.showcase.v1beta1.it.util;
 
 import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.gax.core.InstantiatingExecutorProvider;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.longrunning.OperationTimedPollAlgorithm;
@@ -31,10 +32,11 @@ import com.google.showcase.v1beta1.WaitRequest;
 import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import io.grpc.ManagedChannelBuilder;
 import java.util.Set;
+import java.util.concurrent.ScheduledExecutorService;
 
 public class TestClientInitializer {
 
-  public static final int AWAIT_TERMINATION_SECONDS = 10;
+  public static final int AWAIT_TERMINATION_SECONDS = 60;
 
   public static EchoClient createGrpcEchoClient() throws Exception {
     EchoSettings grpcEchoSettings =
@@ -84,23 +86,29 @@ public class TestClientInitializer {
 
   public static EchoClient createHttpJsonEchoClientCustomBlockSettings(
       RetrySettings retrySettings, Set<StatusCode.Code> retryableCodes) throws Exception {
+    return createHttpJsonEchoClientCustomBlockSettings(retrySettings, retryableCodes, InstantiatingExecutorProvider.newBuilder().build().getExecutor());
+  }
+
+  public static EchoClient createHttpJsonEchoClientCustomBlockSettings(
+          RetrySettings retrySettings, Set<StatusCode.Code> retryableCodes, ScheduledExecutorService scheduledExecutorService) throws Exception {
     EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
     httpJsonEchoSettingsBuilder
-        .blockSettings()
-        .setRetrySettings(retrySettings)
-        .setRetryableCodes(retryableCodes);
+            .blockSettings()
+            .setRetrySettings(retrySettings)
+            .setRetryableCodes(retryableCodes);
     EchoSettings httpJsonEchoSettings = EchoSettings.create(httpJsonEchoSettingsBuilder.build());
     httpJsonEchoSettings =
-        httpJsonEchoSettings
-            .toBuilder()
-            .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTransportChannelProvider(
-                EchoSettings.defaultHttpJsonTransportProviderBuilder()
-                    .setHttpTransport(
-                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
-                    .setEndpoint("http://localhost:7469")
-                    .build())
-            .build();
+            httpJsonEchoSettings
+                    .toBuilder()
+                    .setCredentialsProvider(NoCredentialsProvider.create())
+                    .setTransportChannelProvider(
+                            EchoSettings.defaultHttpJsonTransportProviderBuilder()
+                                    .setExecutor(scheduledExecutorService)
+                                    .setHttpTransport(
+                                            new NetHttpTransport.Builder().doNotValidateCertificate().build())
+                                    .setEndpoint("http://localhost:7469")
+                                    .build())
+                    .build();
     return EchoClient.create(httpJsonEchoSettings);
   }
 

@@ -54,7 +54,7 @@ public abstract class InstantiatingExecutorProvider implements ExecutorProvider 
           return thread;
         }
       };
-  private static final double IO_THREAD_MULTIPLIER = 1.5;
+  private static final int IO_THREAD_MULTIPLIER = 55;
 
   // Package-private constructor prevents others from subclassing.
   InstantiatingExecutorProvider() {}
@@ -88,11 +88,20 @@ public abstract class InstantiatingExecutorProvider implements ExecutorProvider 
 
   public static Builder newIOExecutorBuilder() {
     // IO-bound tasks will require more threads
-    int numThreads = (int) (IO_THREAD_MULTIPLIER * getNumCpus());
+    int numThreads = IO_THREAD_MULTIPLIER * getNumCpus();
 
     return new AutoValue_InstantiatingExecutorProvider.Builder()
         .setExecutorThreadCount(numThreads)
         .setThreadFactory(DEFAULT_THREAD_FACTORY);
+  }
+
+  public static Builder newIOExecutorBuilder(int multiplier) {
+    // IO-bound tasks will require more threads
+    int numThreads = multiplier * getNumCpus();
+
+    return new AutoValue_InstantiatingExecutorProvider.Builder()
+            .setExecutorThreadCount(numThreads)
+            .setThreadFactory(DEFAULT_THREAD_FACTORY);
   }
 
   /**
