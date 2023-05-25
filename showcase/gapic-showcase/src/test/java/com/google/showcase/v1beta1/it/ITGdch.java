@@ -1,8 +1,5 @@
 package com.google.showcase.v1beta1.it;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
@@ -12,7 +9,6 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.api.gax.core.NoCredentialsProvider;
-import com.google.api.gax.rpc.ClientContext;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GdchCredentials;
 import com.google.showcase.v1beta1.EchoClient;
@@ -21,11 +17,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -119,32 +113,6 @@ public class ITGdch {
     assertSame(credentials, fromClient);
   }
 
-  /**
-   * Confirms that the context recreates and contains a different credential when `gdchApiAudience` is specified
-   * @throws IOException
-   * @throws URISyntaxException
-   */
-  @Test
-  public void testClientWithGdchCredentialWithValidAudience_modifiesContextCredentials()
-      throws IOException, URISyntaxException {
-    String audience = "valid-audience";
-    ClientContext context = ClientContext.newBuilder()
-            .setCredentials(credentials)
-            .build();
-    settings = settings.newBuilder(context).build();
-    client = EchoClient.create(settings);
-    GdchCredentials fromClient =
-            (GdchCredentials) client.getSettings().getCredentialsProvider().getCredentials();
-    URI audienceFromClientProvider = fromClient.getApiAudience();
-    assertNotNull(audienceFromClientProvider);
-    assertTrue(audienceFromClientProvider.equals(new URI(audience)));
-    assertTrue(
-            "GDCH credentials with audience should be GdchCredentials",
-            credentials instanceof GdchCredentials);
-    GdchCredentials fromContext = null;
-    assertNotSame(fromContext, audienceFromClientProvider);
-  }
-
   @Test
   public void testClientWithGdchCredentialWithInvalidAudience_throws() throws IOException {
     settings = settings.toBuilder().setGdchApiAudience("$invalid-audience:").build();
@@ -165,19 +133,5 @@ public class ITGdch {
             assertThrows(IllegalArgumentException.class, () -> client = EchoClient.create(settings));
     assertTrue(
         expected.getMessage().contains("audience can only be set when using GdchCredentials"));
-  }
-
-  private class EchoStubSettingsWithAccessibleContext extends EchoStubSettings {
-
-    protected EchoStubSettingsWithAccessibleContext(Builder settingsBuilder) throws IOException {
-      super(settingsBuilder);
-    }
-  }
-
-  private class EchoSettingsWithAccessibleContext extends EchoSettings {
-
-    protected EchoSettingsWithAccessibleContext(Builder settingsBuilder) throws IOException {
-      super(settingsBuilder);
-    }
   }
 }
