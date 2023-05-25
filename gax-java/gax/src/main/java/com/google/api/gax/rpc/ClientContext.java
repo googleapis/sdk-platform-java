@@ -356,6 +356,9 @@ public abstract class ClientContext {
      * Sets the API audience used by {@link com.google.auth.oauth2.GdchCredentials} It cannot be
      * used if other type of {@link com.google.auth.Credentials} is used
      *
+     * <p>If the provided credentials already contain an api audience, it will be overriden by this
+     * one
+     *
      * @param gdchApiAudience the audience to be used - must be a valid URI string
      */
     public abstract Builder setGdchApiAudience(String gdchApiAudience);

@@ -450,7 +450,8 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
 
     /**
      * Sets the API audience used by {@link com.google.auth.oauth2.GdchCredentials} It cannot be
-     * used if other type of {@link com.google.auth.Credentials} is used
+     * used if other type of {@link com.google.auth.Credentials} is used. If the provided
+     * credentials already have an api audience set, then it will be overriden by this audience
      *
      * @param gdchApiAudience the audience to be used - must be a valid URI string
      */
