@@ -29,13 +29,10 @@ public interface PolicyOrBuilder
    * <pre>
    * Immutable. The resource name of the `Policy`, which must be unique. Format:
    * `policies/{attachment_point}/denypolicies/{policy_id}`
-   *
-   *
    * The attachment point is identified by its URL-encoded full resource name,
    * which means that the forward-slash character, `/`, must be written as
    * `%2F`. For example,
    * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-deny-policy`.
-   *
    * For organizations and folders, use the numeric ID in the full resource
    * name. For projects, requests can use the alphanumeric or the numeric ID.
    * Responses always contain the numeric ID.
@@ -52,13 +49,10 @@ public interface PolicyOrBuilder
    * <pre>
    * Immutable. The resource name of the `Policy`, which must be unique. Format:
    * `policies/{attachment_point}/denypolicies/{policy_id}`
-   *
-   *
    * The attachment point is identified by its URL-encoded full resource name,
    * which means that the forward-slash character, `/`, must be written as
    * `%2F`. For example,
    * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-deny-policy`.
-   *
    * For organizations and folders, use the numeric ID in the full resource
    * name. For projects, requests can use the alphanumeric or the numeric ID.
    * Responses always contain the numeric ID.
@@ -219,7 +213,6 @@ public interface PolicyOrBuilder
    * An opaque tag that identifies the current version of the `Policy`. IAM uses
    * this value to help manage concurrent updates, so they do not cause one
    * update to be overwritten by another.
-   *
    * If this field is present in a [CreatePolicy][] request, the value is
    * ignored.
    * </pre>
@@ -236,7 +229,6 @@ public interface PolicyOrBuilder
    * An opaque tag that identifies the current version of the `Policy`. IAM uses
    * this value to help manage concurrent updates, so they do not cause one
    * update to be overwritten by another.
-   *
    * If this field is present in a [CreatePolicy][] request, the value is
    * ignored.
    * </pre>

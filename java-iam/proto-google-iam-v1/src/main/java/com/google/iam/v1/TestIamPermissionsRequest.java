@@ -39,13 +39,18 @@ public final class TestIamPermissionsRequest extends com.google.protobuf.Generat
 
   private TestIamPermissionsRequest() {
     resource_ = "";
-    permissions_ = com.google.protobuf.LazyStringArrayList.emptyList();
+    permissions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
   }
 
   @java.lang.Override
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new TestIamPermissionsRequest();
+  }
+
+  @java.lang.Override
+  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -123,8 +128,7 @@ public final class TestIamPermissionsRequest extends com.google.protobuf.Generat
   public static final int PERMISSIONS_FIELD_NUMBER = 2;
 
   @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringArrayList permissions_ =
-      com.google.protobuf.LazyStringArrayList.emptyList();
+  private com.google.protobuf.LazyStringList permissions_;
   /**
    *
    *
@@ -411,7 +415,8 @@ public final class TestIamPermissionsRequest extends com.google.protobuf.Generat
       super.clear();
       bitField0_ = 0;
       resource_ = "";
-      permissions_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      permissions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      bitField0_ = (bitField0_ & ~0x00000002);
       return this;
     }
 
@@ -439,6 +444,7 @@ public final class TestIamPermissionsRequest extends com.google.protobuf.Generat
     public com.google.iam.v1.TestIamPermissionsRequest buildPartial() {
       com.google.iam.v1.TestIamPermissionsRequest result =
           new com.google.iam.v1.TestIamPermissionsRequest(this);
+      buildPartialRepeatedFields(result);
       if (bitField0_ != 0) {
         buildPartial0(result);
       }
@@ -446,15 +452,52 @@ public final class TestIamPermissionsRequest extends com.google.protobuf.Generat
       return result;
     }
 
+    private void buildPartialRepeatedFields(com.google.iam.v1.TestIamPermissionsRequest result) {
+      if (((bitField0_ & 0x00000002) != 0)) {
+        permissions_ = permissions_.getUnmodifiableView();
+        bitField0_ = (bitField0_ & ~0x00000002);
+      }
+      result.permissions_ = permissions_;
+    }
+
     private void buildPartial0(com.google.iam.v1.TestIamPermissionsRequest result) {
       int from_bitField0_ = bitField0_;
       if (((from_bitField0_ & 0x00000001) != 0)) {
         result.resource_ = resource_;
       }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        permissions_.makeImmutable();
-        result.permissions_ = permissions_;
-      }
+    }
+
+    @java.lang.Override
+    public Builder clone() {
+      return super.clone();
+    }
+
+    @java.lang.Override
+    public Builder setField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.setField(field, value);
+    }
+
+    @java.lang.Override
+    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      return super.clearField(field);
+    }
+
+    @java.lang.Override
+    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      return super.clearOneof(oneof);
+    }
+
+    @java.lang.Override
+    public Builder setRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
+      return super.setRepeatedField(field, index, value);
+    }
+
+    @java.lang.Override
+    public Builder addRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.addRepeatedField(field, value);
     }
 
     @java.lang.Override
@@ -477,7 +520,7 @@ public final class TestIamPermissionsRequest extends com.google.protobuf.Generat
       if (!other.permissions_.isEmpty()) {
         if (permissions_.isEmpty()) {
           permissions_ = other.permissions_;
-          bitField0_ |= 0x00000002;
+          bitField0_ = (bitField0_ & ~0x00000002);
         } else {
           ensurePermissionsIsMutable();
           permissions_.addAll(other.permissions_);
@@ -663,14 +706,14 @@ public final class TestIamPermissionsRequest extends com.google.protobuf.Generat
       return this;
     }
 
-    private com.google.protobuf.LazyStringArrayList permissions_ =
-        com.google.protobuf.LazyStringArrayList.emptyList();
+    private com.google.protobuf.LazyStringList permissions_ =
+        com.google.protobuf.LazyStringArrayList.EMPTY;
 
     private void ensurePermissionsIsMutable() {
-      if (!permissions_.isModifiable()) {
+      if (!((bitField0_ & 0x00000002) != 0)) {
         permissions_ = new com.google.protobuf.LazyStringArrayList(permissions_);
+        bitField0_ |= 0x00000002;
       }
-      bitField0_ |= 0x00000002;
     }
     /**
      *
@@ -687,8 +730,7 @@ public final class TestIamPermissionsRequest extends com.google.protobuf.Generat
      * @return A list containing the permissions.
      */
     public com.google.protobuf.ProtocolStringList getPermissionsList() {
-      permissions_.makeImmutable();
-      return permissions_;
+      return permissions_.getUnmodifiableView();
     }
     /**
      *
@@ -765,7 +807,6 @@ public final class TestIamPermissionsRequest extends com.google.protobuf.Generat
       }
       ensurePermissionsIsMutable();
       permissions_.set(index, value);
-      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -790,7 +831,6 @@ public final class TestIamPermissionsRequest extends com.google.protobuf.Generat
       }
       ensurePermissionsIsMutable();
       permissions_.add(value);
-      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -812,7 +852,6 @@ public final class TestIamPermissionsRequest extends com.google.protobuf.Generat
     public Builder addAllPermissions(java.lang.Iterable<java.lang.String> values) {
       ensurePermissionsIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(values, permissions_);
-      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -831,9 +870,8 @@ public final class TestIamPermissionsRequest extends com.google.protobuf.Generat
      * @return This builder for chaining.
      */
     public Builder clearPermissions() {
-      permissions_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      permissions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       bitField0_ = (bitField0_ & ~0x00000002);
-      ;
       onChanged();
       return this;
     }
@@ -859,7 +897,6 @@ public final class TestIamPermissionsRequest extends com.google.protobuf.Generat
       checkByteStringIsUtf8(value);
       ensurePermissionsIsMutable();
       permissions_.add(value);
-      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
