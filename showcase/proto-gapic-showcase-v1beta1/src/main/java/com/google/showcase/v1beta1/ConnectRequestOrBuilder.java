@@ -64,5 +64,5 @@ public interface ConnectRequestOrBuilder extends
    */
   com.google.showcase.v1beta1.BlurbOrBuilder getBlurbOrBuilder();
 
-  com.google.showcase.v1beta1.ConnectRequest.RequestCase getRequestCase();
+  public com.google.showcase.v1beta1.ConnectRequest.RequestCase getRequestCase();
 }

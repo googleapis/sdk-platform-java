@@ -162,7 +162,6 @@ public interface UserOrBuilder extends
   /**
    * <pre>
    * The nickname of the user.
-   *
    * (-- aip.dev/not-precedent: An empty string is a valid nickname.
    *     Ordinarily, proto3_optional should not be used on a `string` field. --)
    * </pre>
@@ -174,7 +173,6 @@ public interface UserOrBuilder extends
   /**
    * <pre>
    * The nickname of the user.
-   *
    * (-- aip.dev/not-precedent: An empty string is a valid nickname.
    *     Ordinarily, proto3_optional should not be used on a `string` field. --)
    * </pre>
@@ -186,7 +184,6 @@ public interface UserOrBuilder extends
   /**
    * <pre>
    * The nickname of the user.
-   *
    * (-- aip.dev/not-precedent: An empty string is a valid nickname.
    *     Ordinarily, proto3_optional should not be used on a `string` field. --)
    * </pre>
@@ -200,7 +197,6 @@ public interface UserOrBuilder extends
   /**
    * <pre>
    * Enables the receiving of notifications. The default is true if unset.
-   *
    * (-- aip.dev/not-precedent: The default for the feature is true.
    *     Ordinarily, the default for a `bool` field should be false. --)
    * </pre>
@@ -212,7 +208,6 @@ public interface UserOrBuilder extends
   /**
    * <pre>
    * Enables the receiving of notifications. The default is true if unset.
-   *
    * (-- aip.dev/not-precedent: The default for the feature is true.
    *     Ordinarily, the default for a `bool` field should be false. --)
    * </pre>
