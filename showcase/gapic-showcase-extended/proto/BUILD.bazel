@@ -29,6 +29,8 @@ package(default_visibility = ["//visibility:public"])
 
 proto_library(
   name = "showcase_proto_extended",
-  srcs = [],
-  deps = []
+  srcs = [":wicked.proto"],
+  deps = [
+      "@com_google_googleapis//google/api:client_proto",
+  ]
 )
