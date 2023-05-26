@@ -9,13 +9,13 @@
   </difference>
   <difference>
     <!-- add gdchApiAudience to ClientContext and StubSettings -->
-    <differenceType>7012</differenceType>
+    <differenceType>7013</differenceType>
     <className>com/google/api/gax/rpc/ClientContext</className>
     <method>* gdch*(*)</method>
   </difference>
   <difference>
     <!-- add gdchApiAudience to ClientContext and StubSettings -->
-    <differenceType>7012</differenceType>
+    <differenceType>7013</differenceType>
     <className>com/google/api/gax/rpc/StubSettings</className>
     <method>* gdch*(*)</method>
   </difference>
