@@ -96,8 +96,9 @@ public class ITGdch {
   /**
    * Confirms setting a valid audience is successful.
    *
-   * The provider's credentials do not get altered when adding audience.
-   * They are recreated and used only inside `ClientContext`
+   * <p>The provider's credentials do not get altered when adding audience. They are recreated and
+   * used only inside `ClientContext`
+   *
    * @throws IOException
    * @throws URISyntaxException
    */
@@ -108,7 +109,7 @@ public class ITGdch {
     settings = settings.toBuilder().setGdchApiAudience(audience).build();
     client = EchoClient.create(settings);
     GdchCredentials fromClient =
-            (GdchCredentials) client.getSettings().getCredentialsProvider().getCredentials();
+        (GdchCredentials) client.getSettings().getCredentialsProvider().getCredentials();
 
     assertSame(credentials, fromClient);
   }
@@ -117,7 +118,7 @@ public class ITGdch {
   public void testClientWithGdchCredentialWithInvalidAudience_throws() throws IOException {
     settings = settings.toBuilder().setGdchApiAudience("$invalid-audience:").build();
     Exception expected =
-            assertThrows(IllegalArgumentException.class, () -> client = EchoClient.create(settings));
+        assertThrows(IllegalArgumentException.class, () -> client = EchoClient.create(settings));
     assertTrue(expected.getMessage().contains("audience string is not a valid URI"));
   }
 
@@ -130,7 +131,7 @@ public class ITGdch {
             .setGdchApiAudience("any-audience")
             .build();
     Exception expected =
-            assertThrows(IllegalArgumentException.class, () -> client = EchoClient.create(settings));
+        assertThrows(IllegalArgumentException.class, () -> client = EchoClient.create(settings));
     assertTrue(
         expected.getMessage().contains("audience can only be set when using GdchCredentials"));
   }
