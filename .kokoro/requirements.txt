@@ -16,7 +16,7 @@ certifi==2022.12.7 \
     --hash=sha256:35824b4c3a97115964b408844d64aa14db1cc518f6562e8d7261699d1350a9e3 \
     --hash=sha256:4ad3232f5e926d6718ec31cfc1fcadfde020920e278684144551c91769c7bc18
     # via
-    #   -r .kokoro/requirements.in
+    #   -r requirements.in
     #   requests
 cffi==1.15.1 \
     --hash=sha256:00a9ed42e88df81ffae7a8ab6d9356b371399b91dbdf0c3cb1e84c03a13aceb5 \
@@ -92,7 +92,7 @@ click==8.0.4 \
     --hash=sha256:6a7a62563bbfabfda3a38f3023a1db4a35978c0abd76f6c9605ecd6554d6d9b1 \
     --hash=sha256:8458d7b1287c5fb128c90e23381cf99dcde74beaf6c7ff6384ce84d6fe090adb
     # via
-    #   -r .kokoro/requirements.in
+    #   -r requirements.in
     #   gcp-docuploader
     #   gcp-releasetool
 colorlog==6.7.0 \
@@ -124,17 +124,17 @@ cryptography==39.0.2 \
     --hash=sha256:fa507318e427169ade4e9eccef39e9011cdc19534f55ca2f36ec3f388c1f70f3 \
     --hash=sha256:ffd394c7896ed7821a6d13b24657c6a34b6e2650bd84ae063cf11ccffa4f1a97
     # via
-    #   -r .kokoro/requirements.in
+    #   -r requirements.in
     #   gcp-releasetool
     #   secretstorage
 gcp-docuploader==0.6.5 \
     --hash=sha256:30221d4ac3e5a2b9c69aa52fdbef68cc3f27d0e6d0d90e220fc024584b8d2318 \
     --hash=sha256:b7458ef93f605b9d46a4bf3a8dc1755dad1f31d030c8679edf304e343b347eea
-    # via -r .kokoro/requirements.in
+    # via -r requirements.in
 gcp-releasetool==1.10.5 \
     --hash=sha256:174b7b102d704b254f2a26a3eda2c684fd3543320ec239baf771542a2e58e109 \
     --hash=sha256:e29d29927fe2ca493105a82958c6873bb2b90d503acac56be2c229e74de0eec9
-    # via -r .kokoro/requirements.in
+    # via -r requirements.in
 google-api-core==2.8.2 \
     --hash=sha256:06f7244c640322b508b125903bb5701bebabce8832f85aba9335ec00b3d02edc \
     --hash=sha256:93c6a91ccac79079ac6bbf8b74ee75db970cc899278b97d53bc012f35908cf50
@@ -220,18 +220,20 @@ importlib-metadata==4.8.3 \
 jeepney==0.7.1 \
     --hash=sha256:1b5a0ea5c0e7b166b2f5895b91a08c14de8915afda4407fb5022a195224958ac \
     --hash=sha256:fa9e232dfa0c498bd0b8a3a73b8d8a31978304dcef0515adc859d4e096f96f4f
-    # via secretstorage
+    # via
+    #   keyring
+    #   secretstorage
 jinja2==3.0.3 \
     --hash=sha256:077ce6014f7b40d03b47d1f1ca4b0fc8328a692bd284016f806ed0eaca390ad8 \
     --hash=sha256:611bb273cd68f3b993fabdc4064fc858c5b47a973cb5aa7999ec1ba405c87cd7
     # via
-    #   -r .kokoro/requirements.in
+    #   -r requirements.in
     #   gcp-releasetool
 keyring==23.4.1 \
     --hash=sha256:17e49fb0d6883c2b4445359434dba95aad84aabb29bbff044ad0ed7100232eca \
     --hash=sha256:89cbd74d4683ed164c8082fb38619341097741323b3786905c6dac04d6915a55
     # via
-    #   -r .kokoro/requirements.in
+    #   -r requirements.in
     #   gcp-releasetool
 markupsafe==2.0.1 \
     --hash=sha256:01a9b8ea66f1658938f65b93a85ebe8bc016e6769611be228d797c9d998dd298 \
@@ -368,9 +370,9 @@ python-dateutil==2.8.2 \
     --hash=sha256:0123cacc1627ae19ddf3c27a5de5bd67ee4586fbdd6440d9748f8abb483d3e86 \
     --hash=sha256:961d03dc3453ebbc59dbdea9e4e11c5651520a876d0f4db161e8674aae935da9
     # via gcp-releasetool
-requests==2.27.1 \
-    --hash=sha256:68d7c56fd5a8999887728ef304a6d12edc7be74f1cfa47714fc8b414525c9a61 \
-    --hash=sha256:f22fa1e554c9ddfd16e6e41ac79759e17be9e492b3587efa038054674760e72d
+requests==2.31.0 \
+    --hash=sha256:58cd2187c01e70e6e26505bca751777aa9f2ee0b7f4300988b709f44e013003f \
+    --hash=sha256:942c5a758f98d790eaed1a29cb6eefc7ffb0d1cf7af05c3d2791656dbd6ad1e1
     # via
     #   gcp-releasetool
     #   google-api-core
@@ -382,7 +384,9 @@ rsa==4.9 \
 secretstorage==3.3.3 \
     --hash=sha256:2403533ef369eca6d2ba81718576c5e0f564d5cca1b58f73a8b23e7d4eeebd77 \
     --hash=sha256:f356e6628222568e3af06f2eba8df495efa13b3b63081dafd4f7d9a7b7bc9f99
-    # via -r .kokoro/requirements.in
+    # via
+    #   -r requirements.in
+    #   keyring
 six==1.16.0 \
     --hash=sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926 \
     --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254
@@ -393,7 +397,7 @@ six==1.16.0 \
 typing-extensions==4.1.1 \
     --hash=sha256:1a9462dcc3347a79b1f1c0271fbe79e844580bb598bafa1ed208b94da3cdcd42 \
     --hash=sha256:21c85e0fe4b9a155d0799430b0ad741cdce7e359660ccbd8b530613e8df88ce2
-    # via -r .kokoro/requirements.in
+    # via -r requirements.in
 urllib3==1.26.15 \
     --hash=sha256:8a388717b9476f934a21484e8c8e61875ab60644d29b9b39e11e4b9dc1c6b305 \
     --hash=sha256:aa751d169e23c7479ce47a0cb0da579e3ede798f994f5816a74e4f4500dcea42
