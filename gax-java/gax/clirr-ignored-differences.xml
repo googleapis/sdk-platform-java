@@ -8,15 +8,9 @@
     <method>* stream*(*)</method>
   </difference>
   <difference>
-    <!-- add gdchApiAudience to ClientContext and StubSettings -->
+    <!-- add gdchApiAudience to ClientContext -->
     <differenceType>7013</differenceType>
-    <className>com/google/api/gax/rpc/ClientContext</className>
-    <method>* gdch*(*)</method>
-  </difference>
-  <difference>
-    <!-- add gdchApiAudience to ClientContext and StubSettings -->
-    <differenceType>7013</differenceType>
-    <className>com/google/api/gax/rpc/StubSettings</className>
-    <method>* gdch*(*)</method>
+    <className>com/google/api/gax/rpc/*</className>
+    <method>* *Gdch*(*)</method>
   </difference>
 </differences>
