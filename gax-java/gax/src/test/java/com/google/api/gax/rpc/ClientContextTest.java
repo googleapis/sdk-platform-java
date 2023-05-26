@@ -32,7 +32,9 @@ package com.google.api.gax.rpc;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -775,15 +777,17 @@ public class ClientContextTest {
     assertThat(transportChannel.getExecutor()).isSameInstanceAs(executorProvider.getExecutor());
   }
 
-  private Credentials getMockGdchCredentials() {
-    Credentials creds = Mockito.mock(GdchCredentials.class);
+  private GdchCredentials getMockGdchCredentials() throws IOException {
+    GdchCredentials creds = Mockito.mock(GdchCredentials.class);
 
     // GdchCredentials builder is mocked to accept a well-formed uri
     GdchCredentials.Builder gdchCredsBuilder = Mockito.mock(GdchCredentials.Builder.class);
     Mockito.when(gdchCredsBuilder.setGdchAudience(Mockito.any(URI.class)))
         .thenReturn(gdchCredsBuilder);
-    Mockito.when(gdchCredsBuilder.build()).thenReturn((GdchCredentials) creds);
-    Mockito.when(((GdchCredentials) creds).toBuilder()).thenReturn(gdchCredsBuilder);
+    Mockito.when(gdchCredsBuilder.build()).thenReturn(creds);
+    Mockito.when(creds.toBuilder()).thenReturn(gdchCredsBuilder);
+    Mockito.when(creds.createWithGdchAudience(Mockito.any()))
+        .thenAnswer((uri) -> getMockGdchCredentials());
     return creds;
   }
 
@@ -791,9 +795,6 @@ public class ClientContextTest {
     return new FakeTransportProvider(
         FakeTransportChannel.create(new FakeChannel()), null, true, null, null);
   }
-
-  @Test
-  public void testGDCHCredentialsNoAudience() throws IOException {}
 
   @Test
   public void testGdchCredentialNoAudience_correct() throws IOException {
@@ -808,8 +809,33 @@ public class ClientContextTest {
     clientSettingsBuilder.setTransportChannelProvider(transportChannelProvider);
     // should not throw
     ClientContext context = ClientContext.create(clientSettingsBuilder.build());
-    assertThat(context.getCredentials()).isInstanceOf(GdchCredentials.class);
-    assertNull(context.getGdchApiAudience());
+    Credentials fromContext = context.getCredentials();
+    Credentials fromProvider = provider.getCredentials();
+    assertNotNull(fromProvider);
+    assertNotNull(fromContext);
+    assertThat(fromContext).isInstanceOf(GdchCredentials.class);
+    assertSame(fromContext, fromProvider);
+  }
+
+  @Test
+  public void testGdchCredentialValidAudience_correct() throws IOException {
+    Credentials creds = getMockGdchCredentials();
+    CredentialsProvider provider = FixedCredentialsProvider.create(creds);
+    TransportChannelProvider transportChannelProvider = getFakeTransportChannelProvider();
+
+    // it should throw if both apiAudience and GDC-H creds are set but apiAudience is not a valid
+    // uri
+    StubSettings settings = new FakeStubSettings.Builder().setGdchApiAudience("valid-uri").build();
+    ClientSettings.Builder clientSettingsBuilder = new FakeClientSettings.Builder(settings);
+    clientSettingsBuilder.setCredentialsProvider(provider);
+    clientSettingsBuilder.setTransportChannelProvider(transportChannelProvider);
+    ClientContext context = ClientContext.create(clientSettingsBuilder.build());
+    Credentials fromContext = context.getCredentials();
+    Credentials fromProvider = provider.getCredentials();
+    assertNotNull(fromProvider);
+    assertNotNull(fromContext);
+    // using an audience should have made the context to recreate the credentials
+    assertNotSame(fromContext, fromProvider);
   }
 
   @Test
