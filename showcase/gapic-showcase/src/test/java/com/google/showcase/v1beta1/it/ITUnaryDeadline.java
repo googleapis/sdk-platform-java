@@ -24,6 +24,7 @@ import com.google.api.gax.retrying.RetryingFuture;
 import com.google.api.gax.rpc.DeadlineExceededException;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.common.collect.ImmutableSet;
+import com.google.protobuf.util.Durations;
 import com.google.showcase.v1beta1.BlockRequest;
 import com.google.showcase.v1beta1.BlockResponse;
 import com.google.showcase.v1beta1.EchoClient;
@@ -331,31 +332,29 @@ public class ITUnaryDeadline {
   // we would expect at most 50 responses.
   @Test
   public void
-      testHttpJson_unaryCallableRetry_deadlineExecutorTimesOutRequest_throwsDeadlineExceededException()
+  testHttpJson_unaryCallableRetry_deadlineExecutorTimesOutRequest_throwsDeadlineExceededException()
           throws Exception {
     RetrySettings defaultRetrySettings =
-        RetrySettings.newBuilder()
-            .setInitialRpcTimeout(Duration.ofSeconds(10))
-            .setRpcTimeoutMultiplier(2.0)
-            .setMaxRpcTimeout(Duration.ofMinutes(1))
-            .setMaxAttempts(10)
-            .build();
-    for (int threadMult = 1; threadMult <= 12; threadMult++) {
+            RetrySettings.newBuilder()
+                    .setMaxAttempts(1)
+                    .build();
+    for (int threadMult = 1; threadMult <= 15; threadMult++) {
       for (int x = 0; x < 5; x++) {
-        ScheduledExecutorService scheduledExecutorService = InstantiatingExecutorProvider.newIOExecutorBuilder(threadMult * 5).build().getExecutor();
+        int numError = 0;
+        ScheduledExecutorService scheduledExecutorService = InstantiatingExecutorProvider.newIOExecutorBuilder(1).build().getExecutor();
         EchoClient httpjsonClient =
                 TestClientInitializer.createHttpJsonEchoClientCustomBlockSettings(
                         defaultRetrySettings, ImmutableSet.of(StatusCode.Code.DEADLINE_EXCEEDED), scheduledExecutorService);
         List<Future<BlockResponse>> futures = new ArrayList<>();
         long start = System.currentTimeMillis();
         for (int i = 0; i < 1000; i++) {
+          int randomDelay = ((int) (Math.random() * 500)) + 50;
+          com.google.protobuf.Duration value = Durations.fromMillis(randomDelay);
           BlockRequest blockRequest =
                   BlockRequest.newBuilder()
-                          .setSuccess(
-                                  BlockResponse.newBuilder().setContent("content"))
+                          .setSuccess(BlockResponse.newBuilder().setContent("content"))
                           // Set the timeout to be longer than the RPC timeout
-                          .setResponseDelay(
-                                  com.google.protobuf.Duration.newBuilder().setSeconds(((int) (Math.random() * 20))).build())
+                          .setResponseDelay(value)
                           .build();
           futures.add(httpjsonClient.blockCallable().futureCall(blockRequest));
         }
@@ -363,17 +362,21 @@ public class ITUnaryDeadline {
           try {
             future.get();
           } catch (Exception e) {
-            // Ignore
+            numError++;
           }
         }
         long end = System.currentTimeMillis();
-        System.out.println(end - start);
+        if (numError == 0) {
+          System.out.println(end - start);
+        }
         scheduledExecutorService.shutdownNow();
         scheduledExecutorService.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
         httpjsonClient.close();
         httpjsonClient.awaitTermination(
                 TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
       }
+      System.out.println("---");
+      Thread.sleep(20000L);
     }
   }
 }
