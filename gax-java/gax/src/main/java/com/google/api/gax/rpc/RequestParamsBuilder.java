@@ -29,12 +29,10 @@
  */
 package com.google.api.gax.rpc;
 
+import com.google.api.client.util.escape.PercentEscaper;
 import com.google.api.core.BetaApi;
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.common.collect.ImmutableMap;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 /**
@@ -43,6 +41,8 @@ import java.util.Map;
  */
 @BetaApi
 public class RequestParamsBuilder {
+
+  private static final PercentEscaper PERCENT_ESCAPER = new PercentEscaper(".-~_");
 
   private final ImmutableMap.Builder<String, String> paramsBuilder;
 
@@ -96,13 +96,7 @@ public class RequestParamsBuilder {
 
   // Percent encode the value passed in
   private String percentEncodeString(String value) {
-    try {
-      return URLEncoder.encode(value, StandardCharsets.UTF_8.toString());
-    } catch (UnsupportedEncodingException e) {
-      // Default to use the un-encoded value if there is an encoding issue
-      // TODO: Log this scenario once we implemented the Cloud SDK logging.
-      return value;
-    }
+    return PERCENT_ESCAPER.escape(value);
   }
 
   public Map<String, String> build() {
