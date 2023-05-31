@@ -56,7 +56,8 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.longrunning.Operation;
-import com.google.protobuf.DescriptorProtos;
+import com.google.showcase.v1beta1.Annotation;
+import com.google.showcase.v1beta1.Metadata;
 import com.google.showcase.v1beta1.Request;
 import java.io.IOException;
 import java.util.List;
@@ -107,11 +108,7 @@ public class CollisionsStubSettings extends StubSettings<CollisionsStubSettings>
       ImmutableList.<String>builder().build();
 
   private final UnaryCallSettings<Request, Operation> doSomethingSettings;
-  private final OperationCallSettings<
-          Request,
-          DescriptorProtos.GeneratedCodeInfo.Annotation,
-          DescriptorProtos.SourceCodeInfo.Location>
-      doSomethingOperationSettings;
+  private final OperationCallSettings<Request, Annotation, Metadata> doSomethingOperationSettings;
   private final PagedCallSettings<
           ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
       listLocationsSettings;
@@ -176,11 +173,7 @@ public class CollisionsStubSettings extends StubSettings<CollisionsStubSettings>
   }
 
   /** Returns the object with the settings used for calls to doSomething. */
-  public OperationCallSettings<
-          Request,
-          DescriptorProtos.GeneratedCodeInfo.Annotation,
-          DescriptorProtos.SourceCodeInfo.Location>
-      doSomethingOperationSettings() {
+  public OperationCallSettings<Request, Annotation, Metadata> doSomethingOperationSettings() {
     return doSomethingOperationSettings;
   }
 
@@ -311,10 +304,7 @@ public class CollisionsStubSettings extends StubSettings<CollisionsStubSettings>
   public static class Builder extends StubSettings.Builder<CollisionsStubSettings, Builder> {
     private final ImmutableList<UnaryCallSettings.Builder<?, ?>> unaryMethodSettingsBuilders;
     private final UnaryCallSettings.Builder<Request, Operation> doSomethingSettings;
-    private final OperationCallSettings.Builder<
-            Request,
-            DescriptorProtos.GeneratedCodeInfo.Annotation,
-            DescriptorProtos.SourceCodeInfo.Location>
+    private final OperationCallSettings.Builder<Request, Annotation, Metadata>
         doSomethingOperationSettings;
     private final PagedCallSettings.Builder<
             ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
@@ -421,11 +411,9 @@ public class CollisionsStubSettings extends StubSettings<CollisionsStubSettings>
                   .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_params"))
                   .build())
           .setResponseTransformer(
-              ProtoOperationTransformers.ResponseTransformer.create(
-                  DescriptorProtos.GeneratedCodeInfo.Annotation.class))
+              ProtoOperationTransformers.ResponseTransformer.create(Annotation.class))
           .setMetadataTransformer(
-              ProtoOperationTransformers.MetadataTransformer.create(
-                  DescriptorProtos.SourceCodeInfo.Location.class))
+              ProtoOperationTransformers.MetadataTransformer.create(Metadata.class))
           .setPollingAlgorithm(
               OperationTimedPollAlgorithm.create(
                   RetrySettings.newBuilder()
@@ -464,10 +452,7 @@ public class CollisionsStubSettings extends StubSettings<CollisionsStubSettings>
     /** Returns the builder for the settings used for calls to doSomething. */
     @BetaApi(
         "The surface for use by generated code is not stable yet and may change in the future.")
-    public OperationCallSettings.Builder<
-            Request,
-            DescriptorProtos.GeneratedCodeInfo.Annotation,
-            DescriptorProtos.SourceCodeInfo.Location>
+    public OperationCallSettings.Builder<Request, Annotation, Metadata>
         doSomethingOperationSettings() {
       return doSomethingOperationSettings;
     }

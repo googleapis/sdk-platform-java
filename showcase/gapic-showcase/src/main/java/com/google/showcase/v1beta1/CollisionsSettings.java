@@ -37,7 +37,6 @@ import com.google.cloud.location.ListLocationsRequest;
 import com.google.cloud.location.ListLocationsResponse;
 import com.google.cloud.location.Location;
 import com.google.longrunning.Operation;
-import com.google.protobuf.DescriptorProtos;
 import com.google.showcase.v1beta1.stub.CollisionsStubSettings;
 import java.io.IOException;
 import java.util.List;
@@ -89,11 +88,7 @@ public class CollisionsSettings extends ClientSettings<CollisionsSettings> {
   }
 
   /** Returns the object with the settings used for calls to doSomething. */
-  public OperationCallSettings<
-          Request,
-          DescriptorProtos.GeneratedCodeInfo.Annotation,
-          DescriptorProtos.SourceCodeInfo.Location>
-      doSomethingOperationSettings() {
+  public OperationCallSettings<Request, Annotation, Metadata> doSomethingOperationSettings() {
     return ((CollisionsStubSettings) getStubSettings()).doSomethingOperationSettings();
   }
 
@@ -228,10 +223,7 @@ public class CollisionsSettings extends ClientSettings<CollisionsSettings> {
     }
 
     /** Returns the builder for the settings used for calls to doSomething. */
-    public OperationCallSettings.Builder<
-            Request,
-            DescriptorProtos.GeneratedCodeInfo.Annotation,
-            DescriptorProtos.SourceCodeInfo.Location>
+    public OperationCallSettings.Builder<Request, Annotation, Metadata>
         doSomethingOperationSettings() {
       return getStubSettingsBuilder().doSomethingOperationSettings();
     }

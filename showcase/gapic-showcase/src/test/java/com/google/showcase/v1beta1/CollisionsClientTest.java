@@ -34,10 +34,8 @@ import com.google.common.collect.Lists;
 import com.google.longrunning.Operation;
 import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Any;
-import com.google.protobuf.DescriptorProtos;
 import io.grpc.StatusRuntimeException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -94,13 +92,7 @@ public class CollisionsClientTest {
 
   @Test
   public void doSomethingTest() throws Exception {
-    DescriptorProtos.GeneratedCodeInfo.Annotation expectedResponse =
-        DescriptorProtos.GeneratedCodeInfo.Annotation.newBuilder()
-            .addAllPath(new ArrayList<Integer>())
-            .setSourceFile("sourceFile-1111864265")
-            .setBegin(93616297)
-            .setEnd(100571)
-            .build();
+    Annotation expectedResponse = Annotation.newBuilder().setName("name3373707").build();
     Operation resultOperation =
         Operation.newBuilder()
             .setName("doSomethingTest")
@@ -113,11 +105,10 @@ public class CollisionsClientTest {
         Request.newBuilder()
             .setName("name3373707")
             .setAnnotation(Annotation.newBuilder().build())
-            .setLocation(com.google.showcase.v1beta1.Location.newBuilder().build())
+            .setMetadata(Metadata.newBuilder().build())
             .build();
 
-    DescriptorProtos.GeneratedCodeInfo.Annotation actualResponse =
-        client.doSomethingAsync(request).get();
+    Annotation actualResponse = client.doSomethingAsync(request).get();
     Assert.assertEquals(expectedResponse, actualResponse);
 
     List<AbstractMessage> actualRequests = mockCollisions.getRequests();
@@ -126,7 +117,7 @@ public class CollisionsClientTest {
 
     Assert.assertEquals(request.getName(), actualRequest.getName());
     Assert.assertEquals(request.getAnnotation(), actualRequest.getAnnotation());
-    Assert.assertEquals(request.getLocation(), actualRequest.getLocation());
+    Assert.assertEquals(request.getMetadata(), actualRequest.getMetadata());
     Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
@@ -143,7 +134,7 @@ public class CollisionsClientTest {
           Request.newBuilder()
               .setName("name3373707")
               .setAnnotation(Annotation.newBuilder().build())
-              .setLocation(com.google.showcase.v1beta1.Location.newBuilder().build())
+              .setMetadata(Metadata.newBuilder().build())
               .build();
       client.doSomethingAsync(request).get();
       Assert.fail("No exception raised");

@@ -29,7 +29,7 @@ service Collisions {
   rpc doSomething(Request) returns (google.longrunning.Operation) {
     option (google.longrunning.operation_info) = {
       response_type: "Annotation"
-      metadata_type: "Location"
+      metadata_type: "Metadata"
     };
   }
 }
@@ -37,13 +37,13 @@ service Collisions {
 message Request {
   string name = 1;
   Annotation annotation = 2;
-  Location location = 3;
+  Metadata metadata = 3;
 }
 
 message Annotation {
   string name = 1;
 }
 
-message Location {
+message Metadata {
   string name = 1;
 }

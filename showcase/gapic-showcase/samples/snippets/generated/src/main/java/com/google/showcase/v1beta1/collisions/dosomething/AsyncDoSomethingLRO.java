@@ -18,10 +18,9 @@ package com.google.showcase.v1beta1.samples;
 
 // [START localhost7469_v1beta1_generated_Collisions_DoSomething_LRO_async]
 import com.google.api.gax.longrunning.OperationFuture;
-import com.google.protobuf.DescriptorProtos;
 import com.google.showcase.v1beta1.Annotation;
 import com.google.showcase.v1beta1.CollisionsClient;
-import com.google.showcase.v1beta1.Location;
+import com.google.showcase.v1beta1.Metadata;
 import com.google.showcase.v1beta1.Request;
 
 public class AsyncDoSomethingLRO {
@@ -41,14 +40,12 @@ public class AsyncDoSomethingLRO {
           Request.newBuilder()
               .setName("name3373707")
               .setAnnotation(Annotation.newBuilder().build())
-              .setLocation(Location.newBuilder().build())
+              .setMetadata(Metadata.newBuilder().build())
               .build();
-      OperationFuture<
-              DescriptorProtos.GeneratedCodeInfo.Annotation,
-              DescriptorProtos.SourceCodeInfo.Location>
-          future = collisionsClient.doSomethingOperationCallable().futureCall(request);
+      OperationFuture<Annotation, Metadata> future =
+          collisionsClient.doSomethingOperationCallable().futureCall(request);
       // Do something.
-      DescriptorProtos.GeneratedCodeInfo.Annotation response = future.get();
+      Annotation response = future.get();
     }
   }
 }

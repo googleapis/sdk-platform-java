@@ -3,8 +3,8 @@
 
 package com.google.showcase.v1beta1;
 
-public interface LocationOrBuilder extends
-    // @@protoc_insertion_point(interface_extends:google.showcase.v1beta1.Location)
+public interface MetadataOrBuilder extends
+    // @@protoc_insertion_point(interface_extends:google.showcase.v1beta1.Metadata)
     com.google.protobuf.MessageOrBuilder {
 
   /**

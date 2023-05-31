@@ -34,7 +34,6 @@ import com.google.cloud.location.ListLocationsResponse;
 import com.google.cloud.location.Location;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.google.longrunning.Operation;
-import com.google.protobuf.DescriptorProtos;
 import com.google.showcase.v1beta1.stub.CollisionsStub;
 import com.google.showcase.v1beta1.stub.CollisionsStubSettings;
 import java.io.IOException;
@@ -217,19 +216,16 @@ public class CollisionsClient implements BackgroundResource {
    *       Request.newBuilder()
    *           .setName("name3373707")
    *           .setAnnotation(Annotation.newBuilder().build())
-   *           .setLocation(Location.newBuilder().build())
+   *           .setMetadata(Metadata.newBuilder().build())
    *           .build();
-   *   DescriptorProtos.GeneratedCodeInfo.Annotation response =
-   *       collisionsClient.doSomethingAsync(request).get();
+   *   Annotation response = collisionsClient.doSomethingAsync(request).get();
    * }
    * }</pre>
    *
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final OperationFuture<
-          DescriptorProtos.GeneratedCodeInfo.Annotation, DescriptorProtos.SourceCodeInfo.Location>
-      doSomethingAsync(Request request) {
+  public final OperationFuture<Annotation, Metadata> doSomethingAsync(Request request) {
     return doSomethingOperationCallable().futureCall(request);
   }
 
@@ -248,22 +244,16 @@ public class CollisionsClient implements BackgroundResource {
    *       Request.newBuilder()
    *           .setName("name3373707")
    *           .setAnnotation(Annotation.newBuilder().build())
-   *           .setLocation(Location.newBuilder().build())
+   *           .setMetadata(Metadata.newBuilder().build())
    *           .build();
-   *   OperationFuture<
-   *           DescriptorProtos.GeneratedCodeInfo.Annotation,
-   *           DescriptorProtos.SourceCodeInfo.Location>
-   *       future = collisionsClient.doSomethingOperationCallable().futureCall(request);
+   *   OperationFuture<Annotation, Metadata> future =
+   *       collisionsClient.doSomethingOperationCallable().futureCall(request);
    *   // Do something.
-   *   DescriptorProtos.GeneratedCodeInfo.Annotation response = future.get();
+   *   Annotation response = future.get();
    * }
    * }</pre>
    */
-  public final OperationCallable<
-          Request,
-          DescriptorProtos.GeneratedCodeInfo.Annotation,
-          DescriptorProtos.SourceCodeInfo.Location>
-      doSomethingOperationCallable() {
+  public final OperationCallable<Request, Annotation, Metadata> doSomethingOperationCallable() {
     return stub.doSomethingOperationCallable();
   }
 
@@ -282,7 +272,7 @@ public class CollisionsClient implements BackgroundResource {
    *       Request.newBuilder()
    *           .setName("name3373707")
    *           .setAnnotation(Annotation.newBuilder().build())
-   *           .setLocation(Location.newBuilder().build())
+   *           .setMetadata(Metadata.newBuilder().build())
    *           .build();
    *   ApiFuture<Operation> future = collisionsClient.doSomethingCallable().futureCall(request);
    *   // Do something.

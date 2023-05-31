@@ -35,17 +35,17 @@ public interface RequestOrBuilder extends
   com.google.showcase.v1beta1.AnnotationOrBuilder getAnnotationOrBuilder();
 
   /**
-   * <code>.google.showcase.v1beta1.Location location = 3;</code>
-   * @return Whether the location field is set.
+   * <code>.google.showcase.v1beta1.Metadata metadata = 3;</code>
+   * @return Whether the metadata field is set.
    */
-  boolean hasLocation();
+  boolean hasMetadata();
   /**
-   * <code>.google.showcase.v1beta1.Location location = 3;</code>
-   * @return The location.
+   * <code>.google.showcase.v1beta1.Metadata metadata = 3;</code>
+   * @return The metadata.
    */
-  com.google.showcase.v1beta1.Location getLocation();
+  com.google.showcase.v1beta1.Metadata getMetadata();
   /**
-   * <code>.google.showcase.v1beta1.Location location = 3;</code>
+   * <code>.google.showcase.v1beta1.Metadata metadata = 3;</code>
    */
-  com.google.showcase.v1beta1.LocationOrBuilder getLocationOrBuilder();
+  com.google.showcase.v1beta1.MetadataOrBuilder getMetadataOrBuilder();
 }

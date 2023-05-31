@@ -17,10 +17,9 @@
 package com.google.showcase.v1beta1.samples;
 
 // [START localhost7469_v1beta1_generated_Collisions_DoSomething_sync]
-import com.google.protobuf.DescriptorProtos;
 import com.google.showcase.v1beta1.Annotation;
 import com.google.showcase.v1beta1.CollisionsClient;
-import com.google.showcase.v1beta1.Location;
+import com.google.showcase.v1beta1.Metadata;
 import com.google.showcase.v1beta1.Request;
 
 public class SyncDoSomething {
@@ -40,10 +39,9 @@ public class SyncDoSomething {
           Request.newBuilder()
               .setName("name3373707")
               .setAnnotation(Annotation.newBuilder().build())
-              .setLocation(Location.newBuilder().build())
+              .setMetadata(Metadata.newBuilder().build())
               .build();
-      DescriptorProtos.GeneratedCodeInfo.Annotation response =
-          collisionsClient.doSomethingAsync(request).get();
+      Annotation response = collisionsClient.doSomethingAsync(request).get();
     }
   }
 }

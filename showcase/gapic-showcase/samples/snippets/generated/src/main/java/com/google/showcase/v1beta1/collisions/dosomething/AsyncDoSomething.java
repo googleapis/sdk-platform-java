@@ -21,7 +21,7 @@ import com.google.api.core.ApiFuture;
 import com.google.longrunning.Operation;
 import com.google.showcase.v1beta1.Annotation;
 import com.google.showcase.v1beta1.CollisionsClient;
-import com.google.showcase.v1beta1.Location;
+import com.google.showcase.v1beta1.Metadata;
 import com.google.showcase.v1beta1.Request;
 
 public class AsyncDoSomething {
@@ -41,7 +41,7 @@ public class AsyncDoSomething {
           Request.newBuilder()
               .setName("name3373707")
               .setAnnotation(Annotation.newBuilder().build())
-              .setLocation(Location.newBuilder().build())
+              .setMetadata(Metadata.newBuilder().build())
               .build();
       ApiFuture<Operation> future = collisionsClient.doSomethingCallable().futureCall(request);
       // Do something.

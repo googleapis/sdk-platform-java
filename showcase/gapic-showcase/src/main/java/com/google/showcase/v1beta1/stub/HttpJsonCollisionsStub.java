@@ -38,8 +38,9 @@ import com.google.cloud.location.ListLocationsResponse;
 import com.google.cloud.location.Location;
 import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.Operation;
-import com.google.protobuf.DescriptorProtos;
 import com.google.protobuf.TypeRegistry;
+import com.google.showcase.v1beta1.Annotation;
+import com.google.showcase.v1beta1.Metadata;
 import com.google.showcase.v1beta1.Request;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -60,8 +61,8 @@ import javax.annotation.Generated;
 public class HttpJsonCollisionsStub extends CollisionsStub {
   private static final TypeRegistry typeRegistry =
       TypeRegistry.newBuilder()
-          .add(DescriptorProtos.GeneratedCodeInfo.Annotation.getDescriptor())
-          .add(DescriptorProtos.SourceCodeInfo.Location.getDescriptor())
+          .add(Metadata.getDescriptor())
+          .add(Annotation.getDescriptor())
           .build();
 
   private static final ApiMethodDescriptor<ListLocationsRequest, ListLocationsResponse>

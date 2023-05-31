@@ -28,7 +28,8 @@ import com.google.cloud.location.ListLocationsResponse;
 import com.google.cloud.location.Location;
 import com.google.longrunning.Operation;
 import com.google.longrunning.stub.OperationsStub;
-import com.google.protobuf.DescriptorProtos;
+import com.google.showcase.v1beta1.Annotation;
+import com.google.showcase.v1beta1.Metadata;
 import com.google.showcase.v1beta1.Request;
 import javax.annotation.Generated;
 
@@ -50,11 +51,7 @@ public abstract class CollisionsStub implements BackgroundResource {
     return null;
   }
 
-  public OperationCallable<
-          Request,
-          DescriptorProtos.GeneratedCodeInfo.Annotation,
-          DescriptorProtos.SourceCodeInfo.Location>
-      doSomethingOperationCallable() {
+  public OperationCallable<Request, Annotation, Metadata> doSomethingOperationCallable() {
     throw new UnsupportedOperationException("Not implemented: doSomethingOperationCallable()");
   }
 
