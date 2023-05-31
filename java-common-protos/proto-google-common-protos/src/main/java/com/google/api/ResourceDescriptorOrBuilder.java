@@ -30,9 +30,7 @@ public interface ResourceDescriptorOrBuilder
    * The resource type. It must be in the format of
    * {service_name}/{resource_type_kind}. The `resource_type_kind` must be
    * singular and must not include version numbers.
-   *
    * Example: `storage.googleapis.com/Bucket`
-   *
    * The value of the resource_type_kind must follow the regular expression
    * /[A-Za-z][a-zA-Z0-9]+/. It should start with an upper case character and
    * should use PascalCase (UpperCamelCase). The maximum number of
@@ -51,9 +49,7 @@ public interface ResourceDescriptorOrBuilder
    * The resource type. It must be in the format of
    * {service_name}/{resource_type_kind}. The `resource_type_kind` must be
    * singular and must not include version numbers.
-   *
    * Example: `storage.googleapis.com/Bucket`
-   *
    * The value of the resource_type_kind must follow the regular expression
    * /[A-Za-z][a-zA-Z0-9]+/. It should start with an upper case character and
    * should use PascalCase (UpperCamelCase). The maximum number of
@@ -72,19 +68,14 @@ public interface ResourceDescriptorOrBuilder
    * <pre>
    * Optional. The relative resource name pattern associated with this resource
    * type. The DNS prefix of the full resource name shouldn't be specified here.
-   *
    * The path pattern must follow the syntax, which aligns with HTTP binding
    * syntax:
-   *
    *     Template = Segment { "/" Segment } ;
    *     Segment = LITERAL | Variable ;
    *     Variable = "{" LITERAL "}" ;
-   *
    * Examples:
-   *
    *     - "projects/{project}/topics/{topic}"
    *     - "projects/{project}/knowledgeBases/{knowledge_base}"
-   *
    * The components in braces correspond to the IDs for each resource in the
    * hierarchy. It is expected that, if multiple patterns are provided,
    * the same component name (e.g. "project") refers to IDs of the same
@@ -102,19 +93,14 @@ public interface ResourceDescriptorOrBuilder
    * <pre>
    * Optional. The relative resource name pattern associated with this resource
    * type. The DNS prefix of the full resource name shouldn't be specified here.
-   *
    * The path pattern must follow the syntax, which aligns with HTTP binding
    * syntax:
-   *
    *     Template = Segment { "/" Segment } ;
    *     Segment = LITERAL | Variable ;
    *     Variable = "{" LITERAL "}" ;
-   *
    * Examples:
-   *
    *     - "projects/{project}/topics/{topic}"
    *     - "projects/{project}/knowledgeBases/{knowledge_base}"
-   *
    * The components in braces correspond to the IDs for each resource in the
    * hierarchy. It is expected that, if multiple patterns are provided,
    * the same component name (e.g. "project") refers to IDs of the same
@@ -132,19 +118,14 @@ public interface ResourceDescriptorOrBuilder
    * <pre>
    * Optional. The relative resource name pattern associated with this resource
    * type. The DNS prefix of the full resource name shouldn't be specified here.
-   *
    * The path pattern must follow the syntax, which aligns with HTTP binding
    * syntax:
-   *
    *     Template = Segment { "/" Segment } ;
    *     Segment = LITERAL | Variable ;
    *     Variable = "{" LITERAL "}" ;
-   *
    * Examples:
-   *
    *     - "projects/{project}/topics/{topic}"
    *     - "projects/{project}/knowledgeBases/{knowledge_base}"
-   *
    * The components in braces correspond to the IDs for each resource in the
    * hierarchy. It is expected that, if multiple patterns are provided,
    * the same component name (e.g. "project") refers to IDs of the same
@@ -163,19 +144,14 @@ public interface ResourceDescriptorOrBuilder
    * <pre>
    * Optional. The relative resource name pattern associated with this resource
    * type. The DNS prefix of the full resource name shouldn't be specified here.
-   *
    * The path pattern must follow the syntax, which aligns with HTTP binding
    * syntax:
-   *
    *     Template = Segment { "/" Segment } ;
    *     Segment = LITERAL | Variable ;
    *     Variable = "{" LITERAL "}" ;
-   *
    * Examples:
-   *
    *     - "projects/{project}/topics/{topic}"
    *     - "projects/{project}/knowledgeBases/{knowledge_base}"
-   *
    * The components in braces correspond to the IDs for each resource in the
    * hierarchy. It is expected that, if multiple patterns are provided,
    * the same component name (e.g. "project") refers to IDs of the same
@@ -221,9 +197,7 @@ public interface ResourceDescriptorOrBuilder
    *
    * <pre>
    * Optional. The historical or future-looking state of the resource pattern.
-   *
    * Example:
-   *
    *     // The InspectTemplate message originally only supported resource
    *     // names with organization, and project was added later.
    *     message InspectTemplate {
@@ -247,9 +221,7 @@ public interface ResourceDescriptorOrBuilder
    *
    * <pre>
    * Optional. The historical or future-looking state of the resource pattern.
-   *
    * Example:
-   *
    *     // The InspectTemplate message originally only supported resource
    *     // names with organization, and project was added later.
    *     message InspectTemplate {
@@ -278,7 +250,6 @@ public interface ResourceDescriptorOrBuilder
    * name of 'cloudresourcemanager.googleapis.com/projects.get'. It is the same
    * concept of the `plural` field in k8s CRD spec
    * https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/
-   *
    * Note: The plural form is required even for singleton resources. See
    * https://aip.dev/156
    * </pre>
@@ -297,7 +268,6 @@ public interface ResourceDescriptorOrBuilder
    * name of 'cloudresourcemanager.googleapis.com/projects.get'. It is the same
    * concept of the `plural` field in k8s CRD spec
    * https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/
-   *
    * Note: The plural form is required even for singleton resources. See
    * https://aip.dev/156
    * </pre>

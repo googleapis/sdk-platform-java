@@ -28,7 +28,6 @@ public interface ContextOrBuilder
    *
    * <pre>
    * A list of RPC context rules that apply to individual API methods.
-   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -40,7 +39,6 @@ public interface ContextOrBuilder
    *
    * <pre>
    * A list of RPC context rules that apply to individual API methods.
-   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -52,7 +50,6 @@ public interface ContextOrBuilder
    *
    * <pre>
    * A list of RPC context rules that apply to individual API methods.
-   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -64,7 +61,6 @@ public interface ContextOrBuilder
    *
    * <pre>
    * A list of RPC context rules that apply to individual API methods.
-   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -76,7 +72,6 @@ public interface ContextOrBuilder
    *
    * <pre>
    * A list of RPC context rules that apply to individual API methods.
-   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *

@@ -202,5 +202,5 @@ public interface OperationOrBuilder
    */
   com.google.protobuf.AnyOrBuilder getResponseOrBuilder();
 
-  com.google.longrunning.Operation.ResultCase getResultCase();
+  public com.google.longrunning.Operation.ResultCase getResultCase();
 }

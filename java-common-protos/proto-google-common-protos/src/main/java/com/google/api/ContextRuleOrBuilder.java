@@ -28,7 +28,6 @@ public interface ContextRuleOrBuilder
    *
    * <pre>
    * Selects the methods to which this rule applies.
-   *
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax
    * details.
    * </pre>
@@ -43,7 +42,6 @@ public interface ContextRuleOrBuilder
    *
    * <pre>
    * Selects the methods to which this rule applies.
-   *
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax
    * details.
    * </pre>

@@ -28,7 +28,6 @@ public interface MetricRuleOrBuilder
    *
    * <pre>
    * Selects the methods to which this rule applies.
-   *
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax
    * details.
    * </pre>
@@ -43,7 +42,6 @@ public interface MetricRuleOrBuilder
    *
    * <pre>
    * Selects the methods to which this rule applies.
-   *
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax
    * details.
    * </pre>
@@ -60,7 +58,6 @@ public interface MetricRuleOrBuilder
    * <pre>
    * Metrics to update when the selected methods are called, and the associated
    * cost applied to each metric.
-   *
    * The key of the map is the metric name, and the values are the amount
    * increased for the metric against which the quota limits are defined.
    * The value must not be negative.
@@ -75,7 +72,6 @@ public interface MetricRuleOrBuilder
    * <pre>
    * Metrics to update when the selected methods are called, and the associated
    * cost applied to each metric.
-   *
    * The key of the map is the metric name, and the values are the amount
    * increased for the metric against which the quota limits are defined.
    * The value must not be negative.
@@ -93,7 +89,6 @@ public interface MetricRuleOrBuilder
    * <pre>
    * Metrics to update when the selected methods are called, and the associated
    * cost applied to each metric.
-   *
    * The key of the map is the metric name, and the values are the amount
    * increased for the metric against which the quota limits are defined.
    * The value must not be negative.
@@ -108,7 +103,6 @@ public interface MetricRuleOrBuilder
    * <pre>
    * Metrics to update when the selected methods are called, and the associated
    * cost applied to each metric.
-   *
    * The key of the map is the metric name, and the values are the amount
    * increased for the metric against which the quota limits are defined.
    * The value must not be negative.
@@ -123,7 +117,6 @@ public interface MetricRuleOrBuilder
    * <pre>
    * Metrics to update when the selected methods are called, and the associated
    * cost applied to each metric.
-   *
    * The key of the map is the metric name, and the values are the amount
    * increased for the metric against which the quota limits are defined.
    * The value must not be negative.

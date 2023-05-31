@@ -105,7 +105,6 @@ public interface SetIamPolicyRequestOrBuilder
    * OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
    * the fields in the mask will be modified. If no mask is provided, the
    * following default mask is used:
-   *
    * `paths: "bindings, etag"`
    * </pre>
    *
@@ -121,7 +120,6 @@ public interface SetIamPolicyRequestOrBuilder
    * OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
    * the fields in the mask will be modified. If no mask is provided, the
    * following default mask is used:
-   *
    * `paths: "bindings, etag"`
    * </pre>
    *
@@ -137,7 +135,6 @@ public interface SetIamPolicyRequestOrBuilder
    * OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
    * the fields in the mask will be modified. If no mask is provided, the
    * following default mask is used:
-   *
    * `paths: "bindings, etag"`
    * </pre>
    *

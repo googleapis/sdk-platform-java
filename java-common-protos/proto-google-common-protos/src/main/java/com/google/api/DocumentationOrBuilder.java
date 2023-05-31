@@ -110,7 +110,6 @@ public interface DocumentationOrBuilder
    *
    * <pre>
    * A list of documentation rules that apply to individual API elements.
-   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -122,7 +121,6 @@ public interface DocumentationOrBuilder
    *
    * <pre>
    * A list of documentation rules that apply to individual API elements.
-   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -134,7 +132,6 @@ public interface DocumentationOrBuilder
    *
    * <pre>
    * A list of documentation rules that apply to individual API elements.
-   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -146,7 +143,6 @@ public interface DocumentationOrBuilder
    *
    * <pre>
    * A list of documentation rules that apply to individual API elements.
-   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -158,7 +154,6 @@ public interface DocumentationOrBuilder
    *
    * <pre>
    * A list of documentation rules that apply to individual API elements.
-   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *

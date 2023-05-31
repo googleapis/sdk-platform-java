@@ -33,7 +33,6 @@ package com.google.api;
  * [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor] for
  * `"gce_instance"` has labels
  * `"project_id"`, `"instance_id"` and `"zone"`:
- *
  *     { "type": "gce_instance",
  *       "labels": { "project_id": "my-project",
  *                   "instance_id": "12345678901234",
@@ -60,6 +59,11 @@ public final class MonitoredResource extends com.google.protobuf.GeneratedMessag
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new MonitoredResource();
+  }
+
+  @java.lang.Override
+  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -449,7 +453,6 @@ public final class MonitoredResource extends com.google.protobuf.GeneratedMessag
    * [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor] for
    * `"gce_instance"` has labels
    * `"project_id"`, `"instance_id"` and `"zone"`:
-   *
    *     { "type": "gce_instance",
    *       "labels": { "project_id": "my-project",
    *                   "instance_id": "12345678901234",
@@ -552,6 +555,39 @@ public final class MonitoredResource extends com.google.protobuf.GeneratedMessag
         result.labels_ = internalGetLabels();
         result.labels_.makeImmutable();
       }
+    }
+
+    @java.lang.Override
+    public Builder clone() {
+      return super.clone();
+    }
+
+    @java.lang.Override
+    public Builder setField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.setField(field, value);
+    }
+
+    @java.lang.Override
+    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      return super.clearField(field);
+    }
+
+    @java.lang.Override
+    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      return super.clearOneof(oneof);
+    }
+
+    @java.lang.Override
+    public Builder setRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
+      return super.setRepeatedField(field, index, value);
+    }
+
+    @java.lang.Override
+    public Builder addRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.addRepeatedField(field, value);
     }
 
     @java.lang.Override

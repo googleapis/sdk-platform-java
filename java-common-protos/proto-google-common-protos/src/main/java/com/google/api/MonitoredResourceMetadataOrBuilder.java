@@ -33,7 +33,6 @@ public interface MonitoredResourceMetadataOrBuilder
    * "security_group", "name", etc.
    * System label values can be only strings, Boolean values, or a list of
    * strings. For example:
-   *
    *     { "name": "my-test-instance",
    *       "security_group": ["a", "b", "c"],
    *       "spot_instance": false }
@@ -54,7 +53,6 @@ public interface MonitoredResourceMetadataOrBuilder
    * "security_group", "name", etc.
    * System label values can be only strings, Boolean values, or a list of
    * strings. For example:
-   *
    *     { "name": "my-test-instance",
    *       "security_group": ["a", "b", "c"],
    *       "spot_instance": false }
@@ -75,7 +73,6 @@ public interface MonitoredResourceMetadataOrBuilder
    * "security_group", "name", etc.
    * System label values can be only strings, Boolean values, or a list of
    * strings. For example:
-   *
    *     { "name": "my-test-instance",
    *       "security_group": ["a", "b", "c"],
    *       "spot_instance": false }

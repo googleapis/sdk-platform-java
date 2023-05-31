@@ -23,12 +23,10 @@ package com.google.api;
  *
  * <pre>
  * Authentication rules for the service.
- *
  * By default, if a method has any authentication requirements, every request
  * must include a valid credential matching one of the requirements.
  * It's an error to include more than one kind of credential in a single
  * request.
- *
  * If a method doesn't have any auth requirements, request credentials will be
  * ignored.
  * </pre>
@@ -56,6 +54,11 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
     return new AuthenticationRule();
   }
 
+  @java.lang.Override
+  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+    return this.unknownFields;
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.AuthProto.internal_static_google_api_AuthenticationRule_descriptor;
   }
@@ -78,7 +81,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
    *
    * <pre>
    * Selects the methods to which this rule applies.
-   *
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax
    * details.
    * </pre>
@@ -104,7 +106,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
    *
    * <pre>
    * Selects the methods to which this rule applies.
-   *
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax
    * details.
    * </pre>
@@ -458,12 +459,10 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
    *
    * <pre>
    * Authentication rules for the service.
-   *
    * By default, if a method has any authentication requirements, every request
    * must include a valid credential matching one of the requirements.
    * It's an error to include more than one kind of credential in a single
    * request.
-   *
    * If a method doesn't have any auth requirements, request credentials will be
    * ignored.
    * </pre>
@@ -569,6 +568,39 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
       if (((from_bitField0_ & 0x00000004) != 0)) {
         result.allowWithoutCredential_ = allowWithoutCredential_;
       }
+    }
+
+    @java.lang.Override
+    public Builder clone() {
+      return super.clone();
+    }
+
+    @java.lang.Override
+    public Builder setField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.setField(field, value);
+    }
+
+    @java.lang.Override
+    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      return super.clearField(field);
+    }
+
+    @java.lang.Override
+    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      return super.clearOneof(oneof);
+    }
+
+    @java.lang.Override
+    public Builder setRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
+      return super.setRepeatedField(field, index, value);
+    }
+
+    @java.lang.Override
+    public Builder addRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.addRepeatedField(field, value);
     }
 
     @java.lang.Override
@@ -702,7 +734,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
      *
      * <pre>
      * Selects the methods to which this rule applies.
-     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -727,7 +758,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
      *
      * <pre>
      * Selects the methods to which this rule applies.
-     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -752,7 +782,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
      *
      * <pre>
      * Selects the methods to which this rule applies.
-     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -776,7 +805,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
      *
      * <pre>
      * Selects the methods to which this rule applies.
-     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -796,7 +824,6 @@ public final class AuthenticationRule extends com.google.protobuf.GeneratedMessa
      *
      * <pre>
      * Selects the methods to which this rule applies.
-     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>

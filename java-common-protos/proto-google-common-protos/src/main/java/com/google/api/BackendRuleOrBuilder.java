@@ -28,7 +28,6 @@ public interface BackendRuleOrBuilder
    *
    * <pre>
    * Selects the methods to which this rule applies.
-   *
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax
    * details.
    * </pre>
@@ -43,7 +42,6 @@ public interface BackendRuleOrBuilder
    *
    * <pre>
    * Selects the methods to which this rule applies.
-   *
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax
    * details.
    * </pre>
@@ -59,23 +57,18 @@ public interface BackendRuleOrBuilder
    *
    * <pre>
    * The address of the API backend.
-   *
    * The scheme is used to determine the backend protocol and security.
    * The following schemes are accepted:
-   *
    *    SCHEME        PROTOCOL    SECURITY
    *    http://       HTTP        None
    *    https://      HTTP        TLS
    *    grpc://       gRPC        None
    *    grpcs://      gRPC        TLS
-   *
    * It is recommended to explicitly include a scheme. Leaving out the scheme
    * may cause constrasting behaviors across platforms.
-   *
    * If the port is unspecified, the default is:
    * - 80 for schemes without TLS
    * - 443 for schemes with TLS
-   *
    * For HTTP backends, use [protocol][google.api.BackendRule.protocol]
    * to specify the protocol version.
    * </pre>
@@ -90,23 +83,18 @@ public interface BackendRuleOrBuilder
    *
    * <pre>
    * The address of the API backend.
-   *
    * The scheme is used to determine the backend protocol and security.
    * The following schemes are accepted:
-   *
    *    SCHEME        PROTOCOL    SECURITY
    *    http://       HTTP        None
    *    https://      HTTP        TLS
    *    grpc://       gRPC        None
    *    grpcs://      gRPC        TLS
-   *
    * It is recommended to explicitly include a scheme. Leaving out the scheme
    * may cause constrasting behaviors across platforms.
-   *
    * If the port is unspecified, the default is:
    * - 80 for schemes without TLS
    * - 443 for schemes with TLS
-   *
    * For HTTP backends, use [protocol][google.api.BackendRule.protocol]
    * to specify the protocol version.
    * </pre>
@@ -254,22 +242,17 @@ public interface BackendRuleOrBuilder
    * <pre>
    * The protocol used for sending a request to the backend.
    * The supported values are "http/1.1" and "h2".
-   *
    * The default value is inferred from the scheme in the
    * [address][google.api.BackendRule.address] field:
-   *
    *    SCHEME        PROTOCOL
    *    http://       http/1.1
    *    https://      http/1.1
    *    grpc://       h2
    *    grpcs://      h2
-   *
    * For secure HTTP backends (https://) that support HTTP/2, set this field
    * to "h2" for improved performance.
-   *
    * Configuring this field to non-default values is only supported for secure
    * HTTP backends. This field will be ignored for all other backends.
-   *
    * See
    * https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids
    * for more details on the supported values.
@@ -286,22 +269,17 @@ public interface BackendRuleOrBuilder
    * <pre>
    * The protocol used for sending a request to the backend.
    * The supported values are "http/1.1" and "h2".
-   *
    * The default value is inferred from the scheme in the
    * [address][google.api.BackendRule.address] field:
-   *
    *    SCHEME        PROTOCOL
    *    http://       http/1.1
    *    https://      http/1.1
    *    grpc://       h2
    *    grpcs://      h2
-   *
    * For secure HTTP backends (https://) that support HTTP/2, set this field
    * to "h2" for improved performance.
-   *
    * Configuring this field to non-default values is only supported for secure
    * HTTP backends. This field will be ignored for all other backends.
-   *
    * See
    * https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids
    * for more details on the supported values.
@@ -371,5 +349,5 @@ public interface BackendRuleOrBuilder
    */
   com.google.api.BackendRule getOverridesByRequestProtocolOrThrow(java.lang.String key);
 
-  com.google.api.BackendRule.AuthenticationCase getAuthenticationCase();
+  public com.google.api.BackendRule.AuthenticationCase getAuthenticationCase();
 }
