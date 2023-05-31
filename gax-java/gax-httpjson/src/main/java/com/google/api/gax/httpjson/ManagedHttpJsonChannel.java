@@ -213,7 +213,7 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
       // lifecycle will be managed by the channel. Any external executor needs to
       // managed by the user.
       if (executor == null) {
-        executor = InstantiatingExecutorProvider.newBuilder().build().getExecutor();
+        executor = InstantiatingExecutorProvider.newIOBuilder().build().getExecutor();
         usingDefaultExecutor = true;
       }
 
