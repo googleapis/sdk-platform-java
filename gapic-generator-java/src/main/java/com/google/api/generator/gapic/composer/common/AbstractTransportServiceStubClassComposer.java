@@ -67,6 +67,7 @@ import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.RoutingHeaderRule;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.common.base.Preconditions;
@@ -74,6 +75,7 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.Operation;
+import com.google.protobuf.TypeRegistry;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -136,6 +138,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
             RequestParamsExtractor.class,
             ServerStreamingCallable.class,
             TimeUnit.class,
+            TypeRegistry.class,
             UnaryCallable.class,
             UnsupportedOperationException.class);
     return new TypeStore(concreteClazzes);
@@ -270,11 +273,62 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
             .build());
   }
 
-  protected abstract Expr createTransportSettingsInitExpr(
+  protected Expr createTransportSettingsInitExpr(
       Method method,
       VariableExpr transportSettingsVarExpr,
       VariableExpr methodDescriptorVarExpr,
-      List<Statement> classStatements);
+      List<Statement> classStatements) {
+    MethodInvocationExpr callSettingsBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(getTransportContext().transportCallSettingsType())
+            .setGenerics(transportSettingsVarExpr.type().reference().generics())
+            .setMethodName("newBuilder")
+            .build();
+    callSettingsBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(callSettingsBuilderExpr)
+            .setMethodName("setMethodDescriptor")
+            .setArguments(Arrays.asList(methodDescriptorVarExpr))
+            .build();
+
+    // Transport is set to be either REST or GRPC from the sub composers
+    if (getTransportContext().transport() == Transport.REST) {
+      callSettingsBuilderExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(callSettingsBuilderExpr)
+              .setMethodName("setTypeRegistry")
+              .setArguments(
+                  Arrays.asList(
+                      VariableExpr.builder()
+                          .setVariable(
+                              Variable.builder()
+                                  .setName("typeRegistry")
+                                  .setType(FIXED_TYPESTORE.get(TypeRegistry.class.getSimpleName()))
+                                  .build())
+                          .build()))
+              .build();
+    }
+
+    if (method.shouldSetParamsExtractor()) {
+      callSettingsBuilderExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(callSettingsBuilderExpr)
+              .setMethodName("setParamsExtractor")
+              .setArguments(createRequestParamsExtractorClassInstance(method, classStatements))
+              .build();
+    }
+
+    callSettingsBuilderExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(callSettingsBuilderExpr)
+            .setMethodName("build")
+            .setReturnType(transportSettingsVarExpr.type())
+            .build();
+    return AssignmentExpr.builder()
+        .setVariableExpr(transportSettingsVarExpr.toBuilder().setIsDecl(true).build())
+        .setValueExpr(callSettingsBuilderExpr)
+        .build();
+  }
 
   protected List<MethodDefinition> createGetMethodDescriptorsMethod(
       Service service,

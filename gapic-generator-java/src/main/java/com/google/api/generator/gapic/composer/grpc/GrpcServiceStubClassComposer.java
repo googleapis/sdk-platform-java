@@ -187,46 +187,6 @@ public class GrpcServiceStubClassComposer extends AbstractTransportServiceStubCl
   }
 
   @Override
-  protected Expr createTransportSettingsInitExpr(
-      Method method,
-      VariableExpr transportSettingsVarExpr,
-      VariableExpr methodDescriptorVarExpr,
-      List<Statement> classStatements) {
-    MethodInvocationExpr callSettingsBuilderExpr =
-        MethodInvocationExpr.builder()
-            .setStaticReferenceType(getTransportContext().transportCallSettingsType())
-            .setGenerics(transportSettingsVarExpr.type().reference().generics())
-            .setMethodName("newBuilder")
-            .build();
-    callSettingsBuilderExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(callSettingsBuilderExpr)
-            .setMethodName("setMethodDescriptor")
-            .setArguments(Arrays.asList(methodDescriptorVarExpr))
-            .build();
-
-    if (method.shouldSetParamsExtractor()) {
-      callSettingsBuilderExpr =
-          MethodInvocationExpr.builder()
-              .setExprReferenceExpr(callSettingsBuilderExpr)
-              .setMethodName("setParamsExtractor")
-              .setArguments(createRequestParamsExtractorClassInstance(method, classStatements))
-              .build();
-    }
-
-    callSettingsBuilderExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(callSettingsBuilderExpr)
-            .setMethodName("build")
-            .setReturnType(transportSettingsVarExpr.type())
-            .build();
-    return AssignmentExpr.builder()
-        .setVariableExpr(transportSettingsVarExpr.toBuilder().setIsDecl(true).build())
-        .setValueExpr(callSettingsBuilderExpr)
-        .build();
-  }
-
-  @Override
   protected String getProtoRpcFullMethodName(Service protoService, Method protoMethod) {
     if (protoMethod.isMixin()) {
       return String.format("%s/%s", protoMethod.mixedInApiName(), protoMethod.name());
