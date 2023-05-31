@@ -824,39 +824,34 @@ public class Parser {
     boolean isResponseTypeNameShortOnly = lastDotIndex < 0;
     String responseTypeShortName =
         lastDotIndex >= 0 ? responseTypeName.substring(lastDotIndex + 1) : responseTypeName;
+    // When only shortname is provided, match on same proto package as method (See
+    // https://aip.dev/151)
+    String responseTypeFullName =
+        isResponseTypeNameShortOnly
+            ? methodDescriptor.getFile().getPackage() + "." + responseTypeShortName
+            : responseTypeName;
 
     lastDotIndex = metadataTypeName.lastIndexOf('.');
     boolean isMetadataTypeNameShortOnly = lastDotIndex < 0;
     String metadataTypeShortName =
         lastDotIndex >= 0 ? metadataTypeName.substring(lastDotIndex + 1) : metadataTypeName;
+    // When only shortname is provided, match on same proto package as method (See
+    // https://aip.dev/151)
+    String metadataTypeFullName =
+        isMetadataTypeNameShortOnly
+            ? methodDescriptor.getFile().getPackage() + "." + metadataTypeShortName
+            : metadataTypeName;
 
     // The messageTypes map keys to the Java fully-qualified name.
     for (Map.Entry<String, Message> messageEntry : messageTypes.entrySet()) {
-      String messageKey = messageEntry.getKey();
-      int messageLastDotIndex = messageEntry.getKey().lastIndexOf('.');
-      String messageShortName =
-          messageLastDotIndex >= 0 ? messageKey.substring(messageLastDotIndex + 1) : messageKey;
-      if (responseMessage == null) {
-        if (isResponseTypeNameShortOnly && responseTypeName.equals(messageShortName)) {
-          responseMessage = messageEntry.getValue();
-        } else if (!isResponseTypeNameShortOnly && responseTypeShortName.equals(messageShortName)) {
-          // Ensure that the full proto name matches.
-          Message candidateMessage = messageEntry.getValue();
-          if (candidateMessage.fullProtoName().equals(responseTypeName)) {
-            responseMessage = candidateMessage;
-          }
-        }
+      Message candidateMessage = messageEntry.getValue();
+      if (responseMessage == null
+          && candidateMessage.fullProtoName().equals(responseTypeFullName)) {
+        responseMessage = candidateMessage;
       }
-      if (metadataMessage == null) {
-        if (isMetadataTypeNameShortOnly && metadataTypeName.equals(messageShortName)) {
-          metadataMessage = messageEntry.getValue();
-        } else if (!isMetadataTypeNameShortOnly && metadataTypeShortName.equals(messageShortName)) {
-          // Ensure that the full proto name matches.
-          Message candidateMessage = messageEntry.getValue();
-          if (candidateMessage.fullProtoName().equals(metadataTypeName)) {
-            metadataMessage = candidateMessage;
-          }
-        }
+      if (metadataMessage == null
+          && candidateMessage.fullProtoName().equals(metadataTypeFullName)) {
+        metadataMessage = candidateMessage;
       }
     }
 

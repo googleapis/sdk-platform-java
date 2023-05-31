@@ -10,8 +10,8 @@ import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.longrunning.Operation;
 import com.google.longrunning.stub.GrpcOperationsStub;
-import com.google.protobuf.DescriptorProtos.GeneratedCodeInfo;
-import com.google.protobuf.DescriptorProtos.SourceCodeInfo;
+import com.google.testgapic.v1beta1.Annotation;
+import com.google.testgapic.v1beta1.Location;
 import com.google.testgapic.v1beta1.Request;
 import io.grpc.MethodDescriptor;
 import io.grpc.protobuf.ProtoUtils;
@@ -37,11 +37,7 @@ public class GrpcTypeConflictTestingStub extends TypeConflictTestingStub {
           .build();
 
   private final UnaryCallable<Request, Operation> annotationTestCallable;
-  private final OperationCallable<
-          Request,
-          DescriptorProtos.GeneratedCodeInfo.Annotation,
-          DescriptorProtos.SourceCodeInfo.Location>
-      annotationTestOperationCallable;
+  private final OperationCallable<Request, Annotation, Location> annotationTestOperationCallable;
 
   private final BackgroundResource backgroundResources;
   private final GrpcOperationsStub operationsStub;
@@ -116,11 +112,7 @@ public class GrpcTypeConflictTestingStub extends TypeConflictTestingStub {
   }
 
   @Override
-  public OperationCallable<
-          Request,
-          DescriptorProtos.GeneratedCodeInfo.Annotation,
-          DescriptorProtos.SourceCodeInfo.Location>
-      annotationTestOperationCallable() {
+  public OperationCallable<Request, Annotation, Location> annotationTestOperationCallable() {
     return annotationTestOperationCallable;
   }
 
