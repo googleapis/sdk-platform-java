@@ -250,6 +250,48 @@
           }
         }
       }
+    },
+    "Collisions": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "CollisionsClient",
+          "rpcs": {
+            "GetLocation": {
+              "methods": ["getLocation", "getLocationCallable"]
+            },
+            "ListLocations": {
+              "methods": ["listLocations", "listLocationsPagedCallable", "listLocationsCallable"]
+            },
+            "doSomething": {
+              "methods": ["doSomethingAsync", "doSomethingOperationCallable", "doSomethingCallable"]
+            }
+          }
+        }
+      }
+    },
+    "Wicked": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "WickedClient",
+          "rpcs": {
+            "BrainstormEvilPlans": {
+              "methods": ["brainstormEvilPlansCallable"]
+            },
+            "CraftEvilPlan": {
+              "methods": ["craftEvilPlan", "craftEvilPlanCallable"]
+            },
+            "GetLocation": {
+              "methods": ["getLocation", "getLocationCallable"]
+            },
+            "ListLocations": {
+              "methods": ["listLocations", "listLocationsPagedCallable", "listLocationsCallable"]
+            },
+            "PersuadeEvilPlan": {
+              "methods": ["persuadeEvilPlanCallable"]
+            }
+          }
+        }
+      }
     }
   }
 }
