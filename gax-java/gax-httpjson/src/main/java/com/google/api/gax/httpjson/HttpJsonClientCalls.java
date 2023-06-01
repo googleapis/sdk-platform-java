@@ -48,12 +48,12 @@ class HttpJsonClientCalls {
       ApiMethodDescriptor<RequestT, ResponseT> methodDescriptor, ApiCallContext context) {
 
     HttpJsonCallContext httpJsonContext = HttpJsonCallContext.createDefault().nullToSelf(context);
-    HttpJsonCallOptions callOptions = httpJsonContext.getCallOptions();
 
     // Use the context's timeout instead of calculating a future deadline with the System clock.
     // The timeout value is calculated from TimedAttemptSettings which accounts for the
     // TotalTimeout value set in the RetrySettings.
     if (httpJsonContext.getTimeout() != null) {
+      HttpJsonCallOptions callOptions = httpJsonContext.getCallOptions();
       // HttpJsonChannel expects the HttpJsonCallOptions and we store the timeout duration
       // inside the HttpJsonCallOptions
       // Note: There is manual conversion between threetenbp's Duration and java.util.Duration
@@ -69,8 +69,8 @@ class HttpJsonClientCalls {
                 .setTimeout(java.time.Duration.ofMillis(httpJsonContext.getTimeout().toMillis()))
                 .build();
       }
+      httpJsonContext = httpJsonContext.withCallOptions(callOptions);
     }
-    httpJsonContext = httpJsonContext.withCallOptions(callOptions);
 
     // TODO: add headers interceptor logic
     return httpJsonContext.getChannel().newCall(methodDescriptor, httpJsonContext.getCallOptions());
