@@ -35,12 +35,11 @@ import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.location.GetLocationRequest;
 import com.google.cloud.location.ListLocationsRequest;
 import com.google.cloud.location.ListLocationsResponse;
-import com.google.cloud.location.Location;
 import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.Operation;
 import com.google.protobuf.TypeRegistry;
 import com.google.showcase.v1beta1.Annotation;
-import com.google.showcase.v1beta1.Metadata;
+import com.google.showcase.v1beta1.Location;
 import com.google.showcase.v1beta1.Request;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,7 +60,7 @@ import javax.annotation.Generated;
 public class HttpJsonCollisionsStub extends CollisionsStub {
   private static final TypeRegistry typeRegistry =
       TypeRegistry.newBuilder()
-          .add(Metadata.getDescriptor())
+          .add(Location.getDescriptor())
           .add(Annotation.getDescriptor())
           .build();
 
@@ -98,9 +97,9 @@ public class HttpJsonCollisionsStub extends CollisionsStub {
                       .build())
               .build();
 
-  private static final ApiMethodDescriptor<GetLocationRequest, Location>
+  private static final ApiMethodDescriptor<GetLocationRequest, com.google.cloud.location.Location>
       getLocationMethodDescriptor =
-          ApiMethodDescriptor.<GetLocationRequest, Location>newBuilder()
+          ApiMethodDescriptor.<GetLocationRequest, com.google.cloud.location.Location>newBuilder()
               .setFullMethodName("google.cloud.location.Locations/GetLocation")
               .setHttpMethod("GET")
               .setType(ApiMethodDescriptor.MethodType.UNARY)
@@ -125,8 +124,8 @@ public class HttpJsonCollisionsStub extends CollisionsStub {
                       .setRequestBodyExtractor(request -> null)
                       .build())
               .setResponseParser(
-                  ProtoMessageResponseParser.<Location>newBuilder()
-                      .setDefaultInstance(Location.getDefaultInstance())
+                  ProtoMessageResponseParser.<com.google.cloud.location.Location>newBuilder()
+                      .setDefaultInstance(com.google.cloud.location.Location.getDefaultInstance())
                       .setDefaultTypeRegistry(typeRegistry)
                       .build())
               .build();
@@ -134,7 +133,8 @@ public class HttpJsonCollisionsStub extends CollisionsStub {
   private final UnaryCallable<ListLocationsRequest, ListLocationsResponse> listLocationsCallable;
   private final UnaryCallable<ListLocationsRequest, ListLocationsPagedResponse>
       listLocationsPagedCallable;
-  private final UnaryCallable<GetLocationRequest, Location> getLocationCallable;
+  private final UnaryCallable<GetLocationRequest, com.google.cloud.location.Location>
+      getLocationCallable;
 
   private final BackgroundResource backgroundResources;
   private final HttpJsonOperationsStub httpJsonOperationsStub;
@@ -204,11 +204,13 @@ public class HttpJsonCollisionsStub extends CollisionsStub {
                 .setMethodDescriptor(listLocationsMethodDescriptor)
                 .setTypeRegistry(typeRegistry)
                 .build();
-    HttpJsonCallSettings<GetLocationRequest, Location> getLocationTransportSettings =
-        HttpJsonCallSettings.<GetLocationRequest, Location>newBuilder()
-            .setMethodDescriptor(getLocationMethodDescriptor)
-            .setTypeRegistry(typeRegistry)
-            .build();
+    HttpJsonCallSettings<GetLocationRequest, com.google.cloud.location.Location>
+        getLocationTransportSettings =
+            HttpJsonCallSettings
+                .<GetLocationRequest, com.google.cloud.location.Location>newBuilder()
+                .setMethodDescriptor(getLocationMethodDescriptor)
+                .setTypeRegistry(typeRegistry)
+                .build();
 
     this.listLocationsCallable =
         callableFactory.createUnaryCallable(
@@ -248,7 +250,8 @@ public class HttpJsonCollisionsStub extends CollisionsStub {
   }
 
   @Override
-  public UnaryCallable<GetLocationRequest, Location> getLocationCallable() {
+  public UnaryCallable<GetLocationRequest, com.google.cloud.location.Location>
+      getLocationCallable() {
     return getLocationCallable;
   }
 

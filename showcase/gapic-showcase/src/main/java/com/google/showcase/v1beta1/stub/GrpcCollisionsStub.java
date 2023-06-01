@@ -34,7 +34,6 @@ import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.Operation;
 import com.google.longrunning.stub.GrpcOperationsStub;
 import com.google.showcase.v1beta1.Annotation;
-import com.google.showcase.v1beta1.Metadata;
 import com.google.showcase.v1beta1.Request;
 import io.grpc.MethodDescriptor;
 import io.grpc.protobuf.ProtoUtils;
@@ -80,7 +79,8 @@ public class GrpcCollisionsStub extends CollisionsStub {
           .build();
 
   private final UnaryCallable<Request, Operation> doSomethingCallable;
-  private final OperationCallable<Request, Annotation, Metadata> doSomethingOperationCallable;
+  private final OperationCallable<Request, Annotation, com.google.showcase.v1beta1.Location>
+      doSomethingOperationCallable;
   private final UnaryCallable<ListLocationsRequest, ListLocationsResponse> listLocationsCallable;
   private final UnaryCallable<ListLocationsRequest, ListLocationsPagedResponse>
       listLocationsPagedCallable;
@@ -186,7 +186,8 @@ public class GrpcCollisionsStub extends CollisionsStub {
   }
 
   @Override
-  public OperationCallable<Request, Annotation, Metadata> doSomethingOperationCallable() {
+  public OperationCallable<Request, Annotation, com.google.showcase.v1beta1.Location>
+      doSomethingOperationCallable() {
     return doSomethingOperationCallable;
   }
 

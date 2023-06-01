@@ -4,18 +4,18 @@
 package com.google.showcase.v1beta1;
 
 /**
- * Protobuf type {@code google.showcase.v1beta1.Metadata}
+ * Protobuf type {@code google.showcase.v1beta1.Location}
  */
-public final class Metadata extends
+public final class Location extends
     com.google.protobuf.GeneratedMessageV3 implements
-    // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.Metadata)
-    MetadataOrBuilder {
+    // @@protoc_insertion_point(message_implements:google.showcase.v1beta1.Location)
+    LocationOrBuilder {
 private static final long serialVersionUID = 0L;
-  // Use Metadata.newBuilder() to construct.
-  private Metadata(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+  // Use Location.newBuilder() to construct.
+  private Location(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
     super(builder);
   }
-  private Metadata() {
+  private Location() {
     name_ = "";
   }
 
@@ -23,7 +23,7 @@ private static final long serialVersionUID = 0L;
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(
       UnusedPrivateParameter unused) {
-    return new Metadata();
+    return new Location();
   }
 
   @java.lang.Override
@@ -33,15 +33,15 @@ private static final long serialVersionUID = 0L;
   }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
-    return com.google.showcase.v1beta1.CollisionsOuterClass.internal_static_google_showcase_v1beta1_Metadata_descriptor;
+    return com.google.showcase.v1beta1.CollisionsOuterClass.internal_static_google_showcase_v1beta1_Location_descriptor;
   }
 
   @java.lang.Override
   protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internalGetFieldAccessorTable() {
-    return com.google.showcase.v1beta1.CollisionsOuterClass.internal_static_google_showcase_v1beta1_Metadata_fieldAccessorTable
+    return com.google.showcase.v1beta1.CollisionsOuterClass.internal_static_google_showcase_v1beta1_Location_fieldAccessorTable
         .ensureFieldAccessorsInitialized(
-            com.google.showcase.v1beta1.Metadata.class, com.google.showcase.v1beta1.Metadata.Builder.class);
+            com.google.showcase.v1beta1.Location.class, com.google.showcase.v1beta1.Location.Builder.class);
   }
 
   public static final int NAME_FIELD_NUMBER = 1;
@@ -122,10 +122,10 @@ private static final long serialVersionUID = 0L;
     if (obj == this) {
      return true;
     }
-    if (!(obj instanceof com.google.showcase.v1beta1.Metadata)) {
+    if (!(obj instanceof com.google.showcase.v1beta1.Location)) {
       return super.equals(obj);
     }
-    com.google.showcase.v1beta1.Metadata other = (com.google.showcase.v1beta1.Metadata) obj;
+    com.google.showcase.v1beta1.Location other = (com.google.showcase.v1beta1.Location) obj;
 
     if (!getName()
         .equals(other.getName())) return false;
@@ -147,69 +147,69 @@ private static final long serialVersionUID = 0L;
     return hash;
   }
 
-  public static com.google.showcase.v1beta1.Metadata parseFrom(
+  public static com.google.showcase.v1beta1.Location parseFrom(
       java.nio.ByteBuffer data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.showcase.v1beta1.Metadata parseFrom(
+  public static com.google.showcase.v1beta1.Location parseFrom(
       java.nio.ByteBuffer data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.showcase.v1beta1.Metadata parseFrom(
+  public static com.google.showcase.v1beta1.Location parseFrom(
       com.google.protobuf.ByteString data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.showcase.v1beta1.Metadata parseFrom(
+  public static com.google.showcase.v1beta1.Location parseFrom(
       com.google.protobuf.ByteString data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.showcase.v1beta1.Metadata parseFrom(byte[] data)
+  public static com.google.showcase.v1beta1.Location parseFrom(byte[] data)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data);
   }
-  public static com.google.showcase.v1beta1.Metadata parseFrom(
+  public static com.google.showcase.v1beta1.Location parseFrom(
       byte[] data,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws com.google.protobuf.InvalidProtocolBufferException {
     return PARSER.parseFrom(data, extensionRegistry);
   }
-  public static com.google.showcase.v1beta1.Metadata parseFrom(java.io.InputStream input)
+  public static com.google.showcase.v1beta1.Location parseFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.showcase.v1beta1.Metadata parseFrom(
+  public static com.google.showcase.v1beta1.Location parseFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.showcase.v1beta1.Metadata parseDelimitedFrom(java.io.InputStream input)
+  public static com.google.showcase.v1beta1.Location parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-  public static com.google.showcase.v1beta1.Metadata parseDelimitedFrom(
+  public static com.google.showcase.v1beta1.Location parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
   }
-  public static com.google.showcase.v1beta1.Metadata parseFrom(
+  public static com.google.showcase.v1beta1.Location parseFrom(
       com.google.protobuf.CodedInputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input);
   }
-  public static com.google.showcase.v1beta1.Metadata parseFrom(
+  public static com.google.showcase.v1beta1.Location parseFrom(
       com.google.protobuf.CodedInputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
       throws java.io.IOException {
@@ -222,7 +222,7 @@ private static final long serialVersionUID = 0L;
   public static Builder newBuilder() {
     return DEFAULT_INSTANCE.toBuilder();
   }
-  public static Builder newBuilder(com.google.showcase.v1beta1.Metadata prototype) {
+  public static Builder newBuilder(com.google.showcase.v1beta1.Location prototype) {
     return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
   }
   @java.lang.Override
@@ -238,26 +238,26 @@ private static final long serialVersionUID = 0L;
     return builder;
   }
   /**
-   * Protobuf type {@code google.showcase.v1beta1.Metadata}
+   * Protobuf type {@code google.showcase.v1beta1.Location}
    */
   public static final class Builder extends
       com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-      // @@protoc_insertion_point(builder_implements:google.showcase.v1beta1.Metadata)
-      com.google.showcase.v1beta1.MetadataOrBuilder {
+      // @@protoc_insertion_point(builder_implements:google.showcase.v1beta1.Location)
+      com.google.showcase.v1beta1.LocationOrBuilder {
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return com.google.showcase.v1beta1.CollisionsOuterClass.internal_static_google_showcase_v1beta1_Metadata_descriptor;
+      return com.google.showcase.v1beta1.CollisionsOuterClass.internal_static_google_showcase_v1beta1_Location_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return com.google.showcase.v1beta1.CollisionsOuterClass.internal_static_google_showcase_v1beta1_Metadata_fieldAccessorTable
+      return com.google.showcase.v1beta1.CollisionsOuterClass.internal_static_google_showcase_v1beta1_Location_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              com.google.showcase.v1beta1.Metadata.class, com.google.showcase.v1beta1.Metadata.Builder.class);
+              com.google.showcase.v1beta1.Location.class, com.google.showcase.v1beta1.Location.Builder.class);
     }
 
-    // Construct using com.google.showcase.v1beta1.Metadata.newBuilder()
+    // Construct using com.google.showcase.v1beta1.Location.newBuilder()
     private Builder() {
 
     }
@@ -278,17 +278,17 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.protobuf.Descriptors.Descriptor
         getDescriptorForType() {
-      return com.google.showcase.v1beta1.CollisionsOuterClass.internal_static_google_showcase_v1beta1_Metadata_descriptor;
+      return com.google.showcase.v1beta1.CollisionsOuterClass.internal_static_google_showcase_v1beta1_Location_descriptor;
     }
 
     @java.lang.Override
-    public com.google.showcase.v1beta1.Metadata getDefaultInstanceForType() {
-      return com.google.showcase.v1beta1.Metadata.getDefaultInstance();
+    public com.google.showcase.v1beta1.Location getDefaultInstanceForType() {
+      return com.google.showcase.v1beta1.Location.getDefaultInstance();
     }
 
     @java.lang.Override
-    public com.google.showcase.v1beta1.Metadata build() {
-      com.google.showcase.v1beta1.Metadata result = buildPartial();
+    public com.google.showcase.v1beta1.Location build() {
+      com.google.showcase.v1beta1.Location result = buildPartial();
       if (!result.isInitialized()) {
         throw newUninitializedMessageException(result);
       }
@@ -296,14 +296,14 @@ private static final long serialVersionUID = 0L;
     }
 
     @java.lang.Override
-    public com.google.showcase.v1beta1.Metadata buildPartial() {
-      com.google.showcase.v1beta1.Metadata result = new com.google.showcase.v1beta1.Metadata(this);
+    public com.google.showcase.v1beta1.Location buildPartial() {
+      com.google.showcase.v1beta1.Location result = new com.google.showcase.v1beta1.Location(this);
       if (bitField0_ != 0) { buildPartial0(result); }
       onBuilt();
       return result;
     }
 
-    private void buildPartial0(com.google.showcase.v1beta1.Metadata result) {
+    private void buildPartial0(com.google.showcase.v1beta1.Location result) {
       int from_bitField0_ = bitField0_;
       if (((from_bitField0_ & 0x00000001) != 0)) {
         result.name_ = name_;
@@ -344,16 +344,16 @@ private static final long serialVersionUID = 0L;
     }
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
-      if (other instanceof com.google.showcase.v1beta1.Metadata) {
-        return mergeFrom((com.google.showcase.v1beta1.Metadata)other);
+      if (other instanceof com.google.showcase.v1beta1.Location) {
+        return mergeFrom((com.google.showcase.v1beta1.Location)other);
       } else {
         super.mergeFrom(other);
         return this;
       }
     }
 
-    public Builder mergeFrom(com.google.showcase.v1beta1.Metadata other) {
-      if (other == com.google.showcase.v1beta1.Metadata.getDefaultInstance()) return this;
+    public Builder mergeFrom(com.google.showcase.v1beta1.Location other) {
+      if (other == com.google.showcase.v1beta1.Location.getDefaultInstance()) return this;
       if (!other.getName().isEmpty()) {
         name_ = other.name_;
         bitField0_ |= 0x00000001;
@@ -491,23 +491,23 @@ private static final long serialVersionUID = 0L;
     }
 
 
-    // @@protoc_insertion_point(builder_scope:google.showcase.v1beta1.Metadata)
+    // @@protoc_insertion_point(builder_scope:google.showcase.v1beta1.Location)
   }
 
-  // @@protoc_insertion_point(class_scope:google.showcase.v1beta1.Metadata)
-  private static final com.google.showcase.v1beta1.Metadata DEFAULT_INSTANCE;
+  // @@protoc_insertion_point(class_scope:google.showcase.v1beta1.Location)
+  private static final com.google.showcase.v1beta1.Location DEFAULT_INSTANCE;
   static {
-    DEFAULT_INSTANCE = new com.google.showcase.v1beta1.Metadata();
+    DEFAULT_INSTANCE = new com.google.showcase.v1beta1.Location();
   }
 
-  public static com.google.showcase.v1beta1.Metadata getDefaultInstance() {
+  public static com.google.showcase.v1beta1.Location getDefaultInstance() {
     return DEFAULT_INSTANCE;
   }
 
-  private static final com.google.protobuf.Parser<Metadata>
-      PARSER = new com.google.protobuf.AbstractParser<Metadata>() {
+  private static final com.google.protobuf.Parser<Location>
+      PARSER = new com.google.protobuf.AbstractParser<Location>() {
     @java.lang.Override
-    public Metadata parsePartialFrom(
+    public Location parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -526,17 +526,17 @@ private static final long serialVersionUID = 0L;
     }
   };
 
-  public static com.google.protobuf.Parser<Metadata> parser() {
+  public static com.google.protobuf.Parser<Location> parser() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.protobuf.Parser<Metadata> getParserForType() {
+  public com.google.protobuf.Parser<Location> getParserForType() {
     return PARSER;
   }
 
   @java.lang.Override
-  public com.google.showcase.v1beta1.Metadata getDefaultInstanceForType() {
+  public com.google.showcase.v1beta1.Location getDefaultInstanceForType() {
     return DEFAULT_INSTANCE;
   }
 

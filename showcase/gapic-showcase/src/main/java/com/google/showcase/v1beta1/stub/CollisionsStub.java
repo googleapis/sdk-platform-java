@@ -25,11 +25,10 @@ import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.location.GetLocationRequest;
 import com.google.cloud.location.ListLocationsRequest;
 import com.google.cloud.location.ListLocationsResponse;
-import com.google.cloud.location.Location;
 import com.google.longrunning.Operation;
 import com.google.longrunning.stub.OperationsStub;
 import com.google.showcase.v1beta1.Annotation;
-import com.google.showcase.v1beta1.Metadata;
+import com.google.showcase.v1beta1.Location;
 import com.google.showcase.v1beta1.Request;
 import javax.annotation.Generated;
 
@@ -51,7 +50,7 @@ public abstract class CollisionsStub implements BackgroundResource {
     return null;
   }
 
-  public OperationCallable<Request, Annotation, Metadata> doSomethingOperationCallable() {
+  public OperationCallable<Request, Annotation, Location> doSomethingOperationCallable() {
     throw new UnsupportedOperationException("Not implemented: doSomethingOperationCallable()");
   }
 
@@ -68,7 +67,8 @@ public abstract class CollisionsStub implements BackgroundResource {
     throw new UnsupportedOperationException("Not implemented: listLocationsCallable()");
   }
 
-  public UnaryCallable<GetLocationRequest, Location> getLocationCallable() {
+  public UnaryCallable<GetLocationRequest, com.google.cloud.location.Location>
+      getLocationCallable() {
     throw new UnsupportedOperationException("Not implemented: getLocationCallable()");
   }
 

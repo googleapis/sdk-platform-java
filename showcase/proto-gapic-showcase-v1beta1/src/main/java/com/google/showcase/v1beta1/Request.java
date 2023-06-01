@@ -109,30 +109,30 @@ private static final long serialVersionUID = 0L;
     return annotation_ == null ? com.google.showcase.v1beta1.Annotation.getDefaultInstance() : annotation_;
   }
 
-  public static final int METADATA_FIELD_NUMBER = 3;
-  private com.google.showcase.v1beta1.Metadata metadata_;
+  public static final int LOCATION_FIELD_NUMBER = 3;
+  private com.google.showcase.v1beta1.Location location_;
   /**
-   * <code>.google.showcase.v1beta1.Metadata metadata = 3;</code>
-   * @return Whether the metadata field is set.
+   * <code>.google.showcase.v1beta1.Location location = 3;</code>
+   * @return Whether the location field is set.
    */
   @java.lang.Override
-  public boolean hasMetadata() {
-    return metadata_ != null;
+  public boolean hasLocation() {
+    return location_ != null;
   }
   /**
-   * <code>.google.showcase.v1beta1.Metadata metadata = 3;</code>
-   * @return The metadata.
+   * <code>.google.showcase.v1beta1.Location location = 3;</code>
+   * @return The location.
    */
   @java.lang.Override
-  public com.google.showcase.v1beta1.Metadata getMetadata() {
-    return metadata_ == null ? com.google.showcase.v1beta1.Metadata.getDefaultInstance() : metadata_;
+  public com.google.showcase.v1beta1.Location getLocation() {
+    return location_ == null ? com.google.showcase.v1beta1.Location.getDefaultInstance() : location_;
   }
   /**
-   * <code>.google.showcase.v1beta1.Metadata metadata = 3;</code>
+   * <code>.google.showcase.v1beta1.Location location = 3;</code>
    */
   @java.lang.Override
-  public com.google.showcase.v1beta1.MetadataOrBuilder getMetadataOrBuilder() {
-    return metadata_ == null ? com.google.showcase.v1beta1.Metadata.getDefaultInstance() : metadata_;
+  public com.google.showcase.v1beta1.LocationOrBuilder getLocationOrBuilder() {
+    return location_ == null ? com.google.showcase.v1beta1.Location.getDefaultInstance() : location_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -155,8 +155,8 @@ private static final long serialVersionUID = 0L;
     if (annotation_ != null) {
       output.writeMessage(2, getAnnotation());
     }
-    if (metadata_ != null) {
-      output.writeMessage(3, getMetadata());
+    if (location_ != null) {
+      output.writeMessage(3, getLocation());
     }
     getUnknownFields().writeTo(output);
   }
@@ -174,9 +174,9 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(2, getAnnotation());
     }
-    if (metadata_ != null) {
+    if (location_ != null) {
       size += com.google.protobuf.CodedOutputStream
-        .computeMessageSize(3, getMetadata());
+        .computeMessageSize(3, getLocation());
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -200,10 +200,10 @@ private static final long serialVersionUID = 0L;
       if (!getAnnotation()
           .equals(other.getAnnotation())) return false;
     }
-    if (hasMetadata() != other.hasMetadata()) return false;
-    if (hasMetadata()) {
-      if (!getMetadata()
-          .equals(other.getMetadata())) return false;
+    if (hasLocation() != other.hasLocation()) return false;
+    if (hasLocation()) {
+      if (!getLocation()
+          .equals(other.getLocation())) return false;
     }
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
@@ -222,9 +222,9 @@ private static final long serialVersionUID = 0L;
       hash = (37 * hash) + ANNOTATION_FIELD_NUMBER;
       hash = (53 * hash) + getAnnotation().hashCode();
     }
-    if (hasMetadata()) {
-      hash = (37 * hash) + METADATA_FIELD_NUMBER;
-      hash = (53 * hash) + getMetadata().hashCode();
+    if (hasLocation()) {
+      hash = (37 * hash) + LOCATION_FIELD_NUMBER;
+      hash = (53 * hash) + getLocation().hashCode();
     }
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
@@ -361,10 +361,10 @@ private static final long serialVersionUID = 0L;
         annotationBuilder_.dispose();
         annotationBuilder_ = null;
       }
-      metadata_ = null;
-      if (metadataBuilder_ != null) {
-        metadataBuilder_.dispose();
-        metadataBuilder_ = null;
+      location_ = null;
+      if (locationBuilder_ != null) {
+        locationBuilder_.dispose();
+        locationBuilder_ = null;
       }
       return this;
     }
@@ -408,9 +408,9 @@ private static final long serialVersionUID = 0L;
             : annotationBuilder_.build();
       }
       if (((from_bitField0_ & 0x00000004) != 0)) {
-        result.metadata_ = metadataBuilder_ == null
-            ? metadata_
-            : metadataBuilder_.build();
+        result.location_ = locationBuilder_ == null
+            ? location_
+            : locationBuilder_.build();
       }
     }
 
@@ -466,8 +466,8 @@ private static final long serialVersionUID = 0L;
       if (other.hasAnnotation()) {
         mergeAnnotation(other.getAnnotation());
       }
-      if (other.hasMetadata()) {
-        mergeMetadata(other.getMetadata());
+      if (other.hasLocation()) {
+        mergeLocation(other.getLocation());
       }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
@@ -509,7 +509,7 @@ private static final long serialVersionUID = 0L;
             } // case 18
             case 26: {
               input.readMessage(
-                  getMetadataFieldBuilder().getBuilder(),
+                  getLocationFieldBuilder().getBuilder(),
                   extensionRegistry);
               bitField0_ |= 0x00000004;
               break;
@@ -722,123 +722,123 @@ private static final long serialVersionUID = 0L;
       return annotationBuilder_;
     }
 
-    private com.google.showcase.v1beta1.Metadata metadata_;
+    private com.google.showcase.v1beta1.Location location_;
     private com.google.protobuf.SingleFieldBuilderV3<
-        com.google.showcase.v1beta1.Metadata, com.google.showcase.v1beta1.Metadata.Builder, com.google.showcase.v1beta1.MetadataOrBuilder> metadataBuilder_;
+        com.google.showcase.v1beta1.Location, com.google.showcase.v1beta1.Location.Builder, com.google.showcase.v1beta1.LocationOrBuilder> locationBuilder_;
     /**
-     * <code>.google.showcase.v1beta1.Metadata metadata = 3;</code>
-     * @return Whether the metadata field is set.
+     * <code>.google.showcase.v1beta1.Location location = 3;</code>
+     * @return Whether the location field is set.
      */
-    public boolean hasMetadata() {
+    public boolean hasLocation() {
       return ((bitField0_ & 0x00000004) != 0);
     }
     /**
-     * <code>.google.showcase.v1beta1.Metadata metadata = 3;</code>
-     * @return The metadata.
+     * <code>.google.showcase.v1beta1.Location location = 3;</code>
+     * @return The location.
      */
-    public com.google.showcase.v1beta1.Metadata getMetadata() {
-      if (metadataBuilder_ == null) {
-        return metadata_ == null ? com.google.showcase.v1beta1.Metadata.getDefaultInstance() : metadata_;
+    public com.google.showcase.v1beta1.Location getLocation() {
+      if (locationBuilder_ == null) {
+        return location_ == null ? com.google.showcase.v1beta1.Location.getDefaultInstance() : location_;
       } else {
-        return metadataBuilder_.getMessage();
+        return locationBuilder_.getMessage();
       }
     }
     /**
-     * <code>.google.showcase.v1beta1.Metadata metadata = 3;</code>
+     * <code>.google.showcase.v1beta1.Location location = 3;</code>
      */
-    public Builder setMetadata(com.google.showcase.v1beta1.Metadata value) {
-      if (metadataBuilder_ == null) {
+    public Builder setLocation(com.google.showcase.v1beta1.Location value) {
+      if (locationBuilder_ == null) {
         if (value == null) {
           throw new NullPointerException();
         }
-        metadata_ = value;
+        location_ = value;
       } else {
-        metadataBuilder_.setMessage(value);
+        locationBuilder_.setMessage(value);
       }
       bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
     /**
-     * <code>.google.showcase.v1beta1.Metadata metadata = 3;</code>
+     * <code>.google.showcase.v1beta1.Location location = 3;</code>
      */
-    public Builder setMetadata(
-        com.google.showcase.v1beta1.Metadata.Builder builderForValue) {
-      if (metadataBuilder_ == null) {
-        metadata_ = builderForValue.build();
+    public Builder setLocation(
+        com.google.showcase.v1beta1.Location.Builder builderForValue) {
+      if (locationBuilder_ == null) {
+        location_ = builderForValue.build();
       } else {
-        metadataBuilder_.setMessage(builderForValue.build());
+        locationBuilder_.setMessage(builderForValue.build());
       }
       bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
     /**
-     * <code>.google.showcase.v1beta1.Metadata metadata = 3;</code>
+     * <code>.google.showcase.v1beta1.Location location = 3;</code>
      */
-    public Builder mergeMetadata(com.google.showcase.v1beta1.Metadata value) {
-      if (metadataBuilder_ == null) {
+    public Builder mergeLocation(com.google.showcase.v1beta1.Location value) {
+      if (locationBuilder_ == null) {
         if (((bitField0_ & 0x00000004) != 0) &&
-          metadata_ != null &&
-          metadata_ != com.google.showcase.v1beta1.Metadata.getDefaultInstance()) {
-          getMetadataBuilder().mergeFrom(value);
+          location_ != null &&
+          location_ != com.google.showcase.v1beta1.Location.getDefaultInstance()) {
+          getLocationBuilder().mergeFrom(value);
         } else {
-          metadata_ = value;
+          location_ = value;
         }
       } else {
-        metadataBuilder_.mergeFrom(value);
+        locationBuilder_.mergeFrom(value);
       }
       bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
     /**
-     * <code>.google.showcase.v1beta1.Metadata metadata = 3;</code>
+     * <code>.google.showcase.v1beta1.Location location = 3;</code>
      */
-    public Builder clearMetadata() {
+    public Builder clearLocation() {
       bitField0_ = (bitField0_ & ~0x00000004);
-      metadata_ = null;
-      if (metadataBuilder_ != null) {
-        metadataBuilder_.dispose();
-        metadataBuilder_ = null;
+      location_ = null;
+      if (locationBuilder_ != null) {
+        locationBuilder_.dispose();
+        locationBuilder_ = null;
       }
       onChanged();
       return this;
     }
     /**
-     * <code>.google.showcase.v1beta1.Metadata metadata = 3;</code>
+     * <code>.google.showcase.v1beta1.Location location = 3;</code>
      */
-    public com.google.showcase.v1beta1.Metadata.Builder getMetadataBuilder() {
+    public com.google.showcase.v1beta1.Location.Builder getLocationBuilder() {
       bitField0_ |= 0x00000004;
       onChanged();
-      return getMetadataFieldBuilder().getBuilder();
+      return getLocationFieldBuilder().getBuilder();
     }
     /**
-     * <code>.google.showcase.v1beta1.Metadata metadata = 3;</code>
+     * <code>.google.showcase.v1beta1.Location location = 3;</code>
      */
-    public com.google.showcase.v1beta1.MetadataOrBuilder getMetadataOrBuilder() {
-      if (metadataBuilder_ != null) {
-        return metadataBuilder_.getMessageOrBuilder();
+    public com.google.showcase.v1beta1.LocationOrBuilder getLocationOrBuilder() {
+      if (locationBuilder_ != null) {
+        return locationBuilder_.getMessageOrBuilder();
       } else {
-        return metadata_ == null ?
-            com.google.showcase.v1beta1.Metadata.getDefaultInstance() : metadata_;
+        return location_ == null ?
+            com.google.showcase.v1beta1.Location.getDefaultInstance() : location_;
       }
     }
     /**
-     * <code>.google.showcase.v1beta1.Metadata metadata = 3;</code>
+     * <code>.google.showcase.v1beta1.Location location = 3;</code>
      */
     private com.google.protobuf.SingleFieldBuilderV3<
-        com.google.showcase.v1beta1.Metadata, com.google.showcase.v1beta1.Metadata.Builder, com.google.showcase.v1beta1.MetadataOrBuilder> 
-        getMetadataFieldBuilder() {
-      if (metadataBuilder_ == null) {
-        metadataBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
-            com.google.showcase.v1beta1.Metadata, com.google.showcase.v1beta1.Metadata.Builder, com.google.showcase.v1beta1.MetadataOrBuilder>(
-                getMetadata(),
+        com.google.showcase.v1beta1.Location, com.google.showcase.v1beta1.Location.Builder, com.google.showcase.v1beta1.LocationOrBuilder> 
+        getLocationFieldBuilder() {
+      if (locationBuilder_ == null) {
+        locationBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            com.google.showcase.v1beta1.Location, com.google.showcase.v1beta1.Location.Builder, com.google.showcase.v1beta1.LocationOrBuilder>(
+                getLocation(),
                 getParentForChildren(),
                 isClean());
-        metadata_ = null;
+        location_ = null;
       }
-      return metadataBuilder_;
+      return locationBuilder_;
     }
     @java.lang.Override
     public final Builder setUnknownFields(

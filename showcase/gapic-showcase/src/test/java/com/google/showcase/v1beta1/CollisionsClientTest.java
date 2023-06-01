@@ -105,7 +105,7 @@ public class CollisionsClientTest {
         Request.newBuilder()
             .setName("name3373707")
             .setAnnotation(Annotation.newBuilder().build())
-            .setMetadata(Metadata.newBuilder().build())
+            .setLocation(com.google.showcase.v1beta1.Location.newBuilder().build())
             .build();
 
     Annotation actualResponse = client.doSomethingAsync(request).get();
@@ -117,7 +117,7 @@ public class CollisionsClientTest {
 
     Assert.assertEquals(request.getName(), actualRequest.getName());
     Assert.assertEquals(request.getAnnotation(), actualRequest.getAnnotation());
-    Assert.assertEquals(request.getMetadata(), actualRequest.getMetadata());
+    Assert.assertEquals(request.getLocation(), actualRequest.getLocation());
     Assert.assertTrue(
         channelProvider.isHeaderSent(
             ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
@@ -134,7 +134,7 @@ public class CollisionsClientTest {
           Request.newBuilder()
               .setName("name3373707")
               .setAnnotation(Annotation.newBuilder().build())
-              .setMetadata(Metadata.newBuilder().build())
+              .setLocation(com.google.showcase.v1beta1.Location.newBuilder().build())
               .build();
       client.doSomethingAsync(request).get();
       Assert.fail("No exception raised");

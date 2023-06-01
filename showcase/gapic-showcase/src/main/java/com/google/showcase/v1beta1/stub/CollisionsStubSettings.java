@@ -50,14 +50,13 @@ import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.location.GetLocationRequest;
 import com.google.cloud.location.ListLocationsRequest;
 import com.google.cloud.location.ListLocationsResponse;
-import com.google.cloud.location.Location;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Lists;
 import com.google.longrunning.Operation;
 import com.google.showcase.v1beta1.Annotation;
-import com.google.showcase.v1beta1.Metadata;
+import com.google.showcase.v1beta1.Location;
 import com.google.showcase.v1beta1.Request;
 import java.io.IOException;
 import java.util.List;
@@ -108,15 +107,18 @@ public class CollisionsStubSettings extends StubSettings<CollisionsStubSettings>
       ImmutableList.<String>builder().build();
 
   private final UnaryCallSettings<Request, Operation> doSomethingSettings;
-  private final OperationCallSettings<Request, Annotation, Metadata> doSomethingOperationSettings;
+  private final OperationCallSettings<Request, Annotation, Location> doSomethingOperationSettings;
   private final PagedCallSettings<
           ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
       listLocationsSettings;
-  private final UnaryCallSettings<GetLocationRequest, Location> getLocationSettings;
+  private final UnaryCallSettings<GetLocationRequest, com.google.cloud.location.Location>
+      getLocationSettings;
 
-  private static final PagedListDescriptor<ListLocationsRequest, ListLocationsResponse, Location>
+  private static final PagedListDescriptor<
+          ListLocationsRequest, ListLocationsResponse, com.google.cloud.location.Location>
       LIST_LOCATIONS_PAGE_STR_DESC =
-          new PagedListDescriptor<ListLocationsRequest, ListLocationsResponse, Location>() {
+          new PagedListDescriptor<
+              ListLocationsRequest, ListLocationsResponse, com.google.cloud.location.Location>() {
             @Override
             public String emptyToken() {
               return "";
@@ -143,9 +145,10 @@ public class CollisionsStubSettings extends StubSettings<CollisionsStubSettings>
             }
 
             @Override
-            public Iterable<Location> extractResources(ListLocationsResponse payload) {
+            public Iterable<com.google.cloud.location.Location> extractResources(
+                ListLocationsResponse payload) {
               return payload.getLocationsList() == null
-                  ? ImmutableList.<Location>of()
+                  ? ImmutableList.<com.google.cloud.location.Location>of()
                   : payload.getLocationsList();
             }
           };
@@ -161,8 +164,12 @@ public class CollisionsStubSettings extends StubSettings<CollisionsStubSettings>
                 ListLocationsRequest request,
                 ApiCallContext context,
                 ApiFuture<ListLocationsResponse> futureResponse) {
-              PageContext<ListLocationsRequest, ListLocationsResponse, Location> pageContext =
-                  PageContext.create(callable, LIST_LOCATIONS_PAGE_STR_DESC, request, context);
+              PageContext<
+                      ListLocationsRequest,
+                      ListLocationsResponse,
+                      com.google.cloud.location.Location>
+                  pageContext =
+                      PageContext.create(callable, LIST_LOCATIONS_PAGE_STR_DESC, request, context);
               return ListLocationsPagedResponse.createAsync(pageContext, futureResponse);
             }
           };
@@ -173,7 +180,7 @@ public class CollisionsStubSettings extends StubSettings<CollisionsStubSettings>
   }
 
   /** Returns the object with the settings used for calls to doSomething. */
-  public OperationCallSettings<Request, Annotation, Metadata> doSomethingOperationSettings() {
+  public OperationCallSettings<Request, Annotation, Location> doSomethingOperationSettings() {
     return doSomethingOperationSettings;
   }
 
@@ -184,7 +191,8 @@ public class CollisionsStubSettings extends StubSettings<CollisionsStubSettings>
   }
 
   /** Returns the object with the settings used for calls to getLocation. */
-  public UnaryCallSettings<GetLocationRequest, Location> getLocationSettings() {
+  public UnaryCallSettings<GetLocationRequest, com.google.cloud.location.Location>
+      getLocationSettings() {
     return getLocationSettings;
   }
 
@@ -304,12 +312,13 @@ public class CollisionsStubSettings extends StubSettings<CollisionsStubSettings>
   public static class Builder extends StubSettings.Builder<CollisionsStubSettings, Builder> {
     private final ImmutableList<UnaryCallSettings.Builder<?, ?>> unaryMethodSettingsBuilders;
     private final UnaryCallSettings.Builder<Request, Operation> doSomethingSettings;
-    private final OperationCallSettings.Builder<Request, Annotation, Metadata>
+    private final OperationCallSettings.Builder<Request, Annotation, Location>
         doSomethingOperationSettings;
     private final PagedCallSettings.Builder<
             ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
         listLocationsSettings;
-    private final UnaryCallSettings.Builder<GetLocationRequest, Location> getLocationSettings;
+    private final UnaryCallSettings.Builder<GetLocationRequest, com.google.cloud.location.Location>
+        getLocationSettings;
     private static final ImmutableMap<String, ImmutableSet<StatusCode.Code>>
         RETRYABLE_CODE_DEFINITIONS;
 
@@ -413,7 +422,7 @@ public class CollisionsStubSettings extends StubSettings<CollisionsStubSettings>
           .setResponseTransformer(
               ProtoOperationTransformers.ResponseTransformer.create(Annotation.class))
           .setMetadataTransformer(
-              ProtoOperationTransformers.MetadataTransformer.create(Metadata.class))
+              ProtoOperationTransformers.MetadataTransformer.create(Location.class))
           .setPollingAlgorithm(
               OperationTimedPollAlgorithm.create(
                   RetrySettings.newBuilder()
@@ -452,7 +461,7 @@ public class CollisionsStubSettings extends StubSettings<CollisionsStubSettings>
     /** Returns the builder for the settings used for calls to doSomething. */
     @BetaApi(
         "The surface for use by generated code is not stable yet and may change in the future.")
-    public OperationCallSettings.Builder<Request, Annotation, Metadata>
+    public OperationCallSettings.Builder<Request, Annotation, Location>
         doSomethingOperationSettings() {
       return doSomethingOperationSettings;
     }
@@ -465,7 +474,8 @@ public class CollisionsStubSettings extends StubSettings<CollisionsStubSettings>
     }
 
     /** Returns the builder for the settings used for calls to getLocation. */
-    public UnaryCallSettings.Builder<GetLocationRequest, Location> getLocationSettings() {
+    public UnaryCallSettings.Builder<GetLocationRequest, com.google.cloud.location.Location>
+        getLocationSettings() {
       return getLocationSettings;
     }
 

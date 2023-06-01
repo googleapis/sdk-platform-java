@@ -216,7 +216,7 @@ public class CollisionsClient implements BackgroundResource {
    *       Request.newBuilder()
    *           .setName("name3373707")
    *           .setAnnotation(Annotation.newBuilder().build())
-   *           .setMetadata(Metadata.newBuilder().build())
+   *           .setLocation(Location.newBuilder().build())
    *           .build();
    *   Annotation response = collisionsClient.doSomethingAsync(request).get();
    * }
@@ -225,7 +225,8 @@ public class CollisionsClient implements BackgroundResource {
    * @param request The request object containing all of the parameters for the API call.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
-  public final OperationFuture<Annotation, Metadata> doSomethingAsync(Request request) {
+  public final OperationFuture<Annotation, com.google.showcase.v1beta1.Location> doSomethingAsync(
+      Request request) {
     return doSomethingOperationCallable().futureCall(request);
   }
 
@@ -244,16 +245,17 @@ public class CollisionsClient implements BackgroundResource {
    *       Request.newBuilder()
    *           .setName("name3373707")
    *           .setAnnotation(Annotation.newBuilder().build())
-   *           .setMetadata(Metadata.newBuilder().build())
+   *           .setLocation(Location.newBuilder().build())
    *           .build();
-   *   OperationFuture<Annotation, Metadata> future =
+   *   OperationFuture<Annotation, Location> future =
    *       collisionsClient.doSomethingOperationCallable().futureCall(request);
    *   // Do something.
    *   Annotation response = future.get();
    * }
    * }</pre>
    */
-  public final OperationCallable<Request, Annotation, Metadata> doSomethingOperationCallable() {
+  public final OperationCallable<Request, Annotation, com.google.showcase.v1beta1.Location>
+      doSomethingOperationCallable() {
     return stub.doSomethingOperationCallable();
   }
 
@@ -272,7 +274,7 @@ public class CollisionsClient implements BackgroundResource {
    *       Request.newBuilder()
    *           .setName("name3373707")
    *           .setAnnotation(Annotation.newBuilder().build())
-   *           .setMetadata(Metadata.newBuilder().build())
+   *           .setLocation(Location.newBuilder().build())
    *           .build();
    *   ApiFuture<Operation> future = collisionsClient.doSomethingCallable().futureCall(request);
    *   // Do something.

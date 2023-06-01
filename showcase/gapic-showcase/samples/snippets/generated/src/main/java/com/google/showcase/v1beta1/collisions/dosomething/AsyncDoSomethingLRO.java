@@ -20,7 +20,7 @@ package com.google.showcase.v1beta1.samples;
 import com.google.api.gax.longrunning.OperationFuture;
 import com.google.showcase.v1beta1.Annotation;
 import com.google.showcase.v1beta1.CollisionsClient;
-import com.google.showcase.v1beta1.Metadata;
+import com.google.showcase.v1beta1.Location;
 import com.google.showcase.v1beta1.Request;
 
 public class AsyncDoSomethingLRO {
@@ -40,9 +40,9 @@ public class AsyncDoSomethingLRO {
           Request.newBuilder()
               .setName("name3373707")
               .setAnnotation(Annotation.newBuilder().build())
-              .setMetadata(Metadata.newBuilder().build())
+              .setLocation(Location.newBuilder().build())
               .build();
-      OperationFuture<Annotation, Metadata> future =
+      OperationFuture<Annotation, Location> future =
           collisionsClient.doSomethingOperationCallable().futureCall(request);
       // Do something.
       Annotation response = future.get();

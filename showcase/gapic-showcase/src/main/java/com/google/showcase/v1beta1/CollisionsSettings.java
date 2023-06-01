@@ -88,7 +88,8 @@ public class CollisionsSettings extends ClientSettings<CollisionsSettings> {
   }
 
   /** Returns the object with the settings used for calls to doSomething. */
-  public OperationCallSettings<Request, Annotation, Metadata> doSomethingOperationSettings() {
+  public OperationCallSettings<Request, Annotation, com.google.showcase.v1beta1.Location>
+      doSomethingOperationSettings() {
     return ((CollisionsStubSettings) getStubSettings()).doSomethingOperationSettings();
   }
 
@@ -223,7 +224,7 @@ public class CollisionsSettings extends ClientSettings<CollisionsSettings> {
     }
 
     /** Returns the builder for the settings used for calls to doSomething. */
-    public OperationCallSettings.Builder<Request, Annotation, Metadata>
+    public OperationCallSettings.Builder<Request, Annotation, com.google.showcase.v1beta1.Location>
         doSomethingOperationSettings() {
       return getStubSettingsBuilder().doSomethingOperationSettings();
     }
