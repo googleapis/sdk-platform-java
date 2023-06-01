@@ -158,6 +158,9 @@
  *
  * <p>======================= CollisionsClient =======================
  *
+ * <p>Service Description: This service exercises scenarios where short names of types exhibit
+ * ambiguity or collide with other types
+ *
  * <p>Sample for CollisionsClient:
  *
  * <pre>{@code
