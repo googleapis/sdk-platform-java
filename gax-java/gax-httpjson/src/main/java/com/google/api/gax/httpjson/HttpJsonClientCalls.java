@@ -32,6 +32,7 @@ package com.google.api.gax.httpjson;
 import com.google.api.core.AbstractApiFuture;
 import com.google.api.core.ApiFuture;
 import com.google.api.gax.rpc.ApiCallContext;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -53,9 +54,16 @@ class HttpJsonClientCalls {
     HttpJsonCallOptions callOptions = httpJsonContext.getCallOptions();
 
     Map<String, String> headerMap = callOptions.getRequestHeaderMap();
+    if (headerMap == null) {
+      headerMap = new HashMap<>();
+    }
     for (Map.Entry<String, List<String>> extraHeaderEntrySet :
         httpJsonContext.getExtraHeaders().entrySet()) {
-      headerMap.put(extraHeaderEntrySet.getKey(), extraHeaderEntrySet.getValue().get(0));
+      List<String> headerValueList = extraHeaderEntrySet.getValue();
+      // Check that the list is non-null and contains a value
+      if (headerValueList != null && headerValueList.size() > 0) {
+        headerMap.put(extraHeaderEntrySet.getKey(), headerValueList.get(0));
+      }
     }
     callOptions = callOptions.toBuilder().setRequestHeaderMap(headerMap).build();
 

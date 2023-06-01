@@ -34,7 +34,6 @@ import com.google.auth.Credentials;
 import com.google.auto.value.AutoValue;
 import com.google.protobuf.TypeRegistry;
 import java.time.Duration;
-import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Nullable;
 import org.threeten.bp.Instant;
@@ -63,7 +62,7 @@ public abstract class HttpJsonCallOptions {
   public abstract Builder toBuilder();
 
   public static Builder newBuilder() {
-    return new AutoValue_HttpJsonCallOptions.Builder().setRequestHeaderMap(new HashMap<>());
+    return new AutoValue_HttpJsonCallOptions.Builder();
   }
 
   public HttpJsonCallOptions merge(HttpJsonCallOptions inputOptions) {
