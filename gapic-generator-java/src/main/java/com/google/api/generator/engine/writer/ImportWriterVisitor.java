@@ -508,9 +508,7 @@ public class ImportWriterVisitor implements AstNodeVisitor {
       staticImports.add(reference.fullName());
     } else {
       if (reference.hasEnclosingClass()) {
-        // Only import outermost enclosing class, e.g. import com.foo.bar.Outer;
-        // Have writer specify all levels enclosing classes where used in code (e.g.
-        // Outer.Middle.Inner)
+        // Only import outermost enclosing class, e.g. import com.foo.bar.Outer
         addImport(
             String.format(
                 "%s.%s",
