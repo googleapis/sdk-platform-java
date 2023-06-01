@@ -105,7 +105,8 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
       httpTransport.shutdown();
       isTransportShutdown = true;
     } catch (IOException e) {
-      e.printStackTrace();
+      // TODO: Log this scenario once we implemented the Cloud SDK logging.
+      // Swallow error if httpTransport shutdown fails
     }
   }
 
@@ -146,7 +147,8 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
       httpTransport.shutdown();
       isTransportShutdown = true;
     } catch (IOException e) {
-      e.printStackTrace();
+      // TODO: Log this scenario once we implemented the Cloud SDK logging.
+      // Swallow error if httpTransport shutdown fails
     }
   }
 
