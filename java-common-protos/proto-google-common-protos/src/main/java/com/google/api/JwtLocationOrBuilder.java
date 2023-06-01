@@ -143,7 +143,6 @@ public interface JwtLocationOrBuilder
    * If not empty, the header value has to match (case sensitive) this prefix.
    * If not matched, JWT will not be extracted. If matched, JWT will be
    * extracted after the prefix is removed.
-   *
    * For example, for "Authorization: Bearer {JWT}",
    * value_prefix="Bearer " with a space at the end.
    * </pre>
@@ -162,7 +161,6 @@ public interface JwtLocationOrBuilder
    * If not empty, the header value has to match (case sensitive) this prefix.
    * If not matched, JWT will not be extracted. If matched, JWT will be
    * extracted after the prefix is removed.
-   *
    * For example, for "Authorization: Bearer {JWT}",
    * value_prefix="Bearer " with a space at the end.
    * </pre>
@@ -173,5 +171,5 @@ public interface JwtLocationOrBuilder
    */
   com.google.protobuf.ByteString getValuePrefixBytes();
 
-  com.google.api.JwtLocation.InCase getInCase();
+  public com.google.api.JwtLocation.InCase getInCase();
 }

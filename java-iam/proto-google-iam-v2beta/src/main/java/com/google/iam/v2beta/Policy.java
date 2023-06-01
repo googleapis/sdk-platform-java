@@ -52,6 +52,11 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
     return new Policy();
   }
 
+  @java.lang.Override
+  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+    return this.unknownFields;
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.iam.v2beta.PolicyProto.internal_static_google_iam_v2beta_Policy_descriptor;
   }
@@ -86,13 +91,10 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Immutable. The resource name of the `Policy`, which must be unique. Format:
    * `policies/{attachment_point}/denypolicies/{policy_id}`
-   *
-   *
    * The attachment point is identified by its URL-encoded full resource name,
    * which means that the forward-slash character, `/`, must be written as
    * `%2F`. For example,
    * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-deny-policy`.
-   *
    * For organizations and folders, use the numeric ID in the full resource
    * name. For projects, requests can use the alphanumeric or the numeric ID.
    * Responses always contain the numeric ID.
@@ -120,13 +122,10 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Immutable. The resource name of the `Policy`, which must be unique. Format:
    * `policies/{attachment_point}/denypolicies/{policy_id}`
-   *
-   *
    * The attachment point is identified by its URL-encoded full resource name,
    * which means that the forward-slash character, `/`, must be written as
    * `%2F`. For example,
    * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-deny-policy`.
-   *
    * For organizations and folders, use the numeric ID in the full resource
    * name. For projects, requests can use the alphanumeric or the numeric ID.
    * Responses always contain the numeric ID.
@@ -424,7 +423,6 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
    * An opaque tag that identifies the current version of the `Policy`. IAM uses
    * this value to help manage concurrent updates, so they do not cause one
    * update to be overwritten by another.
-   *
    * If this field is present in a [CreatePolicy][] request, the value is
    * ignored.
    * </pre>
@@ -452,7 +450,6 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
    * An opaque tag that identifies the current version of the `Policy`. IAM uses
    * this value to help manage concurrent updates, so they do not cause one
    * update to be overwritten by another.
-   *
    * If this field is present in a [CreatePolicy][] request, the value is
    * ignored.
    * </pre>
@@ -1123,6 +1120,39 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
     }
 
     @java.lang.Override
+    public Builder clone() {
+      return super.clone();
+    }
+
+    @java.lang.Override
+    public Builder setField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.setField(field, value);
+    }
+
+    @java.lang.Override
+    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      return super.clearField(field);
+    }
+
+    @java.lang.Override
+    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      return super.clearOneof(oneof);
+    }
+
+    @java.lang.Override
+    public Builder setRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
+      return super.setRepeatedField(field, index, value);
+    }
+
+    @java.lang.Override
+    public Builder addRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.addRepeatedField(field, value);
+    }
+
+    @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
       if (other instanceof com.google.iam.v2beta.Policy) {
         return mergeFrom((com.google.iam.v2beta.Policy) other);
@@ -1321,13 +1351,10 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Immutable. The resource name of the `Policy`, which must be unique. Format:
      * `policies/{attachment_point}/denypolicies/{policy_id}`
-     *
-     *
      * The attachment point is identified by its URL-encoded full resource name,
      * which means that the forward-slash character, `/`, must be written as
      * `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-deny-policy`.
-     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, requests can use the alphanumeric or the numeric ID.
      * Responses always contain the numeric ID.
@@ -1354,13 +1381,10 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Immutable. The resource name of the `Policy`, which must be unique. Format:
      * `policies/{attachment_point}/denypolicies/{policy_id}`
-     *
-     *
      * The attachment point is identified by its URL-encoded full resource name,
      * which means that the forward-slash character, `/`, must be written as
      * `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-deny-policy`.
-     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, requests can use the alphanumeric or the numeric ID.
      * Responses always contain the numeric ID.
@@ -1387,13 +1411,10 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Immutable. The resource name of the `Policy`, which must be unique. Format:
      * `policies/{attachment_point}/denypolicies/{policy_id}`
-     *
-     *
      * The attachment point is identified by its URL-encoded full resource name,
      * which means that the forward-slash character, `/`, must be written as
      * `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-deny-policy`.
-     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, requests can use the alphanumeric or the numeric ID.
      * Responses always contain the numeric ID.
@@ -1419,13 +1440,10 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Immutable. The resource name of the `Policy`, which must be unique. Format:
      * `policies/{attachment_point}/denypolicies/{policy_id}`
-     *
-     *
      * The attachment point is identified by its URL-encoded full resource name,
      * which means that the forward-slash character, `/`, must be written as
      * `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-deny-policy`.
-     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, requests can use the alphanumeric or the numeric ID.
      * Responses always contain the numeric ID.
@@ -1447,13 +1465,10 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Immutable. The resource name of the `Policy`, which must be unique. Format:
      * `policies/{attachment_point}/denypolicies/{policy_id}`
-     *
-     *
      * The attachment point is identified by its URL-encoded full resource name,
      * which means that the forward-slash character, `/`, must be written as
      * `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-deny-policy`.
-     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, requests can use the alphanumeric or the numeric ID.
      * Responses always contain the numeric ID.
@@ -1984,7 +1999,6 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * An opaque tag that identifies the current version of the `Policy`. IAM uses
      * this value to help manage concurrent updates, so they do not cause one
      * update to be overwritten by another.
-     *
      * If this field is present in a [CreatePolicy][] request, the value is
      * ignored.
      * </pre>
@@ -2011,7 +2025,6 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * An opaque tag that identifies the current version of the `Policy`. IAM uses
      * this value to help manage concurrent updates, so they do not cause one
      * update to be overwritten by another.
-     *
      * If this field is present in a [CreatePolicy][] request, the value is
      * ignored.
      * </pre>
@@ -2038,7 +2051,6 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * An opaque tag that identifies the current version of the `Policy`. IAM uses
      * this value to help manage concurrent updates, so they do not cause one
      * update to be overwritten by another.
-     *
      * If this field is present in a [CreatePolicy][] request, the value is
      * ignored.
      * </pre>
@@ -2064,7 +2076,6 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * An opaque tag that identifies the current version of the `Policy`. IAM uses
      * this value to help manage concurrent updates, so they do not cause one
      * update to be overwritten by another.
-     *
      * If this field is present in a [CreatePolicy][] request, the value is
      * ignored.
      * </pre>
@@ -2086,7 +2097,6 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * An opaque tag that identifies the current version of the `Policy`. IAM uses
      * this value to help manage concurrent updates, so they do not cause one
      * update to be overwritten by another.
-     *
      * If this field is present in a [CreatePolicy][] request, the value is
      * ignored.
      * </pre>

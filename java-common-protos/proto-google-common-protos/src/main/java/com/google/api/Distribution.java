@@ -25,14 +25,12 @@ package com.google.api;
  * `Distribution` contains summary statistics for a population of values. It
  * optionally contains a histogram representing the distribution of those values
  * across a set of buckets.
- *
  * The summary statistics are the count, mean, sum of the squared deviation from
  * the mean, the minimum, and the maximum of the set of population of values.
  * The histogram is based on a sequence of buckets and gives a count of values
  * that fall into each bucket. The boundaries of the buckets are given either
  * explicitly or by formulas for buckets of fixed or exponentially increasing
  * widths.
- *
  * Although it is not forbidden, it is generally a bad idea to include
  * non-finite values (infinities or NaNs) in the population of values, as this
  * will render the `mean` and `sum_of_squared_deviation` fields meaningless.
@@ -59,6 +57,11 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new Distribution();
+  }
+
+  @java.lang.Override
+  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -130,6 +133,11 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
       return new Range();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+      return this.unknownFields;
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -439,6 +447,41 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
         if (((from_bitField0_ & 0x00000002) != 0)) {
           result.max_ = max_;
         }
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+        return super.setField(field, value);
+      }
+
+      @java.lang.Override
+      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+
+      @java.lang.Override
+      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index,
+          java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+        return super.addRepeatedField(field, value);
       }
 
       @java.lang.Override
@@ -796,7 +839,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      */
     com.google.api.Distribution.BucketOptions.ExplicitOrBuilder getExplicitBucketsOrBuilder();
 
-    com.google.api.Distribution.BucketOptions.OptionsCase getOptionsCase();
+    public com.google.api.Distribution.BucketOptions.OptionsCase getOptionsCase();
   }
   /**
    *
@@ -806,7 +849,6 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
    * for the distribution. The buckets can be in a linear sequence, an
    * exponential sequence, or each bucket can be specified explicitly.
    * `BucketOptions` does not include the number of values in each bucket.
-   *
    * A bucket has an inclusive lower bound and exclusive upper bound for the
    * values that are counted for that bucket. The upper bound of a bucket must
    * be strictly greater than the lower bound. The sequence of N buckets for a
@@ -837,6 +879,11 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
       return new BucketOptions();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+      return this.unknownFields;
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -905,12 +952,9 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * Specifies a linear sequence of buckets that all have the same width
      * (except overflow and underflow). Each bucket represents a constant
      * absolute uncertainty on the specific value in the bucket.
-     *
      * There are `num_finite_buckets + 2` (= N) buckets. Bucket `i` has the
      * following boundaries:
-     *
      *    Upper bound (0 &lt;= i &lt; N-1):     offset + (width * i).
-     *
      *    Lower bound (1 &lt;= i &lt; N):       offset + (width * (i - 1)).
      * </pre>
      *
@@ -932,6 +976,11 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
       @SuppressWarnings({"unused"})
       protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
         return new Linear();
+      }
+
+      @java.lang.Override
+      public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+        return this.unknownFields;
       }
 
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -1196,12 +1245,9 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        * Specifies a linear sequence of buckets that all have the same width
        * (except overflow and underflow). Each bucket represents a constant
        * absolute uncertainty on the specific value in the bucket.
-       *
        * There are `num_finite_buckets + 2` (= N) buckets. Bucket `i` has the
        * following boundaries:
-       *
        *    Upper bound (0 &lt;= i &lt; N-1):     offset + (width * i).
-       *
        *    Lower bound (1 &lt;= i &lt; N):       offset + (width * (i - 1)).
        * </pre>
        *
@@ -1286,6 +1332,41 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
           if (((from_bitField0_ & 0x00000004) != 0)) {
             result.offset_ = offset_;
           }
+        }
+
+        @java.lang.Override
+        public Builder clone() {
+          return super.clone();
+        }
+
+        @java.lang.Override
+        public Builder setField(
+            com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+          return super.setField(field, value);
+        }
+
+        @java.lang.Override
+        public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+          return super.clearField(field);
+        }
+
+        @java.lang.Override
+        public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+          return super.clearOneof(oneof);
+        }
+
+        @java.lang.Override
+        public Builder setRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            int index,
+            java.lang.Object value) {
+          return super.setRepeatedField(field, index, value);
+        }
+
+        @java.lang.Override
+        public Builder addRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+          return super.addRepeatedField(field, value);
         }
 
         @java.lang.Override
@@ -1647,12 +1728,9 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * Specifies an exponential sequence of buckets that have a width that is
      * proportional to the value of the lower bound. Each bucket represents a
      * constant relative uncertainty on a specific value in the bucket.
-     *
      * There are `num_finite_buckets + 2` (= N) buckets. Bucket `i` has the
      * following boundaries:
-     *
      *    Upper bound (0 &lt;= i &lt; N-1):     scale * (growth_factor ^ i).
-     *
      *    Lower bound (1 &lt;= i &lt; N):       scale * (growth_factor ^ (i - 1)).
      * </pre>
      *
@@ -1674,6 +1752,11 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
       @SuppressWarnings({"unused"})
       protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
         return new Exponential();
+      }
+
+      @java.lang.Override
+      public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+        return this.unknownFields;
       }
 
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -1939,12 +2022,9 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        * Specifies an exponential sequence of buckets that have a width that is
        * proportional to the value of the lower bound. Each bucket represents a
        * constant relative uncertainty on a specific value in the bucket.
-       *
        * There are `num_finite_buckets + 2` (= N) buckets. Bucket `i` has the
        * following boundaries:
-       *
        *    Upper bound (0 &lt;= i &lt; N-1):     scale * (growth_factor ^ i).
-       *
        *    Lower bound (1 &lt;= i &lt; N):       scale * (growth_factor ^ (i - 1)).
        * </pre>
        *
@@ -2029,6 +2109,41 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
           if (((from_bitField0_ & 0x00000004) != 0)) {
             result.scale_ = scale_;
           }
+        }
+
+        @java.lang.Override
+        public Builder clone() {
+          return super.clone();
+        }
+
+        @java.lang.Override
+        public Builder setField(
+            com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+          return super.setField(field, value);
+        }
+
+        @java.lang.Override
+        public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+          return super.clearField(field);
+        }
+
+        @java.lang.Override
+        public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+          return super.clearOneof(oneof);
+        }
+
+        @java.lang.Override
+        public Builder setRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            int index,
+            java.lang.Object value) {
+          return super.setRepeatedField(field, index, value);
+        }
+
+        @java.lang.Override
+        public Builder addRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+          return super.addRepeatedField(field, value);
         }
 
         @java.lang.Override
@@ -2387,13 +2502,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Specifies a set of buckets with arbitrary widths.
-     *
      * There are `size(bounds) + 1` (= N) buckets. Bucket `i` has the following
      * boundaries:
-     *
      *    Upper bound (0 &lt;= i &lt; N-1):     bounds[i]
      *    Lower bound (1 &lt;= i &lt; N);       bounds[i - 1]
-     *
      * The `bounds` field must contain at least one element. If `bounds` has
      * only one element, then there are no finite buckets, and that single
      * element is the common boundary of the overflow and underflow buckets.
@@ -2419,6 +2531,11 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
       @SuppressWarnings({"unused"})
       protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
         return new Explicit();
+      }
+
+      @java.lang.Override
+      public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+        return this.unknownFields;
       }
 
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -2667,13 +2784,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Specifies a set of buckets with arbitrary widths.
-       *
        * There are `size(bounds) + 1` (= N) buckets. Bucket `i` has the following
        * boundaries:
-       *
        *    Upper bound (0 &lt;= i &lt; N-1):     bounds[i]
        *    Lower bound (1 &lt;= i &lt; N);       bounds[i - 1]
-       *
        * The `bounds` field must contain at least one element. If `bounds` has
        * only one element, then there are no finite buckets, and that single
        * element is the common boundary of the overflow and underflow buckets.
@@ -2759,6 +2873,41 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
 
         private void buildPartial0(com.google.api.Distribution.BucketOptions.Explicit result) {
           int from_bitField0_ = bitField0_;
+        }
+
+        @java.lang.Override
+        public Builder clone() {
+          return super.clone();
+        }
+
+        @java.lang.Override
+        public Builder setField(
+            com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+          return super.setField(field, value);
+        }
+
+        @java.lang.Override
+        public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+          return super.clearField(field);
+        }
+
+        @java.lang.Override
+        public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+          return super.clearOneof(oneof);
+        }
+
+        @java.lang.Override
+        public Builder setRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field,
+            int index,
+            java.lang.Object value) {
+          return super.setRepeatedField(field, index, value);
+        }
+
+        @java.lang.Override
+        public Builder addRepeatedField(
+            com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+          return super.addRepeatedField(field, value);
         }
 
         @java.lang.Override
@@ -3040,8 +3189,6 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int optionsCase_ = 0;
-
-    @SuppressWarnings("serial")
     private java.lang.Object options_;
 
     public enum OptionsCase
@@ -3459,7 +3606,6 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * for the distribution. The buckets can be in a linear sequence, an
      * exponential sequence, or each bucket can be specified explicitly.
      * `BucketOptions` does not include the number of values in each bucket.
-     *
      * A bucket has an inclusive lower bound and exclusive upper bound for the
      * values that are counted for that bucket. The upper bound of a bucket must
      * be strictly greater than the lower bound. The sequence of N buckets for a
@@ -3567,6 +3713,41 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
         if (optionsCase_ == 3 && explicitBucketsBuilder_ != null) {
           result.options_ = explicitBucketsBuilder_.build();
         }
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+        return super.setField(field, value);
+      }
+
+      @java.lang.Override
+      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+
+      @java.lang.Override
+      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index,
+          java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+        return super.addRepeatedField(field, value);
       }
 
       @java.lang.Override
@@ -4441,14 +4622,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Contextual information about the example value. Examples are:
-     *
      *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
-     *
      *   Literal string: type.googleapis.com/google.protobuf.StringValue
-     *
      *   Labels dropped during aggregation:
      *     type.googleapis.com/google.monitoring.v3.DroppedLabels
-     *
      * There may be only a single attachment of any given message type in a
      * single exemplar, and this is enforced by the system.
      * </pre>
@@ -4461,14 +4638,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Contextual information about the example value. Examples are:
-     *
      *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
-     *
      *   Literal string: type.googleapis.com/google.protobuf.StringValue
-     *
      *   Labels dropped during aggregation:
      *     type.googleapis.com/google.monitoring.v3.DroppedLabels
-     *
      * There may be only a single attachment of any given message type in a
      * single exemplar, and this is enforced by the system.
      * </pre>
@@ -4481,14 +4654,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Contextual information about the example value. Examples are:
-     *
      *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
-     *
      *   Literal string: type.googleapis.com/google.protobuf.StringValue
-     *
      *   Labels dropped during aggregation:
      *     type.googleapis.com/google.monitoring.v3.DroppedLabels
-     *
      * There may be only a single attachment of any given message type in a
      * single exemplar, and this is enforced by the system.
      * </pre>
@@ -4501,14 +4670,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Contextual information about the example value. Examples are:
-     *
      *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
-     *
      *   Literal string: type.googleapis.com/google.protobuf.StringValue
-     *
      *   Labels dropped during aggregation:
      *     type.googleapis.com/google.monitoring.v3.DroppedLabels
-     *
      * There may be only a single attachment of any given message type in a
      * single exemplar, and this is enforced by the system.
      * </pre>
@@ -4521,14 +4686,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Contextual information about the example value. Examples are:
-     *
      *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
-     *
      *   Literal string: type.googleapis.com/google.protobuf.StringValue
-     *
      *   Labels dropped during aggregation:
      *     type.googleapis.com/google.monitoring.v3.DroppedLabels
-     *
      * There may be only a single attachment of any given message type in a
      * single exemplar, and this is enforced by the system.
      * </pre>
@@ -4568,6 +4729,11 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
       return new Exemplar();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+      return this.unknownFields;
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -4659,14 +4825,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Contextual information about the example value. Examples are:
-     *
      *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
-     *
      *   Literal string: type.googleapis.com/google.protobuf.StringValue
-     *
      *   Labels dropped during aggregation:
      *     type.googleapis.com/google.monitoring.v3.DroppedLabels
-     *
      * There may be only a single attachment of any given message type in a
      * single exemplar, and this is enforced by the system.
      * </pre>
@@ -4682,14 +4844,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Contextual information about the example value. Examples are:
-     *
      *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
-     *
      *   Literal string: type.googleapis.com/google.protobuf.StringValue
-     *
      *   Labels dropped during aggregation:
      *     type.googleapis.com/google.monitoring.v3.DroppedLabels
-     *
      * There may be only a single attachment of any given message type in a
      * single exemplar, and this is enforced by the system.
      * </pre>
@@ -4706,14 +4864,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Contextual information about the example value. Examples are:
-     *
      *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
-     *
      *   Literal string: type.googleapis.com/google.protobuf.StringValue
-     *
      *   Labels dropped during aggregation:
      *     type.googleapis.com/google.monitoring.v3.DroppedLabels
-     *
      * There may be only a single attachment of any given message type in a
      * single exemplar, and this is enforced by the system.
      * </pre>
@@ -4729,14 +4883,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Contextual information about the example value. Examples are:
-     *
      *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
-     *
      *   Literal string: type.googleapis.com/google.protobuf.StringValue
-     *
      *   Labels dropped during aggregation:
      *     type.googleapis.com/google.monitoring.v3.DroppedLabels
-     *
      * There may be only a single attachment of any given message type in a
      * single exemplar, and this is enforced by the system.
      * </pre>
@@ -4752,14 +4902,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Contextual information about the example value. Examples are:
-     *
      *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
-     *
      *   Literal string: type.googleapis.com/google.protobuf.StringValue
-     *
      *   Labels dropped during aggregation:
      *     type.googleapis.com/google.monitoring.v3.DroppedLabels
-     *
      * There may be only a single attachment of any given message type in a
      * single exemplar, and this is enforced by the system.
      * </pre>
@@ -5071,6 +5217,41 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
         if (((from_bitField0_ & 0x00000002) != 0)) {
           result.timestamp_ = timestampBuilder_ == null ? timestamp_ : timestampBuilder_.build();
         }
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+        return super.setField(field, value);
+      }
+
+      @java.lang.Override
+      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+
+      @java.lang.Override
+      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index,
+          java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+        return super.addRepeatedField(field, value);
       }
 
       @java.lang.Override
@@ -5447,14 +5628,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
-       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
-       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
-       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
-       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5473,14 +5650,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
-       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
-       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
-       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
-       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5499,14 +5672,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
-       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
-       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
-       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
-       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5525,14 +5694,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
-       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
-       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
-       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
-       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5557,14 +5722,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
-       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
-       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
-       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
-       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5586,14 +5747,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
-       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
-       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
-       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
-       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5618,14 +5775,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
-       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
-       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
-       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
-       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5650,14 +5803,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
-       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
-       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
-       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
-       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5679,14 +5828,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
-       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
-       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
-       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
-       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5708,14 +5853,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
-       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
-       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
-       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
-       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5738,14 +5879,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
-       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
-       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
-       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
-       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5767,14 +5904,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
-       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
-       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
-       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
-       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5796,14 +5929,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
-       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
-       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
-       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
-       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5818,14 +5947,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
-       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
-       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
-       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
-       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5844,14 +5969,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
-       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
-       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
-       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
-       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5871,14 +5992,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
-       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
-       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
-       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
-       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5894,14 +6011,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
-       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
-       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
-       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
-       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5917,14 +6030,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
-       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
-       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
-       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
-       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -6066,12 +6175,9 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * The sum of squared deviations from the mean of the values in the
    * population. For values x_i this is:
-   *
    *     Sum[i=1..n]((x_i - mean)^2)
-   *
    * Knuth, "The Art of Computer Programming", Vol. 2, page 232, 3rd edition
    * describes Welford's method for accumulating this sum in one pass.
-   *
    * If `count` is zero then this field must be zero.
    * </pre>
    *
@@ -6199,11 +6305,9 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
    * this field. If there is a histogram, then the sum of the values in
    * `bucket_counts` must equal the value in the `count` field of the
    * distribution.
-   *
    * If present, `bucket_counts` should contain N values, where N is the number
    * of buckets specified in `bucket_options`. If you supply fewer than N
    * values, the remaining values are assumed to be 0.
-   *
    * The order of the values in `bucket_counts` follows the bucket numbering
    * schemes described for the three bucket types. The first value must be the
    * count for the underflow bucket (number 0). The next N-2 values are the
@@ -6228,11 +6332,9 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
    * this field. If there is a histogram, then the sum of the values in
    * `bucket_counts` must equal the value in the `count` field of the
    * distribution.
-   *
    * If present, `bucket_counts` should contain N values, where N is the number
    * of buckets specified in `bucket_options`. If you supply fewer than N
    * values, the remaining values are assumed to be 0.
-   *
    * The order of the values in `bucket_counts` follows the bucket numbering
    * schemes described for the three bucket types. The first value must be the
    * count for the underflow bucket (number 0). The next N-2 values are the
@@ -6256,11 +6358,9 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
    * this field. If there is a histogram, then the sum of the values in
    * `bucket_counts` must equal the value in the `count` field of the
    * distribution.
-   *
    * If present, `bucket_counts` should contain N values, where N is the number
    * of buckets specified in `bucket_options`. If you supply fewer than N
    * values, the remaining values are assumed to be 0.
-   *
    * The order of the values in `bucket_counts` follows the bucket numbering
    * schemes described for the three bucket types. The first value must be the
    * count for the underflow bucket (number 0). The next N-2 values are the
@@ -6604,14 +6704,12 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
    * `Distribution` contains summary statistics for a population of values. It
    * optionally contains a histogram representing the distribution of those values
    * across a set of buckets.
-   *
    * The summary statistics are the count, mean, sum of the squared deviation from
    * the mean, the minimum, and the maximum of the set of population of values.
    * The histogram is based on a sequence of buckets and gives a count of values
    * that fall into each bucket. The boundaries of the buckets are given either
    * explicitly or by formulas for buckets of fixed or exponentially increasing
    * widths.
-   *
    * Although it is not forbidden, it is generally a bad idea to include
    * non-finite values (infinities or NaNs) in the population of values, as this
    * will render the `mean` and `sum_of_squared_deviation` fields meaningless.
@@ -6736,6 +6834,39 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
         result.bucketOptions_ =
             bucketOptionsBuilder_ == null ? bucketOptions_ : bucketOptionsBuilder_.build();
       }
+    }
+
+    @java.lang.Override
+    public Builder clone() {
+      return super.clone();
+    }
+
+    @java.lang.Override
+    public Builder setField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.setField(field, value);
+    }
+
+    @java.lang.Override
+    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      return super.clearField(field);
+    }
+
+    @java.lang.Override
+    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      return super.clearOneof(oneof);
+    }
+
+    @java.lang.Override
+    public Builder setRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
+      return super.setRepeatedField(field, index, value);
+    }
+
+    @java.lang.Override
+    public Builder addRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.addRepeatedField(field, value);
     }
 
     @java.lang.Override
@@ -7030,12 +7161,9 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The sum of squared deviations from the mean of the values in the
      * population. For values x_i this is:
-     *
      *     Sum[i=1..n]((x_i - mean)^2)
-     *
      * Knuth, "The Art of Computer Programming", Vol. 2, page 232, 3rd edition
      * describes Welford's method for accumulating this sum in one pass.
-     *
      * If `count` is zero then this field must be zero.
      * </pre>
      *
@@ -7053,12 +7181,9 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The sum of squared deviations from the mean of the values in the
      * population. For values x_i this is:
-     *
      *     Sum[i=1..n]((x_i - mean)^2)
-     *
      * Knuth, "The Art of Computer Programming", Vol. 2, page 232, 3rd edition
      * describes Welford's method for accumulating this sum in one pass.
-     *
      * If `count` is zero then this field must be zero.
      * </pre>
      *
@@ -7080,12 +7205,9 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The sum of squared deviations from the mean of the values in the
      * population. For values x_i this is:
-     *
      *     Sum[i=1..n]((x_i - mean)^2)
-     *
      * Knuth, "The Art of Computer Programming", Vol. 2, page 232, 3rd edition
      * describes Welford's method for accumulating this sum in one pass.
-     *
      * If `count` is zero then this field must be zero.
      * </pre>
      *
@@ -7498,11 +7620,9 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * this field. If there is a histogram, then the sum of the values in
      * `bucket_counts` must equal the value in the `count` field of the
      * distribution.
-     *
      * If present, `bucket_counts` should contain N values, where N is the number
      * of buckets specified in `bucket_options`. If you supply fewer than N
      * values, the remaining values are assumed to be 0.
-     *
      * The order of the values in `bucket_counts` follows the bucket numbering
      * schemes described for the three bucket types. The first value must be the
      * count for the underflow bucket (number 0). The next N-2 values are the
@@ -7528,11 +7648,9 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * this field. If there is a histogram, then the sum of the values in
      * `bucket_counts` must equal the value in the `count` field of the
      * distribution.
-     *
      * If present, `bucket_counts` should contain N values, where N is the number
      * of buckets specified in `bucket_options`. If you supply fewer than N
      * values, the remaining values are assumed to be 0.
-     *
      * The order of the values in `bucket_counts` follows the bucket numbering
      * schemes described for the three bucket types. The first value must be the
      * count for the underflow bucket (number 0). The next N-2 values are the
@@ -7556,11 +7674,9 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * this field. If there is a histogram, then the sum of the values in
      * `bucket_counts` must equal the value in the `count` field of the
      * distribution.
-     *
      * If present, `bucket_counts` should contain N values, where N is the number
      * of buckets specified in `bucket_options`. If you supply fewer than N
      * values, the remaining values are assumed to be 0.
-     *
      * The order of the values in `bucket_counts` follows the bucket numbering
      * schemes described for the three bucket types. The first value must be the
      * count for the underflow bucket (number 0). The next N-2 values are the
@@ -7585,11 +7701,9 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * this field. If there is a histogram, then the sum of the values in
      * `bucket_counts` must equal the value in the `count` field of the
      * distribution.
-     *
      * If present, `bucket_counts` should contain N values, where N is the number
      * of buckets specified in `bucket_options`. If you supply fewer than N
      * values, the remaining values are assumed to be 0.
-     *
      * The order of the values in `bucket_counts` follows the bucket numbering
      * schemes described for the three bucket types. The first value must be the
      * count for the underflow bucket (number 0). The next N-2 values are the
@@ -7619,11 +7733,9 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * this field. If there is a histogram, then the sum of the values in
      * `bucket_counts` must equal the value in the `count` field of the
      * distribution.
-     *
      * If present, `bucket_counts` should contain N values, where N is the number
      * of buckets specified in `bucket_options`. If you supply fewer than N
      * values, the remaining values are assumed to be 0.
-     *
      * The order of the values in `bucket_counts` follows the bucket numbering
      * schemes described for the three bucket types. The first value must be the
      * count for the underflow bucket (number 0). The next N-2 values are the
@@ -7652,11 +7764,9 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * this field. If there is a histogram, then the sum of the values in
      * `bucket_counts` must equal the value in the `count` field of the
      * distribution.
-     *
      * If present, `bucket_counts` should contain N values, where N is the number
      * of buckets specified in `bucket_options`. If you supply fewer than N
      * values, the remaining values are assumed to be 0.
-     *
      * The order of the values in `bucket_counts` follows the bucket numbering
      * schemes described for the three bucket types. The first value must be the
      * count for the underflow bucket (number 0). The next N-2 values are the
@@ -7684,11 +7794,9 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * this field. If there is a histogram, then the sum of the values in
      * `bucket_counts` must equal the value in the `count` field of the
      * distribution.
-     *
      * If present, `bucket_counts` should contain N values, where N is the number
      * of buckets specified in `bucket_options`. If you supply fewer than N
      * values, the remaining values are assumed to be 0.
-     *
      * The order of the values in `bucket_counts` follows the bucket numbering
      * schemes described for the three bucket types. The first value must be the
      * count for the underflow bucket (number 0). The next N-2 values are the

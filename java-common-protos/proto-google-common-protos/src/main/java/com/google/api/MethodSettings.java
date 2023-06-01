@@ -47,6 +47,11 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
     return new MethodSettings();
   }
 
+  @java.lang.Override
+  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+    return this.unknownFields;
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.ClientProto.internal_static_google_api_MethodSettings_descriptor;
   }
@@ -201,7 +206,7 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
    * long-running operation pattern.
    * All default values below are from those used in the client library
    * generators (e.g.
-   * [Java](https://github.com/googleapis/gapic-generator-java/blob/04c2faa191a9b5a10b92392fe8482279c4404803/src/main/java/com/google/api/generator/gapic/composer/common/RetrySettingsComposer.java)).
+   * [Java](https://github.com/googleapis/sdk-platform-java/blob/04c2faa191a9b5a10b92392fe8482279c4404803/src/main/java/com/google/api/generator/gapic/composer/common/RetrySettingsComposer.java)).
    * </pre>
    *
    * Protobuf type {@code google.api.MethodSettings.LongRunning}
@@ -222,6 +227,11 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
       return new LongRunning();
+    }
+
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+      return this.unknownFields;
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -629,7 +639,7 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * long-running operation pattern.
      * All default values below are from those used in the client library
      * generators (e.g.
-     * [Java](https://github.com/googleapis/gapic-generator-java/blob/04c2faa191a9b5a10b92392fe8482279c4404803/src/main/java/com/google/api/generator/gapic/composer/common/RetrySettingsComposer.java)).
+     * [Java](https://github.com/googleapis/sdk-platform-java/blob/04c2faa191a9b5a10b92392fe8482279c4404803/src/main/java/com/google/api/generator/gapic/composer/common/RetrySettingsComposer.java)).
      * </pre>
      *
      * Protobuf type {@code google.api.MethodSettings.LongRunning}
@@ -736,6 +746,41 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
                   ? totalPollTimeout_
                   : totalPollTimeoutBuilder_.build();
         }
+      }
+
+      @java.lang.Override
+      public Builder clone() {
+        return super.clone();
+      }
+
+      @java.lang.Override
+      public Builder setField(
+          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+        return super.setField(field, value);
+      }
+
+      @java.lang.Override
+      public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+        return super.clearField(field);
+      }
+
+      @java.lang.Override
+      public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+        return super.clearOneof(oneof);
+      }
+
+      @java.lang.Override
+      public Builder setRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field,
+          int index,
+          java.lang.Object value) {
+        return super.setRepeatedField(field, index, value);
+      }
+
+      @java.lang.Override
+      public Builder addRepeatedField(
+          com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+        return super.addRepeatedField(field, value);
       }
 
       @java.lang.Override
@@ -1594,9 +1639,7 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
    * Describes settings to use for long-running operations when generating
    * API methods for RPCs. Complements RPCs that use the annotations in
    * google/longrunning/operations.proto.
-   *
    * Example of a YAML configuration::
-   *
    *  publishing:
    *    method_settings:
    *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
@@ -1625,9 +1668,7 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
    * Describes settings to use for long-running operations when generating
    * API methods for RPCs. Complements RPCs that use the annotations in
    * google/longrunning/operations.proto.
-   *
    * Example of a YAML configuration::
-   *
    *  publishing:
    *    method_settings:
    *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
@@ -1658,9 +1699,7 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
    * Describes settings to use for long-running operations when generating
    * API methods for RPCs. Complements RPCs that use the annotations in
    * google/longrunning/operations.proto.
-   *
    * Example of a YAML configuration::
-   *
    *  publishing:
    *    method_settings:
    *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
@@ -1940,6 +1979,39 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
     }
 
     @java.lang.Override
+    public Builder clone() {
+      return super.clone();
+    }
+
+    @java.lang.Override
+    public Builder setField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.setField(field, value);
+    }
+
+    @java.lang.Override
+    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      return super.clearField(field);
+    }
+
+    @java.lang.Override
+    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      return super.clearOneof(oneof);
+    }
+
+    @java.lang.Override
+    public Builder setRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
+      return super.setRepeatedField(field, index, value);
+    }
+
+    @java.lang.Override
+    public Builder addRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.addRepeatedField(field, value);
+    }
+
+    @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
       if (other instanceof com.google.api.MethodSettings) {
         return mergeFrom((com.google.api.MethodSettings) other);
@@ -2140,9 +2212,7 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * Describes settings to use for long-running operations when generating
      * API methods for RPCs. Complements RPCs that use the annotations in
      * google/longrunning/operations.proto.
-     *
      * Example of a YAML configuration::
-     *
      *  publishing:
      *    method_settings:
      *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
@@ -2170,9 +2240,7 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * Describes settings to use for long-running operations when generating
      * API methods for RPCs. Complements RPCs that use the annotations in
      * google/longrunning/operations.proto.
-     *
      * Example of a YAML configuration::
-     *
      *  publishing:
      *    method_settings:
      *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
@@ -2206,9 +2274,7 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * Describes settings to use for long-running operations when generating
      * API methods for RPCs. Complements RPCs that use the annotations in
      * google/longrunning/operations.proto.
-     *
      * Example of a YAML configuration::
-     *
      *  publishing:
      *    method_settings:
      *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
@@ -2244,9 +2310,7 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * Describes settings to use for long-running operations when generating
      * API methods for RPCs. Complements RPCs that use the annotations in
      * google/longrunning/operations.proto.
-     *
      * Example of a YAML configuration::
-     *
      *  publishing:
      *    method_settings:
      *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
@@ -2280,9 +2344,7 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * Describes settings to use for long-running operations when generating
      * API methods for RPCs. Complements RPCs that use the annotations in
      * google/longrunning/operations.proto.
-     *
      * Example of a YAML configuration::
-     *
      *  publishing:
      *    method_settings:
      *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
@@ -2321,9 +2383,7 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * Describes settings to use for long-running operations when generating
      * API methods for RPCs. Complements RPCs that use the annotations in
      * google/longrunning/operations.proto.
-     *
      * Example of a YAML configuration::
-     *
      *  publishing:
      *    method_settings:
      *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
@@ -2356,9 +2416,7 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * Describes settings to use for long-running operations when generating
      * API methods for RPCs. Complements RPCs that use the annotations in
      * google/longrunning/operations.proto.
-     *
      * Example of a YAML configuration::
-     *
      *  publishing:
      *    method_settings:
      *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
@@ -2386,9 +2444,7 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * Describes settings to use for long-running operations when generating
      * API methods for RPCs. Complements RPCs that use the annotations in
      * google/longrunning/operations.proto.
-     *
      * Example of a YAML configuration::
-     *
      *  publishing:
      *    method_settings:
      *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
@@ -2420,9 +2476,7 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * Describes settings to use for long-running operations when generating
      * API methods for RPCs. Complements RPCs that use the annotations in
      * google/longrunning/operations.proto.
-     *
      * Example of a YAML configuration::
-     *
      *  publishing:
      *    method_settings:
      *      - selector: google.cloud.speech.v2.Speech.BatchRecognize

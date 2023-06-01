@@ -23,13 +23,10 @@ package com.google.api;
  *
  * <pre>
  * A simple descriptor of a resource type.
- *
  * ResourceDescriptor annotates a resource message (either by means of a
  * protobuf annotation or use in the service config), and associates the
  * resource's schema, the resource type, and the pattern of the resource name.
- *
  * Example:
- *
  *     message Topic {
  *       // Indicates this message defines a resource schema.
  *       // Declares the resource type in the format of {service}/{kind}.
@@ -39,18 +36,13 @@ package com.google.api;
  *         pattern: "projects/{project}/topics/{topic}"
  *       };
  *     }
- *
  * The ResourceDescriptor Yaml config will look like:
- *
  *     resources:
  *     - type: "pubsub.googleapis.com/Topic"
  *       pattern: "projects/{project}/topics/{topic}"
- *
  * Sometimes, resources have multiple patterns, typically because they can
  * live under multiple parents.
- *
  * Example:
- *
  *     message LogEntry {
  *       option (google.api.resource) = {
  *         type: "logging.googleapis.com/LogEntry"
@@ -60,9 +52,7 @@ package com.google.api;
  *         pattern: "billingAccounts/{billing_account}/logs/{log}"
  *       };
  *     }
- *
  * The ResourceDescriptor Yaml config will look like:
- *
  *     resources:
  *     - type: 'logging.googleapis.com/LogEntry'
  *       pattern: "projects/{project}/logs/{log}"
@@ -85,7 +75,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
 
   private ResourceDescriptor() {
     type_ = "";
-    pattern_ = com.google.protobuf.LazyStringArrayList.emptyList();
+    pattern_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     nameField_ = "";
     history_ = 0;
     plural_ = "";
@@ -97,6 +87,11 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new ResourceDescriptor();
+  }
+
+  @java.lang.Override
+  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -302,11 +297,9 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      *
      * <pre>
      * This resource is intended to be "declarative-friendly".
-     *
      * Declarative-friendly resources must be more strictly consistent, and
      * setting this to true communicates to tools that this resource should
      * adhere to declarative-friendly expectations.
-     *
      * Note: This is used by the API linter (linter.aip.dev) to enable
      * additional checks.
      * </pre>
@@ -332,11 +325,9 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      *
      * <pre>
      * This resource is intended to be "declarative-friendly".
-     *
      * Declarative-friendly resources must be more strictly consistent, and
      * setting this to true communicates to tools that this resource should
      * adhere to declarative-friendly expectations.
-     *
      * Note: This is used by the API linter (linter.aip.dev) to enable
      * additional checks.
      * </pre>
@@ -437,9 +428,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
    * The resource type. It must be in the format of
    * {service_name}/{resource_type_kind}. The `resource_type_kind` must be
    * singular and must not include version numbers.
-   *
    * Example: `storage.googleapis.com/Bucket`
-   *
    * The value of the resource_type_kind must follow the regular expression
    * /[A-Za-z][a-zA-Z0-9]+/. It should start with an upper case character and
    * should use PascalCase (UpperCamelCase). The maximum number of
@@ -469,9 +458,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
    * The resource type. It must be in the format of
    * {service_name}/{resource_type_kind}. The `resource_type_kind` must be
    * singular and must not include version numbers.
-   *
    * Example: `storage.googleapis.com/Bucket`
-   *
    * The value of the resource_type_kind must follow the regular expression
    * /[A-Za-z][a-zA-Z0-9]+/. It should start with an upper case character and
    * should use PascalCase (UpperCamelCase). The maximum number of
@@ -498,27 +485,21 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
   public static final int PATTERN_FIELD_NUMBER = 2;
 
   @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringArrayList pattern_ =
-      com.google.protobuf.LazyStringArrayList.emptyList();
+  private com.google.protobuf.LazyStringList pattern_;
   /**
    *
    *
    * <pre>
    * Optional. The relative resource name pattern associated with this resource
    * type. The DNS prefix of the full resource name shouldn't be specified here.
-   *
    * The path pattern must follow the syntax, which aligns with HTTP binding
    * syntax:
-   *
    *     Template = Segment { "/" Segment } ;
    *     Segment = LITERAL | Variable ;
    *     Variable = "{" LITERAL "}" ;
-   *
    * Examples:
-   *
    *     - "projects/{project}/topics/{topic}"
    *     - "projects/{project}/knowledgeBases/{knowledge_base}"
-   *
    * The components in braces correspond to the IDs for each resource in the
    * hierarchy. It is expected that, if multiple patterns are provided,
    * the same component name (e.g. "project") refers to IDs of the same
@@ -538,19 +519,14 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
    * <pre>
    * Optional. The relative resource name pattern associated with this resource
    * type. The DNS prefix of the full resource name shouldn't be specified here.
-   *
    * The path pattern must follow the syntax, which aligns with HTTP binding
    * syntax:
-   *
    *     Template = Segment { "/" Segment } ;
    *     Segment = LITERAL | Variable ;
    *     Variable = "{" LITERAL "}" ;
-   *
    * Examples:
-   *
    *     - "projects/{project}/topics/{topic}"
    *     - "projects/{project}/knowledgeBases/{knowledge_base}"
-   *
    * The components in braces correspond to the IDs for each resource in the
    * hierarchy. It is expected that, if multiple patterns are provided,
    * the same component name (e.g. "project") refers to IDs of the same
@@ -570,19 +546,14 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
    * <pre>
    * Optional. The relative resource name pattern associated with this resource
    * type. The DNS prefix of the full resource name shouldn't be specified here.
-   *
    * The path pattern must follow the syntax, which aligns with HTTP binding
    * syntax:
-   *
    *     Template = Segment { "/" Segment } ;
    *     Segment = LITERAL | Variable ;
    *     Variable = "{" LITERAL "}" ;
-   *
    * Examples:
-   *
    *     - "projects/{project}/topics/{topic}"
    *     - "projects/{project}/knowledgeBases/{knowledge_base}"
-   *
    * The components in braces correspond to the IDs for each resource in the
    * hierarchy. It is expected that, if multiple patterns are provided,
    * the same component name (e.g. "project") refers to IDs of the same
@@ -603,19 +574,14 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
    * <pre>
    * Optional. The relative resource name pattern associated with this resource
    * type. The DNS prefix of the full resource name shouldn't be specified here.
-   *
    * The path pattern must follow the syntax, which aligns with HTTP binding
    * syntax:
-   *
    *     Template = Segment { "/" Segment } ;
    *     Segment = LITERAL | Variable ;
    *     Variable = "{" LITERAL "}" ;
-   *
    * Examples:
-   *
    *     - "projects/{project}/topics/{topic}"
    *     - "projects/{project}/knowledgeBases/{knowledge_base}"
-   *
    * The components in braces correspond to the IDs for each resource in the
    * hierarchy. It is expected that, if multiple patterns are provided,
    * the same component name (e.g. "project") refers to IDs of the same
@@ -691,9 +657,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
    *
    * <pre>
    * Optional. The historical or future-looking state of the resource pattern.
-   *
    * Example:
-   *
    *     // The InspectTemplate message originally only supported resource
    *     // names with organization, and project was added later.
    *     message InspectTemplate {
@@ -720,9 +684,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
    *
    * <pre>
    * Optional. The historical or future-looking state of the resource pattern.
-   *
    * Example:
-   *
    *     // The InspectTemplate message originally only supported resource
    *     // names with organization, and project was added later.
    *     message InspectTemplate {
@@ -760,7 +722,6 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
    * name of 'cloudresourcemanager.googleapis.com/projects.get'. It is the same
    * concept of the `plural` field in k8s CRD spec
    * https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/
-   *
    * Note: The plural form is required even for singleton resources. See
    * https://aip.dev/156
    * </pre>
@@ -790,7 +751,6 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
    * name of 'cloudresourcemanager.googleapis.com/projects.get'. It is the same
    * concept of the `plural` field in k8s CRD spec
    * https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/
-   *
    * Note: The plural form is required even for singleton resources. See
    * https://aip.dev/156
    * </pre>
@@ -1213,13 +1173,10 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
    *
    * <pre>
    * A simple descriptor of a resource type.
-   *
    * ResourceDescriptor annotates a resource message (either by means of a
    * protobuf annotation or use in the service config), and associates the
    * resource's schema, the resource type, and the pattern of the resource name.
-   *
    * Example:
-   *
    *     message Topic {
    *       // Indicates this message defines a resource schema.
    *       // Declares the resource type in the format of {service}/{kind}.
@@ -1229,18 +1186,13 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
    *         pattern: "projects/{project}/topics/{topic}"
    *       };
    *     }
-   *
    * The ResourceDescriptor Yaml config will look like:
-   *
    *     resources:
    *     - type: "pubsub.googleapis.com/Topic"
    *       pattern: "projects/{project}/topics/{topic}"
-   *
    * Sometimes, resources have multiple patterns, typically because they can
    * live under multiple parents.
-   *
    * Example:
-   *
    *     message LogEntry {
    *       option (google.api.resource) = {
    *         type: "logging.googleapis.com/LogEntry"
@@ -1250,9 +1202,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
    *         pattern: "billingAccounts/{billing_account}/logs/{log}"
    *       };
    *     }
-   *
    * The ResourceDescriptor Yaml config will look like:
-   *
    *     resources:
    *     - type: 'logging.googleapis.com/LogEntry'
    *       pattern: "projects/{project}/logs/{log}"
@@ -1293,7 +1243,8 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       super.clear();
       bitField0_ = 0;
       type_ = "";
-      pattern_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      pattern_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      bitField0_ = (bitField0_ & ~0x00000002);
       nameField_ = "";
       history_ = 0;
       plural_ = "";
@@ -1334,6 +1285,11 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
     }
 
     private void buildPartialRepeatedFields(com.google.api.ResourceDescriptor result) {
+      if (((bitField0_ & 0x00000002) != 0)) {
+        pattern_ = pattern_.getUnmodifiableView();
+        bitField0_ = (bitField0_ & ~0x00000002);
+      }
+      result.pattern_ = pattern_;
       if (((bitField0_ & 0x00000040) != 0)) {
         style_ = java.util.Collections.unmodifiableList(style_);
         bitField0_ = (bitField0_ & ~0x00000040);
@@ -1345,10 +1301,6 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       int from_bitField0_ = bitField0_;
       if (((from_bitField0_ & 0x00000001) != 0)) {
         result.type_ = type_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        pattern_.makeImmutable();
-        result.pattern_ = pattern_;
       }
       if (((from_bitField0_ & 0x00000004) != 0)) {
         result.nameField_ = nameField_;
@@ -1362,6 +1314,39 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       if (((from_bitField0_ & 0x00000020) != 0)) {
         result.singular_ = singular_;
       }
+    }
+
+    @java.lang.Override
+    public Builder clone() {
+      return super.clone();
+    }
+
+    @java.lang.Override
+    public Builder setField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.setField(field, value);
+    }
+
+    @java.lang.Override
+    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      return super.clearField(field);
+    }
+
+    @java.lang.Override
+    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      return super.clearOneof(oneof);
+    }
+
+    @java.lang.Override
+    public Builder setRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
+      return super.setRepeatedField(field, index, value);
+    }
+
+    @java.lang.Override
+    public Builder addRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.addRepeatedField(field, value);
     }
 
     @java.lang.Override
@@ -1384,7 +1369,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       if (!other.pattern_.isEmpty()) {
         if (pattern_.isEmpty()) {
           pattern_ = other.pattern_;
-          bitField0_ |= 0x00000002;
+          bitField0_ = (bitField0_ & ~0x00000002);
         } else {
           ensurePatternIsMutable();
           pattern_.addAll(other.pattern_);
@@ -1528,9 +1513,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      * The resource type. It must be in the format of
      * {service_name}/{resource_type_kind}. The `resource_type_kind` must be
      * singular and must not include version numbers.
-     *
      * Example: `storage.googleapis.com/Bucket`
-     *
      * The value of the resource_type_kind must follow the regular expression
      * /[A-Za-z][a-zA-Z0-9]+/. It should start with an upper case character and
      * should use PascalCase (UpperCamelCase). The maximum number of
@@ -1559,9 +1542,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      * The resource type. It must be in the format of
      * {service_name}/{resource_type_kind}. The `resource_type_kind` must be
      * singular and must not include version numbers.
-     *
      * Example: `storage.googleapis.com/Bucket`
-     *
      * The value of the resource_type_kind must follow the regular expression
      * /[A-Za-z][a-zA-Z0-9]+/. It should start with an upper case character and
      * should use PascalCase (UpperCamelCase). The maximum number of
@@ -1590,9 +1571,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      * The resource type. It must be in the format of
      * {service_name}/{resource_type_kind}. The `resource_type_kind` must be
      * singular and must not include version numbers.
-     *
      * Example: `storage.googleapis.com/Bucket`
-     *
      * The value of the resource_type_kind must follow the regular expression
      * /[A-Za-z][a-zA-Z0-9]+/. It should start with an upper case character and
      * should use PascalCase (UpperCamelCase). The maximum number of
@@ -1620,9 +1599,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      * The resource type. It must be in the format of
      * {service_name}/{resource_type_kind}. The `resource_type_kind` must be
      * singular and must not include version numbers.
-     *
      * Example: `storage.googleapis.com/Bucket`
-     *
      * The value of the resource_type_kind must follow the regular expression
      * /[A-Za-z][a-zA-Z0-9]+/. It should start with an upper case character and
      * should use PascalCase (UpperCamelCase). The maximum number of
@@ -1646,9 +1623,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      * The resource type. It must be in the format of
      * {service_name}/{resource_type_kind}. The `resource_type_kind` must be
      * singular and must not include version numbers.
-     *
      * Example: `storage.googleapis.com/Bucket`
-     *
      * The value of the resource_type_kind must follow the regular expression
      * /[A-Za-z][a-zA-Z0-9]+/. It should start with an upper case character and
      * should use PascalCase (UpperCamelCase). The maximum number of
@@ -1671,14 +1646,14 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       return this;
     }
 
-    private com.google.protobuf.LazyStringArrayList pattern_ =
-        com.google.protobuf.LazyStringArrayList.emptyList();
+    private com.google.protobuf.LazyStringList pattern_ =
+        com.google.protobuf.LazyStringArrayList.EMPTY;
 
     private void ensurePatternIsMutable() {
-      if (!pattern_.isModifiable()) {
+      if (!((bitField0_ & 0x00000002) != 0)) {
         pattern_ = new com.google.protobuf.LazyStringArrayList(pattern_);
+        bitField0_ |= 0x00000002;
       }
-      bitField0_ |= 0x00000002;
     }
     /**
      *
@@ -1686,19 +1661,14 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      * <pre>
      * Optional. The relative resource name pattern associated with this resource
      * type. The DNS prefix of the full resource name shouldn't be specified here.
-     *
      * The path pattern must follow the syntax, which aligns with HTTP binding
      * syntax:
-     *
      *     Template = Segment { "/" Segment } ;
      *     Segment = LITERAL | Variable ;
      *     Variable = "{" LITERAL "}" ;
-     *
      * Examples:
-     *
      *     - "projects/{project}/topics/{topic}"
      *     - "projects/{project}/knowledgeBases/{knowledge_base}"
-     *
      * The components in braces correspond to the IDs for each resource in the
      * hierarchy. It is expected that, if multiple patterns are provided,
      * the same component name (e.g. "project") refers to IDs of the same
@@ -1710,8 +1680,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      * @return A list containing the pattern.
      */
     public com.google.protobuf.ProtocolStringList getPatternList() {
-      pattern_.makeImmutable();
-      return pattern_;
+      return pattern_.getUnmodifiableView();
     }
     /**
      *
@@ -1719,19 +1688,14 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      * <pre>
      * Optional. The relative resource name pattern associated with this resource
      * type. The DNS prefix of the full resource name shouldn't be specified here.
-     *
      * The path pattern must follow the syntax, which aligns with HTTP binding
      * syntax:
-     *
      *     Template = Segment { "/" Segment } ;
      *     Segment = LITERAL | Variable ;
      *     Variable = "{" LITERAL "}" ;
-     *
      * Examples:
-     *
      *     - "projects/{project}/topics/{topic}"
      *     - "projects/{project}/knowledgeBases/{knowledge_base}"
-     *
      * The components in braces correspond to the IDs for each resource in the
      * hierarchy. It is expected that, if multiple patterns are provided,
      * the same component name (e.g. "project") refers to IDs of the same
@@ -1751,19 +1715,14 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      * <pre>
      * Optional. The relative resource name pattern associated with this resource
      * type. The DNS prefix of the full resource name shouldn't be specified here.
-     *
      * The path pattern must follow the syntax, which aligns with HTTP binding
      * syntax:
-     *
      *     Template = Segment { "/" Segment } ;
      *     Segment = LITERAL | Variable ;
      *     Variable = "{" LITERAL "}" ;
-     *
      * Examples:
-     *
      *     - "projects/{project}/topics/{topic}"
      *     - "projects/{project}/knowledgeBases/{knowledge_base}"
-     *
      * The components in braces correspond to the IDs for each resource in the
      * hierarchy. It is expected that, if multiple patterns are provided,
      * the same component name (e.g. "project") refers to IDs of the same
@@ -1784,19 +1743,14 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      * <pre>
      * Optional. The relative resource name pattern associated with this resource
      * type. The DNS prefix of the full resource name shouldn't be specified here.
-     *
      * The path pattern must follow the syntax, which aligns with HTTP binding
      * syntax:
-     *
      *     Template = Segment { "/" Segment } ;
      *     Segment = LITERAL | Variable ;
      *     Variable = "{" LITERAL "}" ;
-     *
      * Examples:
-     *
      *     - "projects/{project}/topics/{topic}"
      *     - "projects/{project}/knowledgeBases/{knowledge_base}"
-     *
      * The components in braces correspond to the IDs for each resource in the
      * hierarchy. It is expected that, if multiple patterns are provided,
      * the same component name (e.g. "project") refers to IDs of the same
@@ -1817,19 +1771,14 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      * <pre>
      * Optional. The relative resource name pattern associated with this resource
      * type. The DNS prefix of the full resource name shouldn't be specified here.
-     *
      * The path pattern must follow the syntax, which aligns with HTTP binding
      * syntax:
-     *
      *     Template = Segment { "/" Segment } ;
      *     Segment = LITERAL | Variable ;
      *     Variable = "{" LITERAL "}" ;
-     *
      * Examples:
-     *
      *     - "projects/{project}/topics/{topic}"
      *     - "projects/{project}/knowledgeBases/{knowledge_base}"
-     *
      * The components in braces correspond to the IDs for each resource in the
      * hierarchy. It is expected that, if multiple patterns are provided,
      * the same component name (e.g. "project") refers to IDs of the same
@@ -1848,7 +1797,6 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       }
       ensurePatternIsMutable();
       pattern_.set(index, value);
-      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1858,19 +1806,14 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      * <pre>
      * Optional. The relative resource name pattern associated with this resource
      * type. The DNS prefix of the full resource name shouldn't be specified here.
-     *
      * The path pattern must follow the syntax, which aligns with HTTP binding
      * syntax:
-     *
      *     Template = Segment { "/" Segment } ;
      *     Segment = LITERAL | Variable ;
      *     Variable = "{" LITERAL "}" ;
-     *
      * Examples:
-     *
      *     - "projects/{project}/topics/{topic}"
      *     - "projects/{project}/knowledgeBases/{knowledge_base}"
-     *
      * The components in braces correspond to the IDs for each resource in the
      * hierarchy. It is expected that, if multiple patterns are provided,
      * the same component name (e.g. "project") refers to IDs of the same
@@ -1888,7 +1831,6 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       }
       ensurePatternIsMutable();
       pattern_.add(value);
-      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1898,19 +1840,14 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      * <pre>
      * Optional. The relative resource name pattern associated with this resource
      * type. The DNS prefix of the full resource name shouldn't be specified here.
-     *
      * The path pattern must follow the syntax, which aligns with HTTP binding
      * syntax:
-     *
      *     Template = Segment { "/" Segment } ;
      *     Segment = LITERAL | Variable ;
      *     Variable = "{" LITERAL "}" ;
-     *
      * Examples:
-     *
      *     - "projects/{project}/topics/{topic}"
      *     - "projects/{project}/knowledgeBases/{knowledge_base}"
-     *
      * The components in braces correspond to the IDs for each resource in the
      * hierarchy. It is expected that, if multiple patterns are provided,
      * the same component name (e.g. "project") refers to IDs of the same
@@ -1925,7 +1862,6 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
     public Builder addAllPattern(java.lang.Iterable<java.lang.String> values) {
       ensurePatternIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(values, pattern_);
-      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1935,19 +1871,14 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      * <pre>
      * Optional. The relative resource name pattern associated with this resource
      * type. The DNS prefix of the full resource name shouldn't be specified here.
-     *
      * The path pattern must follow the syntax, which aligns with HTTP binding
      * syntax:
-     *
      *     Template = Segment { "/" Segment } ;
      *     Segment = LITERAL | Variable ;
      *     Variable = "{" LITERAL "}" ;
-     *
      * Examples:
-     *
      *     - "projects/{project}/topics/{topic}"
      *     - "projects/{project}/knowledgeBases/{knowledge_base}"
-     *
      * The components in braces correspond to the IDs for each resource in the
      * hierarchy. It is expected that, if multiple patterns are provided,
      * the same component name (e.g. "project") refers to IDs of the same
@@ -1959,9 +1890,8 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      * @return This builder for chaining.
      */
     public Builder clearPattern() {
-      pattern_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      pattern_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       bitField0_ = (bitField0_ & ~0x00000002);
-      ;
       onChanged();
       return this;
     }
@@ -1971,19 +1901,14 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      * <pre>
      * Optional. The relative resource name pattern associated with this resource
      * type. The DNS prefix of the full resource name shouldn't be specified here.
-     *
      * The path pattern must follow the syntax, which aligns with HTTP binding
      * syntax:
-     *
      *     Template = Segment { "/" Segment } ;
      *     Segment = LITERAL | Variable ;
      *     Variable = "{" LITERAL "}" ;
-     *
      * Examples:
-     *
      *     - "projects/{project}/topics/{topic}"
      *     - "projects/{project}/knowledgeBases/{knowledge_base}"
-     *
      * The components in braces correspond to the IDs for each resource in the
      * hierarchy. It is expected that, if multiple patterns are provided,
      * the same component name (e.g. "project") refers to IDs of the same
@@ -2002,7 +1927,6 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
       checkByteStringIsUtf8(value);
       ensurePatternIsMutable();
       pattern_.add(value);
-      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -2124,9 +2048,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      *
      * <pre>
      * Optional. The historical or future-looking state of the resource pattern.
-     *
      * Example:
-     *
      *     // The InspectTemplate message originally only supported resource
      *     // names with organization, and project was added later.
      *     message InspectTemplate {
@@ -2153,9 +2075,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      *
      * <pre>
      * Optional. The historical or future-looking state of the resource pattern.
-     *
      * Example:
-     *
      *     // The InspectTemplate message originally only supported resource
      *     // names with organization, and project was added later.
      *     message InspectTemplate {
@@ -2185,9 +2105,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      *
      * <pre>
      * Optional. The historical or future-looking state of the resource pattern.
-     *
      * Example:
-     *
      *     // The InspectTemplate message originally only supported resource
      *     // names with organization, and project was added later.
      *     message InspectTemplate {
@@ -2216,9 +2134,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      *
      * <pre>
      * Optional. The historical or future-looking state of the resource pattern.
-     *
      * Example:
-     *
      *     // The InspectTemplate message originally only supported resource
      *     // names with organization, and project was added later.
      *     message InspectTemplate {
@@ -2251,9 +2167,7 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      *
      * <pre>
      * Optional. The historical or future-looking state of the resource pattern.
-     *
      * Example:
-     *
      *     // The InspectTemplate message originally only supported resource
      *     // names with organization, and project was added later.
      *     message InspectTemplate {
@@ -2288,7 +2202,6 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      * name of 'cloudresourcemanager.googleapis.com/projects.get'. It is the same
      * concept of the `plural` field in k8s CRD spec
      * https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/
-     *
      * Note: The plural form is required even for singleton resources. See
      * https://aip.dev/156
      * </pre>
@@ -2317,7 +2230,6 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      * name of 'cloudresourcemanager.googleapis.com/projects.get'. It is the same
      * concept of the `plural` field in k8s CRD spec
      * https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/
-     *
      * Note: The plural form is required even for singleton resources. See
      * https://aip.dev/156
      * </pre>
@@ -2346,7 +2258,6 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      * name of 'cloudresourcemanager.googleapis.com/projects.get'. It is the same
      * concept of the `plural` field in k8s CRD spec
      * https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/
-     *
      * Note: The plural form is required even for singleton resources. See
      * https://aip.dev/156
      * </pre>
@@ -2374,7 +2285,6 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      * name of 'cloudresourcemanager.googleapis.com/projects.get'. It is the same
      * concept of the `plural` field in k8s CRD spec
      * https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/
-     *
      * Note: The plural form is required even for singleton resources. See
      * https://aip.dev/156
      * </pre>
@@ -2398,7 +2308,6 @@ public final class ResourceDescriptor extends com.google.protobuf.GeneratedMessa
      * name of 'cloudresourcemanager.googleapis.com/projects.get'. It is the same
      * concept of the `plural` field in k8s CRD spec
      * https://kubernetes.io/docs/tasks/access-kubernetes-api/custom-resources/custom-resource-definitions/
-     *
      * Note: The plural form is required even for singleton resources. See
      * https://aip.dev/156
      * </pre>

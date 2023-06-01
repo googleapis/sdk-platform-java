@@ -38,14 +38,19 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
   }
 
   private ResourceLocation() {
-    currentLocations_ = com.google.protobuf.LazyStringArrayList.emptyList();
-    originalLocations_ = com.google.protobuf.LazyStringArrayList.emptyList();
+    currentLocations_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    originalLocations_ = com.google.protobuf.LazyStringArrayList.EMPTY;
   }
 
   @java.lang.Override
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new ResourceLocation();
+  }
+
+  @java.lang.Override
+  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -66,8 +71,7 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
   public static final int CURRENT_LOCATIONS_FIELD_NUMBER = 1;
 
   @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringArrayList currentLocations_ =
-      com.google.protobuf.LazyStringArrayList.emptyList();
+  private com.google.protobuf.LazyStringList currentLocations_;
   /**
    *
    *
@@ -76,7 +80,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
    * Requests to create or delete a location based resource must populate
    * the 'current_locations' field and not the 'original_locations' field.
    * For example:
-   *
    *     "europe-west1-a"
    *     "us-east1"
    *     "nam3"
@@ -97,7 +100,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
    * Requests to create or delete a location based resource must populate
    * the 'current_locations' field and not the 'original_locations' field.
    * For example:
-   *
    *     "europe-west1-a"
    *     "us-east1"
    *     "nam3"
@@ -118,7 +120,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
    * Requests to create or delete a location based resource must populate
    * the 'current_locations' field and not the 'original_locations' field.
    * For example:
-   *
    *     "europe-west1-a"
    *     "us-east1"
    *     "nam3"
@@ -140,7 +141,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
    * Requests to create or delete a location based resource must populate
    * the 'current_locations' field and not the 'original_locations' field.
    * For example:
-   *
    *     "europe-west1-a"
    *     "us-east1"
    *     "nam3"
@@ -158,8 +158,7 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
   public static final int ORIGINAL_LOCATIONS_FIELD_NUMBER = 2;
 
   @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringArrayList originalLocations_ =
-      com.google.protobuf.LazyStringArrayList.emptyList();
+  private com.google.protobuf.LazyStringList originalLocations_;
   /**
    *
    *
@@ -168,7 +167,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
    * Requests that mutate the resource's location must populate both the
    * 'original_locations' as well as the 'current_locations' fields.
    * For example:
-   *
    *     "europe-west1-a"
    *     "us-east1"
    *     "nam3"
@@ -189,7 +187,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
    * Requests that mutate the resource's location must populate both the
    * 'original_locations' as well as the 'current_locations' fields.
    * For example:
-   *
    *     "europe-west1-a"
    *     "us-east1"
    *     "nam3"
@@ -210,7 +207,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
    * Requests that mutate the resource's location must populate both the
    * 'original_locations' as well as the 'current_locations' fields.
    * For example:
-   *
    *     "europe-west1-a"
    *     "us-east1"
    *     "nam3"
@@ -232,7 +228,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
    * Requests that mutate the resource's location must populate both the
    * 'original_locations' as well as the 'current_locations' fields.
    * For example:
-   *
    *     "europe-west1-a"
    *     "us-east1"
    *     "nam3"
@@ -467,8 +462,10 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
     public Builder clear() {
       super.clear();
       bitField0_ = 0;
-      currentLocations_ = com.google.protobuf.LazyStringArrayList.emptyList();
-      originalLocations_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      currentLocations_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      bitField0_ = (bitField0_ & ~0x00000001);
+      originalLocations_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      bitField0_ = (bitField0_ & ~0x00000002);
       return this;
     }
 
@@ -496,6 +493,7 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
     public com.google.cloud.audit.ResourceLocation buildPartial() {
       com.google.cloud.audit.ResourceLocation result =
           new com.google.cloud.audit.ResourceLocation(this);
+      buildPartialRepeatedFields(result);
       if (bitField0_ != 0) {
         buildPartial0(result);
       }
@@ -503,16 +501,54 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
       return result;
     }
 
+    private void buildPartialRepeatedFields(com.google.cloud.audit.ResourceLocation result) {
+      if (((bitField0_ & 0x00000001) != 0)) {
+        currentLocations_ = currentLocations_.getUnmodifiableView();
+        bitField0_ = (bitField0_ & ~0x00000001);
+      }
+      result.currentLocations_ = currentLocations_;
+      if (((bitField0_ & 0x00000002) != 0)) {
+        originalLocations_ = originalLocations_.getUnmodifiableView();
+        bitField0_ = (bitField0_ & ~0x00000002);
+      }
+      result.originalLocations_ = originalLocations_;
+    }
+
     private void buildPartial0(com.google.cloud.audit.ResourceLocation result) {
       int from_bitField0_ = bitField0_;
-      if (((from_bitField0_ & 0x00000001) != 0)) {
-        currentLocations_.makeImmutable();
-        result.currentLocations_ = currentLocations_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        originalLocations_.makeImmutable();
-        result.originalLocations_ = originalLocations_;
-      }
+    }
+
+    @java.lang.Override
+    public Builder clone() {
+      return super.clone();
+    }
+
+    @java.lang.Override
+    public Builder setField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.setField(field, value);
+    }
+
+    @java.lang.Override
+    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      return super.clearField(field);
+    }
+
+    @java.lang.Override
+    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      return super.clearOneof(oneof);
+    }
+
+    @java.lang.Override
+    public Builder setRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
+      return super.setRepeatedField(field, index, value);
+    }
+
+    @java.lang.Override
+    public Builder addRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.addRepeatedField(field, value);
     }
 
     @java.lang.Override
@@ -530,7 +566,7 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
       if (!other.currentLocations_.isEmpty()) {
         if (currentLocations_.isEmpty()) {
           currentLocations_ = other.currentLocations_;
-          bitField0_ |= 0x00000001;
+          bitField0_ = (bitField0_ & ~0x00000001);
         } else {
           ensureCurrentLocationsIsMutable();
           currentLocations_.addAll(other.currentLocations_);
@@ -540,7 +576,7 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
       if (!other.originalLocations_.isEmpty()) {
         if (originalLocations_.isEmpty()) {
           originalLocations_ = other.originalLocations_;
-          bitField0_ |= 0x00000002;
+          bitField0_ = (bitField0_ & ~0x00000002);
         } else {
           ensureOriginalLocationsIsMutable();
           originalLocations_.addAll(other.originalLocations_);
@@ -606,14 +642,14 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
 
     private int bitField0_;
 
-    private com.google.protobuf.LazyStringArrayList currentLocations_ =
-        com.google.protobuf.LazyStringArrayList.emptyList();
+    private com.google.protobuf.LazyStringList currentLocations_ =
+        com.google.protobuf.LazyStringArrayList.EMPTY;
 
     private void ensureCurrentLocationsIsMutable() {
-      if (!currentLocations_.isModifiable()) {
+      if (!((bitField0_ & 0x00000001) != 0)) {
         currentLocations_ = new com.google.protobuf.LazyStringArrayList(currentLocations_);
+        bitField0_ |= 0x00000001;
       }
-      bitField0_ |= 0x00000001;
     }
     /**
      *
@@ -623,7 +659,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * Requests to create or delete a location based resource must populate
      * the 'current_locations' field and not the 'original_locations' field.
      * For example:
-     *
      *     "europe-west1-a"
      *     "us-east1"
      *     "nam3"
@@ -634,8 +669,7 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * @return A list containing the currentLocations.
      */
     public com.google.protobuf.ProtocolStringList getCurrentLocationsList() {
-      currentLocations_.makeImmutable();
-      return currentLocations_;
+      return currentLocations_.getUnmodifiableView();
     }
     /**
      *
@@ -645,7 +679,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * Requests to create or delete a location based resource must populate
      * the 'current_locations' field and not the 'original_locations' field.
      * For example:
-     *
      *     "europe-west1-a"
      *     "us-east1"
      *     "nam3"
@@ -666,7 +699,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * Requests to create or delete a location based resource must populate
      * the 'current_locations' field and not the 'original_locations' field.
      * For example:
-     *
      *     "europe-west1-a"
      *     "us-east1"
      *     "nam3"
@@ -688,7 +720,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * Requests to create or delete a location based resource must populate
      * the 'current_locations' field and not the 'original_locations' field.
      * For example:
-     *
      *     "europe-west1-a"
      *     "us-east1"
      *     "nam3"
@@ -710,7 +741,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * Requests to create or delete a location based resource must populate
      * the 'current_locations' field and not the 'original_locations' field.
      * For example:
-     *
      *     "europe-west1-a"
      *     "us-east1"
      *     "nam3"
@@ -728,7 +758,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
       }
       ensureCurrentLocationsIsMutable();
       currentLocations_.set(index, value);
-      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -740,7 +769,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * Requests to create or delete a location based resource must populate
      * the 'current_locations' field and not the 'original_locations' field.
      * For example:
-     *
      *     "europe-west1-a"
      *     "us-east1"
      *     "nam3"
@@ -757,7 +785,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
       }
       ensureCurrentLocationsIsMutable();
       currentLocations_.add(value);
-      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -769,7 +796,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * Requests to create or delete a location based resource must populate
      * the 'current_locations' field and not the 'original_locations' field.
      * For example:
-     *
      *     "europe-west1-a"
      *     "us-east1"
      *     "nam3"
@@ -783,7 +809,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
     public Builder addAllCurrentLocations(java.lang.Iterable<java.lang.String> values) {
       ensureCurrentLocationsIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(values, currentLocations_);
-      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -795,7 +820,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * Requests to create or delete a location based resource must populate
      * the 'current_locations' field and not the 'original_locations' field.
      * For example:
-     *
      *     "europe-west1-a"
      *     "us-east1"
      *     "nam3"
@@ -806,9 +830,8 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder clearCurrentLocations() {
-      currentLocations_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      currentLocations_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       bitField0_ = (bitField0_ & ~0x00000001);
-      ;
       onChanged();
       return this;
     }
@@ -820,7 +843,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * Requests to create or delete a location based resource must populate
      * the 'current_locations' field and not the 'original_locations' field.
      * For example:
-     *
      *     "europe-west1-a"
      *     "us-east1"
      *     "nam3"
@@ -838,19 +860,18 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
       checkByteStringIsUtf8(value);
       ensureCurrentLocationsIsMutable();
       currentLocations_.add(value);
-      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
 
-    private com.google.protobuf.LazyStringArrayList originalLocations_ =
-        com.google.protobuf.LazyStringArrayList.emptyList();
+    private com.google.protobuf.LazyStringList originalLocations_ =
+        com.google.protobuf.LazyStringArrayList.EMPTY;
 
     private void ensureOriginalLocationsIsMutable() {
-      if (!originalLocations_.isModifiable()) {
+      if (!((bitField0_ & 0x00000002) != 0)) {
         originalLocations_ = new com.google.protobuf.LazyStringArrayList(originalLocations_);
+        bitField0_ |= 0x00000002;
       }
-      bitField0_ |= 0x00000002;
     }
     /**
      *
@@ -860,7 +881,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * Requests that mutate the resource's location must populate both the
      * 'original_locations' as well as the 'current_locations' fields.
      * For example:
-     *
      *     "europe-west1-a"
      *     "us-east1"
      *     "nam3"
@@ -871,8 +891,7 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * @return A list containing the originalLocations.
      */
     public com.google.protobuf.ProtocolStringList getOriginalLocationsList() {
-      originalLocations_.makeImmutable();
-      return originalLocations_;
+      return originalLocations_.getUnmodifiableView();
     }
     /**
      *
@@ -882,7 +901,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * Requests that mutate the resource's location must populate both the
      * 'original_locations' as well as the 'current_locations' fields.
      * For example:
-     *
      *     "europe-west1-a"
      *     "us-east1"
      *     "nam3"
@@ -903,7 +921,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * Requests that mutate the resource's location must populate both the
      * 'original_locations' as well as the 'current_locations' fields.
      * For example:
-     *
      *     "europe-west1-a"
      *     "us-east1"
      *     "nam3"
@@ -925,7 +942,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * Requests that mutate the resource's location must populate both the
      * 'original_locations' as well as the 'current_locations' fields.
      * For example:
-     *
      *     "europe-west1-a"
      *     "us-east1"
      *     "nam3"
@@ -947,7 +963,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * Requests that mutate the resource's location must populate both the
      * 'original_locations' as well as the 'current_locations' fields.
      * For example:
-     *
      *     "europe-west1-a"
      *     "us-east1"
      *     "nam3"
@@ -965,7 +980,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
       }
       ensureOriginalLocationsIsMutable();
       originalLocations_.set(index, value);
-      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -977,7 +991,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * Requests that mutate the resource's location must populate both the
      * 'original_locations' as well as the 'current_locations' fields.
      * For example:
-     *
      *     "europe-west1-a"
      *     "us-east1"
      *     "nam3"
@@ -994,7 +1007,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
       }
       ensureOriginalLocationsIsMutable();
       originalLocations_.add(value);
-      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1006,7 +1018,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * Requests that mutate the resource's location must populate both the
      * 'original_locations' as well as the 'current_locations' fields.
      * For example:
-     *
      *     "europe-west1-a"
      *     "us-east1"
      *     "nam3"
@@ -1020,7 +1031,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
     public Builder addAllOriginalLocations(java.lang.Iterable<java.lang.String> values) {
       ensureOriginalLocationsIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(values, originalLocations_);
-      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1032,7 +1042,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * Requests that mutate the resource's location must populate both the
      * 'original_locations' as well as the 'current_locations' fields.
      * For example:
-     *
      *     "europe-west1-a"
      *     "us-east1"
      *     "nam3"
@@ -1043,9 +1052,8 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder clearOriginalLocations() {
-      originalLocations_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      originalLocations_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       bitField0_ = (bitField0_ & ~0x00000002);
-      ;
       onChanged();
       return this;
     }
@@ -1057,7 +1065,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
      * Requests that mutate the resource's location must populate both the
      * 'original_locations' as well as the 'current_locations' fields.
      * For example:
-     *
      *     "europe-west1-a"
      *     "us-east1"
      *     "nam3"
@@ -1075,7 +1082,6 @@ public final class ResourceLocation extends com.google.protobuf.GeneratedMessage
       checkByteStringIsUtf8(value);
       ensureOriginalLocationsIsMutable();
       originalLocations_.add(value);
-      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }

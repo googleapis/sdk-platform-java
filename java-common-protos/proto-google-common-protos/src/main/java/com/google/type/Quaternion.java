@@ -25,53 +25,41 @@ package com.google.type;
  * A quaternion is defined as the quotient of two directed lines in a
  * three-dimensional space or equivalently as the quotient of two Euclidean
  * vectors (https://en.wikipedia.org/wiki/Quaternion).
- *
  * Quaternions are often used in calculations involving three-dimensional
  * rotations (https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation),
  * as they provide greater mathematical robustness by avoiding the gimbal lock
  * problems that can be encountered when using Euler angles
  * (https://en.wikipedia.org/wiki/Gimbal_lock).
- *
  * Quaternions are generally represented in this form:
- *
  *     w + xi + yj + zk
- *
  * where x, y, z, and w are real numbers, and i, j, and k are three imaginary
  * numbers.
- *
  * Our naming choice `(x, y, z, w)` comes from the desire to avoid confusion for
  * those interested in the geometric properties of the quaternion in the 3D
  * Cartesian space. Other texts often use alternative names or subscripts, such
  * as `(a, b, c, d)`, `(1, i, j, k)`, or `(0, 1, 2, 3)`, which are perhaps
  * better suited for mathematical interpretations.
- *
  * To avoid any confusion, as well as to maintain compatibility with a large
  * number of software libraries, the quaternions represented using the protocol
  * buffer below *must* follow the Hamilton convention, which defines `ij = k`
  * (i.e. a right-handed algebra), and therefore:
- *
  *     i^2 = j^2 = k^2 = ijk = −1
  *     ij = −ji = k
  *     jk = −kj = i
  *     ki = −ik = j
- *
  * Please DO NOT use this to represent quaternions that follow the JPL
  * convention, or any of the other quaternion flavors out there.
- *
  * Definitions:
- *
  *   - Quaternion norm (or magnitude): `sqrt(x^2 + y^2 + z^2 + w^2)`.
  *   - Unit (or normalized) quaternion: a quaternion whose norm is 1.
  *   - Pure quaternion: a quaternion whose scalar component (`w`) is 0.
  *   - Rotation quaternion: a unit quaternion used to represent rotation.
  *   - Orientation quaternion: a unit quaternion used to represent orientation.
- *
  * A quaternion can be normalized by dividing it by its norm. The resulting
  * quaternion maintains the same direction, but has a norm of 1, i.e. it moves
  * on the unit sphere. This is generally necessary for rotation and orientation
  * quaternions, to avoid rounding errors:
  * https://en.wikipedia.org/wiki/Rotation_formalisms_in_three_dimensions
- *
  * Note that `(x, y, z, w)` and `(-x, -y, -z, -w)` represent the same rotation,
  * but normalization would be even more useful, e.g. for comparison purposes, if
  * it would produce a unique representation. It is thus recommended that `w` be
@@ -97,6 +85,11 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new Quaternion();
+  }
+
+  @java.lang.Override
+  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -386,53 +379,41 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
    * A quaternion is defined as the quotient of two directed lines in a
    * three-dimensional space or equivalently as the quotient of two Euclidean
    * vectors (https://en.wikipedia.org/wiki/Quaternion).
-   *
    * Quaternions are often used in calculations involving three-dimensional
    * rotations (https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation),
    * as they provide greater mathematical robustness by avoiding the gimbal lock
    * problems that can be encountered when using Euler angles
    * (https://en.wikipedia.org/wiki/Gimbal_lock).
-   *
    * Quaternions are generally represented in this form:
-   *
    *     w + xi + yj + zk
-   *
    * where x, y, z, and w are real numbers, and i, j, and k are three imaginary
    * numbers.
-   *
    * Our naming choice `(x, y, z, w)` comes from the desire to avoid confusion for
    * those interested in the geometric properties of the quaternion in the 3D
    * Cartesian space. Other texts often use alternative names or subscripts, such
    * as `(a, b, c, d)`, `(1, i, j, k)`, or `(0, 1, 2, 3)`, which are perhaps
    * better suited for mathematical interpretations.
-   *
    * To avoid any confusion, as well as to maintain compatibility with a large
    * number of software libraries, the quaternions represented using the protocol
    * buffer below *must* follow the Hamilton convention, which defines `ij = k`
    * (i.e. a right-handed algebra), and therefore:
-   *
    *     i^2 = j^2 = k^2 = ijk = −1
    *     ij = −ji = k
    *     jk = −kj = i
    *     ki = −ik = j
-   *
    * Please DO NOT use this to represent quaternions that follow the JPL
    * convention, or any of the other quaternion flavors out there.
-   *
    * Definitions:
-   *
    *   - Quaternion norm (or magnitude): `sqrt(x^2 + y^2 + z^2 + w^2)`.
    *   - Unit (or normalized) quaternion: a quaternion whose norm is 1.
    *   - Pure quaternion: a quaternion whose scalar component (`w`) is 0.
    *   - Rotation quaternion: a unit quaternion used to represent rotation.
    *   - Orientation quaternion: a unit quaternion used to represent orientation.
-   *
    * A quaternion can be normalized by dividing it by its norm. The resulting
    * quaternion maintains the same direction, but has a norm of 1, i.e. it moves
    * on the unit sphere. This is generally necessary for rotation and orientation
    * quaternions, to avoid rounding errors:
    * https://en.wikipedia.org/wiki/Rotation_formalisms_in_three_dimensions
-   *
    * Note that `(x, y, z, w)` and `(-x, -y, -z, -w)` represent the same rotation,
    * but normalization would be even more useful, e.g. for comparison purposes, if
    * it would produce a unique representation. It is thus recommended that `w` be
@@ -520,6 +501,39 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
       if (((from_bitField0_ & 0x00000008) != 0)) {
         result.w_ = w_;
       }
+    }
+
+    @java.lang.Override
+    public Builder clone() {
+      return super.clone();
+    }
+
+    @java.lang.Override
+    public Builder setField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.setField(field, value);
+    }
+
+    @java.lang.Override
+    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      return super.clearField(field);
+    }
+
+    @java.lang.Override
+    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      return super.clearOneof(oneof);
+    }
+
+    @java.lang.Override
+    public Builder setRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
+      return super.setRepeatedField(field, index, value);
+    }
+
+    @java.lang.Override
+    public Builder addRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.addRepeatedField(field, value);
     }
 
     @java.lang.Override

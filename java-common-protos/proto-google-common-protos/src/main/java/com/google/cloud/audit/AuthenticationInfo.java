@@ -51,6 +51,11 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
     return new AuthenticationInfo();
   }
 
+  @java.lang.Override
+  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+    return this.unknownFields;
+  }
+
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.cloud.audit.AuditLogProto
         .internal_static_google_cloud_audit_AuthenticationInfo_descriptor;
@@ -250,7 +255,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
    * The name of the service account key used to create or exchange
    * credentials for authenticating the service account making the request.
    * This is a scheme-less URI full resource name. For example:
-   *
    * "//iam.googleapis.com/projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{key}"
    * </pre>
    *
@@ -277,7 +281,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
    * The name of the service account key used to create or exchange
    * credentials for authenticating the service account making the request.
    * This is a scheme-less URI full resource name. For example:
-   *
    * "//iam.googleapis.com/projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{key}"
    * </pre>
    *
@@ -793,6 +796,39 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
       if (((from_bitField0_ & 0x00000020) != 0)) {
         result.principalSubject_ = principalSubject_;
       }
+    }
+
+    @java.lang.Override
+    public Builder clone() {
+      return super.clone();
+    }
+
+    @java.lang.Override
+    public Builder setField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.setField(field, value);
+    }
+
+    @java.lang.Override
+    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      return super.clearField(field);
+    }
+
+    @java.lang.Override
+    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      return super.clearOneof(oneof);
+    }
+
+    @java.lang.Override
+    public Builder setRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
+      return super.setRepeatedField(field, index, value);
+    }
+
+    @java.lang.Override
+    public Builder addRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.addRepeatedField(field, value);
     }
 
     @java.lang.Override
@@ -1408,7 +1444,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * The name of the service account key used to create or exchange
      * credentials for authenticating the service account making the request.
      * This is a scheme-less URI full resource name. For example:
-     *
      * "//iam.googleapis.com/projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{key}"
      * </pre>
      *
@@ -1434,7 +1469,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * The name of the service account key used to create or exchange
      * credentials for authenticating the service account making the request.
      * This is a scheme-less URI full resource name. For example:
-     *
      * "//iam.googleapis.com/projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{key}"
      * </pre>
      *
@@ -1460,7 +1494,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * The name of the service account key used to create or exchange
      * credentials for authenticating the service account making the request.
      * This is a scheme-less URI full resource name. For example:
-     *
      * "//iam.googleapis.com/projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{key}"
      * </pre>
      *
@@ -1485,7 +1518,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * The name of the service account key used to create or exchange
      * credentials for authenticating the service account making the request.
      * This is a scheme-less URI full resource name. For example:
-     *
      * "//iam.googleapis.com/projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{key}"
      * </pre>
      *
@@ -1506,7 +1538,6 @@ public final class AuthenticationInfo extends com.google.protobuf.GeneratedMessa
      * The name of the service account key used to create or exchange
      * credentials for authenticating the service account making the request.
      * This is a scheme-less URI full resource name. For example:
-     *
      * "//iam.googleapis.com/projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{key}"
      * </pre>
      *

@@ -196,5 +196,5 @@ public interface DateTimeOrBuilder
    */
   com.google.type.TimeZoneOrBuilder getTimeZoneOrBuilder();
 
-  com.google.type.DateTime.TimeOffsetCase getTimeOffsetCase();
+  public com.google.type.DateTime.TimeOffsetCase getTimeOffsetCase();
 }

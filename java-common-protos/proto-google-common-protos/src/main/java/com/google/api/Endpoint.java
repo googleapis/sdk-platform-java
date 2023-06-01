@@ -26,9 +26,7 @@ package com.google.api;
  * APIs. It is commonly known as a service endpoint. A service may expose
  * any number of service endpoints, and all service endpoints share the same
  * service definition, such as quota limits and monitoring metrics.
- *
  * Example:
- *
  *     type: google.api.Service
  *     name: library-example.googleapis.com
  *     endpoints:
@@ -59,7 +57,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
 
   private Endpoint() {
     name_ = "";
-    aliases_ = com.google.protobuf.LazyStringArrayList.emptyList();
+    aliases_ = com.google.protobuf.LazyStringArrayList.EMPTY;
     target_ = "";
   }
 
@@ -67,6 +65,11 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new Endpoint();
+  }
+
+  @java.lang.Override
+  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
+    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -135,18 +138,15 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
   public static final int ALIASES_FIELD_NUMBER = 2;
 
   @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringArrayList aliases_ =
-      com.google.protobuf.LazyStringArrayList.emptyList();
+  private com.google.protobuf.LazyStringList aliases_;
   /**
    *
    *
    * <pre>
    * Unimplemented. Dot not use.
-   *
    * DEPRECATED: This field is no longer supported. Instead of using aliases,
    * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
    * of the intended aliases.
-   *
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
@@ -164,11 +164,9 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Unimplemented. Dot not use.
-   *
    * DEPRECATED: This field is no longer supported. Instead of using aliases,
    * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
    * of the intended aliases.
-   *
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
@@ -186,11 +184,9 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Unimplemented. Dot not use.
-   *
    * DEPRECATED: This field is no longer supported. Instead of using aliases,
    * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
    * of the intended aliases.
-   *
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
@@ -209,11 +205,9 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Unimplemented. Dot not use.
-   *
    * DEPRECATED: This field is no longer supported. Instead of using aliases,
    * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
    * of the intended aliases.
-   *
    * Additional names that this endpoint will be hosted on.
    * </pre>
    *
@@ -509,9 +503,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
    * APIs. It is commonly known as a service endpoint. A service may expose
    * any number of service endpoints, and all service endpoints share the same
    * service definition, such as quota limits and monitoring metrics.
-   *
    * Example:
-   *
    *     type: google.api.Service
    *     name: library-example.googleapis.com
    *     endpoints:
@@ -558,7 +550,8 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
       super.clear();
       bitField0_ = 0;
       name_ = "";
-      aliases_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      aliases_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      bitField0_ = (bitField0_ & ~0x00000002);
       target_ = "";
       allowCors_ = false;
       return this;
@@ -586,6 +579,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.Endpoint buildPartial() {
       com.google.api.Endpoint result = new com.google.api.Endpoint(this);
+      buildPartialRepeatedFields(result);
       if (bitField0_ != 0) {
         buildPartial0(result);
       }
@@ -593,14 +587,18 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
       return result;
     }
 
+    private void buildPartialRepeatedFields(com.google.api.Endpoint result) {
+      if (((bitField0_ & 0x00000002) != 0)) {
+        aliases_ = aliases_.getUnmodifiableView();
+        bitField0_ = (bitField0_ & ~0x00000002);
+      }
+      result.aliases_ = aliases_;
+    }
+
     private void buildPartial0(com.google.api.Endpoint result) {
       int from_bitField0_ = bitField0_;
       if (((from_bitField0_ & 0x00000001) != 0)) {
         result.name_ = name_;
-      }
-      if (((from_bitField0_ & 0x00000002) != 0)) {
-        aliases_.makeImmutable();
-        result.aliases_ = aliases_;
       }
       if (((from_bitField0_ & 0x00000004) != 0)) {
         result.target_ = target_;
@@ -608,6 +606,39 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
       if (((from_bitField0_ & 0x00000008) != 0)) {
         result.allowCors_ = allowCors_;
       }
+    }
+
+    @java.lang.Override
+    public Builder clone() {
+      return super.clone();
+    }
+
+    @java.lang.Override
+    public Builder setField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.setField(field, value);
+    }
+
+    @java.lang.Override
+    public Builder clearField(com.google.protobuf.Descriptors.FieldDescriptor field) {
+      return super.clearField(field);
+    }
+
+    @java.lang.Override
+    public Builder clearOneof(com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      return super.clearOneof(oneof);
+    }
+
+    @java.lang.Override
+    public Builder setRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, int index, java.lang.Object value) {
+      return super.setRepeatedField(field, index, value);
+    }
+
+    @java.lang.Override
+    public Builder addRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field, java.lang.Object value) {
+      return super.addRepeatedField(field, value);
     }
 
     @java.lang.Override
@@ -630,7 +661,7 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
       if (!other.aliases_.isEmpty()) {
         if (aliases_.isEmpty()) {
           aliases_ = other.aliases_;
-          bitField0_ |= 0x00000002;
+          bitField0_ = (bitField0_ & ~0x00000002);
         } else {
           ensureAliasesIsMutable();
           aliases_.addAll(other.aliases_);
@@ -821,25 +852,23 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
       return this;
     }
 
-    private com.google.protobuf.LazyStringArrayList aliases_ =
-        com.google.protobuf.LazyStringArrayList.emptyList();
+    private com.google.protobuf.LazyStringList aliases_ =
+        com.google.protobuf.LazyStringArrayList.EMPTY;
 
     private void ensureAliasesIsMutable() {
-      if (!aliases_.isModifiable()) {
+      if (!((bitField0_ & 0x00000002) != 0)) {
         aliases_ = new com.google.protobuf.LazyStringArrayList(aliases_);
+        bitField0_ |= 0x00000002;
       }
-      bitField0_ |= 0x00000002;
     }
     /**
      *
      *
      * <pre>
      * Unimplemented. Dot not use.
-     *
      * DEPRECATED: This field is no longer supported. Instead of using aliases,
      * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
      * of the intended aliases.
-     *
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
@@ -850,19 +879,16 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Deprecated
     public com.google.protobuf.ProtocolStringList getAliasesList() {
-      aliases_.makeImmutable();
-      return aliases_;
+      return aliases_.getUnmodifiableView();
     }
     /**
      *
      *
      * <pre>
      * Unimplemented. Dot not use.
-     *
      * DEPRECATED: This field is no longer supported. Instead of using aliases,
      * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
      * of the intended aliases.
-     *
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
@@ -880,11 +906,9 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Unimplemented. Dot not use.
-     *
      * DEPRECATED: This field is no longer supported. Instead of using aliases,
      * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
      * of the intended aliases.
-     *
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
@@ -903,11 +927,9 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Unimplemented. Dot not use.
-     *
      * DEPRECATED: This field is no longer supported. Instead of using aliases,
      * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
      * of the intended aliases.
-     *
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
@@ -926,11 +948,9 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Unimplemented. Dot not use.
-     *
      * DEPRECATED: This field is no longer supported. Instead of using aliases,
      * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
      * of the intended aliases.
-     *
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
@@ -948,7 +968,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
       }
       ensureAliasesIsMutable();
       aliases_.set(index, value);
-      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -957,11 +976,9 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Unimplemented. Dot not use.
-     *
      * DEPRECATED: This field is no longer supported. Instead of using aliases,
      * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
      * of the intended aliases.
-     *
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
@@ -978,7 +995,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
       }
       ensureAliasesIsMutable();
       aliases_.add(value);
-      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -987,11 +1003,9 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Unimplemented. Dot not use.
-     *
      * DEPRECATED: This field is no longer supported. Instead of using aliases,
      * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
      * of the intended aliases.
-     *
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
@@ -1005,7 +1019,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
     public Builder addAllAliases(java.lang.Iterable<java.lang.String> values) {
       ensureAliasesIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(values, aliases_);
-      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1014,11 +1027,9 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Unimplemented. Dot not use.
-     *
      * DEPRECATED: This field is no longer supported. Instead of using aliases,
      * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
      * of the intended aliases.
-     *
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
@@ -1029,9 +1040,8 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Deprecated
     public Builder clearAliases() {
-      aliases_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      aliases_ = com.google.protobuf.LazyStringArrayList.EMPTY;
       bitField0_ = (bitField0_ & ~0x00000002);
-      ;
       onChanged();
       return this;
     }
@@ -1040,11 +1050,9 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Unimplemented. Dot not use.
-     *
      * DEPRECATED: This field is no longer supported. Instead of using aliases,
      * please specify multiple [google.api.Endpoint][google.api.Endpoint] for each
      * of the intended aliases.
-     *
      * Additional names that this endpoint will be hosted on.
      * </pre>
      *
@@ -1062,7 +1070,6 @@ public final class Endpoint extends com.google.protobuf.GeneratedMessageV3
       checkByteStringIsUtf8(value);
       ensureAliasesIsMutable();
       aliases_.add(value);
-      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
