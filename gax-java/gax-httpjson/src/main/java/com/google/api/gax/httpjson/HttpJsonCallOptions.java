@@ -34,7 +34,6 @@ import com.google.auth.Credentials;
 import com.google.auto.value.AutoValue;
 import com.google.protobuf.TypeRegistry;
 import java.time.Duration;
-import java.util.Map;
 import javax.annotation.Nullable;
 import org.threeten.bp.Instant;
 
@@ -55,9 +54,6 @@ public abstract class HttpJsonCallOptions {
 
   @Nullable
   public abstract TypeRegistry getTypeRegistry();
-
-  @Nullable
-  public abstract Map<String, String> getRequestHeaderMap();
 
   public abstract Builder toBuilder();
 
@@ -94,11 +90,6 @@ public abstract class HttpJsonCallOptions {
       builder.setTypeRegistry(newTypeRegistry);
     }
 
-    Map<String, String> newRequestHeaderMap = inputOptions.getRequestHeaderMap();
-    if (newRequestHeaderMap != null) {
-      builder.setRequestHeaderMap(newRequestHeaderMap);
-    }
-
     return builder.build();
   }
 
@@ -111,8 +102,6 @@ public abstract class HttpJsonCallOptions {
     public abstract Builder setCredentials(Credentials value);
 
     public abstract Builder setTypeRegistry(TypeRegistry value);
-
-    public abstract Builder setRequestHeaderMap(Map<String, String> value);
 
     public abstract HttpJsonCallOptions build();
   }

@@ -32,9 +32,6 @@ package com.google.api.gax.httpjson;
 import com.google.api.core.AbstractApiFuture;
 import com.google.api.core.ApiFuture;
 import com.google.api.gax.rpc.ApiCallContext;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.threeten.bp.Duration;
@@ -52,21 +49,6 @@ class HttpJsonClientCalls {
 
     HttpJsonCallContext httpJsonContext = HttpJsonCallContext.createDefault().nullToSelf(context);
     HttpJsonCallOptions callOptions = httpJsonContext.getCallOptions();
-
-    Map<String, String> headerMap = callOptions.getRequestHeaderMap();
-    if (headerMap == null) {
-      headerMap = new HashMap<>();
-    }
-    for (Map.Entry<String, List<String>> extraHeaderEntrySet :
-        httpJsonContext.getExtraHeaders().entrySet()) {
-      List<String> headerValueList = extraHeaderEntrySet.getValue();
-      // HeaderValueList is always non-null. Check that it contains at least one value.
-      // Should only ever contain one value, but take the first one if there are multiple.
-      if (headerValueList.size() > 0) {
-        headerMap.put(extraHeaderEntrySet.getKey(), headerValueList.get(0));
-      }
-    }
-    callOptions = callOptions.toBuilder().setRequestHeaderMap(headerMap).build();
 
     // Use the context's timeout instead of calculating a future deadline with the System clock.
     // The timeout value is calculated from TimedAttemptSettings which accounts for the
@@ -95,10 +77,14 @@ class HttpJsonClientCalls {
   }
 
   static <RequestT, ResponseT> ApiFuture<ResponseT> futureUnaryCall(
-      HttpJsonClientCall<RequestT, ResponseT> clientCall, RequestT request) {
+      HttpJsonClientCall<RequestT, ResponseT> clientCall,
+      RequestT request,
+      HttpJsonCallContext context) {
     // Start the call
     HttpJsonFuture<ResponseT> future = new HttpJsonFuture<>(clientCall);
-    clientCall.start(new FutureListener<>(future), HttpJsonMetadata.newBuilder().build());
+    clientCall.start(
+        new FutureListener<>(future),
+        HttpJsonMetadata.newBuilder().build().withHeaders(context.getExtraHeaders()));
 
     // Send the request
     try {
