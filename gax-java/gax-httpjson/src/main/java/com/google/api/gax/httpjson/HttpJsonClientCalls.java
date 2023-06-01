@@ -60,8 +60,9 @@ class HttpJsonClientCalls {
     for (Map.Entry<String, List<String>> extraHeaderEntrySet :
         httpJsonContext.getExtraHeaders().entrySet()) {
       List<String> headerValueList = extraHeaderEntrySet.getValue();
-      // Check that the list is non-null and contains a value
-      if (headerValueList != null && headerValueList.size() > 0) {
+      // HeaderValueList is always non-null. Check that it contains at least one value.
+      // Should only ever contain one value, but take the first one if there are multiple.
+      if (headerValueList.size() > 0) {
         headerMap.put(extraHeaderEntrySet.getKey(), headerValueList.get(0));
       }
     }

@@ -62,8 +62,14 @@ class GrpcServerStreamingRequestParamCallable<RequestT, ResponseT>
   }
 
   private ApiCallContext contextWithParamsEncoder(RequestT request, ApiCallContext inputContext) {
-    return GrpcCallContext.createDefault()
-        .nullToSelf(inputContext)
-        .withRequestParamsDynamicHeaderOption(paramsEncoder.encode(request));
+    ApiCallContext newCallContext = inputContext;
+    String encodedHeader = paramsEncoder.encode(request);
+    if (!encodedHeader.isEmpty()) {
+      newCallContext =
+          GrpcCallContext.createDefault()
+              .nullToSelf(inputContext)
+              .withRequestParamsDynamicHeaderOption(paramsEncoder.encode(request));
+    }
+    return newCallContext;
   }
 }
