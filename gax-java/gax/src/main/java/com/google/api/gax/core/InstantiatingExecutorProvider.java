@@ -54,6 +54,9 @@ public abstract class InstantiatingExecutorProvider implements ExecutorProvider 
           return thread;
         }
       };
+  private static final int MIN_THREAD_AMOUNT = 4;
+  // Attempt to choose a reasonable default core pool multiplier for IO Bound operations
+  private static final int IO_THREAD_MULTIPLIER = 50;
 
   // Package-private constructor prevents others from subclassing.
   InstantiatingExecutorProvider() {}
@@ -76,9 +79,22 @@ public abstract class InstantiatingExecutorProvider implements ExecutorProvider 
 
   public abstract Builder toBuilder();
 
+  // Used for CPU Bound tasks as the thread count is at max the number of processors
+  // Thread count minimum is at least `MIN_CPU_AMOUNT`
   public static Builder newBuilder() {
     int numCpus = Runtime.getRuntime().availableProcessors();
-    int numThreads = Math.max(4, numCpus);
+    int numThreads = Math.max(MIN_THREAD_AMOUNT, numCpus);
+
+    return new AutoValue_InstantiatingExecutorProvider.Builder()
+        .setExecutorThreadCount(numThreads)
+        .setThreadFactory(DEFAULT_THREAD_FACTORY);
+  }
+
+  // Used for IO Bound tasks as the thread count scales with the number of processors
+  // Thread count minimum is at least `MIN_CPU_AMOUNT` * `IO_THREAD_MULTIPLIER`
+  public static Builder newIOBuilder() {
+    int numCpus = Runtime.getRuntime().availableProcessors();
+    int numThreads = IO_THREAD_MULTIPLIER * Math.max(MIN_THREAD_AMOUNT, numCpus);
 
     return new AutoValue_InstantiatingExecutorProvider.Builder()
         .setExecutorThreadCount(numThreads)
