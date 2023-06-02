@@ -20,7 +20,8 @@ import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
-import com.google.api.generator.test.framework.Utils;
+import com.google.api.generator.test.framework.GoldenFileWriter;
+import com.google.api.generator.test.protoloader.RestTestProtoLoader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.junit.Test;
@@ -35,9 +36,10 @@ public class ServiceClientTestClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "ComplianceClientTest.golden", visitor.write());
+    GoldenFileWriter.saveCodegenToFile(
+        this.getClass(), "ComplianceClientTest.golden", visitor.write());
     Path goldenFilePath =
-        Paths.get(Utils.getGoldenDir(this.getClass()), "ComplianceClientTest.golden");
+        Paths.get(GoldenFileWriter.getGoldenDir(this.getClass()), "ComplianceClientTest.golden");
     assertCodeEquals(goldenFilePath, visitor.write());
   }
 }

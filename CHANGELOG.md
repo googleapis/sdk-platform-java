@@ -1,5 +1,32 @@
 # Changelog
 
+## [2.20.1](https://github.com/googleapis/sdk-platform-java/compare/v2.20.0...v2.20.1) (2023-05-25)
+
+
+### Bug Fixes
+
+* Allow quota project to be used in combination with null credentials ([#1688](https://github.com/googleapis/sdk-platform-java/issues/1688)) ([cb07bd4](https://github.com/googleapis/sdk-platform-java/commit/cb07bd405b448fbef51367d1b03d4fe9eab54504))
+
+## [2.20.0](https://github.com/googleapis/sdk-platform-java/compare/v2.19.0...v2.20.0) (2023-05-24)
+
+
+### Features
+
+* Create additional tag on release for google-cloud-shared-dependencies ([#1692](https://github.com/googleapis/sdk-platform-java/issues/1692)) ([c0ea245](https://github.com/googleapis/sdk-platform-java/commit/c0ea24588de744a46600fcf6f0f3c6414549e12d))
+* Make stream wait timeout a first class citizen ([#1473](https://github.com/googleapis/sdk-platform-java/issues/1473)) ([bc8a4ad](https://github.com/googleapis/sdk-platform-java/commit/bc8a4ad864f4d6f2b9d98e5fe296320fea19e74b))
+
+
+### Bug Fixes
+
+* Fix release tag workflow to fetch all tags first ([#1700](https://github.com/googleapis/sdk-platform-java/issues/1700)) ([99b0c96](https://github.com/googleapis/sdk-platform-java/commit/99b0c967fbed22967cd072825de403ed9bac0209))
+* Update tag workflow ([#1699](https://github.com/googleapis/sdk-platform-java/issues/1699)) ([a988fe7](https://github.com/googleapis/sdk-platform-java/commit/a988fe7dcfc8568c9256c22b5df907b16e5eea5a))
+
+
+### Dependencies
+
+* Update protobuf dependencies to v3.23.1 and gprc to 1.55.1 ([#1698](https://github.com/googleapis/sdk-platform-java/issues/1698)) ([1f56175](https://github.com/googleapis/sdk-platform-java/commit/1f561754ed9e797f639cbdfabe070b86b645281b))
+* Update showcase version to 0.28.1 ([#1673](https://github.com/googleapis/sdk-platform-java/issues/1673)) ([9a120e9](https://github.com/googleapis/sdk-platform-java/commit/9a120e98524018fa54ae5dcbe2fb0f524c2a0f1b))
+
 ## [2.19.0](https://github.com/googleapis/gapic-generator-java/compare/v2.18.0...v2.19.0) (2023-05-09)
 
 

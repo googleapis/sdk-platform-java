@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.Sample;
-import com.google.api.generator.testutils.LineFormatter;
+import com.google.api.generator.test.utils.LineFormatter;
 import java.util.Optional;
 import org.junit.Test;
 
