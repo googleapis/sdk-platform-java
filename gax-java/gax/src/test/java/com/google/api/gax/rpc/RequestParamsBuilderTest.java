@@ -55,30 +55,30 @@ public class RequestParamsBuilderTest {
         getRoutingHeaders(
             "projects/**/{table_location=instances/*}",
             "projects/my_cozy_home/instances/living_room");
-    assertThat(actual).containsExactly("table_location", "instances%2Fliving_room");
+    assertThat(actual).containsExactly("table_location", "instances/living_room");
   }
 
   @Test
   public void add_twoParams_happyPath() {
     requestParamsBuilder.add("table_location", "instances/living_room");
     Map<String, String> actual = requestParamsBuilder.build();
-    assertThat(actual).containsExactly("table_location", "instances%2Fliving_room");
+    assertThat(actual).containsExactly("table_location", "instances/living_room");
   }
 
   @Test
-  public void add_encodedHeaderAndEncodedValue() {
+  public void add_containsNonEncodedHeaderAndValue() {
     PathTemplate pathTemplate = PathTemplate.create("projects/**/{table$$_++location=instances/*}");
     requestParamsBuilder.add(
         "projects/my_cozy_home/instances/living_room", "table$$_++location", pathTemplate);
     Map<String, String> actual = requestParamsBuilder.build();
-    assertThat(actual).containsExactly("table%24%24_%2B%2Blocation", "instances%2Fliving_room");
+    assertThat(actual).containsExactly("table$$_++location", "instances/living_room");
   }
 
   @Test
-  public void add_twoParams_encodedHeaderAndEncodedValue() {
+  public void add_twoParams_containsNonEncodedHeaderAndValue() {
     requestParamsBuilder.add("table$$_++location", "instances/living_room");
     Map<String, String> actual = requestParamsBuilder.build();
-    assertThat(actual).containsExactly("table%24%24_%2B%2Blocation", "instances%2Fliving_room");
+    assertThat(actual).containsExactly("table$$_++location", "instances/living_room");
   }
 
   @Test
@@ -102,9 +102,9 @@ public class RequestParamsBuilderTest {
     assertThat(actual)
         .containsExactly(
             "table_location",
-            "projects%2Fmy_cozy_home%2Finstances%2Fliving_room",
+            "projects/my_cozy_home/instances/living_room",
             "routing_id",
-            "projects%2Fmy_cozy_home%2Finstances%2Fliving_room");
+            "projects/my_cozy_home/instances/living_room");
   }
 
   @Test

@@ -29,7 +29,6 @@
  */
 package com.google.api.gax.rpc;
 
-import com.google.api.client.util.escape.PercentEscaper;
 import com.google.api.core.BetaApi;
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.common.collect.ImmutableMap;
@@ -41,9 +40,6 @@ import java.util.Map;
  */
 @BetaApi
 public class RequestParamsBuilder {
-
-  private static final PercentEscaper PERCENT_ESCAPER = new PercentEscaper(".-~_");
-
   private final ImmutableMap.Builder<String, String> paramsBuilder;
 
   private RequestParamsBuilder() {
@@ -66,14 +62,12 @@ public class RequestParamsBuilder {
    * @param pathTemplate {@link PathTemplate} the path template used for match-and-extract
    */
   public void add(String fieldValue, String headerKey, PathTemplate pathTemplate) {
-    if (fieldValue == null || fieldValue.isEmpty()) {
+    if (checkInvalidHeaderValues(fieldValue, headerKey)) {
       return;
     }
     Map<String, String> matchedValues = pathTemplate.match(fieldValue);
     if (matchedValues != null && matchedValues.containsKey(headerKey)) {
-      String encodedKey = percentEncodeString(headerKey);
-      String encodedValue = percentEncodeString(matchedValues.get(headerKey));
-      paramsBuilder.put(encodedKey, encodedValue);
+      paramsBuilder.put(headerKey, matchedValues.get(headerKey));
     }
   }
 
@@ -86,17 +80,14 @@ public class RequestParamsBuilder {
    * @param fieldValue the field value from a request
    */
   public void add(String headerKey, String fieldValue) {
-    if (headerKey == null || headerKey.isEmpty() || fieldValue == null || fieldValue.isEmpty()) {
+    if (checkInvalidHeaderValues(fieldValue, headerKey)) {
       return;
     }
-    String encodedKey = percentEncodeString(headerKey);
-    String encodedValue = percentEncodeString(fieldValue);
-    paramsBuilder.put(encodedKey, encodedValue);
+    paramsBuilder.put(headerKey, fieldValue);
   }
 
-  // Percent encode the value passed in
-  private String percentEncodeString(String value) {
-    return PERCENT_ESCAPER.escape(value);
+  private boolean checkInvalidHeaderValues(String fieldValue, String headerKey) {
+    return headerKey == null || headerKey.isEmpty() || fieldValue == null || fieldValue.isEmpty();
   }
 
   public Map<String, String> build() {

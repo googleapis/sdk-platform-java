@@ -54,8 +54,7 @@ class HttpJsonUnaryRequestParamCallable<RequestT, ResponseT>
       UnaryCallable<RequestT, ResponseT> callable,
       RequestParamsExtractor<RequestT> paramsExtractor) {
     this.callable = Preconditions.checkNotNull(callable);
-    this.paramsEncoder =
-        new RequestUrlParamsEncoder<>(Preconditions.checkNotNull(paramsExtractor), false);
+    this.paramsEncoder = new RequestUrlParamsEncoder<>(Preconditions.checkNotNull(paramsExtractor));
   }
 
   @Override

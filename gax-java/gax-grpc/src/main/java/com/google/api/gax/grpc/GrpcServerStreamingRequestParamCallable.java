@@ -51,8 +51,7 @@ class GrpcServerStreamingRequestParamCallable<RequestT, ResponseT>
       ServerStreamingCallable<RequestT, ResponseT> callable,
       RequestParamsExtractor<RequestT> paramsExtractor) {
     this.callable = Preconditions.checkNotNull(callable);
-    this.paramsEncoder =
-        new RequestUrlParamsEncoder<>(Preconditions.checkNotNull(paramsExtractor), false);
+    this.paramsEncoder = new RequestUrlParamsEncoder<>(Preconditions.checkNotNull(paramsExtractor));
   }
 
   @Override
@@ -68,7 +67,7 @@ class GrpcServerStreamingRequestParamCallable<RequestT, ResponseT>
       newCallContext =
           GrpcCallContext.createDefault()
               .nullToSelf(inputContext)
-              .withRequestParamsDynamicHeaderOption(paramsEncoder.encode(request));
+              .withRequestParamsDynamicHeaderOption(encodedHeader);
     }
     return newCallContext;
   }
