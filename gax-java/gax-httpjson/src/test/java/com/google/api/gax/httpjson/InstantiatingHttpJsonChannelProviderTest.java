@@ -131,8 +131,9 @@ public class InstantiatingHttpJsonChannelProviderTest extends AbstractMtlsTransp
   // Ensure that the user's executor is used by the ManagedHttpJsonChannel
   @Test
   public void managedChannelUsesCustomExecutor() throws IOException {
-    // Custom executor to use
+    // Custom executor to use -- Lifecycle must be managed by this test
     ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
+    executor.shutdown();
 
     InstantiatingHttpJsonChannelProvider instantiatingHttpJsonChannelProvider =
         InstantiatingHttpJsonChannelProvider.newBuilder()
