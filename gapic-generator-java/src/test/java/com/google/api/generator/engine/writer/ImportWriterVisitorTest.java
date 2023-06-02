@@ -430,7 +430,7 @@ public class ImportWriterVisitorTest {
   }
 
   @Test
-  public void writeImport_nestedClasses() {
+  public void writeVaporReferenceImport_outermostForNestedClass() {
     VaporReference nestedVaporReference =
         VaporReference.builder()
             .setName("Inner")
@@ -440,9 +440,10 @@ public class ImportWriterVisitorTest {
 
     TypeNode.withReference(nestedVaporReference).accept(writerVisitor);
     assertEquals("import com.google.testgapic.v1beta1.Outer;\n\n", writerVisitor.write());
+  }
 
-    writerVisitor.clear();
-
+  @Test
+  public void writeConcreteReferenceImport_outermostForNestedClass() {
     ConcreteReference nestedConcreteReference =
         ConcreteReference.withClazz(Outer.Middle.Inner.class);
     TypeNode.withReference(nestedConcreteReference).accept(writerVisitor);

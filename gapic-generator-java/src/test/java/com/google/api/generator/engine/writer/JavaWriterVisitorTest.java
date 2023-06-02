@@ -131,7 +131,7 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
-  public void writeReferenceType_nestedClasses() {
+  public void writeVaporReferenceType_nestedClasses() {
     VaporReference nestedVaporReference =
         VaporReference.builder()
             .setName("Inner")
@@ -140,9 +140,10 @@ public class JavaWriterVisitorTest {
             .build();
     TypeNode.withReference(nestedVaporReference).accept(writerVisitor);
     assertEquals("Outer.Middle.Inner", writerVisitor.write());
+  }
 
-    writerVisitor.clear();
-
+  @Test
+  public void writeConcreteReferenceType_nestedClasses() {
     ConcreteReference nestedConcreteReference =
         ConcreteReference.withClazz(Outer.Middle.Inner.class);
     TypeNode.withReference(nestedConcreteReference).accept(writerVisitor);
