@@ -98,7 +98,7 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
     try {
       // Only shutdown the executor if it was created by Gax. External executors
       // should be managed by the user.
-      if (usingDefaultExecutor && executor instanceof ExecutorService) {
+      if (shouldManageExecutor()) {
         ((ExecutorService) executor).shutdown();
       }
       deadlineScheduledExecutorService.shutdown();
@@ -115,7 +115,7 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
     // TODO(lawrenceqiu): Expose an isShutdown() method for HttpTransport
     boolean isShutdown = isTransportShutdown && deadlineScheduledExecutorService.isShutdown();
     // Check that the Gax's ExecutorService is shutdown as well
-    if (usingDefaultExecutor && executor instanceof ExecutorService) {
+    if (shouldManageExecutor()) {
       isShutdown = isShutdown && ((ExecutorService) executor).isShutdown();
     }
     return isShutdown;
@@ -125,7 +125,7 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
   public boolean isTerminated() {
     boolean isTerminated = deadlineScheduledExecutorService.isTerminated();
     // Check that the Gax's ExecutorService is terminated as well
-    if (usingDefaultExecutor && executor instanceof ExecutorService) {
+    if (shouldManageExecutor()) {
       isTerminated = isTerminated && ((ExecutorService) executor).isTerminated();
     }
     return isTerminated;
@@ -140,7 +140,7 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
     try {
       // Only shutdown the executor if it was created by Gax. External executors
       // should be managed by the user.
-      if (usingDefaultExecutor && executor instanceof ExecutorService) {
+      if (shouldManageExecutor()) {
         ((ExecutorService) executor).shutdownNow();
       }
       deadlineScheduledExecutorService.shutdownNow();
@@ -170,6 +170,10 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
     }
     awaitTimeNanos = endTimeNanos - System.nanoTime();
     return deadlineScheduledExecutorService.awaitTermination(awaitTimeNanos, unit);
+  }
+
+  private boolean shouldManageExecutor() {
+    return usingDefaultExecutor && executor instanceof ExecutorService;
   }
 
   @Override
