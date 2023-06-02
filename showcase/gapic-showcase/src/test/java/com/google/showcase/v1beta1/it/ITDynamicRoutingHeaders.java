@@ -15,6 +15,9 @@
  */
 package com.google.showcase.v1beta1.it;
 
+import static com.google.api.gax.rpc.internal.Headers.DYNAMIC_ROUTING_HEADER_KEY;
+import static com.google.common.truth.Truth.assertThat;
+
 import com.google.api.gax.httpjson.ApiMethodDescriptor;
 import com.google.api.gax.httpjson.ForwardingHttpJsonClientCall;
 import com.google.api.gax.httpjson.ForwardingHttpJsonClientCallListener;
@@ -34,16 +37,12 @@ import io.grpc.ClientInterceptor;
 import io.grpc.ForwardingClientCall;
 import io.grpc.Metadata;
 import io.grpc.MethodDescriptor;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static com.google.api.gax.rpc.internal.Headers.DYNAMIC_ROUTING_HEADER_KEY;
-import static com.google.common.truth.Truth.assertThat;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 public class ITDynamicRoutingHeaders {
   private static final String SPLIT_TOKEN = "&";
@@ -105,7 +104,8 @@ public class ITDynamicRoutingHeaders {
 
           super.start(forwardingResponseListener, requestHeaders);
           if (requestHeaders.getHeaders().containsKey(DYNAMIC_ROUTING_HEADER_KEY)) {
-            requestParam = String.valueOf(requestHeaders.getHeaders().get(DYNAMIC_ROUTING_HEADER_KEY));
+            requestParam =
+                String.valueOf(requestHeaders.getHeaders().get(DYNAMIC_ROUTING_HEADER_KEY));
           }
         }
       };
