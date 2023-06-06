@@ -31,7 +31,6 @@
 package com.google.api.gax.rpc;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
 import com.google.common.collect.ImmutableMap;
@@ -42,87 +41,50 @@ import org.mockito.Mockito;
 
 public class RequestUrlParamsEncoderTest {
 
+  private final String key = "key";
+
   @Test
-  public void testEncodeValidationSuccess() throws Exception {
-    @SuppressWarnings("unchecked")
-    RequestParamsExtractor<Integer> extractor =
-        getMockExtractor(2, ImmutableMap.of("param1", "value+1", "param2", "value+2+%26"));
+  public void testEncode() {
+    RequestParamsExtractor<String> extractor = getMockExtractor(ImmutableMap.of("param", "value"));
+    RequestUrlParamsEncoder<String> encoder = new RequestUrlParamsEncoder<>(extractor);
+    String encodedParams = encoder.encode(key);
 
-    RequestUrlParamsEncoder<Integer> encoder = new RequestUrlParamsEncoder<>(extractor, true);
-    String encodedParams = encoder.encode(2);
-
-    assertEquals("param1=value+1&param2=value+2+%26", encodedParams);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testEncodeValidationFail() throws Exception {
-    RequestParamsExtractor<Integer> extractor =
-        getMockExtractor(1, ImmutableMap.of("param1", "value+1", "param2", "value+2+&"));
-    RequestUrlParamsEncoder<Integer> encoder = new RequestUrlParamsEncoder<>(extractor, true);
-    encoder.encode(1);
+    assertEquals("param=value", encodedParams);
   }
 
   @Test
-  public void testEncodeNoValidationSuccess() throws Exception {
-    RequestParamsExtractor<Integer> extractor =
-        getMockExtractor(1, ImmutableMap.of("param1", "value+1", "param2", "value+2+&"));
-    RequestUrlParamsEncoder<Integer> encoder = new RequestUrlParamsEncoder<>(extractor, false);
-    String encodedParams = encoder.encode(1);
+  public void testEncode_multipleEntriesConcatenation() {
+    RequestParamsExtractor<String> extractor =
+        getMockExtractor(ImmutableMap.of("param1", "value1", "param2", "value2"));
+    RequestUrlParamsEncoder<String> encoder = new RequestUrlParamsEncoder<>(extractor);
+    String encodedParams = encoder.encode(key);
 
-    assertEquals("param1=value+1&param2=value+2+&", encodedParams);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void testEncodeNullName() throws Exception {
-    RequestParamsExtractor<Integer> extractor =
-        getMockExtractor(1, Collections.singletonMap((String) null, "value1"));
-    RequestUrlParamsEncoder<Integer> encoder = new RequestUrlParamsEncoder<>(extractor, false);
-    encoder.encode(1);
+    assertEquals("param1=value1&param2=value2", encodedParams);
   }
 
   @Test
-  public void testEncodeNullValue() throws Exception {
-    RequestParamsExtractor<Integer> extractor =
-        getMockExtractor(1, Collections.singletonMap("param1", (String) null));
-    RequestUrlParamsEncoder<Integer> encoder = new RequestUrlParamsEncoder<>(extractor, false);
-    String encodedParams = encoder.encode(1);
+  public void testEncode_multipleEntriesConcatenation_encodedKeyAndValues() {
+    RequestParamsExtractor<String> extractor =
+        getMockExtractor(ImmutableMap.of("param1!@#", "value+1", "param2()", "value+2+&"));
+    RequestUrlParamsEncoder<String> encoder = new RequestUrlParamsEncoder<>(extractor);
+    String encodedParams = encoder.encode(key);
+
+    assertEquals("param1%21%40%23=value%2B1&param2%28%29=value%2B2%2B%26", encodedParams);
+  }
+
+  @Test
+  public void testEncodeEmptyMap() {
+    RequestParamsExtractor<String> extractor = getMockExtractor(Collections.emptyMap());
+    RequestUrlParamsEncoder<String> encoder = new RequestUrlParamsEncoder<>(extractor);
+    String encodedParams = encoder.encode(key);
     assertEquals("", encodedParams);
   }
 
-  @Test
-  public void testEncodeEmptyValue() throws Exception {
-    RequestParamsExtractor<Integer> extractor =
-        getMockExtractor(1, Collections.singletonMap("param1", ""));
-    RequestUrlParamsEncoder<Integer> encoder = new RequestUrlParamsEncoder<>(extractor, false);
-    String encodedParams = encoder.encode(1);
-    assertEquals("param1=", encodedParams);
-  }
-
-  @Test
-  public void testEncodeNullAndEmptyParams() throws Exception {
-    RequestParamsExtractor<Integer> extractor =
-        getMockExtractor(1, Collections.<String, String>emptyMap());
-    RequestUrlParamsEncoder<Integer> encoder = new RequestUrlParamsEncoder<>(extractor, false);
-    String encodedParams = encoder.encode(1);
-    assertEquals("", encodedParams);
-
-    extractor = getMockExtractor(1, null);
-    encoder = new RequestUrlParamsEncoder<>(extractor, false);
-    NullPointerException exception = null;
-    try {
-      encoder.encode(1);
-    } catch (NullPointerException e) {
-      exception = e;
-    }
-    assertNotNull(exception);
-  }
-
-  private RequestParamsExtractor<Integer> getMockExtractor(
-      Integer input, Map<String, String> output) {
+  private RequestParamsExtractor<String> getMockExtractor(Map<String, String> output) {
     @SuppressWarnings("unchecked")
-    RequestParamsExtractor<Integer> extractor =
-        (RequestParamsExtractor<Integer>) Mockito.mock(RequestParamsExtractor.class);
-    when(extractor.extract(input)).thenReturn(output);
+    RequestParamsExtractor<String> extractor =
+        (RequestParamsExtractor<String>) Mockito.mock(RequestParamsExtractor.class);
+    when(extractor.extract(key)).thenReturn(output);
     return extractor;
   }
 }

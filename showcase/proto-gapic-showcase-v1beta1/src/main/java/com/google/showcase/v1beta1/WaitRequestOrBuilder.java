@@ -118,7 +118,7 @@ public interface WaitRequestOrBuilder extends
    */
   com.google.showcase.v1beta1.WaitResponseOrBuilder getSuccessOrBuilder();
 
-  com.google.showcase.v1beta1.WaitRequest.EndCase getEndCase();
+  public com.google.showcase.v1beta1.WaitRequest.EndCase getEndCase();
 
-  com.google.showcase.v1beta1.WaitRequest.ResponseCase getResponseCase();
+  public com.google.showcase.v1beta1.WaitRequest.ResponseCase getResponseCase();
 }

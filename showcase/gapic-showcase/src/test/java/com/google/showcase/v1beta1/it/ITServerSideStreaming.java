@@ -34,31 +34,36 @@ import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import io.grpc.ManagedChannelBuilder;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.threeten.bp.Duration;
 
 public class ITServerSideStreaming {
 
-  private EchoClient grpcClient;
-  private EchoClient httpjsonClient;
+  private static EchoClient grpcClient;
+  private static EchoClient httpjsonClient;
 
-  @Before
-  public void createClients() throws Exception {
+  @BeforeClass
+  public static void createClients() throws Exception {
     // Create gRPC Echo Client
     grpcClient = TestClientInitializer.createGrpcEchoClient();
     // Create Http JSON Echo Client
     httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
   }
 
-  @After
-  public void destroyClient() {
+  @AfterClass
+  public static void destroyClients() throws InterruptedException {
     grpcClient.close();
     httpjsonClient.close();
+
+    grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+    httpjsonClient.awaitTermination(
+        TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
   @Test

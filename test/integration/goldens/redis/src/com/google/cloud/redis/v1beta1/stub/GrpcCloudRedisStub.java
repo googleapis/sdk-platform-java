@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,7 @@ import com.google.api.gax.grpc.GrpcCallSettings;
 import com.google.api.gax.grpc.GrpcStubCallableFactory;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.OperationCallable;
+import com.google.api.gax.rpc.RequestParamsBuilder;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.redis.v1beta1.CreateInstanceRequest;
 import com.google.cloud.redis.v1beta1.DeleteInstanceRequest;
@@ -40,7 +41,6 @@ import com.google.cloud.redis.v1beta1.ListInstancesResponse;
 import com.google.cloud.redis.v1beta1.RescheduleMaintenanceRequest;
 import com.google.cloud.redis.v1beta1.UpdateInstanceRequest;
 import com.google.cloud.redis.v1beta1.UpgradeInstanceRequest;
-import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.Operation;
 import com.google.longrunning.stub.GrpcOperationsStub;
 import com.google.protobuf.Any;
@@ -249,9 +249,9 @@ public class GrpcCloudRedisStub extends CloudRedisStub {
             .setMethodDescriptor(listInstancesMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("parent", String.valueOf(request.getParent()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("parent", String.valueOf(request.getParent()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<GetInstanceRequest, Instance> getInstanceTransportSettings =
@@ -259,9 +259,9 @@ public class GrpcCloudRedisStub extends CloudRedisStub {
             .setMethodDescriptor(getInstanceMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<GetInstanceAuthStringRequest, InstanceAuthString>
@@ -270,9 +270,9 @@ public class GrpcCloudRedisStub extends CloudRedisStub {
                 .setMethodDescriptor(getInstanceAuthStringMethodDescriptor)
                 .setParamsExtractor(
                     request -> {
-                      ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                      params.put("name", String.valueOf(request.getName()));
-                      return params.build();
+                      RequestParamsBuilder builder = RequestParamsBuilder.create();
+                      builder.add("name", String.valueOf(request.getName()));
+                      return builder.build();
                     })
                 .build();
     GrpcCallSettings<CreateInstanceRequest, Operation> createInstanceTransportSettings =
@@ -280,9 +280,9 @@ public class GrpcCloudRedisStub extends CloudRedisStub {
             .setMethodDescriptor(createInstanceMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("parent", String.valueOf(request.getParent()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("parent", String.valueOf(request.getParent()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<UpdateInstanceRequest, Operation> updateInstanceTransportSettings =
@@ -290,9 +290,9 @@ public class GrpcCloudRedisStub extends CloudRedisStub {
             .setMethodDescriptor(updateInstanceMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("instance.name", String.valueOf(request.getInstance().getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("instance.name", String.valueOf(request.getInstance().getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<UpgradeInstanceRequest, Operation> upgradeInstanceTransportSettings =
@@ -300,9 +300,9 @@ public class GrpcCloudRedisStub extends CloudRedisStub {
             .setMethodDescriptor(upgradeInstanceMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<ImportInstanceRequest, Operation> importInstanceTransportSettings =
@@ -310,9 +310,9 @@ public class GrpcCloudRedisStub extends CloudRedisStub {
             .setMethodDescriptor(importInstanceMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<ExportInstanceRequest, Operation> exportInstanceTransportSettings =
@@ -320,9 +320,9 @@ public class GrpcCloudRedisStub extends CloudRedisStub {
             .setMethodDescriptor(exportInstanceMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<FailoverInstanceRequest, Operation> failoverInstanceTransportSettings =
@@ -330,9 +330,9 @@ public class GrpcCloudRedisStub extends CloudRedisStub {
             .setMethodDescriptor(failoverInstanceMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<DeleteInstanceRequest, Operation> deleteInstanceTransportSettings =
@@ -340,9 +340,9 @@ public class GrpcCloudRedisStub extends CloudRedisStub {
             .setMethodDescriptor(deleteInstanceMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<RescheduleMaintenanceRequest, Operation>
@@ -351,9 +351,9 @@ public class GrpcCloudRedisStub extends CloudRedisStub {
                 .setMethodDescriptor(rescheduleMaintenanceMethodDescriptor)
                 .setParamsExtractor(
                     request -> {
-                      ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                      params.put("name", String.valueOf(request.getName()));
-                      return params.build();
+                      RequestParamsBuilder builder = RequestParamsBuilder.create();
+                      builder.add("name", String.valueOf(request.getName()));
+                      return builder.build();
                     })
                 .build();
 

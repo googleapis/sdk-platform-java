@@ -219,7 +219,7 @@ public interface BlurbOrBuilder extends
   com.google.protobuf.ByteString
       getLegacyUserIdBytes();
 
-  com.google.showcase.v1beta1.Blurb.ContentCase getContentCase();
+  public com.google.showcase.v1beta1.Blurb.ContentCase getContentCase();
 
-  com.google.showcase.v1beta1.Blurb.LegacyIdCase getLegacyIdCase();
+  public com.google.showcase.v1beta1.Blurb.LegacyIdCase getLegacyIdCase();
 }

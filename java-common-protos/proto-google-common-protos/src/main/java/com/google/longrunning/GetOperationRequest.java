@@ -47,11 +47,6 @@ public final class GetOperationRequest extends com.google.protobuf.GeneratedMess
     return new GetOperationRequest();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.longrunning.OperationsProto
         .internal_static_google_longrunning_GetOperationRequest_descriptor;

@@ -307,7 +307,7 @@ message MethodSettings {
   // long-running operation pattern.
   // All default values below are from those used in the client library
   // generators (e.g.
-  // [Java](https://github.com/googleapis/sdk-platform-java/blob/04c2faa191a9b5a10b92392fe8482279c4404803/src/main/java/com/google/api/generator/gapic/composer/common/RetrySettingsComposer.java)).
+  // [Java](https://github.com/googleapis/gapic-generator-java/blob/04c2faa191a9b5a10b92392fe8482279c4404803/src/main/java/com/google/api/generator/gapic/composer/common/RetrySettingsComposer.java)).
   message LongRunning {
     // Initial delay after which the first poll request will be made.
     // Default value: 5 seconds.

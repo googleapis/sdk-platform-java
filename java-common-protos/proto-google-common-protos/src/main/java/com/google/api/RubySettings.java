@@ -45,11 +45,6 @@ public final class RubySettings extends com.google.protobuf.GeneratedMessageV3
     return new RubySettings();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.ClientProto.internal_static_google_api_RubySettings_descriptor;
   }

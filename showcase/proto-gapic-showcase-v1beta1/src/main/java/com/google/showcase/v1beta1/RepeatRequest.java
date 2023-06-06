@@ -27,6 +27,11 @@ private static final long serialVersionUID = 0L;
     return new RepeatRequest();
   }
 
+  @java.lang.Override
+  public final com.google.protobuf.UnknownFieldSet
+  getUnknownFields() {
+    return this.unknownFields;
+  }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
     return com.google.showcase.v1beta1.ComplianceOuterClass.internal_static_google_showcase_v1beta1_RepeatRequest_descriptor;
@@ -514,13 +519,11 @@ private static final long serialVersionUID = 0L;
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
-
   public static com.google.showcase.v1beta1.RepeatRequest parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
-
   public static com.google.showcase.v1beta1.RepeatRequest parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -683,6 +686,38 @@ private static final long serialVersionUID = 0L;
       result.bitField0_ |= to_bitField0_;
     }
 
+    @java.lang.Override
+    public Builder clone() {
+      return super.clone();
+    }
+    @java.lang.Override
+    public Builder setField(
+        com.google.protobuf.Descriptors.FieldDescriptor field,
+        java.lang.Object value) {
+      return super.setField(field, value);
+    }
+    @java.lang.Override
+    public Builder clearField(
+        com.google.protobuf.Descriptors.FieldDescriptor field) {
+      return super.clearField(field);
+    }
+    @java.lang.Override
+    public Builder clearOneof(
+        com.google.protobuf.Descriptors.OneofDescriptor oneof) {
+      return super.clearOneof(oneof);
+    }
+    @java.lang.Override
+    public Builder setRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field,
+        int index, java.lang.Object value) {
+      return super.setRepeatedField(field, index, value);
+    }
+    @java.lang.Override
+    public Builder addRepeatedField(
+        com.google.protobuf.Descriptors.FieldDescriptor field,
+        java.lang.Object value) {
+      return super.addRepeatedField(field, value);
+    }
     @java.lang.Override
     public Builder mergeFrom(com.google.protobuf.Message other) {
       if (other instanceof com.google.showcase.v1beta1.RepeatRequest) {
@@ -1040,7 +1075,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setServerVerify(boolean value) {
-
+      
       serverVerify_ = value;
       bitField0_ |= 0x00000004;
       onChanged();
@@ -1190,7 +1225,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setFInt32(int value) {
-
+      
       fInt32_ = value;
       bitField0_ |= 0x00000010;
       onChanged();
@@ -1227,7 +1262,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setFInt64(long value) {
-
+      
       fInt64_ = value;
       bitField0_ |= 0x00000020;
       onChanged();
@@ -1259,7 +1294,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setFDouble(double value) {
-
+      
       fDouble_ = value;
       bitField0_ |= 0x00000040;
       onChanged();
@@ -1299,7 +1334,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setPInt32(int value) {
-
+      
       pInt32_ = value;
       bitField0_ |= 0x00000080;
       onChanged();
@@ -1339,7 +1374,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setPInt64(long value) {
-
+      
       pInt64_ = value;
       bitField0_ |= 0x00000100;
       onChanged();
@@ -1379,7 +1414,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setPDouble(double value) {
-
+      
       pDouble_ = value;
       bitField0_ |= 0x00000200;
       onChanged();

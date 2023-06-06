@@ -23,7 +23,9 @@ package com.google.api;
  *
  * <pre>
  * Selects and configures the service controller used by the service.
+ *
  * Example:
+ *
  *     control:
  *       environment: servicecontrol.googleapis.com
  * </pre>
@@ -48,11 +50,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new Control();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -284,7 +281,9 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Selects and configures the service controller used by the service.
+   *
    * Example:
+   *
    *     control:
    *       environment: servicecontrol.googleapis.com
    * </pre>

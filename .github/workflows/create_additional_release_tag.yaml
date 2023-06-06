@@ -3,11 +3,7 @@ name: Create additional tags for each release
 on:
   release:
     types: [published]
-  workflow_dispatch: # If manually triggered, clarify which release to create the additional tags for
-    inputs:
-      releaseTag:
-        description: 'Release Tag'
-        required: true
+  workflow_dispatch:
 
 jobs:
   build:
@@ -17,7 +13,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
       with:
-        ref: ${{ github.event.inputs.releaseTag }}
         token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Set up Git
@@ -25,12 +20,19 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
 
+    - name: Fetch all tags
+      run: git fetch --tags
+
     - name: Create additional tags
       run: |
         ARTIFACT_IDS=('google-cloud-shared-dependencies' 'api-common' 'gax')
-        for ARTIFACT_ID in "${ARTIFACT_IDS[@]}"
-        do
-          VERSION=$(grep "${ARTIFACT_ID}" versions.txt | cut -d':' -f2)
-          git tag ${ARTIFACT_ID}/$VERSION ${{ github.event.inputs.releaseTag }}
-          git push origin ${ARTIFACT_ID}/$VERSION
+        for ARTIFACT_ID in "${ARTIFACT_IDS[@]}"; do
+          VERSION=$(grep "^${ARTIFACT_ID}:" versions.txt | cut -d':' -f2 | tr -d '[:space:]')
+          TAG_NAME="${ARTIFACT_ID}/v$VERSION"
+          if git show-ref --tags | grep -q "refs/tags/$TAG_NAME"; then
+            echo "Tag $TAG_NAME already exists. Skipping."
+            continue
+          fi
+          git tag $TAG_NAME
+          git push origin $TAG_NAME
         done

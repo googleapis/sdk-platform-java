@@ -36,7 +36,9 @@ public final class FieldBehaviorProto {
    * <pre>
    * A designation of a specific field behavior (required, output only, etc.)
    * in protobuf messages.
+   *
    * Examples:
+   *
    *   string name = 1 [(google.api.field_behavior) = REQUIRED];
    *   State state = 1 [(google.api.field_behavior) = OUTPUT_ONLY];
    *   google.protobuf.Duration ttl = 1

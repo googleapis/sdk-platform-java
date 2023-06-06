@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,6 +31,7 @@ import com.google.api.gax.httpjson.ProtoRestSerializer;
 import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.LongRunningClient;
+import com.google.api.gax.rpc.RequestParamsBuilder;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.compute.v1small.GetRegionOperationRequest;
 import com.google.cloud.compute.v1small.Operation;
@@ -197,11 +198,27 @@ public class HttpJsonRegionOperationsStub extends RegionOperationsStub {
         HttpJsonCallSettings.<GetRegionOperationRequest, Operation>newBuilder()
             .setMethodDescriptor(getMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("operation", String.valueOf(request.getOperation()));
+                  builder.add("project", String.valueOf(request.getProject()));
+                  builder.add("region", String.valueOf(request.getRegion()));
+                  return builder.build();
+                })
             .build();
     HttpJsonCallSettings<WaitRegionOperationRequest, Operation> waitTransportSettings =
         HttpJsonCallSettings.<WaitRegionOperationRequest, Operation>newBuilder()
             .setMethodDescriptor(waitMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("operation", String.valueOf(request.getOperation()));
+                  builder.add("project", String.valueOf(request.getProject()));
+                  builder.add("region", String.valueOf(request.getRegion()));
+                  return builder.build();
+                })
             .build();
 
     this.getCallable =

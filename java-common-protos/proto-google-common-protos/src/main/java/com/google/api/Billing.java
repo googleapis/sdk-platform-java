@@ -23,12 +23,15 @@ package com.google.api;
  *
  * <pre>
  * Billing related configuration of the service.
+ *
  * The following example shows how to configure monitored resources and metrics
  * for billing, `consumer_destinations` is the only supported destination and
  * the monitored resources need at least one label key
  * `cloud.googleapis.com/location` to indicate the location of the billing
  * usage, using different monitored resources between monitoring and billing is
  * recommended so they can be evolved independently:
+ *
+ *
  *     monitored_resources:
  *     - type: library.googleapis.com/billing_branch
  *       labels:
@@ -73,11 +76,6 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new Billing();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -207,18 +205,13 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
 
     private BillingDestination() {
       monitoredResource_ = "";
-      metrics_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      metrics_ = com.google.protobuf.LazyStringArrayList.emptyList();
     }
 
     @java.lang.Override
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
       return new BillingDestination();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-      return this.unknownFields;
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -294,7 +287,8 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
     public static final int METRICS_FIELD_NUMBER = 2;
 
     @SuppressWarnings("serial")
-    private com.google.protobuf.LazyStringList metrics_;
+    private com.google.protobuf.LazyStringArrayList metrics_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
     /**
      *
      *
@@ -580,8 +574,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
         super.clear();
         bitField0_ = 0;
         monitoredResource_ = "";
-        metrics_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000002);
+        metrics_ = com.google.protobuf.LazyStringArrayList.emptyList();
         return this;
       }
 
@@ -609,7 +602,6 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
       public com.google.api.Billing.BillingDestination buildPartial() {
         com.google.api.Billing.BillingDestination result =
             new com.google.api.Billing.BillingDestination(this);
-        buildPartialRepeatedFields(result);
         if (bitField0_ != 0) {
           buildPartial0(result);
         }
@@ -617,18 +609,14 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
         return result;
       }
 
-      private void buildPartialRepeatedFields(com.google.api.Billing.BillingDestination result) {
-        if (((bitField0_ & 0x00000002) != 0)) {
-          metrics_ = metrics_.getUnmodifiableView();
-          bitField0_ = (bitField0_ & ~0x00000002);
-        }
-        result.metrics_ = metrics_;
-      }
-
       private void buildPartial0(com.google.api.Billing.BillingDestination result) {
         int from_bitField0_ = bitField0_;
         if (((from_bitField0_ & 0x00000001) != 0)) {
           result.monitoredResource_ = monitoredResource_;
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          metrics_.makeImmutable();
+          result.metrics_ = metrics_;
         }
       }
 
@@ -687,7 +675,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
         if (!other.metrics_.isEmpty()) {
           if (metrics_.isEmpty()) {
             metrics_ = other.metrics_;
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ |= 0x00000002;
           } else {
             ensureMetricsIsMutable();
             metrics_.addAll(other.metrics_);
@@ -868,14 +856,14 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
         return this;
       }
 
-      private com.google.protobuf.LazyStringList metrics_ =
-          com.google.protobuf.LazyStringArrayList.EMPTY;
+      private com.google.protobuf.LazyStringArrayList metrics_ =
+          com.google.protobuf.LazyStringArrayList.emptyList();
 
       private void ensureMetricsIsMutable() {
-        if (!((bitField0_ & 0x00000002) != 0)) {
+        if (!metrics_.isModifiable()) {
           metrics_ = new com.google.protobuf.LazyStringArrayList(metrics_);
-          bitField0_ |= 0x00000002;
         }
+        bitField0_ |= 0x00000002;
       }
       /**
        *
@@ -891,7 +879,8 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
        * @return A list containing the metrics.
        */
       public com.google.protobuf.ProtocolStringList getMetricsList() {
-        return metrics_.getUnmodifiableView();
+        metrics_.makeImmutable();
+        return metrics_;
       }
       /**
        *
@@ -964,6 +953,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
         }
         ensureMetricsIsMutable();
         metrics_.set(index, value);
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -987,6 +977,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
         }
         ensureMetricsIsMutable();
         metrics_.add(value);
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -1007,6 +998,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
       public Builder addAllMetrics(java.lang.Iterable<java.lang.String> values) {
         ensureMetricsIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(values, metrics_);
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -1024,8 +1016,9 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearMetrics() {
-        metrics_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        metrics_ = com.google.protobuf.LazyStringArrayList.emptyList();
         bitField0_ = (bitField0_ & ~0x00000002);
+        ;
         onChanged();
         return this;
       }
@@ -1050,6 +1043,7 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
         checkByteStringIsUtf8(value);
         ensureMetricsIsMutable();
         metrics_.add(value);
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -1370,12 +1364,15 @@ public final class Billing extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Billing related configuration of the service.
+   *
    * The following example shows how to configure monitored resources and metrics
    * for billing, `consumer_destinations` is the only supported destination and
    * the monitored resources need at least one label key
    * `cloud.googleapis.com/location` to indicate the location of the billing
    * usage, using different monitored resources between monitoring and billing is
    * recommended so they can be evolved independently:
+   *
+   *
    *     monitored_resources:
    *     - type: library.googleapis.com/billing_branch
    *       labels:

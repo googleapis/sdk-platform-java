@@ -49,11 +49,6 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
     return new Location();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.cloud.location.LocationsProto
         .internal_static_google_cloud_location_Location_descriptor;
@@ -268,6 +263,7 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Cross-service attributes for the location. For example
+   *
    *     {"cloud.googleapis.com/region": "us-east1"}
    * </pre>
    *
@@ -291,6 +287,7 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Cross-service attributes for the location. For example
+   *
    *     {"cloud.googleapis.com/region": "us-east1"}
    * </pre>
    *
@@ -305,6 +302,7 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Cross-service attributes for the location. For example
+   *
    *     {"cloud.googleapis.com/region": "us-east1"}
    * </pre>
    *
@@ -326,6 +324,7 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Cross-service attributes for the location. For example
+   *
    *     {"cloud.googleapis.com/region": "us-east1"}
    * </pre>
    *
@@ -1223,6 +1222,7 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Cross-service attributes for the location. For example
+     *
      *     {"cloud.googleapis.com/region": "us-east1"}
      * </pre>
      *
@@ -1246,6 +1246,7 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Cross-service attributes for the location. For example
+     *
      *     {"cloud.googleapis.com/region": "us-east1"}
      * </pre>
      *
@@ -1260,6 +1261,7 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Cross-service attributes for the location. For example
+     *
      *     {"cloud.googleapis.com/region": "us-east1"}
      * </pre>
      *
@@ -1281,6 +1283,7 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Cross-service attributes for the location. For example
+     *
      *     {"cloud.googleapis.com/region": "us-east1"}
      * </pre>
      *
@@ -1308,6 +1311,7 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Cross-service attributes for the location. For example
+     *
      *     {"cloud.googleapis.com/region": "us-east1"}
      * </pre>
      *
@@ -1331,6 +1335,7 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Cross-service attributes for the location. For example
+     *
      *     {"cloud.googleapis.com/region": "us-east1"}
      * </pre>
      *
@@ -1352,6 +1357,7 @@ public final class Location extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Cross-service attributes for the location. For example
+     *
      *     {"cloud.googleapis.com/region": "us-east1"}
      * </pre>
      *

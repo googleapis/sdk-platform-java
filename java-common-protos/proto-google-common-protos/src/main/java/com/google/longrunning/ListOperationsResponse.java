@@ -48,11 +48,6 @@ public final class ListOperationsResponse extends com.google.protobuf.GeneratedM
     return new ListOperationsResponse();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.longrunning.OperationsProto
         .internal_static_google_longrunning_ListOperationsResponse_descriptor;

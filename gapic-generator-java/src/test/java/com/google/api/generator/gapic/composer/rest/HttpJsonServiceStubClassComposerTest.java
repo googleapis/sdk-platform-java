@@ -196,4 +196,15 @@ public class HttpJsonServiceStubClassComposerTest {
         IllegalArgumentException.class,
         () -> composer.getOperationsURIValueFromHttpRule(customHttpRule));
   }
+
+  @Test
+  public void generateGrpcServiceStubClass_routingHeaders() {
+    GapicContext context =
+        RestTestProtoLoader.instance().parseExplicitDynamicRoutingHeaderTesting();
+    Service service = context.services().get(0);
+    GapicClass clazz = HttpJsonServiceStubClassComposer.instance().generate(context, service);
+
+    Assert.assertGoldenClass(this.getClass(), clazz, "HttpJsonRoutingHeadersStub.golden");
+    Assert.assertEmptySamples(clazz.samples());
+  }
 }

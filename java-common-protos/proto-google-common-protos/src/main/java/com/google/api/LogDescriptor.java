@@ -23,6 +23,7 @@ package com.google.api;
  *
  * <pre>
  * A description of a log type. Example in YAML format:
+ *
  *     - name: library.googleapis.com/activity_history
  *       description: The history of borrowing and returning library items.
  *       display_name: Activity
@@ -54,11 +55,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new LogDescriptor();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -508,6 +504,7 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A description of a log type. Example in YAML format:
+   *
    *     - name: library.googleapis.com/activity_history
    *       description: The history of borrowing and returning library items.
    *       display_name: Activity
