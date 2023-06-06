@@ -29,18 +29,25 @@ import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.After;
-import org.junit.Before;
+import java.util.concurrent.TimeUnit;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class ITBidiStreaming {
 
-  private EchoClient grpcClient;
+  private static EchoClient grpcClient;
 
-  @Before
-  public void setUp() throws Exception {
+  @BeforeClass
+  public static void createClients() throws Exception {
     // Create gRPC Echo Client
     grpcClient = TestClientInitializer.createGrpcEchoClient();
+  }
+
+  @AfterClass
+  public static void destroyClients() throws Exception {
+    grpcClient.close();
+    grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
   // The current implementation of BIDI streaming on Echo showcase server is that it would echo the
@@ -96,10 +103,5 @@ public class ITBidiStreaming {
     public SettableApiFuture<List<String>> getFuture() {
       return future;
     }
-  }
-
-  @After
-  public void tearDown() throws Exception {
-    grpcClient.close();
   }
 }
