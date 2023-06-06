@@ -211,45 +211,6 @@ public class HttpJsonServiceStubClassComposer extends AbstractTransportServiceSt
   }
 
   @Override
-  protected Expr createTransportSettingsInitExpr(
-      Method method,
-      VariableExpr transportSettingsVarExpr,
-      VariableExpr methodDescriptorVarExpr,
-      List<Statement> classStatements) {
-    MethodInvocationExpr callSettingsBuilderExpr =
-        MethodInvocationExpr.builder()
-            .setStaticReferenceType(
-                FIXED_REST_TYPESTORE.get(HttpJsonCallSettings.class.getSimpleName()))
-            .setGenerics(transportSettingsVarExpr.type().reference().generics())
-            .setMethodName("newBuilder")
-            .build();
-    callSettingsBuilderExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(callSettingsBuilderExpr)
-            .setMethodName("setMethodDescriptor")
-            .setArguments(Arrays.asList(methodDescriptorVarExpr))
-            .build();
-
-    callSettingsBuilderExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(callSettingsBuilderExpr)
-            .setMethodName("setTypeRegistry")
-            .setArguments(Arrays.asList(TYPE_REGISTRY_VAR_EXPR))
-            .build();
-
-    callSettingsBuilderExpr =
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(callSettingsBuilderExpr)
-            .setMethodName("build")
-            .setReturnType(transportSettingsVarExpr.type())
-            .build();
-    return AssignmentExpr.builder()
-        .setVariableExpr(transportSettingsVarExpr.toBuilder().setIsDecl(true).build())
-        .setValueExpr(callSettingsBuilderExpr)
-        .build();
-  }
-
-  @Override
   protected List<AnnotationNode> createClassAnnotations(Service service) {
     List<AnnotationNode> annotations = super.createClassAnnotations(service);
 

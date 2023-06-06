@@ -24,8 +24,8 @@ import com.google.api.gax.core.BackgroundResourceAggregation;
 import com.google.api.gax.grpc.GrpcCallSettings;
 import com.google.api.gax.grpc.GrpcStubCallableFactory;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.RequestParamsBuilder;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.common.collect.ImmutableMap;
 import com.google.example.library.v1.Book;
 import com.google.example.library.v1.CreateBookRequest;
 import com.google.example.library.v1.CreateShelfRequest;
@@ -217,9 +217,9 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
             .setMethodDescriptor(getShelfMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<ListShelvesRequest, ListShelvesResponse> listShelvesTransportSettings =
@@ -231,9 +231,9 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
             .setMethodDescriptor(deleteShelfMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<MergeShelvesRequest, Shelf> mergeShelvesTransportSettings =
@@ -241,9 +241,9 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
             .setMethodDescriptor(mergeShelvesMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<CreateBookRequest, Book> createBookTransportSettings =
@@ -251,9 +251,9 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
             .setMethodDescriptor(createBookMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("parent", String.valueOf(request.getParent()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("parent", String.valueOf(request.getParent()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<GetBookRequest, Book> getBookTransportSettings =
@@ -261,9 +261,9 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
             .setMethodDescriptor(getBookMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<ListBooksRequest, ListBooksResponse> listBooksTransportSettings =
@@ -271,9 +271,9 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
             .setMethodDescriptor(listBooksMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("parent", String.valueOf(request.getParent()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("parent", String.valueOf(request.getParent()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<DeleteBookRequest, Empty> deleteBookTransportSettings =
@@ -281,9 +281,9 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
             .setMethodDescriptor(deleteBookMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<UpdateBookRequest, Book> updateBookTransportSettings =
@@ -291,9 +291,9 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
             .setMethodDescriptor(updateBookMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("book.name", String.valueOf(request.getBook().getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("book.name", String.valueOf(request.getBook().getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<MoveBookRequest, Book> moveBookTransportSettings =
@@ -301,9 +301,9 @@ public class GrpcLibraryServiceStub extends LibraryServiceStub {
             .setMethodDescriptor(moveBookMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
 

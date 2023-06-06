@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -27,44 +27,43 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.google.api.gax.grpc;
+package com.google.api.gax.httpjson;
 
-import com.google.api.core.ApiFuture;
 import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.RequestParamsExtractor;
 import com.google.api.gax.rpc.RequestUrlParamsEncoder;
-import com.google.api.gax.rpc.UnaryCallable;
+import com.google.api.gax.rpc.ResponseObserver;
+import com.google.api.gax.rpc.ServerStreamingCallable;
+import com.google.api.gax.rpc.internal.Headers;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 
-/**
- * A {@code UnaryCallable} that extracts values from the fields of the request and inserts them into
- * headers.
- *
- * <p>Package-private for internal usage.
- */
-class GrpcUnaryRequestParamCallable<RequestT, ResponseT>
-    extends UnaryCallable<RequestT, ResponseT> {
-  private final UnaryCallable<RequestT, ResponseT> callable;
+public class HttpJsonServerStreamingRequestParamCallable<RequestT, ResponseT>
+    extends ServerStreamingCallable<RequestT, ResponseT> {
+  private final ServerStreamingCallable<RequestT, ResponseT> callable;
   private final RequestUrlParamsEncoder<RequestT> paramsEncoder;
 
-  GrpcUnaryRequestParamCallable(
-      UnaryCallable<RequestT, ResponseT> callable,
+  HttpJsonServerStreamingRequestParamCallable(
+      ServerStreamingCallable<RequestT, ResponseT> callable,
       RequestParamsExtractor<RequestT> paramsExtractor) {
     this.callable = Preconditions.checkNotNull(callable);
     this.paramsEncoder = new RequestUrlParamsEncoder<>(Preconditions.checkNotNull(paramsExtractor));
   }
 
   @Override
-  public ApiFuture<ResponseT> futureCall(RequestT request, ApiCallContext inputContext) {
-    ApiCallContext newCallContext = inputContext;
+  public void call(
+      RequestT request, ResponseObserver<ResponseT> responseObserver, ApiCallContext context) {
+    ApiCallContext newCallContext = context;
     String encodedHeader = paramsEncoder.encode(request);
     if (!encodedHeader.isEmpty()) {
       newCallContext =
-          GrpcCallContext.createDefault()
-              .nullToSelf(inputContext)
-              .withRequestParamsDynamicHeaderOption(encodedHeader);
+          HttpJsonCallContext.createDefault()
+              .nullToSelf(context)
+              .withExtraHeaders(
+                  ImmutableMap.of(
+                      Headers.DYNAMIC_ROUTING_HEADER_KEY, ImmutableList.of(encodedHeader)));
     }
-
-    return callable.futureCall(request, newCallContext);
+    callable.call(request, responseObserver, newCallContext);
   }
 }
