@@ -45,11 +45,6 @@ public final class PhpSettings extends com.google.protobuf.GeneratedMessageV3
     return new PhpSettings();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.ClientProto.internal_static_google_api_PhpSettings_descriptor;
   }

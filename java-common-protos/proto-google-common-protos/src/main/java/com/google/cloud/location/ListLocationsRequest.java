@@ -49,11 +49,6 @@ public final class ListLocationsRequest extends com.google.protobuf.GeneratedMes
     return new ListLocationsRequest();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.cloud.location.LocationsProto
         .internal_static_google_cloud_location_ListLocationsRequest_descriptor;

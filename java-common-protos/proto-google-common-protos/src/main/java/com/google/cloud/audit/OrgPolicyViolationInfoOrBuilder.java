@@ -98,6 +98,7 @@ public interface OrgPolicyViolationInfoOrBuilder
    * Optional. Tags referenced on the resource at the time of evaluation. These also
    * include the federated tags, if they are supplied in the CheckOrgPolicy
    * or CheckCustomConstraints Requests.
+   *
    * Optional field as of now. These tags are the Cloud tags that are
    * available on the resource during the policy evaluation and will
    * be available as part of the OrgPolicy check response for logging purposes.
@@ -114,6 +115,7 @@ public interface OrgPolicyViolationInfoOrBuilder
    * Optional. Tags referenced on the resource at the time of evaluation. These also
    * include the federated tags, if they are supplied in the CheckOrgPolicy
    * or CheckCustomConstraints Requests.
+   *
    * Optional field as of now. These tags are the Cloud tags that are
    * available on the resource during the policy evaluation and will
    * be available as part of the OrgPolicy check response for logging purposes.
@@ -133,6 +135,7 @@ public interface OrgPolicyViolationInfoOrBuilder
    * Optional. Tags referenced on the resource at the time of evaluation. These also
    * include the federated tags, if they are supplied in the CheckOrgPolicy
    * or CheckCustomConstraints Requests.
+   *
    * Optional field as of now. These tags are the Cloud tags that are
    * available on the resource during the policy evaluation and will
    * be available as part of the OrgPolicy check response for logging purposes.
@@ -149,6 +152,7 @@ public interface OrgPolicyViolationInfoOrBuilder
    * Optional. Tags referenced on the resource at the time of evaluation. These also
    * include the federated tags, if they are supplied in the CheckOrgPolicy
    * or CheckCustomConstraints Requests.
+   *
    * Optional field as of now. These tags are the Cloud tags that are
    * available on the resource during the policy evaluation and will
    * be available as part of the OrgPolicy check response for logging purposes.
@@ -169,6 +173,7 @@ public interface OrgPolicyViolationInfoOrBuilder
    * Optional. Tags referenced on the resource at the time of evaluation. These also
    * include the federated tags, if they are supplied in the CheckOrgPolicy
    * or CheckCustomConstraints Requests.
+   *
    * Optional field as of now. These tags are the Cloud tags that are
    * available on the resource during the policy evaluation and will
    * be available as part of the OrgPolicy check response for logging purposes.

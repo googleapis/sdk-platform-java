@@ -51,11 +51,6 @@ public final class SystemParameter extends com.google.protobuf.GeneratedMessageV
     return new SystemParameter();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.SystemParameterProto
         .internal_static_google_api_SystemParameter_descriptor;

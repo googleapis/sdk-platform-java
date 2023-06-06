@@ -48,11 +48,6 @@ public final class CommonLanguageSettings extends com.google.protobuf.GeneratedM
     return new CommonLanguageSettings();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.ClientProto.internal_static_google_api_CommonLanguageSettings_descriptor;
   }

@@ -48,11 +48,6 @@ public final class AuditContext extends com.google.protobuf.GeneratedMessageV3
     return new AuditContext();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.rpc.context.AuditContextProto
         .internal_static_google_rpc_context_AuditContext_descriptor;

@@ -31,46 +31,40 @@ package com.google.api.gax.rpc;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.google.api.client.util.escape.PercentEscaper;
 import com.google.api.core.InternalApi;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.Map;
 
 /**
  * The request params encoder, which encodes URL-encoded parameters in one URL parameters string.
- * This class expects that name-value pairs, returned from parameters extractor are already
- * URL-encoded and can perform optional validation of that, but does not encode the name-value pairs
- * themselves.
  *
  * @param <RequestT> request message type
  */
 @InternalApi("For use by transport-specific implementations")
 public class RequestUrlParamsEncoder<RequestT> implements RequestParamsEncoder<RequestT> {
-  private static final String STR_ENCODING = "UTF-8";
-
+  // Per RFC 3986 Section 2.3, these are the four unreserved characters that don't need to be
+  // encoded
+  private static final PercentEscaper PERCENT_ESCAPER = new PercentEscaper("._-~");
   private final RequestParamsExtractor<RequestT> paramsExtractor;
-  private final boolean validateExtractedParameters;
 
   /**
    * Creates the encoder.
    *
    * @param paramsExtractor parameters extractor which returns already URL-encoded key-value pairs
-   * @param validateExtractedParameters {@code true} if this class should validate that the
-   *     extracted parameters are URL-encoded, {@code false} otherwise
    */
-  public RequestUrlParamsEncoder(
-      RequestParamsExtractor<RequestT> paramsExtractor, boolean validateExtractedParameters) {
+  public RequestUrlParamsEncoder(RequestParamsExtractor<RequestT> paramsExtractor) {
     this.paramsExtractor = checkNotNull(paramsExtractor);
-    this.validateExtractedParameters = validateExtractedParameters;
   }
 
   /**
    * Encodes the {@code request} in a form of a URL parameters string, for example {@code
    * "param1=value+1&param2=value2%26"}. This method may optionally validate that the name-value
-   * paris are URL-encoded, but it will not perform the actual encoding of them (it will only
-   * concatenate the valid individual name-value pairs in a valid URL parameters string). This is
-   * so, because in most practical cases the name-value paris are already URL-encoded.
+   * paris are URL-encoded. It will URL encode the key and values if there are any non-allowed
+   * characters. It will then concatenate the valid individual name-value pairs in a valid URL
+   * parameters string.
+   *
+   * <p>Note: This will url-encode the key and values during concatenation. Double url-encoding may
+   * occur if the input has values that are already url-encoded.
    *
    * @param request request message
    * @throws IllegalArgumentException if is not
@@ -86,37 +80,17 @@ public class RequestUrlParamsEncoder<RequestT> implements RequestParamsEncoder<R
       if (sb.length() > 0) {
         sb.append("&");
       }
-      String name = entry.getKey();
-      String value = entry.getValue();
-      if (name == null) {
-        throw new IllegalArgumentException("Request parameter name cannot be null");
-      }
-
-      // Let the server decide if the value is required.
-      // Empty value is allowed.
-      if (value != null) {
-        if (!isValid(name, value)) {
-          throw new IllegalArgumentException(
-              "Invalid url-encoded request parameter name-value pair: " + name + "=" + value);
-        }
-        sb.append(name).append("=").append(value);
-      }
+      // RequestParamsExtractor checks that the values are non-null and non-empty
+      String encodedKey = percentEncodeString(entry.getKey());
+      String encodedValue = percentEncodeString(entry.getValue());
+      sb.append(encodedKey).append("=").append(encodedValue);
     }
 
     return sb.toString();
   }
 
-  // Not sure if we need this at all.
-  private boolean isValid(String name, String value) {
-    try {
-      // hoping that encode/decode do not lose information in the middle
-      // (at least for practical use cases)
-      return !validateExtractedParameters
-          || name.equals(URLEncoder.encode(URLDecoder.decode(name, STR_ENCODING), STR_ENCODING))
-              && value.equals(
-                  URLEncoder.encode(URLDecoder.decode(value, STR_ENCODING), STR_ENCODING));
-    } catch (UnsupportedEncodingException e) {
-      return false;
-    }
+  // Percent encode the value passed in.
+  private String percentEncodeString(String value) {
+    return PERCENT_ESCAPER.escape(value);
   }
 }

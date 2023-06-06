@@ -64,6 +64,6 @@ class HttpJsonDirectServerStreamingCallable<RequestT, ResponseT>
     HttpJsonClientCall<RequestT, ResponseT> call = HttpJsonClientCalls.newCall(descriptor, context);
     HttpJsonDirectStreamController<RequestT, ResponseT> controller =
         new HttpJsonDirectStreamController<>(call, responseObserver);
-    controller.start(request);
+    controller.start(request, context);
   }
 }

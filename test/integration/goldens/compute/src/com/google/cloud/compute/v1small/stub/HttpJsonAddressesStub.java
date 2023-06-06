@@ -33,6 +33,7 @@ import com.google.api.gax.httpjson.ProtoRestSerializer;
 import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.OperationCallable;
+import com.google.api.gax.rpc.RequestParamsBuilder;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.compute.v1small.AddressAggregatedList;
 import com.google.cloud.compute.v1small.AddressList;
@@ -319,21 +320,49 @@ public class HttpJsonAddressesStub extends AddressesStub {
             HttpJsonCallSettings.<AggregatedListAddressesRequest, AddressAggregatedList>newBuilder()
                 .setMethodDescriptor(aggregatedListMethodDescriptor)
                 .setTypeRegistry(typeRegistry)
+                .setParamsExtractor(
+                    request -> {
+                      RequestParamsBuilder builder = RequestParamsBuilder.create();
+                      builder.add("project", String.valueOf(request.getProject()));
+                      return builder.build();
+                    })
                 .build();
     HttpJsonCallSettings<DeleteAddressRequest, Operation> deleteTransportSettings =
         HttpJsonCallSettings.<DeleteAddressRequest, Operation>newBuilder()
             .setMethodDescriptor(deleteMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("address", String.valueOf(request.getAddress()));
+                  builder.add("project", String.valueOf(request.getProject()));
+                  builder.add("region", String.valueOf(request.getRegion()));
+                  return builder.build();
+                })
             .build();
     HttpJsonCallSettings<InsertAddressRequest, Operation> insertTransportSettings =
         HttpJsonCallSettings.<InsertAddressRequest, Operation>newBuilder()
             .setMethodDescriptor(insertMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("project", String.valueOf(request.getProject()));
+                  builder.add("region", String.valueOf(request.getRegion()));
+                  return builder.build();
+                })
             .build();
     HttpJsonCallSettings<ListAddressesRequest, AddressList> listTransportSettings =
         HttpJsonCallSettings.<ListAddressesRequest, AddressList>newBuilder()
             .setMethodDescriptor(listMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("project", String.valueOf(request.getProject()));
+                  builder.add("region", String.valueOf(request.getRegion()));
+                  return builder.build();
+                })
             .build();
 
     this.aggregatedListCallable =

@@ -49,11 +49,6 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
     return new DocumentationRule();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.DocumentationProto
         .internal_static_google_api_DocumentationRule_descriptor;

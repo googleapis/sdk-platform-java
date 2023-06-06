@@ -30,6 +30,7 @@ import com.google.api.gax.httpjson.ProtoMessageRequestFormatter;
 import com.google.api.gax.httpjson.ProtoMessageResponseParser;
 import com.google.api.gax.httpjson.ProtoRestSerializer;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.RequestParamsBuilder;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.example.library.v1.Book;
 import com.google.example.library.v1.CreateBookRequest;
@@ -514,6 +515,12 @@ public class HttpJsonLibraryServiceStub extends LibraryServiceStub {
         HttpJsonCallSettings.<GetShelfRequest, Shelf>newBuilder()
             .setMethodDescriptor(getShelfMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
+                })
             .build();
     HttpJsonCallSettings<ListShelvesRequest, ListShelvesResponse> listShelvesTransportSettings =
         HttpJsonCallSettings.<ListShelvesRequest, ListShelvesResponse>newBuilder()
@@ -524,41 +531,89 @@ public class HttpJsonLibraryServiceStub extends LibraryServiceStub {
         HttpJsonCallSettings.<DeleteShelfRequest, Empty>newBuilder()
             .setMethodDescriptor(deleteShelfMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
+                })
             .build();
     HttpJsonCallSettings<MergeShelvesRequest, Shelf> mergeShelvesTransportSettings =
         HttpJsonCallSettings.<MergeShelvesRequest, Shelf>newBuilder()
             .setMethodDescriptor(mergeShelvesMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
+                })
             .build();
     HttpJsonCallSettings<CreateBookRequest, Book> createBookTransportSettings =
         HttpJsonCallSettings.<CreateBookRequest, Book>newBuilder()
             .setMethodDescriptor(createBookMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("parent", String.valueOf(request.getParent()));
+                  return builder.build();
+                })
             .build();
     HttpJsonCallSettings<GetBookRequest, Book> getBookTransportSettings =
         HttpJsonCallSettings.<GetBookRequest, Book>newBuilder()
             .setMethodDescriptor(getBookMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
+                })
             .build();
     HttpJsonCallSettings<ListBooksRequest, ListBooksResponse> listBooksTransportSettings =
         HttpJsonCallSettings.<ListBooksRequest, ListBooksResponse>newBuilder()
             .setMethodDescriptor(listBooksMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("parent", String.valueOf(request.getParent()));
+                  return builder.build();
+                })
             .build();
     HttpJsonCallSettings<DeleteBookRequest, Empty> deleteBookTransportSettings =
         HttpJsonCallSettings.<DeleteBookRequest, Empty>newBuilder()
             .setMethodDescriptor(deleteBookMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
+                })
             .build();
     HttpJsonCallSettings<UpdateBookRequest, Book> updateBookTransportSettings =
         HttpJsonCallSettings.<UpdateBookRequest, Book>newBuilder()
             .setMethodDescriptor(updateBookMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("book.name", String.valueOf(request.getBook().getName()));
+                  return builder.build();
+                })
             .build();
     HttpJsonCallSettings<MoveBookRequest, Book> moveBookTransportSettings =
         HttpJsonCallSettings.<MoveBookRequest, Book>newBuilder()
             .setMethodDescriptor(moveBookMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
+                })
             .build();
 
     this.createShelfCallable =
