@@ -28,7 +28,9 @@ package com.google.api;
  * associated with a school, or a business, or a government agency, a business
  * type property on the project may affect how a service responds to the client.
  * This descriptor defines which properties are allowed to be set on a project.
+ *
  * Example:
+ *
  *    project_properties:
  *      properties:
  *      - name: NO_WATERMARK
@@ -58,11 +60,6 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new ProjectProperties();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -317,7 +314,9 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
    * associated with a school, or a business, or a government agency, a business
    * type property on the project may affect how a service responds to the client.
    * This descriptor defines which properties are allowed to be set on a project.
+   *
    * Example:
+   *
    *    project_properties:
    *      properties:
    *      - name: NO_WATERMARK

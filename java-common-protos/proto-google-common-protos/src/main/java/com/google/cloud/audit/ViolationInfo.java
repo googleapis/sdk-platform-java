@@ -50,11 +50,6 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
     return new ViolationInfo();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.cloud.audit.AuditLogProto
         .internal_static_google_cloud_audit_ViolationInfo_descriptor;

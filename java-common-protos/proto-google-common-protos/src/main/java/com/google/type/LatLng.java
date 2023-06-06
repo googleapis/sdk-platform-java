@@ -49,11 +49,6 @@ public final class LatLng extends com.google.protobuf.GeneratedMessageV3
     return new LatLng();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.type.LatLngProto.internal_static_google_type_LatLng_descriptor;
   }

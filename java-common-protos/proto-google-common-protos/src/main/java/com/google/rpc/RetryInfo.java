@@ -25,8 +25,10 @@ package com.google.rpc;
  * Describes when the clients can retry a failed request. Clients could ignore
  * the recommendation here or retry when this information is missing from error
  * responses.
+ *
  * It's always recommended that clients should use exponential backoff when
  * retrying.
+ *
  * Clients should wait until `retry_delay` amount of time has passed since
  * receiving the error response before retrying.  If retrying requests also
  * fail, clients should use an exponential backoff scheme to gradually increase
@@ -53,11 +55,6 @@ public final class RetryInfo extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new RetryInfo();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -287,8 +284,10 @@ public final class RetryInfo extends com.google.protobuf.GeneratedMessageV3
    * Describes when the clients can retry a failed request. Clients could ignore
    * the recommendation here or retry when this information is missing from error
    * responses.
+   *
    * It's always recommended that clients should use exponential backoff when
    * retrying.
+   *
    * Clients should wait until `retry_delay` amount of time has passed since
    * receiving the error response before retrying.  If retrying requests also
    * fail, clients should use an exponential backoff scheme to gradually increase

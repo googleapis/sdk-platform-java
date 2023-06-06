@@ -45,11 +45,6 @@ public final class PolicyViolationInfo extends com.google.protobuf.GeneratedMess
     return new PolicyViolationInfo();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.cloud.audit.AuditLogProto
         .internal_static_google_cloud_audit_PolicyViolationInfo_descriptor;

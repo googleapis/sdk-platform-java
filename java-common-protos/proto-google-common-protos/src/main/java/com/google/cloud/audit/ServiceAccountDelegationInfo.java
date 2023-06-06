@@ -47,11 +47,6 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
     return new ServiceAccountDelegationInfo();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.cloud.audit.AuditLogProto
         .internal_static_google_cloud_audit_ServiceAccountDelegationInfo_descriptor;
@@ -159,11 +154,6 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
       return new FirstPartyPrincipal();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-      return this.unknownFields;
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -1100,11 +1090,6 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
       return new ThirdPartyPrincipal();
     }
 
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-      return this.unknownFields;
-    }
-
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
       return com.google.cloud.audit.AuditLogProto
           .internal_static_google_cloud_audit_ServiceAccountDelegationInfo_ThirdPartyPrincipal_descriptor;
@@ -1794,6 +1779,8 @@ public final class ServiceAccountDelegationInfo extends com.google.protobuf.Gene
   }
 
   private int authorityCase_ = 0;
+
+  @SuppressWarnings("serial")
   private java.lang.Object authority_;
 
   public enum AuthorityCase

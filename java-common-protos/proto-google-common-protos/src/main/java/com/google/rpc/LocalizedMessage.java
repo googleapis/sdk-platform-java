@@ -49,11 +49,6 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
     return new LocalizedMessage();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_LocalizedMessage_descriptor;
   }

@@ -48,11 +48,6 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
     return new AuthorizationInfo();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.cloud.audit.AuditLogProto
         .internal_static_google_cloud_audit_AuthorizationInfo_descriptor;
@@ -78,6 +73,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
    * <pre>
    * The resource being accessed, as a REST-style or cloud resource string.
    * For example:
+   *
    *     bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID
    * or
    *     projects/PROJECTID/datasets/DATASETID
@@ -105,6 +101,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
    * <pre>
    * The resource being accessed, as a REST-style or cloud resource string.
    * For example:
+   *
    *     bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID
    * or
    *     projects/PROJECTID/datasets/DATASETID
@@ -205,6 +202,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
    * <pre>
    * Resource attributes used in IAM condition evaluation. This field contains
    * resource attributes like resource type and resource name.
+   *
    * To get the whole view of the attributes used in IAM
    * condition evaluation, the user must also look into
    * `AuditLog.request_metadata.request_attributes`.
@@ -224,6 +222,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
    * <pre>
    * Resource attributes used in IAM condition evaluation. This field contains
    * resource attributes like resource type and resource name.
+   *
    * To get the whole view of the attributes used in IAM
    * condition evaluation, the user must also look into
    * `AuditLog.request_metadata.request_attributes`.
@@ -245,6 +244,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
    * <pre>
    * Resource attributes used in IAM condition evaluation. This field contains
    * resource attributes like resource type and resource name.
+   *
    * To get the whole view of the attributes used in IAM
    * condition evaluation, the user must also look into
    * `AuditLog.request_metadata.request_attributes`.
@@ -688,6 +688,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * <pre>
      * The resource being accessed, as a REST-style or cloud resource string.
      * For example:
+     *
      *     bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID
      * or
      *     projects/PROJECTID/datasets/DATASETID
@@ -714,6 +715,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * <pre>
      * The resource being accessed, as a REST-style or cloud resource string.
      * For example:
+     *
      *     bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID
      * or
      *     projects/PROJECTID/datasets/DATASETID
@@ -740,6 +742,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * <pre>
      * The resource being accessed, as a REST-style or cloud resource string.
      * For example:
+     *
      *     bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID
      * or
      *     projects/PROJECTID/datasets/DATASETID
@@ -765,6 +768,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * <pre>
      * The resource being accessed, as a REST-style or cloud resource string.
      * For example:
+     *
      *     bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID
      * or
      *     projects/PROJECTID/datasets/DATASETID
@@ -786,6 +790,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * <pre>
      * The resource being accessed, as a REST-style or cloud resource string.
      * For example:
+     *
      *     bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID
      * or
      *     projects/PROJECTID/datasets/DATASETID
@@ -981,6 +986,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * <pre>
      * Resource attributes used in IAM condition evaluation. This field contains
      * resource attributes like resource type and resource name.
+     *
      * To get the whole view of the attributes used in IAM
      * condition evaluation, the user must also look into
      * `AuditLog.request_metadata.request_attributes`.
@@ -999,6 +1005,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * <pre>
      * Resource attributes used in IAM condition evaluation. This field contains
      * resource attributes like resource type and resource name.
+     *
      * To get the whole view of the attributes used in IAM
      * condition evaluation, the user must also look into
      * `AuditLog.request_metadata.request_attributes`.
@@ -1023,6 +1030,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * <pre>
      * Resource attributes used in IAM condition evaluation. This field contains
      * resource attributes like resource type and resource name.
+     *
      * To get the whole view of the attributes used in IAM
      * condition evaluation, the user must also look into
      * `AuditLog.request_metadata.request_attributes`.
@@ -1049,6 +1057,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * <pre>
      * Resource attributes used in IAM condition evaluation. This field contains
      * resource attributes like resource type and resource name.
+     *
      * To get the whole view of the attributes used in IAM
      * condition evaluation, the user must also look into
      * `AuditLog.request_metadata.request_attributes`.
@@ -1073,6 +1082,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * <pre>
      * Resource attributes used in IAM condition evaluation. This field contains
      * resource attributes like resource type and resource name.
+     *
      * To get the whole view of the attributes used in IAM
      * condition evaluation, the user must also look into
      * `AuditLog.request_metadata.request_attributes`.
@@ -1103,6 +1113,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * <pre>
      * Resource attributes used in IAM condition evaluation. This field contains
      * resource attributes like resource type and resource name.
+     *
      * To get the whole view of the attributes used in IAM
      * condition evaluation, the user must also look into
      * `AuditLog.request_metadata.request_attributes`.
@@ -1126,6 +1137,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * <pre>
      * Resource attributes used in IAM condition evaluation. This field contains
      * resource attributes like resource type and resource name.
+     *
      * To get the whole view of the attributes used in IAM
      * condition evaluation, the user must also look into
      * `AuditLog.request_metadata.request_attributes`.
@@ -1144,6 +1156,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * <pre>
      * Resource attributes used in IAM condition evaluation. This field contains
      * resource attributes like resource type and resource name.
+     *
      * To get the whole view of the attributes used in IAM
      * condition evaluation, the user must also look into
      * `AuditLog.request_metadata.request_attributes`.
@@ -1167,6 +1180,7 @@ public final class AuthorizationInfo extends com.google.protobuf.GeneratedMessag
      * <pre>
      * Resource attributes used in IAM condition evaluation. This field contains
      * resource attributes like resource type and resource name.
+     *
      * To get the whole view of the attributes used in IAM
      * condition evaluation, the user must also look into
      * `AuditLog.request_metadata.request_attributes`.
