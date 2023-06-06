@@ -299,8 +299,9 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
      * Set the maximum amount of time to wait for the next message from the server. {@link
      * Duration#ZERO} disables the check for abandoned streams.
      */
-    public void setWaitTimeout(@Nonnull Duration waitTimeout) {
+    public Builder<RequestT, ResponseT> setWaitTimeout(@Nonnull Duration waitTimeout) {
       this.waitTimeout = waitTimeout;
+      return this;
     }
 
     @Override
