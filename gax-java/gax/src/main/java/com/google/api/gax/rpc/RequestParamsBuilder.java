@@ -55,14 +55,14 @@ public class RequestParamsBuilder {
    * pre-configured path templates. This method is called repeatedly for each configured routing
    * rule parameter, it's possible that the incoming field value from request is null or there is no
    * matches found, we'll continue the match-and-extract process for the next routing rule parameter
-   * in such case. This method will percent encode both the header key and header value.
+   * in such case.
    *
    * @param fieldValue the field value from a request
    * @param headerKey the header key for the routing header param
    * @param pathTemplate {@link PathTemplate} the path template used for match-and-extract
    */
   public void add(String fieldValue, String headerKey, PathTemplate pathTemplate) {
-    if (checkInvalidHeaderValues(fieldValue, headerKey)) {
+    if (checkInvalidHeaderValues(headerKey, fieldValue)) {
       return;
     }
     Map<String, String> matchedValues = pathTemplate.match(fieldValue);
@@ -73,20 +73,19 @@ public class RequestParamsBuilder {
 
   /**
    * Add an entry to paramsBuilder with key-value pairing of (headerKey, fieldValue). The only
-   * validation done is to ensure the headerKey and fieldValue are not null and non-empty. This
-   * method will percent encode both the header key and header value.
+   * validation done is to ensure the headerKey and fieldValue are not null and non-empty.
    *
    * @param headerKey the header key for the routing header param
    * @param fieldValue the field value from a request
    */
   public void add(String headerKey, String fieldValue) {
-    if (checkInvalidHeaderValues(fieldValue, headerKey)) {
+    if (checkInvalidHeaderValues(headerKey, fieldValue)) {
       return;
     }
     paramsBuilder.put(headerKey, fieldValue);
   }
 
-  private boolean checkInvalidHeaderValues(String fieldValue, String headerKey) {
+  private boolean checkInvalidHeaderValues(String headerKey, String fieldValue) {
     return headerKey == null || headerKey.isEmpty() || fieldValue == null || fieldValue.isEmpty();
   }
 

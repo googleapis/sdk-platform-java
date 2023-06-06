@@ -61,6 +61,8 @@ public abstract class HttpJsonMetadata {
     for (Map.Entry<String, List<String>> entrySet : headers.entrySet()) {
       // HeaderValueList is always non-null. Check that it contains at least one value.
       // Should only ever contain one value, but take the first one if there are multiple.
+      // TODO(https://github.com/googleapis/sdk-platform-java/issues/1752):
+      // Investigate how to better support extraHeaders
       List<String> headerValueList = entrySet.getValue();
       if (headerValueList.isEmpty()) {
         continue;
