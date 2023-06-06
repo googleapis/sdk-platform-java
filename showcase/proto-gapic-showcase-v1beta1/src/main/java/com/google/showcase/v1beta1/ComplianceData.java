@@ -35,11 +35,6 @@ private static final long serialVersionUID = 0L;
     return new ComplianceData();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet
-  getUnknownFields() {
-    return this.unknownFields;
-  }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
     return com.google.showcase.v1beta1.ComplianceOuterClass.internal_static_google_showcase_v1beta1_ComplianceData_descriptor;
@@ -994,11 +989,13 @@ private static final long serialVersionUID = 0L;
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
+
   public static com.google.showcase.v1beta1.ComplianceData parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
+
   public static com.google.showcase.v1beta1.ComplianceData parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1599,7 +1596,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setFInt32(int value) {
-      
+
       fInt32_ = value;
       bitField0_ |= 0x00000002;
       onChanged();
@@ -1631,7 +1628,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setFSint32(int value) {
-      
+
       fSint32_ = value;
       bitField0_ |= 0x00000004;
       onChanged();
@@ -1663,7 +1660,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setFSfixed32(int value) {
-      
+
       fSfixed32_ = value;
       bitField0_ |= 0x00000008;
       onChanged();
@@ -1695,7 +1692,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setFUint32(int value) {
-      
+
       fUint32_ = value;
       bitField0_ |= 0x00000010;
       onChanged();
@@ -1727,7 +1724,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setFFixed32(int value) {
-      
+
       fFixed32_ = value;
       bitField0_ |= 0x00000020;
       onChanged();
@@ -1759,7 +1756,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setFInt64(long value) {
-      
+
       fInt64_ = value;
       bitField0_ |= 0x00000040;
       onChanged();
@@ -1791,7 +1788,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setFSint64(long value) {
-      
+
       fSint64_ = value;
       bitField0_ |= 0x00000080;
       onChanged();
@@ -1823,7 +1820,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setFSfixed64(long value) {
-      
+
       fSfixed64_ = value;
       bitField0_ |= 0x00000100;
       onChanged();
@@ -1855,7 +1852,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setFUint64(long value) {
-      
+
       fUint64_ = value;
       bitField0_ |= 0x00000200;
       onChanged();
@@ -1887,7 +1884,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setFFixed64(long value) {
-      
+
       fFixed64_ = value;
       bitField0_ |= 0x00000400;
       onChanged();
@@ -1919,7 +1916,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setFDouble(double value) {
-      
+
       fDouble_ = value;
       bitField0_ |= 0x00000800;
       onChanged();
@@ -1951,7 +1948,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setFFloat(float value) {
-      
+
       fFloat_ = value;
       bitField0_ |= 0x00001000;
       onChanged();
@@ -1983,7 +1980,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setFBool(boolean value) {
-      
+
       fBool_ = value;
       bitField0_ |= 0x00002000;
       onChanged();
@@ -2306,7 +2303,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setPInt32(int value) {
-      
+
       pInt32_ = value;
       bitField0_ |= 0x00040000;
       onChanged();
@@ -2346,7 +2343,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setPDouble(double value) {
-      
+
       pDouble_ = value;
       bitField0_ |= 0x00080000;
       onChanged();
@@ -2386,7 +2383,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setPBool(boolean value) {
-      
+
       pBool_ = value;
       bitField0_ |= 0x00100000;
       onChanged();

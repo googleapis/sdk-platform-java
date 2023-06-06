@@ -91,5 +91,5 @@ public interface BlockRequestOrBuilder extends
    */
   com.google.showcase.v1beta1.BlockResponseOrBuilder getSuccessOrBuilder();
 
-  public com.google.showcase.v1beta1.BlockRequest.ResponseCase getResponseCase();
+  com.google.showcase.v1beta1.BlockRequest.ResponseCase getResponseCase();
 }

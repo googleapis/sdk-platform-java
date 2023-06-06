@@ -29,11 +29,6 @@ private static final long serialVersionUID = 0L;
     return new ComplianceDataChild();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet
-  getUnknownFields() {
-    return this.unknownFields;
-  }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
     return com.google.showcase.v1beta1.ComplianceOuterClass.internal_static_google_showcase_v1beta1_ComplianceDataChild_descriptor;
@@ -578,11 +573,13 @@ private static final long serialVersionUID = 0L;
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
+
   public static com.google.showcase.v1beta1.ComplianceDataChild parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
+
   public static com.google.showcase.v1beta1.ComplianceDataChild parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1045,7 +1042,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setFFloat(float value) {
-      
+
       fFloat_ = value;
       bitField0_ |= 0x00000002;
       onChanged();
@@ -1077,7 +1074,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setFDouble(double value) {
-      
+
       fDouble_ = value;
       bitField0_ |= 0x00000004;
       onChanged();
@@ -1109,7 +1106,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setFBool(boolean value) {
-      
+
       fBool_ = value;
       bitField0_ |= 0x00000008;
       onChanged();
@@ -1400,7 +1397,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setPFloat(float value) {
-      
+
       pFloat_ = value;
       bitField0_ |= 0x00000080;
       onChanged();
@@ -1440,7 +1437,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setPDouble(double value) {
-      
+
       pDouble_ = value;
       bitField0_ |= 0x00000100;
       onChanged();
@@ -1480,7 +1477,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setPBool(boolean value) {
-      
+
       pBool_ = value;
       bitField0_ |= 0x00000200;
       onChanged();

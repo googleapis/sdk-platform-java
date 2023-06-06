@@ -20,7 +20,8 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private PagedExpandResponseList() {
-    words_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    words_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
   }
 
   @java.lang.Override
@@ -30,11 +31,6 @@ private static final long serialVersionUID = 0L;
     return new PagedExpandResponseList();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet
-  getUnknownFields() {
-    return this.unknownFields;
-  }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
     return com.google.showcase.v1beta1.EchoOuterClass.internal_static_google_showcase_v1beta1_PagedExpandResponseList_descriptor;
@@ -50,7 +46,8 @@ private static final long serialVersionUID = 0L;
 
   public static final int WORDS_FIELD_NUMBER = 1;
   @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringList words_;
+  private com.google.protobuf.LazyStringArrayList words_ =
+      com.google.protobuf.LazyStringArrayList.emptyList();
   /**
    * <code>repeated string words = 1;</code>
    * @return A list containing the words.
@@ -199,11 +196,13 @@ private static final long serialVersionUID = 0L;
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
+
   public static com.google.showcase.v1beta1.PagedExpandResponseList parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
+
   public static com.google.showcase.v1beta1.PagedExpandResponseList parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -283,8 +282,8 @@ private static final long serialVersionUID = 0L;
     public Builder clear() {
       super.clear();
       bitField0_ = 0;
-      words_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000001);
+      words_ =
+          com.google.protobuf.LazyStringArrayList.emptyList();
       return this;
     }
 
@@ -311,22 +310,17 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.showcase.v1beta1.PagedExpandResponseList buildPartial() {
       com.google.showcase.v1beta1.PagedExpandResponseList result = new com.google.showcase.v1beta1.PagedExpandResponseList(this);
-      buildPartialRepeatedFields(result);
       if (bitField0_ != 0) { buildPartial0(result); }
       onBuilt();
       return result;
     }
 
-    private void buildPartialRepeatedFields(com.google.showcase.v1beta1.PagedExpandResponseList result) {
-      if (((bitField0_ & 0x00000001) != 0)) {
-        words_ = words_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000001);
-      }
-      result.words_ = words_;
-    }
-
     private void buildPartial0(com.google.showcase.v1beta1.PagedExpandResponseList result) {
       int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        words_.makeImmutable();
+        result.words_ = words_;
+      }
     }
 
     @java.lang.Override
@@ -376,7 +370,7 @@ private static final long serialVersionUID = 0L;
       if (!other.words_.isEmpty()) {
         if (words_.isEmpty()) {
           words_ = other.words_;
-          bitField0_ = (bitField0_ & ~0x00000001);
+          bitField0_ |= 0x00000001;
         } else {
           ensureWordsIsMutable();
           words_.addAll(other.words_);
@@ -432,12 +426,13 @@ private static final long serialVersionUID = 0L;
     }
     private int bitField0_;
 
-    private com.google.protobuf.LazyStringList words_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    private com.google.protobuf.LazyStringArrayList words_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
     private void ensureWordsIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
+      if (!words_.isModifiable()) {
         words_ = new com.google.protobuf.LazyStringArrayList(words_);
-        bitField0_ |= 0x00000001;
-       }
+      }
+      bitField0_ |= 0x00000001;
     }
     /**
      * <code>repeated string words = 1;</code>
@@ -445,7 +440,8 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ProtocolStringList
         getWordsList() {
-      return words_.getUnmodifiableView();
+      words_.makeImmutable();
+      return words_;
     }
     /**
      * <code>repeated string words = 1;</code>
@@ -482,6 +478,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       ensureWordsIsMutable();
       words_.set(index, value);
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -495,6 +492,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       ensureWordsIsMutable();
       words_.add(value);
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -508,6 +506,7 @@ private static final long serialVersionUID = 0L;
       ensureWordsIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(
           values, words_);
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -516,8 +515,9 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearWords() {
-      words_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000001);
+      words_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
+      bitField0_ = (bitField0_ & ~0x00000001);;
       onChanged();
       return this;
     }
@@ -532,6 +532,7 @@ private static final long serialVersionUID = 0L;
       checkByteStringIsUtf8(value);
       ensureWordsIsMutable();
       words_.add(value);
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
