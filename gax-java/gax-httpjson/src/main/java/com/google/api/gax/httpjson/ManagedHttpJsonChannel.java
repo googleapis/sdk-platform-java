@@ -34,6 +34,7 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import java.io.IOException;
 import java.util.concurrent.Executor;
@@ -47,23 +48,24 @@ import javax.annotation.Nullable;
 @BetaApi
 public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResource {
 
-  private static final ExecutorService DEFAULT_EXECUTOR =
-      InstantiatingExecutorProvider.newBuilder().build().getExecutor();
-
   private final Executor executor;
+  private final boolean usingDefaultExecutor;
   private final String endpoint;
   private final HttpTransport httpTransport;
   private final ScheduledExecutorService deadlineScheduledExecutorService;
-
   private boolean isTransportShutdown;
 
   protected ManagedHttpJsonChannel() {
-    this(null, null, null);
+    this(null, true, null, null);
   }
 
   private ManagedHttpJsonChannel(
-      Executor executor, String endpoint, @Nullable HttpTransport httpTransport) {
+      Executor executor,
+      boolean usingDefaultExecutor,
+      String endpoint,
+      @Nullable HttpTransport httpTransport) {
     this.executor = executor;
+    this.usingDefaultExecutor = usingDefaultExecutor;
     this.endpoint = endpoint;
     this.httpTransport = httpTransport == null ? new NetHttpTransport() : httpTransport;
     this.deadlineScheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
@@ -82,46 +84,105 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
         deadlineScheduledExecutorService);
   }
 
+  @VisibleForTesting
+  Executor getExecutor() {
+    return executor;
+  }
+
   @Override
   public synchronized void shutdown() {
+    // Calling shutdown/ shutdownNow() twice should no-op
     if (isTransportShutdown) {
       return;
     }
     try {
+      // Only shutdown the executor if it was created by Gax. External executors
+      // should be managed by the user.
+      if (shouldManageExecutor()) {
+        ((ExecutorService) executor).shutdown();
+      }
       deadlineScheduledExecutorService.shutdown();
       httpTransport.shutdown();
       isTransportShutdown = true;
     } catch (IOException e) {
-      e.printStackTrace();
+      // TODO: Log this scenario once we implemented the Cloud SDK logging.
+      // Swallow error if httpTransport shutdown fails
     }
   }
 
   @Override
   public boolean isShutdown() {
-    return isTransportShutdown;
+    // TODO(lawrenceqiu): Expose an isShutdown() method for HttpTransport
+    boolean isShutdown = isTransportShutdown && deadlineScheduledExecutorService.isShutdown();
+    // Check that the Gax's ExecutorService is shutdown as well
+    if (shouldManageExecutor()) {
+      isShutdown = isShutdown && ((ExecutorService) executor).isShutdown();
+    }
+    return isShutdown;
   }
 
   @Override
   public boolean isTerminated() {
-    return isTransportShutdown;
+    boolean isTerminated = deadlineScheduledExecutorService.isTerminated();
+    // Check that the Gax's ExecutorService is terminated as well
+    if (shouldManageExecutor()) {
+      isTerminated = isTerminated && ((ExecutorService) executor).isTerminated();
+    }
+    return isTerminated;
   }
 
   @Override
   public void shutdownNow() {
-    shutdown();
+    // Calling shutdown/ shutdownNow() twice should no-op
+    if (isTransportShutdown) {
+      return;
+    }
+    try {
+      // Only shutdown the executor if it was created by Gax. External executors
+      // should be managed by the user.
+      if (shouldManageExecutor()) {
+        ((ExecutorService) executor).shutdownNow();
+      }
+      deadlineScheduledExecutorService.shutdownNow();
+      httpTransport.shutdown();
+      isTransportShutdown = true;
+    } catch (IOException e) {
+      // TODO: Log this scenario once we implemented the Cloud SDK logging.
+      // Swallow error if httpTransport shutdown fails
+    }
   }
 
   @Override
   public boolean awaitTermination(long duration, TimeUnit unit) throws InterruptedException {
-    // TODO
-    return false;
+    long endTimeNanos = System.nanoTime() + unit.toNanos(duration);
+    long awaitTimeNanos = endTimeNanos - System.nanoTime();
+    if (awaitTimeNanos <= 0) {
+      return false;
+    }
+    // Only awaitTermination for the executor if it was created by Gax. External executors
+    // should be managed by the user.
+    if (usingDefaultExecutor && executor instanceof ExecutorService) {
+      boolean terminated = ((ExecutorService) executor).awaitTermination(awaitTimeNanos, unit);
+      // Termination duration has elapsed
+      if (!terminated) {
+        return false;
+      }
+    }
+    awaitTimeNanos = endTimeNanos - System.nanoTime();
+    return deadlineScheduledExecutorService.awaitTermination(awaitTimeNanos, unit);
+  }
+
+  private boolean shouldManageExecutor() {
+    return usingDefaultExecutor && executor instanceof ExecutorService;
   }
 
   @Override
-  public void close() {}
+  public void close() {
+    shutdown();
+  }
 
   public static Builder newBuilder() {
-    return new Builder().setExecutor(DEFAULT_EXECUTOR);
+    return new Builder();
   }
 
   public static class Builder {
@@ -129,11 +190,14 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
     private Executor executor;
     private String endpoint;
     private HttpTransport httpTransport;
+    private boolean usingDefaultExecutor;
 
-    private Builder() {}
+    private Builder() {
+      this.usingDefaultExecutor = false;
+    }
 
     public Builder setExecutor(Executor executor) {
-      this.executor = executor == null ? DEFAULT_EXECUTOR : executor;
+      this.executor = executor;
       return this;
     }
 
@@ -150,8 +214,20 @@ public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResour
     public ManagedHttpJsonChannel build() {
       Preconditions.checkNotNull(endpoint);
 
+      // If the executor provided for this channel is null, gax will provide a
+      // default executor to used for the calls. Only the default executor's
+      // lifecycle will be managed by the channel. Any external executor needs to
+      // managed by the user.
+      if (executor == null) {
+        executor = InstantiatingExecutorProvider.newIOBuilder().build().getExecutor();
+        usingDefaultExecutor = true;
+      }
+
       return new ManagedHttpJsonChannel(
-          executor, endpoint, httpTransport == null ? new NetHttpTransport() : httpTransport);
+          executor,
+          usingDefaultExecutor,
+          endpoint,
+          httpTransport == null ? new NetHttpTransport() : httpTransport);
     }
   }
 }

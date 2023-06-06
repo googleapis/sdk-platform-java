@@ -26,7 +26,9 @@ import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.util.ArrayList;
 import java.util.List;
-import org.junit.Before;
+import java.util.concurrent.TimeUnit;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class ITCommonServiceMixins {
@@ -51,16 +53,26 @@ public class ITCommonServiceMixins {
               .setName("projects/showcase/locations/us-west")
               .setDisplayName("us-west")
               .build());
-  private EchoClient grpcClient;
-  private EchoClient httpjsonClient;
+  private static EchoClient grpcClient;
+  private static EchoClient httpjsonClient;
 
-  @Before
-  public void createClients() throws Exception {
+  @BeforeClass
+  public static void createClients() throws Exception {
     // Create gRPC Echo Client
     grpcClient = TestClientInitializer.createGrpcEchoClient();
 
     // Create HttpJson Echo Client
     httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
+  }
+
+  @AfterClass
+  public static void destroyClients() throws InterruptedException {
+    grpcClient.close();
+    httpjsonClient.close();
+
+    grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+    httpjsonClient.awaitTermination(
+        TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
   @Test
