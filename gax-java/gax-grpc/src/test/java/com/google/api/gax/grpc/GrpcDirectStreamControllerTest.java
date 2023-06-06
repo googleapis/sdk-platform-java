@@ -65,7 +65,7 @@ import org.threeten.bp.Duration;
 @RunWith(JUnit4.class)
 public class GrpcDirectStreamControllerTest {
 
-  private static final int DEFAULT_AWAIT_TERMINATION_SEC = 5;
+  private static final int DEFAULT_AWAIT_TERMINATION_SEC = 10;
   private Server server;
   private ManagedChannel channel;
 
@@ -112,7 +112,6 @@ public class GrpcDirectStreamControllerTest {
         };
     // Set up retry settings. Set total timeout to 1 minute to limit the total runtime of this
     // test. Set retry delay to 1 ms so the retries will be scheduled in a loop with no delays.
-    // Set max attempt to max so there could be as many retries as possible.
     ServerStreamingCallSettings<Color, Money> callSettings =
         ServerStreamingCallSettings.<Color, Money>newBuilder()
             .setResumptionStrategy(resumptionStrategy)

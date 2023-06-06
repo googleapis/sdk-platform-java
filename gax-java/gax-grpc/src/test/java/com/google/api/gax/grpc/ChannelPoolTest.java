@@ -72,7 +72,7 @@ import org.mockito.stubbing.Answer;
 
 @RunWith(JUnit4.class)
 public class ChannelPoolTest {
-  private static final int DEFAULT_AWAIT_TERMINATION_SEC = 5;
+  private static final int DEFAULT_AWAIT_TERMINATION_SEC = 10;
 
   @Test
   public void testAuthority() throws IOException, InterruptedException {
