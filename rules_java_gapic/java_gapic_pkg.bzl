@@ -13,10 +13,15 @@
 # limitations under the License.
 
 load("@com_google_api_gax_java_properties//:dependencies.properties.bzl", "PROPERTIES")
+load("@com_google_protobuf//:protobuf_version.bzl", "PROTOBUF_JAVA_VERSION")
 
 def _wrapPropertyNamesInBraces(properties):
     wrappedProperties = {}
     for k, v in properties.items():
+        # replace the protobuf version with PROTOBUF_JAVA_VERSION defined
+        # in protobuf repository.
+        if k == "version.com_google_protobuf":
+            v = PROTOBUF_JAVA_VERSION
         wrappedProperties["{{%s}}" % k] = v
     return wrappedProperties
 
@@ -63,7 +68,7 @@ def _gapic_pkg_tar_impl(ctx):
         for f in dep.files.to_list():
             deps.append(f)
 
-    samples =[]
+    samples = []
     for s in ctx.attr.samples:
         for f in s.files.to_list():
             samples.append(f)
