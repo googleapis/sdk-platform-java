@@ -49,14 +49,11 @@ import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -64,27 +61,13 @@ import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
 public class GrpcDirectStreamControllerTest {
-
   private static final int DEFAULT_AWAIT_TERMINATION_SEC = 10;
-  private Server server;
-  private ManagedChannel channel;
-
-  @Before
-  public void setup() throws IOException {
-    server = ServerBuilder.forPort(1234).addService(new FakeService()).build().start();
-    channel = ManagedChannelBuilder.forAddress("localhost", 1234).usePlaintext().build();
-  }
-
-  @After
-  public void cleanup() throws InterruptedException {
-    server.shutdown();
-    server.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
-    channel.shutdown();
-    channel.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
-  }
 
   @Test(timeout = 180_000) // ms
   public void testRetryNoRaceCondition() throws Exception {
+    Server server = ServerBuilder.forPort(1234).addService(new FakeService()).build().start();
+    ManagedChannel channel =
+        ManagedChannelBuilder.forAddress("localhost", 1234).usePlaintext().build();
     StreamResumptionStrategy<Color, Money> resumptionStrategy =
         new StreamResumptionStrategy<Color, Money>() {
           @Nonnull
@@ -164,6 +147,10 @@ public class GrpcDirectStreamControllerTest {
       // Ignore this error
     } finally {
       // Shutdown all the resources
+      server.shutdown();
+      server.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
+      channel.shutdown();
+      channel.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
       for (BackgroundResource backgroundResource : backgroundResourceList) {
         backgroundResource.shutdown();
         backgroundResource.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
