@@ -73,7 +73,8 @@ public class RequestParamsBuilder {
 
   /**
    * Add an entry to paramsBuilder with key-value pairing of (headerKey, fieldValue). The only
-   * validation done is to ensure the headerKey and fieldValue are not null and non-empty.
+   * validation done is to ensure the headerKey and fieldValue are not null and non-empty. This
+   * method is used for implicit routing headers (backwards compatibility).
    *
    * @param headerKey the header key for the routing header param
    * @param fieldValue the field value from a request
