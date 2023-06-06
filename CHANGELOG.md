@@ -1,5 +1,26 @@
 # Changelog
 
+## [2.21.0](https://github.com/googleapis/sdk-platform-java/compare/v2.20.1...v2.21.0) (2023-06-06)
+
+
+### Features
+
+* Dynamic Routing Headers for HttpJson ([#1667](https://github.com/googleapis/sdk-platform-java/issues/1667)) ([003b993](https://github.com/googleapis/sdk-platform-java/commit/003b993f7ad7cae8ae8c101e0ff147e517dcd83e))
+* Implement awaitTermination() for MangedHttpJsonChannel ([#1677](https://github.com/googleapis/sdk-platform-java/issues/1677)) ([dea8426](https://github.com/googleapis/sdk-platform-java/commit/dea8426a85b53d08d3c8d317a1af4312889b1a3d))
+
+
+### Bug Fixes
+
+* [gapic-generator-java] align writer behavior for nested types ([#1709](https://github.com/googleapis/sdk-platform-java/issues/1709)) ([a21ffe8](https://github.com/googleapis/sdk-platform-java/commit/a21ffe88f880c0b3c6b5b512cd4d0741d9620dd3))
+* [gapic-generator-java] update year to 2023 in generated license headers ([#1720](https://github.com/googleapis/sdk-platform-java/issues/1720)) ([ef4a7ff](https://github.com/googleapis/sdk-platform-java/commit/ef4a7ff91b259f0b650cc06bd664eadca7bd17c9))
+* Update the return type of setWaitTimeout for convience ([#1751](https://github.com/googleapis/sdk-platform-java/issues/1751)) ([f1927a5](https://github.com/googleapis/sdk-platform-java/commit/f1927a53306ee28186074e6cb03a933a0cdffc1f))
+
+
+### Dependencies
+
+* Update dependency com.google.auth:google-auth-library-credentials and google-auth-library-oauth2-http to v1.17.0 ([#1756](https://github.com/googleapis/sdk-platform-java/issues/1756)) ([f583258](https://github.com/googleapis/sdk-platform-java/commit/f58325893b6ab306adbe4047b6dfc438de133ac7))
+* Update protobuf dependencies to v3.23.2 ([#1755](https://github.com/googleapis/sdk-platform-java/issues/1755)) ([55ecbc3](https://github.com/googleapis/sdk-platform-java/commit/55ecbc35cbd735b8f4aab48e02e080d79828d70c))
+
 ## [2.20.1](https://github.com/googleapis/sdk-platform-java/compare/v2.20.0...v2.20.1) (2023-05-25)
 
 
