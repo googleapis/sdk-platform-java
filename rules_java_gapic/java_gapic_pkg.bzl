@@ -15,19 +15,25 @@
 load("@com_google_api_gax_java_properties//:dependencies.properties.bzl", "PROPERTIES")
 load("@com_google_protobuf//:protobuf_version.bzl", "PROTOBUF_JAVA_VERSION")
 
-def _wrapPropertyNamesInBraces(properties):
-    wrappedProperties = {}
-    for k, v in properties.items():
+def _syncVersionWithGoogleapis(properties):
+    syncedProterties = {}
+    for dep, version in properties.items():
         # Before this replacement, there is a problem (e.g., b/284292352) when
         # the version of protobuf defined in googleapis is higher than protobuf
         # defined in gax-java/dependencies.properties, use this replacement to
         # sync the two versions.
-        if k == "version.com_google_protobuf":
-            v = PROTOBUF_JAVA_VERSION
+        if dep == "version.com_google_protobuf":
+            version = PROTOBUF_JAVA_VERSION
+        syncedProterties[dep] = version
+    return syncedProterties
+
+def _wrapPropertyNamesInBraces(properties):
+    wrappedProperties = {}
+    for k, v in properties.items():
         wrappedProperties["{{%s}}" % k] = v
     return wrappedProperties
 
-_PROPERTIES = _wrapPropertyNamesInBraces(PROPERTIES)
+_PROPERTIES = _wrapPropertyNamesInBraces(_syncVersionWithGoogleapis(PROPERTIES))
 
 # ========================================================================
 # General packaging helpers.
