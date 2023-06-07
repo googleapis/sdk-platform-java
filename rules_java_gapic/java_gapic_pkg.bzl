@@ -18,8 +18,10 @@ load("@com_google_protobuf//:protobuf_version.bzl", "PROTOBUF_JAVA_VERSION")
 def _wrapPropertyNamesInBraces(properties):
     wrappedProperties = {}
     for k, v in properties.items():
-        # replace the protobuf version with PROTOBUF_JAVA_VERSION defined
-        # in protobuf repository.
+        # Before this replacement, there is a problem (e.g., b/284292352) when
+        # the version of protobuf defined in googleapis is higher than protobuf
+        # defined in gax-java/dependencies.properties, use this replacement to
+        # sync the two versions.
         if k == "version.com_google_protobuf":
             v = PROTOBUF_JAVA_VERSION
         wrappedProperties["{{%s}}" % k] = v
