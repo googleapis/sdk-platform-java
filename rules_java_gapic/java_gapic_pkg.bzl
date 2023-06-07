@@ -27,10 +27,10 @@ def _syncVersionWithGoogleapis():
 
 def _wrapPropertyNamesInBraces(properties):
     wrappedProperties = {}
+    for k, v in properties.items():
+        wrappedProperties["{{%s}}" % k] = v
     syncedProterties = _syncVersionWithGoogleapis()
     for k, v in syncedProterties.items():
-        wrappedProperties["{{%s}}" % k] = v
-    for k, v in properties.items():
         wrappedProperties["{{%s}}" % k] = v
     return wrappedProperties
 
