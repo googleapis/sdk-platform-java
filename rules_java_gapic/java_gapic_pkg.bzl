@@ -29,12 +29,9 @@ def _wrapPropertyNamesInBraces(properties):
     wrappedProperties = {}
     for k, v in properties.items():
         wrappedProperties["{{%s}}" % k] = v
-    syncedProterties = _syncVersionWithGoogleapis()
-    for k, v in syncedProterties.items():
-        wrappedProperties["{{%s}}" % k] = v
     return wrappedProperties
 
-_PROPERTIES = _wrapPropertyNamesInBraces(PROPERTIES)
+_PROPERTIES = _wrapPropertyNamesInBraces(PROPERTIES | _syncVersionWithGoogleapis())
 
 # ========================================================================
 # General packaging helpers.
