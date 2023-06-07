@@ -18,18 +18,22 @@ package com.google.showcase.v1beta1.it.util;
 
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.NoCredentialsProvider;
+import com.google.api.gax.httpjson.HttpJsonClientInterceptor;
 import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.longrunning.OperationTimedPollAlgorithm;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.UnaryCallSettings;
+import com.google.common.collect.ImmutableList;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.IdentityClient;
 import com.google.showcase.v1beta1.IdentitySettings;
 import com.google.showcase.v1beta1.WaitRequest;
 import com.google.showcase.v1beta1.stub.EchoStubSettings;
+import io.grpc.ClientInterceptor;
 import io.grpc.ManagedChannelBuilder;
+import java.util.List;
 import java.util.Set;
 
 public class TestClientInitializer {
@@ -37,18 +41,29 @@ public class TestClientInitializer {
   public static final int AWAIT_TERMINATION_SECONDS = 10;
 
   public static EchoClient createGrpcEchoClient() throws Exception {
+    return createGrpcEchoClient(ImmutableList.of());
+  }
+
+  public static EchoClient createGrpcEchoClient(List<ClientInterceptor> interceptorList)
+      throws Exception {
     EchoSettings grpcEchoSettings =
         EchoSettings.newBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
             .setTransportChannelProvider(
                 EchoSettings.defaultGrpcTransportProviderBuilder()
                     .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .setInterceptorProvider(() -> interceptorList)
                     .build())
             .build();
     return EchoClient.create(grpcEchoSettings);
   }
 
   public static EchoClient createHttpJsonEchoClient() throws Exception {
+    return createHttpJsonEchoClient(ImmutableList.of());
+  }
+
+  public static EchoClient createHttpJsonEchoClient(List<HttpJsonClientInterceptor> interceptorList)
+      throws Exception {
     EchoSettings httpJsonEchoSettings =
         EchoSettings.newHttpJsonBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
@@ -57,6 +72,7 @@ public class TestClientInitializer {
                     .setHttpTransport(
                         new NetHttpTransport.Builder().doNotValidateCertificate().build())
                     .setEndpoint("http://localhost:7469")
+                    .setInterceptorProvider(() -> interceptorList)
                     .build())
             .build();
     return EchoClient.create(httpJsonEchoSettings);

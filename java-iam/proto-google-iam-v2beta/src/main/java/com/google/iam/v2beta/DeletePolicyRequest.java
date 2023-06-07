@@ -48,11 +48,6 @@ public final class DeletePolicyRequest extends com.google.protobuf.GeneratedMess
     return new DeletePolicyRequest();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.iam.v2beta.PolicyProto
         .internal_static_google_iam_v2beta_DeletePolicyRequest_descriptor;
@@ -78,9 +73,12 @@ public final class DeletePolicyRequest extends com.google.protobuf.GeneratedMess
    * <pre>
    * Required. The resource name of the policy to delete. Format:
    * `policies/{attachment_point}/denypolicies/{policy_id}`
+   *
+   *
    * Use the URL-encoded full resource name, which means that the forward-slash
    * character, `/`, must be written as `%2F`. For example,
    * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`.
+   *
    * For organizations and folders, use the numeric ID in the full resource
    * name. For projects, you can use the alphanumeric or the numeric ID.
    * </pre>
@@ -107,9 +105,12 @@ public final class DeletePolicyRequest extends com.google.protobuf.GeneratedMess
    * <pre>
    * Required. The resource name of the policy to delete. Format:
    * `policies/{attachment_point}/denypolicies/{policy_id}`
+   *
+   *
    * Use the URL-encoded full resource name, which means that the forward-slash
    * character, `/`, must be written as `%2F`. For example,
    * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`.
+   *
    * For organizations and folders, use the numeric ID in the full resource
    * name. For projects, you can use the alphanumeric or the numeric ID.
    * </pre>
@@ -142,6 +143,7 @@ public final class DeletePolicyRequest extends com.google.protobuf.GeneratedMess
    * Optional. The expected `etag` of the policy to delete. If the value does not match
    * the value that is stored in IAM, the request fails with a `409` error code
    * and `ABORTED` status.
+   *
    * If you omit this field, the policy is deleted regardless of its current
    * `etag`.
    * </pre>
@@ -169,6 +171,7 @@ public final class DeletePolicyRequest extends com.google.protobuf.GeneratedMess
    * Optional. The expected `etag` of the policy to delete. If the value does not match
    * the value that is stored in IAM, the request fails with a `409` error code
    * and `ABORTED` status.
+   *
    * If you omit this field, the policy is deleted regardless of its current
    * `etag`.
    * </pre>
@@ -562,9 +565,12 @@ public final class DeletePolicyRequest extends com.google.protobuf.GeneratedMess
      * <pre>
      * Required. The resource name of the policy to delete. Format:
      * `policies/{attachment_point}/denypolicies/{policy_id}`
+     *
+     *
      * Use the URL-encoded full resource name, which means that the forward-slash
      * character, `/`, must be written as `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`.
+     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, you can use the alphanumeric or the numeric ID.
      * </pre>
@@ -590,9 +596,12 @@ public final class DeletePolicyRequest extends com.google.protobuf.GeneratedMess
      * <pre>
      * Required. The resource name of the policy to delete. Format:
      * `policies/{attachment_point}/denypolicies/{policy_id}`
+     *
+     *
      * Use the URL-encoded full resource name, which means that the forward-slash
      * character, `/`, must be written as `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`.
+     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, you can use the alphanumeric or the numeric ID.
      * </pre>
@@ -618,9 +627,12 @@ public final class DeletePolicyRequest extends com.google.protobuf.GeneratedMess
      * <pre>
      * Required. The resource name of the policy to delete. Format:
      * `policies/{attachment_point}/denypolicies/{policy_id}`
+     *
+     *
      * Use the URL-encoded full resource name, which means that the forward-slash
      * character, `/`, must be written as `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`.
+     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, you can use the alphanumeric or the numeric ID.
      * </pre>
@@ -645,9 +657,12 @@ public final class DeletePolicyRequest extends com.google.protobuf.GeneratedMess
      * <pre>
      * Required. The resource name of the policy to delete. Format:
      * `policies/{attachment_point}/denypolicies/{policy_id}`
+     *
+     *
      * Use the URL-encoded full resource name, which means that the forward-slash
      * character, `/`, must be written as `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`.
+     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, you can use the alphanumeric or the numeric ID.
      * </pre>
@@ -668,9 +683,12 @@ public final class DeletePolicyRequest extends com.google.protobuf.GeneratedMess
      * <pre>
      * Required. The resource name of the policy to delete. Format:
      * `policies/{attachment_point}/denypolicies/{policy_id}`
+     *
+     *
      * Use the URL-encoded full resource name, which means that the forward-slash
      * character, `/`, must be written as `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`.
+     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, you can use the alphanumeric or the numeric ID.
      * </pre>
@@ -699,6 +717,7 @@ public final class DeletePolicyRequest extends com.google.protobuf.GeneratedMess
      * Optional. The expected `etag` of the policy to delete. If the value does not match
      * the value that is stored in IAM, the request fails with a `409` error code
      * and `ABORTED` status.
+     *
      * If you omit this field, the policy is deleted regardless of its current
      * `etag`.
      * </pre>
@@ -725,6 +744,7 @@ public final class DeletePolicyRequest extends com.google.protobuf.GeneratedMess
      * Optional. The expected `etag` of the policy to delete. If the value does not match
      * the value that is stored in IAM, the request fails with a `409` error code
      * and `ABORTED` status.
+     *
      * If you omit this field, the policy is deleted regardless of its current
      * `etag`.
      * </pre>
@@ -751,6 +771,7 @@ public final class DeletePolicyRequest extends com.google.protobuf.GeneratedMess
      * Optional. The expected `etag` of the policy to delete. If the value does not match
      * the value that is stored in IAM, the request fails with a `409` error code
      * and `ABORTED` status.
+     *
      * If you omit this field, the policy is deleted regardless of its current
      * `etag`.
      * </pre>
@@ -776,6 +797,7 @@ public final class DeletePolicyRequest extends com.google.protobuf.GeneratedMess
      * Optional. The expected `etag` of the policy to delete. If the value does not match
      * the value that is stored in IAM, the request fails with a `409` error code
      * and `ABORTED` status.
+     *
      * If you omit this field, the policy is deleted regardless of its current
      * `etag`.
      * </pre>
@@ -797,6 +819,7 @@ public final class DeletePolicyRequest extends com.google.protobuf.GeneratedMess
      * Optional. The expected `etag` of the policy to delete. If the value does not match
      * the value that is stored in IAM, the request fails with a `409` error code
      * and `ABORTED` status.
+     *
      * If you omit this field, the policy is deleted regardless of its current
      * `etag`.
      * </pre>

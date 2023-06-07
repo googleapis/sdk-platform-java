@@ -28,12 +28,15 @@ package com.google.api;
  * aspects to sub-sections. Each sub-section is either a proto message or a
  * repeated proto message that configures a specific aspect, such as auth.
  * For more information, see each proto message definition.
+ *
  * Example:
+ *
  *     type: google.api.Service
  *     name: calendar.googleapis.com
  *     title: Google Calendar API
  *     apis:
  *     - name: google.calendar.v3.Calendar
+ *
  *     visibility:
  *       rules:
  *       - selector: "google.calendar.v3.*"
@@ -42,6 +45,7 @@ package com.google.api;
  *       rules:
  *       - selector: "google.calendar.v3.*"
  *         address: calendar.example.com
+ *
  *     authentication:
  *       providers:
  *       - id: google_calendar_auth
@@ -83,11 +87,6 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new Service();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -423,6 +422,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * included.  Messages which are not referenced but shall be included, such as
    * types used by the `google.protobuf.Any` type, should be listed here by
    * name by the configuration author. Example:
+   *
    *     types:
    *     - name: google.protobuf.Int32
    * </pre>
@@ -442,6 +442,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * included.  Messages which are not referenced but shall be included, such as
    * types used by the `google.protobuf.Any` type, should be listed here by
    * name by the configuration author. Example:
+   *
    *     types:
    *     - name: google.protobuf.Int32
    * </pre>
@@ -461,6 +462,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * included.  Messages which are not referenced but shall be included, such as
    * types used by the `google.protobuf.Any` type, should be listed here by
    * name by the configuration author. Example:
+   *
    *     types:
    *     - name: google.protobuf.Int32
    * </pre>
@@ -480,6 +482,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * included.  Messages which are not referenced but shall be included, such as
    * types used by the `google.protobuf.Any` type, should be listed here by
    * name by the configuration author. Example:
+   *
    *     types:
    *     - name: google.protobuf.Int32
    * </pre>
@@ -499,6 +502,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * included.  Messages which are not referenced but shall be included, such as
    * types used by the `google.protobuf.Any` type, should be listed here by
    * name by the configuration author. Example:
+   *
    *     types:
    *     - name: google.protobuf.Int32
    * </pre>
@@ -522,6 +526,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * directly or indirectly by the `apis` are automatically included.  Enums
    * which are not referenced but shall be included should be listed here by
    * name by the configuration author. Example:
+   *
    *     enums:
    *     - name: google.someapi.v1.SomeEnum
    * </pre>
@@ -540,6 +545,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * directly or indirectly by the `apis` are automatically included.  Enums
    * which are not referenced but shall be included should be listed here by
    * name by the configuration author. Example:
+   *
    *     enums:
    *     - name: google.someapi.v1.SomeEnum
    * </pre>
@@ -558,6 +564,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * directly or indirectly by the `apis` are automatically included.  Enums
    * which are not referenced but shall be included should be listed here by
    * name by the configuration author. Example:
+   *
    *     enums:
    *     - name: google.someapi.v1.SomeEnum
    * </pre>
@@ -576,6 +583,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * directly or indirectly by the `apis` are automatically included.  Enums
    * which are not referenced but shall be included should be listed here by
    * name by the configuration author. Example:
+   *
    *     enums:
    *     - name: google.someapi.v1.SomeEnum
    * </pre>
@@ -594,6 +602,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * directly or indirectly by the `apis` are automatically included.  Enums
    * which are not referenced but shall be included should be listed here by
    * name by the configuration author. Example:
+   *
    *     enums:
    *     - name: google.someapi.v1.SomeEnum
    * </pre>
@@ -1577,6 +1586,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Obsolete. Do not use.
+   *
    * This field has no semantic meaning. The service config compiler always
    * sets this field to `3`.
    * </pre>
@@ -1594,6 +1604,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Obsolete. Do not use.
+   *
    * This field has no semantic meaning. The service config compiler always
    * sets this field to `3`.
    * </pre>
@@ -1613,6 +1624,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Obsolete. Do not use.
+   *
    * This field has no semantic meaning. The service config compiler always
    * sets this field to `3`.
    * </pre>
@@ -2108,12 +2120,15 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    * aspects to sub-sections. Each sub-section is either a proto message or a
    * repeated proto message that configures a specific aspect, such as auth.
    * For more information, see each proto message definition.
+   *
    * Example:
+   *
    *     type: google.api.Service
    *     name: calendar.googleapis.com
    *     title: Google Calendar API
    *     apis:
    *     - name: google.calendar.v3.Calendar
+   *
    *     visibility:
    *       rules:
    *       - selector: "google.calendar.v3.*"
@@ -2122,6 +2137,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
    *       rules:
    *       - selector: "google.calendar.v3.*"
    *         address: calendar.example.com
+   *
    *     authentication:
    *       providers:
    *       - id: google_calendar_auth
@@ -3894,6 +3910,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * included.  Messages which are not referenced but shall be included, such as
      * types used by the `google.protobuf.Any` type, should be listed here by
      * name by the configuration author. Example:
+     *
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -3916,6 +3933,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * included.  Messages which are not referenced but shall be included, such as
      * types used by the `google.protobuf.Any` type, should be listed here by
      * name by the configuration author. Example:
+     *
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -3938,6 +3956,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * included.  Messages which are not referenced but shall be included, such as
      * types used by the `google.protobuf.Any` type, should be listed here by
      * name by the configuration author. Example:
+     *
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -3960,6 +3979,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * included.  Messages which are not referenced but shall be included, such as
      * types used by the `google.protobuf.Any` type, should be listed here by
      * name by the configuration author. Example:
+     *
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -3988,6 +4008,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * included.  Messages which are not referenced but shall be included, such as
      * types used by the `google.protobuf.Any` type, should be listed here by
      * name by the configuration author. Example:
+     *
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -4013,6 +4034,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * included.  Messages which are not referenced but shall be included, such as
      * types used by the `google.protobuf.Any` type, should be listed here by
      * name by the configuration author. Example:
+     *
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -4041,6 +4063,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * included.  Messages which are not referenced but shall be included, such as
      * types used by the `google.protobuf.Any` type, should be listed here by
      * name by the configuration author. Example:
+     *
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -4069,6 +4092,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * included.  Messages which are not referenced but shall be included, such as
      * types used by the `google.protobuf.Any` type, should be listed here by
      * name by the configuration author. Example:
+     *
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -4094,6 +4118,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * included.  Messages which are not referenced but shall be included, such as
      * types used by the `google.protobuf.Any` type, should be listed here by
      * name by the configuration author. Example:
+     *
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -4119,6 +4144,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * included.  Messages which are not referenced but shall be included, such as
      * types used by the `google.protobuf.Any` type, should be listed here by
      * name by the configuration author. Example:
+     *
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -4144,6 +4170,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * included.  Messages which are not referenced but shall be included, such as
      * types used by the `google.protobuf.Any` type, should be listed here by
      * name by the configuration author. Example:
+     *
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -4169,6 +4196,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * included.  Messages which are not referenced but shall be included, such as
      * types used by the `google.protobuf.Any` type, should be listed here by
      * name by the configuration author. Example:
+     *
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -4194,6 +4222,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * included.  Messages which are not referenced but shall be included, such as
      * types used by the `google.protobuf.Any` type, should be listed here by
      * name by the configuration author. Example:
+     *
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -4212,6 +4241,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * included.  Messages which are not referenced but shall be included, such as
      * types used by the `google.protobuf.Any` type, should be listed here by
      * name by the configuration author. Example:
+     *
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -4234,6 +4264,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * included.  Messages which are not referenced but shall be included, such as
      * types used by the `google.protobuf.Any` type, should be listed here by
      * name by the configuration author. Example:
+     *
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -4256,6 +4287,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * included.  Messages which are not referenced but shall be included, such as
      * types used by the `google.protobuf.Any` type, should be listed here by
      * name by the configuration author. Example:
+     *
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -4274,6 +4306,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * included.  Messages which are not referenced but shall be included, such as
      * types used by the `google.protobuf.Any` type, should be listed here by
      * name by the configuration author. Example:
+     *
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -4293,6 +4326,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * included.  Messages which are not referenced but shall be included, such as
      * types used by the `google.protobuf.Any` type, should be listed here by
      * name by the configuration author. Example:
+     *
      *     types:
      *     - name: google.protobuf.Int32
      * </pre>
@@ -4343,6 +4377,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * directly or indirectly by the `apis` are automatically included.  Enums
      * which are not referenced but shall be included should be listed here by
      * name by the configuration author. Example:
+     *
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4364,6 +4399,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * directly or indirectly by the `apis` are automatically included.  Enums
      * which are not referenced but shall be included should be listed here by
      * name by the configuration author. Example:
+     *
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4385,6 +4421,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * directly or indirectly by the `apis` are automatically included.  Enums
      * which are not referenced but shall be included should be listed here by
      * name by the configuration author. Example:
+     *
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4406,6 +4443,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * directly or indirectly by the `apis` are automatically included.  Enums
      * which are not referenced but shall be included should be listed here by
      * name by the configuration author. Example:
+     *
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4433,6 +4471,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * directly or indirectly by the `apis` are automatically included.  Enums
      * which are not referenced but shall be included should be listed here by
      * name by the configuration author. Example:
+     *
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4457,6 +4496,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * directly or indirectly by the `apis` are automatically included.  Enums
      * which are not referenced but shall be included should be listed here by
      * name by the configuration author. Example:
+     *
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4484,6 +4524,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * directly or indirectly by the `apis` are automatically included.  Enums
      * which are not referenced but shall be included should be listed here by
      * name by the configuration author. Example:
+     *
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4511,6 +4552,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * directly or indirectly by the `apis` are automatically included.  Enums
      * which are not referenced but shall be included should be listed here by
      * name by the configuration author. Example:
+     *
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4535,6 +4577,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * directly or indirectly by the `apis` are automatically included.  Enums
      * which are not referenced but shall be included should be listed here by
      * name by the configuration author. Example:
+     *
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4559,6 +4602,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * directly or indirectly by the `apis` are automatically included.  Enums
      * which are not referenced but shall be included should be listed here by
      * name by the configuration author. Example:
+     *
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4583,6 +4627,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * directly or indirectly by the `apis` are automatically included.  Enums
      * which are not referenced but shall be included should be listed here by
      * name by the configuration author. Example:
+     *
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4607,6 +4652,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * directly or indirectly by the `apis` are automatically included.  Enums
      * which are not referenced but shall be included should be listed here by
      * name by the configuration author. Example:
+     *
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4631,6 +4677,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * directly or indirectly by the `apis` are automatically included.  Enums
      * which are not referenced but shall be included should be listed here by
      * name by the configuration author. Example:
+     *
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4648,6 +4695,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * directly or indirectly by the `apis` are automatically included.  Enums
      * which are not referenced but shall be included should be listed here by
      * name by the configuration author. Example:
+     *
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4669,6 +4717,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * directly or indirectly by the `apis` are automatically included.  Enums
      * which are not referenced but shall be included should be listed here by
      * name by the configuration author. Example:
+     *
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4690,6 +4739,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * directly or indirectly by the `apis` are automatically included.  Enums
      * which are not referenced but shall be included should be listed here by
      * name by the configuration author. Example:
+     *
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4707,6 +4757,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * directly or indirectly by the `apis` are automatically included.  Enums
      * which are not referenced but shall be included should be listed here by
      * name by the configuration author. Example:
+     *
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -4725,6 +4776,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      * directly or indirectly by the `apis` are automatically included.  Enums
      * which are not referenced but shall be included should be listed here by
      * name by the configuration author. Example:
+     *
      *     enums:
      *     - name: google.someapi.v1.SomeEnum
      * </pre>
@@ -8718,6 +8770,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Obsolete. Do not use.
+     *
      * This field has no semantic meaning. The service config compiler always
      * sets this field to `3`.
      * </pre>
@@ -8734,6 +8787,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Obsolete. Do not use.
+     *
      * This field has no semantic meaning. The service config compiler always
      * sets this field to `3`.
      * </pre>
@@ -8756,6 +8810,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Obsolete. Do not use.
+     *
      * This field has no semantic meaning. The service config compiler always
      * sets this field to `3`.
      * </pre>
@@ -8780,6 +8835,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Obsolete. Do not use.
+     *
      * This field has no semantic meaning. The service config compiler always
      * sets this field to `3`.
      * </pre>
@@ -8801,6 +8857,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Obsolete. Do not use.
+     *
      * This field has no semantic meaning. The service config compiler always
      * sets this field to `3`.
      * </pre>
@@ -8828,6 +8885,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Obsolete. Do not use.
+     *
      * This field has no semantic meaning. The service config compiler always
      * sets this field to `3`.
      * </pre>
@@ -8849,6 +8907,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Obsolete. Do not use.
+     *
      * This field has no semantic meaning. The service config compiler always
      * sets this field to `3`.
      * </pre>
@@ -8865,6 +8924,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Obsolete. Do not use.
+     *
      * This field has no semantic meaning. The service config compiler always
      * sets this field to `3`.
      * </pre>
@@ -8885,6 +8945,7 @@ public final class Service extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Obsolete. Do not use.
+     *
      * This field has no semantic meaning. The service config compiler always
      * sets this field to `3`.
      * </pre>

@@ -51,16 +51,19 @@ class GrpcUnaryRequestParamCallable<RequestT, ResponseT>
       UnaryCallable<RequestT, ResponseT> callable,
       RequestParamsExtractor<RequestT> paramsExtractor) {
     this.callable = Preconditions.checkNotNull(callable);
-    this.paramsEncoder =
-        new RequestUrlParamsEncoder<>(Preconditions.checkNotNull(paramsExtractor), false);
+    this.paramsEncoder = new RequestUrlParamsEncoder<>(Preconditions.checkNotNull(paramsExtractor));
   }
 
   @Override
   public ApiFuture<ResponseT> futureCall(RequestT request, ApiCallContext inputContext) {
-    GrpcCallContext newCallContext =
-        GrpcCallContext.createDefault()
-            .nullToSelf(inputContext)
-            .withRequestParamsDynamicHeaderOption(paramsEncoder.encode(request));
+    ApiCallContext newCallContext = inputContext;
+    String encodedHeader = paramsEncoder.encode(request);
+    if (!encodedHeader.isEmpty()) {
+      newCallContext =
+          GrpcCallContext.createDefault()
+              .nullToSelf(inputContext)
+              .withRequestParamsDynamicHeaderOption(encodedHeader);
+    }
 
     return callable.futureCall(request, newCallContext);
   }

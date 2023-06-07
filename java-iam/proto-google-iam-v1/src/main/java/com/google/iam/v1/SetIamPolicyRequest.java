@@ -47,11 +47,6 @@ public final class SetIamPolicyRequest extends com.google.protobuf.GeneratedMess
     return new SetIamPolicyRequest();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.iam.v1.IamPolicyProto
         .internal_static_google_iam_v1_SetIamPolicyRequest_descriptor;
@@ -188,6 +183,7 @@ public final class SetIamPolicyRequest extends com.google.protobuf.GeneratedMess
    * OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
    * the fields in the mask will be modified. If no mask is provided, the
    * following default mask is used:
+   *
    * `paths: "bindings, etag"`
    * </pre>
    *
@@ -206,6 +202,7 @@ public final class SetIamPolicyRequest extends com.google.protobuf.GeneratedMess
    * OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
    * the fields in the mask will be modified. If no mask is provided, the
    * following default mask is used:
+   *
    * `paths: "bindings, etag"`
    * </pre>
    *
@@ -224,6 +221,7 @@ public final class SetIamPolicyRequest extends com.google.protobuf.GeneratedMess
    * OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
    * the fields in the mask will be modified. If no mask is provided, the
    * following default mask is used:
+   *
    * `paths: "bindings, etag"`
    * </pre>
    *
@@ -974,6 +972,7 @@ public final class SetIamPolicyRequest extends com.google.protobuf.GeneratedMess
      * OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
      * the fields in the mask will be modified. If no mask is provided, the
      * following default mask is used:
+     *
      * `paths: "bindings, etag"`
      * </pre>
      *
@@ -991,6 +990,7 @@ public final class SetIamPolicyRequest extends com.google.protobuf.GeneratedMess
      * OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
      * the fields in the mask will be modified. If no mask is provided, the
      * following default mask is used:
+     *
      * `paths: "bindings, etag"`
      * </pre>
      *
@@ -1014,6 +1014,7 @@ public final class SetIamPolicyRequest extends com.google.protobuf.GeneratedMess
      * OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
      * the fields in the mask will be modified. If no mask is provided, the
      * following default mask is used:
+     *
      * `paths: "bindings, etag"`
      * </pre>
      *
@@ -1039,6 +1040,7 @@ public final class SetIamPolicyRequest extends com.google.protobuf.GeneratedMess
      * OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
      * the fields in the mask will be modified. If no mask is provided, the
      * following default mask is used:
+     *
      * `paths: "bindings, etag"`
      * </pre>
      *
@@ -1061,6 +1063,7 @@ public final class SetIamPolicyRequest extends com.google.protobuf.GeneratedMess
      * OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
      * the fields in the mask will be modified. If no mask is provided, the
      * following default mask is used:
+     *
      * `paths: "bindings, etag"`
      * </pre>
      *
@@ -1089,6 +1092,7 @@ public final class SetIamPolicyRequest extends com.google.protobuf.GeneratedMess
      * OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
      * the fields in the mask will be modified. If no mask is provided, the
      * following default mask is used:
+     *
      * `paths: "bindings, etag"`
      * </pre>
      *
@@ -1111,6 +1115,7 @@ public final class SetIamPolicyRequest extends com.google.protobuf.GeneratedMess
      * OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
      * the fields in the mask will be modified. If no mask is provided, the
      * following default mask is used:
+     *
      * `paths: "bindings, etag"`
      * </pre>
      *
@@ -1128,6 +1133,7 @@ public final class SetIamPolicyRequest extends com.google.protobuf.GeneratedMess
      * OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
      * the fields in the mask will be modified. If no mask is provided, the
      * following default mask is used:
+     *
      * `paths: "bindings, etag"`
      * </pre>
      *
@@ -1149,6 +1155,7 @@ public final class SetIamPolicyRequest extends com.google.protobuf.GeneratedMess
      * OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only
      * the fields in the mask will be modified. If no mask is provided, the
      * following default mask is used:
+     *
      * `paths: "bindings, etag"`
      * </pre>
      *

@@ -47,11 +47,6 @@ public final class GetPolicyRequest extends com.google.protobuf.GeneratedMessage
     return new GetPolicyRequest();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.iam.v2beta.PolicyProto
         .internal_static_google_iam_v2beta_GetPolicyRequest_descriptor;
@@ -77,9 +72,12 @@ public final class GetPolicyRequest extends com.google.protobuf.GeneratedMessage
    * <pre>
    * Required. The resource name of the policy to retrieve. Format:
    * `policies/{attachment_point}/denypolicies/{policy_id}`
+   *
+   *
    * Use the URL-encoded full resource name, which means that the forward-slash
    * character, `/`, must be written as `%2F`. For example,
    * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`.
+   *
    * For organizations and folders, use the numeric ID in the full resource
    * name. For projects, you can use the alphanumeric or the numeric ID.
    * </pre>
@@ -106,9 +104,12 @@ public final class GetPolicyRequest extends com.google.protobuf.GeneratedMessage
    * <pre>
    * Required. The resource name of the policy to retrieve. Format:
    * `policies/{attachment_point}/denypolicies/{policy_id}`
+   *
+   *
    * Use the URL-encoded full resource name, which means that the forward-slash
    * character, `/`, must be written as `%2F`. For example,
    * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`.
+   *
    * For organizations and folders, use the numeric ID in the full resource
    * name. For projects, you can use the alphanumeric or the numeric ID.
    * </pre>
@@ -477,9 +478,12 @@ public final class GetPolicyRequest extends com.google.protobuf.GeneratedMessage
      * <pre>
      * Required. The resource name of the policy to retrieve. Format:
      * `policies/{attachment_point}/denypolicies/{policy_id}`
+     *
+     *
      * Use the URL-encoded full resource name, which means that the forward-slash
      * character, `/`, must be written as `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`.
+     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, you can use the alphanumeric or the numeric ID.
      * </pre>
@@ -505,9 +509,12 @@ public final class GetPolicyRequest extends com.google.protobuf.GeneratedMessage
      * <pre>
      * Required. The resource name of the policy to retrieve. Format:
      * `policies/{attachment_point}/denypolicies/{policy_id}`
+     *
+     *
      * Use the URL-encoded full resource name, which means that the forward-slash
      * character, `/`, must be written as `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`.
+     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, you can use the alphanumeric or the numeric ID.
      * </pre>
@@ -533,9 +540,12 @@ public final class GetPolicyRequest extends com.google.protobuf.GeneratedMessage
      * <pre>
      * Required. The resource name of the policy to retrieve. Format:
      * `policies/{attachment_point}/denypolicies/{policy_id}`
+     *
+     *
      * Use the URL-encoded full resource name, which means that the forward-slash
      * character, `/`, must be written as `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`.
+     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, you can use the alphanumeric or the numeric ID.
      * </pre>
@@ -560,9 +570,12 @@ public final class GetPolicyRequest extends com.google.protobuf.GeneratedMessage
      * <pre>
      * Required. The resource name of the policy to retrieve. Format:
      * `policies/{attachment_point}/denypolicies/{policy_id}`
+     *
+     *
      * Use the URL-encoded full resource name, which means that the forward-slash
      * character, `/`, must be written as `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`.
+     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, you can use the alphanumeric or the numeric ID.
      * </pre>
@@ -583,9 +596,12 @@ public final class GetPolicyRequest extends com.google.protobuf.GeneratedMessage
      * <pre>
      * Required. The resource name of the policy to retrieve. Format:
      * `policies/{attachment_point}/denypolicies/{policy_id}`
+     *
+     *
      * Use the URL-encoded full resource name, which means that the forward-slash
      * character, `/`, must be written as `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`.
+     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, you can use the alphanumeric or the numeric ID.
      * </pre>

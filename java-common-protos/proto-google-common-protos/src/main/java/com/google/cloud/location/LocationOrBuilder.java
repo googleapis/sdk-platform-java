@@ -107,6 +107,7 @@ public interface LocationOrBuilder
    *
    * <pre>
    * Cross-service attributes for the location. For example
+   *
    *     {"cloud.googleapis.com/region": "us-east1"}
    * </pre>
    *
@@ -118,6 +119,7 @@ public interface LocationOrBuilder
    *
    * <pre>
    * Cross-service attributes for the location. For example
+   *
    *     {"cloud.googleapis.com/region": "us-east1"}
    * </pre>
    *
@@ -132,6 +134,7 @@ public interface LocationOrBuilder
    *
    * <pre>
    * Cross-service attributes for the location. For example
+   *
    *     {"cloud.googleapis.com/region": "us-east1"}
    * </pre>
    *
@@ -143,6 +146,7 @@ public interface LocationOrBuilder
    *
    * <pre>
    * Cross-service attributes for the location. For example
+   *
    *     {"cloud.googleapis.com/region": "us-east1"}
    * </pre>
    *
@@ -158,6 +162,7 @@ public interface LocationOrBuilder
    *
    * <pre>
    * Cross-service attributes for the location. For example
+   *
    *     {"cloud.googleapis.com/region": "us-east1"}
    * </pre>
    *

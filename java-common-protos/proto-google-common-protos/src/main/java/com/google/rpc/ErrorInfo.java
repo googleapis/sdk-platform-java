@@ -23,8 +23,10 @@ package com.google.rpc;
  *
  * <pre>
  * Describes the cause of the error with structured details.
+ *
  * Example of an error when contacting the "pubsub.googleapis.com" API when it
  * is not enabled:
+ *
  *     { "reason": "API_DISABLED"
  *       "domain": "googleapis.com"
  *       "metadata": {
@@ -32,9 +34,12 @@ package com.google.rpc;
  *         "service": "pubsub.googleapis.com"
  *       }
  *     }
+ *
  * This response indicates that the pubsub.googleapis.com API is not enabled.
+ *
  * Example of an error that is returned when attempting to create a Spanner
  * instance in a region that is out of stock:
+ *
  *     { "reason": "STOCKOUT"
  *       "domain": "spanner.googleapis.com",
  *       "metadata": {
@@ -64,11 +69,6 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new ErrorInfo();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -245,6 +245,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Additional structured details about this error.
+   *
    * Keys should match /[a-zA-Z0-9-_]/ and be limited to 64 characters in
    * length. When identifying the current value of an exceeded limit, the units
    * should be contained in the key, not the value.  For example, rather than
@@ -273,6 +274,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Additional structured details about this error.
+   *
    * Keys should match /[a-zA-Z0-9-_]/ and be limited to 64 characters in
    * length. When identifying the current value of an exceeded limit, the units
    * should be contained in the key, not the value.  For example, rather than
@@ -292,6 +294,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Additional structured details about this error.
+   *
    * Keys should match /[a-zA-Z0-9-_]/ and be limited to 64 characters in
    * length. When identifying the current value of an exceeded limit, the units
    * should be contained in the key, not the value.  For example, rather than
@@ -318,6 +321,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Additional structured details about this error.
+   *
    * Keys should match /[a-zA-Z0-9-_]/ and be limited to 64 characters in
    * length. When identifying the current value of an exceeded limit, the units
    * should be contained in the key, not the value.  For example, rather than
@@ -528,8 +532,10 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Describes the cause of the error with structured details.
+   *
    * Example of an error when contacting the "pubsub.googleapis.com" API when it
    * is not enabled:
+   *
    *     { "reason": "API_DISABLED"
    *       "domain": "googleapis.com"
    *       "metadata": {
@@ -537,9 +543,12 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
    *         "service": "pubsub.googleapis.com"
    *       }
    *     }
+   *
    * This response indicates that the pubsub.googleapis.com API is not enabled.
+   *
    * Example of an error that is returned when attempting to create a Spanner
    * instance in a region that is out of stock:
+   *
    *     { "reason": "STOCKOUT"
    *       "domain": "spanner.googleapis.com",
    *       "metadata": {
@@ -1061,6 +1070,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Additional structured details about this error.
+     *
      * Keys should match /[a-zA-Z0-9-_]/ and be limited to 64 characters in
      * length. When identifying the current value of an exceeded limit, the units
      * should be contained in the key, not the value.  For example, rather than
@@ -1089,6 +1099,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Additional structured details about this error.
+     *
      * Keys should match /[a-zA-Z0-9-_]/ and be limited to 64 characters in
      * length. When identifying the current value of an exceeded limit, the units
      * should be contained in the key, not the value.  For example, rather than
@@ -1108,6 +1119,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Additional structured details about this error.
+     *
      * Keys should match /[a-zA-Z0-9-_]/ and be limited to 64 characters in
      * length. When identifying the current value of an exceeded limit, the units
      * should be contained in the key, not the value.  For example, rather than
@@ -1134,6 +1146,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Additional structured details about this error.
+     *
      * Keys should match /[a-zA-Z0-9-_]/ and be limited to 64 characters in
      * length. When identifying the current value of an exceeded limit, the units
      * should be contained in the key, not the value.  For example, rather than
@@ -1166,6 +1179,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Additional structured details about this error.
+     *
      * Keys should match /[a-zA-Z0-9-_]/ and be limited to 64 characters in
      * length. When identifying the current value of an exceeded limit, the units
      * should be contained in the key, not the value.  For example, rather than
@@ -1194,6 +1208,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Additional structured details about this error.
+     *
      * Keys should match /[a-zA-Z0-9-_]/ and be limited to 64 characters in
      * length. When identifying the current value of an exceeded limit, the units
      * should be contained in the key, not the value.  For example, rather than
@@ -1220,6 +1235,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Additional structured details about this error.
+     *
      * Keys should match /[a-zA-Z0-9-_]/ and be limited to 64 characters in
      * length. When identifying the current value of an exceeded limit, the units
      * should be contained in the key, not the value.  For example, rather than

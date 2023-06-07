@@ -23,10 +23,12 @@ package com.google.api;
  *
  * <pre>
  * Logging configuration of the service.
+ *
  * The following example shows how to configure logs to be sent to the
  * producer and consumer projects. In the example, the `activity_history`
  * log is sent to both the producer and consumer projects, whereas the
  * `purchase_history` log is only sent to the producer project.
+ *
  *     monitored_resources:
  *     - type: library.googleapis.com/branch
  *       labels:
@@ -72,11 +74,6 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new Logging();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -210,18 +207,13 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
 
     private LoggingDestination() {
       monitoredResource_ = "";
-      logs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      logs_ = com.google.protobuf.LazyStringArrayList.emptyList();
     }
 
     @java.lang.Override
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
       return new LoggingDestination();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-      return this.unknownFields;
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -297,7 +289,8 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
     public static final int LOGS_FIELD_NUMBER = 1;
 
     @SuppressWarnings("serial")
-    private com.google.protobuf.LazyStringList logs_;
+    private com.google.protobuf.LazyStringArrayList logs_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
     /**
      *
      *
@@ -587,8 +580,7 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
         super.clear();
         bitField0_ = 0;
         monitoredResource_ = "";
-        logs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000002);
+        logs_ = com.google.protobuf.LazyStringArrayList.emptyList();
         return this;
       }
 
@@ -616,7 +608,6 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
       public com.google.api.Logging.LoggingDestination buildPartial() {
         com.google.api.Logging.LoggingDestination result =
             new com.google.api.Logging.LoggingDestination(this);
-        buildPartialRepeatedFields(result);
         if (bitField0_ != 0) {
           buildPartial0(result);
         }
@@ -624,18 +615,14 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
         return result;
       }
 
-      private void buildPartialRepeatedFields(com.google.api.Logging.LoggingDestination result) {
-        if (((bitField0_ & 0x00000002) != 0)) {
-          logs_ = logs_.getUnmodifiableView();
-          bitField0_ = (bitField0_ & ~0x00000002);
-        }
-        result.logs_ = logs_;
-      }
-
       private void buildPartial0(com.google.api.Logging.LoggingDestination result) {
         int from_bitField0_ = bitField0_;
         if (((from_bitField0_ & 0x00000001) != 0)) {
           result.monitoredResource_ = monitoredResource_;
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          logs_.makeImmutable();
+          result.logs_ = logs_;
         }
       }
 
@@ -694,7 +681,7 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
         if (!other.logs_.isEmpty()) {
           if (logs_.isEmpty()) {
             logs_ = other.logs_;
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ |= 0x00000002;
           } else {
             ensureLogsIsMutable();
             logs_.addAll(other.logs_);
@@ -875,14 +862,14 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
         return this;
       }
 
-      private com.google.protobuf.LazyStringList logs_ =
-          com.google.protobuf.LazyStringArrayList.EMPTY;
+      private com.google.protobuf.LazyStringArrayList logs_ =
+          com.google.protobuf.LazyStringArrayList.emptyList();
 
       private void ensureLogsIsMutable() {
-        if (!((bitField0_ & 0x00000002) != 0)) {
+        if (!logs_.isModifiable()) {
           logs_ = new com.google.protobuf.LazyStringArrayList(logs_);
-          bitField0_ |= 0x00000002;
         }
+        bitField0_ |= 0x00000002;
       }
       /**
        *
@@ -899,7 +886,8 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
        * @return A list containing the logs.
        */
       public com.google.protobuf.ProtocolStringList getLogsList() {
-        return logs_.getUnmodifiableView();
+        logs_.makeImmutable();
+        return logs_;
       }
       /**
        *
@@ -976,6 +964,7 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
         }
         ensureLogsIsMutable();
         logs_.set(index, value);
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -1000,6 +989,7 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
         }
         ensureLogsIsMutable();
         logs_.add(value);
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -1021,6 +1011,7 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
       public Builder addAllLogs(java.lang.Iterable<java.lang.String> values) {
         ensureLogsIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(values, logs_);
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -1039,8 +1030,9 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearLogs() {
-        logs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+        logs_ = com.google.protobuf.LazyStringArrayList.emptyList();
         bitField0_ = (bitField0_ & ~0x00000002);
+        ;
         onChanged();
         return this;
       }
@@ -1066,6 +1058,7 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
         checkByteStringIsUtf8(value);
         ensureLogsIsMutable();
         logs_.add(value);
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -1485,10 +1478,12 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Logging configuration of the service.
+   *
    * The following example shows how to configure logs to be sent to the
    * producer and consumer projects. In the example, the `activity_history`
    * log is sent to both the producer and consumer projects, whereas the
    * `purchase_history` log is only sent to the producer project.
+   *
    *     monitored_resources:
    *     - type: library.googleapis.com/branch
    *       labels:

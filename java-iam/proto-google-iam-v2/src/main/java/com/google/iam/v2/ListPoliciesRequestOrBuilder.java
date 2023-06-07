@@ -30,10 +30,13 @@ public interface ListPoliciesRequestOrBuilder
    * Required. The resource that the policy is attached to, along with the kind of policy
    * to list. Format:
    * `policies/{attachment_point}/denypolicies`
+   *
+   *
    * The attachment point is identified by its URL-encoded full resource name,
    * which means that the forward-slash character, `/`, must be written as
    * `%2F`. For example,
    * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies`.
+   *
    * For organizations and folders, use the numeric ID in the full resource
    * name. For projects, you can use the alphanumeric or the numeric ID.
    * </pre>
@@ -50,10 +53,13 @@ public interface ListPoliciesRequestOrBuilder
    * Required. The resource that the policy is attached to, along with the kind of policy
    * to list. Format:
    * `policies/{attachment_point}/denypolicies`
+   *
+   *
    * The attachment point is identified by its URL-encoded full resource name,
    * which means that the forward-slash character, `/`, must be written as
    * `%2F`. For example,
    * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies`.
+   *
    * For organizations and folders, use the numeric ID in the full resource
    * name. For projects, you can use the alphanumeric or the numeric ID.
    * </pre>

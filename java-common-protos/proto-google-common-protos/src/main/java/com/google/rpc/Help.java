@@ -23,6 +23,7 @@ package com.google.rpc;
  *
  * <pre>
  * Provides links to documentation or for performing an out of band action.
+ *
  * For example, if a quota check failed with an error indicating the calling
  * project hasn't enabled the accessed service, this can contain a URL pointing
  * directly to the right place in the developer console to flip the bit.
@@ -48,11 +49,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new Help();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -150,11 +146,6 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
       return new Link();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-      return this.unknownFields;
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -1145,6 +1136,7 @@ public final class Help extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Provides links to documentation or for performing an out of band action.
+   *
    * For example, if a quota check failed with an error indicating the calling
    * project hasn't enabled the accessed service, this can contain a URL pointing
    * directly to the right place in the developer console to flip the bit.
