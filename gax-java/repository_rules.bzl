@@ -26,6 +26,8 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
+load("@com_google_protobuf//:protobuf_version.bzl", "PROTOBUF_JAVA_VERSION")
+
 def _com_google_api_gax_java_properties_impl(ctx):
     props_path = ctx.path(ctx.attr.file)
     result = ctx.execute(["cat", props_path])
@@ -43,6 +45,11 @@ def _com_google_api_gax_java_properties_impl(ctx):
         key_value = p.split("=", 1)
         props_as_map[key_value[0]] = key_value[1]
 
+    # Before this replacement, there is a problem (e.g., b/284292352) when
+    # the version of protobuf defined in googleapis is higher than protobuf
+    # defined in gax-java/dependencies.properties, use this replacement to
+    # sync the two versions.
+    props_as_map["version.com_google_protobuf"] = PROTOBUF_JAVA_VERSION
     props_name = ctx.attr.file.name
     dependencies_bzl = """
 # DO NOT EDIT. This file was generated from {properties_file}.
@@ -50,10 +57,9 @@ PROPERTIES = {props_as_map}
      """.format(
         properties_file = props_name,
         props_as_map = str(props_as_map),
-     )
+    )
     ctx.file("BUILD.bazel", "")
     ctx.file("%s.bzl" % props_name, dependencies_bzl)
-
 
 com_google_api_gax_java_properties = repository_rule(
     implementation = _com_google_api_gax_java_properties_impl,
@@ -62,4 +68,3 @@ com_google_api_gax_java_properties = repository_rule(
     },
     local = True,
 )
-
