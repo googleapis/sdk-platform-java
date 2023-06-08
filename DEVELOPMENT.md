@@ -60,7 +60,7 @@ Based on where the code changes are, we should add different tests, in general
 
 See the [Unit Tests](https://github.com/googleapis/sdk-platform-java/blob/main/gapic-generator-java/DEVELOPMENT.md#unit-tests) section in gapic-generator-java/DEVELOPMENT.md for how to run traditional and golden unit tests.
 
-See [Running the Integration Tests](https://github.com/googleapis/sdk-platform-java/blob/main/showcase/README.md#running-the-integration-tests) and [Update the Golden Showcase Files](https://github.com/googleapis/sdk-platform-java/blob/main/showcase/README.md#update-the-golden-showcase-files) sections in showcase/README.md for how to run adn update showcase integration tests.
+See [Running the Integration Tests](https://github.com/googleapis/sdk-platform-java/blob/main/showcase/README.md#running-the-integration-tests) and [Update the Golden Showcase Files](https://github.com/googleapis/sdk-platform-java/blob/main/showcase/README.md#update-the-golden-showcase-files) sections in showcase/README.md for how to run and update showcase integration tests.
 
 See the [Integration Tests](https://github.com/googleapis/sdk-platform-java/blob/main/gapic-generator-java/DEVELOPMENT.md#integration-tests) section in gapic-generator-java/DEVELOPMENT.md for how to run golden integration tests.
  
