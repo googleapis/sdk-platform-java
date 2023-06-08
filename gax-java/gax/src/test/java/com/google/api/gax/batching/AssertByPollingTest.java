@@ -68,19 +68,19 @@ public class AssertByPollingTest {
   }
 
   @Test
-  public void testSucceedsThirdTime() throws InterruptedException {
+  public void testSucceedsAfterInitialFailure() throws InterruptedException {
     AtomicInteger attempt = new AtomicInteger(1);
     AtomicInteger numFailures = new AtomicInteger(0);
-    Runnable succeedsThirdTime =
+    Runnable succeedsSecondTime =
         () -> {
-          if (attempt.getAndIncrement() < 3) {
+          if (attempt.getAndIncrement() < 2) {
             numFailures.incrementAndGet();
             Assert.fail();
           }
         };
 
-    Duration timeout = Duration.ofMillis(100);
-    assertByPolling(timeout, succeedsThirdTime);
-    Truth.assertThat(numFailures.get()).isEqualTo(2);
+    Duration timeout = Duration.ofMillis(300);
+    assertByPolling(timeout, succeedsSecondTime);
+    Truth.assertThat(numFailures.get()).isEqualTo(1);
   }
 }

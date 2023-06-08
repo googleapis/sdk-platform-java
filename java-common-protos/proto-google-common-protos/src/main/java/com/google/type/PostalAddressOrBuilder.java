@@ -29,6 +29,7 @@ public interface PostalAddressOrBuilder
    * <pre>
    * The schema revision of the `PostalAddress`. This must be set to 0, which is
    * the latest revision.
+   *
    * All new revisions **must** be backward compatible with old revisions.
    * </pre>
    *
@@ -82,8 +83,10 @@ public interface PostalAddressOrBuilder
    * This can affect formatting in certain countries, but is not critical
    * to the correctness of the data and will never affect any validation or
    * other non-formatting related operations.
+   *
    * If this value is not known, it should be omitted (rather than specifying a
    * possibly incorrect default).
+   *
    * Examples: "zh-Hant", "ja", "ja-Latn", "en".
    * </pre>
    *
@@ -103,8 +106,10 @@ public interface PostalAddressOrBuilder
    * This can affect formatting in certain countries, but is not critical
    * to the correctness of the data and will never affect any validation or
    * other non-formatting related operations.
+   *
    * If this value is not known, it should be omitted (rather than specifying a
    * possibly incorrect default).
+   *
    * Examples: "zh-Hant", "ja", "ja-Latn", "en".
    * </pre>
    *
@@ -278,6 +283,7 @@ public interface PostalAddressOrBuilder
    *
    * <pre>
    * Unstructured address lines describing the lower levels of an address.
+   *
    * Because values in address_lines do not have type information and may
    * sometimes contain multiple values in a single field (e.g.
    * "Austin, TX"), it is important that the line order is clear. The order of
@@ -286,12 +292,14 @@ public interface PostalAddressOrBuilder
    * used to make it explicit (e.g. "ja" for large-to-small ordering and
    * "ja-Latn" or "en" for small-to-large). This way, the most specific line of
    * an address can be selected based on the language.
+   *
    * The minimum permitted structural representation of an address consists
    * of a region_code with all remaining information placed in the
    * address_lines. It would be possible to format such an address very
    * approximately without geocoding, but no semantic reasoning could be
    * made about any of the address components until it was at least
    * partially resolved.
+   *
    * Creating an address only containing a region_code and address_lines, and
    * then geocoding is the recommended way to handle completely unstructured
    * addresses (as opposed to guessing which parts of the address should be
@@ -308,6 +316,7 @@ public interface PostalAddressOrBuilder
    *
    * <pre>
    * Unstructured address lines describing the lower levels of an address.
+   *
    * Because values in address_lines do not have type information and may
    * sometimes contain multiple values in a single field (e.g.
    * "Austin, TX"), it is important that the line order is clear. The order of
@@ -316,12 +325,14 @@ public interface PostalAddressOrBuilder
    * used to make it explicit (e.g. "ja" for large-to-small ordering and
    * "ja-Latn" or "en" for small-to-large). This way, the most specific line of
    * an address can be selected based on the language.
+   *
    * The minimum permitted structural representation of an address consists
    * of a region_code with all remaining information placed in the
    * address_lines. It would be possible to format such an address very
    * approximately without geocoding, but no semantic reasoning could be
    * made about any of the address components until it was at least
    * partially resolved.
+   *
    * Creating an address only containing a region_code and address_lines, and
    * then geocoding is the recommended way to handle completely unstructured
    * addresses (as opposed to guessing which parts of the address should be
@@ -338,6 +349,7 @@ public interface PostalAddressOrBuilder
    *
    * <pre>
    * Unstructured address lines describing the lower levels of an address.
+   *
    * Because values in address_lines do not have type information and may
    * sometimes contain multiple values in a single field (e.g.
    * "Austin, TX"), it is important that the line order is clear. The order of
@@ -346,12 +358,14 @@ public interface PostalAddressOrBuilder
    * used to make it explicit (e.g. "ja" for large-to-small ordering and
    * "ja-Latn" or "en" for small-to-large). This way, the most specific line of
    * an address can be selected based on the language.
+   *
    * The minimum permitted structural representation of an address consists
    * of a region_code with all remaining information placed in the
    * address_lines. It would be possible to format such an address very
    * approximately without geocoding, but no semantic reasoning could be
    * made about any of the address components until it was at least
    * partially resolved.
+   *
    * Creating an address only containing a region_code and address_lines, and
    * then geocoding is the recommended way to handle completely unstructured
    * addresses (as opposed to guessing which parts of the address should be
@@ -369,6 +383,7 @@ public interface PostalAddressOrBuilder
    *
    * <pre>
    * Unstructured address lines describing the lower levels of an address.
+   *
    * Because values in address_lines do not have type information and may
    * sometimes contain multiple values in a single field (e.g.
    * "Austin, TX"), it is important that the line order is clear. The order of
@@ -377,12 +392,14 @@ public interface PostalAddressOrBuilder
    * used to make it explicit (e.g. "ja" for large-to-small ordering and
    * "ja-Latn" or "en" for small-to-large). This way, the most specific line of
    * an address can be selected based on the language.
+   *
    * The minimum permitted structural representation of an address consists
    * of a region_code with all remaining information placed in the
    * address_lines. It would be possible to format such an address very
    * approximately without geocoding, but no semantic reasoning could be
    * made about any of the address components until it was at least
    * partially resolved.
+   *
    * Creating an address only containing a region_code and address_lines, and
    * then geocoding is the recommended way to handle completely unstructured
    * addresses (as opposed to guessing which parts of the address should be

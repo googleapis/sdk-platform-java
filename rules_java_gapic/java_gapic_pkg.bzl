@@ -13,6 +13,7 @@
 # limitations under the License.
 
 load("@com_google_api_gax_java_properties//:dependencies.properties.bzl", "PROPERTIES")
+load("@com_google_protobuf//:protobuf_version.bzl", "PROTOBUF_JAVA_VERSION")
 
 def _wrapPropertyNamesInBraces(properties):
     wrappedProperties = {}
@@ -20,7 +21,12 @@ def _wrapPropertyNamesInBraces(properties):
         wrappedProperties["{{%s}}" % k] = v
     return wrappedProperties
 
-_PROPERTIES = _wrapPropertyNamesInBraces(PROPERTIES)
+# Before this replacement, there was a problem (e.g., b/284292352) when
+# the version of protobuf defined in googleapis is higher than protobuf
+# defined in gax-java/dependencies.properties, use this replacement to
+# sync the two versions.
+SYNCED_PROPERTIES = PROPERTIES | {"version.com_google_protobuf": PROTOBUF_JAVA_VERSION}
+_PROPERTIES = _wrapPropertyNamesInBraces(SYNCED_PROPERTIES)
 
 # ========================================================================
 # General packaging helpers.
@@ -63,7 +69,7 @@ def _gapic_pkg_tar_impl(ctx):
         for f in dep.files.to_list():
             deps.append(f)
 
-    samples =[]
+    samples = []
     for s in ctx.attr.samples:
         for f in s.files.to_list():
             samples.append(f)

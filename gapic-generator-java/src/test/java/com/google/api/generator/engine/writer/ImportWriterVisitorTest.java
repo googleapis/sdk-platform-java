@@ -55,9 +55,10 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
-import com.google.api.generator.testutils.LineFormatter;
+import com.google.api.generator.test.utils.LineFormatter;
 import com.google.common.base.Function;
 import com.google.common.base.Strings;
+import com.google.testgapic.v1beta1.Outer;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -426,6 +427,27 @@ public class ImportWriterVisitorTest {
             "import java.lang.annotation.Repeatable;\n",
             "import java.util.List;\n\n"),
         writerVisitor.write());
+  }
+
+  @Test
+  public void writeVaporReferenceImport_outermostForNestedClass() {
+    VaporReference nestedVaporReference =
+        VaporReference.builder()
+            .setName("Inner")
+            .setEnclosingClassNames(Arrays.asList("Outer", "Middle"))
+            .setPakkage("com.google.testgapic.v1beta1")
+            .build();
+
+    TypeNode.withReference(nestedVaporReference).accept(writerVisitor);
+    assertEquals("import com.google.testgapic.v1beta1.Outer;\n\n", writerVisitor.write());
+  }
+
+  @Test
+  public void writeConcreteReferenceImport_outermostForNestedClass() {
+    ConcreteReference nestedConcreteReference =
+        ConcreteReference.withClazz(Outer.Middle.Inner.class);
+    TypeNode.withReference(nestedConcreteReference).accept(writerVisitor);
+    assertEquals("import com.google.testgapic.v1beta1.Outer;\n\n", writerVisitor.write());
   }
 
   @Test

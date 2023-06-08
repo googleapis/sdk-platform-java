@@ -1,5 +1,103 @@
 # Changelog
 
+## [2.21.0](https://github.com/googleapis/sdk-platform-java/compare/v2.20.1...v2.21.0) (2023-06-06)
+
+
+### Features
+
+* Dynamic Routing Headers for HttpJson ([#1667](https://github.com/googleapis/sdk-platform-java/issues/1667)) ([003b993](https://github.com/googleapis/sdk-platform-java/commit/003b993f7ad7cae8ae8c101e0ff147e517dcd83e))
+* Implement awaitTermination() for MangedHttpJsonChannel ([#1677](https://github.com/googleapis/sdk-platform-java/issues/1677)) ([dea8426](https://github.com/googleapis/sdk-platform-java/commit/dea8426a85b53d08d3c8d317a1af4312889b1a3d))
+
+
+### Bug Fixes
+
+* [gapic-generator-java] align writer behavior for nested types ([#1709](https://github.com/googleapis/sdk-platform-java/issues/1709)) ([a21ffe8](https://github.com/googleapis/sdk-platform-java/commit/a21ffe88f880c0b3c6b5b512cd4d0741d9620dd3))
+* [gapic-generator-java] update year to 2023 in generated license headers ([#1720](https://github.com/googleapis/sdk-platform-java/issues/1720)) ([ef4a7ff](https://github.com/googleapis/sdk-platform-java/commit/ef4a7ff91b259f0b650cc06bd664eadca7bd17c9))
+* Update the return type of setWaitTimeout for convience ([#1751](https://github.com/googleapis/sdk-platform-java/issues/1751)) ([f1927a5](https://github.com/googleapis/sdk-platform-java/commit/f1927a53306ee28186074e6cb03a933a0cdffc1f))
+
+
+### Dependencies
+
+* Update dependency com.google.auth:google-auth-library-credentials and google-auth-library-oauth2-http to v1.17.0 ([#1756](https://github.com/googleapis/sdk-platform-java/issues/1756)) ([f583258](https://github.com/googleapis/sdk-platform-java/commit/f58325893b6ab306adbe4047b6dfc438de133ac7))
+* Update protobuf dependencies to v3.23.2 ([#1755](https://github.com/googleapis/sdk-platform-java/issues/1755)) ([55ecbc3](https://github.com/googleapis/sdk-platform-java/commit/55ecbc35cbd735b8f4aab48e02e080d79828d70c))
+
+## [2.20.1](https://github.com/googleapis/sdk-platform-java/compare/v2.20.0...v2.20.1) (2023-05-25)
+
+
+### Bug Fixes
+
+* Allow quota project to be used in combination with null credentials ([#1688](https://github.com/googleapis/sdk-platform-java/issues/1688)) ([cb07bd4](https://github.com/googleapis/sdk-platform-java/commit/cb07bd405b448fbef51367d1b03d4fe9eab54504))
+
+## [2.20.0](https://github.com/googleapis/sdk-platform-java/compare/v2.19.0...v2.20.0) (2023-05-24)
+
+
+### Features
+
+* Create additional tag on release for google-cloud-shared-dependencies ([#1692](https://github.com/googleapis/sdk-platform-java/issues/1692)) ([c0ea245](https://github.com/googleapis/sdk-platform-java/commit/c0ea24588de744a46600fcf6f0f3c6414549e12d))
+* Make stream wait timeout a first class citizen ([#1473](https://github.com/googleapis/sdk-platform-java/issues/1473)) ([bc8a4ad](https://github.com/googleapis/sdk-platform-java/commit/bc8a4ad864f4d6f2b9d98e5fe296320fea19e74b))
+
+
+### Bug Fixes
+
+* Fix release tag workflow to fetch all tags first ([#1700](https://github.com/googleapis/sdk-platform-java/issues/1700)) ([99b0c96](https://github.com/googleapis/sdk-platform-java/commit/99b0c967fbed22967cd072825de403ed9bac0209))
+* Update tag workflow ([#1699](https://github.com/googleapis/sdk-platform-java/issues/1699)) ([a988fe7](https://github.com/googleapis/sdk-platform-java/commit/a988fe7dcfc8568c9256c22b5df907b16e5eea5a))
+
+
+### Dependencies
+
+* Update protobuf dependencies to v3.23.1 and gprc to 1.55.1 ([#1698](https://github.com/googleapis/sdk-platform-java/issues/1698)) ([1f56175](https://github.com/googleapis/sdk-platform-java/commit/1f561754ed9e797f639cbdfabe070b86b645281b))
+* Update showcase version to 0.28.1 ([#1673](https://github.com/googleapis/sdk-platform-java/issues/1673)) ([9a120e9](https://github.com/googleapis/sdk-platform-java/commit/9a120e98524018fa54ae5dcbe2fb0f524c2a0f1b))
+
+## [2.19.0](https://github.com/googleapis/gapic-generator-java/compare/v2.18.0...v2.19.0) (2023-05-09)
+
+
+### Features
+
+* [common-protos] .NET library settings (for generator behavior tweaks) ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+* [common-protos] add GEO, SHOPPING, GENERATIVE_AI client orgs ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+* [common-protos] Log Analytics features of the Cloud Logging API ([#1573](https://github.com/googleapis/gapic-generator-java/issues/1573)) ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+* Add an option to enable DirectPath xDS ([#1643](https://github.com/googleapis/gapic-generator-java/issues/1643)) ([4054bc6](https://github.com/googleapis/gapic-generator-java/commit/4054bc668daf797a8fce798843e0ec4cda669faa))
+* Add ConfigServiceV2.CreateBucketAsync method for creating Log Buckets asynchronously ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+* Add ConfigServiceV2.CreateLink method for creating linked datasets for Log Analytics Buckets ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+* Add ConfigServiceV2.DeleteLink method for deleting linked datasets ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+* Add ConfigServiceV2.GetLink methods for describing linked datasets ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+* Add ConfigServiceV2.ListLinks method for listing linked datasets ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+* Add ConfigServiceV2.UpdateBucketAsync method for creating Log Buckets asynchronously ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+* Add LogBucket.analytics_enabled field that specifies whether Log Bucket's Analytics features are enabled ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+* Add LogBucket.index_configs field that contains a list of Log Bucket's indexed fields and related configuration data ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+* Remove directpath enable env ([#1657](https://github.com/googleapis/gapic-generator-java/issues/1657)) ([47851e8](https://github.com/googleapis/gapic-generator-java/commit/47851e877c868ddd6c3eb368591b4e6b635e21c1))
+
+
+### Bug Fixes
+
+* Unary Callables Deadline values respect the TotalTimeout in RetrySettings ([#1603](https://github.com/googleapis/gapic-generator-java/issues/1603)) ([d2fe520](https://github.com/googleapis/gapic-generator-java/commit/d2fe5203c4db1f8ddfd5a9566e6259b53441348a))
+
+
+### Dependencies
+
+* Update dependency org.graalvm.sdk:graal-sdk to v22.3.2 ([6107ff3](https://github.com/googleapis/gapic-generator-java/commit/6107ff316c544e4acb1d808a2ddaf9a805f9d7e7))
+
+
+### Documentation
+
+* [common-protos] mark ReservationResourceUsage field as deprecated ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+* [common-protos] use deprecated=true for deprecated fields ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+* Documentation for the Log Analytics features of the Cloud Logging API ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+* Fix new_issue_uri comment ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+* Separate paragraphs in linear/exponential distributions ([7479758](https://github.com/googleapis/gapic-generator-java/commit/7479758bcc7c7631b01a2a06d149429852cc3900))
+
+## [2.18.0](https://github.com/googleapis/gapic-generator-java/compare/v2.17.0...v2.18.0) (2023-04-25)
+
+
+### Features
+
+* **deps:** Add gapic-generator-java to bom ([#1645](https://github.com/googleapis/gapic-generator-java/issues/1645)) ([3e85c4b](https://github.com/googleapis/gapic-generator-java/commit/3e85c4b0e7c7e7fe1df14f2ace6130ac85039368))
+
+
+### Bug Fixes
+
+* Unescape Java keyword field names when generating HttpJson unit tests. ([#1654](https://github.com/googleapis/gapic-generator-java/issues/1654)) ([5fd79ea](https://github.com/googleapis/gapic-generator-java/commit/5fd79ea433d74d27d6115d91e2e0947e7b247b5d))
+
 ## [2.17.0](https://github.com/googleapis/gapic-generator-java/compare/v2.16.0...v2.17.0) (2023-04-11)
 
 

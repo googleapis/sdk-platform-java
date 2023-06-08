@@ -47,11 +47,6 @@ public final class Money extends com.google.protobuf.GeneratedMessageV3
     return new Money();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.type.MoneyProto.internal_static_google_type_Money_descriptor;
   }

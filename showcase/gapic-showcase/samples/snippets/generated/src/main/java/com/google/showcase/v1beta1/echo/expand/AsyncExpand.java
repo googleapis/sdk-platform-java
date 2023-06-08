@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@ package com.google.showcase.v1beta1.samples;
 
 // [START localhost7469_v1beta1_generated_Echo_Expand_async]
 import com.google.api.gax.rpc.ServerStream;
+import com.google.protobuf.Duration;
 import com.google.rpc.Status;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoResponse;
@@ -40,6 +41,7 @@ public class AsyncExpand {
           ExpandRequest.newBuilder()
               .setContent("content951530617")
               .setError(Status.newBuilder().build())
+              .setStreamWaitTime(Duration.newBuilder().build())
               .build();
       ServerStream<EchoResponse> stream = echoClient.expandCallable().call(request);
       for (EchoResponse response : stream) {

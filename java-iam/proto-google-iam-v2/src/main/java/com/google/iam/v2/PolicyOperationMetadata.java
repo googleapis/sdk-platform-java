@@ -45,11 +45,6 @@ public final class PolicyOperationMetadata extends com.google.protobuf.Generated
     return new PolicyOperationMetadata();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.iam.v2.PolicyProto
         .internal_static_google_iam_v2_PolicyOperationMetadata_descriptor;

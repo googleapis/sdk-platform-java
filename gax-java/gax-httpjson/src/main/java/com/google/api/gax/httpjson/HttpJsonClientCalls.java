@@ -34,11 +34,10 @@ import com.google.api.core.ApiFuture;
 import com.google.api.gax.rpc.ApiCallContext;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Nonnull;
-import org.threeten.bp.Instant;
+import org.threeten.bp.Duration;
 
 /**
- * {@code HttpJsonClientCalls} creates a new {@code HttpJsonClientCAll} from the given call context.
+ * {@code HttpJsonClientCalls} creates a new {@code HttpJsonClientCall} from the given call context.
  *
  * <p>Package-private for internal use.
  */
@@ -50,14 +49,27 @@ class HttpJsonClientCalls {
 
     HttpJsonCallContext httpJsonContext = HttpJsonCallContext.createDefault().nullToSelf(context);
 
-    // Try to convert the timeout into a deadline and use it if it occurs before the actual deadline
+    // Use the context's timeout instead of calculating a future deadline with the System clock.
+    // The timeout value is calculated from TimedAttemptSettings which accounts for the
+    // TotalTimeout value set in the RetrySettings.
     if (httpJsonContext.getTimeout() != null) {
-      @Nonnull Instant newDeadline = Instant.now().plus(httpJsonContext.getTimeout());
       HttpJsonCallOptions callOptions = httpJsonContext.getCallOptions();
-      if (callOptions.getDeadline() == null || newDeadline.isBefore(callOptions.getDeadline())) {
-        callOptions = callOptions.toBuilder().setDeadline(newDeadline).build();
-        httpJsonContext = httpJsonContext.withCallOptions(callOptions);
+      // HttpJsonChannel expects the HttpJsonCallOptions and we store the timeout duration
+      // inside the HttpJsonCallOptions
+      // Note: There is manual conversion between threetenbp's Duration and java.util.Duration
+      // This is temporary here as we plan to migrate to java.util.Duration
+      if (callOptions.getTimeout() == null
+          || httpJsonContext
+                  .getTimeout()
+                  .compareTo(Duration.ofMillis(callOptions.getTimeout().toMillis()))
+              < 0) {
+        callOptions =
+            callOptions
+                .toBuilder()
+                .setTimeout(java.time.Duration.ofMillis(httpJsonContext.getTimeout().toMillis()))
+                .build();
       }
+      httpJsonContext = httpJsonContext.withCallOptions(callOptions);
     }
 
     // TODO: add headers interceptor logic
@@ -65,10 +77,14 @@ class HttpJsonClientCalls {
   }
 
   static <RequestT, ResponseT> ApiFuture<ResponseT> futureUnaryCall(
-      HttpJsonClientCall<RequestT, ResponseT> clientCall, RequestT request) {
+      HttpJsonClientCall<RequestT, ResponseT> clientCall,
+      RequestT request,
+      HttpJsonCallContext context) {
     // Start the call
     HttpJsonFuture<ResponseT> future = new HttpJsonFuture<>(clientCall);
-    clientCall.start(new FutureListener<>(future), HttpJsonMetadata.newBuilder().build());
+    clientCall.start(
+        new FutureListener<>(future),
+        HttpJsonMetadata.newBuilder().build().withHeaders(context.getExtraHeaders()));
 
     // Send the request
     try {

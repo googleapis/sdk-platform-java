@@ -23,6 +23,7 @@ package com.google.api;
  *
  * <pre>
  * `Documentation` provides the information for describing a service.
+ *
  * Example:
  * &lt;pre&gt;&lt;code&gt;documentation:
  *   summary: &gt;
@@ -49,11 +50,14 @@ package com.google.api;
  * code blocks are supported. Section headers can be provided and are
  * interpreted relative to the section nesting of the context where
  * a documentation fragment is embedded.
+ *
  * Documentation from the IDL is merged with documentation defined
  * via the config at normalization time, where documentation provided
  * by config rules overrides IDL provided.
+ *
  * A number of constructs specific to the API platform are supported
  * in documentation text.
+ *
  * In order to reference a proto element, the following
  * notation can be used:
  * &lt;pre&gt;&lt;code&gt;&amp;#91;fully.qualified.proto.name]&amp;#91;]&lt;/code&gt;&lt;/pre&gt;
@@ -61,6 +65,7 @@ package com.google.api;
  * &lt;pre&gt;&lt;code&gt;&amp;#91;display text]&amp;#91;fully.qualified.proto.name]&lt;/code&gt;&lt;/pre&gt;
  * Text can be excluded from doc using the following notation:
  * &lt;pre&gt;&lt;code&gt;&amp;#40;-- internal comment --&amp;#41;&lt;/code&gt;&lt;/pre&gt;
+ *
  * A few directives are available in documentation. Note that
  * directives must appear on a single line to be properly
  * identified. The `include` directive includes a markdown file from
@@ -99,11 +104,6 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new Documentation();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -255,6 +255,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A list of documentation rules that apply to individual API elements.
+   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -269,6 +270,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A list of documentation rules that apply to individual API elements.
+   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -284,6 +286,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A list of documentation rules that apply to individual API elements.
+   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -298,6 +301,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A list of documentation rules that apply to individual API elements.
+   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -312,6 +316,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A list of documentation rules that apply to individual API elements.
+   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -716,6 +721,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * `Documentation` provides the information for describing a service.
+   *
    * Example:
    * &lt;pre&gt;&lt;code&gt;documentation:
    *   summary: &gt;
@@ -742,11 +748,14 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    * code blocks are supported. Section headers can be provided and are
    * interpreted relative to the section nesting of the context where
    * a documentation fragment is embedded.
+   *
    * Documentation from the IDL is merged with documentation defined
    * via the config at normalization time, where documentation provided
    * by config rules overrides IDL provided.
+   *
    * A number of constructs specific to the API platform are supported
    * in documentation text.
+   *
    * In order to reference a proto element, the following
    * notation can be used:
    * &lt;pre&gt;&lt;code&gt;&amp;#91;fully.qualified.proto.name]&amp;#91;]&lt;/code&gt;&lt;/pre&gt;
@@ -754,6 +763,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    * &lt;pre&gt;&lt;code&gt;&amp;#91;display text]&amp;#91;fully.qualified.proto.name]&lt;/code&gt;&lt;/pre&gt;
    * Text can be excluded from doc using the following notation:
    * &lt;pre&gt;&lt;code&gt;&amp;#40;-- internal comment --&amp;#41;&lt;/code&gt;&lt;/pre&gt;
+   *
    * A few directives are available in documentation. Note that
    * directives must appear on a single line to be properly
    * identified. The `include` directive includes a markdown file from
@@ -1574,6 +1584,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of documentation rules that apply to individual API elements.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1591,6 +1602,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of documentation rules that apply to individual API elements.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1608,6 +1620,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of documentation rules that apply to individual API elements.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1625,6 +1638,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of documentation rules that apply to individual API elements.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1648,6 +1662,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of documentation rules that apply to individual API elements.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1668,6 +1683,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of documentation rules that apply to individual API elements.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1691,6 +1707,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of documentation rules that apply to individual API elements.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1714,6 +1731,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of documentation rules that apply to individual API elements.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1734,6 +1752,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of documentation rules that apply to individual API elements.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1754,6 +1773,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of documentation rules that apply to individual API elements.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1775,6 +1795,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of documentation rules that apply to individual API elements.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1795,6 +1816,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of documentation rules that apply to individual API elements.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1815,6 +1837,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of documentation rules that apply to individual API elements.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1828,6 +1851,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of documentation rules that apply to individual API elements.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1845,6 +1869,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of documentation rules that apply to individual API elements.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1863,6 +1888,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of documentation rules that apply to individual API elements.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1877,6 +1903,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of documentation rules that apply to individual API elements.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1891,6 +1918,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of documentation rules that apply to individual API elements.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *

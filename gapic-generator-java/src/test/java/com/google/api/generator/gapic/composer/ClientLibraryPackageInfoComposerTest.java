@@ -15,11 +15,11 @@
 package com.google.api.generator.gapic.composer;
 
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
-import com.google.api.generator.gapic.composer.common.TestProtoLoader;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.test.framework.Assert;
-import com.google.api.generator.test.framework.Utils;
+import com.google.api.generator.test.framework.GoldenFileWriter;
+import com.google.api.generator.test.protoloader.TestProtoLoader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.junit.Test;
@@ -32,9 +32,11 @@ public class ClientLibraryPackageInfoComposerTest {
     GapicPackageInfo packageInfo = ClientLibraryPackageInfoComposer.generatePackageInfo(context);
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     packageInfo.packageInfo().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "ShowcaseWithEchoPackageInfo.golden", visitor.write());
+    GoldenFileWriter.saveCodegenToFile(
+        this.getClass(), "ShowcaseWithEchoPackageInfo.golden", visitor.write());
     Path goldenFilePath =
-        Paths.get(Utils.getGoldenDir(this.getClass()), "ShowcaseWithEchoPackageInfo.golden");
+        Paths.get(
+            GoldenFileWriter.getGoldenDir(this.getClass()), "ShowcaseWithEchoPackageInfo.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 }

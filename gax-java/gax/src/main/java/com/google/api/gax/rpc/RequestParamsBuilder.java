@@ -40,7 +40,6 @@ import java.util.Map;
  */
 @BetaApi
 public class RequestParamsBuilder {
-
   private final ImmutableMap.Builder<String, String> paramsBuilder;
 
   private RequestParamsBuilder() {
@@ -63,13 +62,32 @@ public class RequestParamsBuilder {
    * @param pathTemplate {@link PathTemplate} the path template used for match-and-extract
    */
   public void add(String fieldValue, String headerKey, PathTemplate pathTemplate) {
-    if (fieldValue == null) {
+    if (checkInvalidHeaderValues(headerKey, fieldValue)) {
       return;
     }
     Map<String, String> matchedValues = pathTemplate.match(fieldValue);
     if (matchedValues != null && matchedValues.containsKey(headerKey)) {
       paramsBuilder.put(headerKey, matchedValues.get(headerKey));
     }
+  }
+
+  /**
+   * Add an entry to paramsBuilder with key-value pairing of (headerKey, fieldValue). The only
+   * validation done is to ensure the headerKey and fieldValue are not null and non-empty. This
+   * method is used for implicit routing headers (backwards compatibility).
+   *
+   * @param headerKey the header key for the routing header param
+   * @param fieldValue the field value from a request
+   */
+  public void add(String headerKey, String fieldValue) {
+    if (checkInvalidHeaderValues(headerKey, fieldValue)) {
+      return;
+    }
+    paramsBuilder.put(headerKey, fieldValue);
+  }
+
+  private boolean checkInvalidHeaderValues(String headerKey, String fieldValue) {
+    return headerKey == null || headerKey.isEmpty() || fieldValue == null || fieldValue.isEmpty();
   }
 
   public Map<String, String> build() {

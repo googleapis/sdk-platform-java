@@ -48,11 +48,6 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
     return new TimeOfDay();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.type.TimeOfDayProto.internal_static_google_type_TimeOfDay_descriptor;
   }

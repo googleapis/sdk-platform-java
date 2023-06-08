@@ -28,6 +28,7 @@ package com.google.api;
  * Google Compute Engine VM instances has a type of
  * `"gce_instance"` and specifies the use of the labels `"instance_id"` and
  * `"zone"` to identify particular VM instances.
+ *
  * Different APIs can support different monitored resource types. APIs generally
  * provide a `list` method that returns the monitored resource descriptors used
  * by the API.
@@ -58,11 +59,6 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new MonitoredResourceDescriptor();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -643,6 +639,7 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    * Google Compute Engine VM instances has a type of
    * `"gce_instance"` and specifies the use of the labels `"instance_id"` and
    * `"zone"` to identify particular VM instances.
+   *
    * Different APIs can support different monitored resource types. APIs generally
    * provide a `list` method that returns the monitored resource descriptors used
    * by the API.

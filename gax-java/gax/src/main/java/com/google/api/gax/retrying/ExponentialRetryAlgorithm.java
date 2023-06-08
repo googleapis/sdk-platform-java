@@ -32,6 +32,7 @@ package com.google.api.gax.retrying;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.api.core.ApiClock;
+import com.google.api.core.InternalApi;
 import java.util.concurrent.ThreadLocalRandom;
 import org.threeten.bp.Duration;
 
@@ -150,7 +151,7 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
 
       // If timeLeft at this point is < 0, the shouldRetry logic will prevent
       // the attempt from being made as it would exceed the totalTimeout. A negative RPC timeout
-      // will result in a deadline in the past, which should will always fail prior to making a
+      // will result in a deadline in the past, which will always fail prior to making a
       // network call.
       newRpcTimeout = Math.min(newRpcTimeout, timeLeft.toMillis());
     }
@@ -197,10 +198,10 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
     RetrySettings globalSettings = nextAttemptSettings.getGlobalSettings();
 
     int maxAttempts = globalSettings.getMaxAttempts();
-    long totalTimeout = globalSettings.getTotalTimeout().toNanos();
+    Duration totalTimeout = globalSettings.getTotalTimeout();
 
     // If total timeout and maxAttempts is not set then do not attempt retry.
-    if (totalTimeout == 0 && maxAttempts == 0) {
+    if (totalTimeout.isZero() && maxAttempts == 0) {
       return false;
     }
 
@@ -209,17 +210,13 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
             - nextAttemptSettings.getFirstAttemptStartTimeNanos()
             + nextAttemptSettings.getRandomizedRetryDelay().toNanos();
 
+    Duration timeLeft = totalTimeout.minus(Duration.ofNanos(totalTimeSpentNanos));
+    // Convert time spent to milliseconds to standardize the units being used for
+    // retries. Otherwise, we would be using nanoseconds to determine if retries
+    // should be attempted and milliseconds for retry delays and rpc timeouts
+    long timeLeftMs = timeLeft.toMillis();
     // If totalTimeout limit is defined, check that it hasn't been crossed.
-    //
-    // Note: if the potential time spent is exactly equal to the totalTimeout,
-    // the attempt will still be allowed. This might not be desired, but if we
-    // enforce it, it could have potentially negative side effects on LRO polling.
-    // Specifically, if a polling retry attempt is denied, the LRO is canceled, and
-    // if a polling retry attempt is denied because its delay would *reach* the
-    // totalTimeout, the LRO would be canceled prematurely. The problem here is that
-    // totalTimeout doubles as the polling threshold and also the time limit for an
-    // operation to finish.
-    if (totalTimeout > 0 && totalTimeSpentNanos > totalTimeout) {
+    if (!totalTimeout.isZero() && shouldRPCTerminate(timeLeftMs)) {
       return false;
     }
 
@@ -230,6 +227,15 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
 
     // No limits crossed
     return true;
+  }
+
+  // For non-LRO RPCs, do not attempt to retry if the totalTime spend is over
+  // the totalTimeout (timeout is in the past) or at the totalTimeout (timeout
+  // will occur immediately). For any other value, the deadlineScheduler will
+  // terminate in the future (even if the timeout is small).
+  @InternalApi
+  protected boolean shouldRPCTerminate(long timeLeftMs) {
+    return timeLeftMs <= 0;
   }
 
   /**

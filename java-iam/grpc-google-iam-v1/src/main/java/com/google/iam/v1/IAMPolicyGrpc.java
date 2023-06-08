@@ -235,7 +235,7 @@ public final class IAMPolicyGrpc {
    * attached.
    * </pre>
    */
-  public abstract static class IAMPolicyImplBase implements io.grpc.BindableService {
+  public interface AsyncService {
 
     /**
      *
@@ -246,7 +246,7 @@ public final class IAMPolicyGrpc {
      * Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
      * </pre>
      */
-    public void setIamPolicy(
+    default void setIamPolicy(
         com.google.iam.v1.SetIamPolicyRequest request,
         io.grpc.stub.StreamObserver<com.google.iam.v1.Policy> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(
@@ -262,7 +262,7 @@ public final class IAMPolicyGrpc {
      * set.
      * </pre>
      */
-    public void getIamPolicy(
+    default void getIamPolicy(
         com.google.iam.v1.GetIamPolicyRequest request,
         io.grpc.stub.StreamObserver<com.google.iam.v1.Policy> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(
@@ -281,42 +281,49 @@ public final class IAMPolicyGrpc {
      * may "fail open" without warning.
      * </pre>
      */
-    public void testIamPermissions(
+    default void testIamPermissions(
         com.google.iam.v1.TestIamPermissionsRequest request,
         io.grpc.stub.StreamObserver<com.google.iam.v1.TestIamPermissionsResponse>
             responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(
           getTestIamPermissionsMethod(), responseObserver);
     }
+  }
+
+  /**
+   * Base class for the server implementation of the service IAMPolicy.
+   *
+   * <pre>
+   * API Overview
+   * Manages Identity and Access Management (IAM) policies.
+   * Any implementation of an API that offers access control features
+   * implements the google.iam.v1.IAMPolicy interface.
+   * ## Data model
+   * Access control is applied when a principal (user or service account), takes
+   * some action on a resource exposed by a service. Resources, identified by
+   * URI-like names, are the unit of access control specification. Service
+   * implementations can choose the granularity of access control and the
+   * supported permissions for their resources.
+   * For example one database service may allow access control to be
+   * specified only at the Table level, whereas another might allow access control
+   * to also be specified at the Column level.
+   * ## Policy Structure
+   * See google.iam.v1.Policy
+   * This is intentionally not a CRUD style API because access control policies
+   * are created and deleted implicitly with the resources to which they are
+   * attached.
+   * </pre>
+   */
+  public abstract static class IAMPolicyImplBase implements io.grpc.BindableService, AsyncService {
 
     @java.lang.Override
     public final io.grpc.ServerServiceDefinition bindService() {
-      return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
-          .addMethod(
-              getSetIamPolicyMethod(),
-              io.grpc.stub.ServerCalls.asyncUnaryCall(
-                  new MethodHandlers<
-                      com.google.iam.v1.SetIamPolicyRequest, com.google.iam.v1.Policy>(
-                      this, METHODID_SET_IAM_POLICY)))
-          .addMethod(
-              getGetIamPolicyMethod(),
-              io.grpc.stub.ServerCalls.asyncUnaryCall(
-                  new MethodHandlers<
-                      com.google.iam.v1.GetIamPolicyRequest, com.google.iam.v1.Policy>(
-                      this, METHODID_GET_IAM_POLICY)))
-          .addMethod(
-              getTestIamPermissionsMethod(),
-              io.grpc.stub.ServerCalls.asyncUnaryCall(
-                  new MethodHandlers<
-                      com.google.iam.v1.TestIamPermissionsRequest,
-                      com.google.iam.v1.TestIamPermissionsResponse>(
-                      this, METHODID_TEST_IAM_PERMISSIONS)))
-          .build();
+      return IAMPolicyGrpc.bindService(this);
     }
   }
 
   /**
-   *
+   * A stub to allow clients to do asynchronous rpc calls to service IAMPolicy.
    *
    * <pre>
    * API Overview
@@ -409,7 +416,7 @@ public final class IAMPolicyGrpc {
   }
 
   /**
-   *
+   * A stub to allow clients to do synchronous rpc calls to service IAMPolicy.
    *
    * <pre>
    * API Overview
@@ -492,7 +499,7 @@ public final class IAMPolicyGrpc {
   }
 
   /**
-   *
+   * A stub to allow clients to do ListenableFuture-style rpc calls to service IAMPolicy.
    *
    * <pre>
    * API Overview
@@ -585,10 +592,10 @@ public final class IAMPolicyGrpc {
           io.grpc.stub.ServerCalls.ServerStreamingMethod<Req, Resp>,
           io.grpc.stub.ServerCalls.ClientStreamingMethod<Req, Resp>,
           io.grpc.stub.ServerCalls.BidiStreamingMethod<Req, Resp> {
-    private final IAMPolicyImplBase serviceImpl;
+    private final AsyncService serviceImpl;
     private final int methodId;
 
-    MethodHandlers(IAMPolicyImplBase serviceImpl, int methodId) {
+    MethodHandlers(AsyncService serviceImpl, int methodId) {
       this.serviceImpl = serviceImpl;
       this.methodId = methodId;
     }
@@ -627,6 +634,28 @@ public final class IAMPolicyGrpc {
           throw new AssertionError();
       }
     }
+  }
+
+  public static final io.grpc.ServerServiceDefinition bindService(AsyncService service) {
+    return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
+        .addMethod(
+            getSetIamPolicyMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+                new MethodHandlers<com.google.iam.v1.SetIamPolicyRequest, com.google.iam.v1.Policy>(
+                    service, METHODID_SET_IAM_POLICY)))
+        .addMethod(
+            getGetIamPolicyMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+                new MethodHandlers<com.google.iam.v1.GetIamPolicyRequest, com.google.iam.v1.Policy>(
+                    service, METHODID_GET_IAM_POLICY)))
+        .addMethod(
+            getTestIamPermissionsMethod(),
+            io.grpc.stub.ServerCalls.asyncUnaryCall(
+                new MethodHandlers<
+                    com.google.iam.v1.TestIamPermissionsRequest,
+                    com.google.iam.v1.TestIamPermissionsResponse>(
+                    service, METHODID_TEST_IAM_PERMISSIONS)))
+        .build();
   }
 
   private abstract static class IAMPolicyBaseDescriptorSupplier

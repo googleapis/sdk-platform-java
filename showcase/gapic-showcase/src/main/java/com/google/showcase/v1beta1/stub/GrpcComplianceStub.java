@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,14 +16,20 @@
 
 package com.google.showcase.v1beta1.stub;
 
+import static com.google.showcase.v1beta1.ComplianceClient.ListLocationsPagedResponse;
+
 import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.BackgroundResourceAggregation;
 import com.google.api.gax.grpc.GrpcCallSettings;
 import com.google.api.gax.grpc.GrpcStubCallableFactory;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.RequestParamsBuilder;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.common.collect.ImmutableMap;
+import com.google.cloud.location.GetLocationRequest;
+import com.google.cloud.location.ListLocationsRequest;
+import com.google.cloud.location.ListLocationsResponse;
+import com.google.cloud.location.Location;
 import com.google.longrunning.stub.GrpcOperationsStub;
 import com.google.showcase.v1beta1.EnumRequest;
 import com.google.showcase.v1beta1.EnumResponse;
@@ -134,6 +140,25 @@ public class GrpcComplianceStub extends ComplianceStub {
           .setResponseMarshaller(ProtoUtils.marshaller(EnumResponse.getDefaultInstance()))
           .build();
 
+  private static final MethodDescriptor<ListLocationsRequest, ListLocationsResponse>
+      listLocationsMethodDescriptor =
+          MethodDescriptor.<ListLocationsRequest, ListLocationsResponse>newBuilder()
+              .setType(MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName("google.cloud.location.Locations/ListLocations")
+              .setRequestMarshaller(
+                  ProtoUtils.marshaller(ListLocationsRequest.getDefaultInstance()))
+              .setResponseMarshaller(
+                  ProtoUtils.marshaller(ListLocationsResponse.getDefaultInstance()))
+              .build();
+
+  private static final MethodDescriptor<GetLocationRequest, Location> getLocationMethodDescriptor =
+      MethodDescriptor.<GetLocationRequest, Location>newBuilder()
+          .setType(MethodDescriptor.MethodType.UNARY)
+          .setFullMethodName("google.cloud.location.Locations/GetLocation")
+          .setRequestMarshaller(ProtoUtils.marshaller(GetLocationRequest.getDefaultInstance()))
+          .setResponseMarshaller(ProtoUtils.marshaller(Location.getDefaultInstance()))
+          .build();
+
   private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataBodyCallable;
   private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataBodyInfoCallable;
   private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataQueryCallable;
@@ -144,6 +169,10 @@ public class GrpcComplianceStub extends ComplianceStub {
   private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataBodyPatchCallable;
   private final UnaryCallable<EnumRequest, EnumResponse> getEnumCallable;
   private final UnaryCallable<EnumResponse, EnumResponse> verifyEnumCallable;
+  private final UnaryCallable<ListLocationsRequest, ListLocationsResponse> listLocationsCallable;
+  private final UnaryCallable<ListLocationsRequest, ListLocationsPagedResponse>
+      listLocationsPagedCallable;
+  private final UnaryCallable<GetLocationRequest, Location> getLocationCallable;
 
   private final BackgroundResource backgroundResources;
   private final GrpcOperationsStub operationsStub;
@@ -204,13 +233,13 @@ public class GrpcComplianceStub extends ComplianceStub {
             .setMethodDescriptor(repeatDataSimplePathMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("info.f_bool", String.valueOf(request.getInfo().getFBool()));
-                  params.put("info.f_double", String.valueOf(request.getInfo().getFDouble()));
-                  params.put("info.f_int32", String.valueOf(request.getInfo().getFInt32()));
-                  params.put("info.f_kingdom", String.valueOf(request.getInfo().getFKingdom()));
-                  params.put("info.f_string", String.valueOf(request.getInfo().getFString()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("info.f_bool", String.valueOf(request.getInfo().getFBool()));
+                  builder.add("info.f_double", String.valueOf(request.getInfo().getFDouble()));
+                  builder.add("info.f_int32", String.valueOf(request.getInfo().getFInt32()));
+                  builder.add("info.f_kingdom", String.valueOf(request.getInfo().getFKingdom()));
+                  builder.add("info.f_string", String.valueOf(request.getInfo().getFString()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<RepeatRequest, RepeatResponse> repeatDataPathResourceTransportSettings =
@@ -218,13 +247,13 @@ public class GrpcComplianceStub extends ComplianceStub {
             .setMethodDescriptor(repeatDataPathResourceMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("info.f_bool", String.valueOf(request.getInfo().getFBool()));
-                  params.put(
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("info.f_bool", String.valueOf(request.getInfo().getFBool()));
+                  builder.add(
                       "info.f_child.f_string",
                       String.valueOf(request.getInfo().getFChild().getFString()));
-                  params.put("info.f_string", String.valueOf(request.getInfo().getFString()));
-                  return params.build();
+                  builder.add("info.f_string", String.valueOf(request.getInfo().getFString()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<RepeatRequest, RepeatResponse>
@@ -233,12 +262,12 @@ public class GrpcComplianceStub extends ComplianceStub {
                 .setMethodDescriptor(repeatDataPathTrailingResourceMethodDescriptor)
                 .setParamsExtractor(
                     request -> {
-                      ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                      params.put(
+                      RequestParamsBuilder builder = RequestParamsBuilder.create();
+                      builder.add(
                           "info.f_child.f_string",
                           String.valueOf(request.getInfo().getFChild().getFString()));
-                      params.put("info.f_string", String.valueOf(request.getInfo().getFString()));
-                      return params.build();
+                      builder.add("info.f_string", String.valueOf(request.getInfo().getFString()));
+                      return builder.build();
                     })
                 .build();
     GrpcCallSettings<RepeatRequest, RepeatResponse> repeatDataBodyPutTransportSettings =
@@ -256,6 +285,26 @@ public class GrpcComplianceStub extends ComplianceStub {
     GrpcCallSettings<EnumResponse, EnumResponse> verifyEnumTransportSettings =
         GrpcCallSettings.<EnumResponse, EnumResponse>newBuilder()
             .setMethodDescriptor(verifyEnumMethodDescriptor)
+            .build();
+    GrpcCallSettings<ListLocationsRequest, ListLocationsResponse> listLocationsTransportSettings =
+        GrpcCallSettings.<ListLocationsRequest, ListLocationsResponse>newBuilder()
+            .setMethodDescriptor(listLocationsMethodDescriptor)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
+                })
+            .build();
+    GrpcCallSettings<GetLocationRequest, Location> getLocationTransportSettings =
+        GrpcCallSettings.<GetLocationRequest, Location>newBuilder()
+            .setMethodDescriptor(getLocationMethodDescriptor)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
+                })
             .build();
 
     this.repeatDataBodyCallable =
@@ -300,6 +349,15 @@ public class GrpcComplianceStub extends ComplianceStub {
     this.verifyEnumCallable =
         callableFactory.createUnaryCallable(
             verifyEnumTransportSettings, settings.verifyEnumSettings(), clientContext);
+    this.listLocationsCallable =
+        callableFactory.createUnaryCallable(
+            listLocationsTransportSettings, settings.listLocationsSettings(), clientContext);
+    this.listLocationsPagedCallable =
+        callableFactory.createPagedCallable(
+            listLocationsTransportSettings, settings.listLocationsSettings(), clientContext);
+    this.getLocationCallable =
+        callableFactory.createUnaryCallable(
+            getLocationTransportSettings, settings.getLocationSettings(), clientContext);
 
     this.backgroundResources =
         new BackgroundResourceAggregation(clientContext.getBackgroundResources());
@@ -357,6 +415,22 @@ public class GrpcComplianceStub extends ComplianceStub {
   @Override
   public UnaryCallable<EnumResponse, EnumResponse> verifyEnumCallable() {
     return verifyEnumCallable;
+  }
+
+  @Override
+  public UnaryCallable<ListLocationsRequest, ListLocationsResponse> listLocationsCallable() {
+    return listLocationsCallable;
+  }
+
+  @Override
+  public UnaryCallable<ListLocationsRequest, ListLocationsPagedResponse>
+      listLocationsPagedCallable() {
+    return listLocationsPagedCallable;
+  }
+
+  @Override
+  public UnaryCallable<GetLocationRequest, Location> getLocationCallable() {
+    return getLocationCallable;
   }
 
   @Override

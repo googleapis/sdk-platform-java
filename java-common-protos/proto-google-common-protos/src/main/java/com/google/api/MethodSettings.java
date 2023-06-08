@@ -47,11 +47,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
     return new MethodSettings();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.ClientProto.internal_static_google_api_MethodSettings_descriptor;
   }
@@ -227,11 +222,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
       return new LongRunning();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-      return this.unknownFields;
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -1639,7 +1629,9 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
    * Describes settings to use for long-running operations when generating
    * API methods for RPCs. Complements RPCs that use the annotations in
    * google/longrunning/operations.proto.
+   *
    * Example of a YAML configuration::
+   *
    *  publishing:
    *    method_settings:
    *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
@@ -1668,7 +1660,9 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
    * Describes settings to use for long-running operations when generating
    * API methods for RPCs. Complements RPCs that use the annotations in
    * google/longrunning/operations.proto.
+   *
    * Example of a YAML configuration::
+   *
    *  publishing:
    *    method_settings:
    *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
@@ -1699,7 +1693,9 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
    * Describes settings to use for long-running operations when generating
    * API methods for RPCs. Complements RPCs that use the annotations in
    * google/longrunning/operations.proto.
+   *
    * Example of a YAML configuration::
+   *
    *  publishing:
    *    method_settings:
    *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
@@ -2212,7 +2208,9 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * Describes settings to use for long-running operations when generating
      * API methods for RPCs. Complements RPCs that use the annotations in
      * google/longrunning/operations.proto.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    method_settings:
      *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
@@ -2240,7 +2238,9 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * Describes settings to use for long-running operations when generating
      * API methods for RPCs. Complements RPCs that use the annotations in
      * google/longrunning/operations.proto.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    method_settings:
      *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
@@ -2274,7 +2274,9 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * Describes settings to use for long-running operations when generating
      * API methods for RPCs. Complements RPCs that use the annotations in
      * google/longrunning/operations.proto.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    method_settings:
      *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
@@ -2310,7 +2312,9 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * Describes settings to use for long-running operations when generating
      * API methods for RPCs. Complements RPCs that use the annotations in
      * google/longrunning/operations.proto.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    method_settings:
      *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
@@ -2344,7 +2348,9 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * Describes settings to use for long-running operations when generating
      * API methods for RPCs. Complements RPCs that use the annotations in
      * google/longrunning/operations.proto.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    method_settings:
      *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
@@ -2383,7 +2389,9 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * Describes settings to use for long-running operations when generating
      * API methods for RPCs. Complements RPCs that use the annotations in
      * google/longrunning/operations.proto.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    method_settings:
      *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
@@ -2416,7 +2424,9 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * Describes settings to use for long-running operations when generating
      * API methods for RPCs. Complements RPCs that use the annotations in
      * google/longrunning/operations.proto.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    method_settings:
      *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
@@ -2444,7 +2454,9 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * Describes settings to use for long-running operations when generating
      * API methods for RPCs. Complements RPCs that use the annotations in
      * google/longrunning/operations.proto.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    method_settings:
      *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
@@ -2476,7 +2488,9 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * Describes settings to use for long-running operations when generating
      * API methods for RPCs. Complements RPCs that use the annotations in
      * google/longrunning/operations.proto.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    method_settings:
      *      - selector: google.cloud.speech.v2.Speech.BatchRecognize

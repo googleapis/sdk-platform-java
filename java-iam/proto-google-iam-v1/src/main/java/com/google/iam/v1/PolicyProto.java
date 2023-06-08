@@ -90,11 +90,11 @@ public final class PolicyProto {
           + ".google.iam.v1.AuditConfigDelta.Action\022\017"
           + "\n\007service\030\002 \001(\t\022\027\n\017exempted_member\030\003 \001(\t"
           + "\022\020\n\010log_type\030\004 \001(\t\"5\n\006Action\022\026\n\022ACTION_U"
-          + "NSPECIFIED\020\000\022\007\n\003ADD\020\001\022\n\n\006REMOVE\020\002B\203\001\n\021co"
-          + "m.google.iam.v1B\013PolicyProtoP\001Z0google.g"
-          + "olang.org/genproto/googleapis/iam/v1;iam"
-          + "\370\001\001\252\002\023Google.Cloud.Iam.V1\312\002\023Google\\Cloud"
-          + "\\Iam\\V1b\006proto3"
+          + "NSPECIFIED\020\000\022\007\n\003ADD\020\001\022\n\n\006REMOVE\020\002B|\n\021com"
+          + ".google.iam.v1B\013PolicyProtoP\001Z)cloud.goo"
+          + "gle.com/go/iam/apiv1/iampb;iampb\370\001\001\252\002\023Go"
+          + "ogle.Cloud.Iam.V1\312\002\023Google\\Cloud\\Iam\\V1b"
+          + "\006proto3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(

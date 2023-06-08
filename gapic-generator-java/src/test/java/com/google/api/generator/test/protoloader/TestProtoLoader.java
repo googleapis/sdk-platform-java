@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.google.api.generator.gapic.composer.common;
+package com.google.api.generator.test.protoloader;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -41,6 +41,8 @@ import com.google.showcase.v1beta1.IdentityOuterClass;
 import com.google.showcase.v1beta1.MessagingOuterClass;
 import com.google.showcase.v1beta1.TestingOuterClass;
 import com.google.testdata.v1.DeprecatedServiceOuterClass;
+import com.google.testgapic.v1beta1.NestedMessageProto;
+import com.google.types.testing.TypesTestingProto;
 import google.cloud.CommonResources;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -126,6 +128,30 @@ public class TestProtoLoader {
         .setResourceNames(resourceNames)
         .setServices(services)
         .setServiceConfig(config)
+        .setHelperResourceNames(outputResourceNames)
+        .setTransport(transport)
+        .build();
+  }
+
+  public GapicContext parseNestedMessage() {
+    FileDescriptor fileDescriptor = TypesTestingProto.getDescriptor();
+    ServiceDescriptor serviceDescriptor = fileDescriptor.getServices().get(0);
+    assertEquals(serviceDescriptor.getName(), "NestedMessageService");
+    Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
+
+    FileDescriptor messageFileDescriptor = NestedMessageProto.getDescriptor();
+    messageTypes.putAll(Parser.parseMessages(messageFileDescriptor));
+
+    Map<String, ResourceName> resourceNames = new HashMap<>();
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(
+            fileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
+
+    return GapicContext.builder()
+        .setMessages(messageTypes)
+        .setResourceNames(resourceNames)
+        .setServices(services)
         .setHelperResourceNames(outputResourceNames)
         .setTransport(transport)
         .build();

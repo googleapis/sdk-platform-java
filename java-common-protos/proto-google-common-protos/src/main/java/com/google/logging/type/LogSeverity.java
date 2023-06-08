@@ -26,10 +26,13 @@ package com.google.logging.type;
  * standard severity levels listed below.  For your reference, the levels are
  * assigned the listed numeric values. The effect of using numeric values other
  * than those listed is undefined.
+ *
  * You can filter for log entries by severity.  For example, the following
  * filter expression will match log entries with severities `INFO`, `NOTICE`,
  * and `WARNING`:
+ *
  *     severity &gt; DEBUG AND severity &lt;= WARNING
+ *
  * If you are writing log entries, you should map other severity encodings to
  * one of these standard levels. For example, you might map all of Java's FINE,
  * FINER, and FINEST levels to `LogSeverity.DEBUG`. You can preserve the

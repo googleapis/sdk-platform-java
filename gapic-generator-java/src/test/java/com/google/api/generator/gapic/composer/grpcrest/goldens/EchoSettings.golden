@@ -122,6 +122,11 @@ public class EchoSettings extends ClientSettings<EchoSettings> {
     return ((EchoStubSettings) getStubSettings()).noBindingSettings();
   }
 
+  /** Returns the object with the settings used for calls to updateCase. */
+  public UnaryCallSettings<UpdateCaseRequest, Case> updateCaseSettings() {
+    return ((EchoStubSettings) getStubSettings()).updateCaseSettings();
+  }
+
   public static final EchoSettings create(EchoStubSettings stub) throws IOException {
     return new EchoSettings.Builder(stub.toBuilder()).build();
   }
@@ -294,6 +299,11 @@ public class EchoSettings extends ClientSettings<EchoSettings> {
     /** Returns the builder for the settings used for calls to noBinding. */
     public UnaryCallSettings.Builder<EchoRequest, EchoResponse> noBindingSettings() {
       return getStubSettingsBuilder().noBindingSettings();
+    }
+
+    /** Returns the builder for the settings used for calls to updateCase. */
+    public UnaryCallSettings.Builder<UpdateCaseRequest, Case> updateCaseSettings() {
+      return getStubSettingsBuilder().updateCaseSettings();
     }
 
     @Override

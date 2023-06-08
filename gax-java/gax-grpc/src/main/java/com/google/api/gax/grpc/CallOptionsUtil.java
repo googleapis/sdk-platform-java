@@ -29,6 +29,7 @@
  */
 package com.google.api.gax.grpc;
 
+import com.google.api.gax.rpc.internal.Headers;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import io.grpc.CallOptions;
@@ -45,7 +46,7 @@ class CallOptionsUtil {
           "gax_dynamic_headers", Collections.<Key<String>, String>emptyMap());
   // this is the header name, it is transferred over the wire
   static Metadata.Key<String> REQUEST_PARAMS_HEADER_KEY =
-      Metadata.Key.of("x-goog-request-params", Metadata.ASCII_STRING_MARSHALLER);
+      Metadata.Key.of(Headers.DYNAMIC_ROUTING_HEADER_KEY, Metadata.ASCII_STRING_MARSHALLER);
   private static final CallOptions.Key<ResponseMetadataHandler> METADATA_HANDLER_CALL_OPTION_KEY =
       CallOptions.Key.createWithDefault("gax_metadata_handler", null);
 
