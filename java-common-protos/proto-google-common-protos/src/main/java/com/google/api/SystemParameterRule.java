@@ -49,11 +49,6 @@ public final class SystemParameterRule extends com.google.protobuf.GeneratedMess
     return new SystemParameterRule();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.SystemParameterProto
         .internal_static_google_api_SystemParameterRule_descriptor;
@@ -70,14 +65,18 @@ public final class SystemParameterRule extends com.google.protobuf.GeneratedMess
   }
 
   public static final int SELECTOR_FIELD_NUMBER = 1;
-  private volatile java.lang.Object selector_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object selector_ = "";
   /**
    *
    *
    * <pre>
    * Selects the methods to which this rule applies. Use '*' to indicate all
    * methods in all APIs.
-   * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+   *
+   * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+   * details.
    * </pre>
    *
    * <code>string selector = 1;</code>
@@ -102,7 +101,9 @@ public final class SystemParameterRule extends com.google.protobuf.GeneratedMess
    * <pre>
    * Selects the methods to which this rule applies. Use '*' to indicate all
    * methods in all APIs.
-   * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+   *
+   * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+   * details.
    * </pre>
    *
    * <code>string selector = 1;</code>
@@ -123,6 +124,8 @@ public final class SystemParameterRule extends com.google.protobuf.GeneratedMess
   }
 
   public static final int PARAMETERS_FIELD_NUMBER = 2;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.api.SystemParameter> parameters_;
   /**
    *
@@ -418,15 +421,15 @@ public final class SystemParameterRule extends com.google.protobuf.GeneratedMess
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       selector_ = "";
-
       if (parametersBuilder_ == null) {
         parameters_ = java.util.Collections.emptyList();
       } else {
         parameters_ = null;
         parametersBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000001);
+      bitField0_ = (bitField0_ & ~0x00000002);
       return this;
     }
 
@@ -453,19 +456,31 @@ public final class SystemParameterRule extends com.google.protobuf.GeneratedMess
     @java.lang.Override
     public com.google.api.SystemParameterRule buildPartial() {
       com.google.api.SystemParameterRule result = new com.google.api.SystemParameterRule(this);
-      int from_bitField0_ = bitField0_;
-      result.selector_ = selector_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.api.SystemParameterRule result) {
       if (parametersBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)) {
+        if (((bitField0_ & 0x00000002) != 0)) {
           parameters_ = java.util.Collections.unmodifiableList(parameters_);
-          bitField0_ = (bitField0_ & ~0x00000001);
+          bitField0_ = (bitField0_ & ~0x00000002);
         }
         result.parameters_ = parameters_;
       } else {
         result.parameters_ = parametersBuilder_.build();
       }
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.api.SystemParameterRule result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.selector_ = selector_;
+      }
     }
 
     @java.lang.Override
@@ -515,13 +530,14 @@ public final class SystemParameterRule extends com.google.protobuf.GeneratedMess
       if (other == com.google.api.SystemParameterRule.getDefaultInstance()) return this;
       if (!other.getSelector().isEmpty()) {
         selector_ = other.selector_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (parametersBuilder_ == null) {
         if (!other.parameters_.isEmpty()) {
           if (parameters_.isEmpty()) {
             parameters_ = other.parameters_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ = (bitField0_ & ~0x00000002);
           } else {
             ensureParametersIsMutable();
             parameters_.addAll(other.parameters_);
@@ -534,7 +550,7 @@ public final class SystemParameterRule extends com.google.protobuf.GeneratedMess
             parametersBuilder_.dispose();
             parametersBuilder_ = null;
             parameters_ = other.parameters_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ = (bitField0_ & ~0x00000002);
             parametersBuilder_ =
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
                     ? getParametersFieldBuilder()
@@ -573,7 +589,7 @@ public final class SystemParameterRule extends com.google.protobuf.GeneratedMess
             case 10:
               {
                 selector_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
@@ -614,7 +630,9 @@ public final class SystemParameterRule extends com.google.protobuf.GeneratedMess
      * <pre>
      * Selects the methods to which this rule applies. Use '*' to indicate all
      * methods in all APIs.
-     * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+     *
+     * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+     * details.
      * </pre>
      *
      * <code>string selector = 1;</code>
@@ -638,7 +656,9 @@ public final class SystemParameterRule extends com.google.protobuf.GeneratedMess
      * <pre>
      * Selects the methods to which this rule applies. Use '*' to indicate all
      * methods in all APIs.
-     * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+     *
+     * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+     * details.
      * </pre>
      *
      * <code>string selector = 1;</code>
@@ -662,7 +682,9 @@ public final class SystemParameterRule extends com.google.protobuf.GeneratedMess
      * <pre>
      * Selects the methods to which this rule applies. Use '*' to indicate all
      * methods in all APIs.
-     * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+     *
+     * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+     * details.
      * </pre>
      *
      * <code>string selector = 1;</code>
@@ -674,8 +696,8 @@ public final class SystemParameterRule extends com.google.protobuf.GeneratedMess
       if (value == null) {
         throw new NullPointerException();
       }
-
       selector_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -685,7 +707,9 @@ public final class SystemParameterRule extends com.google.protobuf.GeneratedMess
      * <pre>
      * Selects the methods to which this rule applies. Use '*' to indicate all
      * methods in all APIs.
-     * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+     *
+     * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+     * details.
      * </pre>
      *
      * <code>string selector = 1;</code>
@@ -693,8 +717,8 @@ public final class SystemParameterRule extends com.google.protobuf.GeneratedMess
      * @return This builder for chaining.
      */
     public Builder clearSelector() {
-
       selector_ = getDefaultInstance().getSelector();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -704,7 +728,9 @@ public final class SystemParameterRule extends com.google.protobuf.GeneratedMess
      * <pre>
      * Selects the methods to which this rule applies. Use '*' to indicate all
      * methods in all APIs.
-     * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+     *
+     * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+     * details.
      * </pre>
      *
      * <code>string selector = 1;</code>
@@ -717,8 +743,8 @@ public final class SystemParameterRule extends com.google.protobuf.GeneratedMess
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       selector_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -727,9 +753,9 @@ public final class SystemParameterRule extends com.google.protobuf.GeneratedMess
         java.util.Collections.emptyList();
 
     private void ensureParametersIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
+      if (!((bitField0_ & 0x00000002) != 0)) {
         parameters_ = new java.util.ArrayList<com.google.api.SystemParameter>(parameters_);
-        bitField0_ |= 0x00000001;
+        bitField0_ |= 0x00000002;
       }
     }
 
@@ -988,7 +1014,7 @@ public final class SystemParameterRule extends com.google.protobuf.GeneratedMess
     public Builder clearParameters() {
       if (parametersBuilder_ == null) {
         parameters_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
+        bitField0_ = (bitField0_ & ~0x00000002);
         onChanged();
       } else {
         parametersBuilder_.clear();
@@ -1137,7 +1163,7 @@ public final class SystemParameterRule extends com.google.protobuf.GeneratedMess
                 com.google.api.SystemParameter,
                 com.google.api.SystemParameter.Builder,
                 com.google.api.SystemParameterOrBuilder>(
-                parameters_, ((bitField0_ & 0x00000001) != 0), getParentForChildren(), isClean());
+                parameters_, ((bitField0_ & 0x00000002) != 0), getParentForChildren(), isClean());
         parameters_ = null;
       }
       return parametersBuilder_;

@@ -75,6 +75,7 @@ public interface RequestMetadataOrBuilder
    * The user agent of the caller.
    * This information is not authenticated and should be treated accordingly.
    * For example:
+   *
    * +   `google-api-python-client/1.4.0`:
    *     The request was made by the Google API client for Python.
    * +   `Cloud SDK Command Line Tool apitools-client/1.0 gcloud/0.9.62`:
@@ -96,6 +97,7 @@ public interface RequestMetadataOrBuilder
    * The user agent of the caller.
    * This information is not authenticated and should be treated accordingly.
    * For example:
+   *
    * +   `google-api-python-client/1.4.0`:
    *     The request was made by the Google API client for Python.
    * +   `Cloud SDK Command Line Tool apitools-client/1.0 gcloud/0.9.62`:
@@ -120,6 +122,7 @@ public interface RequestMetadataOrBuilder
    * (or project) as the accessed resource.
    * See https://cloud.google.com/compute/docs/vpc/ for more information.
    * This is a scheme-less URI full resource name. For example:
+   *
    *     "//compute.googleapis.com/projects/PROJECT_ID/global/networks/NETWORK_ID"
    * </pre>
    *
@@ -137,6 +140,7 @@ public interface RequestMetadataOrBuilder
    * (or project) as the accessed resource.
    * See https://cloud.google.com/compute/docs/vpc/ for more information.
    * This is a scheme-less URI full resource name. For example:
+   *
    *     "//compute.googleapis.com/projects/PROJECT_ID/global/networks/NETWORK_ID"
    * </pre>
    *
@@ -153,6 +157,8 @@ public interface RequestMetadataOrBuilder
    * Request attributes used in IAM condition evaluation. This field contains
    * request attributes like request time and access levels associated with
    * the request.
+   *
+   *
    * To get the whole view of the attributes used in IAM
    * condition evaluation, the user must also look into
    * `AuditLog.authentication_info.resource_attributes`.
@@ -170,6 +176,8 @@ public interface RequestMetadataOrBuilder
    * Request attributes used in IAM condition evaluation. This field contains
    * request attributes like request time and access levels associated with
    * the request.
+   *
+   *
    * To get the whole view of the attributes used in IAM
    * condition evaluation, the user must also look into
    * `AuditLog.authentication_info.resource_attributes`.
@@ -187,6 +195,8 @@ public interface RequestMetadataOrBuilder
    * Request attributes used in IAM condition evaluation. This field contains
    * request attributes like request time and access levels associated with
    * the request.
+   *
+   *
    * To get the whole view of the attributes used in IAM
    * condition evaluation, the user must also look into
    * `AuditLog.authentication_info.resource_attributes`.

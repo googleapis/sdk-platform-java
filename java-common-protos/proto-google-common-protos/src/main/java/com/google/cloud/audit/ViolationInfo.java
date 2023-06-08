@@ -50,11 +50,6 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
     return new ViolationInfo();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.cloud.audit.AuditLogProto
         .internal_static_google_cloud_audit_ViolationInfo_descriptor;
@@ -250,7 +245,9 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int CONSTRAINT_FIELD_NUMBER = 1;
-  private volatile java.lang.Object constraint_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object constraint_ = "";
   /**
    *
    *
@@ -299,7 +296,9 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int ERROR_MESSAGE_FIELD_NUMBER = 2;
-  private volatile java.lang.Object errorMessage_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object errorMessage_ = "";
   /**
    *
    *
@@ -348,7 +347,9 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int CHECKED_VALUE_FIELD_NUMBER = 3;
-  private volatile java.lang.Object checkedValue_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object checkedValue_ = "";
   /**
    *
    *
@@ -401,7 +402,7 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int POLICY_TYPE_FIELD_NUMBER = 4;
-  private int policyType_;
+  private int policyType_ = 0;
   /**
    *
    *
@@ -434,9 +435,8 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.cloud.audit.ViolationInfo.PolicyType getPolicyType() {
-    @SuppressWarnings("deprecation")
     com.google.cloud.audit.ViolationInfo.PolicyType result =
-        com.google.cloud.audit.ViolationInfo.PolicyType.valueOf(policyType_);
+        com.google.cloud.audit.ViolationInfo.PolicyType.forNumber(policyType_);
     return result == null ? com.google.cloud.audit.ViolationInfo.PolicyType.UNRECOGNIZED : result;
   }
 
@@ -664,14 +664,11 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       constraint_ = "";
-
       errorMessage_ = "";
-
       checkedValue_ = "";
-
       policyType_ = 0;
-
       return this;
     }
 
@@ -698,12 +695,27 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.cloud.audit.ViolationInfo buildPartial() {
       com.google.cloud.audit.ViolationInfo result = new com.google.cloud.audit.ViolationInfo(this);
-      result.constraint_ = constraint_;
-      result.errorMessage_ = errorMessage_;
-      result.checkedValue_ = checkedValue_;
-      result.policyType_ = policyType_;
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.cloud.audit.ViolationInfo result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.constraint_ = constraint_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.errorMessage_ = errorMessage_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.checkedValue_ = checkedValue_;
+      }
+      if (((from_bitField0_ & 0x00000008) != 0)) {
+        result.policyType_ = policyType_;
+      }
     }
 
     @java.lang.Override
@@ -753,14 +765,17 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
       if (other == com.google.cloud.audit.ViolationInfo.getDefaultInstance()) return this;
       if (!other.getConstraint().isEmpty()) {
         constraint_ = other.constraint_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (!other.getErrorMessage().isEmpty()) {
         errorMessage_ = other.errorMessage_;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
       if (!other.getCheckedValue().isEmpty()) {
         checkedValue_ = other.checkedValue_;
+        bitField0_ |= 0x00000004;
         onChanged();
       }
       if (other.policyType_ != 0) {
@@ -795,25 +810,25 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
             case 10:
               {
                 constraint_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
               {
                 errorMessage_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             case 26:
               {
                 checkedValue_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 26
             case 32:
               {
                 policyType_ = input.readEnum();
-
+                bitField0_ |= 0x00000008;
                 break;
               } // case 32
             default:
@@ -832,6 +847,8 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
       } // finally
       return this;
     }
+
+    private int bitField0_;
 
     private java.lang.Object constraint_ = "";
     /**
@@ -894,8 +911,8 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       constraint_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -911,8 +928,8 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearConstraint() {
-
       constraint_ = getDefaultInstance().getConstraint();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -933,8 +950,8 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       constraint_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -1000,8 +1017,8 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       errorMessage_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1017,8 +1034,8 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearErrorMessage() {
-
       errorMessage_ = getDefaultInstance().getErrorMessage();
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -1039,8 +1056,8 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       errorMessage_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1112,8 +1129,8 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       checkedValue_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1131,8 +1148,8 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearCheckedValue() {
-
       checkedValue_ = getDefaultInstance().getCheckedValue();
+      bitField0_ = (bitField0_ & ~0x00000004);
       onChanged();
       return this;
     }
@@ -1155,8 +1172,8 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       checkedValue_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1194,8 +1211,8 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setPolicyTypeValue(int value) {
-
       policyType_ = value;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -1214,9 +1231,8 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.cloud.audit.ViolationInfo.PolicyType getPolicyType() {
-      @SuppressWarnings("deprecation")
       com.google.cloud.audit.ViolationInfo.PolicyType result =
-          com.google.cloud.audit.ViolationInfo.PolicyType.valueOf(policyType_);
+          com.google.cloud.audit.ViolationInfo.PolicyType.forNumber(policyType_);
       return result == null ? com.google.cloud.audit.ViolationInfo.PolicyType.UNRECOGNIZED : result;
     }
     /**
@@ -1237,7 +1253,7 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
+      bitField0_ |= 0x00000008;
       policyType_ = value.getNumber();
       onChanged();
       return this;
@@ -1256,7 +1272,7 @@ public final class ViolationInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearPolicyType() {
-
+      bitField0_ = (bitField0_ & ~0x00000008);
       policyType_ = 0;
       onChanged();
       return this;

@@ -45,11 +45,6 @@ public final class PolicyViolationInfo extends com.google.protobuf.GeneratedMess
     return new PolicyViolationInfo();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.cloud.audit.AuditLogProto
         .internal_static_google_cloud_audit_PolicyViolationInfo_descriptor;
@@ -111,7 +106,9 @@ public final class PolicyViolationInfo extends com.google.protobuf.GeneratedMess
   @java.lang.Override
   public com.google.cloud.audit.OrgPolicyViolationInfoOrBuilder
       getOrgPolicyViolationInfoOrBuilder() {
-    return getOrgPolicyViolationInfo();
+    return orgPolicyViolationInfo_ == null
+        ? com.google.cloud.audit.OrgPolicyViolationInfo.getDefaultInstance()
+        : orgPolicyViolationInfo_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -317,10 +314,10 @@ public final class PolicyViolationInfo extends com.google.protobuf.GeneratedMess
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      if (orgPolicyViolationInfoBuilder_ == null) {
-        orgPolicyViolationInfo_ = null;
-      } else {
-        orgPolicyViolationInfo_ = null;
+      bitField0_ = 0;
+      orgPolicyViolationInfo_ = null;
+      if (orgPolicyViolationInfoBuilder_ != null) {
+        orgPolicyViolationInfoBuilder_.dispose();
         orgPolicyViolationInfoBuilder_ = null;
       }
       return this;
@@ -350,13 +347,21 @@ public final class PolicyViolationInfo extends com.google.protobuf.GeneratedMess
     public com.google.cloud.audit.PolicyViolationInfo buildPartial() {
       com.google.cloud.audit.PolicyViolationInfo result =
           new com.google.cloud.audit.PolicyViolationInfo(this);
-      if (orgPolicyViolationInfoBuilder_ == null) {
-        result.orgPolicyViolationInfo_ = orgPolicyViolationInfo_;
-      } else {
-        result.orgPolicyViolationInfo_ = orgPolicyViolationInfoBuilder_.build();
+      if (bitField0_ != 0) {
+        buildPartial0(result);
       }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.cloud.audit.PolicyViolationInfo result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.orgPolicyViolationInfo_ =
+            orgPolicyViolationInfoBuilder_ == null
+                ? orgPolicyViolationInfo_
+                : orgPolicyViolationInfoBuilder_.build();
+      }
     }
 
     @java.lang.Override
@@ -437,7 +442,7 @@ public final class PolicyViolationInfo extends com.google.protobuf.GeneratedMess
               {
                 input.readMessage(
                     getOrgPolicyViolationInfoFieldBuilder().getBuilder(), extensionRegistry);
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             default:
@@ -457,6 +462,8 @@ public final class PolicyViolationInfo extends com.google.protobuf.GeneratedMess
       return this;
     }
 
+    private int bitField0_;
+
     private com.google.cloud.audit.OrgPolicyViolationInfo orgPolicyViolationInfo_;
     private com.google.protobuf.SingleFieldBuilderV3<
             com.google.cloud.audit.OrgPolicyViolationInfo,
@@ -475,7 +482,7 @@ public final class PolicyViolationInfo extends com.google.protobuf.GeneratedMess
      * @return Whether the orgPolicyViolationInfo field is set.
      */
     public boolean hasOrgPolicyViolationInfo() {
-      return orgPolicyViolationInfoBuilder_ != null || orgPolicyViolationInfo_ != null;
+      return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      *
@@ -512,11 +519,11 @@ public final class PolicyViolationInfo extends com.google.protobuf.GeneratedMess
           throw new NullPointerException();
         }
         orgPolicyViolationInfo_ = value;
-        onChanged();
       } else {
         orgPolicyViolationInfoBuilder_.setMessage(value);
       }
-
+      bitField0_ |= 0x00000001;
+      onChanged();
       return this;
     }
     /**
@@ -532,11 +539,11 @@ public final class PolicyViolationInfo extends com.google.protobuf.GeneratedMess
         com.google.cloud.audit.OrgPolicyViolationInfo.Builder builderForValue) {
       if (orgPolicyViolationInfoBuilder_ == null) {
         orgPolicyViolationInfo_ = builderForValue.build();
-        onChanged();
       } else {
         orgPolicyViolationInfoBuilder_.setMessage(builderForValue.build());
       }
-
+      bitField0_ |= 0x00000001;
+      onChanged();
       return this;
     }
     /**
@@ -551,19 +558,19 @@ public final class PolicyViolationInfo extends com.google.protobuf.GeneratedMess
     public Builder mergeOrgPolicyViolationInfo(
         com.google.cloud.audit.OrgPolicyViolationInfo value) {
       if (orgPolicyViolationInfoBuilder_ == null) {
-        if (orgPolicyViolationInfo_ != null) {
-          orgPolicyViolationInfo_ =
-              com.google.cloud.audit.OrgPolicyViolationInfo.newBuilder(orgPolicyViolationInfo_)
-                  .mergeFrom(value)
-                  .buildPartial();
+        if (((bitField0_ & 0x00000001) != 0)
+            && orgPolicyViolationInfo_ != null
+            && orgPolicyViolationInfo_
+                != com.google.cloud.audit.OrgPolicyViolationInfo.getDefaultInstance()) {
+          getOrgPolicyViolationInfoBuilder().mergeFrom(value);
         } else {
           orgPolicyViolationInfo_ = value;
         }
-        onChanged();
       } else {
         orgPolicyViolationInfoBuilder_.mergeFrom(value);
       }
-
+      bitField0_ |= 0x00000001;
+      onChanged();
       return this;
     }
     /**
@@ -576,14 +583,13 @@ public final class PolicyViolationInfo extends com.google.protobuf.GeneratedMess
      * <code>.google.cloud.audit.OrgPolicyViolationInfo org_policy_violation_info = 1;</code>
      */
     public Builder clearOrgPolicyViolationInfo() {
-      if (orgPolicyViolationInfoBuilder_ == null) {
-        orgPolicyViolationInfo_ = null;
-        onChanged();
-      } else {
-        orgPolicyViolationInfo_ = null;
+      bitField0_ = (bitField0_ & ~0x00000001);
+      orgPolicyViolationInfo_ = null;
+      if (orgPolicyViolationInfoBuilder_ != null) {
+        orgPolicyViolationInfoBuilder_.dispose();
         orgPolicyViolationInfoBuilder_ = null;
       }
-
+      onChanged();
       return this;
     }
     /**
@@ -597,7 +603,7 @@ public final class PolicyViolationInfo extends com.google.protobuf.GeneratedMess
      */
     public com.google.cloud.audit.OrgPolicyViolationInfo.Builder
         getOrgPolicyViolationInfoBuilder() {
-
+      bitField0_ |= 0x00000001;
       onChanged();
       return getOrgPolicyViolationInfoFieldBuilder().getBuilder();
     }

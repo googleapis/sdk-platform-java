@@ -3,6 +3,7 @@ package com.google.showcase.grpcrest.v1beta1.stub;
 import static com.google.showcase.grpcrest.v1beta1.EchoClient.PagedExpandPagedResponse;
 import static com.google.showcase.grpcrest.v1beta1.EchoClient.SimplePagedExpandPagedResponse;
 
+import com.google.api.HttpRule;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.core.BackgroundResource;
@@ -19,18 +20,22 @@ import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.rpc.BidiStreamingCallable;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.OperationCallable;
+import com.google.api.gax.rpc.RequestParamsBuilder;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.Operation;
 import com.google.protobuf.TypeRegistry;
 import com.google.showcase.grpcrest.v1beta1.BlockRequest;
 import com.google.showcase.grpcrest.v1beta1.BlockResponse;
+import com.google.showcase.grpcrest.v1beta1.Case;
 import com.google.showcase.grpcrest.v1beta1.EchoRequest;
 import com.google.showcase.grpcrest.v1beta1.EchoResponse;
 import com.google.showcase.grpcrest.v1beta1.ExpandRequest;
 import com.google.showcase.grpcrest.v1beta1.Object;
 import com.google.showcase.grpcrest.v1beta1.PagedExpandRequest;
 import com.google.showcase.grpcrest.v1beta1.PagedExpandResponse;
+import com.google.showcase.grpcrest.v1beta1.UpdateCaseRequest;
 import com.google.showcase.grpcrest.v1beta1.WaitMetadata;
 import com.google.showcase.grpcrest.v1beta1.WaitRequest;
 import com.google.showcase.grpcrest.v1beta1.WaitResponse;
@@ -330,6 +335,42 @@ public class HttpJsonEchoStub extends EchoStub {
                   .build())
           .build();
 
+  private static final ApiMethodDescriptor<UpdateCaseRequest, Case> updateCaseMethodDescriptor =
+      ApiMethodDescriptor.<UpdateCaseRequest, Case>newBuilder()
+          .setFullMethodName("google.showcase.grpcrest.v1beta1.Echo/UpdateCase")
+          .setHttpMethod("PATCH")
+          .setType(ApiMethodDescriptor.MethodType.UNARY)
+          .setRequestFormatter(
+              ProtoMessageRequestFormatter.<UpdateCaseRequest>newBuilder()
+                  .setPath(
+                      "/v2beta/{case.name=projects/*/cases/*}",
+                      request -> {
+                        Map<String, String> fields = new HashMap<>();
+                        ProtoRestSerializer<UpdateCaseRequest> serializer =
+                            ProtoRestSerializer.create();
+                        serializer.putPathParam(fields, "case.name", request.getCase().getName());
+                        return fields;
+                      })
+                  .setAdditionalPaths("/v2beta/{case.name=organizations/*/cases/*}")
+                  .setQueryParamsExtractor(
+                      request -> {
+                        Map<String, List<String>> fields = new HashMap<>();
+                        ProtoRestSerializer<UpdateCaseRequest> serializer =
+                            ProtoRestSerializer.create();
+                        serializer.putQueryParam(fields, "updateMask", request.getUpdateMask());
+                        return fields;
+                      })
+                  .setRequestBodyExtractor(
+                      request ->
+                          ProtoRestSerializer.create().toBody("case_", request.getCase(), false))
+                  .build())
+          .setResponseParser(
+              ProtoMessageResponseParser.<Case>newBuilder()
+                  .setDefaultInstance(Case.getDefaultInstance())
+                  .setDefaultTypeRegistry(typeRegistry)
+                  .build())
+          .build();
+
   private final UnaryCallable<EchoRequest, EchoResponse> echoCallable;
   private final ServerStreamingCallable<ExpandRequest, EchoResponse> expandCallable;
   private final UnaryCallable<PagedExpandRequest, PagedExpandResponse> pagedExpandCallable;
@@ -343,6 +384,7 @@ public class HttpJsonEchoStub extends EchoStub {
   private final UnaryCallable<BlockRequest, BlockResponse> blockCallable;
   private final UnaryCallable<EchoRequest, Object> collideNameCallable;
   private final UnaryCallable<EchoRequest, Object> nestedBindingCallable;
+  private final UnaryCallable<UpdateCaseRequest, Case> updateCaseCallable;
 
   private final BackgroundResource backgroundResources;
   private final HttpJsonOperationsStub httpJsonOperationsStub;
@@ -382,7 +424,56 @@ public class HttpJsonEchoStub extends EchoStub {
       throws IOException {
     this.callableFactory = callableFactory;
     this.httpJsonOperationsStub =
-        HttpJsonOperationsStub.create(clientContext, callableFactory, typeRegistry);
+        HttpJsonOperationsStub.create(
+            clientContext,
+            callableFactory,
+            typeRegistry,
+            ImmutableMap.<String, HttpRule>builder()
+                .put(
+                    "google.longrunning.Operations.CancelOperation",
+                    HttpRule.newBuilder()
+                        .setPost("/v1beta1/{name=operations/**}:cancel")
+                        .addAdditionalBindings(
+                            HttpRule.newBuilder()
+                                .setPost("/v1beta2/{name=operations/**}:cancel")
+                                .build())
+                        .addAdditionalBindings(
+                            HttpRule.newBuilder()
+                                .setPost("/v1beta3/{name=operations/**}:cancel")
+                                .build())
+                        .build())
+                .put(
+                    "google.longrunning.Operations.DeleteOperation",
+                    HttpRule.newBuilder()
+                        .setDelete("/v1beta1/{name=operations/**}")
+                        .addAdditionalBindings(
+                            HttpRule.newBuilder()
+                                .setDelete("/v1beta2/{name=operations/**}")
+                                .build())
+                        .addAdditionalBindings(
+                            HttpRule.newBuilder()
+                                .setDelete("/v1beta3/{name=operations/**}")
+                                .build())
+                        .build())
+                .put(
+                    "google.longrunning.Operations.GetOperation",
+                    HttpRule.newBuilder()
+                        .setGet("/v1beta1/{name=operations/**}")
+                        .addAdditionalBindings(
+                            HttpRule.newBuilder().setGet("/v1beta2/{name=operations/**}").build())
+                        .addAdditionalBindings(
+                            HttpRule.newBuilder().setGet("/v1beta3/{name=operations/**}").build())
+                        .build())
+                .put(
+                    "google.longrunning.Operations.ListOperations",
+                    HttpRule.newBuilder()
+                        .setGet("/v1beta1/operations")
+                        .addAdditionalBindings(
+                            HttpRule.newBuilder().setGet("/v1beta2/operations").build())
+                        .addAdditionalBindings(
+                            HttpRule.newBuilder().setGet("/v1beta3/operations").build())
+                        .build())
+                .build());
 
     HttpJsonCallSettings<EchoRequest, EchoResponse> echoTransportSettings =
         HttpJsonCallSettings.<EchoRequest, EchoResponse>newBuilder()
@@ -424,6 +515,23 @@ public class HttpJsonEchoStub extends EchoStub {
         HttpJsonCallSettings.<EchoRequest, Object>newBuilder()
             .setMethodDescriptor(nestedBindingMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("foo_bar.name", String.valueOf(request.getFooBar().getName()));
+                  return builder.build();
+                })
+            .build();
+    HttpJsonCallSettings<UpdateCaseRequest, Case> updateCaseTransportSettings =
+        HttpJsonCallSettings.<UpdateCaseRequest, Case>newBuilder()
+            .setMethodDescriptor(updateCaseMethodDescriptor)
+            .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("case.name", String.valueOf(request.getCase().getName()));
+                  return builder.build();
+                })
             .build();
 
     this.echoCallable =
@@ -466,6 +574,9 @@ public class HttpJsonEchoStub extends EchoStub {
     this.nestedBindingCallable =
         callableFactory.createUnaryCallable(
             nestedBindingTransportSettings, settings.nestedBindingSettings(), clientContext);
+    this.updateCaseCallable =
+        callableFactory.createUnaryCallable(
+            updateCaseTransportSettings, settings.updateCaseSettings(), clientContext);
 
     this.backgroundResources =
         new BackgroundResourceAggregation(clientContext.getBackgroundResources());
@@ -482,6 +593,7 @@ public class HttpJsonEchoStub extends EchoStub {
     methodDescriptors.add(blockMethodDescriptor);
     methodDescriptors.add(collideNameMethodDescriptor);
     methodDescriptors.add(nestedBindingMethodDescriptor);
+    methodDescriptors.add(updateCaseMethodDescriptor);
     return methodDescriptors;
   }
 
@@ -543,6 +655,11 @@ public class HttpJsonEchoStub extends EchoStub {
   @Override
   public UnaryCallable<EchoRequest, Object> nestedBindingCallable() {
     return nestedBindingCallable;
+  }
+
+  @Override
+  public UnaryCallable<UpdateCaseRequest, Case> updateCaseCallable() {
+    return updateCaseCallable;
   }
 
   @Override

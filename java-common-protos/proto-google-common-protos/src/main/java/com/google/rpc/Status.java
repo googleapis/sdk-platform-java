@@ -26,6 +26,7 @@ package com.google.rpc;
  * different programming environments, including REST APIs and RPC APIs. It is
  * used by [gRPC](https://github.com/grpc). Each `Status` message contains
  * three pieces of data: error code, error message, and error details.
+ *
  * You can find out more about this error model and how to work with it in the
  * [API Design Guide](https://cloud.google.com/apis/design/errors).
  * </pre>
@@ -53,11 +54,6 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
     return new Status();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.rpc.StatusProto.internal_static_google_rpc_Status_descriptor;
   }
@@ -71,7 +67,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int CODE_FIELD_NUMBER = 1;
-  private int code_;
+  private int code_ = 0;
   /**
    *
    *
@@ -90,7 +86,9 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int MESSAGE_FIELD_NUMBER = 2;
-  private volatile java.lang.Object message_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object message_ = "";
   /**
    *
    *
@@ -145,6 +143,8 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int DETAILS_FIELD_NUMBER = 3;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.protobuf.Any> details_;
   /**
    *
@@ -402,6 +402,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
    * different programming environments, including REST APIs and RPC APIs. It is
    * used by [gRPC](https://github.com/grpc). Each `Status` message contains
    * three pieces of data: error code, error message, and error details.
+   *
    * You can find out more about this error model and how to work with it in the
    * [API Design Guide](https://cloud.google.com/apis/design/errors).
    * </pre>
@@ -434,17 +435,16 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       code_ = 0;
-
       message_ = "";
-
       if (detailsBuilder_ == null) {
         details_ = java.util.Collections.emptyList();
       } else {
         details_ = null;
         detailsBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000001);
+      bitField0_ = (bitField0_ & ~0x00000004);
       return this;
     }
 
@@ -470,20 +470,34 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.rpc.Status buildPartial() {
       com.google.rpc.Status result = new com.google.rpc.Status(this);
-      int from_bitField0_ = bitField0_;
-      result.code_ = code_;
-      result.message_ = message_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.rpc.Status result) {
       if (detailsBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)) {
+        if (((bitField0_ & 0x00000004) != 0)) {
           details_ = java.util.Collections.unmodifiableList(details_);
-          bitField0_ = (bitField0_ & ~0x00000001);
+          bitField0_ = (bitField0_ & ~0x00000004);
         }
         result.details_ = details_;
       } else {
         result.details_ = detailsBuilder_.build();
       }
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.rpc.Status result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.code_ = code_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.message_ = message_;
+      }
     }
 
     @java.lang.Override
@@ -536,13 +550,14 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
       }
       if (!other.getMessage().isEmpty()) {
         message_ = other.message_;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
       if (detailsBuilder_ == null) {
         if (!other.details_.isEmpty()) {
           if (details_.isEmpty()) {
             details_ = other.details_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ = (bitField0_ & ~0x00000004);
           } else {
             ensureDetailsIsMutable();
             details_.addAll(other.details_);
@@ -555,7 +570,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
             detailsBuilder_.dispose();
             detailsBuilder_ = null;
             details_ = other.details_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ = (bitField0_ & ~0x00000004);
             detailsBuilder_ =
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
                     ? getDetailsFieldBuilder()
@@ -594,13 +609,13 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
             case 8:
               {
                 code_ = input.readInt32();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 8
             case 18:
               {
                 message_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             case 26:
@@ -667,6 +682,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
     public Builder setCode(int value) {
 
       code_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -683,7 +699,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearCode() {
-
+      bitField0_ = (bitField0_ & ~0x00000001);
       code_ = 0;
       onChanged();
       return this;
@@ -759,8 +775,8 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       message_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -779,8 +795,8 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearMessage() {
-
       message_ = getDefaultInstance().getMessage();
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -804,8 +820,8 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       message_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -813,9 +829,9 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
     private java.util.List<com.google.protobuf.Any> details_ = java.util.Collections.emptyList();
 
     private void ensureDetailsIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
+      if (!((bitField0_ & 0x00000004) != 0)) {
         details_ = new java.util.ArrayList<com.google.protobuf.Any>(details_);
-        bitField0_ |= 0x00000001;
+        bitField0_ |= 0x00000004;
       }
     }
 
@@ -1038,7 +1054,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
     public Builder clearDetails() {
       if (detailsBuilder_ == null) {
         details_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
+        bitField0_ = (bitField0_ & ~0x00000004);
         onChanged();
       } else {
         detailsBuilder_.clear();
@@ -1164,7 +1180,7 @@ public final class Status extends com.google.protobuf.GeneratedMessageV3
                 com.google.protobuf.Any,
                 com.google.protobuf.Any.Builder,
                 com.google.protobuf.AnyOrBuilder>(
-                details_, ((bitField0_ & 0x00000001) != 0), getParentForChildren(), isClean());
+                details_, ((bitField0_ & 0x00000004) != 0), getParentForChildren(), isClean());
         details_ = null;
       }
       return detailsBuilder_;

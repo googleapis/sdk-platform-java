@@ -6,13 +6,9 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 # gapic-generator-java dependencies to match the order in googleapis repository,
 # which in its turn, prioritizes actual generated clients runtime dependencies
 # over the generator dependencies.
-
-_gax_java_version = "2.19.0"
-
-http_archive(
-    name = "com_google_api_gax_java",
-    strip_prefix = "gax-java-%s" % _gax_java_version,
-    urls = ["https://github.com/googleapis/gax-java/archive/v%s.zip" % _gax_java_version],
+local_repository(
+   name = "com_google_api_gax_java",
+   path = "gax-java",
 )
 
 load("@com_google_api_gax_java//:repository_rules.bzl", "com_google_api_gax_java_properties")
@@ -64,7 +60,7 @@ maven_install(
     repositories = ["https://repo.maven.apache.org/maven2/"],
 )
 
-_gapic_generator_java_version = "2.14.1-SNAPSHOT"  # {x-version-update:gapic-generator-java:current}
+_gapic_generator_java_version = "2.21.1-SNAPSHOT"  # {x-version-update:gapic-generator-java:current}
 
 maven_install(
     artifacts = [
@@ -111,16 +107,25 @@ http_archive(
 )
 
 # Showcase
-_showcase_commit = "90d73532a0cab753a85f45c158394f24fc21d91a"
-
-_showcase_sha256 = "0f582541a379be0746e6b8bc5af3df511581d4b1f18f7dfb9ce203be1a64cef1"
+_showcase_version = "0.28.1"
 
 http_archive(
     name = "com_google_gapic_showcase",
-    sha256 = _showcase_sha256,
-    strip_prefix = "gapic-showcase-%s" % _showcase_commit,
+    strip_prefix = "gapic-showcase-%s" % _showcase_version,
     urls = [
-        # "https://github.com/googleapis/gapic-showcase/archive/refs/tags/v%s.zip" % _showcase_version,
-        "https://github.com/googleapis/gapic-showcase/archive/%s.zip" % _showcase_commit,
+        "https://github.com/googleapis/gapic-showcase/archive/refs/tags/v%s.zip" % _showcase_version,
     ],
 )
+
+http_archive(
+    name = "rules_pkg",
+    sha256 = "8a298e832762eda1830597d64fe7db58178aa84cd5926d76d5b744d6558941c2",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_pkg/releases/download/0.7.0/rules_pkg-0.7.0.tar.gz",
+        "https://github.com/bazelbuild/rules_pkg/releases/download/0.7.0/rules_pkg-0.7.0.tar.gz",
+    ],
+)
+
+load("@rules_pkg//:deps.bzl", "rules_pkg_dependencies")
+
+rules_pkg_dependencies()

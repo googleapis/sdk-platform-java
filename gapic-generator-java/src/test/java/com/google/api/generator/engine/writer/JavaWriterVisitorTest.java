@@ -71,9 +71,16 @@ import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.ast.WhileStatement;
-import com.google.api.generator.testutils.LineFormatter;
-import com.google.api.generator.util.TestUtils;
+import com.google.api.generator.gapic.composer.grpc.ServiceClientClassComposer;
+import com.google.api.generator.gapic.model.GapicClass;
+import com.google.api.generator.gapic.model.GapicContext;
+import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.test.framework.Assert;
+import com.google.api.generator.test.protoloader.TestProtoLoader;
+import com.google.api.generator.test.utils.LineFormatter;
+import com.google.api.generator.test.utils.TestExprBuilder;
 import com.google.common.base.Function;
+import com.google.testgapic.v1beta1.Outer;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
@@ -127,6 +134,26 @@ public class JavaWriterVisitorTest {
             VaporReference.builder().setName("FooBar").setPakkage("com.foo.bar").build())
         .accept(writerVisitor);
     assertEquals("FooBar", writerVisitor.write());
+  }
+
+  @Test
+  public void writeVaporReferenceType_nestedClasses() {
+    VaporReference nestedVaporReference =
+        VaporReference.builder()
+            .setName("Inner")
+            .setEnclosingClassNames(Arrays.asList("Outer", "Middle"))
+            .setPakkage("com.google.testgapic.v1beta1")
+            .build();
+    TypeNode.withReference(nestedVaporReference).accept(writerVisitor);
+    assertEquals("Outer.Middle.Inner", writerVisitor.write());
+  }
+
+  @Test
+  public void writeConcreteReferenceType_nestedClasses() {
+    ConcreteReference nestedConcreteReference =
+        ConcreteReference.withClazz(Outer.Middle.Inner.class);
+    TypeNode.withReference(nestedConcreteReference).accept(writerVisitor);
+    assertEquals("Outer.Middle.Inner", writerVisitor.write());
   }
 
   @Test
@@ -321,8 +348,8 @@ public class JavaWriterVisitorTest {
             .setDescription(
                 ArrayExpr.builder()
                     .setType(TypeNode.createArrayTypeOf(TypeNode.CLASS_OBJECT))
-                    .addExpr(TestUtils.generateClassValueExpr("Class1"))
-                    .addExpr(TestUtils.generateClassValueExpr("Class2"))
+                    .addExpr(TestExprBuilder.generateClassValueExpr("Class1"))
+                    .addExpr(TestExprBuilder.generateClassValueExpr("Class2"))
                     .build())
             .build();
     annotation.accept(writerVisitor);
@@ -337,8 +364,8 @@ public class JavaWriterVisitorTest {
     ArrayExpr arrayExpr =
         ArrayExpr.builder()
             .setType(TypeNode.createArrayTypeOf(TypeNode.CLASS_OBJECT))
-            .addExpr(TestUtils.generateClassValueExpr("Class1"))
-            .addExpr(TestUtils.generateClassValueExpr("Class2"))
+            .addExpr(TestExprBuilder.generateClassValueExpr("Class1"))
+            .addExpr(TestExprBuilder.generateClassValueExpr("Class2"))
             .build();
     AssignmentExpr clazz1AssignExpr =
         AssignmentExpr.builder()
@@ -391,9 +418,9 @@ public class JavaWriterVisitorTest {
     ArrayExpr expr =
         ArrayExpr.builder()
             .setType(TypeNode.createArrayTypeOf(TypeNode.STRING))
-            .addExpr(TestUtils.generateStringValueExpr("test1"))
-            .addExpr(TestUtils.generateStringValueExpr("test2"))
-            .addExpr(TestUtils.generateStringValueExpr("test3"))
+            .addExpr(TestExprBuilder.generateStringValueExpr("test1"))
+            .addExpr(TestExprBuilder.generateStringValueExpr("test2"))
+            .addExpr(TestExprBuilder.generateStringValueExpr("test3"))
             .build();
     expr.accept(writerVisitor);
     assertEquals("{\"test1\", \"test2\", \"test3\"}", writerVisitor.write());
@@ -404,9 +431,9 @@ public class JavaWriterVisitorTest {
     ArrayExpr expr =
         ArrayExpr.builder()
             .setType(TypeNode.createArrayTypeOf(TypeNode.CLASS_OBJECT))
-            .addExpr(TestUtils.generateClassValueExpr("Class1"))
-            .addExpr(TestUtils.generateClassValueExpr("Class2"))
-            .addExpr(TestUtils.generateClassValueExpr("Class3"))
+            .addExpr(TestExprBuilder.generateClassValueExpr("Class1"))
+            .addExpr(TestExprBuilder.generateClassValueExpr("Class2"))
+            .addExpr(TestExprBuilder.generateClassValueExpr("Class3"))
             .build();
     expr.accept(writerVisitor);
     assertEquals("{Class1.class, Class2.class, Class3.class}", writerVisitor.write());
@@ -423,7 +450,7 @@ public class JavaWriterVisitorTest {
         ArrayExpr.builder()
             .setType(TypeNode.createArrayTypeOf(TypeNode.CLASS_OBJECT))
             .addExpr(clazzVar)
-            .addExpr(TestUtils.generateClassValueExpr("Class2"))
+            .addExpr(TestExprBuilder.generateClassValueExpr("Class2"))
             .build();
     expr.accept(writerVisitor);
     assertEquals("{clazz1Var, Class2.class}", writerVisitor.write());
@@ -443,8 +470,8 @@ public class JavaWriterVisitorTest {
     ArrayExpr expr =
         ArrayExpr.builder()
             .setType(TypeNode.createArrayTypeOf(TypeNode.STRING))
-            .addExpr(TestUtils.generateStringValueExpr("str1"))
-            .addExpr(TestUtils.generateStringValueExpr("str2"))
+            .addExpr(TestExprBuilder.generateStringValueExpr("str1"))
+            .addExpr(TestExprBuilder.generateStringValueExpr("str2"))
             .build();
     AssignmentExpr assignmentExpr =
         AssignmentExpr.builder().setVariableExpr(varExpr).setValueExpr(expr).build();
@@ -2794,6 +2821,17 @@ public class JavaWriterVisitorTest {
             "\n",
             "import javax.annotation.Generated;\n"),
         writerVisitor.write());
+  }
+
+  /** =============================== GOLDEN TESTS =============================== */
+  @Test
+  public void writeSGrpcServiceClientWithNestedClassImport() {
+    GapicContext context = TestProtoLoader.instance().parseNestedMessage();
+    Service nestedService = context.services().get(0);
+    GapicClass clazz = ServiceClientClassComposer.instance().generate(context, nestedService);
+
+    Assert.assertGoldenClass(
+        this.getClass(), clazz, "GrpcServiceClientWithNestedClassImport.golden");
   }
 
   /** =============================== HELPERS =============================== */

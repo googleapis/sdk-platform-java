@@ -28,8 +28,10 @@ public interface QuotaLimitOrBuilder
    *
    * <pre>
    * Name of the quota limit.
+   *
    * The name must be provided, and it must be unique within the service. The
    * name can only include alphanumeric characters as well as '-'.
+   *
    * The maximum length of the limit name is 64 characters.
    * </pre>
    *
@@ -43,8 +45,10 @@ public interface QuotaLimitOrBuilder
    *
    * <pre>
    * Name of the quota limit.
+   *
    * The name must be provided, and it must be unique within the service. The
    * name can only include alphanumeric characters as well as '-'.
+   *
    * The maximum length of the limit name is 64 characters.
    * </pre>
    *
@@ -90,10 +94,12 @@ public interface QuotaLimitOrBuilder
    * Default number of tokens that can be consumed during the specified
    * duration. This is the number of tokens assigned when a client
    * application developer activates the service for his/her project.
+   *
    * Specifying a value of 0 will block all requests. This can be used if you
    * are provisioning quota to selected consumers and blocking others.
    * Similarly, a value of -1 will indicate an unlimited quota. No other
    * negative values are allowed.
+   *
    * Used by group-based quotas only.
    * </pre>
    *
@@ -111,8 +117,10 @@ public interface QuotaLimitOrBuilder
    * duration. Client application developers can override the default limit up
    * to this maximum. If specified, this value cannot be set to a value less
    * than the default limit. If not specified, it is set to the default limit.
+   *
    * To allow clients to apply overrides with no upper bound, set this to -1,
    * indicating unlimited maximum quota.
+   *
    * Used by group-based quotas only.
    * </pre>
    *
@@ -132,6 +140,7 @@ public interface QuotaLimitOrBuilder
    * This field can only be set on a limit with duration "1d", in a billable
    * group; it is invalid on any other limit. If this field is not set, it
    * defaults to 0, indicating that there is no free tier for this service.
+   *
    * Used by group-based quotas only.
    * </pre>
    *
@@ -146,6 +155,7 @@ public interface QuotaLimitOrBuilder
    *
    * <pre>
    * Duration of this limit in textual notation. Must be "100s" or "1d".
+   *
    * Used by group-based quotas only.
    * </pre>
    *
@@ -159,6 +169,7 @@ public interface QuotaLimitOrBuilder
    *
    * <pre>
    * Duration of this limit in textual notation. Must be "100s" or "1d".
+   *
    * Used by group-based quotas only.
    * </pre>
    *
@@ -204,8 +215,10 @@ public interface QuotaLimitOrBuilder
    * Specify the unit of the quota limit. It uses the same syntax as
    * [Metric.unit][]. The supported unit kinds are determined by the quota
    * backend system.
+   *
    * Here are some examples:
    * * "1/min/{project}" for quota per minute per project.
+   *
    * Note: the order of unit components is insignificant.
    * The "1" at the beginning is required to follow the metric unit syntax.
    * </pre>
@@ -222,8 +235,10 @@ public interface QuotaLimitOrBuilder
    * Specify the unit of the quota limit. It uses the same syntax as
    * [Metric.unit][]. The supported unit kinds are determined by the quota
    * backend system.
+   *
    * Here are some examples:
    * * "1/min/{project}" for quota per minute per project.
+   *
    * Note: the order of unit components is insignificant.
    * The "1" at the beginning is required to follow the metric unit syntax.
    * </pre>

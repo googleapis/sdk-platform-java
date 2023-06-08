@@ -38,7 +38,7 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
   }
 
   private DebugInfo() {
-    stackEntries_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    stackEntries_ = com.google.protobuf.LazyStringArrayList.emptyList();
     detail_ = "";
   }
 
@@ -46,11 +46,6 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new DebugInfo();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -66,7 +61,10 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int STACK_ENTRIES_FIELD_NUMBER = 1;
-  private com.google.protobuf.LazyStringList stackEntries_;
+
+  @SuppressWarnings("serial")
+  private com.google.protobuf.LazyStringArrayList stackEntries_ =
+      com.google.protobuf.LazyStringArrayList.emptyList();
   /**
    *
    *
@@ -127,7 +125,9 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int DETAIL_FIELD_NUMBER = 2;
-  private volatile java.lang.Object detail_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object detail_ = "";
   /**
    *
    *
@@ -384,10 +384,9 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      stackEntries_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000001);
+      bitField0_ = 0;
+      stackEntries_ = com.google.protobuf.LazyStringArrayList.emptyList();
       detail_ = "";
-
       return this;
     }
 
@@ -413,15 +412,22 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.rpc.DebugInfo buildPartial() {
       com.google.rpc.DebugInfo result = new com.google.rpc.DebugInfo(this);
-      int from_bitField0_ = bitField0_;
-      if (((bitField0_ & 0x00000001) != 0)) {
-        stackEntries_ = stackEntries_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000001);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
       }
-      result.stackEntries_ = stackEntries_;
-      result.detail_ = detail_;
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.rpc.DebugInfo result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        stackEntries_.makeImmutable();
+        result.stackEntries_ = stackEntries_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.detail_ = detail_;
+      }
     }
 
     @java.lang.Override
@@ -472,7 +478,7 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
       if (!other.stackEntries_.isEmpty()) {
         if (stackEntries_.isEmpty()) {
           stackEntries_ = other.stackEntries_;
-          bitField0_ = (bitField0_ & ~0x00000001);
+          bitField0_ |= 0x00000001;
         } else {
           ensureStackEntriesIsMutable();
           stackEntries_.addAll(other.stackEntries_);
@@ -481,6 +487,7 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
       }
       if (!other.getDetail().isEmpty()) {
         detail_ = other.detail_;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -519,7 +526,7 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
             case 18:
               {
                 detail_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             default:
@@ -541,14 +548,14 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
 
     private int bitField0_;
 
-    private com.google.protobuf.LazyStringList stackEntries_ =
-        com.google.protobuf.LazyStringArrayList.EMPTY;
+    private com.google.protobuf.LazyStringArrayList stackEntries_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
 
     private void ensureStackEntriesIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
+      if (!stackEntries_.isModifiable()) {
         stackEntries_ = new com.google.protobuf.LazyStringArrayList(stackEntries_);
-        bitField0_ |= 0x00000001;
       }
+      bitField0_ |= 0x00000001;
     }
     /**
      *
@@ -562,7 +569,8 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
      * @return A list containing the stackEntries.
      */
     public com.google.protobuf.ProtocolStringList getStackEntriesList() {
-      return stackEntries_.getUnmodifiableView();
+      stackEntries_.makeImmutable();
+      return stackEntries_;
     }
     /**
      *
@@ -627,6 +635,7 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
       }
       ensureStackEntriesIsMutable();
       stackEntries_.set(index, value);
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -648,6 +657,7 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
       }
       ensureStackEntriesIsMutable();
       stackEntries_.add(value);
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -666,6 +676,7 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
     public Builder addAllStackEntries(java.lang.Iterable<java.lang.String> values) {
       ensureStackEntriesIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(values, stackEntries_);
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -681,8 +692,9 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearStackEntries() {
-      stackEntries_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      stackEntries_ = com.google.protobuf.LazyStringArrayList.emptyList();
       bitField0_ = (bitField0_ & ~0x00000001);
+      ;
       onChanged();
       return this;
     }
@@ -705,6 +717,7 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
       checkByteStringIsUtf8(value);
       ensureStackEntriesIsMutable();
       stackEntries_.add(value);
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -770,8 +783,8 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       detail_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -787,8 +800,8 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDetail() {
-
       detail_ = getDefaultInstance().getDetail();
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -809,8 +822,8 @@ public final class DebugInfo extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       detail_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }

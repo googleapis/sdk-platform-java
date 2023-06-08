@@ -47,11 +47,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
     return new JavaSettings();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.ClientProto.internal_static_google_api_JavaSettings_descriptor;
   }
@@ -76,7 +71,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int LIBRARY_PACKAGE_FIELD_NUMBER = 1;
-  private volatile java.lang.Object libraryPackage_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object libraryPackage_ = "";
   /**
    *
    *
@@ -86,7 +83,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
    * who have already set the language_settings.java.package_name" field
    * in gapic.yaml. API teams should use the protobuf java_package option
    * where possible.
+   *
    * Example of a YAML configuration::
+   *
    *  publishing:
    *    java_settings:
    *      library_package: com.google.cloud.pubsub.v1
@@ -117,7 +116,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
    * who have already set the language_settings.java.package_name" field
    * in gapic.yaml. API teams should use the protobuf java_package option
    * where possible.
+   *
    * Example of a YAML configuration::
+   *
    *  publishing:
    *    java_settings:
    *      library_package: com.google.cloud.pubsub.v1
@@ -153,6 +154,7 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
             "");
   }
 
+  @SuppressWarnings("serial")
   private com.google.protobuf.MapField<java.lang.String, java.lang.String> serviceClassNames_;
 
   private com.google.protobuf.MapField<java.lang.String, java.lang.String>
@@ -177,7 +179,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
    * the language_settings.java.interface_names" field in gapic.yaml. API
    * teams should otherwise use the service name as it appears in the
    * protobuf.
+   *
    * Example of a YAML configuration::
+   *
    *  publishing:
    *    java_settings:
    *      service_class_names:
@@ -210,7 +214,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
    * the language_settings.java.interface_names" field in gapic.yaml. API
    * teams should otherwise use the service name as it appears in the
    * protobuf.
+   *
    * Example of a YAML configuration::
+   *
    *  publishing:
    *    java_settings:
    *      service_class_names:
@@ -234,7 +240,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
    * the language_settings.java.interface_names" field in gapic.yaml. API
    * teams should otherwise use the service name as it appears in the
    * protobuf.
+   *
    * Example of a YAML configuration::
+   *
    *  publishing:
    *    java_settings:
    *      service_class_names:
@@ -245,8 +253,10 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
    * <code>map&lt;string, string&gt; service_class_names = 2;</code>
    */
   @java.lang.Override
-  public java.lang.String getServiceClassNamesOrDefault(
-      java.lang.String key, java.lang.String defaultValue) {
+  public /* nullable */ java.lang.String getServiceClassNamesOrDefault(
+      java.lang.String key,
+      /* nullable */
+      java.lang.String defaultValue) {
     if (key == null) {
       throw new NullPointerException("map key");
     }
@@ -263,7 +273,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
    * the language_settings.java.interface_names" field in gapic.yaml. API
    * teams should otherwise use the service name as it appears in the
    * protobuf.
+   *
    * Example of a YAML configuration::
+   *
    *  publishing:
    *    java_settings:
    *      service_class_names:
@@ -328,7 +340,7 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.api.CommonLanguageSettingsOrBuilder getCommonOrBuilder() {
-    return getCommon();
+    return common_ == null ? com.google.api.CommonLanguageSettings.getDefaultInstance() : common_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -577,13 +589,12 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       libraryPackage_ = "";
-
       internalGetMutableServiceClassNames().clear();
-      if (commonBuilder_ == null) {
-        common_ = null;
-      } else {
-        common_ = null;
+      common_ = null;
+      if (commonBuilder_ != null) {
+        commonBuilder_.dispose();
         commonBuilder_ = null;
       }
       return this;
@@ -611,17 +622,25 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.JavaSettings buildPartial() {
       com.google.api.JavaSettings result = new com.google.api.JavaSettings(this);
-      int from_bitField0_ = bitField0_;
-      result.libraryPackage_ = libraryPackage_;
-      result.serviceClassNames_ = internalGetServiceClassNames();
-      result.serviceClassNames_.makeImmutable();
-      if (commonBuilder_ == null) {
-        result.common_ = common_;
-      } else {
-        result.common_ = commonBuilder_.build();
+      if (bitField0_ != 0) {
+        buildPartial0(result);
       }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.api.JavaSettings result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.libraryPackage_ = libraryPackage_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.serviceClassNames_ = internalGetServiceClassNames();
+        result.serviceClassNames_.makeImmutable();
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.common_ = commonBuilder_ == null ? common_ : commonBuilder_.build();
+      }
     }
 
     @java.lang.Override
@@ -671,9 +690,11 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
       if (other == com.google.api.JavaSettings.getDefaultInstance()) return this;
       if (!other.getLibraryPackage().isEmpty()) {
         libraryPackage_ = other.libraryPackage_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       internalGetMutableServiceClassNames().mergeFrom(other.internalGetServiceClassNames());
+      bitField0_ |= 0x00000002;
       if (other.hasCommon()) {
         mergeCommon(other.getCommon());
       }
@@ -706,7 +727,7 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
             case 10:
               {
                 libraryPackage_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
@@ -719,12 +740,13 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
                 internalGetMutableServiceClassNames()
                     .getMutableMap()
                     .put(serviceClassNames__.getKey(), serviceClassNames__.getValue());
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             case 26:
               {
                 input.readMessage(getCommonFieldBuilder().getBuilder(), extensionRegistry);
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 26
             default:
@@ -756,7 +778,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * who have already set the language_settings.java.package_name" field
      * in gapic.yaml. API teams should use the protobuf java_package option
      * where possible.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    java_settings:
      *      library_package: com.google.cloud.pubsub.v1
@@ -786,7 +810,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * who have already set the language_settings.java.package_name" field
      * in gapic.yaml. API teams should use the protobuf java_package option
      * where possible.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    java_settings:
      *      library_package: com.google.cloud.pubsub.v1
@@ -816,7 +842,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * who have already set the language_settings.java.package_name" field
      * in gapic.yaml. API teams should use the protobuf java_package option
      * where possible.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    java_settings:
      *      library_package: com.google.cloud.pubsub.v1
@@ -831,8 +859,8 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       libraryPackage_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -845,7 +873,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * who have already set the language_settings.java.package_name" field
      * in gapic.yaml. API teams should use the protobuf java_package option
      * where possible.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    java_settings:
      *      library_package: com.google.cloud.pubsub.v1
@@ -856,8 +886,8 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearLibraryPackage() {
-
       libraryPackage_ = getDefaultInstance().getLibraryPackage();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -870,7 +900,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * who have already set the language_settings.java.package_name" field
      * in gapic.yaml. API teams should use the protobuf java_package option
      * where possible.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    java_settings:
      *      library_package: com.google.cloud.pubsub.v1
@@ -886,8 +918,8 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       libraryPackage_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -905,8 +937,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
 
     private com.google.protobuf.MapField<java.lang.String, java.lang.String>
         internalGetMutableServiceClassNames() {
-      onChanged();
-      ;
       if (serviceClassNames_ == null) {
         serviceClassNames_ =
             com.google.protobuf.MapField.newMapField(
@@ -915,6 +945,8 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
       if (!serviceClassNames_.isMutable()) {
         serviceClassNames_ = serviceClassNames_.copy();
       }
+      bitField0_ |= 0x00000002;
+      onChanged();
       return serviceClassNames_;
     }
 
@@ -931,7 +963,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * the language_settings.java.interface_names" field in gapic.yaml. API
      * teams should otherwise use the service name as it appears in the
      * protobuf.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    java_settings:
      *      service_class_names:
@@ -964,7 +998,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * the language_settings.java.interface_names" field in gapic.yaml. API
      * teams should otherwise use the service name as it appears in the
      * protobuf.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    java_settings:
      *      service_class_names:
@@ -988,7 +1024,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * the language_settings.java.interface_names" field in gapic.yaml. API
      * teams should otherwise use the service name as it appears in the
      * protobuf.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    java_settings:
      *      service_class_names:
@@ -999,8 +1037,10 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * <code>map&lt;string, string&gt; service_class_names = 2;</code>
      */
     @java.lang.Override
-    public java.lang.String getServiceClassNamesOrDefault(
-        java.lang.String key, java.lang.String defaultValue) {
+    public /* nullable */ java.lang.String getServiceClassNamesOrDefault(
+        java.lang.String key,
+        /* nullable */
+        java.lang.String defaultValue) {
       if (key == null) {
         throw new NullPointerException("map key");
       }
@@ -1018,7 +1058,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * the language_settings.java.interface_names" field in gapic.yaml. API
      * teams should otherwise use the service name as it appears in the
      * protobuf.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    java_settings:
      *      service_class_names:
@@ -1042,6 +1084,7 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
     }
 
     public Builder clearServiceClassNames() {
+      bitField0_ = (bitField0_ & ~0x00000002);
       internalGetMutableServiceClassNames().getMutableMap().clear();
       return this;
     }
@@ -1055,7 +1098,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * the language_settings.java.interface_names" field in gapic.yaml. API
      * teams should otherwise use the service name as it appears in the
      * protobuf.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    java_settings:
      *      service_class_names:
@@ -1075,6 +1120,7 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
     /** Use alternate mutation accessors instead. */
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.String> getMutableServiceClassNames() {
+      bitField0_ |= 0x00000002;
       return internalGetMutableServiceClassNames().getMutableMap();
     }
     /**
@@ -1087,7 +1133,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * the language_settings.java.interface_names" field in gapic.yaml. API
      * teams should otherwise use the service name as it appears in the
      * protobuf.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    java_settings:
      *      service_class_names:
@@ -1104,8 +1152,8 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException("map value");
       }
-
       internalGetMutableServiceClassNames().getMutableMap().put(key, value);
+      bitField0_ |= 0x00000002;
       return this;
     }
     /**
@@ -1118,7 +1166,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * the language_settings.java.interface_names" field in gapic.yaml. API
      * teams should otherwise use the service name as it appears in the
      * protobuf.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    java_settings:
      *      service_class_names:
@@ -1131,6 +1181,7 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
     public Builder putAllServiceClassNames(
         java.util.Map<java.lang.String, java.lang.String> values) {
       internalGetMutableServiceClassNames().getMutableMap().putAll(values);
+      bitField0_ |= 0x00000002;
       return this;
     }
 
@@ -1152,7 +1203,7 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * @return Whether the common field is set.
      */
     public boolean hasCommon() {
-      return commonBuilder_ != null || common_ != null;
+      return ((bitField0_ & 0x00000004) != 0);
     }
     /**
      *
@@ -1189,11 +1240,11 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
           throw new NullPointerException();
         }
         common_ = value;
-        onChanged();
       } else {
         commonBuilder_.setMessage(value);
       }
-
+      bitField0_ |= 0x00000004;
+      onChanged();
       return this;
     }
     /**
@@ -1208,11 +1259,11 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
     public Builder setCommon(com.google.api.CommonLanguageSettings.Builder builderForValue) {
       if (commonBuilder_ == null) {
         common_ = builderForValue.build();
-        onChanged();
       } else {
         commonBuilder_.setMessage(builderForValue.build());
       }
-
+      bitField0_ |= 0x00000004;
+      onChanged();
       return this;
     }
     /**
@@ -1226,19 +1277,18 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder mergeCommon(com.google.api.CommonLanguageSettings value) {
       if (commonBuilder_ == null) {
-        if (common_ != null) {
-          common_ =
-              com.google.api.CommonLanguageSettings.newBuilder(common_)
-                  .mergeFrom(value)
-                  .buildPartial();
+        if (((bitField0_ & 0x00000004) != 0)
+            && common_ != null
+            && common_ != com.google.api.CommonLanguageSettings.getDefaultInstance()) {
+          getCommonBuilder().mergeFrom(value);
         } else {
           common_ = value;
         }
-        onChanged();
       } else {
         commonBuilder_.mergeFrom(value);
       }
-
+      bitField0_ |= 0x00000004;
+      onChanged();
       return this;
     }
     /**
@@ -1251,14 +1301,13 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.CommonLanguageSettings common = 3;</code>
      */
     public Builder clearCommon() {
-      if (commonBuilder_ == null) {
-        common_ = null;
-        onChanged();
-      } else {
-        common_ = null;
+      bitField0_ = (bitField0_ & ~0x00000004);
+      common_ = null;
+      if (commonBuilder_ != null) {
+        commonBuilder_.dispose();
         commonBuilder_ = null;
       }
-
+      onChanged();
       return this;
     }
     /**
@@ -1271,7 +1320,7 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.CommonLanguageSettings common = 3;</code>
      */
     public com.google.api.CommonLanguageSettings.Builder getCommonBuilder() {
-
+      bitField0_ |= 0x00000004;
       onChanged();
       return getCommonFieldBuilder().getBuilder();
     }

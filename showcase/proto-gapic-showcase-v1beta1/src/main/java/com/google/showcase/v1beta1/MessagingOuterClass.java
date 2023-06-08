@@ -141,140 +141,141 @@ public final class MessagingOuterClass {
       "grunning/operations.proto\032\033google/protob" +
       "uf/empty.proto\032 google/protobuf/field_ma" +
       "sk.proto\032\037google/protobuf/timestamp.prot" +
-      "o\032\036google/rpc/error_details.proto\"\341\001\n\004Ro" +
-      "om\022\014\n\004name\030\001 \001(\t\022\031\n\014display_name\030\002 \001(\tB\003" +
-      "\340A\002\022\023\n\013description\030\003 \001(\t\0224\n\013create_time\030" +
-      "\004 \001(\0132\032.google.protobuf.TimestampB\003\340A\003\0224" +
-      "\n\013update_time\030\005 \001(\0132\032.google.protobuf.Ti" +
-      "mestampB\003\340A\003:/\352A,\n\034showcase.googleapis.c" +
-      "om/Room\022\014rooms/{room}\"@\n\021CreateRoomReque" +
-      "st\022+\n\004room\030\001 \001(\0132\035.google.showcase.v1bet" +
-      "a1.Room\"D\n\016GetRoomRequest\0222\n\004name\030\001 \001(\tB" +
-      "$\372A\036\n\034showcase.googleapis.com/Room\340A\002\"q\n" +
-      "\021UpdateRoomRequest\022+\n\004room\030\001 \001(\0132\035.googl" +
-      "e.showcase.v1beta1.Room\022/\n\013update_mask\030\002" +
-      " \001(\0132\032.google.protobuf.FieldMask\"G\n\021Dele" +
-      "teRoomRequest\0222\n\004name\030\001 \001(\tB$\372A\036\n\034showca" +
-      "se.googleapis.com/Room\340A\002\"9\n\020ListRoomsRe" +
-      "quest\022\021\n\tpage_size\030\001 \001(\005\022\022\n\npage_token\030\002" +
-      " \001(\t\"Z\n\021ListRoomsResponse\022,\n\005rooms\030\001 \003(\013" +
-      "2\035.google.showcase.v1beta1.Room\022\027\n\017next_" +
-      "page_token\030\002 \001(\t\"\366\003\n\005Blurb\022\014\n\004name\030\001 \001(\t" +
-      "\0222\n\004user\030\002 \001(\tB$\372A\036\n\034showcase.googleapis" +
-      ".com/User\340A\002\022\016\n\004text\030\003 \001(\tH\000\022\017\n\005image\030\004 " +
-      "\001(\014H\000\0224\n\013create_time\030\005 \001(\0132\032.google.prot" +
-      "obuf.TimestampB\003\340A\003\0224\n\013update_time\030\006 \001(\013" +
-      "2\032.google.protobuf.TimestampB\003\340A\003\022\030\n\016leg" +
-      "acy_room_id\030\007 \001(\tH\001\022\030\n\016legacy_user_id\030\010 " +
-      "\001(\tH\001:\321\001\352A\315\001\n\035showcase.googleapis.com/Bl" +
-      "urb\0228users/{user}/profile/blurbs/legacy/" +
-      "{legacy_user}~{blurb}\022#users/{user}/prof" +
-      "ile/blurbs/{blurb}\022\033rooms/{room}/blurbs/" +
-      "{blurb}\0220rooms/{room}/blurbs/legacy/{leg" +
-      "acy_room}.{blurb}B\t\n\007contentB\013\n\tlegacy_i" +
-      "d\"z\n\022CreateBlurbRequest\0225\n\006parent\030\001 \001(\tB" +
-      "%\372A\037\022\035showcase.googleapis.com/Blurb\340A\002\022-" +
-      "\n\005blurb\030\002 \001(\0132\036.google.showcase.v1beta1." +
-      "Blurb\"F\n\017GetBlurbRequest\0223\n\004name\030\001 \001(\tB%" +
-      "\372A\037\n\035showcase.googleapis.com/Blurb\340A\002\"t\n" +
-      "\022UpdateBlurbRequest\022-\n\005blurb\030\001 \001(\0132\036.goo" +
-      "gle.showcase.v1beta1.Blurb\022/\n\013update_mas" +
-      "k\030\002 \001(\0132\032.google.protobuf.FieldMask\"I\n\022D" +
-      "eleteBlurbRequest\0223\n\004name\030\001 \001(\tB%\372A\037\n\035sh" +
-      "owcase.googleapis.com/Blurb\340A\002\"q\n\021ListBl" +
-      "urbsRequest\0225\n\006parent\030\001 \001(\tB%\372A\037\022\035showca" +
-      "se.googleapis.com/Blurb\340A\002\022\021\n\tpage_size\030" +
-      "\002 \001(\005\022\022\n\npage_token\030\003 \001(\t\"]\n\022ListBlurbsR" +
-      "esponse\022.\n\006blurbs\030\001 \003(\0132\036.google.showcas" +
-      "e.v1beta1.Blurb\022\027\n\017next_page_token\030\002 \001(\t" +
-      "\"\204\001\n\023SearchBlurbsRequest\022\022\n\005query\030\001 \001(\tB" +
-      "\003\340A\002\0222\n\006parent\030\002 \001(\tB\"\372A\037\022\035showcase.goog" +
-      "leapis.com/Blurb\022\021\n\tpage_size\030\003 \001(\005\022\022\n\np" +
-      "age_token\030\004 \001(\t\"A\n\024SearchBlurbsMetadata\022" +
-      ")\n\nretry_info\030\001 \001(\0132\025.google.rpc.RetryIn" +
-      "fo\"_\n\024SearchBlurbsResponse\022.\n\006blurbs\030\001 \003" +
-      "(\0132\036.google.showcase.v1beta1.Blurb\022\027\n\017ne" +
-      "xt_page_token\030\002 \001(\t\"\200\001\n\023StreamBlurbsRequ" +
-      "est\0223\n\004name\030\001 \001(\tB%\372A\037\022\035showcase.googlea" +
-      "pis.com/Blurb\340A\002\0224\n\013expire_time\030\002 \001(\0132\032." +
-      "google.protobuf.TimestampB\003\340A\002\"\321\001\n\024Strea" +
-      "mBlurbsResponse\022-\n\005blurb\030\001 \001(\0132\036.google." +
-      "showcase.v1beta1.Blurb\022D\n\006action\030\002 \001(\01624" +
-      ".google.showcase.v1beta1.StreamBlurbsRes" +
-      "ponse.Action\"D\n\006Action\022\026\n\022ACTION_UNSPECI" +
-      "FIED\020\000\022\n\n\006CREATE\020\001\022\n\n\006UPDATE\020\002\022\n\n\006DELETE" +
-      "\020\003\"#\n\022SendBlurbsResponse\022\r\n\005names\030\001 \003(\t\"" +
-      "\332\001\n\016ConnectRequest\022G\n\006config\030\001 \001(\01325.goo" +
-      "gle.showcase.v1beta1.ConnectRequest.Conn" +
-      "ectConfigH\000\022/\n\005blurb\030\002 \001(\0132\036.google.show" +
-      "case.v1beta1.BlurbH\000\032C\n\rConnectConfig\0222\n" +
-      "\006parent\030\001 \001(\tB\"\372A\037\022\035showcase.googleapis." +
-      "com/BlurbB\t\n\007request2\264\023\n\tMessaging\022\227\001\n\nC" +
-      "reateRoom\022*.google.showcase.v1beta1.Crea" +
-      "teRoomRequest\032\035.google.showcase.v1beta1." +
-      "Room\">\202\323\344\223\002\023\"\016/v1beta1/rooms:\001*\332A\"room.d" +
-      "isplay_name,room.description\022y\n\007GetRoom\022" +
-      "\'.google.showcase.v1beta1.GetRoomRequest" +
-      "\032\035.google.showcase.v1beta1.Room\"&\202\323\344\223\002\031\022" +
-      "\027/v1beta1/{name=rooms/*}\332A\004name\022\203\001\n\nUpda" +
-      "teRoom\022*.google.showcase.v1beta1.UpdateR" +
-      "oomRequest\032\035.google.showcase.v1beta1.Roo" +
-      "m\"*\202\323\344\223\002$2\034/v1beta1/{room.name=rooms/*}:" +
-      "\004room\022x\n\nDeleteRoom\022*.google.showcase.v1" +
-      "beta1.DeleteRoomRequest\032\026.google.protobu" +
-      "f.Empty\"&\202\323\344\223\002\031*\027/v1beta1/{name=rooms/*}" +
-      "\332A\004name\022z\n\tListRooms\022).google.showcase.v" +
-      "1beta1.ListRoomsRequest\032*.google.showcas" +
-      "e.v1beta1.ListRoomsResponse\"\026\202\323\344\223\002\020\022\016/v1" +
-      "beta1/rooms\022\366\001\n\013CreateBlurb\022+.google.sho" +
-      "wcase.v1beta1.CreateBlurbRequest\032\036.googl" +
-      "e.showcase.v1beta1.Blurb\"\231\001\202\323\344\223\002T\" /v1be" +
-      "ta1/{parent=rooms/*}/blurbs:\001*Z-\"(/v1bet" +
-      "a1/{parent=users/*/profile}/blurbs:\001*\332A\034" +
-      "parent,blurb.user,blurb.text\332A\035parent,bl" +
-      "urb.user,blurb.image\022\261\001\n\010GetBlurb\022(.goog" +
-      "le.showcase.v1beta1.GetBlurbRequest\032\036.go" +
-      "ogle.showcase.v1beta1.Blurb\"[\202\323\344\223\002N\022 /v1" +
-      "beta1/{name=rooms/*/blurbs/*}Z*\022(/v1beta" +
-      "1/{name=users/*/profile/blurbs/*}\332A\004name" +
-      "\022\312\001\n\013UpdateBlurb\022+.google.showcase.v1bet" +
-      "a1.UpdateBlurbRequest\032\036.google.showcase." +
-      "v1beta1.Blurb\"n\202\323\344\223\002h2&/v1beta1/{blurb.n" +
-      "ame=rooms/*/blurbs/*}:\005blurbZ72./v1beta1" +
-      "/{blurb.name=users/*/profile/blurbs/*}:\005" +
-      "blurb\022\257\001\n\013DeleteBlurb\022+.google.showcase." +
-      "v1beta1.DeleteBlurbRequest\032\026.google.prot" +
-      "obuf.Empty\"[\202\323\344\223\002N* /v1beta1/{name=rooms" +
-      "/*/blurbs/*}Z**(/v1beta1/{name=users/*/p" +
-      "rofile/blurbs/*}\332A\004name\022\304\001\n\nListBlurbs\022*" +
-      ".google.showcase.v1beta1.ListBlurbsReque" +
-      "st\032+.google.showcase.v1beta1.ListBlurbsR" +
-      "esponse\"]\202\323\344\223\002N\022 /v1beta1/{parent=rooms/" +
-      "*}/blurbsZ*\022(/v1beta1/{parent=users/*/pr" +
-      "ofile}/blurbs\332A\006parent\022\201\002\n\014SearchBlurbs\022" +
-      ",.google.showcase.v1beta1.SearchBlurbsRe" +
-      "quest\032\035.google.longrunning.Operation\"\243\001\202" +
-      "\323\344\223\002_\"\'/v1beta1/{parent=rooms/*}/blurbs:" +
-      "search:\001*Z1\"//v1beta1/{parent=users/*/pr" +
-      "ofile}/blurbs:search\312A,\n\024SearchBlurbsRes" +
-      "ponse\022\024SearchBlurbsMetadata\332A\014parent,que" +
-      "ry\022\323\001\n\014StreamBlurbs\022,.google.showcase.v1" +
-      "beta1.StreamBlurbsRequest\032-.google.showc" +
-      "ase.v1beta1.StreamBlurbsResponse\"d\202\323\344\223\002^" +
-      "\"%/v1beta1/{name=rooms/*}/blurbs:stream:" +
-      "\001*Z2\"-/v1beta1/{name=users/*/profile}/bl" +
-      "urbs:stream:\001*0\001\022\316\001\n\nSendBlurbs\022+.google" +
-      ".showcase.v1beta1.CreateBlurbRequest\032+.g" +
-      "oogle.showcase.v1beta1.SendBlurbsRespons" +
-      "e\"d\202\323\344\223\002^\"%/v1beta1/{parent=rooms/*}/blu" +
-      "rbs:send:\001*Z2\"-/v1beta1/{parent=users/*/" +
-      "profile}/blurbs:send:\001*(\001\022e\n\007Connect\022\'.g" +
-      "oogle.showcase.v1beta1.ConnectRequest\032-." +
-      "google.showcase.v1beta1.StreamBlurbsResp" +
-      "onse(\0010\001\032\021\312A\016localhost:7469Bq\n\033com.googl" +
-      "e.showcase.v1beta1P\001Z4github.com/googlea" +
-      "pis/gapic-showcase/server/genproto\352\002\031Goo" +
-      "gle::Showcase::V1beta1b\006proto3"
+      "o\032\036google/rpc/error_details.proto\"\344\001\n\004Ro" +
+      "om\022\014\n\004name\030\001 \001(\t\022\032\n\014display_name\030\002 \001(\tB\004" +
+      "\342A\001\002\022\023\n\013description\030\003 \001(\t\0225\n\013create_time" +
+      "\030\004 \001(\0132\032.google.protobuf.TimestampB\004\342A\001\003" +
+      "\0225\n\013update_time\030\005 \001(\0132\032.google.protobuf." +
+      "TimestampB\004\342A\001\003:/\352A,\n\034showcase.googleapi" +
+      "s.com/Room\022\014rooms/{room}\"@\n\021CreateRoomRe" +
+      "quest\022+\n\004room\030\001 \001(\0132\035.google.showcase.v1" +
+      "beta1.Room\"E\n\016GetRoomRequest\0223\n\004name\030\001 \001" +
+      "(\tB%\342A\001\002\372A\036\n\034showcase.googleapis.com/Roo" +
+      "m\"q\n\021UpdateRoomRequest\022+\n\004room\030\001 \001(\0132\035.g" +
+      "oogle.showcase.v1beta1.Room\022/\n\013update_ma" +
+      "sk\030\002 \001(\0132\032.google.protobuf.FieldMask\"H\n\021" +
+      "DeleteRoomRequest\0223\n\004name\030\001 \001(\tB%\342A\001\002\372A\036" +
+      "\n\034showcase.googleapis.com/Room\"9\n\020ListRo" +
+      "omsRequest\022\021\n\tpage_size\030\001 \001(\005\022\022\n\npage_to" +
+      "ken\030\002 \001(\t\"Z\n\021ListRoomsResponse\022,\n\005rooms\030" +
+      "\001 \003(\0132\035.google.showcase.v1beta1.Room\022\027\n\017" +
+      "next_page_token\030\002 \001(\t\"\371\003\n\005Blurb\022\014\n\004name\030" +
+      "\001 \001(\t\0223\n\004user\030\002 \001(\tB%\342A\001\002\372A\036\n\034showcase.g" +
+      "oogleapis.com/User\022\016\n\004text\030\003 \001(\tH\000\022\017\n\005im" +
+      "age\030\004 \001(\014H\000\0225\n\013create_time\030\005 \001(\0132\032.googl" +
+      "e.protobuf.TimestampB\004\342A\001\003\0225\n\013update_tim" +
+      "e\030\006 \001(\0132\032.google.protobuf.TimestampB\004\342A\001" +
+      "\003\022\030\n\016legacy_room_id\030\007 \001(\tH\001\022\030\n\016legacy_us" +
+      "er_id\030\010 \001(\tH\001:\321\001\352A\315\001\n\035showcase.googleapi" +
+      "s.com/Blurb\0228users/{user}/profile/blurbs" +
+      "/legacy/{legacy_user}~{blurb}\022#users/{us" +
+      "er}/profile/blurbs/{blurb}\022\033rooms/{room}" +
+      "/blurbs/{blurb}\0220rooms/{room}/blurbs/leg" +
+      "acy/{legacy_room}.{blurb}B\t\n\007contentB\013\n\t" +
+      "legacy_id\"{\n\022CreateBlurbRequest\0226\n\006paren" +
+      "t\030\001 \001(\tB&\342A\001\002\372A\037\022\035showcase.googleapis.co" +
+      "m/Blurb\022-\n\005blurb\030\002 \001(\0132\036.google.showcase" +
+      ".v1beta1.Blurb\"G\n\017GetBlurbRequest\0224\n\004nam" +
+      "e\030\001 \001(\tB&\342A\001\002\372A\037\n\035showcase.googleapis.co" +
+      "m/Blurb\"t\n\022UpdateBlurbRequest\022-\n\005blurb\030\001" +
+      " \001(\0132\036.google.showcase.v1beta1.Blurb\022/\n\013" +
+      "update_mask\030\002 \001(\0132\032.google.protobuf.Fiel" +
+      "dMask\"J\n\022DeleteBlurbRequest\0224\n\004name\030\001 \001(" +
+      "\tB&\342A\001\002\372A\037\n\035showcase.googleapis.com/Blur" +
+      "b\"r\n\021ListBlurbsRequest\0226\n\006parent\030\001 \001(\tB&" +
+      "\342A\001\002\372A\037\022\035showcase.googleapis.com/Blurb\022\021" +
+      "\n\tpage_size\030\002 \001(\005\022\022\n\npage_token\030\003 \001(\t\"]\n" +
+      "\022ListBlurbsResponse\022.\n\006blurbs\030\001 \003(\0132\036.go" +
+      "ogle.showcase.v1beta1.Blurb\022\027\n\017next_page" +
+      "_token\030\002 \001(\t\"\205\001\n\023SearchBlurbsRequest\022\023\n\005" +
+      "query\030\001 \001(\tB\004\342A\001\002\0222\n\006parent\030\002 \001(\tB\"\372A\037\022\035" +
+      "showcase.googleapis.com/Blurb\022\021\n\tpage_si" +
+      "ze\030\003 \001(\005\022\022\n\npage_token\030\004 \001(\t\"A\n\024SearchBl" +
+      "urbsMetadata\022)\n\nretry_info\030\001 \001(\0132\025.googl" +
+      "e.rpc.RetryInfo\"_\n\024SearchBlurbsResponse\022" +
+      ".\n\006blurbs\030\001 \003(\0132\036.google.showcase.v1beta" +
+      "1.Blurb\022\027\n\017next_page_token\030\002 \001(\t\"\202\001\n\023Str" +
+      "eamBlurbsRequest\0224\n\004name\030\001 \001(\tB&\342A\001\002\372A\037\022" +
+      "\035showcase.googleapis.com/Blurb\0225\n\013expire" +
+      "_time\030\002 \001(\0132\032.google.protobuf.TimestampB" +
+      "\004\342A\001\002\"\321\001\n\024StreamBlurbsResponse\022-\n\005blurb\030" +
+      "\001 \001(\0132\036.google.showcase.v1beta1.Blurb\022D\n" +
+      "\006action\030\002 \001(\01624.google.showcase.v1beta1." +
+      "StreamBlurbsResponse.Action\"D\n\006Action\022\026\n" +
+      "\022ACTION_UNSPECIFIED\020\000\022\n\n\006CREATE\020\001\022\n\n\006UPD" +
+      "ATE\020\002\022\n\n\006DELETE\020\003\"#\n\022SendBlurbsResponse\022" +
+      "\r\n\005names\030\001 \003(\t\"\332\001\n\016ConnectRequest\022G\n\006con" +
+      "fig\030\001 \001(\01325.google.showcase.v1beta1.Conn" +
+      "ectRequest.ConnectConfigH\000\022/\n\005blurb\030\002 \001(" +
+      "\0132\036.google.showcase.v1beta1.BlurbH\000\032C\n\rC" +
+      "onnectConfig\0222\n\006parent\030\001 \001(\tB\"\372A\037\022\035showc" +
+      "ase.googleapis.com/BlurbB\t\n\007request2\264\023\n\t" +
+      "Messaging\022\227\001\n\nCreateRoom\022*.google.showca" +
+      "se.v1beta1.CreateRoomRequest\032\035.google.sh" +
+      "owcase.v1beta1.Room\">\332A\"room.display_nam" +
+      "e,room.description\202\323\344\223\002\023\"\016/v1beta1/rooms" +
+      ":\001*\022y\n\007GetRoom\022\'.google.showcase.v1beta1" +
+      ".GetRoomRequest\032\035.google.showcase.v1beta" +
+      "1.Room\"&\332A\004name\202\323\344\223\002\031\022\027/v1beta1/{name=ro" +
+      "oms/*}\022\203\001\n\nUpdateRoom\022*.google.showcase." +
+      "v1beta1.UpdateRoomRequest\032\035.google.showc" +
+      "ase.v1beta1.Room\"*\202\323\344\223\002$2\034/v1beta1/{room" +
+      ".name=rooms/*}:\004room\022x\n\nDeleteRoom\022*.goo" +
+      "gle.showcase.v1beta1.DeleteRoomRequest\032\026" +
+      ".google.protobuf.Empty\"&\332A\004name\202\323\344\223\002\031*\027/" +
+      "v1beta1/{name=rooms/*}\022z\n\tListRooms\022).go" +
+      "ogle.showcase.v1beta1.ListRoomsRequest\032*" +
+      ".google.showcase.v1beta1.ListRoomsRespon" +
+      "se\"\026\202\323\344\223\002\020\022\016/v1beta1/rooms\022\366\001\n\013CreateBlu" +
+      "rb\022+.google.showcase.v1beta1.CreateBlurb" +
+      "Request\032\036.google.showcase.v1beta1.Blurb\"" +
+      "\231\001\332A\034parent,blurb.user,blurb.text\332A\035pare" +
+      "nt,blurb.user,blurb.image\202\323\344\223\002T\" /v1beta" +
+      "1/{parent=rooms/*}/blurbs:\001*Z-\"(/v1beta1" +
+      "/{parent=users/*/profile}/blurbs:\001*\022\261\001\n\010" +
+      "GetBlurb\022(.google.showcase.v1beta1.GetBl" +
+      "urbRequest\032\036.google.showcase.v1beta1.Blu" +
+      "rb\"[\332A\004name\202\323\344\223\002N\022 /v1beta1/{name=rooms/" +
+      "*/blurbs/*}Z*\022(/v1beta1/{name=users/*/pr" +
+      "ofile/blurbs/*}\022\312\001\n\013UpdateBlurb\022+.google" +
+      ".showcase.v1beta1.UpdateBlurbRequest\032\036.g" +
+      "oogle.showcase.v1beta1.Blurb\"n\202\323\344\223\002h2&/v" +
+      "1beta1/{blurb.name=rooms/*/blurbs/*}:\005bl" +
+      "urbZ72./v1beta1/{blurb.name=users/*/prof" +
+      "ile/blurbs/*}:\005blurb\022\257\001\n\013DeleteBlurb\022+.g" +
+      "oogle.showcase.v1beta1.DeleteBlurbReques" +
+      "t\032\026.google.protobuf.Empty\"[\332A\004name\202\323\344\223\002N" +
+      "* /v1beta1/{name=rooms/*/blurbs/*}Z**(/v" +
+      "1beta1/{name=users/*/profile/blurbs/*}\022\304" +
+      "\001\n\nListBlurbs\022*.google.showcase.v1beta1." +
+      "ListBlurbsRequest\032+.google.showcase.v1be" +
+      "ta1.ListBlurbsResponse\"]\332A\006parent\202\323\344\223\002N\022" +
+      " /v1beta1/{parent=rooms/*}/blurbsZ*\022(/v1" +
+      "beta1/{parent=users/*/profile}/blurbs\022\201\002" +
+      "\n\014SearchBlurbs\022,.google.showcase.v1beta1" +
+      ".SearchBlurbsRequest\032\035.google.longrunnin" +
+      "g.Operation\"\243\001\312A,\n\024SearchBlurbsResponse\022" +
+      "\024SearchBlurbsMetadata\332A\014parent,query\202\323\344\223" +
+      "\002_\"\'/v1beta1/{parent=rooms/*}/blurbs:sea" +
+      "rch:\001*Z1\"//v1beta1/{parent=users/*/profi" +
+      "le}/blurbs:search\022\323\001\n\014StreamBlurbs\022,.goo" +
+      "gle.showcase.v1beta1.StreamBlurbsRequest" +
+      "\032-.google.showcase.v1beta1.StreamBlurbsR" +
+      "esponse\"d\202\323\344\223\002^\"%/v1beta1/{name=rooms/*}" +
+      "/blurbs:stream:\001*Z2\"-/v1beta1/{name=user" +
+      "s/*/profile}/blurbs:stream:\001*0\001\022\316\001\n\nSend" +
+      "Blurbs\022+.google.showcase.v1beta1.CreateB" +
+      "lurbRequest\032+.google.showcase.v1beta1.Se" +
+      "ndBlurbsResponse\"d\202\323\344\223\002^\"%/v1beta1/{pare" +
+      "nt=rooms/*}/blurbs:send:\001*Z2\"-/v1beta1/{" +
+      "parent=users/*/profile}/blurbs:send:\001*(\001" +
+      "\022e\n\007Connect\022\'.google.showcase.v1beta1.Co" +
+      "nnectRequest\032-.google.showcase.v1beta1.S" +
+      "treamBlurbsResponse(\0010\001\032\021\312A\016localhost:74" +
+      "69Bq\n\033com.google.showcase.v1beta1P\001Z4git" +
+      "hub.com/googleapis/gapic-showcase/server" +
+      "/genproto\352\002\031Google::Showcase::V1beta1b\006p" +
+      "roto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,

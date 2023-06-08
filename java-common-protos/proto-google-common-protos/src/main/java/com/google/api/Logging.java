@@ -23,10 +23,12 @@ package com.google.api;
  *
  * <pre>
  * Logging configuration of the service.
+ *
  * The following example shows how to configure logs to be sent to the
  * producer and consumer projects. In the example, the `activity_history`
  * log is sent to both the producer and consumer projects, whereas the
  * `purchase_history` log is only sent to the producer project.
+ *
  *     monitored_resources:
  *     - type: library.googleapis.com/branch
  *       labels:
@@ -74,11 +76,6 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
     return new Logging();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.LoggingProto.internal_static_google_api_Logging_descriptor;
   }
@@ -101,7 +98,8 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The monitored resource type. The type must be defined in the
-     * [Service.monitored_resources][google.api.Service.monitored_resources] section.
+     * [Service.monitored_resources][google.api.Service.monitored_resources]
+     * section.
      * </pre>
      *
      * <code>string monitored_resource = 3;</code>
@@ -114,7 +112,8 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The monitored resource type. The type must be defined in the
-     * [Service.monitored_resources][google.api.Service.monitored_resources] section.
+     * [Service.monitored_resources][google.api.Service.monitored_resources]
+     * section.
      * </pre>
      *
      * <code>string monitored_resource = 3;</code>
@@ -128,9 +127,9 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Names of the logs to be sent to this destination. Each name must
-     * be defined in the [Service.logs][google.api.Service.logs] section. If the log name is
-     * not a domain scoped name, it will be automatically prefixed with
-     * the service name followed by "/".
+     * be defined in the [Service.logs][google.api.Service.logs] section. If the
+     * log name is not a domain scoped name, it will be automatically prefixed
+     * with the service name followed by "/".
      * </pre>
      *
      * <code>repeated string logs = 1;</code>
@@ -143,9 +142,9 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Names of the logs to be sent to this destination. Each name must
-     * be defined in the [Service.logs][google.api.Service.logs] section. If the log name is
-     * not a domain scoped name, it will be automatically prefixed with
-     * the service name followed by "/".
+     * be defined in the [Service.logs][google.api.Service.logs] section. If the
+     * log name is not a domain scoped name, it will be automatically prefixed
+     * with the service name followed by "/".
      * </pre>
      *
      * <code>repeated string logs = 1;</code>
@@ -158,9 +157,9 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Names of the logs to be sent to this destination. Each name must
-     * be defined in the [Service.logs][google.api.Service.logs] section. If the log name is
-     * not a domain scoped name, it will be automatically prefixed with
-     * the service name followed by "/".
+     * be defined in the [Service.logs][google.api.Service.logs] section. If the
+     * log name is not a domain scoped name, it will be automatically prefixed
+     * with the service name followed by "/".
      * </pre>
      *
      * <code>repeated string logs = 1;</code>
@@ -174,9 +173,9 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Names of the logs to be sent to this destination. Each name must
-     * be defined in the [Service.logs][google.api.Service.logs] section. If the log name is
-     * not a domain scoped name, it will be automatically prefixed with
-     * the service name followed by "/".
+     * be defined in the [Service.logs][google.api.Service.logs] section. If the
+     * log name is not a domain scoped name, it will be automatically prefixed
+     * with the service name followed by "/".
      * </pre>
      *
      * <code>repeated string logs = 1;</code>
@@ -208,18 +207,13 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
 
     private LoggingDestination() {
       monitoredResource_ = "";
-      logs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      logs_ = com.google.protobuf.LazyStringArrayList.emptyList();
     }
 
     @java.lang.Override
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
       return new LoggingDestination();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-      return this.unknownFields;
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -238,13 +232,16 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
     }
 
     public static final int MONITORED_RESOURCE_FIELD_NUMBER = 3;
-    private volatile java.lang.Object monitoredResource_;
+
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object monitoredResource_ = "";
     /**
      *
      *
      * <pre>
      * The monitored resource type. The type must be defined in the
-     * [Service.monitored_resources][google.api.Service.monitored_resources] section.
+     * [Service.monitored_resources][google.api.Service.monitored_resources]
+     * section.
      * </pre>
      *
      * <code>string monitored_resource = 3;</code>
@@ -268,7 +265,8 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The monitored resource type. The type must be defined in the
-     * [Service.monitored_resources][google.api.Service.monitored_resources] section.
+     * [Service.monitored_resources][google.api.Service.monitored_resources]
+     * section.
      * </pre>
      *
      * <code>string monitored_resource = 3;</code>
@@ -289,15 +287,18 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
     }
 
     public static final int LOGS_FIELD_NUMBER = 1;
-    private com.google.protobuf.LazyStringList logs_;
+
+    @SuppressWarnings("serial")
+    private com.google.protobuf.LazyStringArrayList logs_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
     /**
      *
      *
      * <pre>
      * Names of the logs to be sent to this destination. Each name must
-     * be defined in the [Service.logs][google.api.Service.logs] section. If the log name is
-     * not a domain scoped name, it will be automatically prefixed with
-     * the service name followed by "/".
+     * be defined in the [Service.logs][google.api.Service.logs] section. If the
+     * log name is not a domain scoped name, it will be automatically prefixed
+     * with the service name followed by "/".
      * </pre>
      *
      * <code>repeated string logs = 1;</code>
@@ -312,9 +313,9 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Names of the logs to be sent to this destination. Each name must
-     * be defined in the [Service.logs][google.api.Service.logs] section. If the log name is
-     * not a domain scoped name, it will be automatically prefixed with
-     * the service name followed by "/".
+     * be defined in the [Service.logs][google.api.Service.logs] section. If the
+     * log name is not a domain scoped name, it will be automatically prefixed
+     * with the service name followed by "/".
      * </pre>
      *
      * <code>repeated string logs = 1;</code>
@@ -329,9 +330,9 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Names of the logs to be sent to this destination. Each name must
-     * be defined in the [Service.logs][google.api.Service.logs] section. If the log name is
-     * not a domain scoped name, it will be automatically prefixed with
-     * the service name followed by "/".
+     * be defined in the [Service.logs][google.api.Service.logs] section. If the
+     * log name is not a domain scoped name, it will be automatically prefixed
+     * with the service name followed by "/".
      * </pre>
      *
      * <code>repeated string logs = 1;</code>
@@ -347,9 +348,9 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Names of the logs to be sent to this destination. Each name must
-     * be defined in the [Service.logs][google.api.Service.logs] section. If the log name is
-     * not a domain scoped name, it will be automatically prefixed with
-     * the service name followed by "/".
+     * be defined in the [Service.logs][google.api.Service.logs] section. If the
+     * log name is not a domain scoped name, it will be automatically prefixed
+     * with the service name followed by "/".
      * </pre>
      *
      * <code>repeated string logs = 1;</code>
@@ -577,10 +578,9 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
       @java.lang.Override
       public Builder clear() {
         super.clear();
+        bitField0_ = 0;
         monitoredResource_ = "";
-
-        logs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000001);
+        logs_ = com.google.protobuf.LazyStringArrayList.emptyList();
         return this;
       }
 
@@ -608,15 +608,22 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
       public com.google.api.Logging.LoggingDestination buildPartial() {
         com.google.api.Logging.LoggingDestination result =
             new com.google.api.Logging.LoggingDestination(this);
-        int from_bitField0_ = bitField0_;
-        result.monitoredResource_ = monitoredResource_;
-        if (((bitField0_ & 0x00000001) != 0)) {
-          logs_ = logs_.getUnmodifiableView();
-          bitField0_ = (bitField0_ & ~0x00000001);
+        if (bitField0_ != 0) {
+          buildPartial0(result);
         }
-        result.logs_ = logs_;
         onBuilt();
         return result;
+      }
+
+      private void buildPartial0(com.google.api.Logging.LoggingDestination result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.monitoredResource_ = monitoredResource_;
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          logs_.makeImmutable();
+          result.logs_ = logs_;
+        }
       }
 
       @java.lang.Override
@@ -668,12 +675,13 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
         if (other == com.google.api.Logging.LoggingDestination.getDefaultInstance()) return this;
         if (!other.getMonitoredResource().isEmpty()) {
           monitoredResource_ = other.monitoredResource_;
+          bitField0_ |= 0x00000001;
           onChanged();
         }
         if (!other.logs_.isEmpty()) {
           if (logs_.isEmpty()) {
             logs_ = other.logs_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ |= 0x00000002;
           } else {
             ensureLogsIsMutable();
             logs_.addAll(other.logs_);
@@ -716,7 +724,7 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
               case 26:
                 {
                   monitoredResource_ = input.readStringRequireUtf8();
-
+                  bitField0_ |= 0x00000001;
                   break;
                 } // case 26
               default:
@@ -744,7 +752,8 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * The monitored resource type. The type must be defined in the
-       * [Service.monitored_resources][google.api.Service.monitored_resources] section.
+       * [Service.monitored_resources][google.api.Service.monitored_resources]
+       * section.
        * </pre>
        *
        * <code>string monitored_resource = 3;</code>
@@ -767,7 +776,8 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * The monitored resource type. The type must be defined in the
-       * [Service.monitored_resources][google.api.Service.monitored_resources] section.
+       * [Service.monitored_resources][google.api.Service.monitored_resources]
+       * section.
        * </pre>
        *
        * <code>string monitored_resource = 3;</code>
@@ -790,7 +800,8 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * The monitored resource type. The type must be defined in the
-       * [Service.monitored_resources][google.api.Service.monitored_resources] section.
+       * [Service.monitored_resources][google.api.Service.monitored_resources]
+       * section.
        * </pre>
        *
        * <code>string monitored_resource = 3;</code>
@@ -802,8 +813,8 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
         if (value == null) {
           throw new NullPointerException();
         }
-
         monitoredResource_ = value;
+        bitField0_ |= 0x00000001;
         onChanged();
         return this;
       }
@@ -812,7 +823,8 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * The monitored resource type. The type must be defined in the
-       * [Service.monitored_resources][google.api.Service.monitored_resources] section.
+       * [Service.monitored_resources][google.api.Service.monitored_resources]
+       * section.
        * </pre>
        *
        * <code>string monitored_resource = 3;</code>
@@ -820,8 +832,8 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearMonitoredResource() {
-
         monitoredResource_ = getDefaultInstance().getMonitoredResource();
+        bitField0_ = (bitField0_ & ~0x00000001);
         onChanged();
         return this;
       }
@@ -830,7 +842,8 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * The monitored resource type. The type must be defined in the
-       * [Service.monitored_resources][google.api.Service.monitored_resources] section.
+       * [Service.monitored_resources][google.api.Service.monitored_resources]
+       * section.
        * </pre>
        *
        * <code>string monitored_resource = 3;</code>
@@ -843,29 +856,29 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
           throw new NullPointerException();
         }
         checkByteStringIsUtf8(value);
-
         monitoredResource_ = value;
+        bitField0_ |= 0x00000001;
         onChanged();
         return this;
       }
 
-      private com.google.protobuf.LazyStringList logs_ =
-          com.google.protobuf.LazyStringArrayList.EMPTY;
+      private com.google.protobuf.LazyStringArrayList logs_ =
+          com.google.protobuf.LazyStringArrayList.emptyList();
 
       private void ensureLogsIsMutable() {
-        if (!((bitField0_ & 0x00000001) != 0)) {
+        if (!logs_.isModifiable()) {
           logs_ = new com.google.protobuf.LazyStringArrayList(logs_);
-          bitField0_ |= 0x00000001;
         }
+        bitField0_ |= 0x00000002;
       }
       /**
        *
        *
        * <pre>
        * Names of the logs to be sent to this destination. Each name must
-       * be defined in the [Service.logs][google.api.Service.logs] section. If the log name is
-       * not a domain scoped name, it will be automatically prefixed with
-       * the service name followed by "/".
+       * be defined in the [Service.logs][google.api.Service.logs] section. If the
+       * log name is not a domain scoped name, it will be automatically prefixed
+       * with the service name followed by "/".
        * </pre>
        *
        * <code>repeated string logs = 1;</code>
@@ -873,16 +886,17 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
        * @return A list containing the logs.
        */
       public com.google.protobuf.ProtocolStringList getLogsList() {
-        return logs_.getUnmodifiableView();
+        logs_.makeImmutable();
+        return logs_;
       }
       /**
        *
        *
        * <pre>
        * Names of the logs to be sent to this destination. Each name must
-       * be defined in the [Service.logs][google.api.Service.logs] section. If the log name is
-       * not a domain scoped name, it will be automatically prefixed with
-       * the service name followed by "/".
+       * be defined in the [Service.logs][google.api.Service.logs] section. If the
+       * log name is not a domain scoped name, it will be automatically prefixed
+       * with the service name followed by "/".
        * </pre>
        *
        * <code>repeated string logs = 1;</code>
@@ -897,9 +911,9 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Names of the logs to be sent to this destination. Each name must
-       * be defined in the [Service.logs][google.api.Service.logs] section. If the log name is
-       * not a domain scoped name, it will be automatically prefixed with
-       * the service name followed by "/".
+       * be defined in the [Service.logs][google.api.Service.logs] section. If the
+       * log name is not a domain scoped name, it will be automatically prefixed
+       * with the service name followed by "/".
        * </pre>
        *
        * <code>repeated string logs = 1;</code>
@@ -915,9 +929,9 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Names of the logs to be sent to this destination. Each name must
-       * be defined in the [Service.logs][google.api.Service.logs] section. If the log name is
-       * not a domain scoped name, it will be automatically prefixed with
-       * the service name followed by "/".
+       * be defined in the [Service.logs][google.api.Service.logs] section. If the
+       * log name is not a domain scoped name, it will be automatically prefixed
+       * with the service name followed by "/".
        * </pre>
        *
        * <code>repeated string logs = 1;</code>
@@ -933,9 +947,9 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Names of the logs to be sent to this destination. Each name must
-       * be defined in the [Service.logs][google.api.Service.logs] section. If the log name is
-       * not a domain scoped name, it will be automatically prefixed with
-       * the service name followed by "/".
+       * be defined in the [Service.logs][google.api.Service.logs] section. If the
+       * log name is not a domain scoped name, it will be automatically prefixed
+       * with the service name followed by "/".
        * </pre>
        *
        * <code>repeated string logs = 1;</code>
@@ -950,6 +964,7 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
         }
         ensureLogsIsMutable();
         logs_.set(index, value);
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -958,9 +973,9 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Names of the logs to be sent to this destination. Each name must
-       * be defined in the [Service.logs][google.api.Service.logs] section. If the log name is
-       * not a domain scoped name, it will be automatically prefixed with
-       * the service name followed by "/".
+       * be defined in the [Service.logs][google.api.Service.logs] section. If the
+       * log name is not a domain scoped name, it will be automatically prefixed
+       * with the service name followed by "/".
        * </pre>
        *
        * <code>repeated string logs = 1;</code>
@@ -974,6 +989,7 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
         }
         ensureLogsIsMutable();
         logs_.add(value);
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -982,9 +998,9 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Names of the logs to be sent to this destination. Each name must
-       * be defined in the [Service.logs][google.api.Service.logs] section. If the log name is
-       * not a domain scoped name, it will be automatically prefixed with
-       * the service name followed by "/".
+       * be defined in the [Service.logs][google.api.Service.logs] section. If the
+       * log name is not a domain scoped name, it will be automatically prefixed
+       * with the service name followed by "/".
        * </pre>
        *
        * <code>repeated string logs = 1;</code>
@@ -995,6 +1011,7 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
       public Builder addAllLogs(java.lang.Iterable<java.lang.String> values) {
         ensureLogsIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(values, logs_);
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -1003,9 +1020,9 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Names of the logs to be sent to this destination. Each name must
-       * be defined in the [Service.logs][google.api.Service.logs] section. If the log name is
-       * not a domain scoped name, it will be automatically prefixed with
-       * the service name followed by "/".
+       * be defined in the [Service.logs][google.api.Service.logs] section. If the
+       * log name is not a domain scoped name, it will be automatically prefixed
+       * with the service name followed by "/".
        * </pre>
        *
        * <code>repeated string logs = 1;</code>
@@ -1013,8 +1030,9 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearLogs() {
-        logs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000001);
+        logs_ = com.google.protobuf.LazyStringArrayList.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        ;
         onChanged();
         return this;
       }
@@ -1023,9 +1041,9 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Names of the logs to be sent to this destination. Each name must
-       * be defined in the [Service.logs][google.api.Service.logs] section. If the log name is
-       * not a domain scoped name, it will be automatically prefixed with
-       * the service name followed by "/".
+       * be defined in the [Service.logs][google.api.Service.logs] section. If the
+       * log name is not a domain scoped name, it will be automatically prefixed
+       * with the service name followed by "/".
        * </pre>
        *
        * <code>repeated string logs = 1;</code>
@@ -1040,6 +1058,7 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
         checkByteStringIsUtf8(value);
         ensureLogsIsMutable();
         logs_.add(value);
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -1109,6 +1128,8 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int PRODUCER_DESTINATIONS_FIELD_NUMBER = 1;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.api.Logging.LoggingDestination> producerDestinations_;
   /**
    *
@@ -1194,6 +1215,8 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int CONSUMER_DESTINATIONS_FIELD_NUMBER = 2;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.api.Logging.LoggingDestination> consumerDestinations_;
   /**
    *
@@ -1455,10 +1478,12 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Logging configuration of the service.
+   *
    * The following example shows how to configure logs to be sent to the
    * producer and consumer projects. In the example, the `activity_history`
    * log is sent to both the producer and consumer projects, whereas the
    * `purchase_history` log is only sent to the producer project.
+   *
    *     monitored_resources:
    *     - type: library.googleapis.com/branch
    *       labels:
@@ -1511,6 +1536,7 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       if (producerDestinationsBuilder_ == null) {
         producerDestinations_ = java.util.Collections.emptyList();
       } else {
@@ -1550,7 +1576,15 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.Logging buildPartial() {
       com.google.api.Logging result = new com.google.api.Logging(this);
-      int from_bitField0_ = bitField0_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.api.Logging result) {
       if (producerDestinationsBuilder_ == null) {
         if (((bitField0_ & 0x00000001) != 0)) {
           producerDestinations_ = java.util.Collections.unmodifiableList(producerDestinations_);
@@ -1569,8 +1603,10 @@ public final class Logging extends com.google.protobuf.GeneratedMessageV3
       } else {
         result.consumerDestinations_ = consumerDestinationsBuilder_.build();
       }
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.api.Logging result) {
+      int from_bitField0_ = bitField0_;
     }
 
     @java.lang.Override

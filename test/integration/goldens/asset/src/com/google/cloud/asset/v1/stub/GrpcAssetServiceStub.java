@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ import com.google.api.gax.grpc.GrpcCallSettings;
 import com.google.api.gax.grpc.GrpcStubCallableFactory;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.OperationCallable;
+import com.google.api.gax.rpc.RequestParamsBuilder;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.cloud.asset.v1.AnalyzeIamPolicyLongrunningMetadata;
 import com.google.cloud.asset.v1.AnalyzeIamPolicyLongrunningRequest;
@@ -63,7 +64,6 @@ import com.google.cloud.asset.v1.SearchAllResourcesRequest;
 import com.google.cloud.asset.v1.SearchAllResourcesResponse;
 import com.google.cloud.asset.v1.UpdateFeedRequest;
 import com.google.cloud.asset.v1.UpdateSavedQueryRequest;
-import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.Operation;
 import com.google.longrunning.stub.GrpcOperationsStub;
 import com.google.protobuf.Empty;
@@ -370,9 +370,9 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
             .setMethodDescriptor(exportAssetsMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("parent", String.valueOf(request.getParent()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("parent", String.valueOf(request.getParent()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<ListAssetsRequest, ListAssetsResponse> listAssetsTransportSettings =
@@ -380,9 +380,9 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
             .setMethodDescriptor(listAssetsMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("parent", String.valueOf(request.getParent()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("parent", String.valueOf(request.getParent()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<BatchGetAssetsHistoryRequest, BatchGetAssetsHistoryResponse>
@@ -392,9 +392,9 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
                 .setMethodDescriptor(batchGetAssetsHistoryMethodDescriptor)
                 .setParamsExtractor(
                     request -> {
-                      ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                      params.put("parent", String.valueOf(request.getParent()));
-                      return params.build();
+                      RequestParamsBuilder builder = RequestParamsBuilder.create();
+                      builder.add("parent", String.valueOf(request.getParent()));
+                      return builder.build();
                     })
                 .build();
     GrpcCallSettings<CreateFeedRequest, Feed> createFeedTransportSettings =
@@ -402,9 +402,9 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
             .setMethodDescriptor(createFeedMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("parent", String.valueOf(request.getParent()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("parent", String.valueOf(request.getParent()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<GetFeedRequest, Feed> getFeedTransportSettings =
@@ -412,9 +412,9 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
             .setMethodDescriptor(getFeedMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<ListFeedsRequest, ListFeedsResponse> listFeedsTransportSettings =
@@ -422,9 +422,9 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
             .setMethodDescriptor(listFeedsMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("parent", String.valueOf(request.getParent()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("parent", String.valueOf(request.getParent()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<UpdateFeedRequest, Feed> updateFeedTransportSettings =
@@ -432,9 +432,9 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
             .setMethodDescriptor(updateFeedMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("feed.name", String.valueOf(request.getFeed().getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("feed.name", String.valueOf(request.getFeed().getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<DeleteFeedRequest, Empty> deleteFeedTransportSettings =
@@ -442,9 +442,9 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
             .setMethodDescriptor(deleteFeedMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<SearchAllResourcesRequest, SearchAllResourcesResponse>
@@ -453,9 +453,9 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
                 .setMethodDescriptor(searchAllResourcesMethodDescriptor)
                 .setParamsExtractor(
                     request -> {
-                      ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                      params.put("scope", String.valueOf(request.getScope()));
-                      return params.build();
+                      RequestParamsBuilder builder = RequestParamsBuilder.create();
+                      builder.add("scope", String.valueOf(request.getScope()));
+                      return builder.build();
                     })
                 .build();
     GrpcCallSettings<SearchAllIamPoliciesRequest, SearchAllIamPoliciesResponse>
@@ -464,9 +464,9 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
                 .setMethodDescriptor(searchAllIamPoliciesMethodDescriptor)
                 .setParamsExtractor(
                     request -> {
-                      ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                      params.put("scope", String.valueOf(request.getScope()));
-                      return params.build();
+                      RequestParamsBuilder builder = RequestParamsBuilder.create();
+                      builder.add("scope", String.valueOf(request.getScope()));
+                      return builder.build();
                     })
                 .build();
     GrpcCallSettings<AnalyzeIamPolicyRequest, AnalyzeIamPolicyResponse>
@@ -475,11 +475,11 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
                 .setMethodDescriptor(analyzeIamPolicyMethodDescriptor)
                 .setParamsExtractor(
                     request -> {
-                      ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                      params.put(
+                      RequestParamsBuilder builder = RequestParamsBuilder.create();
+                      builder.add(
                           "analysis_query.scope",
                           String.valueOf(request.getAnalysisQuery().getScope()));
-                      return params.build();
+                      return builder.build();
                     })
                 .build();
     GrpcCallSettings<AnalyzeIamPolicyLongrunningRequest, Operation>
@@ -488,11 +488,11 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
                 .setMethodDescriptor(analyzeIamPolicyLongrunningMethodDescriptor)
                 .setParamsExtractor(
                     request -> {
-                      ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                      params.put(
+                      RequestParamsBuilder builder = RequestParamsBuilder.create();
+                      builder.add(
                           "analysis_query.scope",
                           String.valueOf(request.getAnalysisQuery().getScope()));
-                      return params.build();
+                      return builder.build();
                     })
                 .build();
     GrpcCallSettings<AnalyzeMoveRequest, AnalyzeMoveResponse> analyzeMoveTransportSettings =
@@ -500,9 +500,9 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
             .setMethodDescriptor(analyzeMoveMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("resource", String.valueOf(request.getResource()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("resource", String.valueOf(request.getResource()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<QueryAssetsRequest, QueryAssetsResponse> queryAssetsTransportSettings =
@@ -510,9 +510,9 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
             .setMethodDescriptor(queryAssetsMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("parent", String.valueOf(request.getParent()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("parent", String.valueOf(request.getParent()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<CreateSavedQueryRequest, SavedQuery> createSavedQueryTransportSettings =
@@ -520,9 +520,9 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
             .setMethodDescriptor(createSavedQueryMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("parent", String.valueOf(request.getParent()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("parent", String.valueOf(request.getParent()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<GetSavedQueryRequest, SavedQuery> getSavedQueryTransportSettings =
@@ -530,9 +530,9 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
             .setMethodDescriptor(getSavedQueryMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<ListSavedQueriesRequest, ListSavedQueriesResponse>
@@ -541,9 +541,9 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
                 .setMethodDescriptor(listSavedQueriesMethodDescriptor)
                 .setParamsExtractor(
                     request -> {
-                      ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                      params.put("parent", String.valueOf(request.getParent()));
-                      return params.build();
+                      RequestParamsBuilder builder = RequestParamsBuilder.create();
+                      builder.add("parent", String.valueOf(request.getParent()));
+                      return builder.build();
                     })
                 .build();
     GrpcCallSettings<UpdateSavedQueryRequest, SavedQuery> updateSavedQueryTransportSettings =
@@ -551,9 +551,10 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
             .setMethodDescriptor(updateSavedQueryMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("saved_query.name", String.valueOf(request.getSavedQuery().getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add(
+                      "saved_query.name", String.valueOf(request.getSavedQuery().getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<DeleteSavedQueryRequest, Empty> deleteSavedQueryTransportSettings =
@@ -561,9 +562,9 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
             .setMethodDescriptor(deleteSavedQueryMethodDescriptor)
             .setParamsExtractor(
                 request -> {
-                  ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                  params.put("name", String.valueOf(request.getName()));
-                  return params.build();
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
                 })
             .build();
     GrpcCallSettings<BatchGetEffectiveIamPoliciesRequest, BatchGetEffectiveIamPoliciesResponse>
@@ -574,9 +575,9 @@ public class GrpcAssetServiceStub extends AssetServiceStub {
                 .setMethodDescriptor(batchGetEffectiveIamPoliciesMethodDescriptor)
                 .setParamsExtractor(
                     request -> {
-                      ImmutableMap.Builder<String, String> params = ImmutableMap.builder();
-                      params.put("scope", String.valueOf(request.getScope()));
-                      return params.build();
+                      RequestParamsBuilder builder = RequestParamsBuilder.create();
+                      builder.add("scope", String.valueOf(request.getScope()));
+                      return builder.build();
                     })
                 .build();
 

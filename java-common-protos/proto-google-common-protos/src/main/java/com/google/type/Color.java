@@ -29,27 +29,34 @@ package com.google.type;
  * can also be trivially provided to UIColor's `+colorWithRed:green:blue:alpha`
  * method in iOS; and, with just a little work, it can be easily formatted into
  * a CSS `rgba()` string in JavaScript.
+ *
  * This reference page doesn't carry information about the absolute color
  * space
  * that should be used to interpret the RGB value (e.g. sRGB, Adobe RGB,
  * DCI-P3, BT.2020, etc.). By default, applications should assume the sRGB color
  * space.
+ *
  * When color equality needs to be decided, implementations, unless
  * documented otherwise, treat two colors as equal if all their red,
  * green, blue, and alpha values each differ by at most 1e-5.
+ *
  * Example (Java):
+ *
  *      import com.google.type.Color;
+ *
  *      // ...
  *      public static java.awt.Color fromProto(Color protocolor) {
  *        float alpha = protocolor.hasAlpha()
  *            ? protocolor.getAlpha().getValue()
  *            : 1.0;
+ *
  *        return new java.awt.Color(
  *            protocolor.getRed(),
  *            protocolor.getGreen(),
  *            protocolor.getBlue(),
  *            alpha);
  *      }
+ *
  *      public static Color toProto(java.awt.Color color) {
  *        float red = (float) color.getRed();
  *        float green = (float) color.getGreen();
@@ -72,7 +79,9 @@ package com.google.type;
  *        return resultBuilder.build();
  *      }
  *      // ...
+ *
  * Example (iOS / Obj-C):
+ *
  *      // ...
  *      static UIColor* fromProto(Color* protocolor) {
  *         float red = [protocolor red];
@@ -85,6 +94,7 @@ package com.google.type;
  *         }
  *         return [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
  *      }
+ *
  *      static Color* toProto(UIColor* color) {
  *          CGFloat red, green, blue, alpha;
  *          if (![color getRed:&amp;red green:&amp;green blue:&amp;blue alpha:&amp;alpha]) {
@@ -101,8 +111,11 @@ package com.google.type;
  *          return result;
  *     }
  *     // ...
+ *
  *  Example (JavaScript):
+ *
  *     // ...
+ *
  *     var protoToCssColor = function(rgb_color) {
  *        var redFrac = rgb_color.red || 0.0;
  *        var greenFrac = rgb_color.green || 0.0;
@@ -110,13 +123,16 @@ package com.google.type;
  *        var red = Math.floor(redFrac * 255);
  *        var green = Math.floor(greenFrac * 255);
  *        var blue = Math.floor(blueFrac * 255);
+ *
  *        if (!('alpha' in rgb_color)) {
  *           return rgbToCssColor(red, green, blue);
  *        }
+ *
  *        var alphaFrac = rgb_color.alpha.value || 0.0;
  *        var rgbParams = [red, green, blue].join(',');
  *        return ['rgba(', rgbParams, ',', alphaFrac, ')'].join('');
  *     };
+ *
  *     var rgbToCssColor = function(red, green, blue) {
  *       var rgbNumber = new Number((red &lt;&lt; 16) | (green &lt;&lt; 8) | blue);
  *       var hexString = rgbNumber.toString(16);
@@ -128,6 +144,7 @@ package com.google.type;
  *       resultBuilder.push(hexString);
  *       return resultBuilder.join('');
  *     };
+ *
  *     // ...
  * </pre>
  *
@@ -151,11 +168,6 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
     return new Color();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.type.ColorProto.internal_static_google_type_Color_descriptor;
   }
@@ -169,7 +181,7 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int RED_FIELD_NUMBER = 1;
-  private float red_;
+  private float red_ = 0F;
   /**
    *
    *
@@ -187,7 +199,7 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int GREEN_FIELD_NUMBER = 2;
-  private float green_;
+  private float green_ = 0F;
   /**
    *
    *
@@ -205,7 +217,7 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int BLUE_FIELD_NUMBER = 3;
-  private float blue_;
+  private float blue_ = 0F;
   /**
    *
    *
@@ -230,7 +242,9 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * The fraction of this color that should be applied to the pixel. That is,
    * the final pixel color is defined by the equation:
+   *
    *   `pixel color = alpha * (this color) + (1.0 - alpha) * (background color)`
+   *
    * This means that a value of 1.0 corresponds to a solid color, whereas
    * a value of 0.0 corresponds to a completely transparent color. This
    * uses a wrapper message rather than a simple float scalar so that it is
@@ -253,7 +267,9 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * The fraction of this color that should be applied to the pixel. That is,
    * the final pixel color is defined by the equation:
+   *
    *   `pixel color = alpha * (this color) + (1.0 - alpha) * (background color)`
+   *
    * This means that a value of 1.0 corresponds to a solid color, whereas
    * a value of 0.0 corresponds to a completely transparent color. This
    * uses a wrapper message rather than a simple float scalar so that it is
@@ -276,7 +292,9 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * The fraction of this color that should be applied to the pixel. That is,
    * the final pixel color is defined by the equation:
+   *
    *   `pixel color = alpha * (this color) + (1.0 - alpha) * (background color)`
+   *
    * This means that a value of 1.0 corresponds to a solid color, whereas
    * a value of 0.0 corresponds to a completely transparent color. This
    * uses a wrapper message rather than a simple float scalar so that it is
@@ -289,7 +307,7 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.FloatValueOrBuilder getAlphaOrBuilder() {
-    return getAlpha();
+    return alpha_ == null ? com.google.protobuf.FloatValue.getDefaultInstance() : alpha_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -495,27 +513,34 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
    * can also be trivially provided to UIColor's `+colorWithRed:green:blue:alpha`
    * method in iOS; and, with just a little work, it can be easily formatted into
    * a CSS `rgba()` string in JavaScript.
+   *
    * This reference page doesn't carry information about the absolute color
    * space
    * that should be used to interpret the RGB value (e.g. sRGB, Adobe RGB,
    * DCI-P3, BT.2020, etc.). By default, applications should assume the sRGB color
    * space.
+   *
    * When color equality needs to be decided, implementations, unless
    * documented otherwise, treat two colors as equal if all their red,
    * green, blue, and alpha values each differ by at most 1e-5.
+   *
    * Example (Java):
+   *
    *      import com.google.type.Color;
+   *
    *      // ...
    *      public static java.awt.Color fromProto(Color protocolor) {
    *        float alpha = protocolor.hasAlpha()
    *            ? protocolor.getAlpha().getValue()
    *            : 1.0;
+   *
    *        return new java.awt.Color(
    *            protocolor.getRed(),
    *            protocolor.getGreen(),
    *            protocolor.getBlue(),
    *            alpha);
    *      }
+   *
    *      public static Color toProto(java.awt.Color color) {
    *        float red = (float) color.getRed();
    *        float green = (float) color.getGreen();
@@ -538,7 +563,9 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
    *        return resultBuilder.build();
    *      }
    *      // ...
+   *
    * Example (iOS / Obj-C):
+   *
    *      // ...
    *      static UIColor* fromProto(Color* protocolor) {
    *         float red = [protocolor red];
@@ -551,6 +578,7 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
    *         }
    *         return [UIColor colorWithRed:red green:green blue:blue alpha:alpha];
    *      }
+   *
    *      static Color* toProto(UIColor* color) {
    *          CGFloat red, green, blue, alpha;
    *          if (![color getRed:&amp;red green:&amp;green blue:&amp;blue alpha:&amp;alpha]) {
@@ -567,8 +595,11 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
    *          return result;
    *     }
    *     // ...
+   *
    *  Example (JavaScript):
+   *
    *     // ...
+   *
    *     var protoToCssColor = function(rgb_color) {
    *        var redFrac = rgb_color.red || 0.0;
    *        var greenFrac = rgb_color.green || 0.0;
@@ -576,13 +607,16 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
    *        var red = Math.floor(redFrac * 255);
    *        var green = Math.floor(greenFrac * 255);
    *        var blue = Math.floor(blueFrac * 255);
+   *
    *        if (!('alpha' in rgb_color)) {
    *           return rgbToCssColor(red, green, blue);
    *        }
+   *
    *        var alphaFrac = rgb_color.alpha.value || 0.0;
    *        var rgbParams = [red, green, blue].join(',');
    *        return ['rgba(', rgbParams, ',', alphaFrac, ')'].join('');
    *     };
+   *
    *     var rgbToCssColor = function(red, green, blue) {
    *       var rgbNumber = new Number((red &lt;&lt; 16) | (green &lt;&lt; 8) | blue);
    *       var hexString = rgbNumber.toString(16);
@@ -594,6 +628,7 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
    *       resultBuilder.push(hexString);
    *       return resultBuilder.join('');
    *     };
+   *
    *     // ...
    * </pre>
    *
@@ -625,16 +660,13 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       red_ = 0F;
-
       green_ = 0F;
-
       blue_ = 0F;
-
-      if (alphaBuilder_ == null) {
-        alpha_ = null;
-      } else {
-        alpha_ = null;
+      alpha_ = null;
+      if (alphaBuilder_ != null) {
+        alphaBuilder_.dispose();
         alphaBuilder_ = null;
       }
       return this;
@@ -662,16 +694,27 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.type.Color buildPartial() {
       com.google.type.Color result = new com.google.type.Color(this);
-      result.red_ = red_;
-      result.green_ = green_;
-      result.blue_ = blue_;
-      if (alphaBuilder_ == null) {
-        result.alpha_ = alpha_;
-      } else {
-        result.alpha_ = alphaBuilder_.build();
+      if (bitField0_ != 0) {
+        buildPartial0(result);
       }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.type.Color result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.red_ = red_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.green_ = green_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.blue_ = blue_;
+      }
+      if (((from_bitField0_ & 0x00000008) != 0)) {
+        result.alpha_ = alphaBuilder_ == null ? alpha_ : alphaBuilder_.build();
+      }
     }
 
     @java.lang.Override
@@ -760,25 +803,25 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
             case 13:
               {
                 red_ = input.readFloat();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 13
             case 21:
               {
                 green_ = input.readFloat();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 21
             case 29:
               {
                 blue_ = input.readFloat();
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 29
             case 34:
               {
                 input.readMessage(getAlphaFieldBuilder().getBuilder(), extensionRegistry);
-
+                bitField0_ |= 0x00000008;
                 break;
               } // case 34
             default:
@@ -797,6 +840,8 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
       } // finally
       return this;
     }
+
+    private int bitField0_;
 
     private float red_;
     /**
@@ -829,6 +874,7 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
     public Builder setRed(float value) {
 
       red_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -844,7 +890,7 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearRed() {
-
+      bitField0_ = (bitField0_ & ~0x00000001);
       red_ = 0F;
       onChanged();
       return this;
@@ -881,6 +927,7 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
     public Builder setGreen(float value) {
 
       green_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -896,7 +943,7 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearGreen() {
-
+      bitField0_ = (bitField0_ & ~0x00000002);
       green_ = 0F;
       onChanged();
       return this;
@@ -933,6 +980,7 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
     public Builder setBlue(float value) {
 
       blue_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -948,7 +996,7 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearBlue() {
-
+      bitField0_ = (bitField0_ & ~0x00000004);
       blue_ = 0F;
       onChanged();
       return this;
@@ -966,7 +1014,9 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The fraction of this color that should be applied to the pixel. That is,
      * the final pixel color is defined by the equation:
+     *
      *   `pixel color = alpha * (this color) + (1.0 - alpha) * (background color)`
+     *
      * This means that a value of 1.0 corresponds to a solid color, whereas
      * a value of 0.0 corresponds to a completely transparent color. This
      * uses a wrapper message rather than a simple float scalar so that it is
@@ -980,7 +1030,7 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
      * @return Whether the alpha field is set.
      */
     public boolean hasAlpha() {
-      return alphaBuilder_ != null || alpha_ != null;
+      return ((bitField0_ & 0x00000008) != 0);
     }
     /**
      *
@@ -988,7 +1038,9 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The fraction of this color that should be applied to the pixel. That is,
      * the final pixel color is defined by the equation:
+     *
      *   `pixel color = alpha * (this color) + (1.0 - alpha) * (background color)`
+     *
      * This means that a value of 1.0 corresponds to a solid color, whereas
      * a value of 0.0 corresponds to a completely transparent color. This
      * uses a wrapper message rather than a simple float scalar so that it is
@@ -1014,7 +1066,9 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The fraction of this color that should be applied to the pixel. That is,
      * the final pixel color is defined by the equation:
+     *
      *   `pixel color = alpha * (this color) + (1.0 - alpha) * (background color)`
+     *
      * This means that a value of 1.0 corresponds to a solid color, whereas
      * a value of 0.0 corresponds to a completely transparent color. This
      * uses a wrapper message rather than a simple float scalar so that it is
@@ -1031,11 +1085,11 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
           throw new NullPointerException();
         }
         alpha_ = value;
-        onChanged();
       } else {
         alphaBuilder_.setMessage(value);
       }
-
+      bitField0_ |= 0x00000008;
+      onChanged();
       return this;
     }
     /**
@@ -1044,7 +1098,9 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The fraction of this color that should be applied to the pixel. That is,
      * the final pixel color is defined by the equation:
+     *
      *   `pixel color = alpha * (this color) + (1.0 - alpha) * (background color)`
+     *
      * This means that a value of 1.0 corresponds to a solid color, whereas
      * a value of 0.0 corresponds to a completely transparent color. This
      * uses a wrapper message rather than a simple float scalar so that it is
@@ -1058,11 +1114,11 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
     public Builder setAlpha(com.google.protobuf.FloatValue.Builder builderForValue) {
       if (alphaBuilder_ == null) {
         alpha_ = builderForValue.build();
-        onChanged();
       } else {
         alphaBuilder_.setMessage(builderForValue.build());
       }
-
+      bitField0_ |= 0x00000008;
+      onChanged();
       return this;
     }
     /**
@@ -1071,7 +1127,9 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The fraction of this color that should be applied to the pixel. That is,
      * the final pixel color is defined by the equation:
+     *
      *   `pixel color = alpha * (this color) + (1.0 - alpha) * (background color)`
+     *
      * This means that a value of 1.0 corresponds to a solid color, whereas
      * a value of 0.0 corresponds to a completely transparent color. This
      * uses a wrapper message rather than a simple float scalar so that it is
@@ -1084,17 +1142,18 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder mergeAlpha(com.google.protobuf.FloatValue value) {
       if (alphaBuilder_ == null) {
-        if (alpha_ != null) {
-          alpha_ =
-              com.google.protobuf.FloatValue.newBuilder(alpha_).mergeFrom(value).buildPartial();
+        if (((bitField0_ & 0x00000008) != 0)
+            && alpha_ != null
+            && alpha_ != com.google.protobuf.FloatValue.getDefaultInstance()) {
+          getAlphaBuilder().mergeFrom(value);
         } else {
           alpha_ = value;
         }
-        onChanged();
       } else {
         alphaBuilder_.mergeFrom(value);
       }
-
+      bitField0_ |= 0x00000008;
+      onChanged();
       return this;
     }
     /**
@@ -1103,7 +1162,9 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The fraction of this color that should be applied to the pixel. That is,
      * the final pixel color is defined by the equation:
+     *
      *   `pixel color = alpha * (this color) + (1.0 - alpha) * (background color)`
+     *
      * This means that a value of 1.0 corresponds to a solid color, whereas
      * a value of 0.0 corresponds to a completely transparent color. This
      * uses a wrapper message rather than a simple float scalar so that it is
@@ -1115,14 +1176,13 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.FloatValue alpha = 4;</code>
      */
     public Builder clearAlpha() {
-      if (alphaBuilder_ == null) {
-        alpha_ = null;
-        onChanged();
-      } else {
-        alpha_ = null;
+      bitField0_ = (bitField0_ & ~0x00000008);
+      alpha_ = null;
+      if (alphaBuilder_ != null) {
+        alphaBuilder_.dispose();
         alphaBuilder_ = null;
       }
-
+      onChanged();
       return this;
     }
     /**
@@ -1131,7 +1191,9 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The fraction of this color that should be applied to the pixel. That is,
      * the final pixel color is defined by the equation:
+     *
      *   `pixel color = alpha * (this color) + (1.0 - alpha) * (background color)`
+     *
      * This means that a value of 1.0 corresponds to a solid color, whereas
      * a value of 0.0 corresponds to a completely transparent color. This
      * uses a wrapper message rather than a simple float scalar so that it is
@@ -1143,7 +1205,7 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.protobuf.FloatValue alpha = 4;</code>
      */
     public com.google.protobuf.FloatValue.Builder getAlphaBuilder() {
-
+      bitField0_ |= 0x00000008;
       onChanged();
       return getAlphaFieldBuilder().getBuilder();
     }
@@ -1153,7 +1215,9 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The fraction of this color that should be applied to the pixel. That is,
      * the final pixel color is defined by the equation:
+     *
      *   `pixel color = alpha * (this color) + (1.0 - alpha) * (background color)`
+     *
      * This means that a value of 1.0 corresponds to a solid color, whereas
      * a value of 0.0 corresponds to a completely transparent color. This
      * uses a wrapper message rather than a simple float scalar so that it is
@@ -1177,7 +1241,9 @@ public final class Color extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The fraction of this color that should be applied to the pixel. That is,
      * the final pixel color is defined by the equation:
+     *
      *   `pixel color = alpha * (this color) + (1.0 - alpha) * (background color)`
+     *
      * This means that a value of 1.0 corresponds to a solid color, whereas
      * a value of 0.0 corresponds to a completely transparent color. This
      * uses a wrapper message rather than a simple float scalar so that it is

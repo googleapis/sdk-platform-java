@@ -53,11 +53,6 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
     return new Policy();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.iam.v2.PolicyProto.internal_static_google_iam_v2_Policy_descriptor;
   }
@@ -82,17 +77,22 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int NAME_FIELD_NUMBER = 1;
-  private volatile java.lang.Object name_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object name_ = "";
   /**
    *
    *
    * <pre>
    * Immutable. The resource name of the `Policy`, which must be unique. Format:
    * `policies/{attachment_point}/denypolicies/{policy_id}`
+   *
+   *
    * The attachment point is identified by its URL-encoded full resource name,
    * which means that the forward-slash character, `/`, must be written as
    * `%2F`. For example,
    * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-deny-policy`.
+   *
    * For organizations and folders, use the numeric ID in the full resource
    * name. For projects, requests can use the alphanumeric or the numeric ID.
    * Responses always contain the numeric ID.
@@ -120,10 +120,13 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Immutable. The resource name of the `Policy`, which must be unique. Format:
    * `policies/{attachment_point}/denypolicies/{policy_id}`
+   *
+   *
    * The attachment point is identified by its URL-encoded full resource name,
    * which means that the forward-slash character, `/`, must be written as
    * `%2F`. For example,
    * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-deny-policy`.
+   *
    * For organizations and folders, use the numeric ID in the full resource
    * name. For projects, requests can use the alphanumeric or the numeric ID.
    * Responses always contain the numeric ID.
@@ -147,7 +150,9 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int UID_FIELD_NUMBER = 2;
-  private volatile java.lang.Object uid_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object uid_ = "";
   /**
    *
    *
@@ -198,7 +203,9 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int KIND_FIELD_NUMBER = 3;
-  private volatile java.lang.Object kind_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object kind_ = "";
   /**
    *
    *
@@ -247,7 +254,9 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int DISPLAY_NAME_FIELD_NUMBER = 4;
-  private volatile java.lang.Object displayName_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object displayName_ = "";
   /**
    *
    *
@@ -310,6 +319,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
             "");
   }
 
+  @SuppressWarnings("serial")
   private com.google.protobuf.MapField<java.lang.String, java.lang.String> annotations_;
 
   private com.google.protobuf.MapField<java.lang.String, java.lang.String>
@@ -371,8 +381,10 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
    * <code>map&lt;string, string&gt; annotations = 5;</code>
    */
   @java.lang.Override
-  public java.lang.String getAnnotationsOrDefault(
-      java.lang.String key, java.lang.String defaultValue) {
+  public /* nullable */ java.lang.String getAnnotationsOrDefault(
+      java.lang.String key,
+      /* nullable */
+      java.lang.String defaultValue) {
     if (key == null) {
       throw new NullPointerException("map key");
     }
@@ -402,7 +414,9 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int ETAG_FIELD_NUMBER = 6;
-  private volatile java.lang.Object etag_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object etag_ = "";
   /**
    *
    *
@@ -410,6 +424,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
    * An opaque tag that identifies the current version of the `Policy`. IAM uses
    * this value to help manage concurrent updates, so they do not cause one
    * update to be overwritten by another.
+   *
    * If this field is present in a [CreatePolicy][] request, the value is
    * ignored.
    * </pre>
@@ -437,6 +452,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
    * An opaque tag that identifies the current version of the `Policy`. IAM uses
    * this value to help manage concurrent updates, so they do not cause one
    * update to be overwritten by another.
+   *
    * If this field is present in a [CreatePolicy][] request, the value is
    * ignored.
    * </pre>
@@ -504,7 +520,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.TimestampOrBuilder getCreateTimeOrBuilder() {
-    return getCreateTime();
+    return createTime_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : createTime_;
   }
 
   public static final int UPDATE_TIME_FIELD_NUMBER = 8;
@@ -553,7 +569,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.TimestampOrBuilder getUpdateTimeOrBuilder() {
-    return getUpdateTime();
+    return updateTime_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : updateTime_;
   }
 
   public static final int DELETE_TIME_FIELD_NUMBER = 9;
@@ -602,10 +618,12 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.protobuf.TimestampOrBuilder getDeleteTimeOrBuilder() {
-    return getDeleteTime();
+    return deleteTime_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : deleteTime_;
   }
 
   public static final int RULES_FIELD_NUMBER = 10;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.iam.v2.PolicyRule> rules_;
   /**
    *
@@ -679,7 +697,9 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int MANAGING_AUTHORITY_FIELD_NUMBER = 11;
-  private volatile java.lang.Object managingAuthority_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object managingAuthority_ = "";
   /**
    *
    *
@@ -1056,33 +1076,26 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       name_ = "";
-
       uid_ = "";
-
       kind_ = "";
-
       displayName_ = "";
-
       internalGetMutableAnnotations().clear();
       etag_ = "";
-
-      if (createTimeBuilder_ == null) {
-        createTime_ = null;
-      } else {
-        createTime_ = null;
+      createTime_ = null;
+      if (createTimeBuilder_ != null) {
+        createTimeBuilder_.dispose();
         createTimeBuilder_ = null;
       }
-      if (updateTimeBuilder_ == null) {
-        updateTime_ = null;
-      } else {
-        updateTime_ = null;
+      updateTime_ = null;
+      if (updateTimeBuilder_ != null) {
+        updateTimeBuilder_.dispose();
         updateTimeBuilder_ = null;
       }
-      if (deleteTimeBuilder_ == null) {
-        deleteTime_ = null;
-      } else {
-        deleteTime_ = null;
+      deleteTime_ = null;
+      if (deleteTimeBuilder_ != null) {
+        deleteTimeBuilder_.dispose();
         deleteTimeBuilder_ = null;
       }
       if (rulesBuilder_ == null) {
@@ -1091,9 +1104,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
         rules_ = null;
         rulesBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000002);
+      bitField0_ = (bitField0_ & ~0x00000200);
       managingAuthority_ = "";
-
       return this;
     }
 
@@ -1119,41 +1131,59 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.iam.v2.Policy buildPartial() {
       com.google.iam.v2.Policy result = new com.google.iam.v2.Policy(this);
-      int from_bitField0_ = bitField0_;
-      result.name_ = name_;
-      result.uid_ = uid_;
-      result.kind_ = kind_;
-      result.displayName_ = displayName_;
-      result.annotations_ = internalGetAnnotations();
-      result.annotations_.makeImmutable();
-      result.etag_ = etag_;
-      if (createTimeBuilder_ == null) {
-        result.createTime_ = createTime_;
-      } else {
-        result.createTime_ = createTimeBuilder_.build();
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
       }
-      if (updateTimeBuilder_ == null) {
-        result.updateTime_ = updateTime_;
-      } else {
-        result.updateTime_ = updateTimeBuilder_.build();
-      }
-      if (deleteTimeBuilder_ == null) {
-        result.deleteTime_ = deleteTime_;
-      } else {
-        result.deleteTime_ = deleteTimeBuilder_.build();
-      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.iam.v2.Policy result) {
       if (rulesBuilder_ == null) {
-        if (((bitField0_ & 0x00000002) != 0)) {
+        if (((bitField0_ & 0x00000200) != 0)) {
           rules_ = java.util.Collections.unmodifiableList(rules_);
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ = (bitField0_ & ~0x00000200);
         }
         result.rules_ = rules_;
       } else {
         result.rules_ = rulesBuilder_.build();
       }
-      result.managingAuthority_ = managingAuthority_;
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.iam.v2.Policy result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.name_ = name_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.uid_ = uid_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.kind_ = kind_;
+      }
+      if (((from_bitField0_ & 0x00000008) != 0)) {
+        result.displayName_ = displayName_;
+      }
+      if (((from_bitField0_ & 0x00000010) != 0)) {
+        result.annotations_ = internalGetAnnotations();
+        result.annotations_.makeImmutable();
+      }
+      if (((from_bitField0_ & 0x00000020) != 0)) {
+        result.etag_ = etag_;
+      }
+      if (((from_bitField0_ & 0x00000040) != 0)) {
+        result.createTime_ = createTimeBuilder_ == null ? createTime_ : createTimeBuilder_.build();
+      }
+      if (((from_bitField0_ & 0x00000080) != 0)) {
+        result.updateTime_ = updateTimeBuilder_ == null ? updateTime_ : updateTimeBuilder_.build();
+      }
+      if (((from_bitField0_ & 0x00000100) != 0)) {
+        result.deleteTime_ = deleteTimeBuilder_ == null ? deleteTime_ : deleteTimeBuilder_.build();
+      }
+      if (((from_bitField0_ & 0x00000400) != 0)) {
+        result.managingAuthority_ = managingAuthority_;
+      }
     }
 
     @java.lang.Override
@@ -1203,23 +1233,29 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
       if (other == com.google.iam.v2.Policy.getDefaultInstance()) return this;
       if (!other.getName().isEmpty()) {
         name_ = other.name_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (!other.getUid().isEmpty()) {
         uid_ = other.uid_;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
       if (!other.getKind().isEmpty()) {
         kind_ = other.kind_;
+        bitField0_ |= 0x00000004;
         onChanged();
       }
       if (!other.getDisplayName().isEmpty()) {
         displayName_ = other.displayName_;
+        bitField0_ |= 0x00000008;
         onChanged();
       }
       internalGetMutableAnnotations().mergeFrom(other.internalGetAnnotations());
+      bitField0_ |= 0x00000010;
       if (!other.getEtag().isEmpty()) {
         etag_ = other.etag_;
+        bitField0_ |= 0x00000020;
         onChanged();
       }
       if (other.hasCreateTime()) {
@@ -1235,7 +1271,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
         if (!other.rules_.isEmpty()) {
           if (rules_.isEmpty()) {
             rules_ = other.rules_;
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ = (bitField0_ & ~0x00000200);
           } else {
             ensureRulesIsMutable();
             rules_.addAll(other.rules_);
@@ -1248,7 +1284,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
             rulesBuilder_.dispose();
             rulesBuilder_ = null;
             rules_ = other.rules_;
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ = (bitField0_ & ~0x00000200);
             rulesBuilder_ =
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
                     ? getRulesFieldBuilder()
@@ -1260,6 +1296,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
       }
       if (!other.getManagingAuthority().isEmpty()) {
         managingAuthority_ = other.managingAuthority_;
+        bitField0_ |= 0x00000400;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -1291,25 +1328,25 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
             case 10:
               {
                 name_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
               {
                 uid_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             case 26:
               {
                 kind_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 26
             case 34:
               {
                 displayName_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000008;
                 break;
               } // case 34
             case 42:
@@ -1321,30 +1358,31 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
                 internalGetMutableAnnotations()
                     .getMutableMap()
                     .put(annotations__.getKey(), annotations__.getValue());
+                bitField0_ |= 0x00000010;
                 break;
               } // case 42
             case 50:
               {
                 etag_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000020;
                 break;
               } // case 50
             case 58:
               {
                 input.readMessage(getCreateTimeFieldBuilder().getBuilder(), extensionRegistry);
-
+                bitField0_ |= 0x00000040;
                 break;
               } // case 58
             case 66:
               {
                 input.readMessage(getUpdateTimeFieldBuilder().getBuilder(), extensionRegistry);
-
+                bitField0_ |= 0x00000080;
                 break;
               } // case 66
             case 74:
               {
                 input.readMessage(getDeleteTimeFieldBuilder().getBuilder(), extensionRegistry);
-
+                bitField0_ |= 0x00000100;
                 break;
               } // case 74
             case 82:
@@ -1362,7 +1400,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
             case 90:
               {
                 managingAuthority_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000400;
                 break;
               } // case 90
             default:
@@ -1391,10 +1429,13 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Immutable. The resource name of the `Policy`, which must be unique. Format:
      * `policies/{attachment_point}/denypolicies/{policy_id}`
+     *
+     *
      * The attachment point is identified by its URL-encoded full resource name,
      * which means that the forward-slash character, `/`, must be written as
      * `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-deny-policy`.
+     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, requests can use the alphanumeric or the numeric ID.
      * Responses always contain the numeric ID.
@@ -1421,10 +1462,13 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Immutable. The resource name of the `Policy`, which must be unique. Format:
      * `policies/{attachment_point}/denypolicies/{policy_id}`
+     *
+     *
      * The attachment point is identified by its URL-encoded full resource name,
      * which means that the forward-slash character, `/`, must be written as
      * `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-deny-policy`.
+     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, requests can use the alphanumeric or the numeric ID.
      * Responses always contain the numeric ID.
@@ -1451,10 +1495,13 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Immutable. The resource name of the `Policy`, which must be unique. Format:
      * `policies/{attachment_point}/denypolicies/{policy_id}`
+     *
+     *
      * The attachment point is identified by its URL-encoded full resource name,
      * which means that the forward-slash character, `/`, must be written as
      * `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-deny-policy`.
+     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, requests can use the alphanumeric or the numeric ID.
      * Responses always contain the numeric ID.
@@ -1469,8 +1516,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       name_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -1480,10 +1527,13 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Immutable. The resource name of the `Policy`, which must be unique. Format:
      * `policies/{attachment_point}/denypolicies/{policy_id}`
+     *
+     *
      * The attachment point is identified by its URL-encoded full resource name,
      * which means that the forward-slash character, `/`, must be written as
      * `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-deny-policy`.
+     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, requests can use the alphanumeric or the numeric ID.
      * Responses always contain the numeric ID.
@@ -1494,8 +1544,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearName() {
-
       name_ = getDefaultInstance().getName();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -1505,10 +1555,13 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Immutable. The resource name of the `Policy`, which must be unique. Format:
      * `policies/{attachment_point}/denypolicies/{policy_id}`
+     *
+     *
      * The attachment point is identified by its URL-encoded full resource name,
      * which means that the forward-slash character, `/`, must be written as
      * `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-deny-policy`.
+     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, requests can use the alphanumeric or the numeric ID.
      * Responses always contain the numeric ID.
@@ -1524,8 +1577,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       name_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -1594,8 +1647,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       uid_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1612,8 +1665,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearUid() {
-
       uid_ = getDefaultInstance().getUid();
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -1635,8 +1688,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       uid_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1702,8 +1755,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       kind_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1719,8 +1772,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearKind() {
-
       kind_ = getDefaultInstance().getKind();
+      bitField0_ = (bitField0_ & ~0x00000004);
       onChanged();
       return this;
     }
@@ -1741,8 +1794,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       kind_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1811,8 +1864,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       displayName_ = value;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -1829,8 +1882,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDisplayName() {
-
       displayName_ = getDefaultInstance().getDisplayName();
+      bitField0_ = (bitField0_ & ~0x00000008);
       onChanged();
       return this;
     }
@@ -1852,8 +1905,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       displayName_ = value;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -1871,8 +1924,6 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
 
     private com.google.protobuf.MapField<java.lang.String, java.lang.String>
         internalGetMutableAnnotations() {
-      onChanged();
-      ;
       if (annotations_ == null) {
         annotations_ =
             com.google.protobuf.MapField.newMapField(AnnotationsDefaultEntryHolder.defaultEntry);
@@ -1880,6 +1931,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
       if (!annotations_.isMutable()) {
         annotations_ = annotations_.copy();
       }
+      bitField0_ |= 0x00000010;
+      onChanged();
       return annotations_;
     }
 
@@ -1934,8 +1987,10 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * <code>map&lt;string, string&gt; annotations = 5;</code>
      */
     @java.lang.Override
-    public java.lang.String getAnnotationsOrDefault(
-        java.lang.String key, java.lang.String defaultValue) {
+    public /* nullable */ java.lang.String getAnnotationsOrDefault(
+        java.lang.String key,
+        /* nullable */
+        java.lang.String defaultValue) {
       if (key == null) {
         throw new NullPointerException("map key");
       }
@@ -1965,6 +2020,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
     }
 
     public Builder clearAnnotations() {
+      bitField0_ = (bitField0_ & ~0x00000010);
       internalGetMutableAnnotations().getMutableMap().clear();
       return this;
     }
@@ -1988,6 +2044,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
     /** Use alternate mutation accessors instead. */
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.String> getMutableAnnotations() {
+      bitField0_ |= 0x00000010;
       return internalGetMutableAnnotations().getMutableMap();
     }
     /**
@@ -2007,8 +2064,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException("map value");
       }
-
       internalGetMutableAnnotations().getMutableMap().put(key, value);
+      bitField0_ |= 0x00000010;
       return this;
     }
     /**
@@ -2023,6 +2080,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder putAllAnnotations(java.util.Map<java.lang.String, java.lang.String> values) {
       internalGetMutableAnnotations().getMutableMap().putAll(values);
+      bitField0_ |= 0x00000010;
       return this;
     }
 
@@ -2034,6 +2092,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * An opaque tag that identifies the current version of the `Policy`. IAM uses
      * this value to help manage concurrent updates, so they do not cause one
      * update to be overwritten by another.
+     *
      * If this field is present in a [CreatePolicy][] request, the value is
      * ignored.
      * </pre>
@@ -2060,6 +2119,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * An opaque tag that identifies the current version of the `Policy`. IAM uses
      * this value to help manage concurrent updates, so they do not cause one
      * update to be overwritten by another.
+     *
      * If this field is present in a [CreatePolicy][] request, the value is
      * ignored.
      * </pre>
@@ -2086,6 +2146,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * An opaque tag that identifies the current version of the `Policy`. IAM uses
      * this value to help manage concurrent updates, so they do not cause one
      * update to be overwritten by another.
+     *
      * If this field is present in a [CreatePolicy][] request, the value is
      * ignored.
      * </pre>
@@ -2099,8 +2160,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       etag_ = value;
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }
@@ -2111,6 +2172,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * An opaque tag that identifies the current version of the `Policy`. IAM uses
      * this value to help manage concurrent updates, so they do not cause one
      * update to be overwritten by another.
+     *
      * If this field is present in a [CreatePolicy][] request, the value is
      * ignored.
      * </pre>
@@ -2120,8 +2182,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearEtag() {
-
       etag_ = getDefaultInstance().getEtag();
+      bitField0_ = (bitField0_ & ~0x00000020);
       onChanged();
       return this;
     }
@@ -2132,6 +2194,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * An opaque tag that identifies the current version of the `Policy`. IAM uses
      * this value to help manage concurrent updates, so they do not cause one
      * update to be overwritten by another.
+     *
      * If this field is present in a [CreatePolicy][] request, the value is
      * ignored.
      * </pre>
@@ -2146,8 +2209,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       etag_ = value;
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }
@@ -2172,7 +2235,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * @return Whether the createTime field is set.
      */
     public boolean hasCreateTime() {
-      return createTimeBuilder_ != null || createTime_ != null;
+      return ((bitField0_ & 0x00000040) != 0);
     }
     /**
      *
@@ -2213,11 +2276,11 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
           throw new NullPointerException();
         }
         createTime_ = value;
-        onChanged();
       } else {
         createTimeBuilder_.setMessage(value);
       }
-
+      bitField0_ |= 0x00000040;
+      onChanged();
       return this;
     }
     /**
@@ -2234,11 +2297,11 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
     public Builder setCreateTime(com.google.protobuf.Timestamp.Builder builderForValue) {
       if (createTimeBuilder_ == null) {
         createTime_ = builderForValue.build();
-        onChanged();
       } else {
         createTimeBuilder_.setMessage(builderForValue.build());
       }
-
+      bitField0_ |= 0x00000040;
+      onChanged();
       return this;
     }
     /**
@@ -2254,17 +2317,18 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder mergeCreateTime(com.google.protobuf.Timestamp value) {
       if (createTimeBuilder_ == null) {
-        if (createTime_ != null) {
-          createTime_ =
-              com.google.protobuf.Timestamp.newBuilder(createTime_).mergeFrom(value).buildPartial();
+        if (((bitField0_ & 0x00000040) != 0)
+            && createTime_ != null
+            && createTime_ != com.google.protobuf.Timestamp.getDefaultInstance()) {
+          getCreateTimeBuilder().mergeFrom(value);
         } else {
           createTime_ = value;
         }
-        onChanged();
       } else {
         createTimeBuilder_.mergeFrom(value);
       }
-
+      bitField0_ |= 0x00000040;
+      onChanged();
       return this;
     }
     /**
@@ -2279,14 +2343,13 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * </code>
      */
     public Builder clearCreateTime() {
-      if (createTimeBuilder_ == null) {
-        createTime_ = null;
-        onChanged();
-      } else {
-        createTime_ = null;
+      bitField0_ = (bitField0_ & ~0x00000040);
+      createTime_ = null;
+      if (createTimeBuilder_ != null) {
+        createTimeBuilder_.dispose();
         createTimeBuilder_ = null;
       }
-
+      onChanged();
       return this;
     }
     /**
@@ -2301,7 +2364,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * </code>
      */
     public com.google.protobuf.Timestamp.Builder getCreateTimeBuilder() {
-
+      bitField0_ |= 0x00000040;
       onChanged();
       return getCreateTimeFieldBuilder().getBuilder();
     }
@@ -2373,7 +2436,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * @return Whether the updateTime field is set.
      */
     public boolean hasUpdateTime() {
-      return updateTimeBuilder_ != null || updateTime_ != null;
+      return ((bitField0_ & 0x00000080) != 0);
     }
     /**
      *
@@ -2414,11 +2477,11 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
           throw new NullPointerException();
         }
         updateTime_ = value;
-        onChanged();
       } else {
         updateTimeBuilder_.setMessage(value);
       }
-
+      bitField0_ |= 0x00000080;
+      onChanged();
       return this;
     }
     /**
@@ -2435,11 +2498,11 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
     public Builder setUpdateTime(com.google.protobuf.Timestamp.Builder builderForValue) {
       if (updateTimeBuilder_ == null) {
         updateTime_ = builderForValue.build();
-        onChanged();
       } else {
         updateTimeBuilder_.setMessage(builderForValue.build());
       }
-
+      bitField0_ |= 0x00000080;
+      onChanged();
       return this;
     }
     /**
@@ -2455,17 +2518,18 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder mergeUpdateTime(com.google.protobuf.Timestamp value) {
       if (updateTimeBuilder_ == null) {
-        if (updateTime_ != null) {
-          updateTime_ =
-              com.google.protobuf.Timestamp.newBuilder(updateTime_).mergeFrom(value).buildPartial();
+        if (((bitField0_ & 0x00000080) != 0)
+            && updateTime_ != null
+            && updateTime_ != com.google.protobuf.Timestamp.getDefaultInstance()) {
+          getUpdateTimeBuilder().mergeFrom(value);
         } else {
           updateTime_ = value;
         }
-        onChanged();
       } else {
         updateTimeBuilder_.mergeFrom(value);
       }
-
+      bitField0_ |= 0x00000080;
+      onChanged();
       return this;
     }
     /**
@@ -2480,14 +2544,13 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * </code>
      */
     public Builder clearUpdateTime() {
-      if (updateTimeBuilder_ == null) {
-        updateTime_ = null;
-        onChanged();
-      } else {
-        updateTime_ = null;
+      bitField0_ = (bitField0_ & ~0x00000080);
+      updateTime_ = null;
+      if (updateTimeBuilder_ != null) {
+        updateTimeBuilder_.dispose();
         updateTimeBuilder_ = null;
       }
-
+      onChanged();
       return this;
     }
     /**
@@ -2502,7 +2565,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * </code>
      */
     public com.google.protobuf.Timestamp.Builder getUpdateTimeBuilder() {
-
+      bitField0_ |= 0x00000080;
       onChanged();
       return getUpdateTimeFieldBuilder().getBuilder();
     }
@@ -2574,7 +2637,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * @return Whether the deleteTime field is set.
      */
     public boolean hasDeleteTime() {
-      return deleteTimeBuilder_ != null || deleteTime_ != null;
+      return ((bitField0_ & 0x00000100) != 0);
     }
     /**
      *
@@ -2615,11 +2678,11 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
           throw new NullPointerException();
         }
         deleteTime_ = value;
-        onChanged();
       } else {
         deleteTimeBuilder_.setMessage(value);
       }
-
+      bitField0_ |= 0x00000100;
+      onChanged();
       return this;
     }
     /**
@@ -2636,11 +2699,11 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
     public Builder setDeleteTime(com.google.protobuf.Timestamp.Builder builderForValue) {
       if (deleteTimeBuilder_ == null) {
         deleteTime_ = builderForValue.build();
-        onChanged();
       } else {
         deleteTimeBuilder_.setMessage(builderForValue.build());
       }
-
+      bitField0_ |= 0x00000100;
+      onChanged();
       return this;
     }
     /**
@@ -2656,17 +2719,18 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder mergeDeleteTime(com.google.protobuf.Timestamp value) {
       if (deleteTimeBuilder_ == null) {
-        if (deleteTime_ != null) {
-          deleteTime_ =
-              com.google.protobuf.Timestamp.newBuilder(deleteTime_).mergeFrom(value).buildPartial();
+        if (((bitField0_ & 0x00000100) != 0)
+            && deleteTime_ != null
+            && deleteTime_ != com.google.protobuf.Timestamp.getDefaultInstance()) {
+          getDeleteTimeBuilder().mergeFrom(value);
         } else {
           deleteTime_ = value;
         }
-        onChanged();
       } else {
         deleteTimeBuilder_.mergeFrom(value);
       }
-
+      bitField0_ |= 0x00000100;
+      onChanged();
       return this;
     }
     /**
@@ -2681,14 +2745,13 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * </code>
      */
     public Builder clearDeleteTime() {
-      if (deleteTimeBuilder_ == null) {
-        deleteTime_ = null;
-        onChanged();
-      } else {
-        deleteTime_ = null;
+      bitField0_ = (bitField0_ & ~0x00000100);
+      deleteTime_ = null;
+      if (deleteTimeBuilder_ != null) {
+        deleteTimeBuilder_.dispose();
         deleteTimeBuilder_ = null;
       }
-
+      onChanged();
       return this;
     }
     /**
@@ -2703,7 +2766,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * </code>
      */
     public com.google.protobuf.Timestamp.Builder getDeleteTimeBuilder() {
-
+      bitField0_ |= 0x00000100;
       onChanged();
       return getDeleteTimeFieldBuilder().getBuilder();
     }
@@ -2758,9 +2821,9 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
     private java.util.List<com.google.iam.v2.PolicyRule> rules_ = java.util.Collections.emptyList();
 
     private void ensureRulesIsMutable() {
-      if (!((bitField0_ & 0x00000002) != 0)) {
+      if (!((bitField0_ & 0x00000200) != 0)) {
         rules_ = new java.util.ArrayList<com.google.iam.v2.PolicyRule>(rules_);
-        bitField0_ |= 0x00000002;
+        bitField0_ |= 0x00000200;
       }
     }
 
@@ -2983,7 +3046,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
     public Builder clearRules() {
       if (rulesBuilder_ == null) {
         rules_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000200);
         onChanged();
       } else {
         rulesBuilder_.clear();
@@ -3109,7 +3172,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
                 com.google.iam.v2.PolicyRule,
                 com.google.iam.v2.PolicyRule.Builder,
                 com.google.iam.v2.PolicyRuleOrBuilder>(
-                rules_, ((bitField0_ & 0x00000002) != 0), getParentForChildren(), isClean());
+                rules_, ((bitField0_ & 0x00000200) != 0), getParentForChildren(), isClean());
         rules_ = null;
       }
       return rulesBuilder_;
@@ -3179,8 +3242,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       managingAuthority_ = value;
+      bitField0_ |= 0x00000400;
       onChanged();
       return this;
     }
@@ -3197,8 +3260,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearManagingAuthority() {
-
       managingAuthority_ = getDefaultInstance().getManagingAuthority();
+      bitField0_ = (bitField0_ & ~0x00000400);
       onChanged();
       return this;
     }
@@ -3220,8 +3283,8 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       managingAuthority_ = value;
+      bitField0_ |= 0x00000400;
       onChanged();
       return this;
     }

@@ -38,21 +38,16 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   private DenyRule() {
-    deniedPrincipals_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-    exceptionPrincipals_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-    deniedPermissions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-    exceptionPermissions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    deniedPrincipals_ = com.google.protobuf.LazyStringArrayList.emptyList();
+    exceptionPrincipals_ = com.google.protobuf.LazyStringArrayList.emptyList();
+    deniedPermissions_ = com.google.protobuf.LazyStringArrayList.emptyList();
+    exceptionPermissions_ = com.google.protobuf.LazyStringArrayList.emptyList();
   }
 
   @java.lang.Override
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new DenyRule();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -68,39 +63,50 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int DENIED_PRINCIPALS_FIELD_NUMBER = 1;
-  private com.google.protobuf.LazyStringList deniedPrincipals_;
+
+  @SuppressWarnings("serial")
+  private com.google.protobuf.LazyStringArrayList deniedPrincipals_ =
+      com.google.protobuf.LazyStringArrayList.emptyList();
   /**
    *
    *
    * <pre>
    * The identities that are prevented from using one or more permissions on
    * Google Cloud resources. This field can contain the following values:
+   *
    * * `principalSet://goog/public:all`: A special identifier that represents
    *   any principal that is on the internet, even if they do not have a Google
    *   Account or are not logged in.
+   *
    * * `principal://goog/subject/{email_id}`: A specific Google Account.
    *   Includes Gmail, Cloud Identity, and Google Workspace user accounts. For
    *   example, `principal://goog/subject/alice&#64;example.com`.
+   *
    * * `deleted:principal://goog/subject/{email_id}?uid={uid}`: A specific
    *   Google Account that was deleted recently. For example,
    *   `deleted:principal://goog/subject/alice&#64;example.com?uid=1234567890`. If
    *   the Google Account is recovered, this identifier reverts to the standard
    *   identifier for a Google Account.
+   *
    * * `principalSet://goog/group/{group_id}`: A Google group. For example,
    *   `principalSet://goog/group/admins&#64;example.com`.
+   *
    * * `deleted:principalSet://goog/group/{group_id}?uid={uid}`: A Google group
    *   that was deleted recently. For example,
    *   `deleted:principalSet://goog/group/admins&#64;example.com?uid=1234567890`. If
    *   the Google group is restored, this identifier reverts to the standard
    *   identifier for a Google group.
+   *
    * * `principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}`:
    *   A Google Cloud service account. For example,
    *   `principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com`.
+   *
    * * `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}?uid={uid}`:
    *   A Google Cloud service account that was deleted recently. For example,
    *   `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com?uid=1234567890`.
    *   If the service account is undeleted, this identifier reverts to the
    *   standard identifier for a service account.
+   *
    * * `principalSet://goog/cloudIdentityCustomerId/{customer_id}`: All of the
    *   principals associated with the specified Google Workspace or Cloud
    *   Identity customer ID. For example,
@@ -120,32 +126,40 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * The identities that are prevented from using one or more permissions on
    * Google Cloud resources. This field can contain the following values:
+   *
    * * `principalSet://goog/public:all`: A special identifier that represents
    *   any principal that is on the internet, even if they do not have a Google
    *   Account or are not logged in.
+   *
    * * `principal://goog/subject/{email_id}`: A specific Google Account.
    *   Includes Gmail, Cloud Identity, and Google Workspace user accounts. For
    *   example, `principal://goog/subject/alice&#64;example.com`.
+   *
    * * `deleted:principal://goog/subject/{email_id}?uid={uid}`: A specific
    *   Google Account that was deleted recently. For example,
    *   `deleted:principal://goog/subject/alice&#64;example.com?uid=1234567890`. If
    *   the Google Account is recovered, this identifier reverts to the standard
    *   identifier for a Google Account.
+   *
    * * `principalSet://goog/group/{group_id}`: A Google group. For example,
    *   `principalSet://goog/group/admins&#64;example.com`.
+   *
    * * `deleted:principalSet://goog/group/{group_id}?uid={uid}`: A Google group
    *   that was deleted recently. For example,
    *   `deleted:principalSet://goog/group/admins&#64;example.com?uid=1234567890`. If
    *   the Google group is restored, this identifier reverts to the standard
    *   identifier for a Google group.
+   *
    * * `principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}`:
    *   A Google Cloud service account. For example,
    *   `principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com`.
+   *
    * * `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}?uid={uid}`:
    *   A Google Cloud service account that was deleted recently. For example,
    *   `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com?uid=1234567890`.
    *   If the service account is undeleted, this identifier reverts to the
    *   standard identifier for a service account.
+   *
    * * `principalSet://goog/cloudIdentityCustomerId/{customer_id}`: All of the
    *   principals associated with the specified Google Workspace or Cloud
    *   Identity customer ID. For example,
@@ -165,32 +179,40 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * The identities that are prevented from using one or more permissions on
    * Google Cloud resources. This field can contain the following values:
+   *
    * * `principalSet://goog/public:all`: A special identifier that represents
    *   any principal that is on the internet, even if they do not have a Google
    *   Account or are not logged in.
+   *
    * * `principal://goog/subject/{email_id}`: A specific Google Account.
    *   Includes Gmail, Cloud Identity, and Google Workspace user accounts. For
    *   example, `principal://goog/subject/alice&#64;example.com`.
+   *
    * * `deleted:principal://goog/subject/{email_id}?uid={uid}`: A specific
    *   Google Account that was deleted recently. For example,
    *   `deleted:principal://goog/subject/alice&#64;example.com?uid=1234567890`. If
    *   the Google Account is recovered, this identifier reverts to the standard
    *   identifier for a Google Account.
+   *
    * * `principalSet://goog/group/{group_id}`: A Google group. For example,
    *   `principalSet://goog/group/admins&#64;example.com`.
+   *
    * * `deleted:principalSet://goog/group/{group_id}?uid={uid}`: A Google group
    *   that was deleted recently. For example,
    *   `deleted:principalSet://goog/group/admins&#64;example.com?uid=1234567890`. If
    *   the Google group is restored, this identifier reverts to the standard
    *   identifier for a Google group.
+   *
    * * `principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}`:
    *   A Google Cloud service account. For example,
    *   `principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com`.
+   *
    * * `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}?uid={uid}`:
    *   A Google Cloud service account that was deleted recently. For example,
    *   `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com?uid=1234567890`.
    *   If the service account is undeleted, this identifier reverts to the
    *   standard identifier for a service account.
+   *
    * * `principalSet://goog/cloudIdentityCustomerId/{customer_id}`: All of the
    *   principals associated with the specified Google Workspace or Cloud
    *   Identity customer ID. For example,
@@ -211,32 +233,40 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * The identities that are prevented from using one or more permissions on
    * Google Cloud resources. This field can contain the following values:
+   *
    * * `principalSet://goog/public:all`: A special identifier that represents
    *   any principal that is on the internet, even if they do not have a Google
    *   Account or are not logged in.
+   *
    * * `principal://goog/subject/{email_id}`: A specific Google Account.
    *   Includes Gmail, Cloud Identity, and Google Workspace user accounts. For
    *   example, `principal://goog/subject/alice&#64;example.com`.
+   *
    * * `deleted:principal://goog/subject/{email_id}?uid={uid}`: A specific
    *   Google Account that was deleted recently. For example,
    *   `deleted:principal://goog/subject/alice&#64;example.com?uid=1234567890`. If
    *   the Google Account is recovered, this identifier reverts to the standard
    *   identifier for a Google Account.
+   *
    * * `principalSet://goog/group/{group_id}`: A Google group. For example,
    *   `principalSet://goog/group/admins&#64;example.com`.
+   *
    * * `deleted:principalSet://goog/group/{group_id}?uid={uid}`: A Google group
    *   that was deleted recently. For example,
    *   `deleted:principalSet://goog/group/admins&#64;example.com?uid=1234567890`. If
    *   the Google group is restored, this identifier reverts to the standard
    *   identifier for a Google group.
+   *
    * * `principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}`:
    *   A Google Cloud service account. For example,
    *   `principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com`.
+   *
    * * `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}?uid={uid}`:
    *   A Google Cloud service account that was deleted recently. For example,
    *   `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com?uid=1234567890`.
    *   If the service account is undeleted, this identifier reverts to the
    *   standard identifier for a service account.
+   *
    * * `principalSet://goog/cloudIdentityCustomerId/{customer_id}`: All of the
    *   principals associated with the specified Google Workspace or Cloud
    *   Identity customer ID. For example,
@@ -253,7 +283,10 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int EXCEPTION_PRINCIPALS_FIELD_NUMBER = 2;
-  private com.google.protobuf.LazyStringList exceptionPrincipals_;
+
+  @SuppressWarnings("serial")
+  private com.google.protobuf.LazyStringArrayList exceptionPrincipals_ =
+      com.google.protobuf.LazyStringArrayList.emptyList();
   /**
    *
    *
@@ -262,6 +295,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    * listed in the `denied_principals`. For example, you could add a Google
    * group to the `denied_principals`, then exclude specific users who belong to
    * that group.
+   *
    * This field can contain the same values as the `denied_principals` field,
    * excluding `principalSet://goog/public:all`, which represents all users on
    * the internet.
@@ -282,6 +316,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    * listed in the `denied_principals`. For example, you could add a Google
    * group to the `denied_principals`, then exclude specific users who belong to
    * that group.
+   *
    * This field can contain the same values as the `denied_principals` field,
    * excluding `principalSet://goog/public:all`, which represents all users on
    * the internet.
@@ -302,6 +337,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    * listed in the `denied_principals`. For example, you could add a Google
    * group to the `denied_principals`, then exclude specific users who belong to
    * that group.
+   *
    * This field can contain the same values as the `denied_principals` field,
    * excluding `principalSet://goog/public:all`, which represents all users on
    * the internet.
@@ -323,6 +359,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    * listed in the `denied_principals`. For example, you could add a Google
    * group to the `denied_principals`, then exclude specific users who belong to
    * that group.
+   *
    * This field can contain the same values as the `denied_principals` field,
    * excluding `principalSet://goog/public:all`, which represents all users on
    * the internet.
@@ -338,7 +375,10 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int DENIED_PERMISSIONS_FIELD_NUMBER = 3;
-  private com.google.protobuf.LazyStringList deniedPermissions_;
+
+  @SuppressWarnings("serial")
+  private com.google.protobuf.LazyStringArrayList deniedPermissions_ =
+      com.google.protobuf.LazyStringArrayList.emptyList();
   /**
    *
    *
@@ -411,7 +451,10 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int EXCEPTION_PERMISSIONS_FIELD_NUMBER = 4;
-  private com.google.protobuf.LazyStringList exceptionPermissions_;
+
+  @SuppressWarnings("serial")
+  private com.google.protobuf.LazyStringArrayList exceptionPermissions_ =
+      com.google.protobuf.LazyStringArrayList.emptyList();
   /**
    *
    *
@@ -420,6 +463,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    * permissions given by `denied_permissions`. If a permission appears in
    * `denied_permissions` _and_ in `exception_permissions` then it will _not_ be
    * denied.
+   *
    * The excluded permissions can be specified using the same syntax as
    * `denied_permissions`.
    * </pre>
@@ -439,6 +483,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    * permissions given by `denied_permissions`. If a permission appears in
    * `denied_permissions` _and_ in `exception_permissions` then it will _not_ be
    * denied.
+   *
    * The excluded permissions can be specified using the same syntax as
    * `denied_permissions`.
    * </pre>
@@ -458,6 +503,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    * permissions given by `denied_permissions`. If a permission appears in
    * `denied_permissions` _and_ in `exception_permissions` then it will _not_ be
    * denied.
+   *
    * The excluded permissions can be specified using the same syntax as
    * `denied_permissions`.
    * </pre>
@@ -478,6 +524,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    * permissions given by `denied_permissions`. If a permission appears in
    * `denied_permissions` _and_ in `exception_permissions` then it will _not_ be
    * denied.
+   *
    * The excluded permissions can be specified using the same syntax as
    * `denied_permissions`.
    * </pre>
@@ -500,8 +547,10 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    * The condition that determines whether this deny rule applies to a request.
    * If the condition expression evaluates to `true`, then the deny rule is
    * applied; otherwise, the deny rule is not applied.
+   *
    * Each deny rule is evaluated independently. If this deny rule does not apply
    * to a request, other deny rules might still apply.
+   *
    * The condition can use CEL functions that evaluate
    * [resource
    * tags](https://cloud.google.com/iam/help/conditions/resource-tags). Other
@@ -523,8 +572,10 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    * The condition that determines whether this deny rule applies to a request.
    * If the condition expression evaluates to `true`, then the deny rule is
    * applied; otherwise, the deny rule is not applied.
+   *
    * Each deny rule is evaluated independently. If this deny rule does not apply
    * to a request, other deny rules might still apply.
+   *
    * The condition can use CEL functions that evaluate
    * [resource
    * tags](https://cloud.google.com/iam/help/conditions/resource-tags). Other
@@ -546,8 +597,10 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    * The condition that determines whether this deny rule applies to a request.
    * If the condition expression evaluates to `true`, then the deny rule is
    * applied; otherwise, the deny rule is not applied.
+   *
    * Each deny rule is evaluated independently. If this deny rule does not apply
    * to a request, other deny rules might still apply.
+   *
    * The condition can use CEL functions that evaluate
    * [resource
    * tags](https://cloud.google.com/iam/help/conditions/resource-tags). Other
@@ -558,7 +611,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.type.ExprOrBuilder getDenialConditionOrBuilder() {
-    return getDenialCondition();
+    return denialCondition_ == null ? com.google.type.Expr.getDefaultInstance() : denialCondition_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -824,18 +877,14 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      deniedPrincipals_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000001);
-      exceptionPrincipals_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000002);
-      deniedPermissions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000004);
-      exceptionPermissions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000008);
-      if (denialConditionBuilder_ == null) {
-        denialCondition_ = null;
-      } else {
-        denialCondition_ = null;
+      bitField0_ = 0;
+      deniedPrincipals_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      exceptionPrincipals_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      deniedPermissions_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      exceptionPermissions_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      denialCondition_ = null;
+      if (denialConditionBuilder_ != null) {
+        denialConditionBuilder_.dispose();
         denialConditionBuilder_ = null;
       }
       return this;
@@ -863,34 +912,35 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.iam.v2.DenyRule buildPartial() {
       com.google.iam.v2.DenyRule result = new com.google.iam.v2.DenyRule(this);
-      int from_bitField0_ = bitField0_;
-      if (((bitField0_ & 0x00000001) != 0)) {
-        deniedPrincipals_ = deniedPrincipals_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000001);
-      }
-      result.deniedPrincipals_ = deniedPrincipals_;
-      if (((bitField0_ & 0x00000002) != 0)) {
-        exceptionPrincipals_ = exceptionPrincipals_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000002);
-      }
-      result.exceptionPrincipals_ = exceptionPrincipals_;
-      if (((bitField0_ & 0x00000004) != 0)) {
-        deniedPermissions_ = deniedPermissions_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000004);
-      }
-      result.deniedPermissions_ = deniedPermissions_;
-      if (((bitField0_ & 0x00000008) != 0)) {
-        exceptionPermissions_ = exceptionPermissions_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000008);
-      }
-      result.exceptionPermissions_ = exceptionPermissions_;
-      if (denialConditionBuilder_ == null) {
-        result.denialCondition_ = denialCondition_;
-      } else {
-        result.denialCondition_ = denialConditionBuilder_.build();
+      if (bitField0_ != 0) {
+        buildPartial0(result);
       }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.iam.v2.DenyRule result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        deniedPrincipals_.makeImmutable();
+        result.deniedPrincipals_ = deniedPrincipals_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        exceptionPrincipals_.makeImmutable();
+        result.exceptionPrincipals_ = exceptionPrincipals_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        deniedPermissions_.makeImmutable();
+        result.deniedPermissions_ = deniedPermissions_;
+      }
+      if (((from_bitField0_ & 0x00000008) != 0)) {
+        exceptionPermissions_.makeImmutable();
+        result.exceptionPermissions_ = exceptionPermissions_;
+      }
+      if (((from_bitField0_ & 0x00000010) != 0)) {
+        result.denialCondition_ =
+            denialConditionBuilder_ == null ? denialCondition_ : denialConditionBuilder_.build();
+      }
     }
 
     @java.lang.Override
@@ -941,7 +991,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       if (!other.deniedPrincipals_.isEmpty()) {
         if (deniedPrincipals_.isEmpty()) {
           deniedPrincipals_ = other.deniedPrincipals_;
-          bitField0_ = (bitField0_ & ~0x00000001);
+          bitField0_ |= 0x00000001;
         } else {
           ensureDeniedPrincipalsIsMutable();
           deniedPrincipals_.addAll(other.deniedPrincipals_);
@@ -951,7 +1001,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       if (!other.exceptionPrincipals_.isEmpty()) {
         if (exceptionPrincipals_.isEmpty()) {
           exceptionPrincipals_ = other.exceptionPrincipals_;
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ |= 0x00000002;
         } else {
           ensureExceptionPrincipalsIsMutable();
           exceptionPrincipals_.addAll(other.exceptionPrincipals_);
@@ -961,7 +1011,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       if (!other.deniedPermissions_.isEmpty()) {
         if (deniedPermissions_.isEmpty()) {
           deniedPermissions_ = other.deniedPermissions_;
-          bitField0_ = (bitField0_ & ~0x00000004);
+          bitField0_ |= 0x00000004;
         } else {
           ensureDeniedPermissionsIsMutable();
           deniedPermissions_.addAll(other.deniedPermissions_);
@@ -971,7 +1021,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       if (!other.exceptionPermissions_.isEmpty()) {
         if (exceptionPermissions_.isEmpty()) {
           exceptionPermissions_ = other.exceptionPermissions_;
-          bitField0_ = (bitField0_ & ~0x00000008);
+          bitField0_ |= 0x00000008;
         } else {
           ensureExceptionPermissionsIsMutable();
           exceptionPermissions_.addAll(other.exceptionPermissions_);
@@ -1038,7 +1088,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
             case 42:
               {
                 input.readMessage(getDenialConditionFieldBuilder().getBuilder(), extensionRegistry);
-
+                bitField0_ |= 0x00000010;
                 break;
               } // case 42
             default:
@@ -1060,14 +1110,14 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
 
     private int bitField0_;
 
-    private com.google.protobuf.LazyStringList deniedPrincipals_ =
-        com.google.protobuf.LazyStringArrayList.EMPTY;
+    private com.google.protobuf.LazyStringArrayList deniedPrincipals_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
 
     private void ensureDeniedPrincipalsIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
+      if (!deniedPrincipals_.isModifiable()) {
         deniedPrincipals_ = new com.google.protobuf.LazyStringArrayList(deniedPrincipals_);
-        bitField0_ |= 0x00000001;
       }
+      bitField0_ |= 0x00000001;
     }
     /**
      *
@@ -1075,32 +1125,40 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The identities that are prevented from using one or more permissions on
      * Google Cloud resources. This field can contain the following values:
+     *
      * * `principalSet://goog/public:all`: A special identifier that represents
      *   any principal that is on the internet, even if they do not have a Google
      *   Account or are not logged in.
+     *
      * * `principal://goog/subject/{email_id}`: A specific Google Account.
      *   Includes Gmail, Cloud Identity, and Google Workspace user accounts. For
      *   example, `principal://goog/subject/alice&#64;example.com`.
+     *
      * * `deleted:principal://goog/subject/{email_id}?uid={uid}`: A specific
      *   Google Account that was deleted recently. For example,
      *   `deleted:principal://goog/subject/alice&#64;example.com?uid=1234567890`. If
      *   the Google Account is recovered, this identifier reverts to the standard
      *   identifier for a Google Account.
+     *
      * * `principalSet://goog/group/{group_id}`: A Google group. For example,
      *   `principalSet://goog/group/admins&#64;example.com`.
+     *
      * * `deleted:principalSet://goog/group/{group_id}?uid={uid}`: A Google group
      *   that was deleted recently. For example,
      *   `deleted:principalSet://goog/group/admins&#64;example.com?uid=1234567890`. If
      *   the Google group is restored, this identifier reverts to the standard
      *   identifier for a Google group.
+     *
      * * `principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}`:
      *   A Google Cloud service account. For example,
      *   `principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com`.
+     *
      * * `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}?uid={uid}`:
      *   A Google Cloud service account that was deleted recently. For example,
      *   `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com?uid=1234567890`.
      *   If the service account is undeleted, this identifier reverts to the
      *   standard identifier for a service account.
+     *
      * * `principalSet://goog/cloudIdentityCustomerId/{customer_id}`: All of the
      *   principals associated with the specified Google Workspace or Cloud
      *   Identity customer ID. For example,
@@ -1112,7 +1170,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @return A list containing the deniedPrincipals.
      */
     public com.google.protobuf.ProtocolStringList getDeniedPrincipalsList() {
-      return deniedPrincipals_.getUnmodifiableView();
+      deniedPrincipals_.makeImmutable();
+      return deniedPrincipals_;
     }
     /**
      *
@@ -1120,32 +1179,40 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The identities that are prevented from using one or more permissions on
      * Google Cloud resources. This field can contain the following values:
+     *
      * * `principalSet://goog/public:all`: A special identifier that represents
      *   any principal that is on the internet, even if they do not have a Google
      *   Account or are not logged in.
+     *
      * * `principal://goog/subject/{email_id}`: A specific Google Account.
      *   Includes Gmail, Cloud Identity, and Google Workspace user accounts. For
      *   example, `principal://goog/subject/alice&#64;example.com`.
+     *
      * * `deleted:principal://goog/subject/{email_id}?uid={uid}`: A specific
      *   Google Account that was deleted recently. For example,
      *   `deleted:principal://goog/subject/alice&#64;example.com?uid=1234567890`. If
      *   the Google Account is recovered, this identifier reverts to the standard
      *   identifier for a Google Account.
+     *
      * * `principalSet://goog/group/{group_id}`: A Google group. For example,
      *   `principalSet://goog/group/admins&#64;example.com`.
+     *
      * * `deleted:principalSet://goog/group/{group_id}?uid={uid}`: A Google group
      *   that was deleted recently. For example,
      *   `deleted:principalSet://goog/group/admins&#64;example.com?uid=1234567890`. If
      *   the Google group is restored, this identifier reverts to the standard
      *   identifier for a Google group.
+     *
      * * `principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}`:
      *   A Google Cloud service account. For example,
      *   `principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com`.
+     *
      * * `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}?uid={uid}`:
      *   A Google Cloud service account that was deleted recently. For example,
      *   `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com?uid=1234567890`.
      *   If the service account is undeleted, this identifier reverts to the
      *   standard identifier for a service account.
+     *
      * * `principalSet://goog/cloudIdentityCustomerId/{customer_id}`: All of the
      *   principals associated with the specified Google Workspace or Cloud
      *   Identity customer ID. For example,
@@ -1165,32 +1232,40 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The identities that are prevented from using one or more permissions on
      * Google Cloud resources. This field can contain the following values:
+     *
      * * `principalSet://goog/public:all`: A special identifier that represents
      *   any principal that is on the internet, even if they do not have a Google
      *   Account or are not logged in.
+     *
      * * `principal://goog/subject/{email_id}`: A specific Google Account.
      *   Includes Gmail, Cloud Identity, and Google Workspace user accounts. For
      *   example, `principal://goog/subject/alice&#64;example.com`.
+     *
      * * `deleted:principal://goog/subject/{email_id}?uid={uid}`: A specific
      *   Google Account that was deleted recently. For example,
      *   `deleted:principal://goog/subject/alice&#64;example.com?uid=1234567890`. If
      *   the Google Account is recovered, this identifier reverts to the standard
      *   identifier for a Google Account.
+     *
      * * `principalSet://goog/group/{group_id}`: A Google group. For example,
      *   `principalSet://goog/group/admins&#64;example.com`.
+     *
      * * `deleted:principalSet://goog/group/{group_id}?uid={uid}`: A Google group
      *   that was deleted recently. For example,
      *   `deleted:principalSet://goog/group/admins&#64;example.com?uid=1234567890`. If
      *   the Google group is restored, this identifier reverts to the standard
      *   identifier for a Google group.
+     *
      * * `principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}`:
      *   A Google Cloud service account. For example,
      *   `principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com`.
+     *
      * * `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}?uid={uid}`:
      *   A Google Cloud service account that was deleted recently. For example,
      *   `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com?uid=1234567890`.
      *   If the service account is undeleted, this identifier reverts to the
      *   standard identifier for a service account.
+     *
      * * `principalSet://goog/cloudIdentityCustomerId/{customer_id}`: All of the
      *   principals associated with the specified Google Workspace or Cloud
      *   Identity customer ID. For example,
@@ -1211,32 +1286,40 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The identities that are prevented from using one or more permissions on
      * Google Cloud resources. This field can contain the following values:
+     *
      * * `principalSet://goog/public:all`: A special identifier that represents
      *   any principal that is on the internet, even if they do not have a Google
      *   Account or are not logged in.
+     *
      * * `principal://goog/subject/{email_id}`: A specific Google Account.
      *   Includes Gmail, Cloud Identity, and Google Workspace user accounts. For
      *   example, `principal://goog/subject/alice&#64;example.com`.
+     *
      * * `deleted:principal://goog/subject/{email_id}?uid={uid}`: A specific
      *   Google Account that was deleted recently. For example,
      *   `deleted:principal://goog/subject/alice&#64;example.com?uid=1234567890`. If
      *   the Google Account is recovered, this identifier reverts to the standard
      *   identifier for a Google Account.
+     *
      * * `principalSet://goog/group/{group_id}`: A Google group. For example,
      *   `principalSet://goog/group/admins&#64;example.com`.
+     *
      * * `deleted:principalSet://goog/group/{group_id}?uid={uid}`: A Google group
      *   that was deleted recently. For example,
      *   `deleted:principalSet://goog/group/admins&#64;example.com?uid=1234567890`. If
      *   the Google group is restored, this identifier reverts to the standard
      *   identifier for a Google group.
+     *
      * * `principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}`:
      *   A Google Cloud service account. For example,
      *   `principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com`.
+     *
      * * `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}?uid={uid}`:
      *   A Google Cloud service account that was deleted recently. For example,
      *   `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com?uid=1234567890`.
      *   If the service account is undeleted, this identifier reverts to the
      *   standard identifier for a service account.
+     *
      * * `principalSet://goog/cloudIdentityCustomerId/{customer_id}`: All of the
      *   principals associated with the specified Google Workspace or Cloud
      *   Identity customer ID. For example,
@@ -1257,32 +1340,40 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The identities that are prevented from using one or more permissions on
      * Google Cloud resources. This field can contain the following values:
+     *
      * * `principalSet://goog/public:all`: A special identifier that represents
      *   any principal that is on the internet, even if they do not have a Google
      *   Account or are not logged in.
+     *
      * * `principal://goog/subject/{email_id}`: A specific Google Account.
      *   Includes Gmail, Cloud Identity, and Google Workspace user accounts. For
      *   example, `principal://goog/subject/alice&#64;example.com`.
+     *
      * * `deleted:principal://goog/subject/{email_id}?uid={uid}`: A specific
      *   Google Account that was deleted recently. For example,
      *   `deleted:principal://goog/subject/alice&#64;example.com?uid=1234567890`. If
      *   the Google Account is recovered, this identifier reverts to the standard
      *   identifier for a Google Account.
+     *
      * * `principalSet://goog/group/{group_id}`: A Google group. For example,
      *   `principalSet://goog/group/admins&#64;example.com`.
+     *
      * * `deleted:principalSet://goog/group/{group_id}?uid={uid}`: A Google group
      *   that was deleted recently. For example,
      *   `deleted:principalSet://goog/group/admins&#64;example.com?uid=1234567890`. If
      *   the Google group is restored, this identifier reverts to the standard
      *   identifier for a Google group.
+     *
      * * `principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}`:
      *   A Google Cloud service account. For example,
      *   `principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com`.
+     *
      * * `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}?uid={uid}`:
      *   A Google Cloud service account that was deleted recently. For example,
      *   `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com?uid=1234567890`.
      *   If the service account is undeleted, this identifier reverts to the
      *   standard identifier for a service account.
+     *
      * * `principalSet://goog/cloudIdentityCustomerId/{customer_id}`: All of the
      *   principals associated with the specified Google Workspace or Cloud
      *   Identity customer ID. For example,
@@ -1301,6 +1392,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       }
       ensureDeniedPrincipalsIsMutable();
       deniedPrincipals_.set(index, value);
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -1310,32 +1402,40 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The identities that are prevented from using one or more permissions on
      * Google Cloud resources. This field can contain the following values:
+     *
      * * `principalSet://goog/public:all`: A special identifier that represents
      *   any principal that is on the internet, even if they do not have a Google
      *   Account or are not logged in.
+     *
      * * `principal://goog/subject/{email_id}`: A specific Google Account.
      *   Includes Gmail, Cloud Identity, and Google Workspace user accounts. For
      *   example, `principal://goog/subject/alice&#64;example.com`.
+     *
      * * `deleted:principal://goog/subject/{email_id}?uid={uid}`: A specific
      *   Google Account that was deleted recently. For example,
      *   `deleted:principal://goog/subject/alice&#64;example.com?uid=1234567890`. If
      *   the Google Account is recovered, this identifier reverts to the standard
      *   identifier for a Google Account.
+     *
      * * `principalSet://goog/group/{group_id}`: A Google group. For example,
      *   `principalSet://goog/group/admins&#64;example.com`.
+     *
      * * `deleted:principalSet://goog/group/{group_id}?uid={uid}`: A Google group
      *   that was deleted recently. For example,
      *   `deleted:principalSet://goog/group/admins&#64;example.com?uid=1234567890`. If
      *   the Google group is restored, this identifier reverts to the standard
      *   identifier for a Google group.
+     *
      * * `principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}`:
      *   A Google Cloud service account. For example,
      *   `principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com`.
+     *
      * * `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}?uid={uid}`:
      *   A Google Cloud service account that was deleted recently. For example,
      *   `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com?uid=1234567890`.
      *   If the service account is undeleted, this identifier reverts to the
      *   standard identifier for a service account.
+     *
      * * `principalSet://goog/cloudIdentityCustomerId/{customer_id}`: All of the
      *   principals associated with the specified Google Workspace or Cloud
      *   Identity customer ID. For example,
@@ -1353,6 +1453,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       }
       ensureDeniedPrincipalsIsMutable();
       deniedPrincipals_.add(value);
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -1362,32 +1463,40 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The identities that are prevented from using one or more permissions on
      * Google Cloud resources. This field can contain the following values:
+     *
      * * `principalSet://goog/public:all`: A special identifier that represents
      *   any principal that is on the internet, even if they do not have a Google
      *   Account or are not logged in.
+     *
      * * `principal://goog/subject/{email_id}`: A specific Google Account.
      *   Includes Gmail, Cloud Identity, and Google Workspace user accounts. For
      *   example, `principal://goog/subject/alice&#64;example.com`.
+     *
      * * `deleted:principal://goog/subject/{email_id}?uid={uid}`: A specific
      *   Google Account that was deleted recently. For example,
      *   `deleted:principal://goog/subject/alice&#64;example.com?uid=1234567890`. If
      *   the Google Account is recovered, this identifier reverts to the standard
      *   identifier for a Google Account.
+     *
      * * `principalSet://goog/group/{group_id}`: A Google group. For example,
      *   `principalSet://goog/group/admins&#64;example.com`.
+     *
      * * `deleted:principalSet://goog/group/{group_id}?uid={uid}`: A Google group
      *   that was deleted recently. For example,
      *   `deleted:principalSet://goog/group/admins&#64;example.com?uid=1234567890`. If
      *   the Google group is restored, this identifier reverts to the standard
      *   identifier for a Google group.
+     *
      * * `principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}`:
      *   A Google Cloud service account. For example,
      *   `principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com`.
+     *
      * * `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}?uid={uid}`:
      *   A Google Cloud service account that was deleted recently. For example,
      *   `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com?uid=1234567890`.
      *   If the service account is undeleted, this identifier reverts to the
      *   standard identifier for a service account.
+     *
      * * `principalSet://goog/cloudIdentityCustomerId/{customer_id}`: All of the
      *   principals associated with the specified Google Workspace or Cloud
      *   Identity customer ID. For example,
@@ -1402,6 +1511,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     public Builder addAllDeniedPrincipals(java.lang.Iterable<java.lang.String> values) {
       ensureDeniedPrincipalsIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(values, deniedPrincipals_);
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -1411,32 +1521,40 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The identities that are prevented from using one or more permissions on
      * Google Cloud resources. This field can contain the following values:
+     *
      * * `principalSet://goog/public:all`: A special identifier that represents
      *   any principal that is on the internet, even if they do not have a Google
      *   Account or are not logged in.
+     *
      * * `principal://goog/subject/{email_id}`: A specific Google Account.
      *   Includes Gmail, Cloud Identity, and Google Workspace user accounts. For
      *   example, `principal://goog/subject/alice&#64;example.com`.
+     *
      * * `deleted:principal://goog/subject/{email_id}?uid={uid}`: A specific
      *   Google Account that was deleted recently. For example,
      *   `deleted:principal://goog/subject/alice&#64;example.com?uid=1234567890`. If
      *   the Google Account is recovered, this identifier reverts to the standard
      *   identifier for a Google Account.
+     *
      * * `principalSet://goog/group/{group_id}`: A Google group. For example,
      *   `principalSet://goog/group/admins&#64;example.com`.
+     *
      * * `deleted:principalSet://goog/group/{group_id}?uid={uid}`: A Google group
      *   that was deleted recently. For example,
      *   `deleted:principalSet://goog/group/admins&#64;example.com?uid=1234567890`. If
      *   the Google group is restored, this identifier reverts to the standard
      *   identifier for a Google group.
+     *
      * * `principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}`:
      *   A Google Cloud service account. For example,
      *   `principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com`.
+     *
      * * `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}?uid={uid}`:
      *   A Google Cloud service account that was deleted recently. For example,
      *   `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com?uid=1234567890`.
      *   If the service account is undeleted, this identifier reverts to the
      *   standard identifier for a service account.
+     *
      * * `principalSet://goog/cloudIdentityCustomerId/{customer_id}`: All of the
      *   principals associated with the specified Google Workspace or Cloud
      *   Identity customer ID. For example,
@@ -1448,8 +1566,9 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDeniedPrincipals() {
-      deniedPrincipals_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      deniedPrincipals_ = com.google.protobuf.LazyStringArrayList.emptyList();
       bitField0_ = (bitField0_ & ~0x00000001);
+      ;
       onChanged();
       return this;
     }
@@ -1459,32 +1578,40 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The identities that are prevented from using one or more permissions on
      * Google Cloud resources. This field can contain the following values:
+     *
      * * `principalSet://goog/public:all`: A special identifier that represents
      *   any principal that is on the internet, even if they do not have a Google
      *   Account or are not logged in.
+     *
      * * `principal://goog/subject/{email_id}`: A specific Google Account.
      *   Includes Gmail, Cloud Identity, and Google Workspace user accounts. For
      *   example, `principal://goog/subject/alice&#64;example.com`.
+     *
      * * `deleted:principal://goog/subject/{email_id}?uid={uid}`: A specific
      *   Google Account that was deleted recently. For example,
      *   `deleted:principal://goog/subject/alice&#64;example.com?uid=1234567890`. If
      *   the Google Account is recovered, this identifier reverts to the standard
      *   identifier for a Google Account.
+     *
      * * `principalSet://goog/group/{group_id}`: A Google group. For example,
      *   `principalSet://goog/group/admins&#64;example.com`.
+     *
      * * `deleted:principalSet://goog/group/{group_id}?uid={uid}`: A Google group
      *   that was deleted recently. For example,
      *   `deleted:principalSet://goog/group/admins&#64;example.com?uid=1234567890`. If
      *   the Google group is restored, this identifier reverts to the standard
      *   identifier for a Google group.
+     *
      * * `principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}`:
      *   A Google Cloud service account. For example,
      *   `principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com`.
+     *
      * * `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/{service_account_id}?uid={uid}`:
      *   A Google Cloud service account that was deleted recently. For example,
      *   `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-account&#64;iam.gserviceaccount.com?uid=1234567890`.
      *   If the service account is undeleted, this identifier reverts to the
      *   standard identifier for a service account.
+     *
      * * `principalSet://goog/cloudIdentityCustomerId/{customer_id}`: All of the
      *   principals associated with the specified Google Workspace or Cloud
      *   Identity customer ID. For example,
@@ -1503,18 +1630,19 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       checkByteStringIsUtf8(value);
       ensureDeniedPrincipalsIsMutable();
       deniedPrincipals_.add(value);
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
 
-    private com.google.protobuf.LazyStringList exceptionPrincipals_ =
-        com.google.protobuf.LazyStringArrayList.EMPTY;
+    private com.google.protobuf.LazyStringArrayList exceptionPrincipals_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
 
     private void ensureExceptionPrincipalsIsMutable() {
-      if (!((bitField0_ & 0x00000002) != 0)) {
+      if (!exceptionPrincipals_.isModifiable()) {
         exceptionPrincipals_ = new com.google.protobuf.LazyStringArrayList(exceptionPrincipals_);
-        bitField0_ |= 0x00000002;
       }
+      bitField0_ |= 0x00000002;
     }
     /**
      *
@@ -1524,6 +1652,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * listed in the `denied_principals`. For example, you could add a Google
      * group to the `denied_principals`, then exclude specific users who belong to
      * that group.
+     *
      * This field can contain the same values as the `denied_principals` field,
      * excluding `principalSet://goog/public:all`, which represents all users on
      * the internet.
@@ -1534,7 +1663,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @return A list containing the exceptionPrincipals.
      */
     public com.google.protobuf.ProtocolStringList getExceptionPrincipalsList() {
-      return exceptionPrincipals_.getUnmodifiableView();
+      exceptionPrincipals_.makeImmutable();
+      return exceptionPrincipals_;
     }
     /**
      *
@@ -1544,6 +1674,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * listed in the `denied_principals`. For example, you could add a Google
      * group to the `denied_principals`, then exclude specific users who belong to
      * that group.
+     *
      * This field can contain the same values as the `denied_principals` field,
      * excluding `principalSet://goog/public:all`, which represents all users on
      * the internet.
@@ -1564,6 +1695,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * listed in the `denied_principals`. For example, you could add a Google
      * group to the `denied_principals`, then exclude specific users who belong to
      * that group.
+     *
      * This field can contain the same values as the `denied_principals` field,
      * excluding `principalSet://goog/public:all`, which represents all users on
      * the internet.
@@ -1585,6 +1717,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * listed in the `denied_principals`. For example, you could add a Google
      * group to the `denied_principals`, then exclude specific users who belong to
      * that group.
+     *
      * This field can contain the same values as the `denied_principals` field,
      * excluding `principalSet://goog/public:all`, which represents all users on
      * the internet.
@@ -1606,6 +1739,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * listed in the `denied_principals`. For example, you could add a Google
      * group to the `denied_principals`, then exclude specific users who belong to
      * that group.
+     *
      * This field can contain the same values as the `denied_principals` field,
      * excluding `principalSet://goog/public:all`, which represents all users on
      * the internet.
@@ -1623,6 +1757,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       }
       ensureExceptionPrincipalsIsMutable();
       exceptionPrincipals_.set(index, value);
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1634,6 +1769,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * listed in the `denied_principals`. For example, you could add a Google
      * group to the `denied_principals`, then exclude specific users who belong to
      * that group.
+     *
      * This field can contain the same values as the `denied_principals` field,
      * excluding `principalSet://goog/public:all`, which represents all users on
      * the internet.
@@ -1650,6 +1786,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       }
       ensureExceptionPrincipalsIsMutable();
       exceptionPrincipals_.add(value);
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1661,6 +1798,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * listed in the `denied_principals`. For example, you could add a Google
      * group to the `denied_principals`, then exclude specific users who belong to
      * that group.
+     *
      * This field can contain the same values as the `denied_principals` field,
      * excluding `principalSet://goog/public:all`, which represents all users on
      * the internet.
@@ -1674,6 +1812,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     public Builder addAllExceptionPrincipals(java.lang.Iterable<java.lang.String> values) {
       ensureExceptionPrincipalsIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(values, exceptionPrincipals_);
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1685,6 +1824,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * listed in the `denied_principals`. For example, you could add a Google
      * group to the `denied_principals`, then exclude specific users who belong to
      * that group.
+     *
      * This field can contain the same values as the `denied_principals` field,
      * excluding `principalSet://goog/public:all`, which represents all users on
      * the internet.
@@ -1695,8 +1835,9 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearExceptionPrincipals() {
-      exceptionPrincipals_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      exceptionPrincipals_ = com.google.protobuf.LazyStringArrayList.emptyList();
       bitField0_ = (bitField0_ & ~0x00000002);
+      ;
       onChanged();
       return this;
     }
@@ -1708,6 +1849,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * listed in the `denied_principals`. For example, you could add a Google
      * group to the `denied_principals`, then exclude specific users who belong to
      * that group.
+     *
      * This field can contain the same values as the `denied_principals` field,
      * excluding `principalSet://goog/public:all`, which represents all users on
      * the internet.
@@ -1725,18 +1867,19 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       checkByteStringIsUtf8(value);
       ensureExceptionPrincipalsIsMutable();
       exceptionPrincipals_.add(value);
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
 
-    private com.google.protobuf.LazyStringList deniedPermissions_ =
-        com.google.protobuf.LazyStringArrayList.EMPTY;
+    private com.google.protobuf.LazyStringArrayList deniedPermissions_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
 
     private void ensureDeniedPermissionsIsMutable() {
-      if (!((bitField0_ & 0x00000004) != 0)) {
+      if (!deniedPermissions_.isModifiable()) {
         deniedPermissions_ = new com.google.protobuf.LazyStringArrayList(deniedPermissions_);
-        bitField0_ |= 0x00000004;
       }
+      bitField0_ |= 0x00000004;
     }
     /**
      *
@@ -1753,7 +1896,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @return A list containing the deniedPermissions.
      */
     public com.google.protobuf.ProtocolStringList getDeniedPermissionsList() {
-      return deniedPermissions_.getUnmodifiableView();
+      deniedPermissions_.makeImmutable();
+      return deniedPermissions_;
     }
     /**
      *
@@ -1830,6 +1974,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       }
       ensureDeniedPermissionsIsMutable();
       deniedPermissions_.set(index, value);
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1854,6 +1999,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       }
       ensureDeniedPermissionsIsMutable();
       deniedPermissions_.add(value);
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1875,6 +2021,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     public Builder addAllDeniedPermissions(java.lang.Iterable<java.lang.String> values) {
       ensureDeniedPermissionsIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(values, deniedPermissions_);
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1893,8 +2040,9 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDeniedPermissions() {
-      deniedPermissions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      deniedPermissions_ = com.google.protobuf.LazyStringArrayList.emptyList();
       bitField0_ = (bitField0_ & ~0x00000004);
+      ;
       onChanged();
       return this;
     }
@@ -1920,18 +2068,19 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       checkByteStringIsUtf8(value);
       ensureDeniedPermissionsIsMutable();
       deniedPermissions_.add(value);
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
 
-    private com.google.protobuf.LazyStringList exceptionPermissions_ =
-        com.google.protobuf.LazyStringArrayList.EMPTY;
+    private com.google.protobuf.LazyStringArrayList exceptionPermissions_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
 
     private void ensureExceptionPermissionsIsMutable() {
-      if (!((bitField0_ & 0x00000008) != 0)) {
+      if (!exceptionPermissions_.isModifiable()) {
         exceptionPermissions_ = new com.google.protobuf.LazyStringArrayList(exceptionPermissions_);
-        bitField0_ |= 0x00000008;
       }
+      bitField0_ |= 0x00000008;
     }
     /**
      *
@@ -1941,6 +2090,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * permissions given by `denied_permissions`. If a permission appears in
      * `denied_permissions` _and_ in `exception_permissions` then it will _not_ be
      * denied.
+     *
      * The excluded permissions can be specified using the same syntax as
      * `denied_permissions`.
      * </pre>
@@ -1950,7 +2100,8 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @return A list containing the exceptionPermissions.
      */
     public com.google.protobuf.ProtocolStringList getExceptionPermissionsList() {
-      return exceptionPermissions_.getUnmodifiableView();
+      exceptionPermissions_.makeImmutable();
+      return exceptionPermissions_;
     }
     /**
      *
@@ -1960,6 +2111,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * permissions given by `denied_permissions`. If a permission appears in
      * `denied_permissions` _and_ in `exception_permissions` then it will _not_ be
      * denied.
+     *
      * The excluded permissions can be specified using the same syntax as
      * `denied_permissions`.
      * </pre>
@@ -1979,6 +2131,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * permissions given by `denied_permissions`. If a permission appears in
      * `denied_permissions` _and_ in `exception_permissions` then it will _not_ be
      * denied.
+     *
      * The excluded permissions can be specified using the same syntax as
      * `denied_permissions`.
      * </pre>
@@ -1999,6 +2152,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * permissions given by `denied_permissions`. If a permission appears in
      * `denied_permissions` _and_ in `exception_permissions` then it will _not_ be
      * denied.
+     *
      * The excluded permissions can be specified using the same syntax as
      * `denied_permissions`.
      * </pre>
@@ -2019,6 +2173,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * permissions given by `denied_permissions`. If a permission appears in
      * `denied_permissions` _and_ in `exception_permissions` then it will _not_ be
      * denied.
+     *
      * The excluded permissions can be specified using the same syntax as
      * `denied_permissions`.
      * </pre>
@@ -2035,6 +2190,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       }
       ensureExceptionPermissionsIsMutable();
       exceptionPermissions_.set(index, value);
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -2046,6 +2202,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * permissions given by `denied_permissions`. If a permission appears in
      * `denied_permissions` _and_ in `exception_permissions` then it will _not_ be
      * denied.
+     *
      * The excluded permissions can be specified using the same syntax as
      * `denied_permissions`.
      * </pre>
@@ -2061,6 +2218,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       }
       ensureExceptionPermissionsIsMutable();
       exceptionPermissions_.add(value);
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -2072,6 +2230,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * permissions given by `denied_permissions`. If a permission appears in
      * `denied_permissions` _and_ in `exception_permissions` then it will _not_ be
      * denied.
+     *
      * The excluded permissions can be specified using the same syntax as
      * `denied_permissions`.
      * </pre>
@@ -2084,6 +2243,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     public Builder addAllExceptionPermissions(java.lang.Iterable<java.lang.String> values) {
       ensureExceptionPermissionsIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(values, exceptionPermissions_);
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -2095,6 +2255,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * permissions given by `denied_permissions`. If a permission appears in
      * `denied_permissions` _and_ in `exception_permissions` then it will _not_ be
      * denied.
+     *
      * The excluded permissions can be specified using the same syntax as
      * `denied_permissions`.
      * </pre>
@@ -2104,8 +2265,9 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearExceptionPermissions() {
-      exceptionPermissions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      exceptionPermissions_ = com.google.protobuf.LazyStringArrayList.emptyList();
       bitField0_ = (bitField0_ & ~0x00000008);
+      ;
       onChanged();
       return this;
     }
@@ -2117,6 +2279,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * permissions given by `denied_permissions`. If a permission appears in
      * `denied_permissions` _and_ in `exception_permissions` then it will _not_ be
      * denied.
+     *
      * The excluded permissions can be specified using the same syntax as
      * `denied_permissions`.
      * </pre>
@@ -2133,6 +2296,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
       checkByteStringIsUtf8(value);
       ensureExceptionPermissionsIsMutable();
       exceptionPermissions_.add(value);
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -2148,8 +2312,10 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * The condition that determines whether this deny rule applies to a request.
      * If the condition expression evaluates to `true`, then the deny rule is
      * applied; otherwise, the deny rule is not applied.
+     *
      * Each deny rule is evaluated independently. If this deny rule does not apply
      * to a request, other deny rules might still apply.
+     *
      * The condition can use CEL functions that evaluate
      * [resource
      * tags](https://cloud.google.com/iam/help/conditions/resource-tags). Other
@@ -2161,7 +2327,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * @return Whether the denialCondition field is set.
      */
     public boolean hasDenialCondition() {
-      return denialConditionBuilder_ != null || denialCondition_ != null;
+      return ((bitField0_ & 0x00000010) != 0);
     }
     /**
      *
@@ -2170,8 +2336,10 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * The condition that determines whether this deny rule applies to a request.
      * If the condition expression evaluates to `true`, then the deny rule is
      * applied; otherwise, the deny rule is not applied.
+     *
      * Each deny rule is evaluated independently. If this deny rule does not apply
      * to a request, other deny rules might still apply.
+     *
      * The condition can use CEL functions that evaluate
      * [resource
      * tags](https://cloud.google.com/iam/help/conditions/resource-tags). Other
@@ -2198,8 +2366,10 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * The condition that determines whether this deny rule applies to a request.
      * If the condition expression evaluates to `true`, then the deny rule is
      * applied; otherwise, the deny rule is not applied.
+     *
      * Each deny rule is evaluated independently. If this deny rule does not apply
      * to a request, other deny rules might still apply.
+     *
      * The condition can use CEL functions that evaluate
      * [resource
      * tags](https://cloud.google.com/iam/help/conditions/resource-tags). Other
@@ -2214,11 +2384,11 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
           throw new NullPointerException();
         }
         denialCondition_ = value;
-        onChanged();
       } else {
         denialConditionBuilder_.setMessage(value);
       }
-
+      bitField0_ |= 0x00000010;
+      onChanged();
       return this;
     }
     /**
@@ -2228,8 +2398,10 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * The condition that determines whether this deny rule applies to a request.
      * If the condition expression evaluates to `true`, then the deny rule is
      * applied; otherwise, the deny rule is not applied.
+     *
      * Each deny rule is evaluated independently. If this deny rule does not apply
      * to a request, other deny rules might still apply.
+     *
      * The condition can use CEL functions that evaluate
      * [resource
      * tags](https://cloud.google.com/iam/help/conditions/resource-tags). Other
@@ -2241,11 +2413,11 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
     public Builder setDenialCondition(com.google.type.Expr.Builder builderForValue) {
       if (denialConditionBuilder_ == null) {
         denialCondition_ = builderForValue.build();
-        onChanged();
       } else {
         denialConditionBuilder_.setMessage(builderForValue.build());
       }
-
+      bitField0_ |= 0x00000010;
+      onChanged();
       return this;
     }
     /**
@@ -2255,8 +2427,10 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * The condition that determines whether this deny rule applies to a request.
      * If the condition expression evaluates to `true`, then the deny rule is
      * applied; otherwise, the deny rule is not applied.
+     *
      * Each deny rule is evaluated independently. If this deny rule does not apply
      * to a request, other deny rules might still apply.
+     *
      * The condition can use CEL functions that evaluate
      * [resource
      * tags](https://cloud.google.com/iam/help/conditions/resource-tags). Other
@@ -2267,17 +2441,18 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder mergeDenialCondition(com.google.type.Expr value) {
       if (denialConditionBuilder_ == null) {
-        if (denialCondition_ != null) {
-          denialCondition_ =
-              com.google.type.Expr.newBuilder(denialCondition_).mergeFrom(value).buildPartial();
+        if (((bitField0_ & 0x00000010) != 0)
+            && denialCondition_ != null
+            && denialCondition_ != com.google.type.Expr.getDefaultInstance()) {
+          getDenialConditionBuilder().mergeFrom(value);
         } else {
           denialCondition_ = value;
         }
-        onChanged();
       } else {
         denialConditionBuilder_.mergeFrom(value);
       }
-
+      bitField0_ |= 0x00000010;
+      onChanged();
       return this;
     }
     /**
@@ -2287,8 +2462,10 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * The condition that determines whether this deny rule applies to a request.
      * If the condition expression evaluates to `true`, then the deny rule is
      * applied; otherwise, the deny rule is not applied.
+     *
      * Each deny rule is evaluated independently. If this deny rule does not apply
      * to a request, other deny rules might still apply.
+     *
      * The condition can use CEL functions that evaluate
      * [resource
      * tags](https://cloud.google.com/iam/help/conditions/resource-tags). Other
@@ -2298,14 +2475,13 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.Expr denial_condition = 5;</code>
      */
     public Builder clearDenialCondition() {
-      if (denialConditionBuilder_ == null) {
-        denialCondition_ = null;
-        onChanged();
-      } else {
-        denialCondition_ = null;
+      bitField0_ = (bitField0_ & ~0x00000010);
+      denialCondition_ = null;
+      if (denialConditionBuilder_ != null) {
+        denialConditionBuilder_.dispose();
         denialConditionBuilder_ = null;
       }
-
+      onChanged();
       return this;
     }
     /**
@@ -2315,8 +2491,10 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * The condition that determines whether this deny rule applies to a request.
      * If the condition expression evaluates to `true`, then the deny rule is
      * applied; otherwise, the deny rule is not applied.
+     *
      * Each deny rule is evaluated independently. If this deny rule does not apply
      * to a request, other deny rules might still apply.
+     *
      * The condition can use CEL functions that evaluate
      * [resource
      * tags](https://cloud.google.com/iam/help/conditions/resource-tags). Other
@@ -2326,7 +2504,7 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.Expr denial_condition = 5;</code>
      */
     public com.google.type.Expr.Builder getDenialConditionBuilder() {
-
+      bitField0_ |= 0x00000010;
       onChanged();
       return getDenialConditionFieldBuilder().getBuilder();
     }
@@ -2337,8 +2515,10 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * The condition that determines whether this deny rule applies to a request.
      * If the condition expression evaluates to `true`, then the deny rule is
      * applied; otherwise, the deny rule is not applied.
+     *
      * Each deny rule is evaluated independently. If this deny rule does not apply
      * to a request, other deny rules might still apply.
+     *
      * The condition can use CEL functions that evaluate
      * [resource
      * tags](https://cloud.google.com/iam/help/conditions/resource-tags). Other
@@ -2363,8 +2543,10 @@ public final class DenyRule extends com.google.protobuf.GeneratedMessageV3
      * The condition that determines whether this deny rule applies to a request.
      * If the condition expression evaluates to `true`, then the deny rule is
      * applied; otherwise, the deny rule is not applied.
+     *
      * Each deny rule is evaluated independently. If this deny rule does not apply
      * to a request, other deny rules might still apply.
+     *
      * The condition can use CEL functions that evaluate
      * [resource
      * tags](https://cloud.google.com/iam/help/conditions/resource-tags). Other

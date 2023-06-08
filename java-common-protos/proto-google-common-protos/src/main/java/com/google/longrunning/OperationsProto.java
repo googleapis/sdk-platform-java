@@ -37,6 +37,7 @@ public final class OperationsProto {
    * Additional information regarding long-running operations.
    * In particular, this specifies the types that are returned from
    * long-running operations.
+   *
    * Required for methods that return `google.longrunning.Operation`; invalid
    * otherwise.
    * </pre>
@@ -116,27 +117,27 @@ public final class OperationsProto {
           + "pe\030\002 \001(\t2\252\005\n\nOperations\022\224\001\n\016ListOperatio"
           + "ns\022).google.longrunning.ListOperationsRe"
           + "quest\032*.google.longrunning.ListOperation"
-          + "sResponse\"+\202\323\344\223\002\027\022\025/v1/{name=operations}"
-          + "\332A\013name,filter\022\177\n\014GetOperation\022\'.google."
+          + "sResponse\"+\332A\013name,filter\202\323\344\223\002\027\022\025/v1/{na"
+          + "me=operations}\022\177\n\014GetOperation\022\'.google."
           + "longrunning.GetOperationRequest\032\035.google"
-          + ".longrunning.Operation\"\'\202\323\344\223\002\032\022\030/v1/{nam"
-          + "e=operations/**}\332A\004name\022~\n\017DeleteOperati"
+          + ".longrunning.Operation\"\'\332A\004name\202\323\344\223\002\032\022\030/"
+          + "v1/{name=operations/**}\022~\n\017DeleteOperati"
           + "on\022*.google.longrunning.DeleteOperationR"
-          + "equest\032\026.google.protobuf.Empty\"\'\202\323\344\223\002\032*\030"
-          + "/v1/{name=operations/**}\332A\004name\022\210\001\n\017Canc"
+          + "equest\032\026.google.protobuf.Empty\"\'\332A\004name\202"
+          + "\323\344\223\002\032*\030/v1/{name=operations/**}\022\210\001\n\017Canc"
           + "elOperation\022*.google.longrunning.CancelO"
           + "perationRequest\032\026.google.protobuf.Empty\""
-          + "1\202\323\344\223\002$\"\037/v1/{name=operations/**}:cancel"
-          + ":\001*\332A\004name\022Z\n\rWaitOperation\022(.google.lon"
+          + "1\332A\004name\202\323\344\223\002$\"\037/v1/{name=operations/**}"
+          + ":cancel:\001*\022Z\n\rWaitOperation\022(.google.lon"
           + "grunning.WaitOperationRequest\032\035.google.l"
           + "ongrunning.Operation\"\000\032\035\312A\032longrunning.g"
           + "oogleapis.com:Z\n\016operation_info\022\036.google"
           + ".protobuf.MethodOptions\030\231\010 \001(\0132!.google."
-          + "longrunning.OperationInfoB\227\001\n\026com.google"
-          + ".longrunningB\017OperationsProtoP\001Z=google."
-          + "golang.org/genproto/googleapis/longrunni"
-          + "ng;longrunning\370\001\001\252\002\022Google.LongRunning\312\002"
-          + "\022Google\\LongRunningb\006proto3"
+          + "longrunning.OperationInfoB\235\001\n\026com.google"
+          + ".longrunningB\017OperationsProtoP\001ZCcloud.g"
+          + "oogle.com/go/longrunning/autogen/longrun"
+          + "ningpb;longrunningpb\370\001\001\252\002\022Google.LongRun"
+          + "ning\312\002\022Google\\LongRunningb\006proto3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(

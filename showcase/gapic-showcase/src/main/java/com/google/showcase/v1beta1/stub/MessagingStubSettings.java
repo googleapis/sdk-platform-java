@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 package com.google.showcase.v1beta1.stub;
 
 import static com.google.showcase.v1beta1.MessagingClient.ListBlurbsPagedResponse;
+import static com.google.showcase.v1beta1.MessagingClient.ListLocationsPagedResponse;
 import static com.google.showcase.v1beta1.MessagingClient.ListRoomsPagedResponse;
 
 import com.google.api.core.ApiFunction;
@@ -50,6 +51,10 @@ import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.cloud.location.GetLocationRequest;
+import com.google.cloud.location.ListLocationsRequest;
+import com.google.cloud.location.ListLocationsResponse;
+import com.google.cloud.location.Location;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -145,6 +150,10 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
       streamBlurbsSettings;
   private final StreamingCallSettings<CreateBlurbRequest, SendBlurbsResponse> sendBlurbsSettings;
   private final StreamingCallSettings<ConnectRequest, StreamBlurbsResponse> connectSettings;
+  private final PagedCallSettings<
+          ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
+      listLocationsSettings;
+  private final UnaryCallSettings<GetLocationRequest, Location> getLocationSettings;
 
   private static final PagedListDescriptor<ListRoomsRequest, ListRoomsResponse, Room>
       LIST_ROOMS_PAGE_STR_DESC =
@@ -218,6 +227,42 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
             }
           };
 
+  private static final PagedListDescriptor<ListLocationsRequest, ListLocationsResponse, Location>
+      LIST_LOCATIONS_PAGE_STR_DESC =
+          new PagedListDescriptor<ListLocationsRequest, ListLocationsResponse, Location>() {
+            @Override
+            public String emptyToken() {
+              return "";
+            }
+
+            @Override
+            public ListLocationsRequest injectToken(ListLocationsRequest payload, String token) {
+              return ListLocationsRequest.newBuilder(payload).setPageToken(token).build();
+            }
+
+            @Override
+            public ListLocationsRequest injectPageSize(ListLocationsRequest payload, int pageSize) {
+              return ListLocationsRequest.newBuilder(payload).setPageSize(pageSize).build();
+            }
+
+            @Override
+            public Integer extractPageSize(ListLocationsRequest payload) {
+              return payload.getPageSize();
+            }
+
+            @Override
+            public String extractNextToken(ListLocationsResponse payload) {
+              return payload.getNextPageToken();
+            }
+
+            @Override
+            public Iterable<Location> extractResources(ListLocationsResponse payload) {
+              return payload.getLocationsList() == null
+                  ? ImmutableList.<Location>of()
+                  : payload.getLocationsList();
+            }
+          };
+
   private static final PagedListResponseFactory<
           ListRoomsRequest, ListRoomsResponse, ListRoomsPagedResponse>
       LIST_ROOMS_PAGE_STR_FACT =
@@ -249,6 +294,23 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
               PageContext<ListBlurbsRequest, ListBlurbsResponse, Blurb> pageContext =
                   PageContext.create(callable, LIST_BLURBS_PAGE_STR_DESC, request, context);
               return ListBlurbsPagedResponse.createAsync(pageContext, futureResponse);
+            }
+          };
+
+  private static final PagedListResponseFactory<
+          ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
+      LIST_LOCATIONS_PAGE_STR_FACT =
+          new PagedListResponseFactory<
+              ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>() {
+            @Override
+            public ApiFuture<ListLocationsPagedResponse> getFuturePagedResponse(
+                UnaryCallable<ListLocationsRequest, ListLocationsResponse> callable,
+                ListLocationsRequest request,
+                ApiCallContext context,
+                ApiFuture<ListLocationsResponse> futureResponse) {
+              PageContext<ListLocationsRequest, ListLocationsResponse, Location> pageContext =
+                  PageContext.create(callable, LIST_LOCATIONS_PAGE_STR_DESC, request, context);
+              return ListLocationsPagedResponse.createAsync(pageContext, futureResponse);
             }
           };
 
@@ -329,6 +391,17 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
   /** Returns the object with the settings used for calls to connect. */
   public StreamingCallSettings<ConnectRequest, StreamBlurbsResponse> connectSettings() {
     return connectSettings;
+  }
+
+  /** Returns the object with the settings used for calls to listLocations. */
+  public PagedCallSettings<ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
+      listLocationsSettings() {
+    return listLocationsSettings;
+  }
+
+  /** Returns the object with the settings used for calls to getLocation. */
+  public UnaryCallSettings<GetLocationRequest, Location> getLocationSettings() {
+    return getLocationSettings;
   }
 
   public MessagingStub createStub() throws IOException {
@@ -450,6 +523,8 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
     streamBlurbsSettings = settingsBuilder.streamBlurbsSettings().build();
     sendBlurbsSettings = settingsBuilder.sendBlurbsSettings().build();
     connectSettings = settingsBuilder.connectSettings().build();
+    listLocationsSettings = settingsBuilder.listLocationsSettings().build();
+    getLocationSettings = settingsBuilder.getLocationSettings().build();
   }
 
   /** Builder for MessagingStubSettings. */
@@ -479,6 +554,10 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
         sendBlurbsSettings;
     private final StreamingCallSettings.Builder<ConnectRequest, StreamBlurbsResponse>
         connectSettings;
+    private final PagedCallSettings.Builder<
+            ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
+        listLocationsSettings;
+    private final UnaryCallSettings.Builder<GetLocationRequest, Location> getLocationSettings;
     private static final ImmutableMap<String, ImmutableSet<StatusCode.Code>>
         RETRYABLE_CODE_DEFINITIONS;
 
@@ -544,6 +623,8 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
       streamBlurbsSettings = ServerStreamingCallSettings.newBuilder();
       sendBlurbsSettings = StreamingCallSettings.newBuilder();
       connectSettings = StreamingCallSettings.newBuilder();
+      listLocationsSettings = PagedCallSettings.newBuilder(LIST_LOCATIONS_PAGE_STR_FACT);
+      getLocationSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
 
       unaryMethodSettingsBuilders =
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
@@ -557,7 +638,9 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
               updateBlurbSettings,
               deleteBlurbSettings,
               listBlurbsSettings,
-              searchBlurbsSettings);
+              searchBlurbsSettings,
+              listLocationsSettings,
+              getLocationSettings);
       initDefaults(this);
     }
 
@@ -579,6 +662,8 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
       streamBlurbsSettings = settings.streamBlurbsSettings.toBuilder();
       sendBlurbsSettings = settings.sendBlurbsSettings.toBuilder();
       connectSettings = settings.connectSettings.toBuilder();
+      listLocationsSettings = settings.listLocationsSettings.toBuilder();
+      getLocationSettings = settings.getLocationSettings.toBuilder();
 
       unaryMethodSettingsBuilders =
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
@@ -592,7 +677,9 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
               updateBlurbSettings,
               deleteBlurbSettings,
               listBlurbsSettings,
-              searchBlurbsSettings);
+              searchBlurbsSettings,
+              listLocationsSettings,
+              getLocationSettings);
     }
 
     private static Builder createDefault() {
@@ -679,6 +766,16 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
 
       builder
           .streamBlurbsSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
+
+      builder
+          .listLocationsSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
+
+      builder
+          .getLocationSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
 
@@ -805,6 +902,18 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
     /** Returns the builder for the settings used for calls to connect. */
     public StreamingCallSettings.Builder<ConnectRequest, StreamBlurbsResponse> connectSettings() {
       return connectSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to listLocations. */
+    public PagedCallSettings.Builder<
+            ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
+        listLocationsSettings() {
+      return listLocationsSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to getLocation. */
+    public UnaryCallSettings.Builder<GetLocationRequest, Location> getLocationSettings() {
+      return getLocationSettings;
     }
 
     @Override

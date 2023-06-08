@@ -26,66 +26,6 @@ private static final long serialVersionUID = 0L;
     return new ComplianceDataGrandchild();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet
-  getUnknownFields() {
-    return this.unknownFields;
-  }
-  private ComplianceDataGrandchild(
-      com.google.protobuf.CodedInputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    this();
-    if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
-    }
-    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-        com.google.protobuf.UnknownFieldSet.newBuilder();
-    try {
-      boolean done = false;
-      while (!done) {
-        int tag = input.readTag();
-        switch (tag) {
-          case 0:
-            done = true;
-            break;
-          case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
-
-            fString_ = s;
-            break;
-          }
-          case 17: {
-
-            fDouble_ = input.readDouble();
-            break;
-          }
-          case 24: {
-
-            fBool_ = input.readBool();
-            break;
-          }
-          default: {
-            if (!parseUnknownField(
-                input, unknownFields, extensionRegistry, tag)) {
-              done = true;
-            }
-            break;
-          }
-        }
-      }
-    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-      throw e.setUnfinishedMessage(this);
-    } catch (com.google.protobuf.UninitializedMessageException e) {
-      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
-    } catch (java.io.IOException e) {
-      throw new com.google.protobuf.InvalidProtocolBufferException(
-          e).setUnfinishedMessage(this);
-    } finally {
-      this.unknownFields = unknownFields.build();
-      makeExtensionsImmutable();
-    }
-  }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
     return com.google.showcase.v1beta1.ComplianceOuterClass.internal_static_google_showcase_v1beta1_ComplianceDataGrandchild_descriptor;
@@ -100,7 +40,8 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int F_STRING_FIELD_NUMBER = 1;
-  private volatile java.lang.Object fString_;
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object fString_ = "";
   /**
    * <code>string f_string = 1;</code>
    * @return The fString.
@@ -138,7 +79,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int F_DOUBLE_FIELD_NUMBER = 2;
-  private double fDouble_;
+  private double fDouble_ = 0D;
   /**
    * <code>double f_double = 2;</code>
    * @return The fDouble.
@@ -149,7 +90,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int F_BOOL_FIELD_NUMBER = 3;
-  private boolean fBool_;
+  private boolean fBool_ = false;
   /**
    * <code>bool f_bool = 3;</code>
    * @return The fBool.
@@ -182,7 +123,7 @@ private static final long serialVersionUID = 0L;
     if (fBool_ != false) {
       output.writeBool(3, fBool_);
     }
-    unknownFields.writeTo(output);
+    getUnknownFields().writeTo(output);
   }
 
   @java.lang.Override
@@ -202,7 +143,7 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeBoolSize(3, fBool_);
     }
-    size += unknownFields.getSerializedSize();
+    size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -224,7 +165,7 @@ private static final long serialVersionUID = 0L;
             other.getFDouble())) return false;
     if (getFBool()
         != other.getFBool()) return false;
-    if (!unknownFields.equals(other.unknownFields)) return false;
+    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
 
@@ -243,7 +184,7 @@ private static final long serialVersionUID = 0L;
     hash = (37 * hash) + F_BOOL_FIELD_NUMBER;
     hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
         getFBool());
-    hash = (29 * hash) + unknownFields.hashCode();
+    hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -292,11 +233,13 @@ private static final long serialVersionUID = 0L;
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
+
   public static com.google.showcase.v1beta1.ComplianceDataGrandchild parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
+
   public static com.google.showcase.v1beta1.ComplianceDataGrandchild parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -360,28 +303,21 @@ private static final long serialVersionUID = 0L;
 
     // Construct using com.google.showcase.v1beta1.ComplianceDataGrandchild.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
+
     }
 
     private Builder(
         com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
-      maybeForceBuilderInitialization();
-    }
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3
-              .alwaysUseFieldBuilders) {
-      }
+
     }
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       fString_ = "";
-
       fDouble_ = 0D;
-
       fBool_ = false;
-
       return this;
     }
 
@@ -408,11 +344,22 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.showcase.v1beta1.ComplianceDataGrandchild buildPartial() {
       com.google.showcase.v1beta1.ComplianceDataGrandchild result = new com.google.showcase.v1beta1.ComplianceDataGrandchild(this);
-      result.fString_ = fString_;
-      result.fDouble_ = fDouble_;
-      result.fBool_ = fBool_;
+      if (bitField0_ != 0) { buildPartial0(result); }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.showcase.v1beta1.ComplianceDataGrandchild result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.fString_ = fString_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.fDouble_ = fDouble_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.fBool_ = fBool_;
+      }
     }
 
     @java.lang.Override
@@ -461,6 +408,7 @@ private static final long serialVersionUID = 0L;
       if (other == com.google.showcase.v1beta1.ComplianceDataGrandchild.getDefaultInstance()) return this;
       if (!other.getFString().isEmpty()) {
         fString_ = other.fString_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (other.getFDouble() != 0D) {
@@ -469,7 +417,7 @@ private static final long serialVersionUID = 0L;
       if (other.getFBool() != false) {
         setFBool(other.getFBool());
       }
-      this.mergeUnknownFields(other.unknownFields);
+      this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
       return this;
     }
@@ -484,19 +432,48 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.google.showcase.v1beta1.ComplianceDataGrandchild parsedMessage = null;
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       try {
-        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              fString_ = input.readStringRequireUtf8();
+              bitField0_ |= 0x00000001;
+              break;
+            } // case 10
+            case 17: {
+              fDouble_ = input.readDouble();
+              bitField0_ |= 0x00000002;
+              break;
+            } // case 17
+            case 24: {
+              fBool_ = input.readBool();
+              bitField0_ |= 0x00000004;
+              break;
+            } // case 24
+            default: {
+              if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                done = true; // was an endgroup tag
+              }
+              break;
+            } // default:
+          } // switch (tag)
+        } // while (!done)
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.google.showcase.v1beta1.ComplianceDataGrandchild) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        if (parsedMessage != null) {
-          mergeFrom(parsedMessage);
-        }
-      }
+        onChanged();
+      } // finally
       return this;
     }
+    private int bitField0_;
 
     private java.lang.Object fString_ = "";
     /**
@@ -539,11 +516,9 @@ private static final long serialVersionUID = 0L;
      */
     public Builder setFString(
         java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
+      if (value == null) { throw new NullPointerException(); }
       fString_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -552,8 +527,8 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearFString() {
-      
       fString_ = getDefaultInstance().getFString();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -564,12 +539,10 @@ private static final long serialVersionUID = 0L;
      */
     public Builder setFStringBytes(
         com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
+      if (value == null) { throw new NullPointerException(); }
+      checkByteStringIsUtf8(value);
       fString_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -589,8 +562,9 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setFDouble(double value) {
-      
+
       fDouble_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -599,7 +573,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearFDouble() {
-      
+      bitField0_ = (bitField0_ & ~0x00000002);
       fDouble_ = 0D;
       onChanged();
       return this;
@@ -620,8 +594,9 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setFBool(boolean value) {
-      
+
       fBool_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -630,7 +605,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearFBool() {
-      
+      bitField0_ = (bitField0_ & ~0x00000004);
       fBool_ = false;
       onChanged();
       return this;
@@ -668,7 +643,18 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return new ComplianceDataGrandchild(input, extensionRegistry);
+      Builder builder = newBuilder();
+      try {
+        builder.mergeFrom(input, extensionRegistry);
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(builder.buildPartial());
+      } catch (com.google.protobuf.UninitializedMessageException e) {
+        throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(builder.buildPartial());
+      }
+      return builder.buildPartial();
     }
   };
 

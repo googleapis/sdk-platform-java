@@ -371,157 +371,95 @@ public final class ComplianceGrpc {
 
   /**
    */
-  public static abstract class ComplianceImplBase implements io.grpc.BindableService {
+  public interface AsyncService {
 
     /**
      */
-    public void repeatDataBody(com.google.showcase.v1beta1.RepeatRequest request,
+    default void repeatDataBody(com.google.showcase.v1beta1.RepeatRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getRepeatDataBodyMethod(), responseObserver);
     }
 
     /**
      */
-    public void repeatDataBodyInfo(com.google.showcase.v1beta1.RepeatRequest request,
+    default void repeatDataBodyInfo(com.google.showcase.v1beta1.RepeatRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getRepeatDataBodyInfoMethod(), responseObserver);
     }
 
     /**
      */
-    public void repeatDataQuery(com.google.showcase.v1beta1.RepeatRequest request,
+    default void repeatDataQuery(com.google.showcase.v1beta1.RepeatRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getRepeatDataQueryMethod(), responseObserver);
     }
 
     /**
      */
-    public void repeatDataSimplePath(com.google.showcase.v1beta1.RepeatRequest request,
+    default void repeatDataSimplePath(com.google.showcase.v1beta1.RepeatRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getRepeatDataSimplePathMethod(), responseObserver);
     }
 
     /**
      */
-    public void repeatDataPathResource(com.google.showcase.v1beta1.RepeatRequest request,
+    default void repeatDataPathResource(com.google.showcase.v1beta1.RepeatRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getRepeatDataPathResourceMethod(), responseObserver);
     }
 
     /**
      */
-    public void repeatDataPathTrailingResource(com.google.showcase.v1beta1.RepeatRequest request,
+    default void repeatDataPathTrailingResource(com.google.showcase.v1beta1.RepeatRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getRepeatDataPathTrailingResourceMethod(), responseObserver);
     }
 
     /**
      */
-    public void repeatDataBodyPut(com.google.showcase.v1beta1.RepeatRequest request,
+    default void repeatDataBodyPut(com.google.showcase.v1beta1.RepeatRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getRepeatDataBodyPutMethod(), responseObserver);
     }
 
     /**
      */
-    public void repeatDataBodyPatch(com.google.showcase.v1beta1.RepeatRequest request,
+    default void repeatDataBodyPatch(com.google.showcase.v1beta1.RepeatRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getRepeatDataBodyPatchMethod(), responseObserver);
     }
 
     /**
      */
-    public void getEnum(com.google.showcase.v1beta1.EnumRequest request,
+    default void getEnum(com.google.showcase.v1beta1.EnumRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EnumResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetEnumMethod(), responseObserver);
     }
 
     /**
      */
-    public void verifyEnum(com.google.showcase.v1beta1.EnumResponse request,
+    default void verifyEnum(com.google.showcase.v1beta1.EnumResponse request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EnumResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getVerifyEnumMethod(), responseObserver);
-    }
-
-    @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
-      return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
-          .addMethod(
-            getRepeatDataBodyMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.RepeatRequest,
-                com.google.showcase.v1beta1.RepeatResponse>(
-                  this, METHODID_REPEAT_DATA_BODY)))
-          .addMethod(
-            getRepeatDataBodyInfoMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.RepeatRequest,
-                com.google.showcase.v1beta1.RepeatResponse>(
-                  this, METHODID_REPEAT_DATA_BODY_INFO)))
-          .addMethod(
-            getRepeatDataQueryMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.RepeatRequest,
-                com.google.showcase.v1beta1.RepeatResponse>(
-                  this, METHODID_REPEAT_DATA_QUERY)))
-          .addMethod(
-            getRepeatDataSimplePathMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.RepeatRequest,
-                com.google.showcase.v1beta1.RepeatResponse>(
-                  this, METHODID_REPEAT_DATA_SIMPLE_PATH)))
-          .addMethod(
-            getRepeatDataPathResourceMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.RepeatRequest,
-                com.google.showcase.v1beta1.RepeatResponse>(
-                  this, METHODID_REPEAT_DATA_PATH_RESOURCE)))
-          .addMethod(
-            getRepeatDataPathTrailingResourceMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.RepeatRequest,
-                com.google.showcase.v1beta1.RepeatResponse>(
-                  this, METHODID_REPEAT_DATA_PATH_TRAILING_RESOURCE)))
-          .addMethod(
-            getRepeatDataBodyPutMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.RepeatRequest,
-                com.google.showcase.v1beta1.RepeatResponse>(
-                  this, METHODID_REPEAT_DATA_BODY_PUT)))
-          .addMethod(
-            getRepeatDataBodyPatchMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.RepeatRequest,
-                com.google.showcase.v1beta1.RepeatResponse>(
-                  this, METHODID_REPEAT_DATA_BODY_PATCH)))
-          .addMethod(
-            getGetEnumMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.EnumRequest,
-                com.google.showcase.v1beta1.EnumResponse>(
-                  this, METHODID_GET_ENUM)))
-          .addMethod(
-            getVerifyEnumMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.EnumResponse,
-                com.google.showcase.v1beta1.EnumResponse>(
-                  this, METHODID_VERIFY_ENUM)))
-          .build();
     }
   }
 
   /**
+   * Base class for the server implementation of the service Compliance.
    */
-  public static final class ComplianceStub extends io.grpc.stub.AbstractAsyncStub<ComplianceStub> {
+  public static abstract class ComplianceImplBase
+      implements io.grpc.BindableService, AsyncService {
+
+    @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
+      return ComplianceGrpc.bindService(this);
+    }
+  }
+
+  /**
+   * A stub to allow clients to do asynchronous rpc calls to service Compliance.
+   */
+  public static final class ComplianceStub
+      extends io.grpc.stub.AbstractAsyncStub<ComplianceStub> {
     private ComplianceStub(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -615,8 +553,10 @@ public final class ComplianceGrpc {
   }
 
   /**
+   * A stub to allow clients to do synchronous rpc calls to service Compliance.
    */
-  public static final class ComplianceBlockingStub extends io.grpc.stub.AbstractBlockingStub<ComplianceBlockingStub> {
+  public static final class ComplianceBlockingStub
+      extends io.grpc.stub.AbstractBlockingStub<ComplianceBlockingStub> {
     private ComplianceBlockingStub(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -700,8 +640,10 @@ public final class ComplianceGrpc {
   }
 
   /**
+   * A stub to allow clients to do ListenableFuture-style rpc calls to service Compliance.
    */
-  public static final class ComplianceFutureStub extends io.grpc.stub.AbstractFutureStub<ComplianceFutureStub> {
+  public static final class ComplianceFutureStub
+      extends io.grpc.stub.AbstractFutureStub<ComplianceFutureStub> {
     private ComplianceFutureStub(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -810,10 +752,10 @@ public final class ComplianceGrpc {
       io.grpc.stub.ServerCalls.ServerStreamingMethod<Req, Resp>,
       io.grpc.stub.ServerCalls.ClientStreamingMethod<Req, Resp>,
       io.grpc.stub.ServerCalls.BidiStreamingMethod<Req, Resp> {
-    private final ComplianceImplBase serviceImpl;
+    private final AsyncService serviceImpl;
     private final int methodId;
 
-    MethodHandlers(ComplianceImplBase serviceImpl, int methodId) {
+    MethodHandlers(AsyncService serviceImpl, int methodId) {
       this.serviceImpl = serviceImpl;
       this.methodId = methodId;
     }
@@ -876,6 +818,81 @@ public final class ComplianceGrpc {
           throw new AssertionError();
       }
     }
+  }
+
+  public static final io.grpc.ServerServiceDefinition bindService(AsyncService service) {
+    return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
+        .addMethod(
+          getRepeatDataBodyMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.RepeatRequest,
+              com.google.showcase.v1beta1.RepeatResponse>(
+                service, METHODID_REPEAT_DATA_BODY)))
+        .addMethod(
+          getRepeatDataBodyInfoMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.RepeatRequest,
+              com.google.showcase.v1beta1.RepeatResponse>(
+                service, METHODID_REPEAT_DATA_BODY_INFO)))
+        .addMethod(
+          getRepeatDataQueryMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.RepeatRequest,
+              com.google.showcase.v1beta1.RepeatResponse>(
+                service, METHODID_REPEAT_DATA_QUERY)))
+        .addMethod(
+          getRepeatDataSimplePathMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.RepeatRequest,
+              com.google.showcase.v1beta1.RepeatResponse>(
+                service, METHODID_REPEAT_DATA_SIMPLE_PATH)))
+        .addMethod(
+          getRepeatDataPathResourceMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.RepeatRequest,
+              com.google.showcase.v1beta1.RepeatResponse>(
+                service, METHODID_REPEAT_DATA_PATH_RESOURCE)))
+        .addMethod(
+          getRepeatDataPathTrailingResourceMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.RepeatRequest,
+              com.google.showcase.v1beta1.RepeatResponse>(
+                service, METHODID_REPEAT_DATA_PATH_TRAILING_RESOURCE)))
+        .addMethod(
+          getRepeatDataBodyPutMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.RepeatRequest,
+              com.google.showcase.v1beta1.RepeatResponse>(
+                service, METHODID_REPEAT_DATA_BODY_PUT)))
+        .addMethod(
+          getRepeatDataBodyPatchMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.RepeatRequest,
+              com.google.showcase.v1beta1.RepeatResponse>(
+                service, METHODID_REPEAT_DATA_BODY_PATCH)))
+        .addMethod(
+          getGetEnumMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.EnumRequest,
+              com.google.showcase.v1beta1.EnumResponse>(
+                service, METHODID_GET_ENUM)))
+        .addMethod(
+          getVerifyEnumMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.EnumResponse,
+              com.google.showcase.v1beta1.EnumResponse>(
+                service, METHODID_VERIFY_ENUM)))
+        .build();
   }
 
   private static abstract class ComplianceBaseDescriptorSupplier

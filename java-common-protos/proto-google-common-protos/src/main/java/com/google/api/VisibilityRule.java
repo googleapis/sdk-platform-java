@@ -49,11 +49,6 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
     return new VisibilityRule();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.VisibilityProto.internal_static_google_api_VisibilityRule_descriptor;
   }
@@ -68,12 +63,15 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int SELECTOR_FIELD_NUMBER = 1;
-  private volatile java.lang.Object selector_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object selector_ = "";
   /**
    *
    *
    * <pre>
    * Selects methods, messages, fields, enums, etc. to which this rule applies.
+   *
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax
    * details.
    * </pre>
@@ -99,6 +97,7 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Selects methods, messages, fields, enums, etc. to which this rule applies.
+   *
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax
    * details.
    * </pre>
@@ -121,20 +120,26 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int RESTRICTION_FIELD_NUMBER = 2;
-  private volatile java.lang.Object restriction_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object restriction_ = "";
   /**
    *
    *
    * <pre>
    * A comma-separated list of visibility labels that apply to the `selector`.
    * Any of the listed labels can be used to grant the visibility.
+   *
    * If a rule has multiple labels, removing one of the labels but not all of
    * them can break clients.
+   *
    * Example:
+   *
    *     visibility:
    *       rules:
    *       - selector: google.calendar.Calendar.EnhancedSearch
    *         restriction: INTERNAL, PREVIEW
+   *
    * Removing INTERNAL from this restriction will break clients that rely on
    * this method and only had access to it through INTERNAL.
    * </pre>
@@ -161,13 +166,17 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * A comma-separated list of visibility labels that apply to the `selector`.
    * Any of the listed labels can be used to grant the visibility.
+   *
    * If a rule has multiple labels, removing one of the labels but not all of
    * them can break clients.
+   *
    * Example:
+   *
    *     visibility:
    *       rules:
    *       - selector: google.calendar.Calendar.EnhancedSearch
    *         restriction: INTERNAL, PREVIEW
+   *
    * Removing INTERNAL from this restriction will break clients that rely on
    * this method and only had access to it through INTERNAL.
    * </pre>
@@ -392,10 +401,9 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       selector_ = "";
-
       restriction_ = "";
-
       return this;
     }
 
@@ -421,10 +429,21 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.VisibilityRule buildPartial() {
       com.google.api.VisibilityRule result = new com.google.api.VisibilityRule(this);
-      result.selector_ = selector_;
-      result.restriction_ = restriction_;
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.api.VisibilityRule result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.selector_ = selector_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.restriction_ = restriction_;
+      }
     }
 
     @java.lang.Override
@@ -474,10 +493,12 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
       if (other == com.google.api.VisibilityRule.getDefaultInstance()) return this;
       if (!other.getSelector().isEmpty()) {
         selector_ = other.selector_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (!other.getRestriction().isEmpty()) {
         restriction_ = other.restriction_;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -509,13 +530,13 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
             case 10:
               {
                 selector_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
               {
                 restriction_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             default:
@@ -535,12 +556,15 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
       return this;
     }
 
+    private int bitField0_;
+
     private java.lang.Object selector_ = "";
     /**
      *
      *
      * <pre>
      * Selects methods, messages, fields, enums, etc. to which this rule applies.
+     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -565,6 +589,7 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects methods, messages, fields, enums, etc. to which this rule applies.
+     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -589,6 +614,7 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects methods, messages, fields, enums, etc. to which this rule applies.
+     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -602,8 +628,8 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       selector_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -612,6 +638,7 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects methods, messages, fields, enums, etc. to which this rule applies.
+     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -621,8 +648,8 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearSelector() {
-
       selector_ = getDefaultInstance().getSelector();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -631,6 +658,7 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects methods, messages, fields, enums, etc. to which this rule applies.
+     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -645,8 +673,8 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       selector_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -658,13 +686,17 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * A comma-separated list of visibility labels that apply to the `selector`.
      * Any of the listed labels can be used to grant the visibility.
+     *
      * If a rule has multiple labels, removing one of the labels but not all of
      * them can break clients.
+     *
      * Example:
+     *
      *     visibility:
      *       rules:
      *       - selector: google.calendar.Calendar.EnhancedSearch
      *         restriction: INTERNAL, PREVIEW
+     *
      * Removing INTERNAL from this restriction will break clients that rely on
      * this method and only had access to it through INTERNAL.
      * </pre>
@@ -690,13 +722,17 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * A comma-separated list of visibility labels that apply to the `selector`.
      * Any of the listed labels can be used to grant the visibility.
+     *
      * If a rule has multiple labels, removing one of the labels but not all of
      * them can break clients.
+     *
      * Example:
+     *
      *     visibility:
      *       rules:
      *       - selector: google.calendar.Calendar.EnhancedSearch
      *         restriction: INTERNAL, PREVIEW
+     *
      * Removing INTERNAL from this restriction will break clients that rely on
      * this method and only had access to it through INTERNAL.
      * </pre>
@@ -722,13 +758,17 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * A comma-separated list of visibility labels that apply to the `selector`.
      * Any of the listed labels can be used to grant the visibility.
+     *
      * If a rule has multiple labels, removing one of the labels but not all of
      * them can break clients.
+     *
      * Example:
+     *
      *     visibility:
      *       rules:
      *       - selector: google.calendar.Calendar.EnhancedSearch
      *         restriction: INTERNAL, PREVIEW
+     *
      * Removing INTERNAL from this restriction will break clients that rely on
      * this method and only had access to it through INTERNAL.
      * </pre>
@@ -742,8 +782,8 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       restriction_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -753,13 +793,17 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * A comma-separated list of visibility labels that apply to the `selector`.
      * Any of the listed labels can be used to grant the visibility.
+     *
      * If a rule has multiple labels, removing one of the labels but not all of
      * them can break clients.
+     *
      * Example:
+     *
      *     visibility:
      *       rules:
      *       - selector: google.calendar.Calendar.EnhancedSearch
      *         restriction: INTERNAL, PREVIEW
+     *
      * Removing INTERNAL from this restriction will break clients that rely on
      * this method and only had access to it through INTERNAL.
      * </pre>
@@ -769,8 +813,8 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearRestriction() {
-
       restriction_ = getDefaultInstance().getRestriction();
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -780,13 +824,17 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * A comma-separated list of visibility labels that apply to the `selector`.
      * Any of the listed labels can be used to grant the visibility.
+     *
      * If a rule has multiple labels, removing one of the labels but not all of
      * them can break clients.
+     *
      * Example:
+     *
      *     visibility:
      *       rules:
      *       - selector: google.calendar.Calendar.EnhancedSearch
      *         restriction: INTERNAL, PREVIEW
+     *
      * Removing INTERNAL from this restriction will break clients that rely on
      * this method and only had access to it through INTERNAL.
      * </pre>
@@ -801,8 +849,8 @@ public final class VisibilityRule extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       restriction_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }

@@ -20,7 +20,8 @@ private static final long serialVersionUID = 0L;
     super(builder);
   }
   private PagedExpandResponseList() {
-    words_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    words_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
   }
 
   @java.lang.Override
@@ -30,63 +31,6 @@ private static final long serialVersionUID = 0L;
     return new PagedExpandResponseList();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet
-  getUnknownFields() {
-    return this.unknownFields;
-  }
-  private PagedExpandResponseList(
-      com.google.protobuf.CodedInputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    this();
-    if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
-    }
-    int mutable_bitField0_ = 0;
-    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-        com.google.protobuf.UnknownFieldSet.newBuilder();
-    try {
-      boolean done = false;
-      while (!done) {
-        int tag = input.readTag();
-        switch (tag) {
-          case 0:
-            done = true;
-            break;
-          case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
-            if (!((mutable_bitField0_ & 0x00000001) != 0)) {
-              words_ = new com.google.protobuf.LazyStringArrayList();
-              mutable_bitField0_ |= 0x00000001;
-            }
-            words_.add(s);
-            break;
-          }
-          default: {
-            if (!parseUnknownField(
-                input, unknownFields, extensionRegistry, tag)) {
-              done = true;
-            }
-            break;
-          }
-        }
-      }
-    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-      throw e.setUnfinishedMessage(this);
-    } catch (com.google.protobuf.UninitializedMessageException e) {
-      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
-    } catch (java.io.IOException e) {
-      throw new com.google.protobuf.InvalidProtocolBufferException(
-          e).setUnfinishedMessage(this);
-    } finally {
-      if (((mutable_bitField0_ & 0x00000001) != 0)) {
-        words_ = words_.getUnmodifiableView();
-      }
-      this.unknownFields = unknownFields.build();
-      makeExtensionsImmutable();
-    }
-  }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
     return com.google.showcase.v1beta1.EchoOuterClass.internal_static_google_showcase_v1beta1_PagedExpandResponseList_descriptor;
@@ -101,7 +45,9 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int WORDS_FIELD_NUMBER = 1;
-  private com.google.protobuf.LazyStringList words_;
+  @SuppressWarnings("serial")
+  private com.google.protobuf.LazyStringArrayList words_ =
+      com.google.protobuf.LazyStringArrayList.emptyList();
   /**
    * <code>repeated string words = 1;</code>
    * @return A list containing the words.
@@ -152,7 +98,7 @@ private static final long serialVersionUID = 0L;
     for (int i = 0; i < words_.size(); i++) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, words_.getRaw(i));
     }
-    unknownFields.writeTo(output);
+    getUnknownFields().writeTo(output);
   }
 
   @java.lang.Override
@@ -169,7 +115,7 @@ private static final long serialVersionUID = 0L;
       size += dataSize;
       size += 1 * getWordsList().size();
     }
-    size += unknownFields.getSerializedSize();
+    size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -186,7 +132,7 @@ private static final long serialVersionUID = 0L;
 
     if (!getWordsList()
         .equals(other.getWordsList())) return false;
-    if (!unknownFields.equals(other.unknownFields)) return false;
+    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
 
@@ -201,7 +147,7 @@ private static final long serialVersionUID = 0L;
       hash = (37 * hash) + WORDS_FIELD_NUMBER;
       hash = (53 * hash) + getWordsList().hashCode();
     }
-    hash = (29 * hash) + unknownFields.hashCode();
+    hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -250,11 +196,13 @@ private static final long serialVersionUID = 0L;
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
+
   public static com.google.showcase.v1beta1.PagedExpandResponseList parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
+
   public static com.google.showcase.v1beta1.PagedExpandResponseList parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -322,24 +270,20 @@ private static final long serialVersionUID = 0L;
 
     // Construct using com.google.showcase.v1beta1.PagedExpandResponseList.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
+
     }
 
     private Builder(
         com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
-      maybeForceBuilderInitialization();
-    }
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3
-              .alwaysUseFieldBuilders) {
-      }
+
     }
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      words_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000001);
+      bitField0_ = 0;
+      words_ =
+          com.google.protobuf.LazyStringArrayList.emptyList();
       return this;
     }
 
@@ -366,14 +310,17 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.showcase.v1beta1.PagedExpandResponseList buildPartial() {
       com.google.showcase.v1beta1.PagedExpandResponseList result = new com.google.showcase.v1beta1.PagedExpandResponseList(this);
-      int from_bitField0_ = bitField0_;
-      if (((bitField0_ & 0x00000001) != 0)) {
-        words_ = words_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000001);
-      }
-      result.words_ = words_;
+      if (bitField0_ != 0) { buildPartial0(result); }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.showcase.v1beta1.PagedExpandResponseList result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        words_.makeImmutable();
+        result.words_ = words_;
+      }
     }
 
     @java.lang.Override
@@ -423,14 +370,14 @@ private static final long serialVersionUID = 0L;
       if (!other.words_.isEmpty()) {
         if (words_.isEmpty()) {
           words_ = other.words_;
-          bitField0_ = (bitField0_ & ~0x00000001);
+          bitField0_ |= 0x00000001;
         } else {
           ensureWordsIsMutable();
           words_.addAll(other.words_);
         }
         onChanged();
       }
-      this.mergeUnknownFields(other.unknownFields);
+      this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
       return this;
     }
@@ -445,27 +392,47 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.google.showcase.v1beta1.PagedExpandResponseList parsedMessage = null;
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       try {
-        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              java.lang.String s = input.readStringRequireUtf8();
+              ensureWordsIsMutable();
+              words_.add(s);
+              break;
+            } // case 10
+            default: {
+              if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                done = true; // was an endgroup tag
+              }
+              break;
+            } // default:
+          } // switch (tag)
+        } // while (!done)
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.google.showcase.v1beta1.PagedExpandResponseList) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        if (parsedMessage != null) {
-          mergeFrom(parsedMessage);
-        }
-      }
+        onChanged();
+      } // finally
       return this;
     }
     private int bitField0_;
 
-    private com.google.protobuf.LazyStringList words_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    private com.google.protobuf.LazyStringArrayList words_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
     private void ensureWordsIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
+      if (!words_.isModifiable()) {
         words_ = new com.google.protobuf.LazyStringArrayList(words_);
-        bitField0_ |= 0x00000001;
-       }
+      }
+      bitField0_ |= 0x00000001;
     }
     /**
      * <code>repeated string words = 1;</code>
@@ -473,7 +440,8 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ProtocolStringList
         getWordsList() {
-      return words_.getUnmodifiableView();
+      words_.makeImmutable();
+      return words_;
     }
     /**
      * <code>repeated string words = 1;</code>
@@ -507,11 +475,10 @@ private static final long serialVersionUID = 0L;
      */
     public Builder setWords(
         int index, java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureWordsIsMutable();
+      if (value == null) { throw new NullPointerException(); }
+      ensureWordsIsMutable();
       words_.set(index, value);
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -522,11 +489,10 @@ private static final long serialVersionUID = 0L;
      */
     public Builder addWords(
         java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  ensureWordsIsMutable();
+      if (value == null) { throw new NullPointerException(); }
+      ensureWordsIsMutable();
       words_.add(value);
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -540,6 +506,7 @@ private static final long serialVersionUID = 0L;
       ensureWordsIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(
           values, words_);
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -548,8 +515,9 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearWords() {
-      words_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000001);
+      words_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
+      bitField0_ = (bitField0_ & ~0x00000001);;
       onChanged();
       return this;
     }
@@ -560,12 +528,11 @@ private static final long serialVersionUID = 0L;
      */
     public Builder addWordsBytes(
         com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
+      if (value == null) { throw new NullPointerException(); }
+      checkByteStringIsUtf8(value);
       ensureWordsIsMutable();
       words_.add(value);
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -602,7 +569,18 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return new PagedExpandResponseList(input, extensionRegistry);
+      Builder builder = newBuilder();
+      try {
+        builder.mergeFrom(input, extensionRegistry);
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(builder.buildPartial());
+      } catch (com.google.protobuf.UninitializedMessageException e) {
+        throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(builder.buildPartial());
+      }
+      return builder.buildPartial();
     }
   };
 

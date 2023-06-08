@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,10 @@
 package com.google.showcase.v1beta1.stub;
 
 import static com.google.showcase.v1beta1.MessagingClient.ListBlurbsPagedResponse;
+import static com.google.showcase.v1beta1.MessagingClient.ListLocationsPagedResponse;
 import static com.google.showcase.v1beta1.MessagingClient.ListRoomsPagedResponse;
 
+import com.google.api.HttpRule;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.core.BackgroundResource;
@@ -36,8 +38,14 @@ import com.google.api.gax.rpc.BidiStreamingCallable;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.ClientStreamingCallable;
 import com.google.api.gax.rpc.OperationCallable;
+import com.google.api.gax.rpc.RequestParamsBuilder;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.cloud.location.GetLocationRequest;
+import com.google.cloud.location.ListLocationsRequest;
+import com.google.cloud.location.ListLocationsResponse;
+import com.google.cloud.location.Location;
+import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.Operation;
 import com.google.protobuf.Empty;
 import com.google.protobuf.TypeRegistry;
@@ -105,13 +113,12 @@ public class HttpJsonMessagingStub extends MessagingStub {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<CreateRoomRequest> serializer =
                             ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(
                       request ->
                           ProtoRestSerializer.create()
-                              .toBody("*", request.toBuilder().build(), true))
+                              .toBody("*", request.toBuilder().build(), false))
                   .build())
           .setResponseParser(
               ProtoMessageResponseParser.<Room>newBuilder()
@@ -141,7 +148,6 @@ public class HttpJsonMessagingStub extends MessagingStub {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<GetRoomRequest> serializer =
                             ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(request -> null)
@@ -175,12 +181,11 @@ public class HttpJsonMessagingStub extends MessagingStub {
                         ProtoRestSerializer<UpdateRoomRequest> serializer =
                             ProtoRestSerializer.create();
                         serializer.putQueryParam(fields, "updateMask", request.getUpdateMask());
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(
                       request ->
-                          ProtoRestSerializer.create().toBody("room", request.getRoom(), true))
+                          ProtoRestSerializer.create().toBody("room", request.getRoom(), false))
                   .build())
           .setResponseParser(
               ProtoMessageResponseParser.<Room>newBuilder()
@@ -210,7 +215,6 @@ public class HttpJsonMessagingStub extends MessagingStub {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<DeleteRoomRequest> serializer =
                             ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(request -> null)
@@ -245,7 +249,6 @@ public class HttpJsonMessagingStub extends MessagingStub {
                                 ProtoRestSerializer.create();
                             serializer.putQueryParam(fields, "pageSize", request.getPageSize());
                             serializer.putQueryParam(fields, "pageToken", request.getPageToken());
-                            serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                             return fields;
                           })
                       .setRequestBodyExtractor(request -> null)
@@ -279,13 +282,12 @@ public class HttpJsonMessagingStub extends MessagingStub {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<CreateBlurbRequest> serializer =
                             ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(
                       request ->
                           ProtoRestSerializer.create()
-                              .toBody("*", request.toBuilder().clearParent().build(), true))
+                              .toBody("*", request.toBuilder().clearParent().build(), false))
                   .build())
           .setResponseParser(
               ProtoMessageResponseParser.<Blurb>newBuilder()
@@ -316,7 +318,6 @@ public class HttpJsonMessagingStub extends MessagingStub {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<GetBlurbRequest> serializer =
                             ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(request -> null)
@@ -351,12 +352,11 @@ public class HttpJsonMessagingStub extends MessagingStub {
                         ProtoRestSerializer<UpdateBlurbRequest> serializer =
                             ProtoRestSerializer.create();
                         serializer.putQueryParam(fields, "updateMask", request.getUpdateMask());
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(
                       request ->
-                          ProtoRestSerializer.create().toBody("blurb", request.getBlurb(), true))
+                          ProtoRestSerializer.create().toBody("blurb", request.getBlurb(), false))
                   .build())
           .setResponseParser(
               ProtoMessageResponseParser.<Blurb>newBuilder()
@@ -387,7 +387,6 @@ public class HttpJsonMessagingStub extends MessagingStub {
                         Map<String, List<String>> fields = new HashMap<>();
                         ProtoRestSerializer<DeleteBlurbRequest> serializer =
                             ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                         return fields;
                       })
                   .setRequestBodyExtractor(request -> null)
@@ -424,7 +423,6 @@ public class HttpJsonMessagingStub extends MessagingStub {
                                 ProtoRestSerializer.create();
                             serializer.putQueryParam(fields, "pageSize", request.getPageSize());
                             serializer.putQueryParam(fields, "pageToken", request.getPageToken());
-                            serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                             return fields;
                           })
                       .setRequestBodyExtractor(request -> null)
@@ -459,13 +457,12 @@ public class HttpJsonMessagingStub extends MessagingStub {
                             Map<String, List<String>> fields = new HashMap<>();
                             ProtoRestSerializer<SearchBlurbsRequest> serializer =
                                 ProtoRestSerializer.create();
-                            serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                             return fields;
                           })
                       .setRequestBodyExtractor(
                           request ->
                               ProtoRestSerializer.create()
-                                  .toBody("*", request.toBuilder().clearParent().build(), true))
+                                  .toBody("*", request.toBuilder().clearParent().build(), false))
                       .build())
               .setResponseParser(
                   ProtoMessageResponseParser.<Operation>newBuilder()
@@ -500,17 +497,82 @@ public class HttpJsonMessagingStub extends MessagingStub {
                             Map<String, List<String>> fields = new HashMap<>();
                             ProtoRestSerializer<StreamBlurbsRequest> serializer =
                                 ProtoRestSerializer.create();
-                            serializer.putQueryParam(fields, "$alt", "json;enum-encoding=int");
                             return fields;
                           })
                       .setRequestBodyExtractor(
                           request ->
                               ProtoRestSerializer.create()
-                                  .toBody("*", request.toBuilder().clearName().build(), true))
+                                  .toBody("*", request.toBuilder().clearName().build(), false))
                       .build())
               .setResponseParser(
                   ProtoMessageResponseParser.<StreamBlurbsResponse>newBuilder()
                       .setDefaultInstance(StreamBlurbsResponse.getDefaultInstance())
+                      .setDefaultTypeRegistry(typeRegistry)
+                      .build())
+              .build();
+
+  private static final ApiMethodDescriptor<ListLocationsRequest, ListLocationsResponse>
+      listLocationsMethodDescriptor =
+          ApiMethodDescriptor.<ListLocationsRequest, ListLocationsResponse>newBuilder()
+              .setFullMethodName("google.cloud.location.Locations/ListLocations")
+              .setHttpMethod("GET")
+              .setType(ApiMethodDescriptor.MethodType.UNARY)
+              .setRequestFormatter(
+                  ProtoMessageRequestFormatter.<ListLocationsRequest>newBuilder()
+                      .setPath(
+                          "/v1beta1/{name=projects/*}/locations",
+                          request -> {
+                            Map<String, String> fields = new HashMap<>();
+                            ProtoRestSerializer<ListLocationsRequest> serializer =
+                                ProtoRestSerializer.create();
+                            serializer.putPathParam(fields, "name", request.getName());
+                            return fields;
+                          })
+                      .setQueryParamsExtractor(
+                          request -> {
+                            Map<String, List<String>> fields = new HashMap<>();
+                            ProtoRestSerializer<ListLocationsRequest> serializer =
+                                ProtoRestSerializer.create();
+                            return fields;
+                          })
+                      .setRequestBodyExtractor(request -> null)
+                      .build())
+              .setResponseParser(
+                  ProtoMessageResponseParser.<ListLocationsResponse>newBuilder()
+                      .setDefaultInstance(ListLocationsResponse.getDefaultInstance())
+                      .setDefaultTypeRegistry(typeRegistry)
+                      .build())
+              .build();
+
+  private static final ApiMethodDescriptor<GetLocationRequest, Location>
+      getLocationMethodDescriptor =
+          ApiMethodDescriptor.<GetLocationRequest, Location>newBuilder()
+              .setFullMethodName("google.cloud.location.Locations/GetLocation")
+              .setHttpMethod("GET")
+              .setType(ApiMethodDescriptor.MethodType.UNARY)
+              .setRequestFormatter(
+                  ProtoMessageRequestFormatter.<GetLocationRequest>newBuilder()
+                      .setPath(
+                          "/v1beta1/{name=projects/*/locations/*}",
+                          request -> {
+                            Map<String, String> fields = new HashMap<>();
+                            ProtoRestSerializer<GetLocationRequest> serializer =
+                                ProtoRestSerializer.create();
+                            serializer.putPathParam(fields, "name", request.getName());
+                            return fields;
+                          })
+                      .setQueryParamsExtractor(
+                          request -> {
+                            Map<String, List<String>> fields = new HashMap<>();
+                            ProtoRestSerializer<GetLocationRequest> serializer =
+                                ProtoRestSerializer.create();
+                            return fields;
+                          })
+                      .setRequestBodyExtractor(request -> null)
+                      .build())
+              .setResponseParser(
+                  ProtoMessageResponseParser.<Location>newBuilder()
+                      .setDefaultInstance(Location.getDefaultInstance())
                       .setDefaultTypeRegistry(typeRegistry)
                       .build())
               .build();
@@ -532,6 +594,10 @@ public class HttpJsonMessagingStub extends MessagingStub {
       searchBlurbsOperationCallable;
   private final ServerStreamingCallable<StreamBlurbsRequest, StreamBlurbsResponse>
       streamBlurbsCallable;
+  private final UnaryCallable<ListLocationsRequest, ListLocationsResponse> listLocationsCallable;
+  private final UnaryCallable<ListLocationsRequest, ListLocationsPagedResponse>
+      listLocationsPagedCallable;
+  private final UnaryCallable<GetLocationRequest, Location> getLocationCallable;
 
   private final BackgroundResource backgroundResources;
   private final HttpJsonOperationsStub httpJsonOperationsStub;
@@ -575,7 +641,24 @@ public class HttpJsonMessagingStub extends MessagingStub {
       throws IOException {
     this.callableFactory = callableFactory;
     this.httpJsonOperationsStub =
-        HttpJsonOperationsStub.create(clientContext, callableFactory, typeRegistry);
+        HttpJsonOperationsStub.create(
+            clientContext,
+            callableFactory,
+            typeRegistry,
+            ImmutableMap.<String, HttpRule>builder()
+                .put(
+                    "google.longrunning.Operations.CancelOperation",
+                    HttpRule.newBuilder().setPost("/v1beta1/{name=operations/**}:cancel").build())
+                .put(
+                    "google.longrunning.Operations.DeleteOperation",
+                    HttpRule.newBuilder().setDelete("/v1beta1/{name=operations/**}").build())
+                .put(
+                    "google.longrunning.Operations.GetOperation",
+                    HttpRule.newBuilder().setGet("/v1beta1/{name=operations/**}").build())
+                .put(
+                    "google.longrunning.Operations.ListOperations",
+                    HttpRule.newBuilder().setGet("/v1beta1/operations").build())
+                .build());
 
     HttpJsonCallSettings<CreateRoomRequest, Room> createRoomTransportSettings =
         HttpJsonCallSettings.<CreateRoomRequest, Room>newBuilder()
@@ -586,16 +669,34 @@ public class HttpJsonMessagingStub extends MessagingStub {
         HttpJsonCallSettings.<GetRoomRequest, Room>newBuilder()
             .setMethodDescriptor(getRoomMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
+                })
             .build();
     HttpJsonCallSettings<UpdateRoomRequest, Room> updateRoomTransportSettings =
         HttpJsonCallSettings.<UpdateRoomRequest, Room>newBuilder()
             .setMethodDescriptor(updateRoomMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("room.name", String.valueOf(request.getRoom().getName()));
+                  return builder.build();
+                })
             .build();
     HttpJsonCallSettings<DeleteRoomRequest, Empty> deleteRoomTransportSettings =
         HttpJsonCallSettings.<DeleteRoomRequest, Empty>newBuilder()
             .setMethodDescriptor(deleteRoomMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
+                })
             .build();
     HttpJsonCallSettings<ListRoomsRequest, ListRoomsResponse> listRoomsTransportSettings =
         HttpJsonCallSettings.<ListRoomsRequest, ListRoomsResponse>newBuilder()
@@ -606,36 +707,101 @@ public class HttpJsonMessagingStub extends MessagingStub {
         HttpJsonCallSettings.<CreateBlurbRequest, Blurb>newBuilder()
             .setMethodDescriptor(createBlurbMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("parent", String.valueOf(request.getParent()));
+                  return builder.build();
+                })
             .build();
     HttpJsonCallSettings<GetBlurbRequest, Blurb> getBlurbTransportSettings =
         HttpJsonCallSettings.<GetBlurbRequest, Blurb>newBuilder()
             .setMethodDescriptor(getBlurbMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
+                })
             .build();
     HttpJsonCallSettings<UpdateBlurbRequest, Blurb> updateBlurbTransportSettings =
         HttpJsonCallSettings.<UpdateBlurbRequest, Blurb>newBuilder()
             .setMethodDescriptor(updateBlurbMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("blurb.name", String.valueOf(request.getBlurb().getName()));
+                  return builder.build();
+                })
             .build();
     HttpJsonCallSettings<DeleteBlurbRequest, Empty> deleteBlurbTransportSettings =
         HttpJsonCallSettings.<DeleteBlurbRequest, Empty>newBuilder()
             .setMethodDescriptor(deleteBlurbMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
+                })
             .build();
     HttpJsonCallSettings<ListBlurbsRequest, ListBlurbsResponse> listBlurbsTransportSettings =
         HttpJsonCallSettings.<ListBlurbsRequest, ListBlurbsResponse>newBuilder()
             .setMethodDescriptor(listBlurbsMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("parent", String.valueOf(request.getParent()));
+                  return builder.build();
+                })
             .build();
     HttpJsonCallSettings<SearchBlurbsRequest, Operation> searchBlurbsTransportSettings =
         HttpJsonCallSettings.<SearchBlurbsRequest, Operation>newBuilder()
             .setMethodDescriptor(searchBlurbsMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("parent", String.valueOf(request.getParent()));
+                  return builder.build();
+                })
             .build();
     HttpJsonCallSettings<StreamBlurbsRequest, StreamBlurbsResponse> streamBlurbsTransportSettings =
         HttpJsonCallSettings.<StreamBlurbsRequest, StreamBlurbsResponse>newBuilder()
             .setMethodDescriptor(streamBlurbsMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
+                })
+            .build();
+    HttpJsonCallSettings<ListLocationsRequest, ListLocationsResponse>
+        listLocationsTransportSettings =
+            HttpJsonCallSettings.<ListLocationsRequest, ListLocationsResponse>newBuilder()
+                .setMethodDescriptor(listLocationsMethodDescriptor)
+                .setTypeRegistry(typeRegistry)
+                .setParamsExtractor(
+                    request -> {
+                      RequestParamsBuilder builder = RequestParamsBuilder.create();
+                      builder.add("name", String.valueOf(request.getName()));
+                      return builder.build();
+                    })
+                .build();
+    HttpJsonCallSettings<GetLocationRequest, Location> getLocationTransportSettings =
+        HttpJsonCallSettings.<GetLocationRequest, Location>newBuilder()
+            .setMethodDescriptor(getLocationMethodDescriptor)
+            .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
+                })
             .build();
 
     this.createRoomCallable =
@@ -686,6 +852,15 @@ public class HttpJsonMessagingStub extends MessagingStub {
     this.streamBlurbsCallable =
         callableFactory.createServerStreamingCallable(
             streamBlurbsTransportSettings, settings.streamBlurbsSettings(), clientContext);
+    this.listLocationsCallable =
+        callableFactory.createUnaryCallable(
+            listLocationsTransportSettings, settings.listLocationsSettings(), clientContext);
+    this.listLocationsPagedCallable =
+        callableFactory.createPagedCallable(
+            listLocationsTransportSettings, settings.listLocationsSettings(), clientContext);
+    this.getLocationCallable =
+        callableFactory.createUnaryCallable(
+            getLocationTransportSettings, settings.getLocationSettings(), clientContext);
 
     this.backgroundResources =
         new BackgroundResourceAggregation(clientContext.getBackgroundResources());
@@ -706,6 +881,8 @@ public class HttpJsonMessagingStub extends MessagingStub {
     methodDescriptors.add(listBlurbsMethodDescriptor);
     methodDescriptors.add(searchBlurbsMethodDescriptor);
     methodDescriptors.add(streamBlurbsMethodDescriptor);
+    methodDescriptors.add(listLocationsMethodDescriptor);
+    methodDescriptors.add(getLocationMethodDescriptor);
     return methodDescriptors;
   }
 
@@ -787,6 +964,22 @@ public class HttpJsonMessagingStub extends MessagingStub {
   @Override
   public ServerStreamingCallable<StreamBlurbsRequest, StreamBlurbsResponse> streamBlurbsCallable() {
     return streamBlurbsCallable;
+  }
+
+  @Override
+  public UnaryCallable<ListLocationsRequest, ListLocationsResponse> listLocationsCallable() {
+    return listLocationsCallable;
+  }
+
+  @Override
+  public UnaryCallable<ListLocationsRequest, ListLocationsPagedResponse>
+      listLocationsPagedCallable() {
+    return listLocationsPagedCallable;
+  }
+
+  @Override
+  public UnaryCallable<GetLocationRequest, Location> getLocationCallable() {
+    return getLocationCallable;
   }
 
   @Override

@@ -283,5 +283,44 @@
         "name": "selectedKeys"
       }
     ]
+  },
+  {
+    "name" : "com.google.auth.oauth2.ServiceAccountCredentials",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "allDeclaredFields" : true,
+    "allPublicFields" : true,
+    "queryAllPublicConstructors" : true,
+    "queryAllDeclaredConstructors" : true,
+    "queryAllPublicMethods" : true,
+    "queryAllDeclaredMethods" : true
+  },
+  {
+    "name" : "org.apache.commons.pool2.impl.DefaultEvictionPolicy",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "allDeclaredFields" : true,
+    "allPublicFields" : true,
+    "queryAllPublicConstructors" : true,
+    "queryAllDeclaredConstructors" : true,
+    "queryAllPublicMethods" : true,
+    "queryAllDeclaredMethods" : true
+  },
+  {
+    "name" : "java.nio.channels.spi.SelectorProvider",
+    "allDeclaredConstructors" : true,
+    "allPublicConstructors" : true,
+    "allDeclaredMethods" : true,
+    "allPublicMethods" : true,
+    "allDeclaredFields" : true,
+    "allPublicFields" : true,
+    "queryAllPublicConstructors" : true,
+    "queryAllDeclaredConstructors" : true,
+    "queryAllPublicMethods" : true,
+    "queryAllDeclaredMethods" : true
   }
 ]

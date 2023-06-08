@@ -30,63 +30,6 @@ private static final long serialVersionUID = 0L;
     return new CreateRoomRequest();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet
-  getUnknownFields() {
-    return this.unknownFields;
-  }
-  private CreateRoomRequest(
-      com.google.protobuf.CodedInputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    this();
-    if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
-    }
-    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-        com.google.protobuf.UnknownFieldSet.newBuilder();
-    try {
-      boolean done = false;
-      while (!done) {
-        int tag = input.readTag();
-        switch (tag) {
-          case 0:
-            done = true;
-            break;
-          case 10: {
-            com.google.showcase.v1beta1.Room.Builder subBuilder = null;
-            if (room_ != null) {
-              subBuilder = room_.toBuilder();
-            }
-            room_ = input.readMessage(com.google.showcase.v1beta1.Room.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom(room_);
-              room_ = subBuilder.buildPartial();
-            }
-
-            break;
-          }
-          default: {
-            if (!parseUnknownField(
-                input, unknownFields, extensionRegistry, tag)) {
-              done = true;
-            }
-            break;
-          }
-        }
-      }
-    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-      throw e.setUnfinishedMessage(this);
-    } catch (com.google.protobuf.UninitializedMessageException e) {
-      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
-    } catch (java.io.IOException e) {
-      throw new com.google.protobuf.InvalidProtocolBufferException(
-          e).setUnfinishedMessage(this);
-    } finally {
-      this.unknownFields = unknownFields.build();
-      makeExtensionsImmutable();
-    }
-  }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
     return com.google.showcase.v1beta1.MessagingOuterClass.internal_static_google_showcase_v1beta1_CreateRoomRequest_descriptor;
@@ -135,7 +78,7 @@ private static final long serialVersionUID = 0L;
    */
   @java.lang.Override
   public com.google.showcase.v1beta1.RoomOrBuilder getRoomOrBuilder() {
-    return getRoom();
+    return room_ == null ? com.google.showcase.v1beta1.Room.getDefaultInstance() : room_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -155,7 +98,7 @@ private static final long serialVersionUID = 0L;
     if (room_ != null) {
       output.writeMessage(1, getRoom());
     }
-    unknownFields.writeTo(output);
+    getUnknownFields().writeTo(output);
   }
 
   @java.lang.Override
@@ -168,7 +111,7 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(1, getRoom());
     }
-    size += unknownFields.getSerializedSize();
+    size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -188,7 +131,7 @@ private static final long serialVersionUID = 0L;
       if (!getRoom()
           .equals(other.getRoom())) return false;
     }
-    if (!unknownFields.equals(other.unknownFields)) return false;
+    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
 
@@ -203,7 +146,7 @@ private static final long serialVersionUID = 0L;
       hash = (37 * hash) + ROOM_FIELD_NUMBER;
       hash = (53 * hash) + getRoom().hashCode();
     }
-    hash = (29 * hash) + unknownFields.hashCode();
+    hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -252,11 +195,13 @@ private static final long serialVersionUID = 0L;
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
+
   public static com.google.showcase.v1beta1.CreateRoomRequest parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
+
   public static com.google.showcase.v1beta1.CreateRoomRequest parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -325,26 +270,21 @@ private static final long serialVersionUID = 0L;
 
     // Construct using com.google.showcase.v1beta1.CreateRoomRequest.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
+
     }
 
     private Builder(
         com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
-      maybeForceBuilderInitialization();
-    }
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3
-              .alwaysUseFieldBuilders) {
-      }
+
     }
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      if (roomBuilder_ == null) {
-        room_ = null;
-      } else {
-        room_ = null;
+      bitField0_ = 0;
+      room_ = null;
+      if (roomBuilder_ != null) {
+        roomBuilder_.dispose();
         roomBuilder_ = null;
       }
       return this;
@@ -373,13 +313,18 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.showcase.v1beta1.CreateRoomRequest buildPartial() {
       com.google.showcase.v1beta1.CreateRoomRequest result = new com.google.showcase.v1beta1.CreateRoomRequest(this);
-      if (roomBuilder_ == null) {
-        result.room_ = room_;
-      } else {
-        result.room_ = roomBuilder_.build();
-      }
+      if (bitField0_ != 0) { buildPartial0(result); }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.showcase.v1beta1.CreateRoomRequest result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.room_ = roomBuilder_ == null
+            ? room_
+            : roomBuilder_.build();
+      }
     }
 
     @java.lang.Override
@@ -429,7 +374,7 @@ private static final long serialVersionUID = 0L;
       if (other.hasRoom()) {
         mergeRoom(other.getRoom());
       }
-      this.mergeUnknownFields(other.unknownFields);
+      this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
       return this;
     }
@@ -444,19 +389,40 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.google.showcase.v1beta1.CreateRoomRequest parsedMessage = null;
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       try {
-        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              input.readMessage(
+                  getRoomFieldBuilder().getBuilder(),
+                  extensionRegistry);
+              bitField0_ |= 0x00000001;
+              break;
+            } // case 10
+            default: {
+              if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                done = true; // was an endgroup tag
+              }
+              break;
+            } // default:
+          } // switch (tag)
+        } // while (!done)
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.google.showcase.v1beta1.CreateRoomRequest) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        if (parsedMessage != null) {
-          mergeFrom(parsedMessage);
-        }
-      }
+        onChanged();
+      } // finally
       return this;
     }
+    private int bitField0_;
 
     private com.google.showcase.v1beta1.Room room_;
     private com.google.protobuf.SingleFieldBuilderV3<
@@ -470,7 +436,7 @@ private static final long serialVersionUID = 0L;
      * @return Whether the room field is set.
      */
     public boolean hasRoom() {
-      return roomBuilder_ != null || room_ != null;
+      return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <pre>
@@ -500,11 +466,11 @@ private static final long serialVersionUID = 0L;
           throw new NullPointerException();
         }
         room_ = value;
-        onChanged();
       } else {
         roomBuilder_.setMessage(value);
       }
-
+      bitField0_ |= 0x00000001;
+      onChanged();
       return this;
     }
     /**
@@ -518,11 +484,11 @@ private static final long serialVersionUID = 0L;
         com.google.showcase.v1beta1.Room.Builder builderForValue) {
       if (roomBuilder_ == null) {
         room_ = builderForValue.build();
-        onChanged();
       } else {
         roomBuilder_.setMessage(builderForValue.build());
       }
-
+      bitField0_ |= 0x00000001;
+      onChanged();
       return this;
     }
     /**
@@ -534,17 +500,18 @@ private static final long serialVersionUID = 0L;
      */
     public Builder mergeRoom(com.google.showcase.v1beta1.Room value) {
       if (roomBuilder_ == null) {
-        if (room_ != null) {
-          room_ =
-            com.google.showcase.v1beta1.Room.newBuilder(room_).mergeFrom(value).buildPartial();
+        if (((bitField0_ & 0x00000001) != 0) &&
+          room_ != null &&
+          room_ != com.google.showcase.v1beta1.Room.getDefaultInstance()) {
+          getRoomBuilder().mergeFrom(value);
         } else {
           room_ = value;
         }
-        onChanged();
       } else {
         roomBuilder_.mergeFrom(value);
       }
-
+      bitField0_ |= 0x00000001;
+      onChanged();
       return this;
     }
     /**
@@ -555,14 +522,13 @@ private static final long serialVersionUID = 0L;
      * <code>.google.showcase.v1beta1.Room room = 1;</code>
      */
     public Builder clearRoom() {
-      if (roomBuilder_ == null) {
-        room_ = null;
-        onChanged();
-      } else {
-        room_ = null;
+      bitField0_ = (bitField0_ & ~0x00000001);
+      room_ = null;
+      if (roomBuilder_ != null) {
+        roomBuilder_.dispose();
         roomBuilder_ = null;
       }
-
+      onChanged();
       return this;
     }
     /**
@@ -573,7 +539,7 @@ private static final long serialVersionUID = 0L;
      * <code>.google.showcase.v1beta1.Room room = 1;</code>
      */
     public com.google.showcase.v1beta1.Room.Builder getRoomBuilder() {
-      
+      bitField0_ |= 0x00000001;
       onChanged();
       return getRoomFieldBuilder().getBuilder();
     }
@@ -645,7 +611,18 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return new CreateRoomRequest(input, extensionRegistry);
+      Builder builder = newBuilder();
+      try {
+        builder.mergeFrom(input, extensionRegistry);
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(builder.buildPartial());
+      } catch (com.google.protobuf.UninitializedMessageException e) {
+        throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(builder.buildPartial());
+      }
+      return builder.buildPartial();
     }
   };
 

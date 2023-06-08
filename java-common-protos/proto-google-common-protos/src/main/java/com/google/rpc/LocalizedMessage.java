@@ -49,11 +49,6 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
     return new LocalizedMessage();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_LocalizedMessage_descriptor;
   }
@@ -68,7 +63,9 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
   }
 
   public static final int LOCALE_FIELD_NUMBER = 1;
-  private volatile java.lang.Object locale_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object locale_ = "";
   /**
    *
    *
@@ -121,7 +118,9 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
   }
 
   public static final int MESSAGE_FIELD_NUMBER = 2;
-  private volatile java.lang.Object message_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object message_ = "";
   /**
    *
    *
@@ -373,10 +372,9 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       locale_ = "";
-
       message_ = "";
-
       return this;
     }
 
@@ -403,10 +401,21 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
     @java.lang.Override
     public com.google.rpc.LocalizedMessage buildPartial() {
       com.google.rpc.LocalizedMessage result = new com.google.rpc.LocalizedMessage(this);
-      result.locale_ = locale_;
-      result.message_ = message_;
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.rpc.LocalizedMessage result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.locale_ = locale_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.message_ = message_;
+      }
     }
 
     @java.lang.Override
@@ -456,10 +465,12 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
       if (other == com.google.rpc.LocalizedMessage.getDefaultInstance()) return this;
       if (!other.getLocale().isEmpty()) {
         locale_ = other.locale_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (!other.getMessage().isEmpty()) {
         message_ = other.message_;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -491,13 +502,13 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
             case 10:
               {
                 locale_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
               {
                 message_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             default:
@@ -516,6 +527,8 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
       } // finally
       return this;
     }
+
+    private int bitField0_;
 
     private java.lang.Object locale_ = "";
     /**
@@ -584,8 +597,8 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
       if (value == null) {
         throw new NullPointerException();
       }
-
       locale_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -603,8 +616,8 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder clearLocale() {
-
       locale_ = getDefaultInstance().getLocale();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -627,8 +640,8 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       locale_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -694,8 +707,8 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
       if (value == null) {
         throw new NullPointerException();
       }
-
       message_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -711,8 +724,8 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder clearMessage() {
-
       message_ = getDefaultInstance().getMessage();
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -733,8 +746,8 @@ public final class LocalizedMessage extends com.google.protobuf.GeneratedMessage
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       message_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }

@@ -79,6 +79,36 @@ public enum ClientLibraryOrganization implements com.google.protobuf.ProtocolMes
    * <code>STREET_VIEW = 4;</code>
    */
   STREET_VIEW(4),
+  /**
+   *
+   *
+   * <pre>
+   * Shopping Org.
+   * </pre>
+   *
+   * <code>SHOPPING = 5;</code>
+   */
+  SHOPPING(5),
+  /**
+   *
+   *
+   * <pre>
+   * Geo Org.
+   * </pre>
+   *
+   * <code>GEO = 6;</code>
+   */
+  GEO(6),
+  /**
+   *
+   *
+   * <pre>
+   * Generative AI - https://developers.generativeai.google
+   * </pre>
+   *
+   * <code>GENERATIVE_AI = 7;</code>
+   */
+  GENERATIVE_AI(7),
   UNRECOGNIZED(-1),
   ;
 
@@ -132,6 +162,36 @@ public enum ClientLibraryOrganization implements com.google.protobuf.ProtocolMes
    * <code>STREET_VIEW = 4;</code>
    */
   public static final int STREET_VIEW_VALUE = 4;
+  /**
+   *
+   *
+   * <pre>
+   * Shopping Org.
+   * </pre>
+   *
+   * <code>SHOPPING = 5;</code>
+   */
+  public static final int SHOPPING_VALUE = 5;
+  /**
+   *
+   *
+   * <pre>
+   * Geo Org.
+   * </pre>
+   *
+   * <code>GEO = 6;</code>
+   */
+  public static final int GEO_VALUE = 6;
+  /**
+   *
+   *
+   * <pre>
+   * Generative AI - https://developers.generativeai.google
+   * </pre>
+   *
+   * <code>GENERATIVE_AI = 7;</code>
+   */
+  public static final int GENERATIVE_AI_VALUE = 7;
 
   public final int getNumber() {
     if (this == UNRECOGNIZED) {
@@ -167,6 +227,12 @@ public enum ClientLibraryOrganization implements com.google.protobuf.ProtocolMes
         return PHOTOS;
       case 4:
         return STREET_VIEW;
+      case 5:
+        return SHOPPING;
+      case 6:
+        return GEO;
+      case 7:
+        return GENERATIVE_AI;
       default:
         return null;
     }

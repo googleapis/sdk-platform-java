@@ -26,70 +26,6 @@ private static final long serialVersionUID = 0L;
     return new PagedExpandLegacyMappedResponse();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet
-  getUnknownFields() {
-    return this.unknownFields;
-  }
-  private PagedExpandLegacyMappedResponse(
-      com.google.protobuf.CodedInputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    this();
-    if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
-    }
-    int mutable_bitField0_ = 0;
-    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-        com.google.protobuf.UnknownFieldSet.newBuilder();
-    try {
-      boolean done = false;
-      while (!done) {
-        int tag = input.readTag();
-        switch (tag) {
-          case 0:
-            done = true;
-            break;
-          case 10: {
-            if (!((mutable_bitField0_ & 0x00000001) != 0)) {
-              alphabetized_ = com.google.protobuf.MapField.newMapField(
-                  AlphabetizedDefaultEntryHolder.defaultEntry);
-              mutable_bitField0_ |= 0x00000001;
-            }
-            com.google.protobuf.MapEntry<java.lang.String, com.google.showcase.v1beta1.PagedExpandResponseList>
-            alphabetized__ = input.readMessage(
-                AlphabetizedDefaultEntryHolder.defaultEntry.getParserForType(), extensionRegistry);
-            alphabetized_.getMutableMap().put(
-                alphabetized__.getKey(), alphabetized__.getValue());
-            break;
-          }
-          case 18: {
-            java.lang.String s = input.readStringRequireUtf8();
-
-            nextPageToken_ = s;
-            break;
-          }
-          default: {
-            if (!parseUnknownField(
-                input, unknownFields, extensionRegistry, tag)) {
-              done = true;
-            }
-            break;
-          }
-        }
-      }
-    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-      throw e.setUnfinishedMessage(this);
-    } catch (com.google.protobuf.UninitializedMessageException e) {
-      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
-    } catch (java.io.IOException e) {
-      throw new com.google.protobuf.InvalidProtocolBufferException(
-          e).setUnfinishedMessage(this);
-    } finally {
-      this.unknownFields = unknownFields.build();
-      makeExtensionsImmutable();
-    }
-  }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
     return com.google.showcase.v1beta1.EchoOuterClass.internal_static_google_showcase_v1beta1_PagedExpandLegacyMappedResponse_descriptor;
@@ -127,6 +63,7 @@ private static final long serialVersionUID = 0L;
                 com.google.protobuf.WireFormat.FieldType.MESSAGE,
                 com.google.showcase.v1beta1.PagedExpandResponseList.getDefaultInstance());
   }
+  @SuppressWarnings("serial")
   private com.google.protobuf.MapField<
       java.lang.String, com.google.showcase.v1beta1.PagedExpandResponseList> alphabetized_;
   private com.google.protobuf.MapField<java.lang.String, com.google.showcase.v1beta1.PagedExpandResponseList>
@@ -137,7 +74,6 @@ private static final long serialVersionUID = 0L;
     }
     return alphabetized_;
   }
-
   public int getAlphabetizedCount() {
     return internalGetAlphabetized().getMap().size();
   }
@@ -150,7 +86,6 @@ private static final long serialVersionUID = 0L;
    *
    * <code>map&lt;string, .google.showcase.v1beta1.PagedExpandResponseList&gt; alphabetized = 1;</code>
    */
-
   @java.lang.Override
   public boolean containsAlphabetized(
       java.lang.String key) {
@@ -175,7 +110,6 @@ private static final long serialVersionUID = 0L;
    * <code>map&lt;string, .google.showcase.v1beta1.PagedExpandResponseList&gt; alphabetized = 1;</code>
    */
   @java.lang.Override
-
   public java.util.Map<java.lang.String, com.google.showcase.v1beta1.PagedExpandResponseList> getAlphabetizedMap() {
     return internalGetAlphabetized().getMap();
   }
@@ -189,10 +123,11 @@ private static final long serialVersionUID = 0L;
    * <code>map&lt;string, .google.showcase.v1beta1.PagedExpandResponseList&gt; alphabetized = 1;</code>
    */
   @java.lang.Override
-
-  public com.google.showcase.v1beta1.PagedExpandResponseList getAlphabetizedOrDefault(
+  public /* nullable */
+com.google.showcase.v1beta1.PagedExpandResponseList getAlphabetizedOrDefault(
       java.lang.String key,
-      com.google.showcase.v1beta1.PagedExpandResponseList defaultValue) {
+      /* nullable */
+com.google.showcase.v1beta1.PagedExpandResponseList defaultValue) {
     if (key == null) { throw new NullPointerException("map key"); }
     java.util.Map<java.lang.String, com.google.showcase.v1beta1.PagedExpandResponseList> map =
         internalGetAlphabetized().getMap();
@@ -208,7 +143,6 @@ private static final long serialVersionUID = 0L;
    * <code>map&lt;string, .google.showcase.v1beta1.PagedExpandResponseList&gt; alphabetized = 1;</code>
    */
   @java.lang.Override
-
   public com.google.showcase.v1beta1.PagedExpandResponseList getAlphabetizedOrThrow(
       java.lang.String key) {
     if (key == null) { throw new NullPointerException("map key"); }
@@ -221,7 +155,8 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int NEXT_PAGE_TOKEN_FIELD_NUMBER = 2;
-  private volatile java.lang.Object nextPageToken_;
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object nextPageToken_ = "";
   /**
    * <pre>
    * The next page token.
@@ -289,7 +224,7 @@ private static final long serialVersionUID = 0L;
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(nextPageToken_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, nextPageToken_);
     }
-    unknownFields.writeTo(output);
+    getUnknownFields().writeTo(output);
   }
 
   @java.lang.Override
@@ -311,7 +246,7 @@ private static final long serialVersionUID = 0L;
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(nextPageToken_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, nextPageToken_);
     }
-    size += unknownFields.getSerializedSize();
+    size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -330,7 +265,7 @@ private static final long serialVersionUID = 0L;
         other.internalGetAlphabetized())) return false;
     if (!getNextPageToken()
         .equals(other.getNextPageToken())) return false;
-    if (!unknownFields.equals(other.unknownFields)) return false;
+    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
 
@@ -347,7 +282,7 @@ private static final long serialVersionUID = 0L;
     }
     hash = (37 * hash) + NEXT_PAGE_TOKEN_FIELD_NUMBER;
     hash = (53 * hash) + getNextPageToken().hashCode();
-    hash = (29 * hash) + unknownFields.hashCode();
+    hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -396,11 +331,13 @@ private static final long serialVersionUID = 0L;
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
+
   public static com.google.showcase.v1beta1.PagedExpandLegacyMappedResponse parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
+
   public static com.google.showcase.v1beta1.PagedExpandLegacyMappedResponse parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -486,25 +423,20 @@ private static final long serialVersionUID = 0L;
 
     // Construct using com.google.showcase.v1beta1.PagedExpandLegacyMappedResponse.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
+
     }
 
     private Builder(
         com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
-      maybeForceBuilderInitialization();
-    }
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3
-              .alwaysUseFieldBuilders) {
-      }
+
     }
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       internalGetMutableAlphabetized().clear();
       nextPageToken_ = "";
-
       return this;
     }
 
@@ -531,12 +463,20 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.showcase.v1beta1.PagedExpandLegacyMappedResponse buildPartial() {
       com.google.showcase.v1beta1.PagedExpandLegacyMappedResponse result = new com.google.showcase.v1beta1.PagedExpandLegacyMappedResponse(this);
-      int from_bitField0_ = bitField0_;
-      result.alphabetized_ = internalGetAlphabetized();
-      result.alphabetized_.makeImmutable();
-      result.nextPageToken_ = nextPageToken_;
+      if (bitField0_ != 0) { buildPartial0(result); }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.showcase.v1beta1.PagedExpandLegacyMappedResponse result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.alphabetized_ = internalGetAlphabetized();
+        result.alphabetized_.makeImmutable();
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.nextPageToken_ = nextPageToken_;
+      }
     }
 
     @java.lang.Override
@@ -585,11 +525,13 @@ private static final long serialVersionUID = 0L;
       if (other == com.google.showcase.v1beta1.PagedExpandLegacyMappedResponse.getDefaultInstance()) return this;
       internalGetMutableAlphabetized().mergeFrom(
           other.internalGetAlphabetized());
+      bitField0_ |= 0x00000001;
       if (!other.getNextPageToken().isEmpty()) {
         nextPageToken_ = other.nextPageToken_;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
-      this.mergeUnknownFields(other.unknownFields);
+      this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
       return this;
     }
@@ -604,17 +546,44 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.google.showcase.v1beta1.PagedExpandLegacyMappedResponse parsedMessage = null;
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       try {
-        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              com.google.protobuf.MapEntry<java.lang.String, com.google.showcase.v1beta1.PagedExpandResponseList>
+              alphabetized__ = input.readMessage(
+                  AlphabetizedDefaultEntryHolder.defaultEntry.getParserForType(), extensionRegistry);
+              internalGetMutableAlphabetized().getMutableMap().put(
+                  alphabetized__.getKey(), alphabetized__.getValue());
+              bitField0_ |= 0x00000001;
+              break;
+            } // case 10
+            case 18: {
+              nextPageToken_ = input.readStringRequireUtf8();
+              bitField0_ |= 0x00000002;
+              break;
+            } // case 18
+            default: {
+              if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                done = true; // was an endgroup tag
+              }
+              break;
+            } // default:
+          } // switch (tag)
+        } // while (!done)
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.google.showcase.v1beta1.PagedExpandLegacyMappedResponse) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        if (parsedMessage != null) {
-          mergeFrom(parsedMessage);
-        }
-      }
+        onChanged();
+      } // finally
       return this;
     }
     private int bitField0_;
@@ -622,7 +591,7 @@ private static final long serialVersionUID = 0L;
     private com.google.protobuf.MapField<
         java.lang.String, com.google.showcase.v1beta1.PagedExpandResponseList> alphabetized_;
     private com.google.protobuf.MapField<java.lang.String, com.google.showcase.v1beta1.PagedExpandResponseList>
-    internalGetAlphabetized() {
+        internalGetAlphabetized() {
       if (alphabetized_ == null) {
         return com.google.protobuf.MapField.emptyMapField(
             AlphabetizedDefaultEntryHolder.defaultEntry);
@@ -630,8 +599,7 @@ private static final long serialVersionUID = 0L;
       return alphabetized_;
     }
     private com.google.protobuf.MapField<java.lang.String, com.google.showcase.v1beta1.PagedExpandResponseList>
-    internalGetMutableAlphabetized() {
-      onChanged();;
+        internalGetMutableAlphabetized() {
       if (alphabetized_ == null) {
         alphabetized_ = com.google.protobuf.MapField.newMapField(
             AlphabetizedDefaultEntryHolder.defaultEntry);
@@ -639,9 +607,10 @@ private static final long serialVersionUID = 0L;
       if (!alphabetized_.isMutable()) {
         alphabetized_ = alphabetized_.copy();
       }
+      bitField0_ |= 0x00000001;
+      onChanged();
       return alphabetized_;
     }
-
     public int getAlphabetizedCount() {
       return internalGetAlphabetized().getMap().size();
     }
@@ -654,7 +623,6 @@ private static final long serialVersionUID = 0L;
      *
      * <code>map&lt;string, .google.showcase.v1beta1.PagedExpandResponseList&gt; alphabetized = 1;</code>
      */
-
     @java.lang.Override
     public boolean containsAlphabetized(
         java.lang.String key) {
@@ -679,7 +647,6 @@ private static final long serialVersionUID = 0L;
      * <code>map&lt;string, .google.showcase.v1beta1.PagedExpandResponseList&gt; alphabetized = 1;</code>
      */
     @java.lang.Override
-
     public java.util.Map<java.lang.String, com.google.showcase.v1beta1.PagedExpandResponseList> getAlphabetizedMap() {
       return internalGetAlphabetized().getMap();
     }
@@ -693,10 +660,11 @@ private static final long serialVersionUID = 0L;
      * <code>map&lt;string, .google.showcase.v1beta1.PagedExpandResponseList&gt; alphabetized = 1;</code>
      */
     @java.lang.Override
-
-    public com.google.showcase.v1beta1.PagedExpandResponseList getAlphabetizedOrDefault(
+    public /* nullable */
+com.google.showcase.v1beta1.PagedExpandResponseList getAlphabetizedOrDefault(
         java.lang.String key,
-        com.google.showcase.v1beta1.PagedExpandResponseList defaultValue) {
+        /* nullable */
+com.google.showcase.v1beta1.PagedExpandResponseList defaultValue) {
       if (key == null) { throw new NullPointerException("map key"); }
       java.util.Map<java.lang.String, com.google.showcase.v1beta1.PagedExpandResponseList> map =
           internalGetAlphabetized().getMap();
@@ -712,7 +680,6 @@ private static final long serialVersionUID = 0L;
      * <code>map&lt;string, .google.showcase.v1beta1.PagedExpandResponseList&gt; alphabetized = 1;</code>
      */
     @java.lang.Override
-
     public com.google.showcase.v1beta1.PagedExpandResponseList getAlphabetizedOrThrow(
         java.lang.String key) {
       if (key == null) { throw new NullPointerException("map key"); }
@@ -723,8 +690,8 @@ private static final long serialVersionUID = 0L;
       }
       return map.get(key);
     }
-
     public Builder clearAlphabetized() {
+      bitField0_ = (bitField0_ & ~0x00000001);
       internalGetMutableAlphabetized().getMutableMap()
           .clear();
       return this;
@@ -738,7 +705,6 @@ private static final long serialVersionUID = 0L;
      *
      * <code>map&lt;string, .google.showcase.v1beta1.PagedExpandResponseList&gt; alphabetized = 1;</code>
      */
-
     public Builder removeAlphabetized(
         java.lang.String key) {
       if (key == null) { throw new NullPointerException("map key"); }
@@ -751,7 +717,8 @@ private static final long serialVersionUID = 0L;
      */
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, com.google.showcase.v1beta1.PagedExpandResponseList>
-    getMutableAlphabetized() {
+        getMutableAlphabetized() {
+      bitField0_ |= 0x00000001;
       return internalGetMutableAlphabetized().getMutableMap();
     }
     /**
@@ -767,12 +734,10 @@ private static final long serialVersionUID = 0L;
         java.lang.String key,
         com.google.showcase.v1beta1.PagedExpandResponseList value) {
       if (key == null) { throw new NullPointerException("map key"); }
-      if (value == null) {
-  throw new NullPointerException("map value");
-}
-
+      if (value == null) { throw new NullPointerException("map value"); }
       internalGetMutableAlphabetized().getMutableMap()
           .put(key, value);
+      bitField0_ |= 0x00000001;
       return this;
     }
     /**
@@ -784,11 +749,11 @@ private static final long serialVersionUID = 0L;
      *
      * <code>map&lt;string, .google.showcase.v1beta1.PagedExpandResponseList&gt; alphabetized = 1;</code>
      */
-
     public Builder putAllAlphabetized(
         java.util.Map<java.lang.String, com.google.showcase.v1beta1.PagedExpandResponseList> values) {
       internalGetMutableAlphabetized().getMutableMap()
           .putAll(values);
+      bitField0_ |= 0x00000001;
       return this;
     }
 
@@ -845,11 +810,9 @@ private static final long serialVersionUID = 0L;
      */
     public Builder setNextPageToken(
         java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
+      if (value == null) { throw new NullPointerException(); }
       nextPageToken_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -862,8 +825,8 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearNextPageToken() {
-      
       nextPageToken_ = getDefaultInstance().getNextPageToken();
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -878,12 +841,10 @@ private static final long serialVersionUID = 0L;
      */
     public Builder setNextPageTokenBytes(
         com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
+      if (value == null) { throw new NullPointerException(); }
+      checkByteStringIsUtf8(value);
       nextPageToken_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -920,7 +881,18 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return new PagedExpandLegacyMappedResponse(input, extensionRegistry);
+      Builder builder = newBuilder();
+      try {
+        builder.mergeFrom(input, extensionRegistry);
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(builder.buildPartial());
+      } catch (com.google.protobuf.UninitializedMessageException e) {
+        throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(builder.buildPartial());
+      }
+      return builder.buildPartial();
     }
   };
 

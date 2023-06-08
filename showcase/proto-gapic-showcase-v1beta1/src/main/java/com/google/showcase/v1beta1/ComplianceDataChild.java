@@ -29,131 +29,6 @@ private static final long serialVersionUID = 0L;
     return new ComplianceDataChild();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet
-  getUnknownFields() {
-    return this.unknownFields;
-  }
-  private ComplianceDataChild(
-      com.google.protobuf.CodedInputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    this();
-    if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
-    }
-    int mutable_bitField0_ = 0;
-    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-        com.google.protobuf.UnknownFieldSet.newBuilder();
-    try {
-      boolean done = false;
-      while (!done) {
-        int tag = input.readTag();
-        switch (tag) {
-          case 0:
-            done = true;
-            break;
-          case 10: {
-            java.lang.String s = input.readStringRequireUtf8();
-
-            fString_ = s;
-            break;
-          }
-          case 21: {
-
-            fFloat_ = input.readFloat();
-            break;
-          }
-          case 25: {
-
-            fDouble_ = input.readDouble();
-            break;
-          }
-          case 32: {
-
-            fBool_ = input.readBool();
-            break;
-          }
-          case 42: {
-            com.google.showcase.v1beta1.ComplianceDataGrandchild.Builder subBuilder = null;
-            if (fChild_ != null) {
-              subBuilder = fChild_.toBuilder();
-            }
-            fChild_ = input.readMessage(com.google.showcase.v1beta1.ComplianceDataGrandchild.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom(fChild_);
-              fChild_ = subBuilder.buildPartial();
-            }
-
-            break;
-          }
-          case 50: {
-            java.lang.String s = input.readStringRequireUtf8();
-            bitField0_ |= 0x00000001;
-            pString_ = s;
-            break;
-          }
-          case 61: {
-            bitField0_ |= 0x00000002;
-            pFloat_ = input.readFloat();
-            break;
-          }
-          case 65: {
-            bitField0_ |= 0x00000004;
-            pDouble_ = input.readDouble();
-            break;
-          }
-          case 72: {
-            bitField0_ |= 0x00000008;
-            pBool_ = input.readBool();
-            break;
-          }
-          case 82: {
-            com.google.showcase.v1beta1.ComplianceDataGrandchild.Builder subBuilder = null;
-            if (((bitField0_ & 0x00000010) != 0)) {
-              subBuilder = pChild_.toBuilder();
-            }
-            pChild_ = input.readMessage(com.google.showcase.v1beta1.ComplianceDataGrandchild.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom(pChild_);
-              pChild_ = subBuilder.buildPartial();
-            }
-            bitField0_ |= 0x00000010;
-            break;
-          }
-          case 88: {
-            int rawValue = input.readEnum();
-
-            fContinent_ = rawValue;
-            break;
-          }
-          case 96: {
-            int rawValue = input.readEnum();
-
-            pContinent_ = rawValue;
-            break;
-          }
-          default: {
-            if (!parseUnknownField(
-                input, unknownFields, extensionRegistry, tag)) {
-              done = true;
-            }
-            break;
-          }
-        }
-      }
-    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-      throw e.setUnfinishedMessage(this);
-    } catch (com.google.protobuf.UninitializedMessageException e) {
-      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
-    } catch (java.io.IOException e) {
-      throw new com.google.protobuf.InvalidProtocolBufferException(
-          e).setUnfinishedMessage(this);
-    } finally {
-      this.unknownFields = unknownFields.build();
-      makeExtensionsImmutable();
-    }
-  }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
     return com.google.showcase.v1beta1.ComplianceOuterClass.internal_static_google_showcase_v1beta1_ComplianceDataChild_descriptor;
@@ -169,7 +44,8 @@ private static final long serialVersionUID = 0L;
 
   private int bitField0_;
   public static final int F_STRING_FIELD_NUMBER = 1;
-  private volatile java.lang.Object fString_;
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object fString_ = "";
   /**
    * <code>string f_string = 1;</code>
    * @return The fString.
@@ -207,7 +83,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int F_FLOAT_FIELD_NUMBER = 2;
-  private float fFloat_;
+  private float fFloat_ = 0F;
   /**
    * <code>float f_float = 2;</code>
    * @return The fFloat.
@@ -218,7 +94,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int F_DOUBLE_FIELD_NUMBER = 3;
-  private double fDouble_;
+  private double fDouble_ = 0D;
   /**
    * <code>double f_double = 3;</code>
    * @return The fDouble.
@@ -229,7 +105,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int F_BOOL_FIELD_NUMBER = 4;
-  private boolean fBool_;
+  private boolean fBool_ = false;
   /**
    * <code>bool f_bool = 4;</code>
    * @return The fBool.
@@ -240,7 +116,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int F_CONTINENT_FIELD_NUMBER = 11;
-  private int fContinent_;
+  private int fContinent_ = 0;
   /**
    * <code>.google.showcase.v1beta1.Continent f_continent = 11;</code>
    * @return The enum numeric value on the wire for fContinent.
@@ -253,8 +129,7 @@ private static final long serialVersionUID = 0L;
    * @return The fContinent.
    */
   @java.lang.Override public com.google.showcase.v1beta1.Continent getFContinent() {
-    @SuppressWarnings("deprecation")
-    com.google.showcase.v1beta1.Continent result = com.google.showcase.v1beta1.Continent.valueOf(fContinent_);
+    com.google.showcase.v1beta1.Continent result = com.google.showcase.v1beta1.Continent.forNumber(fContinent_);
     return result == null ? com.google.showcase.v1beta1.Continent.UNRECOGNIZED : result;
   }
 
@@ -281,11 +156,12 @@ private static final long serialVersionUID = 0L;
    */
   @java.lang.Override
   public com.google.showcase.v1beta1.ComplianceDataGrandchildOrBuilder getFChildOrBuilder() {
-    return getFChild();
+    return fChild_ == null ? com.google.showcase.v1beta1.ComplianceDataGrandchild.getDefaultInstance() : fChild_;
   }
 
   public static final int P_STRING_FIELD_NUMBER = 6;
-  private volatile java.lang.Object pString_;
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object pString_ = "";
   /**
    * <code>optional string p_string = 6;</code>
    * @return Whether the pString field is set.
@@ -331,7 +207,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int P_FLOAT_FIELD_NUMBER = 7;
-  private float pFloat_;
+  private float pFloat_ = 0F;
   /**
    * <code>optional float p_float = 7;</code>
    * @return Whether the pFloat field is set.
@@ -350,7 +226,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int P_DOUBLE_FIELD_NUMBER = 8;
-  private double pDouble_;
+  private double pDouble_ = 0D;
   /**
    * <code>optional double p_double = 8;</code>
    * @return Whether the pDouble field is set.
@@ -369,7 +245,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int P_BOOL_FIELD_NUMBER = 9;
-  private boolean pBool_;
+  private boolean pBool_ = false;
   /**
    * <code>optional bool p_bool = 9;</code>
    * @return Whether the pBool field is set.
@@ -388,7 +264,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int P_CONTINENT_FIELD_NUMBER = 12;
-  private int pContinent_;
+  private int pContinent_ = 0;
   /**
    * <code>.google.showcase.v1beta1.Continent p_continent = 12;</code>
    * @return The enum numeric value on the wire for pContinent.
@@ -401,8 +277,7 @@ private static final long serialVersionUID = 0L;
    * @return The pContinent.
    */
   @java.lang.Override public com.google.showcase.v1beta1.Continent getPContinent() {
-    @SuppressWarnings("deprecation")
-    com.google.showcase.v1beta1.Continent result = com.google.showcase.v1beta1.Continent.valueOf(pContinent_);
+    com.google.showcase.v1beta1.Continent result = com.google.showcase.v1beta1.Continent.forNumber(pContinent_);
     return result == null ? com.google.showcase.v1beta1.Continent.UNRECOGNIZED : result;
   }
 
@@ -482,7 +357,7 @@ private static final long serialVersionUID = 0L;
     if (pContinent_ != com.google.showcase.v1beta1.Continent.CONTINENT_UNSPECIFIED.getNumber()) {
       output.writeEnum(12, pContinent_);
     }
-    unknownFields.writeTo(output);
+    getUnknownFields().writeTo(output);
   }
 
   @java.lang.Override
@@ -537,7 +412,7 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeEnumSize(12, pContinent_);
     }
-    size += unknownFields.getSerializedSize();
+    size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -596,7 +471,7 @@ private static final long serialVersionUID = 0L;
       if (!getPChild()
           .equals(other.getPChild())) return false;
     }
-    if (!unknownFields.equals(other.unknownFields)) return false;
+    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
 
@@ -649,7 +524,7 @@ private static final long serialVersionUID = 0L;
       hash = (37 * hash) + P_CHILD_FIELD_NUMBER;
       hash = (53 * hash) + getPChild().hashCode();
     }
-    hash = (29 * hash) + unknownFields.hashCode();
+    hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -698,11 +573,13 @@ private static final long serialVersionUID = 0L;
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
+
   public static com.google.showcase.v1beta1.ComplianceDataChild parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
+
   public static com.google.showcase.v1beta1.ComplianceDataChild parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -777,44 +654,34 @@ private static final long serialVersionUID = 0L;
     private void maybeForceBuilderInitialization() {
       if (com.google.protobuf.GeneratedMessageV3
               .alwaysUseFieldBuilders) {
+        getFChildFieldBuilder();
         getPChildFieldBuilder();
       }
     }
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       fString_ = "";
-
       fFloat_ = 0F;
-
       fDouble_ = 0D;
-
       fBool_ = false;
-
       fContinent_ = 0;
-
-      if (fChildBuilder_ == null) {
-        fChild_ = null;
-      } else {
-        fChild_ = null;
+      fChild_ = null;
+      if (fChildBuilder_ != null) {
+        fChildBuilder_.dispose();
         fChildBuilder_ = null;
       }
       pString_ = "";
-      bitField0_ = (bitField0_ & ~0x00000001);
       pFloat_ = 0F;
-      bitField0_ = (bitField0_ & ~0x00000002);
       pDouble_ = 0D;
-      bitField0_ = (bitField0_ & ~0x00000004);
       pBool_ = false;
-      bitField0_ = (bitField0_ & ~0x00000008);
       pContinent_ = 0;
-
-      if (pChildBuilder_ == null) {
-        pChild_ = null;
-      } else {
-        pChildBuilder_.clear();
+      pChild_ = null;
+      if (pChildBuilder_ != null) {
+        pChildBuilder_.dispose();
+        pChildBuilder_ = null;
       }
-      bitField0_ = (bitField0_ & ~0x00000010);
       return this;
     }
 
@@ -841,46 +708,60 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.showcase.v1beta1.ComplianceDataChild buildPartial() {
       com.google.showcase.v1beta1.ComplianceDataChild result = new com.google.showcase.v1beta1.ComplianceDataChild(this);
+      if (bitField0_ != 0) { buildPartial0(result); }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartial0(com.google.showcase.v1beta1.ComplianceDataChild result) {
       int from_bitField0_ = bitField0_;
-      int to_bitField0_ = 0;
-      result.fString_ = fString_;
-      result.fFloat_ = fFloat_;
-      result.fDouble_ = fDouble_;
-      result.fBool_ = fBool_;
-      result.fContinent_ = fContinent_;
-      if (fChildBuilder_ == null) {
-        result.fChild_ = fChild_;
-      } else {
-        result.fChild_ = fChildBuilder_.build();
-      }
       if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.fString_ = fString_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.fFloat_ = fFloat_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.fDouble_ = fDouble_;
+      }
+      if (((from_bitField0_ & 0x00000008) != 0)) {
+        result.fBool_ = fBool_;
+      }
+      if (((from_bitField0_ & 0x00000010) != 0)) {
+        result.fContinent_ = fContinent_;
+      }
+      if (((from_bitField0_ & 0x00000020) != 0)) {
+        result.fChild_ = fChildBuilder_ == null
+            ? fChild_
+            : fChildBuilder_.build();
+      }
+      int to_bitField0_ = 0;
+      if (((from_bitField0_ & 0x00000040) != 0)) {
+        result.pString_ = pString_;
         to_bitField0_ |= 0x00000001;
       }
-      result.pString_ = pString_;
-      if (((from_bitField0_ & 0x00000002) != 0)) {
+      if (((from_bitField0_ & 0x00000080) != 0)) {
         result.pFloat_ = pFloat_;
         to_bitField0_ |= 0x00000002;
       }
-      if (((from_bitField0_ & 0x00000004) != 0)) {
+      if (((from_bitField0_ & 0x00000100) != 0)) {
         result.pDouble_ = pDouble_;
         to_bitField0_ |= 0x00000004;
       }
-      if (((from_bitField0_ & 0x00000008) != 0)) {
+      if (((from_bitField0_ & 0x00000200) != 0)) {
         result.pBool_ = pBool_;
         to_bitField0_ |= 0x00000008;
       }
-      result.pContinent_ = pContinent_;
-      if (((from_bitField0_ & 0x00000010) != 0)) {
-        if (pChildBuilder_ == null) {
-          result.pChild_ = pChild_;
-        } else {
-          result.pChild_ = pChildBuilder_.build();
-        }
+      if (((from_bitField0_ & 0x00000400) != 0)) {
+        result.pContinent_ = pContinent_;
+      }
+      if (((from_bitField0_ & 0x00000800) != 0)) {
+        result.pChild_ = pChildBuilder_ == null
+            ? pChild_
+            : pChildBuilder_.build();
         to_bitField0_ |= 0x00000010;
       }
-      result.bitField0_ = to_bitField0_;
-      onBuilt();
-      return result;
+      result.bitField0_ |= to_bitField0_;
     }
 
     @java.lang.Override
@@ -929,6 +810,7 @@ private static final long serialVersionUID = 0L;
       if (other == com.google.showcase.v1beta1.ComplianceDataChild.getDefaultInstance()) return this;
       if (!other.getFString().isEmpty()) {
         fString_ = other.fString_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (other.getFFloat() != 0F) {
@@ -947,8 +829,8 @@ private static final long serialVersionUID = 0L;
         mergeFChild(other.getFChild());
       }
       if (other.hasPString()) {
-        bitField0_ |= 0x00000001;
         pString_ = other.pString_;
+        bitField0_ |= 0x00000040;
         onChanged();
       }
       if (other.hasPFloat()) {
@@ -966,7 +848,7 @@ private static final long serialVersionUID = 0L;
       if (other.hasPChild()) {
         mergePChild(other.getPChild());
       }
-      this.mergeUnknownFields(other.unknownFields);
+      this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
       return this;
     }
@@ -981,17 +863,94 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.google.showcase.v1beta1.ComplianceDataChild parsedMessage = null;
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       try {
-        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              fString_ = input.readStringRequireUtf8();
+              bitField0_ |= 0x00000001;
+              break;
+            } // case 10
+            case 21: {
+              fFloat_ = input.readFloat();
+              bitField0_ |= 0x00000002;
+              break;
+            } // case 21
+            case 25: {
+              fDouble_ = input.readDouble();
+              bitField0_ |= 0x00000004;
+              break;
+            } // case 25
+            case 32: {
+              fBool_ = input.readBool();
+              bitField0_ |= 0x00000008;
+              break;
+            } // case 32
+            case 42: {
+              input.readMessage(
+                  getFChildFieldBuilder().getBuilder(),
+                  extensionRegistry);
+              bitField0_ |= 0x00000020;
+              break;
+            } // case 42
+            case 50: {
+              pString_ = input.readStringRequireUtf8();
+              bitField0_ |= 0x00000040;
+              break;
+            } // case 50
+            case 61: {
+              pFloat_ = input.readFloat();
+              bitField0_ |= 0x00000080;
+              break;
+            } // case 61
+            case 65: {
+              pDouble_ = input.readDouble();
+              bitField0_ |= 0x00000100;
+              break;
+            } // case 65
+            case 72: {
+              pBool_ = input.readBool();
+              bitField0_ |= 0x00000200;
+              break;
+            } // case 72
+            case 82: {
+              input.readMessage(
+                  getPChildFieldBuilder().getBuilder(),
+                  extensionRegistry);
+              bitField0_ |= 0x00000800;
+              break;
+            } // case 82
+            case 88: {
+              fContinent_ = input.readEnum();
+              bitField0_ |= 0x00000010;
+              break;
+            } // case 88
+            case 96: {
+              pContinent_ = input.readEnum();
+              bitField0_ |= 0x00000400;
+              break;
+            } // case 96
+            default: {
+              if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                done = true; // was an endgroup tag
+              }
+              break;
+            } // default:
+          } // switch (tag)
+        } // while (!done)
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.google.showcase.v1beta1.ComplianceDataChild) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        if (parsedMessage != null) {
-          mergeFrom(parsedMessage);
-        }
-      }
+        onChanged();
+      } // finally
       return this;
     }
     private int bitField0_;
@@ -1037,11 +996,9 @@ private static final long serialVersionUID = 0L;
      */
     public Builder setFString(
         java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  
+      if (value == null) { throw new NullPointerException(); }
       fString_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -1050,8 +1007,8 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearFString() {
-      
       fString_ = getDefaultInstance().getFString();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -1062,12 +1019,10 @@ private static final long serialVersionUID = 0L;
      */
     public Builder setFStringBytes(
         com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      
+      if (value == null) { throw new NullPointerException(); }
+      checkByteStringIsUtf8(value);
       fString_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -1087,8 +1042,9 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setFFloat(float value) {
-      
+
       fFloat_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1097,7 +1053,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearFFloat() {
-      
+      bitField0_ = (bitField0_ & ~0x00000002);
       fFloat_ = 0F;
       onChanged();
       return this;
@@ -1118,8 +1074,9 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setFDouble(double value) {
-      
+
       fDouble_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1128,7 +1085,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearFDouble() {
-      
+      bitField0_ = (bitField0_ & ~0x00000004);
       fDouble_ = 0D;
       onChanged();
       return this;
@@ -1149,8 +1106,9 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setFBool(boolean value) {
-      
+
       fBool_ = value;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -1159,7 +1117,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearFBool() {
-      
+      bitField0_ = (bitField0_ & ~0x00000008);
       fBool_ = false;
       onChanged();
       return this;
@@ -1179,8 +1137,8 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setFContinentValue(int value) {
-      
       fContinent_ = value;
+      bitField0_ |= 0x00000010;
       onChanged();
       return this;
     }
@@ -1190,8 +1148,7 @@ private static final long serialVersionUID = 0L;
      */
     @java.lang.Override
     public com.google.showcase.v1beta1.Continent getFContinent() {
-      @SuppressWarnings("deprecation")
-      com.google.showcase.v1beta1.Continent result = com.google.showcase.v1beta1.Continent.valueOf(fContinent_);
+      com.google.showcase.v1beta1.Continent result = com.google.showcase.v1beta1.Continent.forNumber(fContinent_);
       return result == null ? com.google.showcase.v1beta1.Continent.UNRECOGNIZED : result;
     }
     /**
@@ -1203,7 +1160,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) {
         throw new NullPointerException();
       }
-      
+      bitField0_ |= 0x00000010;
       fContinent_ = value.getNumber();
       onChanged();
       return this;
@@ -1213,7 +1170,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearFContinent() {
-      
+      bitField0_ = (bitField0_ & ~0x00000010);
       fContinent_ = 0;
       onChanged();
       return this;
@@ -1227,7 +1184,7 @@ private static final long serialVersionUID = 0L;
      * @return Whether the fChild field is set.
      */
     public boolean hasFChild() {
-      return fChildBuilder_ != null || fChild_ != null;
+      return ((bitField0_ & 0x00000020) != 0);
     }
     /**
      * <code>.google.showcase.v1beta1.ComplianceDataGrandchild f_child = 5;</code>
@@ -1249,11 +1206,11 @@ private static final long serialVersionUID = 0L;
           throw new NullPointerException();
         }
         fChild_ = value;
-        onChanged();
       } else {
         fChildBuilder_.setMessage(value);
       }
-
+      bitField0_ |= 0x00000020;
+      onChanged();
       return this;
     }
     /**
@@ -1263,11 +1220,11 @@ private static final long serialVersionUID = 0L;
         com.google.showcase.v1beta1.ComplianceDataGrandchild.Builder builderForValue) {
       if (fChildBuilder_ == null) {
         fChild_ = builderForValue.build();
-        onChanged();
       } else {
         fChildBuilder_.setMessage(builderForValue.build());
       }
-
+      bitField0_ |= 0x00000020;
+      onChanged();
       return this;
     }
     /**
@@ -1275,38 +1232,38 @@ private static final long serialVersionUID = 0L;
      */
     public Builder mergeFChild(com.google.showcase.v1beta1.ComplianceDataGrandchild value) {
       if (fChildBuilder_ == null) {
-        if (fChild_ != null) {
-          fChild_ =
-            com.google.showcase.v1beta1.ComplianceDataGrandchild.newBuilder(fChild_).mergeFrom(value).buildPartial();
+        if (((bitField0_ & 0x00000020) != 0) &&
+          fChild_ != null &&
+          fChild_ != com.google.showcase.v1beta1.ComplianceDataGrandchild.getDefaultInstance()) {
+          getFChildBuilder().mergeFrom(value);
         } else {
           fChild_ = value;
         }
-        onChanged();
       } else {
         fChildBuilder_.mergeFrom(value);
       }
-
+      bitField0_ |= 0x00000020;
+      onChanged();
       return this;
     }
     /**
      * <code>.google.showcase.v1beta1.ComplianceDataGrandchild f_child = 5;</code>
      */
     public Builder clearFChild() {
-      if (fChildBuilder_ == null) {
-        fChild_ = null;
-        onChanged();
-      } else {
-        fChild_ = null;
+      bitField0_ = (bitField0_ & ~0x00000020);
+      fChild_ = null;
+      if (fChildBuilder_ != null) {
+        fChildBuilder_.dispose();
         fChildBuilder_ = null;
       }
-
+      onChanged();
       return this;
     }
     /**
      * <code>.google.showcase.v1beta1.ComplianceDataGrandchild f_child = 5;</code>
      */
     public com.google.showcase.v1beta1.ComplianceDataGrandchild.Builder getFChildBuilder() {
-      
+      bitField0_ |= 0x00000020;
       onChanged();
       return getFChildFieldBuilder().getBuilder();
     }
@@ -1344,7 +1301,7 @@ private static final long serialVersionUID = 0L;
      * @return Whether the pString field is set.
      */
     public boolean hasPString() {
-      return ((bitField0_ & 0x00000001) != 0);
+      return ((bitField0_ & 0x00000040) != 0);
     }
     /**
      * <code>optional string p_string = 6;</code>
@@ -1386,11 +1343,9 @@ private static final long serialVersionUID = 0L;
      */
     public Builder setPString(
         java.lang.String value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  bitField0_ |= 0x00000001;
+      if (value == null) { throw new NullPointerException(); }
       pString_ = value;
+      bitField0_ |= 0x00000040;
       onChanged();
       return this;
     }
@@ -1399,8 +1354,8 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearPString() {
-      bitField0_ = (bitField0_ & ~0x00000001);
       pString_ = getDefaultInstance().getPString();
+      bitField0_ = (bitField0_ & ~0x00000040);
       onChanged();
       return this;
     }
@@ -1411,12 +1366,10 @@ private static final long serialVersionUID = 0L;
      */
     public Builder setPStringBytes(
         com.google.protobuf.ByteString value) {
-      if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-      bitField0_ |= 0x00000001;
+      if (value == null) { throw new NullPointerException(); }
+      checkByteStringIsUtf8(value);
       pString_ = value;
+      bitField0_ |= 0x00000040;
       onChanged();
       return this;
     }
@@ -1428,7 +1381,7 @@ private static final long serialVersionUID = 0L;
      */
     @java.lang.Override
     public boolean hasPFloat() {
-      return ((bitField0_ & 0x00000002) != 0);
+      return ((bitField0_ & 0x00000080) != 0);
     }
     /**
      * <code>optional float p_float = 7;</code>
@@ -1444,8 +1397,9 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setPFloat(float value) {
-      bitField0_ |= 0x00000002;
+
       pFloat_ = value;
+      bitField0_ |= 0x00000080;
       onChanged();
       return this;
     }
@@ -1454,7 +1408,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearPFloat() {
-      bitField0_ = (bitField0_ & ~0x00000002);
+      bitField0_ = (bitField0_ & ~0x00000080);
       pFloat_ = 0F;
       onChanged();
       return this;
@@ -1467,7 +1421,7 @@ private static final long serialVersionUID = 0L;
      */
     @java.lang.Override
     public boolean hasPDouble() {
-      return ((bitField0_ & 0x00000004) != 0);
+      return ((bitField0_ & 0x00000100) != 0);
     }
     /**
      * <code>optional double p_double = 8;</code>
@@ -1483,8 +1437,9 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setPDouble(double value) {
-      bitField0_ |= 0x00000004;
+
       pDouble_ = value;
+      bitField0_ |= 0x00000100;
       onChanged();
       return this;
     }
@@ -1493,7 +1448,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearPDouble() {
-      bitField0_ = (bitField0_ & ~0x00000004);
+      bitField0_ = (bitField0_ & ~0x00000100);
       pDouble_ = 0D;
       onChanged();
       return this;
@@ -1506,7 +1461,7 @@ private static final long serialVersionUID = 0L;
      */
     @java.lang.Override
     public boolean hasPBool() {
-      return ((bitField0_ & 0x00000008) != 0);
+      return ((bitField0_ & 0x00000200) != 0);
     }
     /**
      * <code>optional bool p_bool = 9;</code>
@@ -1522,8 +1477,9 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setPBool(boolean value) {
-      bitField0_ |= 0x00000008;
+
       pBool_ = value;
+      bitField0_ |= 0x00000200;
       onChanged();
       return this;
     }
@@ -1532,7 +1488,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearPBool() {
-      bitField0_ = (bitField0_ & ~0x00000008);
+      bitField0_ = (bitField0_ & ~0x00000200);
       pBool_ = false;
       onChanged();
       return this;
@@ -1552,8 +1508,8 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setPContinentValue(int value) {
-      
       pContinent_ = value;
+      bitField0_ |= 0x00000400;
       onChanged();
       return this;
     }
@@ -1563,8 +1519,7 @@ private static final long serialVersionUID = 0L;
      */
     @java.lang.Override
     public com.google.showcase.v1beta1.Continent getPContinent() {
-      @SuppressWarnings("deprecation")
-      com.google.showcase.v1beta1.Continent result = com.google.showcase.v1beta1.Continent.valueOf(pContinent_);
+      com.google.showcase.v1beta1.Continent result = com.google.showcase.v1beta1.Continent.forNumber(pContinent_);
       return result == null ? com.google.showcase.v1beta1.Continent.UNRECOGNIZED : result;
     }
     /**
@@ -1576,7 +1531,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) {
         throw new NullPointerException();
       }
-      
+      bitField0_ |= 0x00000400;
       pContinent_ = value.getNumber();
       onChanged();
       return this;
@@ -1586,7 +1541,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearPContinent() {
-      
+      bitField0_ = (bitField0_ & ~0x00000400);
       pContinent_ = 0;
       onChanged();
       return this;
@@ -1600,7 +1555,7 @@ private static final long serialVersionUID = 0L;
      * @return Whether the pChild field is set.
      */
     public boolean hasPChild() {
-      return ((bitField0_ & 0x00000010) != 0);
+      return ((bitField0_ & 0x00000800) != 0);
     }
     /**
      * <code>optional .google.showcase.v1beta1.ComplianceDataGrandchild p_child = 10;</code>
@@ -1622,11 +1577,11 @@ private static final long serialVersionUID = 0L;
           throw new NullPointerException();
         }
         pChild_ = value;
-        onChanged();
       } else {
         pChildBuilder_.setMessage(value);
       }
-      bitField0_ |= 0x00000010;
+      bitField0_ |= 0x00000800;
+      onChanged();
       return this;
     }
     /**
@@ -1636,11 +1591,11 @@ private static final long serialVersionUID = 0L;
         com.google.showcase.v1beta1.ComplianceDataGrandchild.Builder builderForValue) {
       if (pChildBuilder_ == null) {
         pChild_ = builderForValue.build();
-        onChanged();
       } else {
         pChildBuilder_.setMessage(builderForValue.build());
       }
-      bitField0_ |= 0x00000010;
+      bitField0_ |= 0x00000800;
+      onChanged();
       return this;
     }
     /**
@@ -1648,39 +1603,38 @@ private static final long serialVersionUID = 0L;
      */
     public Builder mergePChild(com.google.showcase.v1beta1.ComplianceDataGrandchild value) {
       if (pChildBuilder_ == null) {
-        if (((bitField0_ & 0x00000010) != 0) &&
-            pChild_ != null &&
-            pChild_ != com.google.showcase.v1beta1.ComplianceDataGrandchild.getDefaultInstance()) {
-          pChild_ =
-            com.google.showcase.v1beta1.ComplianceDataGrandchild.newBuilder(pChild_).mergeFrom(value).buildPartial();
+        if (((bitField0_ & 0x00000800) != 0) &&
+          pChild_ != null &&
+          pChild_ != com.google.showcase.v1beta1.ComplianceDataGrandchild.getDefaultInstance()) {
+          getPChildBuilder().mergeFrom(value);
         } else {
           pChild_ = value;
         }
-        onChanged();
       } else {
         pChildBuilder_.mergeFrom(value);
       }
-      bitField0_ |= 0x00000010;
+      bitField0_ |= 0x00000800;
+      onChanged();
       return this;
     }
     /**
      * <code>optional .google.showcase.v1beta1.ComplianceDataGrandchild p_child = 10;</code>
      */
     public Builder clearPChild() {
-      if (pChildBuilder_ == null) {
-        pChild_ = null;
-        onChanged();
-      } else {
-        pChildBuilder_.clear();
+      bitField0_ = (bitField0_ & ~0x00000800);
+      pChild_ = null;
+      if (pChildBuilder_ != null) {
+        pChildBuilder_.dispose();
+        pChildBuilder_ = null;
       }
-      bitField0_ = (bitField0_ & ~0x00000010);
+      onChanged();
       return this;
     }
     /**
      * <code>optional .google.showcase.v1beta1.ComplianceDataGrandchild p_child = 10;</code>
      */
     public com.google.showcase.v1beta1.ComplianceDataGrandchild.Builder getPChildBuilder() {
-      bitField0_ |= 0x00000010;
+      bitField0_ |= 0x00000800;
       onChanged();
       return getPChildFieldBuilder().getBuilder();
     }
@@ -1744,7 +1698,18 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return new ComplianceDataChild(input, extensionRegistry);
+      Builder builder = newBuilder();
+      try {
+        builder.mergeFrom(input, extensionRegistry);
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(builder.buildPartial());
+      } catch (com.google.protobuf.UninitializedMessageException e) {
+        throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(builder.buildPartial());
+      }
+      return builder.buildPartial();
     }
   };
 

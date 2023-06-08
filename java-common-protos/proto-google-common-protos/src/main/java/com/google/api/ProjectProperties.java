@@ -28,7 +28,9 @@ package com.google.api;
  * associated with a school, or a business, or a government agency, a business
  * type property on the project may affect how a service responds to the client.
  * This descriptor defines which properties are allowed to be set on a project.
+ *
  * Example:
+ *
  *    project_properties:
  *      properties:
  *      - name: NO_WATERMARK
@@ -60,11 +62,6 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
     return new ProjectProperties();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.ConsumerProto.internal_static_google_api_ProjectProperties_descriptor;
   }
@@ -79,6 +76,8 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
   }
 
   public static final int PROPERTIES_FIELD_NUMBER = 1;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.api.Property> properties_;
   /**
    *
@@ -315,7 +314,9 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
    * associated with a school, or a business, or a government agency, a business
    * type property on the project may affect how a service responds to the client.
    * This descriptor defines which properties are allowed to be set on a project.
+   *
    * Example:
+   *
    *    project_properties:
    *      properties:
    *      - name: NO_WATERMARK
@@ -355,6 +356,7 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       if (propertiesBuilder_ == null) {
         properties_ = java.util.Collections.emptyList();
       } else {
@@ -387,7 +389,15 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
     @java.lang.Override
     public com.google.api.ProjectProperties buildPartial() {
       com.google.api.ProjectProperties result = new com.google.api.ProjectProperties(this);
-      int from_bitField0_ = bitField0_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.api.ProjectProperties result) {
       if (propertiesBuilder_ == null) {
         if (((bitField0_ & 0x00000001) != 0)) {
           properties_ = java.util.Collections.unmodifiableList(properties_);
@@ -397,8 +407,10 @@ public final class ProjectProperties extends com.google.protobuf.GeneratedMessag
       } else {
         result.properties_ = propertiesBuilder_.build();
       }
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.api.ProjectProperties result) {
+      int from_bitField0_ = bitField0_;
     }
 
     @java.lang.Override

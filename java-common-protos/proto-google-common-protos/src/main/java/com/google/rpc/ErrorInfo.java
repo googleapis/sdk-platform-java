@@ -23,8 +23,10 @@ package com.google.rpc;
  *
  * <pre>
  * Describes the cause of the error with structured details.
+ *
  * Example of an error when contacting the "pubsub.googleapis.com" API when it
  * is not enabled:
+ *
  *     { "reason": "API_DISABLED"
  *       "domain": "googleapis.com"
  *       "metadata": {
@@ -32,9 +34,12 @@ package com.google.rpc;
  *         "service": "pubsub.googleapis.com"
  *       }
  *     }
+ *
  * This response indicates that the pubsub.googleapis.com API is not enabled.
+ *
  * Example of an error that is returned when attempting to create a Spanner
  * instance in a region that is out of stock:
+ *
  *     { "reason": "STOCKOUT"
  *       "domain": "spanner.googleapis.com",
  *       "metadata": {
@@ -66,11 +71,6 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
     return new ErrorInfo();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_ErrorInfo_descriptor;
   }
@@ -95,7 +95,9 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int REASON_FIELD_NUMBER = 1;
-  private volatile java.lang.Object reason_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object reason_ = "";
   /**
    *
    *
@@ -152,7 +154,9 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int DOMAIN_FIELD_NUMBER = 2;
-  private volatile java.lang.Object domain_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object domain_ = "";
   /**
    *
    *
@@ -223,6 +227,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
             "");
   }
 
+  @SuppressWarnings("serial")
   private com.google.protobuf.MapField<java.lang.String, java.lang.String> metadata_;
 
   private com.google.protobuf.MapField<java.lang.String, java.lang.String> internalGetMetadata() {
@@ -240,6 +245,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Additional structured details about this error.
+   *
    * Keys should match /[a-zA-Z0-9-_]/ and be limited to 64 characters in
    * length. When identifying the current value of an exceeded limit, the units
    * should be contained in the key, not the value.  For example, rather than
@@ -268,6 +274,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Additional structured details about this error.
+   *
    * Keys should match /[a-zA-Z0-9-_]/ and be limited to 64 characters in
    * length. When identifying the current value of an exceeded limit, the units
    * should be contained in the key, not the value.  For example, rather than
@@ -287,6 +294,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Additional structured details about this error.
+   *
    * Keys should match /[a-zA-Z0-9-_]/ and be limited to 64 characters in
    * length. When identifying the current value of an exceeded limit, the units
    * should be contained in the key, not the value.  For example, rather than
@@ -298,8 +306,10 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
    * <code>map&lt;string, string&gt; metadata = 3;</code>
    */
   @java.lang.Override
-  public java.lang.String getMetadataOrDefault(
-      java.lang.String key, java.lang.String defaultValue) {
+  public /* nullable */ java.lang.String getMetadataOrDefault(
+      java.lang.String key,
+      /* nullable */
+      java.lang.String defaultValue) {
     if (key == null) {
       throw new NullPointerException("map key");
     }
@@ -311,6 +321,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Additional structured details about this error.
+   *
    * Keys should match /[a-zA-Z0-9-_]/ and be limited to 64 characters in
    * length. When identifying the current value of an exceeded limit, the units
    * should be contained in the key, not the value.  For example, rather than
@@ -521,8 +532,10 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Describes the cause of the error with structured details.
+   *
    * Example of an error when contacting the "pubsub.googleapis.com" API when it
    * is not enabled:
+   *
    *     { "reason": "API_DISABLED"
    *       "domain": "googleapis.com"
    *       "metadata": {
@@ -530,9 +543,12 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
    *         "service": "pubsub.googleapis.com"
    *       }
    *     }
+   *
    * This response indicates that the pubsub.googleapis.com API is not enabled.
+   *
    * Example of an error that is returned when attempting to create a Spanner
    * instance in a region that is out of stock:
+   *
    *     { "reason": "STOCKOUT"
    *       "domain": "spanner.googleapis.com",
    *       "metadata": {
@@ -590,10 +606,9 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       reason_ = "";
-
       domain_ = "";
-
       internalGetMutableMetadata().clear();
       return this;
     }
@@ -620,13 +635,25 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.rpc.ErrorInfo buildPartial() {
       com.google.rpc.ErrorInfo result = new com.google.rpc.ErrorInfo(this);
-      int from_bitField0_ = bitField0_;
-      result.reason_ = reason_;
-      result.domain_ = domain_;
-      result.metadata_ = internalGetMetadata();
-      result.metadata_.makeImmutable();
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.rpc.ErrorInfo result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.reason_ = reason_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.domain_ = domain_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.metadata_ = internalGetMetadata();
+        result.metadata_.makeImmutable();
+      }
     }
 
     @java.lang.Override
@@ -676,13 +703,16 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
       if (other == com.google.rpc.ErrorInfo.getDefaultInstance()) return this;
       if (!other.getReason().isEmpty()) {
         reason_ = other.reason_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (!other.getDomain().isEmpty()) {
         domain_ = other.domain_;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
       internalGetMutableMetadata().mergeFrom(other.internalGetMetadata());
+      bitField0_ |= 0x00000004;
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
       return this;
@@ -712,13 +742,13 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
             case 10:
               {
                 reason_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
               {
                 domain_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             case 26:
@@ -730,6 +760,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
                 internalGetMutableMetadata()
                     .getMutableMap()
                     .put(metadata__.getKey(), metadata__.getValue());
+                bitField0_ |= 0x00000004;
                 break;
               } // case 26
             default:
@@ -824,8 +855,8 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       reason_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -845,8 +876,8 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearReason() {
-
       reason_ = getDefaultInstance().getReason();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -871,8 +902,8 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       reason_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -953,8 +984,8 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       domain_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -975,8 +1006,8 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDomain() {
-
       domain_ = getDefaultInstance().getDomain();
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -1002,8 +1033,8 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       domain_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1019,8 +1050,6 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
 
     private com.google.protobuf.MapField<java.lang.String, java.lang.String>
         internalGetMutableMetadata() {
-      onChanged();
-      ;
       if (metadata_ == null) {
         metadata_ =
             com.google.protobuf.MapField.newMapField(MetadataDefaultEntryHolder.defaultEntry);
@@ -1028,6 +1057,8 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
       if (!metadata_.isMutable()) {
         metadata_ = metadata_.copy();
       }
+      bitField0_ |= 0x00000004;
+      onChanged();
       return metadata_;
     }
 
@@ -1039,6 +1070,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Additional structured details about this error.
+     *
      * Keys should match /[a-zA-Z0-9-_]/ and be limited to 64 characters in
      * length. When identifying the current value of an exceeded limit, the units
      * should be contained in the key, not the value.  For example, rather than
@@ -1067,6 +1099,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Additional structured details about this error.
+     *
      * Keys should match /[a-zA-Z0-9-_]/ and be limited to 64 characters in
      * length. When identifying the current value of an exceeded limit, the units
      * should be contained in the key, not the value.  For example, rather than
@@ -1086,6 +1119,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Additional structured details about this error.
+     *
      * Keys should match /[a-zA-Z0-9-_]/ and be limited to 64 characters in
      * length. When identifying the current value of an exceeded limit, the units
      * should be contained in the key, not the value.  For example, rather than
@@ -1097,8 +1131,10 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      * <code>map&lt;string, string&gt; metadata = 3;</code>
      */
     @java.lang.Override
-    public java.lang.String getMetadataOrDefault(
-        java.lang.String key, java.lang.String defaultValue) {
+    public /* nullable */ java.lang.String getMetadataOrDefault(
+        java.lang.String key,
+        /* nullable */
+        java.lang.String defaultValue) {
       if (key == null) {
         throw new NullPointerException("map key");
       }
@@ -1110,6 +1146,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Additional structured details about this error.
+     *
      * Keys should match /[a-zA-Z0-9-_]/ and be limited to 64 characters in
      * length. When identifying the current value of an exceeded limit, the units
      * should be contained in the key, not the value.  For example, rather than
@@ -1133,6 +1170,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
     }
 
     public Builder clearMetadata() {
+      bitField0_ = (bitField0_ & ~0x00000004);
       internalGetMutableMetadata().getMutableMap().clear();
       return this;
     }
@@ -1141,6 +1179,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Additional structured details about this error.
+     *
      * Keys should match /[a-zA-Z0-9-_]/ and be limited to 64 characters in
      * length. When identifying the current value of an exceeded limit, the units
      * should be contained in the key, not the value.  For example, rather than
@@ -1161,6 +1200,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
     /** Use alternate mutation accessors instead. */
     @java.lang.Deprecated
     public java.util.Map<java.lang.String, java.lang.String> getMutableMetadata() {
+      bitField0_ |= 0x00000004;
       return internalGetMutableMetadata().getMutableMap();
     }
     /**
@@ -1168,6 +1208,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Additional structured details about this error.
+     *
      * Keys should match /[a-zA-Z0-9-_]/ and be limited to 64 characters in
      * length. When identifying the current value of an exceeded limit, the units
      * should be contained in the key, not the value.  For example, rather than
@@ -1185,8 +1226,8 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException("map value");
       }
-
       internalGetMutableMetadata().getMutableMap().put(key, value);
+      bitField0_ |= 0x00000004;
       return this;
     }
     /**
@@ -1194,6 +1235,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Additional structured details about this error.
+     *
      * Keys should match /[a-zA-Z0-9-_]/ and be limited to 64 characters in
      * length. When identifying the current value of an exceeded limit, the units
      * should be contained in the key, not the value.  For example, rather than
@@ -1206,6 +1248,7 @@ public final class ErrorInfo extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder putAllMetadata(java.util.Map<java.lang.String, java.lang.String> values) {
       internalGetMutableMetadata().getMutableMap().putAll(values);
+      bitField0_ |= 0x00000004;
       return this;
     }
 

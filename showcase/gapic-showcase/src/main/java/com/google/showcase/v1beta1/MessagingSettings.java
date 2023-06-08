@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 package com.google.showcase.v1beta1;
 
 import static com.google.showcase.v1beta1.MessagingClient.ListBlurbsPagedResponse;
+import static com.google.showcase.v1beta1.MessagingClient.ListLocationsPagedResponse;
 import static com.google.showcase.v1beta1.MessagingClient.ListRoomsPagedResponse;
 
 import com.google.api.core.ApiFunction;
@@ -35,6 +36,10 @@ import com.google.api.gax.rpc.StreamingCallSettings;
 import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
+import com.google.cloud.location.GetLocationRequest;
+import com.google.cloud.location.ListLocationsRequest;
+import com.google.cloud.location.ListLocationsResponse;
+import com.google.cloud.location.Location;
 import com.google.longrunning.Operation;
 import com.google.protobuf.Empty;
 import com.google.showcase.v1beta1.stub.MessagingStubSettings;
@@ -159,6 +164,17 @@ public class MessagingSettings extends ClientSettings<MessagingSettings> {
   /** Returns the object with the settings used for calls to connect. */
   public StreamingCallSettings<ConnectRequest, StreamBlurbsResponse> connectSettings() {
     return ((MessagingStubSettings) getStubSettings()).connectSettings();
+  }
+
+  /** Returns the object with the settings used for calls to listLocations. */
+  public PagedCallSettings<ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
+      listLocationsSettings() {
+    return ((MessagingStubSettings) getStubSettings()).listLocationsSettings();
+  }
+
+  /** Returns the object with the settings used for calls to getLocation. */
+  public UnaryCallSettings<GetLocationRequest, Location> getLocationSettings() {
+    return ((MessagingStubSettings) getStubSettings()).getLocationSettings();
   }
 
   public static final MessagingSettings create(MessagingStubSettings stub) throws IOException {
@@ -354,6 +370,18 @@ public class MessagingSettings extends ClientSettings<MessagingSettings> {
     /** Returns the builder for the settings used for calls to connect. */
     public StreamingCallSettings.Builder<ConnectRequest, StreamBlurbsResponse> connectSettings() {
       return getStubSettingsBuilder().connectSettings();
+    }
+
+    /** Returns the builder for the settings used for calls to listLocations. */
+    public PagedCallSettings.Builder<
+            ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
+        listLocationsSettings() {
+      return getStubSettingsBuilder().listLocationsSettings();
+    }
+
+    /** Returns the builder for the settings used for calls to getLocation. */
+    public UnaryCallSettings.Builder<GetLocationRequest, Location> getLocationSettings() {
+      return getStubSettingsBuilder().getLocationSettings();
     }
 
     @Override

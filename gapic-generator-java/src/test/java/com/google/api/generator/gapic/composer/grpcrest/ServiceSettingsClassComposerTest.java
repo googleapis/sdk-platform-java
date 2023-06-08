@@ -19,7 +19,8 @@ import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.test.framework.Assert;
-import com.google.api.generator.test.framework.Utils;
+import com.google.api.generator.test.framework.GoldenFileWriter;
+import com.google.api.generator.test.protoloader.GrpcRestTestProtoLoader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.junit.Test;
@@ -33,8 +34,24 @@ public class ServiceSettingsClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "EchoSettings.golden", visitor.write());
-    Path goldenFilePath = Paths.get(Utils.getGoldenDir(this.getClass()), "EchoSettings.golden");
+    GoldenFileWriter.saveCodegenToFile(this.getClass(), "EchoSettings.golden", visitor.write());
+    Path goldenFilePath =
+        Paths.get(GoldenFileWriter.getGoldenDir(this.getClass()), "EchoSettings.golden");
+    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+  }
+
+  @Test
+  public void generateServiceClassesWicked() {
+    GapicContext context = GrpcRestTestProtoLoader.instance().parseShowcaseWicked();
+    Service wickedProtoService = context.services().get(0);
+    GapicClass clazz =
+        ServiceSettingsClassComposer.instance().generate(context, wickedProtoService);
+
+    JavaWriterVisitor visitor = new JavaWriterVisitor();
+    clazz.classDefinition().accept(visitor);
+    GoldenFileWriter.saveCodegenToFile(this.getClass(), "WickedSettings.golden", visitor.write());
+    Path goldenFilePath =
+        Paths.get(GoldenFileWriter.getGoldenDir(this.getClass()), "WickedSettings.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
 }

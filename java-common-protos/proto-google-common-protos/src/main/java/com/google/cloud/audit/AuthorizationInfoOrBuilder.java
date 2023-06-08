@@ -29,6 +29,7 @@ public interface AuthorizationInfoOrBuilder
    * <pre>
    * The resource being accessed, as a REST-style or cloud resource string.
    * For example:
+   *
    *     bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID
    * or
    *     projects/PROJECTID/datasets/DATASETID
@@ -45,6 +46,7 @@ public interface AuthorizationInfoOrBuilder
    * <pre>
    * The resource being accessed, as a REST-style or cloud resource string.
    * For example:
+   *
    *     bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID
    * or
    *     projects/PROJECTID/datasets/DATASETID
@@ -101,6 +103,7 @@ public interface AuthorizationInfoOrBuilder
    * <pre>
    * Resource attributes used in IAM condition evaluation. This field contains
    * resource attributes like resource type and resource name.
+   *
    * To get the whole view of the attributes used in IAM
    * condition evaluation, the user must also look into
    * `AuditLog.request_metadata.request_attributes`.
@@ -117,6 +120,7 @@ public interface AuthorizationInfoOrBuilder
    * <pre>
    * Resource attributes used in IAM condition evaluation. This field contains
    * resource attributes like resource type and resource name.
+   *
    * To get the whole view of the attributes used in IAM
    * condition evaluation, the user must also look into
    * `AuditLog.request_metadata.request_attributes`.
@@ -133,6 +137,7 @@ public interface AuthorizationInfoOrBuilder
    * <pre>
    * Resource attributes used in IAM condition evaluation. This field contains
    * resource attributes like resource type and resource name.
+   *
    * To get the whole view of the attributes used in IAM
    * condition evaluation, the user must also look into
    * `AuditLog.request_metadata.request_attributes`.

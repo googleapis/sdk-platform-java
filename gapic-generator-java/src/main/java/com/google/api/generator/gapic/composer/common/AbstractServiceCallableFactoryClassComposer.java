@@ -62,6 +62,11 @@ public abstract class AbstractServiceCallableFactoryClassComposer implements Cla
 
   @Override
   public GapicClass generate(GapicContext context, Service service) {
+    // Do not generate the Callable Factory if there are no RPCs enabled for the Transport
+    if (!service.hasAnyEnabledMethodsForTransport(getTransportContext().transport())) {
+      return GapicClass.createNonGeneratedGapicClass();
+    }
+
     TypeStore typeStore = createTypes(service);
 
     String className =

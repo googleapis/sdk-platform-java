@@ -23,6 +23,7 @@ package com.google.rpc;
  *
  * <pre>
  * Describes what preconditions have failed.
+ *
  * For example, if an RPC failed because it required the Terms of Service to be
  * acknowledged, it could list the terms of service violation in the
  * PreconditionFailure message.
@@ -48,11 +49,6 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new PreconditionFailure();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -139,6 +135,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      * <pre>
      * A description of how the precondition failed. Developers can use this
      * description to understand how to fix the failure.
+     *
      * For example: "Terms of service not accepted".
      * </pre>
      *
@@ -153,6 +150,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      * <pre>
      * A description of how the precondition failed. Developers can use this
      * description to understand how to fix the failure.
+     *
      * For example: "Terms of service not accepted".
      * </pre>
      *
@@ -193,11 +191,6 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
       return new Violation();
     }
 
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-      return this.unknownFields;
-    }
-
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
       return com.google.rpc.ErrorDetailsProto
           .internal_static_google_rpc_PreconditionFailure_Violation_descriptor;
@@ -214,7 +207,9 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
     }
 
     public static final int TYPE_FIELD_NUMBER = 1;
-    private volatile java.lang.Object type_;
+
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object type_ = "";
     /**
      *
      *
@@ -267,7 +262,9 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
     }
 
     public static final int SUBJECT_FIELD_NUMBER = 2;
-    private volatile java.lang.Object subject_;
+
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object subject_ = "";
     /**
      *
      *
@@ -320,13 +317,16 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
     }
 
     public static final int DESCRIPTION_FIELD_NUMBER = 3;
-    private volatile java.lang.Object description_;
+
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object description_ = "";
     /**
      *
      *
      * <pre>
      * A description of how the precondition failed. Developers can use this
      * description to understand how to fix the failure.
+     *
      * For example: "Terms of service not accepted".
      * </pre>
      *
@@ -352,6 +352,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      * <pre>
      * A description of how the precondition failed. Developers can use this
      * description to understand how to fix the failure.
+     *
      * For example: "Terms of service not accepted".
      * </pre>
      *
@@ -589,12 +590,10 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
       @java.lang.Override
       public Builder clear() {
         super.clear();
+        bitField0_ = 0;
         type_ = "";
-
         subject_ = "";
-
         description_ = "";
-
         return this;
       }
 
@@ -622,11 +621,24 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
       public com.google.rpc.PreconditionFailure.Violation buildPartial() {
         com.google.rpc.PreconditionFailure.Violation result =
             new com.google.rpc.PreconditionFailure.Violation(this);
-        result.type_ = type_;
-        result.subject_ = subject_;
-        result.description_ = description_;
+        if (bitField0_ != 0) {
+          buildPartial0(result);
+        }
         onBuilt();
         return result;
+      }
+
+      private void buildPartial0(com.google.rpc.PreconditionFailure.Violation result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.type_ = type_;
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          result.subject_ = subject_;
+        }
+        if (((from_bitField0_ & 0x00000004) != 0)) {
+          result.description_ = description_;
+        }
       }
 
       @java.lang.Override
@@ -678,14 +690,17 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
         if (other == com.google.rpc.PreconditionFailure.Violation.getDefaultInstance()) return this;
         if (!other.getType().isEmpty()) {
           type_ = other.type_;
+          bitField0_ |= 0x00000001;
           onChanged();
         }
         if (!other.getSubject().isEmpty()) {
           subject_ = other.subject_;
+          bitField0_ |= 0x00000002;
           onChanged();
         }
         if (!other.getDescription().isEmpty()) {
           description_ = other.description_;
+          bitField0_ |= 0x00000004;
           onChanged();
         }
         this.mergeUnknownFields(other.getUnknownFields());
@@ -717,19 +732,19 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
               case 10:
                 {
                   type_ = input.readStringRequireUtf8();
-
+                  bitField0_ |= 0x00000001;
                   break;
                 } // case 10
               case 18:
                 {
                   subject_ = input.readStringRequireUtf8();
-
+                  bitField0_ |= 0x00000002;
                   break;
                 } // case 18
               case 26:
                 {
                   description_ = input.readStringRequireUtf8();
-
+                  bitField0_ |= 0x00000004;
                   break;
                 } // case 26
               default:
@@ -748,6 +763,8 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
         } // finally
         return this;
       }
+
+      private int bitField0_;
 
       private java.lang.Object type_ = "";
       /**
@@ -816,8 +833,8 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
         if (value == null) {
           throw new NullPointerException();
         }
-
         type_ = value;
+        bitField0_ |= 0x00000001;
         onChanged();
         return this;
       }
@@ -835,8 +852,8 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        * @return This builder for chaining.
        */
       public Builder clearType() {
-
         type_ = getDefaultInstance().getType();
+        bitField0_ = (bitField0_ & ~0x00000001);
         onChanged();
         return this;
       }
@@ -859,8 +876,8 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
           throw new NullPointerException();
         }
         checkByteStringIsUtf8(value);
-
         type_ = value;
+        bitField0_ |= 0x00000001;
         onChanged();
         return this;
       }
@@ -932,8 +949,8 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
         if (value == null) {
           throw new NullPointerException();
         }
-
         subject_ = value;
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -951,8 +968,8 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        * @return This builder for chaining.
        */
       public Builder clearSubject() {
-
         subject_ = getDefaultInstance().getSubject();
+        bitField0_ = (bitField0_ & ~0x00000002);
         onChanged();
         return this;
       }
@@ -975,8 +992,8 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
           throw new NullPointerException();
         }
         checkByteStringIsUtf8(value);
-
         subject_ = value;
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -988,6 +1005,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        * <pre>
        * A description of how the precondition failed. Developers can use this
        * description to understand how to fix the failure.
+       *
        * For example: "Terms of service not accepted".
        * </pre>
        *
@@ -1012,6 +1030,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        * <pre>
        * A description of how the precondition failed. Developers can use this
        * description to understand how to fix the failure.
+       *
        * For example: "Terms of service not accepted".
        * </pre>
        *
@@ -1036,6 +1055,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        * <pre>
        * A description of how the precondition failed. Developers can use this
        * description to understand how to fix the failure.
+       *
        * For example: "Terms of service not accepted".
        * </pre>
        *
@@ -1048,8 +1068,8 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
         if (value == null) {
           throw new NullPointerException();
         }
-
         description_ = value;
+        bitField0_ |= 0x00000004;
         onChanged();
         return this;
       }
@@ -1059,6 +1079,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        * <pre>
        * A description of how the precondition failed. Developers can use this
        * description to understand how to fix the failure.
+       *
        * For example: "Terms of service not accepted".
        * </pre>
        *
@@ -1067,8 +1088,8 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        * @return This builder for chaining.
        */
       public Builder clearDescription() {
-
         description_ = getDefaultInstance().getDescription();
+        bitField0_ = (bitField0_ & ~0x00000004);
         onChanged();
         return this;
       }
@@ -1078,6 +1099,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        * <pre>
        * A description of how the precondition failed. Developers can use this
        * description to understand how to fix the failure.
+       *
        * For example: "Terms of service not accepted".
        * </pre>
        *
@@ -1091,8 +1113,8 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
           throw new NullPointerException();
         }
         checkByteStringIsUtf8(value);
-
         description_ = value;
+        bitField0_ |= 0x00000004;
         onChanged();
         return this;
       }
@@ -1162,6 +1184,8 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
   }
 
   public static final int VIOLATIONS_FIELD_NUMBER = 1;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.rpc.PreconditionFailure.Violation> violations_;
   /**
    *
@@ -1394,6 +1418,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
    *
    * <pre>
    * Describes what preconditions have failed.
+   *
    * For example, if an RPC failed because it required the Terms of Service to be
    * acknowledged, it could list the terms of service violation in the
    * PreconditionFailure message.
@@ -1430,6 +1455,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       if (violationsBuilder_ == null) {
         violations_ = java.util.Collections.emptyList();
       } else {
@@ -1463,7 +1489,15 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
     @java.lang.Override
     public com.google.rpc.PreconditionFailure buildPartial() {
       com.google.rpc.PreconditionFailure result = new com.google.rpc.PreconditionFailure(this);
-      int from_bitField0_ = bitField0_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.rpc.PreconditionFailure result) {
       if (violationsBuilder_ == null) {
         if (((bitField0_ & 0x00000001) != 0)) {
           violations_ = java.util.Collections.unmodifiableList(violations_);
@@ -1473,8 +1507,10 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
       } else {
         result.violations_ = violationsBuilder_.build();
       }
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.rpc.PreconditionFailure result) {
+      int from_bitField0_ = bitField0_;
     }
 
     @java.lang.Override

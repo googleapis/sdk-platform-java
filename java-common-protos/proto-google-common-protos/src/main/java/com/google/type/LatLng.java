@@ -49,11 +49,6 @@ public final class LatLng extends com.google.protobuf.GeneratedMessageV3
     return new LatLng();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.type.LatLngProto.internal_static_google_type_LatLng_descriptor;
   }
@@ -67,7 +62,7 @@ public final class LatLng extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int LATITUDE_FIELD_NUMBER = 1;
-  private double latitude_;
+  private double latitude_ = 0D;
   /**
    *
    *
@@ -85,7 +80,7 @@ public final class LatLng extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int LONGITUDE_FIELD_NUMBER = 2;
-  private double longitude_;
+  private double longitude_ = 0D;
   /**
    *
    *
@@ -315,10 +310,9 @@ public final class LatLng extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       latitude_ = 0D;
-
       longitude_ = 0D;
-
       return this;
     }
 
@@ -344,10 +338,21 @@ public final class LatLng extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.type.LatLng buildPartial() {
       com.google.type.LatLng result = new com.google.type.LatLng(this);
-      result.latitude_ = latitude_;
-      result.longitude_ = longitude_;
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.type.LatLng result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.latitude_ = latitude_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.longitude_ = longitude_;
+      }
     }
 
     @java.lang.Override
@@ -430,13 +435,13 @@ public final class LatLng extends com.google.protobuf.GeneratedMessageV3
             case 9:
               {
                 latitude_ = input.readDouble();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 9
             case 17:
               {
                 longitude_ = input.readDouble();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 17
             default:
@@ -455,6 +460,8 @@ public final class LatLng extends com.google.protobuf.GeneratedMessageV3
       } // finally
       return this;
     }
+
+    private int bitField0_;
 
     private double latitude_;
     /**
@@ -487,6 +494,7 @@ public final class LatLng extends com.google.protobuf.GeneratedMessageV3
     public Builder setLatitude(double value) {
 
       latitude_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -502,7 +510,7 @@ public final class LatLng extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearLatitude() {
-
+      bitField0_ = (bitField0_ & ~0x00000001);
       latitude_ = 0D;
       onChanged();
       return this;
@@ -539,6 +547,7 @@ public final class LatLng extends com.google.protobuf.GeneratedMessageV3
     public Builder setLongitude(double value) {
 
       longitude_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -554,7 +563,7 @@ public final class LatLng extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearLongitude() {
-
+      bitField0_ = (bitField0_ & ~0x00000002);
       longitude_ = 0D;
       onChanged();
       return this;

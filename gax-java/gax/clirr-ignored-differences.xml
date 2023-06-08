@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- see http://www.mojohaus.org/clirr-maven-plugin/examples/ignored-differences.html -->
+<differences>
+  <difference>
+    <!-- add default stream methods to `Page` interface -->
+    <differenceType>7012</differenceType>
+    <className>com/google/api/gax/paging/Page</className>
+    <method>* stream*(*)</method>
+  </difference>
+  <difference>
+    <differenceType>7006</differenceType>
+    <className>com/google/api/gax/rpc/ServerStreamingCallSettings$Builder</className>
+    <method>*setWaitTimeout*</method>
+    <to>com.google.api.gax.rpc.ServerStreamingCallSettings$Builder</to>
+  </difference>
+</differences>

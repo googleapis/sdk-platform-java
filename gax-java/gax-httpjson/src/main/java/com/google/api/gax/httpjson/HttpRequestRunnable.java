@@ -52,12 +52,11 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import javax.annotation.Nullable;
-import org.threeten.bp.Duration;
-import org.threeten.bp.Instant;
 
 /** A runnable object that creates and executes an HTTP request. */
 class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
@@ -100,24 +99,22 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
 
   @Override
   public void run() {
-    HttpResponse httpResponse = null;
     RunnableResult.Builder result = RunnableResult.builder();
     HttpJsonMetadata.Builder trailers = HttpJsonMetadata.newBuilder();
-    HttpRequest httpRequest = null;
+    HttpResponse httpResponse = null;
     try {
       // Check if already cancelled before even creating a request
       if (cancelled) {
         return;
       }
-      httpRequest = createHttpRequest();
+      HttpRequest httpRequest = createHttpRequest();
       // Check if already cancelled before sending the request;
       if (cancelled) {
         return;
       }
-
       httpResponse = httpRequest.execute();
 
-      // Check if already cancelled before sending the request;
+      // Check if already cancelled before trying to construct and read the response
       if (cancelled) {
         httpResponse.disconnect();
         return;
@@ -145,6 +142,9 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
       }
       trailers.setException(e);
     } finally {
+      // If cancelled, `close()` in HttpJsonClientCallImpl has already been invoked
+      // and returned a DEADLINE_EXCEEDED error back so there is no need to set
+      // a result back.
       if (!cancelled) {
         resultListener.setResult(result.setTrailers(trailers.build()).build());
       }
@@ -172,7 +172,7 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
       jsonFactory.createJsonParser(requestBody).parse(tokenRequest);
       jsonHttpContent =
           new JsonHttpContent(jsonFactory, tokenRequest)
-              .setMediaType((new HttpMediaType("application/json")));
+              .setMediaType((new HttpMediaType("application/json; charset=utf-8")));
     } else {
       // Force underlying HTTP lib to set Content-Length header to avoid 411s.
       // See EmptyContent.java.
@@ -190,16 +190,6 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
     }
 
     HttpRequest httpRequest = buildRequest(requestFactory, url, jsonHttpContent);
-
-    Instant deadline = httpJsonCallOptions.getDeadline();
-    if (deadline != null) {
-      long readTimeout = Duration.between(Instant.now(), deadline).toMillis();
-      if (httpRequest.getReadTimeout() > 0
-          && httpRequest.getReadTimeout() < readTimeout
-          && readTimeout < Integer.MAX_VALUE) {
-        httpRequest.setReadTimeout((int) readTimeout);
-      }
-    }
 
     for (Map.Entry<String, Object> entry : headers.getHeaders().entrySet()) {
       HttpHeadersUtils.setHeader(
@@ -243,7 +233,33 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
       HttpHeadersUtils.setHeader(
           httpRequest.getHeaders(), "X-HTTP-Method-Override", originalHttpMethod);
     }
+
+    Duration timeout = httpJsonCallOptions.getTimeout();
+    if (timeout != null) {
+      long timeoutMs = timeout.toMillis();
+
+      // Read timeout is the timeout between reading two data packets and not total timeout
+      // HttpJsonClientCallsImpl implements a deadlineCancellationExecutor to cancel the
+      // RPC when it exceeds the RPC timeout
+      if (shouldUpdateTimeout(httpRequest.getReadTimeout(), timeoutMs)) {
+        httpRequest.setReadTimeout((int) timeoutMs);
+      }
+
+      // Connect timeout is the time allowed for establishing the connection.
+      // This is updated to match the RPC timeout as we do not want a shorter
+      // connect timeout to preemptively throw a ConnectExcepetion before
+      // we've reached the RPC timeout
+      if (shouldUpdateTimeout(httpRequest.getConnectTimeout(), timeoutMs)) {
+        httpRequest.setConnectTimeout((int) timeoutMs);
+      }
+    }
     return httpRequest;
+  }
+
+  private boolean shouldUpdateTimeout(int currentTimeoutMs, long newTimeoutMs) {
+    return currentTimeoutMs > 0
+        && currentTimeoutMs < newTimeoutMs
+        && newTimeoutMs < Integer.MAX_VALUE;
   }
 
   // This will be frequently executed, so avoiding using regexps if not necessary.

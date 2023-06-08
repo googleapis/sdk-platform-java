@@ -47,11 +47,6 @@ public final class GetPolicyRequest extends com.google.protobuf.GeneratedMessage
     return new GetPolicyRequest();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.iam.v2.PolicyProto.internal_static_google_iam_v2_GetPolicyRequest_descriptor;
   }
@@ -67,16 +62,21 @@ public final class GetPolicyRequest extends com.google.protobuf.GeneratedMessage
   }
 
   public static final int NAME_FIELD_NUMBER = 1;
-  private volatile java.lang.Object name_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object name_ = "";
   /**
    *
    *
    * <pre>
    * Required. The resource name of the policy to retrieve. Format:
    * `policies/{attachment_point}/denypolicies/{policy_id}`
+   *
+   *
    * Use the URL-encoded full resource name, which means that the forward-slash
    * character, `/`, must be written as `%2F`. For example,
    * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`.
+   *
    * For organizations and folders, use the numeric ID in the full resource
    * name. For projects, you can use the alphanumeric or the numeric ID.
    * </pre>
@@ -103,9 +103,12 @@ public final class GetPolicyRequest extends com.google.protobuf.GeneratedMessage
    * <pre>
    * Required. The resource name of the policy to retrieve. Format:
    * `policies/{attachment_point}/denypolicies/{policy_id}`
+   *
+   *
    * Use the URL-encoded full resource name, which means that the forward-slash
    * character, `/`, must be written as `%2F`. For example,
    * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`.
+   *
    * For organizations and folders, use the numeric ID in the full resource
    * name. For projects, you can use the alphanumeric or the numeric ID.
    * </pre>
@@ -322,8 +325,8 @@ public final class GetPolicyRequest extends com.google.protobuf.GeneratedMessage
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       name_ = "";
-
       return this;
     }
 
@@ -350,9 +353,18 @@ public final class GetPolicyRequest extends com.google.protobuf.GeneratedMessage
     @java.lang.Override
     public com.google.iam.v2.GetPolicyRequest buildPartial() {
       com.google.iam.v2.GetPolicyRequest result = new com.google.iam.v2.GetPolicyRequest(this);
-      result.name_ = name_;
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.iam.v2.GetPolicyRequest result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.name_ = name_;
+      }
     }
 
     @java.lang.Override
@@ -402,6 +414,7 @@ public final class GetPolicyRequest extends com.google.protobuf.GeneratedMessage
       if (other == com.google.iam.v2.GetPolicyRequest.getDefaultInstance()) return this;
       if (!other.getName().isEmpty()) {
         name_ = other.name_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -433,7 +446,7 @@ public final class GetPolicyRequest extends com.google.protobuf.GeneratedMessage
             case 10:
               {
                 name_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             default:
@@ -453,6 +466,8 @@ public final class GetPolicyRequest extends com.google.protobuf.GeneratedMessage
       return this;
     }
 
+    private int bitField0_;
+
     private java.lang.Object name_ = "";
     /**
      *
@@ -460,9 +475,12 @@ public final class GetPolicyRequest extends com.google.protobuf.GeneratedMessage
      * <pre>
      * Required. The resource name of the policy to retrieve. Format:
      * `policies/{attachment_point}/denypolicies/{policy_id}`
+     *
+     *
      * Use the URL-encoded full resource name, which means that the forward-slash
      * character, `/`, must be written as `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`.
+     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, you can use the alphanumeric or the numeric ID.
      * </pre>
@@ -488,9 +506,12 @@ public final class GetPolicyRequest extends com.google.protobuf.GeneratedMessage
      * <pre>
      * Required. The resource name of the policy to retrieve. Format:
      * `policies/{attachment_point}/denypolicies/{policy_id}`
+     *
+     *
      * Use the URL-encoded full resource name, which means that the forward-slash
      * character, `/`, must be written as `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`.
+     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, you can use the alphanumeric or the numeric ID.
      * </pre>
@@ -516,9 +537,12 @@ public final class GetPolicyRequest extends com.google.protobuf.GeneratedMessage
      * <pre>
      * Required. The resource name of the policy to retrieve. Format:
      * `policies/{attachment_point}/denypolicies/{policy_id}`
+     *
+     *
      * Use the URL-encoded full resource name, which means that the forward-slash
      * character, `/`, must be written as `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`.
+     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, you can use the alphanumeric or the numeric ID.
      * </pre>
@@ -532,8 +556,8 @@ public final class GetPolicyRequest extends com.google.protobuf.GeneratedMessage
       if (value == null) {
         throw new NullPointerException();
       }
-
       name_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -543,9 +567,12 @@ public final class GetPolicyRequest extends com.google.protobuf.GeneratedMessage
      * <pre>
      * Required. The resource name of the policy to retrieve. Format:
      * `policies/{attachment_point}/denypolicies/{policy_id}`
+     *
+     *
      * Use the URL-encoded full resource name, which means that the forward-slash
      * character, `/`, must be written as `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`.
+     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, you can use the alphanumeric or the numeric ID.
      * </pre>
@@ -555,8 +582,8 @@ public final class GetPolicyRequest extends com.google.protobuf.GeneratedMessage
      * @return This builder for chaining.
      */
     public Builder clearName() {
-
       name_ = getDefaultInstance().getName();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -566,9 +593,12 @@ public final class GetPolicyRequest extends com.google.protobuf.GeneratedMessage
      * <pre>
      * Required. The resource name of the policy to retrieve. Format:
      * `policies/{attachment_point}/denypolicies/{policy_id}`
+     *
+     *
      * Use the URL-encoded full resource name, which means that the forward-slash
      * character, `/`, must be written as `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies/my-policy`.
+     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, you can use the alphanumeric or the numeric ID.
      * </pre>
@@ -583,8 +613,8 @@ public final class GetPolicyRequest extends com.google.protobuf.GeneratedMessage
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       name_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }

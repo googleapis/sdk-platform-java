@@ -1,0 +1,225 @@
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+name: ci
+env:
+  SHOWCASE_VERSION: 0.28.0
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        java: [ 11, 17 ]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: temurin
+          cache: maven
+      - run: java -version
+      - name: Unit Tests
+        run: |
+          mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
+              -Dfmt.skip -DenableTestCoverage
+      - run: bazelisk version
+      - name: Install Maven modules
+        run: |
+          mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+      - name: Integration Tests
+        run: |
+          bazelisk --batch test //test/integration/...
+      - name: Gradle Build Generated Storage Client Library
+        run: |
+          echo "Building Storage lib from generated source..."
+          mkdir /tmp/java-storage
+          bazelisk --batch build @com_google_googleapis//google/storage/v2:google-cloud-storage-v2-java
+          tar zxvf bazel-bin/external/com_google_googleapis/google/storage/v2/google-cloud-storage-v2-java.tar.gz -C /tmp/java-storage
+          pushd /tmp/java-storage/google-cloud-storage-v2-java
+          ./gradlew clean build publishToMavenLocal sourcesJar allJars
+          popd
+
+      - name: Gradle Build Generated Compute Client Library
+        run: |
+          echo "Building Compute lib from generated source..."
+          mkdir /tmp/java-compute
+          bazelisk --batch build @com_google_googleapis//google/cloud/compute/v1small:google-cloud-compute-small-v1-java
+          tar zxvf bazel-bin/external/com_google_googleapis/google/cloud/compute/v1small/google-cloud-compute-small-v1-java.tar.gz -C /tmp/java-compute
+          pushd /tmp/java-compute/google-cloud-compute-small-v1-java
+          ./gradlew clean build publishToMavenLocal sourcesJar allJars
+          popd
+
+  build-java8-except-gapic-generator-java:
+    name: "build(8) except for gapic-generator-java"
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      # Java 8 tests uses JDK 11 to compile and JDK 8 to run tests.
+      - uses: actions/setup-java@v3
+        with:
+          java-version: 8
+          distribution: temurin
+          cache: maven
+      - run: echo "JAVA8_HOME=${JAVA_HOME}" >> $GITHUB_ENV
+      - uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: temurin
+      - name: Compile with Java 17 and run tests with Java 8
+        shell: bash
+        run: |
+          set -x
+          export JAVA_HOME=$JAVA11_HOME
+          export PATH=${JAVA_HOME}/bin:$PATH
+          # Maven surefire plugin lets us to specify the JVM when running tests via
+          # the "jvm" system property.
+          mvn verify --batch-mode --no-transfer-progress -Dcheckstyle.skip \
+              -Dfmt.skip \
+              -Djvm="${JAVA8_HOME}/bin/java"
+
+  build-java8-gapic-generator-java:
+    name: "build(8) for gapic-generator-java"
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: temurin
+          cache: maven
+      - name: Install all modules using Java 11
+        shell: bash
+        run: |
+          mvn -V -B -ntp clean install -DskipTests
+      - uses: actions/setup-java@v3
+        with:
+          java-version: 8
+          distribution: temurin
+      - run: java -version
+      - name: Run tests in Java 8 with the source compiled in Java 11 for gapic-generator-java
+        shell: bash
+        run: |
+          mvn -V -B -ntp surefire:test --projects 'gapic-generator-java'
+      - run: bazelisk version
+      - name: Integration Tests
+        run: |
+          bazelisk --batch test //test/integration/...
+      - name: Gradle Build Generated Storage Client Library
+        run: |
+          echo "Building Storage lib from generated source..."
+          mkdir /tmp/java-storage
+          bazelisk --batch build @com_google_googleapis//google/storage/v2:google-cloud-storage-v2-java
+          tar zxvf bazel-bin/external/com_google_googleapis/google/storage/v2/google-cloud-storage-v2-java.tar.gz -C /tmp/java-storage
+          pushd /tmp/java-storage/google-cloud-storage-v2-java
+          ./gradlew clean build publishToMavenLocal sourcesJar allJars
+          popd
+
+      - name: Gradle Build Generated Compute Client Library
+        run: |
+          echo "Building Compute lib from generated source..."
+          mkdir /tmp/java-compute
+          bazelisk --batch build @com_google_googleapis//google/cloud/compute/v1small:google-cloud-compute-small-v1-java
+          tar zxvf bazel-bin/external/com_google_googleapis/google/cloud/compute/v1small/google-cloud-compute-small-v1-java.tar.gz -C /tmp/java-compute
+          pushd /tmp/java-compute/google-cloud-compute-small-v1-java
+          ./gradlew clean build publishToMavenLocal sourcesJar allJars
+          popd
+
+  lint:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: temurin
+          cache: maven
+      - run: java -version
+      - name: Java Linter
+        # Exclude the root project
+        run: mvn -B -ntp fmt:check
+
+  compatibility:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: temurin
+          cache: maven
+      - run: java -version
+      - name: Compatibility check
+        #  package jar so that gapic-generator-java module can use
+        #  testlib modules of gax
+        run: mvn package clirr:check -DskipTests
+
+  requirements-kokoro:
+    runs-on: ubuntu-latest
+    container: gcr.io/cloud-devrel-public-resources/java11
+    steps:
+      - uses: actions/checkout@v3
+      - run: python3 --version
+      - run: python3 -m pip install --require-hashes -r .kokoro/requirements.txt
+      - run: python3 -m releasetool publish-reporter-script > /dev/null
+
+  showcase:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        java: [ 11, 17 ]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: temurin
+      - run: mvn -version
+      - name: Install Maven modules
+        run: |
+          mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+      - name: Java Linter
+        working-directory: showcase
+        run: |
+          mvn -B -ntp fmt:check
+      - name: Showcase golden tests
+        working-directory: showcase
+        run: |
+          mvn test \
+            -P enable-golden-tests \
+            --batch-mode \
+            --no-transfer-progress
+
+      - name: Install showcase server
+        run: |
+          sudo mkdir -p /usr/src/showcase
+          sudo chown -R ${USER} /usr/src/
+          curl --location https://github.com/googleapis/gapic-showcase/releases/download/v${SHOWCASE_VERSION}/gapic-showcase-${SHOWCASE_VERSION}-linux-amd64.tar.gz --output /usr/src/showcase/showcase-${SHOWCASE_VERSION}-linux-amd64.tar.gz
+          cd /usr/src/showcase/
+          tar -xf showcase-*
+          ./gapic-showcase run &
+          cd -
+      - name: Showcase integration tests
+        working-directory: showcase
+        run: |
+          mvn verify \
+            -P enable-integration-tests \
+            --batch-mode \
+            --no-transfer-progress
+  gapic-generator-java-bom:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-java@v3
+      with:
+        java-version: 11
+        distribution: temurin
+        cache: maven
+    - name: Install Maven modules to local Maven repository
+      run: |
+        mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+    - name: Validate gapic-generator-java-bom
+      uses: googleapis/java-cloud-bom/tests/validate-bom@v26.13.0
+      with:
+        bom-path: gapic-generator-java-bom/pom.xml

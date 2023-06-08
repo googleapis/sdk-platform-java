@@ -47,9 +47,11 @@ import org.threeten.bp.Duration;
  * <p>This class includes settings that are applicable to all server streaming calls, which
  * currently just includes retries and watchdog timers.
  *
- * <p>The watchdog timer is configured via {@code idleTimeout}. The watchdog will terminate any
- * stream that has not has seen any demand (via {@link StreamController#request(int)}) in the
- * configured interval. To turn off idle checks, set the interval to {@link Duration#ZERO}.
+ * <p>The watchdog timer is configured via {@code idleTimeout} and {@code waitTimeout}. The watchdog
+ * will terminate any stream that has not has seen any demand (via {@link
+ * StreamController#request(int)}) in the configured interval or has not seen a message from the
+ * server in {@code waitTimeout}. To turn off idle checks, set the interval to {@link
+ * Duration#ZERO}.
  *
  * <p>Retry configuration allows for the stream to be restarted and resumed. It is composed of 3
  * parts: the retryable codes, the retry settings and the stream resumption strategy. The retryable
@@ -79,12 +81,14 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
   @Nonnull private final StreamResumptionStrategy<RequestT, ResponseT> resumptionStrategy;
 
   @Nonnull private final Duration idleTimeout;
+  @Nonnull private final Duration waitTimeout;
 
   private ServerStreamingCallSettings(Builder<RequestT, ResponseT> builder) {
     this.retryableCodes = ImmutableSet.copyOf(builder.retryableCodes);
     this.retrySettings = builder.retrySettingsBuilder.build();
     this.resumptionStrategy = builder.resumptionStrategy;
     this.idleTimeout = builder.idleTimeout;
+    this.waitTimeout = builder.waitTimeout;
   }
 
   /**
@@ -123,6 +127,15 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
     return idleTimeout;
   }
 
+  /**
+   * See the class documentation of {@link ServerStreamingCallSettings} for a description of what
+   * the {@link #waitTimeout} does.
+   */
+  @Nonnull
+  public Duration getWaitTimeout() {
+    return waitTimeout;
+  }
+
   public Builder<RequestT, ResponseT> toBuilder() {
     return new Builder<>(this);
   }
@@ -135,6 +148,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
   public String toString() {
     return MoreObjects.toStringHelper(this)
         .add("idleTimeout", idleTimeout)
+        .add("waitTimeout", waitTimeout)
         .add("retryableCodes", retryableCodes)
         .add("retrySettings", retrySettings)
         .toString();
@@ -148,6 +162,8 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
 
     @Nonnull private Duration idleTimeout;
 
+    @Nonnull private Duration waitTimeout;
+
     /** Initialize the builder with default settings */
     private Builder() {
       this.retryableCodes = ImmutableSet.of();
@@ -155,6 +171,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
       this.resumptionStrategy = new SimpleStreamResumptionStrategy<>();
 
       this.idleTimeout = Duration.ZERO;
+      this.waitTimeout = Duration.ZERO;
     }
 
     private Builder(ServerStreamingCallSettings<RequestT, ResponseT> settings) {
@@ -164,6 +181,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
       this.resumptionStrategy = settings.resumptionStrategy;
 
       this.idleTimeout = settings.idleTimeout;
+      this.waitTimeout = settings.waitTimeout;
     }
 
     /**
@@ -233,9 +251,9 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
               .setInitialRetryDelay(Duration.ZERO)
               .setRetryDelayMultiplier(1)
               .setMaxRetryDelay(Duration.ZERO)
-              .setInitialRpcTimeout(Duration.ZERO)
+              .setInitialRpcTimeout(timeout)
               .setRpcTimeoutMultiplier(1)
-              .setMaxRpcTimeout(Duration.ZERO)
+              .setMaxRpcTimeout(timeout)
               .setMaxAttempts(1)
               .build());
 
@@ -264,11 +282,25 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
     }
 
     /**
-     * See the class documentation of {@link ServerStreamingCallSettings} for a description of what
-     * the {@link #idleTimeout} does. {@link Duration#ZERO} disables the watchdog.
+     * Set how long to wait before considering the stream orphaned by the user and closing it.
+     * {@link Duration#ZERO} disables the check for abandoned streams.
      */
     public Builder<RequestT, ResponseT> setIdleTimeout(@Nonnull Duration idleTimeout) {
       this.idleTimeout = Preconditions.checkNotNull(idleTimeout);
+      return this;
+    }
+
+    @Nonnull
+    public Duration getWaitTimeout() {
+      return waitTimeout;
+    }
+
+    /**
+     * Set the maximum amount of time to wait for the next message from the server. {@link
+     * Duration#ZERO} disables the check for abandoned streams.
+     */
+    public Builder<RequestT, ResponseT> setWaitTimeout(@Nonnull Duration waitTimeout) {
+      this.waitTimeout = waitTimeout;
       return this;
     }
 

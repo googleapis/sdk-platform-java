@@ -29,6 +29,7 @@
  */
 package com.google.api.gax.httpjson;
 
+import com.google.common.annotations.VisibleForTesting;
 import java.util.concurrent.TimeUnit;
 
 class ManagedHttpJsonInterceptorChannel extends ManagedHttpJsonChannel {
@@ -41,6 +42,11 @@ class ManagedHttpJsonInterceptorChannel extends ManagedHttpJsonChannel {
     super();
     this.channel = channel;
     this.interceptor = interceptor;
+  }
+
+  @VisibleForTesting
+  ManagedHttpJsonChannel getChannel() {
+    return channel;
   }
 
   @Override

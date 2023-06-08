@@ -25,12 +25,14 @@ package com.google.api;
  * `Distribution` contains summary statistics for a population of values. It
  * optionally contains a histogram representing the distribution of those values
  * across a set of buckets.
+ *
  * The summary statistics are the count, mean, sum of the squared deviation from
  * the mean, the minimum, and the maximum of the set of population of values.
  * The histogram is based on a sequence of buckets and gives a count of values
  * that fall into each bucket. The boundaries of the buckets are given either
  * explicitly or by formulas for buckets of fixed or exponentially increasing
  * widths.
+ *
  * Although it is not forbidden, it is generally a bad idea to include
  * non-finite values (infinities or NaNs) in the population of values, as this
  * will render the `mean` and `sum_of_squared_deviation` fields meaningless.
@@ -57,11 +59,6 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new Distribution();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -135,11 +132,6 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
       return new Range();
     }
 
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-      return this.unknownFields;
-    }
-
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
       return com.google.api.DistributionProto
           .internal_static_google_api_Distribution_Range_descriptor;
@@ -156,7 +148,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
     }
 
     public static final int MIN_FIELD_NUMBER = 1;
-    private double min_;
+    private double min_ = 0D;
     /**
      *
      *
@@ -174,7 +166,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
     }
 
     public static final int MAX_FIELD_NUMBER = 2;
-    private double max_;
+    private double max_ = 0D;
     /**
      *
      *
@@ -403,10 +395,9 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
       @java.lang.Override
       public Builder clear() {
         super.clear();
+        bitField0_ = 0;
         min_ = 0D;
-
         max_ = 0D;
-
         return this;
       }
 
@@ -433,10 +424,21 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
       @java.lang.Override
       public com.google.api.Distribution.Range buildPartial() {
         com.google.api.Distribution.Range result = new com.google.api.Distribution.Range(this);
-        result.min_ = min_;
-        result.max_ = max_;
+        if (bitField0_ != 0) {
+          buildPartial0(result);
+        }
         onBuilt();
         return result;
+      }
+
+      private void buildPartial0(com.google.api.Distribution.Range result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.min_ = min_;
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          result.max_ = max_;
+        }
       }
 
       @java.lang.Override
@@ -521,13 +523,13 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
               case 9:
                 {
                   min_ = input.readDouble();
-
+                  bitField0_ |= 0x00000001;
                   break;
                 } // case 9
               case 17:
                 {
                   max_ = input.readDouble();
-
+                  bitField0_ |= 0x00000002;
                   break;
                 } // case 17
               default:
@@ -546,6 +548,8 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
         } // finally
         return this;
       }
+
+      private int bitField0_;
 
       private double min_;
       /**
@@ -578,6 +582,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
       public Builder setMin(double value) {
 
         min_ = value;
+        bitField0_ |= 0x00000001;
         onChanged();
         return this;
       }
@@ -593,7 +598,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearMin() {
-
+        bitField0_ = (bitField0_ & ~0x00000001);
         min_ = 0D;
         onChanged();
         return this;
@@ -630,6 +635,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
       public Builder setMax(double value) {
 
         max_ = value;
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -645,7 +651,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearMax() {
-
+        bitField0_ = (bitField0_ & ~0x00000002);
         max_ = 0D;
         onChanged();
         return this;
@@ -825,7 +831,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      */
     com.google.api.Distribution.BucketOptions.ExplicitOrBuilder getExplicitBucketsOrBuilder();
 
-    public com.google.api.Distribution.BucketOptions.OptionsCase getOptionsCase();
+    com.google.api.Distribution.BucketOptions.OptionsCase getOptionsCase();
   }
   /**
    *
@@ -835,6 +841,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
    * for the distribution. The buckets can be in a linear sequence, an
    * exponential sequence, or each bucket can be specified explicitly.
    * `BucketOptions` does not include the number of values in each bucket.
+   *
    * A bucket has an inclusive lower bound and exclusive upper bound for the
    * values that are counted for that bucket. The upper bound of a bucket must
    * be strictly greater than the lower bound. The sequence of N buckets for a
@@ -865,11 +872,6 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
       return new BucketOptions();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-      return this.unknownFields;
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -938,9 +940,12 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * Specifies a linear sequence of buckets that all have the same width
      * (except overflow and underflow). Each bucket represents a constant
      * absolute uncertainty on the specific value in the bucket.
+     *
      * There are `num_finite_buckets + 2` (= N) buckets. Bucket `i` has the
      * following boundaries:
+     *
      *    Upper bound (0 &lt;= i &lt; N-1):     offset + (width * i).
+     *
      *    Lower bound (1 &lt;= i &lt; N):       offset + (width * (i - 1)).
      * </pre>
      *
@@ -964,11 +969,6 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
         return new Linear();
       }
 
-      @java.lang.Override
-      public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-        return this.unknownFields;
-      }
-
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
         return com.google.api.DistributionProto
             .internal_static_google_api_Distribution_BucketOptions_Linear_descriptor;
@@ -985,7 +985,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
       }
 
       public static final int NUM_FINITE_BUCKETS_FIELD_NUMBER = 1;
-      private int numFiniteBuckets_;
+      private int numFiniteBuckets_ = 0;
       /**
        *
        *
@@ -1003,7 +1003,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
       }
 
       public static final int WIDTH_FIELD_NUMBER = 2;
-      private double width_;
+      private double width_ = 0D;
       /**
        *
        *
@@ -1021,7 +1021,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
       }
 
       public static final int OFFSET_FIELD_NUMBER = 3;
-      private double offset_;
+      private double offset_ = 0D;
       /**
        *
        *
@@ -1231,9 +1231,12 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        * Specifies a linear sequence of buckets that all have the same width
        * (except overflow and underflow). Each bucket represents a constant
        * absolute uncertainty on the specific value in the bucket.
+       *
        * There are `num_finite_buckets + 2` (= N) buckets. Bucket `i` has the
        * following boundaries:
+       *
        *    Upper bound (0 &lt;= i &lt; N-1):     offset + (width * i).
+       *
        *    Lower bound (1 &lt;= i &lt; N):       offset + (width * (i - 1)).
        * </pre>
        *
@@ -1269,12 +1272,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
         @java.lang.Override
         public Builder clear() {
           super.clear();
+          bitField0_ = 0;
           numFiniteBuckets_ = 0;
-
           width_ = 0D;
-
           offset_ = 0D;
-
           return this;
         }
 
@@ -1302,11 +1303,24 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
         public com.google.api.Distribution.BucketOptions.Linear buildPartial() {
           com.google.api.Distribution.BucketOptions.Linear result =
               new com.google.api.Distribution.BucketOptions.Linear(this);
-          result.numFiniteBuckets_ = numFiniteBuckets_;
-          result.width_ = width_;
-          result.offset_ = offset_;
+          if (bitField0_ != 0) {
+            buildPartial0(result);
+          }
           onBuilt();
           return result;
+        }
+
+        private void buildPartial0(com.google.api.Distribution.BucketOptions.Linear result) {
+          int from_bitField0_ = bitField0_;
+          if (((from_bitField0_ & 0x00000001) != 0)) {
+            result.numFiniteBuckets_ = numFiniteBuckets_;
+          }
+          if (((from_bitField0_ & 0x00000002) != 0)) {
+            result.width_ = width_;
+          }
+          if (((from_bitField0_ & 0x00000004) != 0)) {
+            result.offset_ = offset_;
+          }
         }
 
         @java.lang.Override
@@ -1395,19 +1409,19 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
                 case 8:
                   {
                     numFiniteBuckets_ = input.readInt32();
-
+                    bitField0_ |= 0x00000001;
                     break;
                   } // case 8
                 case 17:
                   {
                     width_ = input.readDouble();
-
+                    bitField0_ |= 0x00000002;
                     break;
                   } // case 17
                 case 25:
                   {
                     offset_ = input.readDouble();
-
+                    bitField0_ |= 0x00000004;
                     break;
                   } // case 25
                 default:
@@ -1426,6 +1440,8 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
           } // finally
           return this;
         }
+
+        private int bitField0_;
 
         private int numFiniteBuckets_;
         /**
@@ -1458,6 +1474,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
         public Builder setNumFiniteBuckets(int value) {
 
           numFiniteBuckets_ = value;
+          bitField0_ |= 0x00000001;
           onChanged();
           return this;
         }
@@ -1473,7 +1490,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
          * @return This builder for chaining.
          */
         public Builder clearNumFiniteBuckets() {
-
+          bitField0_ = (bitField0_ & ~0x00000001);
           numFiniteBuckets_ = 0;
           onChanged();
           return this;
@@ -1510,6 +1527,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
         public Builder setWidth(double value) {
 
           width_ = value;
+          bitField0_ |= 0x00000002;
           onChanged();
           return this;
         }
@@ -1525,7 +1543,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
          * @return This builder for chaining.
          */
         public Builder clearWidth() {
-
+          bitField0_ = (bitField0_ & ~0x00000002);
           width_ = 0D;
           onChanged();
           return this;
@@ -1562,6 +1580,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
         public Builder setOffset(double value) {
 
           offset_ = value;
+          bitField0_ |= 0x00000004;
           onChanged();
           return this;
         }
@@ -1577,7 +1596,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
          * @return This builder for chaining.
          */
         public Builder clearOffset() {
-
+          bitField0_ = (bitField0_ & ~0x00000004);
           offset_ = 0D;
           onChanged();
           return this;
@@ -1698,9 +1717,12 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * Specifies an exponential sequence of buckets that have a width that is
      * proportional to the value of the lower bound. Each bucket represents a
      * constant relative uncertainty on a specific value in the bucket.
+     *
      * There are `num_finite_buckets + 2` (= N) buckets. Bucket `i` has the
      * following boundaries:
+     *
      *    Upper bound (0 &lt;= i &lt; N-1):     scale * (growth_factor ^ i).
+     *
      *    Lower bound (1 &lt;= i &lt; N):       scale * (growth_factor ^ (i - 1)).
      * </pre>
      *
@@ -1724,11 +1746,6 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
         return new Exponential();
       }
 
-      @java.lang.Override
-      public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-        return this.unknownFields;
-      }
-
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
         return com.google.api.DistributionProto
             .internal_static_google_api_Distribution_BucketOptions_Exponential_descriptor;
@@ -1745,7 +1762,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
       }
 
       public static final int NUM_FINITE_BUCKETS_FIELD_NUMBER = 1;
-      private int numFiniteBuckets_;
+      private int numFiniteBuckets_ = 0;
       /**
        *
        *
@@ -1763,7 +1780,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
       }
 
       public static final int GROWTH_FACTOR_FIELD_NUMBER = 2;
-      private double growthFactor_;
+      private double growthFactor_ = 0D;
       /**
        *
        *
@@ -1781,7 +1798,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
       }
 
       public static final int SCALE_FIELD_NUMBER = 3;
-      private double scale_;
+      private double scale_ = 0D;
       /**
        *
        *
@@ -1992,9 +2009,12 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        * Specifies an exponential sequence of buckets that have a width that is
        * proportional to the value of the lower bound. Each bucket represents a
        * constant relative uncertainty on a specific value in the bucket.
+       *
        * There are `num_finite_buckets + 2` (= N) buckets. Bucket `i` has the
        * following boundaries:
+       *
        *    Upper bound (0 &lt;= i &lt; N-1):     scale * (growth_factor ^ i).
+       *
        *    Lower bound (1 &lt;= i &lt; N):       scale * (growth_factor ^ (i - 1)).
        * </pre>
        *
@@ -2030,12 +2050,10 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
         @java.lang.Override
         public Builder clear() {
           super.clear();
+          bitField0_ = 0;
           numFiniteBuckets_ = 0;
-
           growthFactor_ = 0D;
-
           scale_ = 0D;
-
           return this;
         }
 
@@ -2063,11 +2081,24 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
         public com.google.api.Distribution.BucketOptions.Exponential buildPartial() {
           com.google.api.Distribution.BucketOptions.Exponential result =
               new com.google.api.Distribution.BucketOptions.Exponential(this);
-          result.numFiniteBuckets_ = numFiniteBuckets_;
-          result.growthFactor_ = growthFactor_;
-          result.scale_ = scale_;
+          if (bitField0_ != 0) {
+            buildPartial0(result);
+          }
           onBuilt();
           return result;
+        }
+
+        private void buildPartial0(com.google.api.Distribution.BucketOptions.Exponential result) {
+          int from_bitField0_ = bitField0_;
+          if (((from_bitField0_ & 0x00000001) != 0)) {
+            result.numFiniteBuckets_ = numFiniteBuckets_;
+          }
+          if (((from_bitField0_ & 0x00000002) != 0)) {
+            result.growthFactor_ = growthFactor_;
+          }
+          if (((from_bitField0_ & 0x00000004) != 0)) {
+            result.scale_ = scale_;
+          }
         }
 
         @java.lang.Override
@@ -2156,19 +2187,19 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
                 case 8:
                   {
                     numFiniteBuckets_ = input.readInt32();
-
+                    bitField0_ |= 0x00000001;
                     break;
                   } // case 8
                 case 17:
                   {
                     growthFactor_ = input.readDouble();
-
+                    bitField0_ |= 0x00000002;
                     break;
                   } // case 17
                 case 25:
                   {
                     scale_ = input.readDouble();
-
+                    bitField0_ |= 0x00000004;
                     break;
                   } // case 25
                 default:
@@ -2187,6 +2218,8 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
           } // finally
           return this;
         }
+
+        private int bitField0_;
 
         private int numFiniteBuckets_;
         /**
@@ -2219,6 +2252,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
         public Builder setNumFiniteBuckets(int value) {
 
           numFiniteBuckets_ = value;
+          bitField0_ |= 0x00000001;
           onChanged();
           return this;
         }
@@ -2234,7 +2268,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
          * @return This builder for chaining.
          */
         public Builder clearNumFiniteBuckets() {
-
+          bitField0_ = (bitField0_ & ~0x00000001);
           numFiniteBuckets_ = 0;
           onChanged();
           return this;
@@ -2271,6 +2305,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
         public Builder setGrowthFactor(double value) {
 
           growthFactor_ = value;
+          bitField0_ |= 0x00000002;
           onChanged();
           return this;
         }
@@ -2286,7 +2321,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
          * @return This builder for chaining.
          */
         public Builder clearGrowthFactor() {
-
+          bitField0_ = (bitField0_ & ~0x00000002);
           growthFactor_ = 0D;
           onChanged();
           return this;
@@ -2323,6 +2358,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
         public Builder setScale(double value) {
 
           scale_ = value;
+          bitField0_ |= 0x00000004;
           onChanged();
           return this;
         }
@@ -2338,7 +2374,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
          * @return This builder for chaining.
          */
         public Builder clearScale() {
-
+          bitField0_ = (bitField0_ & ~0x00000004);
           scale_ = 0D;
           onChanged();
           return this;
@@ -2456,10 +2492,13 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Specifies a set of buckets with arbitrary widths.
+     *
      * There are `size(bounds) + 1` (= N) buckets. Bucket `i` has the following
      * boundaries:
+     *
      *    Upper bound (0 &lt;= i &lt; N-1):     bounds[i]
      *    Lower bound (1 &lt;= i &lt; N);       bounds[i - 1]
+     *
      * The `bounds` field must contain at least one element. If `bounds` has
      * only one element, then there are no finite buckets, and that single
      * element is the common boundary of the overflow and underflow buckets.
@@ -2487,11 +2526,6 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
         return new Explicit();
       }
 
-      @java.lang.Override
-      public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-        return this.unknownFields;
-      }
-
       public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
         return com.google.api.DistributionProto
             .internal_static_google_api_Distribution_BucketOptions_Explicit_descriptor;
@@ -2508,6 +2542,8 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
       }
 
       public static final int BOUNDS_FIELD_NUMBER = 1;
+
+      @SuppressWarnings("serial")
       private com.google.protobuf.Internal.DoubleList bounds_;
       /**
        *
@@ -2736,10 +2772,13 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Specifies a set of buckets with arbitrary widths.
+       *
        * There are `size(bounds) + 1` (= N) buckets. Bucket `i` has the following
        * boundaries:
+       *
        *    Upper bound (0 &lt;= i &lt; N-1):     bounds[i]
        *    Lower bound (1 &lt;= i &lt; N);       bounds[i - 1]
+       *
        * The `bounds` field must contain at least one element. If `bounds` has
        * only one element, then there are no finite buckets, and that single
        * element is the common boundary of the overflow and underflow buckets.
@@ -2777,8 +2816,8 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
         @java.lang.Override
         public Builder clear() {
           super.clear();
+          bitField0_ = 0;
           bounds_ = emptyDoubleList();
-          bitField0_ = (bitField0_ & ~0x00000001);
           return this;
         }
 
@@ -2806,14 +2845,25 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
         public com.google.api.Distribution.BucketOptions.Explicit buildPartial() {
           com.google.api.Distribution.BucketOptions.Explicit result =
               new com.google.api.Distribution.BucketOptions.Explicit(this);
-          int from_bitField0_ = bitField0_;
+          buildPartialRepeatedFields(result);
+          if (bitField0_ != 0) {
+            buildPartial0(result);
+          }
+          onBuilt();
+          return result;
+        }
+
+        private void buildPartialRepeatedFields(
+            com.google.api.Distribution.BucketOptions.Explicit result) {
           if (((bitField0_ & 0x00000001) != 0)) {
             bounds_.makeImmutable();
             bitField0_ = (bitField0_ & ~0x00000001);
           }
           result.bounds_ = bounds_;
-          onBuilt();
-          return result;
+        }
+
+        private void buildPartial0(com.google.api.Distribution.BucketOptions.Explicit result) {
+          int from_bitField0_ = bitField0_;
         }
 
         @java.lang.Override
@@ -3004,6 +3054,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
          * @return This builder for chaining.
          */
         public Builder setBounds(int index, double value) {
+
           ensureBoundsIsMutable();
           bounds_.setDouble(index, value);
           onChanged();
@@ -3022,6 +3073,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
          * @return This builder for chaining.
          */
         public Builder addBounds(double value) {
+
           ensureBoundsIsMutable();
           bounds_.addDouble(value);
           onChanged();
@@ -3128,6 +3180,8 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
     }
 
     private int optionsCase_ = 0;
+
+    @SuppressWarnings("serial")
     private java.lang.Object options_;
 
     public enum OptionsCase
@@ -3545,6 +3599,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * for the distribution. The buckets can be in a linear sequence, an
      * exponential sequence, or each bucket can be specified explicitly.
      * `BucketOptions` does not include the number of values in each bucket.
+     *
      * A bucket has an inclusive lower bound and exclusive upper bound for the
      * values that are counted for that bucket. The upper bound of a bucket must
      * be strictly greater than the lower bound. The sequence of N buckets for a
@@ -3589,6 +3644,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
       @java.lang.Override
       public Builder clear() {
         super.clear();
+        bitField0_ = 0;
         if (linearBucketsBuilder_ != null) {
           linearBucketsBuilder_.clear();
         }
@@ -3627,30 +3683,30 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
       public com.google.api.Distribution.BucketOptions buildPartial() {
         com.google.api.Distribution.BucketOptions result =
             new com.google.api.Distribution.BucketOptions(this);
-        if (optionsCase_ == 1) {
-          if (linearBucketsBuilder_ == null) {
-            result.options_ = options_;
-          } else {
-            result.options_ = linearBucketsBuilder_.build();
-          }
+        if (bitField0_ != 0) {
+          buildPartial0(result);
         }
-        if (optionsCase_ == 2) {
-          if (exponentialBucketsBuilder_ == null) {
-            result.options_ = options_;
-          } else {
-            result.options_ = exponentialBucketsBuilder_.build();
-          }
-        }
-        if (optionsCase_ == 3) {
-          if (explicitBucketsBuilder_ == null) {
-            result.options_ = options_;
-          } else {
-            result.options_ = explicitBucketsBuilder_.build();
-          }
-        }
-        result.optionsCase_ = optionsCase_;
+        buildPartialOneofs(result);
         onBuilt();
         return result;
+      }
+
+      private void buildPartial0(com.google.api.Distribution.BucketOptions result) {
+        int from_bitField0_ = bitField0_;
+      }
+
+      private void buildPartialOneofs(com.google.api.Distribution.BucketOptions result) {
+        result.optionsCase_ = optionsCase_;
+        result.options_ = this.options_;
+        if (optionsCase_ == 1 && linearBucketsBuilder_ != null) {
+          result.options_ = linearBucketsBuilder_.build();
+        }
+        if (optionsCase_ == 2 && exponentialBucketsBuilder_ != null) {
+          result.options_ = exponentialBucketsBuilder_.build();
+        }
+        if (optionsCase_ == 3 && explicitBucketsBuilder_ != null) {
+          result.options_ = explicitBucketsBuilder_.build();
+        }
       }
 
       @java.lang.Override
@@ -3797,6 +3853,8 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
         onChanged();
         return this;
       }
+
+      private int bitField0_;
 
       private com.google.protobuf.SingleFieldBuilderV3<
               com.google.api.Distribution.BucketOptions.Linear,
@@ -4005,7 +4063,6 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
         }
         optionsCase_ = 1;
         onChanged();
-        ;
         return linearBucketsBuilder_;
       }
 
@@ -4220,7 +4277,6 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
         }
         optionsCase_ = 2;
         onChanged();
-        ;
         return exponentialBucketsBuilder_;
       }
 
@@ -4434,7 +4490,6 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
         }
         optionsCase_ = 3;
         onChanged();
-        ;
         return explicitBucketsBuilder_;
       }
 
@@ -4561,10 +4616,14 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Contextual information about the example value. Examples are:
+     *
      *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
+     *
      *   Literal string: type.googleapis.com/google.protobuf.StringValue
+     *
      *   Labels dropped during aggregation:
      *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+     *
      * There may be only a single attachment of any given message type in a
      * single exemplar, and this is enforced by the system.
      * </pre>
@@ -4577,10 +4636,14 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Contextual information about the example value. Examples are:
+     *
      *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
+     *
      *   Literal string: type.googleapis.com/google.protobuf.StringValue
+     *
      *   Labels dropped during aggregation:
      *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+     *
      * There may be only a single attachment of any given message type in a
      * single exemplar, and this is enforced by the system.
      * </pre>
@@ -4593,10 +4656,14 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Contextual information about the example value. Examples are:
+     *
      *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
+     *
      *   Literal string: type.googleapis.com/google.protobuf.StringValue
+     *
      *   Labels dropped during aggregation:
      *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+     *
      * There may be only a single attachment of any given message type in a
      * single exemplar, and this is enforced by the system.
      * </pre>
@@ -4609,10 +4676,14 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Contextual information about the example value. Examples are:
+     *
      *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
+     *
      *   Literal string: type.googleapis.com/google.protobuf.StringValue
+     *
      *   Labels dropped during aggregation:
      *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+     *
      * There may be only a single attachment of any given message type in a
      * single exemplar, and this is enforced by the system.
      * </pre>
@@ -4625,10 +4696,14 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Contextual information about the example value. Examples are:
+     *
      *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
+     *
      *   Literal string: type.googleapis.com/google.protobuf.StringValue
+     *
      *   Labels dropped during aggregation:
      *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+     *
      * There may be only a single attachment of any given message type in a
      * single exemplar, and this is enforced by the system.
      * </pre>
@@ -4670,11 +4745,6 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
       return new Exemplar();
     }
 
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-      return this.unknownFields;
-    }
-
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
       return com.google.api.DistributionProto
           .internal_static_google_api_Distribution_Exemplar_descriptor;
@@ -4691,7 +4761,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
     }
 
     public static final int VALUE_FIELD_NUMBER = 1;
-    private double value_;
+    private double value_ = 0D;
     /**
      *
      *
@@ -4752,20 +4822,26 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.TimestampOrBuilder getTimestampOrBuilder() {
-      return getTimestamp();
+      return timestamp_ == null ? com.google.protobuf.Timestamp.getDefaultInstance() : timestamp_;
     }
 
     public static final int ATTACHMENTS_FIELD_NUMBER = 3;
+
+    @SuppressWarnings("serial")
     private java.util.List<com.google.protobuf.Any> attachments_;
     /**
      *
      *
      * <pre>
      * Contextual information about the example value. Examples are:
+     *
      *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
+     *
      *   Literal string: type.googleapis.com/google.protobuf.StringValue
+     *
      *   Labels dropped during aggregation:
      *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+     *
      * There may be only a single attachment of any given message type in a
      * single exemplar, and this is enforced by the system.
      * </pre>
@@ -4781,10 +4857,14 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Contextual information about the example value. Examples are:
+     *
      *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
+     *
      *   Literal string: type.googleapis.com/google.protobuf.StringValue
+     *
      *   Labels dropped during aggregation:
      *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+     *
      * There may be only a single attachment of any given message type in a
      * single exemplar, and this is enforced by the system.
      * </pre>
@@ -4801,10 +4881,14 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Contextual information about the example value. Examples are:
+     *
      *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
+     *
      *   Literal string: type.googleapis.com/google.protobuf.StringValue
+     *
      *   Labels dropped during aggregation:
      *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+     *
      * There may be only a single attachment of any given message type in a
      * single exemplar, and this is enforced by the system.
      * </pre>
@@ -4820,10 +4904,14 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Contextual information about the example value. Examples are:
+     *
      *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
+     *
      *   Literal string: type.googleapis.com/google.protobuf.StringValue
+     *
      *   Labels dropped during aggregation:
      *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+     *
      * There may be only a single attachment of any given message type in a
      * single exemplar, and this is enforced by the system.
      * </pre>
@@ -4839,10 +4927,14 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Contextual information about the example value. Examples are:
+     *
      *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
+     *
      *   Literal string: type.googleapis.com/google.protobuf.StringValue
+     *
      *   Labels dropped during aggregation:
      *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+     *
      * There may be only a single attachment of any given message type in a
      * single exemplar, and this is enforced by the system.
      * </pre>
@@ -5085,12 +5177,11 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
       @java.lang.Override
       public Builder clear() {
         super.clear();
+        bitField0_ = 0;
         value_ = 0D;
-
-        if (timestampBuilder_ == null) {
-          timestamp_ = null;
-        } else {
-          timestamp_ = null;
+        timestamp_ = null;
+        if (timestampBuilder_ != null) {
+          timestampBuilder_.dispose();
           timestampBuilder_ = null;
         }
         if (attachmentsBuilder_ == null) {
@@ -5099,7 +5190,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
           attachments_ = null;
           attachmentsBuilder_.clear();
         }
-        bitField0_ = (bitField0_ & ~0x00000001);
+        bitField0_ = (bitField0_ & ~0x00000004);
         return this;
       }
 
@@ -5127,24 +5218,34 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
       public com.google.api.Distribution.Exemplar buildPartial() {
         com.google.api.Distribution.Exemplar result =
             new com.google.api.Distribution.Exemplar(this);
-        int from_bitField0_ = bitField0_;
-        result.value_ = value_;
-        if (timestampBuilder_ == null) {
-          result.timestamp_ = timestamp_;
-        } else {
-          result.timestamp_ = timestampBuilder_.build();
+        buildPartialRepeatedFields(result);
+        if (bitField0_ != 0) {
+          buildPartial0(result);
         }
+        onBuilt();
+        return result;
+      }
+
+      private void buildPartialRepeatedFields(com.google.api.Distribution.Exemplar result) {
         if (attachmentsBuilder_ == null) {
-          if (((bitField0_ & 0x00000001) != 0)) {
+          if (((bitField0_ & 0x00000004) != 0)) {
             attachments_ = java.util.Collections.unmodifiableList(attachments_);
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ = (bitField0_ & ~0x00000004);
           }
           result.attachments_ = attachments_;
         } else {
           result.attachments_ = attachmentsBuilder_.build();
         }
-        onBuilt();
-        return result;
+      }
+
+      private void buildPartial0(com.google.api.Distribution.Exemplar result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.value_ = value_;
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          result.timestamp_ = timestampBuilder_ == null ? timestamp_ : timestampBuilder_.build();
+        }
       }
 
       @java.lang.Override
@@ -5204,7 +5305,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
           if (!other.attachments_.isEmpty()) {
             if (attachments_.isEmpty()) {
               attachments_ = other.attachments_;
-              bitField0_ = (bitField0_ & ~0x00000001);
+              bitField0_ = (bitField0_ & ~0x00000004);
             } else {
               ensureAttachmentsIsMutable();
               attachments_.addAll(other.attachments_);
@@ -5217,7 +5318,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
               attachmentsBuilder_.dispose();
               attachmentsBuilder_ = null;
               attachments_ = other.attachments_;
-              bitField0_ = (bitField0_ & ~0x00000001);
+              bitField0_ = (bitField0_ & ~0x00000004);
               attachmentsBuilder_ =
                   com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
                       ? getAttachmentsFieldBuilder()
@@ -5256,13 +5357,13 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
               case 9:
                 {
                   value_ = input.readDouble();
-
+                  bitField0_ |= 0x00000001;
                   break;
                 } // case 9
               case 18:
                 {
                   input.readMessage(getTimestampFieldBuilder().getBuilder(), extensionRegistry);
-
+                  bitField0_ |= 0x00000002;
                   break;
                 } // case 18
               case 26:
@@ -5329,6 +5430,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
       public Builder setValue(double value) {
 
         value_ = value;
+        bitField0_ |= 0x00000001;
         onChanged();
         return this;
       }
@@ -5345,7 +5447,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearValue() {
-
+        bitField0_ = (bitField0_ & ~0x00000001);
         value_ = 0D;
         onChanged();
         return this;
@@ -5369,7 +5471,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        * @return Whether the timestamp field is set.
        */
       public boolean hasTimestamp() {
-        return timestampBuilder_ != null || timestamp_ != null;
+        return ((bitField0_ & 0x00000002) != 0);
       }
       /**
        *
@@ -5406,11 +5508,11 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
             throw new NullPointerException();
           }
           timestamp_ = value;
-          onChanged();
         } else {
           timestampBuilder_.setMessage(value);
         }
-
+        bitField0_ |= 0x00000002;
+        onChanged();
         return this;
       }
       /**
@@ -5425,11 +5527,11 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
       public Builder setTimestamp(com.google.protobuf.Timestamp.Builder builderForValue) {
         if (timestampBuilder_ == null) {
           timestamp_ = builderForValue.build();
-          onChanged();
         } else {
           timestampBuilder_.setMessage(builderForValue.build());
         }
-
+        bitField0_ |= 0x00000002;
+        onChanged();
         return this;
       }
       /**
@@ -5443,19 +5545,18 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        */
       public Builder mergeTimestamp(com.google.protobuf.Timestamp value) {
         if (timestampBuilder_ == null) {
-          if (timestamp_ != null) {
-            timestamp_ =
-                com.google.protobuf.Timestamp.newBuilder(timestamp_)
-                    .mergeFrom(value)
-                    .buildPartial();
+          if (((bitField0_ & 0x00000002) != 0)
+              && timestamp_ != null
+              && timestamp_ != com.google.protobuf.Timestamp.getDefaultInstance()) {
+            getTimestampBuilder().mergeFrom(value);
           } else {
             timestamp_ = value;
           }
-          onChanged();
         } else {
           timestampBuilder_.mergeFrom(value);
         }
-
+        bitField0_ |= 0x00000002;
+        onChanged();
         return this;
       }
       /**
@@ -5468,14 +5569,13 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        * <code>.google.protobuf.Timestamp timestamp = 2;</code>
        */
       public Builder clearTimestamp() {
-        if (timestampBuilder_ == null) {
-          timestamp_ = null;
-          onChanged();
-        } else {
-          timestamp_ = null;
+        bitField0_ = (bitField0_ & ~0x00000002);
+        timestamp_ = null;
+        if (timestampBuilder_ != null) {
+          timestampBuilder_.dispose();
           timestampBuilder_ = null;
         }
-
+        onChanged();
         return this;
       }
       /**
@@ -5488,7 +5588,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        * <code>.google.protobuf.Timestamp timestamp = 2;</code>
        */
       public com.google.protobuf.Timestamp.Builder getTimestampBuilder() {
-
+        bitField0_ |= 0x00000002;
         onChanged();
         return getTimestampFieldBuilder().getBuilder();
       }
@@ -5540,9 +5640,9 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
           java.util.Collections.emptyList();
 
       private void ensureAttachmentsIsMutable() {
-        if (!((bitField0_ & 0x00000001) != 0)) {
+        if (!((bitField0_ & 0x00000004) != 0)) {
           attachments_ = new java.util.ArrayList<com.google.protobuf.Any>(attachments_);
-          bitField0_ |= 0x00000001;
+          bitField0_ |= 0x00000004;
         }
       }
 
@@ -5557,10 +5657,14 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
+       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
+       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5579,10 +5683,14 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
+       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
+       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5601,10 +5709,14 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
+       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
+       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5623,10 +5735,14 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
+       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
+       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5651,10 +5767,14 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
+       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
+       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5676,10 +5796,14 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
+       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
+       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5704,10 +5828,14 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
+       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
+       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5732,10 +5860,14 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
+       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
+       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5757,10 +5889,14 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
+       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
+       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5782,10 +5918,14 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
+       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
+       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5808,10 +5948,14 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
+       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
+       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5821,7 +5965,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
       public Builder clearAttachments() {
         if (attachmentsBuilder_ == null) {
           attachments_ = java.util.Collections.emptyList();
-          bitField0_ = (bitField0_ & ~0x00000001);
+          bitField0_ = (bitField0_ & ~0x00000004);
           onChanged();
         } else {
           attachmentsBuilder_.clear();
@@ -5833,10 +5977,14 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
+       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
+       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5858,10 +6006,14 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
+       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
+       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5876,10 +6028,14 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
+       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
+       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5898,10 +6054,14 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
+       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
+       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5921,10 +6081,14 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
+       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
+       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5940,10 +6104,14 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
+       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
+       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5959,10 +6127,14 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Contextual information about the example value. Examples are:
+       *
        *   Trace: type.googleapis.com/google.monitoring.v3.SpanContext
+       *
        *   Literal string: type.googleapis.com/google.protobuf.StringValue
+       *
        *   Labels dropped during aggregation:
        *     type.googleapis.com/google.monitoring.v3.DroppedLabels
+       *
        * There may be only a single attachment of any given message type in a
        * single exemplar, and this is enforced by the system.
        * </pre>
@@ -5985,7 +6157,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
                   com.google.protobuf.Any.Builder,
                   com.google.protobuf.AnyOrBuilder>(
                   attachments_,
-                  ((bitField0_ & 0x00000001) != 0),
+                  ((bitField0_ & 0x00000004) != 0),
                   getParentForChildren(),
                   isClean());
           attachments_ = null;
@@ -6058,7 +6230,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int COUNT_FIELD_NUMBER = 1;
-  private long count_;
+  private long count_ = 0L;
   /**
    *
    *
@@ -6078,7 +6250,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int MEAN_FIELD_NUMBER = 2;
-  private double mean_;
+  private double mean_ = 0D;
   /**
    *
    *
@@ -6097,16 +6269,19 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int SUM_OF_SQUARED_DEVIATION_FIELD_NUMBER = 3;
-  private double sumOfSquaredDeviation_;
+  private double sumOfSquaredDeviation_ = 0D;
   /**
    *
    *
    * <pre>
    * The sum of squared deviations from the mean of the values in the
    * population. For values x_i this is:
+   *
    *     Sum[i=1..n]((x_i - mean)^2)
+   *
    * Knuth, "The Art of Computer Programming", Vol. 2, page 232, 3rd edition
    * describes Welford's method for accumulating this sum in one pass.
+   *
    * If `count` is zero then this field must be zero.
    * </pre>
    *
@@ -6165,7 +6340,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.api.Distribution.RangeOrBuilder getRangeOrBuilder() {
-    return getRange();
+    return range_ == null ? com.google.api.Distribution.Range.getDefaultInstance() : range_;
   }
 
   public static final int BUCKET_OPTIONS_FIELD_NUMBER = 6;
@@ -6216,10 +6391,14 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.api.Distribution.BucketOptionsOrBuilder getBucketOptionsOrBuilder() {
-    return getBucketOptions();
+    return bucketOptions_ == null
+        ? com.google.api.Distribution.BucketOptions.getDefaultInstance()
+        : bucketOptions_;
   }
 
   public static final int BUCKET_COUNTS_FIELD_NUMBER = 7;
+
+  @SuppressWarnings("serial")
   private com.google.protobuf.Internal.LongList bucketCounts_;
   /**
    *
@@ -6230,9 +6409,11 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
    * this field. If there is a histogram, then the sum of the values in
    * `bucket_counts` must equal the value in the `count` field of the
    * distribution.
+   *
    * If present, `bucket_counts` should contain N values, where N is the number
    * of buckets specified in `bucket_options`. If you supply fewer than N
    * values, the remaining values are assumed to be 0.
+   *
    * The order of the values in `bucket_counts` follows the bucket numbering
    * schemes described for the three bucket types. The first value must be the
    * count for the underflow bucket (number 0). The next N-2 values are the
@@ -6257,9 +6438,11 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
    * this field. If there is a histogram, then the sum of the values in
    * `bucket_counts` must equal the value in the `count` field of the
    * distribution.
+   *
    * If present, `bucket_counts` should contain N values, where N is the number
    * of buckets specified in `bucket_options`. If you supply fewer than N
    * values, the remaining values are assumed to be 0.
+   *
    * The order of the values in `bucket_counts` follows the bucket numbering
    * schemes described for the three bucket types. The first value must be the
    * count for the underflow bucket (number 0). The next N-2 values are the
@@ -6283,9 +6466,11 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
    * this field. If there is a histogram, then the sum of the values in
    * `bucket_counts` must equal the value in the `count` field of the
    * distribution.
+   *
    * If present, `bucket_counts` should contain N values, where N is the number
    * of buckets specified in `bucket_options`. If you supply fewer than N
    * values, the remaining values are assumed to be 0.
+   *
    * The order of the values in `bucket_counts` follows the bucket numbering
    * schemes described for the three bucket types. The first value must be the
    * count for the underflow bucket (number 0). The next N-2 values are the
@@ -6305,6 +6490,8 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
   private int bucketCountsMemoizedSerializedSize = -1;
 
   public static final int EXEMPLARS_FIELD_NUMBER = 10;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.api.Distribution.Exemplar> exemplars_;
   /**
    *
@@ -6627,12 +6814,14 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
    * `Distribution` contains summary statistics for a population of values. It
    * optionally contains a histogram representing the distribution of those values
    * across a set of buckets.
+   *
    * The summary statistics are the count, mean, sum of the squared deviation from
    * the mean, the minimum, and the maximum of the set of population of values.
    * The histogram is based on a sequence of buckets and gives a count of values
    * that fall into each bucket. The boundaries of the buckets are given either
    * explicitly or by formulas for buckets of fixed or exponentially increasing
    * widths.
+   *
    * Although it is not forbidden, it is generally a bad idea to include
    * non-finite values (infinities or NaNs) in the population of values, as this
    * will render the `mean` and `sum_of_squared_deviation` fields meaningless.
@@ -6667,33 +6856,28 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       count_ = 0L;
-
       mean_ = 0D;
-
       sumOfSquaredDeviation_ = 0D;
-
-      if (rangeBuilder_ == null) {
-        range_ = null;
-      } else {
-        range_ = null;
+      range_ = null;
+      if (rangeBuilder_ != null) {
+        rangeBuilder_.dispose();
         rangeBuilder_ = null;
       }
-      if (bucketOptionsBuilder_ == null) {
-        bucketOptions_ = null;
-      } else {
-        bucketOptions_ = null;
+      bucketOptions_ = null;
+      if (bucketOptionsBuilder_ != null) {
+        bucketOptionsBuilder_.dispose();
         bucketOptionsBuilder_ = null;
       }
       bucketCounts_ = emptyLongList();
-      bitField0_ = (bitField0_ & ~0x00000001);
       if (exemplarsBuilder_ == null) {
         exemplars_ = java.util.Collections.emptyList();
       } else {
         exemplars_ = null;
         exemplarsBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000002);
+      bitField0_ = (bitField0_ & ~0x00000040);
       return this;
     }
 
@@ -6719,36 +6903,49 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.Distribution buildPartial() {
       com.google.api.Distribution result = new com.google.api.Distribution(this);
-      int from_bitField0_ = bitField0_;
-      result.count_ = count_;
-      result.mean_ = mean_;
-      result.sumOfSquaredDeviation_ = sumOfSquaredDeviation_;
-      if (rangeBuilder_ == null) {
-        result.range_ = range_;
-      } else {
-        result.range_ = rangeBuilder_.build();
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
       }
-      if (bucketOptionsBuilder_ == null) {
-        result.bucketOptions_ = bucketOptions_;
-      } else {
-        result.bucketOptions_ = bucketOptionsBuilder_.build();
-      }
-      if (((bitField0_ & 0x00000001) != 0)) {
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.api.Distribution result) {
+      if (((bitField0_ & 0x00000020) != 0)) {
         bucketCounts_.makeImmutable();
-        bitField0_ = (bitField0_ & ~0x00000001);
+        bitField0_ = (bitField0_ & ~0x00000020);
       }
       result.bucketCounts_ = bucketCounts_;
       if (exemplarsBuilder_ == null) {
-        if (((bitField0_ & 0x00000002) != 0)) {
+        if (((bitField0_ & 0x00000040) != 0)) {
           exemplars_ = java.util.Collections.unmodifiableList(exemplars_);
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ = (bitField0_ & ~0x00000040);
         }
         result.exemplars_ = exemplars_;
       } else {
         result.exemplars_ = exemplarsBuilder_.build();
       }
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.api.Distribution result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.count_ = count_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.mean_ = mean_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.sumOfSquaredDeviation_ = sumOfSquaredDeviation_;
+      }
+      if (((from_bitField0_ & 0x00000008) != 0)) {
+        result.range_ = rangeBuilder_ == null ? range_ : rangeBuilder_.build();
+      }
+      if (((from_bitField0_ & 0x00000010) != 0)) {
+        result.bucketOptions_ =
+            bucketOptionsBuilder_ == null ? bucketOptions_ : bucketOptionsBuilder_.build();
+      }
     }
 
     @java.lang.Override
@@ -6814,7 +7011,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
       if (!other.bucketCounts_.isEmpty()) {
         if (bucketCounts_.isEmpty()) {
           bucketCounts_ = other.bucketCounts_;
-          bitField0_ = (bitField0_ & ~0x00000001);
+          bitField0_ = (bitField0_ & ~0x00000020);
         } else {
           ensureBucketCountsIsMutable();
           bucketCounts_.addAll(other.bucketCounts_);
@@ -6825,7 +7022,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
         if (!other.exemplars_.isEmpty()) {
           if (exemplars_.isEmpty()) {
             exemplars_ = other.exemplars_;
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ = (bitField0_ & ~0x00000040);
           } else {
             ensureExemplarsIsMutable();
             exemplars_.addAll(other.exemplars_);
@@ -6838,7 +7035,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
             exemplarsBuilder_.dispose();
             exemplarsBuilder_ = null;
             exemplars_ = other.exemplars_;
-            bitField0_ = (bitField0_ & ~0x00000002);
+            bitField0_ = (bitField0_ & ~0x00000040);
             exemplarsBuilder_ =
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
                     ? getExemplarsFieldBuilder()
@@ -6877,31 +7074,31 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
             case 8:
               {
                 count_ = input.readInt64();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 8
             case 17:
               {
                 mean_ = input.readDouble();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 17
             case 25:
               {
                 sumOfSquaredDeviation_ = input.readDouble();
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 25
             case 34:
               {
                 input.readMessage(getRangeFieldBuilder().getBuilder(), extensionRegistry);
-
+                bitField0_ |= 0x00000008;
                 break;
               } // case 34
             case 50:
               {
                 input.readMessage(getBucketOptionsFieldBuilder().getBuilder(), extensionRegistry);
-
+                bitField0_ |= 0x00000010;
                 break;
               } // case 50
             case 56:
@@ -6989,6 +7186,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
     public Builder setCount(long value) {
 
       count_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -7006,7 +7204,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearCount() {
-
+      bitField0_ = (bitField0_ & ~0x00000001);
       count_ = 0L;
       onChanged();
       return this;
@@ -7045,6 +7243,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
     public Builder setMean(double value) {
 
       mean_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -7061,7 +7260,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearMean() {
-
+      bitField0_ = (bitField0_ & ~0x00000002);
       mean_ = 0D;
       onChanged();
       return this;
@@ -7074,9 +7273,12 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The sum of squared deviations from the mean of the values in the
      * population. For values x_i this is:
+     *
      *     Sum[i=1..n]((x_i - mean)^2)
+     *
      * Knuth, "The Art of Computer Programming", Vol. 2, page 232, 3rd edition
      * describes Welford's method for accumulating this sum in one pass.
+     *
      * If `count` is zero then this field must be zero.
      * </pre>
      *
@@ -7094,9 +7296,12 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The sum of squared deviations from the mean of the values in the
      * population. For values x_i this is:
+     *
      *     Sum[i=1..n]((x_i - mean)^2)
+     *
      * Knuth, "The Art of Computer Programming", Vol. 2, page 232, 3rd edition
      * describes Welford's method for accumulating this sum in one pass.
+     *
      * If `count` is zero then this field must be zero.
      * </pre>
      *
@@ -7108,6 +7313,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
     public Builder setSumOfSquaredDeviation(double value) {
 
       sumOfSquaredDeviation_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -7117,9 +7323,12 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The sum of squared deviations from the mean of the values in the
      * population. For values x_i this is:
+     *
      *     Sum[i=1..n]((x_i - mean)^2)
+     *
      * Knuth, "The Art of Computer Programming", Vol. 2, page 232, 3rd edition
      * describes Welford's method for accumulating this sum in one pass.
+     *
      * If `count` is zero then this field must be zero.
      * </pre>
      *
@@ -7128,7 +7337,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearSumOfSquaredDeviation() {
-
+      bitField0_ = (bitField0_ & ~0x00000004);
       sumOfSquaredDeviation_ = 0D;
       onChanged();
       return this;
@@ -7153,7 +7362,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * @return Whether the range field is set.
      */
     public boolean hasRange() {
-      return rangeBuilder_ != null || range_ != null;
+      return ((bitField0_ & 0x00000008) != 0);
     }
     /**
      *
@@ -7190,11 +7399,11 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
           throw new NullPointerException();
         }
         range_ = value;
-        onChanged();
       } else {
         rangeBuilder_.setMessage(value);
       }
-
+      bitField0_ |= 0x00000008;
+      onChanged();
       return this;
     }
     /**
@@ -7210,11 +7419,11 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
     public Builder setRange(com.google.api.Distribution.Range.Builder builderForValue) {
       if (rangeBuilder_ == null) {
         range_ = builderForValue.build();
-        onChanged();
       } else {
         rangeBuilder_.setMessage(builderForValue.build());
       }
-
+      bitField0_ |= 0x00000008;
+      onChanged();
       return this;
     }
     /**
@@ -7229,17 +7438,18 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder mergeRange(com.google.api.Distribution.Range value) {
       if (rangeBuilder_ == null) {
-        if (range_ != null) {
-          range_ =
-              com.google.api.Distribution.Range.newBuilder(range_).mergeFrom(value).buildPartial();
+        if (((bitField0_ & 0x00000008) != 0)
+            && range_ != null
+            && range_ != com.google.api.Distribution.Range.getDefaultInstance()) {
+          getRangeBuilder().mergeFrom(value);
         } else {
           range_ = value;
         }
-        onChanged();
       } else {
         rangeBuilder_.mergeFrom(value);
       }
-
+      bitField0_ |= 0x00000008;
+      onChanged();
       return this;
     }
     /**
@@ -7253,14 +7463,13 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Distribution.Range range = 4;</code>
      */
     public Builder clearRange() {
-      if (rangeBuilder_ == null) {
-        range_ = null;
-        onChanged();
-      } else {
-        range_ = null;
+      bitField0_ = (bitField0_ & ~0x00000008);
+      range_ = null;
+      if (rangeBuilder_ != null) {
+        rangeBuilder_.dispose();
         rangeBuilder_ = null;
       }
-
+      onChanged();
       return this;
     }
     /**
@@ -7274,7 +7483,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Distribution.Range range = 4;</code>
      */
     public com.google.api.Distribution.Range.Builder getRangeBuilder() {
-
+      bitField0_ |= 0x00000008;
       onChanged();
       return getRangeFieldBuilder().getBuilder();
     }
@@ -7341,7 +7550,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * @return Whether the bucketOptions field is set.
      */
     public boolean hasBucketOptions() {
-      return bucketOptionsBuilder_ != null || bucketOptions_ != null;
+      return ((bitField0_ & 0x00000010) != 0);
     }
     /**
      *
@@ -7380,11 +7589,11 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
           throw new NullPointerException();
         }
         bucketOptions_ = value;
-        onChanged();
       } else {
         bucketOptionsBuilder_.setMessage(value);
       }
-
+      bitField0_ |= 0x00000010;
+      onChanged();
       return this;
     }
     /**
@@ -7401,11 +7610,11 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
         com.google.api.Distribution.BucketOptions.Builder builderForValue) {
       if (bucketOptionsBuilder_ == null) {
         bucketOptions_ = builderForValue.build();
-        onChanged();
       } else {
         bucketOptionsBuilder_.setMessage(builderForValue.build());
       }
-
+      bitField0_ |= 0x00000010;
+      onChanged();
       return this;
     }
     /**
@@ -7420,19 +7629,18 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder mergeBucketOptions(com.google.api.Distribution.BucketOptions value) {
       if (bucketOptionsBuilder_ == null) {
-        if (bucketOptions_ != null) {
-          bucketOptions_ =
-              com.google.api.Distribution.BucketOptions.newBuilder(bucketOptions_)
-                  .mergeFrom(value)
-                  .buildPartial();
+        if (((bitField0_ & 0x00000010) != 0)
+            && bucketOptions_ != null
+            && bucketOptions_ != com.google.api.Distribution.BucketOptions.getDefaultInstance()) {
+          getBucketOptionsBuilder().mergeFrom(value);
         } else {
           bucketOptions_ = value;
         }
-        onChanged();
       } else {
         bucketOptionsBuilder_.mergeFrom(value);
       }
-
+      bitField0_ |= 0x00000010;
+      onChanged();
       return this;
     }
     /**
@@ -7446,14 +7654,13 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Distribution.BucketOptions bucket_options = 6;</code>
      */
     public Builder clearBucketOptions() {
-      if (bucketOptionsBuilder_ == null) {
-        bucketOptions_ = null;
-        onChanged();
-      } else {
-        bucketOptions_ = null;
+      bitField0_ = (bitField0_ & ~0x00000010);
+      bucketOptions_ = null;
+      if (bucketOptionsBuilder_ != null) {
+        bucketOptionsBuilder_.dispose();
         bucketOptionsBuilder_ = null;
       }
-
+      onChanged();
       return this;
     }
     /**
@@ -7467,7 +7674,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.Distribution.BucketOptions bucket_options = 6;</code>
      */
     public com.google.api.Distribution.BucketOptions.Builder getBucketOptionsBuilder() {
-
+      bitField0_ |= 0x00000010;
       onChanged();
       return getBucketOptionsFieldBuilder().getBuilder();
     }
@@ -7520,9 +7727,9 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
     private com.google.protobuf.Internal.LongList bucketCounts_ = emptyLongList();
 
     private void ensureBucketCountsIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
+      if (!((bitField0_ & 0x00000020) != 0)) {
         bucketCounts_ = mutableCopy(bucketCounts_);
-        bitField0_ |= 0x00000001;
+        bitField0_ |= 0x00000020;
       }
     }
     /**
@@ -7534,9 +7741,11 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * this field. If there is a histogram, then the sum of the values in
      * `bucket_counts` must equal the value in the `count` field of the
      * distribution.
+     *
      * If present, `bucket_counts` should contain N values, where N is the number
      * of buckets specified in `bucket_options`. If you supply fewer than N
      * values, the remaining values are assumed to be 0.
+     *
      * The order of the values in `bucket_counts` follows the bucket numbering
      * schemes described for the three bucket types. The first value must be the
      * count for the underflow bucket (number 0). The next N-2 values are the
@@ -7549,7 +7758,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * @return A list containing the bucketCounts.
      */
     public java.util.List<java.lang.Long> getBucketCountsList() {
-      return ((bitField0_ & 0x00000001) != 0)
+      return ((bitField0_ & 0x00000020) != 0)
           ? java.util.Collections.unmodifiableList(bucketCounts_)
           : bucketCounts_;
     }
@@ -7562,9 +7771,11 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * this field. If there is a histogram, then the sum of the values in
      * `bucket_counts` must equal the value in the `count` field of the
      * distribution.
+     *
      * If present, `bucket_counts` should contain N values, where N is the number
      * of buckets specified in `bucket_options`. If you supply fewer than N
      * values, the remaining values are assumed to be 0.
+     *
      * The order of the values in `bucket_counts` follows the bucket numbering
      * schemes described for the three bucket types. The first value must be the
      * count for the underflow bucket (number 0). The next N-2 values are the
@@ -7588,9 +7799,11 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * this field. If there is a histogram, then the sum of the values in
      * `bucket_counts` must equal the value in the `count` field of the
      * distribution.
+     *
      * If present, `bucket_counts` should contain N values, where N is the number
      * of buckets specified in `bucket_options`. If you supply fewer than N
      * values, the remaining values are assumed to be 0.
+     *
      * The order of the values in `bucket_counts` follows the bucket numbering
      * schemes described for the three bucket types. The first value must be the
      * count for the underflow bucket (number 0). The next N-2 values are the
@@ -7615,9 +7828,11 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * this field. If there is a histogram, then the sum of the values in
      * `bucket_counts` must equal the value in the `count` field of the
      * distribution.
+     *
      * If present, `bucket_counts` should contain N values, where N is the number
      * of buckets specified in `bucket_options`. If you supply fewer than N
      * values, the remaining values are assumed to be 0.
+     *
      * The order of the values in `bucket_counts` follows the bucket numbering
      * schemes described for the three bucket types. The first value must be the
      * count for the underflow bucket (number 0). The next N-2 values are the
@@ -7632,6 +7847,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setBucketCounts(int index, long value) {
+
       ensureBucketCountsIsMutable();
       bucketCounts_.setLong(index, value);
       onChanged();
@@ -7646,9 +7862,11 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * this field. If there is a histogram, then the sum of the values in
      * `bucket_counts` must equal the value in the `count` field of the
      * distribution.
+     *
      * If present, `bucket_counts` should contain N values, where N is the number
      * of buckets specified in `bucket_options`. If you supply fewer than N
      * values, the remaining values are assumed to be 0.
+     *
      * The order of the values in `bucket_counts` follows the bucket numbering
      * schemes described for the three bucket types. The first value must be the
      * count for the underflow bucket (number 0). The next N-2 values are the
@@ -7662,6 +7880,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder addBucketCounts(long value) {
+
       ensureBucketCountsIsMutable();
       bucketCounts_.addLong(value);
       onChanged();
@@ -7676,9 +7895,11 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * this field. If there is a histogram, then the sum of the values in
      * `bucket_counts` must equal the value in the `count` field of the
      * distribution.
+     *
      * If present, `bucket_counts` should contain N values, where N is the number
      * of buckets specified in `bucket_options`. If you supply fewer than N
      * values, the remaining values are assumed to be 0.
+     *
      * The order of the values in `bucket_counts` follows the bucket numbering
      * schemes described for the three bucket types. The first value must be the
      * count for the underflow bucket (number 0). The next N-2 values are the
@@ -7706,9 +7927,11 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      * this field. If there is a histogram, then the sum of the values in
      * `bucket_counts` must equal the value in the `count` field of the
      * distribution.
+     *
      * If present, `bucket_counts` should contain N values, where N is the number
      * of buckets specified in `bucket_options`. If you supply fewer than N
      * values, the remaining values are assumed to be 0.
+     *
      * The order of the values in `bucket_counts` follows the bucket numbering
      * schemes described for the three bucket types. The first value must be the
      * count for the underflow bucket (number 0). The next N-2 values are the
@@ -7722,7 +7945,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder clearBucketCounts() {
       bucketCounts_ = emptyLongList();
-      bitField0_ = (bitField0_ & ~0x00000001);
+      bitField0_ = (bitField0_ & ~0x00000020);
       onChanged();
       return this;
     }
@@ -7731,9 +7954,9 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
         java.util.Collections.emptyList();
 
     private void ensureExemplarsIsMutable() {
-      if (!((bitField0_ & 0x00000002) != 0)) {
+      if (!((bitField0_ & 0x00000040) != 0)) {
         exemplars_ = new java.util.ArrayList<com.google.api.Distribution.Exemplar>(exemplars_);
-        bitField0_ |= 0x00000002;
+        bitField0_ |= 0x00000040;
       }
     }
 
@@ -7948,7 +8171,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
     public Builder clearExemplars() {
       if (exemplarsBuilder_ == null) {
         exemplars_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000002);
+        bitField0_ = (bitField0_ & ~0x00000040);
         onChanged();
       } else {
         exemplarsBuilder_.clear();
@@ -8069,7 +8292,7 @@ public final class Distribution extends com.google.protobuf.GeneratedMessageV3
                 com.google.api.Distribution.Exemplar,
                 com.google.api.Distribution.Exemplar.Builder,
                 com.google.api.Distribution.ExemplarOrBuilder>(
-                exemplars_, ((bitField0_ & 0x00000002) != 0), getParentForChildren(), isClean());
+                exemplars_, ((bitField0_ & 0x00000040) != 0), getParentForChildren(), isClean());
         exemplars_ = null;
       }
       return exemplarsBuilder_;

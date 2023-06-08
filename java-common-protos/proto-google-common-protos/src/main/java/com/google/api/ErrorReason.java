@@ -52,8 +52,10 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    *
    * <pre>
    * The request is calling a disabled service for a consumer.
+   *
    * Example of an ErrorInfo when the consumer "projects/123" contacting
    * "pubsub.googleapis.com" service which is disabled:
+   *
    *     { "reason": "SERVICE_DISABLED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -61,6 +63,7 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    *         "service": "pubsub.googleapis.com"
    *       }
    *     }
+   *
    * This response indicates the "pubsub.googleapis.com" has been disabled in
    * "projects/123".
    * </pre>
@@ -73,9 +76,11 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    *
    * <pre>
    * The request whose associated billing account is disabled.
+   *
    * Example of an ErrorInfo when the consumer "projects/123" fails to contact
    * "pubsub.googleapis.com" service because the associated billing account is
    * disabled:
+   *
    *     { "reason": "BILLING_DISABLED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -83,6 +88,7 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    *         "service": "pubsub.googleapis.com"
    *       }
    *     }
+   *
    * This response indicates the billing account associated has been disabled.
    * </pre>
    *
@@ -96,8 +102,10 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * The request is denied because the provided [API
    * key](https://cloud.google.com/docs/authentication/api-keys) is invalid. It
    * may be in a bad format, cannot be found, or has been expired).
+   *
    * Example of an ErrorInfo when the request is contacting
    * "storage.googleapis.com" service with an invalid API key:
+   *
    *     { "reason": "API_KEY_INVALID",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -115,9 +123,11 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * <pre>
    * The request is denied because it violates [API key API
    * restrictions](https://cloud.google.com/docs/authentication/api-keys#adding_api_restrictions).
+   *
    * Example of an ErrorInfo when the consumer "projects/123" fails to call the
    * "storage.googleapis.com" service because this service is restricted in the
    * API key:
+   *
    *     { "reason": "API_KEY_SERVICE_BLOCKED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -136,9 +146,11 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * <pre>
    * The request is denied because it violates [API key HTTP
    * restrictions](https://cloud.google.com/docs/authentication/api-keys#adding_http_restrictions).
+   *
    * Example of an ErrorInfo when the consumer "projects/123" fails to call
    * "storage.googleapis.com" service because the http referrer of the request
    * violates API key HTTP restrictions:
+   *
    *     { "reason": "API_KEY_HTTP_REFERRER_BLOCKED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -157,9 +169,11 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * <pre>
    * The request is denied because it violates [API key IP address
    * restrictions](https://cloud.google.com/docs/authentication/api-keys#adding_application_restrictions).
+   *
    * Example of an ErrorInfo when the consumer "projects/123" fails to call
    * "storage.googleapis.com" service because the caller IP of the request
    * violates API key IP address restrictions:
+   *
    *     { "reason": "API_KEY_IP_ADDRESS_BLOCKED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -178,9 +192,11 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * <pre>
    * The request is denied because it violates [API key Android application
    * restrictions](https://cloud.google.com/docs/authentication/api-keys#adding_application_restrictions).
+   *
    * Example of an ErrorInfo when the consumer "projects/123" fails to call
    * "storage.googleapis.com" service because the request from the Android apps
    * violates the API key Android application restrictions:
+   *
    *     { "reason": "API_KEY_ANDROID_APP_BLOCKED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -199,9 +215,11 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * <pre>
    * The request is denied because it violates [API key iOS application
    * restrictions](https://cloud.google.com/docs/authentication/api-keys#adding_application_restrictions).
+   *
    * Example of an ErrorInfo when the consumer "projects/123" fails to call
    * "storage.googleapis.com" service because the request from the iOS apps
    * violates the API key iOS application restrictions:
+   *
    *     { "reason": "API_KEY_IOS_APP_BLOCKED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -220,11 +238,13 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * <pre>
    * The request is denied because there is not enough rate quota for the
    * consumer.
+   *
    * Example of an ErrorInfo when the consumer "projects/123" fails to contact
    * "pubsub.googleapis.com" service because consumer's rate quota usage has
    * reached the maximum value set for the quota limit
    * "ReadsPerMinutePerProject" on the quota metric
    * "pubsub.googleapis.com/read_requests":
+   *
    *     { "reason": "RATE_LIMIT_EXCEEDED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -234,10 +254,12 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    *         "quota_limit": "ReadsPerMinutePerProject"
    *       }
    *     }
+   *
    * Example of an ErrorInfo when the consumer "projects/123" checks quota on
    * the service "dataflow.googleapis.com" and hits the organization quota
    * limit "DefaultRequestsPerMinutePerOrganization" on the metric
    * "dataflow.googleapis.com/default_requests".
+   *
    *     { "reason": "RATE_LIMIT_EXCEEDED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -258,10 +280,12 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * <pre>
    * The request is denied because there is not enough resource quota for the
    * consumer.
+   *
    * Example of an ErrorInfo when the consumer "projects/123" fails to contact
    * "compute.googleapis.com" service because consumer's resource quota usage
    * has reached the maximum value set for the quota limit "VMsPerProject"
    * on the quota metric "compute.googleapis.com/vms":
+   *
    *     { "reason": "RESOURCE_QUOTA_EXCEEDED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -271,10 +295,12 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    *         "quota_limit": "VMsPerProject"
    *       }
    *     }
+   *
    * Example of an ErrorInfo when the consumer "projects/123" checks resource
    * quota on the service "dataflow.googleapis.com" and hits the organization
    * quota limit "jobs-per-organization" on the metric
    * "dataflow.googleapis.com/job_count".
+   *
    *     { "reason": "RESOURCE_QUOTA_EXCEEDED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -296,9 +322,11 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * The request whose associated billing account address is in a tax restricted
    * location, violates the local tax restrictions when creating resources in
    * the restricted region.
+   *
    * Example of an ErrorInfo when creating the Cloud Storage Bucket in the
    * container "projects/123" under a tax restricted region
    * "locations/asia-northeast3":
+   *
    *     { "reason": "LOCATION_TAX_POLICY_VIOLATED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -307,6 +335,7 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    *         "location": "locations/asia-northeast3"
    *       }
    *     }
+   *
    * This response indicates creating the Cloud Storage Bucket in
    * "locations/asia-northeast3" violates the location tax restriction.
    * </pre>
@@ -322,8 +351,10 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * on the user project "projects/123" or the user project is invalid. For more
    * information, check the [userProject System
    * Parameters](https://cloud.google.com/apis/docs/system-parameters).
+   *
    * Example of an ErrorInfo when the caller is calling Cloud Storage service
    * with insufficient permissions on the user project:
+   *
    *     { "reason": "USER_PROJECT_DENIED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -344,8 +375,10 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * to Terms of Service(Tos) violations. Check [Project suspension
    * guidelines](https://cloud.google.com/resource-manager/docs/project-suspension-guidelines)
    * for more information.
+   *
    * Example of an ErrorInfo when calling Cloud Storage service with the
    * suspended consumer "projects/123":
+   *
    *     { "reason": "CONSUMER_SUSPENDED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -364,8 +397,10 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * <pre>
    * The request is denied because the associated consumer is invalid. It may be
    * in a bad format, cannot be found, or have been deleted.
+   *
    * Example of an ErrorInfo when calling Cloud Storage service with the
    * invalid consumer "projects/123":
+   *
    *     { "reason": "CONSUMER_INVALID",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -388,9 +423,11 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * to search the audit log for a request rejected by VPC Service Controls. For
    * more information, please refer [VPC Service Controls
    * Troubleshooting](https://cloud.google.com/vpc-service-controls/docs/troubleshooting#unique-id)
+   *
    * Example of an ErrorInfo when the consumer "projects/123" fails to call
    * Cloud Storage service because the request is prohibited by the VPC Service
    * Controls.
+   *
    *     { "reason": "SECURITY_POLICY_VIOLATED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -409,8 +446,10 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    *
    * <pre>
    * The request is denied because the provided access token has expired.
+   *
    * Example of an ErrorInfo when the request is calling Cloud Storage service
    * with an expired access token:
+   *
    *     { "reason": "ACCESS_TOKEN_EXPIRED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -433,8 +472,10 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * APIs](https://developers.google.com/identity/protocols/oauth2/scopes) for
    * the list of the OAuth 2.0 scopes that you might need to request to access
    * the API.
+   *
    * Example of an ErrorInfo when the request is calling Cloud Storage service
    * with an access token that is missing required scopes:
+   *
    *     { "reason": "ACCESS_TOKEN_SCOPE_INSUFFICIENT",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -454,12 +495,15 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * The request is denied because the account associated with the provided
    * access token is in an invalid state, such as disabled or deleted.
    * For more information, see https://cloud.google.com/docs/authentication.
+   *
    * Warning: For privacy reasons, the server may not be able to disclose the
    * email address for some accounts. The client MUST NOT depend on the
    * availability of the `email` attribute.
+   *
    * Example of an ErrorInfo when the request is to the Cloud Storage API with
    * an access token that is associated with a disabled or deleted [service
    * account](http://cloud/iam/docs/service-accounts):
+   *
    *     { "reason": "ACCOUNT_STATE_INVALID",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -479,8 +523,10 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * <pre>
    * The request is denied because the type of the provided access token is not
    * supported by the API being called.
+   *
    * Example of an ErrorInfo when the request is to the Cloud Storage API with
    * an unsupported token type.
+   *
    *     { "reason": "ACCESS_TOKEN_TYPE_UNSUPPORTED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -501,8 +547,10 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * credentials. For more information regarding the supported authentication
    * strategies for Google Cloud APIs, see
    * https://cloud.google.com/docs/authentication.
+   *
    * Example of an ErrorInfo when the request is to the Cloud Storage API
    * without any authentication credentials.
+   *
    *     { "reason": "CREDENTIALS_MISSING",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -523,9 +571,11 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * which acts as the [API
    * consumer](https://cloud.google.com/apis/design/glossary#api_consumer) is
    * invalid. It may be in a bad format or empty.
+   *
    * Example of an ErrorInfo when the request is to the Cloud Functions API,
    * but the offered resource project in the request in a bad format which can't
    * perform the ListFunctions method.
+   *
    *     { "reason": "RESOURCE_PROJECT_INVALID",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -545,8 +595,10 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * <pre>
    * The request is denied because the provided session cookie is missing,
    * invalid or failed to decode.
+   *
    * Example of an ErrorInfo when the request is calling Cloud Storage service
    * with a SID cookie which can't be decoded.
+   *
    *     { "reason": "SESSION_COOKIE_INVALID",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -566,9 +618,12 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * <pre>
    * The request is denied because the user is from a Google Workspace customer
    * that blocks their users from accessing a particular service.
+   *
    * Example scenario: https://support.google.com/a/answer/9197205?hl=en
+   *
    * Example of an ErrorInfo when access to Google Cloud Storage service is
    * blocked by the Google Workspace administrator:
+   *
    *     { "reason": "USER_BLOCKED_BY_ADMIN",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -589,8 +644,10 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * by administrators according to the organization policy constraint.
    * For more information see
    * https://cloud.google.com/resource-manager/docs/organization-policy/restricting-services.
+   *
    * Example of an ErrorInfo when access to Google Cloud Storage service is
    * restricted by Resource Usage Restriction policy:
+   *
    *     { "reason": "RESOURCE_USAGE_RESTRICTION_VIOLATED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -608,11 +665,14 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    *
    * <pre>
    * Unimplemented. Do not use.
+   *
    * The request is denied because it contains unsupported system parameters in
    * URL query parameters or HTTP headers. For more information,
    * see https://cloud.google.com/apis/docs/system-parameters
+   *
    * Example of an ErrorInfo when access "pubsub.googleapis.com" service with
    * a request header of "x-goog-user-ip":
+   *
    *     { "reason": "SYSTEM_PARAMETER_UNSUPPORTED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -632,8 +692,10 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * The request is denied because it violates Org Restriction: the requested
    * resource does not belong to allowed organizations specified in
    * "X-Goog-Allowed-Resources" header.
+   *
    * Example of an ErrorInfo when accessing a GCP resource that is restricted by
    * Org Restriction for "pubsub.googleapis.com" service.
+   *
    * {
    *   reason: "ORG_RESTRICTION_VIOLATION"
    *   domain: "googleapis.com"
@@ -653,9 +715,11 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * <pre>
    * The request is denied because "X-Goog-Allowed-Resources" header is in a bad
    * format.
+   *
    * Example of an ErrorInfo when
    * accessing "pubsub.googleapis.com" service with an invalid
    * "X-Goog-Allowed-Resources" request header.
+   *
    * {
    *   reason: "ORG_RESTRICTION_HEADER_INVALID"
    *   domain: "googleapis.com"
@@ -669,6 +733,55 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * <code>ORG_RESTRICTION_HEADER_INVALID = 28;</code>
    */
   ORG_RESTRICTION_HEADER_INVALID(28),
+  /**
+   *
+   *
+   * <pre>
+   * Unimplemented. Do not use.
+   *
+   * The request is calling a service that is not visible to the consumer.
+   *
+   * Example of an ErrorInfo when the consumer "projects/123" contacting
+   *  "pubsub.googleapis.com" service which is not visible to the consumer.
+   *
+   *     { "reason": "SERVICE_NOT_VISIBLE",
+   *       "domain": "googleapis.com",
+   *       "metadata": {
+   *         "consumer": "projects/123",
+   *         "service": "pubsub.googleapis.com"
+   *       }
+   *     }
+   *
+   * This response indicates the "pubsub.googleapis.com" is not visible to
+   * "projects/123" (or it may not exist).
+   * </pre>
+   *
+   * <code>SERVICE_NOT_VISIBLE = 29;</code>
+   */
+  SERVICE_NOT_VISIBLE(29),
+  /**
+   *
+   *
+   * <pre>
+   * The request is related to a project for which GCP access is suspended.
+   *
+   * Example of an ErrorInfo when the consumer "projects/123" fails to contact
+   * "pubsub.googleapis.com" service because GCP access is suspended:
+   *
+   *     { "reason": "GCP_SUSPENDED",
+   *       "domain": "googleapis.com",
+   *       "metadata": {
+   *         "consumer": "projects/123",
+   *         "service": "pubsub.googleapis.com"
+   *       }
+   *     }
+   *
+   * This response indicates the associated GCP account has been suspended.
+   * </pre>
+   *
+   * <code>GCP_SUSPENDED = 30;</code>
+   */
+  GCP_SUSPENDED(30),
   UNRECOGNIZED(-1),
   ;
 
@@ -687,8 +800,10 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    *
    * <pre>
    * The request is calling a disabled service for a consumer.
+   *
    * Example of an ErrorInfo when the consumer "projects/123" contacting
    * "pubsub.googleapis.com" service which is disabled:
+   *
    *     { "reason": "SERVICE_DISABLED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -696,6 +811,7 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    *         "service": "pubsub.googleapis.com"
    *       }
    *     }
+   *
    * This response indicates the "pubsub.googleapis.com" has been disabled in
    * "projects/123".
    * </pre>
@@ -708,9 +824,11 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    *
    * <pre>
    * The request whose associated billing account is disabled.
+   *
    * Example of an ErrorInfo when the consumer "projects/123" fails to contact
    * "pubsub.googleapis.com" service because the associated billing account is
    * disabled:
+   *
    *     { "reason": "BILLING_DISABLED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -718,6 +836,7 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    *         "service": "pubsub.googleapis.com"
    *       }
    *     }
+   *
    * This response indicates the billing account associated has been disabled.
    * </pre>
    *
@@ -731,8 +850,10 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * The request is denied because the provided [API
    * key](https://cloud.google.com/docs/authentication/api-keys) is invalid. It
    * may be in a bad format, cannot be found, or has been expired).
+   *
    * Example of an ErrorInfo when the request is contacting
    * "storage.googleapis.com" service with an invalid API key:
+   *
    *     { "reason": "API_KEY_INVALID",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -750,9 +871,11 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * <pre>
    * The request is denied because it violates [API key API
    * restrictions](https://cloud.google.com/docs/authentication/api-keys#adding_api_restrictions).
+   *
    * Example of an ErrorInfo when the consumer "projects/123" fails to call the
    * "storage.googleapis.com" service because this service is restricted in the
    * API key:
+   *
    *     { "reason": "API_KEY_SERVICE_BLOCKED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -771,9 +894,11 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * <pre>
    * The request is denied because it violates [API key HTTP
    * restrictions](https://cloud.google.com/docs/authentication/api-keys#adding_http_restrictions).
+   *
    * Example of an ErrorInfo when the consumer "projects/123" fails to call
    * "storage.googleapis.com" service because the http referrer of the request
    * violates API key HTTP restrictions:
+   *
    *     { "reason": "API_KEY_HTTP_REFERRER_BLOCKED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -792,9 +917,11 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * <pre>
    * The request is denied because it violates [API key IP address
    * restrictions](https://cloud.google.com/docs/authentication/api-keys#adding_application_restrictions).
+   *
    * Example of an ErrorInfo when the consumer "projects/123" fails to call
    * "storage.googleapis.com" service because the caller IP of the request
    * violates API key IP address restrictions:
+   *
    *     { "reason": "API_KEY_IP_ADDRESS_BLOCKED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -813,9 +940,11 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * <pre>
    * The request is denied because it violates [API key Android application
    * restrictions](https://cloud.google.com/docs/authentication/api-keys#adding_application_restrictions).
+   *
    * Example of an ErrorInfo when the consumer "projects/123" fails to call
    * "storage.googleapis.com" service because the request from the Android apps
    * violates the API key Android application restrictions:
+   *
    *     { "reason": "API_KEY_ANDROID_APP_BLOCKED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -834,9 +963,11 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * <pre>
    * The request is denied because it violates [API key iOS application
    * restrictions](https://cloud.google.com/docs/authentication/api-keys#adding_application_restrictions).
+   *
    * Example of an ErrorInfo when the consumer "projects/123" fails to call
    * "storage.googleapis.com" service because the request from the iOS apps
    * violates the API key iOS application restrictions:
+   *
    *     { "reason": "API_KEY_IOS_APP_BLOCKED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -855,11 +986,13 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * <pre>
    * The request is denied because there is not enough rate quota for the
    * consumer.
+   *
    * Example of an ErrorInfo when the consumer "projects/123" fails to contact
    * "pubsub.googleapis.com" service because consumer's rate quota usage has
    * reached the maximum value set for the quota limit
    * "ReadsPerMinutePerProject" on the quota metric
    * "pubsub.googleapis.com/read_requests":
+   *
    *     { "reason": "RATE_LIMIT_EXCEEDED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -869,10 +1002,12 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    *         "quota_limit": "ReadsPerMinutePerProject"
    *       }
    *     }
+   *
    * Example of an ErrorInfo when the consumer "projects/123" checks quota on
    * the service "dataflow.googleapis.com" and hits the organization quota
    * limit "DefaultRequestsPerMinutePerOrganization" on the metric
    * "dataflow.googleapis.com/default_requests".
+   *
    *     { "reason": "RATE_LIMIT_EXCEEDED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -893,10 +1028,12 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * <pre>
    * The request is denied because there is not enough resource quota for the
    * consumer.
+   *
    * Example of an ErrorInfo when the consumer "projects/123" fails to contact
    * "compute.googleapis.com" service because consumer's resource quota usage
    * has reached the maximum value set for the quota limit "VMsPerProject"
    * on the quota metric "compute.googleapis.com/vms":
+   *
    *     { "reason": "RESOURCE_QUOTA_EXCEEDED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -906,10 +1043,12 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    *         "quota_limit": "VMsPerProject"
    *       }
    *     }
+   *
    * Example of an ErrorInfo when the consumer "projects/123" checks resource
    * quota on the service "dataflow.googleapis.com" and hits the organization
    * quota limit "jobs-per-organization" on the metric
    * "dataflow.googleapis.com/job_count".
+   *
    *     { "reason": "RESOURCE_QUOTA_EXCEEDED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -931,9 +1070,11 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * The request whose associated billing account address is in a tax restricted
    * location, violates the local tax restrictions when creating resources in
    * the restricted region.
+   *
    * Example of an ErrorInfo when creating the Cloud Storage Bucket in the
    * container "projects/123" under a tax restricted region
    * "locations/asia-northeast3":
+   *
    *     { "reason": "LOCATION_TAX_POLICY_VIOLATED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -942,6 +1083,7 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    *         "location": "locations/asia-northeast3"
    *       }
    *     }
+   *
    * This response indicates creating the Cloud Storage Bucket in
    * "locations/asia-northeast3" violates the location tax restriction.
    * </pre>
@@ -957,8 +1099,10 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * on the user project "projects/123" or the user project is invalid. For more
    * information, check the [userProject System
    * Parameters](https://cloud.google.com/apis/docs/system-parameters).
+   *
    * Example of an ErrorInfo when the caller is calling Cloud Storage service
    * with insufficient permissions on the user project:
+   *
    *     { "reason": "USER_PROJECT_DENIED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -979,8 +1123,10 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * to Terms of Service(Tos) violations. Check [Project suspension
    * guidelines](https://cloud.google.com/resource-manager/docs/project-suspension-guidelines)
    * for more information.
+   *
    * Example of an ErrorInfo when calling Cloud Storage service with the
    * suspended consumer "projects/123":
+   *
    *     { "reason": "CONSUMER_SUSPENDED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -999,8 +1145,10 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * <pre>
    * The request is denied because the associated consumer is invalid. It may be
    * in a bad format, cannot be found, or have been deleted.
+   *
    * Example of an ErrorInfo when calling Cloud Storage service with the
    * invalid consumer "projects/123":
+   *
    *     { "reason": "CONSUMER_INVALID",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -1023,9 +1171,11 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * to search the audit log for a request rejected by VPC Service Controls. For
    * more information, please refer [VPC Service Controls
    * Troubleshooting](https://cloud.google.com/vpc-service-controls/docs/troubleshooting#unique-id)
+   *
    * Example of an ErrorInfo when the consumer "projects/123" fails to call
    * Cloud Storage service because the request is prohibited by the VPC Service
    * Controls.
+   *
    *     { "reason": "SECURITY_POLICY_VIOLATED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -1044,8 +1194,10 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    *
    * <pre>
    * The request is denied because the provided access token has expired.
+   *
    * Example of an ErrorInfo when the request is calling Cloud Storage service
    * with an expired access token:
+   *
    *     { "reason": "ACCESS_TOKEN_EXPIRED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -1068,8 +1220,10 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * APIs](https://developers.google.com/identity/protocols/oauth2/scopes) for
    * the list of the OAuth 2.0 scopes that you might need to request to access
    * the API.
+   *
    * Example of an ErrorInfo when the request is calling Cloud Storage service
    * with an access token that is missing required scopes:
+   *
    *     { "reason": "ACCESS_TOKEN_SCOPE_INSUFFICIENT",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -1089,12 +1243,15 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * The request is denied because the account associated with the provided
    * access token is in an invalid state, such as disabled or deleted.
    * For more information, see https://cloud.google.com/docs/authentication.
+   *
    * Warning: For privacy reasons, the server may not be able to disclose the
    * email address for some accounts. The client MUST NOT depend on the
    * availability of the `email` attribute.
+   *
    * Example of an ErrorInfo when the request is to the Cloud Storage API with
    * an access token that is associated with a disabled or deleted [service
    * account](http://cloud/iam/docs/service-accounts):
+   *
    *     { "reason": "ACCOUNT_STATE_INVALID",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -1114,8 +1271,10 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * <pre>
    * The request is denied because the type of the provided access token is not
    * supported by the API being called.
+   *
    * Example of an ErrorInfo when the request is to the Cloud Storage API with
    * an unsupported token type.
+   *
    *     { "reason": "ACCESS_TOKEN_TYPE_UNSUPPORTED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -1136,8 +1295,10 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * credentials. For more information regarding the supported authentication
    * strategies for Google Cloud APIs, see
    * https://cloud.google.com/docs/authentication.
+   *
    * Example of an ErrorInfo when the request is to the Cloud Storage API
    * without any authentication credentials.
+   *
    *     { "reason": "CREDENTIALS_MISSING",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -1158,9 +1319,11 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * which acts as the [API
    * consumer](https://cloud.google.com/apis/design/glossary#api_consumer) is
    * invalid. It may be in a bad format or empty.
+   *
    * Example of an ErrorInfo when the request is to the Cloud Functions API,
    * but the offered resource project in the request in a bad format which can't
    * perform the ListFunctions method.
+   *
    *     { "reason": "RESOURCE_PROJECT_INVALID",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -1180,8 +1343,10 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * <pre>
    * The request is denied because the provided session cookie is missing,
    * invalid or failed to decode.
+   *
    * Example of an ErrorInfo when the request is calling Cloud Storage service
    * with a SID cookie which can't be decoded.
+   *
    *     { "reason": "SESSION_COOKIE_INVALID",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -1201,9 +1366,12 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * <pre>
    * The request is denied because the user is from a Google Workspace customer
    * that blocks their users from accessing a particular service.
+   *
    * Example scenario: https://support.google.com/a/answer/9197205?hl=en
+   *
    * Example of an ErrorInfo when access to Google Cloud Storage service is
    * blocked by the Google Workspace administrator:
+   *
    *     { "reason": "USER_BLOCKED_BY_ADMIN",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -1224,8 +1392,10 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * by administrators according to the organization policy constraint.
    * For more information see
    * https://cloud.google.com/resource-manager/docs/organization-policy/restricting-services.
+   *
    * Example of an ErrorInfo when access to Google Cloud Storage service is
    * restricted by Resource Usage Restriction policy:
+   *
    *     { "reason": "RESOURCE_USAGE_RESTRICTION_VIOLATED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -1243,11 +1413,14 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    *
    * <pre>
    * Unimplemented. Do not use.
+   *
    * The request is denied because it contains unsupported system parameters in
    * URL query parameters or HTTP headers. For more information,
    * see https://cloud.google.com/apis/docs/system-parameters
+   *
    * Example of an ErrorInfo when access "pubsub.googleapis.com" service with
    * a request header of "x-goog-user-ip":
+   *
    *     { "reason": "SYSTEM_PARAMETER_UNSUPPORTED",
    *       "domain": "googleapis.com",
    *       "metadata": {
@@ -1267,8 +1440,10 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * The request is denied because it violates Org Restriction: the requested
    * resource does not belong to allowed organizations specified in
    * "X-Goog-Allowed-Resources" header.
+   *
    * Example of an ErrorInfo when accessing a GCP resource that is restricted by
    * Org Restriction for "pubsub.googleapis.com" service.
+   *
    * {
    *   reason: "ORG_RESTRICTION_VIOLATION"
    *   domain: "googleapis.com"
@@ -1288,9 +1463,11 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * <pre>
    * The request is denied because "X-Goog-Allowed-Resources" header is in a bad
    * format.
+   *
    * Example of an ErrorInfo when
    * accessing "pubsub.googleapis.com" service with an invalid
    * "X-Goog-Allowed-Resources" request header.
+   *
    * {
    *   reason: "ORG_RESTRICTION_HEADER_INVALID"
    *   domain: "googleapis.com"
@@ -1304,6 +1481,55 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
    * <code>ORG_RESTRICTION_HEADER_INVALID = 28;</code>
    */
   public static final int ORG_RESTRICTION_HEADER_INVALID_VALUE = 28;
+  /**
+   *
+   *
+   * <pre>
+   * Unimplemented. Do not use.
+   *
+   * The request is calling a service that is not visible to the consumer.
+   *
+   * Example of an ErrorInfo when the consumer "projects/123" contacting
+   *  "pubsub.googleapis.com" service which is not visible to the consumer.
+   *
+   *     { "reason": "SERVICE_NOT_VISIBLE",
+   *       "domain": "googleapis.com",
+   *       "metadata": {
+   *         "consumer": "projects/123",
+   *         "service": "pubsub.googleapis.com"
+   *       }
+   *     }
+   *
+   * This response indicates the "pubsub.googleapis.com" is not visible to
+   * "projects/123" (or it may not exist).
+   * </pre>
+   *
+   * <code>SERVICE_NOT_VISIBLE = 29;</code>
+   */
+  public static final int SERVICE_NOT_VISIBLE_VALUE = 29;
+  /**
+   *
+   *
+   * <pre>
+   * The request is related to a project for which GCP access is suspended.
+   *
+   * Example of an ErrorInfo when the consumer "projects/123" fails to contact
+   * "pubsub.googleapis.com" service because GCP access is suspended:
+   *
+   *     { "reason": "GCP_SUSPENDED",
+   *       "domain": "googleapis.com",
+   *       "metadata": {
+   *         "consumer": "projects/123",
+   *         "service": "pubsub.googleapis.com"
+   *       }
+   *     }
+   *
+   * This response indicates the associated GCP account has been suspended.
+   * </pre>
+   *
+   * <code>GCP_SUSPENDED = 30;</code>
+   */
+  public static final int GCP_SUSPENDED_VALUE = 30;
 
   public final int getNumber() {
     if (this == UNRECOGNIZED) {
@@ -1385,6 +1611,10 @@ public enum ErrorReason implements com.google.protobuf.ProtocolMessageEnum {
         return ORG_RESTRICTION_VIOLATION;
       case 28:
         return ORG_RESTRICTION_HEADER_INVALID;
+      case 29:
+        return SERVICE_NOT_VISIBLE;
+      case 30:
+        return GCP_SUSPENDED;
       default:
         return null;
     }

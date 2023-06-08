@@ -33,6 +33,7 @@ public interface MonitoredResourceMetadataOrBuilder
    * "security_group", "name", etc.
    * System label values can be only strings, Boolean values, or a list of
    * strings. For example:
+   *
    *     { "name": "my-test-instance",
    *       "security_group": ["a", "b", "c"],
    *       "spot_instance": false }
@@ -53,6 +54,7 @@ public interface MonitoredResourceMetadataOrBuilder
    * "security_group", "name", etc.
    * System label values can be only strings, Boolean values, or a list of
    * strings. For example:
+   *
    *     { "name": "my-test-instance",
    *       "security_group": ["a", "b", "c"],
    *       "spot_instance": false }
@@ -73,6 +75,7 @@ public interface MonitoredResourceMetadataOrBuilder
    * "security_group", "name", etc.
    * System label values can be only strings, Boolean values, or a list of
    * strings. For example:
+   *
    *     { "name": "my-test-instance",
    *       "security_group": ["a", "b", "c"],
    *       "spot_instance": false }
@@ -124,7 +127,6 @@ public interface MonitoredResourceMetadataOrBuilder
    *
    * <code>map&lt;string, string&gt; user_labels = 2;</code>
    */
-
   /* nullable */
   java.lang.String getUserLabelsOrDefault(
       java.lang.String key,

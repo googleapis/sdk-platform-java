@@ -26,69 +26,6 @@ private static final long serialVersionUID = 0L;
     return new EnumResponse();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet
-  getUnknownFields() {
-    return this.unknownFields;
-  }
-  private EnumResponse(
-      com.google.protobuf.CodedInputStream input,
-      com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-      throws com.google.protobuf.InvalidProtocolBufferException {
-    this();
-    if (extensionRegistry == null) {
-      throw new java.lang.NullPointerException();
-    }
-    com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-        com.google.protobuf.UnknownFieldSet.newBuilder();
-    try {
-      boolean done = false;
-      while (!done) {
-        int tag = input.readTag();
-        switch (tag) {
-          case 0:
-            done = true;
-            break;
-          case 10: {
-            com.google.showcase.v1beta1.EnumRequest.Builder subBuilder = null;
-            if (request_ != null) {
-              subBuilder = request_.toBuilder();
-            }
-            request_ = input.readMessage(com.google.showcase.v1beta1.EnumRequest.parser(), extensionRegistry);
-            if (subBuilder != null) {
-              subBuilder.mergeFrom(request_);
-              request_ = subBuilder.buildPartial();
-            }
-
-            break;
-          }
-          case 16: {
-            int rawValue = input.readEnum();
-
-            continent_ = rawValue;
-            break;
-          }
-          default: {
-            if (!parseUnknownField(
-                input, unknownFields, extensionRegistry, tag)) {
-              done = true;
-            }
-            break;
-          }
-        }
-      }
-    } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-      throw e.setUnfinishedMessage(this);
-    } catch (com.google.protobuf.UninitializedMessageException e) {
-      throw e.asInvalidProtocolBufferException().setUnfinishedMessage(this);
-    } catch (java.io.IOException e) {
-      throw new com.google.protobuf.InvalidProtocolBufferException(
-          e).setUnfinishedMessage(this);
-    } finally {
-      this.unknownFields = unknownFields.build();
-      makeExtensionsImmutable();
-    }
-  }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
     return com.google.showcase.v1beta1.ComplianceOuterClass.internal_static_google_showcase_v1beta1_EnumResponse_descriptor;
@@ -137,11 +74,11 @@ private static final long serialVersionUID = 0L;
    */
   @java.lang.Override
   public com.google.showcase.v1beta1.EnumRequestOrBuilder getRequestOrBuilder() {
-    return getRequest();
+    return request_ == null ? com.google.showcase.v1beta1.EnumRequest.getDefaultInstance() : request_;
   }
 
   public static final int CONTINENT_FIELD_NUMBER = 2;
-  private int continent_;
+  private int continent_ = 0;
   /**
    * <pre>
    * The actual enum the server provided.
@@ -162,8 +99,7 @@ private static final long serialVersionUID = 0L;
    * @return The continent.
    */
   @java.lang.Override public com.google.showcase.v1beta1.Continent getContinent() {
-    @SuppressWarnings("deprecation")
-    com.google.showcase.v1beta1.Continent result = com.google.showcase.v1beta1.Continent.valueOf(continent_);
+    com.google.showcase.v1beta1.Continent result = com.google.showcase.v1beta1.Continent.forNumber(continent_);
     return result == null ? com.google.showcase.v1beta1.Continent.UNRECOGNIZED : result;
   }
 
@@ -187,7 +123,7 @@ private static final long serialVersionUID = 0L;
     if (continent_ != com.google.showcase.v1beta1.Continent.CONTINENT_UNSPECIFIED.getNumber()) {
       output.writeEnum(2, continent_);
     }
-    unknownFields.writeTo(output);
+    getUnknownFields().writeTo(output);
   }
 
   @java.lang.Override
@@ -204,7 +140,7 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeEnumSize(2, continent_);
     }
-    size += unknownFields.getSerializedSize();
+    size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
     return size;
   }
@@ -225,7 +161,7 @@ private static final long serialVersionUID = 0L;
           .equals(other.getRequest())) return false;
     }
     if (continent_ != other.continent_) return false;
-    if (!unknownFields.equals(other.unknownFields)) return false;
+    if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
 
@@ -242,7 +178,7 @@ private static final long serialVersionUID = 0L;
     }
     hash = (37 * hash) + CONTINENT_FIELD_NUMBER;
     hash = (53 * hash) + continent_;
-    hash = (29 * hash) + unknownFields.hashCode();
+    hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
   }
@@ -291,11 +227,13 @@ private static final long serialVersionUID = 0L;
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
+
   public static com.google.showcase.v1beta1.EnumResponse parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
+
   public static com.google.showcase.v1beta1.EnumResponse parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -359,30 +297,24 @@ private static final long serialVersionUID = 0L;
 
     // Construct using com.google.showcase.v1beta1.EnumResponse.newBuilder()
     private Builder() {
-      maybeForceBuilderInitialization();
+
     }
 
     private Builder(
         com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
-      maybeForceBuilderInitialization();
-    }
-    private void maybeForceBuilderInitialization() {
-      if (com.google.protobuf.GeneratedMessageV3
-              .alwaysUseFieldBuilders) {
-      }
+
     }
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      if (requestBuilder_ == null) {
-        request_ = null;
-      } else {
-        request_ = null;
+      bitField0_ = 0;
+      request_ = null;
+      if (requestBuilder_ != null) {
+        requestBuilder_.dispose();
         requestBuilder_ = null;
       }
       continent_ = 0;
-
       return this;
     }
 
@@ -409,14 +341,21 @@ private static final long serialVersionUID = 0L;
     @java.lang.Override
     public com.google.showcase.v1beta1.EnumResponse buildPartial() {
       com.google.showcase.v1beta1.EnumResponse result = new com.google.showcase.v1beta1.EnumResponse(this);
-      if (requestBuilder_ == null) {
-        result.request_ = request_;
-      } else {
-        result.request_ = requestBuilder_.build();
-      }
-      result.continent_ = continent_;
+      if (bitField0_ != 0) { buildPartial0(result); }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.showcase.v1beta1.EnumResponse result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.request_ = requestBuilder_ == null
+            ? request_
+            : requestBuilder_.build();
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.continent_ = continent_;
+      }
     }
 
     @java.lang.Override
@@ -469,7 +408,7 @@ private static final long serialVersionUID = 0L;
       if (other.continent_ != 0) {
         setContinentValue(other.getContinentValue());
       }
-      this.mergeUnknownFields(other.unknownFields);
+      this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
       return this;
     }
@@ -484,19 +423,45 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
-      com.google.showcase.v1beta1.EnumResponse parsedMessage = null;
+      if (extensionRegistry == null) {
+        throw new java.lang.NullPointerException();
+      }
       try {
-        parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            case 10: {
+              input.readMessage(
+                  getRequestFieldBuilder().getBuilder(),
+                  extensionRegistry);
+              bitField0_ |= 0x00000001;
+              break;
+            } // case 10
+            case 16: {
+              continent_ = input.readEnum();
+              bitField0_ |= 0x00000002;
+              break;
+            } // case 16
+            default: {
+              if (!super.parseUnknownField(input, extensionRegistry, tag)) {
+                done = true; // was an endgroup tag
+              }
+              break;
+            } // default:
+          } // switch (tag)
+        } // while (!done)
       } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        parsedMessage = (com.google.showcase.v1beta1.EnumResponse) e.getUnfinishedMessage();
         throw e.unwrapIOException();
       } finally {
-        if (parsedMessage != null) {
-          mergeFrom(parsedMessage);
-        }
-      }
+        onChanged();
+      } // finally
       return this;
     }
+    private int bitField0_;
 
     private com.google.showcase.v1beta1.EnumRequest request_;
     private com.google.protobuf.SingleFieldBuilderV3<
@@ -510,7 +475,7 @@ private static final long serialVersionUID = 0L;
      * @return Whether the request field is set.
      */
     public boolean hasRequest() {
-      return requestBuilder_ != null || request_ != null;
+      return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <pre>
@@ -540,11 +505,11 @@ private static final long serialVersionUID = 0L;
           throw new NullPointerException();
         }
         request_ = value;
-        onChanged();
       } else {
         requestBuilder_.setMessage(value);
       }
-
+      bitField0_ |= 0x00000001;
+      onChanged();
       return this;
     }
     /**
@@ -558,11 +523,11 @@ private static final long serialVersionUID = 0L;
         com.google.showcase.v1beta1.EnumRequest.Builder builderForValue) {
       if (requestBuilder_ == null) {
         request_ = builderForValue.build();
-        onChanged();
       } else {
         requestBuilder_.setMessage(builderForValue.build());
       }
-
+      bitField0_ |= 0x00000001;
+      onChanged();
       return this;
     }
     /**
@@ -574,17 +539,18 @@ private static final long serialVersionUID = 0L;
      */
     public Builder mergeRequest(com.google.showcase.v1beta1.EnumRequest value) {
       if (requestBuilder_ == null) {
-        if (request_ != null) {
-          request_ =
-            com.google.showcase.v1beta1.EnumRequest.newBuilder(request_).mergeFrom(value).buildPartial();
+        if (((bitField0_ & 0x00000001) != 0) &&
+          request_ != null &&
+          request_ != com.google.showcase.v1beta1.EnumRequest.getDefaultInstance()) {
+          getRequestBuilder().mergeFrom(value);
         } else {
           request_ = value;
         }
-        onChanged();
       } else {
         requestBuilder_.mergeFrom(value);
       }
-
+      bitField0_ |= 0x00000001;
+      onChanged();
       return this;
     }
     /**
@@ -595,14 +561,13 @@ private static final long serialVersionUID = 0L;
      * <code>.google.showcase.v1beta1.EnumRequest request = 1;</code>
      */
     public Builder clearRequest() {
-      if (requestBuilder_ == null) {
-        request_ = null;
-        onChanged();
-      } else {
-        request_ = null;
+      bitField0_ = (bitField0_ & ~0x00000001);
+      request_ = null;
+      if (requestBuilder_ != null) {
+        requestBuilder_.dispose();
         requestBuilder_ = null;
       }
-
+      onChanged();
       return this;
     }
     /**
@@ -613,7 +578,7 @@ private static final long serialVersionUID = 0L;
      * <code>.google.showcase.v1beta1.EnumRequest request = 1;</code>
      */
     public com.google.showcase.v1beta1.EnumRequest.Builder getRequestBuilder() {
-      
+      bitField0_ |= 0x00000001;
       onChanged();
       return getRequestFieldBuilder().getBuilder();
     }
@@ -675,8 +640,8 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder setContinentValue(int value) {
-      
       continent_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -690,8 +655,7 @@ private static final long serialVersionUID = 0L;
      */
     @java.lang.Override
     public com.google.showcase.v1beta1.Continent getContinent() {
-      @SuppressWarnings("deprecation")
-      com.google.showcase.v1beta1.Continent result = com.google.showcase.v1beta1.Continent.valueOf(continent_);
+      com.google.showcase.v1beta1.Continent result = com.google.showcase.v1beta1.Continent.forNumber(continent_);
       return result == null ? com.google.showcase.v1beta1.Continent.UNRECOGNIZED : result;
     }
     /**
@@ -707,7 +671,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) {
         throw new NullPointerException();
       }
-      
+      bitField0_ |= 0x00000002;
       continent_ = value.getNumber();
       onChanged();
       return this;
@@ -721,7 +685,7 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearContinent() {
-      
+      bitField0_ = (bitField0_ & ~0x00000002);
       continent_ = 0;
       onChanged();
       return this;
@@ -759,7 +723,18 @@ private static final long serialVersionUID = 0L;
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
-      return new EnumResponse(input, extensionRegistry);
+      Builder builder = newBuilder();
+      try {
+        builder.mergeFrom(input, extensionRegistry);
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(builder.buildPartial());
+      } catch (com.google.protobuf.UninitializedMessageException e) {
+        throw e.asInvalidProtocolBufferException().setUnfinishedMessage(builder.buildPartial());
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(e)
+            .setUnfinishedMessage(builder.buildPartial());
+      }
+      return builder.buildPartial();
     }
   };
 

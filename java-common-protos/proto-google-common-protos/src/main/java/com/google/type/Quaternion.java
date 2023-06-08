@@ -25,41 +25,53 @@ package com.google.type;
  * A quaternion is defined as the quotient of two directed lines in a
  * three-dimensional space or equivalently as the quotient of two Euclidean
  * vectors (https://en.wikipedia.org/wiki/Quaternion).
+ *
  * Quaternions are often used in calculations involving three-dimensional
  * rotations (https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation),
  * as they provide greater mathematical robustness by avoiding the gimbal lock
  * problems that can be encountered when using Euler angles
  * (https://en.wikipedia.org/wiki/Gimbal_lock).
+ *
  * Quaternions are generally represented in this form:
+ *
  *     w + xi + yj + zk
+ *
  * where x, y, z, and w are real numbers, and i, j, and k are three imaginary
  * numbers.
+ *
  * Our naming choice `(x, y, z, w)` comes from the desire to avoid confusion for
  * those interested in the geometric properties of the quaternion in the 3D
  * Cartesian space. Other texts often use alternative names or subscripts, such
  * as `(a, b, c, d)`, `(1, i, j, k)`, or `(0, 1, 2, 3)`, which are perhaps
  * better suited for mathematical interpretations.
+ *
  * To avoid any confusion, as well as to maintain compatibility with a large
  * number of software libraries, the quaternions represented using the protocol
  * buffer below *must* follow the Hamilton convention, which defines `ij = k`
  * (i.e. a right-handed algebra), and therefore:
+ *
  *     i^2 = j^2 = k^2 = ijk = −1
  *     ij = −ji = k
  *     jk = −kj = i
  *     ki = −ik = j
+ *
  * Please DO NOT use this to represent quaternions that follow the JPL
  * convention, or any of the other quaternion flavors out there.
+ *
  * Definitions:
+ *
  *   - Quaternion norm (or magnitude): `sqrt(x^2 + y^2 + z^2 + w^2)`.
  *   - Unit (or normalized) quaternion: a quaternion whose norm is 1.
  *   - Pure quaternion: a quaternion whose scalar component (`w`) is 0.
  *   - Rotation quaternion: a unit quaternion used to represent rotation.
  *   - Orientation quaternion: a unit quaternion used to represent orientation.
+ *
  * A quaternion can be normalized by dividing it by its norm. The resulting
  * quaternion maintains the same direction, but has a norm of 1, i.e. it moves
  * on the unit sphere. This is generally necessary for rotation and orientation
  * quaternions, to avoid rounding errors:
  * https://en.wikipedia.org/wiki/Rotation_formalisms_in_three_dimensions
+ *
  * Note that `(x, y, z, w)` and `(-x, -y, -z, -w)` represent the same rotation,
  * but normalization would be even more useful, e.g. for comparison purposes, if
  * it would produce a unique representation. It is thus recommended that `w` be
@@ -87,11 +99,6 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
     return new Quaternion();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.type.QuaternionProto.internal_static_google_type_Quaternion_descriptor;
   }
@@ -105,7 +112,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int X_FIELD_NUMBER = 1;
-  private double x_;
+  private double x_ = 0D;
   /**
    *
    *
@@ -123,7 +130,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int Y_FIELD_NUMBER = 2;
-  private double y_;
+  private double y_ = 0D;
   /**
    *
    *
@@ -141,7 +148,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int Z_FIELD_NUMBER = 3;
-  private double z_;
+  private double z_ = 0D;
   /**
    *
    *
@@ -159,7 +166,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int W_FIELD_NUMBER = 4;
-  private double w_;
+  private double w_ = 0D;
   /**
    *
    *
@@ -379,41 +386,53 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
    * A quaternion is defined as the quotient of two directed lines in a
    * three-dimensional space or equivalently as the quotient of two Euclidean
    * vectors (https://en.wikipedia.org/wiki/Quaternion).
+   *
    * Quaternions are often used in calculations involving three-dimensional
    * rotations (https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation),
    * as they provide greater mathematical robustness by avoiding the gimbal lock
    * problems that can be encountered when using Euler angles
    * (https://en.wikipedia.org/wiki/Gimbal_lock).
+   *
    * Quaternions are generally represented in this form:
+   *
    *     w + xi + yj + zk
+   *
    * where x, y, z, and w are real numbers, and i, j, and k are three imaginary
    * numbers.
+   *
    * Our naming choice `(x, y, z, w)` comes from the desire to avoid confusion for
    * those interested in the geometric properties of the quaternion in the 3D
    * Cartesian space. Other texts often use alternative names or subscripts, such
    * as `(a, b, c, d)`, `(1, i, j, k)`, or `(0, 1, 2, 3)`, which are perhaps
    * better suited for mathematical interpretations.
+   *
    * To avoid any confusion, as well as to maintain compatibility with a large
    * number of software libraries, the quaternions represented using the protocol
    * buffer below *must* follow the Hamilton convention, which defines `ij = k`
    * (i.e. a right-handed algebra), and therefore:
+   *
    *     i^2 = j^2 = k^2 = ijk = −1
    *     ij = −ji = k
    *     jk = −kj = i
    *     ki = −ik = j
+   *
    * Please DO NOT use this to represent quaternions that follow the JPL
    * convention, or any of the other quaternion flavors out there.
+   *
    * Definitions:
+   *
    *   - Quaternion norm (or magnitude): `sqrt(x^2 + y^2 + z^2 + w^2)`.
    *   - Unit (or normalized) quaternion: a quaternion whose norm is 1.
    *   - Pure quaternion: a quaternion whose scalar component (`w`) is 0.
    *   - Rotation quaternion: a unit quaternion used to represent rotation.
    *   - Orientation quaternion: a unit quaternion used to represent orientation.
+   *
    * A quaternion can be normalized by dividing it by its norm. The resulting
    * quaternion maintains the same direction, but has a norm of 1, i.e. it moves
    * on the unit sphere. This is generally necessary for rotation and orientation
    * quaternions, to avoid rounding errors:
    * https://en.wikipedia.org/wiki/Rotation_formalisms_in_three_dimensions
+   *
    * Note that `(x, y, z, w)` and `(-x, -y, -z, -w)` represent the same rotation,
    * but normalization would be even more useful, e.g. for comparison purposes, if
    * it would produce a unique representation. It is thus recommended that `w` be
@@ -450,14 +469,11 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       x_ = 0D;
-
       y_ = 0D;
-
       z_ = 0D;
-
       w_ = 0D;
-
       return this;
     }
 
@@ -483,12 +499,27 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.type.Quaternion buildPartial() {
       com.google.type.Quaternion result = new com.google.type.Quaternion(this);
-      result.x_ = x_;
-      result.y_ = y_;
-      result.z_ = z_;
-      result.w_ = w_;
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.type.Quaternion result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.x_ = x_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.y_ = y_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.z_ = z_;
+      }
+      if (((from_bitField0_ & 0x00000008) != 0)) {
+        result.w_ = w_;
+      }
     }
 
     @java.lang.Override
@@ -577,25 +608,25 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
             case 9:
               {
                 x_ = input.readDouble();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 9
             case 17:
               {
                 y_ = input.readDouble();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 17
             case 25:
               {
                 z_ = input.readDouble();
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 25
             case 33:
               {
                 w_ = input.readDouble();
-
+                bitField0_ |= 0x00000008;
                 break;
               } // case 33
             default:
@@ -614,6 +645,8 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
       } // finally
       return this;
     }
+
+    private int bitField0_;
 
     private double x_;
     /**
@@ -646,6 +679,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
     public Builder setX(double value) {
 
       x_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -661,7 +695,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearX() {
-
+      bitField0_ = (bitField0_ & ~0x00000001);
       x_ = 0D;
       onChanged();
       return this;
@@ -698,6 +732,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
     public Builder setY(double value) {
 
       y_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -713,7 +748,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearY() {
-
+      bitField0_ = (bitField0_ & ~0x00000002);
       y_ = 0D;
       onChanged();
       return this;
@@ -750,6 +785,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
     public Builder setZ(double value) {
 
       z_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -765,7 +801,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearZ() {
-
+      bitField0_ = (bitField0_ & ~0x00000004);
       z_ = 0D;
       onChanged();
       return this;
@@ -802,6 +838,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
     public Builder setW(double value) {
 
       w_ = value;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -817,7 +854,7 @@ public final class Quaternion extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearW() {
-
+      bitField0_ = (bitField0_ & ~0x00000008);
       w_ = 0D;
       onChanged();
       return this;

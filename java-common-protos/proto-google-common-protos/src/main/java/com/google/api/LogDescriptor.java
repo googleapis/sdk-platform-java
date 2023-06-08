@@ -23,6 +23,7 @@ package com.google.api;
  *
  * <pre>
  * A description of a log type. Example in YAML format:
+ *
  *     - name: library.googleapis.com/activity_history
  *       description: The history of borrowing and returning library items.
  *       display_name: Activity
@@ -56,11 +57,6 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
     return new LogDescriptor();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.LogProto.internal_static_google_api_LogDescriptor_descriptor;
   }
@@ -74,7 +70,9 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int NAME_FIELD_NUMBER = 1;
-  private volatile java.lang.Object name_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object name_ = "";
   /**
    *
    *
@@ -129,6 +127,8 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int LABELS_FIELD_NUMBER = 2;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.api.LabelDescriptor> labels_;
   /**
    *
@@ -208,7 +208,9 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int DESCRIPTION_FIELD_NUMBER = 3;
-  private volatile java.lang.Object description_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object description_ = "";
   /**
    *
    *
@@ -259,7 +261,9 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int DISPLAY_NAME_FIELD_NUMBER = 4;
-  private volatile java.lang.Object displayName_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object displayName_ = "";
   /**
    *
    *
@@ -500,6 +504,7 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A description of a log type. Example in YAML format:
+   *
    *     - name: library.googleapis.com/activity_history
    *       description: The history of borrowing and returning library items.
    *       display_name: Activity
@@ -536,19 +541,17 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       name_ = "";
-
       if (labelsBuilder_ == null) {
         labels_ = java.util.Collections.emptyList();
       } else {
         labels_ = null;
         labelsBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000001);
+      bitField0_ = (bitField0_ & ~0x00000002);
       description_ = "";
-
       displayName_ = "";
-
       return this;
     }
 
@@ -574,21 +577,37 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.LogDescriptor buildPartial() {
       com.google.api.LogDescriptor result = new com.google.api.LogDescriptor(this);
-      int from_bitField0_ = bitField0_;
-      result.name_ = name_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.api.LogDescriptor result) {
       if (labelsBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)) {
+        if (((bitField0_ & 0x00000002) != 0)) {
           labels_ = java.util.Collections.unmodifiableList(labels_);
-          bitField0_ = (bitField0_ & ~0x00000001);
+          bitField0_ = (bitField0_ & ~0x00000002);
         }
         result.labels_ = labels_;
       } else {
         result.labels_ = labelsBuilder_.build();
       }
-      result.description_ = description_;
-      result.displayName_ = displayName_;
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.api.LogDescriptor result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.name_ = name_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.description_ = description_;
+      }
+      if (((from_bitField0_ & 0x00000008) != 0)) {
+        result.displayName_ = displayName_;
+      }
     }
 
     @java.lang.Override
@@ -638,13 +657,14 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
       if (other == com.google.api.LogDescriptor.getDefaultInstance()) return this;
       if (!other.getName().isEmpty()) {
         name_ = other.name_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (labelsBuilder_ == null) {
         if (!other.labels_.isEmpty()) {
           if (labels_.isEmpty()) {
             labels_ = other.labels_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ = (bitField0_ & ~0x00000002);
           } else {
             ensureLabelsIsMutable();
             labels_.addAll(other.labels_);
@@ -657,7 +677,7 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
             labelsBuilder_.dispose();
             labelsBuilder_ = null;
             labels_ = other.labels_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ = (bitField0_ & ~0x00000002);
             labelsBuilder_ =
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
                     ? getLabelsFieldBuilder()
@@ -669,10 +689,12 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
       }
       if (!other.getDescription().isEmpty()) {
         description_ = other.description_;
+        bitField0_ |= 0x00000004;
         onChanged();
       }
       if (!other.getDisplayName().isEmpty()) {
         displayName_ = other.displayName_;
+        bitField0_ |= 0x00000008;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -704,7 +726,7 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
             case 10:
               {
                 name_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
@@ -722,13 +744,13 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
             case 26:
               {
                 description_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 26
             case 34:
               {
                 displayName_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000008;
                 break;
               } // case 34
             default:
@@ -820,8 +842,8 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       name_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -840,8 +862,8 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearName() {
-
       name_ = getDefaultInstance().getName();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -865,8 +887,8 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       name_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -875,9 +897,9 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
         java.util.Collections.emptyList();
 
     private void ensureLabelsIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
+      if (!((bitField0_ & 0x00000002) != 0)) {
         labels_ = new java.util.ArrayList<com.google.api.LabelDescriptor>(labels_);
-        bitField0_ |= 0x00000001;
+        bitField0_ |= 0x00000002;
       }
     }
 
@@ -1112,7 +1134,7 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
     public Builder clearLabels() {
       if (labelsBuilder_ == null) {
         labels_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
+        bitField0_ = (bitField0_ & ~0x00000002);
         onChanged();
       } else {
         labelsBuilder_.clear();
@@ -1247,7 +1269,7 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
                 com.google.api.LabelDescriptor,
                 com.google.api.LabelDescriptor.Builder,
                 com.google.api.LabelDescriptorOrBuilder>(
-                labels_, ((bitField0_ & 0x00000001) != 0), getParentForChildren(), isClean());
+                labels_, ((bitField0_ & 0x00000002) != 0), getParentForChildren(), isClean());
         labels_ = null;
       }
       return labelsBuilder_;
@@ -1317,8 +1339,8 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       description_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1335,8 +1357,8 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDescription() {
-
       description_ = getDefaultInstance().getDescription();
+      bitField0_ = (bitField0_ & ~0x00000004);
       onChanged();
       return this;
     }
@@ -1358,8 +1380,8 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       description_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1428,8 +1450,8 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       displayName_ = value;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -1446,8 +1468,8 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDisplayName() {
-
       displayName_ = getDefaultInstance().getDisplayName();
+      bitField0_ = (bitField0_ & ~0x00000008);
       onChanged();
       return this;
     }
@@ -1469,8 +1491,8 @@ public final class LogDescriptor extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       displayName_ = value;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }

@@ -45,21 +45,17 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     documentationUri_ = "";
     apiShortName_ = "";
     githubLabel_ = "";
-    codeownerGithubTeams_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    codeownerGithubTeams_ = com.google.protobuf.LazyStringArrayList.emptyList();
     docTagPrefix_ = "";
     organization_ = 0;
     librarySettings_ = java.util.Collections.emptyList();
+    protoReferenceDocumentationUri_ = "";
   }
 
   @java.lang.Override
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new Publishing();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -75,6 +71,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int METHOD_SETTINGS_FIELD_NUMBER = 2;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.api.MethodSettings> methodSettings_;
   /**
    *
@@ -149,12 +147,14 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int NEW_ISSUE_URI_FIELD_NUMBER = 101;
-  private volatile java.lang.Object newIssueUri_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object newIssueUri_ = "";
   /**
    *
    *
    * <pre>
-   * Link to a place that API users can report issues.  Example:
+   * Link to a *public* URI where users can report issues.  Example:
    * https://issuetracker.google.com/issues/new?component=190865&amp;template=1161103
    * </pre>
    *
@@ -178,7 +178,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * Link to a place that API users can report issues.  Example:
+   * Link to a *public* URI where users can report issues.  Example:
    * https://issuetracker.google.com/issues/new?component=190865&amp;template=1161103
    * </pre>
    *
@@ -200,7 +200,9 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int DOCUMENTATION_URI_FIELD_NUMBER = 102;
-  private volatile java.lang.Object documentationUri_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object documentationUri_ = "";
   /**
    *
    *
@@ -251,7 +253,9 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int API_SHORT_NAME_FIELD_NUMBER = 103;
-  private volatile java.lang.Object apiShortName_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object apiShortName_ = "";
   /**
    *
    *
@@ -304,7 +308,9 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int GITHUB_LABEL_FIELD_NUMBER = 104;
-  private volatile java.lang.Object githubLabel_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object githubLabel_ = "";
   /**
    *
    *
@@ -353,7 +359,10 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int CODEOWNER_GITHUB_TEAMS_FIELD_NUMBER = 105;
-  private com.google.protobuf.LazyStringList codeownerGithubTeams_;
+
+  @SuppressWarnings("serial")
+  private com.google.protobuf.LazyStringArrayList codeownerGithubTeams_ =
+      com.google.protobuf.LazyStringArrayList.emptyList();
   /**
    *
    *
@@ -418,7 +427,9 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int DOC_TAG_PREFIX_FIELD_NUMBER = 106;
-  private volatile java.lang.Object docTagPrefix_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object docTagPrefix_ = "";
   /**
    *
    *
@@ -469,7 +480,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int ORGANIZATION_FIELD_NUMBER = 107;
-  private int organization_;
+  private int organization_ = 0;
   /**
    *
    *
@@ -498,13 +509,14 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.api.ClientLibraryOrganization getOrganization() {
-    @SuppressWarnings("deprecation")
     com.google.api.ClientLibraryOrganization result =
-        com.google.api.ClientLibraryOrganization.valueOf(organization_);
+        com.google.api.ClientLibraryOrganization.forNumber(organization_);
     return result == null ? com.google.api.ClientLibraryOrganization.UNRECOGNIZED : result;
   }
 
   public static final int LIBRARY_SETTINGS_FIELD_NUMBER = 109;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.api.ClientLibrarySettings> librarySettings_;
   /**
    *
@@ -583,6 +595,59 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     return librarySettings_.get(index);
   }
 
+  public static final int PROTO_REFERENCE_DOCUMENTATION_URI_FIELD_NUMBER = 110;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object protoReferenceDocumentationUri_ = "";
+  /**
+   *
+   *
+   * <pre>
+   * Optional link to proto reference documentation.  Example:
+   * https://cloud.google.com/pubsub/lite/docs/reference/rpc
+   * </pre>
+   *
+   * <code>string proto_reference_documentation_uri = 110;</code>
+   *
+   * @return The protoReferenceDocumentationUri.
+   */
+  @java.lang.Override
+  public java.lang.String getProtoReferenceDocumentationUri() {
+    java.lang.Object ref = protoReferenceDocumentationUri_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      protoReferenceDocumentationUri_ = s;
+      return s;
+    }
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Optional link to proto reference documentation.  Example:
+   * https://cloud.google.com/pubsub/lite/docs/reference/rpc
+   * </pre>
+   *
+   * <code>string proto_reference_documentation_uri = 110;</code>
+   *
+   * @return The bytes for protoReferenceDocumentationUri.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString getProtoReferenceDocumentationUriBytes() {
+    java.lang.Object ref = protoReferenceDocumentationUri_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b =
+          com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+      protoReferenceDocumentationUri_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
   private byte memoizedIsInitialized = -1;
 
   @java.lang.Override
@@ -626,6 +691,10 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     }
     for (int i = 0; i < librarySettings_.size(); i++) {
       output.writeMessage(109, librarySettings_.get(i));
+    }
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(protoReferenceDocumentationUri_)) {
+      com.google.protobuf.GeneratedMessageV3.writeString(
+          output, 110, protoReferenceDocumentationUri_);
     }
     getUnknownFields().writeTo(output);
   }
@@ -671,6 +740,11 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       size +=
           com.google.protobuf.CodedOutputStream.computeMessageSize(109, librarySettings_.get(i));
     }
+    if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(protoReferenceDocumentationUri_)) {
+      size +=
+          com.google.protobuf.GeneratedMessageV3.computeStringSize(
+              110, protoReferenceDocumentationUri_);
+    }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
     return size;
@@ -695,6 +769,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     if (!getDocTagPrefix().equals(other.getDocTagPrefix())) return false;
     if (organization_ != other.organization_) return false;
     if (!getLibrarySettingsList().equals(other.getLibrarySettingsList())) return false;
+    if (!getProtoReferenceDocumentationUri().equals(other.getProtoReferenceDocumentationUri()))
+      return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -730,6 +806,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       hash = (37 * hash) + LIBRARY_SETTINGS_FIELD_NUMBER;
       hash = (53 * hash) + getLibrarySettingsList().hashCode();
     }
+    hash = (37 * hash) + PROTO_REFERENCE_DOCUMENTATION_URI_FIELD_NUMBER;
+    hash = (53 * hash) + getProtoReferenceDocumentationUri().hashCode();
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -866,6 +944,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       if (methodSettingsBuilder_ == null) {
         methodSettings_ = java.util.Collections.emptyList();
       } else {
@@ -874,26 +953,20 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       }
       bitField0_ = (bitField0_ & ~0x00000001);
       newIssueUri_ = "";
-
       documentationUri_ = "";
-
       apiShortName_ = "";
-
       githubLabel_ = "";
-
-      codeownerGithubTeams_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000002);
+      codeownerGithubTeams_ = com.google.protobuf.LazyStringArrayList.emptyList();
       docTagPrefix_ = "";
-
       organization_ = 0;
-
       if (librarySettingsBuilder_ == null) {
         librarySettings_ = java.util.Collections.emptyList();
       } else {
         librarySettings_ = null;
         librarySettingsBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000004);
+      bitField0_ = (bitField0_ & ~0x00000100);
+      protoReferenceDocumentationUri_ = "";
       return this;
     }
 
@@ -919,7 +992,15 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.Publishing buildPartial() {
       com.google.api.Publishing result = new com.google.api.Publishing(this);
-      int from_bitField0_ = bitField0_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.api.Publishing result) {
       if (methodSettingsBuilder_ == null) {
         if (((bitField0_ & 0x00000001) != 0)) {
           methodSettings_ = java.util.Collections.unmodifiableList(methodSettings_);
@@ -929,28 +1010,44 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       } else {
         result.methodSettings_ = methodSettingsBuilder_.build();
       }
-      result.newIssueUri_ = newIssueUri_;
-      result.documentationUri_ = documentationUri_;
-      result.apiShortName_ = apiShortName_;
-      result.githubLabel_ = githubLabel_;
-      if (((bitField0_ & 0x00000002) != 0)) {
-        codeownerGithubTeams_ = codeownerGithubTeams_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000002);
-      }
-      result.codeownerGithubTeams_ = codeownerGithubTeams_;
-      result.docTagPrefix_ = docTagPrefix_;
-      result.organization_ = organization_;
       if (librarySettingsBuilder_ == null) {
-        if (((bitField0_ & 0x00000004) != 0)) {
+        if (((bitField0_ & 0x00000100) != 0)) {
           librarySettings_ = java.util.Collections.unmodifiableList(librarySettings_);
-          bitField0_ = (bitField0_ & ~0x00000004);
+          bitField0_ = (bitField0_ & ~0x00000100);
         }
         result.librarySettings_ = librarySettings_;
       } else {
         result.librarySettings_ = librarySettingsBuilder_.build();
       }
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.api.Publishing result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.newIssueUri_ = newIssueUri_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.documentationUri_ = documentationUri_;
+      }
+      if (((from_bitField0_ & 0x00000008) != 0)) {
+        result.apiShortName_ = apiShortName_;
+      }
+      if (((from_bitField0_ & 0x00000010) != 0)) {
+        result.githubLabel_ = githubLabel_;
+      }
+      if (((from_bitField0_ & 0x00000020) != 0)) {
+        codeownerGithubTeams_.makeImmutable();
+        result.codeownerGithubTeams_ = codeownerGithubTeams_;
+      }
+      if (((from_bitField0_ & 0x00000040) != 0)) {
+        result.docTagPrefix_ = docTagPrefix_;
+      }
+      if (((from_bitField0_ & 0x00000080) != 0)) {
+        result.organization_ = organization_;
+      }
+      if (((from_bitField0_ & 0x00000200) != 0)) {
+        result.protoReferenceDocumentationUri_ = protoReferenceDocumentationUri_;
+      }
     }
 
     @java.lang.Override
@@ -1027,24 +1124,28 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       }
       if (!other.getNewIssueUri().isEmpty()) {
         newIssueUri_ = other.newIssueUri_;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
       if (!other.getDocumentationUri().isEmpty()) {
         documentationUri_ = other.documentationUri_;
+        bitField0_ |= 0x00000004;
         onChanged();
       }
       if (!other.getApiShortName().isEmpty()) {
         apiShortName_ = other.apiShortName_;
+        bitField0_ |= 0x00000008;
         onChanged();
       }
       if (!other.getGithubLabel().isEmpty()) {
         githubLabel_ = other.githubLabel_;
+        bitField0_ |= 0x00000010;
         onChanged();
       }
       if (!other.codeownerGithubTeams_.isEmpty()) {
         if (codeownerGithubTeams_.isEmpty()) {
           codeownerGithubTeams_ = other.codeownerGithubTeams_;
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ |= 0x00000020;
         } else {
           ensureCodeownerGithubTeamsIsMutable();
           codeownerGithubTeams_.addAll(other.codeownerGithubTeams_);
@@ -1053,6 +1154,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       }
       if (!other.getDocTagPrefix().isEmpty()) {
         docTagPrefix_ = other.docTagPrefix_;
+        bitField0_ |= 0x00000040;
         onChanged();
       }
       if (other.organization_ != 0) {
@@ -1062,7 +1164,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         if (!other.librarySettings_.isEmpty()) {
           if (librarySettings_.isEmpty()) {
             librarySettings_ = other.librarySettings_;
-            bitField0_ = (bitField0_ & ~0x00000004);
+            bitField0_ = (bitField0_ & ~0x00000100);
           } else {
             ensureLibrarySettingsIsMutable();
             librarySettings_.addAll(other.librarySettings_);
@@ -1075,7 +1177,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
             librarySettingsBuilder_.dispose();
             librarySettingsBuilder_ = null;
             librarySettings_ = other.librarySettings_;
-            bitField0_ = (bitField0_ & ~0x00000004);
+            bitField0_ = (bitField0_ & ~0x00000100);
             librarySettingsBuilder_ =
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
                     ? getLibrarySettingsFieldBuilder()
@@ -1084,6 +1186,11 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
             librarySettingsBuilder_.addAllMessages(other.librarySettings_);
           }
         }
+      }
+      if (!other.getProtoReferenceDocumentationUri().isEmpty()) {
+        protoReferenceDocumentationUri_ = other.protoReferenceDocumentationUri_;
+        bitField0_ |= 0x00000200;
+        onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
@@ -1126,25 +1233,25 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
             case 810:
               {
                 newIssueUri_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 810
             case 818:
               {
                 documentationUri_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 818
             case 826:
               {
                 apiShortName_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000008;
                 break;
               } // case 826
             case 834:
               {
                 githubLabel_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000010;
                 break;
               } // case 834
             case 842:
@@ -1157,13 +1264,13 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
             case 850:
               {
                 docTagPrefix_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000040;
                 break;
               } // case 850
             case 856:
               {
                 organization_ = input.readEnum();
-
+                bitField0_ |= 0x00000080;
                 break;
               } // case 856
             case 874:
@@ -1179,6 +1286,12 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
                 }
                 break;
               } // case 874
+            case 882:
+              {
+                protoReferenceDocumentationUri_ = input.readStringRequireUtf8();
+                bitField0_ |= 0x00000200;
+                break;
+              } // case 882
             default:
               {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
@@ -1572,7 +1685,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Link to a place that API users can report issues.  Example:
+     * Link to a *public* URI where users can report issues.  Example:
      * https://issuetracker.google.com/issues/new?component=190865&amp;template=1161103
      * </pre>
      *
@@ -1595,7 +1708,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Link to a place that API users can report issues.  Example:
+     * Link to a *public* URI where users can report issues.  Example:
      * https://issuetracker.google.com/issues/new?component=190865&amp;template=1161103
      * </pre>
      *
@@ -1618,7 +1731,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Link to a place that API users can report issues.  Example:
+     * Link to a *public* URI where users can report issues.  Example:
      * https://issuetracker.google.com/issues/new?component=190865&amp;template=1161103
      * </pre>
      *
@@ -1631,8 +1744,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       newIssueUri_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1640,7 +1753,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Link to a place that API users can report issues.  Example:
+     * Link to a *public* URI where users can report issues.  Example:
      * https://issuetracker.google.com/issues/new?component=190865&amp;template=1161103
      * </pre>
      *
@@ -1649,8 +1762,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearNewIssueUri() {
-
       newIssueUri_ = getDefaultInstance().getNewIssueUri();
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -1658,7 +1771,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Link to a place that API users can report issues.  Example:
+     * Link to a *public* URI where users can report issues.  Example:
      * https://issuetracker.google.com/issues/new?component=190865&amp;template=1161103
      * </pre>
      *
@@ -1672,8 +1785,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       newIssueUri_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1742,8 +1855,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       documentationUri_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1760,8 +1873,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDocumentationUri() {
-
       documentationUri_ = getDefaultInstance().getDocumentationUri();
+      bitField0_ = (bitField0_ & ~0x00000004);
       onChanged();
       return this;
     }
@@ -1783,8 +1896,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       documentationUri_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1856,8 +1969,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       apiShortName_ = value;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -1875,8 +1988,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearApiShortName() {
-
       apiShortName_ = getDefaultInstance().getApiShortName();
+      bitField0_ = (bitField0_ & ~0x00000008);
       onChanged();
       return this;
     }
@@ -1899,8 +2012,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       apiShortName_ = value;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -1966,8 +2079,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       githubLabel_ = value;
+      bitField0_ |= 0x00000010;
       onChanged();
       return this;
     }
@@ -1983,8 +2096,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearGithubLabel() {
-
       githubLabel_ = getDefaultInstance().getGithubLabel();
+      bitField0_ = (bitField0_ & ~0x00000010);
       onChanged();
       return this;
     }
@@ -2005,20 +2118,20 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       githubLabel_ = value;
+      bitField0_ |= 0x00000010;
       onChanged();
       return this;
     }
 
-    private com.google.protobuf.LazyStringList codeownerGithubTeams_ =
-        com.google.protobuf.LazyStringArrayList.EMPTY;
+    private com.google.protobuf.LazyStringArrayList codeownerGithubTeams_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
 
     private void ensureCodeownerGithubTeamsIsMutable() {
-      if (!((bitField0_ & 0x00000002) != 0)) {
+      if (!codeownerGithubTeams_.isModifiable()) {
         codeownerGithubTeams_ = new com.google.protobuf.LazyStringArrayList(codeownerGithubTeams_);
-        bitField0_ |= 0x00000002;
       }
+      bitField0_ |= 0x00000020;
     }
     /**
      *
@@ -2033,7 +2146,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return A list containing the codeownerGithubTeams.
      */
     public com.google.protobuf.ProtocolStringList getCodeownerGithubTeamsList() {
-      return codeownerGithubTeams_.getUnmodifiableView();
+      codeownerGithubTeams_.makeImmutable();
+      return codeownerGithubTeams_;
     }
     /**
      *
@@ -2102,6 +2216,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       }
       ensureCodeownerGithubTeamsIsMutable();
       codeownerGithubTeams_.set(index, value);
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }
@@ -2124,6 +2239,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       }
       ensureCodeownerGithubTeamsIsMutable();
       codeownerGithubTeams_.add(value);
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }
@@ -2143,6 +2259,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     public Builder addAllCodeownerGithubTeams(java.lang.Iterable<java.lang.String> values) {
       ensureCodeownerGithubTeamsIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(values, codeownerGithubTeams_);
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }
@@ -2159,8 +2276,9 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearCodeownerGithubTeams() {
-      codeownerGithubTeams_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000002);
+      codeownerGithubTeams_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      bitField0_ = (bitField0_ & ~0x00000020);
+      ;
       onChanged();
       return this;
     }
@@ -2184,6 +2302,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       checkByteStringIsUtf8(value);
       ensureCodeownerGithubTeamsIsMutable();
       codeownerGithubTeams_.add(value);
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }
@@ -2252,8 +2371,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       docTagPrefix_ = value;
+      bitField0_ |= 0x00000040;
       onChanged();
       return this;
     }
@@ -2270,8 +2389,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDocTagPrefix() {
-
       docTagPrefix_ = getDefaultInstance().getDocTagPrefix();
+      bitField0_ = (bitField0_ & ~0x00000040);
       onChanged();
       return this;
     }
@@ -2293,8 +2412,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       docTagPrefix_ = value;
+      bitField0_ |= 0x00000040;
       onChanged();
       return this;
     }
@@ -2328,8 +2447,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setOrganizationValue(int value) {
-
       organization_ = value;
+      bitField0_ |= 0x00000080;
       onChanged();
       return this;
     }
@@ -2346,9 +2465,8 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.api.ClientLibraryOrganization getOrganization() {
-      @SuppressWarnings("deprecation")
       com.google.api.ClientLibraryOrganization result =
-          com.google.api.ClientLibraryOrganization.valueOf(organization_);
+          com.google.api.ClientLibraryOrganization.forNumber(organization_);
       return result == null ? com.google.api.ClientLibraryOrganization.UNRECOGNIZED : result;
     }
     /**
@@ -2367,7 +2485,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
+      bitField0_ |= 0x00000080;
       organization_ = value.getNumber();
       onChanged();
       return this;
@@ -2384,7 +2502,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearOrganization() {
-
+      bitField0_ = (bitField0_ & ~0x00000080);
       organization_ = 0;
       onChanged();
       return this;
@@ -2394,10 +2512,10 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
         java.util.Collections.emptyList();
 
     private void ensureLibrarySettingsIsMutable() {
-      if (!((bitField0_ & 0x00000004) != 0)) {
+      if (!((bitField0_ & 0x00000100) != 0)) {
         librarySettings_ =
             new java.util.ArrayList<com.google.api.ClientLibrarySettings>(librarySettings_);
-        bitField0_ |= 0x00000004;
+        bitField0_ |= 0x00000100;
       }
     }
 
@@ -2635,7 +2753,7 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
     public Builder clearLibrarySettings() {
       if (librarySettingsBuilder_ == null) {
         librarySettings_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000004);
+        bitField0_ = (bitField0_ & ~0x00000100);
         onChanged();
       } else {
         librarySettingsBuilder_.clear();
@@ -2772,12 +2890,123 @@ public final class Publishing extends com.google.protobuf.GeneratedMessageV3
                 com.google.api.ClientLibrarySettings.Builder,
                 com.google.api.ClientLibrarySettingsOrBuilder>(
                 librarySettings_,
-                ((bitField0_ & 0x00000004) != 0),
+                ((bitField0_ & 0x00000100) != 0),
                 getParentForChildren(),
                 isClean());
         librarySettings_ = null;
       }
       return librarySettingsBuilder_;
+    }
+
+    private java.lang.Object protoReferenceDocumentationUri_ = "";
+    /**
+     *
+     *
+     * <pre>
+     * Optional link to proto reference documentation.  Example:
+     * https://cloud.google.com/pubsub/lite/docs/reference/rpc
+     * </pre>
+     *
+     * <code>string proto_reference_documentation_uri = 110;</code>
+     *
+     * @return The protoReferenceDocumentationUri.
+     */
+    public java.lang.String getProtoReferenceDocumentationUri() {
+      java.lang.Object ref = protoReferenceDocumentationUri_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs = (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        protoReferenceDocumentationUri_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Optional link to proto reference documentation.  Example:
+     * https://cloud.google.com/pubsub/lite/docs/reference/rpc
+     * </pre>
+     *
+     * <code>string proto_reference_documentation_uri = 110;</code>
+     *
+     * @return The bytes for protoReferenceDocumentationUri.
+     */
+    public com.google.protobuf.ByteString getProtoReferenceDocumentationUriBytes() {
+      java.lang.Object ref = protoReferenceDocumentationUri_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b =
+            com.google.protobuf.ByteString.copyFromUtf8((java.lang.String) ref);
+        protoReferenceDocumentationUri_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Optional link to proto reference documentation.  Example:
+     * https://cloud.google.com/pubsub/lite/docs/reference/rpc
+     * </pre>
+     *
+     * <code>string proto_reference_documentation_uri = 110;</code>
+     *
+     * @param value The protoReferenceDocumentationUri to set.
+     * @return This builder for chaining.
+     */
+    public Builder setProtoReferenceDocumentationUri(java.lang.String value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      protoReferenceDocumentationUri_ = value;
+      bitField0_ |= 0x00000200;
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Optional link to proto reference documentation.  Example:
+     * https://cloud.google.com/pubsub/lite/docs/reference/rpc
+     * </pre>
+     *
+     * <code>string proto_reference_documentation_uri = 110;</code>
+     *
+     * @return This builder for chaining.
+     */
+    public Builder clearProtoReferenceDocumentationUri() {
+      protoReferenceDocumentationUri_ = getDefaultInstance().getProtoReferenceDocumentationUri();
+      bitField0_ = (bitField0_ & ~0x00000200);
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Optional link to proto reference documentation.  Example:
+     * https://cloud.google.com/pubsub/lite/docs/reference/rpc
+     * </pre>
+     *
+     * <code>string proto_reference_documentation_uri = 110;</code>
+     *
+     * @param value The bytes for protoReferenceDocumentationUri to set.
+     * @return This builder for chaining.
+     */
+    public Builder setProtoReferenceDocumentationUriBytes(com.google.protobuf.ByteString value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      checkByteStringIsUtf8(value);
+      protoReferenceDocumentationUri_ = value;
+      bitField0_ |= 0x00000200;
+      onChanged();
+      return this;
     }
 
     @java.lang.Override

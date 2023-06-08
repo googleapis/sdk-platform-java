@@ -50,11 +50,6 @@ public final class Page extends com.google.protobuf.GeneratedMessageV3
     return new Page();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.DocumentationProto.internal_static_google_api_Page_descriptor;
   }
@@ -68,7 +63,9 @@ public final class Page extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int NAME_FIELD_NUMBER = 1;
-  private volatile java.lang.Object name_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object name_ = "";
   /**
    *
    *
@@ -143,7 +140,9 @@ public final class Page extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int CONTENT_FIELD_NUMBER = 2;
-  private volatile java.lang.Object content_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object content_ = "";
   /**
    *
    *
@@ -196,6 +195,8 @@ public final class Page extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int SUBPAGES_FIELD_NUMBER = 3;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.api.Page> subpages_;
   /**
    *
@@ -481,17 +482,16 @@ public final class Page extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       name_ = "";
-
       content_ = "";
-
       if (subpagesBuilder_ == null) {
         subpages_ = java.util.Collections.emptyList();
       } else {
         subpages_ = null;
         subpagesBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000001);
+      bitField0_ = (bitField0_ & ~0x00000004);
       return this;
     }
 
@@ -517,20 +517,34 @@ public final class Page extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.Page buildPartial() {
       com.google.api.Page result = new com.google.api.Page(this);
-      int from_bitField0_ = bitField0_;
-      result.name_ = name_;
-      result.content_ = content_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.api.Page result) {
       if (subpagesBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)) {
+        if (((bitField0_ & 0x00000004) != 0)) {
           subpages_ = java.util.Collections.unmodifiableList(subpages_);
-          bitField0_ = (bitField0_ & ~0x00000001);
+          bitField0_ = (bitField0_ & ~0x00000004);
         }
         result.subpages_ = subpages_;
       } else {
         result.subpages_ = subpagesBuilder_.build();
       }
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.api.Page result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.name_ = name_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.content_ = content_;
+      }
     }
 
     @java.lang.Override
@@ -580,17 +594,19 @@ public final class Page extends com.google.protobuf.GeneratedMessageV3
       if (other == com.google.api.Page.getDefaultInstance()) return this;
       if (!other.getName().isEmpty()) {
         name_ = other.name_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (!other.getContent().isEmpty()) {
         content_ = other.content_;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
       if (subpagesBuilder_ == null) {
         if (!other.subpages_.isEmpty()) {
           if (subpages_.isEmpty()) {
             subpages_ = other.subpages_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ = (bitField0_ & ~0x00000004);
           } else {
             ensureSubpagesIsMutable();
             subpages_.addAll(other.subpages_);
@@ -603,7 +619,7 @@ public final class Page extends com.google.protobuf.GeneratedMessageV3
             subpagesBuilder_.dispose();
             subpagesBuilder_ = null;
             subpages_ = other.subpages_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ = (bitField0_ & ~0x00000004);
             subpagesBuilder_ =
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
                     ? getSubpagesFieldBuilder()
@@ -642,13 +658,13 @@ public final class Page extends com.google.protobuf.GeneratedMessageV3
             case 10:
               {
                 name_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
               {
                 content_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             case 26:
@@ -782,8 +798,8 @@ public final class Page extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       name_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -812,8 +828,8 @@ public final class Page extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearName() {
-
       name_ = getDefaultInstance().getName();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -847,8 +863,8 @@ public final class Page extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       name_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -920,8 +936,8 @@ public final class Page extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       content_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -939,8 +955,8 @@ public final class Page extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearContent() {
-
       content_ = getDefaultInstance().getContent();
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -963,8 +979,8 @@ public final class Page extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       content_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -972,9 +988,9 @@ public final class Page extends com.google.protobuf.GeneratedMessageV3
     private java.util.List<com.google.api.Page> subpages_ = java.util.Collections.emptyList();
 
     private void ensureSubpagesIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
+      if (!((bitField0_ & 0x00000004) != 0)) {
         subpages_ = new java.util.ArrayList<com.google.api.Page>(subpages_);
-        bitField0_ |= 0x00000001;
+        bitField0_ |= 0x00000004;
       }
     }
 
@@ -1195,7 +1211,7 @@ public final class Page extends com.google.protobuf.GeneratedMessageV3
     public Builder clearSubpages() {
       if (subpagesBuilder_ == null) {
         subpages_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
+        bitField0_ = (bitField0_ & ~0x00000004);
         onChanged();
       } else {
         subpagesBuilder_.clear();
@@ -1316,7 +1332,7 @@ public final class Page extends com.google.protobuf.GeneratedMessageV3
         subpagesBuilder_ =
             new com.google.protobuf.RepeatedFieldBuilderV3<
                 com.google.api.Page, com.google.api.Page.Builder, com.google.api.PageOrBuilder>(
-                subpages_, ((bitField0_ & 0x00000001) != 0), getParentForChildren(), isClean());
+                subpages_, ((bitField0_ & 0x00000004) != 0), getParentForChildren(), isClean());
         subpages_ = null;
       }
       return subpagesBuilder_;

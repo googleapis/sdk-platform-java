@@ -23,12 +23,14 @@ package com.google.api;
  *
  * <pre>
  * Monitoring configuration of the service.
+ *
  * The example below shows how to configure monitored resources and metrics
  * for monitoring. In the example, a monitored resource and two metrics are
  * defined. The `library.googleapis.com/book/returned_count` metric is sent
  * to both producer and consumer projects, whereas the
  * `library.googleapis.com/book/num_overdue` metric is only sent to the
  * consumer project.
+ *
  *     monitored_resources:
  *     - type: library.googleapis.com/Branch
  *       display_name: "Library Branch"
@@ -97,11 +99,6 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
     return new Monitoring();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.MonitoringProto.internal_static_google_api_Monitoring_descriptor;
   }
@@ -124,7 +121,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The monitored resource type. The type must be defined in
-     * [Service.monitored_resources][google.api.Service.monitored_resources] section.
+     * [Service.monitored_resources][google.api.Service.monitored_resources]
+     * section.
      * </pre>
      *
      * <code>string monitored_resource = 1;</code>
@@ -137,7 +135,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The monitored resource type. The type must be defined in
-     * [Service.monitored_resources][google.api.Service.monitored_resources] section.
+     * [Service.monitored_resources][google.api.Service.monitored_resources]
+     * section.
      * </pre>
      *
      * <code>string monitored_resource = 1;</code>
@@ -151,7 +150,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Types of the metrics to report to this monitoring destination.
-     * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
+     * Each type must be defined in
+     * [Service.metrics][google.api.Service.metrics] section.
      * </pre>
      *
      * <code>repeated string metrics = 2;</code>
@@ -164,7 +164,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Types of the metrics to report to this monitoring destination.
-     * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
+     * Each type must be defined in
+     * [Service.metrics][google.api.Service.metrics] section.
      * </pre>
      *
      * <code>repeated string metrics = 2;</code>
@@ -177,7 +178,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Types of the metrics to report to this monitoring destination.
-     * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
+     * Each type must be defined in
+     * [Service.metrics][google.api.Service.metrics] section.
      * </pre>
      *
      * <code>repeated string metrics = 2;</code>
@@ -191,7 +193,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Types of the metrics to report to this monitoring destination.
-     * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
+     * Each type must be defined in
+     * [Service.metrics][google.api.Service.metrics] section.
      * </pre>
      *
      * <code>repeated string metrics = 2;</code>
@@ -223,18 +226,13 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
 
     private MonitoringDestination() {
       monitoredResource_ = "";
-      metrics_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      metrics_ = com.google.protobuf.LazyStringArrayList.emptyList();
     }
 
     @java.lang.Override
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
       return new MonitoringDestination();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-      return this.unknownFields;
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -253,13 +251,16 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
     }
 
     public static final int MONITORED_RESOURCE_FIELD_NUMBER = 1;
-    private volatile java.lang.Object monitoredResource_;
+
+    @SuppressWarnings("serial")
+    private volatile java.lang.Object monitoredResource_ = "";
     /**
      *
      *
      * <pre>
      * The monitored resource type. The type must be defined in
-     * [Service.monitored_resources][google.api.Service.monitored_resources] section.
+     * [Service.monitored_resources][google.api.Service.monitored_resources]
+     * section.
      * </pre>
      *
      * <code>string monitored_resource = 1;</code>
@@ -283,7 +284,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The monitored resource type. The type must be defined in
-     * [Service.monitored_resources][google.api.Service.monitored_resources] section.
+     * [Service.monitored_resources][google.api.Service.monitored_resources]
+     * section.
      * </pre>
      *
      * <code>string monitored_resource = 1;</code>
@@ -304,13 +306,17 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
     }
 
     public static final int METRICS_FIELD_NUMBER = 2;
-    private com.google.protobuf.LazyStringList metrics_;
+
+    @SuppressWarnings("serial")
+    private com.google.protobuf.LazyStringArrayList metrics_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
     /**
      *
      *
      * <pre>
      * Types of the metrics to report to this monitoring destination.
-     * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
+     * Each type must be defined in
+     * [Service.metrics][google.api.Service.metrics] section.
      * </pre>
      *
      * <code>repeated string metrics = 2;</code>
@@ -325,7 +331,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Types of the metrics to report to this monitoring destination.
-     * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
+     * Each type must be defined in
+     * [Service.metrics][google.api.Service.metrics] section.
      * </pre>
      *
      * <code>repeated string metrics = 2;</code>
@@ -340,7 +347,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Types of the metrics to report to this monitoring destination.
-     * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
+     * Each type must be defined in
+     * [Service.metrics][google.api.Service.metrics] section.
      * </pre>
      *
      * <code>repeated string metrics = 2;</code>
@@ -356,7 +364,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Types of the metrics to report to this monitoring destination.
-     * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
+     * Each type must be defined in
+     * [Service.metrics][google.api.Service.metrics] section.
      * </pre>
      *
      * <code>repeated string metrics = 2;</code>
@@ -584,10 +593,9 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       @java.lang.Override
       public Builder clear() {
         super.clear();
+        bitField0_ = 0;
         monitoredResource_ = "";
-
-        metrics_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000001);
+        metrics_ = com.google.protobuf.LazyStringArrayList.emptyList();
         return this;
       }
 
@@ -615,15 +623,22 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       public com.google.api.Monitoring.MonitoringDestination buildPartial() {
         com.google.api.Monitoring.MonitoringDestination result =
             new com.google.api.Monitoring.MonitoringDestination(this);
-        int from_bitField0_ = bitField0_;
-        result.monitoredResource_ = monitoredResource_;
-        if (((bitField0_ & 0x00000001) != 0)) {
-          metrics_ = metrics_.getUnmodifiableView();
-          bitField0_ = (bitField0_ & ~0x00000001);
+        if (bitField0_ != 0) {
+          buildPartial0(result);
         }
-        result.metrics_ = metrics_;
         onBuilt();
         return result;
+      }
+
+      private void buildPartial0(com.google.api.Monitoring.MonitoringDestination result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.monitoredResource_ = monitoredResource_;
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          metrics_.makeImmutable();
+          result.metrics_ = metrics_;
+        }
       }
 
       @java.lang.Override
@@ -676,12 +691,13 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
           return this;
         if (!other.getMonitoredResource().isEmpty()) {
           monitoredResource_ = other.monitoredResource_;
+          bitField0_ |= 0x00000001;
           onChanged();
         }
         if (!other.metrics_.isEmpty()) {
           if (metrics_.isEmpty()) {
             metrics_ = other.metrics_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ |= 0x00000002;
           } else {
             ensureMetricsIsMutable();
             metrics_.addAll(other.metrics_);
@@ -717,7 +733,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
               case 10:
                 {
                   monitoredResource_ = input.readStringRequireUtf8();
-
+                  bitField0_ |= 0x00000001;
                   break;
                 } // case 10
               case 18:
@@ -752,7 +768,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * The monitored resource type. The type must be defined in
-       * [Service.monitored_resources][google.api.Service.monitored_resources] section.
+       * [Service.monitored_resources][google.api.Service.monitored_resources]
+       * section.
        * </pre>
        *
        * <code>string monitored_resource = 1;</code>
@@ -775,7 +792,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * The monitored resource type. The type must be defined in
-       * [Service.monitored_resources][google.api.Service.monitored_resources] section.
+       * [Service.monitored_resources][google.api.Service.monitored_resources]
+       * section.
        * </pre>
        *
        * <code>string monitored_resource = 1;</code>
@@ -798,7 +816,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * The monitored resource type. The type must be defined in
-       * [Service.monitored_resources][google.api.Service.monitored_resources] section.
+       * [Service.monitored_resources][google.api.Service.monitored_resources]
+       * section.
        * </pre>
        *
        * <code>string monitored_resource = 1;</code>
@@ -810,8 +829,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         if (value == null) {
           throw new NullPointerException();
         }
-
         monitoredResource_ = value;
+        bitField0_ |= 0x00000001;
         onChanged();
         return this;
       }
@@ -820,7 +839,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * The monitored resource type. The type must be defined in
-       * [Service.monitored_resources][google.api.Service.monitored_resources] section.
+       * [Service.monitored_resources][google.api.Service.monitored_resources]
+       * section.
        * </pre>
        *
        * <code>string monitored_resource = 1;</code>
@@ -828,8 +848,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearMonitoredResource() {
-
         monitoredResource_ = getDefaultInstance().getMonitoredResource();
+        bitField0_ = (bitField0_ & ~0x00000001);
         onChanged();
         return this;
       }
@@ -838,7 +858,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * The monitored resource type. The type must be defined in
-       * [Service.monitored_resources][google.api.Service.monitored_resources] section.
+       * [Service.monitored_resources][google.api.Service.monitored_resources]
+       * section.
        * </pre>
        *
        * <code>string monitored_resource = 1;</code>
@@ -851,27 +872,28 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
           throw new NullPointerException();
         }
         checkByteStringIsUtf8(value);
-
         monitoredResource_ = value;
+        bitField0_ |= 0x00000001;
         onChanged();
         return this;
       }
 
-      private com.google.protobuf.LazyStringList metrics_ =
-          com.google.protobuf.LazyStringArrayList.EMPTY;
+      private com.google.protobuf.LazyStringArrayList metrics_ =
+          com.google.protobuf.LazyStringArrayList.emptyList();
 
       private void ensureMetricsIsMutable() {
-        if (!((bitField0_ & 0x00000001) != 0)) {
+        if (!metrics_.isModifiable()) {
           metrics_ = new com.google.protobuf.LazyStringArrayList(metrics_);
-          bitField0_ |= 0x00000001;
         }
+        bitField0_ |= 0x00000002;
       }
       /**
        *
        *
        * <pre>
        * Types of the metrics to report to this monitoring destination.
-       * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
+       * Each type must be defined in
+       * [Service.metrics][google.api.Service.metrics] section.
        * </pre>
        *
        * <code>repeated string metrics = 2;</code>
@@ -879,14 +901,16 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
        * @return A list containing the metrics.
        */
       public com.google.protobuf.ProtocolStringList getMetricsList() {
-        return metrics_.getUnmodifiableView();
+        metrics_.makeImmutable();
+        return metrics_;
       }
       /**
        *
        *
        * <pre>
        * Types of the metrics to report to this monitoring destination.
-       * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
+       * Each type must be defined in
+       * [Service.metrics][google.api.Service.metrics] section.
        * </pre>
        *
        * <code>repeated string metrics = 2;</code>
@@ -901,7 +925,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Types of the metrics to report to this monitoring destination.
-       * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
+       * Each type must be defined in
+       * [Service.metrics][google.api.Service.metrics] section.
        * </pre>
        *
        * <code>repeated string metrics = 2;</code>
@@ -917,7 +942,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Types of the metrics to report to this monitoring destination.
-       * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
+       * Each type must be defined in
+       * [Service.metrics][google.api.Service.metrics] section.
        * </pre>
        *
        * <code>repeated string metrics = 2;</code>
@@ -933,7 +959,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Types of the metrics to report to this monitoring destination.
-       * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
+       * Each type must be defined in
+       * [Service.metrics][google.api.Service.metrics] section.
        * </pre>
        *
        * <code>repeated string metrics = 2;</code>
@@ -948,6 +975,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         }
         ensureMetricsIsMutable();
         metrics_.set(index, value);
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -956,7 +984,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Types of the metrics to report to this monitoring destination.
-       * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
+       * Each type must be defined in
+       * [Service.metrics][google.api.Service.metrics] section.
        * </pre>
        *
        * <code>repeated string metrics = 2;</code>
@@ -970,6 +999,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         }
         ensureMetricsIsMutable();
         metrics_.add(value);
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -978,7 +1008,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Types of the metrics to report to this monitoring destination.
-       * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
+       * Each type must be defined in
+       * [Service.metrics][google.api.Service.metrics] section.
        * </pre>
        *
        * <code>repeated string metrics = 2;</code>
@@ -989,6 +1020,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       public Builder addAllMetrics(java.lang.Iterable<java.lang.String> values) {
         ensureMetricsIsMutable();
         com.google.protobuf.AbstractMessageLite.Builder.addAll(values, metrics_);
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -997,7 +1029,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Types of the metrics to report to this monitoring destination.
-       * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
+       * Each type must be defined in
+       * [Service.metrics][google.api.Service.metrics] section.
        * </pre>
        *
        * <code>repeated string metrics = 2;</code>
@@ -1005,8 +1038,9 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearMetrics() {
-        metrics_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-        bitField0_ = (bitField0_ & ~0x00000001);
+        metrics_ = com.google.protobuf.LazyStringArrayList.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        ;
         onChanged();
         return this;
       }
@@ -1015,7 +1049,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
        *
        * <pre>
        * Types of the metrics to report to this monitoring destination.
-       * Each type must be defined in [Service.metrics][google.api.Service.metrics] section.
+       * Each type must be defined in
+       * [Service.metrics][google.api.Service.metrics] section.
        * </pre>
        *
        * <code>repeated string metrics = 2;</code>
@@ -1030,6 +1065,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
         checkByteStringIsUtf8(value);
         ensureMetricsIsMutable();
         metrics_.add(value);
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -1099,6 +1135,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int PRODUCER_DESTINATIONS_FIELD_NUMBER = 1;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.api.Monitoring.MonitoringDestination> producerDestinations_;
   /**
    *
@@ -1195,6 +1233,8 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int CONSUMER_DESTINATIONS_FIELD_NUMBER = 2;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.api.Monitoring.MonitoringDestination> consumerDestinations_;
   /**
    *
@@ -1467,12 +1507,14 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Monitoring configuration of the service.
+   *
    * The example below shows how to configure monitored resources and metrics
    * for monitoring. In the example, a monitored resource and two metrics are
    * defined. The `library.googleapis.com/book/returned_count` metric is sent
    * to both producer and consumer projects, whereas the
    * `library.googleapis.com/book/num_overdue` metric is only sent to the
    * consumer project.
+   *
    *     monitored_resources:
    *     - type: library.googleapis.com/Branch
    *       display_name: "Library Branch"
@@ -1546,6 +1588,7 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       if (producerDestinationsBuilder_ == null) {
         producerDestinations_ = java.util.Collections.emptyList();
       } else {
@@ -1585,7 +1628,15 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.Monitoring buildPartial() {
       com.google.api.Monitoring result = new com.google.api.Monitoring(this);
-      int from_bitField0_ = bitField0_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.api.Monitoring result) {
       if (producerDestinationsBuilder_ == null) {
         if (((bitField0_ & 0x00000001) != 0)) {
           producerDestinations_ = java.util.Collections.unmodifiableList(producerDestinations_);
@@ -1604,8 +1655,10 @@ public final class Monitoring extends com.google.protobuf.GeneratedMessageV3
       } else {
         result.consumerDestinations_ = consumerDestinationsBuilder_.build();
       }
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.api.Monitoring result) {
+      int from_bitField0_ = bitField0_;
     }
 
     @java.lang.Override

@@ -49,11 +49,6 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
     return new LabelDescriptor();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.LabelProto.internal_static_google_api_LabelDescriptor_descriptor;
   }
@@ -224,7 +219,9 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
   }
 
   public static final int KEY_FIELD_NUMBER = 1;
-  private volatile java.lang.Object key_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object key_ = "";
   /**
    *
    *
@@ -273,7 +270,7 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
   }
 
   public static final int VALUE_TYPE_FIELD_NUMBER = 2;
-  private int valueType_;
+  private int valueType_ = 0;
   /**
    *
    *
@@ -302,14 +299,15 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
    */
   @java.lang.Override
   public com.google.api.LabelDescriptor.ValueType getValueType() {
-    @SuppressWarnings("deprecation")
     com.google.api.LabelDescriptor.ValueType result =
-        com.google.api.LabelDescriptor.ValueType.valueOf(valueType_);
+        com.google.api.LabelDescriptor.ValueType.forNumber(valueType_);
     return result == null ? com.google.api.LabelDescriptor.ValueType.UNRECOGNIZED : result;
   }
 
   public static final int DESCRIPTION_FIELD_NUMBER = 3;
-  private volatile java.lang.Object description_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object description_ = "";
   /**
    *
    *
@@ -567,12 +565,10 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       key_ = "";
-
       valueType_ = 0;
-
       description_ = "";
-
       return this;
     }
 
@@ -598,11 +594,24 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
     @java.lang.Override
     public com.google.api.LabelDescriptor buildPartial() {
       com.google.api.LabelDescriptor result = new com.google.api.LabelDescriptor(this);
-      result.key_ = key_;
-      result.valueType_ = valueType_;
-      result.description_ = description_;
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.api.LabelDescriptor result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.key_ = key_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.valueType_ = valueType_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.description_ = description_;
+      }
     }
 
     @java.lang.Override
@@ -652,6 +661,7 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
       if (other == com.google.api.LabelDescriptor.getDefaultInstance()) return this;
       if (!other.getKey().isEmpty()) {
         key_ = other.key_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (other.valueType_ != 0) {
@@ -659,6 +669,7 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
       }
       if (!other.getDescription().isEmpty()) {
         description_ = other.description_;
+        bitField0_ |= 0x00000004;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -690,19 +701,19 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
             case 10:
               {
                 key_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 16:
               {
                 valueType_ = input.readEnum();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 16
             case 26:
               {
                 description_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 26
             default:
@@ -721,6 +732,8 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
       } // finally
       return this;
     }
+
+    private int bitField0_;
 
     private java.lang.Object key_ = "";
     /**
@@ -783,8 +796,8 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
       if (value == null) {
         throw new NullPointerException();
       }
-
       key_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -800,8 +813,8 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder clearKey() {
-
       key_ = getDefaultInstance().getKey();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -822,8 +835,8 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       key_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -857,8 +870,8 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder setValueTypeValue(int value) {
-
       valueType_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -875,9 +888,8 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
      */
     @java.lang.Override
     public com.google.api.LabelDescriptor.ValueType getValueType() {
-      @SuppressWarnings("deprecation")
       com.google.api.LabelDescriptor.ValueType result =
-          com.google.api.LabelDescriptor.ValueType.valueOf(valueType_);
+          com.google.api.LabelDescriptor.ValueType.forNumber(valueType_);
       return result == null ? com.google.api.LabelDescriptor.ValueType.UNRECOGNIZED : result;
     }
     /**
@@ -896,7 +908,7 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
       if (value == null) {
         throw new NullPointerException();
       }
-
+      bitField0_ |= 0x00000002;
       valueType_ = value.getNumber();
       onChanged();
       return this;
@@ -913,7 +925,7 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder clearValueType() {
-
+      bitField0_ = (bitField0_ & ~0x00000002);
       valueType_ = 0;
       onChanged();
       return this;
@@ -980,8 +992,8 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
       if (value == null) {
         throw new NullPointerException();
       }
-
       description_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -997,8 +1009,8 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
      * @return This builder for chaining.
      */
     public Builder clearDescription() {
-
       description_ = getDefaultInstance().getDescription();
+      bitField0_ = (bitField0_ & ~0x00000004);
       onChanged();
       return this;
     }
@@ -1019,8 +1031,8 @@ public final class LabelDescriptor extends com.google.protobuf.GeneratedMessageV
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       description_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }

@@ -132,6 +132,27 @@ public class ProtoMessageRequestFormatterTest {
   }
 
   @Test
+  public void getPath_additionalPaths() {
+    Field fieldWithLongerName = field.toBuilder().setName("field_name1/random_text").build();
+    String path = formatter.getPath(fieldWithLongerName);
+    Truth.assertThat(path).isEqualTo("api/v1/names/field_name1/random_text/aggregated");
+
+    Field fieldWithRandomValues =
+        field.toBuilder().setName("field_name1/random_text/random_text1").build();
+    path = formatter.getPath(fieldWithRandomValues);
+    Truth.assertThat(path)
+        .isEqualTo("api/v1/names/field_name1/random_text/random_text1/aggregated");
+  }
+
+  @Test
+  public void getPath_noMatches() {
+    // If there are no valid matches, it will return with the default path's url
+    Field fieldNotMatching = field.toBuilder().setName("name_does_not_match").build();
+    String path = formatter.getPath(fieldNotMatching);
+    Truth.assertThat(path).isEqualTo("api/v1/names/name_does_not_match/aggregated");
+  }
+
+  @Test
   public void getPathTemplate() {
     String path =
         formatter.getPathTemplate().instantiate(Collections.singletonMap("name", "field_name1"));

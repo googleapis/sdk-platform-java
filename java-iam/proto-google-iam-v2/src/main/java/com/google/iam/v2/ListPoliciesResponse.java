@@ -48,11 +48,6 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
     return new ListPoliciesResponse();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.iam.v2.PolicyProto
         .internal_static_google_iam_v2_ListPoliciesResponse_descriptor;
@@ -69,6 +64,8 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
   }
 
   public static final int POLICIES_FIELD_NUMBER = 1;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.iam.v2.Policy> policies_;
   /**
    *
@@ -137,7 +134,9 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
   }
 
   public static final int NEXT_PAGE_TOKEN_FIELD_NUMBER = 2;
-  private volatile java.lang.Object nextPageToken_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object nextPageToken_ = "";
   /**
    *
    *
@@ -394,6 +393,7 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       if (policiesBuilder_ == null) {
         policies_ = java.util.Collections.emptyList();
       } else {
@@ -402,7 +402,6 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
       }
       bitField0_ = (bitField0_ & ~0x00000001);
       nextPageToken_ = "";
-
       return this;
     }
 
@@ -430,7 +429,15 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
     public com.google.iam.v2.ListPoliciesResponse buildPartial() {
       com.google.iam.v2.ListPoliciesResponse result =
           new com.google.iam.v2.ListPoliciesResponse(this);
-      int from_bitField0_ = bitField0_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.iam.v2.ListPoliciesResponse result) {
       if (policiesBuilder_ == null) {
         if (((bitField0_ & 0x00000001) != 0)) {
           policies_ = java.util.Collections.unmodifiableList(policies_);
@@ -440,9 +447,13 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
       } else {
         result.policies_ = policiesBuilder_.build();
       }
-      result.nextPageToken_ = nextPageToken_;
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.iam.v2.ListPoliciesResponse result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.nextPageToken_ = nextPageToken_;
+      }
     }
 
     @java.lang.Override
@@ -519,6 +530,7 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
       }
       if (!other.getNextPageToken().isEmpty()) {
         nextPageToken_ = other.nextPageToken_;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -562,7 +574,7 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
             case 18:
               {
                 nextPageToken_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             default:
@@ -990,8 +1002,8 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
       if (value == null) {
         throw new NullPointerException();
       }
-
       nextPageToken_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1008,8 +1020,8 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
      * @return This builder for chaining.
      */
     public Builder clearNextPageToken() {
-
       nextPageToken_ = getDefaultInstance().getNextPageToken();
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -1031,8 +1043,8 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       nextPageToken_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }

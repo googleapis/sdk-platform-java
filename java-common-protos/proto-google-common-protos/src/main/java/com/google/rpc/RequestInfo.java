@@ -49,11 +49,6 @@ public final class RequestInfo extends com.google.protobuf.GeneratedMessageV3
     return new RequestInfo();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_RequestInfo_descriptor;
   }
@@ -68,7 +63,9 @@ public final class RequestInfo extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int REQUEST_ID_FIELD_NUMBER = 1;
-  private volatile java.lang.Object requestId_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object requestId_ = "";
   /**
    *
    *
@@ -119,7 +116,9 @@ public final class RequestInfo extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int SERVING_DATA_FIELD_NUMBER = 2;
-  private volatile java.lang.Object servingData_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object servingData_ = "";
   /**
    *
    *
@@ -372,10 +371,9 @@ public final class RequestInfo extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       requestId_ = "";
-
       servingData_ = "";
-
       return this;
     }
 
@@ -401,10 +399,21 @@ public final class RequestInfo extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.rpc.RequestInfo buildPartial() {
       com.google.rpc.RequestInfo result = new com.google.rpc.RequestInfo(this);
-      result.requestId_ = requestId_;
-      result.servingData_ = servingData_;
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.rpc.RequestInfo result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.requestId_ = requestId_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.servingData_ = servingData_;
+      }
     }
 
     @java.lang.Override
@@ -454,10 +463,12 @@ public final class RequestInfo extends com.google.protobuf.GeneratedMessageV3
       if (other == com.google.rpc.RequestInfo.getDefaultInstance()) return this;
       if (!other.getRequestId().isEmpty()) {
         requestId_ = other.requestId_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (!other.getServingData().isEmpty()) {
         servingData_ = other.servingData_;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -489,13 +500,13 @@ public final class RequestInfo extends com.google.protobuf.GeneratedMessageV3
             case 10:
               {
                 requestId_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
               {
                 servingData_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             default:
@@ -514,6 +525,8 @@ public final class RequestInfo extends com.google.protobuf.GeneratedMessageV3
       } // finally
       return this;
     }
+
+    private int bitField0_;
 
     private java.lang.Object requestId_ = "";
     /**
@@ -579,8 +592,8 @@ public final class RequestInfo extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       requestId_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -597,8 +610,8 @@ public final class RequestInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearRequestId() {
-
       requestId_ = getDefaultInstance().getRequestId();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -620,8 +633,8 @@ public final class RequestInfo extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       requestId_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -690,8 +703,8 @@ public final class RequestInfo extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       servingData_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -708,8 +721,8 @@ public final class RequestInfo extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearServingData() {
-
       servingData_ = getDefaultInstance().getServingData();
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -731,8 +744,8 @@ public final class RequestInfo extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       servingData_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }

@@ -26,11 +26,14 @@ package com.google.iam.v1;
  * The configuration determines which permission types are logged, and what
  * identities, if any, are exempted from logging.
  * An AuditConfig must have one or more AuditLogConfigs.
+ *
  * If there are AuditConfigs for both `allServices` and a specific service,
  * the union of the two AuditConfigs is used for that service: the log_types
  * specified in each AuditConfig are enabled, and the exempted_members in each
  * AuditLogConfig are exempted.
+ *
  * Example Policy with multiple AuditConfigs:
+ *
  *     {
  *       "audit_configs": [
  *         {
@@ -66,6 +69,7 @@ package com.google.iam.v1;
  *         }
  *       ]
  *     }
+ *
  * For sampleservice, this policy enables DATA_READ, DATA_WRITE and ADMIN_READ
  * logging. It also exempts jose&#64;example.com from DATA_READ logging, and
  * aliya&#64;example.com from DATA_WRITE logging.
@@ -94,11 +98,6 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
     return new AuditConfig();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.iam.v1.PolicyProto.internal_static_google_iam_v1_AuditConfig_descriptor;
   }
@@ -113,7 +112,9 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int SERVICE_FIELD_NUMBER = 1;
-  private volatile java.lang.Object service_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object service_ = "";
   /**
    *
    *
@@ -166,6 +167,8 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int AUDIT_LOG_CONFIGS_FIELD_NUMBER = 3;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.iam.v1.AuditLogConfig> auditLogConfigs_;
   /**
    *
@@ -410,11 +413,14 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
    * The configuration determines which permission types are logged, and what
    * identities, if any, are exempted from logging.
    * An AuditConfig must have one or more AuditLogConfigs.
+   *
    * If there are AuditConfigs for both `allServices` and a specific service,
    * the union of the two AuditConfigs is used for that service: the log_types
    * specified in each AuditConfig are enabled, and the exempted_members in each
    * AuditLogConfig are exempted.
+   *
    * Example Policy with multiple AuditConfigs:
+   *
    *     {
    *       "audit_configs": [
    *         {
@@ -450,6 +456,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
    *         }
    *       ]
    *     }
+   *
    * For sampleservice, this policy enables DATA_READ, DATA_WRITE and ADMIN_READ
    * logging. It also exempts jose&#64;example.com from DATA_READ logging, and
    * aliya&#64;example.com from DATA_WRITE logging.
@@ -484,15 +491,15 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       service_ = "";
-
       if (auditLogConfigsBuilder_ == null) {
         auditLogConfigs_ = java.util.Collections.emptyList();
       } else {
         auditLogConfigs_ = null;
         auditLogConfigsBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000001);
+      bitField0_ = (bitField0_ & ~0x00000002);
       return this;
     }
 
@@ -518,19 +525,31 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.iam.v1.AuditConfig buildPartial() {
       com.google.iam.v1.AuditConfig result = new com.google.iam.v1.AuditConfig(this);
-      int from_bitField0_ = bitField0_;
-      result.service_ = service_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.iam.v1.AuditConfig result) {
       if (auditLogConfigsBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)) {
+        if (((bitField0_ & 0x00000002) != 0)) {
           auditLogConfigs_ = java.util.Collections.unmodifiableList(auditLogConfigs_);
-          bitField0_ = (bitField0_ & ~0x00000001);
+          bitField0_ = (bitField0_ & ~0x00000002);
         }
         result.auditLogConfigs_ = auditLogConfigs_;
       } else {
         result.auditLogConfigs_ = auditLogConfigsBuilder_.build();
       }
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.iam.v1.AuditConfig result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.service_ = service_;
+      }
     }
 
     @java.lang.Override
@@ -580,13 +599,14 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
       if (other == com.google.iam.v1.AuditConfig.getDefaultInstance()) return this;
       if (!other.getService().isEmpty()) {
         service_ = other.service_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (auditLogConfigsBuilder_ == null) {
         if (!other.auditLogConfigs_.isEmpty()) {
           if (auditLogConfigs_.isEmpty()) {
             auditLogConfigs_ = other.auditLogConfigs_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ = (bitField0_ & ~0x00000002);
           } else {
             ensureAuditLogConfigsIsMutable();
             auditLogConfigs_.addAll(other.auditLogConfigs_);
@@ -599,7 +619,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
             auditLogConfigsBuilder_.dispose();
             auditLogConfigsBuilder_ = null;
             auditLogConfigs_ = other.auditLogConfigs_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ = (bitField0_ & ~0x00000002);
             auditLogConfigsBuilder_ =
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
                     ? getAuditLogConfigsFieldBuilder()
@@ -638,7 +658,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
             case 10:
               {
                 service_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 26:
@@ -739,8 +759,8 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       service_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -758,8 +778,8 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearService() {
-
       service_ = getDefaultInstance().getService();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -782,8 +802,8 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       service_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -792,10 +812,10 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
         java.util.Collections.emptyList();
 
     private void ensureAuditLogConfigsIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
+      if (!((bitField0_ & 0x00000002) != 0)) {
         auditLogConfigs_ =
             new java.util.ArrayList<com.google.iam.v1.AuditLogConfig>(auditLogConfigs_);
-        bitField0_ |= 0x00000001;
+        bitField0_ |= 0x00000002;
       }
     }
 
@@ -1010,7 +1030,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
     public Builder clearAuditLogConfigs() {
       if (auditLogConfigsBuilder_ == null) {
         auditLogConfigs_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
+        bitField0_ = (bitField0_ & ~0x00000002);
         onChanged();
       } else {
         auditLogConfigsBuilder_.clear();
@@ -1133,7 +1153,7 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
                 com.google.iam.v1.AuditLogConfig.Builder,
                 com.google.iam.v1.AuditLogConfigOrBuilder>(
                 auditLogConfigs_,
-                ((bitField0_ & 0x00000001) != 0),
+                ((bitField0_ & 0x00000002) != 0),
                 getParentForChildren(),
                 isClean());
         auditLogConfigs_ = null;

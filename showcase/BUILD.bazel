@@ -1,3 +1,6 @@
+# Note: The commented section is the framework for gapic-showcase-extended
+# See gapic-showcase-extended folder for more info
+
 load(
     "//rules_java_gapic:java_gapic.bzl",
     "java_gapic_library",
@@ -14,13 +17,18 @@ proto_library_with_info(
     name = "showcase_proto_with_info",
     deps = [
         "@com_google_gapic_showcase//schema/google/showcase/v1beta1:showcase_proto",
+#        "//showcase/gapic-showcase-extended/proto:showcase_proto_extended",
         "@com_google_googleapis//google/cloud:common_resources_proto",
+        "@com_google_googleapis//google/cloud/location:location_proto"
     ],
 )
 
 java_proto_library(
     name = "showcase_java_proto",
-    deps = ["@com_google_gapic_showcase//schema/google/showcase/v1beta1:showcase_proto"],
+    deps = [
+        "@com_google_gapic_showcase//schema/google/showcase/v1beta1:showcase_proto",
+#       "//showcase/gapic-showcase-extended/proto:showcase_proto_extended"
+],
 )
 
 java_grpc_library(
@@ -29,21 +37,34 @@ java_grpc_library(
     deps = [":showcase_java_proto"],
 )
 
+#java_grpc_library(
+#    name = "showcase_java_grpc_extended",
+#    srcs = [
+#        "//showcase/gapic-showcase-extended/proto:showcase_proto_extended",
+#    ],
+#    deps = [":showcase_java_proto"],
+#)
+
 java_gapic_library(
     name = "showcase_java_gapic",
     srcs = [":showcase_proto_with_info"],
     gapic_yaml = None,
     grpc_service_config = "@com_google_gapic_showcase//schema/google/showcase/v1beta1:showcase_grpc_service_config.json",
-    rest_numeric_enums = True,
+    # TODO(#1285): Enable rest_numeric_enums once https://github.com/googleapis/gapic-showcase/issues/1255 is
+    # fixed.
+    rest_numeric_enums = False,
     service_yaml = "@com_google_gapic_showcase//schema/google/showcase/v1beta1:showcase_v1beta1.yaml",
     test_deps = [
         ":showcase_java_grpc",
+#        ":showcase_java_grpc_extended",
+        "@com_google_googleapis//google/cloud/location:location_java_grpc"
     ],
     transport = "grpc+rest",
     deps = [
         ":showcase_java_proto",
         "@com_google_googleapis//google/api:api_java_proto",
-    ],
+        "@com_google_googleapis//google/cloud/location:location_java_proto"
+   ],
 )
 
 # Open Source Packages
@@ -52,6 +73,8 @@ java_gapic_assembly_gradle_pkg(
     transport = "grpc+rest",
     deps = [
         ":showcase_java_gapic",
+        # TODO(lawrenceqiu): Not adding :showcase_java_grpc_extended dep as that includes WickedGrpc.java
+        # Need to figure out why it's being included
         ":showcase_java_grpc",
         ":showcase_java_proto",
         "@com_google_gapic_showcase//schema/google/showcase/v1beta1:showcase_proto",
@@ -98,8 +121,10 @@ sh_binary(
 # GRPC Showcase : Update and Verify
 GRPC_DATA = [
     "libshowcase_java_grpc-src.jar",
+#    "libshowcase_java_grpc_extended-src.jar",
     ":grpc_gapic_showcase_files",
-    "//showcase:showcase_java_grpc",
+    ":showcase_java_grpc",
+#    ":showcase_java_grpc_extended"
 ]
 
 sh_binary(
@@ -120,7 +145,8 @@ sh_binary(
 PROTO_DATA = [
     "proto-google-cloud-showcase-v1beta1-java.tar.gz",
     ":proto_gapic_showcase_files",
-    "//showcase:showcase_java_proto",
+    ":showcase_java_proto",
+#    ":showcase_java_proto_extended",
 ]
 
 sh_binary(

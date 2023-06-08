@@ -15,6 +15,7 @@
 package com.google.api.generator.gapic.model;
 
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.auto.value.AutoValue;
 import java.util.Collections;
 import java.util.List;
@@ -26,7 +27,10 @@ public abstract class GapicClass {
     MAIN,
     STUB,
     TEST,
-    PROTO
+    PROTO,
+    // Used to denote a Gapic Class that has no intention of being generated
+    // The Writer will skip generating code for this class
+    NON_GENERATED
   };
 
   public abstract Kind kind();
@@ -40,6 +44,24 @@ public abstract class GapicClass {
 
   // Only used for generating the region tag for samples; therefore only used in select Composers.
   public abstract String apiVersion();
+
+  /**
+   * Create a GapicClass with minimal information. This is intended to be used for GapicClasses that
+   * will not generate any Java files (Writer will skip)
+   *
+   * @return GapicClass denoted with NON_GENERATED Kind enum
+   */
+  public static GapicClass createNonGeneratedGapicClass() {
+    return builder()
+        .setKind(Kind.NON_GENERATED)
+        .setClassDefinition(
+            ClassDefinition.builder()
+                .setPackageString("Empty Package")
+                .setName("Empty Name")
+                .setScope(ScopeNode.PUBLIC)
+                .build())
+        .build();
+  }
 
   public static GapicClass create(Kind kind, ClassDefinition classDefinition) {
     return builder().setKind(kind).setClassDefinition(classDefinition).build();

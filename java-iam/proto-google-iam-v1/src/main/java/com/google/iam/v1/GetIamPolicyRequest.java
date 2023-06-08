@@ -47,11 +47,6 @@ public final class GetIamPolicyRequest extends com.google.protobuf.GeneratedMess
     return new GetIamPolicyRequest();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.iam.v1.IamPolicyProto
         .internal_static_google_iam_v1_GetIamPolicyRequest_descriptor;
@@ -68,7 +63,9 @@ public final class GetIamPolicyRequest extends com.google.protobuf.GeneratedMess
   }
 
   public static final int RESOURCE_FIELD_NUMBER = 1;
-  private volatile java.lang.Object resource_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object resource_ = "";
   /**
    *
    *
@@ -168,7 +165,7 @@ public final class GetIamPolicyRequest extends com.google.protobuf.GeneratedMess
    */
   @java.lang.Override
   public com.google.iam.v1.GetPolicyOptionsOrBuilder getOptionsOrBuilder() {
-    return getOptions();
+    return options_ == null ? com.google.iam.v1.GetPolicyOptions.getDefaultInstance() : options_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -380,12 +377,11 @@ public final class GetIamPolicyRequest extends com.google.protobuf.GeneratedMess
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       resource_ = "";
-
-      if (optionsBuilder_ == null) {
-        options_ = null;
-      } else {
-        options_ = null;
+      options_ = null;
+      if (optionsBuilder_ != null) {
+        optionsBuilder_.dispose();
         optionsBuilder_ = null;
       }
       return this;
@@ -415,14 +411,21 @@ public final class GetIamPolicyRequest extends com.google.protobuf.GeneratedMess
     public com.google.iam.v1.GetIamPolicyRequest buildPartial() {
       com.google.iam.v1.GetIamPolicyRequest result =
           new com.google.iam.v1.GetIamPolicyRequest(this);
-      result.resource_ = resource_;
-      if (optionsBuilder_ == null) {
-        result.options_ = options_;
-      } else {
-        result.options_ = optionsBuilder_.build();
+      if (bitField0_ != 0) {
+        buildPartial0(result);
       }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.iam.v1.GetIamPolicyRequest result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.resource_ = resource_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.options_ = optionsBuilder_ == null ? options_ : optionsBuilder_.build();
+      }
     }
 
     @java.lang.Override
@@ -472,6 +475,7 @@ public final class GetIamPolicyRequest extends com.google.protobuf.GeneratedMess
       if (other == com.google.iam.v1.GetIamPolicyRequest.getDefaultInstance()) return this;
       if (!other.getResource().isEmpty()) {
         resource_ = other.resource_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (other.hasOptions()) {
@@ -506,13 +510,13 @@ public final class GetIamPolicyRequest extends com.google.protobuf.GeneratedMess
             case 10:
               {
                 resource_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
               {
                 input.readMessage(getOptionsFieldBuilder().getBuilder(), extensionRegistry);
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             default:
@@ -531,6 +535,8 @@ public final class GetIamPolicyRequest extends com.google.protobuf.GeneratedMess
       } // finally
       return this;
     }
+
+    private int bitField0_;
 
     private java.lang.Object resource_ = "";
     /**
@@ -602,8 +608,8 @@ public final class GetIamPolicyRequest extends com.google.protobuf.GeneratedMess
       if (value == null) {
         throw new NullPointerException();
       }
-
       resource_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -622,8 +628,8 @@ public final class GetIamPolicyRequest extends com.google.protobuf.GeneratedMess
      * @return This builder for chaining.
      */
     public Builder clearResource() {
-
       resource_ = getDefaultInstance().getResource();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -647,8 +653,8 @@ public final class GetIamPolicyRequest extends com.google.protobuf.GeneratedMess
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       resource_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -672,7 +678,7 @@ public final class GetIamPolicyRequest extends com.google.protobuf.GeneratedMess
      * @return Whether the options field is set.
      */
     public boolean hasOptions() {
-      return optionsBuilder_ != null || options_ != null;
+      return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      *
@@ -711,11 +717,11 @@ public final class GetIamPolicyRequest extends com.google.protobuf.GeneratedMess
           throw new NullPointerException();
         }
         options_ = value;
-        onChanged();
       } else {
         optionsBuilder_.setMessage(value);
       }
-
+      bitField0_ |= 0x00000002;
+      onChanged();
       return this;
     }
     /**
@@ -731,11 +737,11 @@ public final class GetIamPolicyRequest extends com.google.protobuf.GeneratedMess
     public Builder setOptions(com.google.iam.v1.GetPolicyOptions.Builder builderForValue) {
       if (optionsBuilder_ == null) {
         options_ = builderForValue.build();
-        onChanged();
       } else {
         optionsBuilder_.setMessage(builderForValue.build());
       }
-
+      bitField0_ |= 0x00000002;
+      onChanged();
       return this;
     }
     /**
@@ -750,19 +756,18 @@ public final class GetIamPolicyRequest extends com.google.protobuf.GeneratedMess
      */
     public Builder mergeOptions(com.google.iam.v1.GetPolicyOptions value) {
       if (optionsBuilder_ == null) {
-        if (options_ != null) {
-          options_ =
-              com.google.iam.v1.GetPolicyOptions.newBuilder(options_)
-                  .mergeFrom(value)
-                  .buildPartial();
+        if (((bitField0_ & 0x00000002) != 0)
+            && options_ != null
+            && options_ != com.google.iam.v1.GetPolicyOptions.getDefaultInstance()) {
+          getOptionsBuilder().mergeFrom(value);
         } else {
           options_ = value;
         }
-        onChanged();
       } else {
         optionsBuilder_.mergeFrom(value);
       }
-
+      bitField0_ |= 0x00000002;
+      onChanged();
       return this;
     }
     /**
@@ -776,14 +781,13 @@ public final class GetIamPolicyRequest extends com.google.protobuf.GeneratedMess
      * <code>.google.iam.v1.GetPolicyOptions options = 2;</code>
      */
     public Builder clearOptions() {
-      if (optionsBuilder_ == null) {
-        options_ = null;
-        onChanged();
-      } else {
-        options_ = null;
+      bitField0_ = (bitField0_ & ~0x00000002);
+      options_ = null;
+      if (optionsBuilder_ != null) {
+        optionsBuilder_.dispose();
         optionsBuilder_ = null;
       }
-
+      onChanged();
       return this;
     }
     /**
@@ -797,7 +801,7 @@ public final class GetIamPolicyRequest extends com.google.protobuf.GeneratedMess
      * <code>.google.iam.v1.GetPolicyOptions options = 2;</code>
      */
     public com.google.iam.v1.GetPolicyOptions.Builder getOptionsBuilder() {
-
+      bitField0_ |= 0x00000002;
       onChanged();
       return getOptionsFieldBuilder().getBuilder();
     }

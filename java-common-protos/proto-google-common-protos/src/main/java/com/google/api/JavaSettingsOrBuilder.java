@@ -32,7 +32,9 @@ public interface JavaSettingsOrBuilder
    * who have already set the language_settings.java.package_name" field
    * in gapic.yaml. API teams should use the protobuf java_package option
    * where possible.
+   *
    * Example of a YAML configuration::
+   *
    *  publishing:
    *    java_settings:
    *      library_package: com.google.cloud.pubsub.v1
@@ -52,7 +54,9 @@ public interface JavaSettingsOrBuilder
    * who have already set the language_settings.java.package_name" field
    * in gapic.yaml. API teams should use the protobuf java_package option
    * where possible.
+   *
    * Example of a YAML configuration::
+   *
    *  publishing:
    *    java_settings:
    *      library_package: com.google.cloud.pubsub.v1
@@ -74,7 +78,9 @@ public interface JavaSettingsOrBuilder
    * the language_settings.java.interface_names" field in gapic.yaml. API
    * teams should otherwise use the service name as it appears in the
    * protobuf.
+   *
    * Example of a YAML configuration::
+   *
    *  publishing:
    *    java_settings:
    *      service_class_names:
@@ -95,7 +101,9 @@ public interface JavaSettingsOrBuilder
    * the language_settings.java.interface_names" field in gapic.yaml. API
    * teams should otherwise use the service name as it appears in the
    * protobuf.
+   *
    * Example of a YAML configuration::
+   *
    *  publishing:
    *    java_settings:
    *      service_class_names:
@@ -119,7 +127,9 @@ public interface JavaSettingsOrBuilder
    * the language_settings.java.interface_names" field in gapic.yaml. API
    * teams should otherwise use the service name as it appears in the
    * protobuf.
+   *
    * Example of a YAML configuration::
+   *
    *  publishing:
    *    java_settings:
    *      service_class_names:
@@ -140,7 +150,9 @@ public interface JavaSettingsOrBuilder
    * the language_settings.java.interface_names" field in gapic.yaml. API
    * teams should otherwise use the service name as it appears in the
    * protobuf.
+   *
    * Example of a YAML configuration::
+   *
    *  publishing:
    *    java_settings:
    *      service_class_names:
@@ -150,7 +162,6 @@ public interface JavaSettingsOrBuilder
    *
    * <code>map&lt;string, string&gt; service_class_names = 2;</code>
    */
-
   /* nullable */
   java.lang.String getServiceClassNamesOrDefault(
       java.lang.String key,
@@ -166,7 +177,9 @@ public interface JavaSettingsOrBuilder
    * the language_settings.java.interface_names" field in gapic.yaml. API
    * teams should otherwise use the service name as it appears in the
    * protobuf.
+   *
    * Example of a YAML configuration::
+   *
    *  publishing:
    *    java_settings:
    *      service_class_names:

@@ -39,18 +39,13 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
 
   private Binding() {
     role_ = "";
-    members_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    members_ = com.google.protobuf.LazyStringArrayList.emptyList();
   }
 
   @java.lang.Override
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new Binding();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -66,7 +61,9 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int ROLE_FIELD_NUMBER = 1;
-  private volatile java.lang.Object role_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object role_ = "";
   /**
    *
    *
@@ -117,28 +114,39 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int MEMBERS_FIELD_NUMBER = 2;
-  private com.google.protobuf.LazyStringList members_;
+
+  @SuppressWarnings("serial")
+  private com.google.protobuf.LazyStringArrayList members_ =
+      com.google.protobuf.LazyStringArrayList.emptyList();
   /**
    *
    *
    * <pre>
    * Specifies the principals requesting access for a Cloud Platform resource.
    * `members` can have the following values:
+   *
    * * `allUsers`: A special identifier that represents anyone who is
    *    on the internet; with or without a Google account.
+   *
    * * `allAuthenticatedUsers`: A special identifier that represents anyone
    *    who is authenticated with a Google account or a service account.
+   *
    * * `user:{emailid}`: An email address that represents a specific Google
    *    account. For example, `alice&#64;example.com` .
+   *
+   *
    * * `serviceAccount:{emailid}`: An email address that represents a service
    *    account. For example, `my-other-app&#64;appspot.gserviceaccount.com`.
+   *
    * * `group:{emailid}`: An email address that represents a Google group.
    *    For example, `admins&#64;example.com`.
+   *
    * * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique
    *    identifier) representing a user that has been recently deleted. For
    *    example, `alice&#64;example.com?uid=123456789012345678901`. If the user is
    *    recovered, this value reverts to `user:{emailid}` and the recovered user
    *    retains the role in the binding.
+   *
    * * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus
    *    unique identifier) representing a service account that has been recently
    *    deleted. For example,
@@ -146,11 +154,14 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
    *    If the service account is undeleted, this value reverts to
    *    `serviceAccount:{emailid}` and the undeleted service account retains the
    *    role in the binding.
+   *
    * * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique
    *    identifier) representing a Google group that has been recently
    *    deleted. For example, `admins&#64;example.com?uid=123456789012345678901`. If
    *    the group is recovered, this value reverts to `group:{emailid}` and the
    *    recovered group retains the role in the binding.
+   *
+   *
    * * `domain:{domain}`: The G Suite domain (primary) that represents all the
    *    users of that domain. For example, `google.com` or `example.com`.
    * </pre>
@@ -168,21 +179,29 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Specifies the principals requesting access for a Cloud Platform resource.
    * `members` can have the following values:
+   *
    * * `allUsers`: A special identifier that represents anyone who is
    *    on the internet; with or without a Google account.
+   *
    * * `allAuthenticatedUsers`: A special identifier that represents anyone
    *    who is authenticated with a Google account or a service account.
+   *
    * * `user:{emailid}`: An email address that represents a specific Google
    *    account. For example, `alice&#64;example.com` .
+   *
+   *
    * * `serviceAccount:{emailid}`: An email address that represents a service
    *    account. For example, `my-other-app&#64;appspot.gserviceaccount.com`.
+   *
    * * `group:{emailid}`: An email address that represents a Google group.
    *    For example, `admins&#64;example.com`.
+   *
    * * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique
    *    identifier) representing a user that has been recently deleted. For
    *    example, `alice&#64;example.com?uid=123456789012345678901`. If the user is
    *    recovered, this value reverts to `user:{emailid}` and the recovered user
    *    retains the role in the binding.
+   *
    * * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus
    *    unique identifier) representing a service account that has been recently
    *    deleted. For example,
@@ -190,11 +209,14 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
    *    If the service account is undeleted, this value reverts to
    *    `serviceAccount:{emailid}` and the undeleted service account retains the
    *    role in the binding.
+   *
    * * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique
    *    identifier) representing a Google group that has been recently
    *    deleted. For example, `admins&#64;example.com?uid=123456789012345678901`. If
    *    the group is recovered, this value reverts to `group:{emailid}` and the
    *    recovered group retains the role in the binding.
+   *
+   *
    * * `domain:{domain}`: The G Suite domain (primary) that represents all the
    *    users of that domain. For example, `google.com` or `example.com`.
    * </pre>
@@ -212,21 +234,29 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Specifies the principals requesting access for a Cloud Platform resource.
    * `members` can have the following values:
+   *
    * * `allUsers`: A special identifier that represents anyone who is
    *    on the internet; with or without a Google account.
+   *
    * * `allAuthenticatedUsers`: A special identifier that represents anyone
    *    who is authenticated with a Google account or a service account.
+   *
    * * `user:{emailid}`: An email address that represents a specific Google
    *    account. For example, `alice&#64;example.com` .
+   *
+   *
    * * `serviceAccount:{emailid}`: An email address that represents a service
    *    account. For example, `my-other-app&#64;appspot.gserviceaccount.com`.
+   *
    * * `group:{emailid}`: An email address that represents a Google group.
    *    For example, `admins&#64;example.com`.
+   *
    * * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique
    *    identifier) representing a user that has been recently deleted. For
    *    example, `alice&#64;example.com?uid=123456789012345678901`. If the user is
    *    recovered, this value reverts to `user:{emailid}` and the recovered user
    *    retains the role in the binding.
+   *
    * * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus
    *    unique identifier) representing a service account that has been recently
    *    deleted. For example,
@@ -234,11 +264,14 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
    *    If the service account is undeleted, this value reverts to
    *    `serviceAccount:{emailid}` and the undeleted service account retains the
    *    role in the binding.
+   *
    * * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique
    *    identifier) representing a Google group that has been recently
    *    deleted. For example, `admins&#64;example.com?uid=123456789012345678901`. If
    *    the group is recovered, this value reverts to `group:{emailid}` and the
    *    recovered group retains the role in the binding.
+   *
+   *
    * * `domain:{domain}`: The G Suite domain (primary) that represents all the
    *    users of that domain. For example, `google.com` or `example.com`.
    * </pre>
@@ -257,21 +290,29 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Specifies the principals requesting access for a Cloud Platform resource.
    * `members` can have the following values:
+   *
    * * `allUsers`: A special identifier that represents anyone who is
    *    on the internet; with or without a Google account.
+   *
    * * `allAuthenticatedUsers`: A special identifier that represents anyone
    *    who is authenticated with a Google account or a service account.
+   *
    * * `user:{emailid}`: An email address that represents a specific Google
    *    account. For example, `alice&#64;example.com` .
+   *
+   *
    * * `serviceAccount:{emailid}`: An email address that represents a service
    *    account. For example, `my-other-app&#64;appspot.gserviceaccount.com`.
+   *
    * * `group:{emailid}`: An email address that represents a Google group.
    *    For example, `admins&#64;example.com`.
+   *
    * * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique
    *    identifier) representing a user that has been recently deleted. For
    *    example, `alice&#64;example.com?uid=123456789012345678901`. If the user is
    *    recovered, this value reverts to `user:{emailid}` and the recovered user
    *    retains the role in the binding.
+   *
    * * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus
    *    unique identifier) representing a service account that has been recently
    *    deleted. For example,
@@ -279,11 +320,14 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
    *    If the service account is undeleted, this value reverts to
    *    `serviceAccount:{emailid}` and the undeleted service account retains the
    *    role in the binding.
+   *
    * * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique
    *    identifier) representing a Google group that has been recently
    *    deleted. For example, `admins&#64;example.com?uid=123456789012345678901`. If
    *    the group is recovered, this value reverts to `group:{emailid}` and the
    *    recovered group retains the role in the binding.
+   *
+   *
    * * `domain:{domain}`: The G Suite domain (primary) that represents all the
    *    users of that domain. For example, `google.com` or `example.com`.
    * </pre>
@@ -304,11 +348,14 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * The condition that is associated with this binding.
+   *
    * If the condition evaluates to `true`, then this binding applies to the
    * current request.
+   *
    * If the condition evaluates to `false`, then this binding does not apply to
    * the current request. However, a different role binding might grant the same
    * role to one or more of the principals in this binding.
+   *
    * To learn which resources support conditions in their IAM policies, see the
    * [IAM
    * documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
@@ -327,11 +374,14 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * The condition that is associated with this binding.
+   *
    * If the condition evaluates to `true`, then this binding applies to the
    * current request.
+   *
    * If the condition evaluates to `false`, then this binding does not apply to
    * the current request. However, a different role binding might grant the same
    * role to one or more of the principals in this binding.
+   *
    * To learn which resources support conditions in their IAM policies, see the
    * [IAM
    * documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
@@ -350,11 +400,14 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * The condition that is associated with this binding.
+   *
    * If the condition evaluates to `true`, then this binding applies to the
    * current request.
+   *
    * If the condition evaluates to `false`, then this binding does not apply to
    * the current request. However, a different role binding might grant the same
    * role to one or more of the principals in this binding.
+   *
    * To learn which resources support conditions in their IAM policies, see the
    * [IAM
    * documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
@@ -364,7 +417,7 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.type.ExprOrBuilder getConditionOrBuilder() {
-    return getCondition();
+    return condition_ == null ? com.google.type.Expr.getDefaultInstance() : condition_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -589,14 +642,12 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       role_ = "";
-
-      members_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000001);
-      if (conditionBuilder_ == null) {
-        condition_ = null;
-      } else {
-        condition_ = null;
+      members_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      condition_ = null;
+      if (conditionBuilder_ != null) {
+        conditionBuilder_.dispose();
         conditionBuilder_ = null;
       }
       return this;
@@ -624,20 +675,25 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.iam.v1.Binding buildPartial() {
       com.google.iam.v1.Binding result = new com.google.iam.v1.Binding(this);
-      int from_bitField0_ = bitField0_;
-      result.role_ = role_;
-      if (((bitField0_ & 0x00000001) != 0)) {
-        members_ = members_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000001);
-      }
-      result.members_ = members_;
-      if (conditionBuilder_ == null) {
-        result.condition_ = condition_;
-      } else {
-        result.condition_ = conditionBuilder_.build();
+      if (bitField0_ != 0) {
+        buildPartial0(result);
       }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.iam.v1.Binding result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.role_ = role_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        members_.makeImmutable();
+        result.members_ = members_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.condition_ = conditionBuilder_ == null ? condition_ : conditionBuilder_.build();
+      }
     }
 
     @java.lang.Override
@@ -687,12 +743,13 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
       if (other == com.google.iam.v1.Binding.getDefaultInstance()) return this;
       if (!other.getRole().isEmpty()) {
         role_ = other.role_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (!other.members_.isEmpty()) {
         if (members_.isEmpty()) {
           members_ = other.members_;
-          bitField0_ = (bitField0_ & ~0x00000001);
+          bitField0_ |= 0x00000002;
         } else {
           ensureMembersIsMutable();
           members_.addAll(other.members_);
@@ -731,7 +788,7 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
             case 10:
               {
                 role_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
@@ -744,7 +801,7 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
             case 26:
               {
                 input.readMessage(getConditionFieldBuilder().getBuilder(), extensionRegistry);
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 26
             default:
@@ -830,8 +887,8 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       role_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -848,8 +905,8 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearRole() {
-
       role_ = getDefaultInstance().getRole();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -871,20 +928,20 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       role_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
 
-    private com.google.protobuf.LazyStringList members_ =
-        com.google.protobuf.LazyStringArrayList.EMPTY;
+    private com.google.protobuf.LazyStringArrayList members_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
 
     private void ensureMembersIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
+      if (!members_.isModifiable()) {
         members_ = new com.google.protobuf.LazyStringArrayList(members_);
-        bitField0_ |= 0x00000001;
       }
+      bitField0_ |= 0x00000002;
     }
     /**
      *
@@ -892,21 +949,29 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Specifies the principals requesting access for a Cloud Platform resource.
      * `members` can have the following values:
+     *
      * * `allUsers`: A special identifier that represents anyone who is
      *    on the internet; with or without a Google account.
+     *
      * * `allAuthenticatedUsers`: A special identifier that represents anyone
      *    who is authenticated with a Google account or a service account.
+     *
      * * `user:{emailid}`: An email address that represents a specific Google
      *    account. For example, `alice&#64;example.com` .
+     *
+     *
      * * `serviceAccount:{emailid}`: An email address that represents a service
      *    account. For example, `my-other-app&#64;appspot.gserviceaccount.com`.
+     *
      * * `group:{emailid}`: An email address that represents a Google group.
      *    For example, `admins&#64;example.com`.
+     *
      * * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique
      *    identifier) representing a user that has been recently deleted. For
      *    example, `alice&#64;example.com?uid=123456789012345678901`. If the user is
      *    recovered, this value reverts to `user:{emailid}` and the recovered user
      *    retains the role in the binding.
+     *
      * * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus
      *    unique identifier) representing a service account that has been recently
      *    deleted. For example,
@@ -914,11 +979,14 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      *    If the service account is undeleted, this value reverts to
      *    `serviceAccount:{emailid}` and the undeleted service account retains the
      *    role in the binding.
+     *
      * * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique
      *    identifier) representing a Google group that has been recently
      *    deleted. For example, `admins&#64;example.com?uid=123456789012345678901`. If
      *    the group is recovered, this value reverts to `group:{emailid}` and the
      *    recovered group retains the role in the binding.
+     *
+     *
      * * `domain:{domain}`: The G Suite domain (primary) that represents all the
      *    users of that domain. For example, `google.com` or `example.com`.
      * </pre>
@@ -928,7 +996,8 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      * @return A list containing the members.
      */
     public com.google.protobuf.ProtocolStringList getMembersList() {
-      return members_.getUnmodifiableView();
+      members_.makeImmutable();
+      return members_;
     }
     /**
      *
@@ -936,21 +1005,29 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Specifies the principals requesting access for a Cloud Platform resource.
      * `members` can have the following values:
+     *
      * * `allUsers`: A special identifier that represents anyone who is
      *    on the internet; with or without a Google account.
+     *
      * * `allAuthenticatedUsers`: A special identifier that represents anyone
      *    who is authenticated with a Google account or a service account.
+     *
      * * `user:{emailid}`: An email address that represents a specific Google
      *    account. For example, `alice&#64;example.com` .
+     *
+     *
      * * `serviceAccount:{emailid}`: An email address that represents a service
      *    account. For example, `my-other-app&#64;appspot.gserviceaccount.com`.
+     *
      * * `group:{emailid}`: An email address that represents a Google group.
      *    For example, `admins&#64;example.com`.
+     *
      * * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique
      *    identifier) representing a user that has been recently deleted. For
      *    example, `alice&#64;example.com?uid=123456789012345678901`. If the user is
      *    recovered, this value reverts to `user:{emailid}` and the recovered user
      *    retains the role in the binding.
+     *
      * * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus
      *    unique identifier) representing a service account that has been recently
      *    deleted. For example,
@@ -958,11 +1035,14 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      *    If the service account is undeleted, this value reverts to
      *    `serviceAccount:{emailid}` and the undeleted service account retains the
      *    role in the binding.
+     *
      * * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique
      *    identifier) representing a Google group that has been recently
      *    deleted. For example, `admins&#64;example.com?uid=123456789012345678901`. If
      *    the group is recovered, this value reverts to `group:{emailid}` and the
      *    recovered group retains the role in the binding.
+     *
+     *
      * * `domain:{domain}`: The G Suite domain (primary) that represents all the
      *    users of that domain. For example, `google.com` or `example.com`.
      * </pre>
@@ -980,21 +1060,29 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Specifies the principals requesting access for a Cloud Platform resource.
      * `members` can have the following values:
+     *
      * * `allUsers`: A special identifier that represents anyone who is
      *    on the internet; with or without a Google account.
+     *
      * * `allAuthenticatedUsers`: A special identifier that represents anyone
      *    who is authenticated with a Google account or a service account.
+     *
      * * `user:{emailid}`: An email address that represents a specific Google
      *    account. For example, `alice&#64;example.com` .
+     *
+     *
      * * `serviceAccount:{emailid}`: An email address that represents a service
      *    account. For example, `my-other-app&#64;appspot.gserviceaccount.com`.
+     *
      * * `group:{emailid}`: An email address that represents a Google group.
      *    For example, `admins&#64;example.com`.
+     *
      * * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique
      *    identifier) representing a user that has been recently deleted. For
      *    example, `alice&#64;example.com?uid=123456789012345678901`. If the user is
      *    recovered, this value reverts to `user:{emailid}` and the recovered user
      *    retains the role in the binding.
+     *
      * * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus
      *    unique identifier) representing a service account that has been recently
      *    deleted. For example,
@@ -1002,11 +1090,14 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      *    If the service account is undeleted, this value reverts to
      *    `serviceAccount:{emailid}` and the undeleted service account retains the
      *    role in the binding.
+     *
      * * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique
      *    identifier) representing a Google group that has been recently
      *    deleted. For example, `admins&#64;example.com?uid=123456789012345678901`. If
      *    the group is recovered, this value reverts to `group:{emailid}` and the
      *    recovered group retains the role in the binding.
+     *
+     *
      * * `domain:{domain}`: The G Suite domain (primary) that represents all the
      *    users of that domain. For example, `google.com` or `example.com`.
      * </pre>
@@ -1025,21 +1116,29 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Specifies the principals requesting access for a Cloud Platform resource.
      * `members` can have the following values:
+     *
      * * `allUsers`: A special identifier that represents anyone who is
      *    on the internet; with or without a Google account.
+     *
      * * `allAuthenticatedUsers`: A special identifier that represents anyone
      *    who is authenticated with a Google account or a service account.
+     *
      * * `user:{emailid}`: An email address that represents a specific Google
      *    account. For example, `alice&#64;example.com` .
+     *
+     *
      * * `serviceAccount:{emailid}`: An email address that represents a service
      *    account. For example, `my-other-app&#64;appspot.gserviceaccount.com`.
+     *
      * * `group:{emailid}`: An email address that represents a Google group.
      *    For example, `admins&#64;example.com`.
+     *
      * * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique
      *    identifier) representing a user that has been recently deleted. For
      *    example, `alice&#64;example.com?uid=123456789012345678901`. If the user is
      *    recovered, this value reverts to `user:{emailid}` and the recovered user
      *    retains the role in the binding.
+     *
      * * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus
      *    unique identifier) representing a service account that has been recently
      *    deleted. For example,
@@ -1047,11 +1146,14 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      *    If the service account is undeleted, this value reverts to
      *    `serviceAccount:{emailid}` and the undeleted service account retains the
      *    role in the binding.
+     *
      * * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique
      *    identifier) representing a Google group that has been recently
      *    deleted. For example, `admins&#64;example.com?uid=123456789012345678901`. If
      *    the group is recovered, this value reverts to `group:{emailid}` and the
      *    recovered group retains the role in the binding.
+     *
+     *
      * * `domain:{domain}`: The G Suite domain (primary) that represents all the
      *    users of that domain. For example, `google.com` or `example.com`.
      * </pre>
@@ -1070,21 +1172,29 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Specifies the principals requesting access for a Cloud Platform resource.
      * `members` can have the following values:
+     *
      * * `allUsers`: A special identifier that represents anyone who is
      *    on the internet; with or without a Google account.
+     *
      * * `allAuthenticatedUsers`: A special identifier that represents anyone
      *    who is authenticated with a Google account or a service account.
+     *
      * * `user:{emailid}`: An email address that represents a specific Google
      *    account. For example, `alice&#64;example.com` .
+     *
+     *
      * * `serviceAccount:{emailid}`: An email address that represents a service
      *    account. For example, `my-other-app&#64;appspot.gserviceaccount.com`.
+     *
      * * `group:{emailid}`: An email address that represents a Google group.
      *    For example, `admins&#64;example.com`.
+     *
      * * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique
      *    identifier) representing a user that has been recently deleted. For
      *    example, `alice&#64;example.com?uid=123456789012345678901`. If the user is
      *    recovered, this value reverts to `user:{emailid}` and the recovered user
      *    retains the role in the binding.
+     *
      * * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus
      *    unique identifier) representing a service account that has been recently
      *    deleted. For example,
@@ -1092,11 +1202,14 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      *    If the service account is undeleted, this value reverts to
      *    `serviceAccount:{emailid}` and the undeleted service account retains the
      *    role in the binding.
+     *
      * * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique
      *    identifier) representing a Google group that has been recently
      *    deleted. For example, `admins&#64;example.com?uid=123456789012345678901`. If
      *    the group is recovered, this value reverts to `group:{emailid}` and the
      *    recovered group retains the role in the binding.
+     *
+     *
      * * `domain:{domain}`: The G Suite domain (primary) that represents all the
      *    users of that domain. For example, `google.com` or `example.com`.
      * </pre>
@@ -1113,6 +1226,7 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
       }
       ensureMembersIsMutable();
       members_.set(index, value);
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1122,21 +1236,29 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Specifies the principals requesting access for a Cloud Platform resource.
      * `members` can have the following values:
+     *
      * * `allUsers`: A special identifier that represents anyone who is
      *    on the internet; with or without a Google account.
+     *
      * * `allAuthenticatedUsers`: A special identifier that represents anyone
      *    who is authenticated with a Google account or a service account.
+     *
      * * `user:{emailid}`: An email address that represents a specific Google
      *    account. For example, `alice&#64;example.com` .
+     *
+     *
      * * `serviceAccount:{emailid}`: An email address that represents a service
      *    account. For example, `my-other-app&#64;appspot.gserviceaccount.com`.
+     *
      * * `group:{emailid}`: An email address that represents a Google group.
      *    For example, `admins&#64;example.com`.
+     *
      * * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique
      *    identifier) representing a user that has been recently deleted. For
      *    example, `alice&#64;example.com?uid=123456789012345678901`. If the user is
      *    recovered, this value reverts to `user:{emailid}` and the recovered user
      *    retains the role in the binding.
+     *
      * * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus
      *    unique identifier) representing a service account that has been recently
      *    deleted. For example,
@@ -1144,11 +1266,14 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      *    If the service account is undeleted, this value reverts to
      *    `serviceAccount:{emailid}` and the undeleted service account retains the
      *    role in the binding.
+     *
      * * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique
      *    identifier) representing a Google group that has been recently
      *    deleted. For example, `admins&#64;example.com?uid=123456789012345678901`. If
      *    the group is recovered, this value reverts to `group:{emailid}` and the
      *    recovered group retains the role in the binding.
+     *
+     *
      * * `domain:{domain}`: The G Suite domain (primary) that represents all the
      *    users of that domain. For example, `google.com` or `example.com`.
      * </pre>
@@ -1164,6 +1289,7 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
       }
       ensureMembersIsMutable();
       members_.add(value);
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1173,21 +1299,29 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Specifies the principals requesting access for a Cloud Platform resource.
      * `members` can have the following values:
+     *
      * * `allUsers`: A special identifier that represents anyone who is
      *    on the internet; with or without a Google account.
+     *
      * * `allAuthenticatedUsers`: A special identifier that represents anyone
      *    who is authenticated with a Google account or a service account.
+     *
      * * `user:{emailid}`: An email address that represents a specific Google
      *    account. For example, `alice&#64;example.com` .
+     *
+     *
      * * `serviceAccount:{emailid}`: An email address that represents a service
      *    account. For example, `my-other-app&#64;appspot.gserviceaccount.com`.
+     *
      * * `group:{emailid}`: An email address that represents a Google group.
      *    For example, `admins&#64;example.com`.
+     *
      * * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique
      *    identifier) representing a user that has been recently deleted. For
      *    example, `alice&#64;example.com?uid=123456789012345678901`. If the user is
      *    recovered, this value reverts to `user:{emailid}` and the recovered user
      *    retains the role in the binding.
+     *
      * * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus
      *    unique identifier) representing a service account that has been recently
      *    deleted. For example,
@@ -1195,11 +1329,14 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      *    If the service account is undeleted, this value reverts to
      *    `serviceAccount:{emailid}` and the undeleted service account retains the
      *    role in the binding.
+     *
      * * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique
      *    identifier) representing a Google group that has been recently
      *    deleted. For example, `admins&#64;example.com?uid=123456789012345678901`. If
      *    the group is recovered, this value reverts to `group:{emailid}` and the
      *    recovered group retains the role in the binding.
+     *
+     *
      * * `domain:{domain}`: The G Suite domain (primary) that represents all the
      *    users of that domain. For example, `google.com` or `example.com`.
      * </pre>
@@ -1212,6 +1349,7 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
     public Builder addAllMembers(java.lang.Iterable<java.lang.String> values) {
       ensureMembersIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(values, members_);
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1221,21 +1359,29 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Specifies the principals requesting access for a Cloud Platform resource.
      * `members` can have the following values:
+     *
      * * `allUsers`: A special identifier that represents anyone who is
      *    on the internet; with or without a Google account.
+     *
      * * `allAuthenticatedUsers`: A special identifier that represents anyone
      *    who is authenticated with a Google account or a service account.
+     *
      * * `user:{emailid}`: An email address that represents a specific Google
      *    account. For example, `alice&#64;example.com` .
+     *
+     *
      * * `serviceAccount:{emailid}`: An email address that represents a service
      *    account. For example, `my-other-app&#64;appspot.gserviceaccount.com`.
+     *
      * * `group:{emailid}`: An email address that represents a Google group.
      *    For example, `admins&#64;example.com`.
+     *
      * * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique
      *    identifier) representing a user that has been recently deleted. For
      *    example, `alice&#64;example.com?uid=123456789012345678901`. If the user is
      *    recovered, this value reverts to `user:{emailid}` and the recovered user
      *    retains the role in the binding.
+     *
      * * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus
      *    unique identifier) representing a service account that has been recently
      *    deleted. For example,
@@ -1243,11 +1389,14 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      *    If the service account is undeleted, this value reverts to
      *    `serviceAccount:{emailid}` and the undeleted service account retains the
      *    role in the binding.
+     *
      * * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique
      *    identifier) representing a Google group that has been recently
      *    deleted. For example, `admins&#64;example.com?uid=123456789012345678901`. If
      *    the group is recovered, this value reverts to `group:{emailid}` and the
      *    recovered group retains the role in the binding.
+     *
+     *
      * * `domain:{domain}`: The G Suite domain (primary) that represents all the
      *    users of that domain. For example, `google.com` or `example.com`.
      * </pre>
@@ -1257,8 +1406,9 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearMembers() {
-      members_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000001);
+      members_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      bitField0_ = (bitField0_ & ~0x00000002);
+      ;
       onChanged();
       return this;
     }
@@ -1268,21 +1418,29 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Specifies the principals requesting access for a Cloud Platform resource.
      * `members` can have the following values:
+     *
      * * `allUsers`: A special identifier that represents anyone who is
      *    on the internet; with or without a Google account.
+     *
      * * `allAuthenticatedUsers`: A special identifier that represents anyone
      *    who is authenticated with a Google account or a service account.
+     *
      * * `user:{emailid}`: An email address that represents a specific Google
      *    account. For example, `alice&#64;example.com` .
+     *
+     *
      * * `serviceAccount:{emailid}`: An email address that represents a service
      *    account. For example, `my-other-app&#64;appspot.gserviceaccount.com`.
+     *
      * * `group:{emailid}`: An email address that represents a Google group.
      *    For example, `admins&#64;example.com`.
+     *
      * * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique
      *    identifier) representing a user that has been recently deleted. For
      *    example, `alice&#64;example.com?uid=123456789012345678901`. If the user is
      *    recovered, this value reverts to `user:{emailid}` and the recovered user
      *    retains the role in the binding.
+     *
      * * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus
      *    unique identifier) representing a service account that has been recently
      *    deleted. For example,
@@ -1290,11 +1448,14 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      *    If the service account is undeleted, this value reverts to
      *    `serviceAccount:{emailid}` and the undeleted service account retains the
      *    role in the binding.
+     *
      * * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique
      *    identifier) representing a Google group that has been recently
      *    deleted. For example, `admins&#64;example.com?uid=123456789012345678901`. If
      *    the group is recovered, this value reverts to `group:{emailid}` and the
      *    recovered group retains the role in the binding.
+     *
+     *
      * * `domain:{domain}`: The G Suite domain (primary) that represents all the
      *    users of that domain. For example, `google.com` or `example.com`.
      * </pre>
@@ -1311,6 +1472,7 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
       checkByteStringIsUtf8(value);
       ensureMembersIsMutable();
       members_.add(value);
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1324,11 +1486,14 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The condition that is associated with this binding.
+     *
      * If the condition evaluates to `true`, then this binding applies to the
      * current request.
+     *
      * If the condition evaluates to `false`, then this binding does not apply to
      * the current request. However, a different role binding might grant the same
      * role to one or more of the principals in this binding.
+     *
      * To learn which resources support conditions in their IAM policies, see the
      * [IAM
      * documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
@@ -1339,18 +1504,21 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      * @return Whether the condition field is set.
      */
     public boolean hasCondition() {
-      return conditionBuilder_ != null || condition_ != null;
+      return ((bitField0_ & 0x00000004) != 0);
     }
     /**
      *
      *
      * <pre>
      * The condition that is associated with this binding.
+     *
      * If the condition evaluates to `true`, then this binding applies to the
      * current request.
+     *
      * If the condition evaluates to `false`, then this binding does not apply to
      * the current request. However, a different role binding might grant the same
      * role to one or more of the principals in this binding.
+     *
      * To learn which resources support conditions in their IAM policies, see the
      * [IAM
      * documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
@@ -1372,11 +1540,14 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The condition that is associated with this binding.
+     *
      * If the condition evaluates to `true`, then this binding applies to the
      * current request.
+     *
      * If the condition evaluates to `false`, then this binding does not apply to
      * the current request. However, a different role binding might grant the same
      * role to one or more of the principals in this binding.
+     *
      * To learn which resources support conditions in their IAM policies, see the
      * [IAM
      * documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
@@ -1390,11 +1561,11 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
           throw new NullPointerException();
         }
         condition_ = value;
-        onChanged();
       } else {
         conditionBuilder_.setMessage(value);
       }
-
+      bitField0_ |= 0x00000004;
+      onChanged();
       return this;
     }
     /**
@@ -1402,11 +1573,14 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The condition that is associated with this binding.
+     *
      * If the condition evaluates to `true`, then this binding applies to the
      * current request.
+     *
      * If the condition evaluates to `false`, then this binding does not apply to
      * the current request. However, a different role binding might grant the same
      * role to one or more of the principals in this binding.
+     *
      * To learn which resources support conditions in their IAM policies, see the
      * [IAM
      * documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
@@ -1417,11 +1591,11 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
     public Builder setCondition(com.google.type.Expr.Builder builderForValue) {
       if (conditionBuilder_ == null) {
         condition_ = builderForValue.build();
-        onChanged();
       } else {
         conditionBuilder_.setMessage(builderForValue.build());
       }
-
+      bitField0_ |= 0x00000004;
+      onChanged();
       return this;
     }
     /**
@@ -1429,11 +1603,14 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The condition that is associated with this binding.
+     *
      * If the condition evaluates to `true`, then this binding applies to the
      * current request.
+     *
      * If the condition evaluates to `false`, then this binding does not apply to
      * the current request. However, a different role binding might grant the same
      * role to one or more of the principals in this binding.
+     *
      * To learn which resources support conditions in their IAM policies, see the
      * [IAM
      * documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
@@ -1443,16 +1620,18 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder mergeCondition(com.google.type.Expr value) {
       if (conditionBuilder_ == null) {
-        if (condition_ != null) {
-          condition_ = com.google.type.Expr.newBuilder(condition_).mergeFrom(value).buildPartial();
+        if (((bitField0_ & 0x00000004) != 0)
+            && condition_ != null
+            && condition_ != com.google.type.Expr.getDefaultInstance()) {
+          getConditionBuilder().mergeFrom(value);
         } else {
           condition_ = value;
         }
-        onChanged();
       } else {
         conditionBuilder_.mergeFrom(value);
       }
-
+      bitField0_ |= 0x00000004;
+      onChanged();
       return this;
     }
     /**
@@ -1460,11 +1639,14 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The condition that is associated with this binding.
+     *
      * If the condition evaluates to `true`, then this binding applies to the
      * current request.
+     *
      * If the condition evaluates to `false`, then this binding does not apply to
      * the current request. However, a different role binding might grant the same
      * role to one or more of the principals in this binding.
+     *
      * To learn which resources support conditions in their IAM policies, see the
      * [IAM
      * documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
@@ -1473,14 +1655,13 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.Expr condition = 3;</code>
      */
     public Builder clearCondition() {
-      if (conditionBuilder_ == null) {
-        condition_ = null;
-        onChanged();
-      } else {
-        condition_ = null;
+      bitField0_ = (bitField0_ & ~0x00000004);
+      condition_ = null;
+      if (conditionBuilder_ != null) {
+        conditionBuilder_.dispose();
         conditionBuilder_ = null;
       }
-
+      onChanged();
       return this;
     }
     /**
@@ -1488,11 +1669,14 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The condition that is associated with this binding.
+     *
      * If the condition evaluates to `true`, then this binding applies to the
      * current request.
+     *
      * If the condition evaluates to `false`, then this binding does not apply to
      * the current request. However, a different role binding might grant the same
      * role to one or more of the principals in this binding.
+     *
      * To learn which resources support conditions in their IAM policies, see the
      * [IAM
      * documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
@@ -1501,7 +1685,7 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.type.Expr condition = 3;</code>
      */
     public com.google.type.Expr.Builder getConditionBuilder() {
-
+      bitField0_ |= 0x00000004;
       onChanged();
       return getConditionFieldBuilder().getBuilder();
     }
@@ -1510,11 +1694,14 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The condition that is associated with this binding.
+     *
      * If the condition evaluates to `true`, then this binding applies to the
      * current request.
+     *
      * If the condition evaluates to `false`, then this binding does not apply to
      * the current request. However, a different role binding might grant the same
      * role to one or more of the principals in this binding.
+     *
      * To learn which resources support conditions in their IAM policies, see the
      * [IAM
      * documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
@@ -1534,11 +1721,14 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The condition that is associated with this binding.
+     *
      * If the condition evaluates to `true`, then this binding applies to the
      * current request.
+     *
      * If the condition evaluates to `false`, then this binding does not apply to
      * the current request. However, a different role binding might grant the same
      * role to one or more of the principals in this binding.
+     *
      * To learn which resources support conditions in their IAM policies, see the
      * [IAM
      * documentation](https://cloud.google.com/iam/help/conditions/resource-policies).

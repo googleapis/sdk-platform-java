@@ -38,7 +38,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
   }
 
   private Usage() {
-    requirements_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    requirements_ = com.google.protobuf.LazyStringArrayList.emptyList();
     rules_ = java.util.Collections.emptyList();
     producerNotificationChannel_ = "";
   }
@@ -47,11 +47,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new Usage();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -67,7 +62,10 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int REQUIREMENTS_FIELD_NUMBER = 1;
-  private com.google.protobuf.LazyStringList requirements_;
+
+  @SuppressWarnings("serial")
+  private com.google.protobuf.LazyStringArrayList requirements_ =
+      com.google.protobuf.LazyStringArrayList.emptyList();
   /**
    *
    *
@@ -75,6 +73,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
    * Requirements that must be satisfied before a consumer project can use the
    * service. Each requirement is of the form &lt;service.name&gt;/&lt;requirement-id&gt;;
    * for example 'serviceusage.googleapis.com/billing-enabled'.
+   *
    * For Google APIs, a Terms of Service requirement must be included here.
    * Google Cloud APIs must include "serviceusage.googleapis.com/tos/cloud".
    * Other Google APIs should include
@@ -96,6 +95,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
    * Requirements that must be satisfied before a consumer project can use the
    * service. Each requirement is of the form &lt;service.name&gt;/&lt;requirement-id&gt;;
    * for example 'serviceusage.googleapis.com/billing-enabled'.
+   *
    * For Google APIs, a Terms of Service requirement must be included here.
    * Google Cloud APIs must include "serviceusage.googleapis.com/tos/cloud".
    * Other Google APIs should include
@@ -117,6 +117,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
    * Requirements that must be satisfied before a consumer project can use the
    * service. Each requirement is of the form &lt;service.name&gt;/&lt;requirement-id&gt;;
    * for example 'serviceusage.googleapis.com/billing-enabled'.
+   *
    * For Google APIs, a Terms of Service requirement must be included here.
    * Google Cloud APIs must include "serviceusage.googleapis.com/tos/cloud".
    * Other Google APIs should include
@@ -139,6 +140,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
    * Requirements that must be satisfied before a consumer project can use the
    * service. Each requirement is of the form &lt;service.name&gt;/&lt;requirement-id&gt;;
    * for example 'serviceusage.googleapis.com/billing-enabled'.
+   *
    * For Google APIs, a Terms of Service requirement must be included here.
    * Google Cloud APIs must include "serviceusage.googleapis.com/tos/cloud".
    * Other Google APIs should include
@@ -156,12 +158,15 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int RULES_FIELD_NUMBER = 6;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.api.UsageRule> rules_;
   /**
    *
    *
    * <pre>
    * A list of usage rules that apply to individual API methods.
+   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -176,6 +181,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A list of usage rules that apply to individual API methods.
+   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -190,6 +196,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A list of usage rules that apply to individual API methods.
+   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -204,6 +211,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A list of usage rules that apply to individual API methods.
+   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -218,6 +226,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A list of usage rules that apply to individual API methods.
+   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -229,13 +238,16 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int PRODUCER_NOTIFICATION_CHANNEL_FIELD_NUMBER = 7;
-  private volatile java.lang.Object producerNotificationChannel_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object producerNotificationChannel_ = "";
   /**
    *
    *
    * <pre>
    * The full resource name of a channel used for sending notifications to the
    * service producer.
+   *
    * Google Service Management currently only supports
    * [Google Cloud Pub/Sub](https://cloud.google.com/pubsub) as a notification
    * channel. To use Google Cloud Pub/Sub as the channel, this must be the name
@@ -265,6 +277,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * The full resource name of a channel used for sending notifications to the
    * service producer.
+   *
    * Google Service Management currently only supports
    * [Google Cloud Pub/Sub](https://cloud.google.com/pubsub) as a notification
    * channel. To use Google Cloud Pub/Sub as the channel, this must be the name
@@ -510,8 +523,8 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
-      requirements_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000001);
+      bitField0_ = 0;
+      requirements_ = com.google.protobuf.LazyStringArrayList.emptyList();
       if (rulesBuilder_ == null) {
         rules_ = java.util.Collections.emptyList();
       } else {
@@ -520,7 +533,6 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       }
       bitField0_ = (bitField0_ & ~0x00000002);
       producerNotificationChannel_ = "";
-
       return this;
     }
 
@@ -546,12 +558,15 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.Usage buildPartial() {
       com.google.api.Usage result = new com.google.api.Usage(this);
-      int from_bitField0_ = bitField0_;
-      if (((bitField0_ & 0x00000001) != 0)) {
-        requirements_ = requirements_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000001);
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
       }
-      result.requirements_ = requirements_;
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.api.Usage result) {
       if (rulesBuilder_ == null) {
         if (((bitField0_ & 0x00000002) != 0)) {
           rules_ = java.util.Collections.unmodifiableList(rules_);
@@ -561,9 +576,17 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       } else {
         result.rules_ = rulesBuilder_.build();
       }
-      result.producerNotificationChannel_ = producerNotificationChannel_;
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.api.Usage result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        requirements_.makeImmutable();
+        result.requirements_ = requirements_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.producerNotificationChannel_ = producerNotificationChannel_;
+      }
     }
 
     @java.lang.Override
@@ -614,7 +637,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       if (!other.requirements_.isEmpty()) {
         if (requirements_.isEmpty()) {
           requirements_ = other.requirements_;
-          bitField0_ = (bitField0_ & ~0x00000001);
+          bitField0_ |= 0x00000001;
         } else {
           ensureRequirementsIsMutable();
           requirements_.addAll(other.requirements_);
@@ -650,6 +673,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       }
       if (!other.getProducerNotificationChannel().isEmpty()) {
         producerNotificationChannel_ = other.producerNotificationChannel_;
+        bitField0_ |= 0x00000004;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -700,7 +724,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
             case 58:
               {
                 producerNotificationChannel_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 58
             default:
@@ -722,14 +746,14 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
 
     private int bitField0_;
 
-    private com.google.protobuf.LazyStringList requirements_ =
-        com.google.protobuf.LazyStringArrayList.EMPTY;
+    private com.google.protobuf.LazyStringArrayList requirements_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
 
     private void ensureRequirementsIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
+      if (!requirements_.isModifiable()) {
         requirements_ = new com.google.protobuf.LazyStringArrayList(requirements_);
-        bitField0_ |= 0x00000001;
       }
+      bitField0_ |= 0x00000001;
     }
     /**
      *
@@ -738,6 +762,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      * Requirements that must be satisfied before a consumer project can use the
      * service. Each requirement is of the form &lt;service.name&gt;/&lt;requirement-id&gt;;
      * for example 'serviceusage.googleapis.com/billing-enabled'.
+     *
      * For Google APIs, a Terms of Service requirement must be included here.
      * Google Cloud APIs must include "serviceusage.googleapis.com/tos/cloud".
      * Other Google APIs should include
@@ -750,7 +775,8 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      * @return A list containing the requirements.
      */
     public com.google.protobuf.ProtocolStringList getRequirementsList() {
-      return requirements_.getUnmodifiableView();
+      requirements_.makeImmutable();
+      return requirements_;
     }
     /**
      *
@@ -759,6 +785,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      * Requirements that must be satisfied before a consumer project can use the
      * service. Each requirement is of the form &lt;service.name&gt;/&lt;requirement-id&gt;;
      * for example 'serviceusage.googleapis.com/billing-enabled'.
+     *
      * For Google APIs, a Terms of Service requirement must be included here.
      * Google Cloud APIs must include "serviceusage.googleapis.com/tos/cloud".
      * Other Google APIs should include
@@ -780,6 +807,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      * Requirements that must be satisfied before a consumer project can use the
      * service. Each requirement is of the form &lt;service.name&gt;/&lt;requirement-id&gt;;
      * for example 'serviceusage.googleapis.com/billing-enabled'.
+     *
      * For Google APIs, a Terms of Service requirement must be included here.
      * Google Cloud APIs must include "serviceusage.googleapis.com/tos/cloud".
      * Other Google APIs should include
@@ -802,6 +830,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      * Requirements that must be satisfied before a consumer project can use the
      * service. Each requirement is of the form &lt;service.name&gt;/&lt;requirement-id&gt;;
      * for example 'serviceusage.googleapis.com/billing-enabled'.
+     *
      * For Google APIs, a Terms of Service requirement must be included here.
      * Google Cloud APIs must include "serviceusage.googleapis.com/tos/cloud".
      * Other Google APIs should include
@@ -824,6 +853,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      * Requirements that must be satisfied before a consumer project can use the
      * service. Each requirement is of the form &lt;service.name&gt;/&lt;requirement-id&gt;;
      * for example 'serviceusage.googleapis.com/billing-enabled'.
+     *
      * For Google APIs, a Terms of Service requirement must be included here.
      * Google Cloud APIs must include "serviceusage.googleapis.com/tos/cloud".
      * Other Google APIs should include
@@ -843,6 +873,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       }
       ensureRequirementsIsMutable();
       requirements_.set(index, value);
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -853,6 +884,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      * Requirements that must be satisfied before a consumer project can use the
      * service. Each requirement is of the form &lt;service.name&gt;/&lt;requirement-id&gt;;
      * for example 'serviceusage.googleapis.com/billing-enabled'.
+     *
      * For Google APIs, a Terms of Service requirement must be included here.
      * Google Cloud APIs must include "serviceusage.googleapis.com/tos/cloud".
      * Other Google APIs should include
@@ -871,6 +903,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       }
       ensureRequirementsIsMutable();
       requirements_.add(value);
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -881,6 +914,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      * Requirements that must be satisfied before a consumer project can use the
      * service. Each requirement is of the form &lt;service.name&gt;/&lt;requirement-id&gt;;
      * for example 'serviceusage.googleapis.com/billing-enabled'.
+     *
      * For Google APIs, a Terms of Service requirement must be included here.
      * Google Cloud APIs must include "serviceusage.googleapis.com/tos/cloud".
      * Other Google APIs should include
@@ -896,6 +930,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
     public Builder addAllRequirements(java.lang.Iterable<java.lang.String> values) {
       ensureRequirementsIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(values, requirements_);
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -906,6 +941,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      * Requirements that must be satisfied before a consumer project can use the
      * service. Each requirement is of the form &lt;service.name&gt;/&lt;requirement-id&gt;;
      * for example 'serviceusage.googleapis.com/billing-enabled'.
+     *
      * For Google APIs, a Terms of Service requirement must be included here.
      * Google Cloud APIs must include "serviceusage.googleapis.com/tos/cloud".
      * Other Google APIs should include
@@ -918,8 +954,9 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearRequirements() {
-      requirements_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      requirements_ = com.google.protobuf.LazyStringArrayList.emptyList();
       bitField0_ = (bitField0_ & ~0x00000001);
+      ;
       onChanged();
       return this;
     }
@@ -930,6 +967,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      * Requirements that must be satisfied before a consumer project can use the
      * service. Each requirement is of the form &lt;service.name&gt;/&lt;requirement-id&gt;;
      * for example 'serviceusage.googleapis.com/billing-enabled'.
+     *
      * For Google APIs, a Terms of Service requirement must be included here.
      * Google Cloud APIs must include "serviceusage.googleapis.com/tos/cloud".
      * Other Google APIs should include
@@ -949,6 +987,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       checkByteStringIsUtf8(value);
       ensureRequirementsIsMutable();
       requirements_.add(value);
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -973,6 +1012,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of usage rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -990,6 +1030,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of usage rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1007,6 +1048,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of usage rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1024,6 +1066,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of usage rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1047,6 +1090,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of usage rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1067,6 +1111,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of usage rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1090,6 +1135,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of usage rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1113,6 +1159,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of usage rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1133,6 +1180,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of usage rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1153,6 +1201,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of usage rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1173,6 +1222,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of usage rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1193,6 +1243,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of usage rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1213,6 +1264,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of usage rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1226,6 +1278,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of usage rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1243,6 +1296,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of usage rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1260,6 +1314,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of usage rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1273,6 +1328,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of usage rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1287,6 +1343,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of usage rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -1320,6 +1377,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The full resource name of a channel used for sending notifications to the
      * service producer.
+     *
      * Google Service Management currently only supports
      * [Google Cloud Pub/Sub](https://cloud.google.com/pubsub) as a notification
      * channel. To use Google Cloud Pub/Sub as the channel, this must be the name
@@ -1348,6 +1406,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The full resource name of a channel used for sending notifications to the
      * service producer.
+     *
      * Google Service Management currently only supports
      * [Google Cloud Pub/Sub](https://cloud.google.com/pubsub) as a notification
      * channel. To use Google Cloud Pub/Sub as the channel, this must be the name
@@ -1376,6 +1435,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The full resource name of a channel used for sending notifications to the
      * service producer.
+     *
      * Google Service Management currently only supports
      * [Google Cloud Pub/Sub](https://cloud.google.com/pubsub) as a notification
      * channel. To use Google Cloud Pub/Sub as the channel, this must be the name
@@ -1392,8 +1452,8 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       producerNotificationChannel_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1403,6 +1463,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The full resource name of a channel used for sending notifications to the
      * service producer.
+     *
      * Google Service Management currently only supports
      * [Google Cloud Pub/Sub](https://cloud.google.com/pubsub) as a notification
      * channel. To use Google Cloud Pub/Sub as the channel, this must be the name
@@ -1415,8 +1476,8 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearProducerNotificationChannel() {
-
       producerNotificationChannel_ = getDefaultInstance().getProducerNotificationChannel();
+      bitField0_ = (bitField0_ & ~0x00000004);
       onChanged();
       return this;
     }
@@ -1426,6 +1487,7 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The full resource name of a channel used for sending notifications to the
      * service producer.
+     *
      * Google Service Management currently only supports
      * [Google Cloud Pub/Sub](https://cloud.google.com/pubsub) as a notification
      * channel. To use Google Cloud Pub/Sub as the channel, this must be the name
@@ -1443,8 +1505,8 @@ public final class Usage extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       producerNotificationChannel_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }

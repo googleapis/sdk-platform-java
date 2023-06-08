@@ -55,13 +55,15 @@ import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
-import com.google.api.generator.testutils.LineFormatter;
+import com.google.api.generator.test.utils.LineFormatter;
 import com.google.common.base.Function;
 import com.google.common.base.Strings;
+import com.google.testgapic.v1beta1.Outer;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.lang.annotation.Repeatable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -388,6 +390,64 @@ public class ImportWriterVisitorTest {
             "import com.google.api.generator.engine.ast.Expr;\n",
             "import javax.annotation.Generated;\n\n"),
         writerVisitor.write());
+  }
+
+  @Test
+  public void writeVariableExprImports_annotationsWithDescription() {
+    Variable variable =
+        Variable.builder()
+            .setName("expr")
+            .setType(TypeNode.withReference(ConcreteReference.withClazz(Expr.class)))
+            .build();
+
+    VariableExpr annotationDescription =
+        VariableExpr.builder()
+            .setVariable(Variable.builder().setType(TypeNode.CLASS_OBJECT).setName("class").build())
+            .setStaticReferenceType(TypeNode.withReference(ConcreteReference.withClazz(List.class)))
+            .build();
+
+    // Constructs with annotation @Repeatable(List.class)
+    VariableExpr variableExpr =
+        VariableExpr.builder()
+            .setVariable(variable)
+            .setIsDecl(true)
+            .setAnnotations(
+                Arrays.asList(
+                    AnnotationNode.builder()
+                        .setType(
+                            TypeNode.withReference(ConcreteReference.withClazz(Repeatable.class)))
+                        .setDescription(annotationDescription)
+                        .build()))
+            .build();
+
+    variableExpr.accept(writerVisitor);
+    assertEquals(
+        LineFormatter.lines(
+            "import com.google.api.generator.engine.ast.Expr;\n",
+            "import java.lang.annotation.Repeatable;\n",
+            "import java.util.List;\n\n"),
+        writerVisitor.write());
+  }
+
+  @Test
+  public void writeVaporReferenceImport_outermostForNestedClass() {
+    VaporReference nestedVaporReference =
+        VaporReference.builder()
+            .setName("Inner")
+            .setEnclosingClassNames(Arrays.asList("Outer", "Middle"))
+            .setPakkage("com.google.testgapic.v1beta1")
+            .build();
+
+    TypeNode.withReference(nestedVaporReference).accept(writerVisitor);
+    assertEquals("import com.google.testgapic.v1beta1.Outer;\n\n", writerVisitor.write());
+  }
+
+  @Test
+  public void writeConcreteReferenceImport_outermostForNestedClass() {
+    ConcreteReference nestedConcreteReference =
+        ConcreteReference.withClazz(Outer.Middle.Inner.class);
+    TypeNode.withReference(nestedConcreteReference).accept(writerVisitor);
+    assertEquals("import com.google.testgapic.v1beta1.Outer;\n\n", writerVisitor.write());
   }
 
   @Test

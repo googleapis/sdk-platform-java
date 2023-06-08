@@ -1,6 +1,148 @@
 {
+  "enabled": false,
   "extends": [
     "config:base"
   ],
-  "ignorePaths": [".kokoro/requirements.txt"]
+  "ignoreDeps": ["rules_pkg"],
+  "regexManagers": [
+    {
+      "fileMatch": ["^gax-java/dependencies\\.properties$"],
+      "matchStrings": ["=(?<depName>.+\\:.+?):(?<currentValue>.+?)\\n"],
+      "datasourceTemplate": "maven"
+    },
+    {
+      "fileMatch": ["^gax-java/dependencies\\.properties$"],
+      "matchStrings": ["version\\.com_google_protobuf=(?<currentValue>.+?)\\n"],
+      "depNameTemplate": "com.google.protobuf:protobuf-java",
+      "datasourceTemplate": "maven"
+    },
+    {
+      "fileMatch": ["^gax-java/dependencies\\.properties$"],
+      "matchStrings": ["version\\.google_java_format=(?<currentValue>.+?)\\n"],
+      "depNameTemplate": "com.google.googlejavaformat:google-java-format",
+      "datasourceTemplate": "maven"
+    },
+    {
+      "fileMatch": ["^gax-java/dependencies\\.properties$"],
+      "matchStrings": ["version\\.io_grpc=(?<currentValue>.+?)\\n"],
+      "depNameTemplate": "io.grpc:grpc-core",
+      "datasourceTemplate": "maven"
+    },
+    {
+      "fileMatch": ["^\\.kokoro/presubmit/.*\\.sh"],
+      "matchStrings": ["SHOWCASE_VERSION=(?<currentValue>.+?)\\n"],
+      "datasourceTemplate": "go"
+    },
+    {
+      "fileMatch": ["^showcase/gapic-showcase/pom\\.xml$"],
+      "matchStrings": ["<gapic-showcase.version>(?<currentValue>.+?)</gapic-showcase.version>\\n"],
+      "datasourceTemplate": "go"
+    }
+  ],
+  "packageRules": [
+     {
+      "matchUpdateTypes": ["major"],
+      "matchPackagePatterns": ["*"],
+      "enabled": false
+    },
+    {
+      "packagePatterns": [
+        "^com.google.guava:"
+      ],
+      "versionScheme": "docker"
+    },
+    {
+      "packagePatterns": [
+        "*"
+      ],
+      "semanticCommitType": "deps",
+      "semanticCommitScope": null
+    },
+    {
+      "packagePatterns": [
+        "^org.apache.maven",
+        "^org.jacoco:",
+        "^org.codehaus.mojo:",
+        "^org.sonatype.plugins:",
+        "^com.coveo:",
+        "^com.google.cloud:google-cloud-shared-config"
+      ],
+      "semanticCommitType": "build",
+      "semanticCommitScope": "deps"
+    },
+    {
+      "packagePatterns": [
+        "^{{metadata['repo']['distribution_name']}}",
+        "^com.google.cloud:libraries-bom",
+        "^com.google.cloud.samples:shared-configuration"
+      ],
+      "semanticCommitType": "chore",
+      "semanticCommitScope": "deps"
+    },
+    {
+      "packagePatterns": [
+        "^junit:junit",
+        "^com.google.truth:truth",
+        "^org.mockito:mockito-core",
+        "^org.objenesis:objenesis",
+        "^com.google.cloud:google-cloud-conformance-tests"
+      ],
+      "semanticCommitType": "test",
+      "semanticCommitScope": "deps"
+    },
+    {
+      "packagePatterns": [
+        "^com.google.cloud:google-cloud-"
+      ],
+      "ignoreUnstable": false
+    },
+    {
+      "packagePatterns": [
+        "^com.fasterxml.jackson.core"
+      ],
+      "groupName": "jackson dependencies"
+    },
+    {
+      "packagePatterns": [
+        "^com.google.protobuf"
+      ],
+      "groupName": "Protobuf dependencies"
+    },
+    {
+      "packagePatterns": [
+        "^io.grpc"
+      ],
+      "groupName": "gRPC dependencies"
+    },
+    {
+      "packagePatterns": [
+        "^com.google.auth"
+      ],
+      "groupName": "Google Auth Library dependencies"
+    },
+    {
+      "packagePatterns": [
+        "^com.google.api"
+      ],
+      "groupName": "Google API dependencies"
+    },
+    {
+      "packagePatterns": [
+        "^com.google.http-client"
+      ],
+      "groupName": "Google HTTP Client dependencies"
+    },
+    {
+      "packagePatterns": [
+        "^io.opencensus"
+      ],
+      "groupName": "OpenCensus dependencies"
+    },
+    {
+      "packagePatterns": [
+        "^io.netty"
+      ],
+      "groupName": "Netty dependencies"
+    }
+  ]
 }

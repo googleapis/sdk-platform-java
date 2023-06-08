@@ -16,7 +16,7 @@ package com.google.api.generator.gapic.composer.utils;
 
 import static org.junit.Assert.assertEquals;
 
-import com.google.api.generator.testutils.LineFormatter;
+import com.google.api.generator.test.utils.LineFormatter;
 import org.junit.Test;
 
 public class CommentFormatterTest {

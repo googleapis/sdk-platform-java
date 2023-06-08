@@ -113,6 +113,33 @@ public abstract class Service {
     return false;
   }
 
+  /**
+   * Wrapper for hasAnyEnabledMethodsForTransport(Transport). Some invocations are called with
+   * `gRPC` which can't match with the correct Transport (GRPC)
+   *
+   * @param transportName String transport value
+   * @return boolean if service contains any enabled methods for a transport
+   */
+  public boolean hasAnyEnabledMethodsForTransport(String transportName) {
+    return hasAnyEnabledMethodsForTransport(Transport.parse(transportName));
+  }
+
+  /**
+   * Determines if a Service contains any methods that are both eligible and enabled for the
+   * Transport. GRPC+REST Transport is not supported as each transport's sub composers will invoke
+   * this method the specific transport (GRPC or REST)
+   *
+   * @param transport Expects either GRPC or REST Transport
+   * @return boolean if service contains any enabled methods for a transport
+   */
+  public boolean hasAnyEnabledMethodsForTransport(Transport transport) {
+    if (transport == Transport.GRPC_REST) {
+      throw new IllegalArgumentException(
+          String.format("Invalid Transport: %s. Expecting GRPC or REST", transport.name()));
+    }
+    return methods().stream().anyMatch(x -> x.isSupportedByTransport(transport));
+  }
+
   public abstract Builder toBuilder();
 
   public static Builder builder() {

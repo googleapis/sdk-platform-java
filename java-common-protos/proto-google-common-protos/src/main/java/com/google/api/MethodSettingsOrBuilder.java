@@ -57,10 +57,12 @@ public interface MethodSettingsOrBuilder
    * Describes settings to use for long-running operations when generating
    * API methods for RPCs. Complements RPCs that use the annotations in
    * google/longrunning/operations.proto.
+   *
    * Example of a YAML configuration::
+   *
    *  publishing:
-   *    method_behavior:
-   *      - selector: CreateAdDomain
+   *    method_settings:
+   *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
    *        long_running:
    *          initial_poll_delay:
    *            seconds: 60 # 1 minute
@@ -83,10 +85,12 @@ public interface MethodSettingsOrBuilder
    * Describes settings to use for long-running operations when generating
    * API methods for RPCs. Complements RPCs that use the annotations in
    * google/longrunning/operations.proto.
+   *
    * Example of a YAML configuration::
+   *
    *  publishing:
-   *    method_behavior:
-   *      - selector: CreateAdDomain
+   *    method_settings:
+   *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
    *        long_running:
    *          initial_poll_delay:
    *            seconds: 60 # 1 minute
@@ -109,10 +113,12 @@ public interface MethodSettingsOrBuilder
    * Describes settings to use for long-running operations when generating
    * API methods for RPCs. Complements RPCs that use the annotations in
    * google/longrunning/operations.proto.
+   *
    * Example of a YAML configuration::
+   *
    *  publishing:
-   *    method_behavior:
-   *      - selector: CreateAdDomain
+   *    method_settings:
+   *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
    *        long_running:
    *          initial_poll_delay:
    *            seconds: 60 # 1 minute

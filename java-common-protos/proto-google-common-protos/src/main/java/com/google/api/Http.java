@@ -49,11 +49,6 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
     return new Http();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.HttpProto.internal_static_google_api_Http_descriptor;
   }
@@ -67,12 +62,15 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int RULES_FIELD_NUMBER = 1;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.api.HttpRule> rules_;
   /**
    *
    *
    * <pre>
    * A list of HTTP configuration rules that apply to individual API methods.
+   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -87,6 +85,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A list of HTTP configuration rules that apply to individual API methods.
+   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -101,6 +100,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A list of HTTP configuration rules that apply to individual API methods.
+   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -115,6 +115,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A list of HTTP configuration rules that apply to individual API methods.
+   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -129,6 +130,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A list of HTTP configuration rules that apply to individual API methods.
+   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -140,7 +142,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int FULLY_DECODE_RESERVED_EXPANSION_FIELD_NUMBER = 2;
-  private boolean fullyDecodeReservedExpansion_;
+  private boolean fullyDecodeReservedExpansion_ = false;
   /**
    *
    *
@@ -148,6 +150,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
    * When set to true, URL path parameters will be fully URI-decoded except in
    * cases of single segment matches in reserved expansion, where "%2F" will be
    * left encoded.
+   *
    * The default behavior is to not decode RFC 6570 reserved characters in multi
    * segment matches.
    * </pre>
@@ -368,6 +371,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       if (rulesBuilder_ == null) {
         rules_ = java.util.Collections.emptyList();
       } else {
@@ -376,7 +380,6 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
       }
       bitField0_ = (bitField0_ & ~0x00000001);
       fullyDecodeReservedExpansion_ = false;
-
       return this;
     }
 
@@ -402,7 +405,15 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.Http buildPartial() {
       com.google.api.Http result = new com.google.api.Http(this);
-      int from_bitField0_ = bitField0_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.api.Http result) {
       if (rulesBuilder_ == null) {
         if (((bitField0_ & 0x00000001) != 0)) {
           rules_ = java.util.Collections.unmodifiableList(rules_);
@@ -412,9 +423,13 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
       } else {
         result.rules_ = rulesBuilder_.build();
       }
-      result.fullyDecodeReservedExpansion_ = fullyDecodeReservedExpansion_;
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.api.Http result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.fullyDecodeReservedExpansion_ = fullyDecodeReservedExpansion_;
+      }
     }
 
     @java.lang.Override
@@ -533,7 +548,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
             case 16:
               {
                 fullyDecodeReservedExpansion_ = input.readBool();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 16
             default:
@@ -575,6 +590,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of HTTP configuration rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -592,6 +608,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of HTTP configuration rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -609,6 +626,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of HTTP configuration rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -626,6 +644,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of HTTP configuration rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -649,6 +668,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of HTTP configuration rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -669,6 +689,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of HTTP configuration rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -692,6 +713,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of HTTP configuration rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -715,6 +737,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of HTTP configuration rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -735,6 +758,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of HTTP configuration rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -755,6 +779,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of HTTP configuration rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -775,6 +800,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of HTTP configuration rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -795,6 +821,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of HTTP configuration rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -815,6 +842,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of HTTP configuration rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -828,6 +856,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of HTTP configuration rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -845,6 +874,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of HTTP configuration rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -862,6 +892,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of HTTP configuration rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -875,6 +906,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of HTTP configuration rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -888,6 +920,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of HTTP configuration rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -922,6 +955,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
      * When set to true, URL path parameters will be fully URI-decoded except in
      * cases of single segment matches in reserved expansion, where "%2F" will be
      * left encoded.
+     *
      * The default behavior is to not decode RFC 6570 reserved characters in multi
      * segment matches.
      * </pre>
@@ -941,6 +975,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
      * When set to true, URL path parameters will be fully URI-decoded except in
      * cases of single segment matches in reserved expansion, where "%2F" will be
      * left encoded.
+     *
      * The default behavior is to not decode RFC 6570 reserved characters in multi
      * segment matches.
      * </pre>
@@ -953,6 +988,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
     public Builder setFullyDecodeReservedExpansion(boolean value) {
 
       fullyDecodeReservedExpansion_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -963,6 +999,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
      * When set to true, URL path parameters will be fully URI-decoded except in
      * cases of single segment matches in reserved expansion, where "%2F" will be
      * left encoded.
+     *
      * The default behavior is to not decode RFC 6570 reserved characters in multi
      * segment matches.
      * </pre>
@@ -972,7 +1009,7 @@ public final class Http extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearFullyDecodeReservedExpansion() {
-
+      bitField0_ = (bitField0_ & ~0x00000002);
       fullyDecodeReservedExpansion_ = false;
       onChanged();
       return this;

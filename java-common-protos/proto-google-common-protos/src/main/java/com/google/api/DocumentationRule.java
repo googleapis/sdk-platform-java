@@ -49,11 +49,6 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
     return new DocumentationRule();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.DocumentationProto
         .internal_static_google_api_DocumentationRule_descriptor;
@@ -69,7 +64,9 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
   }
 
   public static final int SELECTOR_FIELD_NUMBER = 1;
-  private volatile java.lang.Object selector_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object selector_ = "";
   /**
    *
    *
@@ -130,7 +127,9 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
   }
 
   public static final int DESCRIPTION_FIELD_NUMBER = 2;
-  private volatile java.lang.Object description_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object description_ = "";
   /**
    *
    *
@@ -183,7 +182,9 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
   }
 
   public static final int DEPRECATION_DESCRIPTION_FIELD_NUMBER = 3;
-  private volatile java.lang.Object deprecationDescription_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object deprecationDescription_ = "";
   /**
    *
    *
@@ -446,12 +447,10 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       selector_ = "";
-
       description_ = "";
-
       deprecationDescription_ = "";
-
       return this;
     }
 
@@ -478,11 +477,24 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
     @java.lang.Override
     public com.google.api.DocumentationRule buildPartial() {
       com.google.api.DocumentationRule result = new com.google.api.DocumentationRule(this);
-      result.selector_ = selector_;
-      result.description_ = description_;
-      result.deprecationDescription_ = deprecationDescription_;
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.api.DocumentationRule result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.selector_ = selector_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.description_ = description_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.deprecationDescription_ = deprecationDescription_;
+      }
     }
 
     @java.lang.Override
@@ -532,14 +544,17 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
       if (other == com.google.api.DocumentationRule.getDefaultInstance()) return this;
       if (!other.getSelector().isEmpty()) {
         selector_ = other.selector_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (!other.getDescription().isEmpty()) {
         description_ = other.description_;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
       if (!other.getDeprecationDescription().isEmpty()) {
         deprecationDescription_ = other.deprecationDescription_;
+        bitField0_ |= 0x00000004;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -571,19 +586,19 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
             case 10:
               {
                 selector_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
               {
                 description_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             case 26:
               {
                 deprecationDescription_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 26
             default:
@@ -602,6 +617,8 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
       } // finally
       return this;
     }
+
+    private int bitField0_;
 
     private java.lang.Object selector_ = "";
     /**
@@ -682,8 +699,8 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
       if (value == null) {
         throw new NullPointerException();
       }
-
       selector_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -705,8 +722,8 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
      * @return This builder for chaining.
      */
     public Builder clearSelector() {
-
       selector_ = getDefaultInstance().getSelector();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -733,8 +750,8 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       selector_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -806,8 +823,8 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
       if (value == null) {
         throw new NullPointerException();
       }
-
       description_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -825,8 +842,8 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
      * @return This builder for chaining.
      */
     public Builder clearDescription() {
-
       description_ = getDefaultInstance().getDescription();
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -849,8 +866,8 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       description_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -919,8 +936,8 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
       if (value == null) {
         throw new NullPointerException();
       }
-
       deprecationDescription_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -937,8 +954,8 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
      * @return This builder for chaining.
      */
     public Builder clearDeprecationDescription() {
-
       deprecationDescription_ = getDefaultInstance().getDeprecationDescription();
+      bitField0_ = (bitField0_ & ~0x00000004);
       onChanged();
       return this;
     }
@@ -960,8 +977,8 @@ public final class DocumentationRule extends com.google.protobuf.GeneratedMessag
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       deprecationDescription_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }

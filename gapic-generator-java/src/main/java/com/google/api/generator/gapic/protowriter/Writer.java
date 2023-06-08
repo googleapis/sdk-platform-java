@@ -57,6 +57,9 @@ public class Writer {
     }
 
     for (GapicClass gapicClazz : clazzes) {
+      if (gapicClazz.kind() == GapicClass.Kind.NON_GENERATED) {
+        continue;
+      }
       String classPath = writeClazz(gapicClazz, codeWriter, jos);
       writeSamples(gapicClazz, getSamplePackage(gapicClazz), classPath, jos);
     }

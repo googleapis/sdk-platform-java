@@ -166,6 +166,9 @@ public class ImportWriterVisitor implements AstNodeVisitor {
   @Override
   public void visit(AnnotationNode annotation) {
     annotation.type().accept(this);
+    if (annotation.descriptionExprs() != null) {
+      expressions(annotation.descriptionExprs());
+    }
   }
 
   @Override
@@ -505,9 +508,11 @@ public class ImportWriterVisitor implements AstNodeVisitor {
       staticImports.add(reference.fullName());
     } else {
       if (reference.hasEnclosingClass()) {
+        // Only import outermost enclosing class, e.g. import com.foo.bar.Outer
         addImport(
             String.format(
-                "%s.%s", reference.pakkage(), String.join(DOT, reference.enclosingClassNames())));
+                "%s.%s",
+                reference.pakkage(), String.join(DOT, reference.enclosingClassNames().get(0))));
       } else {
         addImport(reference.fullName());
       }

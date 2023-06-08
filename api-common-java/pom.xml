@@ -5,14 +5,14 @@
     <groupId>com.google.api</groupId>
     <artifactId>api-common</artifactId>
     <packaging>jar</packaging>
-    <version>2.5.1-SNAPSHOT</version><!-- {x-version-update:api-common:current} -->
+    <version>2.12.1-SNAPSHOT</version><!-- {x-version-update:api-common:current} -->
     <name>API Common</name>
     <description>Common utilities for Google APIs in Java</description>
 
     <parent>
         <groupId>com.google.api</groupId>
         <artifactId>gapic-generator-java-pom-parent</artifactId>
-        <version>2.14.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
+        <version>2.21.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
         <relativePath>../gapic-generator-java-pom-parent</relativePath>
     </parent>
 
@@ -28,7 +28,7 @@
 
     <licenses>
         <license>
-            <name>BSD</name>
+            <name>BSD-3-Clause</name>
             <url>https://github.com/googleapis/api-common-java/blob/main/LICENSE</url>
         </license>
     </licenses>
@@ -49,11 +49,6 @@
         <dependency>
             <groupId>com.google.auto.value</groupId>
             <artifactId>auto-value-annotations</artifactId>
-            <version>${auto-value.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.auto.value</groupId>
-            <artifactId>auto-value</artifactId>
             <version>${auto-value.version}</version>
         </dependency>
         <dependency>

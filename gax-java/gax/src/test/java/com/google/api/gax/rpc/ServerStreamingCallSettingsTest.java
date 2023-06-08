@@ -99,6 +99,20 @@ public class ServerStreamingCallSettingsTest {
   }
 
   @Test
+  public void waitTimeoutIsNotLost() {
+    Duration waitTimeout = Duration.ofSeconds(5);
+
+    ServerStreamingCallSettings.Builder<Object, Object> builder =
+        ServerStreamingCallSettings.newBuilder();
+
+    builder.setWaitTimeout(waitTimeout);
+
+    assertThat(builder.getWaitTimeout()).isEqualTo(waitTimeout);
+    assertThat(builder.build().getWaitTimeout()).isEqualTo(waitTimeout);
+    assertThat(builder.build().toBuilder().getWaitTimeout()).isEqualTo(waitTimeout);
+  }
+
+  @Test
   public void testRetrySettingsBuilder() {
     RetrySettings initialSettings =
         RetrySettings.newBuilder()

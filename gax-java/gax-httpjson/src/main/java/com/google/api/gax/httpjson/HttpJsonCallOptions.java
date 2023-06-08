@@ -32,6 +32,7 @@ package com.google.api.gax.httpjson;
 import com.google.auth.Credentials;
 import com.google.auto.value.AutoValue;
 import com.google.protobuf.TypeRegistry;
+import java.time.Duration;
 import javax.annotation.Nullable;
 import org.threeten.bp.Instant;
 
@@ -39,6 +40,9 @@ import org.threeten.bp.Instant;
 @AutoValue
 public abstract class HttpJsonCallOptions {
   public static final HttpJsonCallOptions DEFAULT = newBuilder().build();
+
+  @Nullable
+  public abstract Duration getTimeout();
 
   @Nullable
   public abstract Instant getDeadline();
@@ -67,6 +71,13 @@ public abstract class HttpJsonCallOptions {
       builder.setDeadline(newDeadline);
     }
 
+    if (inputOptions.getTimeout() != null) {
+      Duration newTimeout = java.time.Duration.ofMillis(inputOptions.getTimeout().toMillis());
+      if (newTimeout != null) {
+        builder.setTimeout(newTimeout);
+      }
+    }
+
     Credentials newCredentials = inputOptions.getCredentials();
     if (newCredentials != null) {
       builder.setCredentials(newCredentials);
@@ -82,6 +93,8 @@ public abstract class HttpJsonCallOptions {
 
   @AutoValue.Builder
   public abstract static class Builder {
+    public abstract Builder setTimeout(java.time.Duration value);
+
     public abstract Builder setDeadline(Instant value);
 
     public abstract Builder setCredentials(Credentials value);

@@ -48,11 +48,6 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
     return new CreatePolicyRequest();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.iam.v2beta.PolicyProto
         .internal_static_google_iam_v2beta_CreatePolicyRequest_descriptor;
@@ -69,17 +64,22 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
   }
 
   public static final int PARENT_FIELD_NUMBER = 1;
-  private volatile java.lang.Object parent_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object parent_ = "";
   /**
    *
    *
    * <pre>
    * Required. The resource that the policy is attached to, along with the kind of policy
    * to create. Format: `policies/{attachment_point}/denypolicies`
+   *
+   *
    * The attachment point is identified by its URL-encoded full resource name,
    * which means that the forward-slash character, `/`, must be written as
    * `%2F`. For example,
    * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies`.
+   *
    * For organizations and folders, use the numeric ID in the full resource
    * name. For projects, you can use the alphanumeric or the numeric ID.
    * </pre>
@@ -106,10 +106,13 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
    * <pre>
    * Required. The resource that the policy is attached to, along with the kind of policy
    * to create. Format: `policies/{attachment_point}/denypolicies`
+   *
+   *
    * The attachment point is identified by its URL-encoded full resource name,
    * which means that the forward-slash character, `/`, must be written as
    * `%2F`. For example,
    * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies`.
+   *
    * For organizations and folders, use the numeric ID in the full resource
    * name. For projects, you can use the alphanumeric or the numeric ID.
    * </pre>
@@ -174,11 +177,13 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
    */
   @java.lang.Override
   public com.google.iam.v2beta.PolicyOrBuilder getPolicyOrBuilder() {
-    return getPolicy();
+    return policy_ == null ? com.google.iam.v2beta.Policy.getDefaultInstance() : policy_;
   }
 
   public static final int POLICY_ID_FIELD_NUMBER = 3;
-  private volatile java.lang.Object policyId_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object policyId_ = "";
   /**
    *
    *
@@ -452,16 +457,14 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       parent_ = "";
-
-      if (policyBuilder_ == null) {
-        policy_ = null;
-      } else {
-        policy_ = null;
+      policy_ = null;
+      if (policyBuilder_ != null) {
+        policyBuilder_.dispose();
         policyBuilder_ = null;
       }
       policyId_ = "";
-
       return this;
     }
 
@@ -489,15 +492,24 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
     public com.google.iam.v2beta.CreatePolicyRequest buildPartial() {
       com.google.iam.v2beta.CreatePolicyRequest result =
           new com.google.iam.v2beta.CreatePolicyRequest(this);
-      result.parent_ = parent_;
-      if (policyBuilder_ == null) {
-        result.policy_ = policy_;
-      } else {
-        result.policy_ = policyBuilder_.build();
+      if (bitField0_ != 0) {
+        buildPartial0(result);
       }
-      result.policyId_ = policyId_;
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.iam.v2beta.CreatePolicyRequest result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.parent_ = parent_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.policy_ = policyBuilder_ == null ? policy_ : policyBuilder_.build();
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.policyId_ = policyId_;
+      }
     }
 
     @java.lang.Override
@@ -547,6 +559,7 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
       if (other == com.google.iam.v2beta.CreatePolicyRequest.getDefaultInstance()) return this;
       if (!other.getParent().isEmpty()) {
         parent_ = other.parent_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (other.hasPolicy()) {
@@ -554,6 +567,7 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
       }
       if (!other.getPolicyId().isEmpty()) {
         policyId_ = other.policyId_;
+        bitField0_ |= 0x00000004;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -585,19 +599,19 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
             case 10:
               {
                 parent_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
               {
                 input.readMessage(getPolicyFieldBuilder().getBuilder(), extensionRegistry);
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             case 26:
               {
                 policyId_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 26
             default:
@@ -617,6 +631,8 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
       return this;
     }
 
+    private int bitField0_;
+
     private java.lang.Object parent_ = "";
     /**
      *
@@ -624,10 +640,13 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
      * <pre>
      * Required. The resource that the policy is attached to, along with the kind of policy
      * to create. Format: `policies/{attachment_point}/denypolicies`
+     *
+     *
      * The attachment point is identified by its URL-encoded full resource name,
      * which means that the forward-slash character, `/`, must be written as
      * `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies`.
+     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, you can use the alphanumeric or the numeric ID.
      * </pre>
@@ -653,10 +672,13 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
      * <pre>
      * Required. The resource that the policy is attached to, along with the kind of policy
      * to create. Format: `policies/{attachment_point}/denypolicies`
+     *
+     *
      * The attachment point is identified by its URL-encoded full resource name,
      * which means that the forward-slash character, `/`, must be written as
      * `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies`.
+     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, you can use the alphanumeric or the numeric ID.
      * </pre>
@@ -682,10 +704,13 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
      * <pre>
      * Required. The resource that the policy is attached to, along with the kind of policy
      * to create. Format: `policies/{attachment_point}/denypolicies`
+     *
+     *
      * The attachment point is identified by its URL-encoded full resource name,
      * which means that the forward-slash character, `/`, must be written as
      * `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies`.
+     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, you can use the alphanumeric or the numeric ID.
      * </pre>
@@ -699,8 +724,8 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
       if (value == null) {
         throw new NullPointerException();
       }
-
       parent_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -710,10 +735,13 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
      * <pre>
      * Required. The resource that the policy is attached to, along with the kind of policy
      * to create. Format: `policies/{attachment_point}/denypolicies`
+     *
+     *
      * The attachment point is identified by its URL-encoded full resource name,
      * which means that the forward-slash character, `/`, must be written as
      * `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies`.
+     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, you can use the alphanumeric or the numeric ID.
      * </pre>
@@ -723,8 +751,8 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
      * @return This builder for chaining.
      */
     public Builder clearParent() {
-
       parent_ = getDefaultInstance().getParent();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -734,10 +762,13 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
      * <pre>
      * Required. The resource that the policy is attached to, along with the kind of policy
      * to create. Format: `policies/{attachment_point}/denypolicies`
+     *
+     *
      * The attachment point is identified by its URL-encoded full resource name,
      * which means that the forward-slash character, `/`, must be written as
      * `%2F`. For example,
      * `policies/cloudresourcemanager.googleapis.com%2Fprojects%2Fmy-project/denypolicies`.
+     *
      * For organizations and folders, use the numeric ID in the full resource
      * name. For projects, you can use the alphanumeric or the numeric ID.
      * </pre>
@@ -752,8 +783,8 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       parent_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -776,7 +807,7 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
      * @return Whether the policy field is set.
      */
     public boolean hasPolicy() {
-      return policyBuilder_ != null || policy_ != null;
+      return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      *
@@ -811,11 +842,11 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
           throw new NullPointerException();
         }
         policy_ = value;
-        onChanged();
       } else {
         policyBuilder_.setMessage(value);
       }
-
+      bitField0_ |= 0x00000002;
+      onChanged();
       return this;
     }
     /**
@@ -830,11 +861,11 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
     public Builder setPolicy(com.google.iam.v2beta.Policy.Builder builderForValue) {
       if (policyBuilder_ == null) {
         policy_ = builderForValue.build();
-        onChanged();
       } else {
         policyBuilder_.setMessage(builderForValue.build());
       }
-
+      bitField0_ |= 0x00000002;
+      onChanged();
       return this;
     }
     /**
@@ -848,17 +879,18 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
      */
     public Builder mergePolicy(com.google.iam.v2beta.Policy value) {
       if (policyBuilder_ == null) {
-        if (policy_ != null) {
-          policy_ =
-              com.google.iam.v2beta.Policy.newBuilder(policy_).mergeFrom(value).buildPartial();
+        if (((bitField0_ & 0x00000002) != 0)
+            && policy_ != null
+            && policy_ != com.google.iam.v2beta.Policy.getDefaultInstance()) {
+          getPolicyBuilder().mergeFrom(value);
         } else {
           policy_ = value;
         }
-        onChanged();
       } else {
         policyBuilder_.mergeFrom(value);
       }
-
+      bitField0_ |= 0x00000002;
+      onChanged();
       return this;
     }
     /**
@@ -871,14 +903,13 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
      * <code>.google.iam.v2beta.Policy policy = 2 [(.google.api.field_behavior) = REQUIRED];</code>
      */
     public Builder clearPolicy() {
-      if (policyBuilder_ == null) {
-        policy_ = null;
-        onChanged();
-      } else {
-        policy_ = null;
+      bitField0_ = (bitField0_ & ~0x00000002);
+      policy_ = null;
+      if (policyBuilder_ != null) {
+        policyBuilder_.dispose();
         policyBuilder_ = null;
       }
-
+      onChanged();
       return this;
     }
     /**
@@ -891,7 +922,7 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
      * <code>.google.iam.v2beta.Policy policy = 2 [(.google.api.field_behavior) = REQUIRED];</code>
      */
     public com.google.iam.v2beta.Policy.Builder getPolicyBuilder() {
-
+      bitField0_ |= 0x00000002;
       onChanged();
       return getPolicyFieldBuilder().getBuilder();
     }
@@ -1007,8 +1038,8 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
       if (value == null) {
         throw new NullPointerException();
       }
-
       policyId_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1027,8 +1058,8 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
      * @return This builder for chaining.
      */
     public Builder clearPolicyId() {
-
       policyId_ = getDefaultInstance().getPolicyId();
+      bitField0_ = (bitField0_ & ~0x00000004);
       onChanged();
       return this;
     }
@@ -1052,8 +1083,8 @@ public final class CreatePolicyRequest extends com.google.protobuf.GeneratedMess
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       policyId_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }

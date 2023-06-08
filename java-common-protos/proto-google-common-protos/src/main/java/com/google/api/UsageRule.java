@@ -23,19 +23,26 @@ package com.google.api;
  *
  * <pre>
  * Usage configuration rules for the service.
+ *
  * NOTE: Under development.
+ *
+ *
  * Use this rule to configure unregistered calls for the service. Unregistered
  * calls are calls that do not contain consumer project identity.
  * (Example: calls that do not contain an API key).
  * By default, API methods do not allow unregistered calls, and each method call
  * must be identified by a consumer project identity. Use this rule to
  * allow/disallow unregistered calls.
+ *
  * Example of an API that wants to allow unregistered calls for entire service.
+ *
  *     usage:
  *       rules:
  *       - selector: "*"
  *         allow_unregistered_calls: true
+ *
  * Example of a method that wants to allow unregistered calls.
+ *
  *     usage:
  *       rules:
  *       - selector: "google.example.library.v1.LibraryService.CreateBook"
@@ -64,11 +71,6 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
     return new UsageRule();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.UsageProto.internal_static_google_api_UsageRule_descriptor;
   }
@@ -82,14 +84,18 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int SELECTOR_FIELD_NUMBER = 1;
-  private volatile java.lang.Object selector_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object selector_ = "";
   /**
    *
    *
    * <pre>
    * Selects the methods to which this rule applies. Use '*' to indicate all
    * methods in all APIs.
-   * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+   *
+   * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+   * details.
    * </pre>
    *
    * <code>string selector = 1;</code>
@@ -114,7 +120,9 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Selects the methods to which this rule applies. Use '*' to indicate all
    * methods in all APIs.
-   * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+   *
+   * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+   * details.
    * </pre>
    *
    * <code>string selector = 1;</code>
@@ -135,7 +143,7 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int ALLOW_UNREGISTERED_CALLS_FIELD_NUMBER = 2;
-  private boolean allowUnregisteredCalls_;
+  private boolean allowUnregisteredCalls_ = false;
   /**
    *
    *
@@ -154,7 +162,7 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int SKIP_SERVICE_CONTROL_FIELD_NUMBER = 3;
-  private boolean skipServiceControl_;
+  private boolean skipServiceControl_ = false;
   /**
    *
    *
@@ -354,19 +362,26 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Usage configuration rules for the service.
+   *
    * NOTE: Under development.
+   *
+   *
    * Use this rule to configure unregistered calls for the service. Unregistered
    * calls are calls that do not contain consumer project identity.
    * (Example: calls that do not contain an API key).
    * By default, API methods do not allow unregistered calls, and each method call
    * must be identified by a consumer project identity. Use this rule to
    * allow/disallow unregistered calls.
+   *
    * Example of an API that wants to allow unregistered calls for entire service.
+   *
    *     usage:
    *       rules:
    *       - selector: "*"
    *         allow_unregistered_calls: true
+   *
    * Example of a method that wants to allow unregistered calls.
+   *
    *     usage:
    *       rules:
    *       - selector: "google.example.library.v1.LibraryService.CreateBook"
@@ -401,12 +416,10 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       selector_ = "";
-
       allowUnregisteredCalls_ = false;
-
       skipServiceControl_ = false;
-
       return this;
     }
 
@@ -432,11 +445,24 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.UsageRule buildPartial() {
       com.google.api.UsageRule result = new com.google.api.UsageRule(this);
-      result.selector_ = selector_;
-      result.allowUnregisteredCalls_ = allowUnregisteredCalls_;
-      result.skipServiceControl_ = skipServiceControl_;
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.api.UsageRule result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.selector_ = selector_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.allowUnregisteredCalls_ = allowUnregisteredCalls_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.skipServiceControl_ = skipServiceControl_;
+      }
     }
 
     @java.lang.Override
@@ -486,6 +512,7 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
       if (other == com.google.api.UsageRule.getDefaultInstance()) return this;
       if (!other.getSelector().isEmpty()) {
         selector_ = other.selector_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (other.getAllowUnregisteredCalls() != false) {
@@ -523,19 +550,19 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
             case 10:
               {
                 selector_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 16:
               {
                 allowUnregisteredCalls_ = input.readBool();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 16
             case 24:
               {
                 skipServiceControl_ = input.readBool();
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 24
             default:
@@ -555,6 +582,8 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
       return this;
     }
 
+    private int bitField0_;
+
     private java.lang.Object selector_ = "";
     /**
      *
@@ -562,7 +591,9 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Selects the methods to which this rule applies. Use '*' to indicate all
      * methods in all APIs.
-     * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+     *
+     * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+     * details.
      * </pre>
      *
      * <code>string selector = 1;</code>
@@ -586,7 +617,9 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Selects the methods to which this rule applies. Use '*' to indicate all
      * methods in all APIs.
-     * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+     *
+     * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+     * details.
      * </pre>
      *
      * <code>string selector = 1;</code>
@@ -610,7 +643,9 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Selects the methods to which this rule applies. Use '*' to indicate all
      * methods in all APIs.
-     * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+     *
+     * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+     * details.
      * </pre>
      *
      * <code>string selector = 1;</code>
@@ -622,8 +657,8 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       selector_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -633,7 +668,9 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Selects the methods to which this rule applies. Use '*' to indicate all
      * methods in all APIs.
-     * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+     *
+     * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+     * details.
      * </pre>
      *
      * <code>string selector = 1;</code>
@@ -641,8 +678,8 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearSelector() {
-
       selector_ = getDefaultInstance().getSelector();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -652,7 +689,9 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Selects the methods to which this rule applies. Use '*' to indicate all
      * methods in all APIs.
-     * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+     *
+     * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+     * details.
      * </pre>
      *
      * <code>string selector = 1;</code>
@@ -665,8 +704,8 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       selector_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -704,6 +743,7 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
     public Builder setAllowUnregisteredCalls(boolean value) {
 
       allowUnregisteredCalls_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -720,7 +760,7 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearAllowUnregisteredCalls() {
-
+      bitField0_ = (bitField0_ & ~0x00000002);
       allowUnregisteredCalls_ = false;
       onChanged();
       return this;
@@ -763,6 +803,7 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
     public Builder setSkipServiceControl(boolean value) {
 
       skipServiceControl_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -781,7 +822,7 @@ public final class UsageRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearSkipServiceControl() {
-
+      bitField0_ = (bitField0_ & ~0x00000004);
       skipServiceControl_ = false;
       onChanged();
       return this;

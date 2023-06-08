@@ -96,6 +96,7 @@ public interface ErrorInfoOrBuilder
    *
    * <pre>
    * Additional structured details about this error.
+   *
    * Keys should match /[a-zA-Z0-9-_]/ and be limited to 64 characters in
    * length. When identifying the current value of an exceeded limit, the units
    * should be contained in the key, not the value.  For example, rather than
@@ -112,6 +113,7 @@ public interface ErrorInfoOrBuilder
    *
    * <pre>
    * Additional structured details about this error.
+   *
    * Keys should match /[a-zA-Z0-9-_]/ and be limited to 64 characters in
    * length. When identifying the current value of an exceeded limit, the units
    * should be contained in the key, not the value.  For example, rather than
@@ -131,6 +133,7 @@ public interface ErrorInfoOrBuilder
    *
    * <pre>
    * Additional structured details about this error.
+   *
    * Keys should match /[a-zA-Z0-9-_]/ and be limited to 64 characters in
    * length. When identifying the current value of an exceeded limit, the units
    * should be contained in the key, not the value.  For example, rather than
@@ -147,6 +150,7 @@ public interface ErrorInfoOrBuilder
    *
    * <pre>
    * Additional structured details about this error.
+   *
    * Keys should match /[a-zA-Z0-9-_]/ and be limited to 64 characters in
    * length. When identifying the current value of an exceeded limit, the units
    * should be contained in the key, not the value.  For example, rather than
@@ -157,7 +161,6 @@ public interface ErrorInfoOrBuilder
    *
    * <code>map&lt;string, string&gt; metadata = 3;</code>
    */
-
   /* nullable */
   java.lang.String getMetadataOrDefault(
       java.lang.String key,
@@ -168,6 +171,7 @@ public interface ErrorInfoOrBuilder
    *
    * <pre>
    * Additional structured details about this error.
+   *
    * Keys should match /[a-zA-Z0-9-_]/ and be limited to 64 characters in
    * length. When identifying the current value of an exceeded limit, the units
    * should be contained in the key, not the value.  For example, rather than

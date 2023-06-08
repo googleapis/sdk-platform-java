@@ -45,11 +45,16 @@ import javax.annotation.Nullable;
 public final class ApiFutures {
   private ApiFutures() {}
 
-  /*
-   * @deprecated Use {@linkplain #addCallback(ApiFuture, ApiFutureCallback, Executor) the
-   * overload that requires an executor}. For identical behavior, pass {@link
-   * com.google.common.util.concurrent.MoreExecutors#directExecutor}, but consider whether
-   * another executor would be safer.
+  /**
+   * Registers a callback to be run when the {@link ApiFuture}'s computation is complete or, if the
+   * computation is already complete, immediately.
+   *
+   * @param future The future attach the callback to
+   * @param callback The callback to invoke when future is completed
+   * @deprecated Use {@linkplain #addCallback(ApiFuture, ApiFutureCallback, Executor) the overload
+   *     that requires an executor}. For identical behavior, pass {@link
+   *     com.google.common.util.concurrent.MoreExecutors#directExecutor}, but consider whether
+   *     another executor would be safer.
    */
   @Deprecated
   public static <V> void addCallback(
@@ -57,6 +62,18 @@ public final class ApiFutures {
     addCallback(future, callback, directExecutor());
   }
 
+  /**
+   * Registers a callback to be run when the {@link ApiFuture}'s computation is complete or, if the
+   * computation is already complete, immediately.
+   *
+   * <p>Note that this method is a delegate of {@link Futures#addCallback(ListenableFuture,
+   * FutureCallback, Executor)}.
+   *
+   * @param future The future attach the callback to
+   * @param callback The callback to invoke when future is completed
+   * @param executor The executor to run callback when the future completes
+   * @see Futures#addCallback(ListenableFuture, FutureCallback, Executor)
+   */
   public static <V> void addCallback(
       final ApiFuture<V> future, final ApiFutureCallback<? super V> callback, Executor executor) {
     Futures.addCallback(
@@ -75,11 +92,20 @@ public final class ApiFutures {
         executor);
   }
 
-  /*
-   * @deprecated Use {@linkplain #catching(ApiFuture, Class, ApiFunction, Executor) the
-   * overload that requires an executor}. For identical behavior, pass {@link
-   * com.google.common.util.concurrent.MoreExecutors#directExecutor}, but consider whether
-   * another executor would be safer.
+  /**
+   * Returns an {@link ApiFuture} whose result is taken from the given primary input or, if the
+   * primary input fails with the given exceptionType, from the result provided by the callback.
+   *
+   * @param input The primary input {@code ApiFuture}
+   * @param exceptionType The exception type that triggers use of {@code fallback}
+   * @param callback The {@link ApiFunction} to be called if input fails with the expected exception
+   *     type
+   * @return A future whose result is taken either from the given {@code input} or by the {@code
+   *     callback}
+   * @deprecated Use {@linkplain #catching(ApiFuture, Class, ApiFunction, Executor) the overload
+   *     that requires an executor}. For identical behavior, pass {@link
+   *     com.google.common.util.concurrent.MoreExecutors#directExecutor}, but consider whether
+   *     another executor would be safer.
    */
   @Deprecated
   public static <V, X extends Throwable> ApiFuture<V> catching(
@@ -89,6 +115,22 @@ public final class ApiFutures {
     return catching(input, exceptionType, callback, directExecutor());
   }
 
+  /**
+   * Returns an {@link ApiFuture} whose result is taken from the given primary input or, if the
+   * primary input fails with the given exceptionType, from the result provided by the callback.
+   *
+   * <p>Note that this method is a delegate of {@link Futures#catching(ListenableFuture, Class,
+   * Function, Executor)}.
+   *
+   * @param input The primary input {@code ApiFuture}
+   * @param exceptionType The exception type that triggers use of {@code fallback}
+   * @param callback The {@link ApiFunction} to be called if input fails with the expected exception
+   *     type
+   * @param executor The executor that runs {@code fallback} if {@code input} fails
+   * @return A future whose result is taken either from the given {@code input} or by the {@code
+   *     callback}
+   * @see Futures#catching(ListenableFuture, Class, Function, Executor)
+   */
   public static <V, X extends Throwable> ApiFuture<V> catching(
       ApiFuture<? extends V> input,
       Class<X> exceptionType,
@@ -103,6 +145,22 @@ public final class ApiFutures {
     return new ListenableFutureToApiFuture<V>(catchingFuture);
   }
 
+  /**
+   * Returns a {@link ApiFuture} whose result is taken from the given primary input or, if the
+   * primary input fails with the given exceptionType, from the result provided by the callback.
+   *
+   * <p>Note that this method is a delegate of {@link Futures#catchingAsync(ListenableFuture, Class,
+   * AsyncFunction, Executor)}
+   *
+   * @param input The primary input {@code ApiFuture}
+   * @param exceptionType The exception type that triggers use of {@code fallback}.
+   * @param callback The {@link ApiAsyncFunction} to be called if {@code input} fails with the
+   *     expected * exception type.
+   * @param executor The executor that runs {@code fallback} if {@code input} fails
+   * @return A future whose result is taken either from the given {@code input} or by the {@code
+   *     callback}
+   * @see Futures#catchingAsync(ListenableFuture, Class, AsyncFunction, Executor)
+   */
   @BetaApi
   public static <V, X extends Throwable> ApiFuture<V> catchingAsync(
       ApiFuture<V> input,
@@ -124,23 +182,57 @@ public final class ApiFutures {
     return new ListenableFutureToApiFuture<>(catchingFuture);
   }
 
+  /**
+   * Creates a {@code ApiFuture} which has its value set immediately upon construction.
+   *
+   * <p>Note that this method is a delegate of {@link Futures#immediateFuture(Object)}.
+   *
+   * @param value The value set to the {@code ApiFuture} upon construction
+   * @return A future that holds {@code value}
+   * @see Futures#immediateFuture(Object)
+   */
   public static <V> ApiFuture<V> immediateFuture(V value) {
     return new ListenableFutureToApiFuture<>(Futures.<V>immediateFuture(value));
   }
 
+  /**
+   * Returns a {@code ApiFuture} which has an exception set immediately upon construction.
+   *
+   * <p>Note that this method is a delegate of {@link Futures#immediateFailedFuture(Throwable)}.
+   *
+   * @param throwable The exception set to the {@code ApiFuture} upon construction
+   * @return A future that holds an exception
+   * @see Futures#immediateFailedFuture(Throwable)
+   */
   public static <V> ApiFuture<V> immediateFailedFuture(Throwable throwable) {
     return new ListenableFutureToApiFuture<V>(Futures.<V>immediateFailedFuture(throwable));
   }
 
+  /**
+   * Creates a {@code ApiFuture} which is cancelled immediately upon construction, so that {@code
+   * isCancelled()} always returns {@code true}.
+   *
+   * <p>Note that this method is a delegate of {@link Futures#immediateCancelledFuture()}.
+   *
+   * @return A cancelled future
+   * @see Futures#immediateCancelledFuture()
+   */
   public static <V> ApiFuture<V> immediateCancelledFuture() {
     return new ListenableFutureToApiFuture<V>(Futures.<V>immediateCancelledFuture());
   }
 
-  /*
-   * @deprecated Use {@linkplain #transform(ApiFuture, ApiFunction, Executor) the
-   * overload that requires an executor}. For identical behavior, pass {@link
-   * com.google.common.util.concurrent.MoreExecutors#directExecutor}, but consider whether
-   * another executor would be safer.
+  /**
+   * Returns a new {@code ApiFuture} whose result is derived from the result of the given {@code
+   * ApiFuture}.
+   *
+   * @param input The future to transform
+   * @param function A Function to transform the results of the provided future to the results of
+   *     the returned future
+   * @return A future that holds result of the transformation
+   * @deprecated Use {@linkplain #transform(ApiFuture, ApiFunction, Executor) the overload that
+   *     requires an executor}. For identical behavior, pass {@link
+   *     com.google.common.util.concurrent.MoreExecutors#directExecutor}, but consider whether
+   *     another executor would be safer.
    */
   @Deprecated
   public static <V, X> ApiFuture<X> transform(
@@ -148,6 +240,20 @@ public final class ApiFutures {
     return transform(input, function, directExecutor());
   }
 
+  /**
+   * Returns a new {@code ApiFuture} whose result is derived from the result of the given {@code
+   * ApiFuture}.
+   *
+   * <p>Note that this method is a delegate of {@link Futures#transform(ListenableFuture, Function,
+   * Executor)}.
+   *
+   * @param input The future to transform
+   * @param function A Function to transform the results of the provided future to the results of
+   *     the returned future.
+   * @param executor Executor to run the function in.
+   * @return A future that holds result of the transformation
+   * @see Futures#transform(ListenableFuture, Function, Executor)
+   */
   public static <V, X> ApiFuture<X> transform(
       ApiFuture<? extends V> input,
       final ApiFunction<? super V, ? extends X> function,
@@ -159,6 +265,18 @@ public final class ApiFutures {
             executor));
   }
 
+  /**
+   * Creates a new {@code ApiFuture} whose value is a list containing the values of all its input
+   * futures, if all succeed.
+   *
+   * <p>The list of results is in the same order as the input list.
+   *
+   * <p>Note that this method is a delegate of {@link Futures#allAsList(Iterable)}.
+   *
+   * @param futures Futures to combine
+   * @return A future that provides a list of the results of the component futures
+   * @see Futures#allAsList(Iterable)
+   */
   public static <V> ApiFuture<List<V>> allAsList(
       Iterable<? extends ApiFuture<? extends V>> futures) {
     return new ListenableFutureToApiFuture<>(
@@ -172,6 +290,21 @@ public final class ApiFutures {
                 })));
   }
 
+  /**
+   * Creates a new {@code ApiFuture} whose value is a list containing the values of all its
+   * successful input futures. The list of results is in the same order as the input list, and if
+   * any of the provided futures fails or is canceled, its corresponding position will contain
+   * {@code null} (which is indistinguishable from the future having a successful value of {@code
+   * null}).
+   *
+   * <p>The list of results is in the same order as the input list.
+   *
+   * <p>Note that this method is a delegate of {@link Futures#successfulAsList(Iterable)}.
+   *
+   * @param futures Futures to combine
+   * @return A future that provides a list of the results of the component futures
+   * @see Futures#successfulAsList(Iterable)
+   */
   @BetaApi
   public static <V> ApiFuture<List<V>> successfulAsList(
       Iterable<? extends ApiFuture<? extends V>> futures) {
@@ -186,11 +319,20 @@ public final class ApiFutures {
                 })));
   }
 
-  /*
-   * @deprecated Use {@linkplain #transformAsync(ApiFuture, ApiFunction, Executor) the
-   * overload that requires an executor}. For identical behavior, pass {@link
-   * com.google.common.util.concurrent.MoreExecutors#directExecutor}, but consider whether
-   * another executor would be safer.
+  /**
+   * Returns a new {@code ApiFuture} whose result is asynchronously derived from the result of the
+   * given {@code ApiFuture}. If the given {@code Future} fails, the returned {@code ApiFuture}
+   * fails with the same exception (and the function is not invoked).
+   *
+   * @param input The future to transform
+   * @param function A function to transform the result of the input future to the result of the
+   *     output future
+   * @return A future that holds result of the function (if the input succeeded) or the original
+   *     input's failure (if not)
+   * @deprecated Use {@linkplain #transformAsync(ApiFuture, ApiAsyncFunction, Executor)}, the
+   *     overload that requires an executor. For identical behavior, pass {@link
+   *     com.google.common.util.concurrent.MoreExecutors#directExecutor}, but consider whether
+   *     another executor would be safer.
    */
   @Deprecated
   public static <I, O> ApiFuture<O> transformAsync(
@@ -198,6 +340,22 @@ public final class ApiFutures {
     return transformAsync(input, function, directExecutor());
   }
 
+  /**
+   * Returns a new {@code ApiFuture} whose result is asynchronously derived from the result of the
+   * given {@code ApiFuture}. If the given {@code Future} fails, the returned {@code ApiFuture}
+   * fails with the same exception (and the function is not invoked).
+   *
+   * <p>Note that this method is a delegate of {@link Futures#transformAsync(ListenableFuture,
+   * AsyncFunction, Executor)}.
+   *
+   * @param input The future to transform
+   * @param function A function to transform the result of the input future to the result of the
+   *     output future
+   * @param executor Executor to run the function in.
+   * @return A future that holds result of the function (if the input succeeded) or the original
+   *     input's failure (if not)
+   * @see Futures#transformAsync(ListenableFuture, AsyncFunction, Executor)
+   */
   public static <I, O> ApiFuture<O> transformAsync(
       ApiFuture<I> input, final ApiAsyncFunction<I, O> function, Executor executor) {
     ListenableFuture<I> listenableInput = listenableFutureForApiFuture(input);

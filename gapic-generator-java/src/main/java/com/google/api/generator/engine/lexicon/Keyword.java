@@ -14,6 +14,7 @@
 
 package com.google.api.generator.engine.lexicon;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 
 public class Keyword {
@@ -71,9 +72,25 @@ public class Keyword {
           "native",
           "super",
           "while");
+  private static final String ESCAPE_CHAR = "_";
 
   public static boolean isKeyword(String s) {
     return s.equals(CLASS_KEYWORD) || KEYWORDS.contains(s);
+  }
+
+  public static String unescapeKeyword(String str) {
+    if (Strings.isNullOrEmpty(str)) {
+      return str;
+    }
+    if (!str.endsWith(ESCAPE_CHAR)) {
+      return str;
+    }
+    String strWithoutEscapeChar = str.substring(0, str.lastIndexOf(ESCAPE_CHAR));
+    return isKeyword(strWithoutEscapeChar) ? strWithoutEscapeChar : str;
+  }
+
+  public static String escapeKeyword(String str) {
+    return Keyword.isKeyword(str) ? str + ESCAPE_CHAR : str;
   }
 
   public static boolean isInvalidFieldName(String s) {

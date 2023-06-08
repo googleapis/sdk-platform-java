@@ -25,31 +25,44 @@ package com.google.api;
  * Message that represents an arbitrary HTTP body. It should only be used for
  * payload formats that can't be represented as JSON, such as raw binary or
  * an HTML page.
+ *
+ *
  * This message can be used both in streaming and non-streaming API methods in
  * the request as well as the response.
+ *
  * It can be used as a top-level request field, which is convenient if one
  * wants to extract parameters from either the URL or HTTP template into the
  * request fields and also want access to the raw HTTP body.
+ *
  * Example:
+ *
  *     message GetResourceRequest {
  *       // A unique request id.
  *       string request_id = 1;
+ *
  *       // The raw HTTP body is bound to this field.
  *       google.api.HttpBody http_body = 2;
+ *
  *     }
+ *
  *     service ResourceService {
  *       rpc GetResource(GetResourceRequest)
  *         returns (google.api.HttpBody);
  *       rpc UpdateResource(google.api.HttpBody)
  *         returns (google.protobuf.Empty);
+ *
  *     }
+ *
  * Example with streaming methods:
+ *
  *     service CaldavService {
  *       rpc GetCalendar(stream google.api.HttpBody)
  *         returns (stream google.api.HttpBody);
  *       rpc UpdateCalendar(stream google.api.HttpBody)
  *         returns (stream google.api.HttpBody);
+ *
  *     }
+ *
  * Use of this type only changes how the request and response bodies are
  * handled, all other features will continue to work unchanged.
  * </pre>
@@ -78,11 +91,6 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
     return new HttpBody();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.HttpBodyProto.internal_static_google_api_HttpBody_descriptor;
   }
@@ -96,7 +104,9 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int CONTENT_TYPE_FIELD_NUMBER = 1;
-  private volatile java.lang.Object contentType_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object contentType_ = "";
   /**
    *
    *
@@ -145,7 +155,7 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int DATA_FIELD_NUMBER = 2;
-  private com.google.protobuf.ByteString data_;
+  private com.google.protobuf.ByteString data_ = com.google.protobuf.ByteString.EMPTY;
   /**
    *
    *
@@ -163,6 +173,8 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int EXTENSIONS_FIELD_NUMBER = 3;
+
+  @SuppressWarnings("serial")
   private java.util.List<com.google.protobuf.Any> extensions_;
   /**
    *
@@ -419,31 +431,44 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
    * Message that represents an arbitrary HTTP body. It should only be used for
    * payload formats that can't be represented as JSON, such as raw binary or
    * an HTML page.
+   *
+   *
    * This message can be used both in streaming and non-streaming API methods in
    * the request as well as the response.
+   *
    * It can be used as a top-level request field, which is convenient if one
    * wants to extract parameters from either the URL or HTTP template into the
    * request fields and also want access to the raw HTTP body.
+   *
    * Example:
+   *
    *     message GetResourceRequest {
    *       // A unique request id.
    *       string request_id = 1;
+   *
    *       // The raw HTTP body is bound to this field.
    *       google.api.HttpBody http_body = 2;
+   *
    *     }
+   *
    *     service ResourceService {
    *       rpc GetResource(GetResourceRequest)
    *         returns (google.api.HttpBody);
    *       rpc UpdateResource(google.api.HttpBody)
    *         returns (google.protobuf.Empty);
+   *
    *     }
+   *
    * Example with streaming methods:
+   *
    *     service CaldavService {
    *       rpc GetCalendar(stream google.api.HttpBody)
    *         returns (stream google.api.HttpBody);
    *       rpc UpdateCalendar(stream google.api.HttpBody)
    *         returns (stream google.api.HttpBody);
+   *
    *     }
+   *
    * Use of this type only changes how the request and response bodies are
    * handled, all other features will continue to work unchanged.
    * </pre>
@@ -476,17 +501,16 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       contentType_ = "";
-
       data_ = com.google.protobuf.ByteString.EMPTY;
-
       if (extensionsBuilder_ == null) {
         extensions_ = java.util.Collections.emptyList();
       } else {
         extensions_ = null;
         extensionsBuilder_.clear();
       }
-      bitField0_ = (bitField0_ & ~0x00000001);
+      bitField0_ = (bitField0_ & ~0x00000004);
       return this;
     }
 
@@ -512,20 +536,34 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.HttpBody buildPartial() {
       com.google.api.HttpBody result = new com.google.api.HttpBody(this);
-      int from_bitField0_ = bitField0_;
-      result.contentType_ = contentType_;
-      result.data_ = data_;
+      buildPartialRepeatedFields(result);
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
+      onBuilt();
+      return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.api.HttpBody result) {
       if (extensionsBuilder_ == null) {
-        if (((bitField0_ & 0x00000001) != 0)) {
+        if (((bitField0_ & 0x00000004) != 0)) {
           extensions_ = java.util.Collections.unmodifiableList(extensions_);
-          bitField0_ = (bitField0_ & ~0x00000001);
+          bitField0_ = (bitField0_ & ~0x00000004);
         }
         result.extensions_ = extensions_;
       } else {
         result.extensions_ = extensionsBuilder_.build();
       }
-      onBuilt();
-      return result;
+    }
+
+    private void buildPartial0(com.google.api.HttpBody result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.contentType_ = contentType_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.data_ = data_;
+      }
     }
 
     @java.lang.Override
@@ -575,6 +613,7 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
       if (other == com.google.api.HttpBody.getDefaultInstance()) return this;
       if (!other.getContentType().isEmpty()) {
         contentType_ = other.contentType_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (other.getData() != com.google.protobuf.ByteString.EMPTY) {
@@ -584,7 +623,7 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
         if (!other.extensions_.isEmpty()) {
           if (extensions_.isEmpty()) {
             extensions_ = other.extensions_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ = (bitField0_ & ~0x00000004);
           } else {
             ensureExtensionsIsMutable();
             extensions_.addAll(other.extensions_);
@@ -597,7 +636,7 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
             extensionsBuilder_.dispose();
             extensionsBuilder_ = null;
             extensions_ = other.extensions_;
-            bitField0_ = (bitField0_ & ~0x00000001);
+            bitField0_ = (bitField0_ & ~0x00000004);
             extensionsBuilder_ =
                 com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
                     ? getExtensionsFieldBuilder()
@@ -636,13 +675,13 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
             case 10:
               {
                 contentType_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
               {
                 data_ = input.readBytes();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             case 26:
@@ -737,8 +776,8 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       contentType_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -754,8 +793,8 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearContentType() {
-
       contentType_ = getDefaultInstance().getContentType();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -776,8 +815,8 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       contentType_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -814,8 +853,8 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       data_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -831,7 +870,7 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearData() {
-
+      bitField0_ = (bitField0_ & ~0x00000002);
       data_ = getDefaultInstance().getData();
       onChanged();
       return this;
@@ -840,9 +879,9 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
     private java.util.List<com.google.protobuf.Any> extensions_ = java.util.Collections.emptyList();
 
     private void ensureExtensionsIsMutable() {
-      if (!((bitField0_ & 0x00000001) != 0)) {
+      if (!((bitField0_ & 0x00000004) != 0)) {
         extensions_ = new java.util.ArrayList<com.google.protobuf.Any>(extensions_);
-        bitField0_ |= 0x00000001;
+        bitField0_ |= 0x00000004;
       }
     }
 
@@ -1065,7 +1104,7 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
     public Builder clearExtensions() {
       if (extensionsBuilder_ == null) {
         extensions_ = java.util.Collections.emptyList();
-        bitField0_ = (bitField0_ & ~0x00000001);
+        bitField0_ = (bitField0_ & ~0x00000004);
         onChanged();
       } else {
         extensionsBuilder_.clear();
@@ -1191,7 +1230,7 @@ public final class HttpBody extends com.google.protobuf.GeneratedMessageV3
                 com.google.protobuf.Any,
                 com.google.protobuf.Any.Builder,
                 com.google.protobuf.AnyOrBuilder>(
-                extensions_, ((bitField0_ & 0x00000001) != 0), getParentForChildren(), isClean());
+                extensions_, ((bitField0_ & 0x00000004) != 0), getParentForChildren(), isClean());
         extensions_ = null;
       }
       return extensionsBuilder_;

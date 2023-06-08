@@ -28,10 +28,12 @@ public interface MonitoredResourceOrBuilder
    *
    * <pre>
    * Required. The monitored resource type. This field must match
-   * the `type` field of a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor] object. For
-   * example, the type of a Compute Engine VM instance is `gce_instance`.
-   * Some descriptors include the service name in the type; for example,
-   * the type of a Datastream stream is `datastream.googleapis.com/Stream`.
+   * the `type` field of a
+   * [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor]
+   * object. For example, the type of a Compute Engine VM instance is
+   * `gce_instance`. Some descriptors include the service name in the type; for
+   * example, the type of a Datastream stream is
+   * `datastream.googleapis.com/Stream`.
    * </pre>
    *
    * <code>string type = 1;</code>
@@ -44,10 +46,12 @@ public interface MonitoredResourceOrBuilder
    *
    * <pre>
    * Required. The monitored resource type. This field must match
-   * the `type` field of a [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor] object. For
-   * example, the type of a Compute Engine VM instance is `gce_instance`.
-   * Some descriptors include the service name in the type; for example,
-   * the type of a Datastream stream is `datastream.googleapis.com/Stream`.
+   * the `type` field of a
+   * [MonitoredResourceDescriptor][google.api.MonitoredResourceDescriptor]
+   * object. For example, the type of a Compute Engine VM instance is
+   * `gce_instance`. Some descriptors include the service name in the type; for
+   * example, the type of a Datastream stream is
+   * `datastream.googleapis.com/Stream`.
    * </pre>
    *
    * <code>string type = 1;</code>
@@ -106,7 +110,6 @@ public interface MonitoredResourceOrBuilder
    *
    * <code>map&lt;string, string&gt; labels = 2;</code>
    */
-
   /* nullable */
   java.lang.String getLabelsOrDefault(
       java.lang.String key,

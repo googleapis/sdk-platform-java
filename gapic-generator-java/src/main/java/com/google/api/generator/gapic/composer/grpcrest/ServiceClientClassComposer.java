@@ -26,6 +26,7 @@ import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.model.Transport;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +49,10 @@ public class ServiceClientClassComposer extends AbstractServiceClientClassCompos
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes,
       List<Sample> samples) {
+    if (!service.hasAnyEnabledMethodsForTransport(Transport.REST)) {
+      return super.createClassHeaderComments(
+          service, typeStore, resourceNames, messageTypes, samples);
+    }
     TypeNode clientType = typeStore.get(ClassNames.getServiceClientClassName(service));
     TypeNode settingsType = typeStore.get(ClassNames.getServiceSettingsClassName(service));
     Sample classMethodSampleCode =

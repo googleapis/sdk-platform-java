@@ -216,87 +216,60 @@ public final class IdentityGrpc {
 
   /**
    */
-  public static abstract class IdentityImplBase implements io.grpc.BindableService {
+  public interface AsyncService {
 
     /**
      */
-    public void createUser(com.google.showcase.v1beta1.CreateUserRequest request,
+    default void createUser(com.google.showcase.v1beta1.CreateUserRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.User> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getCreateUserMethod(), responseObserver);
     }
 
     /**
      */
-    public void getUser(com.google.showcase.v1beta1.GetUserRequest request,
+    default void getUser(com.google.showcase.v1beta1.GetUserRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.User> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetUserMethod(), responseObserver);
     }
 
     /**
      */
-    public void updateUser(com.google.showcase.v1beta1.UpdateUserRequest request,
+    default void updateUser(com.google.showcase.v1beta1.UpdateUserRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.User> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getUpdateUserMethod(), responseObserver);
     }
 
     /**
      */
-    public void deleteUser(com.google.showcase.v1beta1.DeleteUserRequest request,
+    default void deleteUser(com.google.showcase.v1beta1.DeleteUserRequest request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getDeleteUserMethod(), responseObserver);
     }
 
     /**
      */
-    public void listUsers(com.google.showcase.v1beta1.ListUsersRequest request,
+    default void listUsers(com.google.showcase.v1beta1.ListUsersRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.ListUsersResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getListUsersMethod(), responseObserver);
-    }
-
-    @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
-      return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
-          .addMethod(
-            getCreateUserMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.CreateUserRequest,
-                com.google.showcase.v1beta1.User>(
-                  this, METHODID_CREATE_USER)))
-          .addMethod(
-            getGetUserMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.GetUserRequest,
-                com.google.showcase.v1beta1.User>(
-                  this, METHODID_GET_USER)))
-          .addMethod(
-            getUpdateUserMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.UpdateUserRequest,
-                com.google.showcase.v1beta1.User>(
-                  this, METHODID_UPDATE_USER)))
-          .addMethod(
-            getDeleteUserMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.DeleteUserRequest,
-                com.google.protobuf.Empty>(
-                  this, METHODID_DELETE_USER)))
-          .addMethod(
-            getListUsersMethod(),
-            io.grpc.stub.ServerCalls.asyncUnaryCall(
-              new MethodHandlers<
-                com.google.showcase.v1beta1.ListUsersRequest,
-                com.google.showcase.v1beta1.ListUsersResponse>(
-                  this, METHODID_LIST_USERS)))
-          .build();
     }
   }
 
   /**
+   * Base class for the server implementation of the service Identity.
    */
-  public static final class IdentityStub extends io.grpc.stub.AbstractAsyncStub<IdentityStub> {
+  public static abstract class IdentityImplBase
+      implements io.grpc.BindableService, AsyncService {
+
+    @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
+      return IdentityGrpc.bindService(this);
+    }
+  }
+
+  /**
+   * A stub to allow clients to do asynchronous rpc calls to service Identity.
+   */
+  public static final class IdentityStub
+      extends io.grpc.stub.AbstractAsyncStub<IdentityStub> {
     private IdentityStub(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -350,8 +323,10 @@ public final class IdentityGrpc {
   }
 
   /**
+   * A stub to allow clients to do synchronous rpc calls to service Identity.
    */
-  public static final class IdentityBlockingStub extends io.grpc.stub.AbstractBlockingStub<IdentityBlockingStub> {
+  public static final class IdentityBlockingStub
+      extends io.grpc.stub.AbstractBlockingStub<IdentityBlockingStub> {
     private IdentityBlockingStub(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -400,8 +375,10 @@ public final class IdentityGrpc {
   }
 
   /**
+   * A stub to allow clients to do ListenableFuture-style rpc calls to service Identity.
    */
-  public static final class IdentityFutureStub extends io.grpc.stub.AbstractFutureStub<IdentityFutureStub> {
+  public static final class IdentityFutureStub
+      extends io.grpc.stub.AbstractFutureStub<IdentityFutureStub> {
     private IdentityFutureStub(
         io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
       super(channel, callOptions);
@@ -465,10 +442,10 @@ public final class IdentityGrpc {
       io.grpc.stub.ServerCalls.ServerStreamingMethod<Req, Resp>,
       io.grpc.stub.ServerCalls.ClientStreamingMethod<Req, Resp>,
       io.grpc.stub.ServerCalls.BidiStreamingMethod<Req, Resp> {
-    private final IdentityImplBase serviceImpl;
+    private final AsyncService serviceImpl;
     private final int methodId;
 
-    MethodHandlers(IdentityImplBase serviceImpl, int methodId) {
+    MethodHandlers(AsyncService serviceImpl, int methodId) {
       this.serviceImpl = serviceImpl;
       this.methodId = methodId;
     }
@@ -511,6 +488,46 @@ public final class IdentityGrpc {
           throw new AssertionError();
       }
     }
+  }
+
+  public static final io.grpc.ServerServiceDefinition bindService(AsyncService service) {
+    return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
+        .addMethod(
+          getCreateUserMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.CreateUserRequest,
+              com.google.showcase.v1beta1.User>(
+                service, METHODID_CREATE_USER)))
+        .addMethod(
+          getGetUserMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.GetUserRequest,
+              com.google.showcase.v1beta1.User>(
+                service, METHODID_GET_USER)))
+        .addMethod(
+          getUpdateUserMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.UpdateUserRequest,
+              com.google.showcase.v1beta1.User>(
+                service, METHODID_UPDATE_USER)))
+        .addMethod(
+          getDeleteUserMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.DeleteUserRequest,
+              com.google.protobuf.Empty>(
+                service, METHODID_DELETE_USER)))
+        .addMethod(
+          getListUsersMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.ListUsersRequest,
+              com.google.showcase.v1beta1.ListUsersResponse>(
+                service, METHODID_LIST_USERS)))
+        .build();
   }
 
   private static abstract class IdentityBaseDescriptorSupplier

@@ -49,11 +49,6 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
     return new ResourceReference();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.ResourceProto.internal_static_google_api_ResourceReference_descriptor;
   }
@@ -68,21 +63,28 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
   }
 
   public static final int TYPE_FIELD_NUMBER = 1;
-  private volatile java.lang.Object type_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object type_ = "";
   /**
    *
    *
    * <pre>
    * The resource type that the annotated field references.
+   *
    * Example:
+   *
    *     message Subscription {
    *       string topic = 2 [(google.api.resource_reference) = {
    *         type: "pubsub.googleapis.com/Topic"
    *       }];
    *     }
+   *
    * Occasionally, a field may reference an arbitrary resource. In this case,
    * APIs use the special value * in their resource reference.
+   *
    * Example:
+   *
    *     message GetIamPolicyRequest {
    *       string resource = 2 [(google.api.resource_reference) = {
    *         type: "*"
@@ -111,15 +113,20 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
    *
    * <pre>
    * The resource type that the annotated field references.
+   *
    * Example:
+   *
    *     message Subscription {
    *       string topic = 2 [(google.api.resource_reference) = {
    *         type: "pubsub.googleapis.com/Topic"
    *       }];
    *     }
+   *
    * Occasionally, a field may reference an arbitrary resource. In this case,
    * APIs use the special value * in their resource reference.
+   *
    * Example:
+   *
    *     message GetIamPolicyRequest {
    *       string resource = 2 [(google.api.resource_reference) = {
    *         type: "*"
@@ -145,7 +152,9 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
   }
 
   public static final int CHILD_TYPE_FIELD_NUMBER = 2;
-  private volatile java.lang.Object childType_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object childType_ = "";
   /**
    *
    *
@@ -153,7 +162,9 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
    * The resource type of a child collection that the annotated field
    * references. This is useful for annotating the `parent` field that
    * doesn't have a fixed resource type.
+   *
    * Example:
+   *
    *     message ListLogEntriesRequest {
    *       string parent = 1 [(google.api.resource_reference) = {
    *         child_type: "logging.googleapis.com/LogEntry"
@@ -184,7 +195,9 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
    * The resource type of a child collection that the annotated field
    * references. This is useful for annotating the `parent` field that
    * doesn't have a fixed resource type.
+   *
    * Example:
+   *
    *     message ListLogEntriesRequest {
    *       string parent = 1 [(google.api.resource_reference) = {
    *         child_type: "logging.googleapis.com/LogEntry"
@@ -413,10 +426,9 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       type_ = "";
-
       childType_ = "";
-
       return this;
     }
 
@@ -442,10 +454,21 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
     @java.lang.Override
     public com.google.api.ResourceReference buildPartial() {
       com.google.api.ResourceReference result = new com.google.api.ResourceReference(this);
-      result.type_ = type_;
-      result.childType_ = childType_;
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.api.ResourceReference result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.type_ = type_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.childType_ = childType_;
+      }
     }
 
     @java.lang.Override
@@ -495,10 +518,12 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
       if (other == com.google.api.ResourceReference.getDefaultInstance()) return this;
       if (!other.getType().isEmpty()) {
         type_ = other.type_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (!other.getChildType().isEmpty()) {
         childType_ = other.childType_;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -530,13 +555,13 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
             case 10:
               {
                 type_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
               {
                 childType_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             default:
@@ -556,21 +581,28 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
       return this;
     }
 
+    private int bitField0_;
+
     private java.lang.Object type_ = "";
     /**
      *
      *
      * <pre>
      * The resource type that the annotated field references.
+     *
      * Example:
+     *
      *     message Subscription {
      *       string topic = 2 [(google.api.resource_reference) = {
      *         type: "pubsub.googleapis.com/Topic"
      *       }];
      *     }
+     *
      * Occasionally, a field may reference an arbitrary resource. In this case,
      * APIs use the special value * in their resource reference.
+     *
      * Example:
+     *
      *     message GetIamPolicyRequest {
      *       string resource = 2 [(google.api.resource_reference) = {
      *         type: "*"
@@ -598,15 +630,20 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
      *
      * <pre>
      * The resource type that the annotated field references.
+     *
      * Example:
+     *
      *     message Subscription {
      *       string topic = 2 [(google.api.resource_reference) = {
      *         type: "pubsub.googleapis.com/Topic"
      *       }];
      *     }
+     *
      * Occasionally, a field may reference an arbitrary resource. In this case,
      * APIs use the special value * in their resource reference.
+     *
      * Example:
+     *
      *     message GetIamPolicyRequest {
      *       string resource = 2 [(google.api.resource_reference) = {
      *         type: "*"
@@ -634,15 +671,20 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
      *
      * <pre>
      * The resource type that the annotated field references.
+     *
      * Example:
+     *
      *     message Subscription {
      *       string topic = 2 [(google.api.resource_reference) = {
      *         type: "pubsub.googleapis.com/Topic"
      *       }];
      *     }
+     *
      * Occasionally, a field may reference an arbitrary resource. In this case,
      * APIs use the special value * in their resource reference.
+     *
      * Example:
+     *
      *     message GetIamPolicyRequest {
      *       string resource = 2 [(google.api.resource_reference) = {
      *         type: "*"
@@ -659,8 +701,8 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
       if (value == null) {
         throw new NullPointerException();
       }
-
       type_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -669,15 +711,20 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
      *
      * <pre>
      * The resource type that the annotated field references.
+     *
      * Example:
+     *
      *     message Subscription {
      *       string topic = 2 [(google.api.resource_reference) = {
      *         type: "pubsub.googleapis.com/Topic"
      *       }];
      *     }
+     *
      * Occasionally, a field may reference an arbitrary resource. In this case,
      * APIs use the special value * in their resource reference.
+     *
      * Example:
+     *
      *     message GetIamPolicyRequest {
      *       string resource = 2 [(google.api.resource_reference) = {
      *         type: "*"
@@ -690,8 +737,8 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
      * @return This builder for chaining.
      */
     public Builder clearType() {
-
       type_ = getDefaultInstance().getType();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -700,15 +747,20 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
      *
      * <pre>
      * The resource type that the annotated field references.
+     *
      * Example:
+     *
      *     message Subscription {
      *       string topic = 2 [(google.api.resource_reference) = {
      *         type: "pubsub.googleapis.com/Topic"
      *       }];
      *     }
+     *
      * Occasionally, a field may reference an arbitrary resource. In this case,
      * APIs use the special value * in their resource reference.
+     *
      * Example:
+     *
      *     message GetIamPolicyRequest {
      *       string resource = 2 [(google.api.resource_reference) = {
      *         type: "*"
@@ -726,8 +778,8 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       type_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -740,7 +792,9 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
      * The resource type of a child collection that the annotated field
      * references. This is useful for annotating the `parent` field that
      * doesn't have a fixed resource type.
+     *
      * Example:
+     *
      *     message ListLogEntriesRequest {
      *       string parent = 1 [(google.api.resource_reference) = {
      *         child_type: "logging.googleapis.com/LogEntry"
@@ -770,7 +824,9 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
      * The resource type of a child collection that the annotated field
      * references. This is useful for annotating the `parent` field that
      * doesn't have a fixed resource type.
+     *
      * Example:
+     *
      *     message ListLogEntriesRequest {
      *       string parent = 1 [(google.api.resource_reference) = {
      *         child_type: "logging.googleapis.com/LogEntry"
@@ -800,7 +856,9 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
      * The resource type of a child collection that the annotated field
      * references. This is useful for annotating the `parent` field that
      * doesn't have a fixed resource type.
+     *
      * Example:
+     *
      *     message ListLogEntriesRequest {
      *       string parent = 1 [(google.api.resource_reference) = {
      *         child_type: "logging.googleapis.com/LogEntry"
@@ -817,8 +875,8 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
       if (value == null) {
         throw new NullPointerException();
       }
-
       childType_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -829,7 +887,9 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
      * The resource type of a child collection that the annotated field
      * references. This is useful for annotating the `parent` field that
      * doesn't have a fixed resource type.
+     *
      * Example:
+     *
      *     message ListLogEntriesRequest {
      *       string parent = 1 [(google.api.resource_reference) = {
      *         child_type: "logging.googleapis.com/LogEntry"
@@ -842,8 +902,8 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
      * @return This builder for chaining.
      */
     public Builder clearChildType() {
-
       childType_ = getDefaultInstance().getChildType();
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -854,7 +914,9 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
      * The resource type of a child collection that the annotated field
      * references. This is useful for annotating the `parent` field that
      * doesn't have a fixed resource type.
+     *
      * Example:
+     *
      *     message ListLogEntriesRequest {
      *       string parent = 1 [(google.api.resource_reference) = {
      *         child_type: "logging.googleapis.com/LogEntry"
@@ -872,8 +934,8 @@ public final class ResourceReference extends com.google.protobuf.GeneratedMessag
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       childType_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }

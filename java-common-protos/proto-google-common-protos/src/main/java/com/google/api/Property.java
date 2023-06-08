@@ -23,11 +23,13 @@ package com.google.api;
  *
  * <pre>
  * Defines project properties.
+ *
  * API services can define properties that can be assigned to consumer projects
  * so that backends can perform response customization without having to make
  * additional calls or maintain additional storage. For example, Maps API
  * defines properties that controls map tile cache period, or whether to embed a
  * watermark in a result.
+ *
  * These values can be set via API producer console. Only API providers can
  * define and set these properties.
  * </pre>
@@ -54,11 +56,6 @@ public final class Property extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new Property();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -275,7 +272,9 @@ public final class Property extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int NAME_FIELD_NUMBER = 1;
-  private volatile java.lang.Object name_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object name_ = "";
   /**
    *
    *
@@ -324,7 +323,7 @@ public final class Property extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int TYPE_FIELD_NUMBER = 2;
-  private int type_;
+  private int type_ = 0;
   /**
    *
    *
@@ -353,14 +352,15 @@ public final class Property extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.api.Property.PropertyType getType() {
-    @SuppressWarnings("deprecation")
     com.google.api.Property.PropertyType result =
-        com.google.api.Property.PropertyType.valueOf(type_);
+        com.google.api.Property.PropertyType.forNumber(type_);
     return result == null ? com.google.api.Property.PropertyType.UNRECOGNIZED : result;
   }
 
   public static final int DESCRIPTION_FIELD_NUMBER = 3;
-  private volatile java.lang.Object description_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object description_ = "";
   /**
    *
    *
@@ -588,11 +588,13 @@ public final class Property extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Defines project properties.
+   *
    * API services can define properties that can be assigned to consumer projects
    * so that backends can perform response customization without having to make
    * additional calls or maintain additional storage. For example, Maps API
    * defines properties that controls map tile cache period, or whether to embed a
    * watermark in a result.
+   *
    * These values can be set via API producer console. Only API providers can
    * define and set these properties.
    * </pre>
@@ -625,12 +627,10 @@ public final class Property extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       name_ = "";
-
       type_ = 0;
-
       description_ = "";
-
       return this;
     }
 
@@ -656,11 +656,24 @@ public final class Property extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.Property buildPartial() {
       com.google.api.Property result = new com.google.api.Property(this);
-      result.name_ = name_;
-      result.type_ = type_;
-      result.description_ = description_;
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.api.Property result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.name_ = name_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.type_ = type_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.description_ = description_;
+      }
     }
 
     @java.lang.Override
@@ -710,6 +723,7 @@ public final class Property extends com.google.protobuf.GeneratedMessageV3
       if (other == com.google.api.Property.getDefaultInstance()) return this;
       if (!other.getName().isEmpty()) {
         name_ = other.name_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (other.type_ != 0) {
@@ -717,6 +731,7 @@ public final class Property extends com.google.protobuf.GeneratedMessageV3
       }
       if (!other.getDescription().isEmpty()) {
         description_ = other.description_;
+        bitField0_ |= 0x00000004;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -748,19 +763,19 @@ public final class Property extends com.google.protobuf.GeneratedMessageV3
             case 10:
               {
                 name_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 16:
               {
                 type_ = input.readEnum();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 16
             case 26:
               {
                 description_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 26
             default:
@@ -779,6 +794,8 @@ public final class Property extends com.google.protobuf.GeneratedMessageV3
       } // finally
       return this;
     }
+
+    private int bitField0_;
 
     private java.lang.Object name_ = "";
     /**
@@ -841,8 +858,8 @@ public final class Property extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       name_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -858,8 +875,8 @@ public final class Property extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearName() {
-
       name_ = getDefaultInstance().getName();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -880,8 +897,8 @@ public final class Property extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       name_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -915,8 +932,8 @@ public final class Property extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setTypeValue(int value) {
-
       type_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -933,9 +950,8 @@ public final class Property extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.api.Property.PropertyType getType() {
-      @SuppressWarnings("deprecation")
       com.google.api.Property.PropertyType result =
-          com.google.api.Property.PropertyType.valueOf(type_);
+          com.google.api.Property.PropertyType.forNumber(type_);
       return result == null ? com.google.api.Property.PropertyType.UNRECOGNIZED : result;
     }
     /**
@@ -954,7 +970,7 @@ public final class Property extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
+      bitField0_ |= 0x00000002;
       type_ = value.getNumber();
       onChanged();
       return this;
@@ -971,7 +987,7 @@ public final class Property extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearType() {
-
+      bitField0_ = (bitField0_ & ~0x00000002);
       type_ = 0;
       onChanged();
       return this;
@@ -1038,8 +1054,8 @@ public final class Property extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       description_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1055,8 +1071,8 @@ public final class Property extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDescription() {
-
       description_ = getDefaultInstance().getDescription();
+      bitField0_ = (bitField0_ & ~0x00000004);
       onChanged();
       return this;
     }
@@ -1077,8 +1093,8 @@ public final class Property extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       description_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }

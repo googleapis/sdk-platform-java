@@ -47,11 +47,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
     return new MethodSettings();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.ClientProto.internal_static_google_api_MethodSettings_descriptor;
   }
@@ -229,11 +224,6 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       return new LongRunning();
     }
 
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-      return this.unknownFields;
-    }
-
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
       return com.google.api.ClientProto
           .internal_static_google_api_MethodSettings_LongRunning_descriptor;
@@ -297,11 +287,13 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.DurationOrBuilder getInitialPollDelayOrBuilder() {
-      return getInitialPollDelay();
+      return initialPollDelay_ == null
+          ? com.google.protobuf.Duration.getDefaultInstance()
+          : initialPollDelay_;
     }
 
     public static final int POLL_DELAY_MULTIPLIER_FIELD_NUMBER = 2;
-    private float pollDelayMultiplier_;
+    private float pollDelayMultiplier_ = 0F;
     /**
      *
      *
@@ -368,7 +360,9 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.DurationOrBuilder getMaxPollDelayOrBuilder() {
-      return getMaxPollDelay();
+      return maxPollDelay_ == null
+          ? com.google.protobuf.Duration.getDefaultInstance()
+          : maxPollDelay_;
     }
 
     public static final int TOTAL_POLL_TIMEOUT_FIELD_NUMBER = 4;
@@ -419,7 +413,9 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.protobuf.DurationOrBuilder getTotalPollTimeoutOrBuilder() {
-      return getTotalPollTimeout();
+      return totalPollTimeout_ == null
+          ? com.google.protobuf.Duration.getDefaultInstance()
+          : totalPollTimeout_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -668,24 +664,21 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       @java.lang.Override
       public Builder clear() {
         super.clear();
-        if (initialPollDelayBuilder_ == null) {
-          initialPollDelay_ = null;
-        } else {
-          initialPollDelay_ = null;
+        bitField0_ = 0;
+        initialPollDelay_ = null;
+        if (initialPollDelayBuilder_ != null) {
+          initialPollDelayBuilder_.dispose();
           initialPollDelayBuilder_ = null;
         }
         pollDelayMultiplier_ = 0F;
-
-        if (maxPollDelayBuilder_ == null) {
-          maxPollDelay_ = null;
-        } else {
-          maxPollDelay_ = null;
+        maxPollDelay_ = null;
+        if (maxPollDelayBuilder_ != null) {
+          maxPollDelayBuilder_.dispose();
           maxPollDelayBuilder_ = null;
         }
-        if (totalPollTimeoutBuilder_ == null) {
-          totalPollTimeout_ = null;
-        } else {
-          totalPollTimeout_ = null;
+        totalPollTimeout_ = null;
+        if (totalPollTimeoutBuilder_ != null) {
+          totalPollTimeoutBuilder_.dispose();
           totalPollTimeoutBuilder_ = null;
         }
         return this;
@@ -715,24 +708,34 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       public com.google.api.MethodSettings.LongRunning buildPartial() {
         com.google.api.MethodSettings.LongRunning result =
             new com.google.api.MethodSettings.LongRunning(this);
-        if (initialPollDelayBuilder_ == null) {
-          result.initialPollDelay_ = initialPollDelay_;
-        } else {
-          result.initialPollDelay_ = initialPollDelayBuilder_.build();
-        }
-        result.pollDelayMultiplier_ = pollDelayMultiplier_;
-        if (maxPollDelayBuilder_ == null) {
-          result.maxPollDelay_ = maxPollDelay_;
-        } else {
-          result.maxPollDelay_ = maxPollDelayBuilder_.build();
-        }
-        if (totalPollTimeoutBuilder_ == null) {
-          result.totalPollTimeout_ = totalPollTimeout_;
-        } else {
-          result.totalPollTimeout_ = totalPollTimeoutBuilder_.build();
+        if (bitField0_ != 0) {
+          buildPartial0(result);
         }
         onBuilt();
         return result;
+      }
+
+      private void buildPartial0(com.google.api.MethodSettings.LongRunning result) {
+        int from_bitField0_ = bitField0_;
+        if (((from_bitField0_ & 0x00000001) != 0)) {
+          result.initialPollDelay_ =
+              initialPollDelayBuilder_ == null
+                  ? initialPollDelay_
+                  : initialPollDelayBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000002) != 0)) {
+          result.pollDelayMultiplier_ = pollDelayMultiplier_;
+        }
+        if (((from_bitField0_ & 0x00000004) != 0)) {
+          result.maxPollDelay_ =
+              maxPollDelayBuilder_ == null ? maxPollDelay_ : maxPollDelayBuilder_.build();
+        }
+        if (((from_bitField0_ & 0x00000008) != 0)) {
+          result.totalPollTimeout_ =
+              totalPollTimeoutBuilder_ == null
+                  ? totalPollTimeout_
+                  : totalPollTimeoutBuilder_.build();
+        }
       }
 
       @java.lang.Override
@@ -824,26 +827,26 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
                 {
                   input.readMessage(
                       getInitialPollDelayFieldBuilder().getBuilder(), extensionRegistry);
-
+                  bitField0_ |= 0x00000001;
                   break;
                 } // case 10
               case 21:
                 {
                   pollDelayMultiplier_ = input.readFloat();
-
+                  bitField0_ |= 0x00000002;
                   break;
                 } // case 21
               case 26:
                 {
                   input.readMessage(getMaxPollDelayFieldBuilder().getBuilder(), extensionRegistry);
-
+                  bitField0_ |= 0x00000004;
                   break;
                 } // case 26
               case 34:
                 {
                   input.readMessage(
                       getTotalPollTimeoutFieldBuilder().getBuilder(), extensionRegistry);
-
+                  bitField0_ |= 0x00000008;
                   break;
                 } // case 34
               default:
@@ -862,6 +865,8 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
         } // finally
         return this;
       }
+
+      private int bitField0_;
 
       private com.google.protobuf.Duration initialPollDelay_;
       private com.google.protobuf.SingleFieldBuilderV3<
@@ -882,7 +887,7 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
        * @return Whether the initialPollDelay field is set.
        */
       public boolean hasInitialPollDelay() {
-        return initialPollDelayBuilder_ != null || initialPollDelay_ != null;
+        return ((bitField0_ & 0x00000001) != 0);
       }
       /**
        *
@@ -921,11 +926,11 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
             throw new NullPointerException();
           }
           initialPollDelay_ = value;
-          onChanged();
         } else {
           initialPollDelayBuilder_.setMessage(value);
         }
-
+        bitField0_ |= 0x00000001;
+        onChanged();
         return this;
       }
       /**
@@ -941,11 +946,11 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       public Builder setInitialPollDelay(com.google.protobuf.Duration.Builder builderForValue) {
         if (initialPollDelayBuilder_ == null) {
           initialPollDelay_ = builderForValue.build();
-          onChanged();
         } else {
           initialPollDelayBuilder_.setMessage(builderForValue.build());
         }
-
+        bitField0_ |= 0x00000001;
+        onChanged();
         return this;
       }
       /**
@@ -960,19 +965,18 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
        */
       public Builder mergeInitialPollDelay(com.google.protobuf.Duration value) {
         if (initialPollDelayBuilder_ == null) {
-          if (initialPollDelay_ != null) {
-            initialPollDelay_ =
-                com.google.protobuf.Duration.newBuilder(initialPollDelay_)
-                    .mergeFrom(value)
-                    .buildPartial();
+          if (((bitField0_ & 0x00000001) != 0)
+              && initialPollDelay_ != null
+              && initialPollDelay_ != com.google.protobuf.Duration.getDefaultInstance()) {
+            getInitialPollDelayBuilder().mergeFrom(value);
           } else {
             initialPollDelay_ = value;
           }
-          onChanged();
         } else {
           initialPollDelayBuilder_.mergeFrom(value);
         }
-
+        bitField0_ |= 0x00000001;
+        onChanged();
         return this;
       }
       /**
@@ -986,14 +990,13 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
        * <code>.google.protobuf.Duration initial_poll_delay = 1;</code>
        */
       public Builder clearInitialPollDelay() {
-        if (initialPollDelayBuilder_ == null) {
-          initialPollDelay_ = null;
-          onChanged();
-        } else {
-          initialPollDelay_ = null;
+        bitField0_ = (bitField0_ & ~0x00000001);
+        initialPollDelay_ = null;
+        if (initialPollDelayBuilder_ != null) {
+          initialPollDelayBuilder_.dispose();
           initialPollDelayBuilder_ = null;
         }
-
+        onChanged();
         return this;
       }
       /**
@@ -1007,7 +1010,7 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
        * <code>.google.protobuf.Duration initial_poll_delay = 1;</code>
        */
       public com.google.protobuf.Duration.Builder getInitialPollDelayBuilder() {
-
+        bitField0_ |= 0x00000001;
         onChanged();
         return getInitialPollDelayFieldBuilder().getBuilder();
       }
@@ -1092,6 +1095,7 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       public Builder setPollDelayMultiplier(float value) {
 
         pollDelayMultiplier_ = value;
+        bitField0_ |= 0x00000002;
         onChanged();
         return this;
       }
@@ -1109,7 +1113,7 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
        * @return This builder for chaining.
        */
       public Builder clearPollDelayMultiplier() {
-
+        bitField0_ = (bitField0_ & ~0x00000002);
         pollDelayMultiplier_ = 0F;
         onChanged();
         return this;
@@ -1134,7 +1138,7 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
        * @return Whether the maxPollDelay field is set.
        */
       public boolean hasMaxPollDelay() {
-        return maxPollDelayBuilder_ != null || maxPollDelay_ != null;
+        return ((bitField0_ & 0x00000004) != 0);
       }
       /**
        *
@@ -1173,11 +1177,11 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
             throw new NullPointerException();
           }
           maxPollDelay_ = value;
-          onChanged();
         } else {
           maxPollDelayBuilder_.setMessage(value);
         }
-
+        bitField0_ |= 0x00000004;
+        onChanged();
         return this;
       }
       /**
@@ -1193,11 +1197,11 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       public Builder setMaxPollDelay(com.google.protobuf.Duration.Builder builderForValue) {
         if (maxPollDelayBuilder_ == null) {
           maxPollDelay_ = builderForValue.build();
-          onChanged();
         } else {
           maxPollDelayBuilder_.setMessage(builderForValue.build());
         }
-
+        bitField0_ |= 0x00000004;
+        onChanged();
         return this;
       }
       /**
@@ -1212,19 +1216,18 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
        */
       public Builder mergeMaxPollDelay(com.google.protobuf.Duration value) {
         if (maxPollDelayBuilder_ == null) {
-          if (maxPollDelay_ != null) {
-            maxPollDelay_ =
-                com.google.protobuf.Duration.newBuilder(maxPollDelay_)
-                    .mergeFrom(value)
-                    .buildPartial();
+          if (((bitField0_ & 0x00000004) != 0)
+              && maxPollDelay_ != null
+              && maxPollDelay_ != com.google.protobuf.Duration.getDefaultInstance()) {
+            getMaxPollDelayBuilder().mergeFrom(value);
           } else {
             maxPollDelay_ = value;
           }
-          onChanged();
         } else {
           maxPollDelayBuilder_.mergeFrom(value);
         }
-
+        bitField0_ |= 0x00000004;
+        onChanged();
         return this;
       }
       /**
@@ -1238,14 +1241,13 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
        * <code>.google.protobuf.Duration max_poll_delay = 3;</code>
        */
       public Builder clearMaxPollDelay() {
-        if (maxPollDelayBuilder_ == null) {
-          maxPollDelay_ = null;
-          onChanged();
-        } else {
-          maxPollDelay_ = null;
+        bitField0_ = (bitField0_ & ~0x00000004);
+        maxPollDelay_ = null;
+        if (maxPollDelayBuilder_ != null) {
+          maxPollDelayBuilder_.dispose();
           maxPollDelayBuilder_ = null;
         }
-
+        onChanged();
         return this;
       }
       /**
@@ -1259,7 +1261,7 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
        * <code>.google.protobuf.Duration max_poll_delay = 3;</code>
        */
       public com.google.protobuf.Duration.Builder getMaxPollDelayBuilder() {
-
+        bitField0_ |= 0x00000004;
         onChanged();
         return getMaxPollDelayFieldBuilder().getBuilder();
       }
@@ -1328,7 +1330,7 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
        * @return Whether the totalPollTimeout field is set.
        */
       public boolean hasTotalPollTimeout() {
-        return totalPollTimeoutBuilder_ != null || totalPollTimeout_ != null;
+        return ((bitField0_ & 0x00000008) != 0);
       }
       /**
        *
@@ -1367,11 +1369,11 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
             throw new NullPointerException();
           }
           totalPollTimeout_ = value;
-          onChanged();
         } else {
           totalPollTimeoutBuilder_.setMessage(value);
         }
-
+        bitField0_ |= 0x00000008;
+        onChanged();
         return this;
       }
       /**
@@ -1387,11 +1389,11 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       public Builder setTotalPollTimeout(com.google.protobuf.Duration.Builder builderForValue) {
         if (totalPollTimeoutBuilder_ == null) {
           totalPollTimeout_ = builderForValue.build();
-          onChanged();
         } else {
           totalPollTimeoutBuilder_.setMessage(builderForValue.build());
         }
-
+        bitField0_ |= 0x00000008;
+        onChanged();
         return this;
       }
       /**
@@ -1406,19 +1408,18 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
        */
       public Builder mergeTotalPollTimeout(com.google.protobuf.Duration value) {
         if (totalPollTimeoutBuilder_ == null) {
-          if (totalPollTimeout_ != null) {
-            totalPollTimeout_ =
-                com.google.protobuf.Duration.newBuilder(totalPollTimeout_)
-                    .mergeFrom(value)
-                    .buildPartial();
+          if (((bitField0_ & 0x00000008) != 0)
+              && totalPollTimeout_ != null
+              && totalPollTimeout_ != com.google.protobuf.Duration.getDefaultInstance()) {
+            getTotalPollTimeoutBuilder().mergeFrom(value);
           } else {
             totalPollTimeout_ = value;
           }
-          onChanged();
         } else {
           totalPollTimeoutBuilder_.mergeFrom(value);
         }
-
+        bitField0_ |= 0x00000008;
+        onChanged();
         return this;
       }
       /**
@@ -1432,14 +1433,13 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
        * <code>.google.protobuf.Duration total_poll_timeout = 4;</code>
        */
       public Builder clearTotalPollTimeout() {
-        if (totalPollTimeoutBuilder_ == null) {
-          totalPollTimeout_ = null;
-          onChanged();
-        } else {
-          totalPollTimeout_ = null;
+        bitField0_ = (bitField0_ & ~0x00000008);
+        totalPollTimeout_ = null;
+        if (totalPollTimeoutBuilder_ != null) {
+          totalPollTimeoutBuilder_.dispose();
           totalPollTimeoutBuilder_ = null;
         }
-
+        onChanged();
         return this;
       }
       /**
@@ -1453,7 +1453,7 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
        * <code>.google.protobuf.Duration total_poll_timeout = 4;</code>
        */
       public com.google.protobuf.Duration.Builder getTotalPollTimeoutBuilder() {
-
+        bitField0_ |= 0x00000008;
         onChanged();
         return getTotalPollTimeoutFieldBuilder().getBuilder();
       }
@@ -1568,7 +1568,9 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int SELECTOR_FIELD_NUMBER = 1;
-  private volatile java.lang.Object selector_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object selector_ = "";
   /**
    *
    *
@@ -1627,10 +1629,12 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
    * Describes settings to use for long-running operations when generating
    * API methods for RPCs. Complements RPCs that use the annotations in
    * google/longrunning/operations.proto.
+   *
    * Example of a YAML configuration::
+   *
    *  publishing:
-   *    method_behavior:
-   *      - selector: CreateAdDomain
+   *    method_settings:
+   *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
    *        long_running:
    *          initial_poll_delay:
    *            seconds: 60 # 1 minute
@@ -1656,10 +1660,12 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
    * Describes settings to use for long-running operations when generating
    * API methods for RPCs. Complements RPCs that use the annotations in
    * google/longrunning/operations.proto.
+   *
    * Example of a YAML configuration::
+   *
    *  publishing:
-   *    method_behavior:
-   *      - selector: CreateAdDomain
+   *    method_settings:
+   *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
    *        long_running:
    *          initial_poll_delay:
    *            seconds: 60 # 1 minute
@@ -1687,10 +1693,12 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
    * Describes settings to use for long-running operations when generating
    * API methods for RPCs. Complements RPCs that use the annotations in
    * google/longrunning/operations.proto.
+   *
    * Example of a YAML configuration::
+   *
    *  publishing:
-   *    method_behavior:
-   *      - selector: CreateAdDomain
+   *    method_settings:
+   *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
    *        long_running:
    *          initial_poll_delay:
    *            seconds: 60 # 1 minute
@@ -1705,7 +1713,9 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.api.MethodSettings.LongRunningOrBuilder getLongRunningOrBuilder() {
-    return getLongRunning();
+    return longRunning_ == null
+        ? com.google.api.MethodSettings.LongRunning.getDefaultInstance()
+        : longRunning_;
   }
 
   private byte memoizedIsInitialized = -1;
@@ -1914,12 +1924,11 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       selector_ = "";
-
-      if (longRunningBuilder_ == null) {
-        longRunning_ = null;
-      } else {
-        longRunning_ = null;
+      longRunning_ = null;
+      if (longRunningBuilder_ != null) {
+        longRunningBuilder_.dispose();
         longRunningBuilder_ = null;
       }
       return this;
@@ -1947,14 +1956,22 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.MethodSettings buildPartial() {
       com.google.api.MethodSettings result = new com.google.api.MethodSettings(this);
-      result.selector_ = selector_;
-      if (longRunningBuilder_ == null) {
-        result.longRunning_ = longRunning_;
-      } else {
-        result.longRunning_ = longRunningBuilder_.build();
+      if (bitField0_ != 0) {
+        buildPartial0(result);
       }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.api.MethodSettings result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.selector_ = selector_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.longRunning_ =
+            longRunningBuilder_ == null ? longRunning_ : longRunningBuilder_.build();
+      }
     }
 
     @java.lang.Override
@@ -2004,6 +2021,7 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       if (other == com.google.api.MethodSettings.getDefaultInstance()) return this;
       if (!other.getSelector().isEmpty()) {
         selector_ = other.selector_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (other.hasLongRunning()) {
@@ -2038,13 +2056,13 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
             case 10:
               {
                 selector_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
               {
                 input.readMessage(getLongRunningFieldBuilder().getBuilder(), extensionRegistry);
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             default:
@@ -2063,6 +2081,8 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       } // finally
       return this;
     }
+
+    private int bitField0_;
 
     private java.lang.Object selector_ = "";
     /**
@@ -2128,8 +2148,8 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       selector_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -2146,8 +2166,8 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearSelector() {
-
       selector_ = getDefaultInstance().getSelector();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -2169,8 +2189,8 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       selector_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -2188,10 +2208,12 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * Describes settings to use for long-running operations when generating
      * API methods for RPCs. Complements RPCs that use the annotations in
      * google/longrunning/operations.proto.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
-     *    method_behavior:
-     *      - selector: CreateAdDomain
+     *    method_settings:
+     *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
      *        long_running:
      *          initial_poll_delay:
      *            seconds: 60 # 1 minute
@@ -2207,7 +2229,7 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * @return Whether the longRunning field is set.
      */
     public boolean hasLongRunning() {
-      return longRunningBuilder_ != null || longRunning_ != null;
+      return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      *
@@ -2216,10 +2238,12 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * Describes settings to use for long-running operations when generating
      * API methods for RPCs. Complements RPCs that use the annotations in
      * google/longrunning/operations.proto.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
-     *    method_behavior:
-     *      - selector: CreateAdDomain
+     *    method_settings:
+     *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
      *        long_running:
      *          initial_poll_delay:
      *            seconds: 60 # 1 minute
@@ -2250,10 +2274,12 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * Describes settings to use for long-running operations when generating
      * API methods for RPCs. Complements RPCs that use the annotations in
      * google/longrunning/operations.proto.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
-     *    method_behavior:
-     *      - selector: CreateAdDomain
+     *    method_settings:
+     *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
      *        long_running:
      *          initial_poll_delay:
      *            seconds: 60 # 1 minute
@@ -2272,11 +2298,11 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
           throw new NullPointerException();
         }
         longRunning_ = value;
-        onChanged();
       } else {
         longRunningBuilder_.setMessage(value);
       }
-
+      bitField0_ |= 0x00000002;
+      onChanged();
       return this;
     }
     /**
@@ -2286,10 +2312,12 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * Describes settings to use for long-running operations when generating
      * API methods for RPCs. Complements RPCs that use the annotations in
      * google/longrunning/operations.proto.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
-     *    method_behavior:
-     *      - selector: CreateAdDomain
+     *    method_settings:
+     *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
      *        long_running:
      *          initial_poll_delay:
      *            seconds: 60 # 1 minute
@@ -2306,11 +2334,11 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
         com.google.api.MethodSettings.LongRunning.Builder builderForValue) {
       if (longRunningBuilder_ == null) {
         longRunning_ = builderForValue.build();
-        onChanged();
       } else {
         longRunningBuilder_.setMessage(builderForValue.build());
       }
-
+      bitField0_ |= 0x00000002;
+      onChanged();
       return this;
     }
     /**
@@ -2320,10 +2348,12 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * Describes settings to use for long-running operations when generating
      * API methods for RPCs. Complements RPCs that use the annotations in
      * google/longrunning/operations.proto.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
-     *    method_behavior:
-     *      - selector: CreateAdDomain
+     *    method_settings:
+     *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
      *        long_running:
      *          initial_poll_delay:
      *            seconds: 60 # 1 minute
@@ -2338,19 +2368,18 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      */
     public Builder mergeLongRunning(com.google.api.MethodSettings.LongRunning value) {
       if (longRunningBuilder_ == null) {
-        if (longRunning_ != null) {
-          longRunning_ =
-              com.google.api.MethodSettings.LongRunning.newBuilder(longRunning_)
-                  .mergeFrom(value)
-                  .buildPartial();
+        if (((bitField0_ & 0x00000002) != 0)
+            && longRunning_ != null
+            && longRunning_ != com.google.api.MethodSettings.LongRunning.getDefaultInstance()) {
+          getLongRunningBuilder().mergeFrom(value);
         } else {
           longRunning_ = value;
         }
-        onChanged();
       } else {
         longRunningBuilder_.mergeFrom(value);
       }
-
+      bitField0_ |= 0x00000002;
+      onChanged();
       return this;
     }
     /**
@@ -2360,10 +2389,12 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * Describes settings to use for long-running operations when generating
      * API methods for RPCs. Complements RPCs that use the annotations in
      * google/longrunning/operations.proto.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
-     *    method_behavior:
-     *      - selector: CreateAdDomain
+     *    method_settings:
+     *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
      *        long_running:
      *          initial_poll_delay:
      *            seconds: 60 # 1 minute
@@ -2377,14 +2408,13 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.MethodSettings.LongRunning long_running = 2;</code>
      */
     public Builder clearLongRunning() {
-      if (longRunningBuilder_ == null) {
-        longRunning_ = null;
-        onChanged();
-      } else {
-        longRunning_ = null;
+      bitField0_ = (bitField0_ & ~0x00000002);
+      longRunning_ = null;
+      if (longRunningBuilder_ != null) {
+        longRunningBuilder_.dispose();
         longRunningBuilder_ = null;
       }
-
+      onChanged();
       return this;
     }
     /**
@@ -2394,10 +2424,12 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * Describes settings to use for long-running operations when generating
      * API methods for RPCs. Complements RPCs that use the annotations in
      * google/longrunning/operations.proto.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
-     *    method_behavior:
-     *      - selector: CreateAdDomain
+     *    method_settings:
+     *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
      *        long_running:
      *          initial_poll_delay:
      *            seconds: 60 # 1 minute
@@ -2411,7 +2443,7 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * <code>.google.api.MethodSettings.LongRunning long_running = 2;</code>
      */
     public com.google.api.MethodSettings.LongRunning.Builder getLongRunningBuilder() {
-
+      bitField0_ |= 0x00000002;
       onChanged();
       return getLongRunningFieldBuilder().getBuilder();
     }
@@ -2422,10 +2454,12 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * Describes settings to use for long-running operations when generating
      * API methods for RPCs. Complements RPCs that use the annotations in
      * google/longrunning/operations.proto.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
-     *    method_behavior:
-     *      - selector: CreateAdDomain
+     *    method_settings:
+     *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
      *        long_running:
      *          initial_poll_delay:
      *            seconds: 60 # 1 minute
@@ -2454,10 +2488,12 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
      * Describes settings to use for long-running operations when generating
      * API methods for RPCs. Complements RPCs that use the annotations in
      * google/longrunning/operations.proto.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
-     *    method_behavior:
-     *      - selector: CreateAdDomain
+     *    method_settings:
+     *      - selector: google.cloud.speech.v2.Speech.BatchRecognize
      *        long_running:
      *          initial_poll_delay:
      *            seconds: 60 # 1 minute

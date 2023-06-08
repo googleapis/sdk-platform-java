@@ -23,7 +23,9 @@ package com.google.api;
  *
  * <pre>
  * Selects and configures the service controller used by the service.
+ *
  * Example:
+ *
  *     control:
  *       environment: servicecontrol.googleapis.com
  * </pre>
@@ -50,11 +52,6 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
     return new Control();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.ControlProto.internal_static_google_api_Control_descriptor;
   }
@@ -68,7 +65,9 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int ENVIRONMENT_FIELD_NUMBER = 1;
-  private volatile java.lang.Object environment_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object environment_ = "";
   /**
    *
    *
@@ -282,7 +281,9 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Selects and configures the service controller used by the service.
+   *
    * Example:
+   *
    *     control:
    *       environment: servicecontrol.googleapis.com
    * </pre>
@@ -315,8 +316,8 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       environment_ = "";
-
       return this;
     }
 
@@ -342,9 +343,18 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.Control buildPartial() {
       com.google.api.Control result = new com.google.api.Control(this);
-      result.environment_ = environment_;
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.api.Control result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.environment_ = environment_;
+      }
     }
 
     @java.lang.Override
@@ -394,6 +404,7 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
       if (other == com.google.api.Control.getDefaultInstance()) return this;
       if (!other.getEnvironment().isEmpty()) {
         environment_ = other.environment_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -425,7 +436,7 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
             case 10:
               {
                 environment_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             default:
@@ -444,6 +455,8 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
       } // finally
       return this;
     }
+
+    private int bitField0_;
 
     private java.lang.Object environment_ = "";
     /**
@@ -512,8 +525,8 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       environment_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -531,8 +544,8 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearEnvironment() {
-
       environment_ = getDefaultInstance().getEnvironment();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -555,8 +568,8 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       environment_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }

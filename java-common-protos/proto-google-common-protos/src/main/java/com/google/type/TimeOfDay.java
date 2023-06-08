@@ -48,11 +48,6 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
     return new TimeOfDay();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.type.TimeOfDayProto.internal_static_google_type_TimeOfDay_descriptor;
   }
@@ -66,7 +61,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int HOURS_FIELD_NUMBER = 1;
-  private int hours_;
+  private int hours_ = 0;
   /**
    *
    *
@@ -85,7 +80,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int MINUTES_FIELD_NUMBER = 2;
-  private int minutes_;
+  private int minutes_ = 0;
   /**
    *
    *
@@ -103,7 +98,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int SECONDS_FIELD_NUMBER = 3;
-  private int seconds_;
+  private int seconds_ = 0;
   /**
    *
    *
@@ -122,7 +117,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int NANOS_FIELD_NUMBER = 4;
-  private int nanos_;
+  private int nanos_ = 0;
   /**
    *
    *
@@ -361,14 +356,11 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       hours_ = 0;
-
       minutes_ = 0;
-
       seconds_ = 0;
-
       nanos_ = 0;
-
       return this;
     }
 
@@ -394,12 +386,27 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.type.TimeOfDay buildPartial() {
       com.google.type.TimeOfDay result = new com.google.type.TimeOfDay(this);
-      result.hours_ = hours_;
-      result.minutes_ = minutes_;
-      result.seconds_ = seconds_;
-      result.nanos_ = nanos_;
+      if (bitField0_ != 0) {
+        buildPartial0(result);
+      }
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.type.TimeOfDay result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.hours_ = hours_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.minutes_ = minutes_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.seconds_ = seconds_;
+      }
+      if (((from_bitField0_ & 0x00000008) != 0)) {
+        result.nanos_ = nanos_;
+      }
     }
 
     @java.lang.Override
@@ -488,25 +495,25 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
             case 8:
               {
                 hours_ = input.readInt32();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 8
             case 16:
               {
                 minutes_ = input.readInt32();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 16
             case 24:
               {
                 seconds_ = input.readInt32();
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 24
             case 32:
               {
                 nanos_ = input.readInt32();
-
+                bitField0_ |= 0x00000008;
                 break;
               } // case 32
             default:
@@ -525,6 +532,8 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
       } // finally
       return this;
     }
+
+    private int bitField0_;
 
     private int hours_;
     /**
@@ -559,6 +568,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
     public Builder setHours(int value) {
 
       hours_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -575,7 +585,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearHours() {
-
+      bitField0_ = (bitField0_ & ~0x00000001);
       hours_ = 0;
       onChanged();
       return this;
@@ -612,6 +622,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
     public Builder setMinutes(int value) {
 
       minutes_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -627,7 +638,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearMinutes() {
-
+      bitField0_ = (bitField0_ & ~0x00000002);
       minutes_ = 0;
       onChanged();
       return this;
@@ -666,6 +677,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
     public Builder setSeconds(int value) {
 
       seconds_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -682,7 +694,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearSeconds() {
-
+      bitField0_ = (bitField0_ & ~0x00000004);
       seconds_ = 0;
       onChanged();
       return this;
@@ -719,6 +731,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
     public Builder setNanos(int value) {
 
       nanos_ = value;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -734,7 +747,7 @@ public final class TimeOfDay extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearNanos() {
-
+      bitField0_ = (bitField0_ & ~0x00000008);
       nanos_ = 0;
       onChanged();
       return this;

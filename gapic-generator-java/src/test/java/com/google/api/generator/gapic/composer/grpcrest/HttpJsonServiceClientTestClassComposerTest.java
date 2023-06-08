@@ -15,12 +15,14 @@
 package com.google.api.generator.gapic.composer.grpcrest;
 
 import static com.google.api.generator.test.framework.Assert.assertCodeEquals;
+import static com.google.common.truth.Truth.assertThat;
 
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
-import com.google.api.generator.test.framework.Utils;
+import com.google.api.generator.test.framework.GoldenFileWriter;
+import com.google.api.generator.test.protoloader.GrpcRestTestProtoLoader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.junit.Test;
@@ -35,9 +37,19 @@ public class HttpJsonServiceClientTestClassComposerTest {
 
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    Utils.saveCodegenToFile(this.getClass(), "EchoClientHttpJsonTest.golden", visitor.write());
+    GoldenFileWriter.saveCodegenToFile(
+        this.getClass(), "EchoClientHttpJsonTest.golden", visitor.write());
     Path goldenFilePath =
-        Paths.get(Utils.getGoldenDir(this.getClass()), "EchoClientHttpJsonTest.golden");
+        Paths.get(GoldenFileWriter.getGoldenDir(this.getClass()), "EchoClientHttpJsonTest.golden");
     assertCodeEquals(goldenFilePath, visitor.write());
+  }
+
+  @Test
+  public void generateServiceClassesWicked() {
+    GapicContext context = GrpcRestTestProtoLoader.instance().parseShowcaseWicked();
+    Service wickedProtoService = context.services().get(0);
+    GapicClass clazz =
+        HttpJsonServiceClientTestClassComposer.instance().generate(context, wickedProtoService);
+    assertThat(clazz.kind()).isEqualTo(GapicClass.Kind.NON_GENERATED);
   }
 }

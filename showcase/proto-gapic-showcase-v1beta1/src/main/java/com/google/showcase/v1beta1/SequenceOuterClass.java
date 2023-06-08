@@ -25,6 +25,26 @@ public final class SequenceOuterClass {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_google_showcase_v1beta1_Sequence_Response_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_google_showcase_v1beta1_StreamingSequence_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_showcase_v1beta1_StreamingSequence_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_google_showcase_v1beta1_StreamingSequence_Response_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_showcase_v1beta1_StreamingSequence_Response_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_google_showcase_v1beta1_StreamingSequenceReport_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_showcase_v1beta1_StreamingSequenceReport_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_google_showcase_v1beta1_StreamingSequenceReport_Attempt_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_showcase_v1beta1_StreamingSequenceReport_Attempt_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
     internal_static_google_showcase_v1beta1_SequenceReport_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -40,15 +60,35 @@ public final class SequenceOuterClass {
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_google_showcase_v1beta1_CreateSequenceRequest_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_google_showcase_v1beta1_CreateStreamingSequenceRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_showcase_v1beta1_CreateStreamingSequenceRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
     internal_static_google_showcase_v1beta1_AttemptSequenceRequest_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_google_showcase_v1beta1_AttemptSequenceRequest_fieldAccessorTable;
   static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_google_showcase_v1beta1_AttemptStreamingSequenceRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_showcase_v1beta1_AttemptStreamingSequenceRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_google_showcase_v1beta1_AttemptStreamingSequenceResponse_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_showcase_v1beta1_AttemptStreamingSequenceResponse_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
     internal_static_google_showcase_v1beta1_GetSequenceReportRequest_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_google_showcase_v1beta1_GetSequenceReportRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_google_showcase_v1beta1_GetStreamingSequenceReportRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_google_showcase_v1beta1_GetStreamingSequenceReportRequest_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -65,46 +105,91 @@ public final class SequenceOuterClass {
       "\032\031google/api/resource.proto\032\036google/prot" +
       "obuf/duration.proto\032\033google/protobuf/emp" +
       "ty.proto\032\037google/protobuf/timestamp.prot" +
-      "o\032\027google/rpc/status.proto\"\363\001\n\010Sequence\022" +
-      "\021\n\004name\030\001 \001(\tB\003\340A\003\022=\n\tresponses\030\002 \003(\0132*." +
-      "google.showcase.v1beta1.Sequence.Respons" +
-      "e\032X\n\010Response\022\"\n\006status\030\001 \001(\0132\022.google.r" +
-      "pc.Status\022(\n\005delay\030\002 \001(\0132\031.google.protob" +
-      "uf.Duration:;\352A8\n showcase.googleapis.co" +
-      "m/Sequence\022\024sequences/{sequence}\"\233\003\n\016Seq" +
-      "uenceReport\022\021\n\004name\030\001 \001(\tB\003\340A\003\022A\n\010attemp" +
-      "ts\030\002 \003(\0132/.google.showcase.v1beta1.Seque" +
-      "nceReport.Attempt\032\340\001\n\007Attempt\022\026\n\016attempt" +
-      "_number\030\001 \001(\005\0224\n\020attempt_deadline\030\002 \001(\0132" +
-      "\032.google.protobuf.Timestamp\0221\n\rresponse_" +
-      "time\030\003 \001(\0132\032.google.protobuf.Timestamp\0220" +
-      "\n\rattempt_delay\030\004 \001(\0132\031.google.protobuf." +
-      "Duration\022\"\n\006status\030\005 \001(\0132\022.google.rpc.St" +
-      "atus:P\352AM\n&showcase.googleapis.com/Seque" +
-      "nceReport\022#sequences/{sequence}/sequence" +
-      "Report\"L\n\025CreateSequenceRequest\0223\n\010seque" +
-      "nce\030\001 \001(\0132!.google.showcase.v1beta1.Sequ" +
-      "ence\"P\n\026AttemptSequenceRequest\0226\n\004name\030\001" +
-      " \001(\tB(\372A\"\n showcase.googleapis.com/Seque" +
-      "nce\340A\002\"X\n\030GetSequenceReportRequest\022<\n\004na" +
-      "me\030\001 \001(\tB.\372A(\n&showcase.googleapis.com/S" +
-      "equenceReport\340A\0022\364\003\n\017SequenceService\022\224\001\n" +
-      "\016CreateSequence\022..google.showcase.v1beta" +
-      "1.CreateSequenceRequest\032!.google.showcas" +
-      "e.v1beta1.Sequence\"/\202\323\344\223\002\036\"\022/v1beta1/seq" +
-      "uences:\010sequence\332A\010sequence\022\252\001\n\021GetSeque" +
-      "nceReport\0221.google.showcase.v1beta1.GetS" +
-      "equenceReportRequest\032\'.google.showcase.v" +
-      "1beta1.SequenceReport\"9\202\323\344\223\002,\022*/v1beta1/" +
-      "{name=sequences/*/sequenceReport}\332A\004name" +
-      "\022\211\001\n\017AttemptSequence\022/.google.showcase.v" +
-      "1beta1.AttemptSequenceRequest\032\026.google.p" +
-      "rotobuf.Empty\"-\202\323\344\223\002 \"\033/v1beta1/{name=se" +
-      "quences/*}:\001*\332A\004name\032\021\312A\016localhost:7469B" +
-      "q\n\033com.google.showcase.v1beta1P\001Z4github" +
-      ".com/googleapis/gapic-showcase/server/ge" +
-      "nproto\352\002\031Google::Showcase::V1beta1b\006prot" +
-      "o3"
+      "o\032\027google/rpc/status.proto\"\364\001\n\010Sequence\022" +
+      "\022\n\004name\030\001 \001(\tB\004\342A\001\003\022=\n\tresponses\030\002 \003(\0132*" +
+      ".google.showcase.v1beta1.Sequence.Respon" +
+      "se\032X\n\010Response\022\"\n\006status\030\001 \001(\0132\022.google." +
+      "rpc.Status\022(\n\005delay\030\002 \001(\0132\031.google.proto" +
+      "buf.Duration:;\352A8\n showcase.googleapis.c" +
+      "om/Sequence\022\024sequences/{sequence}\"\313\002\n\021St" +
+      "reamingSequence\022\022\n\004name\030\001 \001(\tB\004\342A\001\003\022\017\n\007c" +
+      "ontent\030\002 \001(\t\022F\n\tresponses\030\003 \003(\01323.google" +
+      ".showcase.v1beta1.StreamingSequence.Resp" +
+      "onse\032p\n\010Response\022\"\n\006status\030\001 \001(\0132\022.googl" +
+      "e.rpc.Status\022(\n\005delay\030\002 \001(\0132\031.google.pro" +
+      "tobuf.Duration\022\026\n\016response_index\030\003 \001(\005:W" +
+      "\352AT\n)showcase.googleapis.com/StreamingSe" +
+      "quence\022\'streamingSequences/{streaming_se" +
+      "quence}\"\351\003\n\027StreamingSequenceReport\022\022\n\004n" +
+      "ame\030\001 \001(\tB\004\342A\001\003\022J\n\010attempts\030\002 \003(\01328.goog" +
+      "le.showcase.v1beta1.StreamingSequenceRep" +
+      "ort.Attempt\032\366\001\n\007Attempt\022\026\n\016attempt_numbe" +
+      "r\030\001 \001(\005\0224\n\020attempt_deadline\030\002 \001(\0132\032.goog" +
+      "le.protobuf.Timestamp\0221\n\rresponse_time\030\003" +
+      " \001(\0132\032.google.protobuf.Timestamp\0220\n\ratte" +
+      "mpt_delay\030\004 \001(\0132\031.google.protobuf.Durati" +
+      "on\022\"\n\006status\030\005 \001(\0132\022.google.rpc.Status\022\024" +
+      "\n\014content_sent\030\006 \001(\t:u\352Ar\n/showcase.goog" +
+      "leapis.com/StreamingSequenceReport\022?stre" +
+      "amingSequences/{streaming_sequence}/stre" +
+      "amingSequenceReport\"\234\003\n\016SequenceReport\022\022" +
+      "\n\004name\030\001 \001(\tB\004\342A\001\003\022A\n\010attempts\030\002 \003(\0132/.g" +
+      "oogle.showcase.v1beta1.SequenceReport.At" +
+      "tempt\032\340\001\n\007Attempt\022\026\n\016attempt_number\030\001 \001(" +
+      "\005\0224\n\020attempt_deadline\030\002 \001(\0132\032.google.pro" +
+      "tobuf.Timestamp\0221\n\rresponse_time\030\003 \001(\0132\032" +
+      ".google.protobuf.Timestamp\0220\n\rattempt_de" +
+      "lay\030\004 \001(\0132\031.google.protobuf.Duration\022\"\n\006" +
+      "status\030\005 \001(\0132\022.google.rpc.Status:P\352AM\n&s" +
+      "howcase.googleapis.com/SequenceReport\022#s" +
+      "equences/{sequence}/sequenceReport\"L\n\025Cr" +
+      "eateSequenceRequest\0223\n\010sequence\030\001 \001(\0132!." +
+      "google.showcase.v1beta1.Sequence\"h\n\036Crea" +
+      "teStreamingSequenceRequest\022F\n\022streaming_" +
+      "sequence\030\001 \001(\0132*.google.showcase.v1beta1" +
+      ".StreamingSequence\"Q\n\026AttemptSequenceReq" +
+      "uest\0227\n\004name\030\001 \001(\tB)\342A\001\002\372A\"\n showcase.go" +
+      "ogleapis.com/Sequence\"c\n\037AttemptStreamin" +
+      "gSequenceRequest\022@\n\004name\030\001 \001(\tB2\342A\001\002\372A+\n" +
+      ")showcase.googleapis.com/StreamingSequen" +
+      "ce\"3\n AttemptStreamingSequenceResponse\022\017" +
+      "\n\007content\030\001 \001(\t\"Y\n\030GetSequenceReportRequ" +
+      "est\022=\n\004name\030\001 \001(\tB/\342A\001\002\372A(\n&showcase.goo" +
+      "gleapis.com/SequenceReport\"k\n!GetStreami" +
+      "ngSequenceReportRequest\022F\n\004name\030\001 \001(\tB8\342" +
+      "A\001\002\372A1\n/showcase.googleapis.com/Streamin" +
+      "gSequenceReport2\360\010\n\017SequenceService\022\224\001\n\016" +
+      "CreateSequence\022..google.showcase.v1beta1" +
+      ".CreateSequenceRequest\032!.google.showcase" +
+      ".v1beta1.Sequence\"/\332A\010sequence\202\323\344\223\002\036\"\022/v" +
+      "1beta1/sequences:\010sequence\022\314\001\n\027CreateStr" +
+      "eamingSequence\0227.google.showcase.v1beta1" +
+      ".CreateStreamingSequenceRequest\032*.google" +
+      ".showcase.v1beta1.StreamingSequence\"L\332A\022" +
+      "streaming_sequence\202\323\344\223\0021\"\033/v1beta1/strea" +
+      "mingSequences:\022streaming_sequence\022\252\001\n\021Ge" +
+      "tSequenceReport\0221.google.showcase.v1beta" +
+      "1.GetSequenceReportRequest\032\'.google.show" +
+      "case.v1beta1.SequenceReport\"9\332A\004name\202\323\344\223" +
+      "\002,\022*/v1beta1/{name=sequences/*/sequenceR" +
+      "eport}\022\327\001\n\032GetStreamingSequenceReport\022:." +
+      "google.showcase.v1beta1.GetStreamingSequ" +
+      "enceReportRequest\0320.google.showcase.v1be" +
+      "ta1.StreamingSequenceReport\"K\332A\004name\202\323\344\223" +
+      "\002>\022</v1beta1/{name=streamingSequences/*/" +
+      "streamingSequenceReport}\022\211\001\n\017AttemptSequ" +
+      "ence\022/.google.showcase.v1beta1.AttemptSe" +
+      "quenceRequest\032\026.google.protobuf.Empty\"-\332" +
+      "A\004name\202\323\344\223\002 \"\033/v1beta1/{name=sequences/*" +
+      "}:\001*\022\320\001\n\030AttemptStreamingSequence\0228.goog" +
+      "le.showcase.v1beta1.AttemptStreamingSequ" +
+      "enceRequest\0329.google.showcase.v1beta1.At" +
+      "temptStreamingSequenceResponse\"=\332A\004name\202" +
+      "\323\344\223\0020\"+/v1beta1/{name=streamingSequences" +
+      "/*}:stream:\001*0\001\032\021\312A\016localhost:7469Bq\n\033co" +
+      "m.google.showcase.v1beta1P\001Z4github.com/" +
+      "googleapis/gapic-showcase/server/genprot" +
+      "o\352\002\031Google::Showcase::V1beta1b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -130,8 +215,32 @@ public final class SequenceOuterClass {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_showcase_v1beta1_Sequence_Response_descriptor,
         new java.lang.String[] { "Status", "Delay", });
-    internal_static_google_showcase_v1beta1_SequenceReport_descriptor =
+    internal_static_google_showcase_v1beta1_StreamingSequence_descriptor =
       getDescriptor().getMessageTypes().get(1);
+    internal_static_google_showcase_v1beta1_StreamingSequence_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_google_showcase_v1beta1_StreamingSequence_descriptor,
+        new java.lang.String[] { "Name", "Content", "Responses", });
+    internal_static_google_showcase_v1beta1_StreamingSequence_Response_descriptor =
+      internal_static_google_showcase_v1beta1_StreamingSequence_descriptor.getNestedTypes().get(0);
+    internal_static_google_showcase_v1beta1_StreamingSequence_Response_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_google_showcase_v1beta1_StreamingSequence_Response_descriptor,
+        new java.lang.String[] { "Status", "Delay", "ResponseIndex", });
+    internal_static_google_showcase_v1beta1_StreamingSequenceReport_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_google_showcase_v1beta1_StreamingSequenceReport_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_google_showcase_v1beta1_StreamingSequenceReport_descriptor,
+        new java.lang.String[] { "Name", "Attempts", });
+    internal_static_google_showcase_v1beta1_StreamingSequenceReport_Attempt_descriptor =
+      internal_static_google_showcase_v1beta1_StreamingSequenceReport_descriptor.getNestedTypes().get(0);
+    internal_static_google_showcase_v1beta1_StreamingSequenceReport_Attempt_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_google_showcase_v1beta1_StreamingSequenceReport_Attempt_descriptor,
+        new java.lang.String[] { "AttemptNumber", "AttemptDeadline", "ResponseTime", "AttemptDelay", "Status", "ContentSent", });
+    internal_static_google_showcase_v1beta1_SequenceReport_descriptor =
+      getDescriptor().getMessageTypes().get(3);
     internal_static_google_showcase_v1beta1_SequenceReport_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_showcase_v1beta1_SequenceReport_descriptor,
@@ -143,22 +252,46 @@ public final class SequenceOuterClass {
         internal_static_google_showcase_v1beta1_SequenceReport_Attempt_descriptor,
         new java.lang.String[] { "AttemptNumber", "AttemptDeadline", "ResponseTime", "AttemptDelay", "Status", });
     internal_static_google_showcase_v1beta1_CreateSequenceRequest_descriptor =
-      getDescriptor().getMessageTypes().get(2);
+      getDescriptor().getMessageTypes().get(4);
     internal_static_google_showcase_v1beta1_CreateSequenceRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_showcase_v1beta1_CreateSequenceRequest_descriptor,
         new java.lang.String[] { "Sequence", });
+    internal_static_google_showcase_v1beta1_CreateStreamingSequenceRequest_descriptor =
+      getDescriptor().getMessageTypes().get(5);
+    internal_static_google_showcase_v1beta1_CreateStreamingSequenceRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_google_showcase_v1beta1_CreateStreamingSequenceRequest_descriptor,
+        new java.lang.String[] { "StreamingSequence", });
     internal_static_google_showcase_v1beta1_AttemptSequenceRequest_descriptor =
-      getDescriptor().getMessageTypes().get(3);
+      getDescriptor().getMessageTypes().get(6);
     internal_static_google_showcase_v1beta1_AttemptSequenceRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_showcase_v1beta1_AttemptSequenceRequest_descriptor,
         new java.lang.String[] { "Name", });
+    internal_static_google_showcase_v1beta1_AttemptStreamingSequenceRequest_descriptor =
+      getDescriptor().getMessageTypes().get(7);
+    internal_static_google_showcase_v1beta1_AttemptStreamingSequenceRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_google_showcase_v1beta1_AttemptStreamingSequenceRequest_descriptor,
+        new java.lang.String[] { "Name", });
+    internal_static_google_showcase_v1beta1_AttemptStreamingSequenceResponse_descriptor =
+      getDescriptor().getMessageTypes().get(8);
+    internal_static_google_showcase_v1beta1_AttemptStreamingSequenceResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_google_showcase_v1beta1_AttemptStreamingSequenceResponse_descriptor,
+        new java.lang.String[] { "Content", });
     internal_static_google_showcase_v1beta1_GetSequenceReportRequest_descriptor =
-      getDescriptor().getMessageTypes().get(4);
+      getDescriptor().getMessageTypes().get(9);
     internal_static_google_showcase_v1beta1_GetSequenceReportRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_showcase_v1beta1_GetSequenceReportRequest_descriptor,
+        new java.lang.String[] { "Name", });
+    internal_static_google_showcase_v1beta1_GetStreamingSequenceReportRequest_descriptor =
+      getDescriptor().getMessageTypes().get(10);
+    internal_static_google_showcase_v1beta1_GetStreamingSequenceReportRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_google_showcase_v1beta1_GetStreamingSequenceReportRequest_descriptor,
         new java.lang.String[] { "Name", });
     com.google.protobuf.ExtensionRegistry registry =
         com.google.protobuf.ExtensionRegistry.newInstance();

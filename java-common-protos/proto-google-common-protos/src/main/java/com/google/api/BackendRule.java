@@ -50,13 +50,19 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     return new BackendRule();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.BackendProto.internal_static_google_api_BackendRule_descriptor;
+  }
+
+  @SuppressWarnings({"rawtypes"})
+  @java.lang.Override
+  protected com.google.protobuf.MapField internalGetMapField(int number) {
+    switch (number) {
+      case 10:
+        return internalGetOverridesByRequestProtocol();
+      default:
+        throw new RuntimeException("Invalid map field number: " + number);
+    }
   }
 
   @java.lang.Override
@@ -74,6 +80,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    * Path Translation specifies how to combine the backend address with the
    * request path in order to produce the appropriate forwarding URL for the
    * request.
+   *
    * Path Translation is applicable only to HTTP-based backends. Backends which
    * do not accept requests over HTTP/HTTPS should leave `path_translation`
    * unspecified.
@@ -93,15 +100,21 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * appended to the query string. If a query string parameter and a URL
      * pattern variable have the same name, this may result in duplicate keys in
      * the query string.
+     *
      * # Examples
+     *
      * Given the following operation config:
+     *
      *     Method path:        /api/company/{cid}/user/{uid}
      *     Backend address:    https://example.cloudfunctions.net/getUser
+     *
      * Requests to the following request paths will call the backend at the
      * translated path:
+     *
      *     Request path: /api/company/widgetworks/user/johndoe
      *     Translated:
      *     https://example.cloudfunctions.net/getUser?cid=widgetworks&amp;uid=johndoe
+     *
      *     Request path: /api/company/widgetworks/user/johndoe?timezone=EST
      *     Translated:
      *     https://example.cloudfunctions.net/getUser?timezone=EST&amp;cid=widgetworks&amp;uid=johndoe
@@ -115,15 +128,21 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The request path will be appended to the backend address.
+     *
      * # Examples
+     *
      * Given the following operation config:
+     *
      *     Method path:        /api/company/{cid}/user/{uid}
      *     Backend address:    https://example.appspot.com
+     *
      * Requests to the following request paths will call the backend at the
      * translated path:
+     *
      *     Request path: /api/company/widgetworks/user/johndoe
      *     Translated:
      *     https://example.appspot.com/api/company/widgetworks/user/johndoe
+     *
      *     Request path: /api/company/widgetworks/user/johndoe?timezone=EST
      *     Translated:
      *     https://example.appspot.com/api/company/widgetworks/user/johndoe?timezone=EST
@@ -146,15 +165,21 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * appended to the query string. If a query string parameter and a URL
      * pattern variable have the same name, this may result in duplicate keys in
      * the query string.
+     *
      * # Examples
+     *
      * Given the following operation config:
+     *
      *     Method path:        /api/company/{cid}/user/{uid}
      *     Backend address:    https://example.cloudfunctions.net/getUser
+     *
      * Requests to the following request paths will call the backend at the
      * translated path:
+     *
      *     Request path: /api/company/widgetworks/user/johndoe
      *     Translated:
      *     https://example.cloudfunctions.net/getUser?cid=widgetworks&amp;uid=johndoe
+     *
      *     Request path: /api/company/widgetworks/user/johndoe?timezone=EST
      *     Translated:
      *     https://example.cloudfunctions.net/getUser?timezone=EST&amp;cid=widgetworks&amp;uid=johndoe
@@ -168,15 +193,21 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The request path will be appended to the backend address.
+     *
      * # Examples
+     *
      * Given the following operation config:
+     *
      *     Method path:        /api/company/{cid}/user/{uid}
      *     Backend address:    https://example.appspot.com
+     *
      * Requests to the following request paths will call the backend at the
      * translated path:
+     *
      *     Request path: /api/company/widgetworks/user/johndoe
      *     Translated:
      *     https://example.appspot.com/api/company/widgetworks/user/johndoe
+     *
      *     Request path: /api/company/widgetworks/user/johndoe?timezone=EST
      *     Translated:
      *     https://example.appspot.com/api/company/widgetworks/user/johndoe?timezone=EST
@@ -272,6 +303,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   private int authenticationCase_ = 0;
+
+  @SuppressWarnings("serial")
   private java.lang.Object authentication_;
 
   public enum AuthenticationCase
@@ -319,13 +352,17 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int SELECTOR_FIELD_NUMBER = 1;
-  private volatile java.lang.Object selector_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object selector_ = "";
   /**
    *
    *
    * <pre>
    * Selects the methods to which this rule applies.
-   * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+   *
+   * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+   * details.
    * </pre>
    *
    * <code>string selector = 1;</code>
@@ -349,7 +386,9 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Selects the methods to which this rule applies.
-   * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+   *
+   * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+   * details.
    * </pre>
    *
    * <code>string selector = 1;</code>
@@ -370,24 +409,31 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int ADDRESS_FIELD_NUMBER = 2;
-  private volatile java.lang.Object address_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object address_ = "";
   /**
    *
    *
    * <pre>
    * The address of the API backend.
+   *
    * The scheme is used to determine the backend protocol and security.
    * The following schemes are accepted:
+   *
    *    SCHEME        PROTOCOL    SECURITY
    *    http://       HTTP        None
    *    https://      HTTP        TLS
    *    grpc://       gRPC        None
    *    grpcs://      gRPC        TLS
+   *
    * It is recommended to explicitly include a scheme. Leaving out the scheme
    * may cause constrasting behaviors across platforms.
+   *
    * If the port is unspecified, the default is:
    * - 80 for schemes without TLS
    * - 443 for schemes with TLS
+   *
    * For HTTP backends, use [protocol][google.api.BackendRule.protocol]
    * to specify the protocol version.
    * </pre>
@@ -413,18 +459,23 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * The address of the API backend.
+   *
    * The scheme is used to determine the backend protocol and security.
    * The following schemes are accepted:
+   *
    *    SCHEME        PROTOCOL    SECURITY
    *    http://       HTTP        None
    *    https://      HTTP        TLS
    *    grpc://       gRPC        None
    *    grpcs://      gRPC        TLS
+   *
    * It is recommended to explicitly include a scheme. Leaving out the scheme
    * may cause constrasting behaviors across platforms.
+   *
    * If the port is unspecified, the default is:
    * - 80 for schemes without TLS
    * - 443 for schemes with TLS
+   *
    * For HTTP backends, use [protocol][google.api.BackendRule.protocol]
    * to specify the protocol version.
    * </pre>
@@ -447,7 +498,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int DEADLINE_FIELD_NUMBER = 3;
-  private double deadline_;
+  private double deadline_ = 0D;
   /**
    *
    *
@@ -466,7 +517,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int MIN_DEADLINE_FIELD_NUMBER = 4;
-  private double minDeadline_;
+  private double minDeadline_ = 0D;
   /**
    *
    *
@@ -477,7 +528,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    * <code>double min_deadline = 4 [deprecated = true];</code>
    *
    * @deprecated google.api.BackendRule.min_deadline is deprecated. See
-   *     google/api/backend.proto;l=123
+   *     google/api/backend.proto;l=124
    * @return The minDeadline.
    */
   @java.lang.Override
@@ -487,7 +538,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int OPERATION_DEADLINE_FIELD_NUMBER = 5;
-  private double operationDeadline_;
+  private double operationDeadline_ = 0D;
   /**
    *
    *
@@ -506,7 +557,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int PATH_TRANSLATION_FIELD_NUMBER = 6;
-  private int pathTranslation_;
+  private int pathTranslation_ = 0;
   /**
    * <code>.google.api.BackendRule.PathTranslation path_translation = 6;</code>
    *
@@ -523,9 +574,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    */
   @java.lang.Override
   public com.google.api.BackendRule.PathTranslation getPathTranslation() {
-    @SuppressWarnings("deprecation")
     com.google.api.BackendRule.PathTranslation result =
-        com.google.api.BackendRule.PathTranslation.valueOf(pathTranslation_);
+        com.google.api.BackendRule.PathTranslation.forNumber(pathTranslation_);
     return result == null ? com.google.api.BackendRule.PathTranslation.UNRECOGNIZED : result;
   }
 
@@ -647,24 +697,31 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   public static final int PROTOCOL_FIELD_NUMBER = 9;
-  private volatile java.lang.Object protocol_;
+
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object protocol_ = "";
   /**
    *
    *
    * <pre>
    * The protocol used for sending a request to the backend.
    * The supported values are "http/1.1" and "h2".
+   *
    * The default value is inferred from the scheme in the
    * [address][google.api.BackendRule.address] field:
+   *
    *    SCHEME        PROTOCOL
    *    http://       http/1.1
    *    https://      http/1.1
    *    grpc://       h2
    *    grpcs://      h2
+   *
    * For secure HTTP backends (https://) that support HTTP/2, set this field
    * to "h2" for improved performance.
+   *
    * Configuring this field to non-default values is only supported for secure
    * HTTP backends. This field will be ignored for all other backends.
+   *
    * See
    * https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids
    * for more details on the supported values.
@@ -692,17 +749,22 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * The protocol used for sending a request to the backend.
    * The supported values are "http/1.1" and "h2".
+   *
    * The default value is inferred from the scheme in the
    * [address][google.api.BackendRule.address] field:
+   *
    *    SCHEME        PROTOCOL
    *    http://       http/1.1
    *    https://      http/1.1
    *    grpc://       h2
    *    grpcs://      h2
+   *
    * For secure HTTP backends (https://) that support HTTP/2, set this field
    * to "h2" for improved performance.
+   *
    * Configuring this field to non-default values is only supported for secure
    * HTTP backends. This field will be ignored for all other backends.
+   *
    * See
    * https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids
    * for more details on the supported values.
@@ -723,6 +785,117 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     } else {
       return (com.google.protobuf.ByteString) ref;
     }
+  }
+
+  public static final int OVERRIDES_BY_REQUEST_PROTOCOL_FIELD_NUMBER = 10;
+
+  private static final class OverridesByRequestProtocolDefaultEntryHolder {
+    static final com.google.protobuf.MapEntry<java.lang.String, com.google.api.BackendRule>
+        defaultEntry =
+            com.google.protobuf.MapEntry
+                .<java.lang.String, com.google.api.BackendRule>newDefaultInstance(
+                    com.google.api.BackendProto
+                        .internal_static_google_api_BackendRule_OverridesByRequestProtocolEntry_descriptor,
+                    com.google.protobuf.WireFormat.FieldType.STRING,
+                    "",
+                    com.google.protobuf.WireFormat.FieldType.MESSAGE,
+                    com.google.api.BackendRule.getDefaultInstance());
+  }
+
+  @SuppressWarnings("serial")
+  private com.google.protobuf.MapField<java.lang.String, com.google.api.BackendRule>
+      overridesByRequestProtocol_;
+
+  private com.google.protobuf.MapField<java.lang.String, com.google.api.BackendRule>
+      internalGetOverridesByRequestProtocol() {
+    if (overridesByRequestProtocol_ == null) {
+      return com.google.protobuf.MapField.emptyMapField(
+          OverridesByRequestProtocolDefaultEntryHolder.defaultEntry);
+    }
+    return overridesByRequestProtocol_;
+  }
+
+  public int getOverridesByRequestProtocolCount() {
+    return internalGetOverridesByRequestProtocol().getMap().size();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The map between request protocol and the backend address.
+   * </pre>
+   *
+   * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
+   */
+  @java.lang.Override
+  public boolean containsOverridesByRequestProtocol(java.lang.String key) {
+    if (key == null) {
+      throw new NullPointerException("map key");
+    }
+    return internalGetOverridesByRequestProtocol().getMap().containsKey(key);
+  }
+  /** Use {@link #getOverridesByRequestProtocolMap()} instead. */
+  @java.lang.Override
+  @java.lang.Deprecated
+  public java.util.Map<java.lang.String, com.google.api.BackendRule>
+      getOverridesByRequestProtocol() {
+    return getOverridesByRequestProtocolMap();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The map between request protocol and the backend address.
+   * </pre>
+   *
+   * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
+   */
+  @java.lang.Override
+  public java.util.Map<java.lang.String, com.google.api.BackendRule>
+      getOverridesByRequestProtocolMap() {
+    return internalGetOverridesByRequestProtocol().getMap();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The map between request protocol and the backend address.
+   * </pre>
+   *
+   * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
+   */
+  @java.lang.Override
+  public /* nullable */ com.google.api.BackendRule getOverridesByRequestProtocolOrDefault(
+      java.lang.String key,
+      /* nullable */
+      com.google.api.BackendRule defaultValue) {
+    if (key == null) {
+      throw new NullPointerException("map key");
+    }
+    java.util.Map<java.lang.String, com.google.api.BackendRule> map =
+        internalGetOverridesByRequestProtocol().getMap();
+    return map.containsKey(key) ? map.get(key) : defaultValue;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * The map between request protocol and the backend address.
+   * </pre>
+   *
+   * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
+   */
+  @java.lang.Override
+  public com.google.api.BackendRule getOverridesByRequestProtocolOrThrow(java.lang.String key) {
+    if (key == null) {
+      throw new NullPointerException("map key");
+    }
+    java.util.Map<java.lang.String, com.google.api.BackendRule> map =
+        internalGetOverridesByRequestProtocol().getMap();
+    if (!map.containsKey(key)) {
+      throw new java.lang.IllegalArgumentException();
+    }
+    return map.get(key);
   }
 
   private byte memoizedIsInitialized = -1;
@@ -767,6 +940,11 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(protocol_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 9, protocol_);
     }
+    com.google.protobuf.GeneratedMessageV3.serializeStringMapTo(
+        output,
+        internalGetOverridesByRequestProtocol(),
+        OverridesByRequestProtocolDefaultEntryHolder.defaultEntry,
+        10);
     getUnknownFields().writeTo(output);
   }
 
@@ -806,6 +984,19 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(protocol_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(9, protocol_);
     }
+    for (java.util.Map.Entry<java.lang.String, com.google.api.BackendRule> entry :
+        internalGetOverridesByRequestProtocol().getMap().entrySet()) {
+      com.google.protobuf.MapEntry<java.lang.String, com.google.api.BackendRule>
+          overridesByRequestProtocol__ =
+              OverridesByRequestProtocolDefaultEntryHolder.defaultEntry
+                  .newBuilderForType()
+                  .setKey(entry.getKey())
+                  .setValue(entry.getValue())
+                  .build();
+      size +=
+          com.google.protobuf.CodedOutputStream.computeMessageSize(
+              10, overridesByRequestProtocol__);
+    }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
     return size;
@@ -831,6 +1022,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
         != java.lang.Double.doubleToLongBits(other.getOperationDeadline())) return false;
     if (pathTranslation_ != other.pathTranslation_) return false;
     if (!getProtocol().equals(other.getProtocol())) return false;
+    if (!internalGetOverridesByRequestProtocol()
+        .equals(other.internalGetOverridesByRequestProtocol())) return false;
     if (!getAuthenticationCase().equals(other.getAuthenticationCase())) return false;
     switch (authenticationCase_) {
       case 7:
@@ -876,6 +1069,10 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     hash = (53 * hash) + pathTranslation_;
     hash = (37 * hash) + PROTOCOL_FIELD_NUMBER;
     hash = (53 * hash) + getProtocol().hashCode();
+    if (!internalGetOverridesByRequestProtocol().getMap().isEmpty()) {
+      hash = (37 * hash) + OVERRIDES_BY_REQUEST_PROTOCOL_FIELD_NUMBER;
+      hash = (53 * hash) + internalGetOverridesByRequestProtocol().hashCode();
+    }
     switch (authenticationCase_) {
       case 7:
         hash = (37 * hash) + JWT_AUDIENCE_FIELD_NUMBER;
@@ -1004,6 +1201,26 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       return com.google.api.BackendProto.internal_static_google_api_BackendRule_descriptor;
     }
 
+    @SuppressWarnings({"rawtypes"})
+    protected com.google.protobuf.MapField internalGetMapField(int number) {
+      switch (number) {
+        case 10:
+          return internalGetOverridesByRequestProtocol();
+        default:
+          throw new RuntimeException("Invalid map field number: " + number);
+      }
+    }
+
+    @SuppressWarnings({"rawtypes"})
+    protected com.google.protobuf.MapField internalGetMutableMapField(int number) {
+      switch (number) {
+        case 10:
+          return internalGetMutableOverridesByRequestProtocol();
+        default:
+          throw new RuntimeException("Invalid map field number: " + number);
+      }
+    }
+
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
         internalGetFieldAccessorTable() {
@@ -1022,20 +1239,15 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public Builder clear() {
       super.clear();
+      bitField0_ = 0;
       selector_ = "";
-
       address_ = "";
-
       deadline_ = 0D;
-
       minDeadline_ = 0D;
-
       operationDeadline_ = 0D;
-
       pathTranslation_ = 0;
-
       protocol_ = "";
-
+      internalGetMutableOverridesByRequestProtocol().clear();
       authenticationCase_ = 0;
       authentication_ = null;
       return this;
@@ -1063,22 +1275,46 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.BackendRule buildPartial() {
       com.google.api.BackendRule result = new com.google.api.BackendRule(this);
-      result.selector_ = selector_;
-      result.address_ = address_;
-      result.deadline_ = deadline_;
-      result.minDeadline_ = minDeadline_;
-      result.operationDeadline_ = operationDeadline_;
-      result.pathTranslation_ = pathTranslation_;
-      if (authenticationCase_ == 7) {
-        result.authentication_ = authentication_;
+      if (bitField0_ != 0) {
+        buildPartial0(result);
       }
-      if (authenticationCase_ == 8) {
-        result.authentication_ = authentication_;
-      }
-      result.protocol_ = protocol_;
-      result.authenticationCase_ = authenticationCase_;
+      buildPartialOneofs(result);
       onBuilt();
       return result;
+    }
+
+    private void buildPartial0(com.google.api.BackendRule result) {
+      int from_bitField0_ = bitField0_;
+      if (((from_bitField0_ & 0x00000001) != 0)) {
+        result.selector_ = selector_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        result.address_ = address_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.deadline_ = deadline_;
+      }
+      if (((from_bitField0_ & 0x00000008) != 0)) {
+        result.minDeadline_ = minDeadline_;
+      }
+      if (((from_bitField0_ & 0x00000010) != 0)) {
+        result.operationDeadline_ = operationDeadline_;
+      }
+      if (((from_bitField0_ & 0x00000020) != 0)) {
+        result.pathTranslation_ = pathTranslation_;
+      }
+      if (((from_bitField0_ & 0x00000100) != 0)) {
+        result.protocol_ = protocol_;
+      }
+      if (((from_bitField0_ & 0x00000200) != 0)) {
+        result.overridesByRequestProtocol_ = internalGetOverridesByRequestProtocol();
+        result.overridesByRequestProtocol_.makeImmutable();
+      }
+    }
+
+    private void buildPartialOneofs(com.google.api.BackendRule result) {
+      result.authenticationCase_ = authenticationCase_;
+      result.authentication_ = this.authentication_;
     }
 
     @java.lang.Override
@@ -1128,10 +1364,12 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       if (other == com.google.api.BackendRule.getDefaultInstance()) return this;
       if (!other.getSelector().isEmpty()) {
         selector_ = other.selector_;
+        bitField0_ |= 0x00000001;
         onChanged();
       }
       if (!other.getAddress().isEmpty()) {
         address_ = other.address_;
+        bitField0_ |= 0x00000002;
         onChanged();
       }
       if (other.getDeadline() != 0D) {
@@ -1148,8 +1386,12 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       }
       if (!other.getProtocol().isEmpty()) {
         protocol_ = other.protocol_;
+        bitField0_ |= 0x00000100;
         onChanged();
       }
+      internalGetMutableOverridesByRequestProtocol()
+          .mergeFrom(other.internalGetOverridesByRequestProtocol());
+      bitField0_ |= 0x00000200;
       switch (other.getAuthenticationCase()) {
         case JWT_AUDIENCE:
           {
@@ -1197,37 +1439,37 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
             case 10:
               {
                 selector_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000001;
                 break;
               } // case 10
             case 18:
               {
                 address_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000002;
                 break;
               } // case 18
             case 25:
               {
                 deadline_ = input.readDouble();
-
+                bitField0_ |= 0x00000004;
                 break;
               } // case 25
             case 33:
               {
                 minDeadline_ = input.readDouble();
-
+                bitField0_ |= 0x00000008;
                 break;
               } // case 33
             case 41:
               {
                 operationDeadline_ = input.readDouble();
-
+                bitField0_ |= 0x00000010;
                 break;
               } // case 41
             case 48:
               {
                 pathTranslation_ = input.readEnum();
-
+                bitField0_ |= 0x00000020;
                 break;
               } // case 48
             case 58:
@@ -1246,9 +1488,25 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
             case 74:
               {
                 protocol_ = input.readStringRequireUtf8();
-
+                bitField0_ |= 0x00000100;
                 break;
               } // case 74
+            case 82:
+              {
+                com.google.protobuf.MapEntry<java.lang.String, com.google.api.BackendRule>
+                    overridesByRequestProtocol__ =
+                        input.readMessage(
+                            OverridesByRequestProtocolDefaultEntryHolder.defaultEntry
+                                .getParserForType(),
+                            extensionRegistry);
+                internalGetMutableOverridesByRequestProtocol()
+                    .getMutableMap()
+                    .put(
+                        overridesByRequestProtocol__.getKey(),
+                        overridesByRequestProtocol__.getValue());
+                bitField0_ |= 0x00000200;
+                break;
+              } // case 82
             default:
               {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
@@ -1280,13 +1538,17 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       return this;
     }
 
+    private int bitField0_;
+
     private java.lang.Object selector_ = "";
     /**
      *
      *
      * <pre>
      * Selects the methods to which this rule applies.
-     * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+     *
+     * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+     * details.
      * </pre>
      *
      * <code>string selector = 1;</code>
@@ -1309,7 +1571,9 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects the methods to which this rule applies.
-     * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+     *
+     * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+     * details.
      * </pre>
      *
      * <code>string selector = 1;</code>
@@ -1332,7 +1596,9 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects the methods to which this rule applies.
-     * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+     *
+     * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+     * details.
      * </pre>
      *
      * <code>string selector = 1;</code>
@@ -1344,8 +1610,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       selector_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -1354,7 +1620,9 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects the methods to which this rule applies.
-     * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+     *
+     * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+     * details.
      * </pre>
      *
      * <code>string selector = 1;</code>
@@ -1362,8 +1630,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearSelector() {
-
       selector_ = getDefaultInstance().getSelector();
+      bitField0_ = (bitField0_ & ~0x00000001);
       onChanged();
       return this;
     }
@@ -1372,7 +1640,9 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects the methods to which this rule applies.
-     * Refer to [selector][google.api.DocumentationRule.selector] for syntax details.
+     *
+     * Refer to [selector][google.api.DocumentationRule.selector] for syntax
+     * details.
      * </pre>
      *
      * <code>string selector = 1;</code>
@@ -1385,8 +1655,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       selector_ = value;
+      bitField0_ |= 0x00000001;
       onChanged();
       return this;
     }
@@ -1397,18 +1667,23 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The address of the API backend.
+     *
      * The scheme is used to determine the backend protocol and security.
      * The following schemes are accepted:
+     *
      *    SCHEME        PROTOCOL    SECURITY
      *    http://       HTTP        None
      *    https://      HTTP        TLS
      *    grpc://       gRPC        None
      *    grpcs://      gRPC        TLS
+     *
      * It is recommended to explicitly include a scheme. Leaving out the scheme
      * may cause constrasting behaviors across platforms.
+     *
      * If the port is unspecified, the default is:
      * - 80 for schemes without TLS
      * - 443 for schemes with TLS
+     *
      * For HTTP backends, use [protocol][google.api.BackendRule.protocol]
      * to specify the protocol version.
      * </pre>
@@ -1433,18 +1708,23 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The address of the API backend.
+     *
      * The scheme is used to determine the backend protocol and security.
      * The following schemes are accepted:
+     *
      *    SCHEME        PROTOCOL    SECURITY
      *    http://       HTTP        None
      *    https://      HTTP        TLS
      *    grpc://       gRPC        None
      *    grpcs://      gRPC        TLS
+     *
      * It is recommended to explicitly include a scheme. Leaving out the scheme
      * may cause constrasting behaviors across platforms.
+     *
      * If the port is unspecified, the default is:
      * - 80 for schemes without TLS
      * - 443 for schemes with TLS
+     *
      * For HTTP backends, use [protocol][google.api.BackendRule.protocol]
      * to specify the protocol version.
      * </pre>
@@ -1469,18 +1749,23 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The address of the API backend.
+     *
      * The scheme is used to determine the backend protocol and security.
      * The following schemes are accepted:
+     *
      *    SCHEME        PROTOCOL    SECURITY
      *    http://       HTTP        None
      *    https://      HTTP        TLS
      *    grpc://       gRPC        None
      *    grpcs://      gRPC        TLS
+     *
      * It is recommended to explicitly include a scheme. Leaving out the scheme
      * may cause constrasting behaviors across platforms.
+     *
      * If the port is unspecified, the default is:
      * - 80 for schemes without TLS
      * - 443 for schemes with TLS
+     *
      * For HTTP backends, use [protocol][google.api.BackendRule.protocol]
      * to specify the protocol version.
      * </pre>
@@ -1494,8 +1779,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       address_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1504,18 +1789,23 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The address of the API backend.
+     *
      * The scheme is used to determine the backend protocol and security.
      * The following schemes are accepted:
+     *
      *    SCHEME        PROTOCOL    SECURITY
      *    http://       HTTP        None
      *    https://      HTTP        TLS
      *    grpc://       gRPC        None
      *    grpcs://      gRPC        TLS
+     *
      * It is recommended to explicitly include a scheme. Leaving out the scheme
      * may cause constrasting behaviors across platforms.
+     *
      * If the port is unspecified, the default is:
      * - 80 for schemes without TLS
      * - 443 for schemes with TLS
+     *
      * For HTTP backends, use [protocol][google.api.BackendRule.protocol]
      * to specify the protocol version.
      * </pre>
@@ -1525,8 +1815,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearAddress() {
-
       address_ = getDefaultInstance().getAddress();
+      bitField0_ = (bitField0_ & ~0x00000002);
       onChanged();
       return this;
     }
@@ -1535,18 +1825,23 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The address of the API backend.
+     *
      * The scheme is used to determine the backend protocol and security.
      * The following schemes are accepted:
+     *
      *    SCHEME        PROTOCOL    SECURITY
      *    http://       HTTP        None
      *    https://      HTTP        TLS
      *    grpc://       gRPC        None
      *    grpcs://      gRPC        TLS
+     *
      * It is recommended to explicitly include a scheme. Leaving out the scheme
      * may cause constrasting behaviors across platforms.
+     *
      * If the port is unspecified, the default is:
      * - 80 for schemes without TLS
      * - 443 for schemes with TLS
+     *
      * For HTTP backends, use [protocol][google.api.BackendRule.protocol]
      * to specify the protocol version.
      * </pre>
@@ -1561,8 +1856,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       address_ = value;
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1600,6 +1895,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     public Builder setDeadline(double value) {
 
       deadline_ = value;
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1616,7 +1912,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearDeadline() {
-
+      bitField0_ = (bitField0_ & ~0x00000004);
       deadline_ = 0D;
       onChanged();
       return this;
@@ -1633,7 +1929,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * <code>double min_deadline = 4 [deprecated = true];</code>
      *
      * @deprecated google.api.BackendRule.min_deadline is deprecated. See
-     *     google/api/backend.proto;l=123
+     *     google/api/backend.proto;l=124
      * @return The minDeadline.
      */
     @java.lang.Override
@@ -1651,7 +1947,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * <code>double min_deadline = 4 [deprecated = true];</code>
      *
      * @deprecated google.api.BackendRule.min_deadline is deprecated. See
-     *     google/api/backend.proto;l=123
+     *     google/api/backend.proto;l=124
      * @param value The minDeadline to set.
      * @return This builder for chaining.
      */
@@ -1659,6 +1955,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     public Builder setMinDeadline(double value) {
 
       minDeadline_ = value;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -1672,12 +1969,12 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * <code>double min_deadline = 4 [deprecated = true];</code>
      *
      * @deprecated google.api.BackendRule.min_deadline is deprecated. See
-     *     google/api/backend.proto;l=123
+     *     google/api/backend.proto;l=124
      * @return This builder for chaining.
      */
     @java.lang.Deprecated
     public Builder clearMinDeadline() {
-
+      bitField0_ = (bitField0_ & ~0x00000008);
       minDeadline_ = 0D;
       onChanged();
       return this;
@@ -1716,6 +2013,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
     public Builder setOperationDeadline(double value) {
 
       operationDeadline_ = value;
+      bitField0_ |= 0x00000010;
       onChanged();
       return this;
     }
@@ -1732,7 +2030,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearOperationDeadline() {
-
+      bitField0_ = (bitField0_ & ~0x00000010);
       operationDeadline_ = 0D;
       onChanged();
       return this;
@@ -1755,8 +2053,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setPathTranslationValue(int value) {
-
       pathTranslation_ = value;
+      bitField0_ |= 0x00000020;
       onChanged();
       return this;
     }
@@ -1767,9 +2065,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      */
     @java.lang.Override
     public com.google.api.BackendRule.PathTranslation getPathTranslation() {
-      @SuppressWarnings("deprecation")
       com.google.api.BackendRule.PathTranslation result =
-          com.google.api.BackendRule.PathTranslation.valueOf(pathTranslation_);
+          com.google.api.BackendRule.PathTranslation.forNumber(pathTranslation_);
       return result == null ? com.google.api.BackendRule.PathTranslation.UNRECOGNIZED : result;
     }
     /**
@@ -1782,7 +2079,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
+      bitField0_ |= 0x00000020;
       pathTranslation_ = value.getNumber();
       onChanged();
       return this;
@@ -1793,7 +2090,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearPathTranslation() {
-
+      bitField0_ = (bitField0_ & ~0x00000020);
       pathTranslation_ = 0;
       onChanged();
       return this;
@@ -1998,6 +2295,7 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder setDisableAuth(boolean value) {
+
       authenticationCase_ = 8;
       authentication_ = value;
       onChanged();
@@ -2033,17 +2331,22 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The protocol used for sending a request to the backend.
      * The supported values are "http/1.1" and "h2".
+     *
      * The default value is inferred from the scheme in the
      * [address][google.api.BackendRule.address] field:
+     *
      *    SCHEME        PROTOCOL
      *    http://       http/1.1
      *    https://      http/1.1
      *    grpc://       h2
      *    grpcs://      h2
+     *
      * For secure HTTP backends (https://) that support HTTP/2, set this field
      * to "h2" for improved performance.
+     *
      * Configuring this field to non-default values is only supported for secure
      * HTTP backends. This field will be ignored for all other backends.
+     *
      * See
      * https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids
      * for more details on the supported values.
@@ -2070,17 +2373,22 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The protocol used for sending a request to the backend.
      * The supported values are "http/1.1" and "h2".
+     *
      * The default value is inferred from the scheme in the
      * [address][google.api.BackendRule.address] field:
+     *
      *    SCHEME        PROTOCOL
      *    http://       http/1.1
      *    https://      http/1.1
      *    grpc://       h2
      *    grpcs://      h2
+     *
      * For secure HTTP backends (https://) that support HTTP/2, set this field
      * to "h2" for improved performance.
+     *
      * Configuring this field to non-default values is only supported for secure
      * HTTP backends. This field will be ignored for all other backends.
+     *
      * See
      * https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids
      * for more details on the supported values.
@@ -2107,17 +2415,22 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The protocol used for sending a request to the backend.
      * The supported values are "http/1.1" and "h2".
+     *
      * The default value is inferred from the scheme in the
      * [address][google.api.BackendRule.address] field:
+     *
      *    SCHEME        PROTOCOL
      *    http://       http/1.1
      *    https://      http/1.1
      *    grpc://       h2
      *    grpcs://      h2
+     *
      * For secure HTTP backends (https://) that support HTTP/2, set this field
      * to "h2" for improved performance.
+     *
      * Configuring this field to non-default values is only supported for secure
      * HTTP backends. This field will be ignored for all other backends.
+     *
      * See
      * https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids
      * for more details on the supported values.
@@ -2132,8 +2445,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
       if (value == null) {
         throw new NullPointerException();
       }
-
       protocol_ = value;
+      bitField0_ |= 0x00000100;
       onChanged();
       return this;
     }
@@ -2143,17 +2456,22 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The protocol used for sending a request to the backend.
      * The supported values are "http/1.1" and "h2".
+     *
      * The default value is inferred from the scheme in the
      * [address][google.api.BackendRule.address] field:
+     *
      *    SCHEME        PROTOCOL
      *    http://       http/1.1
      *    https://      http/1.1
      *    grpc://       h2
      *    grpcs://      h2
+     *
      * For secure HTTP backends (https://) that support HTTP/2, set this field
      * to "h2" for improved performance.
+     *
      * Configuring this field to non-default values is only supported for secure
      * HTTP backends. This field will be ignored for all other backends.
+     *
      * See
      * https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids
      * for more details on the supported values.
@@ -2164,8 +2482,8 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearProtocol() {
-
       protocol_ = getDefaultInstance().getProtocol();
+      bitField0_ = (bitField0_ & ~0x00000100);
       onChanged();
       return this;
     }
@@ -2175,17 +2493,22 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * The protocol used for sending a request to the backend.
      * The supported values are "http/1.1" and "h2".
+     *
      * The default value is inferred from the scheme in the
      * [address][google.api.BackendRule.address] field:
+     *
      *    SCHEME        PROTOCOL
      *    http://       http/1.1
      *    https://      http/1.1
      *    grpc://       h2
      *    grpcs://      h2
+     *
      * For secure HTTP backends (https://) that support HTTP/2, set this field
      * to "h2" for improved performance.
+     *
      * Configuring this field to non-default values is only supported for secure
      * HTTP backends. This field will be ignored for all other backends.
+     *
      * See
      * https://www.iana.org/assignments/tls-extensiontype-values/tls-extensiontype-values.xhtml#alpn-protocol-ids
      * for more details on the supported values.
@@ -2201,9 +2524,184 @@ public final class BackendRule extends com.google.protobuf.GeneratedMessageV3
         throw new NullPointerException();
       }
       checkByteStringIsUtf8(value);
-
       protocol_ = value;
+      bitField0_ |= 0x00000100;
       onChanged();
+      return this;
+    }
+
+    private com.google.protobuf.MapField<java.lang.String, com.google.api.BackendRule>
+        overridesByRequestProtocol_;
+
+    private com.google.protobuf.MapField<java.lang.String, com.google.api.BackendRule>
+        internalGetOverridesByRequestProtocol() {
+      if (overridesByRequestProtocol_ == null) {
+        return com.google.protobuf.MapField.emptyMapField(
+            OverridesByRequestProtocolDefaultEntryHolder.defaultEntry);
+      }
+      return overridesByRequestProtocol_;
+    }
+
+    private com.google.protobuf.MapField<java.lang.String, com.google.api.BackendRule>
+        internalGetMutableOverridesByRequestProtocol() {
+      if (overridesByRequestProtocol_ == null) {
+        overridesByRequestProtocol_ =
+            com.google.protobuf.MapField.newMapField(
+                OverridesByRequestProtocolDefaultEntryHolder.defaultEntry);
+      }
+      if (!overridesByRequestProtocol_.isMutable()) {
+        overridesByRequestProtocol_ = overridesByRequestProtocol_.copy();
+      }
+      bitField0_ |= 0x00000200;
+      onChanged();
+      return overridesByRequestProtocol_;
+    }
+
+    public int getOverridesByRequestProtocolCount() {
+      return internalGetOverridesByRequestProtocol().getMap().size();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The map between request protocol and the backend address.
+     * </pre>
+     *
+     * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
+     */
+    @java.lang.Override
+    public boolean containsOverridesByRequestProtocol(java.lang.String key) {
+      if (key == null) {
+        throw new NullPointerException("map key");
+      }
+      return internalGetOverridesByRequestProtocol().getMap().containsKey(key);
+    }
+    /** Use {@link #getOverridesByRequestProtocolMap()} instead. */
+    @java.lang.Override
+    @java.lang.Deprecated
+    public java.util.Map<java.lang.String, com.google.api.BackendRule>
+        getOverridesByRequestProtocol() {
+      return getOverridesByRequestProtocolMap();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The map between request protocol and the backend address.
+     * </pre>
+     *
+     * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
+     */
+    @java.lang.Override
+    public java.util.Map<java.lang.String, com.google.api.BackendRule>
+        getOverridesByRequestProtocolMap() {
+      return internalGetOverridesByRequestProtocol().getMap();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The map between request protocol and the backend address.
+     * </pre>
+     *
+     * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
+     */
+    @java.lang.Override
+    public /* nullable */ com.google.api.BackendRule getOverridesByRequestProtocolOrDefault(
+        java.lang.String key,
+        /* nullable */
+        com.google.api.BackendRule defaultValue) {
+      if (key == null) {
+        throw new NullPointerException("map key");
+      }
+      java.util.Map<java.lang.String, com.google.api.BackendRule> map =
+          internalGetOverridesByRequestProtocol().getMap();
+      return map.containsKey(key) ? map.get(key) : defaultValue;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The map between request protocol and the backend address.
+     * </pre>
+     *
+     * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
+     */
+    @java.lang.Override
+    public com.google.api.BackendRule getOverridesByRequestProtocolOrThrow(java.lang.String key) {
+      if (key == null) {
+        throw new NullPointerException("map key");
+      }
+      java.util.Map<java.lang.String, com.google.api.BackendRule> map =
+          internalGetOverridesByRequestProtocol().getMap();
+      if (!map.containsKey(key)) {
+        throw new java.lang.IllegalArgumentException();
+      }
+      return map.get(key);
+    }
+
+    public Builder clearOverridesByRequestProtocol() {
+      bitField0_ = (bitField0_ & ~0x00000200);
+      internalGetMutableOverridesByRequestProtocol().getMutableMap().clear();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The map between request protocol and the backend address.
+     * </pre>
+     *
+     * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
+     */
+    public Builder removeOverridesByRequestProtocol(java.lang.String key) {
+      if (key == null) {
+        throw new NullPointerException("map key");
+      }
+      internalGetMutableOverridesByRequestProtocol().getMutableMap().remove(key);
+      return this;
+    }
+    /** Use alternate mutation accessors instead. */
+    @java.lang.Deprecated
+    public java.util.Map<java.lang.String, com.google.api.BackendRule>
+        getMutableOverridesByRequestProtocol() {
+      bitField0_ |= 0x00000200;
+      return internalGetMutableOverridesByRequestProtocol().getMutableMap();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The map between request protocol and the backend address.
+     * </pre>
+     *
+     * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
+     */
+    public Builder putOverridesByRequestProtocol(
+        java.lang.String key, com.google.api.BackendRule value) {
+      if (key == null) {
+        throw new NullPointerException("map key");
+      }
+      if (value == null) {
+        throw new NullPointerException("map value");
+      }
+      internalGetMutableOverridesByRequestProtocol().getMutableMap().put(key, value);
+      bitField0_ |= 0x00000200;
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * The map between request protocol and the backend address.
+     * </pre>
+     *
+     * <code>map&lt;string, .google.api.BackendRule&gt; overrides_by_request_protocol = 10;</code>
+     */
+    public Builder putAllOverridesByRequestProtocol(
+        java.util.Map<java.lang.String, com.google.api.BackendRule> values) {
+      internalGetMutableOverridesByRequestProtocol().getMutableMap().putAll(values);
+      bitField0_ |= 0x00000200;
       return this;
     }
 

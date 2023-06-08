@@ -16,26 +16,28 @@
 
 package com.google.showcase.v1beta1.it;
 
-import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertEquals;
 
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.NoCredentialsProvider;
-import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.showcase.v1beta1.ComplianceClient;
 import com.google.showcase.v1beta1.ComplianceSettings;
 import com.google.showcase.v1beta1.EnumRequest;
+import com.google.showcase.v1beta1.EnumResponse;
+import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import org.junit.After;
-import org.junit.Before;
+import java.util.concurrent.TimeUnit;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class ITNumericEnums {
 
-  private ComplianceClient client;
+  private static ComplianceClient httpjsonClient;
 
-  @Before
-  public void createClient() throws GeneralSecurityException, IOException {
+  @BeforeClass
+  public static void createClients() throws GeneralSecurityException, IOException {
     ComplianceSettings complianceSettings =
         ComplianceSettings.newHttpJsonBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
@@ -46,26 +48,20 @@ public class ITNumericEnums {
                     .setEndpoint("http://localhost:7469")
                     .build())
             .build();
-    client = ComplianceClient.create(complianceSettings);
+    httpjsonClient = ComplianceClient.create(complianceSettings);
   }
 
-  @After
-  public void destroyClient() {
-    client.close();
+  @AfterClass
+  public static void destroyClients() throws InterruptedException {
+    httpjsonClient.close();
+    httpjsonClient.awaitTermination(
+        TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
-  // TODO(#1187): For 'throws' explanation, see
-  // https://github.com/googleapis/gapic-showcase/blob/v0.25.0/util/genrest/resttools/systemparam.go#L37-L46
   @Test
   public void verifyEnums() {
     EnumRequest request = EnumRequest.newBuilder().setUnknownEnum(true).build();
-
-    // EnumResponse initialResponse =
-    assertThrows(InvalidArgumentException.class, () -> client.getEnum(request));
-
-    //    EnumResponse verifiedResponse = client.verifyEnum(initialResponse);
-    //
-    //    Assert.assertNotNull(initialResponse);
-    //    Assert.assertEquals(initialResponse, verifiedResponse);
+    EnumResponse initialResponse = httpjsonClient.getEnum(request);
+    assertEquals(initialResponse, httpjsonClient.verifyEnum(initialResponse));
   }
 }

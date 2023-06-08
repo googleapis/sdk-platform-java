@@ -6,9 +6,9 @@ compileJava.options.encoding = 'UTF-8'
 javadoc.options.encoding = 'UTF-8'
 
 dependencies {
-  implementation 'com.google.api:gax:{{version.gax}}'
+  api 'com.google.api:gax:{{version.gax}}'
   testImplementation 'com.google.api:gax:{{version.gax}}:testlib'
-  implementation 'com.google.api:gax-httpjson:{{version.gax_httpjson}}'
+  api 'com.google.api:gax-httpjson:{{version.gax_httpjson}}'
   testImplementation 'com.google.api:gax-httpjson:{{version.gax_httpjson}}:testlib'
   testImplementation '{{maven.junit_junit}}'
 

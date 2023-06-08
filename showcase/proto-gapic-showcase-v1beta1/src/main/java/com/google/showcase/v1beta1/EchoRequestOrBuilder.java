@@ -122,5 +122,5 @@ public interface EchoRequestOrBuilder extends
   com.google.protobuf.ByteString
       getOtherHeaderBytes();
 
-  public com.google.showcase.v1beta1.EchoRequest.ResponseCase getResponseCase();
+  com.google.showcase.v1beta1.EchoRequest.ResponseCase getResponseCase();
 }
