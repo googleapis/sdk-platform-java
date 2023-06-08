@@ -21,7 +21,7 @@ def _wrapPropertyNamesInBraces(properties):
         wrappedProperties["{{%s}}" % k] = v
     return wrappedProperties
 
-# Before this replacement, there is a problem (e.g., b/284292352) when
+# Before this replacement, there was a problem (e.g., b/284292352) when
 # the version of protobuf defined in googleapis is higher than protobuf
 # defined in gax-java/dependencies.properties, use this replacement to
 # sync the two versions.
