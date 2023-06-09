@@ -41,7 +41,7 @@
             <dependency>
                 <groupId>com.google.api</groupId>
                 <artifactId>gax-httpjson</artifactId>
-                <version>0.114.1-SNAPSHOT</version> <!-- {x-version-update:gax-httpjson:current} -->
+                <version>2.29.1-SNAPSHOT</version> <!-- {x-version-update:gax-httpjson:current} -->
             </dependency>
             <dependency>
                 <groupId>com.google.api</groupId>
