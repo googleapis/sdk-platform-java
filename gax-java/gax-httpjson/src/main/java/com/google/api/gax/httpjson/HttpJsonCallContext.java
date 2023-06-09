@@ -59,7 +59,6 @@ import org.threeten.bp.Instant;
  * copies of the object, but with one field changed. The immutability and thread safety of the
  * arguments solely depends on the arguments themselves.
  */
-@BetaApi("Reference ApiCallContext instead - this class is likely to experience breaking changes")
 public final class HttpJsonCallContext implements ApiCallContext {
   private final HttpJsonChannel channel;
   private final HttpJsonCallOptions callOptions;
@@ -326,6 +325,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
     return streamIdleTimeout;
   }
 
+  @BetaApi("The surface for extra headers is not stable yet and may change in the future.")
   @Override
   public ApiCallContext withExtraHeaders(Map<String, List<String>> extraHeaders) {
     Preconditions.checkNotNull(extraHeaders);
@@ -344,6 +344,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
         this.retryableCodes);
   }
 
+  @BetaApi("The surface for extra headers is not stable yet and may change in the future.")
   @Override
   public Map<String, List<String>> getExtraHeaders() {
     return extraHeaders;
