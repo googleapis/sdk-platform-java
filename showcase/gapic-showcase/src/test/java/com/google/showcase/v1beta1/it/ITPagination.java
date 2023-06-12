@@ -9,6 +9,7 @@ import com.google.showcase.v1beta1.ExpandRequest;
 import com.google.showcase.v1beta1.PagedExpandRequest;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.junit.AfterClass;
@@ -40,35 +41,31 @@ public class ITPagination {
   @Test
   public void testExpandGrpc() {
     String content = "Testing the entire response is the same";
-    int expected = content.split(" ").length;
-    ServerStream<EchoResponse> echoResponses =
+    List<String> splitContent = Arrays.asList(content.split(" "));
+    ServerStream<EchoResponse> streamedResponses =
         grpcClient.expandCallable().call(ExpandRequest.newBuilder().setContent(content).build());
     List<String> values = new ArrayList<>();
-    for (EchoResponse echoResponse : echoResponses) {
+    for (EchoResponse echoResponse : streamedResponses) {
       values.add(echoResponse.getContent());
     }
 
-    String response = String.join(" ", values);
-    assertThat(values.size()).isEqualTo(expected);
-    assertThat(response).isEqualTo(content);
+    assertThat(values.size()).isEqualTo(splitContent.size());
+    assertThat(splitContent).containsExactlyElementsIn(values).inOrder();
   }
 
   @Test
   public void testExpandHttpJson() {
     String content = "Testing the entire response is the same";
-    int expected = content.split(" ").length;
-    ServerStream<EchoResponse> echoResponses =
-        httpjsonClient
-            .expandCallable()
-            .call(ExpandRequest.newBuilder().setContent(content).build());
+    List<String> splitContent = Arrays.asList(content.split(" "));
+    ServerStream<EchoResponse> streamedResponses =
+        grpcClient.expandCallable().call(ExpandRequest.newBuilder().setContent(content).build());
     List<String> values = new ArrayList<>();
-    for (EchoResponse echoResponse : echoResponses) {
+    for (EchoResponse echoResponse : streamedResponses) {
       values.add(echoResponse.getContent());
     }
 
-    String response = String.join(" ", values);
-    assertThat(values.size()).isEqualTo(expected);
-    assertThat(response).isEqualTo(content);
+    assertThat(values.size()).isEqualTo(splitContent.size());
+    assertThat(splitContent).containsExactlyElementsIn(values).inOrder();
   }
 
   // This tests that pagination returns the correct number of pages + responses and that
@@ -94,18 +91,8 @@ public class ITPagination {
                 .setPageSize(pageSize)
                 .setPageToken(String.valueOf(pageToken))
                 .build());
-    String[] expected = content.split(" ");
-    int numResponses = 0;
-    int numPages = 0;
-    for (EchoClient.PagedExpandPage page : pagedExpandPagedResponse.iteratePages()) {
-      for (EchoResponse echoResponse : page.getValues()) {
-        // Add pageToken as offset to the expected array to start indexing at the pageToken
-        assertThat(echoResponse.getContent()).isEqualTo(expected[numResponses + pageToken]);
-        numResponses++;
-      }
-      numPages++;
-    }
 
+    String[] expected = content.split(" ");
     int numExpectedPages = ((contentLength - pageToken) / pageSize);
     // If the responses can't be evenly split into pages, then the extra responses
     // will go to an additional page
@@ -114,8 +101,8 @@ public class ITPagination {
     }
     int numExpectedResponses = contentLength - pageToken;
 
-    assertThat(numPages).isEqualTo(numExpectedPages);
-    assertThat(numResponses).isEqualTo(numExpectedResponses);
+    validatePagedResponses(
+        pagedExpandPagedResponse, expected, pageToken, numExpectedResponses, numExpectedPages);
   }
 
   // This tests that pagination returns the correct number of pages + responses and that
@@ -141,7 +128,26 @@ public class ITPagination {
                 .setPageSize(pageSize)
                 .setPageToken(String.valueOf(pageToken))
                 .build());
+
     String[] expected = content.split(" ");
+    int numExpectedPages = ((contentLength - pageToken) / pageSize);
+    // If the responses can't be evenly split into pages, then the extra responses
+    // will go to an additional page
+    if ((contentLength - pageToken) % pageSize != 0) {
+      numExpectedPages++;
+    }
+    int numExpectedResponses = contentLength - pageToken;
+
+    validatePagedResponses(
+        pagedExpandPagedResponse, expected, pageToken, numExpectedResponses, numExpectedPages);
+  }
+
+  private void validatePagedResponses(
+      EchoClient.PagedExpandPagedResponse pagedExpandPagedResponse,
+      String[] expected,
+      int pageToken,
+      int numExpectedResponses,
+      int numExpectedPages) {
     int numResponses = 0;
     int numPages = 0;
     for (EchoClient.PagedExpandPage page : pagedExpandPagedResponse.iteratePages()) {
@@ -152,14 +158,6 @@ public class ITPagination {
       }
       numPages++;
     }
-
-    int numExpectedPages = ((contentLength - pageToken) / pageSize);
-    // If the responses can't be evenly split into pages, then the extra responses
-    // will go to an additional page
-    if ((contentLength - pageToken) % pageSize != 0) {
-      numExpectedPages++;
-    }
-    int numExpectedResponses = contentLength - pageToken;
 
     assertThat(numPages).isEqualTo(numExpectedPages);
     assertThat(numResponses).isEqualTo(numExpectedResponses);
