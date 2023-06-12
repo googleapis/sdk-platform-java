@@ -37,8 +37,6 @@ public class ITPagination {
         TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
-  // This tests that pagination returns the correct number of pages + responses and the content is
-  // correct. It tests pagination from Server-Side Streaming.
   @Test
   public void testExpandGrpc() {
     String content = "Testing the entire response is the same";
@@ -55,8 +53,6 @@ public class ITPagination {
     assertThat(response).isEqualTo(content);
   }
 
-  // This tests that pagination returns the correct number of pages + responses and the content is
-  // correct. It tests pagination from Server-Side Streaming.
   @Test
   public void testExpandHttpJson() {
     String content = "Testing the entire response is the same";
@@ -75,8 +71,8 @@ public class ITPagination {
     assertThat(response).isEqualTo(content);
   }
 
-  // This tests that pagination returns the correct number of pages + responses and the content is
-  // correct. It tests pagination from ServerSideStreaming.
+  // This tests that pagination returns the correct number of pages + responses and that
+  // the content is correct.
   //
   // The pageToken is where the streaming responses come back from and the page size denotes
   // how many of the responses come back together. i.e for PageSize = 2 and PageToken = 1, see
@@ -122,8 +118,8 @@ public class ITPagination {
     assertThat(numResponses).isEqualTo(numExpectedResponses);
   }
 
-  // This tests that pagination returns the correct number of pages + responses and the content is
-  // correct. It tests pagination from ServerSideStreaming.
+  // This tests that pagination returns the correct number of pages + responses and that
+  // the content is correct.
   //
   // The pageToken is where the streaming responses come back from and the page size denotes
   // how many of the responses come back together. i.e for PageSize = 2 and PageToken = 1, see
