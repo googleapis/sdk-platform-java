@@ -155,47 +155,6 @@
  *   Session response = testingClient.createSession(request);
  * }
  * }</pre>
- *
- * <p>======================= CollisionsClient =======================
- *
- * <p>Service Description: This service exercises scenarios where short names of types exhibit
- * ambiguity or collide with other types
- *
- * <p>Sample for CollisionsClient:
- *
- * <pre>{@code
- * // This snippet has been automatically generated and should be regarded as a code template only.
- * // It will require modifications to work:
- * // - It may require correct/in-range values for request initialization.
- * // - It may require specifying regional endpoints when creating the service client as shown in
- * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
- * try (CollisionsClient collisionsClient = CollisionsClient.create()) {
- *   GetLocationRequest request = GetLocationRequest.newBuilder().setName("name3373707").build();
- *   Location response = collisionsClient.getLocation(request);
- * }
- * }</pre>
- *
- * <p>======================= WickedClient =======================
- *
- * <p>Service Description: This service is used to show a Service with either non-enabled or
- * non-eligible RPCs for HttpJson (Http 1.1). Non-Enabled: Missing the (google.api.http) annotation
- * to enabled it Non-Eligible: BIDI and Client side streaming are not supported with Http 1.1
- * Service name is reference to `No REST for the Wicked`
- *
- * <p>Sample for WickedClient:
- *
- * <pre>{@code
- * // This snippet has been automatically generated and should be regarded as a code template only.
- * // It will require modifications to work:
- * // - It may require correct/in-range values for request initialization.
- * // - It may require specifying regional endpoints when creating the service client as shown in
- * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
- * try (WickedClient wickedClient = WickedClient.create()) {
- *   EvilRequest request =
- *       EvilRequest.newBuilder().setMaliciousIdea("maliciousIdea712541645").build();
- *   EvilResponse response = wickedClient.craftEvilPlan(request);
- * }
- * }</pre>
  */
 @Generated("by gapic-generator-java")
 package com.google.showcase.v1beta1;
