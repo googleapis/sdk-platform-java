@@ -13,7 +13,12 @@ if [ -z "${bazel_target}" ]; then
 fi
 
 basedir=$(dirname "$(readlink -f "$0")")
-workspace=$(mktemp -d)
+
+if [ -d target/library-gen-workspace ]; then
+  rm -rf target/library-gen-workspace
+fi
+mkdir -p target/library-gen-workspace
+workspace=$(realpath target/library-gen-workspace)
 googleapis_commit=$(cat "${basedir}/googleapis_commit" | tr -d '\n')
 
 
