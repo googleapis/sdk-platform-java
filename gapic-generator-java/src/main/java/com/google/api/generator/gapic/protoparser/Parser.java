@@ -780,6 +780,21 @@ public class Parser {
     return methods;
   }
 
+  private static String fetchTypeFullName(String typeName, MethodDescriptor methodDescriptor) {
+    // When provided type name is fully qualified, return as-is
+    // When only shortname is provided, assume same proto package as method (See
+    // https://aip.dev/151)
+    int lastDotIndex = typeName.lastIndexOf('.');
+    boolean isResponseTypeNameShortOnly = lastDotIndex < 0;
+    String responseTypeShortName =
+        lastDotIndex >= 0 ? typeName.substring(lastDotIndex + 1) : typeName;
+    String typeFullName =
+        isResponseTypeNameShortOnly
+            ? methodDescriptor.getFile().getPackage() + "." + responseTypeShortName
+            : typeName;
+    return typeFullName;
+  }
+
   @VisibleForTesting
   static LongrunningOperation parseLro(
       String servicePackage, MethodDescriptor methodDescriptor, Map<String, Message> messageTypes) {
@@ -820,27 +835,8 @@ public class Parser {
     Message responseMessage = null;
     Message metadataMessage = null;
 
-    int lastDotIndex = responseTypeName.lastIndexOf('.');
-    boolean isResponseTypeNameShortOnly = lastDotIndex < 0;
-    String responseTypeShortName =
-        lastDotIndex >= 0 ? responseTypeName.substring(lastDotIndex + 1) : responseTypeName;
-    // When only shortname is provided, match on same proto package as method (See
-    // https://aip.dev/151)
-    String responseTypeFullName =
-        isResponseTypeNameShortOnly
-            ? methodDescriptor.getFile().getPackage() + "." + responseTypeShortName
-            : responseTypeName;
-
-    lastDotIndex = metadataTypeName.lastIndexOf('.');
-    boolean isMetadataTypeNameShortOnly = lastDotIndex < 0;
-    String metadataTypeShortName =
-        lastDotIndex >= 0 ? metadataTypeName.substring(lastDotIndex + 1) : metadataTypeName;
-    // When only shortname is provided, match on same proto package as method (See
-    // https://aip.dev/151)
-    String metadataTypeFullName =
-        isMetadataTypeNameShortOnly
-            ? methodDescriptor.getFile().getPackage() + "." + metadataTypeShortName
-            : metadataTypeName;
+    String responseTypeFullName = fetchTypeFullName(responseTypeName, methodDescriptor);
+    String metadataTypeFullName = fetchTypeFullName(metadataTypeName, methodDescriptor);
 
     // The messageTypes map keys to the Java fully-qualified name.
     for (Map.Entry<String, Message> messageEntry : messageTypes.entrySet()) {
