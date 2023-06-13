@@ -41,7 +41,7 @@ git checkout "${googleapis_commit}"
 # We fix Protobuf, gRPC, and GAPIC Generator Java version
 cp "${basedir}/WORKSPACE" ./WORKSPACE
 
-bazelisk query  "filter("-java$', kind('rule", ${bazel_package}:*))" | bazelisk build
+bazelisk query  "filter('-java$', kind('rule', ${bazel_package}:*))" | bazelisk build
 
 # The latest as of June 13th 2023
 OWLBOT_VERSION=sha256:8d01aceb509d6da986ca4ddd8f7acb11dc780997f57a231018574849b0fdc686
