@@ -29,6 +29,7 @@
  */
 package com.google.api.gax.rpc;
 
+import com.google.api.client.util.Strings;
 import com.google.api.core.ApiClock;
 import com.google.api.core.BetaApi;
 import com.google.api.core.NanoClock;
@@ -177,21 +178,28 @@ public abstract class ClientContext {
 
     Credentials credentials = settings.getCredentialsProvider().getCredentials();
 
-    String gdhcApiAudience = settings.getGdchApiAudience();
-    if (gdhcApiAudience != null) {
-      if (!(credentials instanceof GdchCredentials)) {
-        // We have audience set for non-gdch credentials - this is not allowed
-        throw new IllegalArgumentException(
-            "GDC-H API audience can only be set when using GdchCredentials");
-      }
+    String settingsGdchApiAudience = settings.getGdchApiAudience();
+    if (credentials instanceof GdchCredentials) {
       // We recompute the GdchCredentials with the audience
+      String audienceString;
+      if (!Strings.isNullOrEmpty(settingsGdchApiAudience)) {
+        audienceString = settingsGdchApiAudience;
+      } else if (!Strings.isNullOrEmpty(settings.getEndpoint())) {
+        audienceString = settings.getEndpoint();
+      } else {
+        throw new IllegalArgumentException("Could not infer GDCH api audience from settings");
+      }
+
       URI gdchAudienceUri;
       try {
-        gdchAudienceUri = URI.create(gdhcApiAudience);
+        gdchAudienceUri = URI.create(audienceString);
       } catch (IllegalArgumentException ex) { // thrown when passing a malformed uri string
         throw new IllegalArgumentException("The GDC-H API audience string is not a valid URI", ex);
       }
       credentials = ((GdchCredentials) credentials).createWithGdchAudience(gdchAudienceUri);
+    } else if (!Strings.isNullOrEmpty(settingsGdchApiAudience)) {
+      throw new IllegalArgumentException(
+          "GDC-H API audience can only be set when using GdchCredentials");
     }
 
     if (settings.getQuotaProjectId() != null && credentials != null) {

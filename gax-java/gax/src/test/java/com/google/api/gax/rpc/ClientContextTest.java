@@ -34,10 +34,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import com.google.api.core.ApiClock;
 import com.google.api.gax.core.BackgroundResource;
@@ -818,7 +819,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testGdchCredentialNoAudience_correct() throws IOException {
+  public void testGdchCredentialNoAudienceNoEndpoint_throws() throws IOException {
     TransportChannelProvider transportChannelProvider = getFakeTransportChannelProvider();
     Credentials creds = getMockGdchCredentials();
 
@@ -828,14 +829,43 @@ public class ClientContextTest {
     FakeClientSettings.Builder clientSettingsBuilder = new FakeClientSettings.Builder(settings);
     clientSettingsBuilder.setCredentialsProvider(provider);
     clientSettingsBuilder.setTransportChannelProvider(transportChannelProvider);
+
+    // should not throw
+    IllegalArgumentException ex =
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> ClientContext.create(clientSettingsBuilder.build()));
+    assertEquals("Could not infer GDCH api audience from settings", ex.getMessage());
+  }
+
+  @Test
+  public void testGdchCredentialNoAudienceWithEndpoint_correct() throws IOException {
+    TransportChannelProvider transportChannelProvider = getFakeTransportChannelProvider();
+    Credentials creds = getMockGdchCredentials();
+
+    // it should correctly create a client context with gdch creds and null audience
+    CredentialsProvider provider = FixedCredentialsProvider.create(creds);
+    StubSettings settings =
+        new FakeStubSettings.Builder()
+            .setGdchApiAudience(null)
+            .setEndpoint("test-endpoint")
+            .build();
+    FakeClientSettings.Builder clientSettingsBuilder = new FakeClientSettings.Builder(settings);
+    clientSettingsBuilder.setCredentialsProvider(provider);
+    clientSettingsBuilder.setTransportChannelProvider(transportChannelProvider);
+
     // should not throw
     ClientContext context = ClientContext.create(clientSettingsBuilder.build());
+
     Credentials fromContext = context.getCredentials();
     Credentials fromProvider = provider.getCredentials();
     assertNotNull(fromProvider);
     assertNotNull(fromContext);
     assertThat(fromContext).isInstanceOf(GdchCredentials.class);
-    assertSame(fromContext, fromProvider);
+    assertThat(fromProvider).isInstanceOf(GdchCredentials.class);
+    assertNotSame(fromContext, fromProvider);
+    verify((GdchCredentials) fromProvider, times(1))
+        .createWithGdchAudience(URI.create("test-endpoint"));
   }
 
   @Test
@@ -846,7 +876,11 @@ public class ClientContextTest {
 
     // it should throw if both apiAudience and GDC-H creds are set but apiAudience is not a valid
     // uri
-    StubSettings settings = new FakeStubSettings.Builder().setGdchApiAudience("valid-uri").build();
+    StubSettings settings =
+        new FakeStubSettings.Builder()
+            .setEndpoint("test-endpoint")
+            .setGdchApiAudience("valid-uri")
+            .build();
     ClientSettings.Builder clientSettingsBuilder = new FakeClientSettings.Builder(settings);
     clientSettingsBuilder.setCredentialsProvider(provider);
     clientSettingsBuilder.setTransportChannelProvider(transportChannelProvider);
@@ -857,6 +891,10 @@ public class ClientContextTest {
     assertNotNull(fromContext);
     // using an audience should have made the context to recreate the credentials
     assertNotSame(fromContext, fromProvider);
+    verify((GdchCredentials) fromProvider, times(1))
+        .createWithGdchAudience(URI.create("valid-uri"));
+    verify((GdchCredentials) fromProvider, times(0))
+        .createWithGdchAudience(URI.create("test-endpoint"));
   }
 
   @Test
@@ -868,7 +906,10 @@ public class ClientContextTest {
     // it should throw if both apiAudience and GDC-H creds are set but apiAudience is not a valid
     // uri
     StubSettings settings =
-        new FakeStubSettings.Builder().setGdchApiAudience("$invalid-uri:").build();
+        new FakeStubSettings.Builder()
+            .setGdchApiAudience("$invalid-uri:")
+            .setEndpoint("test-endpoint")
+            .build();
     ClientSettings.Builder clientSettingsBuilder = new FakeClientSettings.Builder(settings);
     clientSettingsBuilder.setCredentialsProvider(provider);
     clientSettingsBuilder.setTransportChannelProvider(transportChannelProvider);
@@ -880,6 +921,10 @@ public class ClientContextTest {
                 () -> ClientContext.create(withGdchCredentialsAndMalformedApiAudience))
             .getMessage();
     assertThat(exMessage).contains("The GDC-H API audience string is not a valid URI");
+
+    Credentials fromProvider = provider.getCredentials();
+    verify((GdchCredentials) fromProvider, times(0))
+        .createWithGdchAudience(URI.create("test-endpoint"));
   }
 
   @Test
