@@ -19,7 +19,7 @@ import "google/longrunning/operations.proto";
 
 package google.showcase.v1beta1;
 
-option java_package = "com.google.showcase.v1beta1";
+option java_package = "com.google.test.collisions";
 option java_multiple_files = true;
 
 // This service exercises scenarios where short names of types
@@ -30,19 +30,29 @@ service Collisions {
 
   rpc shouldUseSamePackageTypesLro(Request) returns (google.longrunning.Operation) {
     option (google.longrunning.operation_info) = {
-      // collision with com.google.protobuf.DescriptorProtos.GeneratedCodeInfo.Annotation
+      // collision with google.protobuf.DescriptorProtos.GeneratedCodeInfo.Annotation
       response_type: "Annotation"
-      // collision with com.google.cloud.location.Location;
+      // collision with google.cloud.location.Location;
       metadata_type: "Location"
     };
   }
 
   rpc shortNameMatchShouldThrowLro(Request) returns (google.longrunning.Operation) {
     option (google.longrunning.operation_info) = {
-      // collision with com.google.protobuf.DescriptorProtos.GeneratedCodeInfo.Annotation
+      // collision with google.protobuf.DescriptorProtos.GeneratedCodeInfo.Annotation
       response_type: "Annotation"
-      // collision with com.google.protobuf.DescriptorProtos.ExtensionRangeOptions.Declaration
+      // collision with google.protobuf.DescriptorProtos.ExtensionRangeOptions.Declaration
+      // not a valid short name specification (no such type exist in same package)
       metadata_type: "Declaration"
+    };
+  }
+
+  rpc fullNameForDifferentPackageLro(Request) returns (google.longrunning.Operation) {
+    option (google.longrunning.operation_info) = {
+      // fully qualified name should match google.cloud.location.Location
+      response_type: "google.cloud.location.Location"
+      // short name only should match Location message defined below
+      metadata_type: "Location"
     };
   }
 }

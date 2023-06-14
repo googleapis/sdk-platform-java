@@ -21,13 +21,14 @@ import static org.junit.Assert.assertThrows;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.gapic.model.LongrunningOperation;
 import com.google.api.generator.gapic.model.Message;
+import com.google.cloud.location.LocationsProto;
 import com.google.protobuf.DescriptorProtos;
 import com.google.protobuf.Descriptors.Descriptor;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
-import com.google.showcase.v1beta1.CollisionsOuterClass;
 import com.google.showcase.v1beta1.EchoOuterClass;
+import com.google.test.collisions.CollisionsOuterClass;
 import com.google.testgapic.v1beta1.NestedMessageProto;
 import java.util.Map;
 import org.junit.Test;
@@ -39,6 +40,8 @@ public class TypeParserTest {
       CollisionsOuterClass.getDescriptor();
   private static final FileDescriptor DESCRIPTOR_PROTOS_FILE_DESCRIPTOR =
       DescriptorProtos.getDescriptor();
+  private static final FileDescriptor LOCATION_PROTO_FILE_DESCRIPTOR =
+      LocationsProto.getDescriptor();
   private static final ServiceDescriptor COLLISIONS_SERVICE =
       COLLISIONS_FILE_DESCRIPTOR.getServices().get(0);
 
@@ -71,7 +74,15 @@ public class TypeParserTest {
   public void parseLroResponseMetadataType_shortName_shouldMatchSamePackage() {
     Map<String, Message> messageTypes = Parser.parseMessages(COLLISIONS_FILE_DESCRIPTOR);
     messageTypes.putAll(Parser.parseMessages(DESCRIPTOR_PROTOS_FILE_DESCRIPTOR));
+    messageTypes.putAll(Parser.parseMessages(LOCATION_PROTO_FILE_DESCRIPTOR));
     MethodDescriptor shouldUseSamePackageTypesLro = COLLISIONS_SERVICE.getMethods().get(0);
+
+    assertEquals(COLLISIONS_SERVICE.getName(), "Collisions");
+    assertThat(messageTypes)
+        .containsKey("com.google.protobuf.DescriptorProtos.GeneratedCodeInfo.Annotation");
+    assertThat(messageTypes)
+        .containsKey("com.google.protobuf.DescriptorProtos.SourceCodeInfo.Location");
+    assertThat(messageTypes).containsKey("com.google.cloud.location.Location");
 
     LongrunningOperation testLro =
         Parser.parseLro(
@@ -79,15 +90,10 @@ public class TypeParserTest {
             shouldUseSamePackageTypesLro,
             messageTypes);
 
-    assertEquals(COLLISIONS_SERVICE.getName(), "Collisions");
-    assertThat(messageTypes)
-        .containsKey("com.google.protobuf.DescriptorProtos.GeneratedCodeInfo.Annotation");
-    assertThat(messageTypes)
-        .containsKey("com.google.protobuf.DescriptorProtos.SourceCodeInfo.Location");
     assertThat(testLro.responseType().reference().fullName())
-        .isEqualTo("com.google.showcase.v1beta1.Annotation");
+        .isEqualTo("com.google.test.collisions.Annotation");
     assertThat(testLro.metadataType().reference().fullName())
-        .isEqualTo("com.google.showcase.v1beta1.Location");
+        .isEqualTo("com.google.test.collisions.Location");
   }
 
   @Test
@@ -99,6 +105,7 @@ public class TypeParserTest {
     assertEquals(COLLISIONS_SERVICE.getName(), "Collisions");
     assertThat(messageTypes)
         .containsKey("com.google.protobuf.DescriptorProtos.ExtensionRangeOptions.Declaration");
+
     assertThrows(
         NullPointerException.class,
         () ->
@@ -106,5 +113,29 @@ public class TypeParserTest {
                 TypeParser.getPackage(COLLISIONS_FILE_DESCRIPTOR),
                 shortNameMatchShouldThrowLro,
                 messageTypes));
+  }
+
+  @Test
+  public void parseLroResponseMetadataType_shortName_withFullyQualifiedCollision() {
+    Map<String, Message> messageTypes = Parser.parseMessages(COLLISIONS_FILE_DESCRIPTOR);
+    messageTypes.putAll(Parser.parseMessages(DESCRIPTOR_PROTOS_FILE_DESCRIPTOR));
+    messageTypes.putAll(Parser.parseMessages(LOCATION_PROTO_FILE_DESCRIPTOR));
+    MethodDescriptor fullNameForDifferentPackageLro = COLLISIONS_SERVICE.getMethods().get(2);
+
+    assertEquals(COLLISIONS_SERVICE.getName(), "Collisions");
+    assertThat(messageTypes).containsKey("com.google.cloud.location.Location");
+    assertThat(messageTypes)
+        .containsKey("com.google.protobuf.DescriptorProtos.SourceCodeInfo.Location");
+
+    LongrunningOperation testLro =
+        Parser.parseLro(
+            TypeParser.getPackage(COLLISIONS_FILE_DESCRIPTOR),
+            fullNameForDifferentPackageLro,
+            messageTypes);
+
+    assertThat(testLro.responseType().reference().fullName())
+        .isEqualTo("com.google.cloud.location.Location");
+    assertThat(testLro.metadataType().reference().fullName())
+        .isEqualTo("com.google.test.collisions.Location");
   }
 }
