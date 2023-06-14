@@ -2398,43 +2398,31 @@ public class JavaWriterVisitorTest {
   @Test
   public void writeClassDefinition_withImportCollision() {
 
-    VaporReference firstLocationType =
+    VaporReference firstType =
         VaporReference.builder()
-            .setName("Location")
-            .setPakkage("com.google.cloud.location")
+            .setName("Service")
+            .setPakkage("com.google.api.generator.gapic.model")
             .build();
 
-    VaporReference secondLocationType =
-        VaporReference.builder().setName("Location").setPakkage("com.sun.jdi").build();
+    VaporReference secondType =
+        VaporReference.builder().setName("Service").setPakkage("com.google.api").build();
 
-    Variable secondLocationVar =
+    Variable secondTypeVar =
         Variable.builder()
-            .setName("anotherLocationVar")
-            .setType(TypeNode.withReference(secondLocationType))
+            .setName("anotherServiceVar")
+            .setType(TypeNode.withReference(secondType))
             .build();
 
     MethodInvocationExpr genericMethodInvocation =
         MethodInvocationExpr.builder()
-            .setMethodName("bar")
-            .setStaticReferenceType(TypeNode.withReference(firstLocationType))
-            .setGenerics(Arrays.asList(secondLocationType))
-            .setArguments(VariableExpr.withVariable(secondLocationVar))
+            .setMethodName("barMethod")
+            .setStaticReferenceType(TypeNode.withReference(firstType))
+            .setGenerics(Arrays.asList(secondType))
+            .setArguments(VariableExpr.withVariable(secondTypeVar))
             .setReturnType(TypeNode.STRING)
             .build();
 
-    VariableExpr varExpr =
-        VariableExpr.builder()
-            .setVariable(Variable.builder().setName("result").setType(TypeNode.STRING).build())
-            .setIsDecl(true)
-            .build();
-
-    AssignmentExpr assignmentExpr =
-        AssignmentExpr.builder()
-            .setVariableExpr(varExpr)
-            .setValueExpr(genericMethodInvocation)
-            .build();
-
-    List<Statement> statements = Arrays.asList(ExprStatement.withExpr(assignmentExpr));
+    List<Statement> statements = Arrays.asList(ExprStatement.withExpr(genericMethodInvocation));
 
     MethodDefinition methodOne =
         MethodDefinition.builder()
@@ -2448,7 +2436,7 @@ public class JavaWriterVisitorTest {
 
     ClassDefinition classDef =
         ClassDefinition.builder()
-            .setPackageString("com.google.example.library.v1.stub")
+            .setPackageString("com.google.example")
             .setName("FooService")
             .setScope(ScopeNode.PUBLIC)
             .setMethods(methods)
@@ -2458,14 +2446,14 @@ public class JavaWriterVisitorTest {
 
     String expected =
         LineFormatter.lines(
-            "package com.google.example.library.v1.stub;\n"
+            "package com.google.example;\n"
                 + "\n"
-                + "import com.google.cloud.location.Location;\n"
+                + "import com.google.api.generator.gapic.model.Service;\n"
                 + "\n"
                 + "public class FooService {\n"
                 + "\n"
                 + "  private void doSomething() {\n"
-                + "    String result = Location.<com.sun.jdi.Location>bar(anotherLocationVar);\n"
+                + "    Service.<com.google.api.Service>barMethod(anotherServiceVar);\n"
                 + "  }\n"
                 + "}\n");
 
