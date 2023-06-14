@@ -2396,6 +2396,83 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
+  public void writeClassDefinition_withImportCollision() {
+
+    VaporReference firstLocationType =
+        VaporReference.builder()
+            .setName("Location")
+            .setPakkage("com.google.cloud.location")
+            .build();
+
+    VaporReference secondLocationType =
+        VaporReference.builder().setName("Location").setPakkage("com.sun.jdi").build();
+
+    Variable secondLocationVar =
+        Variable.builder()
+            .setName("anotherLocationVar")
+            .setType(TypeNode.withReference(secondLocationType))
+            .build();
+
+    MethodInvocationExpr genericMethodInvocation =
+        MethodInvocationExpr.builder()
+            .setMethodName("bar")
+            .setStaticReferenceType(TypeNode.withReference(firstLocationType))
+            .setGenerics(Arrays.asList(secondLocationType))
+            .setArguments(VariableExpr.withVariable(secondLocationVar))
+            .setReturnType(TypeNode.STRING)
+            .build();
+
+    VariableExpr varExpr =
+        VariableExpr.builder()
+            .setVariable(Variable.builder().setName("result").setType(TypeNode.STRING).build())
+            .setIsDecl(true)
+            .build();
+
+    AssignmentExpr assignmentExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(varExpr)
+            .setValueExpr(genericMethodInvocation)
+            .build();
+
+    List<Statement> statements = Arrays.asList(ExprStatement.withExpr(assignmentExpr));
+
+    MethodDefinition methodOne =
+        MethodDefinition.builder()
+            .setName("doSomething")
+            .setScope(ScopeNode.PRIVATE)
+            .setBody(statements)
+            .setReturnType(TypeNode.VOID)
+            .build();
+
+    List<MethodDefinition> methods = Arrays.asList(methodOne);
+
+    ClassDefinition classDef =
+        ClassDefinition.builder()
+            .setPackageString("com.google.example.library.v1.stub")
+            .setName("FooService")
+            .setScope(ScopeNode.PUBLIC)
+            .setMethods(methods)
+            .build();
+
+    classDef.accept(writerVisitor);
+
+    String expected =
+        LineFormatter.lines(
+            "package com.google.example.library.v1.stub;\n"
+                + "\n"
+                + "import com.google.cloud.location.Location;\n"
+                + "\n"
+                + "public class FooService {\n"
+                + "\n"
+                + "  private void doSomething() {\n"
+                + "    String result = Location.<com.sun.jdi.Location>bar(anotherLocationVar);\n"
+                + "  }\n"
+                + "}\n");
+
+    assertThat(writerVisitor.write()).isEqualTo(expected);
+  }
+
+  @Test
   public void writeReferenceConstructorExpr_thisConstructorWithArguments() {
     VaporReference ref =
         VaporReference.builder().setName("Student").setPakkage("com.google.example.v1").build();
