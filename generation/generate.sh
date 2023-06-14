@@ -21,11 +21,11 @@ fi
 
 basedir=$(dirname "$(readlink -f "$0")")
 
-if [ -d target/library-gen-workspace ]; then
-  rm -rf target/library-gen-workspace
+if [ -d target/workspace ]; then
+  rm -rf target/workspace
 fi
-mkdir -p target/library-gen-workspace
-workspace=$(realpath target/library-gen-workspace)
+mkdir -p target/workspace
+workspace=$(realpath target/workspace)
 googleapis_commit=$(cat "${basedir}/googleapis_commit" | tr -d '\n')
 
 cd "${workspace}"
@@ -41,7 +41,10 @@ git checkout "${googleapis_commit}"
 # We fix Protobuf, gRPC, and GAPIC Generator Java version
 cp "${basedir}/WORKSPACE" ./WORKSPACE
 
-bazelisk query  "filter('-java$', kind('rule', ${bazel_package}:*))" | bazelisk build
+docker run --rm  --user "$(id -u):$(id -g)" --env HOME=/workspace --env USER=$(id -u -n) \
+    -v "${workspace}:/workspace" -w /workspace/googleapis \
+    --entrypoint "bazelisk query \"filter('-java$', kind('rule', ${bazel_package}:*))\" | bazelisk build" \
+    -it gcr.io/gapic-images/googleapis:20230301
 
 # The latest as of June 13th 2023
 OWLBOT_VERSION=sha256:8d01aceb509d6da986ca4ddd8f7acb11dc780997f57a231018574849b0fdc686
