@@ -25,6 +25,10 @@ if [ -d target/workspace ]; then
   rm -rf target/workspace
 fi
 mkdir -p target/workspace
+mkdir -p target/home
+
+# The directory Bazel saves cache and bazel-bin
+bazel_home=$(realpath target/home)
 workspace=$(realpath target/workspace)
 googleapis_commit=$(cat "${basedir}/googleapis_commit" | tr -d '\n')
 
@@ -41,17 +45,25 @@ git checkout "${googleapis_commit}"
 # We fix Protobuf, gRPC, and GAPIC Generator Java version
 cp "${basedir}/WORKSPACE" ./WORKSPACE
 
-docker run --rm  --user "$(id -u):$(id -g)" --env HOME=/workspace --env USER=$(id -u -n) \
+docker run --rm  --user "$(id -u):$(id -g)" --env HOME="/bazel_home" --env USER=$(id -u -n) \
+    --env BAZEL_PACKAGE="${bazel_package}" \
     -v "${workspace}:/workspace" -w /workspace/googleapis \
-    --entrypoint "bazelisk query \"filter('-java$', kind('rule', ${bazel_package}:*))\" | bazelisk build" \
+    -v "${basedir}:/generation" \
+    -v "${bazel_home}:/bazel_home" \
+    --entrypoint "/generation/bazel_build_command.sh" \
     -it gcr.io/gapic-images/googleapis:20230301
 
 # The latest as of June 13th 2023
 OWLBOT_VERSION=sha256:8d01aceb509d6da986ca4ddd8f7acb11dc780997f57a231018574849b0fdc686
-docker run --rm --user "$(id -u):$(id -g)" --env HOME=/workspace --env USER=$(id -u -n) \
+docker run --rm --user "$(id -u):$(id -g)" --env HOME=/bazel_home --env USER=$(id -u -n) \
     -v "${workspace}:/workspace" -v "${REPO}:/repo"\
+    -v "${bazel_home}:/bazel_home" \
     gcr.io/cloud-devrel-public-resources/owlbot-cli@${OWLBOT_VERSION} copy-bazel-bin \
     --config-file=.github/.OwlBot.yaml \
     --source-dir "/workspace/googleapis/bazel-bin" --dest "/repo"
 
-echo "Check out ${workspace} and ${REPO}"
+OWLBOT_JAVA_POSTPROCESSOR_VERSION=$(grep digest "${REPO}/.github/.OwlBot.lock.yaml" |awk '{print $2}')
+docker run --rm --user "$(id -u):$(id -g)" --env USER=$(id -u -n) \
+    -v "${REPO}:/repo"   -w /repo \
+    "gcr.io/cloud-devrel-public-resources/owlbot-java@${OWLBOT_JAVA_POSTPROCESSOR_VERSION}"
+

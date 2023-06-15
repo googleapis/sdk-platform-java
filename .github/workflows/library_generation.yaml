@@ -10,11 +10,9 @@ jobs:
   library-generation:
     name: Library generation job check
     runs-on: ubuntu-22.04
-    container: gcr.io/gapic-images/googleapis:20230301
     steps:
     - uses: actions/checkout@v2
     - name: Run library generation for monitoring
       run: |
         sh generation/generate.sh //google/monitoring/v3:google-cloud-monitoring-v3-java
         echo "Finished generation"
-        
