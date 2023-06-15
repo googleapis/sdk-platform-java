@@ -11,8 +11,17 @@ jobs:
     name: Library generation job check
     runs-on: ubuntu-22.04
     steps:
-    - uses: actions/checkout@v2
-    - name: Run library generation for monitoring
+    - uses: actions/checkout@v3
+      with:
+        path: sdk-platform-java
+    - uses: actions/checkout@v3
+      with:
+        repository: googleapis/java-monitoring
+        path: java-monitoring
+        ref: v3.2.10
+    - name: Run library generation for monitoring v3 client library
       run: |
-        sh generation/generate.sh //google/monitoring/v3:google-cloud-monitoring-v3-java
+        repo=$(realpath ../java-monitoring)
+        REPO=$repo sh generation/generate.sh //google/monitoring/v3
         echo "Finished generation"
+      working-directory: sdk-platform-java
