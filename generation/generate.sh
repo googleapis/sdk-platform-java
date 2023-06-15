@@ -7,10 +7,10 @@
 # REPO=$HOME/java-bigtable generate.sh //google/bigtable/v2
 set -e
 
-bazel_package=$1
+bazel_packages=$@
 
-if [ -z "${bazel_package}" ]; then
-  echo "Please specify Bazel package to build. E.g., //google/bigtable/v2"
+if [ -z "${bazel_packages}" ]; then
+  echo "Please specify Bazel packages to build. E.g., //google/bigtable/v2"
   exit 1
 fi
 
@@ -46,12 +46,12 @@ git checkout "${googleapis_commit}"
 cp "${basedir}/WORKSPACE" ./WORKSPACE
 
 docker run --rm  --user "$(id -u):$(id -g)" --env HOME="/bazel_home" --env USER=$(id -u -n) \
-    --env BAZEL_PACKAGE="${bazel_package}" \
+    --env BAZEL_PACKAGES="${bazel_packages}" \
     -v "${workspace}:/workspace" -w /workspace/googleapis \
     -v "${basedir}:/generation" \
     -v "${bazel_home}:/bazel_home" \
     --entrypoint "/generation/bazel_build_command.sh" \
-    -it gcr.io/gapic-images/googleapis:20230301
+    -it gcr.io/gapic-images/googleapis:20230301 ${bazel_packages}
 
 # The latest as of June 13th 2023
 OWLBOT_VERSION=sha256:8d01aceb509d6da986ca4ddd8f7acb11dc780997f57a231018574849b0fdc686
