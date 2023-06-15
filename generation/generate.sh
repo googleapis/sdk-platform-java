@@ -62,6 +62,9 @@ docker run -t --rm --user "$(id -u):$(id -g)" --env HOME=/bazel_home --env USER=
     --config-file=.github/.OwlBot.yaml \
     --source-dir "/workspace/googleapis/bazel-bin" --dest "/repo"
 
+echo "Deleting workspace ${workspace} to avoid it being checked by the post processor"
+rm -rf "${workspace}"
+
 OWLBOT_JAVA_POSTPROCESSOR_VERSION=$(grep digest "${REPO}/.github/.OwlBot.lock.yaml" |awk '{print $2}')
 docker run --rm --user "$(id -u):$(id -g)" --env USER=$(id -u -n) \
     -v "${REPO}:/repo"   -w /repo \
