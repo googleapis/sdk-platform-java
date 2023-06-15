@@ -45,7 +45,7 @@ git checkout "${googleapis_commit}"
 # We fix Protobuf, gRPC, and GAPIC Generator Java version
 cp "${basedir}/WORKSPACE" ./WORKSPACE
 
-docker run --rm  --user "$(id -u):$(id -g)" --env HOME="/bazel_home" --env USER=$(id -u -n) \
+docker run -t --rm  --user "$(id -u):$(id -g)" --env HOME="/bazel_home" --env USER=$(id -u -n) \
     --env BAZEL_PACKAGES="${bazel_packages}" \
     -v "${workspace}:/workspace" -w /workspace/googleapis \
     -v "${basedir}:/generation" \
@@ -55,7 +55,7 @@ docker run --rm  --user "$(id -u):$(id -g)" --env HOME="/bazel_home" --env USER=
 
 # The latest as of June 13th 2023
 OWLBOT_VERSION=sha256:8d01aceb509d6da986ca4ddd8f7acb11dc780997f57a231018574849b0fdc686
-docker run --rm --user "$(id -u):$(id -g)" --env HOME=/bazel_home --env USER=$(id -u -n) \
+docker run -t --rm --user "$(id -u):$(id -g)" --env HOME=/bazel_home --env USER=$(id -u -n) \
     -v "${workspace}:/workspace" -v "${REPO}:/repo"\
     -v "${bazel_home}:/bazel_home" \
     gcr.io/cloud-devrel-public-resources/owlbot-cli@${OWLBOT_VERSION} copy-bazel-bin \
