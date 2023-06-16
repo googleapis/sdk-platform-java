@@ -25,7 +25,8 @@ def _wrapPropertyNamesInBraces(properties):
 # the version of protobuf defined in googleapis is higher than protobuf
 # defined in gax-java/dependencies.properties, use this replacement to
 # sync the two versions.
-SYNCED_PROPERTIES = PROPERTIES | {"version.com_google_protobuf": PROTOBUF_JAVA_VERSION}
+SYNCED_PROPERTIES = dict(PROPERTIES)
+SYNCED_PROPERTIES.update({"version.com_google_protobuf": PROTOBUF_JAVA_VERSION})
 _PROPERTIES = _wrapPropertyNamesInBraces(SYNCED_PROPERTIES)
 
 # ========================================================================
