@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -xe
+set -e
 
 PROTO_PATH=$1
 CONTAINS_CLOUD=$2
