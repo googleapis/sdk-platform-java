@@ -24,6 +24,7 @@ def _java_gapic_postprocess_srcjar_impl(ctx):
     output_samples = ctx.outputs.samples
     output_resource_name = ctx.outputs.resource_name
     formatter = ctx.executable.formatter
+    generator_version = bazel.workspace.get_variable('_gapic_generator_java_version')
 
     output_dir_name = ctx.label.name
     output_dir_path = "%s/%s" % (output_main.dirname, output_dir_name)
@@ -35,6 +36,9 @@ def _java_gapic_postprocess_srcjar_impl(ctx):
     # This may fail if there are spaces and/or too many files (exceed max length of command length).
     {formatter} --replace $(find {output_dir_path} -type f -printf "%p ")
     WORKING_DIR=`pwd`
+
+    # Add a file indicating the version of the generator being used
+    echo {generator_version} > $WORKING_DIR/gapic-generator-java.version
 
     # Main source files.
     cd {output_dir_path}/src/main/java
