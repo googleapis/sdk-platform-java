@@ -273,9 +273,6 @@ def _java_gapic_srcs_pkg_impl(ctx):
         unzip -q -o $src -d {package_dir_path}/src/main/java
         rm -r -f {package_dir_path}/src/main/java/META-INF
 
-        # move ggj version to root level
-        mv {package_dir_path}/src/main/java/gapic-generator-java.version {package_dir_path}
-
         # Remove empty files. If there are no resource names, one such file might have
         # been created. See java_gapic.bzl.
         find {package_dir_path}/src/main/java -type f -size 0 | while read f; do rm -f $f; done
