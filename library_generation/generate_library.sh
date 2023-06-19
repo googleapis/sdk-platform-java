@@ -42,18 +42,24 @@ git checkout "${GOOGLEAPIS_COMMIT}"
 PROTO_FILES=$(find "${PROTO_PATH}" -type f  -name "*.proto" | sort)
 # pull proto files and protoc from protobuf repository
 # maven central doesn't have proto files
-cd "${LIBRARY_GEN_OUT}"
-curl -LJ -o protobuf.zip https://github.com/protocolbuffers/protobuf/releases/download/v"${PROTOBUF_VERSION}"/protoc-"${PROTOBUF_VERSION}"-linux-x86_64.zip
-unzip -o -q protobuf.zip -d protobuf/
-cp -r protobuf/include/google "${GOOGLEAPIS_ROOT}"
 PROTOC_ROOT=${LIBRARY_GEN_OUT}/protobuf/bin
-echo "protoc version: $("${PROTOC_ROOT}"/protoc --version)"
+cd "${LIBRARY_GEN_OUT}"
+if [ ! -d protobuf ]; then
+  curl -LJ -o protobuf.zip https://github.com/protocolbuffers/protobuf/releases/download/v"${PROTOBUF_VERSION}"/protoc-"${PROTOBUF_VERSION}"-linux-x86_64.zip
+  unzip -o -q protobuf.zip -d protobuf/
+  cp -r protobuf/include/google "${GOOGLEAPIS_ROOT}"
+  echo "protoc version: $("${PROTOC_ROOT}"/protoc --version)"
+fi
 # pull protoc-gen-grpc-java plugin from maven central
 cd "${LIBRARY_GEN_OUT}"
-curl -LJ -o protoc-gen-grpc-java https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/"${GRPC_VERSION}"/protoc-gen-grpc-java-"${GRPC_VERSION}"-linux-x86_64.exe
-chmod +x protoc-gen-grpc-java
+if [ ! -f protoc-gen-grpc-java ]; then
+  curl -LJ -o protoc-gen-grpc-java https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/"${GRPC_VERSION}"/protoc-gen-grpc-java-"${GRPC_VERSION}"-linux-x86_64.exe
+  chmod +x protoc-gen-grpc-java
+fi
 # gapic-generator-java
-curl -LJ -o gapic-generator-java.jar https://repo1.maven.org/maven2/com/google/api/gapic-generator-java/"${GAPIC_GENERATOR_VERSION}"/gapic-generator-java-"${GAPIC_GENERATOR_VERSION}".jar
+if [ ! -f gapic-generator-java.jar ]; then
+  curl -LJ -o gapic-generator-java.jar https://repo1.maven.org/maven2/com/google/api/gapic-generator-java/"${GAPIC_GENERATOR_VERSION}"/gapic-generator-java-"${GAPIC_GENERATOR_VERSION}".jar
+fi
 # define utility functions
 remove_empty_files() {
   FOLDER=$1
