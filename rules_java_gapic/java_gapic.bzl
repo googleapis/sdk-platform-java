@@ -13,6 +13,7 @@
 # limitations under the License.
 
 load("@rules_gapic//:gapic.bzl", "proto_custom_library")
+#load("@//:WORKSPACE", 'gapic_generator_java_version')
 
 NO_GRPC_CONFIG_ALLOWLIST = ["library"]
 
@@ -24,7 +25,7 @@ def _java_gapic_postprocess_srcjar_impl(ctx):
     output_samples = ctx.outputs.samples
     output_resource_name = ctx.outputs.resource_name
     formatter = ctx.executable.formatter
-    generator_version = bazel.workspace.get_variable('_gapic_generator_java_version')
+    generator_version = "2.21.1-SNAPSHOT"  # {x-version-update:gapic-generator-java:current}
 
     output_dir_name = ctx.label.name
     output_dir_path = "%s/%s" % (output_main.dirname, output_dir_name)
@@ -38,7 +39,7 @@ def _java_gapic_postprocess_srcjar_impl(ctx):
     WORKING_DIR=`pwd`
 
     # Add a file indicating the version of the generator being used
-    echo {generator_version} > $WORKING_DIR/gapic-generator-java.version
+    echo "{generator_version}" > {output_dir_path}/src/main/java/gapic-generator-java.version
 
     # Main source files.
     cd {output_dir_path}/src/main/java
@@ -76,6 +77,7 @@ def _java_gapic_postprocess_srcjar_impl(ctx):
     """.format(
         gapic_srcjar = gapic_srcjar.path,
         output_srcjar_name = output_srcjar_name,
+        generator_version = generator_version,
         formatter = formatter,
         output_dir_name = output_dir_name,
         output_dir_path = output_dir_path,
