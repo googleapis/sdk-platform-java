@@ -192,3 +192,8 @@ for proto_src in ${PROTO_FILES}; do
     mkdir -p "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/"${OUT_LAYER_FOLDER}"/proto-"${OUT_LAYER_FOLDER}"/src/main/proto
     cp -f --parents "${proto_src}" "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/"${OUT_LAYER_FOLDER}"/proto-"${OUT_LAYER_FOLDER}"/src/main/proto
 done
+##################### Section 4 #####################
+# rm tar files
+#####################################################
+cd "${LIBRARY_GEN_OUT}/${PROTO_PATH}"
+rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_proto.jar temp-codegen.srcjar
