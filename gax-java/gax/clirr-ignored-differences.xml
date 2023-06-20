@@ -13,4 +13,10 @@
     <method>*setWaitTimeout*</method>
     <to>com.google.api.gax.rpc.ServerStreamingCallSettings$Builder</to>
   </difference>
+  <!-- BatchingDescriptor is an InternalApi intended for google cloud libraries use only -->
+  <difference>
+    <differenceType>7012</differenceType>
+    <className>com/google/api/gax/batching/BatchingDescriptor</className>
+    <method>*</method>
+  </difference>
 </differences>
