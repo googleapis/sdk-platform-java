@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -xe
+set -e
 
 GOOGLEAPIS_COMMIT=$1
 PROTOBUF_VERSION=$2
