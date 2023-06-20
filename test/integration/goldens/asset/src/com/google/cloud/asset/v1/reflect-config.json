@@ -1,82 +1,155 @@
 [
   {
-    "name": "com.google.cloud.asset.v1.BatchGetEffectiveIamPolicies",
-    "allDeclaredFields": true
+    "name": "com.google.cloud.asset.v1.stub.AssetServiceStub",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
   },
   {
-    "name": "com.google.cloud.asset.v1.BatchGetEffectiveIamPolicies",
-    "allDeclaredFields": true
+    "name": "com.google.cloud.asset.v1.stub.AssetServiceStubSettings",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
   },
   {
-    "name": "com.google.cloud.asset.v1.BatchGetEffectiveIamPolicies",
-    "allDeclaredFields": true
+    "name": "com.google.cloud.asset.v1.stub.GrpcAssetServiceCallableFactory",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
   },
   {
-    "name": "com.google.cloud.asset.v1.BatchGetEffectiveIamPolicies",
-    "allDeclaredFields": true
+    "name": "com.google.cloud.asset.v1.stub.GrpcAssetServiceStub",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
   },
   {
-    "name": "com.google.cloud.asset.v1.BatchGetEffectiveIamPolicies",
-    "allDeclaredFields": true
+    "name": "com.google.cloud.asset.v1.stub.HttpJsonAssetServiceCallableFactory",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
   },
   {
-    "name": "com.google.cloud.asset.v1.BatchGetEffectiveIamPolicies",
-    "allDeclaredFields": true
+    "name": "com.google.cloud.asset.v1.stub.HttpJsonAssetServiceStub",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
   },
   {
-    "name": "com.google.cloud.asset.v1.BatchGetEffectiveIamPolicies",
-    "allDeclaredFields": true
+    "name": "com.google.cloud.asset.v1.AssetServiceClient",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
   },
   {
-    "name": "com.google.cloud.asset.v1.BatchGetEffectiveIamPolicies",
-    "allDeclaredFields": true
+    "name": "com.google.cloud.asset.v1.AssetServiceSettings",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
   },
   {
-    "name": "com.google.cloud.asset.v1.BatchGetEffectiveIamPolicies",
-    "allDeclaredFields": true
+    "name": "com.google.cloud.asset.v1.MockAssetService",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
   },
   {
-    "name": "com.google.cloud.asset.v1.BatchGetEffectiveIamPolicies",
-    "allDeclaredFields": true
+    "name": "com.google.cloud.asset.v1.MockAssetServiceImpl",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
   },
   {
-    "name": "com.google.cloud.asset.v1.BatchGetEffectiveIamPolicies",
-    "allDeclaredFields": true
+    "name": "com.google.cloud.asset.v1.AssetServiceClientTest",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
   },
   {
-    "name": "com.google.cloud.asset.v1.BatchGetEffectiveIamPolicies",
-    "allDeclaredFields": true
+    "name": "com.google.cloud.asset.v1.AssetServiceClientHttpJsonTest",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
   },
   {
-    "name": "com.google.cloud.asset.v1.BatchGetEffectiveIamPolicies",
-    "allDeclaredFields": true
+    "name": "com.google.cloud.asset.v1.FeedName",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
   },
   {
-    "name": "com.google.cloud.asset.v1.BatchGetEffectiveIamPolicies",
-    "allDeclaredFields": true
+    "name": "com.google.cloud.asset.v1.SavedQueryName",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
   },
   {
-    "name": "com.google.cloud.asset.v1.BatchGetEffectiveIamPolicies",
-    "allDeclaredFields": true
+    "name": "com.google.cloud.asset.v1.FolderName",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
   },
   {
-    "name": "com.google.cloud.asset.v1.BatchGetEffectiveIamPolicies",
-    "allDeclaredFields": true
+    "name": "com.google.cloud.asset.v1.OrganizationName",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
   },
   {
-    "name": "com.google.cloud.asset.v1.BatchGetEffectiveIamPolicies",
-    "allDeclaredFields": true
-  },
-  {
-    "name": "com.google.cloud.asset.v1.BatchGetEffectiveIamPolicies",
-    "allDeclaredFields": true
-  },
-  {
-    "name": "com.google.cloud.asset.v1.BatchGetEffectiveIamPolicies",
-    "allDeclaredFields": true
-  },
-  {
-    "name": "com.google.cloud.asset.v1.BatchGetEffectiveIamPolicies",
-    "allDeclaredFields": true
+    "name": "com.google.cloud.asset.v1.ProjectName",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "queryAllPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
   }
 ]

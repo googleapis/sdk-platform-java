@@ -65,8 +65,7 @@ public class Writer {
 
     String packagePath = writePackageInfo(gapicPackageInfo, codeWriter, jos);
     writeMetadataFile(context, packagePath, jos);
-    writeNativeImageMetadata(context, packagePath, jos);
-
+    writeNativeImageMetadata(clazzes,  packagePath,  jos);
     try {
       jos.finish();
       jos.flush();
@@ -151,11 +150,17 @@ public class Writer {
   }
 
   private static void writeNativeImageMetadata(
-          GapicContext context, String path, JarOutputStream jos) {
+          List<GapicClass> clazzes, String path, JarOutputStream jos) {
     JarEntry jarEntry = new JarEntry(String.format("%s/reflect-config.json", path));
+    JsonArray jsonArray = new JsonArray();
     try {
       jos.putNextEntry(jarEntry);
-      String result = buildNativeImageMetadataJson(context);
+      for (GapicClass gapicClazz : clazzes) {
+        appendToNativeImageMetadataJson(gapicClazz, jsonArray);
+      }
+      Gson gson = new GsonBuilder().setPrettyPrinting().create();
+      JsonElement prettyJson = JsonParser.parseString(jsonArray.toString());
+      String result = gson.toJson(prettyJson);
       jos.write(result.getBytes(StandardCharsets.UTF_8));
     } catch (IOException e) {
       throw new GapicWriterException(
@@ -163,34 +168,17 @@ public class Writer {
     }
   }
 
-  static String buildNativeImageMetadataJson(GapicContext context) {
-    JsonArray jsonArray = new JsonArray();
-    Service assetService = fetchAssetService(context);
-    if (assetService != null) {
-      JsonObject innerObject = new JsonObject();
-      assetService.methods().stream().forEach(
-              method -> {
-                innerObject.addProperty("name", assetService.pakkage() + "." + method.name());
-                innerObject.addProperty("allDeclaredFields", true);
-                jsonArray.add(innerObject);
-              }
-      );
-
-    }
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    JsonElement prettyJson = JsonParser.parseString(jsonArray.toString());
-    return gson.toJson(prettyJson);
+  static void appendToNativeImageMetadataJson(GapicClass gapicClazz, JsonArray jsonArray) {
+    JsonObject innerObject = new JsonObject();
+    innerObject.addProperty("name",  gapicClazz.classDefinition().packageString() + "." + gapicClazz.classDefinition().classIdentifier().name());
+    innerObject.addProperty("queryAllDeclaredConstructors", true);
+    innerObject.addProperty("queryAllPublicConstructors", true);
+    innerObject.addProperty("queryAllDeclaredMethods", true);
+    innerObject.addProperty("queryAllPublicMethods", true);
+    innerObject.addProperty("allDeclaredClasses", true);
+    innerObject.addProperty("allPublicClasses", true);
+    jsonArray.add(innerObject);
   }
-
-  static Service fetchAssetService(GapicContext context) {
-    for (Service service : context.services()) {
-      if (service.name().toLowerCase().contains("asset")) {
-        return service;
-      }
-    }
-    return null;
-  }
-
 
     private static void writeMetadataFile(GapicContext context, String path, JarOutputStream jos) {
     if (context.gapicMetadataEnabled()) {
