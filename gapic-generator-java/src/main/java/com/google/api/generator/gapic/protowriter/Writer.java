@@ -18,13 +18,12 @@ import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.PackageInfoDefinition;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
-import com.google.api.generator.gapic.model.GapicClass;
-import com.google.api.generator.gapic.model.GapicContext;
-import com.google.api.generator.gapic.model.GapicPackageInfo;
-import com.google.api.generator.gapic.model.Sample;
+import com.google.api.generator.gapic.model.*;
+import com.google.gson.*;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
 import com.google.protobuf.util.JsonFormat;
+
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -64,7 +63,9 @@ public class Writer {
       writeSamples(gapicClazz, getSamplePackage(gapicClazz), classPath, jos);
     }
 
-    writeMetadataFile(context, writePackageInfo(gapicPackageInfo, codeWriter, jos), jos);
+    String packagePath = writePackageInfo(gapicPackageInfo, codeWriter, jos);
+    writeMetadataFile(context, packagePath, jos);
+    writeNativeImageMetadata(context, packagePath, jos);
 
     try {
       jos.finish();
@@ -139,7 +140,7 @@ public class Writer {
     codeWriter.clear();
 
     String packagePath = "src/main/java/" + packageInfo.pakkage().replaceAll("\\.", "/");
-    JarEntry jarEntry = new JarEntry(String.format("%s/package-info.java", packagePath));
+    JarEntry jarEntry = new JarEntry(String.format("%s/package-info-two.java", packagePath));
     try {
       jos.putNextEntry(jarEntry);
       jos.write(code.getBytes(StandardCharsets.UTF_8));
@@ -149,7 +150,49 @@ public class Writer {
     return packagePath;
   }
 
-  private static void writeMetadataFile(GapicContext context, String path, JarOutputStream jos) {
+  private static void writeNativeImageMetadata(
+          GapicContext context, String path, JarOutputStream jos) {
+    JarEntry jarEntry = new JarEntry(String.format("%s/reflect-config.json", path));
+    try {
+      jos.putNextEntry(jarEntry);
+      String result = buildNativeImageMetadataJson(context);
+      jos.write(result.getBytes(StandardCharsets.UTF_8));
+    } catch (IOException e) {
+      throw new GapicWriterException(
+              "Could not write reflect-config.json", e);
+    }
+  }
+
+  static String buildNativeImageMetadataJson(GapicContext context) {
+    JsonArray jsonArray = new JsonArray();
+    Service assetService = fetchAssetService(context);
+    if (assetService != null) {
+      JsonObject innerObject = new JsonObject();
+      assetService.methods().stream().forEach(
+              method -> {
+                innerObject.addProperty("name", assetService.pakkage() + "." + method.name());
+                innerObject.addProperty("allDeclaredFields", true);
+                jsonArray.add(innerObject);
+              }
+      );
+
+    }
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    JsonElement prettyJson = JsonParser.parseString(jsonArray.toString());
+    return gson.toJson(prettyJson);
+  }
+
+  static Service fetchAssetService(GapicContext context) {
+    for (Service service : context.services()) {
+      if (service.name().toLowerCase().contains("asset")) {
+        return service;
+      }
+    }
+    return null;
+  }
+
+
+    private static void writeMetadataFile(GapicContext context, String path, JarOutputStream jos) {
     if (context.gapicMetadataEnabled()) {
       JarEntry jarEntry = new JarEntry(String.format("%s/gapic_metadata.json", path));
       try {
