@@ -29,13 +29,10 @@
  */
 package com.google.api.gax.httpjson;
 
-import com.google.api.core.BetaApi;
-
 /**
  * An exception thrown when a protobuf message cannot be serialized/deserialized for REST
  * interactions.
  */
-@BetaApi
 public class RestSerializationException extends RuntimeException {
 
   private static final long serialVersionUID = -6485633460933364916L;

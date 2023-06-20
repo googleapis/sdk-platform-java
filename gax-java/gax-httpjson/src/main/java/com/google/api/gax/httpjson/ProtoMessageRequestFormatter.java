@@ -29,7 +29,6 @@
  */
 package com.google.api.gax.httpjson;
 
-import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.protobuf.Message;
@@ -121,7 +120,6 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
     return path;
   }
 
-  @BetaApi
   @Override
   public List<PathTemplate> getAdditionalPathTemplates() {
     return additionalPathTemplates;
@@ -161,7 +159,6 @@ public class ProtoMessageRequestFormatter<RequestT extends Message>
       return this;
     }
 
-    @BetaApi
     public Builder<RequestT> setAdditionalPaths(String... rawAdditionalPaths) {
       this.rawAdditionalPaths = Arrays.asList(rawAdditionalPaths);
       return this;

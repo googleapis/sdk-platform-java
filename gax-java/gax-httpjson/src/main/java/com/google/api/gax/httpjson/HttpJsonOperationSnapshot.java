@@ -29,7 +29,6 @@
  */
 package com.google.api.gax.httpjson;
 
-import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.rpc.StatusCode;
@@ -41,7 +40,6 @@ import com.google.longrunning.Operation;
  *
  * <p>Public for technical reasons. For internal use only.
  */
-@BetaApi
 @InternalApi
 public class HttpJsonOperationSnapshot implements OperationSnapshot {
   private final String name;

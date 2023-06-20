@@ -29,10 +29,7 @@
  */
 package com.google.api.gax.httpjson;
 
-import com.google.api.core.BetaApi;
-
 /** HttpJsonChannel contains the functionality to issue http-json calls. */
-@BetaApi
 public interface HttpJsonChannel {
   <RequestT, ResponseT> HttpJsonClientCall<RequestT, ResponseT> newCall(
       ApiMethodDescriptor<RequestT, ResponseT> methodDescriptor, HttpJsonCallOptions callOptions);

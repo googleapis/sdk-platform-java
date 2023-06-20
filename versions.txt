@@ -5,7 +5,7 @@ gapic-generator-java:2.21.0:2.21.1-SNAPSHOT
 api-common:2.12.0:2.12.1-SNAPSHOT
 gax:2.29.0:2.29.1-SNAPSHOT
 gax-grpc:2.29.0:2.29.1-SNAPSHOT
-gax-httpjson:0.114.0:0.114.1-SNAPSHOT
+gax-httpjson:0.114.0:2.29.1-SNAPSHOT
 proto-google-common-protos:2.20.0:2.20.1-SNAPSHOT
 grpc-google-common-protos:2.20.0:2.20.1-SNAPSHOT
 proto-google-iam-v1:1.15.0:1.15.1-SNAPSHOT
