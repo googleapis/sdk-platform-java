@@ -15,14 +15,26 @@
  */
 package com.google.showcase.v1beta1.it;
 
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertThrows;
+
+import com.google.api.gax.rpc.InvalidArgumentException;
+import com.google.api.gax.rpc.NotFoundException;
+import com.google.common.collect.ImmutableList;
 import com.google.iam.v1.Binding;
+import com.google.iam.v1.GetIamPolicyRequest;
 import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
+import com.google.iam.v1.TestIamPermissionsRequest;
+import com.google.iam.v1.TestIamPermissionsResponse;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
+import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Test;
 
 public class ITIam {
   private static EchoClient grpcClient;
@@ -44,11 +56,205 @@ public class ITIam {
         TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
+  @Test
   public void testGrpc_setIamPolicy() {
-    SetIamPolicyRequest policyRequest = SetIamPolicyRequest.newBuilder()
-            .setPolicy(
-                    Policy.newBuilder()
-                            .addBindings(Binding.newBuilder().setRole("foo.editor").addMembers("allUsers")))
+    String resource = "users/" + UUID.randomUUID().toString().substring(0, 8);
+    Policy expectedPolicy =
+        Policy.newBuilder()
+            .addBindings(Binding.newBuilder().setRole("foo.editor").addMembers("allUsers"))
             .build();
+    SetIamPolicyRequest policyRequest =
+        SetIamPolicyRequest.newBuilder().setPolicy(expectedPolicy).setResource(resource).build();
+    Policy policy = grpcClient.setIamPolicy(policyRequest);
+    assertThat(policy).isEqualTo(expectedPolicy);
+  }
+
+  @Test
+  public void testHttpJson_setIamPolicy() {
+    String resource = "users/" + UUID.randomUUID().toString().substring(0, 8);
+    Policy expectedPolicy =
+        Policy.newBuilder()
+            .addBindings(Binding.newBuilder().setRole("foo.editor").addMembers("allUsers"))
+            .build();
+    SetIamPolicyRequest policyRequest =
+        SetIamPolicyRequest.newBuilder().setPolicy(expectedPolicy).setResource(resource).build();
+    Policy policy = httpjsonClient.setIamPolicy(policyRequest);
+    assertThat(policy).isEqualTo(expectedPolicy);
+  }
+
+  @Test
+  public void testGrpc_getIamPolicy() {
+    String resource = "users/" + UUID.randomUUID().toString().substring(0, 8);
+    Policy expectedPolicy =
+        Policy.newBuilder()
+            .addBindings(Binding.newBuilder().setRole("foo.editor").addMembers("allUsers"))
+            .build();
+    SetIamPolicyRequest policyRequest =
+        SetIamPolicyRequest.newBuilder().setPolicy(expectedPolicy).setResource(resource).build();
+    grpcClient.setIamPolicy(policyRequest);
+
+    Policy policy =
+        grpcClient.getIamPolicy(GetIamPolicyRequest.newBuilder().setResource(resource).build());
+    assertThat(policy).isEqualTo(expectedPolicy);
+  }
+
+  @Test
+  public void testHttpJson_getIamPolicy() {
+    String resource = "users/" + UUID.randomUUID().toString().substring(0, 8);
+    Policy expectedPolicy =
+        Policy.newBuilder()
+            .addBindings(Binding.newBuilder().setRole("foo.editor").addMembers("allUsers"))
+            .build();
+    SetIamPolicyRequest policyRequest =
+        SetIamPolicyRequest.newBuilder().setPolicy(expectedPolicy).setResource(resource).build();
+    httpjsonClient.setIamPolicy(policyRequest);
+
+    Policy policy =
+        httpjsonClient.getIamPolicy(GetIamPolicyRequest.newBuilder().setResource(resource).build());
+    assertThat(policy).isEqualTo(expectedPolicy);
+  }
+
+  @Test
+  public void testGrpc_testIamPermissions() {
+    String resource = "users/" + UUID.randomUUID().toString().substring(0, 8);
+    Policy expectedPolicy =
+        Policy.newBuilder()
+            .addBindings(Binding.newBuilder().setRole("foo.editor").addMembers("allUsers"))
+            .build();
+    SetIamPolicyRequest policyRequest =
+        SetIamPolicyRequest.newBuilder().setPolicy(expectedPolicy).setResource(resource).build();
+    grpcClient.setIamPolicy(policyRequest);
+    List<String> permissions = ImmutableList.of("foo.create");
+    TestIamPermissionsResponse testIamPermissionsResponse =
+        grpcClient.testIamPermissions(
+            TestIamPermissionsRequest.newBuilder()
+                .setResource(resource)
+                .addAllPermissions(permissions)
+                .build());
+    assertThat(testIamPermissionsResponse.getPermissionsList())
+        .containsExactlyElementsIn(permissions);
+  }
+
+  @Test
+  public void testHttpJson_testIamPermissions() {
+    String resource = "users/" + UUID.randomUUID().toString().substring(0, 8);
+    Policy expectedPolicy =
+        Policy.newBuilder()
+            .addBindings(Binding.newBuilder().setRole("foo.editor").addMembers("allUsers"))
+            .build();
+    SetIamPolicyRequest policyRequest =
+        SetIamPolicyRequest.newBuilder().setPolicy(expectedPolicy).setResource(resource).build();
+    httpjsonClient.setIamPolicy(policyRequest);
+    List<String> permissions = ImmutableList.of("foo.create");
+    TestIamPermissionsResponse testIamPermissionsResponse =
+        httpjsonClient.testIamPermissions(
+            TestIamPermissionsRequest.newBuilder()
+                .setResource(resource)
+                .addAllPermissions(permissions)
+                .build());
+    assertThat(testIamPermissionsResponse.getPermissionsList())
+        .containsExactlyElementsIn(permissions);
+  }
+
+  @Test
+  public void testGrpc_getIamPolicy_doesNotExist() {
+    String resource = "users/" + UUID.randomUUID().toString().substring(0, 8);
+    assertThrows(
+        NotFoundException.class,
+        () ->
+            grpcClient.getIamPolicy(
+                GetIamPolicyRequest.newBuilder().setResource(resource).build()));
+  }
+
+  @Test
+  public void testHttpJson_getIamPolicy_doesNotExist() {
+    String resource = "users/" + UUID.randomUUID().toString().substring(0, 8);
+    assertThrows(
+        NotFoundException.class,
+        () ->
+            httpjsonClient.getIamPolicy(
+                GetIamPolicyRequest.newBuilder().setResource(resource).build()));
+  }
+
+  @Test
+  public void testGrpc_getIamPolicy_missingResource() {
+    assertThrows(
+        InvalidArgumentException.class,
+        () -> grpcClient.getIamPolicy(GetIamPolicyRequest.newBuilder().build()));
+  }
+
+  @Test
+  public void testHttpJson_getIamPolicy_missingResource() {
+    assertThrows(
+        InvalidArgumentException.class,
+        () -> httpjsonClient.getIamPolicy(GetIamPolicyRequest.newBuilder().build()));
+  }
+
+  @Test
+  public void testGrpc_setIamPolicy_missingResource() {
+    assertThrows(
+        InvalidArgumentException.class,
+        () -> grpcClient.setIamPolicy(SetIamPolicyRequest.newBuilder().build()));
+  }
+
+  @Test
+  public void testHttpJson_setIamPolicy_missingResource() {
+    assertThrows(
+        InvalidArgumentException.class,
+        () -> httpjsonClient.setIamPolicy(SetIamPolicyRequest.newBuilder().build()));
+  }
+
+  @Test
+  public void testGrpc_setIamPolicy_missingPolicy() {
+    String resource = "users/" + UUID.randomUUID().toString().substring(0, 8);
+    assertThrows(
+        InvalidArgumentException.class,
+        () ->
+            grpcClient.setIamPolicy(
+                SetIamPolicyRequest.newBuilder().setResource(resource).build()));
+  }
+
+  @Test
+  public void testHttpJson_setIamPolicy_missingPolicy() {
+    String resource = "users/" + UUID.randomUUID().toString().substring(0, 8);
+    assertThrows(
+        InvalidArgumentException.class,
+        () ->
+            httpjsonClient.setIamPolicy(
+                SetIamPolicyRequest.newBuilder().setResource(resource).build()));
+  }
+
+  @Test
+  public void testGrpc_testIamPermissions_doesNotExist() {
+    String resource = "users/" + UUID.randomUUID().toString().substring(0, 8);
+    assertThrows(
+        NotFoundException.class,
+        () ->
+            grpcClient.testIamPermissions(
+                TestIamPermissionsRequest.newBuilder().setResource(resource).build()));
+  }
+
+  @Test
+  public void testHttpJson_testIamPermissions_doesNotExist() {
+    String resource = "users/" + UUID.randomUUID().toString().substring(0, 8);
+    assertThrows(
+        NotFoundException.class,
+        () ->
+            httpjsonClient.testIamPermissions(
+                TestIamPermissionsRequest.newBuilder().setResource(resource).build()));
+  }
+
+  @Test
+  public void testGrpc_testIamPermissions_missingResource() {
+    assertThrows(
+        InvalidArgumentException.class,
+        () -> grpcClient.testIamPermissions(TestIamPermissionsRequest.newBuilder().build()));
+  }
+
+  @Test
+  public void testHttpJson_testIamPermissions_missingResource() {
+    assertThrows(
+        InvalidArgumentException.class,
+        () -> httpjsonClient.testIamPermissions(TestIamPermissionsRequest.newBuilder().build()));
   }
 }
