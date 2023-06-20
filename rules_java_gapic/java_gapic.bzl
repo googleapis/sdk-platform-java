@@ -13,7 +13,6 @@
 # limitations under the License.
 
 load("@rules_gapic//:gapic.bzl", "proto_custom_library")
-#load("@//:WORKSPACE", 'gapic_generator_java_version')
 
 NO_GRPC_CONFIG_ALLOWLIST = ["library"]
 
