@@ -6,7 +6,8 @@ PROTO_PATH=$1
 CONTAINS_CLOUD=$2
 TRANSPORT=$3 # grpc+rest or grpc
 REST_NUMERIC_ENUMS=$4 # true or false
-INCLUDE_SAMPLES=$5 # true or false
+IS_GAPIC_LIBRARY=$5 # true or false
+INCLUDE_SAMPLES=$6 # true or false
 
 cd "$(dirname "$(readlink -f "$0")")"
 chmod +x generate_library.sh
@@ -19,4 +20,5 @@ chmod +x generate_library.sh
 "${CONTAINS_CLOUD}" \
 "${TRANSPORT}" \
 "${REST_NUMERIC_ENUMS}" \
+"${IS_GAPIC_LIBRARY}" \
 "${INCLUDE_SAMPLES}"

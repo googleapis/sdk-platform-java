@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -xe
 
 GOOGLEAPIS_COMMIT=$1
 PROTOBUF_VERSION=$2
@@ -10,7 +10,11 @@ PROTO_PATH=$5
 CONTAINS_CLOUD=$6
 TRANSPORT=$7 # grpc+rest or grpc
 REST_NUMERIC_ENUMS=$8 # true or false
-INCLUDE_SAMPLES=$9 # true or false
+IS_GAPIC_LIBRARY=$9  # true or false
+if [ -z "${IS_GAPIC_LIBRARY}" ]; then
+  IS_GAPIC_LIBRARY="true"
+fi
+INCLUDE_SAMPLES=${10} # true or false
 if [ -z "${INCLUDE_SAMPLES}" ]; then
   INCLUDE_SAMPLES="true"
 fi
@@ -82,8 +86,10 @@ mv_src_files() {
     FOLDER_SUFFIX="${FOLDER}"-"${OUT_LAYER_FOLDER}"/src/"${TYPE}"
     SRC_SUFFIX="src/${TYPE}/java"
   fi
-  mkdir -p "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/"${OUT_LAYER_FOLDER}"/"${FOLDER_SUFFIX}"
-  cp -r "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/java_gapic_srcjar/"${SRC_SUFFIX}" "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/"${OUT_LAYER_FOLDER}"/"${FOLDER_SUFFIX}"
+  if [ "${IS_GAPIC_LIBRARY}" == "true" ]; then
+    mkdir -p "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/"${OUT_LAYER_FOLDER}"/"${FOLDER_SUFFIX}"
+    cp -r "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/java_gapic_srcjar/"${SRC_SUFFIX}" "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/"${OUT_LAYER_FOLDER}"/"${FOLDER_SUFFIX}"
+  fi
   if [ "${FOLDER}" != "samples" ]; then
     rm -r -f "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/"${OUT_LAYER_FOLDER}"/"${FOLDER_SUFFIX}"/java/META-INF
   fi
@@ -148,36 +154,38 @@ remove_empty_files "grpc"
 ##################### Section 2 #####################
 # generate gapic-*/, proto-*/, samples/
 #####################################################
-"${PROTOC_ROOT}"/protoc --experimental_allow_proto3_optional \
-"--plugin=protoc-gen-java_gapic=${REPO_ROOT}/library_generation/gapic-generator-java-wrapper" \
-"--java_gapic_out=metadata:${LIBRARY_GEN_OUT}/${PROTO_PATH}/java_gapic_srcjar_raw.srcjar.zip" \
-"--java_gapic_opt=$(get_gapic_opts)" \
-${PROTO_FILES} $(search_additional_protos)
+if [ "${IS_GAPIC_LIBRARY}" == "true" ]; then
+  "${PROTOC_ROOT}"/protoc --experimental_allow_proto3_optional \
+  "--plugin=protoc-gen-java_gapic=${REPO_ROOT}/library_generation/gapic-generator-java-wrapper" \
+  "--java_gapic_out=metadata:${LIBRARY_GEN_OUT}/${PROTO_PATH}/java_gapic_srcjar_raw.srcjar.zip" \
+  "--java_gapic_opt=$(get_gapic_opts)" \
+  ${PROTO_FILES} $(search_additional_protos)
 
-unzip -o -q "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/java_gapic_srcjar_raw.srcjar.zip -d "${LIBRARY_GEN_OUT}"/${PROTO_PATH}
-# Sync'\''d to the output file name in Writer.java.
-unzip -o -q "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/temp-codegen.srcjar -d "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/java_gapic_srcjar
-# Resource name source files.
-PROTO_DIR=${LIBRARY_GEN_OUT}/${PROTO_PATH}/java_gapic_srcjar/proto/src/main/java
-if [ ! -d "${PROTO_DIR}" ]
-then
-  # Some APIs don'\''t have resource name helpers, like BigQuery v2.
-  # Create an empty file so we can finish building. Gating the resource name rule definition
-  # on file existences go against Bazel'\''s design patterns, so we'\''ll simply delete all empty
-  # files during the final packaging process (see java_gapic_pkg.bzl)
-  mkdir -p "${PROTO_DIR}"
-  touch "${PROTO_DIR}"/PlaceholderFile.java
-fi
+  unzip -o -q "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/java_gapic_srcjar_raw.srcjar.zip -d "${LIBRARY_GEN_OUT}"/${PROTO_PATH}
+  # Sync'\''d to the output file name in Writer.java.
+  unzip -o -q "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/temp-codegen.srcjar -d "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/java_gapic_srcjar
+  # Resource name source files.
+  PROTO_DIR=${LIBRARY_GEN_OUT}/${PROTO_PATH}/java_gapic_srcjar/proto/src/main/java
+  if [ ! -d "${PROTO_DIR}" ]
+  then
+    # Some APIs don'\''t have resource name helpers, like BigQuery v2.
+    # Create an empty file so we can finish building. Gating the resource name rule definition
+    # on file existences go against Bazel'\''s design patterns, so we'\''ll simply delete all empty
+    # files during the final packaging process (see java_gapic_pkg.bzl)
+    mkdir -p "${PROTO_DIR}"
+    touch "${PROTO_DIR}"/PlaceholderFile.java
+  fi
 
-cd "${LIBRARY_GEN_OUT}"
-# Main source files.
-mv_src_files "gapic" "main"
-remove_empty_files "gapic"
-# Test source files.
-mv_src_files "gapic" "test"
-if [ "${INCLUDE_SAMPLES}" == "true" ]; then
-  # Sample source files.
-  mv_src_files "samples" "main"
+  cd "${LIBRARY_GEN_OUT}"
+  # Main source files.
+  mv_src_files "gapic" "main"
+  remove_empty_files "gapic"
+  # Test source files.
+  mv_src_files "gapic" "test"
+  if [ "${INCLUDE_SAMPLES}" == "true" ]; then
+    # Sample source files.
+    mv_src_files "samples" "main"
+  fi
 fi
 ##################### Section 3 #####################
 # generate proto-*/
