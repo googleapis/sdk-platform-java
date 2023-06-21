@@ -27,7 +27,7 @@ import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
-import com.google.showcase.v1beta1.EchoClient;
+import com.google.showcase.v1beta1.IdentityClient;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.util.List;
 import java.util.UUID;
@@ -42,19 +42,19 @@ public class ITIam {
       Policy.newBuilder()
           .addBindings(Binding.newBuilder().setRole("foo.editor").addMembers("allUsers"))
           .build();
-  private static EchoClient grpcClient;
-  private static EchoClient httpjsonClient;
-  private String resource;
+  private static IdentityClient grpcClient;
+  private static IdentityClient httpjsonClient;
+  private String resourceName;
 
   @BeforeClass
   public static void createClients() throws Exception {
-    grpcClient = TestClientInitializer.createGrpcEchoClient();
-    httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
+    grpcClient = TestClientInitializer.createGrpcIdentityClient();
+    httpjsonClient = TestClientInitializer.createHttpJsonIdentityClient();
   }
 
   @Before
   public void setupTests() {
-    resource = "rooms/" + UUID.randomUUID().toString().substring(0, 8);
+    resourceName = "users/" + UUID.randomUUID().toString().substring(0, 8);
   }
 
   @AfterClass
@@ -70,7 +70,10 @@ public class ITIam {
   @Test
   public void testGrpc_setIamPolicy() {
     SetIamPolicyRequest policyRequest =
-        SetIamPolicyRequest.newBuilder().setPolicy(DEFAULT_POLICY).setResource(resource).build();
+        SetIamPolicyRequest.newBuilder()
+            .setPolicy(DEFAULT_POLICY)
+            .setResource(resourceName)
+            .build();
     Policy policy = grpcClient.setIamPolicy(policyRequest);
     assertThat(policy).isEqualTo(DEFAULT_POLICY);
   }
@@ -78,7 +81,10 @@ public class ITIam {
   @Test
   public void testHttpJson_setIamPolicy() {
     SetIamPolicyRequest policyRequest =
-        SetIamPolicyRequest.newBuilder().setPolicy(DEFAULT_POLICY).setResource(resource).build();
+        SetIamPolicyRequest.newBuilder()
+            .setPolicy(DEFAULT_POLICY)
+            .setResource(resourceName)
+            .build();
     Policy policy = httpjsonClient.setIamPolicy(policyRequest);
     assertThat(policy).isEqualTo(DEFAULT_POLICY);
   }
@@ -103,7 +109,7 @@ public class ITIam {
         InvalidArgumentException.class,
         () ->
             grpcClient.setIamPolicy(
-                SetIamPolicyRequest.newBuilder().setResource(resource).build()));
+                SetIamPolicyRequest.newBuilder().setResource(resourceName).build()));
   }
 
   @Test
@@ -112,13 +118,16 @@ public class ITIam {
         InvalidArgumentException.class,
         () ->
             httpjsonClient.setIamPolicy(
-                SetIamPolicyRequest.newBuilder().setResource(resource).build()));
+                SetIamPolicyRequest.newBuilder().setResource(resourceName).build()));
   }
 
   @Test
   public void testGrpc_getIamPolicy() {
     SetIamPolicyRequest policyRequest =
-        SetIamPolicyRequest.newBuilder().setPolicy(DEFAULT_POLICY).setResource(resource).build();
+        SetIamPolicyRequest.newBuilder()
+            .setPolicy(DEFAULT_POLICY)
+            .setResource(resourceName)
+            .build();
     grpcClient.setIamPolicy(policyRequest);
 
     Policy policy =
@@ -130,7 +139,10 @@ public class ITIam {
   @Test
   public void testHttpJson_getIamPolicy() {
     SetIamPolicyRequest policyRequest =
-        SetIamPolicyRequest.newBuilder().setPolicy(DEFAULT_POLICY).setResource(resource).build();
+        SetIamPolicyRequest.newBuilder()
+            .setPolicy(DEFAULT_POLICY)
+            .setResource(resourceName)
+            .build();
     httpjsonClient.setIamPolicy(policyRequest);
 
     Policy policy =
@@ -145,7 +157,7 @@ public class ITIam {
         NotFoundException.class,
         () ->
             grpcClient.getIamPolicy(
-                GetIamPolicyRequest.newBuilder().setResource(resource).build()));
+                GetIamPolicyRequest.newBuilder().setResource(resourceName).build()));
   }
 
   @Test
@@ -154,7 +166,7 @@ public class ITIam {
         NotFoundException.class,
         () ->
             httpjsonClient.getIamPolicy(
-                GetIamPolicyRequest.newBuilder().setResource(resource).build()));
+                GetIamPolicyRequest.newBuilder().setResource(resourceName).build()));
   }
 
   @Test
@@ -174,7 +186,10 @@ public class ITIam {
   @Test
   public void testGrpc_testIamPermissions() {
     SetIamPolicyRequest policyRequest =
-        SetIamPolicyRequest.newBuilder().setPolicy(DEFAULT_POLICY).setResource(resource).build();
+        SetIamPolicyRequest.newBuilder()
+            .setPolicy(DEFAULT_POLICY)
+            .setResource(resourceName)
+            .build();
     grpcClient.setIamPolicy(policyRequest);
     List<String> permissions = ImmutableList.of("foo.create");
     TestIamPermissionsResponse testIamPermissionsResponse =
@@ -190,7 +205,10 @@ public class ITIam {
   @Test
   public void testHttpJson_testIamPermissions() {
     SetIamPolicyRequest policyRequest =
-        SetIamPolicyRequest.newBuilder().setPolicy(DEFAULT_POLICY).setResource(resource).build();
+        SetIamPolicyRequest.newBuilder()
+            .setPolicy(DEFAULT_POLICY)
+            .setResource(resourceName)
+            .build();
     httpjsonClient.setIamPolicy(policyRequest);
     List<String> permissions = ImmutableList.of("foo.create");
     TestIamPermissionsResponse testIamPermissionsResponse =
@@ -209,7 +227,7 @@ public class ITIam {
         NotFoundException.class,
         () ->
             grpcClient.testIamPermissions(
-                TestIamPermissionsRequest.newBuilder().setResource(resource).build()));
+                TestIamPermissionsRequest.newBuilder().setResource(resourceName).build()));
   }
 
   @Test
@@ -218,7 +236,7 @@ public class ITIam {
         NotFoundException.class,
         () ->
             httpjsonClient.testIamPermissions(
-                TestIamPermissionsRequest.newBuilder().setResource(resource).build()));
+                TestIamPermissionsRequest.newBuilder().setResource(resourceName).build()));
   }
 
   @Test
