@@ -819,7 +819,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testGdchCredentialNoAudienceNoEndpoint_throws() throws IOException {
+  public void testCreateClientContext_withGdchCredentialNoAudienceNoEndpoint_throws() throws IOException {
     TransportChannelProvider transportChannelProvider = getFakeTransportChannelProvider();
     Credentials creds = getMockGdchCredentials();
 
@@ -838,7 +838,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testGdchCredentialNoAudienceWithEndpoint_correct() throws IOException {
+  public void testCreateClientContext_withGdchCredentialWithoutAudienceWithEndpoint_correct() throws IOException {
     TransportChannelProvider transportChannelProvider = getFakeTransportChannelProvider();
     Credentials creds = getMockGdchCredentials();
 
@@ -868,7 +868,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testGdchCredentialValidAudience_correct() throws IOException {
+  public void testCreateClientContext_withGdchCredentialAndValidAudience() throws IOException {
     Credentials creds = getMockGdchCredentials();
     CredentialsProvider provider = FixedCredentialsProvider.create(creds);
     TransportChannelProvider transportChannelProvider = getFakeTransportChannelProvider();
@@ -897,7 +897,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testGdchCredentialInvalidAudience_throws() throws IOException {
+  public void testCreateClientContext_withGdchCredentialAndInvalidAudience_throws() throws IOException {
     TransportChannelProvider transportChannelProvider = getFakeTransportChannelProvider();
     Credentials creds = getMockGdchCredentials();
     CredentialsProvider provider = FixedCredentialsProvider.create(creds);
@@ -927,7 +927,7 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testNonGdchCredentialAnyAudience_throws() throws IOException {
+  public void testCreateClientContext_withNonGdchCredentialAndAnyAudience_throws() throws IOException {
     TransportChannelProvider transportChannelProvider = getFakeTransportChannelProvider();
 
     // it should throw if apiAudience is set but not using GDC-H creds
