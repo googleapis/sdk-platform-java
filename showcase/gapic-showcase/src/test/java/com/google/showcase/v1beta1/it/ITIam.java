@@ -133,8 +133,7 @@ public class ITIam {
     httpjsonClient.setIamPolicy(policyRequest);
 
     Policy policy =
-        httpjsonClient.getIamPolicy(
-            GetIamPolicyRequest.newBuilder().setResource(policyRequest.getResource()).build());
+        httpjsonClient.getIamPolicy(GetIamPolicyRequest.newBuilder().setResource(resource).build());
     assertThat(policy).isEqualTo(DEFAULT_POLICY);
   }
 

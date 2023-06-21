@@ -178,7 +178,7 @@ jobs:
       - run: mvn -version
       - name: Install Maven modules
         run: |
-          mvn clean install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+          mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
       - name: Java Linter
         working-directory: showcase
         run: |
@@ -203,7 +203,7 @@ jobs:
       - name: Showcase integration tests
         working-directory: showcase
         run: |
-          mvn clean verify \
+          mvn verify \
             -P enable-integration-tests \
             --batch-mode \
             --no-transfer-progress
