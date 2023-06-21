@@ -43,8 +43,9 @@ public class ITPagination {
   @AfterClass
   public static void destroyClients() throws InterruptedException {
     grpcClient.close();
-    grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
     httpjsonClient.close();
+
+    grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
     httpjsonClient.awaitTermination(
         TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
@@ -53,15 +54,15 @@ public class ITPagination {
   // the content is correct.
   //
   // The pageToken is where the streaming responses come back from and the page size denotes
-  // how many of the responses come back together. i.e for PageSize = 2 and PageToken = 1, see
-  // below:
+  // how many of the responses come back together (in a page). i.e for PageSize = 2 and
+  // PageToken = 3, see below:
   //         | A | Series  | Of  | Words | That  | Will  | Be  | Sent  | Back  | One | By  | One
-  // Page #  | X | 1       | 1   | 2     | 2     | 3     | 3   | 4     | 4     | 5   | 5   | 6
+  // Page #  | - | -       | -   | 1     | 1     | 2     | 2   | 3     | 3     | 4   | 4   | 5
   // Token # | 0 | 1       | 2   | 3     | 4     | 5     | 6   | 7     | 8     | 9   | 10  | 11
   @Test
   public void testPagedExpandWithTokenGrpc() {
     int pageSize = 2;
-    int pageToken = 1;
+    int pageToken = 3;
     String content = "A series of words that will be sent back one by one";
     int contentLength = content.split(" ").length;
 
@@ -90,15 +91,15 @@ public class ITPagination {
   // the content is correct.
   //
   // The pageToken is where the streaming responses come back from and the page size denotes
-  // how many of the responses come back together. i.e for PageSize = 2 and PageToken = 1, see
-  // below:
+  // how many of the responses come back together (in a page). i.e for PageSize = 2 and
+  // PageToken = 3, see below:
   //         | A | Series  | Of  | Words | That  | Will  | Be  | Sent  | Back  | One | By  | One
-  // Page #  | X | 1       | 1   | 2     | 2     | 3     | 3   | 4     | 4     | 5   | 5   | 6
+  // Page #  | - | -       | -   | 1     | 1     | 2     | 2   | 3     | 3     | 4   | 4   | 5
   // Token # | 0 | 1       | 2   | 3     | 4     | 5     | 6   | 7     | 8     | 9   | 10  | 11
   @Test
   public void testPagedExpandWithTokenHttpJson() {
     int pageSize = 2;
-    int pageToken = 1;
+    int pageToken = 3;
     String content = "A series of words that will be sent back one by one";
     int contentLength = content.split(" ").length;
 
