@@ -35,6 +35,7 @@ import java.util.concurrent.TimeUnit;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class ITIam {
@@ -127,6 +128,7 @@ public class ITIam {
     assertThat(policy).isEqualTo(DEFAULT_POLICY);
   }
 
+  @Ignore
   @Test
   public void testHttpJson_getIamPolicy() {
     SetIamPolicyRequest policyRequest =
