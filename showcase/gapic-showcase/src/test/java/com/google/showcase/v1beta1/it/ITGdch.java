@@ -109,7 +109,7 @@ public class ITGdch {
    * @throws IOException
    */
   @Test
-  public void testClientWithGdchCredentialNoAudience_correct() throws IOException {
+  public void testCreateClient_withGdchCredentialAndNoAudience() throws IOException {
     context = ClientContext.create(settings);
     stubSettings = EchoStubSettings.newBuilder(context).build();
     client = EchoClient.create(stubSettings.createStub());
@@ -138,7 +138,7 @@ public class ITGdch {
    * @throws IOException
    */
   @Test
-  public void testClientWithGdchCredentialWithValidAudience_correct() throws IOException {
+  public void testCreateClient_withGdchCredentialWithValidAudience() throws IOException {
     String audience = "valid-audience";
     settings = settings.toBuilder().setGdchApiAudience(audience).build();
     context = ClientContext.create(settings);
@@ -163,7 +163,7 @@ public class ITGdch {
   }
 
   @Test
-  public void testClientWithGdchCredentialWithInvalidAudience_throws() throws IOException {
+  public void testCreateClient_withGdchCredentialWithInvalidAudience_throws() throws IOException {
     settings = settings.toBuilder().setGdchApiAudience("$invalid-audience:").build();
     Exception expected =
         assertThrows(IllegalArgumentException.class, () -> client = EchoClient.create(settings));
@@ -171,7 +171,7 @@ public class ITGdch {
   }
 
   @Test
-  public void testClientWithNonGdchCredentialWithAnyAudience_throws() throws IOException {
+  public void testCreateClient_withNonGdchCredentialWithAnyAudience_throws() throws IOException {
     settings =
         settings
             .toBuilder()
