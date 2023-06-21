@@ -127,11 +127,13 @@ public class ITIam {
   }
 
   @Test
-  public void testHttpJson_getIamPolicy() {
+  public void testHttpJson_getIamPolicy() throws InterruptedException {
     SetIamPolicyRequest policyRequest =
         SetIamPolicyRequest.newBuilder().setPolicy(DEFAULT_POLICY).setResource(resource).build();
     Policy setIamPolicy = httpjsonClient.setIamPolicy(policyRequest);
     System.out.println(setIamPolicy.getBindingsList() + " " + resource);
+
+    Thread.sleep(1000);
 
     Policy policy =
         httpjsonClient.getIamPolicy(GetIamPolicyRequest.newBuilder().setResource(resource).build());
