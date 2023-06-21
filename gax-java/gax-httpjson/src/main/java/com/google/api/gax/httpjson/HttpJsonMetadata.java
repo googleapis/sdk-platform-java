@@ -29,7 +29,6 @@
  */
 package com.google.api.gax.httpjson;
 
-import com.google.api.core.BetaApi;
 import com.google.api.core.InternalExtensionOnly;
 import com.google.auto.value.AutoValue;
 import java.util.Collections;
@@ -39,7 +38,6 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 @AutoValue
-@BetaApi
 @InternalExtensionOnly
 public abstract class HttpJsonMetadata {
   public abstract Map<String, Object> getHeaders();

@@ -29,7 +29,6 @@
  */
 package com.google.api.gax.httpjson.longrunning.stub;
 
-import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.httpjson.HttpJsonCallSettings;
 import com.google.api.gax.httpjson.HttpJsonCallableFactory;
@@ -49,7 +48,6 @@ import com.google.longrunning.Operation;
  *
  * <p>This class is for advanced usage.
  */
-@BetaApi
 public class HttpJsonOperationsCallableFactory
     implements HttpJsonStubCallableFactory<Operation, BackgroundResource> {
 
