@@ -38,6 +38,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class ITIam {
+  private static final Policy DEFAULT_POLICY =
+      Policy.newBuilder()
+          .addBindings(Binding.newBuilder().setRole("foo.editor").addMembers("allUsers"))
+          .build();
   private static EchoClient grpcClient;
   private static EchoClient httpjsonClient;
   private String resource;
@@ -65,56 +69,40 @@ public class ITIam {
 
   @Test
   public void testGrpc_setIamPolicy() {
-    Policy expectedPolicy =
-        Policy.newBuilder()
-            .addBindings(Binding.newBuilder().setRole("foo.editor").addMembers("allUsers"))
-            .build();
     SetIamPolicyRequest policyRequest =
-        SetIamPolicyRequest.newBuilder().setPolicy(expectedPolicy).setResource(resource).build();
+        SetIamPolicyRequest.newBuilder().setPolicy(DEFAULT_POLICY).setResource(resource).build();
     Policy policy = grpcClient.setIamPolicy(policyRequest);
-    assertThat(policy).isEqualTo(expectedPolicy);
+    assertThat(policy).isEqualTo(DEFAULT_POLICY);
   }
 
   @Test
   public void testHttpJson_setIamPolicy() {
-    Policy expectedPolicy =
-        Policy.newBuilder()
-            .addBindings(Binding.newBuilder().setRole("foo.editor").addMembers("allUsers"))
-            .build();
     SetIamPolicyRequest policyRequest =
-        SetIamPolicyRequest.newBuilder().setPolicy(expectedPolicy).setResource(resource).build();
+        SetIamPolicyRequest.newBuilder().setPolicy(DEFAULT_POLICY).setResource(resource).build();
     Policy policy = httpjsonClient.setIamPolicy(policyRequest);
-    assertThat(policy).isEqualTo(expectedPolicy);
+    assertThat(policy).isEqualTo(DEFAULT_POLICY);
   }
 
   @Test
   public void testGrpc_getIamPolicy() {
-    Policy expectedPolicy =
-        Policy.newBuilder()
-            .addBindings(Binding.newBuilder().setRole("foo.editor").addMembers("allUsers"))
-            .build();
     SetIamPolicyRequest policyRequest =
-        SetIamPolicyRequest.newBuilder().setPolicy(expectedPolicy).setResource(resource).build();
+        SetIamPolicyRequest.newBuilder().setPolicy(DEFAULT_POLICY).setResource(resource).build();
     grpcClient.setIamPolicy(policyRequest);
 
     Policy policy =
         grpcClient.getIamPolicy(GetIamPolicyRequest.newBuilder().setResource(resource).build());
-    assertThat(policy).isEqualTo(expectedPolicy);
+    assertThat(policy).isEqualTo(DEFAULT_POLICY);
   }
 
   @Test
   public void testHttpJson_getIamPolicy() {
-    Policy expectedPolicy =
-        Policy.newBuilder()
-            .addBindings(Binding.newBuilder().setRole("foo.editor").addMembers("allUsers"))
-            .build();
     SetIamPolicyRequest policyRequest =
-        SetIamPolicyRequest.newBuilder().setPolicy(expectedPolicy).setResource(resource).build();
+        SetIamPolicyRequest.newBuilder().setPolicy(DEFAULT_POLICY).setResource(resource).build();
     httpjsonClient.setIamPolicy(policyRequest);
 
     Policy policy =
         httpjsonClient.getIamPolicy(GetIamPolicyRequest.newBuilder().setResource(resource).build());
-    assertThat(policy).isEqualTo(expectedPolicy);
+    assertThat(policy).isEqualTo(DEFAULT_POLICY);
   }
 
   @Test
@@ -183,12 +171,8 @@ public class ITIam {
 
   @Test
   public void testGrpc_testIamPermissions() {
-    Policy expectedPolicy =
-        Policy.newBuilder()
-            .addBindings(Binding.newBuilder().setRole("foo.editor").addMembers("allUsers"))
-            .build();
     SetIamPolicyRequest policyRequest =
-        SetIamPolicyRequest.newBuilder().setPolicy(expectedPolicy).setResource(resource).build();
+        SetIamPolicyRequest.newBuilder().setPolicy(DEFAULT_POLICY).setResource(resource).build();
     grpcClient.setIamPolicy(policyRequest);
     List<String> permissions = ImmutableList.of("foo.create");
     TestIamPermissionsResponse testIamPermissionsResponse =
@@ -203,12 +187,8 @@ public class ITIam {
 
   @Test
   public void testHttpJson_testIamPermissions() {
-    Policy expectedPolicy =
-        Policy.newBuilder()
-            .addBindings(Binding.newBuilder().setRole("foo.editor").addMembers("allUsers"))
-            .build();
     SetIamPolicyRequest policyRequest =
-        SetIamPolicyRequest.newBuilder().setPolicy(expectedPolicy).setResource(resource).build();
+        SetIamPolicyRequest.newBuilder().setPolicy(DEFAULT_POLICY).setResource(resource).build();
     httpjsonClient.setIamPolicy(policyRequest);
     List<String> permissions = ImmutableList.of("foo.create");
     TestIamPermissionsResponse testIamPermissionsResponse =
