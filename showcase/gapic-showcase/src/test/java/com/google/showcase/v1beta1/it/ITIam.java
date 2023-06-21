@@ -55,7 +55,6 @@ public class ITIam {
   @Before
   public void setupTests() {
     resource = "users/" + UUID.randomUUID().toString().substring(0, 8);
-    System.out.println(resource);
   }
 
   @AfterClass
@@ -134,7 +133,8 @@ public class ITIam {
     httpjsonClient.setIamPolicy(policyRequest);
 
     Policy policy =
-        httpjsonClient.getIamPolicy(GetIamPolicyRequest.newBuilder().setResource(resource).build());
+        httpjsonClient.getIamPolicy(
+            GetIamPolicyRequest.newBuilder().setResource(policyRequest.getResource()).build());
     assertThat(policy).isEqualTo(DEFAULT_POLICY);
   }
 
