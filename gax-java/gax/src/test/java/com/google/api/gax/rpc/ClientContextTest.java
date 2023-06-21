@@ -823,7 +823,6 @@ public class ClientContextTest {
     TransportChannelProvider transportChannelProvider = getFakeTransportChannelProvider();
     Credentials creds = getMockGdchCredentials();
 
-    // it should correctly create a client context with gdch creds and null audience
     CredentialsProvider provider = FixedCredentialsProvider.create(creds);
     StubSettings settings = new FakeStubSettings.Builder().setGdchApiAudience(null).build();
     FakeClientSettings.Builder clientSettingsBuilder = new FakeClientSettings.Builder(settings);
