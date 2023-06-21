@@ -122,23 +122,21 @@ public class ITIam {
     grpcClient.setIamPolicy(policyRequest);
 
     Policy policy =
-        grpcClient.getIamPolicy(GetIamPolicyRequest.newBuilder().setResource(resource).build());
+        grpcClient.getIamPolicy(
+            GetIamPolicyRequest.newBuilder().setResource(policyRequest.getResource()).build());
     assertThat(policy).isEqualTo(DEFAULT_POLICY);
   }
 
   @Test
-  public void testHttpJson_getIamPolicy() throws InterruptedException {
+  public void testHttpJson_getIamPolicy() {
     SetIamPolicyRequest policyRequest =
         SetIamPolicyRequest.newBuilder().setPolicy(DEFAULT_POLICY).setResource(resource).build();
-    Policy setIamPolicy = httpjsonClient.setIamPolicy(policyRequest);
-    System.out.println(setIamPolicy.getBindingsList() + " " + resource);
-
-    Thread.sleep(1000);
+    httpjsonClient.setIamPolicy(policyRequest);
 
     Policy policy =
-        httpjsonClient.getIamPolicy(GetIamPolicyRequest.newBuilder().setResource(resource).build());
+        httpjsonClient.getIamPolicy(
+            GetIamPolicyRequest.newBuilder().setResource(policyRequest.getResource()).build());
     assertThat(policy).isEqualTo(DEFAULT_POLICY);
-    System.out.println(resource);
   }
 
   @Test
@@ -182,7 +180,7 @@ public class ITIam {
     TestIamPermissionsResponse testIamPermissionsResponse =
         grpcClient.testIamPermissions(
             TestIamPermissionsRequest.newBuilder()
-                .setResource(resource)
+                .setResource(policyRequest.getResource())
                 .addAllPermissions(permissions)
                 .build());
     assertThat(testIamPermissionsResponse.getPermissionsList())
@@ -198,7 +196,7 @@ public class ITIam {
     TestIamPermissionsResponse testIamPermissionsResponse =
         httpjsonClient.testIamPermissions(
             TestIamPermissionsRequest.newBuilder()
-                .setResource(resource)
+                .setResource(policyRequest.getResource())
                 .addAllPermissions(permissions)
                 .build());
     assertThat(testIamPermissionsResponse.getPermissionsList())
