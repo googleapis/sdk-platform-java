@@ -31,7 +31,6 @@ package com.google.api.gax.httpjson;
 
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
 import com.google.common.annotations.VisibleForTesting;
@@ -45,7 +44,6 @@ import java.util.concurrent.TimeUnit;
 import javax.annotation.Nullable;
 
 /** Implementation of HttpJsonChannel which can issue http-json calls. */
-@BetaApi
 public class ManagedHttpJsonChannel implements HttpJsonChannel, BackgroundResource {
 
   private final Executor executor;
