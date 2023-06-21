@@ -55,6 +55,7 @@ public class ITIam {
   @Before
   public void setupTests() {
     resource = "users/" + UUID.randomUUID().toString().substring(0, 8);
+    System.out.println(resource);
   }
 
   @AfterClass
@@ -81,6 +82,38 @@ public class ITIam {
         SetIamPolicyRequest.newBuilder().setPolicy(DEFAULT_POLICY).setResource(resource).build();
     Policy policy = httpjsonClient.setIamPolicy(policyRequest);
     assertThat(policy).isEqualTo(DEFAULT_POLICY);
+  }
+
+  @Test
+  public void testGrpc_setIamPolicy_missingResource() {
+    assertThrows(
+        InvalidArgumentException.class,
+        () -> grpcClient.setIamPolicy(SetIamPolicyRequest.newBuilder().build()));
+  }
+
+  @Test
+  public void testHttpJson_setIamPolicy_missingResource() {
+    assertThrows(
+        InvalidArgumentException.class,
+        () -> httpjsonClient.setIamPolicy(SetIamPolicyRequest.newBuilder().build()));
+  }
+
+  @Test
+  public void testGrpc_setIamPolicy_missingPolicy() {
+    assertThrows(
+        InvalidArgumentException.class,
+        () ->
+            grpcClient.setIamPolicy(
+                SetIamPolicyRequest.newBuilder().setResource(resource).build()));
+  }
+
+  @Test
+  public void testHttpJson_setIamPolicy_missingPolicy() {
+    assertThrows(
+        InvalidArgumentException.class,
+        () ->
+            httpjsonClient.setIamPolicy(
+                SetIamPolicyRequest.newBuilder().setResource(resource).build()));
   }
 
   @Test
@@ -135,38 +168,6 @@ public class ITIam {
     assertThrows(
         InvalidArgumentException.class,
         () -> httpjsonClient.getIamPolicy(GetIamPolicyRequest.newBuilder().build()));
-  }
-
-  @Test
-  public void testGrpc_setIamPolicy_missingResource() {
-    assertThrows(
-        InvalidArgumentException.class,
-        () -> grpcClient.setIamPolicy(SetIamPolicyRequest.newBuilder().build()));
-  }
-
-  @Test
-  public void testHttpJson_setIamPolicy_missingResource() {
-    assertThrows(
-        InvalidArgumentException.class,
-        () -> httpjsonClient.setIamPolicy(SetIamPolicyRequest.newBuilder().build()));
-  }
-
-  @Test
-  public void testGrpc_setIamPolicy_missingPolicy() {
-    assertThrows(
-        InvalidArgumentException.class,
-        () ->
-            grpcClient.setIamPolicy(
-                SetIamPolicyRequest.newBuilder().setResource(resource).build()));
-  }
-
-  @Test
-  public void testHttpJson_setIamPolicy_missingPolicy() {
-    assertThrows(
-        InvalidArgumentException.class,
-        () ->
-            httpjsonClient.setIamPolicy(
-                SetIamPolicyRequest.newBuilder().setResource(resource).build()));
   }
 
   @Test
