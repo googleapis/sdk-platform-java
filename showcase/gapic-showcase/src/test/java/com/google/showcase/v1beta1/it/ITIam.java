@@ -54,7 +54,7 @@ public class ITIam {
 
   @Before
   public void setupTests() {
-    resource = "users/" + UUID.randomUUID().toString().substring(0, 8);
+    resource = "rooms/" + UUID.randomUUID().toString().substring(0, 8);
   }
 
   @AfterClass
