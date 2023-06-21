@@ -18,15 +18,10 @@ package com.google.showcase.v1beta1.it;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import com.google.api.gax.rpc.ServerStream;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoResponse;
-import com.google.showcase.v1beta1.ExpandRequest;
 import com.google.showcase.v1beta1.PagedExpandRequest;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -52,36 +47,6 @@ public class ITPagination {
     httpjsonClient.close();
     httpjsonClient.awaitTermination(
         TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
-  }
-
-  @Test
-  public void testExpandGrpc() {
-    String content = "Testing the entire response is the same";
-    List<String> splitContent = Arrays.asList(content.split(" "));
-    ServerStream<EchoResponse> streamedResponses =
-        grpcClient.expandCallable().call(ExpandRequest.newBuilder().setContent(content).build());
-    List<String> values = new ArrayList<>();
-    for (EchoResponse echoResponse : streamedResponses) {
-      values.add(echoResponse.getContent());
-    }
-
-    assertThat(values).hasSize(splitContent.size());
-    assertThat(splitContent).containsExactlyElementsIn(values).inOrder();
-  }
-
-  @Test
-  public void testExpandHttpJson() {
-    String content = "Testing the entire response is the same";
-    List<String> splitContent = Arrays.asList(content.split(" "));
-    ServerStream<EchoResponse> streamedResponses =
-        grpcClient.expandCallable().call(ExpandRequest.newBuilder().setContent(content).build());
-    List<String> values = new ArrayList<>();
-    for (EchoResponse echoResponse : streamedResponses) {
-      values.add(echoResponse.getContent());
-    }
-
-    assertThat(values).hasSize(splitContent.size());
-    assertThat(splitContent).containsExactlyElementsIn(values).inOrder();
   }
 
   // This tests that pagination returns the correct number of pages + responses and that
