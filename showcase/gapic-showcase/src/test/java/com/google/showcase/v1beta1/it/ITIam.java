@@ -128,7 +128,6 @@ public class ITIam {
     assertThat(policy).isEqualTo(DEFAULT_POLICY);
   }
 
-  @Ignore
   @Test
   public void testHttpJson_getIamPolicy() {
     SetIamPolicyRequest policyRequest =
