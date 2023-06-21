@@ -48,11 +48,6 @@ public final class CustomHttpPattern extends com.google.protobuf.GeneratedMessag
     return new CustomHttpPattern();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.HttpProto.internal_static_google_api_CustomHttpPattern_descriptor;
   }

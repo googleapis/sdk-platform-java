@@ -142,5 +142,5 @@ public interface ServiceAccountDelegationInfoOrBuilder
   com.google.cloud.audit.ServiceAccountDelegationInfo.ThirdPartyPrincipalOrBuilder
       getThirdPartyPrincipalOrBuilder();
 
-  public com.google.cloud.audit.ServiceAccountDelegationInfo.AuthorityCase getAuthorityCase();
+  com.google.cloud.audit.ServiceAccountDelegationInfo.AuthorityCase getAuthorityCase();
 }

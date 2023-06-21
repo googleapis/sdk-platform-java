@@ -48,11 +48,6 @@ public final class Advice extends com.google.protobuf.GeneratedMessageV3
     return new Advice();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.ConfigChangeProto.internal_static_google_api_Advice_descriptor;
   }

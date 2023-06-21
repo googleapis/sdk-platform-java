@@ -47,11 +47,6 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
     return new PolicyRule();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.iam.v2.PolicyProto.internal_static_google_iam_v2_PolicyRule_descriptor;
   }
@@ -65,6 +60,8 @@ public final class PolicyRule extends com.google.protobuf.GeneratedMessageV3
   }
 
   private int kindCase_ = 0;
+
+  @SuppressWarnings("serial")
   private java.lang.Object kind_;
 
   public enum KindCase

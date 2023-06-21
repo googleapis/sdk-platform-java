@@ -40,21 +40,16 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
 
   private ContextRule() {
     selector_ = "";
-    requested_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-    provided_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-    allowedRequestExtensions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-    allowedResponseExtensions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    requested_ = com.google.protobuf.LazyStringArrayList.emptyList();
+    provided_ = com.google.protobuf.LazyStringArrayList.emptyList();
+    allowedRequestExtensions_ = com.google.protobuf.LazyStringArrayList.emptyList();
+    allowedResponseExtensions_ = com.google.protobuf.LazyStringArrayList.emptyList();
   }
 
   @java.lang.Override
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new ContextRule();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -78,6 +73,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Selects the methods to which this rule applies.
+   *
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax
    * details.
    * </pre>
@@ -103,6 +99,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Selects the methods to which this rule applies.
+   *
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax
    * details.
    * </pre>
@@ -127,7 +124,8 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
   public static final int REQUESTED_FIELD_NUMBER = 2;
 
   @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringList requested_;
+  private com.google.protobuf.LazyStringArrayList requested_ =
+      com.google.protobuf.LazyStringArrayList.emptyList();
   /**
    *
    *
@@ -190,7 +188,8 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
   public static final int PROVIDED_FIELD_NUMBER = 3;
 
   @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringList provided_;
+  private com.google.protobuf.LazyStringArrayList provided_ =
+      com.google.protobuf.LazyStringArrayList.emptyList();
   /**
    *
    *
@@ -253,7 +252,8 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
   public static final int ALLOWED_REQUEST_EXTENSIONS_FIELD_NUMBER = 4;
 
   @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringList allowedRequestExtensions_;
+  private com.google.protobuf.LazyStringArrayList allowedRequestExtensions_ =
+      com.google.protobuf.LazyStringArrayList.emptyList();
   /**
    *
    *
@@ -320,7 +320,8 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
   public static final int ALLOWED_RESPONSE_EXTENSIONS_FIELD_NUMBER = 5;
 
   @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringList allowedResponseExtensions_;
+  private com.google.protobuf.LazyStringArrayList allowedResponseExtensions_ =
+      com.google.protobuf.LazyStringArrayList.emptyList();
   /**
    *
    *
@@ -647,14 +648,10 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       super.clear();
       bitField0_ = 0;
       selector_ = "";
-      requested_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000002);
-      provided_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000004);
-      allowedRequestExtensions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000008);
-      allowedResponseExtensions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000010);
+      requested_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      provided_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      allowedRequestExtensions_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      allowedResponseExtensions_ = com.google.protobuf.LazyStringArrayList.emptyList();
       return this;
     }
 
@@ -680,7 +677,6 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.ContextRule buildPartial() {
       com.google.api.ContextRule result = new com.google.api.ContextRule(this);
-      buildPartialRepeatedFields(result);
       if (bitField0_ != 0) {
         buildPartial0(result);
       }
@@ -688,33 +684,26 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       return result;
     }
 
-    private void buildPartialRepeatedFields(com.google.api.ContextRule result) {
-      if (((bitField0_ & 0x00000002) != 0)) {
-        requested_ = requested_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000002);
-      }
-      result.requested_ = requested_;
-      if (((bitField0_ & 0x00000004) != 0)) {
-        provided_ = provided_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000004);
-      }
-      result.provided_ = provided_;
-      if (((bitField0_ & 0x00000008) != 0)) {
-        allowedRequestExtensions_ = allowedRequestExtensions_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000008);
-      }
-      result.allowedRequestExtensions_ = allowedRequestExtensions_;
-      if (((bitField0_ & 0x00000010) != 0)) {
-        allowedResponseExtensions_ = allowedResponseExtensions_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000010);
-      }
-      result.allowedResponseExtensions_ = allowedResponseExtensions_;
-    }
-
     private void buildPartial0(com.google.api.ContextRule result) {
       int from_bitField0_ = bitField0_;
       if (((from_bitField0_ & 0x00000001) != 0)) {
         result.selector_ = selector_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        requested_.makeImmutable();
+        result.requested_ = requested_;
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        provided_.makeImmutable();
+        result.provided_ = provided_;
+      }
+      if (((from_bitField0_ & 0x00000008) != 0)) {
+        allowedRequestExtensions_.makeImmutable();
+        result.allowedRequestExtensions_ = allowedRequestExtensions_;
+      }
+      if (((from_bitField0_ & 0x00000010) != 0)) {
+        allowedResponseExtensions_.makeImmutable();
+        result.allowedResponseExtensions_ = allowedResponseExtensions_;
       }
     }
 
@@ -771,7 +760,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       if (!other.requested_.isEmpty()) {
         if (requested_.isEmpty()) {
           requested_ = other.requested_;
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ |= 0x00000002;
         } else {
           ensureRequestedIsMutable();
           requested_.addAll(other.requested_);
@@ -781,7 +770,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       if (!other.provided_.isEmpty()) {
         if (provided_.isEmpty()) {
           provided_ = other.provided_;
-          bitField0_ = (bitField0_ & ~0x00000004);
+          bitField0_ |= 0x00000004;
         } else {
           ensureProvidedIsMutable();
           provided_.addAll(other.provided_);
@@ -791,7 +780,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       if (!other.allowedRequestExtensions_.isEmpty()) {
         if (allowedRequestExtensions_.isEmpty()) {
           allowedRequestExtensions_ = other.allowedRequestExtensions_;
-          bitField0_ = (bitField0_ & ~0x00000008);
+          bitField0_ |= 0x00000008;
         } else {
           ensureAllowedRequestExtensionsIsMutable();
           allowedRequestExtensions_.addAll(other.allowedRequestExtensions_);
@@ -801,7 +790,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       if (!other.allowedResponseExtensions_.isEmpty()) {
         if (allowedResponseExtensions_.isEmpty()) {
           allowedResponseExtensions_ = other.allowedResponseExtensions_;
-          bitField0_ = (bitField0_ & ~0x00000010);
+          bitField0_ |= 0x00000010;
         } else {
           ensureAllowedResponseExtensionsIsMutable();
           allowedResponseExtensions_.addAll(other.allowedResponseExtensions_);
@@ -893,6 +882,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects the methods to which this rule applies.
+     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -917,6 +907,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects the methods to which this rule applies.
+     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -941,6 +932,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects the methods to which this rule applies.
+     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -964,6 +956,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects the methods to which this rule applies.
+     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -983,6 +976,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects the methods to which this rule applies.
+     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -1003,14 +997,14 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       return this;
     }
 
-    private com.google.protobuf.LazyStringList requested_ =
-        com.google.protobuf.LazyStringArrayList.EMPTY;
+    private com.google.protobuf.LazyStringArrayList requested_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
 
     private void ensureRequestedIsMutable() {
-      if (!((bitField0_ & 0x00000002) != 0)) {
+      if (!requested_.isModifiable()) {
         requested_ = new com.google.protobuf.LazyStringArrayList(requested_);
-        bitField0_ |= 0x00000002;
       }
+      bitField0_ |= 0x00000002;
     }
     /**
      *
@@ -1024,7 +1018,8 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return A list containing the requested.
      */
     public com.google.protobuf.ProtocolStringList getRequestedList() {
-      return requested_.getUnmodifiableView();
+      requested_.makeImmutable();
+      return requested_;
     }
     /**
      *
@@ -1089,6 +1084,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       }
       ensureRequestedIsMutable();
       requested_.set(index, value);
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1110,6 +1106,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       }
       ensureRequestedIsMutable();
       requested_.add(value);
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1128,6 +1125,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
     public Builder addAllRequested(java.lang.Iterable<java.lang.String> values) {
       ensureRequestedIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(values, requested_);
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -1143,8 +1141,9 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearRequested() {
-      requested_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      requested_ = com.google.protobuf.LazyStringArrayList.emptyList();
       bitField0_ = (bitField0_ & ~0x00000002);
+      ;
       onChanged();
       return this;
     }
@@ -1167,18 +1166,19 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       checkByteStringIsUtf8(value);
       ensureRequestedIsMutable();
       requested_.add(value);
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
 
-    private com.google.protobuf.LazyStringList provided_ =
-        com.google.protobuf.LazyStringArrayList.EMPTY;
+    private com.google.protobuf.LazyStringArrayList provided_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
 
     private void ensureProvidedIsMutable() {
-      if (!((bitField0_ & 0x00000004) != 0)) {
+      if (!provided_.isModifiable()) {
         provided_ = new com.google.protobuf.LazyStringArrayList(provided_);
-        bitField0_ |= 0x00000004;
       }
+      bitField0_ |= 0x00000004;
     }
     /**
      *
@@ -1192,7 +1192,8 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return A list containing the provided.
      */
     public com.google.protobuf.ProtocolStringList getProvidedList() {
-      return provided_.getUnmodifiableView();
+      provided_.makeImmutable();
+      return provided_;
     }
     /**
      *
@@ -1257,6 +1258,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       }
       ensureProvidedIsMutable();
       provided_.set(index, value);
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1278,6 +1280,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       }
       ensureProvidedIsMutable();
       provided_.add(value);
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1296,6 +1299,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
     public Builder addAllProvided(java.lang.Iterable<java.lang.String> values) {
       ensureProvidedIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(values, provided_);
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
@@ -1311,8 +1315,9 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearProvided() {
-      provided_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      provided_ = com.google.protobuf.LazyStringArrayList.emptyList();
       bitField0_ = (bitField0_ & ~0x00000004);
+      ;
       onChanged();
       return this;
     }
@@ -1335,19 +1340,20 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       checkByteStringIsUtf8(value);
       ensureProvidedIsMutable();
       provided_.add(value);
+      bitField0_ |= 0x00000004;
       onChanged();
       return this;
     }
 
-    private com.google.protobuf.LazyStringList allowedRequestExtensions_ =
-        com.google.protobuf.LazyStringArrayList.EMPTY;
+    private com.google.protobuf.LazyStringArrayList allowedRequestExtensions_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
 
     private void ensureAllowedRequestExtensionsIsMutable() {
-      if (!((bitField0_ & 0x00000008) != 0)) {
+      if (!allowedRequestExtensions_.isModifiable()) {
         allowedRequestExtensions_ =
             new com.google.protobuf.LazyStringArrayList(allowedRequestExtensions_);
-        bitField0_ |= 0x00000008;
       }
+      bitField0_ |= 0x00000008;
     }
     /**
      *
@@ -1362,7 +1368,8 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return A list containing the allowedRequestExtensions.
      */
     public com.google.protobuf.ProtocolStringList getAllowedRequestExtensionsList() {
-      return allowedRequestExtensions_.getUnmodifiableView();
+      allowedRequestExtensions_.makeImmutable();
+      return allowedRequestExtensions_;
     }
     /**
      *
@@ -1431,6 +1438,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       }
       ensureAllowedRequestExtensionsIsMutable();
       allowedRequestExtensions_.set(index, value);
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -1453,6 +1461,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       }
       ensureAllowedRequestExtensionsIsMutable();
       allowedRequestExtensions_.add(value);
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -1472,6 +1481,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
     public Builder addAllAllowedRequestExtensions(java.lang.Iterable<java.lang.String> values) {
       ensureAllowedRequestExtensionsIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(values, allowedRequestExtensions_);
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
@@ -1488,8 +1498,9 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearAllowedRequestExtensions() {
-      allowedRequestExtensions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      allowedRequestExtensions_ = com.google.protobuf.LazyStringArrayList.emptyList();
       bitField0_ = (bitField0_ & ~0x00000008);
+      ;
       onChanged();
       return this;
     }
@@ -1513,19 +1524,20 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       checkByteStringIsUtf8(value);
       ensureAllowedRequestExtensionsIsMutable();
       allowedRequestExtensions_.add(value);
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
 
-    private com.google.protobuf.LazyStringList allowedResponseExtensions_ =
-        com.google.protobuf.LazyStringArrayList.EMPTY;
+    private com.google.protobuf.LazyStringArrayList allowedResponseExtensions_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
 
     private void ensureAllowedResponseExtensionsIsMutable() {
-      if (!((bitField0_ & 0x00000010) != 0)) {
+      if (!allowedResponseExtensions_.isModifiable()) {
         allowedResponseExtensions_ =
             new com.google.protobuf.LazyStringArrayList(allowedResponseExtensions_);
-        bitField0_ |= 0x00000010;
       }
+      bitField0_ |= 0x00000010;
     }
     /**
      *
@@ -1540,7 +1552,8 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return A list containing the allowedResponseExtensions.
      */
     public com.google.protobuf.ProtocolStringList getAllowedResponseExtensionsList() {
-      return allowedResponseExtensions_.getUnmodifiableView();
+      allowedResponseExtensions_.makeImmutable();
+      return allowedResponseExtensions_;
     }
     /**
      *
@@ -1609,6 +1622,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       }
       ensureAllowedResponseExtensionsIsMutable();
       allowedResponseExtensions_.set(index, value);
+      bitField0_ |= 0x00000010;
       onChanged();
       return this;
     }
@@ -1631,6 +1645,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       }
       ensureAllowedResponseExtensionsIsMutable();
       allowedResponseExtensions_.add(value);
+      bitField0_ |= 0x00000010;
       onChanged();
       return this;
     }
@@ -1650,6 +1665,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
     public Builder addAllAllowedResponseExtensions(java.lang.Iterable<java.lang.String> values) {
       ensureAllowedResponseExtensionsIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(values, allowedResponseExtensions_);
+      bitField0_ |= 0x00000010;
       onChanged();
       return this;
     }
@@ -1666,8 +1682,9 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
      * @return This builder for chaining.
      */
     public Builder clearAllowedResponseExtensions() {
-      allowedResponseExtensions_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+      allowedResponseExtensions_ = com.google.protobuf.LazyStringArrayList.emptyList();
       bitField0_ = (bitField0_ & ~0x00000010);
+      ;
       onChanged();
       return this;
     }
@@ -1691,6 +1708,7 @@ public final class ContextRule extends com.google.protobuf.GeneratedMessageV3
       checkByteStringIsUtf8(value);
       ensureAllowedResponseExtensionsIsMutable();
       allowedResponseExtensions_.add(value);
+      bitField0_ |= 0x00000010;
       onChanged();
       return this;
     }

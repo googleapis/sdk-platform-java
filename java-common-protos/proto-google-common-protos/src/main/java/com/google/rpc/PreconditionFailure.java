@@ -23,6 +23,7 @@ package com.google.rpc;
  *
  * <pre>
  * Describes what preconditions have failed.
+ *
  * For example, if an RPC failed because it required the Terms of Service to be
  * acknowledged, it could list the terms of service violation in the
  * PreconditionFailure message.
@@ -48,11 +49,6 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new PreconditionFailure();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -139,6 +135,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      * <pre>
      * A description of how the precondition failed. Developers can use this
      * description to understand how to fix the failure.
+     *
      * For example: "Terms of service not accepted".
      * </pre>
      *
@@ -153,6 +150,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      * <pre>
      * A description of how the precondition failed. Developers can use this
      * description to understand how to fix the failure.
+     *
      * For example: "Terms of service not accepted".
      * </pre>
      *
@@ -191,11 +189,6 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
     @SuppressWarnings({"unused"})
     protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
       return new Violation();
-    }
-
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-      return this.unknownFields;
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -333,6 +326,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      * <pre>
      * A description of how the precondition failed. Developers can use this
      * description to understand how to fix the failure.
+     *
      * For example: "Terms of service not accepted".
      * </pre>
      *
@@ -358,6 +352,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
      * <pre>
      * A description of how the precondition failed. Developers can use this
      * description to understand how to fix the failure.
+     *
      * For example: "Terms of service not accepted".
      * </pre>
      *
@@ -1010,6 +1005,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        * <pre>
        * A description of how the precondition failed. Developers can use this
        * description to understand how to fix the failure.
+       *
        * For example: "Terms of service not accepted".
        * </pre>
        *
@@ -1034,6 +1030,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        * <pre>
        * A description of how the precondition failed. Developers can use this
        * description to understand how to fix the failure.
+       *
        * For example: "Terms of service not accepted".
        * </pre>
        *
@@ -1058,6 +1055,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        * <pre>
        * A description of how the precondition failed. Developers can use this
        * description to understand how to fix the failure.
+       *
        * For example: "Terms of service not accepted".
        * </pre>
        *
@@ -1081,6 +1079,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        * <pre>
        * A description of how the precondition failed. Developers can use this
        * description to understand how to fix the failure.
+       *
        * For example: "Terms of service not accepted".
        * </pre>
        *
@@ -1100,6 +1099,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
        * <pre>
        * A description of how the precondition failed. Developers can use this
        * description to understand how to fix the failure.
+       *
        * For example: "Terms of service not accepted".
        * </pre>
        *
@@ -1418,6 +1418,7 @@ public final class PreconditionFailure extends com.google.protobuf.GeneratedMess
    *
    * <pre>
    * Describes what preconditions have failed.
+   *
    * For example, if an RPC failed because it required the Terms of Service to be
    * acknowledged, it could list the terms of service violation in the
    * PreconditionFailure message.

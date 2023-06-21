@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,8 +38,10 @@ import com.google.api.gax.rpc.BidiStreamingCallable;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.ClientStreamingCallable;
 import com.google.api.gax.rpc.OperationCallable;
+import com.google.api.gax.rpc.RequestParamsBuilder;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.api.pathtemplate.PathTemplate;
 import com.google.cloud.location.GetLocationRequest;
 import com.google.cloud.location.ListLocationsRequest;
 import com.google.cloud.location.ListLocationsResponse;
@@ -409,6 +411,20 @@ public class HttpJsonEchoStub extends EchoStub {
   private final HttpJsonOperationsStub httpJsonOperationsStub;
   private final HttpJsonStubCallableFactory callableFactory;
 
+  private static final PathTemplate ECHO_0_PATH_TEMPLATE = PathTemplate.create("{header=**}");
+  private static final PathTemplate ECHO_1_PATH_TEMPLATE = PathTemplate.create("{routing_id=**}");
+  private static final PathTemplate ECHO_2_PATH_TEMPLATE =
+      PathTemplate.create("{table_name=regions/*/zones/*/**}");
+  private static final PathTemplate ECHO_3_PATH_TEMPLATE =
+      PathTemplate.create("{super_id=projects/*}/**");
+  private static final PathTemplate ECHO_4_PATH_TEMPLATE =
+      PathTemplate.create("{table_name=projects/*/instances/*/**}");
+  private static final PathTemplate ECHO_5_PATH_TEMPLATE =
+      PathTemplate.create("projects/*/{instance_id=instances/*}/**");
+  private static final PathTemplate ECHO_6_PATH_TEMPLATE = PathTemplate.create("{baz=**}");
+  private static final PathTemplate ECHO_7_PATH_TEMPLATE =
+      PathTemplate.create("{qux=projects/*}/**");
+
   public static final HttpJsonEchoStub create(EchoStubSettings settings) throws IOException {
     return new HttpJsonEchoStub(settings, ClientContext.create(settings));
   }
@@ -466,6 +482,19 @@ public class HttpJsonEchoStub extends EchoStub {
         HttpJsonCallSettings.<EchoRequest, EchoResponse>newBuilder()
             .setMethodDescriptor(echoMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add(request.getHeader(), "header", ECHO_0_PATH_TEMPLATE);
+                  builder.add(request.getHeader(), "routing_id", ECHO_1_PATH_TEMPLATE);
+                  builder.add(request.getHeader(), "table_name", ECHO_2_PATH_TEMPLATE);
+                  builder.add(request.getHeader(), "super_id", ECHO_3_PATH_TEMPLATE);
+                  builder.add(request.getHeader(), "table_name", ECHO_4_PATH_TEMPLATE);
+                  builder.add(request.getHeader(), "instance_id", ECHO_5_PATH_TEMPLATE);
+                  builder.add(request.getOtherHeader(), "baz", ECHO_6_PATH_TEMPLATE);
+                  builder.add(request.getOtherHeader(), "qux", ECHO_7_PATH_TEMPLATE);
+                  return builder.build();
+                })
             .build();
     HttpJsonCallSettings<ExpandRequest, EchoResponse> expandTransportSettings =
         HttpJsonCallSettings.<ExpandRequest, EchoResponse>newBuilder()
@@ -504,11 +533,23 @@ public class HttpJsonEchoStub extends EchoStub {
             HttpJsonCallSettings.<ListLocationsRequest, ListLocationsResponse>newBuilder()
                 .setMethodDescriptor(listLocationsMethodDescriptor)
                 .setTypeRegistry(typeRegistry)
+                .setParamsExtractor(
+                    request -> {
+                      RequestParamsBuilder builder = RequestParamsBuilder.create();
+                      builder.add("name", String.valueOf(request.getName()));
+                      return builder.build();
+                    })
                 .build();
     HttpJsonCallSettings<GetLocationRequest, Location> getLocationTransportSettings =
         HttpJsonCallSettings.<GetLocationRequest, Location>newBuilder()
             .setMethodDescriptor(getLocationMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
+                })
             .build();
 
     this.echoCallable =

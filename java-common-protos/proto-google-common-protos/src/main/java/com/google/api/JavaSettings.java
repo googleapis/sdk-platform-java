@@ -47,11 +47,6 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
     return new JavaSettings();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.ClientProto.internal_static_google_api_JavaSettings_descriptor;
   }
@@ -88,7 +83,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
    * who have already set the language_settings.java.package_name" field
    * in gapic.yaml. API teams should use the protobuf java_package option
    * where possible.
+   *
    * Example of a YAML configuration::
+   *
    *  publishing:
    *    java_settings:
    *      library_package: com.google.cloud.pubsub.v1
@@ -119,7 +116,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
    * who have already set the language_settings.java.package_name" field
    * in gapic.yaml. API teams should use the protobuf java_package option
    * where possible.
+   *
    * Example of a YAML configuration::
+   *
    *  publishing:
    *    java_settings:
    *      library_package: com.google.cloud.pubsub.v1
@@ -180,7 +179,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
    * the language_settings.java.interface_names" field in gapic.yaml. API
    * teams should otherwise use the service name as it appears in the
    * protobuf.
+   *
    * Example of a YAML configuration::
+   *
    *  publishing:
    *    java_settings:
    *      service_class_names:
@@ -213,7 +214,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
    * the language_settings.java.interface_names" field in gapic.yaml. API
    * teams should otherwise use the service name as it appears in the
    * protobuf.
+   *
    * Example of a YAML configuration::
+   *
    *  publishing:
    *    java_settings:
    *      service_class_names:
@@ -237,7 +240,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
    * the language_settings.java.interface_names" field in gapic.yaml. API
    * teams should otherwise use the service name as it appears in the
    * protobuf.
+   *
    * Example of a YAML configuration::
+   *
    *  publishing:
    *    java_settings:
    *      service_class_names:
@@ -268,7 +273,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
    * the language_settings.java.interface_names" field in gapic.yaml. API
    * teams should otherwise use the service name as it appears in the
    * protobuf.
+   *
    * Example of a YAML configuration::
+   *
    *  publishing:
    *    java_settings:
    *      service_class_names:
@@ -771,7 +778,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * who have already set the language_settings.java.package_name" field
      * in gapic.yaml. API teams should use the protobuf java_package option
      * where possible.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    java_settings:
      *      library_package: com.google.cloud.pubsub.v1
@@ -801,7 +810,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * who have already set the language_settings.java.package_name" field
      * in gapic.yaml. API teams should use the protobuf java_package option
      * where possible.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    java_settings:
      *      library_package: com.google.cloud.pubsub.v1
@@ -831,7 +842,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * who have already set the language_settings.java.package_name" field
      * in gapic.yaml. API teams should use the protobuf java_package option
      * where possible.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    java_settings:
      *      library_package: com.google.cloud.pubsub.v1
@@ -860,7 +873,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * who have already set the language_settings.java.package_name" field
      * in gapic.yaml. API teams should use the protobuf java_package option
      * where possible.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    java_settings:
      *      library_package: com.google.cloud.pubsub.v1
@@ -885,7 +900,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * who have already set the language_settings.java.package_name" field
      * in gapic.yaml. API teams should use the protobuf java_package option
      * where possible.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    java_settings:
      *      library_package: com.google.cloud.pubsub.v1
@@ -946,7 +963,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * the language_settings.java.interface_names" field in gapic.yaml. API
      * teams should otherwise use the service name as it appears in the
      * protobuf.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    java_settings:
      *      service_class_names:
@@ -979,7 +998,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * the language_settings.java.interface_names" field in gapic.yaml. API
      * teams should otherwise use the service name as it appears in the
      * protobuf.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    java_settings:
      *      service_class_names:
@@ -1003,7 +1024,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * the language_settings.java.interface_names" field in gapic.yaml. API
      * teams should otherwise use the service name as it appears in the
      * protobuf.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    java_settings:
      *      service_class_names:
@@ -1035,7 +1058,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * the language_settings.java.interface_names" field in gapic.yaml. API
      * teams should otherwise use the service name as it appears in the
      * protobuf.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    java_settings:
      *      service_class_names:
@@ -1073,7 +1098,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * the language_settings.java.interface_names" field in gapic.yaml. API
      * teams should otherwise use the service name as it appears in the
      * protobuf.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    java_settings:
      *      service_class_names:
@@ -1106,7 +1133,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * the language_settings.java.interface_names" field in gapic.yaml. API
      * teams should otherwise use the service name as it appears in the
      * protobuf.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    java_settings:
      *      service_class_names:
@@ -1137,7 +1166,9 @@ public final class JavaSettings extends com.google.protobuf.GeneratedMessageV3
      * the language_settings.java.interface_names" field in gapic.yaml. API
      * teams should otherwise use the service name as it appears in the
      * protobuf.
+     *
      * Example of a YAML configuration::
+     *
      *  publishing:
      *    java_settings:
      *      service_class_names:

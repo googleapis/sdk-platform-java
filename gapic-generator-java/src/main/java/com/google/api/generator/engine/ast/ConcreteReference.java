@@ -103,14 +103,15 @@ public abstract class ConcreteReference implements Reference {
     if (!hasEnclosingClass()) {
       return ImmutableList.of();
     }
-    // The innermost type will be the last element in the list.
+    // Builds list in order of inner to outer.
+    // Return the reversed list, since the outermost type is expected to lie at index 0.
     ImmutableList.Builder<String> listBuilder = new ImmutableList.Builder<>();
     Class<?> currentClz = clazz();
     while (currentClz.getEnclosingClass() != null) {
       listBuilder.add(currentClz.getEnclosingClass().getSimpleName());
       currentClz = currentClz.getEnclosingClass();
     }
-    return listBuilder.build();
+    return listBuilder.build().reverse();
   }
 
   @Override

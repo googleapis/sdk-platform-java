@@ -37,7 +37,7 @@ import java.util.logging.Logger;
 import org.threeten.bp.Duration;
 
 /**
- * {@code HttpJsonClientCalls} creates a new {@code HttpJsonClientCAll} from the given call context.
+ * {@code HttpJsonClientCalls} creates a new {@code HttpJsonClientCall} from the given call context.
  *
  * <p>Package-private for internal use.
  */
@@ -68,8 +68,8 @@ class HttpJsonClientCalls {
                 .toBuilder()
                 .setTimeout(java.time.Duration.ofMillis(httpJsonContext.getTimeout().toMillis()))
                 .build();
-        httpJsonContext = httpJsonContext.withCallOptions(callOptions);
       }
+      httpJsonContext = httpJsonContext.withCallOptions(callOptions);
     }
 
     // TODO: add headers interceptor logic
@@ -77,10 +77,14 @@ class HttpJsonClientCalls {
   }
 
   static <RequestT, ResponseT> ApiFuture<ResponseT> futureUnaryCall(
-      HttpJsonClientCall<RequestT, ResponseT> clientCall, RequestT request) {
+      HttpJsonClientCall<RequestT, ResponseT> clientCall,
+      RequestT request,
+      HttpJsonCallContext context) {
     // Start the call
     HttpJsonFuture<ResponseT> future = new HttpJsonFuture<>(clientCall);
-    clientCall.start(new FutureListener<>(future), HttpJsonMetadata.newBuilder().build());
+    clientCall.start(
+        new FutureListener<>(future),
+        HttpJsonMetadata.newBuilder().build().withHeaders(context.getExtraHeaders()));
 
     // Send the request
     try {

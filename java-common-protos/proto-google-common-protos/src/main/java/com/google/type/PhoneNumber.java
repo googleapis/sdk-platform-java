@@ -23,15 +23,21 @@ package com.google.type;
  *
  * <pre>
  * An object representing a phone number, suitable as an API wire format.
+ *
  * This representation:
+ *
  *  - should not be used for locale-specific formatting of a phone number, such
  *    as "+1 (650) 253-0000 ext. 123"
+ *
  *  - is not designed for efficient storage
  *  - may not be suitable for dialing - specialized libraries (see references)
  *    should be used to parse the number for that purpose
+ *
  * To do something meaningful with this number, such as format it for various
  * use-cases, convert it to an `i18n.phonenumbers.PhoneNumber` object first.
+ *
  * For instance, in Java this would be:
+ *
  *    com.google.type.PhoneNumber wireProto =
  *        com.google.type.PhoneNumber.newBuilder().build();
  *    com.google.i18n.phonenumbers.Phonenumber.PhoneNumber phoneNumber =
@@ -39,6 +45,7 @@ package com.google.type;
  *    if (!wireProto.getExtension().isEmpty()) {
  *      phoneNumber.setExtension(wireProto.getExtension());
  *    }
+ *
  *  Reference(s):
  *   - https://github.com/google/libphonenumber
  * </pre>
@@ -65,11 +72,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
     return new PhoneNumber();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.type.PhoneNumberProto.internal_static_google_type_PhoneNumber_descriptor;
   }
@@ -94,6 +96,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Required. The BCP-47 region code of the location where calls to this
      * short code can be made, such as "US" and "BB".
+     *
      * Reference(s):
      *  - http://www.unicode.org/reports/tr35/#unicode_region_subtag
      * </pre>
@@ -109,6 +112,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Required. The BCP-47 region code of the location where calls to this
      * short code can be made, such as "US" and "BB".
+     *
      * Reference(s):
      *  - http://www.unicode.org/reports/tr35/#unicode_region_subtag
      * </pre>
@@ -154,6 +158,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
    * typically much shorter than regular phone numbers and can be used to
    * address messages in MMS and SMS systems, as well as for abbreviated dialing
    * (e.g. "Text 611 to see how many minutes you have remaining on your plan.").
+   *
    * Short codes are restricted to a region and are not internationally
    * dialable, which means the same short code can exist in different regions,
    * with different usage and pricing, even if those regions share the same
@@ -183,11 +188,6 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
       return new ShortCode();
     }
 
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-      return this.unknownFields;
-    }
-
     public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
       return com.google.type.PhoneNumberProto
           .internal_static_google_type_PhoneNumber_ShortCode_descriptor;
@@ -213,6 +213,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Required. The BCP-47 region code of the location where calls to this
      * short code can be made, such as "US" and "BB".
+     *
      * Reference(s):
      *  - http://www.unicode.org/reports/tr35/#unicode_region_subtag
      * </pre>
@@ -239,6 +240,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Required. The BCP-47 region code of the location where calls to this
      * short code can be made, such as "US" and "BB".
+     *
      * Reference(s):
      *  - http://www.unicode.org/reports/tr35/#unicode_region_subtag
      * </pre>
@@ -489,6 +491,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * typically much shorter than regular phone numbers and can be used to
      * address messages in MMS and SMS systems, as well as for abbreviated dialing
      * (e.g. "Text 611 to see how many minutes you have remaining on your plan.").
+     *
      * Short codes are restricted to a region and are not internationally
      * dialable, which means the same short code can exist in different regions,
      * with different usage and pricing, even if those regions share the same
@@ -695,6 +698,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
        * <pre>
        * Required. The BCP-47 region code of the location where calls to this
        * short code can be made, such as "US" and "BB".
+       *
        * Reference(s):
        *  - http://www.unicode.org/reports/tr35/#unicode_region_subtag
        * </pre>
@@ -720,6 +724,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
        * <pre>
        * Required. The BCP-47 region code of the location where calls to this
        * short code can be made, such as "US" and "BB".
+       *
        * Reference(s):
        *  - http://www.unicode.org/reports/tr35/#unicode_region_subtag
        * </pre>
@@ -745,6 +750,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
        * <pre>
        * Required. The BCP-47 region code of the location where calls to this
        * short code can be made, such as "US" and "BB".
+       *
        * Reference(s):
        *  - http://www.unicode.org/reports/tr35/#unicode_region_subtag
        * </pre>
@@ -769,6 +775,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
        * <pre>
        * Required. The BCP-47 region code of the location where calls to this
        * short code can be made, such as "US" and "BB".
+       *
        * Reference(s):
        *  - http://www.unicode.org/reports/tr35/#unicode_region_subtag
        * </pre>
@@ -789,6 +796,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
        * <pre>
        * Required. The BCP-47 region code of the location where calls to this
        * short code can be made, such as "US" and "BB".
+       *
        * Reference(s):
        *  - http://www.unicode.org/reports/tr35/#unicode_region_subtag
        * </pre>
@@ -985,6 +993,8 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
   }
 
   private int kindCase_ = 0;
+
+  @SuppressWarnings("serial")
   private java.lang.Object kind_;
 
   public enum KindCase
@@ -1042,9 +1052,11 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
    * additional spaces or formatting, e.g.:
    *  - correct: "+15552220123"
    *  - incorrect: "+1 (555) 222-01234 x123".
+   *
    * The ITU E.164 format limits the latter to 12 digits, but in practice not
    * all countries respect that, so we relax that restriction here.
    * National-only numbers are not allowed.
+   *
    * References:
    *  - https://www.itu.int/rec/T-REC-E.164-201011-I
    *  - https://en.wikipedia.org/wiki/E.164.
@@ -1068,9 +1080,11 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
    * additional spaces or formatting, e.g.:
    *  - correct: "+15552220123"
    *  - incorrect: "+1 (555) 222-01234 x123".
+   *
    * The ITU E.164 format limits the latter to 12 digits, but in practice not
    * all countries respect that, so we relax that restriction here.
    * National-only numbers are not allowed.
+   *
    * References:
    *  - https://www.itu.int/rec/T-REC-E.164-201011-I
    *  - https://en.wikipedia.org/wiki/E.164.
@@ -1107,9 +1121,11 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
    * additional spaces or formatting, e.g.:
    *  - correct: "+15552220123"
    *  - incorrect: "+1 (555) 222-01234 x123".
+   *
    * The ITU E.164 format limits the latter to 12 digits, but in practice not
    * all countries respect that, so we relax that restriction here.
    * National-only numbers are not allowed.
+   *
    * References:
    *  - https://www.itu.int/rec/T-REC-E.164-201011-I
    *  - https://en.wikipedia.org/wiki/E.164.
@@ -1143,6 +1159,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A short code.
+   *
    * Reference(s):
    *  - https://en.wikipedia.org/wiki/Short_code
    * </pre>
@@ -1160,6 +1177,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A short code.
+   *
    * Reference(s):
    *  - https://en.wikipedia.org/wiki/Short_code
    * </pre>
@@ -1180,6 +1198,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A short code.
+   *
    * Reference(s):
    *  - https://en.wikipedia.org/wiki/Short_code
    * </pre>
@@ -1206,6 +1225,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
    * recommendations, except for being defined as a series of numbers with a
    * maximum length of 40 digits. Other than digits, some other dialing
    * characters such as ',' (indicating a wait) or '#' may be stored here.
+   *
    * Note that no regions currently use extensions with short codes, so this
    * field is normally only set in conjunction with an E.164 number. It is held
    * separately from the E.164 number to allow for short code extensions in the
@@ -1236,6 +1256,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
    * recommendations, except for being defined as a series of numbers with a
    * maximum length of 40 digits. Other than digits, some other dialing
    * characters such as ',' (indicating a wait) or '#' may be stored here.
+   *
    * Note that no regions currently use extensions with short codes, so this
    * field is normally only set in conjunction with an E.164 number. It is held
    * separately from the E.164 number to allow for short code extensions in the
@@ -1458,15 +1479,21 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * An object representing a phone number, suitable as an API wire format.
+   *
    * This representation:
+   *
    *  - should not be used for locale-specific formatting of a phone number, such
    *    as "+1 (650) 253-0000 ext. 123"
+   *
    *  - is not designed for efficient storage
    *  - may not be suitable for dialing - specialized libraries (see references)
    *    should be used to parse the number for that purpose
+   *
    * To do something meaningful with this number, such as format it for various
    * use-cases, convert it to an `i18n.phonenumbers.PhoneNumber` object first.
+   *
    * For instance, in Java this would be:
+   *
    *    com.google.type.PhoneNumber wireProto =
    *        com.google.type.PhoneNumber.newBuilder().build();
    *    com.google.i18n.phonenumbers.Phonenumber.PhoneNumber phoneNumber =
@@ -1474,6 +1501,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
    *    if (!wireProto.getExtension().isEmpty()) {
    *      phoneNumber.setExtension(wireProto.getExtension());
    *    }
+   *
    *  Reference(s):
    *   - https://github.com/google/libphonenumber
    * </pre>
@@ -1718,9 +1746,11 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * additional spaces or formatting, e.g.:
      *  - correct: "+15552220123"
      *  - incorrect: "+1 (555) 222-01234 x123".
+     *
      * The ITU E.164 format limits the latter to 12 digits, but in practice not
      * all countries respect that, so we relax that restriction here.
      * National-only numbers are not allowed.
+     *
      * References:
      *  - https://www.itu.int/rec/T-REC-E.164-201011-I
      *  - https://en.wikipedia.org/wiki/E.164.
@@ -1745,9 +1775,11 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * additional spaces or formatting, e.g.:
      *  - correct: "+15552220123"
      *  - incorrect: "+1 (555) 222-01234 x123".
+     *
      * The ITU E.164 format limits the latter to 12 digits, but in practice not
      * all countries respect that, so we relax that restriction here.
      * National-only numbers are not allowed.
+     *
      * References:
      *  - https://www.itu.int/rec/T-REC-E.164-201011-I
      *  - https://en.wikipedia.org/wiki/E.164.
@@ -1785,9 +1817,11 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * additional spaces or formatting, e.g.:
      *  - correct: "+15552220123"
      *  - incorrect: "+1 (555) 222-01234 x123".
+     *
      * The ITU E.164 format limits the latter to 12 digits, but in practice not
      * all countries respect that, so we relax that restriction here.
      * National-only numbers are not allowed.
+     *
      * References:
      *  - https://www.itu.int/rec/T-REC-E.164-201011-I
      *  - https://en.wikipedia.org/wiki/E.164.
@@ -1825,9 +1859,11 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * additional spaces or formatting, e.g.:
      *  - correct: "+15552220123"
      *  - incorrect: "+1 (555) 222-01234 x123".
+     *
      * The ITU E.164 format limits the latter to 12 digits, but in practice not
      * all countries respect that, so we relax that restriction here.
      * National-only numbers are not allowed.
+     *
      * References:
      *  - https://www.itu.int/rec/T-REC-E.164-201011-I
      *  - https://en.wikipedia.org/wiki/E.164.
@@ -1858,9 +1894,11 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * additional spaces or formatting, e.g.:
      *  - correct: "+15552220123"
      *  - incorrect: "+1 (555) 222-01234 x123".
+     *
      * The ITU E.164 format limits the latter to 12 digits, but in practice not
      * all countries respect that, so we relax that restriction here.
      * National-only numbers are not allowed.
+     *
      * References:
      *  - https://www.itu.int/rec/T-REC-E.164-201011-I
      *  - https://en.wikipedia.org/wiki/E.164.
@@ -1889,9 +1927,11 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * additional spaces or formatting, e.g.:
      *  - correct: "+15552220123"
      *  - incorrect: "+1 (555) 222-01234 x123".
+     *
      * The ITU E.164 format limits the latter to 12 digits, but in practice not
      * all countries respect that, so we relax that restriction here.
      * National-only numbers are not allowed.
+     *
      * References:
      *  - https://www.itu.int/rec/T-REC-E.164-201011-I
      *  - https://en.wikipedia.org/wiki/E.164.
@@ -1924,6 +1964,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A short code.
+     *
      * Reference(s):
      *  - https://en.wikipedia.org/wiki/Short_code
      * </pre>
@@ -1941,6 +1982,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A short code.
+     *
      * Reference(s):
      *  - https://en.wikipedia.org/wiki/Short_code
      * </pre>
@@ -1968,6 +2010,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A short code.
+     *
      * Reference(s):
      *  - https://en.wikipedia.org/wiki/Short_code
      * </pre>
@@ -1992,6 +2035,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A short code.
+     *
      * Reference(s):
      *  - https://en.wikipedia.org/wiki/Short_code
      * </pre>
@@ -2013,6 +2057,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A short code.
+     *
      * Reference(s):
      *  - https://en.wikipedia.org/wiki/Short_code
      * </pre>
@@ -2046,6 +2091,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A short code.
+     *
      * Reference(s):
      *  - https://en.wikipedia.org/wiki/Short_code
      * </pre>
@@ -2073,6 +2119,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A short code.
+     *
      * Reference(s):
      *  - https://en.wikipedia.org/wiki/Short_code
      * </pre>
@@ -2087,6 +2134,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A short code.
+     *
      * Reference(s):
      *  - https://en.wikipedia.org/wiki/Short_code
      * </pre>
@@ -2109,6 +2157,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A short code.
+     *
      * Reference(s):
      *  - https://en.wikipedia.org/wiki/Short_code
      * </pre>
@@ -2146,6 +2195,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * recommendations, except for being defined as a series of numbers with a
      * maximum length of 40 digits. Other than digits, some other dialing
      * characters such as ',' (indicating a wait) or '#' may be stored here.
+     *
      * Note that no regions currently use extensions with short codes, so this
      * field is normally only set in conjunction with an E.164 number. It is held
      * separately from the E.164 number to allow for short code extensions in the
@@ -2175,6 +2225,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * recommendations, except for being defined as a series of numbers with a
      * maximum length of 40 digits. Other than digits, some other dialing
      * characters such as ',' (indicating a wait) or '#' may be stored here.
+     *
      * Note that no regions currently use extensions with short codes, so this
      * field is normally only set in conjunction with an E.164 number. It is held
      * separately from the E.164 number to allow for short code extensions in the
@@ -2204,6 +2255,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * recommendations, except for being defined as a series of numbers with a
      * maximum length of 40 digits. Other than digits, some other dialing
      * characters such as ',' (indicating a wait) or '#' may be stored here.
+     *
      * Note that no regions currently use extensions with short codes, so this
      * field is normally only set in conjunction with an E.164 number. It is held
      * separately from the E.164 number to allow for short code extensions in the
@@ -2232,6 +2284,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * recommendations, except for being defined as a series of numbers with a
      * maximum length of 40 digits. Other than digits, some other dialing
      * characters such as ',' (indicating a wait) or '#' may be stored here.
+     *
      * Note that no regions currently use extensions with short codes, so this
      * field is normally only set in conjunction with an E.164 number. It is held
      * separately from the E.164 number to allow for short code extensions in the
@@ -2256,6 +2309,7 @@ public final class PhoneNumber extends com.google.protobuf.GeneratedMessageV3
      * recommendations, except for being defined as a series of numbers with a
      * maximum length of 40 digits. Other than digits, some other dialing
      * characters such as ',' (indicating a wait) or '#' may be stored here.
+     *
      * Note that no regions currently use extensions with short codes, so this
      * field is normally only set in conjunction with an E.164 number. It is held
      * separately from the E.164 number to allow for short code extensions in the

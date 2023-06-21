@@ -45,11 +45,6 @@ public final class GetPolicyOptions extends com.google.protobuf.GeneratedMessage
     return new GetPolicyOptions();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.iam.v1.OptionsProto.internal_static_google_iam_v1_GetPolicyOptions_descriptor;
   }
@@ -72,15 +67,19 @@ public final class GetPolicyOptions extends com.google.protobuf.GeneratedMessage
    * <pre>
    * Optional. The maximum policy version that will be used to format the
    * policy.
+   *
    * Valid values are 0, 1, and 3. Requests specifying an invalid value will be
    * rejected.
+   *
    * Requests for policies with any conditional role bindings must specify
    * version 3. Policies with no conditional role bindings may specify any valid
    * value or leave the field unset.
+   *
    * The policy in the response might use the policy version that you specified,
    * or it might use a lower policy version. For example, if you specify version
    * 3, but the policy has no conditional role bindings, the response uses
    * version 1.
+   *
    * To learn which resources support conditions in their IAM policies, see the
    * [IAM
    * documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
@@ -438,15 +437,19 @@ public final class GetPolicyOptions extends com.google.protobuf.GeneratedMessage
      * <pre>
      * Optional. The maximum policy version that will be used to format the
      * policy.
+     *
      * Valid values are 0, 1, and 3. Requests specifying an invalid value will be
      * rejected.
+     *
      * Requests for policies with any conditional role bindings must specify
      * version 3. Policies with no conditional role bindings may specify any valid
      * value or leave the field unset.
+     *
      * The policy in the response might use the policy version that you specified,
      * or it might use a lower policy version. For example, if you specify version
      * 3, but the policy has no conditional role bindings, the response uses
      * version 1.
+     *
      * To learn which resources support conditions in their IAM policies, see the
      * [IAM
      * documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
@@ -466,15 +469,19 @@ public final class GetPolicyOptions extends com.google.protobuf.GeneratedMessage
      * <pre>
      * Optional. The maximum policy version that will be used to format the
      * policy.
+     *
      * Valid values are 0, 1, and 3. Requests specifying an invalid value will be
      * rejected.
+     *
      * Requests for policies with any conditional role bindings must specify
      * version 3. Policies with no conditional role bindings may specify any valid
      * value or leave the field unset.
+     *
      * The policy in the response might use the policy version that you specified,
      * or it might use a lower policy version. For example, if you specify version
      * 3, but the policy has no conditional role bindings, the response uses
      * version 1.
+     *
      * To learn which resources support conditions in their IAM policies, see the
      * [IAM
      * documentation](https://cloud.google.com/iam/help/conditions/resource-policies).
@@ -498,15 +505,19 @@ public final class GetPolicyOptions extends com.google.protobuf.GeneratedMessage
      * <pre>
      * Optional. The maximum policy version that will be used to format the
      * policy.
+     *
      * Valid values are 0, 1, and 3. Requests specifying an invalid value will be
      * rejected.
+     *
      * Requests for policies with any conditional role bindings must specify
      * version 3. Policies with no conditional role bindings may specify any valid
      * value or leave the field unset.
+     *
      * The policy in the response might use the policy version that you specified,
      * or it might use a lower policy version. For example, if you specify version
      * 3, but the policy has no conditional role bindings, the response uses
      * version 1.
+     *
      * To learn which resources support conditions in their IAM policies, see the
      * [IAM
      * documentation](https://cloud.google.com/iam/help/conditions/resource-policies).

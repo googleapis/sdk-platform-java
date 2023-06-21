@@ -48,11 +48,6 @@ public final class ListPoliciesResponse extends com.google.protobuf.GeneratedMes
     return new ListPoliciesResponse();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.iam.v2.PolicyProto
         .internal_static_google_iam_v2_ListPoliciesResponse_descriptor;

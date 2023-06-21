@@ -58,9 +58,12 @@ public interface DistributionOrBuilder
    * <pre>
    * The sum of squared deviations from the mean of the values in the
    * population. For values x_i this is:
+   *
    *     Sum[i=1..n]((x_i - mean)^2)
+   *
    * Knuth, "The Art of Computer Programming", Vol. 2, page 232, 3rd edition
    * describes Welford's method for accumulating this sum in one pass.
+   *
    * If `count` is zero then this field must be zero.
    * </pre>
    *
@@ -155,9 +158,11 @@ public interface DistributionOrBuilder
    * this field. If there is a histogram, then the sum of the values in
    * `bucket_counts` must equal the value in the `count` field of the
    * distribution.
+   *
    * If present, `bucket_counts` should contain N values, where N is the number
    * of buckets specified in `bucket_options`. If you supply fewer than N
    * values, the remaining values are assumed to be 0.
+   *
    * The order of the values in `bucket_counts` follows the bucket numbering
    * schemes described for the three bucket types. The first value must be the
    * count for the underflow bucket (number 0). The next N-2 values are the
@@ -179,9 +184,11 @@ public interface DistributionOrBuilder
    * this field. If there is a histogram, then the sum of the values in
    * `bucket_counts` must equal the value in the `count` field of the
    * distribution.
+   *
    * If present, `bucket_counts` should contain N values, where N is the number
    * of buckets specified in `bucket_options`. If you supply fewer than N
    * values, the remaining values are assumed to be 0.
+   *
    * The order of the values in `bucket_counts` follows the bucket numbering
    * schemes described for the three bucket types. The first value must be the
    * count for the underflow bucket (number 0). The next N-2 values are the
@@ -203,9 +210,11 @@ public interface DistributionOrBuilder
    * this field. If there is a histogram, then the sum of the values in
    * `bucket_counts` must equal the value in the `count` field of the
    * distribution.
+   *
    * If present, `bucket_counts` should contain N values, where N is the number
    * of buckets specified in `bucket_options`. If you supply fewer than N
    * values, the remaining values are assumed to be 0.
+   *
    * The order of the values in `bucket_counts` follows the bucket numbering
    * schemes described for the three bucket types. The first value must be the
    * count for the underflow bucket (number 0). The next N-2 values are the

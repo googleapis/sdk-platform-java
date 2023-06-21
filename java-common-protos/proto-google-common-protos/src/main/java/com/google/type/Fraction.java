@@ -45,11 +45,6 @@ public final class Fraction extends com.google.protobuf.GeneratedMessageV3
     return new Fraction();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.type.FractionProto.internal_static_google_type_Fraction_descriptor;
   }

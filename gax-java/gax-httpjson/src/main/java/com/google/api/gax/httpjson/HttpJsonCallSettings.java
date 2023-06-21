@@ -29,21 +29,27 @@
  */
 package com.google.api.gax.httpjson;
 
+import com.google.api.gax.rpc.RequestParamsExtractor;
 import com.google.protobuf.TypeRegistry;
 
 /** HTTP-specific settings for creating callables. */
 public class HttpJsonCallSettings<RequestT, ResponseT> {
   private final ApiMethodDescriptor<RequestT, ResponseT> methodDescriptor;
+  private final RequestParamsExtractor<RequestT> paramsExtractor;
   private final TypeRegistry typeRegistry;
 
-  private HttpJsonCallSettings(
-      ApiMethodDescriptor<RequestT, ResponseT> methodDescriptor, TypeRegistry typeRegistry) {
-    this.methodDescriptor = methodDescriptor;
-    this.typeRegistry = typeRegistry;
+  private HttpJsonCallSettings(Builder<RequestT, ResponseT> builder) {
+    this.methodDescriptor = builder.methodDescriptor;
+    this.paramsExtractor = builder.paramsExtractor;
+    this.typeRegistry = builder.typeRegistry;
   }
 
   public ApiMethodDescriptor<RequestT, ResponseT> getMethodDescriptor() {
     return methodDescriptor;
+  }
+
+  public RequestParamsExtractor<RequestT> getParamsExtractor() {
+    return paramsExtractor;
   }
 
   public TypeRegistry getTypeRegistry() {
@@ -67,6 +73,7 @@ public class HttpJsonCallSettings<RequestT, ResponseT> {
 
   public static class Builder<RequestT, ResponseT> {
     private ApiMethodDescriptor<RequestT, ResponseT> methodDescriptor;
+    private RequestParamsExtractor<RequestT> paramsExtractor;
     private TypeRegistry typeRegistry;
 
     private Builder() {}
@@ -81,13 +88,19 @@ public class HttpJsonCallSettings<RequestT, ResponseT> {
       return this;
     }
 
+    public Builder<RequestT, ResponseT> setParamsExtractor(
+        RequestParamsExtractor<RequestT> paramsExtractor) {
+      this.paramsExtractor = paramsExtractor;
+      return this;
+    }
+
     public Builder<RequestT, ResponseT> setTypeRegistry(TypeRegistry typeRegistry) {
       this.typeRegistry = typeRegistry;
       return this;
     }
 
     public HttpJsonCallSettings<RequestT, ResponseT> build() {
-      return new HttpJsonCallSettings<>(methodDescriptor, typeRegistry);
+      return new HttpJsonCallSettings<>(this);
     }
   }
 }

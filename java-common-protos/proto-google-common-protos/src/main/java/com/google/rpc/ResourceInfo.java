@@ -50,11 +50,6 @@ public final class ResourceInfo extends com.google.protobuf.GeneratedMessageV3
     return new ResourceInfo();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.rpc.ErrorDetailsProto.internal_static_google_rpc_ResourceInfo_descriptor;
   }

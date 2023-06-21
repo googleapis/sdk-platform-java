@@ -37,6 +37,7 @@ public final class OperationsProto {
    * Additional information regarding long-running operations.
    * In particular, this specifies the types that are returned from
    * long-running operations.
+   *
    * Required for methods that return `google.longrunning.Operation`; invalid
    * otherwise.
    * </pre>
@@ -116,18 +117,18 @@ public final class OperationsProto {
           + "pe\030\002 \001(\t2\252\005\n\nOperations\022\224\001\n\016ListOperatio"
           + "ns\022).google.longrunning.ListOperationsRe"
           + "quest\032*.google.longrunning.ListOperation"
-          + "sResponse\"+\202\323\344\223\002\027\022\025/v1/{name=operations}"
-          + "\332A\013name,filter\022\177\n\014GetOperation\022\'.google."
+          + "sResponse\"+\332A\013name,filter\202\323\344\223\002\027\022\025/v1/{na"
+          + "me=operations}\022\177\n\014GetOperation\022\'.google."
           + "longrunning.GetOperationRequest\032\035.google"
-          + ".longrunning.Operation\"\'\202\323\344\223\002\032\022\030/v1/{nam"
-          + "e=operations/**}\332A\004name\022~\n\017DeleteOperati"
+          + ".longrunning.Operation\"\'\332A\004name\202\323\344\223\002\032\022\030/"
+          + "v1/{name=operations/**}\022~\n\017DeleteOperati"
           + "on\022*.google.longrunning.DeleteOperationR"
-          + "equest\032\026.google.protobuf.Empty\"\'\202\323\344\223\002\032*\030"
-          + "/v1/{name=operations/**}\332A\004name\022\210\001\n\017Canc"
+          + "equest\032\026.google.protobuf.Empty\"\'\332A\004name\202"
+          + "\323\344\223\002\032*\030/v1/{name=operations/**}\022\210\001\n\017Canc"
           + "elOperation\022*.google.longrunning.CancelO"
           + "perationRequest\032\026.google.protobuf.Empty\""
-          + "1\202\323\344\223\002$\"\037/v1/{name=operations/**}:cancel"
-          + ":\001*\332A\004name\022Z\n\rWaitOperation\022(.google.lon"
+          + "1\332A\004name\202\323\344\223\002$\"\037/v1/{name=operations/**}"
+          + ":cancel:\001*\022Z\n\rWaitOperation\022(.google.lon"
           + "grunning.WaitOperationRequest\032\035.google.l"
           + "ongrunning.Operation\"\000\032\035\312A\032longrunning.g"
           + "oogleapis.com:Z\n\016operation_info\022\036.google"
