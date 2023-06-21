@@ -130,11 +130,13 @@ public class ITIam {
   public void testHttpJson_getIamPolicy() {
     SetIamPolicyRequest policyRequest =
         SetIamPolicyRequest.newBuilder().setPolicy(DEFAULT_POLICY).setResource(resource).build();
-    httpjsonClient.setIamPolicy(policyRequest);
+    Policy setIamPolicy = httpjsonClient.setIamPolicy(policyRequest);
+    System.out.println(setIamPolicy.getBindingsList() + " " + resource);
 
     Policy policy =
         httpjsonClient.getIamPolicy(GetIamPolicyRequest.newBuilder().setResource(resource).build());
     assertThat(policy).isEqualTo(DEFAULT_POLICY);
+    System.out.println(resource);
   }
 
   @Test
