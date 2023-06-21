@@ -85,5 +85,5 @@ public interface PolicyRuleOrBuilder
    */
   com.google.protobuf.ByteString getDescriptionBytes();
 
-  public com.google.iam.v2beta.PolicyRule.KindCase getKindCase();
+  com.google.iam.v2beta.PolicyRule.KindCase getKindCase();
 }

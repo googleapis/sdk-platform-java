@@ -47,11 +47,6 @@ public final class SourceInfo extends com.google.protobuf.GeneratedMessageV3
     return new SourceInfo();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.SourceInfoProto.internal_static_google_api_SourceInfo_descriptor;
   }

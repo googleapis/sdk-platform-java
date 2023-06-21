@@ -13,4 +13,10 @@
     <className>com/google/api/gax/rpc/*</className>
     <method>* *Gdch*(*)</method>
   </difference>
+  <difference>
+    <differenceType>7006</differenceType>
+    <className>com/google/api/gax/rpc/ServerStreamingCallSettings$Builder</className>
+    <method>*setWaitTimeout*</method>
+    <to>com.google.api.gax.rpc.ServerStreamingCallSettings$Builder</to>
+  </difference>
 </differences>

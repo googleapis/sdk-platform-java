@@ -48,11 +48,6 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
     return new MetricRule();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.QuotaProto.internal_static_google_api_MetricRule_descriptor;
   }
@@ -85,6 +80,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Selects the methods to which this rule applies.
+   *
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax
    * details.
    * </pre>
@@ -110,6 +106,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Selects the methods to which this rule applies.
+   *
    * Refer to [selector][google.api.DocumentationRule.selector] for syntax
    * details.
    * </pre>
@@ -163,6 +160,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Metrics to update when the selected methods are called, and the associated
    * cost applied to each metric.
+   *
    * The key of the map is the metric name, and the values are the amount
    * increased for the metric against which the quota limits are defined.
    * The value must not be negative.
@@ -189,6 +187,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Metrics to update when the selected methods are called, and the associated
    * cost applied to each metric.
+   *
    * The key of the map is the metric name, and the values are the amount
    * increased for the metric against which the quota limits are defined.
    * The value must not be negative.
@@ -206,6 +205,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Metrics to update when the selected methods are called, and the associated
    * cost applied to each metric.
+   *
    * The key of the map is the metric name, and the values are the amount
    * increased for the metric against which the quota limits are defined.
    * The value must not be negative.
@@ -227,6 +227,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
    * <pre>
    * Metrics to update when the selected methods are called, and the associated
    * cost applied to each metric.
+   *
    * The key of the map is the metric name, and the values are the amount
    * increased for the metric against which the quota limits are defined.
    * The value must not be negative.
@@ -643,6 +644,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects the methods to which this rule applies.
+     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -667,6 +669,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects the methods to which this rule applies.
+     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -691,6 +694,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects the methods to which this rule applies.
+     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -714,6 +718,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects the methods to which this rule applies.
+     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -733,6 +738,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * Selects the methods to which this rule applies.
+     *
      * Refer to [selector][google.api.DocumentationRule.selector] for syntax
      * details.
      * </pre>
@@ -787,6 +793,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Metrics to update when the selected methods are called, and the associated
      * cost applied to each metric.
+     *
      * The key of the map is the metric name, and the values are the amount
      * increased for the metric against which the quota limits are defined.
      * The value must not be negative.
@@ -813,6 +820,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Metrics to update when the selected methods are called, and the associated
      * cost applied to each metric.
+     *
      * The key of the map is the metric name, and the values are the amount
      * increased for the metric against which the quota limits are defined.
      * The value must not be negative.
@@ -830,6 +838,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Metrics to update when the selected methods are called, and the associated
      * cost applied to each metric.
+     *
      * The key of the map is the metric name, and the values are the amount
      * increased for the metric against which the quota limits are defined.
      * The value must not be negative.
@@ -851,6 +860,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Metrics to update when the selected methods are called, and the associated
      * cost applied to each metric.
+     *
      * The key of the map is the metric name, and the values are the amount
      * increased for the metric against which the quota limits are defined.
      * The value must not be negative.
@@ -881,6 +891,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Metrics to update when the selected methods are called, and the associated
      * cost applied to each metric.
+     *
      * The key of the map is the metric name, and the values are the amount
      * increased for the metric against which the quota limits are defined.
      * The value must not be negative.
@@ -907,6 +918,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Metrics to update when the selected methods are called, and the associated
      * cost applied to each metric.
+     *
      * The key of the map is the metric name, and the values are the amount
      * increased for the metric against which the quota limits are defined.
      * The value must not be negative.
@@ -929,6 +941,7 @@ public final class MetricRule extends com.google.protobuf.GeneratedMessageV3
      * <pre>
      * Metrics to update when the selected methods are called, and the associated
      * cost applied to each metric.
+     *
      * The key of the map is the metric name, and the values are the amount
      * increased for the metric against which the quota limits are defined.
      * The value must not be negative.

@@ -29,6 +29,7 @@
  */
 package com.google.api.gax.httpjson;
 
+import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.ResponseObserver;
 import com.google.api.gax.rpc.StreamController;
 import com.google.common.base.Preconditions;
@@ -80,10 +81,12 @@ class HttpJsonDirectStreamController<RequestT, ResponseT> implements StreamContr
     }
   }
 
-  void start(RequestT request) {
+  void start(RequestT request, ApiCallContext context) {
     responseObserver.onStart(this);
     this.hasStarted = true;
-    clientCall.start(new ResponseObserverAdapter(), HttpJsonMetadata.newBuilder().build());
+    clientCall.start(
+        new ResponseObserverAdapter(),
+        HttpJsonMetadata.newBuilder().build().withHeaders(context.getExtraHeaders()));
 
     if (autoflowControl) {
       clientCall.request(1);

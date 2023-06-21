@@ -38,6 +38,8 @@ import java.util.Map;
 
 @InternalApi
 public class Headers {
+  public static final String DYNAMIC_ROUTING_HEADER_KEY = "x-goog-request-params";
+
   public static ImmutableMap<String, List<String>> mergeHeaders(
       Map<String, List<String>> oldHeaders, Map<String, List<String>> newHeaders) {
     ImmutableMap.Builder<String, List<String>> headersBuilder = ImmutableMap.builder();

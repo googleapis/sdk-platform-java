@@ -51,11 +51,6 @@ public final class AuditConfigDelta extends com.google.protobuf.GeneratedMessage
     return new AuditConfigDelta();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.iam.v1.PolicyProto.internal_static_google_iam_v1_AuditConfigDelta_descriptor;
   }

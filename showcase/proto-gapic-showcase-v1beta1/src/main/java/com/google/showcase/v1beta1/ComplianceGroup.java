@@ -23,7 +23,8 @@ private static final long serialVersionUID = 0L;
   }
   private ComplianceGroup() {
     name_ = "";
-    rpcs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    rpcs_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
     requests_ = java.util.Collections.emptyList();
   }
 
@@ -34,11 +35,6 @@ private static final long serialVersionUID = 0L;
     return new ComplianceGroup();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet
-  getUnknownFields() {
-    return this.unknownFields;
-  }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
     return com.google.showcase.v1beta1.ComplianceOuterClass.internal_static_google_showcase_v1beta1_ComplianceGroup_descriptor;
@@ -93,7 +89,8 @@ private static final long serialVersionUID = 0L;
 
   public static final int RPCS_FIELD_NUMBER = 2;
   @SuppressWarnings("serial")
-  private com.google.protobuf.LazyStringList rpcs_;
+  private com.google.protobuf.LazyStringArrayList rpcs_ =
+      com.google.protobuf.LazyStringArrayList.emptyList();
   /**
    * <code>repeated string rpcs = 2;</code>
    * @return A list containing the rpcs.
@@ -306,11 +303,13 @@ private static final long serialVersionUID = 0L;
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
+
   public static com.google.showcase.v1beta1.ComplianceGroup parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
+
   public static com.google.showcase.v1beta1.ComplianceGroup parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -393,8 +392,8 @@ private static final long serialVersionUID = 0L;
       super.clear();
       bitField0_ = 0;
       name_ = "";
-      rpcs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000002);
+      rpcs_ =
+          com.google.protobuf.LazyStringArrayList.emptyList();
       if (requestsBuilder_ == null) {
         requests_ = java.util.Collections.emptyList();
       } else {
@@ -435,11 +434,6 @@ private static final long serialVersionUID = 0L;
     }
 
     private void buildPartialRepeatedFields(com.google.showcase.v1beta1.ComplianceGroup result) {
-      if (((bitField0_ & 0x00000002) != 0)) {
-        rpcs_ = rpcs_.getUnmodifiableView();
-        bitField0_ = (bitField0_ & ~0x00000002);
-      }
-      result.rpcs_ = rpcs_;
       if (requestsBuilder_ == null) {
         if (((bitField0_ & 0x00000004) != 0)) {
           requests_ = java.util.Collections.unmodifiableList(requests_);
@@ -455,6 +449,10 @@ private static final long serialVersionUID = 0L;
       int from_bitField0_ = bitField0_;
       if (((from_bitField0_ & 0x00000001) != 0)) {
         result.name_ = name_;
+      }
+      if (((from_bitField0_ & 0x00000002) != 0)) {
+        rpcs_.makeImmutable();
+        result.rpcs_ = rpcs_;
       }
     }
 
@@ -510,7 +508,7 @@ private static final long serialVersionUID = 0L;
       if (!other.rpcs_.isEmpty()) {
         if (rpcs_.isEmpty()) {
           rpcs_ = other.rpcs_;
-          bitField0_ = (bitField0_ & ~0x00000002);
+          bitField0_ |= 0x00000002;
         } else {
           ensureRpcsIsMutable();
           rpcs_.addAll(other.rpcs_);
@@ -682,12 +680,13 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private com.google.protobuf.LazyStringList rpcs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
+    private com.google.protobuf.LazyStringArrayList rpcs_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
     private void ensureRpcsIsMutable() {
-      if (!((bitField0_ & 0x00000002) != 0)) {
+      if (!rpcs_.isModifiable()) {
         rpcs_ = new com.google.protobuf.LazyStringArrayList(rpcs_);
-        bitField0_ |= 0x00000002;
-       }
+      }
+      bitField0_ |= 0x00000002;
     }
     /**
      * <code>repeated string rpcs = 2;</code>
@@ -695,7 +694,8 @@ private static final long serialVersionUID = 0L;
      */
     public com.google.protobuf.ProtocolStringList
         getRpcsList() {
-      return rpcs_.getUnmodifiableView();
+      rpcs_.makeImmutable();
+      return rpcs_;
     }
     /**
      * <code>repeated string rpcs = 2;</code>
@@ -732,6 +732,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       ensureRpcsIsMutable();
       rpcs_.set(index, value);
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -745,6 +746,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       ensureRpcsIsMutable();
       rpcs_.add(value);
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -758,6 +760,7 @@ private static final long serialVersionUID = 0L;
       ensureRpcsIsMutable();
       com.google.protobuf.AbstractMessageLite.Builder.addAll(
           values, rpcs_);
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }
@@ -766,8 +769,9 @@ private static final long serialVersionUID = 0L;
      * @return This builder for chaining.
      */
     public Builder clearRpcs() {
-      rpcs_ = com.google.protobuf.LazyStringArrayList.EMPTY;
-      bitField0_ = (bitField0_ & ~0x00000002);
+      rpcs_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
+      bitField0_ = (bitField0_ & ~0x00000002);;
       onChanged();
       return this;
     }
@@ -782,6 +786,7 @@ private static final long serialVersionUID = 0L;
       checkByteStringIsUtf8(value);
       ensureRpcsIsMutable();
       rpcs_.add(value);
+      bitField0_ |= 0x00000002;
       onChanged();
       return this;
     }

@@ -23,24 +23,31 @@ package com.google.api;
  *
  * <pre>
  * `Context` defines which contexts an API requests.
+ *
  * Example:
+ *
  *     context:
  *       rules:
  *       - selector: "*"
  *         requested:
  *         - google.rpc.context.ProjectContext
  *         - google.rpc.context.OriginContext
+ *
  * The above specifies that all methods in the API request
  * `google.rpc.context.ProjectContext` and
  * `google.rpc.context.OriginContext`.
+ *
  * Available context types are defined in package
  * `google.rpc.context`.
+ *
  * This also provides mechanism to allowlist any protobuf message extension that
  * can be sent in grpc metadata using “x-goog-ext-&lt;extension_id&gt;-bin” and
  * “x-goog-ext-&lt;extension_id&gt;-jspb” format. For example, list any service
  * specific protobuf types that can appear in grpc metadata as follows in your
  * yaml file:
+ *
  * Example:
+ *
  *     context:
  *       rules:
  *        - selector: "google.example.library.v1.LibraryService.CreateBook"
@@ -48,6 +55,7 @@ package com.google.api;
  *          - google.foo.v1.NewExtension
  *          allowed_response_extensions:
  *          - google.foo.v1.NewExtension
+ *
  * You can also specify extension ID instead of fully qualified extension name
  * here.
  * </pre>
@@ -74,11 +82,6 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
     return new Context();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.api.ContextProto.internal_static_google_api_Context_descriptor;
   }
@@ -100,6 +103,7 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A list of RPC context rules that apply to individual API methods.
+   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -114,6 +118,7 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A list of RPC context rules that apply to individual API methods.
+   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -128,6 +133,7 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A list of RPC context rules that apply to individual API methods.
+   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -142,6 +148,7 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A list of RPC context rules that apply to individual API methods.
+   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -156,6 +163,7 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * A list of RPC context rules that apply to individual API methods.
+   *
    * **NOTE:** All service configuration rules follow "last one wins" order.
    * </pre>
    *
@@ -330,24 +338,31 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * `Context` defines which contexts an API requests.
+   *
    * Example:
+   *
    *     context:
    *       rules:
    *       - selector: "*"
    *         requested:
    *         - google.rpc.context.ProjectContext
    *         - google.rpc.context.OriginContext
+   *
    * The above specifies that all methods in the API request
    * `google.rpc.context.ProjectContext` and
    * `google.rpc.context.OriginContext`.
+   *
    * Available context types are defined in package
    * `google.rpc.context`.
+   *
    * This also provides mechanism to allowlist any protobuf message extension that
    * can be sent in grpc metadata using “x-goog-ext-&lt;extension_id&gt;-bin” and
    * “x-goog-ext-&lt;extension_id&gt;-jspb” format. For example, list any service
    * specific protobuf types that can appear in grpc metadata as follows in your
    * yaml file:
+   *
    * Example:
+   *
    *     context:
    *       rules:
    *        - selector: "google.example.library.v1.LibraryService.CreateBook"
@@ -355,6 +370,7 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
    *          - google.foo.v1.NewExtension
    *          allowed_response_extensions:
    *          - google.foo.v1.NewExtension
+   *
    * You can also specify extension ID instead of fully qualified extension name
    * here.
    * </pre>
@@ -593,6 +609,7 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of RPC context rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -610,6 +627,7 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of RPC context rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -627,6 +645,7 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of RPC context rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -644,6 +663,7 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of RPC context rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -667,6 +687,7 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of RPC context rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -687,6 +708,7 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of RPC context rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -710,6 +732,7 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of RPC context rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -733,6 +756,7 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of RPC context rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -753,6 +777,7 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of RPC context rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -773,6 +798,7 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of RPC context rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -793,6 +819,7 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of RPC context rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -813,6 +840,7 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of RPC context rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -833,6 +861,7 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of RPC context rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -846,6 +875,7 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of RPC context rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -863,6 +893,7 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of RPC context rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -880,6 +911,7 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of RPC context rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -893,6 +925,7 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of RPC context rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *
@@ -907,6 +940,7 @@ public final class Context extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * A list of RPC context rules that apply to individual API methods.
+     *
      * **NOTE:** All service configuration rules follow "last one wins" order.
      * </pre>
      *

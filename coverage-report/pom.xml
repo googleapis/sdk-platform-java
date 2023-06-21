@@ -31,22 +31,22 @@
             <dependency>
                 <groupId>com.google.api</groupId>
                 <artifactId>gax</artifactId>
-                <version>2.28.1</version> <!-- {x-version-update:gax:current} -->
+                <version>2.29.1-SNAPSHOT</version> <!-- {x-version-update:gax:current} -->
             </dependency>
             <dependency>
                 <groupId>com.google.api</groupId>
                 <artifactId>gax-grpc</artifactId>
-                <version>2.28.1</version> <!-- {x-version-update:gax-grpc:current} -->
+                <version>2.29.1-SNAPSHOT</version> <!-- {x-version-update:gax-grpc:current} -->
             </dependency>
             <dependency>
                 <groupId>com.google.api</groupId>
                 <artifactId>gax-httpjson</artifactId>
-                <version>0.113.1</version> <!-- {x-version-update:gax-httpjson:current} -->
+                <version>2.29.1-SNAPSHOT</version> <!-- {x-version-update:gax:current} -->
             </dependency>
             <dependency>
                 <groupId>com.google.api</groupId>
                 <artifactId>api-common</artifactId>
-                <version>2.11.1</version> <!-- {x-version-update:api-common:current} -->
+                <version>2.12.1-SNAPSHOT</version> <!-- {x-version-update:api-common:current} -->
             </dependency>
         </dependencies>
 

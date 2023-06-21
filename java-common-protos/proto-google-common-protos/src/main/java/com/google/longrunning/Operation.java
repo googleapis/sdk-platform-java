@@ -48,11 +48,6 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
     return new Operation();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.longrunning.OperationsProto
         .internal_static_google_longrunning_Operation_descriptor;
@@ -68,6 +63,8 @@ public final class Operation extends com.google.protobuf.GeneratedMessageV3
   }
 
   private int resultCase_ = 0;
+
+  @SuppressWarnings("serial")
   private java.lang.Object result_;
 
   public enum ResultCase

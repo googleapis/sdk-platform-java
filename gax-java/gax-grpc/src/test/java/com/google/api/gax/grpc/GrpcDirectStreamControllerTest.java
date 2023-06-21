@@ -29,11 +29,11 @@
  */
 package com.google.api.gax.grpc;
 
+import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.grpc.testing.FakeServiceGrpc;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.retrying.StreamResumptionStrategy;
-import com.google.api.gax.rpc.Callables;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.DeadlineExceededException;
 import com.google.api.gax.rpc.FixedTransportChannelProvider;
@@ -49,6 +49,9 @@ import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import org.junit.Test;
@@ -58,15 +61,13 @@ import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
 public class GrpcDirectStreamControllerTest {
+  private static final int DEFAULT_AWAIT_TERMINATION_SEC = 10;
 
   @Test(timeout = 180_000) // ms
   public void testRetryNoRaceCondition() throws Exception {
-    Server server = ServerBuilder.forPort(1234).addService(new FakeService()).build();
-    server.start();
-
+    Server server = ServerBuilder.forPort(1234).addService(new FakeService()).build().start();
     ManagedChannel channel =
         ManagedChannelBuilder.forAddress("localhost", 1234).usePlaintext().build();
-
     StreamResumptionStrategy<Color, Money> resumptionStrategy =
         new StreamResumptionStrategy<Color, Money>() {
           @Nonnull
@@ -92,58 +93,68 @@ public class GrpcDirectStreamControllerTest {
             return true;
           }
         };
-
-    // Set up retry settings. Set total timeout to 1 minute to limit the total runtime of this test.
-    // Set retry delay to 1 ms so the retries will be scheduled in a loop with no delays.
-    // Set max attempt to max so there could be as many retries as possible.
-    ServerStreamingCallSettings<Color, Money> callSettigs =
+    // Set up retry settings. Set total timeout to 1 minute to limit the total runtime of this
+    // test. Set retry delay to 1 ms so the retries will be scheduled in a loop with no delays.
+    ServerStreamingCallSettings<Color, Money> callSettings =
         ServerStreamingCallSettings.<Color, Money>newBuilder()
             .setResumptionStrategy(resumptionStrategy)
             .setRetryableCodes(StatusCode.Code.DEADLINE_EXCEEDED)
             .setRetrySettings(
                 RetrySettings.newBuilder()
                     .setTotalTimeout(Duration.ofMinutes(1))
-                    .setMaxAttempts(Integer.MAX_VALUE)
+                    .setInitialRpcTimeout(Duration.ofMillis(1))
+                    .setMaxRpcTimeout(Duration.ofMillis(1))
                     .setInitialRetryDelay(Duration.ofMillis(1))
                     .setMaxRetryDelay(Duration.ofMillis(1))
                     .build())
             .build();
-
-    StubSettings.Builder builder =
-        new StubSettings.Builder() {
-          @Override
-          public StubSettings build() {
-            return new StubSettings(this) {
-              @Override
-              public Builder toBuilder() {
-                throw new IllegalStateException();
-              }
-            };
-          }
-        };
-
-    builder
-        .setEndpoint("localhost:1234")
-        .setCredentialsProvider(NoCredentialsProvider.create())
-        .setTransportChannelProvider(
-            FixedTransportChannelProvider.create(GrpcTransportChannel.create(channel)));
-
-    ServerStreamingCallable<Color, Money> callable =
-        GrpcCallableFactory.createServerStreamingCallable(
-            GrpcCallSettings.create(FakeServiceGrpc.METHOD_SERVER_STREAMING_RECOGNIZE),
-            callSettigs,
-            ClientContext.create(builder.build()));
-
-    ServerStreamingCallable<Color, Money> retrying =
-        Callables.retrying(callable, callSettigs, ClientContext.create(builder.build()));
-
-    Color request = Color.newBuilder().getDefaultInstanceForType();
-
+    // Store a list of resources to manually close at the end of the test
+    List<BackgroundResource> backgroundResourceList = new ArrayList<>();
     try {
-      for (Money money : retrying.call(request, GrpcCallContext.createDefault())) {}
+      GrpcTransportChannel transportChannel = GrpcTransportChannel.create(channel);
+      backgroundResourceList.add(transportChannel);
 
+      StubSettings.Builder builder =
+          new StubSettings.Builder() {
+            @Override
+            public StubSettings build() {
+              return new StubSettings(this) {
+                @Override
+                public Builder toBuilder() {
+                  throw new IllegalStateException();
+                }
+              };
+            }
+          };
+
+      builder
+          .setEndpoint("localhost:1234")
+          .setCredentialsProvider(NoCredentialsProvider.create())
+          .setTransportChannelProvider(FixedTransportChannelProvider.create(transportChannel));
+
+      ClientContext clientContext = ClientContext.create(builder.build());
+      backgroundResourceList.addAll(clientContext.getBackgroundResources());
+      // GrpcCallableFactory's createServerStreamingCallable creates a retrying callable
+      ServerStreamingCallable<Color, Money> callable =
+          GrpcCallableFactory.createServerStreamingCallable(
+              GrpcCallSettings.create(FakeServiceGrpc.METHOD_SERVER_STREAMING_RECOGNIZE),
+              callSettings,
+              clientContext);
+
+      Color request = Color.newBuilder().getDefaultInstanceForType();
+      for (Money money : callable.call(request, clientContext.getDefaultCallContext())) {}
     } catch (DeadlineExceededException e) {
       // Ignore this error
+    } finally {
+      // Shutdown all the resources
+      server.shutdown();
+      server.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
+      channel.shutdown();
+      channel.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
+      for (BackgroundResource backgroundResource : backgroundResourceList) {
+        backgroundResource.shutdown();
+        backgroundResource.awaitTermination(DEFAULT_AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
+      }
     }
   }
 

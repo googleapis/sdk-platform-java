@@ -23,11 +23,13 @@ package com.google.api;
  *
  * <pre>
  * Defines project properties.
+ *
  * API services can define properties that can be assigned to consumer projects
  * so that backends can perform response customization without having to make
  * additional calls or maintain additional storage. For example, Maps API
  * defines properties that controls map tile cache period, or whether to embed a
  * watermark in a result.
+ *
  * These values can be set via API producer console. Only API providers can
  * define and set these properties.
  * </pre>
@@ -54,11 +56,6 @@ public final class Property extends com.google.protobuf.GeneratedMessageV3
   @SuppressWarnings({"unused"})
   protected java.lang.Object newInstance(UnusedPrivateParameter unused) {
     return new Property();
-  }
-
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
   }
 
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
@@ -591,11 +588,13 @@ public final class Property extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * Defines project properties.
+   *
    * API services can define properties that can be assigned to consumer projects
    * so that backends can perform response customization without having to make
    * additional calls or maintain additional storage. For example, Maps API
    * defines properties that controls map tile cache period, or whether to embed a
    * watermark in a result.
+   *
    * These values can be set via API producer console. Only API providers can
    * define and set these properties.
    * </pre>

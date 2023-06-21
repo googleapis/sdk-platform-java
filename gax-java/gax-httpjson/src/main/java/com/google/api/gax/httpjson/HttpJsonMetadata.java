@@ -29,15 +29,15 @@
  */
 package com.google.api.gax.httpjson;
 
-import com.google.api.core.BetaApi;
 import com.google.api.core.InternalExtensionOnly;
 import com.google.auto.value.AutoValue;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.annotation.Nullable;
 
 @AutoValue
-@BetaApi
 @InternalExtensionOnly
 public abstract class HttpJsonMetadata {
   public abstract Map<String, Object> getHeaders();
@@ -52,6 +52,22 @@ public abstract class HttpJsonMetadata {
 
   public static HttpJsonMetadata.Builder newBuilder() {
     return new AutoValue_HttpJsonMetadata.Builder().setHeaders(Collections.emptyMap());
+  }
+
+  public HttpJsonMetadata withHeaders(Map<String, List<String>> headers) {
+    Map<String, Object> extraHeaders = new HashMap<>();
+    for (Map.Entry<String, List<String>> entrySet : headers.entrySet()) {
+      // HeaderValueList is always non-null. Check that it contains at least one value.
+      // Should only ever contain one value, but take the first one if there are multiple.
+      // TODO(https://github.com/googleapis/sdk-platform-java/issues/1752):
+      // Investigate how to better support extraHeaders
+      List<String> headerValueList = entrySet.getValue();
+      if (headerValueList.isEmpty()) {
+        continue;
+      }
+      extraHeaders.put(entrySet.getKey(), headerValueList.get(0));
+    }
+    return toBuilder().setHeaders(extraHeaders).build();
   }
 
   @AutoValue.Builder

@@ -30,13 +30,10 @@
 
 package com.google.api.gax.httpjson;
 
-import com.google.api.core.BetaApi;
-
 /**
  * A {@link HttpJsonClientCall.Listener} which forwards all of its methods to another {@link
  * HttpJsonClientCall.Listener}.
  */
-@BetaApi
 public abstract class ForwardingHttpJsonClientCallListener<ResponseT>
     extends HttpJsonClientCall.Listener<ResponseT> {
 

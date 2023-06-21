@@ -48,11 +48,6 @@ public final class LocalizedText extends com.google.protobuf.GeneratedMessageV3
     return new LocalizedText();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet getUnknownFields() {
-    return this.unknownFields;
-  }
-
   public static final com.google.protobuf.Descriptors.Descriptor getDescriptor() {
     return com.google.type.LocalizedTextProto.internal_static_google_type_LocalizedText_descriptor;
   }
@@ -126,6 +121,7 @@ public final class LocalizedText extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * The text's BCP-47 language code, such as "en-US" or "sr-Latn".
+   *
    * For more information, see
    * http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
    * </pre>
@@ -151,6 +147,7 @@ public final class LocalizedText extends com.google.protobuf.GeneratedMessageV3
    *
    * <pre>
    * The text's BCP-47 language code, such as "en-US" or "sr-Latn".
+   *
    * For more information, see
    * http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
    * </pre>
@@ -645,6 +642,7 @@ public final class LocalizedText extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The text's BCP-47 language code, such as "en-US" or "sr-Latn".
+     *
      * For more information, see
      * http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
      * </pre>
@@ -669,6 +667,7 @@ public final class LocalizedText extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The text's BCP-47 language code, such as "en-US" or "sr-Latn".
+     *
      * For more information, see
      * http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
      * </pre>
@@ -693,6 +692,7 @@ public final class LocalizedText extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The text's BCP-47 language code, such as "en-US" or "sr-Latn".
+     *
      * For more information, see
      * http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
      * </pre>
@@ -716,6 +716,7 @@ public final class LocalizedText extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The text's BCP-47 language code, such as "en-US" or "sr-Latn".
+     *
      * For more information, see
      * http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
      * </pre>
@@ -735,6 +736,7 @@ public final class LocalizedText extends com.google.protobuf.GeneratedMessageV3
      *
      * <pre>
      * The text's BCP-47 language code, such as "en-US" or "sr-Latn".
+     *
      * For more information, see
      * http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
      * </pre>

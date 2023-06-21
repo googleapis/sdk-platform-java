@@ -27,11 +27,6 @@ private static final long serialVersionUID = 0L;
     return new Sequence();
   }
 
-  @java.lang.Override
-  public final com.google.protobuf.UnknownFieldSet
-  getUnknownFields() {
-    return this.unknownFields;
-  }
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
     return com.google.showcase.v1beta1.SequenceOuterClass.internal_static_google_showcase_v1beta1_Sequence_descriptor;
@@ -129,11 +124,6 @@ private static final long serialVersionUID = 0L;
       return new Response();
     }
 
-    @java.lang.Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
       return com.google.showcase.v1beta1.SequenceOuterClass.internal_static_google_showcase_v1beta1_Sequence_Response_descriptor;
@@ -353,11 +343,13 @@ private static final long serialVersionUID = 0L;
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
+
     public static com.google.showcase.v1beta1.Sequence.Response parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
+
     public static com.google.showcase.v1beta1.Sequence.Response parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
@@ -1198,11 +1190,13 @@ private static final long serialVersionUID = 0L;
     return com.google.protobuf.GeneratedMessageV3
         .parseWithIOException(PARSER, input, extensionRegistry);
   }
+
   public static com.google.showcase.v1beta1.Sequence parseDelimitedFrom(java.io.InputStream input)
       throws java.io.IOException {
     return com.google.protobuf.GeneratedMessageV3
         .parseDelimitedWithIOException(PARSER, input);
   }
+
   public static com.google.showcase.v1beta1.Sequence parseDelimitedFrom(
       java.io.InputStream input,
       com.google.protobuf.ExtensionRegistryLite extensionRegistry)

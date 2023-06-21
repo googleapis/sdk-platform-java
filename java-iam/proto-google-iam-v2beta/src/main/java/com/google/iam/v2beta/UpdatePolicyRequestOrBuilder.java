@@ -28,6 +28,7 @@ public interface UpdatePolicyRequestOrBuilder
    *
    * <pre>
    * Required. The policy to update.
+   *
    * To prevent conflicting updates, the `etag` value must match the value that
    * is stored in IAM. If the `etag` values do not match, the request fails with
    * a `409` error code and `ABORTED` status.
@@ -43,6 +44,7 @@ public interface UpdatePolicyRequestOrBuilder
    *
    * <pre>
    * Required. The policy to update.
+   *
    * To prevent conflicting updates, the `etag` value must match the value that
    * is stored in IAM. If the `etag` values do not match, the request fails with
    * a `409` error code and `ABORTED` status.
@@ -58,6 +60,7 @@ public interface UpdatePolicyRequestOrBuilder
    *
    * <pre>
    * Required. The policy to update.
+   *
    * To prevent conflicting updates, the `etag` value must match the value that
    * is stored in IAM. If the `etag` values do not match, the request fails with
    * a `409` error code and `ABORTED` status.
