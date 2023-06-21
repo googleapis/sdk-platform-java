@@ -2,7 +2,6 @@ package com.google.showcase.v1beta1.it;
 
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
@@ -18,17 +17,15 @@ import com.google.auth.oauth2.GdchCredentialsTestUtil;
 import com.google.auth.oauth2.MockTokenServerTransportFactory;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoSettings;
+import com.google.showcase.v1beta1.stub.EchoStub;
+import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
-import com.google.showcase.v1beta1.stub.EchoStub;
-import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -100,16 +97,14 @@ public class ITGdch {
       fileWriter.write(preparedJson);
     }
 
-
     // use temp location to instantiate credentials
-    initialCredentials = GdchCredentialsTestUtil
-            .fromJson(converted, transportFactory);
+    initialCredentials = GdchCredentialsTestUtil.fromJson(converted, transportFactory);
   }
 
   /**
-   * {@link com.google.api.gax.rpc.ClientContext} will create a new {@link GdchCredentials}
-   * with an audience defaulted to the endpoint if the audience is not manually passed.
-   * This test confirms that a new credential is created from the context and can be refreshed
+   * {@link com.google.api.gax.rpc.ClientContext} will create a new {@link GdchCredentials} with an
+   * audience defaulted to the endpoint if the audience is not manually passed. This test confirms
+   * that a new credential is created from the context and can be refreshed
    *
    * @throws IOException
    */
@@ -121,12 +116,14 @@ public class ITGdch {
     Credentials fromContext = context.getCredentials();
     Credentials fromClient = initialCredentials;
     assertNotSame(fromContext, fromClient);
-    NullPointerException expectedEx = assertThrows(NullPointerException.class, () -> initialCredentials.refresh());
-    assertTrue(expectedEx.getMessage().contains("Audience are not configured for GDCH service account"));
+    NullPointerException expectedEx =
+        assertThrows(NullPointerException.class, () -> initialCredentials.refresh());
+    assertTrue(
+        expectedEx.getMessage().contains("Audience are not configured for GDCH service account"));
     Exception unexpected = null;
     try {
       registerCredential(fromContext);
-      ((GdchCredentials)fromContext).refreshAccessToken();
+      ((GdchCredentials) fromContext).refreshAccessToken();
     } catch (Exception ex) {
       unexpected = ex;
     }
@@ -134,31 +131,31 @@ public class ITGdch {
   }
 
   /**
-   * Confirms creating a client with a valid audience is successful.
-   * We cannot confirm which audience is chosen (our passed audience or the endpoint) but
-   * this is confirmed in the unit tests.
+   * Confirms creating a client with a valid audience is successful. We cannot confirm which
+   * audience is chosen (our passed audience or the endpoint) but this is confirmed in the unit
+   * tests.
    *
    * @throws IOException
    */
   @Test
-  public void testClientWithGdchCredentialWithValidAudience_correct()
-      throws IOException {
+  public void testClientWithGdchCredentialWithValidAudience_correct() throws IOException {
     String audience = "valid-audience";
-    settings = settings
-            .toBuilder()
-            .setGdchApiAudience(audience)
-            .build();
+    settings = settings.toBuilder().setGdchApiAudience(audience).build();
     context = ClientContext.create(settings);
     stubSettings = EchoStubSettings.newBuilder(context).build();
     client = EchoClient.create(stubSettings.createStub());
     Credentials fromContext = context.getCredentials();
     assertNotSame(fromContext, initialCredentials);
-    NullPointerException thrownByClientCreds = assertThrows(NullPointerException.class, () -> initialCredentials.refresh());
-    assertTrue(thrownByClientCreds.getMessage().contains("Audience are not configured for GDCH service account"));
+    NullPointerException thrownByClientCreds =
+        assertThrows(NullPointerException.class, () -> initialCredentials.refresh());
+    assertTrue(
+        thrownByClientCreds
+            .getMessage()
+            .contains("Audience are not configured for GDCH service account"));
     Exception unexpected = null;
     try {
       registerCredential(fromContext);
-      ((GdchCredentials)fromContext).refreshAccessToken();
+      ((GdchCredentials) fromContext).refreshAccessToken();
     } catch (Exception ex) {
       unexpected = ex;
     }
@@ -188,7 +185,12 @@ public class ITGdch {
   }
 
   private void registerCredential(Credentials fromContext) {
-    GdchCredentialsTestUtil.registerGdchCredentialWithMockTransport((GdchCredentials) fromContext,
-            transportFactory.transport, projectId, SID_NAME, GDCH_TOKEN_STRING, tokenUri);
+    GdchCredentialsTestUtil.registerGdchCredentialWithMockTransport(
+        (GdchCredentials) fromContext,
+        transportFactory.transport,
+        projectId,
+        SID_NAME,
+        GDCH_TOKEN_STRING,
+        tokenUri);
   }
 }
