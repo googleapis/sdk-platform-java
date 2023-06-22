@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.22.0](https://github.com/googleapis/sdk-platform-java/compare/v2.21.0...v2.22.0) (2023-06-22)
+
+
+### Features
+
+* Dynamically determine protobuf version in build.gradle ([#1753](https://github.com/googleapis/sdk-platform-java/issues/1753)) ([6de5110](https://github.com/googleapis/sdk-platform-java/commit/6de51100965b8b6a1c252ec06b10993486de7d44))
+* GA Gax HttpJson ([#1264](https://github.com/googleapis/sdk-platform-java/issues/1264)) ([9f15fea](https://github.com/googleapis/sdk-platform-java/commit/9f15fea139e9b49ae32e6a4923085f9aca9c3115))
+
+
+### Bug Fixes
+
+* Update grpc to 1.55.1 in dependencies.properties ([#1794](https://github.com/googleapis/sdk-platform-java/issues/1794)) ([4df4450](https://github.com/googleapis/sdk-platform-java/commit/4df445067484454455512c8f7de0055c0ae21434))
+
 ## [2.21.0](https://github.com/googleapis/sdk-platform-java/compare/v2.20.1...v2.21.0) (2023-06-06)
 
 
