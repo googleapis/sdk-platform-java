@@ -110,19 +110,30 @@ public class ITGdch {
    */
   @Test
   public void testCreateClient_withGdchCredentialAndNoAudience_defaultsToEndpointBasedAudience() throws IOException {
+
+    // we create the client as usual - no audience passed
     context = ClientContext.create(settings);
     stubSettings = EchoStubSettings.newBuilder(context).build();
     client = EchoClient.create(stubSettings.createStub());
+
+    // We retrieve from context and from client
+    // the client has only access to creds provider, which may differ from the actual credentials used in the Context
     Credentials fromContext = context.getCredentials();
     Credentials fromClient = initialCredentials;
+
+    // Since ClientContext.create() uses a modified version of GdchCredentials
+    // via GdchCredentials.createWithGdchAudience(), they should be different objects
     assertNotSame(fromContext, fromClient);
+
+    // When credentials don't have an audience (such as the ones we passed to client creation and now stored in the
+    // provider) they will throw if we try to refresh them
     NullPointerException expectedEx =
         assertThrows(NullPointerException.class, () -> initialCredentials.refresh());
     assertTrue(
         expectedEx.getMessage().contains("Audience are not configured for GDCH service account"));
-    Exception unexpected = null;
-    // the credentials prepared in ClientContext should be able to refresh since the audience would be internally
-    // set to equal the endpoint of the StubSettings
+
+    // However, the credentials prepared in ClientContext should be able to refresh since the audience would be
+    // internally defaulted the endpoint of the StubSettings
     registerCredential(fromContext);
     ((GdchCredentials) fromContext).refreshAccessToken();
   }
@@ -136,13 +147,21 @@ public class ITGdch {
    */
   @Test
   public void testCreateClient_withGdchCredentialWithValidAudience_usesCredentialWithPassedAudience() throws IOException {
+
+    // Similar to the previous test, create a client as usual but this time we pass a explicit audience. It should
+    // be created without issues
     String audience = "valid-audience";
     settings = settings.toBuilder().setGdchApiAudience(audience).build();
     context = ClientContext.create(settings);
     stubSettings = EchoStubSettings.newBuilder(context).build();
     client = EchoClient.create(stubSettings.createStub());
+
+    // We retrieve both creds from the creds provider and the ones prepared in the context (which should have been
+    // re-created using GdchCredentials.createWithAudience("valid-audience"))
     Credentials fromContext = context.getCredentials();
     assertNotSame(fromContext, initialCredentials);
+
+    // Again, since the initial credentials don't have an audience, we should not be able to refresh them
     NullPointerException thrownByClientCreds =
         assertThrows(NullPointerException.class, () -> initialCredentials.refresh());
     assertTrue(
@@ -151,7 +170,7 @@ public class ITGdch {
             .contains("Audience are not configured for GDCH service account"));
     Exception unexpected = null;
 
-    // the credentials prepared in ClientContext should be able to refresh since the audience would be internally
+    // But the credentials prepared in ClientContext should be able to refresh since the audience would be internally
     // set to the one passed in stub settings
     registerCredential(fromContext);
     ((GdchCredentials) fromContext).refreshAccessToken();
