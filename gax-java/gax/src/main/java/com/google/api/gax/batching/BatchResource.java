@@ -47,7 +47,4 @@ public interface BatchResource {
 
   /** Returns the byte count of this resource. */
   long getByteCount();
-
-  /** Returns true if the resource is empty. */
-  boolean isEmpty();
 }

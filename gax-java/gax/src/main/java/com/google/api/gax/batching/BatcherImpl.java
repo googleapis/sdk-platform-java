@@ -95,8 +95,9 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
   private final FlowController flowController;
   private final ApiCallContext callContext;
 
+  // If element threshold or bytes threshold is 0, it means that it'll always flush every element
+  // without batching
   private final long elementThreshold;
-
   private final long bytesThreshold;
 
   /**
@@ -250,9 +251,8 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
 
     SettableApiFuture<ElementResultT> result = SettableApiFuture.create();
     synchronized (elementLock) {
-      if (!currentOpenBatch.isEmpty()
-          && batchingDescriptor.shouldFlush(
-              currentOpenBatch.resource.add(newResource), elementThreshold, bytesThreshold)) {
+      if (batchingDescriptor.shouldFlush(
+          currentOpenBatch.resource.add(newResource), elementThreshold, bytesThreshold)) {
         sendOutstanding();
       }
 
@@ -476,7 +476,7 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
     }
 
     boolean isEmpty() {
-      return resource.isEmpty();
+      return resource.getElementCount() == 0;
     }
   }
 

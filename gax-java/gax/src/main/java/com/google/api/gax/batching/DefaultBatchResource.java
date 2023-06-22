@@ -29,43 +29,33 @@
  */
 package com.google.api.gax.batching;
 
+import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
 
 /**
  * The default implementation of {@link BatchResource} which tracks the elementCount and byteCount.
  */
-final class DefaultBatchResource implements BatchResource {
+@AutoValue
+abstract class DefaultBatchResource implements BatchResource {
 
-  private long elementCount;
-  private long byteCount;
-
-  DefaultBatchResource(long elementCount, long byteCount) {
-    this.elementCount = elementCount;
-    this.byteCount = byteCount;
+  static DefaultBatchResource create(long elementCount, long byteCount) {
+    return new AutoValue_DefaultBatchResource(elementCount, byteCount);
   }
 
   @Override
   public BatchResource add(BatchResource resource) {
     Preconditions.checkArgument(
         resource instanceof DefaultBatchResource,
-        "BatchResource needs to be an instance of DefaultBatchResource");
-    this.elementCount += ((DefaultBatchResource) resource).elementCount;
-    this.byteCount += ((DefaultBatchResource) resource).byteCount;
-    return this;
+        "Expect an instance of DefaultBatchResource, got " + resource.getClass());
+    DefaultBatchResource defaultResource = (DefaultBatchResource) resource;
+    return new AutoValue_DefaultBatchResource(
+        getElementCount() + defaultResource.getElementCount(),
+        getByteCount() + defaultResource.getByteCount());
   }
 
   @Override
-  public long getElementCount() {
-    return elementCount;
-  }
+  public abstract long getElementCount();
 
   @Override
-  public long getByteCount() {
-    return byteCount;
-  }
-
-  @Override
-  public boolean isEmpty() {
-    return elementCount == 0;
-  }
+  public abstract long getByteCount();
 }

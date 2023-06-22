@@ -99,12 +99,12 @@ public interface BatchingDescriptor<ElementT, ElementResultT, RequestT, Response
 
   /** Creates a new {@link BatchResource} with ElementT. */
   default BatchResource createResource(ElementT element) {
-    return new DefaultBatchResource(1, countBytes(element));
+    return DefaultBatchResource.create(1, countBytes(element));
   }
 
   /** Create an empty {@link BatchResource}. */
   default BatchResource createEmptyResource() {
-    return new DefaultBatchResource(0, 0);
+    return DefaultBatchResource.create(0, 0);
   }
 
   /**
