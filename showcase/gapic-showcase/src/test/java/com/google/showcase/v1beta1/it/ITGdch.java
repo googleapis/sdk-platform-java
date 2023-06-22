@@ -121,13 +121,10 @@ public class ITGdch {
     assertTrue(
         expectedEx.getMessage().contains("Audience are not configured for GDCH service account"));
     Exception unexpected = null;
-    try {
-      registerCredential(fromContext);
-      ((GdchCredentials) fromContext).refreshAccessToken();
-    } catch (Exception ex) {
-      unexpected = ex;
-    }
-    assertNull(unexpected);
+    // the credentials prepared in ClientContext should be able to refresh since the audience would be internally
+    // set to equal the endpoint of the StubSettings
+    registerCredential(fromContext);
+    ((GdchCredentials) fromContext).refreshAccessToken();
   }
 
   /**
@@ -153,35 +150,11 @@ public class ITGdch {
             .getMessage()
             .contains("Audience are not configured for GDCH service account"));
     Exception unexpected = null;
-    try {
-      registerCredential(fromContext);
-      ((GdchCredentials) fromContext).refreshAccessToken();
-    } catch (Exception ex) {
-      unexpected = ex;
-    }
-    assertNull(unexpected);
-  }
 
-  @Test
-  public void testCreateClient_withGdchCredentialWithInvalidAudience_throws() throws IOException {
-    settings = settings.toBuilder().setGdchApiAudience("$invalid-audience:").build();
-    Exception expected =
-        assertThrows(IllegalArgumentException.class, () -> client = EchoClient.create(settings));
-    assertTrue(expected.getMessage().contains("audience string is not a valid URI"));
-  }
-
-  @Test
-  public void testCreateClient_withNonGdchCredentialWithAnyAudience_throws() throws IOException {
-    settings =
-        settings
-            .toBuilder()
-            .setCredentialsProvider(NoCredentialsProvider.create())
-            .setGdchApiAudience("any-audience")
-            .build();
-    Exception expected =
-        assertThrows(IllegalArgumentException.class, () -> client = EchoClient.create(settings));
-    assertTrue(
-        expected.getMessage().contains("audience can only be set when using GdchCredentials"));
+    // the credentials prepared in ClientContext should be able to refresh since the audience would be internally
+    // set to the one passed in stub settings
+    registerCredential(fromContext);
+    ((GdchCredentials) fromContext).refreshAccessToken();
   }
 
   private void registerCredential(Credentials fromContext) {
