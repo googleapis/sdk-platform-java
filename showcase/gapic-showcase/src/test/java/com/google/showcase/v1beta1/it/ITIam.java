@@ -73,18 +73,15 @@ public class ITIam {
 
   @Test
   public void testGrpc_setIamPolicy() {
-    grpcClient.createUser(
-        CreateUserRequest.newBuilder()
-            .setUser(
-                User.newBuilder()
-                    .setName(userId)
-                    .setDisplayName(userId)
-                    .setEmail(userId + "@google.com"))
-            .build());
+    User user =
+        grpcClient.createUser(
+            CreateUserRequest.newBuilder()
+                .setUser(User.newBuilder().setDisplayName(userId).setEmail(userId + "@google.com"))
+                .build());
     SetIamPolicyRequest policyRequest =
         SetIamPolicyRequest.newBuilder()
             .setPolicy(DEFAULT_POLICY)
-            .setResource(resourceName)
+            .setResource(user.getName())
             .build();
     Policy policy = grpcClient.setIamPolicy(policyRequest);
     assertThat(policy).isEqualTo(DEFAULT_POLICY);
@@ -92,18 +89,15 @@ public class ITIam {
 
   @Test
   public void testHttpJson_setIamPolicy() {
-    httpjsonClient.createUser(
-        CreateUserRequest.newBuilder()
-            .setUser(
-                User.newBuilder()
-                    .setName(userId)
-                    .setDisplayName(userId)
-                    .setEmail(userId + "@google.com"))
-            .build());
+    User user =
+        httpjsonClient.createUser(
+            CreateUserRequest.newBuilder()
+                .setUser(User.newBuilder().setDisplayName(userId).setEmail(userId + "@google.com"))
+                .build());
     SetIamPolicyRequest policyRequest =
         SetIamPolicyRequest.newBuilder()
             .setPolicy(DEFAULT_POLICY)
-            .setResource(resourceName)
+            .setResource(user.getName())
             .build();
     Policy policy = httpjsonClient.setIamPolicy(policyRequest);
     assertThat(policy).isEqualTo(DEFAULT_POLICY);
@@ -143,18 +137,15 @@ public class ITIam {
 
   @Test
   public void testGrpc_getIamPolicy() {
-    grpcClient.createUser(
-        CreateUserRequest.newBuilder()
-            .setUser(
-                User.newBuilder()
-                    .setName(userId)
-                    .setDisplayName(userId)
-                    .setEmail(userId + "@google.com"))
-            .build());
+    User user =
+        grpcClient.createUser(
+            CreateUserRequest.newBuilder()
+                .setUser(User.newBuilder().setDisplayName(userId).setEmail(userId + "@google.com"))
+                .build());
     SetIamPolicyRequest policyRequest =
         SetIamPolicyRequest.newBuilder()
             .setPolicy(DEFAULT_POLICY)
-            .setResource(resourceName)
+            .setResource(user.getName())
             .build();
     grpcClient.setIamPolicy(policyRequest);
 
@@ -166,18 +157,15 @@ public class ITIam {
 
   @Test
   public void testHttpJson_getIamPolicy() {
-    httpjsonClient.createUser(
-        CreateUserRequest.newBuilder()
-            .setUser(
-                User.newBuilder()
-                    .setName(userId)
-                    .setDisplayName(userId)
-                    .setEmail(userId + "@google.com"))
-            .build());
+    User user =
+        httpjsonClient.createUser(
+            CreateUserRequest.newBuilder()
+                .setUser(User.newBuilder().setDisplayName(userId).setEmail(userId + "@google.com"))
+                .build());
     SetIamPolicyRequest policyRequest =
         SetIamPolicyRequest.newBuilder()
             .setPolicy(DEFAULT_POLICY)
-            .setResource(resourceName)
+            .setResource(user.getName())
             .build();
     httpjsonClient.setIamPolicy(policyRequest);
 
@@ -223,11 +211,7 @@ public class ITIam {
   public void testGrpc_testIamPermissions() {
     grpcClient.createUser(
         CreateUserRequest.newBuilder()
-            .setUser(
-                User.newBuilder()
-                    .setName(userId)
-                    .setDisplayName(userId)
-                    .setEmail(userId + "@google.com"))
+            .setUser(User.newBuilder().setDisplayName(userId).setEmail(userId + "@google.com"))
             .build());
     SetIamPolicyRequest policyRequest =
         SetIamPolicyRequest.newBuilder()
@@ -248,18 +232,15 @@ public class ITIam {
 
   @Test
   public void testHttpJson_testIamPermissions() {
-    httpjsonClient.createUser(
-        CreateUserRequest.newBuilder()
-            .setUser(
-                User.newBuilder()
-                    .setName(userId)
-                    .setDisplayName(userId)
-                    .setEmail(userId + "@google.com"))
-            .build());
+    User user =
+        httpjsonClient.createUser(
+            CreateUserRequest.newBuilder()
+                .setUser(User.newBuilder().setDisplayName(userId).setEmail(userId + "@google.com"))
+                .build());
     SetIamPolicyRequest policyRequest =
         SetIamPolicyRequest.newBuilder()
             .setPolicy(DEFAULT_POLICY)
-            .setResource(resourceName)
+            .setResource(user.getName())
             .build();
     httpjsonClient.setIamPolicy(policyRequest);
     List<String> permissions = ImmutableList.of("foo.create");
