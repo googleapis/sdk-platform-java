@@ -109,7 +109,7 @@ public class ITGdch {
    * @throws IOException
    */
   @Test
-  public void testCreateClient_withGdchCredentialAndNoAudience() throws IOException {
+  public void testCreateClient_withGdchCredentialAndNoAudience_defaultsToEndpointBasedAudience() throws IOException {
     context = ClientContext.create(settings);
     stubSettings = EchoStubSettings.newBuilder(context).build();
     client = EchoClient.create(stubSettings.createStub());
@@ -135,7 +135,7 @@ public class ITGdch {
    * @throws IOException
    */
   @Test
-  public void testCreateClient_withGdchCredentialWithValidAudience() throws IOException {
+  public void testCreateClient_withGdchCredentialWithValidAudience_usesCredentialWithPassedAudience() throws IOException {
     String audience = "valid-audience";
     settings = settings.toBuilder().setGdchApiAudience(audience).build();
     context = ClientContext.create(settings);
