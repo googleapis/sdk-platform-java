@@ -1,19 +1,19 @@
 # Format:
 # module:released-version:current-version
 
-gapic-generator-java:2.21.0:2.21.1-SNAPSHOT
-api-common:2.12.0:2.12.1-SNAPSHOT
-gax:2.29.0:2.29.1-SNAPSHOT
-gax-grpc:2.29.0:2.29.1-SNAPSHOT
-gax-httpjson:0.114.0:2.29.1-SNAPSHOT
-proto-google-common-protos:2.20.0:2.20.1-SNAPSHOT
-grpc-google-common-protos:2.20.0:2.20.1-SNAPSHOT
-proto-google-iam-v1:1.15.0:1.15.1-SNAPSHOT
-grpc-google-iam-v1:1.15.0:1.15.1-SNAPSHOT
-proto-google-iam-v2beta:1.15.0:1.15.1-SNAPSHOT
-grpc-google-iam-v2beta:1.15.0:1.15.1-SNAPSHOT
-google-iam-policy:1.15.0:1.15.1-SNAPSHOT
-proto-google-iam-v2:1.15.0:1.15.1-SNAPSHOT
-grpc-google-iam-v2:1.15.0:1.15.1-SNAPSHOT
-google-cloud-core:2.19.0:2.19.1-SNAPSHOT
-google-cloud-shared-dependencies:3.11.0:3.11.1-SNAPSHOT
+gapic-generator-java:2.22.0:2.22.0
+api-common:2.13.0:2.13.0
+gax:2.30.0:2.30.0
+gax-grpc:2.30.0:2.30.0
+gax-httpjson:0.115.0:0.115.0
+proto-google-common-protos:2.21.0:2.21.0
+grpc-google-common-protos:2.21.0:2.21.0
+proto-google-iam-v1:1.16.0:1.16.0
+grpc-google-iam-v1:1.16.0:1.16.0
+proto-google-iam-v2beta:1.16.0:1.16.0
+grpc-google-iam-v2beta:1.16.0:1.16.0
+google-iam-policy:1.16.0:1.16.0
+proto-google-iam-v2:1.16.0:1.16.0
+grpc-google-iam-v2:1.16.0:1.16.0
+google-cloud-core:2.20.0:2.20.0
+google-cloud-shared-dependencies:3.12.0:3.12.0
