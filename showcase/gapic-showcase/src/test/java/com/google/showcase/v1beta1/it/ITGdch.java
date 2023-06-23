@@ -1,5 +1,7 @@
 package com.google.showcase.v1beta1.it;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
@@ -17,6 +19,8 @@ import com.google.auth.oauth2.GdchCredentialsTestUtil;
 import com.google.auth.oauth2.MockTokenServerTransportFactory;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoSettings;
+import com.google.showcase.v1beta1.it.util.InterceptingMockTokenServerTransport;
+import com.google.showcase.v1beta1.it.util.InterceptingMockTokenServerTransportFactory;
 import com.google.showcase.v1beta1.stub.EchoStub;
 import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import java.io.File;
@@ -53,13 +57,13 @@ public class ITGdch {
   private Credentials initialCredentials;
   private ClientContext context;
   private EchoStub stub;
-  private MockTokenServerTransportFactory transportFactory;
+  private InterceptingMockTokenServerTransportFactory transportFactory;
   private String projectId;
   private URI tokenUri;
 
   @Before
   public void setup() throws IOException, URISyntaxException {
-    transportFactory = new MockTokenServerTransportFactory();
+    transportFactory = new InterceptingMockTokenServerTransportFactory();
     prepareCredentials();
     tempFolder.create();
     settings =
@@ -112,6 +116,10 @@ public class ITGdch {
   public void testCreateClient_withGdchCredentialAndNoAudience_defaultsToEndpointBasedAudience() throws IOException {
 
     // we create the client as usual - no audience passed
+    String testEndpoint = "custom-endpoint:123";
+    settings = settings.toBuilder()
+            .setEndpoint(testEndpoint)
+            .build();
     context = ClientContext.create(settings);
     stubSettings = EchoStubSettings.newBuilder(context).build();
     client = EchoClient.create(stubSettings.createStub());
@@ -136,6 +144,9 @@ public class ITGdch {
     // internally defaulted the endpoint of the StubSettings
     registerCredential(fromContext);
     ((GdchCredentials) fromContext).refreshAccessToken();
+    String usedAudience = transportFactory.transport.getLastAudienceSent();
+    assertNotNull(usedAudience);
+    assertEquals(testEndpoint, usedAudience);
   }
 
   /**
@@ -150,8 +161,8 @@ public class ITGdch {
 
     // Similar to the previous test, create a client as usual but this time we pass a explicit audience. It should
     // be created without issues
-    String audience = "valid-audience";
-    settings = settings.toBuilder().setGdchApiAudience(audience).build();
+    String testAudience = "valid-audience";
+    settings = settings.toBuilder().setGdchApiAudience(testAudience).build();
     context = ClientContext.create(settings);
     stubSettings = EchoStubSettings.newBuilder(context).build();
     client = EchoClient.create(stubSettings.createStub());
@@ -174,6 +185,9 @@ public class ITGdch {
     // set to the one passed in stub settings
     registerCredential(fromContext);
     ((GdchCredentials) fromContext).refreshAccessToken();
+    String usedAudience = transportFactory.transport.getLastAudienceSent();
+    assertNotNull(usedAudience);
+    assertEquals(testAudience, usedAudience);
   }
 
   private void registerCredential(Credentials fromContext) {
