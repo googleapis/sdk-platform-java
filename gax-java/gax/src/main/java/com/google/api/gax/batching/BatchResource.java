@@ -47,4 +47,10 @@ public interface BatchResource {
 
   /** Returns the byte count of this resource. */
   long getByteCount();
+
+  /**
+   * Checks if the current {@link BatchResource} should be flushed based on the maxElementThreshold
+   * and maxBytesThreshold.
+   */
+  boolean shouldFlush(long maxElementThreshold, long maxBytesThreshold);
 }

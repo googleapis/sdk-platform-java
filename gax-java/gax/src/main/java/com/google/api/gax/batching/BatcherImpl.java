@@ -251,8 +251,10 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
 
     SettableApiFuture<ElementResultT> result = SettableApiFuture.create();
     synchronized (elementLock) {
-      if (batchingDescriptor.shouldFlush(
-          currentOpenBatch.resource.add(newResource), elementThreshold, bytesThreshold)) {
+      if (currentOpenBatch
+          .resource
+          .add(newResource)
+          .shouldFlush(elementThreshold, bytesThreshold)) {
         sendOutstanding();
       }
 
@@ -451,8 +453,8 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
         long throttledTimeMs) {
       builder.add(element);
       entries.add(BatchEntry.create(element, result));
-      totalThrottledTimeMs += throttledTimeMs;
       resource = resource.add(newResource);
+      totalThrottledTimeMs += throttledTimeMs;
     }
 
     void onBatchSuccess(ResponseT response) {

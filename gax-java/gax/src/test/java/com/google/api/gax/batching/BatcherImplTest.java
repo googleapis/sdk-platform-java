@@ -1009,6 +1009,30 @@ public class BatcherImplTest {
     Assert.assertThrows(RuntimeException.class, batcher::close);
   }
 
+  @Test
+  public void testDefaultShouldFlush() {
+    BatchResource resource =
+        DefaultBatchResource.builder().setElementCount(2).setByteCount(2).build();
+
+    assertThat(resource.shouldFlush(2, 2)).isFalse();
+    assertThat(resource.shouldFlush(1, 1)).isTrue();
+  }
+
+  @Test
+  public void testDefaultBatchResourceAdd() {
+    BatchResource resource =
+        DefaultBatchResource.builder().setElementCount(1).setByteCount(1).build();
+
+    BatchResource newResource =
+        resource.add(DefaultBatchResource.builder().setElementCount(1).setByteCount(1).build());
+
+    // Make sure add doesn't modify the old object
+    assertThat(resource.getElementCount()).isEqualTo(1);
+    assertThat(resource.getByteCount()).isEqualTo(1);
+    assertThat(newResource.getElementCount()).isEqualTo(2);
+    assertThat(newResource.getByteCount()).isEqualTo(2);
+  }
+
   private void testElementTriggers(BatchingSettings settings) throws Exception {
     underTest = createDefaultBatcherImpl(settings, null);
     Future<Integer> result = underTest.add(4);

@@ -99,21 +99,14 @@ public interface BatchingDescriptor<ElementT, ElementResultT, RequestT, Response
 
   /** Creates a new {@link BatchResource} with ElementT. */
   default BatchResource createResource(ElementT element) {
-    return DefaultBatchResource.create(1, countBytes(element));
+    return DefaultBatchResource.builder()
+        .setElementCount(1)
+        .setByteCount(countBytes(element))
+        .build();
   }
 
   /** Create an empty {@link BatchResource}. */
   default BatchResource createEmptyResource() {
-    return DefaultBatchResource.create(0, 0);
-  }
-
-  /**
-   * Checks if the current {@link BatchResource} should be flushed based on the maxElementThreshold
-   * and maxBytesThreshold.
-   */
-  default boolean shouldFlush(
-      BatchResource resource, long maxElementThreshold, long maxBytesThreshold) {
-    return resource.getElementCount() > maxElementThreshold
-        || resource.getByteCount() > maxBytesThreshold;
+    return DefaultBatchResource.builder().setElementCount(0).setByteCount(0).build();
   }
 }

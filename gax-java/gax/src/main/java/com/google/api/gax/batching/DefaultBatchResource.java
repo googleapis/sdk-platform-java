@@ -38,8 +38,8 @@ import com.google.common.base.Preconditions;
 @AutoValue
 abstract class DefaultBatchResource implements BatchResource {
 
-  static DefaultBatchResource create(long elementCount, long byteCount) {
-    return new AutoValue_DefaultBatchResource(elementCount, byteCount);
+  static DefaultBatchResource.Builder builder() {
+    return new AutoValue_DefaultBatchResource.Builder();
   }
 
   @Override
@@ -48,9 +48,10 @@ abstract class DefaultBatchResource implements BatchResource {
         resource instanceof DefaultBatchResource,
         "Expect an instance of DefaultBatchResource, got " + resource.getClass());
     DefaultBatchResource defaultResource = (DefaultBatchResource) resource;
-    return new AutoValue_DefaultBatchResource(
-        getElementCount() + defaultResource.getElementCount(),
-        getByteCount() + defaultResource.getByteCount());
+    return new AutoValue_DefaultBatchResource.Builder()
+        .setElementCount(getElementCount() + defaultResource.getElementCount())
+        .setByteCount(getByteCount() + defaultResource.getByteCount())
+        .build();
   }
 
   @Override
@@ -58,4 +59,18 @@ abstract class DefaultBatchResource implements BatchResource {
 
   @Override
   public abstract long getByteCount();
+
+  @Override
+  public boolean shouldFlush(long maxElementThreshold, long maxBytesThreshold) {
+    return getElementCount() > maxElementThreshold || getByteCount() > maxBytesThreshold;
+  }
+
+  @AutoValue.Builder
+  abstract static class Builder {
+    abstract Builder setElementCount(long elementCount);
+
+    abstract Builder setByteCount(long byteCount);
+
+    abstract DefaultBatchResource build();
+  }
 }
