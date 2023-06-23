@@ -143,7 +143,6 @@ public class ITGdch {
     registerCredential(fromContext);
     ((GdchCredentials) fromContext).refreshAccessToken();
     String usedAudience = transportFactory.transport.getLastAudienceSent();
-    assertNotNull(usedAudience);
     assertEquals(testEndpoint, usedAudience);
   }
 
@@ -182,7 +181,6 @@ public class ITGdch {
         thrownByClientCreds
             .getMessage()
             .contains("Audience are not configured for GDCH service account"));
-    Exception unexpected = null;
 
     // But the credentials prepared in ClientContext should be able to refresh since the audience
     // would be internally
@@ -190,7 +188,6 @@ public class ITGdch {
     registerCredential(fromContext);
     ((GdchCredentials) fromContext).refreshAccessToken();
     String usedAudience = transportFactory.transport.getLastAudienceSent();
-    assertNotNull(usedAudience);
     assertEquals(testAudience, usedAudience);
   }
 

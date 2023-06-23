@@ -830,7 +830,7 @@ public class ClientContextTest {
     clientSettingsBuilder.setCredentialsProvider(provider);
     clientSettingsBuilder.setTransportChannelProvider(transportChannelProvider);
 
-    // should not throw
+    // should throw
     IllegalArgumentException ex =
         assertThrows(
             IllegalArgumentException.class,

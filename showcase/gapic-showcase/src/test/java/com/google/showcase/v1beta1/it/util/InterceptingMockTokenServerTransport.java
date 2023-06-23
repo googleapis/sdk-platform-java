@@ -23,16 +23,12 @@ public class InterceptingMockTokenServerTransport extends MockTokenServerTranspo
         return baseRequest;
     }
 
-    public String getLastAudienceSent() {
-        try {
-            String contentString = lastRequest.getContentAsString();
-            Map<String, String> query = TestUtils.parseQuery(contentString);
-            String assertion = query.get("assertion");
-            JsonWebSignature signature = JsonWebSignature.parse(JSON_FACTORY, assertion);
-            String foundTargetAudience = (String) signature.getPayload().get("api_audience");
-            return foundTargetAudience;
-        } catch (Exception ex) {
-            return null;
-        }
+    public String getLastAudienceSent() throws IOException {
+        String contentString = lastRequest.getContentAsString();
+        Map<String, String> query = TestUtils.parseQuery(contentString);
+        String assertion = query.get("assertion");
+        JsonWebSignature signature = JsonWebSignature.parse(JSON_FACTORY, assertion);
+        String foundTargetAudience = (String) signature.getPayload().get("api_audience");
+        return foundTargetAudience;
     }
 }
