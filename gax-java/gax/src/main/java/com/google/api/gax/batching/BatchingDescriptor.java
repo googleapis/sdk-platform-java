@@ -96,4 +96,17 @@ public interface BatchingDescriptor<ElementT, ElementResultT, RequestT, Response
 
   /** Returns the size of the passed element object in bytes. */
   long countBytes(ElementT element);
+
+  /** Creates a new {@link BatchResource} with ElementT. */
+  default BatchResource createResource(ElementT element) {
+    return DefaultBatchResource.builder()
+        .setElementCount(1)
+        .setByteCount(countBytes(element))
+        .build();
+  }
+
+  /** Create an empty {@link BatchResource}. */
+  default BatchResource createEmptyResource() {
+    return DefaultBatchResource.builder().setElementCount(0).setByteCount(0).build();
+  }
 }
