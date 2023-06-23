@@ -207,6 +207,35 @@ jobs:
             -P enable-integration-tests \
             --batch-mode \
             --no-transfer-progress
+
+  showcase-clirr:
+    if: ${{ github.base_ref != '' }} # Only execute on pull_request trigger event
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout @ target branch
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.base_ref }}
+      - uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: temurin
+          cache: maven
+      - name: Install sdk-platform-java and showcase to local maven repository
+        run: |
+          mvn install -B -ntp -T 1C -DskipTests
+          cd showcase
+          mvn install -B -ntp -T 1C -DskipTests
+      - name: Checkout sdk-platform-java @ PR merge commit
+        uses: actions/checkout@v3
+        # Showcase golden test ensures that src changes are already reflected in the PR.
+      - name: Update Showcase version to 0.0.2-SNAPSHOT
+        working-directory: showcase
+        run: mvn versions:set -B -ntp -DnewVersion=0.0.2-SNAPSHOT
+      - name: Clirr Check
+        working-directory: showcase
+        run: mvn -B -ntp clirr:check -Dclirr.skip=false -DcomparisonVersion=0.0.1-SNAPSHOT
+
   gapic-generator-java-bom:
     runs-on: ubuntu-latest
     steps:
