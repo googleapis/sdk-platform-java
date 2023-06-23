@@ -229,12 +229,12 @@ jobs:
       - name: Checkout sdk-platform-java @ PR merge commit
         uses: actions/checkout@v3
         # Showcase golden test ensures that src changes are already reflected in the PR.
-      - name: Update Showcase version to 0.0.2-SNAPSHOT
+      - name: Clirr check
         working-directory: showcase
-        run: mvn versions:set -B -ntp -DnewVersion=0.0.2-SNAPSHOT
-      - name: Clirr Check
-        working-directory: showcase
-        run: mvn -B -ntp clirr:check -Dclirr.skip=false -DcomparisonVersion=0.0.1-SNAPSHOT
+        run: |
+          SHOWCASE_CLIENT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          mvn versions:set -B -ntp -DnewVersion=local
+          mvn clirr:check -B -ntp -Dclirr.skip=false -DcomparisonVersion=$SHOWCASE_CLIENT_VERSION
 
   gapic-generator-java-bom:
     runs-on: ubuntu-latest
