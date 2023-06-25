@@ -100,6 +100,9 @@ public interface ApiTracer {
 
   /** Adds an annotation that the attempt succeeded. */
   void attemptSucceeded();
+  default String attemptLatencyName() {
+    return "";
+  };
 
   /** Add an annotation that the attempt was cancelled by the user. */
   void attemptCancelled();
