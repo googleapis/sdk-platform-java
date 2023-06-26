@@ -202,15 +202,6 @@ public class Parser {
       }
     }
 
-    // Before we convert to GapicContext, we want to print th service info in a .txt file.
-//    System.out.println("****** MY SERVICE INFO");
-//    System.out.println(services.get(0).name());
-//    for (Method serviceMethod : services.get(0).methods()) {
-//      System.out.println(serviceMethod.name());
-//      System.out.println(serviceMethod.methodSignatures().get(0));
-//    }
-
-
     return GapicContext.builder()
         .setServices(services)
         .setMixinServices(
@@ -751,11 +742,6 @@ public class Parser {
               .setIsDeprecated(isDeprecated)
               .setOperationPollingMethod(operationPollingMethod)
               .build());
-
-//      if (protoMethod.getName().contains("Builder")) {
-//        System.out.println("HELLLOOOOOOOO");
-//        System.out.println(protoMethod.getName());
-//      }
 
       // Any input type that has a resource reference will need a resource name helper class.
       for (Field field : inputMessage.fields()) {
