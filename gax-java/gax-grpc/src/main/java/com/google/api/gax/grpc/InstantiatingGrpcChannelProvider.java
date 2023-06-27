@@ -40,6 +40,7 @@ import com.google.api.gax.rpc.TransportChannel;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.internal.EnvironmentProvider;
 import com.google.api.gax.rpc.mtls.MtlsProvider;
+import com.google.api.gax.tracing.ClientMetricsTracer;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.ComputeEngineCredentials;
 import com.google.common.annotations.VisibleForTesting;
@@ -112,7 +113,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @Nullable private final Boolean allowNonDefaultServiceAccount;
   @VisibleForTesting final ImmutableMap<String, ?> directPathServiceConfig;
   @Nullable private final MtlsProvider mtlsProvider;
-
+  @Nullable private ClientMetricsTracer clientMetricsTracer;
   @Nullable
   private final ApiFunction<ManagedChannelBuilder, ManagedChannelBuilder> channelConfigurator;
 
@@ -179,6 +180,11 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   @Override
+  public void setClientMetricsTracer(ClientMetricsTracer clientMetricsTracer) {
+    this.clientMetricsTracer = clientMetricsTracer;
+  }
+
+  @Override
   public boolean needsEndpoint() {
     return endpoint == null;
   }
@@ -235,7 +241,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   private TransportChannel createChannel() throws IOException {
     return GrpcTransportChannel.create(
         ChannelPool.create(
-            channelPoolSettings, InstantiatingGrpcChannelProvider.this::createSingleChannel));
+            channelPoolSettings, InstantiatingGrpcChannelProvider.this::createSingleChannel, clientMetricsTracer));
   }
 
   private boolean isDirectPathEnabled() {

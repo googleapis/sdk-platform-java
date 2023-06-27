@@ -61,4 +61,9 @@ public interface ApiTracerFactory {
    * @param operationType the type of operation that the tracer will trace
    */
   ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType);
+
+  //This probably needs to be moved to a new factory
+  default ClientMetricsTracer newClientMetricsTracer() {
+    return null;
+  };
 }

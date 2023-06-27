@@ -39,6 +39,7 @@ import com.google.api.gax.rpc.internal.QuotaProjectIdHidingCredentials;
 import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.api.gax.tracing.BaseApiTracerFactory;
+import com.google.api.gax.tracing.ClientMetricsTracer;
 import com.google.auth.Credentials;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
@@ -198,6 +199,9 @@ public abstract class ClientContext {
     if (transportChannelProvider.needsEndpoint()) {
       transportChannelProvider = transportChannelProvider.withEndpoint(endpoint);
     }
+    ClientMetricsTracer clientMetricsTracer = settings.getTracerFactory().newClientMetricsTracer();
+    transportChannelProvider.setClientMetricsTracer(clientMetricsTracer);
+
     TransportChannel transportChannel = transportChannelProvider.getTransportChannel();
 
     ApiCallContext defaultCallContext =

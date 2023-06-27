@@ -100,8 +100,10 @@ public interface ApiTracer {
 
   /** Adds an annotation that the attempt succeeded. */
   void attemptSucceeded();
+
+  //This is for libraries to override to intended name
   default String attemptLatencyName() {
-    return "";
+    return "attempt_latency";
   };
 
   /** Add an annotation that the attempt was cancelled by the user. */

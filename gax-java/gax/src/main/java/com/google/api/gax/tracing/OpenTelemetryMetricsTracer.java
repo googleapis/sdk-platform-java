@@ -95,7 +95,7 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
 
     @Override
     public void attemptSucceeded() {
-        DoubleHistogram doubleHistogram = meter.histogramBuilder(attemptLatencyName() + "-attempt_latency")
+        DoubleHistogram doubleHistogram = meter.histogramBuilder(attemptLatencyName())
                 .setDescription("Duration of an individual operation attempt")
                 .setUnit("ms")
                 .build();
