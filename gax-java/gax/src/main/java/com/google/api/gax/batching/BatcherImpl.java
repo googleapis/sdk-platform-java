@@ -95,6 +95,11 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
   private final FlowController flowController;
   private final ApiCallContext callContext;
 
+  // If element threshold or bytes threshold is 0, it means that it'll always flush every element
+  // without batching
+  private final long elementThreshold;
+  private final long bytesThreshold;
+
   /**
    * @param batchingDescriptor a {@link BatchingDescriptor} for transforming individual elements
    *     into wrappers request and response
@@ -192,7 +197,7 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
               + "#maxOutstandingRequestBytes must be greater or equal to requestByteThreshold");
     }
     this.flowController = flowController;
-    currentOpenBatch = new Batch<>(prototype, batchingDescriptor, batchingSettings, batcherStats);
+    currentOpenBatch = new Batch<>(prototype, batchingDescriptor, batcherStats);
     if (batchingSettings.getDelayThreshold() != null) {
       long delay = batchingSettings.getDelayThreshold().toMillis();
       PushCurrentBatchRunnable<ElementT, ElementResultT, RequestT, ResponseT> runnable =
@@ -204,6 +209,11 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
     }
     currentBatcherReference = new BatcherReference(this);
     this.callContext = callContext;
+
+    Long elementCountThreshold = batchingSettings.getElementCountThreshold();
+    this.elementThreshold = elementCountThreshold == null ? 0 : elementCountThreshold;
+    Long requestByteThreshold = batchingSettings.getRequestByteThreshold();
+    this.bytesThreshold = requestByteThreshold == null ? 0 : requestByteThreshold;
   }
 
   /** {@inheritDoc} */
@@ -213,7 +223,7 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
     // will only be done from a single calling thread.
     Preconditions.checkState(closeFuture == null, "Cannot add elements on a closed batcher");
 
-    long bytesSize = batchingDescriptor.countBytes(element);
+    BatchResource newResource = batchingDescriptor.createResource(element);
 
     // This is not the optimal way of throttling. It does not send out partial batches, which
     // means that the Batcher might not use up all the resources allowed by FlowController.
@@ -232,7 +242,7 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
     // defer it till we decide on if refactoring FlowController is necessary.
     Stopwatch stopwatch = Stopwatch.createStarted();
     try {
-      flowController.reserve(1, bytesSize);
+      flowController.reserve(newResource.getElementCount(), newResource.getByteCount());
     } catch (FlowControlException e) {
       // This exception will only be thrown if the FlowController is set to ThrowException behavior
       throw FlowControlRuntimeException.fromFlowControlException(e);
@@ -241,12 +251,16 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
 
     SettableApiFuture<ElementResultT> result = SettableApiFuture.create();
     synchronized (elementLock) {
-      currentOpenBatch.add(element, result, throttledTimeMs);
+      if (currentOpenBatch
+          .resource
+          .add(newResource)
+          .shouldFlush(elementThreshold, bytesThreshold)) {
+        sendOutstanding();
+      }
+
+      currentOpenBatch.add(element, newResource, result, throttledTimeMs);
     }
 
-    if (currentOpenBatch.hasAnyThresholdReached()) {
-      sendOutstanding();
-    }
     return result;
   }
 
@@ -267,7 +281,7 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
         return;
       }
       accumulatedBatch = currentOpenBatch;
-      currentOpenBatch = new Batch<>(prototype, batchingDescriptor, batchingSettings, batcherStats);
+      currentOpenBatch = new Batch<>(prototype, batchingDescriptor, batcherStats);
     }
 
     // This check is for old clients that instantiated the batcher without ApiCallContext
@@ -291,7 +305,9 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
           @Override
           public void onSuccess(ResponseT response) {
             try {
-              flowController.release(accumulatedBatch.elementCounter, accumulatedBatch.byteCounter);
+              flowController.release(
+                  accumulatedBatch.resource.getElementCount(),
+                  accumulatedBatch.resource.getByteCount());
               accumulatedBatch.onBatchSuccess(response);
             } finally {
               onBatchCompletion();
@@ -301,7 +317,9 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
           @Override
           public void onFailure(Throwable throwable) {
             try {
-              flowController.release(accumulatedBatch.elementCounter, accumulatedBatch.byteCounter);
+              flowController.release(
+                  accumulatedBatch.resource.getElementCount(),
+                  accumulatedBatch.resource.getByteCount());
               accumulatedBatch.onBatchFailure(throwable);
             } finally {
               onBatchCompletion();
@@ -412,34 +430,30 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
     private final BatchingRequestBuilder<ElementT, RequestT> builder;
     private final List<BatchEntry<ElementT, ElementResultT>> entries;
     private final BatchingDescriptor<ElementT, ElementResultT, RequestT, ResponseT> descriptor;
-    private final BatcherStats batcherStats;
-    private final long elementThreshold;
-    private final long bytesThreshold;
 
-    private long elementCounter = 0;
-    private long byteCounter = 0;
+    private final BatcherStats batcherStats;
     private long totalThrottledTimeMs = 0;
+    private BatchResource resource;
 
     private Batch(
         RequestT prototype,
         BatchingDescriptor<ElementT, ElementResultT, RequestT, ResponseT> descriptor,
-        BatchingSettings batchingSettings,
         BatcherStats batcherStats) {
       this.descriptor = descriptor;
       this.builder = descriptor.newRequestBuilder(prototype);
       this.entries = new ArrayList<>();
-      Long elementCountThreshold = batchingSettings.getElementCountThreshold();
-      this.elementThreshold = elementCountThreshold == null ? 0 : elementCountThreshold;
-      Long requestByteThreshold = batchingSettings.getRequestByteThreshold();
-      this.bytesThreshold = requestByteThreshold == null ? 0 : requestByteThreshold;
       this.batcherStats = batcherStats;
+      this.resource = descriptor.createEmptyResource();
     }
 
-    void add(ElementT element, SettableApiFuture<ElementResultT> result, long throttledTimeMs) {
+    void add(
+        ElementT element,
+        BatchResource newResource,
+        SettableApiFuture<ElementResultT> result,
+        long throttledTimeMs) {
       builder.add(element);
       entries.add(BatchEntry.create(element, result));
-      elementCounter++;
-      byteCounter += descriptor.countBytes(element);
+      resource = resource.add(newResource);
       totalThrottledTimeMs += throttledTimeMs;
     }
 
@@ -464,11 +478,7 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
     }
 
     boolean isEmpty() {
-      return elementCounter == 0;
-    }
-
-    boolean hasAnyThresholdReached() {
-      return elementCounter >= elementThreshold || byteCounter >= bytesThreshold;
+      return resource.getElementCount() == 0;
     }
   }
 

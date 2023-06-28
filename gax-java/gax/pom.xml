@@ -88,6 +88,7 @@
           <!-- Ignore any files marked as @InternalApi -->
           <excludes>
             <exclude>com/google/api/gax/rpc/RequestUrlParamsEncoder</exclude>
+            <exclude>com/google/api/gax/batching/BatchingDescriptor</exclude>
           </excludes>
         </configuration>
       </plugin>
