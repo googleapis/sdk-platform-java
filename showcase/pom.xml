@@ -75,12 +75,6 @@
             <artifactId>maven-surefire-plugin</artifactId>
             <version>3.0.0-M8</version>
             <configuration>
-              <!-- Exclude MessagingClientHttpJsonTest which is currently failing.
-              See https://github.com/googleapis/gapic-generator-java/issues/1547 -->
-              <!-- TODO(1547): Remove this exclusion once MessagingClientHttpJsonTest#updateBlurbTest is fixed -->
-              <excludes>
-                <exclude>**/MessagingClientHttpJsonTest.java</exclude>
-              </excludes>
               <reportNameSuffix>sponge_log</reportNameSuffix>
               <skipTests>${skipUnitTests}</skipTests>
             </configuration>

@@ -1188,9 +1188,7 @@ public class MessagingClientHttpJsonTest {
         UpdateBlurbRequest.newBuilder()
             .setBlurb(
                 Blurb.newBuilder()
-                    .setName(
-                        BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-                            .toString())
+                    .setName(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
                     .setUser(UserName.of("[USER]").toString())
                     .setCreateTime(Timestamp.newBuilder().build())
                     .setUpdateTime(Timestamp.newBuilder().build())
@@ -1228,9 +1226,7 @@ public class MessagingClientHttpJsonTest {
           UpdateBlurbRequest.newBuilder()
               .setBlurb(
                   Blurb.newBuilder()
-                      .setName(
-                          BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-                              .toString())
+                      .setName(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
                       .setUser(UserName.of("[USER]").toString())
                       .setCreateTime(Timestamp.newBuilder().build())
                       .setUpdateTime(Timestamp.newBuilder().build())
