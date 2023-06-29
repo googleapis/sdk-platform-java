@@ -57,6 +57,8 @@ public interface ApiTracer {
    */
   void operationSucceeded();
 
+  default void operationSucceeded(Object response){};
+
   /**
    * Signals that the operation was cancelled by the user. The tracer is now considered closed and
    * should no longer be used.
@@ -100,6 +102,7 @@ public interface ApiTracer {
 
   /** Adds an annotation that the attempt succeeded. */
   void attemptSucceeded();
+  default void attemptSucceeded(Object response) {};
 
   //This is for libraries to override to intended name
   default String attemptLatencyName() {

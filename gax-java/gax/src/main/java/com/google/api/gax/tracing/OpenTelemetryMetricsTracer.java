@@ -32,11 +32,14 @@ package com.google.api.gax.tracing;
 
 import com.google.common.base.Stopwatch;
 import io.opentelemetry.api.common.Attributes;
+import io.opentelemetry.api.common.AttributesBuilder;
 import io.opentelemetry.api.metrics.DoubleHistogram;
 import io.opentelemetry.api.metrics.LongCounter;
 import io.opentelemetry.api.metrics.Meter;
 import org.threeten.bp.Duration;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static io.opentelemetry.api.common.AttributeKey.stringKey;
@@ -46,11 +49,27 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
 
     private Stopwatch attemptTimer;
 
+    private final Stopwatch operationTimer = Stopwatch.createStarted();
+
     private SpanName spanName;
+
+    private DoubleHistogram attemptLatencyRecorder;
+
+    private DoubleHistogram operationLatencyRecorder;
+
+    Map<String, String> operationLatencyLabels = new HashMap<>();
 
     public OpenTelemetryMetricsTracer(Meter meter, SpanName spanName) {
         this.meter = meter;
         this.spanName = spanName;
+        this.attemptLatencyRecorder = meter.histogramBuilder(attemptLatencyName())
+                .setDescription("Duration of an individual operation attempt")
+                .setUnit("ms")
+                .build();
+        this.operationLatencyRecorder = meter.histogramBuilder("operation_latency")
+                .setDescription("Total time until final operation success or failure, including retries and backoff.")
+                .setUnit("ms")
+                .build();
     }
 
     @Override
@@ -61,6 +80,24 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
     @Override
     public void operationSucceeded() {
 
+    }
+
+    //This is just one way to add labels, we could have another layer of abstraction(a separate class) just for get/set labels because the logic is generic.
+    public void addOperationLatencyLabels(String key, String value) {
+        operationLatencyLabels.put(key, value);
+    }
+
+    public Map<String, String> getOperationLatencyLabels() {
+        return operationLatencyLabels;
+    }
+
+    @Override
+    public void operationSucceeded(Object response) {
+        AttributesBuilder attributesBuilder = Attributes.builder();
+        getOperationLatencyLabels().forEach((key, value) -> {
+            attributesBuilder.put(stringKey(key), value);
+        });
+        operationLatencyRecorder.record(operationTimer.elapsed(TimeUnit.MILLISECONDS), attributesBuilder.build());
     }
 
     @Override
@@ -95,12 +132,13 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
 
     @Override
     public void attemptSucceeded() {
-        DoubleHistogram doubleHistogram = meter.histogramBuilder(attemptLatencyName())
-                .setDescription("Duration of an individual operation attempt")
-                .setUnit("ms")
-                .build();
+
+    }
+
+    @Override
+    public void attemptSucceeded(Object response) {
         Attributes attributes = Attributes.of(stringKey("method_name"), spanName.toString());
-        doubleHistogram.record(attemptTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
+        attemptLatencyRecorder.record(attemptTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
     }
 
     @Override
