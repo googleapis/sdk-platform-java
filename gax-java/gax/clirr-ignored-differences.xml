@@ -8,12 +8,6 @@
     <method>* stream*(*)</method>
   </difference>
   <difference>
-    <!-- add gdchApiAudience to ClientContext -->
-    <differenceType>7013</differenceType>
-    <className>com/google/api/gax/rpc/*</className>
-    <method>* *Gdch*(*)</method>
-  </difference>
-  <difference>
     <differenceType>7006</differenceType>
     <className>com/google/api/gax/rpc/ServerStreamingCallSettings$Builder</className>
     <method>*setWaitTimeout*</method>

@@ -111,11 +111,6 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     return stubSettings.getStreamWatchdogCheckInterval();
   }
 
-  /** Gets the GDCH API audience that was previously set in this Builder */
-  public final String getGdchApiAudience() {
-    return stubSettings.getGdchApiAudience();
-  }
-
   public String toString() {
     return MoreObjects.toStringHelper(this)
         .add("executorProvider", getExecutorProvider())
@@ -129,7 +124,6 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
         .add("quotaProjectId", getQuotaProjectId())
         .add("watchdogProvider", getWatchdogProvider())
         .add("watchdogCheckInterval", getWatchdogCheckInterval())
-        .add("gdchApiAudience", getGdchApiAudience())
         .toString();
   }
 
@@ -262,18 +256,6 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     }
 
     /**
-     * Sets the GDC-H api audience. This is intended only to be used with {@link
-     * com.google.auth.oauth2.GdchCredentials} If this field is set and other type of {@link
-     * com.google.auth.Credentials} is used then an {@link IllegalArgumentException} will be thrown.
-     * If the provided credentials already have an api audience, then it will be overriden by this
-     * audience
-     */
-    public B setGdchApiAudience(@Nullable String gdchApiAudience) {
-      stubSettings.setGdchApiAudience(gdchApiAudience);
-      return self();
-    }
-
-    /**
      * Gets the ExecutorProvider that was previously set on this Builder. This ExecutorProvider is
      * to use for running asynchronous API call logic (such as retries and long-running operations),
      * and also to pass to the transport settings if an executor is needed for the transport and it
@@ -340,12 +322,6 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
       return stubSettings.getStreamWatchdogCheckInterval();
     }
 
-    /** Gets the GDCH API audience that was previously set in this Builder */
-    @Nullable
-    public String getGdchApiAudience() {
-      return stubSettings.getGdchApiAudience();
-    }
-
     /** Applies the given settings updater function to the given method settings builders. */
     protected static void applyToAllUnaryMethods(
         Iterable<UnaryCallSettings.Builder<?, ?>> methodSettingsBuilders,
@@ -368,7 +344,6 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
           .add("quotaProjectId", getQuotaProjectId())
           .add("watchdogProvider", getWatchdogProvider())
           .add("watchdogCheckInterval", getWatchdogCheckInterval())
-          .add("gdchApiAudience", getGdchApiAudience())
           .toString();
     }
   }
