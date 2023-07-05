@@ -192,6 +192,8 @@ public class ITIam {
                 .setResource(policyRequest.getResource())
                 .addAllPermissions(permissions)
                 .build());
+    // Showcase server will simply echo the request's Permissions List back
+    // if the resource exists and contains a policy
     assertThat(testIamPermissionsResponse.getPermissionsList())
         .containsExactlyElementsIn(permissions);
   }
@@ -211,6 +213,8 @@ public class ITIam {
                 .setResource(policyRequest.getResource())
                 .addAllPermissions(permissions)
                 .build());
+    // Showcase server will simply echo the request's Permissions List back
+    // if the resource exists and contains a policy
     assertThat(testIamPermissionsResponse.getPermissionsList())
         .containsExactlyElementsIn(permissions);
   }
