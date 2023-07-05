@@ -91,34 +91,32 @@ public class ITIam {
 
   @Test
   public void testGrpc_setIamPolicy_missingResource() {
+    SetIamPolicyRequest setIamPolicyRequest = SetIamPolicyRequest.newBuilder().build();
     assertThrows(
-        InvalidArgumentException.class,
-        () -> grpcClient.setIamPolicy(SetIamPolicyRequest.newBuilder().build()));
+        InvalidArgumentException.class, () -> grpcClient.setIamPolicy(setIamPolicyRequest));
   }
 
   @Test
   public void testHttpJson_setIamPolicy_missingResource() {
+    SetIamPolicyRequest setIamPolicyRequest = SetIamPolicyRequest.newBuilder().build();
     assertThrows(
-        InvalidArgumentException.class,
-        () -> httpjsonClient.setIamPolicy(SetIamPolicyRequest.newBuilder().build()));
+        InvalidArgumentException.class, () -> httpjsonClient.setIamPolicy(setIamPolicyRequest));
   }
 
   @Test
   public void testGrpc_setIamPolicy_missingPolicy() {
+    SetIamPolicyRequest setIamPolicyRequest =
+        SetIamPolicyRequest.newBuilder().setResource(resourceName).build();
     assertThrows(
-        InvalidArgumentException.class,
-        () ->
-            grpcClient.setIamPolicy(
-                SetIamPolicyRequest.newBuilder().setResource(resourceName).build()));
+        InvalidArgumentException.class, () -> grpcClient.setIamPolicy(setIamPolicyRequest));
   }
 
   @Test
   public void testHttpJson_setIamPolicy_missingPolicy() {
+    SetIamPolicyRequest setIamPolicyRequest =
+        SetIamPolicyRequest.newBuilder().setResource(resourceName).build();
     assertThrows(
-        InvalidArgumentException.class,
-        () ->
-            httpjsonClient.setIamPolicy(
-                SetIamPolicyRequest.newBuilder().setResource(resourceName).build()));
+        InvalidArgumentException.class, () -> httpjsonClient.setIamPolicy(setIamPolicyRequest));
   }
 
   @Test
@@ -153,34 +151,30 @@ public class ITIam {
 
   @Test
   public void testGrpc_getIamPolicy_doesNotExist() {
-    assertThrows(
-        NotFoundException.class,
-        () ->
-            grpcClient.getIamPolicy(
-                GetIamPolicyRequest.newBuilder().setResource(resourceName).build()));
+    GetIamPolicyRequest getIamPolicyRequest =
+        GetIamPolicyRequest.newBuilder().setResource(resourceName).build();
+    assertThrows(NotFoundException.class, () -> grpcClient.getIamPolicy(getIamPolicyRequest));
   }
 
   @Test
   public void testHttpJson_getIamPolicy_doesNotExist() {
-    assertThrows(
-        NotFoundException.class,
-        () ->
-            httpjsonClient.getIamPolicy(
-                GetIamPolicyRequest.newBuilder().setResource(resourceName).build()));
+    GetIamPolicyRequest getIamPolicyRequest =
+        GetIamPolicyRequest.newBuilder().setResource(resourceName).build();
+    assertThrows(NotFoundException.class, () -> httpjsonClient.getIamPolicy(getIamPolicyRequest));
   }
 
   @Test
   public void testGrpc_getIamPolicy_missingResource() {
+    GetIamPolicyRequest getIamPolicyRequest = GetIamPolicyRequest.newBuilder().build();
     assertThrows(
-        InvalidArgumentException.class,
-        () -> grpcClient.getIamPolicy(GetIamPolicyRequest.newBuilder().build()));
+        InvalidArgumentException.class, () -> grpcClient.getIamPolicy(getIamPolicyRequest));
   }
 
   @Test
   public void testHttpJson_getIamPolicy_missingResource() {
+    GetIamPolicyRequest getIamPolicyRequest = GetIamPolicyRequest.newBuilder().build();
     assertThrows(
-        InvalidArgumentException.class,
-        () -> httpjsonClient.getIamPolicy(GetIamPolicyRequest.newBuilder().build()));
+        InvalidArgumentException.class, () -> httpjsonClient.getIamPolicy(getIamPolicyRequest));
   }
 
   @Test
@@ -191,7 +185,7 @@ public class ITIam {
             .setResource(resourceName)
             .build();
     grpcClient.setIamPolicy(policyRequest);
-    List<String> permissions = ImmutableList.of("foo.create");
+    List<String> permissions = ImmutableList.of("foo.create", "foo.write");
     TestIamPermissionsResponse testIamPermissionsResponse =
         grpcClient.testIamPermissions(
             TestIamPermissionsRequest.newBuilder()
@@ -210,7 +204,7 @@ public class ITIam {
             .setResource(resourceName)
             .build();
     httpjsonClient.setIamPolicy(policyRequest);
-    List<String> permissions = ImmutableList.of("foo.create");
+    List<String> permissions = ImmutableList.of("foo.create", "foo.write");
     TestIamPermissionsResponse testIamPermissionsResponse =
         httpjsonClient.testIamPermissions(
             TestIamPermissionsRequest.newBuilder()
@@ -223,33 +217,36 @@ public class ITIam {
 
   @Test
   public void testGrpc_testIamPermissions_doesNotExist() {
+    TestIamPermissionsRequest testIamPermissionsRequest =
+        TestIamPermissionsRequest.newBuilder().setResource(resourceName).build();
     assertThrows(
-        NotFoundException.class,
-        () ->
-            grpcClient.testIamPermissions(
-                TestIamPermissionsRequest.newBuilder().setResource(resourceName).build()));
+        NotFoundException.class, () -> grpcClient.testIamPermissions(testIamPermissionsRequest));
   }
 
   @Test
   public void testHttpJson_testIamPermissions_doesNotExist() {
+    TestIamPermissionsRequest testIamPermissionsRequest =
+        TestIamPermissionsRequest.newBuilder().setResource(resourceName).build();
     assertThrows(
         NotFoundException.class,
-        () ->
-            httpjsonClient.testIamPermissions(
-                TestIamPermissionsRequest.newBuilder().setResource(resourceName).build()));
+        () -> httpjsonClient.testIamPermissions(testIamPermissionsRequest));
   }
 
   @Test
   public void testGrpc_testIamPermissions_missingResource() {
+    TestIamPermissionsRequest testIamPermissionsRequest =
+        TestIamPermissionsRequest.newBuilder().build();
     assertThrows(
         InvalidArgumentException.class,
-        () -> grpcClient.testIamPermissions(TestIamPermissionsRequest.newBuilder().build()));
+        () -> grpcClient.testIamPermissions(testIamPermissionsRequest));
   }
 
   @Test
   public void testHttpJson_testIamPermissions_missingResource() {
+    TestIamPermissionsRequest testIamPermissionsRequest =
+        TestIamPermissionsRequest.newBuilder().build();
     assertThrows(
         InvalidArgumentException.class,
-        () -> httpjsonClient.testIamPermissions(TestIamPermissionsRequest.newBuilder().build()));
+        () -> httpjsonClient.testIamPermissions(testIamPermissionsRequest));
   }
 }
