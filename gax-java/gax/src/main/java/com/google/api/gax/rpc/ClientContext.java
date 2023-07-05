@@ -29,6 +29,7 @@
  */
 package com.google.api.gax.rpc;
 
+import com.google.api.client.util.Strings;
 import com.google.api.core.ApiClock;
 import com.google.api.core.BetaApi;
 import com.google.api.core.NanoClock;
@@ -40,11 +41,13 @@ import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.api.gax.tracing.BaseApiTracerFactory;
 import com.google.auth.Credentials;
+import com.google.auth.oauth2.GdchCredentials;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 import java.io.IOException;
+import java.net.URI;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -109,6 +112,13 @@ public abstract class ClientContext {
   @Nonnull
   public abstract ApiTracerFactory getTracerFactory();
 
+  /**
+   * Gets the API audience used when creating a Client that uses {@link
+   * com.google.auth.oauth2.GdchCredentials}
+   */
+  @Nullable
+  public abstract String getGdchApiAudience();
+
   public static Builder newBuilder() {
     return new AutoValue_ClientContext.Builder()
         .setBackgroundResources(Collections.<BackgroundResource>emptyList())
@@ -119,7 +129,8 @@ public abstract class ClientContext {
         .setStreamWatchdog(null)
         .setStreamWatchdogCheckInterval(Duration.ZERO)
         .setTracerFactory(BaseApiTracerFactory.getInstance())
-        .setQuotaProjectId(null);
+        .setQuotaProjectId(null)
+        .setGdchApiAudience(null);
   }
 
   public abstract Builder toBuilder();
@@ -166,6 +177,30 @@ public abstract class ClientContext {
     final ScheduledExecutorService backgroundExecutor = backgroundExecutorProvider.getExecutor();
 
     Credentials credentials = settings.getCredentialsProvider().getCredentials();
+
+    String settingsGdchApiAudience = settings.getGdchApiAudience();
+    if (credentials instanceof GdchCredentials) {
+      // We recompute the GdchCredentials with the audience
+      String audienceString;
+      if (!Strings.isNullOrEmpty(settingsGdchApiAudience)) {
+        audienceString = settingsGdchApiAudience;
+      } else if (!Strings.isNullOrEmpty(settings.getEndpoint())) {
+        audienceString = settings.getEndpoint();
+      } else {
+        throw new IllegalArgumentException("Could not infer GDCH api audience from settings");
+      }
+
+      URI gdchAudienceUri;
+      try {
+        gdchAudienceUri = URI.create(audienceString);
+      } catch (IllegalArgumentException ex) { // thrown when passing a malformed uri string
+        throw new IllegalArgumentException("The GDC-H API audience string is not a valid URI", ex);
+      }
+      credentials = ((GdchCredentials) credentials).createWithGdchAudience(gdchAudienceUri);
+    } else if (!Strings.isNullOrEmpty(settingsGdchApiAudience)) {
+      throw new IllegalArgumentException(
+          "GDC-H API audience can only be set when using GdchCredentials");
+    }
 
     if (settings.getQuotaProjectId() != null && credentials != null) {
       // If the quotaProjectId is set, wrap original credentials with correct quotaProjectId as
@@ -324,6 +359,17 @@ public abstract class ClientContext {
      */
     @BetaApi("The surface for tracing is not stable yet and may change in the future.")
     public abstract Builder setTracerFactory(ApiTracerFactory tracerFactory);
+
+    /**
+     * Sets the API audience used by {@link com.google.auth.oauth2.GdchCredentials} It cannot be
+     * used if other type of {@link com.google.auth.Credentials} is used
+     *
+     * <p>If the provided credentials already contain an api audience, it will be overriden by this
+     * one
+     *
+     * @param gdchApiAudience the audience to be used - must be a valid URI string
+     */
+    public abstract Builder setGdchApiAudience(String gdchApiAudience);
 
     public abstract ClientContext build();
   }
