@@ -362,7 +362,8 @@ public class JavaWriterVisitor implements AstNodeVisitor {
       leftAngle();
       int numGenerics = methodInvocationExpr.generics().size();
       for (int i = 0; i < numGenerics; i++) {
-        buffer.append(methodInvocationExpr.generics().get(i).name());
+        Reference r = methodInvocationExpr.generics().get(i);
+        r.accept(this);
         if (i < numGenerics - 1) {
           buffer.append(COMMA);
           space();
