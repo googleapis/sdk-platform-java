@@ -31,6 +31,7 @@ import com.google.protobuf.ByteString;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.StructProto;
 import com.google.showcase.v1beta1.EchoOuterClass;
+import com.google.showcase.v1beta1.MessagingOuterClass;
 import com.google.testgapic.v1beta1.LockerProto;
 import java.util.Arrays;
 import java.util.Collections;
@@ -372,6 +373,79 @@ public class DefaultValueComposerTest {
             "\n",
             "}");
     assertEquals(expected, writerVisitor.write());
+  }
+
+  @Test
+  public void defaultValue_resourceNameMultiplePatterns_matchesHttpBinding() {
+    FileDescriptor messagingFileDescriptor = MessagingOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(messagingFileDescriptor);
+    Map<String, ResourceName> typeStringsToResourceNames =
+        Parser.parseResourceNames(messagingFileDescriptor);
+    Message message = messageTypes.get("com.google.showcase.v1beta1.Blurb");
+
+    HttpBindings bindings =
+        HttpBindings.builder()
+            .setHttpVerb(HttpVerb.PATCH)
+            .setPattern("/v1beta1/{blurb.name=rooms/*/blurbs/*}")
+            .setAdditionalPatterns(
+                Collections.singletonList("/v1beta1/{blurb.name=users/*/profile/blurbs/*}"))
+            .setIsAsteriskBody(false)
+            .build();
+
+    Expr expr =
+        DefaultValueComposer.createSimpleMessageBuilderValue(
+            message, typeStringsToResourceNames, messageTypes, bindings);
+    expr.accept(writerVisitor);
+    // This will first attempt to match with the default pattern
+    assertEquals(
+        "Blurb.newBuilder().setName(BlurbName.ofRoomBlurbName(\"[ROOM]\", \"[BLURB]\").toString()).build()",
+        writerVisitor.write());
+  }
+
+  @Test
+  public void defaultValue_resourceNameMultiplePatterns_matchesAdditionalHttpBinding() {
+    FileDescriptor messagingFileDescriptor = MessagingOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(messagingFileDescriptor);
+    Map<String, ResourceName> typeStringsToResourceNames =
+        Parser.parseResourceNames(messagingFileDescriptor);
+    Message message = messageTypes.get("com.google.showcase.v1beta1.Blurb");
+
+    HttpBindings bindings =
+        HttpBindings.builder()
+            .setHttpVerb(HttpVerb.PATCH)
+            .setPattern("/v1beta1/{blurb.name=invalid/pattern/*}")
+            .setAdditionalPatterns(
+                Collections.singletonList("/v1beta1/{blurb.name=users/*/profile/blurbs/*}"))
+            .setIsAsteriskBody(false)
+            .build();
+
+    Expr expr =
+        DefaultValueComposer.createSimpleMessageBuilderValue(
+            message, typeStringsToResourceNames, messageTypes, bindings);
+    expr.accept(writerVisitor);
+    // The default pattern does not match and will attempt to match with patterns in the additional
+    // bindings
+    assertEquals(
+        "Blurb.newBuilder().setName(BlurbName.ofUserBlurbName(\"[USER]\", \"[BLURB]\").toString()).build()",
+        writerVisitor.write());
+  }
+
+  @Test
+  public void defaultValue_resourceNameMultiplePatterns_doesNotMatchHttpBinding() {
+    FileDescriptor messagingFileDescriptor = MessagingOuterClass.getDescriptor();
+    Map<String, Message> messageTypes = Parser.parseMessages(messagingFileDescriptor);
+    Map<String, ResourceName> typeStringsToResourceNames =
+        Parser.parseResourceNames(messagingFileDescriptor);
+    Message message = messageTypes.get("com.google.showcase.v1beta1.Blurb");
+
+    Expr expr =
+        DefaultValueComposer.createSimpleMessageBuilderValue(
+            message, typeStringsToResourceNames, messageTypes, null);
+    expr.accept(writerVisitor);
+    // This will not match with anything and will use the first pattern in the Resource definition
+    assertEquals(
+        "Blurb.newBuilder().setName(BlurbName.ofUserLegacyUserBlurbName(\"[USER]\", \"[LEGACY_USER]\", \"[BLURB]\").toString()).build()",
+        writerVisitor.write());
   }
 
   @Test
