@@ -114,6 +114,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @VisibleForTesting final ImmutableMap<String, ?> directPathServiceConfig;
   @Nullable private final MtlsProvider mtlsProvider;
   @Nullable private ClientMetricsTracer clientMetricsTracer;
+
   @Nullable
   private final ApiFunction<ManagedChannelBuilder, ManagedChannelBuilder> channelConfigurator;
 
@@ -241,7 +242,9 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   private TransportChannel createChannel() throws IOException {
     return GrpcTransportChannel.create(
         ChannelPool.create(
-            channelPoolSettings, InstantiatingGrpcChannelProvider.this::createSingleChannel, clientMetricsTracer));
+            channelPoolSettings,
+            InstantiatingGrpcChannelProvider.this::createSingleChannel,
+            clientMetricsTracer));
   }
 
   private boolean isDirectPathEnabled() {

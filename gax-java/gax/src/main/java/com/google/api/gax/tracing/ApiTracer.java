@@ -57,7 +57,7 @@ public interface ApiTracer {
    */
   void operationSucceeded();
 
-  default void operationSucceeded(Object response){};
+  default void operationSucceeded(Object response) {};
 
   /**
    * Signals that the operation was cancelled by the user. The tracer is now considered closed and
@@ -102,9 +102,10 @@ public interface ApiTracer {
 
   /** Adds an annotation that the attempt succeeded. */
   void attemptSucceeded();
+
   default void attemptSucceeded(Object response) {};
 
-  //This is for libraries to override to intended name
+  // This is for libraries to override to intended name
   default String attemptLatencyName() {
     return "attempt_latency";
   };
@@ -136,6 +137,7 @@ public interface ApiTracer {
    */
   void attemptPermanentFailure(Throwable error);
 
+  default void retryCount(int count) {};
   /**
    * Signals that the initial RPC for the long running operation failed.
    *

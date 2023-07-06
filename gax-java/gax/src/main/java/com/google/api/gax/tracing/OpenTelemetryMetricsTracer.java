@@ -30,159 +30,137 @@
 
 package com.google.api.gax.tracing;
 
+import static io.opentelemetry.api.common.AttributeKey.stringKey;
+
 import com.google.common.base.Stopwatch;
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.common.AttributesBuilder;
 import io.opentelemetry.api.metrics.DoubleHistogram;
-import io.opentelemetry.api.metrics.LongCounter;
+import io.opentelemetry.api.metrics.LongHistogram;
 import io.opentelemetry.api.metrics.Meter;
-import org.threeten.bp.Duration;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-
-import static io.opentelemetry.api.common.AttributeKey.stringKey;
+import org.threeten.bp.Duration;
 
 public class OpenTelemetryMetricsTracer implements ApiTracer {
-    protected Meter meter;
+  protected Meter meter;
 
-    private Stopwatch attemptTimer;
+  private Stopwatch attemptTimer;
 
-    private final Stopwatch operationTimer = Stopwatch.createStarted();
+  private final Stopwatch operationTimer = Stopwatch.createStarted();
 
-    private SpanName spanName;
+  private SpanName spanName;
 
-    private DoubleHistogram attemptLatencyRecorder;
+  private DoubleHistogram attemptLatencyRecorder;
 
-    private DoubleHistogram operationLatencyRecorder;
+  private DoubleHistogram operationLatencyRecorder;
+  private LongHistogram retryCountRecorder;
 
-    Map<String, String> operationLatencyLabels = new HashMap<>();
+  Map<String, String> operationLatencyLabels = new HashMap<>();
 
-    public OpenTelemetryMetricsTracer(Meter meter, SpanName spanName) {
-        this.meter = meter;
-        this.spanName = spanName;
-        this.attemptLatencyRecorder = meter.histogramBuilder(attemptLatencyName())
-                .setDescription("Duration of an individual operation attempt")
-                .setUnit("ms")
-                .build();
-        this.operationLatencyRecorder = meter.histogramBuilder("operation_latency")
-                .setDescription("Total time until final operation success or failure, including retries and backoff.")
-                .setUnit("ms")
-                .build();
-    }
+  public OpenTelemetryMetricsTracer(Meter meter, SpanName spanName) {
+    this.meter = meter;
+    this.spanName = spanName;
+    this.attemptLatencyRecorder =
+        meter
+            .histogramBuilder(attemptLatencyName())
+            .setDescription("Duration of an individual operation attempt")
+            .setUnit("ms")
+            .build();
+    this.operationLatencyRecorder =
+        meter
+            .histogramBuilder("operation_latency")
+            .setDescription(
+                "Total time until final operation success or failure, including retries and backoff.")
+            .setUnit("ms")
+            .build();
+    this.retryCountRecorder =
+        meter
+            .histogramBuilder("retry_count")
+            .setDescription("Number of additional attempts per operation after initial attempt")
+            .setUnit("1")
+            .ofLongs()
+            .build();
+  }
 
-    @Override
-    public Scope inScope() {
-        return () -> {};
-    }
+  @Override
+  public Scope inScope() {
+    return () -> {};
+  }
 
-    @Override
-    public void operationSucceeded() {
+  @Override
+  public void operationSucceeded() {}
 
-    }
+  // This is just one way to add labels, we could have another layer of abstraction(a separate
+  // class) just for get/set labels because the logic is generic.
+  public void addOperationLatencyLabels(String key, String value) {
+    operationLatencyLabels.put(key, value);
+  }
 
-    //This is just one way to add labels, we could have another layer of abstraction(a separate class) just for get/set labels because the logic is generic.
-    public void addOperationLatencyLabels(String key, String value) {
-        operationLatencyLabels.put(key, value);
-    }
+  @Override
+  public void operationSucceeded(Object response) {
+    AttributesBuilder attributesBuilder = Attributes.builder();
+    operationLatencyLabels.forEach((key, value) -> attributesBuilder.put(stringKey(key), value));
+    operationLatencyRecorder.record(
+        operationTimer.elapsed(TimeUnit.MILLISECONDS), attributesBuilder.build());
+  }
 
-    public Map<String, String> getOperationLatencyLabels() {
-        return operationLatencyLabels;
-    }
+  @Override
+  public void operationCancelled() {}
 
-    @Override
-    public void operationSucceeded(Object response) {
-        AttributesBuilder attributesBuilder = Attributes.builder();
-        getOperationLatencyLabels().forEach((key, value) -> {
-            attributesBuilder.put(stringKey(key), value);
-        });
-        operationLatencyRecorder.record(operationTimer.elapsed(TimeUnit.MILLISECONDS), attributesBuilder.build());
-    }
+  @Override
+  public void operationFailed(Throwable error) {}
 
-    @Override
-    public void operationCancelled() {
+  @Override
+  public void connectionSelected(String id) {}
 
-    }
+  @Override
+  public void attemptStarted(int attemptNumber) {}
 
-    @Override
-    public void operationFailed(Throwable error) {
+  @Override
+  public void attemptStarted(Object request, int attemptNumber) {
+    attemptTimer = Stopwatch.createStarted();
+  }
 
-    }
+  @Override
+  public void attemptSucceeded() {}
 
-    @Override
-    public void connectionSelected(String id) {
+  @Override
+  public void attemptSucceeded(Object response) {
+    Attributes attributes = Attributes.of(stringKey("method_name"), spanName.toString());
+    attemptLatencyRecorder.record(attemptTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
+  }
 
-    }
+  @Override
+  public void attemptCancelled() {}
 
-    @Override
-    public void attemptStarted(int attemptNumber) {
+  @Override
+  public void attemptFailed(Throwable error, Duration delay) {}
 
-    }
+  @Override
+  public void attemptFailedRetriesExhausted(Throwable error) {}
 
-    @Override
-    public void attemptStarted(Object request, int attemptNumber) {
-        attemptTimer = Stopwatch.createStarted();
-        LongCounter longCounter = meter.counterBuilder("attempt_count")
-                .setDescription("Attempt Count")
-                .setUnit("1")
-                .build();
-        longCounter.add(1);
-    }
+  @Override
+  public void attemptPermanentFailure(Throwable error) {}
 
-    @Override
-    public void attemptSucceeded() {
+  @Override
+  public void retryCount(int count) {
+    retryCountRecorder.record(count);
+  }
 
-    }
+  @Override
+  public void lroStartFailed(Throwable error) {}
 
-    @Override
-    public void attemptSucceeded(Object response) {
-        Attributes attributes = Attributes.of(stringKey("method_name"), spanName.toString());
-        attemptLatencyRecorder.record(attemptTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
-    }
+  @Override
+  public void lroStartSucceeded() {}
 
-    @Override
-    public void attemptCancelled() {
+  @Override
+  public void responseReceived() {}
 
-    }
+  @Override
+  public void requestSent() {}
 
-    @Override
-    public void attemptFailed(Throwable error, Duration delay) {
-
-    }
-
-    @Override
-    public void attemptFailedRetriesExhausted(Throwable error) {
-
-    }
-
-    @Override
-    public void attemptPermanentFailure(Throwable error) {
-
-    }
-
-    @Override
-    public void lroStartFailed(Throwable error) {
-
-    }
-
-    @Override
-    public void lroStartSucceeded() {
-
-    }
-
-    @Override
-    public void responseReceived() {
-
-    }
-
-    @Override
-    public void requestSent() {
-
-    }
-
-    @Override
-    public void batchRequestSent(long elementCount, long requestSize) {
-
-    }
+  @Override
+  public void batchRequestSent(long elementCount, long requestSize) {}
 }

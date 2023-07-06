@@ -82,17 +82,22 @@ class ChannelPool extends ManagedChannel {
   private final String authority;
 
   private ClientMetricsTracer clientMetricsTracer;
+
   static ChannelPool create(ChannelPoolSettings settings, ChannelFactory channelFactory)
-          throws IOException {
+      throws IOException {
     return new ChannelPool(settings, channelFactory, Executors.newSingleThreadScheduledExecutor());
   }
 
-  static ChannelPool create(ChannelPoolSettings settings, ChannelFactory channelFactory, ClientMetricsTracer clientMetricsTracer)
+  static ChannelPool create(
+      ChannelPoolSettings settings,
+      ChannelFactory channelFactory,
+      ClientMetricsTracer clientMetricsTracer)
       throws IOException {
-    ChannelPool channelPool = new ChannelPool(settings, channelFactory, Executors.newSingleThreadScheduledExecutor());
+    ChannelPool channelPool =
+        new ChannelPool(settings, channelFactory, Executors.newSingleThreadScheduledExecutor());
     channelPool.clientMetricsTracer = clientMetricsTracer;
     if (channelPool.clientMetricsTracer != null) {
-      channelPool.clientMetricsTracer.recordCurrentChannelSize(1);
+      channelPool.clientMetricsTracer.recordCurrentChannelSize(settings.getInitialChannelCount());
     }
     return channelPool;
   }
@@ -310,7 +315,7 @@ class ChannelPool extends ManagedChannel {
 
       shrink(dampenedTarget);
     }
-    clientMetricsTracer.recordCurrentChannelSize(localEntries.size());
+    clientMetricsTracer.recordCurrentChannelSize(entries.get().size());
   }
 
   /** Not threadsafe, must be called under the entryWriteLock monitor */

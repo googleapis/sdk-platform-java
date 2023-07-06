@@ -45,22 +45,11 @@ import io.opentelemetry.api.metrics.Meter;
 @InternalApi("For google-cloud-java client use only")
 public class OpenTelemetryTracerFactory extends BaseApiTracerFactory {
   protected Meter meter;
-  public OpenTelemetryTracerFactory(OpenTelemetry openTelemetry, String libraryName, String libraryVersion) {
-    meter = openTelemetry.meterBuilder(libraryName)
-            .setInstrumentationVersion(libraryVersion)
-            .build();
 
-
-//
-//    // Build an asynchronous instrument, e.g. Gauge
-//    ObservableDoubleGauge observableDoubleGauge = meter
-//            .gaugeBuilder("cpu_usage")
-//            .setDescription("CPU Usage")
-//            .setUnit("ms")
-//
-//            .buildWithCallback(measurement -> {
-//              measurement.record(0.3, Attributes.of(stringKey("Key"), "SomeWork"));
-//            });
+  public OpenTelemetryTracerFactory(
+      OpenTelemetry openTelemetry, String libraryName, String libraryVersion) {
+    meter =
+        openTelemetry.meterBuilder(libraryName).setInstrumentationVersion(libraryVersion).build();
   }
 
   @Override
