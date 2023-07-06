@@ -64,25 +64,6 @@ def _put_dep_in_a_bucket(dep, dep_bucket, processed_deps):
     dep_bucket.append(dep)
     processed_deps[dep] = True
 
-def _java_gapic_native_image_metadata_impl(ctx):
-    tar_name = ctx.attr.name
-#    paths = _construct_package_dir_paths(ctx.attr.package_dir, ctx.outputs.pkg, ctx.label.name)
-#    script = """
-#        echo $name
-#    """.format(
-#        tar_name = tar_name
-#    )
-#
-#    ctx.actions.run_shell(
-#        command = script
-#    )
-    print("hi hello")
-    print(tar_name)
-
-java_gapic_native_image_metadata = rule(
-    attrs = {},
-    implementation = _java_gapic_native_image_metadata_impl,
-)
 def _gapic_pkg_tar_impl(ctx):
     deps = []
     for dep in ctx.attr.deps:
@@ -306,9 +287,6 @@ def _java_gapic_srcs_pkg_impl(ctx):
     # must ensure uniqueness within a build.
     script = """
     for src in {srcs}; do
-        echo "*************COPY SRC FILES******************"
-        echo $src
-        echo "*************END OF COPY SRC FILES***********"
         mkdir -p {package_dir_path}/src/main/java
         unzip -q -o $src -d {package_dir_path}/src/main/java
         rm -r -f {package_dir_path}/src/main/java/META-INF
@@ -324,10 +302,7 @@ def _java_gapic_srcs_pkg_impl(ctx):
     done
     for proto_src in {proto_srcs}; do
         mkdir -p {package_dir_path}/src/main/proto
-        echo "************copy PROTO FILES****************"
-        echo $proto_src
         cp -f --parents $proto_src {package_dir_path}/src/main/proto
-        echo "*************END of PROTO FILE **********"
     done
     for test_src in {test_srcs}; do
         mkdir -p {package_dir_path}/src/test/java
@@ -338,9 +313,6 @@ def _java_gapic_srcs_pkg_impl(ctx):
     tar -zchpf {tar_prefix}/{package_dir}.tar.gz {tar_prefix}/*
     cd - > /dev/null
     mv {package_dir_path}/{package_dir}.tar.gz {pkg}
-    echo "**********Read contents for pkg**************"
-    cd {pkg}
-    ls
     """.format(
         srcs = " ".join(["'%s'" % f.path for f in srcs]),
         proto_srcs = " ".join(["'%s'" % f.path for f in proto_srcs]),
@@ -394,7 +366,6 @@ def java_gapic_assembly_gradle_pkg(
     samples = []
 
     processed_deps = {}  #there is no proper Set in Starlark
-    print("*****PRINTING CLIENT DEPS******")
     for dep in deps:
         # Use contains instead of endswith since microgenerator testing may use differently-named targets.
         if "_java_gapic" in dep:
@@ -433,8 +404,6 @@ def java_gapic_assembly_gradle_pkg(
             template_label = Label("//rules_java_gapic:resources/gradle/client_rest.gradle.tmpl")
         elif transport == "grpc+rest":
             template_label = Label("//rules_java_gapic:resources/gradle/client_grpcrest.gradle.tmpl")
-        print("*****PRINTING CLIENT DEPS******")
-        print(client_deps)
         _java_gapic_gradle_pkg(
             name = client_target,
             template_label = template_label,
@@ -443,24 +412,6 @@ def java_gapic_assembly_gradle_pkg(
             **kwargs
         )
         client_target_dep = ["%s" % client_target]
-
-        print("hello")
-        print("********PRINTING NAME OF TAR********")
-        print(name)
-#        java_gapic_native_image_metadata(
-#            name = name,
-#            gapic_tar = "%s.tar.gz" % name
-#        )
-#    print("*****PRINTING DEPS******")
-#    print(proto_target_dep)
-#    print(grpc_target_dep)
-#    print(client_target_dep)
-
-# This is the call that builds the final tar ball.
-# Modify these deps before assembly is called
-#    java_gapic_native_image_metadata(
-#          name =  name
-#    )
     _java_gapic_assembly_gradle_pkg(
         name = name,
         assembly_name = package_dir,
@@ -468,8 +419,6 @@ def java_gapic_assembly_gradle_pkg(
         samples = samples,
     )
 
-
-# Add native image metadata methoda here
 
 def _java_gapic_gradle_pkg(
         name,
@@ -536,7 +485,3 @@ def _java_gapic_assembly_gradle_pkg(name, assembly_name, deps, samples = None, v
         package_dir = assembly_name,
         visibility = visibility,
     )
-
-
-
-
