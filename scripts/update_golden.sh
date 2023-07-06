@@ -19,10 +19,6 @@ find . -name '*.java' -delete
 find . -name 'gapic_metadata.json' -delete
 
 mkdir -p ./src
-echo "Hello"
-#ls ${UNPACK_DIR}/src/main/java/*
-#ls ${UNPACK_DIR}/src/main/java/google/
-ls ./src
 cp -r ${UNPACK_DIR}/src/main/java/* ./src
 cp -r ${UNPACK_DIR}/src/test/java/* ./src
 [ -d ${UNPACK_DIR}/proto ] && cp -r ${UNPACK_DIR}/proto/src/main/java/* ./src
