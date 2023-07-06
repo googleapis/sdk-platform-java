@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -27,21 +27,50 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.google.api.gax.httpjson;
+package com.google.api.gax.batching;
 
-import com.google.api.client.http.HttpHeaders;
+import com.google.auto.value.AutoValue;
+import com.google.common.base.Preconditions;
 
-/** Utility class that creates instances of {@link HttpJsonHeaderEnhancer}. */
-public class HttpJsonHeaderEnhancers {
+/**
+ * The default implementation of {@link BatchResource} which tracks the elementCount and byteCount.
+ */
+@AutoValue
+abstract class DefaultBatchResource implements BatchResource {
 
-  private HttpJsonHeaderEnhancers() {}
+  static DefaultBatchResource.Builder builder() {
+    return new AutoValue_DefaultBatchResource.Builder();
+  }
 
-  public static HttpJsonHeaderEnhancer create(final String key, final String value) {
-    return new HttpJsonHeaderEnhancer() {
-      @Override
-      public void enhance(HttpHeaders headers) {
-        HttpHeadersUtils.setHeader(headers, key, value);
-      }
-    };
+  @Override
+  public BatchResource add(BatchResource resource) {
+    Preconditions.checkArgument(
+        resource instanceof DefaultBatchResource,
+        "Expect an instance of DefaultBatchResource, got " + resource.getClass());
+    DefaultBatchResource defaultResource = (DefaultBatchResource) resource;
+    return new AutoValue_DefaultBatchResource.Builder()
+        .setElementCount(getElementCount() + defaultResource.getElementCount())
+        .setByteCount(getByteCount() + defaultResource.getByteCount())
+        .build();
+  }
+
+  @Override
+  public abstract long getElementCount();
+
+  @Override
+  public abstract long getByteCount();
+
+  @Override
+  public boolean shouldFlush(long maxElementThreshold, long maxBytesThreshold) {
+    return getElementCount() > maxElementThreshold || getByteCount() > maxBytesThreshold;
+  }
+
+  @AutoValue.Builder
+  abstract static class Builder {
+    abstract Builder setElementCount(long elementCount);
+
+    abstract Builder setByteCount(long byteCount);
+
+    abstract DefaultBatchResource build();
   }
 }

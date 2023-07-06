@@ -19,7 +19,7 @@
   </parent>
 
   <properties>
-    <gapic-showcase.version>0.28.0</gapic-showcase.version>
+    <gapic-showcase.version>0.28.2</gapic-showcase.version>
   </properties>
 
   <profiles>
@@ -225,6 +225,14 @@
     <dependency>
       <groupId>com.google.api</groupId>
       <artifactId>gax-httpjson</artifactId>
+      <type>test-jar</type>
+      <classifier>testlib</classifier>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.auth</groupId>
+      <artifactId>google-auth-library-oauth2-http</artifactId>
+      <version>${google.auth.version}</version>
       <type>test-jar</type>
       <classifier>testlib</classifier>
       <scope>test</scope>

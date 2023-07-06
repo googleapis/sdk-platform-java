@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -27,21 +27,30 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-package com.google.api.gax.httpjson;
+package com.google.api.gax.batching;
 
-import com.google.api.client.http.HttpHeaders;
+import com.google.api.core.InternalApi;
 
-/** Utility class that creates instances of {@link HttpJsonHeaderEnhancer}. */
-public class HttpJsonHeaderEnhancers {
+/**
+ * Represent the resource used by a batch including element and byte. It can also be extended to
+ * other things to determine if adding a new element needs to be flow controlled or if the current
+ * batch needs to be flushed.
+ */
+@InternalApi("For google-cloud-java client use only.")
+public interface BatchResource {
 
-  private HttpJsonHeaderEnhancers() {}
+  /** Adds the additional resource. */
+  BatchResource add(BatchResource resource);
 
-  public static HttpJsonHeaderEnhancer create(final String key, final String value) {
-    return new HttpJsonHeaderEnhancer() {
-      @Override
-      public void enhance(HttpHeaders headers) {
-        HttpHeadersUtils.setHeader(headers, key, value);
-      }
-    };
-  }
+  /** Returns the element count of this resource. */
+  long getElementCount();
+
+  /** Returns the byte count of this resource. */
+  long getByteCount();
+
+  /**
+   * Checks if the current {@link BatchResource} should be flushed based on the maxElementThreshold
+   * and maxBytesThreshold.
+   */
+  boolean shouldFlush(long maxElementThreshold, long maxBytesThreshold);
 }

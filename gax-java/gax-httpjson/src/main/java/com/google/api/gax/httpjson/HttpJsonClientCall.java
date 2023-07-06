@@ -29,7 +29,6 @@
  */
 package com.google.api.gax.httpjson;
 
-import com.google.api.core.BetaApi;
 import javax.annotation.Nullable;
 
 // This class mimics the structure and behavior of the corresponding ClientCall from gRPC package as
@@ -58,7 +57,6 @@ import javax.annotation.Nullable;
  * @param <RequestT> type of message sent to the server
  * @param <ResponseT> type of message received one or more times from the server
  */
-@BetaApi
 public abstract class HttpJsonClientCall<RequestT, ResponseT> {
   /**
    * Callbacks for receiving metadata, response messages and completion status from the server.
@@ -67,7 +65,6 @@ public abstract class HttpJsonClientCall<RequestT, ResponseT> {
    * not required to be thread-safe, but they must not be thread-hostile. The caller is free to call
    * an instance from multiple threads, but only one call simultaneously.
    */
-  @BetaApi
   public abstract static class Listener<T> {
     /**
      * The response headers have been received. Headers always precede messages.
