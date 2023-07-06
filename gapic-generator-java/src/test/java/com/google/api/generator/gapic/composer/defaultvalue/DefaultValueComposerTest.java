@@ -485,13 +485,6 @@ public class DefaultValueComposerTest {
     Map<String, Message> messageTypes = Parser.parseMessages(messagingFileDescriptor);
     Map<String, ResourceName> typeStringsToResourceNames =
         Parser.parseResourceNames(messagingFileDescriptor);
-    /*
-    Blurb Resource contains four patterns (in order of):
-      - pattern: "users/{user}/profile/blurbs/legacy/{legacy_user}~{blurb}"
-      - pattern: "users/{user}/profile/blurbs/{blurb}"
-      - pattern: "rooms/{room}/blurbs/{blurb}"
-      - pattern: "rooms/{room}/blurbs/legacy/{legacy_room}.{blurb}"
-    */
     Message message = messageTypes.get("com.google.showcase.v1beta1.Blurb");
 
     Expr expr =
