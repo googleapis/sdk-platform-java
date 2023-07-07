@@ -17,6 +17,7 @@
 package com.google.showcase.v1beta1.it;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
@@ -32,13 +33,13 @@ import com.google.auth.oauth2.GdchCredentialsTestUtil;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.it.util.InterceptingMockTokenServerTransportFactory;
-import com.google.showcase.v1beta1.stub.EchoStub;
 import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.junit.After;
@@ -67,7 +68,6 @@ public class ITGdch {
   private EchoStubSettings stubSettings;
   private Credentials initialCredentials;
   private ClientContext context;
-  private EchoStub stub;
   private InterceptingMockTokenServerTransportFactory transportFactory;
   private String projectId;
   private URI tokenUri;
@@ -90,9 +90,12 @@ public class ITGdch {
     }
   }
 
-  private void prepareCredentials() throws IOException, URISyntaxException {
+  private void prepareCredentials() throws IOException {
     // compute absolute path of the CA certificate
-    Path caCertPath = Paths.get(getClass().getResource(CA_CERT_RESOURCE_PATH).toURI());
+    URL foundResource = getClass().getResource(CA_CERT_RESOURCE_PATH);
+    assertNotNull(foundResource);
+    Path caCertPath = Paths.get(foundResource.getPath());
+    assertTrue(caCertPath.toFile().exists());
 
     // open gdch credential json (still needs its "ca_cert_path" to point to the CA certificate
     // obtained from above)
