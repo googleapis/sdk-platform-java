@@ -16,6 +16,8 @@
 
 package com.google.showcase.v1beta1.it;
 
+import static com.google.common.truth.Truth.assertThat;
+import static com.google.common.truth.Truth.assertWithMessage;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertThrows;
@@ -29,7 +31,6 @@ import com.google.api.gax.rpc.ClientContext;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GdchCredentials;
 import com.google.auth.oauth2.GdchCredentialsTestUtil;
-import com.google.common.truth.Truth;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.it.util.InterceptingMockTokenServerTransportFactory;
@@ -97,12 +98,10 @@ public class ITGdch {
     // Copy file so it can be referenced by Path even in native-image builds
     File caCertFile = tempFolder.newFile(CA_CERT_FILENAME);
     try (InputStream inputStream = getClass().getResourceAsStream(CA_CERT_RESOURCE_PATH)) {
-      Truth.assertThat(inputStream).isNotNull();
+      assertThat(inputStream).isNotNull();
       Files.copy(inputStream, caCertFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
     }
-    Truth.assertWithMessage(caCertFile.toPath() + " should exist")
-        .that(caCertFile.exists())
-        .isTrue();
+    assertWithMessage(caCertFile.toPath() + " should exist").that(caCertFile.exists()).isTrue();
 
     // open gdch credential json (still needs its "ca_cert_path" to point to the CA certificate
     // obtained from above)
