@@ -1,5 +1,26 @@
 # Changelog
 
+## [2.23.0](https://github.com/googleapis/sdk-platform-java/compare/v2.22.0...v2.23.0) (2023-07-07)
+
+
+### Features
+
+* Support GDC-H Credentials  ([#1642](https://github.com/googleapis/sdk-platform-java/issues/1642)) ([26da0d3](https://github.com/googleapis/sdk-platform-java/commit/26da0d3fb882e4f11c1cc43a81d34eb500c2c0cf))
+
+
+### Bug Fixes
+
+* [gapic-generator-java] handle response and metadata type ambiguity in LRO parsing ([#1726](https://github.com/googleapis/sdk-platform-java/issues/1726)) ([1ace494](https://github.com/googleapis/sdk-platform-java/commit/1ace49499175f2509062edb2fa5098e6cf8035d6))
+* Abstract batch resource and add method to determine if batch should be flushed ([#1790](https://github.com/googleapis/sdk-platform-java/issues/1790)) ([4c74107](https://github.com/googleapis/sdk-platform-java/commit/4c741077d614093d08665e9ddd83fb0e332b7881))
+
+
+### Dependencies
+
+* Bump grpc-java version to 1.55.3 ([1ff8cc0](https://github.com/googleapis/sdk-platform-java/commit/1ff8cc017bfb567933713ceeb06502f5eec9eaa6))
+* Bump guava version to 32.1.1-jre ([016e84d](https://github.com/googleapis/sdk-platform-java/commit/016e84d17febd68e2aa028cba40e2781a383f7ff))
+* Bump j2obc-annotations version to 2.8 ([4f45313](https://github.com/googleapis/sdk-platform-java/commit/4f4531373f313a7d68c2b9bfd5b0f1f71b21128f))
+* Update google-auth-java-library to 1.19.0 ([#1815](https://github.com/googleapis/sdk-platform-java/issues/1815)) ([41007a9](https://github.com/googleapis/sdk-platform-java/commit/41007a9efbd4cf08a5f933c23e01fce6cf2efac7))
+
 ## [2.22.0](https://github.com/googleapis/sdk-platform-java/compare/v2.21.0...v2.22.0) (2023-06-22)
 
 
