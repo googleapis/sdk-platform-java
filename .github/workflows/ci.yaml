@@ -230,6 +230,8 @@ jobs:
           echo "SHOWCASE_CLIENT_VERSION=$SHOWCASE_CLIENT_VERSION" >> "$GITHUB_ENV"
       - name: Checkout sdk-platform-java @ PR merge commit
         uses: actions/checkout@v3
+      - name: Install sdk-platform-java @ PR merge commit
+        run: mvn install -B -ntp -T 1C -DskipTests
         # Showcase golden test ensures that src changes are already reflected in the PR.
       - name: Clirr check
         working-directory: showcase
