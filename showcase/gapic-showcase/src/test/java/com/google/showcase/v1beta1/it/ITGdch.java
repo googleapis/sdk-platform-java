@@ -33,6 +33,7 @@ import com.google.common.truth.Truth;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.it.util.InterceptingMockTokenServerTransportFactory;
+import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import java.io.File;
 import java.io.FileWriter;
@@ -42,6 +43,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -84,9 +86,10 @@ public class ITGdch {
   }
 
   @After
-  public void tearDown() {
+  public void tearDown() throws InterruptedException {
     if (client != null) {
       client.close();
+      client.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
     }
   }
 
