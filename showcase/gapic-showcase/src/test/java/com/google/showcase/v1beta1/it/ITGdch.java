@@ -16,6 +16,8 @@
 
 package com.google.showcase.v1beta1.it;
 
+import static com.google.common.truth.Truth.assertThat;
+import static com.google.common.truth.Truth.assertWithMessage;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertThrows;
@@ -32,15 +34,17 @@ import com.google.auth.oauth2.GdchCredentialsTestUtil;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.it.util.InterceptingMockTokenServerTransportFactory;
-import com.google.showcase.v1beta1.stub.EchoStub;
+import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -53,10 +57,11 @@ import org.junit.rules.TemporaryFolder;
  */
 public class ITGdch {
 
-  private static final String TEST_GDCH_CREDENTIAL_FILE = "/test_gdch_credential.json";
-  private static final String CA_CERT_RESOURCE_PATH = "/fake_cert.pem";
+  private static final String CA_CERT_FILENAME = "fake_cert.pem";
+  private static final String CA_CERT_RESOURCE_PATH = "/" + CA_CERT_FILENAME;
   private static final String CA_CERT_JSON_KEY = "ca_cert_path";
-  private static final String TEMP_CREDENTIAL_JSON_FILENAME = "temp_gdch_credential.json";
+  private static final String GDCH_CREDENTIAL_FILENAME = "test_gdch_credential.json";
+  private static final String GDCH_CREDENTIAL_RESOURCE_PATH = "/" + GDCH_CREDENTIAL_FILENAME;
   private static final String GDCH_TOKEN_STRING = "1/MkSJoj1xsli0AccessToken_NKPY2";
   private static final String SID_NAME = "service-identity-name";
 
@@ -67,7 +72,6 @@ public class ITGdch {
   private EchoStubSettings stubSettings;
   private Credentials initialCredentials;
   private ClientContext context;
-  private EchoStub stub;
   private InterceptingMockTokenServerTransportFactory transportFactory;
   private String projectId;
   private URI tokenUri;
@@ -76,7 +80,6 @@ public class ITGdch {
   public void setup() throws IOException, URISyntaxException {
     transportFactory = new InterceptingMockTokenServerTransportFactory();
     prepareCredentials();
-    tempFolder.create();
     settings =
         EchoSettings.newBuilder()
             .setCredentialsProvider(FixedCredentialsProvider.create(initialCredentials))
@@ -84,29 +87,35 @@ public class ITGdch {
   }
 
   @After
-  public void tearDown() {
+  public void tearDown() throws InterruptedException {
     if (client != null) {
       client.close();
+      client.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
     }
   }
 
-  private void prepareCredentials() throws IOException, URISyntaxException {
-    // compute absolute path of the CA certificate
-    Path caCertPath = Paths.get(getClass().getResource(CA_CERT_RESOURCE_PATH).toURI());
+  private void prepareCredentials() throws IOException {
+    // Copy file so it can be referenced by Path even in native-image builds
+    File caCertFile = tempFolder.newFile(CA_CERT_FILENAME);
+    try (InputStream inputStream = getClass().getResourceAsStream(CA_CERT_RESOURCE_PATH)) {
+      assertThat(inputStream).isNotNull();
+      Files.copy(inputStream, caCertFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+    }
+    assertWithMessage(caCertFile.toPath() + " should exist").that(caCertFile.exists()).isTrue();
 
     // open gdch credential json (still needs its "ca_cert_path" to point to the CA certificate
     // obtained from above)
     JsonFactory factory = new GsonFactory();
     GenericJson converted =
         factory.fromInputStream(
-            getClass().getResourceAsStream(TEST_GDCH_CREDENTIAL_FILE), GenericJson.class);
+            getClass().getResourceAsStream(GDCH_CREDENTIAL_RESOURCE_PATH), GenericJson.class);
 
     // modify and save to a temporary folder
-    converted.set(CA_CERT_JSON_KEY, caCertPath.toAbsolutePath().toString());
+    converted.set(CA_CERT_JSON_KEY, caCertFile.toPath().toAbsolutePath().toString());
     projectId = converted.get("project").toString();
     tokenUri = URI.create(converted.get("token_uri").toString());
 
-    File tempGdchCredentialFile = tempFolder.newFile(TEMP_CREDENTIAL_JSON_FILENAME);
+    File tempGdchCredentialFile = tempFolder.newFile(GDCH_CREDENTIAL_FILENAME);
     try (FileWriter fileWriter = new FileWriter(tempGdchCredentialFile)) {
       String preparedJson = converted.toPrettyString();
       fileWriter.write(preparedJson);
