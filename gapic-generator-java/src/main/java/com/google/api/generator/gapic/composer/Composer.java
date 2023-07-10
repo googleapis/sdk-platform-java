@@ -16,6 +16,7 @@ package com.google.api.generator.gapic.composer;
 
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
+import com.google.api.generator.gapic.composer.ClientLibraryReflectConfigComposer.ReflectConfig;
 import com.google.api.generator.gapic.composer.comment.CommentComposer;
 import com.google.api.generator.gapic.composer.grpc.GrpcServiceCallableFactoryClassComposer;
 import com.google.api.generator.gapic.composer.grpc.GrpcServiceStubClassComposer;
@@ -53,6 +54,11 @@ public class Composer {
 
   public static GapicPackageInfo composePackageInfo(GapicContext context) {
     return addApacheLicense(ClientLibraryPackageInfoComposer.generatePackageInfo(context));
+  }
+
+  public static List<ReflectConfig> composeNativeReflectConfig(
+      GapicContext context, GapicPackageInfo packageInfo) {
+    return ClientLibraryReflectConfigComposer.generateReflectConfig(context, packageInfo);
   }
 
   public static List<GapicClass> generateServiceClasses(GapicContext context) {

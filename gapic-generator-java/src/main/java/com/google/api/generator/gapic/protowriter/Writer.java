@@ -17,11 +17,14 @@ package com.google.api.generator.gapic.protowriter;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.PackageInfoDefinition;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
+import com.google.api.generator.gapic.composer.ClientLibraryReflectConfigComposer.ReflectConfig;
 import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.gapic.model.Sample;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
 import com.google.protobuf.util.JsonFormat;
@@ -46,6 +49,7 @@ public class Writer {
       GapicContext context,
       List<GapicClass> clazzes,
       GapicPackageInfo gapicPackageInfo,
+      List<ReflectConfig> reflectConfigInfo,
       String outputFilePath) {
     ByteString.Output output = ByteString.newOutput();
     JavaWriterVisitor codeWriter = new JavaWriterVisitor();
@@ -65,6 +69,7 @@ public class Writer {
     }
 
     writeMetadataFile(context, writePackageInfo(gapicPackageInfo, codeWriter, jos), jos);
+    writeReflectConfigFile(gapicPackageInfo.packageInfo().pakkage(), reflectConfigInfo, jos);
 
     try {
       jos.finish();
@@ -80,6 +85,24 @@ public class Writer {
         .setName(outputFilePath)
         .setContentBytes(output.toByteString());
     return response.build();
+  }
+
+  private static void writeReflectConfigFile(
+      String pakkage, List<ReflectConfig> reflectConfigInfo, JarOutputStream jos) {
+    if (reflectConfigInfo.isEmpty()) {
+      return;
+    }
+    Gson prettyGson = new GsonBuilder().setPrettyPrinting().create();
+    JarEntry jarEntry =
+        new JarEntry(
+            String.format(
+                "src/main/resources/META-INF/native-image/%s/reflect-config.json", pakkage));
+    try {
+      jos.putNextEntry(jarEntry);
+      jos.write(prettyGson.toJson(reflectConfigInfo).getBytes(StandardCharsets.UTF_8));
+    } catch (IOException e) {
+      throw new GapicWriterException("Could not write gapic_metadata.json", e);
+    }
   }
 
   private static String writeClazz(

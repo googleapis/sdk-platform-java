@@ -14,6 +14,7 @@
 
 package com.google.api.generator.gapic;
 
+import com.google.api.generator.gapic.composer.ClientLibraryReflectConfigComposer.ReflectConfig;
 import com.google.api.generator.gapic.composer.Composer;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
@@ -29,7 +30,8 @@ public class Generator {
     GapicContext context = Parser.parse(request);
     List<GapicClass> clazzes = Composer.composeServiceClasses(context);
     GapicPackageInfo packageInfo = Composer.composePackageInfo(context);
+    List<ReflectConfig> reflectConfig = Composer.composeNativeReflectConfig(context, packageInfo);
     String outputFilename = "temp-codegen.srcjar";
-    return Writer.write(context, clazzes, packageInfo, outputFilename);
+    return Writer.write(context, clazzes, packageInfo, reflectConfig, outputFilename);
   }
 }
