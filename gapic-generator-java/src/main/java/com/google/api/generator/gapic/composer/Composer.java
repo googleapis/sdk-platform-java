@@ -56,9 +56,8 @@ public class Composer {
     return addApacheLicense(ClientLibraryPackageInfoComposer.generatePackageInfo(context));
   }
 
-  public static List<ReflectConfig> composeNativeReflectConfig(
-      GapicContext context, GapicPackageInfo packageInfo) {
-    return ClientLibraryReflectConfigComposer.generateReflectConfig(context, packageInfo);
+  public static List<ReflectConfig> composeNativeReflectConfig(GapicContext context) {
+    return ClientLibraryReflectConfigComposer.generateReflectConfig(context);
   }
 
   public static List<GapicClass> generateServiceClasses(GapicContext context) {

@@ -46,6 +46,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 import com.google.longrunning.OperationInfo;
@@ -80,6 +81,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Parser {
+
   private static final String COMMA = ",";
   private static final String COLON = ":";
   private static final String DEFAULT_PORT = "443";
@@ -103,6 +105,7 @@ public class Parser {
   protected static final SourceCodeInfoParser SOURCE_CODE_INFO_PARSER = new SourceCodeInfoParser();
 
   static class GapicParserException extends RuntimeException {
+
     public GapicParserException(String errorMessage) {
       super(errorMessage);
     }
@@ -554,21 +557,20 @@ public class Parser {
       List<String> outerNestedTypes) {
     Map<String, Message> messages = new HashMap<>();
     String messageName = messageDescriptor.getName();
-    if (!messageDescriptor.getNestedTypes().isEmpty()) {
-      for (Descriptor nestedMessage : messageDescriptor.getNestedTypes()) {
-        if (isMapType(nestedMessage)) {
-          continue;
-        }
-        List<String> currentNestedTypes = new ArrayList<>(outerNestedTypes);
-        currentNestedTypes.add(messageName);
-        messages.putAll(
-            parseMessages(nestedMessage, outputResourceReferencesSeen, currentNestedTypes));
+
+    for (Descriptor nestedMessage : messageDescriptor.getNestedTypes()) {
+      if (isMapType(nestedMessage)) {
+        continue;
       }
+      List<String> currentNestedTypes = new ArrayList<>(outerNestedTypes);
+      currentNestedTypes.add(messageName);
+      messages.putAll(
+          parseMessages(nestedMessage, outputResourceReferencesSeen, currentNestedTypes));
     }
     TypeNode messageType = TypeParser.parseType(messageDescriptor);
 
     List<FieldDescriptor> fields = messageDescriptor.getFields();
-    HashMap<String, String> operationRequestFields = new HashMap<String, String>();
+    HashMap<String, String> operationRequestFields = new HashMap<>();
     BiMap<String, String> operationResponseFields = HashBiMap.create();
     OperationResponse.Builder operationResponse = null;
     for (FieldDescriptor fd : fields) {
@@ -598,9 +600,16 @@ public class Parser {
         }
       }
     }
+
+    ImmutableList<String> nestedEnums =
+        messageDescriptor.getEnumTypes().stream()
+            .map(EnumDescriptor::getName)
+            .collect(ImmutableList.toImmutableList());
+
     messages.put(
         messageType.reference().fullName(),
         Message.builder()
+            .setNestedEnums(nestedEnums)
             .setType(messageType)
             .setName(messageName)
             .setFullProtoName(messageDescriptor.getFullName())

@@ -4,7 +4,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -13,7 +13,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -22,7 +22,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -31,7 +31,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -40,7 +40,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -49,7 +49,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -58,7 +58,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -67,7 +67,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -76,7 +76,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -85,7 +85,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -94,7 +94,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -103,7 +103,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -112,7 +112,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -121,7 +121,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -130,7 +130,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -139,7 +139,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -148,7 +148,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -157,7 +157,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -166,7 +166,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -175,7 +175,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -184,7 +184,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -193,7 +193,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -202,7 +202,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -211,25 +211,25 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.api.MethodSettings.LongRunning",
+    "name": "com.google.api.MethodSettings$LongRunning",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.api.MethodSettings.LongRunning$Builder",
+    "name": "com.google.api.MethodSettings$LongRunning$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -238,7 +238,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -247,7 +247,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -256,7 +256,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -265,7 +265,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -274,7 +274,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -283,7 +283,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -292,7 +292,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -301,7 +301,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -310,7 +310,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -319,7 +319,25 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.api.ResourceDescriptor$History",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.api.ResourceDescriptor$Style",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -328,7 +346,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -337,7 +355,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -346,7 +364,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -355,7 +373,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -364,7 +382,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -373,7 +391,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -382,7 +400,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -391,7 +409,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -400,7 +418,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -409,7 +427,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -418,7 +436,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -427,7 +445,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -436,7 +454,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -445,7 +463,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -454,7 +472,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -463,7 +481,250 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.iam.v1.AuditConfig",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.iam.v1.AuditConfig$Builder",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.iam.v1.AuditConfigDelta",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.iam.v1.AuditConfigDelta$Action",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.iam.v1.AuditConfigDelta$Builder",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.iam.v1.AuditLogConfig",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.iam.v1.AuditLogConfig$Builder",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.iam.v1.AuditLogConfig$LogType",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.iam.v1.Binding",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.iam.v1.Binding$Builder",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.iam.v1.BindingDelta",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.iam.v1.BindingDelta$Action",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.iam.v1.BindingDelta$Builder",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.iam.v1.GetIamPolicyRequest",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.iam.v1.GetIamPolicyRequest$Builder",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.iam.v1.GetPolicyOptions",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.iam.v1.GetPolicyOptions$Builder",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.iam.v1.Policy",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.iam.v1.Policy$Builder",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.iam.v1.PolicyDelta",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.iam.v1.PolicyDelta$Builder",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.iam.v1.SetIamPolicyRequest",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.iam.v1.SetIamPolicyRequest$Builder",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.iam.v1.TestIamPermissionsRequest",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.iam.v1.TestIamPermissionsRequest$Builder",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.iam.v1.TestIamPermissionsResponse",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.iam.v1.TestIamPermissionsResponse$Builder",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -472,7 +733,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -481,7 +742,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -490,7 +751,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -499,7 +760,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -508,7 +769,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -517,7 +778,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -526,7 +787,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -535,7 +796,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -544,7 +805,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -553,7 +814,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -562,7 +823,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -571,7 +832,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -580,7 +841,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -589,7 +850,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -598,7 +859,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -607,7 +868,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -616,7 +877,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -625,511 +886,601 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.DescriptorProto",
+    "name": "com.google.protobuf.DescriptorProtos$DescriptorProto",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.DescriptorProto$Builder",
+    "name": "com.google.protobuf.DescriptorProtos$DescriptorProto$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.DescriptorProto.ExtensionRange",
+    "name": "com.google.protobuf.DescriptorProtos$DescriptorProto$ExtensionRange",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.DescriptorProto.ExtensionRange$Builder",
+    "name": "com.google.protobuf.DescriptorProtos$DescriptorProto$ExtensionRange$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.DescriptorProto.ReservedRange",
+    "name": "com.google.protobuf.DescriptorProtos$DescriptorProto$ReservedRange",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.DescriptorProto.ReservedRange$Builder",
+    "name": "com.google.protobuf.DescriptorProtos$DescriptorProto$ReservedRange$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.EnumDescriptorProto",
+    "name": "com.google.protobuf.DescriptorProtos$EnumDescriptorProto",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.EnumDescriptorProto$Builder",
+    "name": "com.google.protobuf.DescriptorProtos$EnumDescriptorProto$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.EnumDescriptorProto.EnumReservedRange",
+    "name": "com.google.protobuf.DescriptorProtos$EnumDescriptorProto$EnumReservedRange",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.EnumDescriptorProto.EnumReservedRange$Builder",
+    "name": "com.google.protobuf.DescriptorProtos$EnumDescriptorProto$EnumReservedRange$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.EnumOptions",
+    "name": "com.google.protobuf.DescriptorProtos$EnumOptions",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.EnumOptions$Builder",
+    "name": "com.google.protobuf.DescriptorProtos$EnumOptions$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.EnumValueDescriptorProto",
+    "name": "com.google.protobuf.DescriptorProtos$EnumValueDescriptorProto",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.EnumValueDescriptorProto$Builder",
+    "name": "com.google.protobuf.DescriptorProtos$EnumValueDescriptorProto$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.EnumValueOptions",
+    "name": "com.google.protobuf.DescriptorProtos$EnumValueOptions",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.EnumValueOptions$Builder",
+    "name": "com.google.protobuf.DescriptorProtos$EnumValueOptions$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.ExtensionRangeOptions",
+    "name": "com.google.protobuf.DescriptorProtos$ExtensionRangeOptions",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.ExtensionRangeOptions$Builder",
+    "name": "com.google.protobuf.DescriptorProtos$ExtensionRangeOptions$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.ExtensionRangeOptions.Declaration",
+    "name": "com.google.protobuf.DescriptorProtos$ExtensionRangeOptions$Declaration",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.ExtensionRangeOptions.Declaration$Builder",
+    "name": "com.google.protobuf.DescriptorProtos$ExtensionRangeOptions$Declaration$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.FieldDescriptorProto",
+    "name": "com.google.protobuf.DescriptorProtos$ExtensionRangeOptions$VerificationState",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.FieldDescriptorProto$Builder",
+    "name": "com.google.protobuf.DescriptorProtos$FieldDescriptorProto",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.FieldOptions",
+    "name": "com.google.protobuf.DescriptorProtos$FieldDescriptorProto$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.FieldOptions$Builder",
+    "name": "com.google.protobuf.DescriptorProtos$FieldDescriptorProto$Label",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.FileDescriptorProto",
+    "name": "com.google.protobuf.DescriptorProtos$FieldDescriptorProto$Type",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.FileDescriptorProto$Builder",
+    "name": "com.google.protobuf.DescriptorProtos$FieldOptions",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.FileDescriptorSet",
+    "name": "com.google.protobuf.DescriptorProtos$FieldOptions$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.FileDescriptorSet$Builder",
+    "name": "com.google.protobuf.DescriptorProtos$FieldOptions$CType",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.FileOptions",
+    "name": "com.google.protobuf.DescriptorProtos$FieldOptions$JSType",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.FileOptions$Builder",
+    "name": "com.google.protobuf.DescriptorProtos$FieldOptions$OptionRetention",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.GeneratedCodeInfo",
+    "name": "com.google.protobuf.DescriptorProtos$FieldOptions$OptionTargetType",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.GeneratedCodeInfo$Builder",
+    "name": "com.google.protobuf.DescriptorProtos$FileDescriptorProto",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.GeneratedCodeInfo.Annotation",
+    "name": "com.google.protobuf.DescriptorProtos$FileDescriptorProto$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.GeneratedCodeInfo.Annotation$Builder",
+    "name": "com.google.protobuf.DescriptorProtos$FileDescriptorSet",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.MessageOptions",
+    "name": "com.google.protobuf.DescriptorProtos$FileDescriptorSet$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.MessageOptions$Builder",
+    "name": "com.google.protobuf.DescriptorProtos$FileOptions",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.MethodDescriptorProto",
+    "name": "com.google.protobuf.DescriptorProtos$FileOptions$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.MethodDescriptorProto$Builder",
+    "name": "com.google.protobuf.DescriptorProtos$FileOptions$OptimizeMode",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.MethodOptions",
+    "name": "com.google.protobuf.DescriptorProtos$GeneratedCodeInfo",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.MethodOptions$Builder",
+    "name": "com.google.protobuf.DescriptorProtos$GeneratedCodeInfo$Annotation",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.OneofDescriptorProto",
+    "name": "com.google.protobuf.DescriptorProtos$GeneratedCodeInfo$Annotation$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.OneofDescriptorProto$Builder",
+    "name": "com.google.protobuf.DescriptorProtos$GeneratedCodeInfo$Annotation$Semantic",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.OneofOptions",
+    "name": "com.google.protobuf.DescriptorProtos$GeneratedCodeInfo$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.OneofOptions$Builder",
+    "name": "com.google.protobuf.DescriptorProtos$MessageOptions",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.ServiceDescriptorProto",
+    "name": "com.google.protobuf.DescriptorProtos$MessageOptions$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.ServiceDescriptorProto$Builder",
+    "name": "com.google.protobuf.DescriptorProtos$MethodDescriptorProto",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.ServiceOptions",
+    "name": "com.google.protobuf.DescriptorProtos$MethodDescriptorProto$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.ServiceOptions$Builder",
+    "name": "com.google.protobuf.DescriptorProtos$MethodOptions",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.SourceCodeInfo",
+    "name": "com.google.protobuf.DescriptorProtos$MethodOptions$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.SourceCodeInfo$Builder",
+    "name": "com.google.protobuf.DescriptorProtos$MethodOptions$IdempotencyLevel",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.SourceCodeInfo.Location",
+    "name": "com.google.protobuf.DescriptorProtos$OneofDescriptorProto",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.SourceCodeInfo.Location$Builder",
+    "name": "com.google.protobuf.DescriptorProtos$OneofDescriptorProto$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.UninterpretedOption",
+    "name": "com.google.protobuf.DescriptorProtos$OneofOptions",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.UninterpretedOption$Builder",
+    "name": "com.google.protobuf.DescriptorProtos$OneofOptions$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.UninterpretedOption.NamePart",
+    "name": "com.google.protobuf.DescriptorProtos$ServiceDescriptorProto",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.protobuf.DescriptorProtos.UninterpretedOption.NamePart$Builder",
+    "name": "com.google.protobuf.DescriptorProtos$ServiceDescriptorProto$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.protobuf.DescriptorProtos$ServiceOptions",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.protobuf.DescriptorProtos$ServiceOptions$Builder",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.protobuf.DescriptorProtos$SourceCodeInfo",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.protobuf.DescriptorProtos$SourceCodeInfo$Builder",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.protobuf.DescriptorProtos$SourceCodeInfo$Location",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.protobuf.DescriptorProtos$SourceCodeInfo$Location$Builder",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.protobuf.DescriptorProtos$UninterpretedOption",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.protobuf.DescriptorProtos$UninterpretedOption$Builder",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.protobuf.DescriptorProtos$UninterpretedOption$NamePart",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.protobuf.DescriptorProtos$UninterpretedOption$NamePart$Builder",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1138,7 +1489,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1147,7 +1498,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1156,7 +1507,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1165,7 +1516,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1174,7 +1525,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1183,7 +1534,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1192,7 +1543,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1201,7 +1552,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1210,7 +1561,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1219,25 +1570,25 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.BadRequest.FieldViolation",
+    "name": "com.google.rpc.BadRequest$FieldViolation",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.BadRequest.FieldViolation$Builder",
+    "name": "com.google.rpc.BadRequest$FieldViolation$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1246,7 +1597,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1255,7 +1606,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1264,7 +1615,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1273,7 +1624,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1282,7 +1633,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1291,25 +1642,25 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.Help.Link",
+    "name": "com.google.rpc.Help$Link",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.Help.Link$Builder",
+    "name": "com.google.rpc.Help$Link$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1318,7 +1669,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1327,7 +1678,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1336,7 +1687,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1345,25 +1696,25 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.PreconditionFailure.Violation",
+    "name": "com.google.rpc.PreconditionFailure$Violation",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.PreconditionFailure.Violation$Builder",
+    "name": "com.google.rpc.PreconditionFailure$Violation$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1372,7 +1723,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1381,25 +1732,25 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.QuotaFailure.Violation",
+    "name": "com.google.rpc.QuotaFailure$Violation",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.QuotaFailure.Violation$Builder",
+    "name": "com.google.rpc.QuotaFailure$Violation$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1408,7 +1759,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1417,7 +1768,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1426,7 +1777,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1435,7 +1786,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1444,7 +1795,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1453,7 +1804,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1462,7 +1813,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1471,7 +1822,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1480,7 +1831,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1489,7 +1840,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1498,7 +1849,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1507,7 +1858,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1516,7 +1867,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1525,7 +1876,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1534,7 +1885,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1543,7 +1894,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1552,7 +1903,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1561,7 +1912,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1570,7 +1921,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1579,7 +1930,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1588,7 +1939,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1597,7 +1948,16 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.showcase.v1beta1.ComplianceData$LifeKingdom",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1606,7 +1966,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1615,7 +1975,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1624,7 +1984,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1633,7 +1993,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1642,7 +2002,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1651,7 +2011,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1660,7 +2020,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1669,7 +2029,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1678,7 +2038,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1687,25 +2047,25 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ConnectRequest.ConnectConfig",
+    "name": "com.google.showcase.v1beta1.ConnectRequest$ConnectConfig",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ConnectRequest.ConnectConfig$Builder",
+    "name": "com.google.showcase.v1beta1.ConnectRequest$ConnectConfig$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1714,7 +2074,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1723,7 +2083,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1732,7 +2092,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1741,7 +2101,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1750,7 +2110,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1759,7 +2119,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1768,7 +2128,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1777,7 +2137,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1786,7 +2146,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1795,7 +2155,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1804,7 +2164,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1813,7 +2173,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1822,7 +2182,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1831,7 +2191,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1840,7 +2200,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1849,7 +2209,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1858,7 +2218,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1867,7 +2227,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1876,7 +2236,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1885,7 +2245,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1894,7 +2254,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1903,7 +2263,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1912,7 +2272,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1921,7 +2281,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1930,7 +2290,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1939,7 +2299,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1948,7 +2308,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1957,7 +2317,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1966,7 +2326,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1975,7 +2335,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1984,7 +2344,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -1993,7 +2353,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2002,7 +2362,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2011,7 +2371,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2020,7 +2380,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2029,7 +2389,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2038,7 +2398,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2047,7 +2407,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2056,7 +2416,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2065,7 +2425,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2074,7 +2434,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2083,7 +2443,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2092,7 +2452,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2101,7 +2461,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2110,7 +2470,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2119,7 +2479,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2128,7 +2488,25 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.showcase.v1beta1.Issue$Severity",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.showcase.v1beta1.Issue$Type",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2137,7 +2515,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2146,7 +2524,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2155,7 +2533,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2164,7 +2542,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2173,7 +2551,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2182,7 +2560,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2191,7 +2569,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2200,7 +2578,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2209,7 +2587,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2218,7 +2596,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2227,7 +2605,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2236,7 +2614,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2245,7 +2623,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2254,7 +2632,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2263,7 +2641,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2272,7 +2650,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2281,7 +2659,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2290,7 +2668,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2299,7 +2677,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2308,7 +2686,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2317,7 +2695,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2326,7 +2704,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2335,7 +2713,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2344,7 +2722,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2353,7 +2731,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2362,7 +2740,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2371,7 +2749,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2380,7 +2758,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2389,7 +2767,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2398,7 +2776,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2407,7 +2785,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2416,7 +2794,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2425,7 +2803,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2434,7 +2812,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2443,7 +2821,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2452,7 +2830,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2461,7 +2839,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2470,7 +2848,16 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.showcase.v1beta1.ReportSessionResponse$Result",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2479,7 +2866,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2488,7 +2875,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2497,7 +2884,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2506,7 +2893,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2515,7 +2902,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2524,7 +2911,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2533,7 +2920,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2542,7 +2929,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2551,7 +2938,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2560,7 +2947,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2569,7 +2956,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2578,25 +2965,25 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.Sequence.Response",
+    "name": "com.google.showcase.v1beta1.Sequence$Response",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.Sequence.Response$Builder",
+    "name": "com.google.showcase.v1beta1.Sequence$Response$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2605,7 +2992,25 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.showcase.v1beta1.SequenceReport$Attempt",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.showcase.v1beta1.SequenceReport$Attempt$Builder",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2614,25 +3019,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.SequenceReport.Attempt",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.SequenceReport.Attempt$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2641,7 +3028,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2650,7 +3037,16 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.showcase.v1beta1.Session$Version",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2659,7 +3055,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2668,7 +3064,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2677,7 +3073,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2686,7 +3082,16 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.showcase.v1beta1.StreamBlurbsResponse$Action",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2695,7 +3100,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2704,7 +3109,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2713,25 +3118,25 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.StreamingSequence.Response",
+    "name": "com.google.showcase.v1beta1.StreamingSequence$Response",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.StreamingSequence.Response$Builder",
+    "name": "com.google.showcase.v1beta1.StreamingSequence$Response$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2740,7 +3145,25 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.showcase.v1beta1.StreamingSequenceReport$Attempt",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.showcase.v1beta1.StreamingSequenceReport$Attempt$Builder",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2749,25 +3172,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.StreamingSequenceReport.Attempt",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.StreamingSequenceReport.Attempt$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2776,7 +3181,43 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.showcase.v1beta1.Test$Blueprint",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.showcase.v1beta1.Test$Blueprint$Builder",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.showcase.v1beta1.Test$Blueprint$Invocation",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.showcase.v1beta1.Test$Blueprint$Invocation$Builder",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2785,43 +3226,16 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.Test.Blueprint",
+    "name": "com.google.showcase.v1beta1.Test$ExpectationLevel",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.Test.Blueprint$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.Test.Blueprint.Invocation",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.Test.Blueprint.Invocation$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2830,7 +3244,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2839,7 +3253,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2848,7 +3262,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2857,7 +3271,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2866,7 +3280,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2875,7 +3289,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2884,7 +3298,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2893,7 +3307,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2902,7 +3316,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2911,7 +3325,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2920,7 +3334,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2929,7 +3343,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2938,7 +3352,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2947,7 +3361,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2956,7 +3370,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2965,7 +3379,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2974,7 +3388,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2983,7 +3397,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -2992,7 +3406,7 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   },
@@ -3001,7 +3415,25 @@
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
-    "queryAllPublicMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.type.Expr",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
+    "allDeclaredClasses": true,
+    "allPublicClasses": true
+  },
+  {
+    "name": "com.google.type.Expr$Builder",
+    "queryAllDeclaredConstructors": true,
+    "queryAllPublicConstructors": true,
+    "queryAllDeclaredMethods": true,
+    "allPublicMethods": true,
     "allDeclaredClasses": true,
     "allPublicClasses": true
   }

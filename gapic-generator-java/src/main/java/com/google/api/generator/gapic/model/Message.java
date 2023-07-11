@@ -74,6 +74,8 @@ public abstract class Message {
   // [Foo, Bar, Car].
   public abstract ImmutableList<String> outerNestedTypes();
 
+  public abstract ImmutableList<String> nestedEnums();
+
   public abstract Builder toBuilder();
 
   public boolean isEnum() {
@@ -150,6 +152,7 @@ public abstract class Message {
 
   public static Builder builder() {
     return new AutoValue_Message.Builder()
+        .setNestedEnums(Collections.emptyList())
         .setOuterNestedTypes(Collections.emptyList())
         .setFields(Collections.emptyList())
         .setFieldMap(Collections.emptyMap())
@@ -187,6 +190,8 @@ public abstract class Message {
 
     public abstract Builder setOperationResponseFields(
         BiMap<String, String> operationRequestFields);
+
+    public abstract Builder setNestedEnums(List<String> nestedEnums);
 
     abstract Builder setFieldMap(Map<String, Field> fieldMap);
 
