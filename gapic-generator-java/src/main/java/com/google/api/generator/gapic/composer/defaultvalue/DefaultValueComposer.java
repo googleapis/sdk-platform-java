@@ -102,8 +102,7 @@ public class DefaultValueComposer {
     }
 
     if (methodArg.type().equals(methodArg.field().type())) {
-      return createValue(
-          methodArg.field(), false, resourceNames, messageTypes, valuePatterns, bindings);
+      return createValue(methodArg.field(), false, resourceNames, messageTypes, valuePatterns, bindings);
     }
 
     return createValue(Field.builder().setName(methodArg.name()).setType(methodArg.type()).build());
@@ -422,8 +421,7 @@ public class DefaultValueComposer {
         }
 
         if (defaultExpr == null) {
-          defaultExpr =
-              createValue(field, true, resourceNames, messageTypes, valuePatterns, bindings);
+          defaultExpr = createValue(field, true, resourceNames, messageTypes, valuePatterns, bindings);
         }
       }
       builderExpr =
