@@ -414,78 +414,6 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.cloud.location.GetLocationRequest",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.cloud.location.GetLocationRequest$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.cloud.location.ListLocationsRequest",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.cloud.location.ListLocationsRequest$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.cloud.location.ListLocationsResponse",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.cloud.location.ListLocationsResponse$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.cloud.location.Location",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.cloud.location.Location$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
     "name": "com.google.iam.v1.AuditConfig",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
@@ -721,168 +649,6 @@
   },
   {
     "name": "com.google.iam.v1.TestIamPermissionsResponse$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.longrunning.CancelOperationRequest",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.longrunning.CancelOperationRequest$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.longrunning.DeleteOperationRequest",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.longrunning.DeleteOperationRequest$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.longrunning.GetOperationRequest",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.longrunning.GetOperationRequest$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.longrunning.ListOperationsRequest",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.longrunning.ListOperationsRequest$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.longrunning.ListOperationsResponse",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.longrunning.ListOperationsResponse$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.longrunning.Operation",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.longrunning.Operation$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.longrunning.OperationInfo",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.longrunning.OperationInfo$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.longrunning.WaitOperationRequest",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.longrunning.WaitOperationRequest$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.protobuf.Any",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.protobuf.Any$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1557,7 +1323,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.BadRequest",
+    "name": "com.google.storage.v2.Bucket",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1566,7 +1332,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.BadRequest$Builder",
+    "name": "com.google.storage.v2.Bucket$Autoclass",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1575,7 +1341,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.BadRequest$FieldViolation",
+    "name": "com.google.storage.v2.Bucket$Autoclass$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1584,7 +1350,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.BadRequest$FieldViolation$Builder",
+    "name": "com.google.storage.v2.Bucket$Billing",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1593,7 +1359,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.DebugInfo",
+    "name": "com.google.storage.v2.Bucket$Billing$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1602,7 +1368,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.DebugInfo$Builder",
+    "name": "com.google.storage.v2.Bucket$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1611,7 +1377,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.ErrorInfo",
+    "name": "com.google.storage.v2.Bucket$Cors",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1620,7 +1386,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.ErrorInfo$Builder",
+    "name": "com.google.storage.v2.Bucket$Cors$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1629,7 +1395,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.Help",
+    "name": "com.google.storage.v2.Bucket$CustomPlacementConfig",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1638,7 +1404,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.Help$Builder",
+    "name": "com.google.storage.v2.Bucket$CustomPlacementConfig$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1647,7 +1413,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.Help$Link",
+    "name": "com.google.storage.v2.Bucket$Encryption",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1656,7 +1422,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.Help$Link$Builder",
+    "name": "com.google.storage.v2.Bucket$Encryption$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1665,7 +1431,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.LocalizedMessage",
+    "name": "com.google.storage.v2.Bucket$IamConfig",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1674,7 +1440,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.LocalizedMessage$Builder",
+    "name": "com.google.storage.v2.Bucket$IamConfig$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1683,7 +1449,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.PreconditionFailure",
+    "name": "com.google.storage.v2.Bucket$IamConfig$UniformBucketLevelAccess",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1692,7 +1458,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.PreconditionFailure$Builder",
+    "name": "com.google.storage.v2.Bucket$IamConfig$UniformBucketLevelAccess$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1701,7 +1467,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.PreconditionFailure$Violation",
+    "name": "com.google.storage.v2.Bucket$Lifecycle",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1710,7 +1476,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.PreconditionFailure$Violation$Builder",
+    "name": "com.google.storage.v2.Bucket$Lifecycle$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1719,7 +1485,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.QuotaFailure",
+    "name": "com.google.storage.v2.Bucket$Lifecycle$Rule",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1728,7 +1494,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.QuotaFailure$Builder",
+    "name": "com.google.storage.v2.Bucket$Lifecycle$Rule$Action",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1737,7 +1503,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.QuotaFailure$Violation",
+    "name": "com.google.storage.v2.Bucket$Lifecycle$Rule$Action$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1746,7 +1512,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.QuotaFailure$Violation$Builder",
+    "name": "com.google.storage.v2.Bucket$Lifecycle$Rule$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1755,7 +1521,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.RequestInfo",
+    "name": "com.google.storage.v2.Bucket$Lifecycle$Rule$Condition",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1764,7 +1530,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.RequestInfo$Builder",
+    "name": "com.google.storage.v2.Bucket$Lifecycle$Rule$Condition$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1773,7 +1539,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.ResourceInfo",
+    "name": "com.google.storage.v2.Bucket$Logging",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1782,7 +1548,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.ResourceInfo$Builder",
+    "name": "com.google.storage.v2.Bucket$Logging$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1791,7 +1557,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.RetryInfo",
+    "name": "com.google.storage.v2.Bucket$RetentionPolicy",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1800,7 +1566,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.RetryInfo$Builder",
+    "name": "com.google.storage.v2.Bucket$RetentionPolicy$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1809,7 +1575,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.Status",
+    "name": "com.google.storage.v2.Bucket$Versioning",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1818,7 +1584,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.rpc.Status$Builder",
+    "name": "com.google.storage.v2.Bucket$Versioning$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1827,7 +1593,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.AttemptSequenceRequest",
+    "name": "com.google.storage.v2.Bucket$Website",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1836,7 +1602,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.AttemptSequenceRequest$Builder",
+    "name": "com.google.storage.v2.Bucket$Website$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1845,7 +1611,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.AttemptStreamingSequenceRequest",
+    "name": "com.google.storage.v2.BucketAccessControl",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1854,7 +1620,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.AttemptStreamingSequenceRequest$Builder",
+    "name": "com.google.storage.v2.BucketAccessControl$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1863,7 +1629,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.AttemptStreamingSequenceResponse",
+    "name": "com.google.storage.v2.CancelResumableWriteRequest",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1872,7 +1638,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.AttemptStreamingSequenceResponse$Builder",
+    "name": "com.google.storage.v2.CancelResumableWriteRequest$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1881,7 +1647,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.BlockRequest",
+    "name": "com.google.storage.v2.CancelResumableWriteResponse",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1890,7 +1656,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.BlockRequest$Builder",
+    "name": "com.google.storage.v2.CancelResumableWriteResponse$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1899,7 +1665,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.BlockResponse",
+    "name": "com.google.storage.v2.ChecksummedData",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1908,7 +1674,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.BlockResponse$Builder",
+    "name": "com.google.storage.v2.ChecksummedData$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1917,7 +1683,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.Blurb",
+    "name": "com.google.storage.v2.CommonObjectRequestParams",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1926,7 +1692,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.Blurb$Builder",
+    "name": "com.google.storage.v2.CommonObjectRequestParams$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1935,7 +1701,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ComplianceData",
+    "name": "com.google.storage.v2.ComposeObjectRequest",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1944,7 +1710,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ComplianceData$Builder",
+    "name": "com.google.storage.v2.ComposeObjectRequest$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1953,7 +1719,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ComplianceData$LifeKingdom",
+    "name": "com.google.storage.v2.ComposeObjectRequest$SourceObject",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1962,7 +1728,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ComplianceDataChild",
+    "name": "com.google.storage.v2.ComposeObjectRequest$SourceObject$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1971,7 +1737,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ComplianceDataChild$Builder",
+    "name": "com.google.storage.v2.ComposeObjectRequest$SourceObject$ObjectPreconditions",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1980,7 +1746,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ComplianceDataGrandchild",
+    "name": "com.google.storage.v2.ComposeObjectRequest$SourceObject$ObjectPreconditions$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1989,7 +1755,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ComplianceDataGrandchild$Builder",
+    "name": "com.google.storage.v2.ContentRange",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -1998,7 +1764,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ComplianceGroup",
+    "name": "com.google.storage.v2.ContentRange$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2007,7 +1773,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ComplianceGroup$Builder",
+    "name": "com.google.storage.v2.CreateBucketRequest",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2016,7 +1782,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ComplianceSuite",
+    "name": "com.google.storage.v2.CreateBucketRequest$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2025,7 +1791,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ComplianceSuite$Builder",
+    "name": "com.google.storage.v2.CreateHmacKeyRequest",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2034,7 +1800,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ConnectRequest",
+    "name": "com.google.storage.v2.CreateHmacKeyRequest$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2043,7 +1809,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ConnectRequest$Builder",
+    "name": "com.google.storage.v2.CreateHmacKeyResponse",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2052,7 +1818,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ConnectRequest$ConnectConfig",
+    "name": "com.google.storage.v2.CreateHmacKeyResponse$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2061,7 +1827,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ConnectRequest$ConnectConfig$Builder",
+    "name": "com.google.storage.v2.CreateNotificationRequest",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2070,7 +1836,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.Continent",
+    "name": "com.google.storage.v2.CreateNotificationRequest$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2079,7 +1845,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.CreateBlurbRequest",
+    "name": "com.google.storage.v2.CustomerEncryption",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2088,7 +1854,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.CreateBlurbRequest$Builder",
+    "name": "com.google.storage.v2.CustomerEncryption$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2097,7 +1863,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.CreateRoomRequest",
+    "name": "com.google.storage.v2.DeleteBucketRequest",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2106,7 +1872,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.CreateRoomRequest$Builder",
+    "name": "com.google.storage.v2.DeleteBucketRequest$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2115,7 +1881,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.CreateSequenceRequest",
+    "name": "com.google.storage.v2.DeleteHmacKeyRequest",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2124,7 +1890,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.CreateSequenceRequest$Builder",
+    "name": "com.google.storage.v2.DeleteHmacKeyRequest$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2133,7 +1899,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.CreateSessionRequest",
+    "name": "com.google.storage.v2.DeleteNotificationRequest",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2142,7 +1908,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.CreateSessionRequest$Builder",
+    "name": "com.google.storage.v2.DeleteNotificationRequest$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2151,7 +1917,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.CreateStreamingSequenceRequest",
+    "name": "com.google.storage.v2.DeleteObjectRequest",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2160,7 +1926,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.CreateStreamingSequenceRequest$Builder",
+    "name": "com.google.storage.v2.DeleteObjectRequest$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2169,7 +1935,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.CreateUserRequest",
+    "name": "com.google.storage.v2.GetBucketRequest",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2178,7 +1944,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.CreateUserRequest$Builder",
+    "name": "com.google.storage.v2.GetBucketRequest$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2187,7 +1953,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.DeleteBlurbRequest",
+    "name": "com.google.storage.v2.GetHmacKeyRequest",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2196,7 +1962,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.DeleteBlurbRequest$Builder",
+    "name": "com.google.storage.v2.GetHmacKeyRequest$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2205,7 +1971,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.DeleteRoomRequest",
+    "name": "com.google.storage.v2.GetNotificationRequest",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2214,7 +1980,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.DeleteRoomRequest$Builder",
+    "name": "com.google.storage.v2.GetNotificationRequest$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2223,7 +1989,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.DeleteSessionRequest",
+    "name": "com.google.storage.v2.GetObjectRequest",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2232,7 +1998,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.DeleteSessionRequest$Builder",
+    "name": "com.google.storage.v2.GetObjectRequest$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2241,7 +2007,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.DeleteTestRequest",
+    "name": "com.google.storage.v2.GetServiceAccountRequest",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2250,7 +2016,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.DeleteTestRequest$Builder",
+    "name": "com.google.storage.v2.GetServiceAccountRequest$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2259,7 +2025,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.DeleteUserRequest",
+    "name": "com.google.storage.v2.HmacKeyMetadata",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2268,7 +2034,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.DeleteUserRequest$Builder",
+    "name": "com.google.storage.v2.HmacKeyMetadata$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2277,7 +2043,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.EchoRequest",
+    "name": "com.google.storage.v2.ListBucketsRequest",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2286,7 +2052,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.EchoRequest$Builder",
+    "name": "com.google.storage.v2.ListBucketsRequest$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2295,7 +2061,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.EchoResponse",
+    "name": "com.google.storage.v2.ListBucketsResponse",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2304,7 +2070,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.EchoResponse$Builder",
+    "name": "com.google.storage.v2.ListBucketsResponse$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2313,7 +2079,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.EnumRequest",
+    "name": "com.google.storage.v2.ListHmacKeysRequest",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2322,7 +2088,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.EnumRequest$Builder",
+    "name": "com.google.storage.v2.ListHmacKeysRequest$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2331,7 +2097,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.EnumResponse",
+    "name": "com.google.storage.v2.ListHmacKeysResponse",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2340,7 +2106,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.EnumResponse$Builder",
+    "name": "com.google.storage.v2.ListHmacKeysResponse$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2349,7 +2115,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ExpandRequest",
+    "name": "com.google.storage.v2.ListNotificationsRequest",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2358,7 +2124,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ExpandRequest$Builder",
+    "name": "com.google.storage.v2.ListNotificationsRequest$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2367,7 +2133,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.GetBlurbRequest",
+    "name": "com.google.storage.v2.ListNotificationsResponse",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2376,7 +2142,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.GetBlurbRequest$Builder",
+    "name": "com.google.storage.v2.ListNotificationsResponse$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2385,7 +2151,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.GetRoomRequest",
+    "name": "com.google.storage.v2.ListObjectsRequest",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2394,7 +2160,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.GetRoomRequest$Builder",
+    "name": "com.google.storage.v2.ListObjectsRequest$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2403,7 +2169,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.GetSequenceReportRequest",
+    "name": "com.google.storage.v2.ListObjectsResponse",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2412,7 +2178,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.GetSequenceReportRequest$Builder",
+    "name": "com.google.storage.v2.ListObjectsResponse$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2421,7 +2187,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.GetSessionRequest",
+    "name": "com.google.storage.v2.LockBucketRetentionPolicyRequest",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2430,7 +2196,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.GetSessionRequest$Builder",
+    "name": "com.google.storage.v2.LockBucketRetentionPolicyRequest$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2439,7 +2205,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.GetStreamingSequenceReportRequest",
+    "name": "com.google.storage.v2.Notification",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2448,7 +2214,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.GetStreamingSequenceReportRequest$Builder",
+    "name": "com.google.storage.v2.Notification$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2457,7 +2223,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.GetUserRequest",
+    "name": "com.google.storage.v2.Object",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2466,7 +2232,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.GetUserRequest$Builder",
+    "name": "com.google.storage.v2.Object$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2475,7 +2241,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.Issue",
+    "name": "com.google.storage.v2.ObjectAccessControl",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2484,7 +2250,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.Issue$Builder",
+    "name": "com.google.storage.v2.ObjectAccessControl$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2493,7 +2259,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.Issue$Severity",
+    "name": "com.google.storage.v2.ObjectChecksums",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2502,7 +2268,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.Issue$Type",
+    "name": "com.google.storage.v2.ObjectChecksums$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2511,7 +2277,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ListBlurbsRequest",
+    "name": "com.google.storage.v2.Owner",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2520,7 +2286,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ListBlurbsRequest$Builder",
+    "name": "com.google.storage.v2.Owner$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2529,7 +2295,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ListBlurbsResponse",
+    "name": "com.google.storage.v2.ProjectTeam",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2538,7 +2304,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ListBlurbsResponse$Builder",
+    "name": "com.google.storage.v2.ProjectTeam$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2547,7 +2313,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ListRoomsRequest",
+    "name": "com.google.storage.v2.QueryWriteStatusRequest",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2556,7 +2322,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ListRoomsRequest$Builder",
+    "name": "com.google.storage.v2.QueryWriteStatusRequest$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2565,7 +2331,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ListRoomsResponse",
+    "name": "com.google.storage.v2.QueryWriteStatusResponse",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2574,7 +2340,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ListRoomsResponse$Builder",
+    "name": "com.google.storage.v2.QueryWriteStatusResponse$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2583,7 +2349,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ListSessionsRequest",
+    "name": "com.google.storage.v2.ReadObjectRequest",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2592,7 +2358,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ListSessionsRequest$Builder",
+    "name": "com.google.storage.v2.ReadObjectRequest$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2601,7 +2367,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ListSessionsResponse",
+    "name": "com.google.storage.v2.ReadObjectResponse",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2610,7 +2376,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ListSessionsResponse$Builder",
+    "name": "com.google.storage.v2.ReadObjectResponse$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2619,7 +2385,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ListTestsRequest",
+    "name": "com.google.storage.v2.RewriteObjectRequest",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2628,7 +2394,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ListTestsRequest$Builder",
+    "name": "com.google.storage.v2.RewriteObjectRequest$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2637,7 +2403,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ListTestsResponse",
+    "name": "com.google.storage.v2.RewriteResponse",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2646,7 +2412,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ListTestsResponse$Builder",
+    "name": "com.google.storage.v2.RewriteResponse$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2655,7 +2421,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ListUsersRequest",
+    "name": "com.google.storage.v2.ServiceAccount",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2664,7 +2430,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ListUsersRequest$Builder",
+    "name": "com.google.storage.v2.ServiceAccount$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2673,7 +2439,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ListUsersResponse",
+    "name": "com.google.storage.v2.ServiceConstants",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2682,7 +2448,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ListUsersResponse$Builder",
+    "name": "com.google.storage.v2.ServiceConstants$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2691,7 +2457,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.PagedExpandLegacyMappedResponse",
+    "name": "com.google.storage.v2.ServiceConstants$Values",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2700,7 +2466,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.PagedExpandLegacyMappedResponse$Builder",
+    "name": "com.google.storage.v2.StartResumableWriteRequest",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2709,7 +2475,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.PagedExpandLegacyRequest",
+    "name": "com.google.storage.v2.StartResumableWriteRequest$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2718,7 +2484,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.PagedExpandLegacyRequest$Builder",
+    "name": "com.google.storage.v2.StartResumableWriteResponse",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2727,7 +2493,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.PagedExpandRequest",
+    "name": "com.google.storage.v2.StartResumableWriteResponse$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2736,7 +2502,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.PagedExpandRequest$Builder",
+    "name": "com.google.storage.v2.UpdateBucketRequest",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2745,7 +2511,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.PagedExpandResponse",
+    "name": "com.google.storage.v2.UpdateBucketRequest$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2754,7 +2520,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.PagedExpandResponse$Builder",
+    "name": "com.google.storage.v2.UpdateHmacKeyRequest",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2763,7 +2529,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.PagedExpandResponseList",
+    "name": "com.google.storage.v2.UpdateHmacKeyRequest$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2772,7 +2538,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.PagedExpandResponseList$Builder",
+    "name": "com.google.storage.v2.UpdateObjectRequest",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2781,7 +2547,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.RepeatRequest",
+    "name": "com.google.storage.v2.UpdateObjectRequest$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2790,7 +2556,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.RepeatRequest$Builder",
+    "name": "com.google.storage.v2.WriteObjectRequest",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2799,7 +2565,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.RepeatResponse",
+    "name": "com.google.storage.v2.WriteObjectRequest$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2808,7 +2574,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.RepeatResponse$Builder",
+    "name": "com.google.storage.v2.WriteObjectResponse",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2817,7 +2583,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ReportSessionRequest",
+    "name": "com.google.storage.v2.WriteObjectResponse$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2826,7 +2592,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ReportSessionRequest$Builder",
+    "name": "com.google.storage.v2.WriteObjectSpec",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2835,7 +2601,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ReportSessionResponse",
+    "name": "com.google.storage.v2.WriteObjectSpec$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2844,7 +2610,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ReportSessionResponse$Builder",
+    "name": "com.google.type.Date",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
@@ -2853,565 +2619,7 @@
     "allPublicClasses": true
   },
   {
-    "name": "com.google.showcase.v1beta1.ReportSessionResponse$Result",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.Room",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.Room$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.SearchBlurbsMetadata",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.SearchBlurbsMetadata$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.SearchBlurbsRequest",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.SearchBlurbsRequest$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.SearchBlurbsResponse",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.SearchBlurbsResponse$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.SendBlurbsResponse",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.SendBlurbsResponse$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.Sequence",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.Sequence$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.Sequence$Response",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.Sequence$Response$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.SequenceReport",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.SequenceReport$Attempt",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.SequenceReport$Attempt$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.SequenceReport$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.Session",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.Session$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.Session$Version",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.Severity",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.StreamBlurbsRequest",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.StreamBlurbsRequest$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.StreamBlurbsResponse",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.StreamBlurbsResponse$Action",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.StreamBlurbsResponse$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.StreamingSequence",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.StreamingSequence$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.StreamingSequence$Response",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.StreamingSequence$Response$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.StreamingSequenceReport",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.StreamingSequenceReport$Attempt",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.StreamingSequenceReport$Attempt$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.StreamingSequenceReport$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.Test",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.Test$Blueprint",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.Test$Blueprint$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.Test$Blueprint$Invocation",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.Test$Blueprint$Invocation$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.Test$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.Test$ExpectationLevel",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.TestRun",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.TestRun$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.UpdateBlurbRequest",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.UpdateBlurbRequest$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.UpdateRoomRequest",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.UpdateRoomRequest$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.UpdateUserRequest",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.UpdateUserRequest$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.User",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.User$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.VerifyTestRequest",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.VerifyTestRequest$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.VerifyTestResponse",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.VerifyTestResponse$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.WaitMetadata",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.WaitMetadata$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.WaitRequest",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.WaitRequest$Builder",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.WaitResponse",
-    "queryAllDeclaredConstructors": true,
-    "queryAllPublicConstructors": true,
-    "queryAllDeclaredMethods": true,
-    "allPublicMethods": true,
-    "allDeclaredClasses": true,
-    "allPublicClasses": true
-  },
-  {
-    "name": "com.google.showcase.v1beta1.WaitResponse$Builder",
+    "name": "com.google.type.Date$Builder",
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
