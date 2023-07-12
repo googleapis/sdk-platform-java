@@ -9,6 +9,7 @@ clear_existing() {
   cd "$SHOWCASE_DIR/$1"
   find . -name '*.java' -not -path '*/it/*' -delete
   find . -name 'gapic_metadata.json' -delete
+  find . -name 'reflect-config.json' -delete
   cd -
 }
 create_unpack_dir() {
@@ -57,6 +58,6 @@ case $1 in
 
     unzip -q -c "$BAZEL_ROOT/$GAPIC_JAR" temp-codegen.srcjar | jar x
     delete_unneeded
-    diff -ru "$SHOWCASE_DIR/$GAPIC_PROJECT_DIR"/src "$GAPIC_UNPACK_DIR"/src --exclude=it --exclude=resources --exclude=*.iml
+    diff -ru "$SHOWCASE_DIR/$GAPIC_PROJECT_DIR"/src "$GAPIC_UNPACK_DIR"/src --exclude=it --exclude=*.iml
     ;;
 esac
