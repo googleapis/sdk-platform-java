@@ -23,6 +23,7 @@ import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.gapic.model.Sample;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.protobuf.ByteString;
@@ -87,7 +88,8 @@ public class Writer {
     return response.build();
   }
 
-  private static void writeReflectConfigFile(
+  @VisibleForTesting
+  static void writeReflectConfigFile(
       String pakkage, List<ReflectConfig> reflectConfigInfo, JarOutputStream jos) {
     if (reflectConfigInfo.isEmpty()) {
       return;
@@ -101,7 +103,7 @@ public class Writer {
       jos.putNextEntry(jarEntry);
       jos.write(prettyGson.toJson(reflectConfigInfo).getBytes(StandardCharsets.UTF_8));
     } catch (IOException e) {
-      throw new GapicWriterException("Could not write gapic_metadata.json", e);
+      throw new GapicWriterException("Could not write reflect-config.json", e);
     }
   }
 

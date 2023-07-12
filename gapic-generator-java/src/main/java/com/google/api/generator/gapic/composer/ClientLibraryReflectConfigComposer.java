@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClientLibraryReflectConfigComposer {
+  private ClientLibraryReflectConfigComposer() {} // Disallow instance creation
 
   public static List<ReflectConfig> generateReflectConfig(GapicContext context) {
     List<String> allConfigs = new ArrayList<>();
@@ -78,12 +79,13 @@ public class ClientLibraryReflectConfigComposer {
     boolean allDeclaredClasses = true;
     boolean allPublicClasses = true;
 
-    ReflectConfig(String name) {
+    @VisibleForTesting
+    public ReflectConfig(String name) {
       this.name = name;
     }
 
     @VisibleForTesting
-    String getName() {
+    public String getName() {
       return name;
     }
   }
