@@ -58,6 +58,13 @@ case $1 in
 
     unzip -q -c "$BAZEL_ROOT/$GAPIC_JAR" temp-codegen.srcjar | jar x
     delete_unneeded
-    diff -ru "$SHOWCASE_DIR/$GAPIC_PROJECT_DIR"/src "$GAPIC_UNPACK_DIR"/src --exclude=it --exclude=test/resources --exclude=*.iml
+
+    # "diff --exclude" matches against file and directory basenames, not pathnames.
+    # To exclude "test/resources" without excluding "main/resources", we copy the showcase project
+    # to a temporary directory, and delete what we want to exclude.
+    cp -r "$SHOWCASE_DIR/$GAPIC_PROJECT_DIR"/src "$GAPIC_UNPACK_DIR"/golden
+    rm -r "$GAPIC_UNPACK_DIR"/golden/test/java/com/google/showcase/v1beta1/it
+    rm -r "$GAPIC_UNPACK_DIR"/golden/test/resources
+    diff -ru "$GAPIC_UNPACK_DIR"/golden "$GAPIC_UNPACK_DIR"/src --exclude=*.iml
     ;;
 esac
