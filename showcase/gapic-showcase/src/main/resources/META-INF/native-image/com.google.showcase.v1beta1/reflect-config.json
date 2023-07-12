@@ -154,6 +154,7 @@
   },
   {
     "name": "com.google.api.HttpRule",
+    "force-test-failure": true,
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,

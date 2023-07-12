@@ -10,6 +10,7 @@
   },
   {
     "name": "com.google.api.ClientLibraryOrganization",
+    "force-test-failure": true,
     "queryAllDeclaredConstructors": true,
     "queryAllPublicConstructors": true,
     "queryAllDeclaredMethods": true,
