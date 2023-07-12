@@ -16,6 +16,7 @@ package com.google.api.generator.gapic.composer;
 
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Message;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ public class ClientLibraryReflectConfigComposer {
 
   public static List<ReflectConfig> generateReflectConfig(GapicContext context) {
     List<String> allConfigs = new ArrayList<>();
-    context.messages().forEach((id, msg) -> allConfigs.addAll(parseReflectConfig(id, msg)));
+    context.messages().forEach((id, msg) -> allConfigs.addAll(calculateReflectConfigList(id, msg)));
     return allConfigs.stream()
         .distinct()
         .sorted()
@@ -33,7 +34,8 @@ public class ClientLibraryReflectConfigComposer {
   }
 
   /** List all classes in the message that should have a reflect-config entry */
-  private static List<String> parseReflectConfig(String id, Message message) {
+  @VisibleForTesting
+  static List<String> calculateReflectConfigList(String id, Message message) {
     final String name = formatNestedClasses(id);
 
     List<String> list = new ArrayList<>();
@@ -51,7 +53,8 @@ public class ClientLibraryReflectConfigComposer {
    * Replace '.' with '$' in fully qualified class names once the classes become nested. ex:
    * com.google.foo.Bar.Baz.Car becomes com.google.foo.Bar$Baz$Car
    */
-  private static String formatNestedClasses(String name) {
+  @VisibleForTesting
+  static String formatNestedClasses(String name) {
     StringBuilder result = new StringBuilder();
     boolean isNested = false;
     for (String s : name.split("\\.")) {
@@ -77,6 +80,11 @@ public class ClientLibraryReflectConfigComposer {
 
     ReflectConfig(String name) {
       this.name = name;
+    }
+
+    @VisibleForTesting
+    String getName() {
+      return name;
     }
   }
 }

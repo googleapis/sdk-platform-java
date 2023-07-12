@@ -81,7 +81,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Parser {
-
   private static final String COMMA = ",";
   private static final String COLON = ":";
   private static final String DEFAULT_PORT = "443";
@@ -105,7 +104,6 @@ public class Parser {
   protected static final SourceCodeInfoParser SOURCE_CODE_INFO_PARSER = new SourceCodeInfoParser();
 
   static class GapicParserException extends RuntimeException {
-
     public GapicParserException(String errorMessage) {
       super(errorMessage);
     }
@@ -601,7 +599,7 @@ public class Parser {
       }
     }
 
-    ImmutableList<String> nestedEnums =
+    List<String> nestedEnums =
         messageDescriptor.getEnumTypes().stream()
             .map(EnumDescriptor::getName)
             .collect(ImmutableList.toImmutableList());
