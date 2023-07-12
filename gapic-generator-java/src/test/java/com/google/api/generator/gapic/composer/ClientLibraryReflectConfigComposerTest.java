@@ -71,8 +71,7 @@ public class ClientLibraryReflectConfigComposerTest {
             "com.google.showcase.v1beta1.WaitRequest",
             "com.google.showcase.v1beta1.WaitRequest$Builder",
             "com.google.showcase.v1beta1.WaitResponse",
-            "com.google.showcase.v1beta1.WaitResponse$Builder"
-        );
+            "com.google.showcase.v1beta1.WaitResponse$Builder");
   }
 
   @Test
