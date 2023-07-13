@@ -4,7 +4,7 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
-import com.google.api.generator.gapic.composer.ClientLibraryReflectConfigComposer.ReflectConfig;
+import com.google.api.generator.gapic.model.ReflectConfig;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import java.io.File;

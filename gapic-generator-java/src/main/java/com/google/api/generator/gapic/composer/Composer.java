@@ -34,6 +34,7 @@ import com.google.api.generator.gapic.composer.rest.HttpJsonServiceStubClassComp
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
+import com.google.api.generator.gapic.model.ReflectConfig;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.Transport;

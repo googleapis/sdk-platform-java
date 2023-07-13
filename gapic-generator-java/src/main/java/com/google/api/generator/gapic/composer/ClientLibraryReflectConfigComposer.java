@@ -16,6 +16,7 @@ package com.google.api.generator.gapic.composer;
 
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Message;
+import com.google.api.generator.gapic.model.ReflectConfig;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
@@ -68,25 +69,5 @@ public class ClientLibraryReflectConfigComposer {
       }
     }
     return result.toString();
-  }
-
-  public static class ReflectConfig {
-    String name;
-    boolean queryAllDeclaredConstructors = true;
-    boolean queryAllPublicConstructors = true;
-    boolean queryAllDeclaredMethods = true;
-    boolean allPublicMethods = true;
-    boolean allDeclaredClasses = true;
-    boolean allPublicClasses = true;
-
-    @VisibleForTesting
-    public ReflectConfig(String name) {
-      this.name = name;
-    }
-
-    @VisibleForTesting
-    public String getName() {
-      return name;
-    }
   }
 }

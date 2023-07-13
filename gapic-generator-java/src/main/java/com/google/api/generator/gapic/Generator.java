@@ -19,6 +19,7 @@ import com.google.api.generator.gapic.composer.Composer;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
+import com.google.api.generator.gapic.model.ReflectConfig;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.gapic.protowriter.Writer;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
