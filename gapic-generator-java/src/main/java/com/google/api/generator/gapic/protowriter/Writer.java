@@ -108,8 +108,8 @@ public class Writer {
     // TODO: If we begin splitting the reflection configuration into gapic-specific, grpc-specific,
     // and proto-specific files, we will need to prevent collisions by either following the
     // recommended subdirectory structure, or adding a gapic/grpc/proto identifier to this path.
-    String jarEntryLocation = String.format(
-        "src/main/resources/META-INF/native-image/%s/reflect-config.json", pakkage);
+    String jarEntryLocation =
+        String.format("src/main/resources/META-INF/native-image/%s/reflect-config.json", pakkage);
     try {
       jos.putNextEntry(new JarEntry(jarEntryLocation));
       jos.write(prettyGson.toJson(reflectConfigInfo).getBytes(StandardCharsets.UTF_8));
