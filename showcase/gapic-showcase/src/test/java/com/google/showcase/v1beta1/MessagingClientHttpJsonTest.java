@@ -1786,9 +1786,7 @@ public class MessagingClientHttpJsonTest {
 
     SetIamPolicyRequest request =
         SetIamPolicyRequest.newBuilder()
-            .setResource(
-                BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-                    .toString())
+            .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
             .setPolicy(Policy.newBuilder().build())
             .setUpdateMask(FieldMask.newBuilder().build())
             .build();
@@ -1821,9 +1819,7 @@ public class MessagingClientHttpJsonTest {
     try {
       SetIamPolicyRequest request =
           SetIamPolicyRequest.newBuilder()
-              .setResource(
-                  BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-                      .toString())
+              .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
               .setPolicy(Policy.newBuilder().build())
               .setUpdateMask(FieldMask.newBuilder().build())
               .build();
@@ -1847,9 +1843,7 @@ public class MessagingClientHttpJsonTest {
 
     GetIamPolicyRequest request =
         GetIamPolicyRequest.newBuilder()
-            .setResource(
-                BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-                    .toString())
+            .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
             .setOptions(GetPolicyOptions.newBuilder().build())
             .build();
 
@@ -1881,9 +1875,7 @@ public class MessagingClientHttpJsonTest {
     try {
       GetIamPolicyRequest request =
           GetIamPolicyRequest.newBuilder()
-              .setResource(
-                  BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-                      .toString())
+              .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
               .setOptions(GetPolicyOptions.newBuilder().build())
               .build();
       client.getIamPolicy(request);
@@ -1901,9 +1893,7 @@ public class MessagingClientHttpJsonTest {
 
     TestIamPermissionsRequest request =
         TestIamPermissionsRequest.newBuilder()
-            .setResource(
-                BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-                    .toString())
+            .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
             .addAllPermissions(new ArrayList<String>())
             .build();
 
@@ -1935,9 +1925,7 @@ public class MessagingClientHttpJsonTest {
     try {
       TestIamPermissionsRequest request =
           TestIamPermissionsRequest.newBuilder()
-              .setResource(
-                  BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-                      .toString())
+              .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
               .addAllPermissions(new ArrayList<String>())
               .build();
       client.testIamPermissions(request);

@@ -697,9 +697,7 @@ public class EchoClientTest {
 
     SetIamPolicyRequest request =
         SetIamPolicyRequest.newBuilder()
-            .setResource(
-                BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-                    .toString())
+            .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
             .setPolicy(Policy.newBuilder().build())
             .setUpdateMask(FieldMask.newBuilder().build())
             .build();
@@ -728,9 +726,7 @@ public class EchoClientTest {
     try {
       SetIamPolicyRequest request =
           SetIamPolicyRequest.newBuilder()
-              .setResource(
-                  BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-                      .toString())
+              .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
               .setPolicy(Policy.newBuilder().build())
               .setUpdateMask(FieldMask.newBuilder().build())
               .build();
@@ -754,9 +750,7 @@ public class EchoClientTest {
 
     GetIamPolicyRequest request =
         GetIamPolicyRequest.newBuilder()
-            .setResource(
-                BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-                    .toString())
+            .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
             .setOptions(GetPolicyOptions.newBuilder().build())
             .build();
 
@@ -783,9 +777,7 @@ public class EchoClientTest {
     try {
       GetIamPolicyRequest request =
           GetIamPolicyRequest.newBuilder()
-              .setResource(
-                  BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-                      .toString())
+              .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
               .setOptions(GetPolicyOptions.newBuilder().build())
               .build();
       client.getIamPolicy(request);
@@ -803,9 +795,7 @@ public class EchoClientTest {
 
     TestIamPermissionsRequest request =
         TestIamPermissionsRequest.newBuilder()
-            .setResource(
-                BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-                    .toString())
+            .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
             .addAllPermissions(new ArrayList<String>())
             .build();
 
@@ -832,9 +822,7 @@ public class EchoClientTest {
     try {
       TestIamPermissionsRequest request =
           TestIamPermissionsRequest.newBuilder()
-              .setResource(
-                  BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-                      .toString())
+              .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
               .addAllPermissions(new ArrayList<String>())
               .build();
       client.testIamPermissions(request);

@@ -42,6 +42,7 @@ import com.google.api.generator.gapic.utils.ResourceNameConstants;
 import com.google.api.generator.gapic.utils.ResourceReferenceUtils;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.Operation;
 import com.google.protobuf.Any;
 import java.util.ArrayList;
@@ -232,7 +233,7 @@ public class DefaultValueComposer {
       String fieldOrMessageName,
       HttpBindings bindings) {
     return createResourceHelperValue(
-        resourceName, isChildType, resnames, fieldOrMessageName, true, bindings);
+        resourceName, isChildType, resnames, fieldOrMessageName, true, ImmutableMap.of(), bindings);
   }
 
   private static Optional<ResourceName> findParentResource(
@@ -262,6 +263,7 @@ public class DefaultValueComposer {
       List<ResourceName> resnames,
       String fieldOrMessageName,
       boolean allowAnonResourceNameClass,
+      Map<String, String> valuePatterns,
       HttpBindings bindings) {
 
     if (isChildType) {
@@ -275,8 +277,19 @@ public class DefaultValueComposer {
         if (!resname.isOnlyWildcard()
             && (bindings == null || resname.getMatchingPattern(bindings) != null)) {
           return createResourceHelperValue(
-              resname, false, unexaminedResnames, fieldOrMessageName, null);
+              resname, false, unexaminedResnames, fieldOrMessageName, bindings);
         }
+      }
+
+      // If there are no matching Resources then we need to construct it by ourselves
+      // by trying to match any pathPatterns
+      Optional<Map.Entry<String, String>> valuePattern =
+          valuePatterns.entrySet().stream().findFirst();
+      if (valuePattern.isPresent()) {
+        String javaFieldName = JavaStyle.toLowerCamelCase(valuePattern.get().getKey());
+        return ValueExpr.withValue(
+            StringObjectValue.withValue(
+                constructValueMatchingPattern(javaFieldName, valuePatterns.get(javaFieldName))));
       }
 
       return allowAnonResourceNameClass
@@ -387,6 +400,7 @@ public class DefaultValueComposer {
                 resourceNames.values().stream().collect(Collectors.toList()),
                 message.name(),
                 /* allowAnonResourceNameClass = */ false,
+                valuePatterns,
                 bindings);
         defaultExpr =
             MethodInvocationExpr.builder()
