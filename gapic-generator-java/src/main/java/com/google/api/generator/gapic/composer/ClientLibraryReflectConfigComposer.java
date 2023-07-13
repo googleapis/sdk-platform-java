@@ -27,7 +27,11 @@ public class ClientLibraryReflectConfigComposer {
 
   public static List<ReflectConfig> generateReflectConfig(GapicContext context) {
     List<String> allConfigs = new ArrayList<>();
-    context.messages().forEach((id, msg) -> allConfigs.addAll(calculateReflectConfigList(id, msg)));
+    context
+        .messages()
+        .forEach(
+            (fullyQualifiedClassName, msg) ->
+                allConfigs.addAll(calculateReflectConfigList(fullyQualifiedClassName, msg)));
     return allConfigs.stream()
         .distinct()
         .sorted()
@@ -35,31 +39,49 @@ public class ClientLibraryReflectConfigComposer {
         .collect(ImmutableList.toImmutableList());
   }
 
-  /** List all classes in the message that should have a reflect-config entry */
+  /**
+   * List the binary names of all classes in the Message that should have a reflect-config entry.
+   *
+   * <p>Note: Each reflect-config 'name' entry must be the "binary name" of a class to prevent
+   * ClassNotFoundException warnings during the native-image build.
+   *
+   * <p>Binary names (ex: `foo.Bar$Baz`) are guaranteed to be unique within a jar. By contrast,
+   * fully qualified class names (ex: `foo.Bar.Baz`) are only unique if standard Java package naming
+   * conventions are followed. A class `Baz` in package `foo.Bar` would have the same fully
+   * qualified class name as a nested class `Baz` in the class `Bar` in package `foo`.
+   *
+   * <p>See also the Java Language Specification @ 13.1.1 and 13.1.2 for specifics on the binary
+   * name format.
+   */
   @VisibleForTesting
-  static List<String> calculateReflectConfigList(String id, Message message) {
-    final String name = formatNestedClasses(id);
+  static List<String> calculateReflectConfigList(String fullyQualifiedClassName, Message message) {
+    final String binaryName = convertToBinaryName(fullyQualifiedClassName);
 
     List<String> list = new ArrayList<>();
-    list.add(name);
+    list.add(binaryName);
     for (String nestedEnum : message.nestedEnums()) {
-      list.add(name + "$" + nestedEnum);
+      list.add(binaryName + "$" + nestedEnum);
     }
     if (!message.isEnum()) {
-      list.add(name + "$Builder");
+      list.add(binaryName + "$Builder");
     }
     return list;
   }
 
   /**
-   * Replace '.' with '$' in fully qualified class names once the classes become nested. ex:
-   * com.google.foo.Bar.Baz.Car becomes com.google.foo.Bar$Baz$Car
+   * Replace '.' with '$' in fully qualified class names once the classes become nested.
+   *
+   * <p>For example, the fully qualified class name `com.google.foo.Bar.Baz.Car` becomes the binary
+   * name `com.google.foo.Bar$Baz$Car`.
+   *
+   * <p>This conversion works only when following standard Java naming conventions that packages
+   * always start with a lowercase letter, and classes always start with an uppercase letter.
    */
   @VisibleForTesting
-  static String formatNestedClasses(String name) {
+  static String convertToBinaryName(String fullyQualifiedClassName) {
     StringBuilder result = new StringBuilder();
     boolean isNested = false;
-    for (String s : name.split("\\.")) {
+    for (String s : fullyQualifiedClassName.split("\\.")) {
       if (result.length() != 0) {
         result.append(isNested ? "$" : ".");
       }

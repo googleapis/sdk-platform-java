@@ -113,21 +113,21 @@ public class ClientLibraryReflectConfigComposerTest {
 
   @Test
   public void formatNestedClassFullyQualifiedNames_noNested() {
-    assertEquals("a.B", ClientLibraryReflectConfigComposer.formatNestedClasses("a.B"));
-    assertEquals("aa.bb.CC", ClientLibraryReflectConfigComposer.formatNestedClasses("aa.bb.CC"));
+    assertEquals("a.B", ClientLibraryReflectConfigComposer.convertToBinaryName("a.B"));
+    assertEquals("aa.bb.CC", ClientLibraryReflectConfigComposer.convertToBinaryName("aa.bb.CC"));
   }
 
   @Test
   public void formatNestedClassFullyQualifiedNames_oneNested() {
-    assertEquals("a.B$C", ClientLibraryReflectConfigComposer.formatNestedClasses("a.B.C"));
+    assertEquals("a.B$C", ClientLibraryReflectConfigComposer.convertToBinaryName("a.B.C"));
     assertEquals(
-        "aa.bb.Cc$Dd", ClientLibraryReflectConfigComposer.formatNestedClasses("aa.bb.Cc.Dd"));
+        "aa.bb.Cc$Dd", ClientLibraryReflectConfigComposer.convertToBinaryName("aa.bb.Cc.Dd"));
   }
 
   @Test
   public void formatNestedClassFullyQualifiedNames_twoNested() {
-    assertEquals("a.B$C$D", ClientLibraryReflectConfigComposer.formatNestedClasses("a.B.C.D"));
+    assertEquals("a.B$C$D", ClientLibraryReflectConfigComposer.convertToBinaryName("a.B.C.D"));
     assertEquals(
-        "aa.bb.Cc$Dd$Ee", ClientLibraryReflectConfigComposer.formatNestedClasses("aa.bb.Cc.Dd.Ee"));
+        "aa.bb.Cc$Dd$Ee", ClientLibraryReflectConfigComposer.convertToBinaryName("aa.bb.Cc.Dd.Ee"));
   }
 }
