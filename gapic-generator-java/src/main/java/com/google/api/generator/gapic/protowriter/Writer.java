@@ -95,12 +95,23 @@ public class Writer {
       return;
     }
     Gson prettyGson = new GsonBuilder().setPrettyPrinting().create();
-    JarEntry jarEntry =
-        new JarEntry(
-            String.format(
-                "src/main/resources/META-INF/native-image/%s/reflect-config.json", pakkage));
+
+    // This path does not follow the recommended native-image subdirectory structure defined by
+    // https://www.graalvm.org/22.1/reference-manual/native-image/BuildConfiguration/#embedding-a-configuration-file
+    //
+    // The recommended subdirectory is .../native-image/<groupId>/<artifactId>/reflect-config.json
+    // to prevent multiple jars from having overlapping configurations when combined into the same
+    // native-image. However, we don't have access to the client library's groupId and artifactId in
+    // the GAPIC generator, and we're only providing a single reflection configuration per client
+    // library. So this package-based path is "unique enough" for our current use.
+    //
+    // TODO: If we begin splitting the reflection configuration into gapic-specific, grpc-specific,
+    // and proto-specific files, we will need to prevent collisions by either following the
+    // recommended subdirectory structure, or adding a gapic/grpc/proto identifier to this path.
+    String jarEntryLocation = String.format(
+        "src/main/resources/META-INF/native-image/%s/reflect-config.json", pakkage);
     try {
-      jos.putNextEntry(jarEntry);
+      jos.putNextEntry(new JarEntry(jarEntryLocation));
       jos.write(prettyGson.toJson(reflectConfigInfo).getBytes(StandardCharsets.UTF_8));
     } catch (IOException e) {
       throw new GapicWriterException("Could not write reflect-config.json", e);
