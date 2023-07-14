@@ -14,7 +14,6 @@
 
 package com.google.api.generator.gapic;
 
-import com.google.api.generator.gapic.composer.ClientLibraryReflectConfigComposer.ReflectConfig;
 import com.google.api.generator.gapic.composer.Composer;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;

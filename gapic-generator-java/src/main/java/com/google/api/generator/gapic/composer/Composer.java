@@ -16,7 +16,6 @@ package com.google.api.generator.gapic.composer;
 
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
-import com.google.api.generator.gapic.composer.ClientLibraryReflectConfigComposer.ReflectConfig;
 import com.google.api.generator.gapic.composer.comment.CommentComposer;
 import com.google.api.generator.gapic.composer.grpc.GrpcServiceCallableFactoryClassComposer;
 import com.google.api.generator.gapic.composer.grpc.GrpcServiceStubClassComposer;
