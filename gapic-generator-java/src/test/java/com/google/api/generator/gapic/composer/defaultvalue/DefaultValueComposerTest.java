@@ -204,16 +204,21 @@ public class DefaultValueComposerTest {
   public void defaultValue_resourceNameWithMultiplePatterns_matchesBindings() {
     FileDescriptor lockerServiceFileDescriptor = LockerProto.getDescriptor();
     Map<String, ResourceName> typeStringsToResourceNames =
-            Parser.parseResourceNames(lockerServiceFileDescriptor);
+        Parser.parseResourceNames(lockerServiceFileDescriptor);
     ResourceName resourceName =
-            typeStringsToResourceNames.get("cloudresourcemanager.googleapis.com/Folder");
+        typeStringsToResourceNames.get("cloudresourcemanager.googleapis.com/Folder");
     Expr expr =
-            DefaultValueComposer.createResourceHelperValue(
-                    resourceName,
-                    false,
-                    typeStringsToResourceNames.values().stream().collect(Collectors.toList()),
-                    "folder",
-                    HttpBindings.builder().setHttpVerb(HttpVerb.POST).setPattern("/v1/{name=folders/*}").setAdditionalPatterns(ImmutableList.of()).setIsAsteriskBody(true).build());
+        DefaultValueComposer.createResourceHelperValue(
+            resourceName,
+            false,
+            typeStringsToResourceNames.values().stream().collect(Collectors.toList()),
+            "folder",
+            HttpBindings.builder()
+                .setHttpVerb(HttpVerb.POST)
+                .setPattern("/v1/{name=folders/*}")
+                .setAdditionalPatterns(ImmutableList.of())
+                .setIsAsteriskBody(true)
+                .build());
     expr.accept(writerVisitor);
     /*
     There are two patterns:
@@ -221,8 +226,7 @@ public class DefaultValueComposerTest {
       - pattern: "folders/{folder}"
       It attempts to match the correct HttpBinding
     */
-    assertEquals(
-            "FolderName.ofFolderName(\"[FOLDER]\")", writerVisitor.write());
+    assertEquals("FolderName.ofFolderName(\"[FOLDER]\")", writerVisitor.write());
   }
 
   @Test
@@ -442,7 +446,8 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void createSimpleMessageBuilderValue_resourceNameMultiplePatterns_matchesAdditionalHttpBinding() {
+  public void
+      createSimpleMessageBuilderValue_resourceNameMultiplePatterns_matchesAdditionalHttpBinding() {
     FileDescriptor messagingFileDescriptor = MessagingOuterClass.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(messagingFileDescriptor);
     Map<String, ResourceName> typeStringsToResourceNames =
@@ -477,7 +482,8 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void createSimpleMessageBuilderValue_resourceNameMultiplePatterns_doesNotMatchHttpBinding() {
+  public void
+      createSimpleMessageBuilderValue_resourceNameMultiplePatterns_doesNotMatchHttpBinding() {
     FileDescriptor messagingFileDescriptor = MessagingOuterClass.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(messagingFileDescriptor);
     Map<String, ResourceName> typeStringsToResourceNames =
