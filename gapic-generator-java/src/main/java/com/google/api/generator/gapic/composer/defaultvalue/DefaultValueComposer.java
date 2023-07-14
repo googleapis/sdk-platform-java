@@ -234,7 +234,7 @@ public class DefaultValueComposer {
       String fieldOrMessageName,
       HttpBindings bindings) {
     return createResourceHelperValue(
-        resourceName, isChildType, resnames, fieldOrMessageName, true, ImmutableMap.of(), bindings);
+        resourceName, isChildType, resnames, fieldOrMessageName, true, bindings);
   }
 
   private static Optional<ResourceName> findParentResource(
@@ -264,7 +264,6 @@ public class DefaultValueComposer {
       List<ResourceName> resnames,
       String fieldOrMessageName,
       boolean allowAnonResourceNameClass,
-      Map<String, String> valuePatterns,
       HttpBindings bindings) {
 
     if (isChildType) {
@@ -280,17 +279,6 @@ public class DefaultValueComposer {
           return createResourceHelperValue(
               resname, false, unexaminedResnames, fieldOrMessageName, bindings);
         }
-      }
-
-      // If there are no matching Resources then we need to construct it by ourselves
-      // by trying to match any pathPatterns
-      Optional<Map.Entry<String, String>> valuePattern =
-          valuePatterns.entrySet().stream().findFirst();
-      if (valuePattern.isPresent()) {
-        String javaFieldName = JavaStyle.toLowerCamelCase(valuePattern.get().getKey());
-        return ValueExpr.withValue(
-            StringObjectValue.withValue(
-                constructValueMatchingPattern(javaFieldName, valuePatterns.get(javaFieldName))));
       }
 
       return allowAnonResourceNameClass
@@ -401,7 +389,6 @@ public class DefaultValueComposer {
                 resourceNames.values().stream().collect(Collectors.toList()),
                 message.name(),
                 /* allowAnonResourceNameClass = */ false,
-                valuePatterns,
                 bindings);
         defaultExpr =
             MethodInvocationExpr.builder()

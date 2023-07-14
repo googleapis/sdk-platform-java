@@ -254,7 +254,6 @@ public class DefaultValueComposerTest {
             Collections.emptyList(),
             fallbackField,
             /* allowAnonResourceNameClass = */ false,
-            ImmutableMap.of(),
             null);
     expr.accept(writerVisitor);
     assertEquals(
@@ -294,7 +293,6 @@ public class DefaultValueComposerTest {
             Arrays.asList(resourceName, extraResourceName),
             fallbackField,
             /* allowAnonResourceNameClass = */ false,
-            ImmutableMap.of(),
             bindings);
     expr.accept(writerVisitor);
     assertEquals("TopicName.ofProjectTopicName(\"[PROJECT]\", \"[TOPIC]\")", writerVisitor.write());
@@ -333,7 +331,6 @@ public class DefaultValueComposerTest {
             Arrays.asList(resourceName, extraResourceName),
             fallbackField,
             /* allowAnonResourceNameClass = */ false,
-            ImmutableMap.of(),
             bindings);
     expr.accept(writerVisitor);
     assertEquals(
