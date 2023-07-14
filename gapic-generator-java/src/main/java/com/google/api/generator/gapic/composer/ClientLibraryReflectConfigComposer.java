@@ -14,12 +14,14 @@
 
 package com.google.api.generator.gapic.composer;
 
+import com.google.api.client.util.Preconditions;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ReflectConfig;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 public class ClientLibraryReflectConfigComposer {
@@ -32,8 +34,12 @@ public class ClientLibraryReflectConfigComposer {
         .forEach(
             (fullyQualifiedClassName, msg) ->
                 allConfigs.addAll(calculateReflectConfigList(fullyQualifiedClassName, msg)));
+
+    List<String> duplicates = calculateDuplicates(allConfigs);
+    Preconditions.checkState(
+        duplicates.isEmpty(), "Duplicate binary name entries found: %s", duplicates);
+
     return allConfigs.stream()
-        .distinct()
         .sorted()
         .map(ReflectConfig::new)
         .collect(ImmutableList.toImmutableList());
@@ -91,5 +97,12 @@ public class ClientLibraryReflectConfigComposer {
       }
     }
     return result.toString();
+  }
+
+  @VisibleForTesting
+  static List<String> calculateDuplicates(List<String> allConfigs) {
+    List<String> duplicates = new ArrayList<>(allConfigs);
+    new HashSet<>(allConfigs).forEach(duplicates::remove);
+    return duplicates;
   }
 }

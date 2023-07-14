@@ -130,4 +130,16 @@ public class ClientLibraryReflectConfigComposerTest {
     assertEquals(
         "aa.bb.Cc$Dd$Ee", ClientLibraryReflectConfigComposer.convertToBinaryName("aa.bb.Cc.Dd.Ee"));
   }
+
+  @Test
+  public void duplicateEntries_found() {
+    assertThat(ClientLibraryReflectConfigComposer.calculateDuplicates(Arrays.asList("a", "a", "b")))
+        .containsExactly("a");
+
+    assertThat(ClientLibraryReflectConfigComposer.calculateDuplicates(Arrays.asList("a", "a", "a")))
+        .containsExactly("a", "a");
+
+    assertThat(ClientLibraryReflectConfigComposer.calculateDuplicates(Arrays.asList("a", "b")))
+        .isEmpty();
+  }
 }
