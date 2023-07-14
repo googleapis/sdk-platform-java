@@ -27,6 +27,7 @@ import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.test.utils.LineFormatter;
+import com.google.common.collect.ImmutableList;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.StructProto;
@@ -175,7 +176,7 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void defaultValue_resourceNameWithMultiplePatterns() {
+  public void defaultValue_resourceNameWithMultiplePatterns_noBindings() {
     FileDescriptor lockerServiceFileDescriptor = LockerProto.getDescriptor();
     Map<String, ResourceName> typeStringsToResourceNames =
         Parser.parseResourceNames(lockerServiceFileDescriptor);
@@ -189,8 +190,39 @@ public class DefaultValueComposerTest {
             "ignored",
             null);
     expr.accept(writerVisitor);
+    /*
+    There are two patterns:
+      - pattern: "projects/{project}/folders/{folder}"
+      - pattern: "folders/{folder}"
+      It matches the first one given no bindings
+    */
     assertEquals(
         "FolderName.ofProjectFolderName(\"[PROJECT]\", \"[FOLDER]\")", writerVisitor.write());
+  }
+
+  @Test
+  public void defaultValue_resourceNameWithMultiplePatterns_matchesBindings() {
+    FileDescriptor lockerServiceFileDescriptor = LockerProto.getDescriptor();
+    Map<String, ResourceName> typeStringsToResourceNames =
+            Parser.parseResourceNames(lockerServiceFileDescriptor);
+    ResourceName resourceName =
+            typeStringsToResourceNames.get("cloudresourcemanager.googleapis.com/Folder");
+    Expr expr =
+            DefaultValueComposer.createResourceHelperValue(
+                    resourceName,
+                    false,
+                    typeStringsToResourceNames.values().stream().collect(Collectors.toList()),
+                    "folder",
+                    HttpBindings.builder().setHttpVerb(HttpVerb.POST).setPattern("/v1/{name=folders/*}").setAdditionalPatterns(ImmutableList.of()).setIsAsteriskBody(true).build());
+    expr.accept(writerVisitor);
+    /*
+    There are two patterns:
+      - pattern: "projects/{project}/folders/{folder}"
+      - pattern: "folders/{folder}"
+      It attempts to match the correct HttpBinding
+    */
+    assertEquals(
+            "FolderName.ofFolderName(\"[FOLDER]\")", writerVisitor.write());
   }
 
   @Test
@@ -376,7 +408,7 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void defaultValue_resourceNameMultiplePatterns_matchesHttpBinding() {
+  public void createSimpleMessageBuilderValue_resourceNameMultiplePatterns_matchesHttpBinding() {
     FileDescriptor messagingFileDescriptor = MessagingOuterClass.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(messagingFileDescriptor);
     Map<String, ResourceName> typeStringsToResourceNames =
@@ -410,7 +442,7 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void defaultValue_resourceNameMultiplePatterns_matchesAdditionalHttpBinding() {
+  public void createSimpleMessageBuilderValue_resourceNameMultiplePatterns_matchesAdditionalHttpBinding() {
     FileDescriptor messagingFileDescriptor = MessagingOuterClass.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(messagingFileDescriptor);
     Map<String, ResourceName> typeStringsToResourceNames =
@@ -445,7 +477,7 @@ public class DefaultValueComposerTest {
   }
 
   @Test
-  public void defaultValue_resourceNameMultiplePatterns_doesNotMatchHttpBinding() {
+  public void createSimpleMessageBuilderValue_resourceNameMultiplePatterns_doesNotMatchHttpBinding() {
     FileDescriptor messagingFileDescriptor = MessagingOuterClass.getDescriptor();
     Map<String, Message> messageTypes = Parser.parseMessages(messagingFileDescriptor);
     Map<String, ResourceName> typeStringsToResourceNames =
