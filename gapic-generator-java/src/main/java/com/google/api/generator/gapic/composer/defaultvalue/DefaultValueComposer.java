@@ -42,7 +42,6 @@ import com.google.api.generator.gapic.utils.ResourceNameConstants;
 import com.google.api.generator.gapic.utils.ResourceReferenceUtils;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.Operation;
 import com.google.protobuf.Any;
 import java.util.ArrayList;
