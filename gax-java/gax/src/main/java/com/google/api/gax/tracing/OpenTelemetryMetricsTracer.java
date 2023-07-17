@@ -57,6 +57,8 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
   private DoubleHistogram operationLatencyRecorder;
   private LongHistogram retryCountRecorder;
 
+  private Attributes defaultAttributes;
+
   Map<String, String> operationLatencyLabels = new HashMap<>();
 
   public OpenTelemetryMetricsTracer(Meter meter, SpanName spanName) {
@@ -82,6 +84,7 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
             .setUnit("1")
             .ofLongs()
             .build();
+    this.defaultAttributes = Attributes.of(stringKey("method_name"), spanName.toString());
   }
 
   @Override
@@ -101,6 +104,7 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
   @Override
   public void operationSucceeded(Object response) {
     AttributesBuilder attributesBuilder = Attributes.builder();
+    attributesBuilder.putAll(defaultAttributes);
     operationLatencyLabels.forEach((key, value) -> attributesBuilder.put(stringKey(key), value));
     operationLatencyRecorder.record(
         operationTimer.elapsed(TimeUnit.MILLISECONDS), attributesBuilder.build());
@@ -128,8 +132,7 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
 
   @Override
   public void attemptSucceeded(Object response) {
-    Attributes attributes = Attributes.of(stringKey("method_name"), spanName.toString());
-    attemptLatencyRecorder.record(attemptTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
+    attemptLatencyRecorder.record(attemptTimer.elapsed(TimeUnit.MILLISECONDS), defaultAttributes);
   }
 
   @Override
@@ -146,7 +149,7 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
 
   @Override
   public void retryCount(int count) {
-    retryCountRecorder.record(count);
+    retryCountRecorder.record(count, defaultAttributes);
   }
 
   @Override

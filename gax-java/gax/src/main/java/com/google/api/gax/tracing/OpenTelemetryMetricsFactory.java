@@ -43,10 +43,10 @@ import io.opentelemetry.api.metrics.Meter;
  * <p>This class is thread safe.
  */
 @InternalApi("For google-cloud-java client use only")
-public class OpenTelemetryTracerFactory extends BaseApiTracerFactory {
+public class OpenTelemetryMetricsFactory implements ApiTracerFactory {
   protected Meter meter;
 
-  public OpenTelemetryTracerFactory(
+  public OpenTelemetryMetricsFactory(
       OpenTelemetry openTelemetry, String libraryName, String libraryVersion) {
     meter =
         openTelemetry.meterBuilder(libraryName).setInstrumentationVersion(libraryVersion).build();
@@ -55,5 +55,10 @@ public class OpenTelemetryTracerFactory extends BaseApiTracerFactory {
   @Override
   public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
     return new OpenTelemetryMetricsTracer(meter, spanName);
+  }
+
+  @Override
+  public ClientMetricsTracer newClientMetricsTracer() {
+    return new OpenTelemetryClientMetricsTracer(meter);
   }
 }
