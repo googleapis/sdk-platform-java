@@ -85,7 +85,5 @@ message Resource {
   // `projects/{project}/locations/{location}/deployments/{deployment}/revisions/{revision}/resources/{resource}`
   string name = 1 [
     (google.api.field_behavior) = OUTPUT_ONLY
-    // (datapol.semantic_type) = ST_IDENTIFYING_ID,
-    // (google.api.field_auditing).directive = "AUDIT"
   ];
 }
