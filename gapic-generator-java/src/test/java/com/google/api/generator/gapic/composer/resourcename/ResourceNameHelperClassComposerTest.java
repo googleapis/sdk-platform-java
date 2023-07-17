@@ -16,6 +16,7 @@ package com.google.api.generator.gapic.composer.resourcename;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicClass;
@@ -34,6 +35,7 @@ import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import com.google.showcase.v1beta1.TestingOuterClass;
+import com.google.test.collisions.CollisionsOuterClass;
 import google.cloud.CommonResources;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -50,6 +52,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class ResourceNameHelperClassComposerTest {
+
+  private final String COLLIDING_RESOURCE_NAME_KEY = "config.googleapis.com/Resource";
+
   private ServiceDescriptor echoService;
   private FileDescriptor echoFileDescriptor;
 
@@ -237,5 +242,26 @@ public class ResourceNameHelperClassComposerTest {
     Path goldenFilePath =
         Paths.get(GoldenFileWriter.getGoldenDir(this.getClass()), "AgentName.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
+  }
+
+  @Test
+  public void generateResourceNameClass_resourceNameCollisionIsAvoided() {
+    ResourceName collidingResourceName = Parser.parseResourceNames(CollisionsOuterClass.getDescriptor())
+            .get(COLLIDING_RESOURCE_NAME_KEY);
+
+    GapicContext irrelevantContext = TestProtoLoader.instance().parseShowcaseEcho();
+    GapicClass clazz =
+            ResourceNameHelperClassComposer.instance().generate(collidingResourceName, irrelevantContext);
+    JavaWriterVisitor visitor = new JavaWriterVisitor();
+    clazz.classDefinition().accept(visitor);
+    GoldenFileWriter.saveCodegenToFile(this.getClass(), "CollisionResourceName.golden", visitor.write());
+    Path goldenFilePath =
+            Paths.get(GoldenFileWriter.getGoldenDir(this.getClass()), "CollisionResourceName.golden");
+    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+
+    assertEquals(1, clazz.classDefinition().implementsTypes().size());
+    assertTrue(clazz.classDefinition().implementsTypes().get(0).reference().useFullName());
+    assertEquals(clazz.classDefinition().classIdentifier().name(),
+            clazz.classDefinition().implementsTypes().get(0).reference().name());
   }
 }
