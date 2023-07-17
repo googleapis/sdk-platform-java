@@ -39,9 +39,7 @@ public class AsyncGetIamPolicy {
     try (ComplianceClient complianceClient = ComplianceClient.create()) {
       GetIamPolicyRequest request =
           GetIamPolicyRequest.newBuilder()
-              .setResource(
-                  BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-                      .toString())
+              .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
               .setOptions(GetPolicyOptions.newBuilder().build())
               .build();
       ApiFuture<Policy> future = complianceClient.getIamPolicyCallable().futureCall(request);

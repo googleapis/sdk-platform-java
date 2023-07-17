@@ -38,9 +38,7 @@ public class SyncGetIamPolicy {
     try (IdentityClient identityClient = IdentityClient.create()) {
       GetIamPolicyRequest request =
           GetIamPolicyRequest.newBuilder()
-              .setResource(
-                  BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-                      .toString())
+              .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
               .setOptions(GetPolicyOptions.newBuilder().build())
               .build();
       Policy response = identityClient.getIamPolicy(request);

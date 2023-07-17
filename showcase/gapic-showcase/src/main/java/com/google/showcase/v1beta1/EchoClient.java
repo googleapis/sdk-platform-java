@@ -979,9 +979,7 @@ public class EchoClient implements BackgroundResource {
    * try (EchoClient echoClient = EchoClient.create()) {
    *   SetIamPolicyRequest request =
    *       SetIamPolicyRequest.newBuilder()
-   *           .setResource(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
    *           .setPolicy(Policy.newBuilder().build())
    *           .setUpdateMask(FieldMask.newBuilder().build())
    *           .build();
@@ -1013,9 +1011,7 @@ public class EchoClient implements BackgroundResource {
    * try (EchoClient echoClient = EchoClient.create()) {
    *   SetIamPolicyRequest request =
    *       SetIamPolicyRequest.newBuilder()
-   *           .setResource(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
    *           .setPolicy(Policy.newBuilder().build())
    *           .setUpdateMask(FieldMask.newBuilder().build())
    *           .build();
@@ -1045,9 +1041,7 @@ public class EchoClient implements BackgroundResource {
    * try (EchoClient echoClient = EchoClient.create()) {
    *   GetIamPolicyRequest request =
    *       GetIamPolicyRequest.newBuilder()
-   *           .setResource(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
    *           .setOptions(GetPolicyOptions.newBuilder().build())
    *           .build();
    *   Policy response = echoClient.getIamPolicy(request);
@@ -1077,9 +1071,7 @@ public class EchoClient implements BackgroundResource {
    * try (EchoClient echoClient = EchoClient.create()) {
    *   GetIamPolicyRequest request =
    *       GetIamPolicyRequest.newBuilder()
-   *           .setResource(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
    *           .setOptions(GetPolicyOptions.newBuilder().build())
    *           .build();
    *   ApiFuture<Policy> future = echoClient.getIamPolicyCallable().futureCall(request);
@@ -1112,9 +1104,7 @@ public class EchoClient implements BackgroundResource {
    * try (EchoClient echoClient = EchoClient.create()) {
    *   TestIamPermissionsRequest request =
    *       TestIamPermissionsRequest.newBuilder()
-   *           .setResource(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
    *           .addAllPermissions(new ArrayList<String>())
    *           .build();
    *   TestIamPermissionsResponse response = echoClient.testIamPermissions(request);
@@ -1148,9 +1138,7 @@ public class EchoClient implements BackgroundResource {
    * try (EchoClient echoClient = EchoClient.create()) {
    *   TestIamPermissionsRequest request =
    *       TestIamPermissionsRequest.newBuilder()
-   *           .setResource(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
    *           .addAllPermissions(new ArrayList<String>())
    *           .build();
    *   ApiFuture<TestIamPermissionsResponse> future =
