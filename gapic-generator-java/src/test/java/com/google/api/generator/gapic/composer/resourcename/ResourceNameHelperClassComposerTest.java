@@ -246,22 +246,26 @@ public class ResourceNameHelperClassComposerTest {
 
   @Test
   public void generateResourceNameClass_resourceNameCollisionIsAvoided() {
-    ResourceName collidingResourceName = Parser.parseResourceNames(CollisionsOuterClass.getDescriptor())
+    ResourceName collidingResourceName =
+        Parser.parseResourceNames(CollisionsOuterClass.getDescriptor())
             .get(COLLIDING_RESOURCE_NAME_KEY);
 
     GapicContext irrelevantContext = TestProtoLoader.instance().parseShowcaseEcho();
     GapicClass clazz =
-            ResourceNameHelperClassComposer.instance().generate(collidingResourceName, irrelevantContext);
+        ResourceNameHelperClassComposer.instance()
+            .generate(collidingResourceName, irrelevantContext);
     JavaWriterVisitor visitor = new JavaWriterVisitor();
     clazz.classDefinition().accept(visitor);
-    GoldenFileWriter.saveCodegenToFile(this.getClass(), "CollisionResourceName.golden", visitor.write());
+    GoldenFileWriter.saveCodegenToFile(
+        this.getClass(), "CollisionResourceName.golden", visitor.write());
     Path goldenFilePath =
-            Paths.get(GoldenFileWriter.getGoldenDir(this.getClass()), "CollisionResourceName.golden");
+        Paths.get(GoldenFileWriter.getGoldenDir(this.getClass()), "CollisionResourceName.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
 
     assertEquals(1, clazz.classDefinition().implementsTypes().size());
     assertTrue(clazz.classDefinition().implementsTypes().get(0).reference().useFullName());
-    assertEquals(clazz.classDefinition().classIdentifier().name(),
-            clazz.classDefinition().implementsTypes().get(0).reference().name());
+    assertEquals(
+        clazz.classDefinition().classIdentifier().name(),
+        clazz.classDefinition().implementsTypes().get(0).reference().name());
   }
 }

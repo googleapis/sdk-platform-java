@@ -20,12 +20,9 @@ import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.Message;
 import com.google.common.base.Preconditions;
-
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class TypeStore {
@@ -54,18 +51,22 @@ public class TypeStore {
     Preconditions.checkNotNull(stored);
     Reference ref;
     if (stored.reference() instanceof ConcreteReference) {
-      ref = ConcreteReference.builder()
+      ref =
+          ConcreteReference.builder()
               .setClazz(clazzStore.get(typeName))
               .setUseFullName(true)
               .build();
     } else if (stored.reference() instanceof VaporReference) {
-      ref = VaporReference.builder()
+      ref =
+          VaporReference.builder()
               .setUseFullName(true)
               .setName(typeName)
               .setPakkage(stored.reference().pakkage())
               .build();
     } else {
-      throw new IllegalArgumentException(String.format("Unexpected reference %s of type %s",
+      throw new IllegalArgumentException(
+          String.format(
+              "Unexpected reference %s of type %s",
               typeName, stored.reference().getClass().getSimpleName()));
     }
     return TypeNode.withReference(ref);
@@ -89,12 +90,12 @@ public class TypeStore {
     store.put(
         typeName,
         TypeNode.withReference(
-                VaporReference.builder()
-                        .setName(typeName)
-                        .setEnclosingClassNames(enclosingClassNames)
-                        .setPakkage(pakkage)
-                        .setIsStaticImport(isStaticImport)
-                        .build()));
+            VaporReference.builder()
+                .setName(typeName)
+                .setEnclosingClassNames(enclosingClassNames)
+                .setPakkage(pakkage)
+                .setIsStaticImport(isStaticImport)
+                .build()));
   }
 
   public void putAll(List<Class<?>> concreteClasses) {

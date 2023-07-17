@@ -161,15 +161,19 @@ public class ResourceNameHelperClassComposer {
   }
 
   /**
-   * Builds a list of types to be implemented. If the type has the same name then we use its full name
-   * @param implementingClassName class that is implementing the resulting list. Collisions are checked
+   * Builds a list of types to be implemented. If the type has the same name then we use its full
+   * name
+   *
+   * @param implementingClassName class that is implementing the resulting list. Collisions are
+   *     checked
    * @return
    */
   private static List<TypeNode> createImplementsTypes(String implementingClassName) {
     List<TypeNode> preprocessed = Arrays.asList(FIXED_TYPESTORE.get("ResourceName"));
     List<TypeNode> result = new ArrayList<>();
     for (TypeNode typeNode : preprocessed) {
-      if (!typeNode.isPrimitiveType() && typeNode.reference().name().compareTo(implementingClassName) == 0) {
+      if (!typeNode.isPrimitiveType()
+          && typeNode.reference().name().compareTo(implementingClassName) == 0) {
         result.add(FIXED_TYPESTORE.getWithFullName(typeNode.reference().name()));
       } else {
         result.add(typeNode);
