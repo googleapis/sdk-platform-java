@@ -58,13 +58,6 @@ service Collisions {
       metadata_type: "Location"
     };
   }
-
-  rpc GetResource(GetResourceRequest) returns (Resource) {
-    option (google.api.http) = {
-      get: "/v1/{name=projects/*/locations/*/deployments/*/revisions/*/resources/*}"
-    };
-    option (google.api.method_signature) = "name";
-  }
 }
 
 message Request {
@@ -79,15 +72,6 @@ message Annotation {
 
 message Location {
   string name = 1;
-}
-
-message GetResourceRequest {
-  // Required. The name of the Resource in the format:
-  // 'projects/{project_id}/locations/{location}/deployments/{deployment}/revisions/{revision}/resource/{resource}'.
-  string name = 1 [
-    (google.api.field_behavior) = REQUIRED,
-    (google.api.resource_reference) = { type: "config.googleapis.com/Resource" }
-  ];
 }
 
 message Resource {
