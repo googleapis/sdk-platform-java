@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.google.api</groupId>
   <artifactId>gapic-generator-java-pom-parent</artifactId>
-  <version>2.22.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
+  <version>2.23.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
   <packaging>pom</packaging>
   <name>GAPIC Generator Java POM Parent</name>
   <url>https://github.com/googleapis/sdk-platform-java</url>
@@ -30,7 +30,7 @@
     <grpc.version>1.55.3</grpc.version>
     <google.auth.version>1.19.0</google.auth.version>
     <gson.version>2.10.1</gson.version>
-    <guava.version>32.0.1-jre</guava.version>
+    <guava.version>32.1.1-jre</guava.version>
     <!--  On next protobuf upgrade (to 3.23.3 or higher),
     remove temporarily j2objc-annotations exclusions from protobuf-java-util dependencies.
       For context: https://github.com/googleapis/sdk-platform-java/pull/1791-->

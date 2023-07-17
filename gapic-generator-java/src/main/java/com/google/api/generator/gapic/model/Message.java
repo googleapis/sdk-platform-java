@@ -47,10 +47,15 @@ public abstract class Message {
   // a specific field.
   public abstract ImmutableList<Field> fields();
 
-  // String :: number value map for enums.
   // TODO(unsupported): Consider making enums a separate POJO. However, that would require
   // passing in a map of Message and another map of Enum types, which is not needed for
   // 99.99% of protobuf generation.
+  /**
+   * This Message POJO is used to represent both proto-messages and proto-enums.
+   *
+   * @return an empty map if this instance represents a proto-message, otherwise the proto-enum's
+   *     String-number value map.
+   */
   public abstract ImmutableMap<String, Integer> enumValues();
 
   public abstract TypeNode type();
@@ -74,8 +79,24 @@ public abstract class Message {
   // [Foo, Bar, Car].
   public abstract ImmutableList<String> outerNestedTypes();
 
+  /**
+   * This Message POJO is used to represent both proto-messages and proto-enums.
+   *
+   * <p>If this instance represents a proto-enum (<code>this.isEnum() == true</code>), this method
+   * will always return an empty list, since enums cannot contain nested enums.
+   *
+   * <p>If this instance represents a proto-message (<code>this.isEnum() == false</code>), this
+   * method returns a list of any nested proto-enums defined in this proto-message.
+   */
+  public abstract ImmutableList<String> nestedEnums();
+
   public abstract Builder toBuilder();
 
+  /**
+   * This Message POJO is used to represent both proto-messages and proto-enums.
+   *
+   * @return true, when this instance represents a proto-enum.
+   */
   public boolean isEnum() {
     return !enumValues().isEmpty();
   }
@@ -150,6 +171,7 @@ public abstract class Message {
 
   public static Builder builder() {
     return new AutoValue_Message.Builder()
+        .setNestedEnums(Collections.emptyList())
         .setOuterNestedTypes(Collections.emptyList())
         .setFields(Collections.emptyList())
         .setFieldMap(Collections.emptyMap())
@@ -187,6 +209,8 @@ public abstract class Message {
 
     public abstract Builder setOperationResponseFields(
         BiMap<String, String> operationRequestFields);
+
+    public abstract Builder setNestedEnums(List<String> nestedEnums);
 
     abstract Builder setFieldMap(Map<String, Field> fieldMap);
 

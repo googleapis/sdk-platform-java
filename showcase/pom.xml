@@ -15,7 +15,7 @@
   <parent>
     <groupId>com.google.api</groupId>
     <artifactId>gapic-generator-java-bom</artifactId>
-    <version>2.22.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
+    <version>2.23.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
     <relativePath>../gapic-generator-java-bom</relativePath>
   </parent>
 
@@ -64,6 +64,34 @@
 
   <profiles>
     <profile>
+      <id>native</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.graalvm.buildtools</groupId>
+            <artifactId>native-maven-plugin</artifactId>
+            <extensions>true</extensions>
+            <executions>
+              <execution>
+                <id>test-native</id>
+                <goals>
+                  <goal>test</goal>
+                </goals>
+                <phase>test</phase>
+              </execution>
+            </executions>
+            <configuration>
+              <buildArgs>
+                <buildArg>--no-fallback</buildArg>
+                <buildArg>--no-server</buildArg>
+                <buildArg>--verbose</buildArg>
+              </buildArgs>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
       <id>showcase</id>
       <activation>
         <activeByDefault>true</activeByDefault>
@@ -80,6 +108,11 @@
               <!-- TODO(1547): Remove this exclusion once MessagingClientHttpJsonTest#updateBlurbTest is fixed -->
               <excludes>
                 <exclude>**/MessagingClientHttpJsonTest.java</exclude>
+                <exclude>**/ComplianceClientHttpJsonTest.java</exclude>
+                <exclude>**/EchoClientHttpJsonTest.java</exclude>
+                <exclude>**/IdentityClientHttpJsonTest.java</exclude>
+                <exclude>**/SequenceServiceClientHttpJsonTest.java</exclude>
+                <exclude>**/TestingClientHttpJsonTest.java</exclude>
               </excludes>
               <reportNameSuffix>sponge_log</reportNameSuffix>
               <skipTests>${skipUnitTests}</skipTests>
