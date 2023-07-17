@@ -21,7 +21,11 @@ import com.google.api.generator.gapic.composer.samplecode.SampleCodeWriter;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
+import com.google.api.generator.gapic.model.ReflectConfig;
 import com.google.api.generator.gapic.model.Sample;
+import com.google.common.annotations.VisibleForTesting;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
 import com.google.protobuf.util.JsonFormat;
@@ -46,6 +50,7 @@ public class Writer {
       GapicContext context,
       List<GapicClass> clazzes,
       GapicPackageInfo gapicPackageInfo,
+      List<ReflectConfig> reflectConfigInfo,
       String outputFilePath) {
     ByteString.Output output = ByteString.newOutput();
     JavaWriterVisitor codeWriter = new JavaWriterVisitor();
@@ -65,6 +70,7 @@ public class Writer {
     }
 
     writeMetadataFile(context, writePackageInfo(gapicPackageInfo, codeWriter, jos), jos);
+    writeReflectConfigFile(gapicPackageInfo.packageInfo().pakkage(), reflectConfigInfo, jos);
 
     try {
       jos.finish();
@@ -80,6 +86,36 @@ public class Writer {
         .setName(outputFilePath)
         .setContentBytes(output.toByteString());
     return response.build();
+  }
+
+  @VisibleForTesting
+  static void writeReflectConfigFile(
+      String pakkage, List<ReflectConfig> reflectConfigInfo, JarOutputStream jos) {
+    if (reflectConfigInfo.isEmpty()) {
+      return;
+    }
+    Gson prettyGson = new GsonBuilder().setPrettyPrinting().create();
+
+    // This path does not follow the recommended native-image subdirectory structure defined by
+    // https://www.graalvm.org/22.1/reference-manual/native-image/BuildConfiguration/#embedding-a-configuration-file
+    //
+    // The recommended subdirectory is .../native-image/<groupId>/<artifactId>/reflect-config.json
+    // to prevent multiple jars from having overlapping configurations when combined into the same
+    // native-image. However, we don't have access to the client library's groupId and artifactId in
+    // the GAPIC generator, and we're only providing a single reflection configuration per client
+    // library. So this package-based path is "unique enough" for our current use.
+    //
+    // TODO: If we begin splitting the reflection configuration into gapic-specific, grpc-specific,
+    // and proto-specific files, we will need to prevent collisions by either following the
+    // recommended subdirectory structure, or adding a gapic/grpc/proto identifier to this path.
+    String jarEntryLocation =
+        String.format("src/main/resources/META-INF/native-image/%s/reflect-config.json", pakkage);
+    try {
+      jos.putNextEntry(new JarEntry(jarEntryLocation));
+      jos.write(prettyGson.toJson(reflectConfigInfo).getBytes(StandardCharsets.UTF_8));
+    } catch (IOException e) {
+      throw new GapicWriterException("Could not write reflect-config.json", e);
+    }
   }
 
   private static String writeClazz(
