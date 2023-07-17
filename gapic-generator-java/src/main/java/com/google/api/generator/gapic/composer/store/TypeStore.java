@@ -15,16 +15,22 @@
 package com.google.api.generator.gapic.composer.store;
 
 import com.google.api.generator.engine.ast.ConcreteReference;
+import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.Message;
+import com.google.common.base.Preconditions;
+
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class TypeStore {
   private final Map<String, TypeNode> store = new HashMap<>();
+  private final Map<String, Class<?>> clazzStore = new HashMap<String, Class<?>>();
 
   public TypeStore() {}
 
@@ -33,16 +39,36 @@ public class TypeStore {
   }
 
   private void putConcreteClassses(List<Class<?>> concreteClasses) {
-    store.putAll(
-        concreteClasses.stream()
-            .collect(
-                Collectors.toMap(
-                    Class::getSimpleName,
-                    c -> TypeNode.withReference(ConcreteReference.withClazz(c)))));
+    for (Class<?> clazz : concreteClasses) {
+      store.put(clazz.getSimpleName(), TypeNode.withReference(ConcreteReference.withClazz(clazz)));
+      clazzStore.put(clazz.getSimpleName(), clazz);
+    }
   }
 
   public TypeNode get(String typeName) {
     return store.get(typeName);
+  }
+
+  public TypeNode getWithFullName(String typeName) {
+    TypeNode stored = store.get(typeName);
+    Preconditions.checkNotNull(stored);
+    Reference ref;
+    if (stored.reference() instanceof ConcreteReference) {
+      ref = ConcreteReference.builder()
+              .setClazz(clazzStore.get(typeName))
+              .setUseFullName(true)
+              .build();
+    } else if (stored.reference() instanceof VaporReference) {
+      ref = VaporReference.builder()
+              .setUseFullName(true)
+              .setName(typeName)
+              .setPakkage(stored.reference().pakkage())
+              .build();
+    } else {
+      throw new IllegalArgumentException(String.format("Unexpected reference %s of type %s",
+              typeName, stored.reference().getClass().getSimpleName()));
+    }
+    return TypeNode.withReference(ref);
   }
 
   public void put(String pakkage, String typeName) {
@@ -63,12 +89,12 @@ public class TypeStore {
     store.put(
         typeName,
         TypeNode.withReference(
-            VaporReference.builder()
-                .setName(typeName)
-                .setEnclosingClassNames(enclosingClassNames)
-                .setPakkage(pakkage)
-                .setIsStaticImport(isStaticImport)
-                .build()));
+                VaporReference.builder()
+                        .setName(typeName)
+                        .setEnclosingClassNames(enclosingClassNames)
+                        .setPakkage(pakkage)
+                        .setIsStaticImport(isStaticImport)
+                        .build()));
   }
 
   public void putAll(List<Class<?>> concreteClasses) {

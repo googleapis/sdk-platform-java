@@ -1,7 +1,6 @@
 package com.google.test.collisions;
 
 import com.google.api.pathtemplate.PathTemplate;
-import com.google.api.resourcenames.ResourceName;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ import javax.annotation.Generated;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
 @Generated("by gapic-generator-java")
-public class ResourceName implements ResourceName {
+public class ResourceName implements com.google.api.resourcenames.ResourceName {
   private static final PathTemplate PROJECT_LOCATION_DEPLOYMENT_REVISION_RESOURCE =
       PathTemplate.createWithoutUrlEncoding(
           "projects/{project}/locations/{location}/deployments/{deployment}/revisions/{revision}/resources/{resource}");
@@ -68,7 +67,7 @@ public class ResourceName implements ResourceName {
     return new Builder(this);
   }
 
-  public static com.google.test.collisions.ResourceName of(
+  public static ResourceName of(
       String project, String location, String deployment, String revision, String resource) {
     return newBuilder()
         .setProject(project)
@@ -91,7 +90,7 @@ public class ResourceName implements ResourceName {
         .toString();
   }
 
-  public static com.google.test.collisions.ResourceName parse(String formattedString) {
+  public static ResourceName parse(String formattedString) {
     if (formattedString.isEmpty()) {
       return null;
     }
@@ -106,18 +105,17 @@ public class ResourceName implements ResourceName {
         matchMap.get("resource"));
   }
 
-  public static List<com.google.test.collisions.ResourceName> parseList(
-      List<String> formattedStrings) {
-    List<com.google.test.collisions.ResourceName> list = new ArrayList<>(formattedStrings.size());
+  public static List<ResourceName> parseList(List<String> formattedStrings) {
+    List<ResourceName> list = new ArrayList<>(formattedStrings.size());
     for (String formattedString : formattedStrings) {
       list.add(parse(formattedString));
     }
     return list;
   }
 
-  public static List<String> toStringList(List<com.google.test.collisions.ResourceName> values) {
+  public static List<String> toStringList(List<ResourceName> values) {
     List<String> list = new ArrayList<>(values.size());
-    for (com.google.test.collisions.ResourceName value : values) {
+    for (ResourceName value : values) {
       if (value == null) {
         list.add("");
       } else {
@@ -184,7 +182,7 @@ public class ResourceName implements ResourceName {
       return true;
     }
     if (o != null || getClass() == o.getClass()) {
-      com.google.test.collisions.ResourceName that = ((com.google.test.collisions.ResourceName) o);
+      ResourceName that = ((ResourceName) o);
       return Objects.equals(this.project, that.project)
           && Objects.equals(this.location, that.location)
           && Objects.equals(this.deployment, that.deployment)
@@ -268,7 +266,7 @@ public class ResourceName implements ResourceName {
       return this;
     }
 
-    private Builder(com.google.test.collisions.ResourceName resourceName) {
+    private Builder(ResourceName resourceName) {
       this.project = resourceName.project;
       this.location = resourceName.location;
       this.deployment = resourceName.deployment;
@@ -276,8 +274,8 @@ public class ResourceName implements ResourceName {
       this.resource = resourceName.resource;
     }
 
-    public com.google.test.collisions.ResourceName build() {
-      return new com.google.test.collisions.ResourceName(this);
+    public ResourceName build() {
+      return new ResourceName(this);
     }
   }
 }
