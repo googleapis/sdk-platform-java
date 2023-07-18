@@ -66,6 +66,10 @@ import org.threeten.bp.Duration;
  * <p>Server streaming RPCs interpret RPC timeouts a bit differently. For server streaming RPCs, the
  * RPC timeout gets converted into a wait timeout {@link
  * com.google.api.gax.rpc.ApiCallContext#withStreamWaitTimeout(Duration)}.
+ *
+ * <p>In Cloud Client Libraries, Retry and LRO Retry Settings may be configured for each service and
+ * RPC. These values are set by the service teams and may be found by looking at the
+ * {Service}StubSettings.java file in each library.
  */
 @AutoValue
 public abstract class RetrySettings implements Serializable {
@@ -76,6 +80,9 @@ public abstract class RetrySettings implements Serializable {
    * TotalTimeout has ultimate control over how long the logic should keep trying the remote call
    * until it gives up completely. The higher the total timeout, the more retries can be attempted.
    * The default value is {@code Duration.ZERO}.
+   *
+   * <p>If there are no configurations, Retries have the default timeout value set above and LROs
+   * have a default total timeout value of {@code Duration.ofMillis(300000)} (5 minutes).
    */
   public abstract Duration getTotalTimeout();
 
@@ -83,6 +90,10 @@ public abstract class RetrySettings implements Serializable {
    * InitialRetryDelay controls the delay before the first retry. Subsequent retries will use this
    * value adjusted according to the RetryDelayMultiplier. The default value is {@code
    * Duration.ZERO}.
+   *
+   * <p>If there are no configurations, Retries have the default initial retry delay value set above
+   * and LROs have a default initial poll delay value of {@code Duration.ofMillis(5000)} (5
+   * seconds).
    */
   public abstract Duration getInitialRetryDelay();
 
@@ -90,6 +101,9 @@ public abstract class RetrySettings implements Serializable {
    * RetryDelayMultiplier controls the change in retry delay. The retry delay of the previous call
    * is multiplied by the RetryDelayMultiplier to calculate the retry delay for the next call. The
    * default value is {@code 1.0}.
+   *
+   * <p>If there are no configurations, Retries have the default retry delay multiplier value set
+   * above and LROs have a default retry delay multiplier of {@code 1.5}.
    */
   public abstract double getRetryDelayMultiplier();
 
@@ -97,6 +111,10 @@ public abstract class RetrySettings implements Serializable {
    * MaxRetryDelay puts a limit on the value of the retry delay, so that the RetryDelayMultiplier
    * can't increase the retry delay higher than this amount. The default value is {@code
    * Duration.ZERO}.
+   *
+   * <p>If there are no configurations, Retries have the default max retry delay value set above and
+   * LROs have a default max poll retry delay value of {@code Duration.ofMillis(45000)} (45
+   * seconds).
    */
   public abstract Duration getMaxRetryDelay();
 
@@ -104,6 +122,9 @@ public abstract class RetrySettings implements Serializable {
    * MaxAttempts defines the maximum number of attempts to perform. The default value is {@code 0}.
    * If this value is greater than 0, and the number of attempts reaches this limit, the logic will
    * give up retrying even if the total retry time is still lower than TotalTimeout.
+   *
+   * <p>If there are no configurations, Retries and LROs have the default max attempt value set
+   * above. LRO polling does not use this value by default.
    */
   public abstract int getMaxAttempts();
 
@@ -125,6 +146,9 @@ public abstract class RetrySettings implements Serializable {
    * InitialRpcTimeout controls the timeout for the initial RPC. Subsequent calls will use this
    * value adjusted according to the RpcTimeoutMultiplier. The default value is {@code
    * Duration.ZERO}.
+   *
+   * <p>If there are no configurations, Retries have the default initial RPC timeout value set
+   * above. LRO polling does not use the Initial RPC Timeout value.
    */
   public abstract Duration getInitialRpcTimeout();
 
@@ -132,6 +156,9 @@ public abstract class RetrySettings implements Serializable {
    * RpcTimeoutMultiplier controls the change in RPC timeout. The timeout of the previous call is
    * multiplied by the RpcTimeoutMultiplier to calculate the timeout for the next call. The default
    * value is {@code 1.0}.
+   *
+   * <p>If there are no configurations, Retries have the default RPC Timeout Multiplier value set
+   * above. LRO polling does not use the RPC Timeout Multiplier value.
    */
   public abstract double getRpcTimeoutMultiplier();
 
@@ -139,6 +166,9 @@ public abstract class RetrySettings implements Serializable {
    * MaxRpcTimeout puts a limit on the value of the RPC timeout, so that the RpcTimeoutMultiplier
    * can't increase the RPC timeout higher than this amount. The default value is {@code
    * Duration.ZERO}.
+   *
+   * <p>If there are no configurations, Retries have the default Max RPC Timeout value set above.
+   * LRO polling does not use the Max RPC Timeout value.
    */
   public abstract Duration getMaxRpcTimeout();
 
@@ -168,6 +198,9 @@ public abstract class RetrySettings implements Serializable {
      * TotalTimeout has ultimate control over how long the logic should keep trying the remote call
      * until it gives up completely. The higher the total timeout, the more retries can be
      * attempted. The default value is {@code Duration.ZERO}.
+     *
+     * <p>If there are no configurations, Retries have the default timeout value set above and LROs
+     * have a default total timeout value of {@code Duration.ofMillis(300000)} (5 minutes).
      */
     public abstract Builder setTotalTimeout(Duration totalTimeout);
 
@@ -175,6 +208,10 @@ public abstract class RetrySettings implements Serializable {
      * InitialRetryDelay controls the delay before the first retry. Subsequent retries will use this
      * value adjusted according to the RetryDelayMultiplier. The default value is {@code
      * Duration.ZERO}.
+     *
+     * <p>If there are no configurations, Retries have the default initial retry delay value set
+     * above and LROs have a default initial poll delay value of {@code Duration.ofMillis(5000)} (5
+     * seconds).
      */
     public abstract Builder setInitialRetryDelay(Duration initialDelay);
 
@@ -182,6 +219,9 @@ public abstract class RetrySettings implements Serializable {
      * RetryDelayMultiplier controls the change in retry delay. The retry delay of the previous call
      * is multiplied by the RetryDelayMultiplier to calculate the retry delay for the next call. The
      * default value is {@code 1.0}.
+     *
+     * <p>If there are no configurations, Retries have the default retry delay multiplier value set
+     * above and LROs have a default retry delay multiplier of {@code 1.5}.
      */
     public abstract Builder setRetryDelayMultiplier(double multiplier);
 
@@ -189,6 +229,10 @@ public abstract class RetrySettings implements Serializable {
      * MaxRetryDelay puts a limit on the value of the retry delay, so that the RetryDelayMultiplier
      * can't increase the retry delay higher than this amount. The default value is {@code
      * Duration.ZERO}.
+     *
+     * <p>If there are no configurations, Retries have the default max retry delay value set above
+     * and LROs have a default max poll retry delay value of {@code Duration.ofMillis(45000)} (45
+     * seconds).
      */
     public abstract Builder setMaxRetryDelay(Duration maxDelay);
 
@@ -196,6 +240,9 @@ public abstract class RetrySettings implements Serializable {
      * MaxAttempts defines the maximum number of attempts to perform. The default value is {@code
      * 0}. If this value is greater than 0, and the number of attempts reaches this limit, the logic
      * will give up retrying even if the total retry time is still lower than TotalTimeout.
+     *
+     * <p>If there are no configurations, Retries and LROs have the default max attempt value set
+     * above. LRO polling does not use this value by default.
      */
     public abstract Builder setMaxAttempts(int maxAttempts);
 
@@ -217,12 +264,18 @@ public abstract class RetrySettings implements Serializable {
      * InitialRpcTimeout controls the timeout for the initial RPC. Subsequent calls will use this
      * value adjusted according to the RpcTimeoutMultiplier. The default value is {@code
      * Duration.ZERO}.
+     *
+     * <p>If there are no configurations, Retries have the default initial RPC timeout value set
+     * above. LRO polling does not use the Initial RPC Timeout value.
      */
     public abstract Builder setInitialRpcTimeout(Duration initialTimeout);
 
     /**
      * See the class documentation of {@link RetrySettings} for a description of what this value
      * does. The default value is {@code 1.0}.
+     *
+     * <p>If there are no configurations, Retries have the default RPC Timeout Multiplier value set
+     * above. LRO polling does not use the RPC Timeout Multiplier value.
      */
     public abstract Builder setRpcTimeoutMultiplier(double multiplier);
 
@@ -230,6 +283,9 @@ public abstract class RetrySettings implements Serializable {
      * MaxRpcTimeout puts a limit on the value of the RPC timeout, so that the RpcTimeoutMultiplier
      * can't increase the RPC timeout higher than this amount. The default value is {@code
      * Duration.ZERO}.
+     *
+     * <p>If there are no configurations, Retries have the default Max RPC Timeout value set above.
+     * LRO polling does not use the Max RPC Timeout value.
      */
     public abstract Builder setMaxRpcTimeout(Duration maxTimeout);
 
@@ -237,6 +293,9 @@ public abstract class RetrySettings implements Serializable {
      * TotalTimeout has ultimate control over how long the logic should keep trying the remote call
      * until it gives up completely. The higher the total timeout, the more retries can be
      * attempted. The default value is {@code Duration.ZERO}.
+     *
+     * <p>If there are no configurations, Retries have the default timeout value set above and LROs
+     * have a default total timeout value of {@code Duration.ofMillis(300000)} (5 minutes).
      */
     public abstract Duration getTotalTimeout();
 
@@ -244,6 +303,10 @@ public abstract class RetrySettings implements Serializable {
      * InitialRetryDelay controls the delay before the first retry. Subsequent retries will use this
      * value adjusted according to the RetryDelayMultiplier. The default value is {@code
      * Duration.ZERO}.
+     *
+     * <p>If there are no configurations, Retries have the default initial retry delay value set
+     * above and LROs have a default initial poll delay value of {@code Duration.ofMillis(5000)} (5
+     * seconds).
      */
     public abstract Duration getInitialRetryDelay();
 
@@ -251,6 +314,9 @@ public abstract class RetrySettings implements Serializable {
      * RetryDelayMultiplier controls the change in retry delay. The retry delay of the previous call
      * is multiplied by the RetryDelayMultiplier to calculate the retry delay for the next call. The
      * default value is {@code 1.0}.
+     *
+     * <p>If there are no configurations, Retries have the default retry delay multiplier value set
+     * above and LROs have a default retry delay multiplier of {@code 1.5}.
      */
     public abstract double getRetryDelayMultiplier();
 
@@ -258,6 +324,9 @@ public abstract class RetrySettings implements Serializable {
      * MaxAttempts defines the maximum number of attempts to perform. The default value is {@code
      * 0}. If this value is greater than 0, and the number of attempts reaches this limit, the logic
      * will give up retrying even if the total retry time is still lower than TotalTimeout.
+     *
+     * <p>If there are no configurations, Retries and LROs have the default max attempt value set
+     * above. LRO polling does not use this value by default.
      */
     public abstract int getMaxAttempts();
 
@@ -275,6 +344,10 @@ public abstract class RetrySettings implements Serializable {
      * MaxRetryDelay puts a limit on the value of the retry delay, so that the RetryDelayMultiplier
      * can't increase the retry delay higher than this amount. The default value is {@code
      * Duration.ZERO}.
+     *
+     * <p>If there are no configurations, Retries have the default max retry delay value set above
+     * and LROs have a default max poll retry delay value of {@code Duration.ofMillis(45000)} (45
+     * seconds).
      */
     public abstract Duration getMaxRetryDelay();
 
@@ -282,18 +355,27 @@ public abstract class RetrySettings implements Serializable {
      * InitialRpcTimeout controls the timeout for the initial RPC. Subsequent calls will use this
      * value adjusted according to the RpcTimeoutMultiplier. The default value is {@code
      * Duration.ZERO}.
+     *
+     * <p>If there are no configurations, Retries have the default initial RPC timeout value set
+     * above. LRO polling does not use the Initial RPC Timeout value.
      */
     public abstract Duration getInitialRpcTimeout();
 
     /**
      * See the class documentation of {@link RetrySettings} for a description of what this value
      * does. The default value is {@code 1.0}.
+     *
+     * <p>If there are no configurations, Retries have the default RPC Timeout Multiplier value set
+     * above. LRO polling does not use the RPC Timeout Multiplier value.
      */
     public abstract double getRpcTimeoutMultiplier();
 
     /**
      * MaxRpcTimeout puts a limit on the value of the RPC timeout, so that the RpcTimeoutMultiplier
      * can't increase the RPC timeout higher than this amount.
+     *
+     * <p>If there are no configurations, Retries have the default Max RPC Timeout value set above.
+     * LRO polling does not use the Max RPC Timeout value.
      */
     public abstract Duration getMaxRpcTimeout();
 
