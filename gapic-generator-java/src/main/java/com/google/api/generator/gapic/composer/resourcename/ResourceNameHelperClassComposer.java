@@ -163,9 +163,7 @@ public class ResourceNameHelperClassComposer {
   /**
    * Returns a singleton list with {@code ResourceName} as its only member. Checks for collisions
    *
-   * @param implementingClassName class that is implementing the resulting list. Collisions are
-   *     checked
-   * @return
+   * @param implementingClassName class that is implementing the resulting list
    */
   private static List<TypeNode> createImplementsTypes(String implementingClassName) {
     // the original resource name reference has useFullName == false
