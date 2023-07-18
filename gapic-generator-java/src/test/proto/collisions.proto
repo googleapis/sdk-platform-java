@@ -14,8 +14,11 @@
 
 syntax = "proto3";
 
+import "google/api/annotations.proto";
 import "google/api/client.proto";
 import "google/longrunning/operations.proto";
+import "google/api/field_behavior.proto";
+import "google/api/resource.proto";
 
 package google.showcase.v1beta1;
 
@@ -69,4 +72,18 @@ message Annotation {
 
 message Location {
   string name = 1;
+}
+
+message Resource {
+  option (google.api.resource) = {
+    type: "config.googleapis.com/Resource"
+    pattern: "projects/{project}/locations/{location}/deployments/{deployment}/revisions/{revision}/resources/{resource}"
+  };
+
+  // Resource name of the Resource.
+  // Format:
+  // `projects/{project}/locations/{location}/deployments/{deployment}/revisions/{revision}/resources/{resource}`
+  string name = 1 [
+    (google.api.field_behavior) = OUTPUT_ONLY
+  ];
 }
