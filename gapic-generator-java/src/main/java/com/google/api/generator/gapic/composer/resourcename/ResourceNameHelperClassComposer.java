@@ -161,25 +161,28 @@ public class ResourceNameHelperClassComposer {
   }
 
   /**
-   * Builds a list of types to be implemented. If the type has the same name then we use its full
-   * name
+   * Returns a singleton list with {@code ResourceName} as its only member. Checks for collisions
    *
    * @param implementingClassName class that is implementing the resulting list. Collisions are
    *     checked
    * @return
    */
   private static List<TypeNode> createImplementsTypes(String implementingClassName) {
-    List<TypeNode> preprocessed = Arrays.asList(FIXED_TYPESTORE.get("ResourceName"));
-    List<TypeNode> result = new ArrayList<>();
-    for (TypeNode typeNode : preprocessed) {
-      if (!typeNode.isPrimitiveType()
-          && typeNode.reference().name().compareTo(implementingClassName) == 0) {
-        result.add(FIXED_TYPESTORE.getWithFullName(typeNode.reference().name()));
-      } else {
-        result.add(typeNode);
-      }
+    // the original resource name reference has useFullName == false
+    TypeNode originalResourceName = FIXED_TYPESTORE.get("ResourceName");
+    if (implementingClassName.equals(originalResourceName.reference().name())) {
+      // we create a copy with useFullName == true
+      return Arrays.asList(
+          TypeNode.withReference(
+              ConcreteReference.builder()
+                  .setUseFullName(true)
+                  .setClazz(com.google.api.resourcenames.ResourceName.class)
+                  .setGenerics(originalResourceName.reference().generics())
+                  .setIsStaticImport(originalResourceName.reference().isStaticImport())
+                  .setWildcardUpperBound(originalResourceName.reference().wildcardUpperBound())
+                  .build()));
     }
-    return result;
+    return Arrays.asList(originalResourceName);
   }
 
   private static List<VariableExpr> createTemplateClassMembers(
