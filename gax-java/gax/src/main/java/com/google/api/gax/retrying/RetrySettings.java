@@ -78,8 +78,8 @@ public abstract class RetrySettings implements Serializable {
 
   /**
    * TotalTimeout has ultimate control over how long the logic should keep trying the remote call
-   * until it gives up completely. The higher the total timeout, the more retries can be attempted.
-   * The default value is {@code Duration.ZERO}.
+   * until it gives up completely. The higher the total timeout, the more retries and polls can be
+   * attempted. The default value is {@code Duration.ZERO}.
    *
    * <p>If there are no configurations, Retries have the default timeout value set above and LROs
    * have a default total timeout value of {@code Duration.ofMillis(300000)} (5 minutes).
@@ -87,8 +87,8 @@ public abstract class RetrySettings implements Serializable {
   public abstract Duration getTotalTimeout();
 
   /**
-   * InitialRetryDelay controls the delay before the first retry. Subsequent retries will use this
-   * value adjusted according to the RetryDelayMultiplier. The default value is {@code
+   * InitialRetryDelay controls the delay before the first retry/ poll. Subsequent retries and polls
+   * will use this value adjusted according to the RetryDelayMultiplier. The default value is {@code
    * Duration.ZERO}.
    *
    * <p>If there are no configurations, Retries have the default initial retry delay value set above
@@ -98,9 +98,9 @@ public abstract class RetrySettings implements Serializable {
   public abstract Duration getInitialRetryDelay();
 
   /**
-   * RetryDelayMultiplier controls the change in retry delay. The retry delay of the previous call
-   * is multiplied by the RetryDelayMultiplier to calculate the retry delay for the next call. The
-   * default value is {@code 1.0}.
+   * RetryDelayMultiplier controls the change in delay before the next retry or poll. The retry
+   * delay of the previous call is multiplied by the RetryDelayMultiplier to calculate the retry
+   * delay for the next call. The default value is {@code 1.0}.
    *
    * <p>If there are no configurations, Retries have the default retry delay multiplier value set
    * above and LROs have a default retry delay multiplier of {@code 1.5}.
@@ -196,7 +196,7 @@ public abstract class RetrySettings implements Serializable {
 
     /**
      * TotalTimeout has ultimate control over how long the logic should keep trying the remote call
-     * until it gives up completely. The higher the total timeout, the more retries can be
+     * until it gives up completely. The higher the total timeout, the more retries and polls can be
      * attempted. The default value is {@code Duration.ZERO}.
      *
      * <p>If there are no configurations, Retries have the default timeout value set above and LROs
@@ -205,9 +205,9 @@ public abstract class RetrySettings implements Serializable {
     public abstract Builder setTotalTimeout(Duration totalTimeout);
 
     /**
-     * InitialRetryDelay controls the delay before the first retry. Subsequent retries will use this
-     * value adjusted according to the RetryDelayMultiplier. The default value is {@code
-     * Duration.ZERO}.
+     * InitialRetryDelay controls the delay before the first retry/ poll. Subsequent retries and
+     * polls will use this value adjusted according to the RetryDelayMultiplier. The default value
+     * is {@code Duration.ZERO}.
      *
      * <p>If there are no configurations, Retries have the default initial retry delay value set
      * above and LROs have a default initial poll delay value of {@code Duration.ofMillis(5000)} (5
@@ -216,9 +216,9 @@ public abstract class RetrySettings implements Serializable {
     public abstract Builder setInitialRetryDelay(Duration initialDelay);
 
     /**
-     * RetryDelayMultiplier controls the change in retry delay. The retry delay of the previous call
-     * is multiplied by the RetryDelayMultiplier to calculate the retry delay for the next call. The
-     * default value is {@code 1.0}.
+     * RetryDelayMultiplier controls the change in delay before the next retry or poll. The retry
+     * delay of the previous call is multiplied by the RetryDelayMultiplier to calculate the retry
+     * delay for the next call. The default value is {@code 1.0}.
      *
      * <p>If there are no configurations, Retries have the default retry delay multiplier value set
      * above and LROs have a default retry delay multiplier of {@code 1.5}.
@@ -291,7 +291,7 @@ public abstract class RetrySettings implements Serializable {
 
     /**
      * TotalTimeout has ultimate control over how long the logic should keep trying the remote call
-     * until it gives up completely. The higher the total timeout, the more retries can be
+     * until it gives up completely. The higher the total timeout, the more retries and polls can be
      * attempted. The default value is {@code Duration.ZERO}.
      *
      * <p>If there are no configurations, Retries have the default timeout value set above and LROs
@@ -300,9 +300,9 @@ public abstract class RetrySettings implements Serializable {
     public abstract Duration getTotalTimeout();
 
     /**
-     * InitialRetryDelay controls the delay before the first retry. Subsequent retries will use this
-     * value adjusted according to the RetryDelayMultiplier. The default value is {@code
-     * Duration.ZERO}.
+     * InitialRetryDelay controls the delay before the first retry/ poll. Subsequent retries and
+     * polls will use this value adjusted according to the RetryDelayMultiplier. The default value
+     * is {@code Duration.ZERO}.
      *
      * <p>If there are no configurations, Retries have the default initial retry delay value set
      * above and LROs have a default initial poll delay value of {@code Duration.ofMillis(5000)} (5
@@ -311,9 +311,9 @@ public abstract class RetrySettings implements Serializable {
     public abstract Duration getInitialRetryDelay();
 
     /**
-     * RetryDelayMultiplier controls the change in retry delay. The retry delay of the previous call
-     * is multiplied by the RetryDelayMultiplier to calculate the retry delay for the next call. The
-     * default value is {@code 1.0}.
+     * RetryDelayMultiplier controls the change in delay before the next retry or poll. The retry
+     * delay of the previous call is multiplied by the RetryDelayMultiplier to calculate the retry
+     * delay for the next call. The default value is {@code 1.0}.
      *
      * <p>If there are no configurations, Retries have the default retry delay multiplier value set
      * above and LROs have a default retry delay multiplier of {@code 1.5}.
