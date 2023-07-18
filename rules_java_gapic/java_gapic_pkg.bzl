@@ -270,9 +270,17 @@ def _java_gapic_srcs_pkg_impl(ctx):
     # must ensure uniqueness within a build.
     script = """
     for src in {srcs}; do
-        mkdir -p {package_dir_path}/src/main
-        unzip -q -o $src -d {package_dir_path}/src/main
-        rm -r -f {package_dir_path}/src/main/META-INF
+        mkdir -p {package_dir_path}/src/main/java
+        unzip -q -o $src -d {package_dir_path}/src/main/java
+        rm -r -f {package_dir_path}/src/main/java/META-INF
+
+        # GAPIC libraries generate java/ and resources/ folders, unlike grpc and proto.
+        # If this is a GAPIC library, move its output up one directory.
+        if [ -d {package_dir_path}/src/main/java/java ]; then
+          mv {package_dir_path}/src/main/java {package_dir_path}/src/main/tmp-java
+          mv {package_dir_path}/src/main/tmp-java/* {package_dir_path}/src/main
+          rm -d {package_dir_path}/src/main/tmp-java
+        fi
 
         # Remove empty files. If there are no resource names, one such file might have
         # been created. See java_gapic.bzl.
