@@ -55,6 +55,8 @@ import io.grpc.ManagedChannelBuilder;
 import io.grpc.TlsChannelCredentials;
 import io.grpc.alts.GoogleDefaultChannelCredentials;
 import io.grpc.auth.MoreCallCredentials;
+import org.threeten.bp.Duration;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -66,7 +68,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Nullable;
 import javax.net.ssl.KeyManagerFactory;
-import org.threeten.bp.Duration;
 
 /**
  * InstantiatingGrpcChannelProvider is a TransportChannelProvider which constructs a gRPC
@@ -101,8 +102,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @Nullable private final GrpcInterceptorProvider interceptorProvider;
   @Nullable private final Integer maxInboundMessageSize;
   @Nullable private final Integer maxInboundMetadataSize;
-  @Nullable private final Duration keepAliveTime;
-  @Nullable private final Duration keepAliveTimeout;
+  @Nullable private final java.time.Duration keepAliveTime;
+  @Nullable private final java.time.Duration keepAliveTimeout;
   @Nullable private final Boolean keepAliveWithoutCalls;
   private final ChannelPoolSettings channelPoolSettings;
   @Nullable private final Credentials credentials;
@@ -400,13 +401,21 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return endpoint;
   }
 
+  public org.threeten.bp.Duration getKeepAliveTime() {
+    return org.threeten.bp.Duration.ofNanos(getKeepAliveTimeDuration().toNanos());
+  }
+
   /** The time without read activity before sending a keepalive ping. */
-  public Duration getKeepAliveTime() {
+  public java.time.Duration getKeepAliveTimeDuration() {
     return keepAliveTime;
   }
 
+  public org.threeten.bp.Duration getKeepAliveTimeout() {
+    return org.threeten.bp.Duration.ofNanos(getKeepAliveTimeoutDuration().toNanos());
+  }
+
   /** The time without read activity after sending a keepalive ping. */
-  public Duration getKeepAliveTimeout() {
+  public java.time.Duration getKeepAliveTimeoutDuration() {
     return keepAliveTimeout;
   }
 
@@ -444,8 +453,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     @Nullable private GrpcInterceptorProvider interceptorProvider;
     @Nullable private Integer maxInboundMessageSize;
     @Nullable private Integer maxInboundMetadataSize;
-    @Nullable private Duration keepAliveTime;
-    @Nullable private Duration keepAliveTimeout;
+    @Nullable private java.time.Duration keepAliveTime;
+    @Nullable private java.time.Duration keepAliveTimeout;
     @Nullable private Boolean keepAliveWithoutCalls;
     @Nullable private ApiFunction<ManagedChannelBuilder, ManagedChannelBuilder> channelConfigurator;
     @Nullable private Credentials credentials;
@@ -583,25 +592,37 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return maxInboundMetadataSize;
     }
 
+    /**
+     * Overload of {@link #setKeepAliveTime(java.time.Duration)} using {@link org.threeten.bp.Duration}
+     */
+    public Builder setKeepAliveTime(org.threeten.bp.Duration duration) {
+      return setKeepAliveTime(java.time.Duration.ofNanos(duration.toNanos())) ;
+    }
     /** The time without read activity before sending a keepalive ping. */
-    public Builder setKeepAliveTime(Duration duration) {
+    public Builder setKeepAliveTime(java.time.Duration duration) {
       this.keepAliveTime = duration;
       return this;
     }
 
+    /**
+     * Backport of {@link #getKeepAliveTimeDuration()}
+     */
+    public org.threeten.bp.Duration getKeepAliveTime() {
+      return org.threeten.bp.Duration.ofNanos(getKeepAliveTimeDuration().toNanos());
+    }
+
     /** The time without read activity before sending a keepalive ping. */
-    public Duration getKeepAliveTime() {
+    public java.time.Duration getKeepAliveTimeDuration() {
       return keepAliveTime;
     }
 
     /** The time without read activity after sending a keepalive ping. */
-    public Builder setKeepAliveTimeout(Duration duration) {
-      this.keepAliveTimeout = duration;
-      return this;
+    public org.threeten.bp.Duration getKeepAliveTimeout() {
+      return org.threeten.bp.Duration.ofNanos(getKeepAliveTimeoutDuration().toNanos());
     }
 
     /** The time without read activity after sending a keepalive ping. */
-    public Duration getKeepAliveTimeout() {
+    public java.time.Duration getKeepAliveTimeoutDuration() {
       return keepAliveTimeout;
     }
 

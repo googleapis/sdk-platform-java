@@ -31,7 +31,6 @@ package com.google.api.gax.rpc;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
-import org.threeten.bp.Duration;
 
 /**
  * A callable that uses a {@link Watchdog} to monitor streams.
@@ -62,8 +61,8 @@ class WatchdogServerStreamingCallable<RequestT, ResponseT>
       RequestT request, ResponseObserver<ResponseT> responseObserver, ApiCallContext context) {
 
     // If the caller never configured the timeouts, disable them
-    Duration waitTimeout = MoreObjects.firstNonNull(context.getStreamWaitTimeout(), Duration.ZERO);
-    Duration idleTimeout = MoreObjects.firstNonNull(context.getStreamIdleTimeout(), Duration.ZERO);
+    java.time.Duration waitTimeout = MoreObjects.firstNonNull(context.getStreamWaitTimeoutDuration(), java.time.Duration.ZERO);
+    java.time.Duration idleTimeout = MoreObjects.firstNonNull(context.getStreamIdleTimeoutDuration(), java.time.Duration.ZERO);
 
     responseObserver = watchdog.watch(responseObserver, waitTimeout, idleTimeout);
     inner.call(request, responseObserver, context);

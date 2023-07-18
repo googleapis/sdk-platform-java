@@ -37,12 +37,13 @@ import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.tracing.ApiTracer;
 import com.google.auth.Credentials;
 import com.google.common.base.Preconditions;
+import org.threeten.bp.Duration;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.threeten.bp.Duration;
 
 /**
  * Context for an API call.
@@ -64,6 +65,11 @@ public interface ApiCallContext extends RetryingContext {
   ApiCallContext withTransportChannel(TransportChannel channel);
 
   /**
+   * Overload of {@link #withTimeout(java.time.Duration)} using {@link org.threeten.bp.Duration}
+   */
+  ApiCallContext withTimeout(@Nullable org.threeten.bp.Duration timeout);
+
+  /**
    * Returns a new ApiCallContext with the given timeout set.
    *
    * <p>This sets the maximum amount of time a single unary RPC attempt can take. If retries are
@@ -75,11 +81,20 @@ public interface ApiCallContext extends RetryingContext {
    * <p>If a method has default {@link com.google.api.gax.retrying.RetrySettings}, the max attempts
    * and/or total timeout is still respected when scheduling each RPC attempt.
    */
-  ApiCallContext withTimeout(@Nullable Duration timeout);
+  ApiCallContext withTimeout(@Nullable java.time.Duration timeout);
+
+  /** Backport of {@link #getTimeoutDuration()} */
+  @Nullable
+  org.threeten.bp.Duration getTimeout();
 
   /** Returns the configured per-RPC timeout. */
   @Nullable
-  Duration getTimeout();
+  java.time.Duration getTimeoutDuration();
+
+  /**
+   * Overload of {@link #withStreamWaitTimeout(java.time.Duration)} using {@link org.threeten.bp.Duration }
+   */
+  ApiCallContext withStreamWaitTimeout(@Nullable org.threeten.bp.Duration streamWaitTimeout);
 
   /**
    * Returns a new ApiCallContext with the given stream timeout set.
@@ -92,21 +107,32 @@ public interface ApiCallContext extends RetryingContext {
    * server or connection stalls. When the timeout has been reached, the stream will be closed with
    * a retryable {@link WatchdogTimeoutException} and a status of {@link StatusCode.Code#ABORTED}.
    *
-   * <p>A value of {@link Duration#ZERO}, disables the streaming wait timeout and a null value will
+   * <p>A value of {@link java.time.Duration#ZERO}, disables the streaming wait timeout and a null value will
    * use the default in the callable.
    *
    * <p>Please note that this timeout is best effort and the maximum resolution is configured in
    * {@link StubSettings#getStreamWatchdogCheckInterval()}.
    */
-  ApiCallContext withStreamWaitTimeout(@Nullable Duration streamWaitTimeout);
+  ApiCallContext withStreamWaitTimeout(@Nullable java.time.Duration streamWaitTimeout);
+
+  /**
+   * Backport of {@link #getStreamWaitTimeoutDuration()}
+   */
+  @Nullable
+  org.threeten.bp.Duration getStreamWaitTimeout();
 
   /**
    * Return the stream wait timeout set for this context.
    *
-   * @see #withStreamWaitTimeout(Duration)
+   * @see #withStreamWaitTimeout(java.time.Duration)
    */
   @Nullable
-  Duration getStreamWaitTimeout();
+  java.time.Duration getStreamWaitTimeoutDuration();
+
+  /**
+   * Overload of {@link #withStreamIdleTimeout(java.time.Duration)} using {@link org.threeten.bp.Duration}
+   */
+  ApiCallContext withStreamIdleTimeout(@Nullable org.threeten.bp.Duration streamIdleTimeout);
 
   /**
    * Returns a new ApiCallContext with the given stream idle timeout set.
@@ -120,13 +146,19 @@ public interface ApiCallContext extends RetryingContext {
    * reached, the stream will be closed with a nonretryable {@link WatchdogTimeoutException} and a
    * status of {@link StatusCode.Code#ABORTED}.
    *
-   * <p>A value of {@link Duration#ZERO}, disables the streaming idle timeout and a null value will
+   * <p>A value of {@link java.time.Duration#ZERO}, disables the streaming idle timeout and a null value will
    * use the default in the callable.
    *
    * <p>Please note that this timeout is best effort and the maximum resolution is configured in
    * {@link StubSettings#getStreamWatchdogCheckInterval()}.
    */
-  ApiCallContext withStreamIdleTimeout(@Nullable Duration streamIdleTimeout);
+  ApiCallContext withStreamIdleTimeout(@Nullable java.time.Duration streamIdleTimeout);
+
+  /**
+   * Backport of {@link #getStreamIdleTimeoutDuration()}
+   */
+  @Nullable
+  org.threeten.bp.Duration getStreamIdleTimeout();
 
   /**
    * The stream idle timeout set for this context.
@@ -134,7 +166,7 @@ public interface ApiCallContext extends RetryingContext {
    * @see #withStreamIdleTimeout(Duration)
    */
   @Nullable
-  Duration getStreamIdleTimeout();
+  java.time.Duration getStreamIdleTimeoutDuration();
 
   /**
    * The {@link ApiTracer} that was previously set for this context.

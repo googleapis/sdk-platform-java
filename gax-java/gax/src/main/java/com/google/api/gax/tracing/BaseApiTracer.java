@@ -30,7 +30,6 @@
 package com.google.api.gax.tracing;
 
 import com.google.api.core.InternalApi;
-import org.threeten.bp.Duration;
 
 /**
  * A base implementation of {@link ApiTracer} that does nothing.
@@ -101,7 +100,7 @@ public class BaseApiTracer implements ApiTracer {
   }
 
   @Override
-  public void attemptFailed(Throwable error, Duration delay) {
+  public void attemptFailed(Throwable error, java.time.Duration delay) {
     // noop
   }
 

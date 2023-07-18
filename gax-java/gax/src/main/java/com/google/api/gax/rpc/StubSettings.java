@@ -44,11 +44,12 @@ import com.google.api.gax.tracing.BaseApiTracerFactory;
 import com.google.auth.oauth2.QuotaProjectIdProvider;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
+import org.threeten.bp.Duration;
+
 import java.io.IOException;
 import java.util.concurrent.Executor;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.threeten.bp.Duration;
 
 /**
  * A base settings class to configure a client stub class.
@@ -75,7 +76,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   private final String quotaProjectId;
   @Nullable private final String gdchApiAudience;
   @Nullable private final WatchdogProvider streamWatchdogProvider;
-  @Nonnull private final Duration streamWatchdogCheckInterval;
+  @Nonnull private final java.time.Duration streamWatchdogCheckInterval;
   @Nonnull private final ApiTracerFactory tracerFactory;
   // Track if deprecated setExecutorProvider is called
   private boolean deprecatedExecutorProviderSet;
@@ -159,8 +160,16 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     return streamWatchdogProvider;
   }
 
+  /**
+   * Backport of {@link #getStreamWatchdogCheckIntervalDuration()}
+   */
   @Nonnull
-  public final Duration getStreamWatchdogCheckInterval() {
+  public final org.threeten.bp.Duration getStreamWatchdogCheckInterval() {
+    return org.threeten.bp.Duration.ofNanos(getStreamWatchdogCheckIntervalDuration().toNanos());
+  }
+
+  @Nonnull
+  public final java.time.Duration getStreamWatchdogCheckIntervalDuration() {
     return streamWatchdogCheckInterval;
   }
 
@@ -216,7 +225,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     private String quotaProjectId;
     @Nullable private String gdchApiAudience;
     @Nullable private WatchdogProvider streamWatchdogProvider;
-    @Nonnull private Duration streamWatchdogCheckInterval;
+    @Nonnull private java.time.Duration streamWatchdogCheckInterval;
     @Nonnull private ApiTracerFactory tracerFactory;
     private boolean deprecatedExecutorProviderSet;
 
@@ -276,7 +285,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.mtlsEndpoint = null;
         this.quotaProjectId = null;
         this.streamWatchdogProvider = InstantiatingWatchdogProvider.create();
-        this.streamWatchdogCheckInterval = Duration.ofSeconds(10);
+        this.streamWatchdogCheckInterval = java.time.Duration.ofSeconds(10);
         this.tracerFactory = BaseApiTracerFactory.getInstance();
         this.deprecatedExecutorProviderSet = false;
         this.gdchApiAudience = null;
@@ -298,7 +307,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         }
         this.streamWatchdogProvider =
             FixedWatchdogProvider.create(clientContext.getStreamWatchdog());
-        this.streamWatchdogCheckInterval = clientContext.getStreamWatchdogCheckInterval();
+        this.streamWatchdogCheckInterval = clientContext.getStreamWatchdogCheckIntervalDuration();
         this.tracerFactory = clientContext.getTracerFactory();
         this.quotaProjectId = getQuotaProjectIdFromClientContext(clientContext);
         this.gdchApiAudience = clientContext.getGdchApiAudience();
@@ -439,10 +448,17 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     }
 
     /**
-     * Sets how often the {@link Watchdog} will check ongoing streaming RPCs. Defaults to 10 secs.
-     * Use {@link Duration#ZERO} to disable.
+     * Overload of {@link #setStreamWatchdogCheckInterval(java.time.Duration)} using {@link org.threeten.bp.Duration}
      */
-    public B setStreamWatchdogCheckInterval(@Nonnull Duration checkInterval) {
+    public B setStreamWatchdogCheckInterval(@Nonnull org.threeten.bp.Duration checkInterval) {
+      return setStreamWatchdogCheckInterval(java.time.Duration.ofNanos(checkInterval.toNanos()));
+    }
+
+    /**
+     * Sets how often the {@link Watchdog} will check ongoing streaming RPCs. Defaults to 10 secs.
+     * Use {@link java.time.Duration#ZERO} to disable.
+     */
+    public B setStreamWatchdogCheckInterval(@Nonnull java.time.Duration checkInterval) {
       Preconditions.checkNotNull(checkInterval);
       this.streamWatchdogCheckInterval = checkInterval;
       return self();
@@ -527,8 +543,12 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       return quotaProjectId;
     }
 
+    public org.threeten.bp.Duration getStreamWatchdogCheckInterval() {
+      return org.threeten.bp.Duration.ofNanos(getStreamWatchdogCheckIntervalDuration().toNanos());
+    }
+
     @Nonnull
-    public Duration getStreamWatchdogCheckInterval() {
+    public java.time.Duration getStreamWatchdogCheckIntervalDuration() {
       return streamWatchdogCheckInterval;
     }
 

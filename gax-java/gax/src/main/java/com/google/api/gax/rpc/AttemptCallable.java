@@ -35,7 +35,6 @@ import com.google.api.gax.retrying.NonCancellableFuture;
 import com.google.api.gax.retrying.RetryingFuture;
 import com.google.common.base.Preconditions;
 import java.util.concurrent.Callable;
-import org.threeten.bp.Duration;
 
 /**
  * A callable representing an attempt to make an RPC call. This class is used from {@link
@@ -70,7 +69,7 @@ class AttemptCallable<RequestT, ResponseT> implements Callable<ResponseT> {
 
     try {
       // Set the RPC timeout if the caller did not provide their own.
-      Duration rpcTimeout = externalFuture.getAttemptSettings().getRpcTimeout();
+      java.time.Duration rpcTimeout = externalFuture.getAttemptSettings().getRpcTimeoutDuration();
       if (!rpcTimeout.isZero() && callContext.getTimeout() == null) {
         callContext = callContext.withTimeout(rpcTimeout);
       }

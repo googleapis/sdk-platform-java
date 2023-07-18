@@ -35,7 +35,6 @@ import com.google.api.gax.retrying.NonCancellableFuture;
 import com.google.api.gax.retrying.RetryingFuture;
 import com.google.common.base.Preconditions;
 import java.util.concurrent.Callable;
-import org.threeten.bp.Duration;
 
 /**
  * A callable representing an attempt to check the status of something by issuing a call to a
@@ -66,7 +65,7 @@ class CheckingAttemptCallable<RequestT, ResponseT> implements Callable<ResponseT
     ApiCallContext callContext = originalCallContext;
 
     try {
-      Duration rpcTimeout = externalFuture.getAttemptSettings().getRpcTimeout();
+      java.time.Duration rpcTimeout = externalFuture.getAttemptSettings().getRpcTimeoutDuration();
       if (!rpcTimeout.isZero()) {
         callContext = callContext.withTimeout(rpcTimeout);
       }

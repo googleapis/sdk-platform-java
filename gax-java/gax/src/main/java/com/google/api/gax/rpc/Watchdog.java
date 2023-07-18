@@ -32,6 +32,8 @@ package com.google.api.gax.rpc;
 import com.google.api.core.ApiClock;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.common.base.Preconditions;
+
+import java.time.Duration;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.concurrent.CancellationException;
@@ -45,7 +47,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.GuardedBy;
-import org.threeten.bp.Duration;
 
 /**
  * Prevents the streams from hanging indefinitely. This middleware garbage collects idle streams in
@@ -71,19 +72,19 @@ public final class Watchdog implements Runnable, BackgroundResource {
   private final ConcurrentHashMap<WatchdogStream, Object> openStreams = new ConcurrentHashMap<>();
 
   private final ApiClock clock;
-  private final Duration scheduleInterval;
+  private final java.time.Duration scheduleInterval;
   private final ScheduledExecutorService executor;
   private ScheduledFuture<?> future;
 
   /** returns a Watchdog which is scheduled at the provided interval. */
   public static Watchdog create(
-      ApiClock clock, Duration scheduleInterval, ScheduledExecutorService executor) {
+      ApiClock clock, java.time.Duration scheduleInterval, ScheduledExecutorService executor) {
     Watchdog watchdog = new Watchdog(clock, scheduleInterval, executor);
     watchdog.start();
     return watchdog;
   }
 
-  private Watchdog(ApiClock clock, Duration scheduleInterval, ScheduledExecutorService executor) {
+  private Watchdog(ApiClock clock, java.time.Duration scheduleInterval, ScheduledExecutorService executor) {
     this.clock = Preconditions.checkNotNull(clock, "clock can't be null");
     this.scheduleInterval = scheduleInterval;
     this.executor = executor;
@@ -95,11 +96,22 @@ public final class Watchdog implements Runnable, BackgroundResource {
             this, scheduleInterval.toMillis(), scheduleInterval.toMillis(), TimeUnit.MILLISECONDS);
   }
 
+  /**
+   * Overload of {@link #watch(ResponseObserver, java.time.Duration, java.time.Duration)} using {@link org.threeten.bp.Duration}
+   */
+  public <ResponseT> ResponseObserver<ResponseT> watch(
+          ResponseObserver<ResponseT> innerObserver,
+          @Nonnull org.threeten.bp.Duration waitTimeout,
+          @Nonnull org.threeten.bp.Duration idleTimeout) {
+    return watch(innerObserver,
+            java.time.Duration.ofNanos(waitTimeout.toNanos()),
+            java.time.Duration.ofNanos(idleTimeout.toNanos()));
+  }
   /** Wraps the target observer with timing constraints. */
   public <ResponseT> ResponseObserver<ResponseT> watch(
       ResponseObserver<ResponseT> innerObserver,
-      @Nonnull Duration waitTimeout,
-      @Nonnull Duration idleTimeout) {
+      @Nonnull java.time.Duration waitTimeout,
+      @Nonnull java.time.Duration idleTimeout) {
     Preconditions.checkNotNull(innerObserver, "innerObserver can't be null");
     Preconditions.checkNotNull(waitTimeout, "waitTimeout can't be null");
     Preconditions.checkNotNull(idleTimeout, "idleTimeout can't be null");

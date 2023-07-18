@@ -55,7 +55,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nullable;
-import org.threeten.bp.Duration;
 
 /**
  * A {@link ManagedChannel} that will send requests round-robin via a set of channels.
@@ -69,7 +68,7 @@ import org.threeten.bp.Duration;
  */
 class ChannelPool extends ManagedChannel {
   private static final Logger LOG = Logger.getLogger(ChannelPool.class.getName());
-  private static final Duration REFRESH_PERIOD = Duration.ofMinutes(50);
+  private static final java.time.Duration REFRESH_PERIOD = java.time.Duration.ofMinutes(50);
 
   private final ChannelPoolSettings settings;
   private final ChannelFactory channelFactory;

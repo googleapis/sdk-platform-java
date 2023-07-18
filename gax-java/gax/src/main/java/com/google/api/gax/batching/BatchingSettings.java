@@ -33,7 +33,7 @@ import com.google.api.gax.batching.FlowController.LimitExceededBehavior;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
 import javax.annotation.Nullable;
-import org.threeten.bp.Duration;
+import java.time.Duration;
 
 /**
  * Represents the batching settings to use for an API method that is capable of batching.
@@ -100,7 +100,13 @@ public abstract class BatchingSettings {
 
   /** Get the delay threshold to use for batching. */
   @Nullable
-  public abstract Duration getDelayThreshold();
+  public final org.threeten.bp.Duration getDelayThreshold() {
+    return org.threeten.bp.Duration.ofNanos(getDelayThresholdDuration().toNanos());
+  }
+
+  /** Get the delay threshold to use for batching. */
+  @Nullable
+  public abstract Duration getDelayThresholdDuration();
 
   /** Returns the Boolean object to indicate if the batching is enabled. Default to true */
   public abstract Boolean getIsEnabled();
@@ -114,7 +120,7 @@ public abstract class BatchingSettings {
         .setIsEnabled(true)
         .setElementCountThreshold(1L)
         .setRequestByteThreshold(1L)
-        .setDelayThreshold(Duration.ofMillis(1))
+        .setDelayThreshold(org.threeten.bp.Duration.ofMillis(1))
         .setFlowControlSettings(
             FlowControlSettings.newBuilder()
                 .setLimitExceededBehavior(LimitExceededBehavior.Ignore)
@@ -148,7 +154,7 @@ public abstract class BatchingSettings {
      * value should not be set too high, usually on the order of milliseconds. Otherwise, calls
      * might appear to never complete.
      */
-    public abstract Builder setDelayThreshold(Duration delayThreshold);
+    public abstract Builder setDelayThreshold(org.threeten.bp.Duration delayThreshold);
 
     /**
      * Set if the batch should be enabled. If set to false, the batch logic will be disabled and the
@@ -172,7 +178,7 @@ public abstract class BatchingSettings {
           "requestByteThreshold must be either unset or positive");
       Preconditions.checkArgument(
           settings.getDelayThreshold() == null
-              || settings.getDelayThreshold().compareTo(Duration.ZERO) > 0,
+              || settings.getDelayThreshold().compareTo(org.threeten.bp.Duration.ZERO) > 0,
           "delayThreshold must be either unset or positive");
       return settings;
     }

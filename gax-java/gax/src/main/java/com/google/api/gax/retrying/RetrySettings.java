@@ -33,7 +33,6 @@ import com.google.api.core.BetaApi;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
 import java.io.Serializable;
-import org.threeten.bp.Duration;
 
 /**
  * Holds the parameters for <b>retry</b> or <b>poll</b> logic with jitter, timeout and exponential
@@ -65,7 +64,7 @@ import org.threeten.bp.Duration;
  *
  * <p>Server streaming RPCs interpret RPC timeouts a bit differently. For server streaming RPCs, the
  * RPC timeout gets converted into a wait timeout {@link
- * com.google.api.gax.rpc.ApiCallContext#withStreamWaitTimeout(Duration)}.
+ * com.google.api.gax.rpc.ApiCallContext#withStreamWaitTimeout(java.time.Duration)}.
  */
 @AutoValue
 public abstract class RetrySettings implements Serializable {
@@ -73,18 +72,28 @@ public abstract class RetrySettings implements Serializable {
   private static final long serialVersionUID = 8258475264439710899L;
 
   /**
+   * Backport of {@link #getTotalTimeoutDuration()}
+   */
+  public abstract org.threeten.bp.Duration getTotalTimeout();
+
+  /**
    * TotalTimeout has ultimate control over how long the logic should keep trying the remote call
    * until it gives up completely. The higher the total timeout, the more retries can be attempted.
    * The default value is {@code Duration.ZERO}.
    */
-  public abstract Duration getTotalTimeout();
+  public abstract java.time.Duration getTotalTimeoutDuration();
+
+  /**
+   * Backport of {@link #getInitialRetryDelayDuration()}
+   */
+  public abstract org.threeten.bp.Duration getInitialRetryDelay();
 
   /**
    * InitialRetryDelay controls the delay before the first retry. Subsequent retries will use this
    * value adjusted according to the RetryDelayMultiplier. The default value is {@code
    * Duration.ZERO}.
    */
-  public abstract Duration getInitialRetryDelay();
+  public abstract java.time.Duration getInitialRetryDelayDuration();
 
   /**
    * RetryDelayMultiplier controls the change in retry delay. The retry delay of the previous call
@@ -94,11 +103,16 @@ public abstract class RetrySettings implements Serializable {
   public abstract double getRetryDelayMultiplier();
 
   /**
+   * Backport of {@link #getMaxRetryDelayDuration()}
+   */
+  public abstract org.threeten.bp.Duration getMaxRetryDelay();
+
+  /**
    * MaxRetryDelay puts a limit on the value of the retry delay, so that the RetryDelayMultiplier
    * can't increase the retry delay higher than this amount. The default value is {@code
    * Duration.ZERO}.
    */
-  public abstract Duration getMaxRetryDelay();
+  public abstract java.time.Duration getMaxRetryDelayDuration();
 
   /**
    * MaxAttempts defines the maximum number of attempts to perform. The default value is {@code 0}.
@@ -122,11 +136,16 @@ public abstract class RetrySettings implements Serializable {
   public abstract boolean isJittered();
 
   /**
+   * Backport of {@link #getInitialRpcTimeoutDuration()}
+   */
+  public abstract org.threeten.bp.Duration getInitialRpcTimeout();
+
+  /**
    * InitialRpcTimeout controls the timeout for the initial RPC. Subsequent calls will use this
    * value adjusted according to the RpcTimeoutMultiplier. The default value is {@code
    * Duration.ZERO}.
    */
-  public abstract Duration getInitialRpcTimeout();
+  public abstract java.time.Duration getInitialRpcTimeoutDuration();
 
   /**
    * RpcTimeoutMultiplier controls the change in RPC timeout. The timeout of the previous call is
@@ -136,23 +155,28 @@ public abstract class RetrySettings implements Serializable {
   public abstract double getRpcTimeoutMultiplier();
 
   /**
+   * Backport of {@link #getMaxRpcTimeoutDuration()}
+   */
+  public abstract org.threeten.bp.Duration getMaxRpcTimeout();
+
+  /**
    * MaxRpcTimeout puts a limit on the value of the RPC timeout, so that the RpcTimeoutMultiplier
    * can't increase the RPC timeout higher than this amount. The default value is {@code
    * Duration.ZERO}.
    */
-  public abstract Duration getMaxRpcTimeout();
+  public abstract java.time.Duration getMaxRpcTimeoutDuration();
 
   public static Builder newBuilder() {
     return new AutoValue_RetrySettings.Builder()
-        .setTotalTimeout(Duration.ZERO)
-        .setInitialRetryDelay(Duration.ZERO)
+        .setTotalTimeout(java.time.Duration.ZERO)
+        .setInitialRetryDelay(java.time.Duration.ZERO)
         .setRetryDelayMultiplier(1.0)
-        .setMaxRetryDelay(Duration.ZERO)
+        .setMaxRetryDelay(java.time.Duration.ZERO)
         .setMaxAttempts(0)
         .setJittered(true)
-        .setInitialRpcTimeout(Duration.ZERO)
+        .setInitialRpcTimeout(java.time.Duration.ZERO)
         .setRpcTimeoutMultiplier(1.0)
-        .setMaxRpcTimeout(Duration.ZERO);
+        .setMaxRpcTimeout(java.time.Duration.ZERO);
   }
 
   public abstract Builder toBuilder();
@@ -165,18 +189,32 @@ public abstract class RetrySettings implements Serializable {
   public abstract static class Builder {
 
     /**
+     * Overload of {@link #setTotalTimeout(java.time.Duration)} using {@link org.threeten.bp.Duration}
+     */
+    public final Builder setTotalTimeout(org.threeten.bp.Duration totalTimeout) {
+      return setTotalTimeout(java.time.Duration.ofNanos(totalTimeout.toNanos()));
+    }
+
+    /**
      * TotalTimeout has ultimate control over how long the logic should keep trying the remote call
      * until it gives up completely. The higher the total timeout, the more retries can be
      * attempted. The default value is {@code Duration.ZERO}.
      */
-    public abstract Builder setTotalTimeout(Duration totalTimeout);
+    public abstract Builder setTotalTimeout(java.time.Duration totalTimeout);
+
+    /**
+     * Overload of {@link #setInitialRetryDelay(java.time.Duration)} using {@link org.threeten.bp.Duration}
+     */
+    public final Builder setInitialRetryDelay(org.threeten.bp.Duration initialDelay) {
+      return setInitialRetryDelay(java.time.Duration.ofNanos(initialDelay.toNanos()));
+    }
 
     /**
      * InitialRetryDelay controls the delay before the first retry. Subsequent retries will use this
      * value adjusted according to the RetryDelayMultiplier. The default value is {@code
      * Duration.ZERO}.
      */
-    public abstract Builder setInitialRetryDelay(Duration initialDelay);
+    public abstract Builder setInitialRetryDelay(java.time.Duration initialDelay);
 
     /**
      * RetryDelayMultiplier controls the change in retry delay. The retry delay of the previous call
@@ -186,11 +224,18 @@ public abstract class RetrySettings implements Serializable {
     public abstract Builder setRetryDelayMultiplier(double multiplier);
 
     /**
+     * Overload of {@link #setMaxRetryDelay(java.time.Duration)} using {@link org.threeten.bp.Duration}
+     */
+    public final Builder setMaxRetryDelay(org.threeten.bp.Duration maxDelay) {
+      return setMaxRetryDelay(java.time.Duration.ofNanos(maxDelay.toNanos()));
+    }
+
+    /**
      * MaxRetryDelay puts a limit on the value of the retry delay, so that the RetryDelayMultiplier
      * can't increase the retry delay higher than this amount. The default value is {@code
      * Duration.ZERO}.
      */
-    public abstract Builder setMaxRetryDelay(Duration maxDelay);
+    public abstract Builder setMaxRetryDelay(java.time.Duration maxDelay);
 
     /**
      * MaxAttempts defines the maximum number of attempts to perform. The default value is {@code
@@ -214,11 +259,18 @@ public abstract class RetrySettings implements Serializable {
     public abstract Builder setJittered(boolean jittered);
 
     /**
+     * Overload of {@link #setInitialRpcTimeout(java.time.Duration)} using {@link org.threeten.bp.Duration}
+     */
+    public final Builder setInitialRpcTimeout(org.threeten.bp.Duration initialTimeout) {
+      return setInitialRpcTimeout(java.time.Duration.ofNanos(initialTimeout.toNanos()));
+    }
+
+    /**
      * InitialRpcTimeout controls the timeout for the initial RPC. Subsequent calls will use this
      * value adjusted according to the RpcTimeoutMultiplier. The default value is {@code
      * Duration.ZERO}.
      */
-    public abstract Builder setInitialRpcTimeout(Duration initialTimeout);
+    public abstract Builder setInitialRpcTimeout(java.time.Duration initialTimeout);
 
     /**
      * See the class documentation of {@link RetrySettings} for a description of what this value
@@ -227,25 +279,46 @@ public abstract class RetrySettings implements Serializable {
     public abstract Builder setRpcTimeoutMultiplier(double multiplier);
 
     /**
+     * Overload of {@link #setMaxRpcTimeout(java.time.Duration)} using {@link org.threeten.bp.Duration}
+     */
+    public final Builder setMaxRpcTimeout(org.threeten.bp.Duration maxTimeout) {
+      return setMaxRpcTimeout(java.time.Duration.ofNanos(maxTimeout.toNanos()));
+    }
+
+    /**
      * MaxRpcTimeout puts a limit on the value of the RPC timeout, so that the RpcTimeoutMultiplier
      * can't increase the RPC timeout higher than this amount. The default value is {@code
      * Duration.ZERO}.
      */
-    public abstract Builder setMaxRpcTimeout(Duration maxTimeout);
+    public abstract Builder setMaxRpcTimeout(java.time.Duration maxTimeout);
+
+    /**
+     * Backport of {@link #getTotalTimeoutDuration()}
+     */
+    public final org.threeten.bp.Duration getTotalTimeout() {
+      return org.threeten.bp.Duration.ofNanos(getTotalTimeoutDuration().toNanos());
+    }
 
     /**
      * TotalTimeout has ultimate control over how long the logic should keep trying the remote call
      * until it gives up completely. The higher the total timeout, the more retries can be
      * attempted. The default value is {@code Duration.ZERO}.
      */
-    public abstract Duration getTotalTimeout();
+    public abstract java.time.Duration getTotalTimeoutDuration();
+
+    /**
+     * Backport of {@link #getInitialRetryDelay()}
+     */
+    public final org.threeten.bp.Duration getInitialRetryDelay() {
+      return org.threeten.bp.Duration.ofNanos(getInitialRetryDelayDuration().toNanos());
+    }
 
     /**
      * InitialRetryDelay controls the delay before the first retry. Subsequent retries will use this
      * value adjusted according to the RetryDelayMultiplier. The default value is {@code
      * Duration.ZERO}.
      */
-    public abstract Duration getInitialRetryDelay();
+    public abstract java.time.Duration getInitialRetryDelayDuration();
 
     /**
      * RetryDelayMultiplier controls the change in retry delay. The retry delay of the previous call
@@ -272,18 +345,32 @@ public abstract class RetrySettings implements Serializable {
     public abstract boolean isJittered();
 
     /**
+     * Backport of {@link #getMaxRetryDelayDuration()}
+     */
+    public final org.threeten.bp.Duration getMaxRetryDelay() {
+      return org.threeten.bp.Duration.ofNanos(getMaxRetryDelayDuration().toNanos());
+    }
+
+    /**
      * MaxRetryDelay puts a limit on the value of the retry delay, so that the RetryDelayMultiplier
      * can't increase the retry delay higher than this amount. The default value is {@code
      * Duration.ZERO}.
      */
-    public abstract Duration getMaxRetryDelay();
+    public abstract java.time.Duration getMaxRetryDelayDuration();
+
+    /**
+     * Backport of {@link #getInitialRpcTimeoutDuration()}
+     */
+    public final org.threeten.bp.Duration getInitialRpcTimeout() {
+      return org.threeten.bp.Duration.ofNanos((getInitialRpcTimeoutDuration().toNanos()));
+    }
 
     /**
      * InitialRpcTimeout controls the timeout for the initial RPC. Subsequent calls will use this
      * value adjusted according to the RpcTimeoutMultiplier. The default value is {@code
      * Duration.ZERO}.
      */
-    public abstract Duration getInitialRpcTimeout();
+    public abstract java.time.Duration getInitialRpcTimeoutDuration();
 
     /**
      * See the class documentation of {@link RetrySettings} for a description of what this value
@@ -292,10 +379,25 @@ public abstract class RetrySettings implements Serializable {
     public abstract double getRpcTimeoutMultiplier();
 
     /**
+     * Backport of {@link #getMaxRpcTimeoutDuration()}
+     */
+    public final org.threeten.bp.Duration getMaxRpcTimeout() {
+      return org.threeten.bp.Duration.ofNanos((getMaxRpcTimeoutDuration().toNanos()));
+    }
+
+    /**
      * MaxRpcTimeout puts a limit on the value of the RPC timeout, so that the RpcTimeoutMultiplier
      * can't increase the RPC timeout higher than this amount.
      */
-    public abstract Duration getMaxRpcTimeout();
+    public abstract java.time.Duration getMaxRpcTimeoutDuration();
+
+    /**
+     * Overload of {@link #setLogicalTimeout(java.time.Duration)} using {@link org.threeten.bp.Duration}
+     */
+    @BetaApi
+    public Builder setLogicalTimeout(org.threeten.bp.Duration timeout) {
+      return setLogicalTimeout(java.time.Duration.ofNanos(timeout.toNanos()));
+    }
 
     /**
      * Configures the timeout settings with the given timeout such that the logical call will take
@@ -307,7 +409,7 @@ public abstract class RetrySettings implements Serializable {
      * setter is respected.
      */
     @BetaApi
-    public Builder setLogicalTimeout(Duration timeout) {
+    public Builder setLogicalTimeout(java.time.Duration timeout) {
       return setRpcTimeoutMultiplier(1)
           .setInitialRpcTimeout(timeout)
           .setMaxRpcTimeout(timeout)

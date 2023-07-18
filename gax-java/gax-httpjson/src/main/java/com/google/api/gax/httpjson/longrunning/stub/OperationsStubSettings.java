@@ -65,7 +65,6 @@ import com.google.longrunning.Operation;
 import com.google.protobuf.Empty;
 import java.io.IOException;
 import java.util.List;
-import org.threeten.bp.Duration;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
 /**
@@ -293,13 +292,13 @@ public class OperationsStubSettings extends StubSettings<OperationsStubSettings>
       RetrySettings settings = null;
       settings =
           RetrySettings.newBuilder()
-              .setInitialRetryDelay(Duration.ofMillis(500L))
+              .setInitialRetryDelay(java.time.Duration.ofMillis(500L))
               .setRetryDelayMultiplier(2.0)
-              .setMaxRetryDelay(Duration.ofMillis(10000L))
-              .setInitialRpcTimeout(Duration.ofMillis(10000L))
+              .setMaxRetryDelay(java.time.Duration.ofMillis(10000L))
+              .setInitialRpcTimeout(java.time.Duration.ofMillis(10000L))
               .setRpcTimeoutMultiplier(1.0)
-              .setMaxRpcTimeout(Duration.ofMillis(10000L))
-              .setTotalTimeout(Duration.ofMillis(10000L))
+              .setMaxRpcTimeout(java.time.Duration.ofMillis(10000L))
+              .setTotalTimeout(java.time.Duration.ofMillis(10000L))
               .build();
       definitions.put("retry_policy_0_params", settings);
       RETRY_PARAM_DEFINITIONS = definitions.build();

@@ -30,7 +30,6 @@
 package com.google.api.gax.tracing;
 
 import com.google.api.core.InternalApi;
-import org.threeten.bp.Duration;
 
 /**
  * Implementations of this class trace the logical flow of a google cloud client.
@@ -110,7 +109,7 @@ public interface ApiTracer {
    * @param error the transient error that caused the attempt to fail.
    * @param delay the amount of time to wait before the next attempt will start.
    */
-  void attemptFailed(Throwable error, Duration delay);
+  void attemptFailed(Throwable error, java.time.Duration delay);
 
   /**
    * Adds an annotation that the attempt failed and that no further attempts will be made because

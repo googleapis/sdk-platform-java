@@ -36,7 +36,6 @@ import com.google.api.core.ApiFutures;
 import java.io.InterruptedIOException;
 import java.nio.channels.ClosedByInterruptException;
 import java.util.concurrent.Callable;
-import org.threeten.bp.Duration;
 
 /**
  * The retry executor which executes attempts in the current thread, potentially causing the current
@@ -99,7 +98,7 @@ public class DirectRetryingExecutor<ResponseT> implements RetryingExecutorWithCo
   public ApiFuture<ResponseT> submit(RetryingFuture<ResponseT> retryingFuture) {
     while (!retryingFuture.isDone()) {
       try {
-        sleep(retryingFuture.getAttemptSettings().getRandomizedRetryDelay());
+        sleep(retryingFuture.getAttemptSettings().getRandomizedRetryDelayDuration());
         ResponseT response = retryingFuture.getCallable().call();
         retryingFuture.setAttemptFuture(ApiFutures.immediateFuture(response));
       } catch (InterruptedException | InterruptedIOException | ClosedByInterruptException e) {
@@ -118,8 +117,8 @@ public class DirectRetryingExecutor<ResponseT> implements RetryingExecutorWithCo
    * @param delay time to sleep
    * @throws InterruptedException if any thread has interrupted the current thread
    */
-  protected void sleep(Duration delay) throws InterruptedException {
-    if (Duration.ZERO.compareTo(delay) < 0) {
+  protected void sleep(java.time.Duration delay) throws InterruptedException {
+    if (java.time.Duration.ZERO.compareTo(delay) < 0) {
       Thread.sleep(delay.toMillis());
     }
   }

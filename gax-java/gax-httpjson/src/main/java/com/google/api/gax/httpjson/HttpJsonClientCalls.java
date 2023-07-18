@@ -34,7 +34,6 @@ import com.google.api.core.ApiFuture;
 import com.google.api.gax.rpc.ApiCallContext;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.threeten.bp.Duration;
 
 /**
  * {@code HttpJsonClientCalls} creates a new {@code HttpJsonClientCall} from the given call context.
@@ -60,8 +59,8 @@ class HttpJsonClientCalls {
       // This is temporary here as we plan to migrate to java.util.Duration
       if (callOptions.getTimeout() == null
           || httpJsonContext
-                  .getTimeout()
-                  .compareTo(Duration.ofMillis(callOptions.getTimeout().toMillis()))
+                  .getTimeoutDuration()
+                  .compareTo(java.time.Duration.ofMillis(callOptions.getTimeout().toMillis()))
               < 0) {
         callOptions =
             callOptions

@@ -38,7 +38,6 @@ import java.io.IOException;
 import java.util.concurrent.Executor;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.threeten.bp.Duration;
 
 /**
  * A base settings class to configure a client class.
@@ -106,9 +105,18 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     return stubSettings.getStreamWatchdogProvider();
   }
 
+  /**
+   * Backport of {@link #getWatchdogCheckIntervalDuration()}
+   * @return
+   */
   @Nonnull
-  public final Duration getWatchdogCheckInterval() {
-    return stubSettings.getStreamWatchdogCheckInterval();
+  public final org.threeten.bp.Duration getWatchdogCheckInterval() {
+    return org.threeten.bp.Duration.ofNanos(getWatchdogCheckIntervalDuration().toNanos());
+  }
+
+  @Nonnull
+  public final java.time.Duration getWatchdogCheckIntervalDuration() {
+    return stubSettings.getStreamWatchdogCheckIntervalDuration();
   }
 
   /** Gets the GDCH API audience that was previously set in this Builder */
@@ -256,7 +264,11 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
       return self();
     }
 
-    public B setWatchdogCheckInterval(@Nullable Duration checkInterval) {
+    public B setWatchdogCheckInterval(@Nullable org.threeten.bp.Duration checkInterval) {
+      return setWatchdogCheckInterval(java.time.Duration.ofNanos(checkInterval.toNanos()));
+    }
+
+    public B setWatchdogCheckInterval(@Nullable java.time.Duration checkInterval) {
       stubSettings.setStreamWatchdogCheckInterval(checkInterval);
       return self();
     }
@@ -336,8 +348,13 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     }
 
     @Nullable
-    public Duration getWatchdogCheckInterval() {
-      return stubSettings.getStreamWatchdogCheckInterval();
+    public org.threeten.bp.Duration getWatchdogCheckInterval() {
+      return org.threeten.bp.Duration.ofNanos(getWatchdogCheckIntervalDuration().toNanos());
+    }
+
+    @Nullable
+    public java.time.Duration getWatchdogCheckIntervalDuration() {
+      return stubSettings.getStreamWatchdogCheckIntervalDuration();
     }
 
     /** Gets the GDCH API audience that was previously set in this Builder */

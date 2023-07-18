@@ -57,7 +57,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.threeten.bp.Duration;
 
 /**
  * Encapsulates client state, including executor, credentials, and transport channel.
@@ -98,8 +97,17 @@ public abstract class ClientContext {
   @Nullable
   public abstract Watchdog getStreamWatchdog();
 
+  /**
+   * Backport of {@link #getStreamWatchdogCheckIntervalDuration()}
+   * @return
+   */
   @Nonnull
-  public abstract Duration getStreamWatchdogCheckInterval();
+  public final org.threeten.bp.Duration getStreamWatchdogCheckInterval() {
+    return org.threeten.bp.Duration.ofNanos(getStreamWatchdogCheckIntervalDuration().toNanos());
+  }
+
+  @Nonnull
+  public abstract java.time.Duration getStreamWatchdogCheckIntervalDuration();
 
   @Nullable
   public abstract String getEndpoint();
@@ -127,7 +135,7 @@ public abstract class ClientContext {
         .setInternalHeaders(Collections.<String, String>emptyMap())
         .setClock(NanoClock.getDefaultClock())
         .setStreamWatchdog(null)
-        .setStreamWatchdogCheckInterval(Duration.ZERO)
+        .setStreamWatchdogCheckInterval(java.time.Duration.ZERO)
         .setTracerFactory(BaseApiTracerFactory.getInstance())
         .setQuotaProjectId(null)
         .setGdchApiAudience(null);
@@ -350,7 +358,10 @@ public abstract class ClientContext {
 
     public abstract Builder setStreamWatchdog(Watchdog watchdog);
 
-    public abstract Builder setStreamWatchdogCheckInterval(Duration duration);
+    public final Builder setStreamWatchdogCheckInterval(org.threeten.bp.Duration duration) {
+      return setStreamWatchdogCheckInterval(java.time.Duration.ofNanos(duration.toNanos()));
+    }
+    public abstract Builder setStreamWatchdogCheckInterval(java.time.Duration duration);
 
     /**
      * Set the {@link ApiTracerFactory} that will be used to generate traces for operations.

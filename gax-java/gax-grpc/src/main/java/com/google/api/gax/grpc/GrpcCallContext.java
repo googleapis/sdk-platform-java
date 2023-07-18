@@ -48,13 +48,14 @@ import io.grpc.Channel;
 import io.grpc.Deadline;
 import io.grpc.Metadata;
 import io.grpc.auth.MoreCallCredentials;
+import org.threeten.bp.Duration;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.threeten.bp.Duration;
 
 /**
  * GrpcCallContext encapsulates context data used to make a grpc call.
@@ -70,9 +71,9 @@ public final class GrpcCallContext implements ApiCallContext {
 
   private final Channel channel;
   private final CallOptions callOptions;
-  @Nullable private final Duration timeout;
-  @Nullable private final Duration streamWaitTimeout;
-  @Nullable private final Duration streamIdleTimeout;
+  @Nullable private final java.time.Duration timeout;
+  @Nullable private final java.time.Duration streamWaitTimeout;
+  @Nullable private final java.time.Duration streamIdleTimeout;
   @Nullable private final Integer channelAffinity;
   @Nullable private final RetrySettings retrySettings;
   @Nullable private final ImmutableSet<StatusCode.Code> retryableCodes;
@@ -112,9 +113,9 @@ public final class GrpcCallContext implements ApiCallContext {
   private GrpcCallContext(
       Channel channel,
       CallOptions callOptions,
-      @Nullable Duration timeout,
-      @Nullable Duration streamWaitTimeout,
-      @Nullable Duration streamIdleTimeout,
+      @Nullable java.time.Duration timeout,
+      @Nullable java.time.Duration streamWaitTimeout,
+      @Nullable java.time.Duration streamIdleTimeout,
       @Nullable Integer channelAffinity,
       ImmutableMap<String, List<String>> extraHeaders,
       ApiCallContextOptions options,
@@ -172,8 +173,16 @@ public final class GrpcCallContext implements ApiCallContext {
     return withChannel(transportChannel.getChannel());
   }
 
+  /**
+   * Overload of {@link #withTimeout(java.time.Duration)} using {@link org.threeten.bp.Duration}
+   */
   @Override
-  public GrpcCallContext withTimeout(@Nullable Duration timeout) {
+  public GrpcCallContext withTimeout(@Nullable org.threeten.bp.Duration timeout) {
+    return withTimeout(java.time.Duration.ofNanos(timeout.toNanos()));
+  }
+
+  @Override
+  public GrpcCallContext withTimeout(@Nullable java.time.Duration timeout) {
     // Default RetrySettings use 0 for RPC timeout. Treat that as disabled timeouts.
     if (timeout != null && (timeout.isZero() || timeout.isNegative())) {
       timeout = null;
@@ -199,15 +208,29 @@ public final class GrpcCallContext implements ApiCallContext {
 
   @Nullable
   @Override
-  public Duration getTimeout() {
+  public org.threeten.bp.Duration getTimeout() {
+    return org.threeten.bp.Duration.ofNanos(getTimeoutDuration().toNanos());
+  }
+
+  @Nullable
+  @Override
+  public java.time.Duration getTimeoutDuration() {
     return timeout;
   }
 
+  /**
+   * Overload of {@link #withStreamWaitTimeout(java.time.Duration)} using {@link org.threeten.bp.Duration}
+   */
   @Override
-  public GrpcCallContext withStreamWaitTimeout(@Nullable Duration streamWaitTimeout) {
+  public GrpcCallContext withStreamWaitTimeout(@Nullable org.threeten.bp.Duration streamWaitTimeout) {
+    return withStreamWaitTimeout(java.time.Duration.ofNanos(streamWaitTimeout.toNanos()));
+  }
+
+  @Override
+  public GrpcCallContext withStreamWaitTimeout(@Nullable java.time.Duration streamWaitTimeout) {
     if (streamWaitTimeout != null) {
       Preconditions.checkArgument(
-          streamWaitTimeout.compareTo(Duration.ZERO) >= 0, "Invalid timeout: < 0 s");
+          streamWaitTimeout.compareTo(java.time.Duration.ZERO) >= 0, "Invalid timeout: < 0 s");
     }
 
     return new GrpcCallContext(
@@ -223,11 +246,21 @@ public final class GrpcCallContext implements ApiCallContext {
         retryableCodes);
   }
 
+  /**
+   * Overload of {@link #withStreamIdleTimeout(java.time.Duration)} using {@link org.threeten.bp.Duration}
+   * @param streamIdleTimeout
+   * @return
+   */
   @Override
-  public GrpcCallContext withStreamIdleTimeout(@Nullable Duration streamIdleTimeout) {
+  public GrpcCallContext withStreamIdleTimeout(@Nullable org.threeten.bp.Duration streamIdleTimeout) {
+    return withStreamIdleTimeout(java.time.Duration.ofNanos(streamIdleTimeout.toNanos()));
+  }
+
+  @Override
+  public GrpcCallContext withStreamIdleTimeout(@Nullable java.time.Duration streamIdleTimeout) {
     if (streamIdleTimeout != null) {
       Preconditions.checkArgument(
-          streamIdleTimeout.compareTo(Duration.ZERO) >= 0, "Invalid timeout: < 0 s");
+          streamIdleTimeout.compareTo(java.time.Duration.ZERO) >= 0, "Invalid timeout: < 0 s");
     }
 
     return new GrpcCallContext(
@@ -349,17 +382,17 @@ public final class GrpcCallContext implements ApiCallContext {
       newTracer = callOptions.getOption(TRACER_KEY);
     }
 
-    Duration newTimeout = grpcCallContext.timeout;
+    java.time.Duration newTimeout = grpcCallContext.timeout;
     if (newTimeout == null) {
       newTimeout = timeout;
     }
 
-    Duration newStreamWaitTimeout = grpcCallContext.streamWaitTimeout;
+    java.time.Duration newStreamWaitTimeout = grpcCallContext.streamWaitTimeout;
     if (newStreamWaitTimeout == null) {
       newStreamWaitTimeout = streamWaitTimeout;
     }
 
-    Duration newStreamIdleTimeout = grpcCallContext.streamIdleTimeout;
+    java.time.Duration newStreamIdleTimeout = grpcCallContext.streamIdleTimeout;
     if (newStreamIdleTimeout == null) {
       newStreamIdleTimeout = streamIdleTimeout;
     }
@@ -418,16 +451,30 @@ public final class GrpcCallContext implements ApiCallContext {
   }
 
   /**
+   * Backport of {@link #getStreamWaitTimeoutDuration()}
+   */
+  @Override
+  @Nullable
+  public org.threeten.bp.Duration getStreamWaitTimeout() {
+    return org.threeten.bp.Duration.ofNanos(getStreamWaitTimeoutDuration().toNanos());
+  }
+
+  /**
    * The stream wait timeout set for this context.
    *
    * @see ApiCallContext#withStreamWaitTimeout(Duration)
    */
   @Override
   @Nullable
-  public Duration getStreamWaitTimeout() {
+  public java.time.Duration getStreamWaitTimeoutDuration() {
     return streamWaitTimeout;
   }
 
+  @Override
+  @Nullable
+  public org.threeten.bp.Duration getStreamIdleTimeout() {
+    return org.threeten.bp.Duration.ofNanos(getStreamIdleTimeoutDuration().toNanos());
+  }
   /**
    * The stream idle timeout set for this context.
    *
@@ -435,7 +482,7 @@ public final class GrpcCallContext implements ApiCallContext {
    */
   @Override
   @Nullable
-  public Duration getStreamIdleTimeout() {
+  public java.time.Duration getStreamIdleTimeoutDuration() {
     return streamIdleTimeout;
   }
 

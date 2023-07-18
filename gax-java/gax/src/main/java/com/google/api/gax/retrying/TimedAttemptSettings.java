@@ -41,19 +41,40 @@ public abstract class TimedAttemptSettings {
   public abstract RetrySettings getGlobalSettings();
 
   /**
+   * Backport of {@link #getRetryDelayDuration()}
+   */
+  public final org.threeten.bp.Duration getRetryDelay() {
+    return org.threeten.bp.Duration.ofNanos(getRetryDelayDuration().toNanos());
+  }
+
+  /**
    * Returns the calculated retry delay. Note that the actual delay used for retry scheduling may be
    * different (randomized, based on this value).
    */
-  public abstract Duration getRetryDelay();
+  public abstract java.time.Duration getRetryDelayDuration();
+
+  /**
+   * Backport of {@link #getRpcTimeoutDuration()}
+   */
+  public final org.threeten.bp.Duration getRpcTimeout() {
+    return org.threeten.bp.Duration.ofNanos(getRpcTimeoutDuration().toNanos());
+  }
 
   /** Returns rpc timeout used for this attempt. */
-  public abstract Duration getRpcTimeout();
+  public abstract java.time.Duration getRpcTimeoutDuration();
+
+  /**
+   * Backport of {@link #getRandomizedRetryDelayDuration()}
+   */
+  public final org.threeten.bp.Duration getRandomizedRetryDelay() {
+    return org.threeten.bp.Duration.ofNanos(getRandomizedRetryDelayDuration().toNanos());
+  }
 
   /**
    * Returns randomized attempt delay. By default this value is calculated based on the {@code
    * retryDelay} value, and is used as the actual attempt execution delay.
    */
-  public abstract Duration getRandomizedRetryDelay();
+  public abstract java.time.Duration getRandomizedRetryDelayDuration();
 
   /**
    * The attempt count. It is a zero-based value (first attempt will have this value set to 0). For
@@ -86,19 +107,40 @@ public abstract class TimedAttemptSettings {
     public abstract Builder setGlobalSettings(RetrySettings value);
 
     /**
+     * Overload of {@link #setRetryDelay(java.time.Duration)} using {@link org.threeten.bp.Duration}
+     */
+    public final Builder setRetryDelay(org.threeten.bp.Duration value) {
+      return setRetryDelay(java.time.Duration.ofNanos(value.toNanos()));
+    }
+
+    /**
      * Sets the calculated retry delay. Note that the actual delay used for retry scheduling may be
      * different (randomized, based on this value).
      */
-    public abstract Builder setRetryDelay(Duration value);
+    public abstract Builder setRetryDelay(java.time.Duration value);
+
+    /**
+     * Overload of {@link #setRpcTimeout(java.time.Duration)} using {@link org.threeten.bp.Duration}
+     */
+    public final Builder setRpcTimeout(org.threeten.bp.Duration value) {
+      return setRpcTimeout(java.time.Duration.ofNanos(value.toNanos()));
+    }
 
     /** Sets rpc timeout used for this attempt. */
-    public abstract Builder setRpcTimeout(Duration value);
+    public abstract Builder setRpcTimeout(java.time.Duration value);
+
+    /**
+    * Overload of {@link #setRandomizedRetryDelay(java.time.Duration)} using {@link org.threeten.bp.Duration}
+    */
+    public final Builder setRandomizedRetryDelay(Duration value) {
+        return setRandomizedRetryDelay(java.time.Duration.ofNanos(value.toNanos()));
+    }
 
     /**
      * Sets randomized attempt delay. By default this value is calculated based on the {@code
      * retryDelay} value, and is used as the actual attempt execution delay.
      */
-    public abstract Builder setRandomizedRetryDelay(Duration value);
+    public abstract Builder setRandomizedRetryDelay(java.time.Duration value);
 
     /**
      * Set the attempt count. It is a zero-based value (first attempt will have this value set to
