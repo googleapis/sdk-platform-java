@@ -39,9 +39,7 @@ public class AsyncGetIamPolicy {
     try (SequenceServiceClient sequenceServiceClient = SequenceServiceClient.create()) {
       GetIamPolicyRequest request =
           GetIamPolicyRequest.newBuilder()
-              .setResource(
-                  BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-                      .toString())
+              .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
               .setOptions(GetPolicyOptions.newBuilder().build())
               .build();
       ApiFuture<Policy> future = sequenceServiceClient.getIamPolicyCallable().futureCall(request);

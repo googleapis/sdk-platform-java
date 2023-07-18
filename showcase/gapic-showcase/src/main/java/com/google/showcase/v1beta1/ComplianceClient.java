@@ -1103,9 +1103,7 @@ public class ComplianceClient implements BackgroundResource {
    * try (ComplianceClient complianceClient = ComplianceClient.create()) {
    *   SetIamPolicyRequest request =
    *       SetIamPolicyRequest.newBuilder()
-   *           .setResource(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
    *           .setPolicy(Policy.newBuilder().build())
    *           .setUpdateMask(FieldMask.newBuilder().build())
    *           .build();
@@ -1137,9 +1135,7 @@ public class ComplianceClient implements BackgroundResource {
    * try (ComplianceClient complianceClient = ComplianceClient.create()) {
    *   SetIamPolicyRequest request =
    *       SetIamPolicyRequest.newBuilder()
-   *           .setResource(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
    *           .setPolicy(Policy.newBuilder().build())
    *           .setUpdateMask(FieldMask.newBuilder().build())
    *           .build();
@@ -1169,9 +1165,7 @@ public class ComplianceClient implements BackgroundResource {
    * try (ComplianceClient complianceClient = ComplianceClient.create()) {
    *   GetIamPolicyRequest request =
    *       GetIamPolicyRequest.newBuilder()
-   *           .setResource(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
    *           .setOptions(GetPolicyOptions.newBuilder().build())
    *           .build();
    *   Policy response = complianceClient.getIamPolicy(request);
@@ -1201,9 +1195,7 @@ public class ComplianceClient implements BackgroundResource {
    * try (ComplianceClient complianceClient = ComplianceClient.create()) {
    *   GetIamPolicyRequest request =
    *       GetIamPolicyRequest.newBuilder()
-   *           .setResource(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
    *           .setOptions(GetPolicyOptions.newBuilder().build())
    *           .build();
    *   ApiFuture<Policy> future = complianceClient.getIamPolicyCallable().futureCall(request);
@@ -1236,9 +1228,7 @@ public class ComplianceClient implements BackgroundResource {
    * try (ComplianceClient complianceClient = ComplianceClient.create()) {
    *   TestIamPermissionsRequest request =
    *       TestIamPermissionsRequest.newBuilder()
-   *           .setResource(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
    *           .addAllPermissions(new ArrayList<String>())
    *           .build();
    *   TestIamPermissionsResponse response = complianceClient.testIamPermissions(request);
@@ -1272,9 +1262,7 @@ public class ComplianceClient implements BackgroundResource {
    * try (ComplianceClient complianceClient = ComplianceClient.create()) {
    *   TestIamPermissionsRequest request =
    *       TestIamPermissionsRequest.newBuilder()
-   *           .setResource(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
    *           .addAllPermissions(new ArrayList<String>())
    *           .build();
    *   ApiFuture<TestIamPermissionsResponse> future =

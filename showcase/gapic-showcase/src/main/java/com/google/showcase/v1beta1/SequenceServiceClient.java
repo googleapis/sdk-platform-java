@@ -887,9 +887,7 @@ public class SequenceServiceClient implements BackgroundResource {
    * try (SequenceServiceClient sequenceServiceClient = SequenceServiceClient.create()) {
    *   SetIamPolicyRequest request =
    *       SetIamPolicyRequest.newBuilder()
-   *           .setResource(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
    *           .setPolicy(Policy.newBuilder().build())
    *           .setUpdateMask(FieldMask.newBuilder().build())
    *           .build();
@@ -921,9 +919,7 @@ public class SequenceServiceClient implements BackgroundResource {
    * try (SequenceServiceClient sequenceServiceClient = SequenceServiceClient.create()) {
    *   SetIamPolicyRequest request =
    *       SetIamPolicyRequest.newBuilder()
-   *           .setResource(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
    *           .setPolicy(Policy.newBuilder().build())
    *           .setUpdateMask(FieldMask.newBuilder().build())
    *           .build();
@@ -953,9 +949,7 @@ public class SequenceServiceClient implements BackgroundResource {
    * try (SequenceServiceClient sequenceServiceClient = SequenceServiceClient.create()) {
    *   GetIamPolicyRequest request =
    *       GetIamPolicyRequest.newBuilder()
-   *           .setResource(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
    *           .setOptions(GetPolicyOptions.newBuilder().build())
    *           .build();
    *   Policy response = sequenceServiceClient.getIamPolicy(request);
@@ -985,9 +979,7 @@ public class SequenceServiceClient implements BackgroundResource {
    * try (SequenceServiceClient sequenceServiceClient = SequenceServiceClient.create()) {
    *   GetIamPolicyRequest request =
    *       GetIamPolicyRequest.newBuilder()
-   *           .setResource(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
    *           .setOptions(GetPolicyOptions.newBuilder().build())
    *           .build();
    *   ApiFuture<Policy> future = sequenceServiceClient.getIamPolicyCallable().futureCall(request);
@@ -1020,9 +1012,7 @@ public class SequenceServiceClient implements BackgroundResource {
    * try (SequenceServiceClient sequenceServiceClient = SequenceServiceClient.create()) {
    *   TestIamPermissionsRequest request =
    *       TestIamPermissionsRequest.newBuilder()
-   *           .setResource(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
    *           .addAllPermissions(new ArrayList<String>())
    *           .build();
    *   TestIamPermissionsResponse response = sequenceServiceClient.testIamPermissions(request);
@@ -1056,9 +1046,7 @@ public class SequenceServiceClient implements BackgroundResource {
    * try (SequenceServiceClient sequenceServiceClient = SequenceServiceClient.create()) {
    *   TestIamPermissionsRequest request =
    *       TestIamPermissionsRequest.newBuilder()
-   *           .setResource(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
    *           .addAllPermissions(new ArrayList<String>())
    *           .build();
    *   ApiFuture<TestIamPermissionsResponse> future =

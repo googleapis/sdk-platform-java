@@ -2127,9 +2127,7 @@ public class MessagingClient implements BackgroundResource {
    * try (MessagingClient messagingClient = MessagingClient.create()) {
    *   SetIamPolicyRequest request =
    *       SetIamPolicyRequest.newBuilder()
-   *           .setResource(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
    *           .setPolicy(Policy.newBuilder().build())
    *           .setUpdateMask(FieldMask.newBuilder().build())
    *           .build();
@@ -2161,9 +2159,7 @@ public class MessagingClient implements BackgroundResource {
    * try (MessagingClient messagingClient = MessagingClient.create()) {
    *   SetIamPolicyRequest request =
    *       SetIamPolicyRequest.newBuilder()
-   *           .setResource(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
    *           .setPolicy(Policy.newBuilder().build())
    *           .setUpdateMask(FieldMask.newBuilder().build())
    *           .build();
@@ -2193,9 +2189,7 @@ public class MessagingClient implements BackgroundResource {
    * try (MessagingClient messagingClient = MessagingClient.create()) {
    *   GetIamPolicyRequest request =
    *       GetIamPolicyRequest.newBuilder()
-   *           .setResource(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
    *           .setOptions(GetPolicyOptions.newBuilder().build())
    *           .build();
    *   Policy response = messagingClient.getIamPolicy(request);
@@ -2225,9 +2219,7 @@ public class MessagingClient implements BackgroundResource {
    * try (MessagingClient messagingClient = MessagingClient.create()) {
    *   GetIamPolicyRequest request =
    *       GetIamPolicyRequest.newBuilder()
-   *           .setResource(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
    *           .setOptions(GetPolicyOptions.newBuilder().build())
    *           .build();
    *   ApiFuture<Policy> future = messagingClient.getIamPolicyCallable().futureCall(request);
@@ -2260,9 +2252,7 @@ public class MessagingClient implements BackgroundResource {
    * try (MessagingClient messagingClient = MessagingClient.create()) {
    *   TestIamPermissionsRequest request =
    *       TestIamPermissionsRequest.newBuilder()
-   *           .setResource(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
    *           .addAllPermissions(new ArrayList<String>())
    *           .build();
    *   TestIamPermissionsResponse response = messagingClient.testIamPermissions(request);
@@ -2296,9 +2286,7 @@ public class MessagingClient implements BackgroundResource {
    * try (MessagingClient messagingClient = MessagingClient.create()) {
    *   TestIamPermissionsRequest request =
    *       TestIamPermissionsRequest.newBuilder()
-   *           .setResource(
-   *               BlurbName.ofUserLegacyUserBlurbName("[USER]", "[LEGACY_USER]", "[BLURB]")
-   *                   .toString())
+   *           .setResource(BlurbName.ofRoomBlurbName("[ROOM]", "[BLURB]").toString())
    *           .addAllPermissions(new ArrayList<String>())
    *           .build();
    *   ApiFuture<TestIamPermissionsResponse> future =
