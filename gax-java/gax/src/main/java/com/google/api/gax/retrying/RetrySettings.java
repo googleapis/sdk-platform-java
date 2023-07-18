@@ -145,7 +145,8 @@ public abstract class RetrySettings implements Serializable {
   /**
    * InitialRpcTimeout controls the timeout for the initial RPC. Subsequent calls will use this
    * value adjusted according to the RpcTimeoutMultiplier. The default value is {@code
-   * Duration.ZERO}.
+   * Duration.ZERO}. RPC Timeout value of {@code Duration.ZERO} allows the RPC to continue
+   * indefinitely (until it hits a Connect Timeout or the connection has been terminated).
    *
    * <p>If there are no configurations, Retries have the default initial RPC timeout value set
    * above. LRO polling does not use the Initial RPC Timeout value.
@@ -263,7 +264,8 @@ public abstract class RetrySettings implements Serializable {
     /**
      * InitialRpcTimeout controls the timeout for the initial RPC. Subsequent calls will use this
      * value adjusted according to the RpcTimeoutMultiplier. The default value is {@code
-     * Duration.ZERO}.
+     * Duration.ZERO}. RPC Timeout value of {@code Duration.ZERO} allows the RPC to continue
+     * indefinitely (until it hits a Connect Timeout or the connection has been terminated).
      *
      * <p>If there are no configurations, Retries have the default initial RPC timeout value set
      * above. LRO polling does not use the Initial RPC Timeout value.
@@ -354,7 +356,8 @@ public abstract class RetrySettings implements Serializable {
     /**
      * InitialRpcTimeout controls the timeout for the initial RPC. Subsequent calls will use this
      * value adjusted according to the RpcTimeoutMultiplier. The default value is {@code
-     * Duration.ZERO}.
+     * Duration.ZERO}. RPC Timeout value of {@code Duration.ZERO} allows the RPC to continue
+     * indefinitely (until it hits a Connect Timeout or the connection has been terminated).
      *
      * <p>If there are no configurations, Retries have the default initial RPC timeout value set
      * above. LRO polling does not use the Initial RPC Timeout value.
