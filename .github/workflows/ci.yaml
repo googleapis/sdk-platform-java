@@ -5,7 +5,7 @@ on:
   pull_request:
 name: ci
 env:
-  SHOWCASE_VERSION: 0.28.0
+  SHOWCASE_VERSION: 0.28.2
 jobs:
   build:
     runs-on: ubuntu-22.04
@@ -208,6 +208,33 @@ jobs:
             --batch-mode \
             --no-transfer-progress
 
+  showcase-native:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          version: '22.3.2'
+          java-version: '17'
+          components: 'native-image'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - run: mvn -version
+      - run: native-image --version
+      - name: Install sdk-platform-java
+        run: mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+      - name: Install showcase server
+        run: |
+          sudo mkdir -p /usr/src/showcase
+          sudo chown -R ${USER} /usr/src/
+          curl --location https://github.com/googleapis/gapic-showcase/releases/download/v${SHOWCASE_VERSION}/gapic-showcase-${SHOWCASE_VERSION}-linux-amd64.tar.gz --output /usr/src/showcase/showcase-${SHOWCASE_VERSION}-linux-amd64.tar.gz
+          cd /usr/src/showcase/
+          tar -xf showcase-*
+          ./gapic-showcase run &
+          cd -
+      - name: Build native image
+        working-directory: showcase
+        run: mvn test -Pnative,-showcase -ntp -B
+
   showcase-clirr:
     if: ${{ github.base_ref != '' }} # Only execute on pull_request trigger event
     runs-on: ubuntu-22.04
@@ -230,6 +257,8 @@ jobs:
           echo "SHOWCASE_CLIENT_VERSION=$SHOWCASE_CLIENT_VERSION" >> "$GITHUB_ENV"
       - name: Checkout sdk-platform-java @ PR merge commit
         uses: actions/checkout@v3
+      - name: Install sdk-platform-java @ PR merge commit
+        run: mvn install -B -ntp -T 1C -DskipTests
         # Showcase golden test ensures that src changes are already reflected in the PR.
       - name: Clirr check
         working-directory: showcase

@@ -15,7 +15,7 @@
 
 set -eo pipefail
 
-SHOWCASE_VERSION=0.28.0
+SHOWCASE_VERSION=0.28.2
 
 ## Get the directory of the build script
 scriptDir=$(realpath "$(dirname "${BASH_SOURCE[0]}")")
