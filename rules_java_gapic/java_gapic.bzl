@@ -37,7 +37,7 @@ def _java_gapic_postprocess_srcjar_impl(ctx):
     WORKING_DIR=`pwd`
 
     # Main source files.
-    cd {output_dir_path}/src/main/java
+    cd {output_dir_path}/src/main
     zip -r $WORKING_DIR/{output_srcjar_name}.srcjar ./
 
     # Resource name source files.
