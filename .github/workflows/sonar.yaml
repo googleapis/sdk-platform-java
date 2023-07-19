@@ -30,6 +30,11 @@ jobs:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
+      - name: Install modules to local maven
+        run: |
+          mvn install -T 1C -DskipTests -ntp -B
+          cd showcase
+          mvn install -T 1C -DskipTests -ntp -B
       - name: Parse showcase version
         working-directory: showcase/gapic-showcase
         run: echo "SHOWCASE_VERSION=$(mvn help:evaluate -Dexpression=gapic-showcase.version -q -DforceStdout)" >> "$GITHUB_ENV"
