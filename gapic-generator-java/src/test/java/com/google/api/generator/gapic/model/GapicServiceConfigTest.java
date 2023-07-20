@@ -97,8 +97,8 @@ public class GapicServiceConfigTest {
 
     MethodConfig.RetryPolicy retryPolicy = settings.retryPolicy();
     assertEquals(3, retryPolicy.getMaxAttempts());
-    assertEquals(100,Durations.toMillis(retryPolicy.getInitialBackoff()));
-    assertEquals(3000,Durations.toMillis(retryPolicy.getMaxBackoff()));
+    assertEquals(100, Durations.toMillis(retryPolicy.getInitialBackoff()));
+    assertEquals(3000, Durations.toMillis(retryPolicy.getMaxBackoff()));
     assertEquals(2.0, retryPolicy.getBackoffMultiplier(), EPSILON);
 
     String retryCodeName = serviceConfig.getRetryCodeName(service, method);

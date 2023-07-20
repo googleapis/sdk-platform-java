@@ -29,14 +29,13 @@
  */
 package com.google.api.gax.batching;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
+
 import com.google.api.gax.batching.FlowController.LimitExceededBehavior;
-import com.google.api.gax.util.TimeConversionUtils;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
 import javax.annotation.Nullable;
-
-import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
-import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 
 /**
  * Represents the batching settings to use for an API method that is capable of batching.

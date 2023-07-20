@@ -29,6 +29,9 @@
  */
 package com.google.api.gax.rpc;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
+
 import com.google.api.core.ApiClock;
 import com.google.api.core.ApiFunction;
 import com.google.api.core.BetaApi;
@@ -48,9 +51,6 @@ import java.io.IOException;
 import java.util.concurrent.Executor;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-
-import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
-import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 
 /**
  * A base settings class to configure a client stub class.

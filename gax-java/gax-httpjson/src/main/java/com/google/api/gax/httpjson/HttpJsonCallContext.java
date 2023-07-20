@@ -29,6 +29,9 @@
  */
 package com.google.api.gax.httpjson;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
+
 import com.google.api.core.BetaApi;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.ApiCallContext;
@@ -49,9 +52,6 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import org.threeten.bp.Duration;
-
-import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
-import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 
 /**
  * HttpJsonCallContext encapsulates context data used to make an http-json call.

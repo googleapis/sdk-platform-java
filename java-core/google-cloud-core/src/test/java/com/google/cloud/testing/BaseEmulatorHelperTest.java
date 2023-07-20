@@ -70,7 +70,8 @@ public class BaseEmulatorHelperTest {
     }
 
     @Override
-    public void stop(java.time.Duration timeout) throws IOException, InterruptedException, TimeoutException {
+    public void stop(java.time.Duration timeout)
+        throws IOException, InterruptedException, TimeoutException {
       waitForProcess(timeout);
     }
 

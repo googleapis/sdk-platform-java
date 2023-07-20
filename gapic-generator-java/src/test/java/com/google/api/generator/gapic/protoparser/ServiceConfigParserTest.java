@@ -51,8 +51,8 @@ public class ServiceConfigParserTest {
 
     MethodConfig.RetryPolicy retryPolicy = methodConfig.getRetryPolicy();
     assertEquals(5, retryPolicy.getMaxAttempts());
-    assertEquals(500,Durations.toMillis(retryPolicy.getInitialBackoff()));
-    assertEquals(30000,Durations.toMillis(retryPolicy.getMaxBackoff()));
+    assertEquals(500, Durations.toMillis(retryPolicy.getInitialBackoff()));
+    assertEquals(30000, Durations.toMillis(retryPolicy.getMaxBackoff()));
     assertEquals(2.0, retryPolicy.getBackoffMultiplier(), EPSILON);
 
     assertEquals(1, retryPolicy.getRetryableStatusCodesList().size());
@@ -72,7 +72,7 @@ public class ServiceConfigParserTest {
     MethodConfig methodConfig = config.getMethodConfigList().get(0);
     assertEquals(2, methodConfig.getNameList().size());
     assertTrue(methodConfig.getNameList().get(0).getMethod().isEmpty());
-    assertEquals(5000,Durations.toMillis(methodConfig.getTimeout()));
+    assertEquals(5000, Durations.toMillis(methodConfig.getTimeout()));
 
     methodConfig = config.getMethodConfigList().get(1);
     assertEquals(9, methodConfig.getNameList().size());

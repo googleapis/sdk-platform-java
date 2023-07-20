@@ -29,11 +29,11 @@
  */
 package com.google.api.gax.retrying;
 
-import com.google.api.core.ApiClock;
-import com.google.auto.value.AutoValue;
-
 import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
 import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
+
+import com.google.api.core.ApiClock;
+import com.google.auto.value.AutoValue;
 
 /** Timed attempt execution settings. Defines time-specific properties of a retry attempt. */
 @AutoValue

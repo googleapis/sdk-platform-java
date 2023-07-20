@@ -29,6 +29,9 @@
  */
 package com.google.api.gax.rpc;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
+
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.retrying.SimpleStreamResumptionStrategy;
 import com.google.api.gax.retrying.StreamResumptionStrategy;
@@ -39,9 +42,6 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import java.util.Set;
 import javax.annotation.Nonnull;
-
-import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
-import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 
 /**
  * A settings class to configure a {@link ServerStreamingCallable}.
