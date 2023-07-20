@@ -73,11 +73,20 @@ public abstract class RetrySettings implements Serializable {
   private static final long serialVersionUID = 8258475264439710899L;
 
   /**
+   * Backport of {@link #getTotalTimeoutDuration()} using {@link org.threeten.bp.Duration}
+   * Converts result to {@link org.threeten.bp.Duration}
+   */
+  public final org.threeten.bp.Duration getTotalTimeout() {
+    // simplified conversion without null safety
+    return org.threeten.bp.Duration.ofNanos(getTotalTimeoutDuration().toNanos());
+  }
+
+  /**
    * TotalTimeout has ultimate control over how long the logic should keep trying the remote call
    * until it gives up completely. The higher the total timeout, the more retries can be attempted.
    * The default value is {@code Duration.ZERO}.
    */
-  public abstract Duration getTotalTimeout();
+  public abstract java.time.Duration getTotalTimeoutDuration();
 
   /**
    * InitialRetryDelay controls the delay before the first retry. Subsequent retries will use this
@@ -165,11 +174,20 @@ public abstract class RetrySettings implements Serializable {
   public abstract static class Builder {
 
     /**
+     * Backport of {@link #setTotalTimeoutDuration(java.time.Duration)}
+     * Converts argument to {@link java.time.Duration} before processing
+     */
+    public final Builder setTotalTimeout(org.threeten.bp.Duration totalTimeout) {
+      // simplified conversion without null safety
+      return setTotalTimeoutDuration(java.time.Duration.ofNanos(totalTimeout.toNanos()));
+    }
+
+    /**
      * TotalTimeout has ultimate control over how long the logic should keep trying the remote call
      * until it gives up completely. The higher the total timeout, the more retries can be
      * attempted. The default value is {@code Duration.ZERO}.
      */
-    public abstract Builder setTotalTimeout(Duration totalTimeout);
+    public abstract Builder setTotalTimeoutDuration(java.time.Duration totalTimeout);
 
     /**
      * InitialRetryDelay controls the delay before the first retry. Subsequent retries will use this
