@@ -121,18 +121,18 @@ public class RetrySettingsComposerTest {
             "settings ="
                 + " RetrySettings.newBuilder().setInitialRetryDelay("
                 + "Duration.ofMillis(100L)).setRetryDelayMultiplier(2.0)"
-                + ".setMaxRetryDelayjava.time.Duration.ofMillis(3000L))"
-                + ".setInitialRpcTimeoutjava.time.Duration.ofMillis(10000L))"
+                + ".setMaxRetryDelay(java.time.Duration.ofMillis(3000L))"
+                + ".setInitialRpcTimeout(java.time.Duration.ofMillis(10000L))"
                 + ".setRpcTimeoutMultiplier(1.0)"
-                + ".setMaxRpcTimeoutjava.time.Duration.ofMillis(10000L))"
-                + ".setTotalTimeoutjava.time.Duration.ofMillis(10000L)).build();\n",
+                + ".setMaxRpcTimeout(java.time.Duration.ofMillis(10000L))"
+                + ".setTotalTimeout(java.time.Duration.ofMillis(10000L)).build();\n",
             "definitions.put(\"retry_policy_1_params\", settings);\n",
             "settings ="
                 + " RetrySettings.newBuilder()"
-                + ".setInitialRpcTimeoutjava.time.Duration.ofMillis(5000L))"
+                + ".setInitialRpcTimeout(java.time.Duration.ofMillis(5000L))"
                 + ".setRpcTimeoutMultiplier(1.0)"
-                + ".setMaxRpcTimeoutjava.time.Duration.ofMillis(5000L))"
-                + ".setTotalTimeoutjava.time.Duration.ofMillis(5000L)).build();\n",
+                + ".setMaxRpcTimeout(java.time.Duration.ofMillis(5000L))"
+                + ".setTotalTimeout(java.time.Duration.ofMillis(5000L)).build();\n",
             "definitions.put(\"no_retry_0_params\", settings);\n",
             "RETRY_PARAM_DEFINITIONS = definitions.build();\n",
             "}\n");
@@ -341,10 +341,10 @@ public class RetrySettingsComposerTest {
                 + "WaitResponse.class))"
                 + ".setMetadataTransformer(ProtoOperationTransformers.MetadataTransformer.create("
                 + "WaitMetadata.class)).setPollingAlgorithm(OperationTimedPollAlgorithm.create("
-                + "RetrySettings.newBuilder().setInitialRetryDelayjava.time.Duration.ofMillis(5000L))"
-                + ".setRetryDelayMultiplier(1.5).setMaxRetryDelayjava.time.Duration.ofMillis(45000L))"
-                + ".setInitialRpcTimeoutjava.time.Duration.ZERO).setRpcTimeoutMultiplier(1.0)"
-                + ".setMaxRpcTimeoutjava.time.Duration.ZERO).setTotalTimeoutjava.time.Duration.ofMillis(300000L))"
+                + "RetrySettings.newBuilder().setInitialRetryDelay(java.time.Duration.ofMillis(5000L))"
+                + ".setRetryDelayMultiplier(1.5).setMaxRetryDelay(java.time.Duration.ofMillis(45000L))"
+                + ".setInitialRpcTimeout(java.time.Duration.ZERO).setRpcTimeoutMultiplier(1.0)"
+                + ".setMaxRpcTimeout(java.time.Duration.ZERO).setTotalTimeout(java.time.Duration.ofMillis(300000L))"
                 + ".build()))");
     assertEquals(expected, writerVisitor.write());
   }
@@ -394,7 +394,7 @@ public class RetrySettingsComposerTest {
             + "BatchingSettings.newBuilder()"
             + ".setElementCountThreshold(100L)"
             + ".setRequestByteThreshold(1048576L)"
-            + ".setDelayThresholdjava.time.Duration.ofMillis(10L))"
+            + ".setDelayThreshold(java.time.Duration.ofMillis(10L))"
             + ".setFlowControlSettings("
             + "FlowControlSettings.newBuilder()"
             + ".setLimitExceededBehavior(FlowController.LimitExceededBehavior.Ignore)"
@@ -451,7 +451,7 @@ public class RetrySettingsComposerTest {
             + "BatchingSettings.newBuilder()"
             + ".setElementCountThreshold(1000L)"
             + ".setRequestByteThreshold(1048576L)"
-            + ".setDelayThresholdjava.time.Duration.ofMillis(50L))"
+            + ".setDelayThreshold(java.time.Duration.ofMillis(50L))"
             + ".setFlowControlSettings("
             + "FlowControlSettings.newBuilder()"
             + ".setMaxOutstandingElementCount(100000L)"

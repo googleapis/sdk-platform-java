@@ -87,7 +87,7 @@ public abstract class RecordingScheduler implements ScheduledExecutorService {
               }
             });
 
-    // Listjava.time.Duration> getSleepDurations()
+    // List<java.time.Duration> getSleepDurations()
     when(mock.getSleepDurations()).thenReturn(sleepDurations);
 
     // int getIterationsCount()

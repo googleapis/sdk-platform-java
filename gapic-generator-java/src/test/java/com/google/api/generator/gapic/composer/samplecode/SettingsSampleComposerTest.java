@@ -61,7 +61,7 @@ public class SettingsSampleComposerTest {
             "            .echoSettings()\n",
             "            .getRetrySettings()\n",
             "            .toBuilder()\n",
-            "            .setTotalTimeoutjava.time.Duration.ofSeconds(30))\n",
+            "            .setTotalTimeout(java.time.Duration.ofSeconds(30))\n",
             "            .build());\n",
             "EchoSettings echoSettings = echoSettingsBuilder.build();");
     assertEquals(results.get(), expected);
@@ -89,7 +89,7 @@ public class SettingsSampleComposerTest {
             "            .echoSettings()\n",
             "            .getRetrySettings()\n",
             "            .toBuilder()\n",
-            "            .setTotalTimeoutjava.time.Duration.ofSeconds(30))\n",
+            "            .setTotalTimeout(java.time.Duration.ofSeconds(30))\n",
             "            .build());\n",
             "EchoStubSettings echoSettings = echoSettingsBuilder.build();");
     assertEquals(results.get(), expected);
