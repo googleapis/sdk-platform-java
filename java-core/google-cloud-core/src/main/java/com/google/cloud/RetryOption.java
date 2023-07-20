@@ -16,6 +16,7 @@
 
 package com.google.cloud;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.api.core.BetaApi;
@@ -52,7 +53,7 @@ public class RetryOption implements Serializable {
 
   /** See {@link RetrySettings#getTotalTimeout()}. */
   public static RetryOption totalTimeout(org.threeten.bp.Duration totalTimeout) {
-    return totalTimeout(java.time.Duration.ofNanos(totalTimeout.toNanos()));
+    return totalTimeout(toJavaTimeDuration(totalTimeout));
   }
 
   /** See {@link RetrySettings#getTotalTimeout()}. */
@@ -62,7 +63,7 @@ public class RetryOption implements Serializable {
 
   /** See {@link RetrySettings#getInitialRetryDelay()}. */
   public static RetryOption initialRetryDelay(org.threeten.bp.Duration initialRetryDelay) {
-    return initialRetryDelay(java.time.Duration.ofNanos(initialRetryDelay.toNanos()));
+    return initialRetryDelay(toJavaTimeDuration(initialRetryDelay));
   }
 
   /** See {@link RetrySettings#getInitialRetryDelay()}. */
@@ -77,7 +78,7 @@ public class RetryOption implements Serializable {
 
   /** See {@link RetrySettings#getMaxRetryDelay()}. */
   public static RetryOption maxRetryDelay(org.threeten.bp.Duration maxRetryDelay) {
-    return maxRetryDelay(java.time.Duration.ofNanos(maxRetryDelay.toNanos()));
+    return maxRetryDelay(toJavaTimeDuration(maxRetryDelay));
   }
 
   /** See {@link RetrySettings#getMaxRetryDelay()}. */

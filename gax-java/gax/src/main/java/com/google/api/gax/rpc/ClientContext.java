@@ -58,6 +58,9 @@ import java.util.concurrent.ScheduledExecutorService;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
+
 /**
  * Encapsulates client state, including executor, credentials, and transport channel.
  *
@@ -104,7 +107,7 @@ public abstract class ClientContext {
    */
   @Nonnull
   public final org.threeten.bp.Duration getStreamWatchdogCheckInterval() {
-    return org.threeten.bp.Duration.ofNanos(getStreamWatchdogCheckIntervalDuration().toNanos());
+    return toThreetenDuration(getStreamWatchdogCheckIntervalDuration());
   }
 
   @Nonnull
@@ -360,7 +363,7 @@ public abstract class ClientContext {
     public abstract Builder setStreamWatchdog(Watchdog watchdog);
 
     public final Builder setStreamWatchdogCheckInterval(org.threeten.bp.Duration duration) {
-      return setStreamWatchdogCheckIntervalDuration(java.time.Duration.ofNanos(duration.toNanos()));
+      return setStreamWatchdogCheckIntervalDuration(toJavaTimeDuration(duration));
     }
 
     public final Builder setStreamWatchdogCheckInterval(java.time.Duration duration) {

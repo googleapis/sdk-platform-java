@@ -47,6 +47,8 @@ import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.GuardedBy;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+
 /**
  * Prevents the streams from hanging indefinitely. This middleware garbage collects idle streams in
  * case the user forgot to close a ServerStream or if a connection is reset and GRPC does not get
@@ -106,8 +108,8 @@ public final class Watchdog implements Runnable, BackgroundResource {
       @Nonnull org.threeten.bp.Duration idleTimeout) {
     return watch(
         innerObserver,
-        java.time.Duration.ofNanos(waitTimeout.toNanos()),
-        java.time.Duration.ofNanos(idleTimeout.toNanos()));
+        toJavaTimeDuration(waitTimeout),
+        toJavaTimeDuration(idleTimeout));
   }
   /** Wraps the target observer with timing constraints. */
   public <ResponseT> ResponseObserver<ResponseT> watch(

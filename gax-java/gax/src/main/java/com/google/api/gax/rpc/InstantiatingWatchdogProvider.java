@@ -36,6 +36,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+
 /**
  * A watchdog provider which instantiates a new provider on every request.
  *
@@ -87,7 +89,7 @@ public final class InstantiatingWatchdogProvider implements WatchdogProvider {
   @Override
   public WatchdogProvider withCheckInterval(@Nonnull org.threeten.bp.Duration checkInterval) {
     return withCheckInterval(
-        java.time.Duration.ofNanos(Preconditions.checkNotNull(checkInterval).toNanos()));
+        toJavaTimeDuration(Preconditions.checkNotNull(checkInterval)));
   }
 
   @Override

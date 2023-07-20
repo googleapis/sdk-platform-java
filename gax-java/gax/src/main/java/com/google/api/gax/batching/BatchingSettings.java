@@ -30,9 +30,13 @@
 package com.google.api.gax.batching;
 
 import com.google.api.gax.batching.FlowController.LimitExceededBehavior;
+import com.google.api.gax.util.TimeConversionUtils;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
 import javax.annotation.Nullable;
+
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 
 /**
  * Represents the batching settings to use for an API method that is capable of batching.
@@ -100,7 +104,7 @@ public abstract class BatchingSettings {
   /** Get the delay threshold to use for batching. */
   @Nullable
   public final org.threeten.bp.Duration getDelayThreshold() {
-    return org.threeten.bp.Duration.ofNanos(getDelayThresholdDuration().toNanos());
+    return toThreetenDuration(getDelayThresholdDuration());
   }
 
   /** Get the delay threshold to use for batching. */
@@ -152,7 +156,7 @@ public abstract class BatchingSettings {
      * org.threeten.bp.Duration}
      */
     public final Builder setDelayThreshold(org.threeten.bp.Duration delayThreshold) {
-      return setDelayThresholdDuration(java.time.Duration.ofNanos(delayThreshold.toNanos()));
+      return setDelayThresholdDuration(toJavaTimeDuration(delayThreshold));
     }
 
     /**
@@ -160,7 +164,7 @@ public abstract class BatchingSettings {
      * org.threeten.bp.Duration} This is a convenience public method to keep name conformity
      */
     public final Builder setDelayThreshold(java.time.Duration delayThreshold) {
-      return setDelayThresholdDuration(java.time.Duration.ofNanos(delayThreshold.toNanos()));
+      return setDelayThresholdDuration(delayThreshold);
     }
 
     /**

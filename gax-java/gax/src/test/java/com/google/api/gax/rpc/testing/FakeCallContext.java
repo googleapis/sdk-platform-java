@@ -49,6 +49,9 @@ import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
+
 @InternalApi("for testing")
 public class FakeCallContext implements ApiCallContext {
   private final Credentials credentials;
@@ -237,7 +240,7 @@ public class FakeCallContext implements ApiCallContext {
   @Override
   public ApiCallContext withStreamWaitTimeout(
       @Nullable org.threeten.bp.Duration streamWaitTimeout) {
-    return withStreamWaitTimeout(java.time.Duration.ofNanos(streamWaitTimeout.toNanos()));
+    return withStreamWaitTimeout(toJavaTimeDuration(streamWaitTimeout));
   }
 
   @Nullable
@@ -249,7 +252,7 @@ public class FakeCallContext implements ApiCallContext {
   @Override
   public ApiCallContext withStreamIdleTimeout(
       @Nullable org.threeten.bp.Duration streamIdleTimeout) {
-    return withStreamIdleTimeout(java.time.Duration.ofNanos(streamIdleTimeout.toNanos()));
+    return withStreamIdleTimeout(toJavaTimeDuration(streamIdleTimeout));
   }
 
   @Nullable
@@ -286,7 +289,7 @@ public class FakeCallContext implements ApiCallContext {
 
   @Override
   public FakeCallContext withTimeout(@Nullable org.threeten.bp.Duration timeout) {
-    return withTimeout(java.time.Duration.ofNanos(timeout.toNanos()));
+    return withTimeout(toJavaTimeDuration(timeout));
   }
 
   public FakeCallContext withChannel(FakeChannel channel) {
@@ -331,7 +334,7 @@ public class FakeCallContext implements ApiCallContext {
   @Nullable
   @Override
   public org.threeten.bp.Duration getTimeout() {
-    return org.threeten.bp.Duration.ofNanos(getTimeoutDuration().toNanos());
+    return toThreetenDuration(getTimeoutDuration());
   }
 
   @Override
@@ -352,7 +355,7 @@ public class FakeCallContext implements ApiCallContext {
   @Nullable
   @Override
   public org.threeten.bp.Duration getStreamWaitTimeout() {
-    return org.threeten.bp.Duration.ofNanos(getStreamWaitTimeoutDuration().toNanos());
+    return toThreetenDuration(getStreamWaitTimeoutDuration());
   }
 
   @Override
@@ -374,7 +377,7 @@ public class FakeCallContext implements ApiCallContext {
   @Nullable
   @Override
   public org.threeten.bp.Duration getStreamIdleTimeout() {
-    return org.threeten.bp.Duration.ofNanos(getStreamIdleTimeout().toNanos());
+    return toThreetenDuration(getStreamIdleTimeoutDuration());
   }
 
   @Override

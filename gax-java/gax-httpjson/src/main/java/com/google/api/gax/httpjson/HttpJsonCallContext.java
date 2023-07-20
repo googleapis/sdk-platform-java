@@ -50,6 +50,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import org.threeten.bp.Duration;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
+
 /**
  * HttpJsonCallContext encapsulates context data used to make an http-json call.
  *
@@ -234,7 +237,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
   /** Overload of {@link #withTimeout(java.time.Duration)} using {@link org.threeten.bp.Duration} */
   @Override
   public HttpJsonCallContext withTimeout(org.threeten.bp.Duration timeout) {
-    return withTimeout(java.time.Duration.ofNanos(timeout.toNanos()));
+    return withTimeout(toJavaTimeDuration(timeout));
   }
 
   @Override
@@ -266,7 +269,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
   @Nullable
   @Override
   public org.threeten.bp.Duration getTimeout() {
-    return org.threeten.bp.Duration.ofNanos(getTimeoutDuration().toNanos());
+    return toThreetenDuration(getTimeoutDuration());
   }
 
   @Nullable
@@ -282,7 +285,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
   @Override
   public HttpJsonCallContext withStreamWaitTimeout(
       @Nullable org.threeten.bp.Duration streamWaitTimeout) {
-    return withStreamWaitTimeout(java.time.Duration.ofNanos(streamWaitTimeout.toNanos()));
+    return withStreamWaitTimeout(toJavaTimeDuration(streamWaitTimeout));
   }
 
   @Override
@@ -309,7 +312,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
   @Override
   @Nullable
   public org.threeten.bp.Duration getStreamWaitTimeout() {
-    return org.threeten.bp.Duration.ofNanos(getStreamWaitTimeoutDuration().toNanos());
+    return toThreetenDuration(getStreamWaitTimeoutDuration());
   }
 
   /**
@@ -330,7 +333,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
   @Override
   public HttpJsonCallContext withStreamIdleTimeout(
       @Nullable org.threeten.bp.Duration streamIdleTimeout) {
-    return withStreamIdleTimeout(java.time.Duration.ofNanos(streamIdleTimeout.toNanos()));
+    return withStreamIdleTimeout(toJavaTimeDuration(streamIdleTimeout));
   }
 
   @Override
@@ -357,7 +360,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
   @Override
   @Nullable
   public org.threeten.bp.Duration getStreamIdleTimeout() {
-    return org.threeten.bp.Duration.ofNanos(getStreamIdleTimeoutDuration().toNanos());
+    return toThreetenDuration(getStreamIdleTimeoutDuration());
   }
 
   /**

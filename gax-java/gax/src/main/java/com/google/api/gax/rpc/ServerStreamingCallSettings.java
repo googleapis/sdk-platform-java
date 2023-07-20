@@ -40,6 +40,9 @@ import com.google.common.collect.Sets;
 import java.util.Set;
 import javax.annotation.Nonnull;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
+
 /**
  * A settings class to configure a {@link ServerStreamingCallable}.
  *
@@ -120,7 +123,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
   /** Backport of {@link #getIdleTimeoutDuration()} */
   @Nonnull
   public org.threeten.bp.Duration getIdleTimeout() {
-    return org.threeten.bp.Duration.ofNanos(getIdleTimeoutDuration().toNanos());
+    return toThreetenDuration(getIdleTimeoutDuration());
   }
 
   /**
@@ -135,7 +138,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
   /** Backport of {@link #getWaitTimeoutDuration()} */
   @Nonnull
   public org.threeten.bp.Duration getWaitTimeout() {
-    return org.threeten.bp.Duration.ofNanos(getWaitTimeoutDuration().toNanos());
+    return toThreetenDuration(getWaitTimeoutDuration());
   }
 
   /**
@@ -259,7 +262,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
      */
     public Builder<RequestT, ResponseT> setSimpleTimeoutNoRetries(
         @Nonnull org.threeten.bp.Duration timeout) {
-      return setSimpleTimeoutNoRetries(java.time.Duration.ofNanos(timeout.toNanos()));
+      return setSimpleTimeoutNoRetries(toJavaTimeDuration(timeout));
     }
 
     /** Disables retries and sets the overall timeout. */
@@ -300,7 +303,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
     /** Backport of {@link #getIdleTimeoutDuration()} */
     @Nonnull
     public org.threeten.bp.Duration getIdleTimeout() {
-      return org.threeten.bp.Duration.ofNanos(getIdleTimeoutDuration().toNanos());
+      return toThreetenDuration(getIdleTimeoutDuration());
     }
 
     @Nonnull
@@ -313,7 +316,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
      */
     public Builder<RequestT, ResponseT> setIdleTimeout(
         @Nonnull org.threeten.bp.Duration idleTimeout) {
-      return setIdleTimeout(java.time.Duration.ofNanos(idleTimeout.toNanos()));
+      return setIdleTimeout(toJavaTimeDuration(idleTimeout));
     }
 
     /**
@@ -328,7 +331,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
     /** Backport of {@link #getWaitTimeoutDuration()} */
     @Nonnull
     public org.threeten.bp.Duration getWaitTimeout() {
-      return org.threeten.bp.Duration.ofNanos(getWaitTimeoutDuration().toNanos());
+      return toThreetenDuration(getWaitTimeoutDuration());
     }
 
     @Nonnull
@@ -342,7 +345,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
      */
     public Builder<RequestT, ResponseT> setWaitTimeout(
         @Nonnull org.threeten.bp.Duration waitTimeout) {
-      return setWaitTimeout(java.time.Duration.ofNanos(waitTimeout.toNanos()));
+      return setWaitTimeout(toJavaTimeDuration(waitTimeout));
     }
 
     /**

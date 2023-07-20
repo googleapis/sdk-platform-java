@@ -34,6 +34,9 @@ import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
 import java.io.Serializable;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
+
 /**
  * Holds the parameters for <b>retry</b> or <b>poll</b> logic with jitter, timeout and exponential
  * backoff. Actual implementation of the logic is elsewhere.
@@ -73,7 +76,7 @@ public abstract class RetrySettings implements Serializable {
 
   /** Backport of {@link #getTotalTimeoutDuration()} */
   public final org.threeten.bp.Duration getTotalTimeout() {
-    return org.threeten.bp.Duration.ofNanos(getTotalTimeoutDuration().toNanos());
+    return toThreetenDuration(getTotalTimeoutDuration());
   }
 
   /**
@@ -85,7 +88,7 @@ public abstract class RetrySettings implements Serializable {
 
   /** Backport of {@link #getInitialRetryDelayDuration()} */
   public final org.threeten.bp.Duration getInitialRetryDelay() {
-    return org.threeten.bp.Duration.ofNanos(getInitialRetryDelayDuration().toNanos());
+    return toThreetenDuration(getInitialRetryDelayDuration());
   }
 
   /**
@@ -104,7 +107,7 @@ public abstract class RetrySettings implements Serializable {
 
   /** Backport of {@link #getMaxRetryDelayDuration()} */
   public final org.threeten.bp.Duration getMaxRetryDelay() {
-    return org.threeten.bp.Duration.ofNanos(getMaxRetryDelayDuration().toNanos());
+    return toThreetenDuration(getMaxRetryDelayDuration());
   }
 
   /**
@@ -137,7 +140,7 @@ public abstract class RetrySettings implements Serializable {
 
   /** Backport of {@link #getInitialRpcTimeoutDuration()} */
   public final org.threeten.bp.Duration getInitialRpcTimeout() {
-    return org.threeten.bp.Duration.ofNanos(getInitialRpcTimeoutDuration().toNanos());
+    return toThreetenDuration(getInitialRpcTimeoutDuration());
   }
 
   /**
@@ -156,7 +159,7 @@ public abstract class RetrySettings implements Serializable {
 
   /** Backport of {@link #getMaxRpcTimeoutDuration()} */
   public final org.threeten.bp.Duration getMaxRpcTimeout() {
-    return org.threeten.bp.Duration.ofNanos(getMaxRpcTimeoutDuration().toNanos());
+    return toThreetenDuration(getMaxRpcTimeoutDuration());
   }
 
   /**
@@ -193,7 +196,7 @@ public abstract class RetrySettings implements Serializable {
      * org.threeten.bp.Duration}
      */
     public final Builder setTotalTimeout(org.threeten.bp.Duration totalTimeout) {
-      return setTotalTimeoutDuration(java.time.Duration.ofNanos(totalTimeout.toNanos()));
+      return setTotalTimeoutDuration(toJavaTimeDuration(totalTimeout));
     }
 
     /**
@@ -201,7 +204,7 @@ public abstract class RetrySettings implements Serializable {
      * org.threeten.bp.Duration} This is a convenience public method to keep name conformity
      */
     public final Builder setTotalTimeout(java.time.Duration totalTimeout) {
-      return setTotalTimeoutDuration(java.time.Duration.ofNanos(totalTimeout.toNanos()));
+      return setTotalTimeoutDuration(totalTimeout);
     }
 
     /**
@@ -216,7 +219,7 @@ public abstract class RetrySettings implements Serializable {
      * org.threeten.bp.Duration}
      */
     public final Builder setInitialRetryDelay(org.threeten.bp.Duration initialDelay) {
-      return setInitialRetryDelay(java.time.Duration.ofNanos(initialDelay.toNanos()));
+      return setInitialRetryDelay(toJavaTimeDuration(initialDelay));
     }
 
     /**
@@ -246,7 +249,7 @@ public abstract class RetrySettings implements Serializable {
      * org.threeten.bp.Duration}
      */
     public final Builder setMaxRetryDelay(org.threeten.bp.Duration maxDelay) {
-      return setMaxRetryDelayDuration(java.time.Duration.ofNanos(maxDelay.toNanos()));
+      return setMaxRetryDelayDuration(toJavaTimeDuration(maxDelay));
     }
 
     /**
@@ -290,7 +293,7 @@ public abstract class RetrySettings implements Serializable {
      * org.threeten.bp.Duration}
      */
     public final Builder setInitialRpcTimeout(org.threeten.bp.Duration initialTimeout) {
-      return setInitialRpcTimeoutDuration(java.time.Duration.ofNanos(initialTimeout.toNanos()));
+      return setInitialRpcTimeoutDuration(toJavaTimeDuration(initialTimeout));
     }
 
     /**
@@ -319,12 +322,12 @@ public abstract class RetrySettings implements Serializable {
      * org.threeten.bp.Duration}
      */
     public final Builder setMaxRpcTimeout(org.threeten.bp.Duration maxTimeout) {
-      return setMaxRpcTimeoutDuration(java.time.Duration.ofNanos(maxTimeout.toNanos()));
+      return setMaxRpcTimeoutDuration(toJavaTimeDuration(maxTimeout));
     }
 
     /**
      * Overload of {@link #setMaxRpcTimeoutDuration(java.time.Duration)} using {@link
-     * java.time..Duration} This is a convenience public method to keep name conformity
+     * java.time.Duration} This is a convenience public method to keep name conformity
      */
     public final Builder setMaxRpcTimeout(java.time.Duration maxTimeout) {
       return setMaxRpcTimeoutDuration(maxTimeout);
@@ -339,7 +342,7 @@ public abstract class RetrySettings implements Serializable {
 
     /** Backport of {@link #getTotalTimeoutDuration()} */
     public final org.threeten.bp.Duration getTotalTimeout() {
-      return org.threeten.bp.Duration.ofNanos(getTotalTimeoutDuration().toNanos());
+      return toThreetenDuration(getTotalTimeoutDuration());
     }
 
     /**
@@ -351,7 +354,7 @@ public abstract class RetrySettings implements Serializable {
 
     /** Backport of {@link #getInitialRetryDelay()} */
     public final org.threeten.bp.Duration getInitialRetryDelay() {
-      return org.threeten.bp.Duration.ofNanos(getInitialRetryDelayDuration().toNanos());
+      return toThreetenDuration(getInitialRetryDelayDuration());
     }
 
     /**
@@ -387,7 +390,7 @@ public abstract class RetrySettings implements Serializable {
 
     /** Backport of {@link #getMaxRetryDelayDuration()} */
     public final org.threeten.bp.Duration getMaxRetryDelay() {
-      return org.threeten.bp.Duration.ofNanos(getMaxRetryDelayDuration().toNanos());
+      return toThreetenDuration(getMaxRetryDelayDuration());
     }
 
     /**
@@ -399,7 +402,7 @@ public abstract class RetrySettings implements Serializable {
 
     /** Backport of {@link #getInitialRpcTimeoutDuration()} */
     public final org.threeten.bp.Duration getInitialRpcTimeout() {
-      return org.threeten.bp.Duration.ofNanos((getInitialRpcTimeoutDuration().toNanos()));
+      return toThreetenDuration((getInitialRpcTimeoutDuration()));
     }
 
     /**
@@ -417,7 +420,7 @@ public abstract class RetrySettings implements Serializable {
 
     /** Backport of {@link #getMaxRpcTimeoutDuration()} */
     public final org.threeten.bp.Duration getMaxRpcTimeout() {
-      return org.threeten.bp.Duration.ofNanos((getMaxRpcTimeoutDuration().toNanos()));
+      return toThreetenDuration((getMaxRpcTimeoutDuration()));
     }
 
     /**
@@ -432,7 +435,7 @@ public abstract class RetrySettings implements Serializable {
      */
     @BetaApi
     public Builder setLogicalTimeout(org.threeten.bp.Duration timeout) {
-      return setLogicalTimeout(java.time.Duration.ofNanos(timeout.toNanos()));
+      return setLogicalTimeout(toJavaTimeDuration(timeout));
     }
 
     /**

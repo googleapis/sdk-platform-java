@@ -29,6 +29,7 @@
  */
 package com.google.api.gax.batching;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
 import static com.google.common.util.concurrent.MoreExecutors.directExecutor;
 
 import com.google.api.core.ApiFunction;
@@ -124,7 +125,7 @@ public final class ThresholdBatcher<E> {
 
     /** Set the max delay for a batch. This is counted from the first item added to a batch. */
     public Builder<E> setMaxDelay(org.threeten.bp.Duration maxDelay) {
-      this.maxDelay = java.time.Duration.ofNanos(maxDelay.toNanos());
+      this.maxDelay = toJavaTimeDuration(maxDelay);
       return this;
     }
 

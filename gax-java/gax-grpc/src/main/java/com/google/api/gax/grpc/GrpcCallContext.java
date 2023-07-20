@@ -56,6 +56,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import org.threeten.bp.Duration;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
+
 /**
  * GrpcCallContext encapsulates context data used to make a grpc call.
  *
@@ -175,7 +178,7 @@ public final class GrpcCallContext implements ApiCallContext {
   /** Overload of {@link #withTimeout(java.time.Duration)} using {@link org.threeten.bp.Duration} */
   @Override
   public GrpcCallContext withTimeout(@Nullable org.threeten.bp.Duration timeout) {
-    return withTimeout(java.time.Duration.ofNanos(timeout.toNanos()));
+    return withTimeout(toJavaTimeDuration(timeout));
   }
 
   @Override
@@ -206,7 +209,7 @@ public final class GrpcCallContext implements ApiCallContext {
   @Nullable
   @Override
   public org.threeten.bp.Duration getTimeout() {
-    return org.threeten.bp.Duration.ofNanos(getTimeoutDuration().toNanos());
+    return toThreetenDuration(getTimeoutDuration());
   }
 
   @Nullable
@@ -222,7 +225,7 @@ public final class GrpcCallContext implements ApiCallContext {
   @Override
   public GrpcCallContext withStreamWaitTimeout(
       @Nullable org.threeten.bp.Duration streamWaitTimeout) {
-    return withStreamWaitTimeout(java.time.Duration.ofNanos(streamWaitTimeout.toNanos()));
+    return withStreamWaitTimeout(toJavaTimeDuration(streamWaitTimeout));
   }
 
   @Override
@@ -255,7 +258,7 @@ public final class GrpcCallContext implements ApiCallContext {
   @Override
   public GrpcCallContext withStreamIdleTimeout(
       @Nullable org.threeten.bp.Duration streamIdleTimeout) {
-    return withStreamIdleTimeout(java.time.Duration.ofNanos(streamIdleTimeout.toNanos()));
+    return withStreamIdleTimeout(toJavaTimeDuration(streamIdleTimeout));
   }
 
   @Override
@@ -456,7 +459,7 @@ public final class GrpcCallContext implements ApiCallContext {
   @Override
   @Nullable
   public org.threeten.bp.Duration getStreamWaitTimeout() {
-    return org.threeten.bp.Duration.ofNanos(getStreamWaitTimeoutDuration().toNanos());
+    return toThreetenDuration(getStreamWaitTimeoutDuration());
   }
 
   /**
@@ -473,7 +476,7 @@ public final class GrpcCallContext implements ApiCallContext {
   @Override
   @Nullable
   public org.threeten.bp.Duration getStreamIdleTimeout() {
-    return org.threeten.bp.Duration.ofNanos(getStreamIdleTimeoutDuration().toNanos());
+    return toThreetenDuration(getStreamIdleTimeoutDuration());
   }
   /**
    * The stream idle timeout set for this context.

@@ -32,6 +32,9 @@ package com.google.api.gax.retrying;
 import com.google.api.core.ApiClock;
 import com.google.auto.value.AutoValue;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
+
 /** Timed attempt execution settings. Defines time-specific properties of a retry attempt. */
 @AutoValue
 public abstract class TimedAttemptSettings {
@@ -41,7 +44,7 @@ public abstract class TimedAttemptSettings {
 
   /** Backport of {@link #getRetryDelayDuration()} */
   public final org.threeten.bp.Duration getRetryDelay() {
-    return org.threeten.bp.Duration.ofNanos(getRetryDelayDuration().toNanos());
+    return toThreetenDuration(getRetryDelayDuration());
   }
 
   /**
@@ -52,7 +55,7 @@ public abstract class TimedAttemptSettings {
 
   /** Backport of {@link #getRpcTimeoutDuration()} */
   public final org.threeten.bp.Duration getRpcTimeout() {
-    return org.threeten.bp.Duration.ofNanos(getRpcTimeoutDuration().toNanos());
+    return toThreetenDuration(getRpcTimeoutDuration());
   }
 
   /** Returns rpc timeout used for this attempt. */
@@ -60,7 +63,7 @@ public abstract class TimedAttemptSettings {
 
   /** Backport of {@link #getRandomizedRetryDelayDuration()} */
   public final org.threeten.bp.Duration getRandomizedRetryDelay() {
-    return org.threeten.bp.Duration.ofNanos(getRandomizedRetryDelayDuration().toNanos());
+    return toThreetenDuration(getRandomizedRetryDelayDuration());
   }
 
   /**
@@ -104,7 +107,7 @@ public abstract class TimedAttemptSettings {
      * org.threeten.bp.Duration}
      */
     public final Builder setRetryDelay(org.threeten.bp.Duration value) {
-      return setRetryDelayDuration(java.time.Duration.ofNanos(value.toNanos()));
+      return setRetryDelayDuration(toJavaTimeDuration(value));
     }
 
     /**
@@ -126,7 +129,7 @@ public abstract class TimedAttemptSettings {
      * org.threeten.bp.Duration}
      */
     public final Builder setRpcTimeout(org.threeten.bp.Duration value) {
-      return setRpcTimeoutDuration(java.time.Duration.ofNanos(value.toNanos()));
+      return setRpcTimeoutDuration(toJavaTimeDuration(value));
     }
 
     /**
@@ -145,7 +148,7 @@ public abstract class TimedAttemptSettings {
      * org.threeten.bp.Duration}
      */
     public final Builder setRandomizedRetryDelay(org.threeten.bp.Duration value) {
-      return setRandomizedRetryDelayDuration(java.time.Duration.ofNanos(value.toNanos()));
+      return setRandomizedRetryDelayDuration(toJavaTimeDuration(value));
     }
 
     /**

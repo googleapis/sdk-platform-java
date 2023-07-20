@@ -39,6 +39,9 @@ import java.util.concurrent.Executor;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
+
 /**
  * A base settings class to configure a client class.
  *
@@ -112,7 +115,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
    */
   @Nonnull
   public final org.threeten.bp.Duration getWatchdogCheckInterval() {
-    return org.threeten.bp.Duration.ofNanos(getWatchdogCheckIntervalDuration().toNanos());
+    return toThreetenDuration(getWatchdogCheckIntervalDuration());
   }
 
   @Nonnull
@@ -266,7 +269,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     }
 
     public B setWatchdogCheckInterval(@Nullable org.threeten.bp.Duration checkInterval) {
-      return setWatchdogCheckInterval(java.time.Duration.ofNanos(checkInterval.toNanos()));
+      return setWatchdogCheckInterval(toJavaTimeDuration(checkInterval));
     }
 
     public B setWatchdogCheckInterval(@Nullable java.time.Duration checkInterval) {
@@ -350,7 +353,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
 
     @Nullable
     public org.threeten.bp.Duration getWatchdogCheckInterval() {
-      return org.threeten.bp.Duration.ofNanos(getWatchdogCheckIntervalDuration().toNanos());
+      return toThreetenDuration(getWatchdogCheckIntervalDuration());
     }
 
     @Nullable

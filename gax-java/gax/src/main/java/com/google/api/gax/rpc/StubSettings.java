@@ -49,6 +49,9 @@ import java.util.concurrent.Executor;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
+
 /**
  * A base settings class to configure a client stub class.
  *
@@ -161,7 +164,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   /** Backport of {@link #getStreamWatchdogCheckIntervalDuration()} */
   @Nonnull
   public final org.threeten.bp.Duration getStreamWatchdogCheckInterval() {
-    return org.threeten.bp.Duration.ofNanos(getStreamWatchdogCheckIntervalDuration().toNanos());
+    return toThreetenDuration(getStreamWatchdogCheckIntervalDuration());
   }
 
   @Nonnull
@@ -448,7 +451,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
      * org.threeten.bp.Duration}
      */
     public B setStreamWatchdogCheckInterval(@Nonnull org.threeten.bp.Duration checkInterval) {
-      return setStreamWatchdogCheckInterval(java.time.Duration.ofNanos(checkInterval.toNanos()));
+      return setStreamWatchdogCheckInterval(toJavaTimeDuration(checkInterval));
     }
 
     /**
@@ -541,7 +544,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     }
 
     public org.threeten.bp.Duration getStreamWatchdogCheckInterval() {
-      return org.threeten.bp.Duration.ofNanos(getStreamWatchdogCheckIntervalDuration().toNanos());
+      return toThreetenDuration(getStreamWatchdogCheckIntervalDuration());
     }
 
     @Nonnull
