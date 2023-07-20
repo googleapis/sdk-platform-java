@@ -33,7 +33,6 @@ import java.util.concurrent.TimeoutException;
 import java.util.logging.Logger;
 import org.easymock.EasyMock;
 import org.junit.Test;
-import org.threeten.bp.Duration;
 
 public class BaseEmulatorHelperTest {
 
@@ -71,7 +70,7 @@ public class BaseEmulatorHelperTest {
     }
 
     @Override
-    public void stop(Duration timeout) throws IOException, InterruptedException, TimeoutException {
+    public void stop(java.time.Duration timeout) throws IOException, InterruptedException, TimeoutException {
       waitForProcess(timeout);
     }
 
@@ -91,13 +90,13 @@ public class BaseEmulatorHelperTest {
     emulatorRunner.start();
     EasyMock.expectLastCall();
     EasyMock.expect(emulatorRunner.getProcess()).andReturn(process);
-    emulatorRunner.waitFor(Duration.ofMinutes(1));
+    emulatorRunner.waitFor(java.time.Duration.ofMinutes(1));
     EasyMock.expectLastCall().andReturn(0);
     EasyMock.replay(process, emulatorRunner);
     TestEmulatorHelper helper =
         new TestEmulatorHelper(ImmutableList.of(emulatorRunner), BLOCK_UNTIL);
     helper.start();
-    helper.stop(Duration.ofMinutes(1));
+    helper.stop(java.time.Duration.ofMinutes(1));
     EasyMock.verify();
   }
 
@@ -157,13 +156,13 @@ public class BaseEmulatorHelperTest {
     secondRunner.start();
     EasyMock.expectLastCall();
     EasyMock.expect(secondRunner.getProcess()).andReturn(process);
-    secondRunner.waitFor(Duration.ofMinutes(1));
+    secondRunner.waitFor(java.time.Duration.ofMinutes(1));
     EasyMock.expectLastCall().andReturn(0);
     EasyMock.replay(process, secondRunner);
     TestEmulatorHelper helper =
         new TestEmulatorHelper(ImmutableList.of(firstRunner, secondRunner), BLOCK_UNTIL);
     helper.start();
-    helper.stop(Duration.ofMinutes(1));
+    helper.stop(java.time.Duration.ofMinutes(1));
     EasyMock.verify();
   }
 

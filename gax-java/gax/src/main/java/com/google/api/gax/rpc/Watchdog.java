@@ -32,7 +32,6 @@ package com.google.api.gax.rpc;
 import com.google.api.core.ApiClock;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.common.base.Preconditions;
-
 import java.time.Duration;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -84,7 +83,8 @@ public final class Watchdog implements Runnable, BackgroundResource {
     return watchdog;
   }
 
-  private Watchdog(ApiClock clock, java.time.Duration scheduleInterval, ScheduledExecutorService executor) {
+  private Watchdog(
+      ApiClock clock, java.time.Duration scheduleInterval, ScheduledExecutorService executor) {
     this.clock = Preconditions.checkNotNull(clock, "clock can't be null");
     this.scheduleInterval = scheduleInterval;
     this.executor = executor;
@@ -97,15 +97,17 @@ public final class Watchdog implements Runnable, BackgroundResource {
   }
 
   /**
-   * Overload of {@link #watch(ResponseObserver, java.time.Duration, java.time.Duration)} using {@link org.threeten.bp.Duration}
+   * Overload of {@link #watch(ResponseObserver, java.time.Duration, java.time.Duration)} using
+   * {@link org.threeten.bp.Duration}
    */
   public <ResponseT> ResponseObserver<ResponseT> watch(
-          ResponseObserver<ResponseT> innerObserver,
-          @Nonnull org.threeten.bp.Duration waitTimeout,
-          @Nonnull org.threeten.bp.Duration idleTimeout) {
-    return watch(innerObserver,
-            java.time.Duration.ofNanos(waitTimeout.toNanos()),
-            java.time.Duration.ofNanos(idleTimeout.toNanos()));
+      ResponseObserver<ResponseT> innerObserver,
+      @Nonnull org.threeten.bp.Duration waitTimeout,
+      @Nonnull org.threeten.bp.Duration idleTimeout) {
+    return watch(
+        innerObserver,
+        java.time.Duration.ofNanos(waitTimeout.toNanos()),
+        java.time.Duration.ofNanos(idleTimeout.toNanos()));
   }
   /** Wraps the target observer with timing constraints. */
   public <ResponseT> ResponseObserver<ResponseT> watch(

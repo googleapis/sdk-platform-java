@@ -38,7 +38,6 @@ import java.util.Set;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
 public class ServerStreamingCallSettingsTest {
@@ -66,11 +65,11 @@ public class ServerStreamingCallSettingsTest {
   public void retryableSettingsAreNotLost() {
     RetrySettings retrySettings =
         RetrySettings.newBuilder()
-            .setInitialRetryDelay(Duration.ofMillis(5))
-            .setMaxRetryDelay(Duration.ofSeconds(1))
+            .setInitialRetryDelay(java.time.Duration.ofMillis(5))
+            .setMaxRetryDelay(java.time.Duration.ofSeconds(1))
             .setRetryDelayMultiplier(2)
-            .setInitialRpcTimeout(Duration.ofMillis(100))
-            .setMaxRpcTimeout(Duration.ofMillis(200))
+            .setInitialRpcTimeout(java.time.Duration.ofMillis(100))
+            .setMaxRpcTimeout(java.time.Duration.ofMillis(200))
             .setRpcTimeoutMultiplier(1.1)
             .setJittered(true)
             .setMaxAttempts(10)
@@ -87,7 +86,7 @@ public class ServerStreamingCallSettingsTest {
 
   @Test
   public void idleTimeoutIsNotLost() {
-    Duration idleTimeout = Duration.ofSeconds(5);
+    java.time.Duration idleTimeout = java.time.Duration.ofSeconds(5);
 
     ServerStreamingCallSettings.Builder<Object, Object> builder =
         ServerStreamingCallSettings.newBuilder();
@@ -100,7 +99,7 @@ public class ServerStreamingCallSettingsTest {
 
   @Test
   public void waitTimeoutIsNotLost() {
-    Duration waitTimeout = Duration.ofSeconds(5);
+    java.time.Duration waitTimeout = java.time.Duration.ofSeconds(5);
 
     ServerStreamingCallSettings.Builder<Object, Object> builder =
         ServerStreamingCallSettings.newBuilder();
@@ -116,11 +115,11 @@ public class ServerStreamingCallSettingsTest {
   public void testRetrySettingsBuilder() {
     RetrySettings initialSettings =
         RetrySettings.newBuilder()
-            .setInitialRetryDelay(Duration.ofMillis(5))
-            .setMaxRetryDelay(Duration.ofSeconds(1))
+            .setInitialRetryDelay(java.time.Duration.ofMillis(5))
+            .setMaxRetryDelay(java.time.Duration.ofSeconds(1))
             .setRetryDelayMultiplier(2)
-            .setInitialRpcTimeout(Duration.ofMillis(100))
-            .setMaxRpcTimeout(Duration.ofMillis(200))
+            .setInitialRpcTimeout(java.time.Duration.ofMillis(100))
+            .setMaxRpcTimeout(java.time.Duration.ofMillis(200))
             .setRpcTimeoutMultiplier(1.1)
             .setJittered(true)
             .setMaxAttempts(10)
@@ -129,18 +128,19 @@ public class ServerStreamingCallSettingsTest {
     ServerStreamingCallSettings.Builder<Object, Object> builder =
         ServerStreamingCallSettings.newBuilder().setRetrySettings(initialSettings);
 
-    builder.retrySettings().setMaxRetryDelay(Duration.ofMinutes(1));
+    builder.retrySettings().setMaxRetryDelay(java.time.Duration.ofMinutes(1));
 
-    assertThat(builder.getRetrySettings().getMaxRetryDelay()).isEqualTo(Duration.ofMinutes(1));
+    assertThat(builder.getRetrySettings().getMaxRetryDelay())
+        .isEqualTo(java.time.Duration.ofMinutes(1));
     assertThat(builder.build().getRetrySettings().getMaxRetryDelay())
-        .isEqualTo(Duration.ofMinutes(1));
+        .isEqualTo(java.time.Duration.ofMinutes(1));
   }
 
   @Test
   public void testToString() {
     RetrySettings retrySettings = RetrySettings.newBuilder().build();
     Set<StatusCode.Code> retryableCodes = ImmutableSet.of(StatusCode.Code.DEADLINE_EXCEEDED);
-    Duration idleTime = Duration.ofSeconds(100);
+    java.time.Duration idleTime = java.time.Duration.ofSeconds(100);
     ServerStreamingCallSettings serverCallSettings =
         ServerStreamingCallSettings.newBuilder()
             .setRetrySettings(retrySettings)

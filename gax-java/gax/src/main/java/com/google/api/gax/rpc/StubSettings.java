@@ -44,8 +44,6 @@ import com.google.api.gax.tracing.BaseApiTracerFactory;
 import com.google.auth.oauth2.QuotaProjectIdProvider;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
-import org.threeten.bp.Duration;
-
 import java.io.IOException;
 import java.util.concurrent.Executor;
 import javax.annotation.Nonnull;
@@ -160,9 +158,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     return streamWatchdogProvider;
   }
 
-  /**
-   * Backport of {@link #getStreamWatchdogCheckIntervalDuration()}
-   */
+  /** Backport of {@link #getStreamWatchdogCheckIntervalDuration()} */
   @Nonnull
   public final org.threeten.bp.Duration getStreamWatchdogCheckInterval() {
     return org.threeten.bp.Duration.ofNanos(getStreamWatchdogCheckIntervalDuration().toNanos());
@@ -448,7 +444,8 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     }
 
     /**
-     * Overload of {@link #setStreamWatchdogCheckInterval(java.time.Duration)} using {@link org.threeten.bp.Duration}
+     * Overload of {@link #setStreamWatchdogCheckInterval(java.time.Duration)} using {@link
+     * org.threeten.bp.Duration}
      */
     public B setStreamWatchdogCheckInterval(@Nonnull org.threeten.bp.Duration checkInterval) {
       return setStreamWatchdogCheckInterval(java.time.Duration.ofNanos(checkInterval.toNanos()));

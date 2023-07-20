@@ -55,8 +55,6 @@ import io.grpc.ManagedChannelBuilder;
 import io.grpc.TlsChannelCredentials;
 import io.grpc.alts.GoogleDefaultChannelCredentials;
 import io.grpc.auth.MoreCallCredentials;
-import org.threeten.bp.Duration;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -593,10 +591,11 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     }
 
     /**
-     * Overload of {@link #setKeepAliveTime(java.time.Duration)} using {@link org.threeten.bp.Duration}
+     * Overload of {@link #setKeepAliveTime(java.time.Duration)} using {@link
+     * org.threeten.bp.Duration}
      */
     public Builder setKeepAliveTime(org.threeten.bp.Duration duration) {
-      return setKeepAliveTime(java.time.Duration.ofNanos(duration.toNanos())) ;
+      return setKeepAliveTime(java.time.Duration.ofNanos(duration.toNanos()));
     }
     /** The time without read activity before sending a keepalive ping. */
     public Builder setKeepAliveTime(java.time.Duration duration) {
@@ -604,9 +603,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return this;
     }
 
-    /**
-     * Backport of {@link #getKeepAliveTimeDuration()}
-     */
+    /** Backport of {@link #getKeepAliveTimeDuration()} */
     public org.threeten.bp.Duration getKeepAliveTime() {
       return org.threeten.bp.Duration.ofNanos(getKeepAliveTimeDuration().toNanos());
     }
@@ -616,9 +613,14 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return keepAliveTime;
     }
 
+    public Builder setKeepAliveTimeout(org.threeten.bp.Duration duration) {
+      return setKeepAliveTimeout(java.time.Duration.ofNanos(duration.toNanos()));
+    }
+
     /** The time without read activity after sending a keepalive ping. */
-    public org.threeten.bp.Duration getKeepAliveTimeout() {
-      return org.threeten.bp.Duration.ofNanos(getKeepAliveTimeoutDuration().toNanos());
+    public Builder setKeepAliveTimeout(java.time.Duration duration) {
+      this.keepAliveTimeout = duration;
+      return this;
     }
 
     /** The time without read activity after sending a keepalive ping. */

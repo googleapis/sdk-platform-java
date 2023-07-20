@@ -63,7 +63,7 @@ public class Callables {
       settings =
           settings
               .toBuilder()
-              .setSimpleTimeoutNoRetries(settings.getRetrySettings().getTotalTimeout())
+              .setSimpleTimeoutNoRetries(settings.getRetrySettings().getTotalTimeoutDuration())
               .build();
     }
 

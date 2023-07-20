@@ -72,7 +72,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
 public class ClientContextTest {
@@ -258,9 +257,9 @@ public class ClientContextTest {
     Watchdog watchdog =
         Watchdog.create(
             Mockito.mock(ApiClock.class),
-            Duration.ZERO,
+            java.time.Duration.ZERO,
             Mockito.mock(ScheduledExecutorService.class));
-    Duration watchdogCheckInterval = Duration.ofSeconds(11);
+    java.time.Duration watchdogCheckInterval = java.time.Duration.ofSeconds(11);
 
     builder.setExecutorProvider(executorProvider);
     builder.setTransportChannelProvider(transportProvider);
@@ -335,7 +334,7 @@ public class ClientContextTest {
     builder.setExecutorProvider(new FakeExecutorProvider(executor, true));
     builder.setTransportChannelProvider(transportProvider);
 
-    Duration watchdogCheckInterval = Duration.ofSeconds(11);
+    java.time.Duration watchdogCheckInterval = java.time.Duration.ofSeconds(11);
     builder.setWatchdogProvider(
         InstantiatingWatchdogProvider.create()
             .withClock(clock)

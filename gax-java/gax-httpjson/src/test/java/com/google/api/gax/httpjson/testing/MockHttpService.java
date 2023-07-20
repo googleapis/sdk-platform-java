@@ -43,7 +43,6 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
-import java.time.Duration;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -88,7 +87,7 @@ public final class MockHttpService extends MockHttpTransport {
     responseHandlers.add(new MessageResponseFactory(endpoint, serviceMethodDescriptors, response));
   }
 
-  public synchronized void addResponse(Object response, Duration delay) {
+  public synchronized void addResponse(Object response, java.time.Duration delay) {
     responseHandlers.add(
         new MessageResponseFactory(endpoint, serviceMethodDescriptors, response, delay));
   }
@@ -188,18 +187,18 @@ public final class MockHttpService extends MockHttpTransport {
     private final List<ApiMethodDescriptor> serviceMethodDescriptors;
     private final Object response;
     private final String endpoint;
-    private final Duration delay;
+    private final java.time.Duration delay;
 
     public MessageResponseFactory(
         String endpoint, List<ApiMethodDescriptor> serviceMethodDescriptors, Object response) {
-      this(endpoint, serviceMethodDescriptors, response, Duration.ofNanos(0));
+      this(endpoint, serviceMethodDescriptors, response, java.time.Duration.ofNanos(0));
     }
 
     public MessageResponseFactory(
         String endpoint,
         List<ApiMethodDescriptor> serviceMethodDescriptors,
         Object response,
-        Duration delay) {
+        java.time.Duration delay) {
       this.endpoint = endpoint;
       this.serviceMethodDescriptors = ImmutableList.copyOf(serviceMethodDescriptors);
       this.response = response;

@@ -56,7 +56,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
-import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
 public class TracedCallableTest {
@@ -103,7 +102,7 @@ public class TracedCallableTest {
     // Verify that callables configured to not retry have the appropriate tracer interactions.
     UnaryCallSettings<Object, Object> callSettings =
         UnaryCallSettings.newUnaryCallSettingsBuilder()
-            .setSimpleTimeoutNoRetries(Duration.ofMillis(5L))
+            .setSimpleTimeoutNoRetries(java.time.Duration.ofMillis(5L))
             .build();
     UnaryCallable<String, String> callable = setupTracedUnaryCallable(callSettings);
     innerResult.set("No, my refrigerator is not running!");

@@ -43,11 +43,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import org.threeten.bp.Duration;
 
 public abstract class RecordingScheduler implements ScheduledExecutorService {
 
-  public abstract List<Duration> getSleepDurations();
+  public abstract List<java.time.Duration> getSleepDurations();
 
   public abstract int getIterationsCount();
 
@@ -56,7 +55,7 @@ public abstract class RecordingScheduler implements ScheduledExecutorService {
 
     // mock class fields:
     final ScheduledExecutorService executor = new ScheduledThreadPoolExecutor(1);
-    final List<Duration> sleepDurations = new ArrayList<>();
+    final List<java.time.Duration> sleepDurations = new ArrayList<>();
     final AtomicInteger iterationsCount = new AtomicInteger(0);
 
     // mock class methods:
@@ -71,7 +70,8 @@ public abstract class RecordingScheduler implements ScheduledExecutorService {
                 Long delay = (Long) args[1];
                 TimeUnit unit = (TimeUnit) args[2];
                 iterationsCount.incrementAndGet();
-                sleepDurations.add(Duration.ofMillis(TimeUnit.MILLISECONDS.convert(delay, unit)));
+                sleepDurations.add(
+                    java.time.Duration.ofMillis(TimeUnit.MILLISECONDS.convert(delay, unit)));
                 clock.incrementNanoTime(TimeUnit.NANOSECONDS.convert(delay, unit));
                 return executor.schedule(runnable, 0, TimeUnit.NANOSECONDS);
               }
@@ -87,7 +87,7 @@ public abstract class RecordingScheduler implements ScheduledExecutorService {
               }
             });
 
-    // List<Duration> getSleepDurations()
+    // Listjava.time.Duration> getSleepDurations()
     when(mock.getSleepDurations()).thenReturn(sleepDurations);
 
     // int getIterationsCount()

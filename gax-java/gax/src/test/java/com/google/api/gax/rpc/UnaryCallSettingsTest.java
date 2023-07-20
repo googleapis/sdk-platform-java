@@ -39,7 +39,6 @@ import java.util.Set;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
 public class UnaryCallSettingsTest {
@@ -47,17 +46,18 @@ public class UnaryCallSettingsTest {
   @Test
   public void testSetSimpleTimeoutNoRetries() {
     UnaryCallSettings.Builder<?, ?> builder = new UnaryCallSettings.Builder<Object, Object>();
-    builder.setSimpleTimeoutNoRetries(Duration.ofSeconds(13));
+    builder.setSimpleTimeoutNoRetries(java.time.Duration.ofSeconds(13));
 
     assertThat(builder.getRetryableCodes().size()).isEqualTo(0);
     assertThat(builder.getRetrySettings().getMaxAttempts()).isEqualTo(1);
-    assertThat(builder.getRetrySettings().getTotalTimeout()).isEqualTo(Duration.ofSeconds(13));
+    assertThat(builder.getRetrySettings().getTotalTimeout())
+        .isEqualTo(java.time.Duration.ofSeconds(13));
   }
 
   @Test
   public void testEquals() {
     UnaryCallSettings.Builder<?, ?> builder = new UnaryCallSettings.Builder<Object, Object>();
-    builder.setSimpleTimeoutNoRetries(Duration.ofSeconds(13));
+    builder.setSimpleTimeoutNoRetries(java.time.Duration.ofSeconds(13));
 
     UnaryCallSettings<?, ?> settings13 = builder.build();
     assertEquals(settings13, settings13);
@@ -66,7 +66,7 @@ public class UnaryCallSettingsTest {
     assertEquals(settings13.hashCode(), settings13.hashCode());
 
     UnaryCallSettings.Builder<?, ?> builder5 = new UnaryCallSettings.Builder<Object, Object>();
-    builder5.setSimpleTimeoutNoRetries(Duration.ofSeconds(5));
+    builder5.setSimpleTimeoutNoRetries(java.time.Duration.ofSeconds(5));
 
     UnaryCallSettings<?, ?> settings5 = builder5.build();
     assertNotEquals(settings13, settings5);
@@ -77,11 +77,11 @@ public class UnaryCallSettingsTest {
   public void testEquals_retrySettings() {
     RetrySettings initialSettings =
         RetrySettings.newBuilder()
-            .setInitialRetryDelay(Duration.ofMillis(5))
-            .setMaxRetryDelay(Duration.ofSeconds(1))
+            .setInitialRetryDelay(java.time.Duration.ofMillis(5))
+            .setMaxRetryDelay(java.time.Duration.ofSeconds(1))
             .setRetryDelayMultiplier(2)
-            .setInitialRpcTimeout(Duration.ofMillis(100))
-            .setMaxRpcTimeout(Duration.ofMillis(200))
+            .setInitialRpcTimeout(java.time.Duration.ofMillis(100))
+            .setMaxRpcTimeout(java.time.Duration.ofMillis(200))
             .setRpcTimeoutMultiplier(1.1)
             .setJittered(true)
             .setMaxAttempts(10)
@@ -114,11 +114,11 @@ public class UnaryCallSettingsTest {
   public void testRetrySettingsBuilder() {
     RetrySettings initialSettings =
         RetrySettings.newBuilder()
-            .setInitialRetryDelay(Duration.ofMillis(5))
-            .setMaxRetryDelay(Duration.ofSeconds(1))
+            .setInitialRetryDelay(java.time.Duration.ofMillis(5))
+            .setMaxRetryDelay(java.time.Duration.ofSeconds(1))
             .setRetryDelayMultiplier(2)
-            .setInitialRpcTimeout(Duration.ofMillis(100))
-            .setMaxRpcTimeout(Duration.ofMillis(200))
+            .setInitialRpcTimeout(java.time.Duration.ofMillis(100))
+            .setMaxRpcTimeout(java.time.Duration.ofMillis(200))
             .setRpcTimeoutMultiplier(1.1)
             .setJittered(true)
             .setMaxAttempts(10)
@@ -127,11 +127,12 @@ public class UnaryCallSettingsTest {
     UnaryCallSettings.Builder<Object, Object> builder =
         new UnaryCallSettings.Builder<Object, Object>().setRetrySettings(initialSettings);
 
-    builder.retrySettings().setMaxRetryDelay(Duration.ofMinutes(1));
+    builder.retrySettings().setMaxRetryDelay(java.time.Duration.ofMinutes(1));
 
-    assertThat(builder.getRetrySettings().getMaxRetryDelay()).isEqualTo(Duration.ofMinutes(1));
+    assertThat(builder.getRetrySettings().getMaxRetryDelay())
+        .isEqualTo(java.time.Duration.ofMinutes(1));
     assertThat(builder.build().getRetrySettings().getMaxRetryDelay())
-        .isEqualTo(Duration.ofMinutes(1));
+        .isEqualTo(java.time.Duration.ofMinutes(1));
   }
 
   @Test

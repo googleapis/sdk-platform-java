@@ -31,7 +31,6 @@ package com.google.api.gax.retrying;
 
 import com.google.api.core.ApiClock;
 import com.google.auto.value.AutoValue;
-import org.threeten.bp.Duration;
 
 /** Timed attempt execution settings. Defines time-specific properties of a retry attempt. */
 @AutoValue
@@ -40,9 +39,7 @@ public abstract class TimedAttemptSettings {
   /** Returns global (attempt-independent) retry settings. */
   public abstract RetrySettings getGlobalSettings();
 
-  /**
-   * Backport of {@link #getRetryDelayDuration()}
-   */
+  /** Backport of {@link #getRetryDelayDuration()} */
   public final org.threeten.bp.Duration getRetryDelay() {
     return org.threeten.bp.Duration.ofNanos(getRetryDelayDuration().toNanos());
   }
@@ -53,9 +50,7 @@ public abstract class TimedAttemptSettings {
    */
   public abstract java.time.Duration getRetryDelayDuration();
 
-  /**
-   * Backport of {@link #getRpcTimeoutDuration()}
-   */
+  /** Backport of {@link #getRpcTimeoutDuration()} */
   public final org.threeten.bp.Duration getRpcTimeout() {
     return org.threeten.bp.Duration.ofNanos(getRpcTimeoutDuration().toNanos());
   }
@@ -63,9 +58,7 @@ public abstract class TimedAttemptSettings {
   /** Returns rpc timeout used for this attempt. */
   public abstract java.time.Duration getRpcTimeoutDuration();
 
-  /**
-   * Backport of {@link #getRandomizedRetryDelayDuration()}
-   */
+  /** Backport of {@link #getRandomizedRetryDelayDuration()} */
   public final org.threeten.bp.Duration getRandomizedRetryDelay() {
     return org.threeten.bp.Duration.ofNanos(getRandomizedRetryDelayDuration().toNanos());
   }
@@ -107,40 +100,67 @@ public abstract class TimedAttemptSettings {
     public abstract Builder setGlobalSettings(RetrySettings value);
 
     /**
-     * Overload of {@link #setRetryDelay(java.time.Duration)} using {@link org.threeten.bp.Duration}
+     * Overload of {@link #setRetryDelayDuration(java.time.Duration)} using {@link
+     * org.threeten.bp.Duration}
      */
     public final Builder setRetryDelay(org.threeten.bp.Duration value) {
-      return setRetryDelay(java.time.Duration.ofNanos(value.toNanos()));
+      return setRetryDelayDuration(java.time.Duration.ofNanos(value.toNanos()));
+    }
+
+    /**
+     * Overload of {@link #setRetryDelayDuration(java.time.Duration)} using {@link
+     * java.time.Duration} This is a convenience public method to keep name conformity
+     */
+    public final Builder setRetryDelay(java.time.Duration value) {
+      return setRetryDelayDuration(value);
     }
 
     /**
      * Sets the calculated retry delay. Note that the actual delay used for retry scheduling may be
      * different (randomized, based on this value).
      */
-    public abstract Builder setRetryDelay(java.time.Duration value);
+    public abstract Builder setRetryDelayDuration(java.time.Duration value);
 
     /**
-     * Overload of {@link #setRpcTimeout(java.time.Duration)} using {@link org.threeten.bp.Duration}
+     * Overload of {@link #setRpcTimeoutDuration(java.time.Duration)} using {@link
+     * org.threeten.bp.Duration}
      */
     public final Builder setRpcTimeout(org.threeten.bp.Duration value) {
-      return setRpcTimeout(java.time.Duration.ofNanos(value.toNanos()));
+      return setRpcTimeoutDuration(java.time.Duration.ofNanos(value.toNanos()));
+    }
+
+    /**
+     * Overload of {@link #setRpcTimeoutDuration(java.time.Duration)} using {@link
+     * java.time.Duration} This is a convenience public method to keep name conformity
+     */
+    public final Builder setRpcTimeout(java.time.Duration value) {
+      return setRpcTimeoutDuration(value);
     }
 
     /** Sets rpc timeout used for this attempt. */
-    public abstract Builder setRpcTimeout(java.time.Duration value);
+    public abstract Builder setRpcTimeoutDuration(java.time.Duration value);
 
     /**
-    * Overload of {@link #setRandomizedRetryDelay(java.time.Duration)} using {@link org.threeten.bp.Duration}
-    */
-    public final Builder setRandomizedRetryDelay(Duration value) {
-        return setRandomizedRetryDelay(java.time.Duration.ofNanos(value.toNanos()));
+     * Overload of {@link #setRandomizedRetryDelayDuration(java.time.Duration)} using {@link
+     * org.threeten.bp.Duration}
+     */
+    public final Builder setRandomizedRetryDelay(org.threeten.bp.Duration value) {
+      return setRandomizedRetryDelayDuration(java.time.Duration.ofNanos(value.toNanos()));
+    }
+
+    /**
+     * Overload of {@link #setRandomizedRetryDelayDuration(java.time.Duration)} using {@link
+     * java.time.Duration} This is a convenience public method to keep name conformity
+     */
+    public final Builder setRandomizedRetryDelay(java.time.Duration value) {
+      return setRandomizedRetryDelayDuration(value);
     }
 
     /**
      * Sets randomized attempt delay. By default this value is calculated based on the {@code
      * retryDelay} value, and is used as the actual attempt execution delay.
      */
-    public abstract Builder setRandomizedRetryDelay(java.time.Duration value);
+    public abstract Builder setRandomizedRetryDelayDuration(java.time.Duration value);
 
     /**
      * Set the attempt count. It is a zero-based value (first attempt will have this value set to

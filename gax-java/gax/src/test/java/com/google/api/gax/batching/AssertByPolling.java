@@ -32,7 +32,6 @@ package com.google.api.gax.batching;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 import com.google.common.base.Stopwatch;
-import java.time.Duration;
 import java.util.Objects;
 
 /**
@@ -40,12 +39,12 @@ import java.util.Objects;
  * timeout is exceeded. Expected usage:
  *
  * <pre>{@code
- * assertByPolling(Duration.ofSeconds(2), () -> assertThat(...));
+ * assertByPolling(java.time.Duration.ofSeconds(2), () -> assertThat(...));
  * }</pre>
  */
 public class AssertByPolling {
 
-  public static void assertByPolling(Duration timeout, Runnable assertion)
+  public static void assertByPolling(java.time.Duration timeout, Runnable assertion)
       throws InterruptedException {
     Objects.requireNonNull(timeout, "Timeout must not be null");
     Stopwatch stopwatch = Stopwatch.createStarted();

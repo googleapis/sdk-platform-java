@@ -107,6 +107,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
 
   /**
    * Backport of {@link #getWatchdogCheckIntervalDuration()}
+   *
    * @return
    */
   @Nonnull

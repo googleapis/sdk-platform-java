@@ -31,13 +31,12 @@ package com.google.api.gax.retrying;
 
 import com.google.common.truth.Truth;
 import org.junit.Test;
-import org.threeten.bp.Duration;
 
 public class RetrySettingsTest {
 
   @Test
   public void retrySettingsSetLogicalTimeout() {
-    Duration timeout = Duration.ofMillis(60000);
+    java.time.Duration timeout = java.time.Duration.ofMillis(60000);
     RetrySettings retrySettings = RetrySettings.newBuilder().setLogicalTimeout(timeout).build();
 
     Truth.assertThat(retrySettings.getRpcTimeoutMultiplier()).isEqualTo(1);
@@ -50,13 +49,13 @@ public class RetrySettingsTest {
   public void retrySettingsMerge() {
     RetrySettings.Builder builder =
         RetrySettings.newBuilder()
-            .setTotalTimeout(Duration.ofMillis(45000))
-            .setInitialRpcTimeout(Duration.ofMillis(2000))
+            .setTotalTimeout(java.time.Duration.ofMillis(45000))
+            .setInitialRpcTimeout(java.time.Duration.ofMillis(2000))
             .setRpcTimeoutMultiplier(1.5)
-            .setMaxRpcTimeout(Duration.ofMillis(30000))
-            .setInitialRetryDelay(Duration.ofMillis(100))
+            .setMaxRpcTimeout(java.time.Duration.ofMillis(30000))
+            .setInitialRetryDelay(java.time.Duration.ofMillis(100))
             .setRetryDelayMultiplier(1.2)
-            .setMaxRetryDelay(Duration.ofMillis(1000));
+            .setMaxRetryDelay(java.time.Duration.ofMillis(1000));
     RetrySettings.Builder mergedBuilder = RetrySettings.newBuilder();
     mergedBuilder.merge(builder);
 

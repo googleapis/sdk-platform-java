@@ -54,7 +54,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
 public class BatchingTest {
@@ -82,7 +81,7 @@ public class BatchingTest {
   public void batching() throws Exception {
     BatchingSettings batchingSettings =
         BatchingSettings.newBuilder()
-            .setDelayThreshold(Duration.ofSeconds(1))
+            .setDelayThresholdDuration(java.time.Duration.ofSeconds(1))
             .setElementCountThreshold(2L)
             .build();
     BatchingCallSettings<LabeledIntList, List<Integer>> batchingCallSettings =
@@ -102,7 +101,7 @@ public class BatchingTest {
   public void batchingWithFlowControl() throws Exception {
     BatchingSettings batchingSettings =
         BatchingSettings.newBuilder()
-            .setDelayThreshold(Duration.ofSeconds(1))
+            .setDelayThresholdDuration(java.time.Duration.ofSeconds(1))
             .setElementCountThreshold(4L)
             .setRequestByteThreshold(null)
             .setFlowControlSettings(
@@ -180,7 +179,7 @@ public class BatchingTest {
   public void batchingWithBlockingCallThreshold() throws Exception {
     BatchingSettings batchingSettings =
         BatchingSettings.newBuilder()
-            .setDelayThreshold(Duration.ofSeconds(1))
+            .setDelayThresholdDuration(java.time.Duration.ofSeconds(1))
             .setElementCountThreshold(2L)
             .build();
     BatchingCallSettings<LabeledIntList, List<Integer>> batchingCallSettings =
@@ -209,7 +208,7 @@ public class BatchingTest {
   public void batchingException() throws Exception {
     BatchingSettings batchingSettings =
         BatchingSettings.newBuilder()
-            .setDelayThreshold(Duration.ofSeconds(1))
+            .setDelayThreshold(java.time.Duration.ofSeconds(1))
             .setElementCountThreshold(2L)
             .build();
     BatchingCallSettings<LabeledIntList, List<Integer>> batchingCallSettings =

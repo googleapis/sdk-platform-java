@@ -146,7 +146,8 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
       java.time.Duration timeElapsed =
           java.time.Duration.ofNanos(clock.nanoTime())
               .minus(java.time.Duration.ofNanos(previousSettings.getFirstAttemptStartTimeNanos()));
-      java.time.Duration timeLeft = settings.getTotalTimeoutDuration().minus(timeElapsed).minus(randomDelay);
+      java.time.Duration timeLeft =
+          settings.getTotalTimeoutDuration().minus(timeElapsed).minus(randomDelay);
 
       // If timeLeft at this point is < 0, the shouldRetry logic will prevent
       // the attempt from being made as it would exceed the totalTimeout. A negative RPC timeout
@@ -209,7 +210,8 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
             - nextAttemptSettings.getFirstAttemptStartTimeNanos()
             + nextAttemptSettings.getRandomizedRetryDelay().toNanos();
 
-    java.time.Duration timeLeft = totalTimeout.minus(java.time.Duration.ofNanos(totalTimeSpentNanos));
+    java.time.Duration timeLeft =
+        totalTimeout.minus(java.time.Duration.ofNanos(totalTimeSpentNanos));
     // Convert time spent to milliseconds to standardize the units being used for
     // retries. Otherwise, we would be using nanoseconds to determine if retries
     // should be attempted and milliseconds for retry delays and rpc timeouts

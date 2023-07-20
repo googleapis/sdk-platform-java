@@ -37,7 +37,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
 public class FixedWatchdogProviderTest {
@@ -52,7 +51,7 @@ public class FixedWatchdogProviderTest {
     Watchdog watchdog =
         Watchdog.create(
             Mockito.mock(ApiClock.class),
-            Duration.ZERO,
+            java.time.Duration.ZERO,
             Mockito.mock(ScheduledExecutorService.class));
 
     WatchdogProvider provider = FixedWatchdogProvider.create(watchdog);
@@ -64,7 +63,7 @@ public class FixedWatchdogProviderTest {
     Watchdog watchdog =
         Watchdog.create(
             Mockito.mock(ApiClock.class),
-            Duration.ZERO,
+            java.time.Duration.ZERO,
             Mockito.mock(ScheduledExecutorService.class));
     WatchdogProvider provider = FixedWatchdogProvider.create(watchdog);
 
@@ -75,7 +74,7 @@ public class FixedWatchdogProviderTest {
 
     Throwable actualError = null;
     try {
-      provider.withCheckInterval(Duration.ofSeconds(10));
+      provider.withCheckInterval(java.time.Duration.ofSeconds(10));
     } catch (Throwable t) {
       actualError = t;
     }

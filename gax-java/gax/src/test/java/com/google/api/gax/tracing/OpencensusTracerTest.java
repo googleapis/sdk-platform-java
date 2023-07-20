@@ -60,7 +60,6 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
-import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
 public class OpencensusTracerTest {
@@ -85,7 +84,7 @@ public class OpencensusTracerTest {
     ApiException error0 =
         new DeadlineExceededException(
             "deadline exceeded", null, new FakeStatusCode(Code.DEADLINE_EXCEEDED), true);
-    tracer.attemptFailed(error0, Duration.ofMillis(5));
+    tracer.attemptFailed(error0, java.time.Duration.ofMillis(5));
 
     tracer.attemptStarted(1);
     tracer.connectionSelected("2");
@@ -136,7 +135,7 @@ public class OpencensusTracerTest {
 
     // Initial poll of the initial rpc
     tracer.attemptStarted(0);
-    tracer.attemptFailed(null, Duration.ofMillis(5));
+    tracer.attemptFailed(null, java.time.Duration.ofMillis(5));
 
     // Initial rpc finished
     tracer.lroStartSucceeded();
@@ -260,7 +259,7 @@ public class OpencensusTracerTest {
     tracer.attemptStarted(0);
     tracer.responseReceived();
     tracer.responseReceived();
-    tracer.attemptFailed(new RuntimeException(), Duration.ofMillis(1));
+    tracer.attemptFailed(new RuntimeException(), java.time.Duration.ofMillis(1));
 
     // Next attempt got 1 message, then successfully finished the attempt and the logical operation.
     tracer.attemptStarted(1);
@@ -288,7 +287,7 @@ public class OpencensusTracerTest {
     tracer.attemptStarted(0);
     tracer.requestSent();
     tracer.requestSent();
-    tracer.attemptFailed(new RuntimeException(), Duration.ofMillis(1));
+    tracer.attemptFailed(new RuntimeException(), java.time.Duration.ofMillis(1));
 
     // Next attempt sent 1 message, then successfully finished the attempt and the logical
     // operation.
@@ -314,7 +313,7 @@ public class OpencensusTracerTest {
   @Test
   public void testAttemptNumber() {
     tracer.attemptStarted(0);
-    tracer.attemptFailed(new RuntimeException(), Duration.ofMillis(1));
+    tracer.attemptFailed(new RuntimeException(), java.time.Duration.ofMillis(1));
     tracer.attemptStarted(1);
     tracer.attemptSucceeded();
     tracer.operationSucceeded();
@@ -339,7 +338,7 @@ public class OpencensusTracerTest {
     tracer.attemptFailed(
         new DeadlineExceededException(
             "deadline exceeded", null, new FakeStatusCode(Code.DEADLINE_EXCEEDED), true),
-        Duration.ofMillis(1));
+        java.time.Duration.ofMillis(1));
 
     tracer.attemptStarted(1);
     ApiException permanentError =

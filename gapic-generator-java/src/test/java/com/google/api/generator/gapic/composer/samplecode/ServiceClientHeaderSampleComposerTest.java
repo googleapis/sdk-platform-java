@@ -163,7 +163,7 @@ public class ServiceClientHeaderSampleComposerTest {
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
-            "  Duration ttl = Duration.newBuilder().build();\n",
+            " java.time.Duration ttl =java.time.Duration.newBuilder().build();\n",
             "  WaitResponse response = echoClient.waitAsync(ttl).get();\n",
             "}");
     Assert.assertEquals(results, expected);
@@ -806,7 +806,7 @@ public class ServiceClientHeaderSampleComposerTest {
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
-            "  Duration ttl = Duration.newBuilder().build();\n",
+            " java.time.Duration ttl =java.time.Duration.newBuilder().build();\n",
             "  WaitResponse response = echoClient.waitAsync(ttl).get();\n",
             "}");
     Assert.assertEquals(results, expected);
@@ -888,7 +888,7 @@ public class ServiceClientHeaderSampleComposerTest {
     String expected =
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
-            "  Duration ttl = Duration.newBuilder().build();\n",
+            " java.time.Duration ttl =java.time.Duration.newBuilder().build();\n",
             "  echoClient.waitAsync(ttl).get();\n",
             "}");
     Assert.assertEquals(results, expected);

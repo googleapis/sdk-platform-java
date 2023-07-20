@@ -54,7 +54,6 @@ import java.util.concurrent.TimeUnit;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
 public class GrpcClientCallsTest {
   @Test
@@ -149,7 +148,7 @@ public class GrpcClientCallsTest {
     Mockito.when(mockChannel.newCall(Mockito.eq(descriptor), capturedCallOptions.capture()))
         .thenReturn(mockClientCall);
 
-    Duration timeout = Duration.ofSeconds(10);
+    java.time.Duration timeout = java.time.Duration.ofSeconds(10);
     Deadline minExpectedDeadline = Deadline.after(timeout.getSeconds(), TimeUnit.SECONDS);
 
     GrpcCallContext context =
@@ -182,7 +181,7 @@ public class GrpcClientCallsTest {
 
     // Configure a timeout that occurs after the grpc deadline
     Deadline priorDeadline = Deadline.after(5, TimeUnit.SECONDS);
-    Duration timeout = Duration.ofSeconds(10);
+    java.time.Duration timeout = java.time.Duration.ofSeconds(10);
 
     GrpcCallContext context =
         GrpcCallContext.createDefault()
@@ -214,7 +213,7 @@ public class GrpcClientCallsTest {
         .thenReturn(mockClientCall);
 
     // Configure a timeout that occurs before the grpc deadline
-    Duration timeout = Duration.ofSeconds(5);
+    java.time.Duration timeout = java.time.Duration.ofSeconds(5);
     Deadline subsequentDeadline = Deadline.after(10, TimeUnit.SECONDS);
     Deadline minExpectedDeadline = Deadline.after(timeout.getSeconds(), TimeUnit.SECONDS);
 

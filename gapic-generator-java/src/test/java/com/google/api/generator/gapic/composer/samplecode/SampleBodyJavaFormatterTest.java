@@ -49,7 +49,7 @@ public class SampleBodyJavaFormatterTest {
     String sampleCode =
         "echoSettingsBuilder.echoSettings().setRetrySettings("
             + "echoSettingsBuilder.echoSettings().getRetrySettings().toBuilder()"
-            + ".setTotalTimeout(Duration.ofSeconds(30)).build());";
+            + ".setTotalTimeoutjava.time.Duration.ofSeconds(30)).build());";
     String result = SampleBodyJavaFormatter.format(sampleCode);
     String expected =
         LineFormatter.lines(
@@ -60,7 +60,7 @@ public class SampleBodyJavaFormatterTest {
             "            .echoSettings()\n",
             "            .getRetrySettings()\n",
             "            .toBuilder()\n",
-            "            .setTotalTimeout(Duration.ofSeconds(30))\n",
+            "            .setTotalTimeoutjava.time.Duration.ofSeconds(30))\n",
             "            .build());");
     assertEquals(expected, result);
   }

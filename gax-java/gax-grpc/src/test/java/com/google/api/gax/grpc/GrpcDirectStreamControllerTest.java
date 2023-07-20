@@ -57,7 +57,6 @@ import javax.annotation.Nullable;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
 public class GrpcDirectStreamControllerTest {
@@ -101,11 +100,11 @@ public class GrpcDirectStreamControllerTest {
             .setRetryableCodes(StatusCode.Code.DEADLINE_EXCEEDED)
             .setRetrySettings(
                 RetrySettings.newBuilder()
-                    .setTotalTimeout(Duration.ofMinutes(1))
-                    .setInitialRpcTimeout(Duration.ofMillis(1))
-                    .setMaxRpcTimeout(Duration.ofMillis(1))
-                    .setInitialRetryDelay(Duration.ofMillis(1))
-                    .setMaxRetryDelay(Duration.ofMillis(1))
+                    .setTotalTimeout(java.time.Duration.ofMinutes(1))
+                    .setInitialRpcTimeout(java.time.Duration.ofMillis(1))
+                    .setMaxRpcTimeout(java.time.Duration.ofMillis(1))
+                    .setInitialRetryDelay(java.time.Duration.ofMillis(1))
+                    .setMaxRetryDelay(java.time.Duration.ofMillis(1))
                     .build())
             .build();
     // Store a list of resources to manually close at the end of the test

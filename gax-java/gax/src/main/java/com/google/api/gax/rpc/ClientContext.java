@@ -99,6 +99,7 @@ public abstract class ClientContext {
 
   /**
    * Backport of {@link #getStreamWatchdogCheckIntervalDuration()}
+   *
    * @return
    */
   @Nonnull
@@ -359,9 +360,14 @@ public abstract class ClientContext {
     public abstract Builder setStreamWatchdog(Watchdog watchdog);
 
     public final Builder setStreamWatchdogCheckInterval(org.threeten.bp.Duration duration) {
-      return setStreamWatchdogCheckInterval(java.time.Duration.ofNanos(duration.toNanos()));
+      return setStreamWatchdogCheckIntervalDuration(java.time.Duration.ofNanos(duration.toNanos()));
     }
-    public abstract Builder setStreamWatchdogCheckInterval(java.time.Duration duration);
+
+    public final Builder setStreamWatchdogCheckInterval(java.time.Duration duration) {
+      return setStreamWatchdogCheckIntervalDuration(duration);
+    }
+
+    public abstract Builder setStreamWatchdogCheckIntervalDuration(java.time.Duration duration);
 
     /**
      * Set the {@link ApiTracerFactory} that will be used to generate traces for operations.

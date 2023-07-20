@@ -37,8 +37,6 @@ import com.google.common.base.MoreObjects;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import org.threeten.bp.Duration;
-
 import java.util.Set;
 import javax.annotation.Nonnull;
 
@@ -119,9 +117,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
     return resumptionStrategy;
   }
 
-  /**
-   * Backport of {@link #getIdleTimeoutDuration()}
-   */
+  /** Backport of {@link #getIdleTimeoutDuration()} */
   @Nonnull
   public org.threeten.bp.Duration getIdleTimeout() {
     return org.threeten.bp.Duration.ofNanos(getIdleTimeoutDuration().toNanos());
@@ -136,9 +132,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
     return idleTimeout;
   }
 
-  /**
-   * Backport of {@link #getWaitTimeoutDuration()}
-   */
+  /** Backport of {@link #getWaitTimeoutDuration()} */
   @Nonnull
   public org.threeten.bp.Duration getWaitTimeout() {
     return org.threeten.bp.Duration.ofNanos(getWaitTimeoutDuration().toNanos());
@@ -260,14 +254,17 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
     }
 
     /**
-     * Overload of {@link #setSimpleTimeoutNoRetries(java.time.Duration)} using {@link org.threeten.bp.Duration}
+     * Overload of {@link #setSimpleTimeoutNoRetries(java.time.Duration)} using {@link
+     * org.threeten.bp.Duration}
      */
-    public Builder<RequestT, ResponseT> setSimpleTimeoutNoRetries(@Nonnull org.threeten.bp.Duration timeout) {
+    public Builder<RequestT, ResponseT> setSimpleTimeoutNoRetries(
+        @Nonnull org.threeten.bp.Duration timeout) {
       return setSimpleTimeoutNoRetries(java.time.Duration.ofNanos(timeout.toNanos()));
     }
 
     /** Disables retries and sets the overall timeout. */
-    public Builder<RequestT, ResponseT> setSimpleTimeoutNoRetries(@Nonnull java.time.Duration timeout) {
+    public Builder<RequestT, ResponseT> setSimpleTimeoutNoRetries(
+        @Nonnull java.time.Duration timeout) {
       setRetryableCodes();
       setRetrySettings(
           RetrySettings.newBuilder()
@@ -300,9 +297,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
       return resumptionStrategy;
     }
 
-    /**
-     * Backport of {@link #getIdleTimeoutDuration()}
-     */
+    /** Backport of {@link #getIdleTimeoutDuration()} */
     @Nonnull
     public org.threeten.bp.Duration getIdleTimeout() {
       return org.threeten.bp.Duration.ofNanos(getIdleTimeoutDuration().toNanos());
@@ -316,7 +311,8 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
     /**
      * Overlad of {@link #setIdleTimeout(java.time.Duration)} using {@link org.threeten.bp.Duration}
      */
-    public Builder<RequestT, ResponseT> setIdleTimeout(@Nonnull org.threeten.bp.Duration idleTimeout) {
+    public Builder<RequestT, ResponseT> setIdleTimeout(
+        @Nonnull org.threeten.bp.Duration idleTimeout) {
       return setIdleTimeout(java.time.Duration.ofNanos(idleTimeout.toNanos()));
     }
 
@@ -329,9 +325,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
       return this;
     }
 
-    /**
-     * Backport of {@link #getWaitTimeoutDuration()}
-     */
+    /** Backport of {@link #getWaitTimeoutDuration()} */
     @Nonnull
     public org.threeten.bp.Duration getWaitTimeout() {
       return org.threeten.bp.Duration.ofNanos(getWaitTimeoutDuration().toNanos());
@@ -343,9 +337,11 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
     }
 
     /**
-     * Overload of {@link #setWaitTimeout(java.time.Duration)} using {@link org.threeten.bp.Duration}
+     * Overload of {@link #setWaitTimeout(java.time.Duration)} using {@link
+     * org.threeten.bp.Duration}
      */
-    public Builder<RequestT, ResponseT> setWaitTimeout(@Nonnull org.threeten.bp.Duration waitTimeout) {
+    public Builder<RequestT, ResponseT> setWaitTimeout(
+        @Nonnull org.threeten.bp.Duration waitTimeout) {
       return setWaitTimeout(java.time.Duration.ofNanos(waitTimeout.toNanos()));
     }
 

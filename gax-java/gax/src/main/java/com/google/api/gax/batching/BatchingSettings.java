@@ -33,7 +33,6 @@ import com.google.api.gax.batching.FlowController.LimitExceededBehavior;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
 import javax.annotation.Nullable;
-import java.time.Duration;
 
 /**
  * Represents the batching settings to use for an API method that is capable of batching.
@@ -106,7 +105,7 @@ public abstract class BatchingSettings {
 
   /** Get the delay threshold to use for batching. */
   @Nullable
-  public abstract Duration getDelayThresholdDuration();
+  public abstract java.time.Duration getDelayThresholdDuration();
 
   /** Returns the Boolean object to indicate if the batching is enabled. Default to true */
   public abstract Boolean getIsEnabled();
@@ -149,12 +148,28 @@ public abstract class BatchingSettings {
     public abstract Builder setRequestByteThreshold(Long requestByteThreshold);
 
     /**
+     * Overload of {@link #setDelayThresholdDuration(java.time.Duration)} using {@link
+     * org.threeten.bp.Duration}
+     */
+    public final Builder setDelayThreshold(org.threeten.bp.Duration delayThreshold) {
+      return setDelayThresholdDuration(java.time.Duration.ofNanos(delayThreshold.toNanos()));
+    }
+
+    /**
+     * Overload of {@link #setDelayThresholdDuration(java.time.Duration)} using {@link
+     * org.threeten.bp.Duration} This is a convenience public method to keep name conformity
+     */
+    public final Builder setDelayThreshold(java.time.Duration delayThreshold) {
+      return setDelayThresholdDuration(java.time.Duration.ofNanos(delayThreshold.toNanos()));
+    }
+
+    /**
      * Set the delay threshold to use for batching. After this amount of time has elapsed (counting
      * from the first element added), the elements will be wrapped up in a batch and sent. This
      * value should not be set too high, usually on the order of milliseconds. Otherwise, calls
      * might appear to never complete.
      */
-    public abstract Builder setDelayThreshold(org.threeten.bp.Duration delayThreshold);
+    public abstract Builder setDelayThresholdDuration(java.time.Duration delayThreshold);
 
     /**
      * Set if the batch should be enabled. If set to false, the batch logic will be disabled and the

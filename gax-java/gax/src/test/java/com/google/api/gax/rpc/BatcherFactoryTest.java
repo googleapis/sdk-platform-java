@@ -47,7 +47,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
 public class BatcherFactoryTest {
@@ -67,7 +66,7 @@ public class BatcherFactoryTest {
   public void testGetPushingBatcher() {
     BatchingSettings batchingSettings =
         BatchingSettings.newBuilder()
-            .setDelayThreshold(Duration.ofSeconds(1))
+            .setDelayThresholdDuration(java.time.Duration.ofSeconds(1))
             .setElementCountThreshold(2L)
             .setRequestByteThreshold(1000L)
             .build();

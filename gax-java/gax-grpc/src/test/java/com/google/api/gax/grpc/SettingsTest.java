@@ -62,7 +62,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
 public class SettingsTest {
@@ -112,13 +111,13 @@ public class SettingsTest {
       RetrySettings settings = null;
       settings =
           RetrySettings.newBuilder()
-              .setInitialRetryDelay(Duration.ofMillis(100L))
+              .setInitialRetryDelay(java.time.Duration.ofMillis(100L))
               .setRetryDelayMultiplier(1.2)
-              .setMaxRetryDelay(Duration.ofMillis(1000L))
-              .setInitialRpcTimeout(Duration.ofMillis(2000L))
+              .setMaxRetryDelay(java.time.Duration.ofMillis(1000L))
+              .setInitialRpcTimeout(java.time.Duration.ofMillis(2000L))
               .setRpcTimeoutMultiplier(1.5)
-              .setMaxRpcTimeout(Duration.ofMillis(30000L))
-              .setTotalTimeout(Duration.ofMillis(45000L))
+              .setMaxRpcTimeout(java.time.Duration.ofMillis(30000L))
+              .setTotalTimeout(java.time.Duration.ofMillis(45000L))
               .build();
       definitions.put("default", settings);
       RETRY_PARAM_DEFINITIONS = definitions.build();
@@ -224,7 +223,7 @@ public class SettingsTest {
                 BatchingSettings.newBuilder()
                     .setElementCountThreshold(800L)
                     .setRequestByteThreshold(8388608L)
-                    .setDelayThreshold(Duration.ofMillis(100))
+                    .setDelayThreshold(java.time.Duration.ofMillis(100))
                     .build());
         builder
             .fakeMethodBatching()
@@ -337,7 +336,7 @@ public class SettingsTest {
 
   @Test
   public void callSettingsBuildFromTimeoutNoRetries() {
-    Duration timeout = Duration.ofMillis(60000);
+    java.time.Duration timeout = java.time.Duration.ofMillis(60000);
 
     UnaryCallSettings.Builder<Integer, Integer> builderA =
         UnaryCallSettings.newUnaryCallSettingsBuilder();
@@ -351,9 +350,9 @@ public class SettingsTest {
         .setRetrySettings(
             RetrySettings.newBuilder()
                 .setTotalTimeout(timeout)
-                .setInitialRetryDelay(Duration.ZERO)
+                .setInitialRetryDelay(java.time.Duration.ZERO)
                 .setRetryDelayMultiplier(1)
-                .setMaxRetryDelay(Duration.ZERO)
+                .setMaxRetryDelay(java.time.Duration.ZERO)
                 .setInitialRpcTimeout(timeout)
                 .setRpcTimeoutMultiplier(1)
                 .setMaxRpcTimeout(timeout)

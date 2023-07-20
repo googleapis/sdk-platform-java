@@ -32,7 +32,6 @@ package com.google.api.gax.batching;
 import static com.google.api.gax.batching.AssertByPolling.assertByPolling;
 
 import com.google.common.truth.Truth;
-import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.junit.Assert;
@@ -45,7 +44,9 @@ public class AssertByPollingTest {
     AssertionError error =
         Assert.assertThrows(
             AssertionError.class,
-            () -> assertByPolling(Duration.ofNanos(2), () -> Truth.assertThat(1).isAtLeast(2)));
+            () ->
+                assertByPolling(
+                    java.time.Duration.ofNanos(2), () -> Truth.assertThat(1).isAtLeast(2)));
 
     Throwable cause = error.getCause();
     Truth.assertThat(cause).isInstanceOf(AssertionError.class);
@@ -63,7 +64,7 @@ public class AssertByPollingTest {
             throw new RuntimeException(ex);
           }
         };
-    Duration timeout = Duration.ofNanos(0);
+    java.time.Duration timeout = java.time.Duration.ofNanos(0);
     assertByPolling(timeout, succeedsAfter1ms);
   }
 
@@ -79,7 +80,7 @@ public class AssertByPollingTest {
           }
         };
 
-    Duration timeout = Duration.ofMillis(300);
+    java.time.Duration timeout = java.time.Duration.ofMillis(300);
     assertByPolling(timeout, succeedsSecondTime);
     Truth.assertThat(numFailures.get()).isEqualTo(1);
   }

@@ -32,8 +32,6 @@ package com.google.api.gax.httpjson;
 import com.google.auth.Credentials;
 import com.google.auto.value.AutoValue;
 import com.google.protobuf.TypeRegistry;
-import org.threeten.bp.Instant;
-
 import java.time.Duration;
 import javax.annotation.Nullable;
 
@@ -102,13 +100,22 @@ public abstract class HttpJsonCallOptions {
     public abstract Builder setTimeout(java.time.Duration value);
 
     /**
-     * Overload of {@link #setDeadline(java.time.Instant)} using {@link org.threeten.bp.Instant}
+     * Overload of {@link #setDeadlineInstant(java.time.Instant)} using {@link
+     * org.threeten.bp.Instant}
      */
     public final Builder setDeadline(org.threeten.bp.Instant value) {
-      return setDeadline(java.time.Instant.ofEpochMilli(value.toEpochMilli()));
+      return setDeadlineInstant(java.time.Instant.ofEpochMilli(value.toEpochMilli()));
     }
 
-    public abstract Builder setDeadline(java.time.Instant value);
+    /**
+     * Overload of {@link #setDeadlineInstant(java.time.Instant)} using {@link
+     * org.threeten.bp.Instant} This is a convenience public method to keep name conformity
+     */
+    public final Builder setDeadline(java.time.Instant value) {
+      return setDeadlineInstant(value);
+    }
+
+    public abstract Builder setDeadlineInstant(java.time.Instant value);
 
     public abstract Builder setCredentials(Credentials value);
 
