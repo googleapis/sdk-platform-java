@@ -92,9 +92,9 @@ public class ServerStreamingCallSettingsTest {
         ServerStreamingCallSettings.newBuilder();
     builder.setIdleTimeout(idleTimeout);
 
-    assertThat(builder.getIdleTimeout()).isEqualTo(idleTimeout);
-    assertThat(builder.build().getIdleTimeout()).isEqualTo(idleTimeout);
-    assertThat(builder.build().toBuilder().getIdleTimeout()).isEqualTo(idleTimeout);
+    assertThat(builder.getIdleTimeoutDuration()).isEqualTo(idleTimeout);
+    assertThat(builder.build().getIdleTimeoutDuration()).isEqualTo(idleTimeout);
+    assertThat(builder.build().toBuilder().getIdleTimeoutDuration()).isEqualTo(idleTimeout);
   }
 
   @Test
@@ -106,9 +106,9 @@ public class ServerStreamingCallSettingsTest {
 
     builder.setWaitTimeout(waitTimeout);
 
-    assertThat(builder.getWaitTimeout()).isEqualTo(waitTimeout);
-    assertThat(builder.build().getWaitTimeout()).isEqualTo(waitTimeout);
-    assertThat(builder.build().toBuilder().getWaitTimeout()).isEqualTo(waitTimeout);
+    assertThat(builder.getWaitTimeoutDuration()).isEqualTo(waitTimeout);
+    assertThat(builder.build().getWaitTimeoutDuration()).isEqualTo(waitTimeout);
+    assertThat(builder.build().toBuilder().getWaitTimeoutDuration()).isEqualTo(waitTimeout);
   }
 
   @Test
@@ -130,9 +130,9 @@ public class ServerStreamingCallSettingsTest {
 
     builder.retrySettings().setMaxRetryDelay(java.time.Duration.ofMinutes(1));
 
-    assertThat(builder.getRetrySettings().getMaxRetryDelay())
+    assertThat(builder.getRetrySettings().getMaxRetryDelayDuration())
         .isEqualTo(java.time.Duration.ofMinutes(1));
-    assertThat(builder.build().getRetrySettings().getMaxRetryDelay())
+    assertThat(builder.build().getRetrySettings().getMaxRetryDelayDuration())
         .isEqualTo(java.time.Duration.ofMinutes(1));
   }
 

@@ -567,7 +567,7 @@ public class OperationCallableImplTest {
 
     callable.futureCall(2, callContext).get(10, TimeUnit.SECONDS);
 
-    assertThat(callContextCaptor.getValue().getTimeout())
+    assertThat(callContextCaptor.getValue().getTimeoutDuration())
         .isEqualTo(java.time.Duration.ofMillis(10));
   }
 
