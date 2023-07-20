@@ -292,7 +292,7 @@ public class ClientContextTest {
     Truth.assertThat(clientContext.getCredentials()).isSameInstanceAs(credentials);
     Truth.assertThat(clientContext.getClock()).isSameInstanceAs(clock);
     Truth.assertThat(clientContext.getStreamWatchdog()).isSameInstanceAs(watchdog);
-    Truth.assertThat(clientContext.getStreamWatchdogCheckInterval())
+    Truth.assertThat(clientContext.getStreamWatchdogCheckIntervalDuration())
         .isEqualTo(watchdogCheckInterval);
 
     Truth.assertThat(clientContext.getHeaders()).isEqualTo(ImmutableMap.of("k1", "v1"));

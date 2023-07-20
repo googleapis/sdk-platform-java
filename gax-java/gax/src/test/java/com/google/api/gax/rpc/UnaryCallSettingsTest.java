@@ -50,7 +50,7 @@ public class UnaryCallSettingsTest {
 
     assertThat(builder.getRetryableCodes().size()).isEqualTo(0);
     assertThat(builder.getRetrySettings().getMaxAttempts()).isEqualTo(1);
-    assertThat(builder.getRetrySettings().getTotalTimeout())
+    assertThat(builder.getRetrySettings().getTotalTimeoutDuration())
         .isEqualTo(java.time.Duration.ofSeconds(13));
   }
 
@@ -129,9 +129,9 @@ public class UnaryCallSettingsTest {
 
     builder.retrySettings().setMaxRetryDelay(java.time.Duration.ofMinutes(1));
 
-    assertThat(builder.getRetrySettings().getMaxRetryDelay())
+    assertThat(builder.getRetrySettings().getMaxRetryDelayDuration())
         .isEqualTo(java.time.Duration.ofMinutes(1));
-    assertThat(builder.build().getRetrySettings().getMaxRetryDelay())
+    assertThat(builder.build().getRetrySettings().getMaxRetryDelayDuration())
         .isEqualTo(java.time.Duration.ofMinutes(1));
   }
 

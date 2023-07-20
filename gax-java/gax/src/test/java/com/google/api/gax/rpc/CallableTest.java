@@ -123,7 +123,7 @@ public class CallableTest {
     callable.call("Is your refrigerator running?", callContext);
 
     verify(callContext, atLeastOnce()).getRetrySettings();
-    verify(callContext).getTimeout();
+    verify(callContext).getTimeoutDuration();
     verify(callContext).withTimeout(timeout);
   }
 
@@ -141,7 +141,7 @@ public class CallableTest {
     callable.call("Is your refrigerator running?", callContextWithRetrySettings);
 
     verify(callContextWithRetrySettings, atLeastOnce()).getRetrySettings();
-    verify(callContextWithRetrySettings).getTimeout();
+    verify(callContextWithRetrySettings).getTimeoutDuration();
     verify(callContextWithRetrySettings).withTimeout(timeout);
   }
 }

@@ -77,10 +77,10 @@ public class ExponentialRetryAlgorithmTest {
     // Checking only the most core values, to not make this test too implementation specific.
     assertEquals(0, attempt.getAttemptCount());
     assertEquals(0, attempt.getOverallAttemptCount());
-    assertEquals(java.time.Duration.ZERO, attempt.getRetryDelay());
-    assertEquals(java.time.Duration.ZERO, attempt.getRandomizedRetryDelay());
-    assertEquals(java.time.Duration.ofMillis(1L), attempt.getRpcTimeout());
-    assertEquals(java.time.Duration.ZERO, attempt.getRetryDelay());
+    assertEquals(java.time.Duration.ZERO, attempt.getRetryDelayDuration());
+    assertEquals(java.time.Duration.ZERO, attempt.getRandomizedRetryDelayDuration());
+    assertEquals(java.time.Duration.ofMillis(1L), attempt.getRpcTimeoutDuration());
+    assertEquals(java.time.Duration.ZERO, attempt.getRetryDelayDuration());
   }
 
   @Test
@@ -90,10 +90,11 @@ public class ExponentialRetryAlgorithmTest {
     // Checking only the most core values, to not make this test too implementation specific.
     assertEquals(0, attempt.getAttemptCount());
     assertEquals(0, attempt.getOverallAttemptCount());
-    assertEquals(java.time.Duration.ZERO, attempt.getRetryDelay());
-    assertEquals(java.time.Duration.ZERO, attempt.getRandomizedRetryDelay());
-    assertEquals(retrySettingsOverride.getInitialRpcTimeout(), attempt.getRpcTimeout());
-    assertEquals(java.time.Duration.ZERO, attempt.getRetryDelay());
+    assertEquals(java.time.Duration.ZERO, attempt.getRetryDelayDuration());
+    assertEquals(java.time.Duration.ZERO, attempt.getRandomizedRetryDelayDuration());
+    assertEquals(
+        retrySettingsOverride.getInitialRpcTimeoutDuration(), attempt.getRpcTimeoutDuration());
+    assertEquals(java.time.Duration.ZERO, attempt.getRetryDelayDuration());
   }
 
   @Test
@@ -104,13 +105,13 @@ public class ExponentialRetryAlgorithmTest {
     // Checking only the most core values, to not make this test too implementation specific.
     assertEquals(1, secondAttempt.getAttemptCount());
     assertEquals(1, secondAttempt.getOverallAttemptCount());
-    assertEquals(java.time.Duration.ofMillis(1L), secondAttempt.getRetryDelay());
-    assertEquals(java.time.Duration.ofMillis(2L), secondAttempt.getRpcTimeout());
+    assertEquals(java.time.Duration.ofMillis(1L), secondAttempt.getRetryDelayDuration());
+    assertEquals(java.time.Duration.ofMillis(2L), secondAttempt.getRpcTimeoutDuration());
 
     TimedAttemptSettings thirdAttempt = algorithm.createNextAttempt(secondAttempt);
     assertEquals(2, thirdAttempt.getAttemptCount());
-    assertEquals(java.time.Duration.ofMillis(2L), thirdAttempt.getRetryDelay());
-    assertEquals(java.time.Duration.ofMillis(4L), thirdAttempt.getRpcTimeout());
+    assertEquals(java.time.Duration.ofMillis(2L), thirdAttempt.getRetryDelayDuration());
+    assertEquals(java.time.Duration.ofMillis(4L), thirdAttempt.getRpcTimeoutDuration());
   }
 
   @Test
@@ -121,13 +122,13 @@ public class ExponentialRetryAlgorithmTest {
     // Checking only the most core values, to not make this test too implementation specific.
     assertEquals(1, secondAttempt.getAttemptCount());
     assertEquals(1, secondAttempt.getOverallAttemptCount());
-    assertEquals(java.time.Duration.ofMillis(2L), secondAttempt.getRetryDelay());
-    assertEquals(java.time.Duration.ofMillis(6L), secondAttempt.getRpcTimeout());
+    assertEquals(java.time.Duration.ofMillis(2L), secondAttempt.getRetryDelayDuration());
+    assertEquals(java.time.Duration.ofMillis(6L), secondAttempt.getRpcTimeoutDuration());
 
     TimedAttemptSettings thirdAttempt = algorithm.createNextAttempt(secondAttempt);
     assertEquals(2, thirdAttempt.getAttemptCount());
-    assertEquals(java.time.Duration.ofMillis(6L), thirdAttempt.getRetryDelay());
-    assertEquals(java.time.Duration.ofMillis(18L), thirdAttempt.getRpcTimeout());
+    assertEquals(java.time.Duration.ofMillis(6L), thirdAttempt.getRetryDelayDuration());
+    assertEquals(java.time.Duration.ofMillis(18L), thirdAttempt.getRpcTimeoutDuration());
   }
 
   @Test

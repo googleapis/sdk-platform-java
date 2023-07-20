@@ -92,13 +92,13 @@ public class CheckingAttemptCallableTest {
 
     callable.call();
 
-    assertThat(capturedCallContext.getValue().getTimeout()).isEqualTo(timeout);
+    assertThat(capturedCallContext.getValue().getTimeoutDuration()).isEqualTo(timeout);
 
     // Make sure that subsequent attempts can extend the time out
     java.time.Duration longerTimeout = java.time.Duration.ofSeconds(20);
     currentAttemptSettings =
         currentAttemptSettings.toBuilder().setRpcTimeout(longerTimeout).build();
     callable.call();
-    assertThat(capturedCallContext.getValue().getTimeout()).isEqualTo(longerTimeout);
+    assertThat(capturedCallContext.getValue().getTimeoutDuration()).isEqualTo(longerTimeout);
   }
 }

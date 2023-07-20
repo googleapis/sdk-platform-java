@@ -186,7 +186,8 @@ public class ClientSettingsTest {
     Truth.assertThat(builder.getHeaderProvider()).isSameInstanceAs(headerProvider);
     Truth.assertThat(builder.getInternalHeaderProvider()).isSameInstanceAs(internalHeaderProvider);
     Truth.assertThat(builder.getWatchdogProvider()).isSameInstanceAs(watchdogProvider);
-    Truth.assertThat(builder.getWatchdogCheckInterval()).isSameInstanceAs(watchdogCheckInterval);
+    Truth.assertThat(builder.getWatchdogCheckIntervalDuration())
+        .isSameInstanceAs(watchdogCheckInterval);
     Truth.assertThat(builder.getQuotaProjectId()).isEqualTo(quotaProjectId);
 
     String builderString = builder.toString();
@@ -243,7 +244,7 @@ public class ClientSettingsTest {
         .containsEntry("spiffykey", "spiffyvalue");
     Truth.assertThat(builder.getWatchdogProvider()).isInstanceOf(FixedWatchdogProvider.class);
     Truth.assertThat(builder.getWatchdogProvider().getWatchdog()).isSameInstanceAs(watchdog);
-    Truth.assertThat(builder.getWatchdogCheckInterval()).isEqualTo(watchdogCheckInterval);
+    Truth.assertThat(builder.getWatchdogCheckIntervalDuration()).isEqualTo(watchdogCheckInterval);
     Truth.assertThat(builder.getQuotaProjectId()).isEqualTo(QUOTA_PROJECT_ID_FROM_CONTEXT);
   }
 
@@ -283,7 +284,8 @@ public class ClientSettingsTest {
     Truth.assertThat(newBuilder.getInternalHeaderProvider())
         .isSameInstanceAs(internalHeaderProvider);
     Truth.assertThat(newBuilder.getWatchdogProvider()).isSameInstanceAs(watchdogProvider);
-    Truth.assertThat(newBuilder.getWatchdogCheckInterval()).isEqualTo(watchdogCheckInterval);
+    Truth.assertThat(newBuilder.getWatchdogCheckIntervalDuration())
+        .isEqualTo(watchdogCheckInterval);
     Truth.assertThat(newBuilder.getQuotaProjectId()).isEqualTo(quotaProjectId);
   }
 
