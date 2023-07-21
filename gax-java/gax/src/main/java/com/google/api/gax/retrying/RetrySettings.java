@@ -75,9 +75,25 @@ public abstract class RetrySettings implements Serializable {
   /**
    * TotalTimeout has ultimate control over how long the logic should keep trying the remote call
    * until it gives up completely. The higher the total timeout, the more retries can be attempted.
-   * The default value is {@code Duration.ZERO}.
+   * The default value is {@code 0l}.
    */
-  public abstract Duration getTotalTimeout();
+  public abstract long getTotalTimeoutNanos();
+
+  /**
+   * Convenience version of {@link #getTotalTimeoutNanos()}
+   * @return total timeout in {@link org.threeten.bp.Duration}
+   */
+  public final org.threeten.bp.Duration getTotalTimeout() {
+    return  org.threeten.bp.Duration.ofNanos(getTotalTimeoutNanos());
+  }
+
+  /**
+   * Convenience version of {@link #getTotalTimeoutNanos()}
+   * @return total timeout in {@link java.time.Duration}
+   */
+  public final java.time.Duration getTotalTimeoutDuration() {
+    return  java.time.Duration.ofNanos(getTotalTimeoutNanos());
+  }
 
   /**
    * InitialRetryDelay controls the delay before the first retry. Subsequent retries will use this
@@ -167,9 +183,25 @@ public abstract class RetrySettings implements Serializable {
     /**
      * TotalTimeout has ultimate control over how long the logic should keep trying the remote call
      * until it gives up completely. The higher the total timeout, the more retries can be
-     * attempted. The default value is {@code Duration.ZERO}.
+     * attempted. The default value is {@code 0l}.
      */
-    public abstract Builder setTotalTimeout(Duration totalTimeout);
+    public abstract Builder setTotalTimeoutNanos(long nanos);
+
+    /**
+     * Convenience version of {@link #setTotalTimeoutNanos(long)}
+     * @param totalTimeout of type {@link org.threeten.bp.Duration}
+     */
+    public final Builder setTotalTimeout(org.threeten.bp.Duration totalTimeout) {
+      return setTotalTimeoutNanos(totalTimeout.toNanos());
+    }
+
+    /**
+     * Convenience version of {@link #setTotalTimeoutNanos(long)}
+     * @param totalTimeout of type {@link java.time.Duration}
+     */
+    public final Builder setTotalTimeout(java.time.Duration totalTimeout) {
+      return setTotalTimeoutNanos(totalTimeout.toNanos());
+    }
 
     /**
      * InitialRetryDelay controls the delay before the first retry. Subsequent retries will use this
