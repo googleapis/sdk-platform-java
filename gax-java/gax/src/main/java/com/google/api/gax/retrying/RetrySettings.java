@@ -73,11 +73,36 @@ public abstract class RetrySettings implements Serializable {
   private static final long serialVersionUID = 8258475264439710899L;
 
   /**
+   * Internal {@link org.threeten.bp.Duration} kept in sync with {@link #getTotalTimeoutDurationInternal()}
+   * @return
+   */
+  abstract org.threeten.bp.Duration getTotalTimeoutInternal();
+
+  /**
+   * Internal {@link org.threeten.bp.Duration} kept in sync with {@link #getTotalTimeoutInternal()}
+   * @return
+   */
+  abstract java.time.Duration getTotalTimeoutDurationInternal();
+
+  /**
    * TotalTimeout has ultimate control over how long the logic should keep trying the remote call
    * until it gives up completely. The higher the total timeout, the more retries can be attempted.
    * The default value is {@code Duration.ZERO}.
+   * @return the timeout as {@link org.threeten.bp.Duration}
    */
-  public abstract Duration getTotalTimeout();
+  public final org.threeten.bp.Duration getTotalTimeout() {
+    return getTotalTimeoutInternal();
+  }
+
+  /**
+   * TotalTimeout has ultimate control over how long the logic should keep trying the remote call
+   * until it gives up completely. The higher the total timeout, the more retries can be attempted.
+   * The default value is {@code java.time.Duration.ZERO}.
+   * @return the timeout as {@link java.time.Duration}
+   */
+  public final java.time.Duration getTotalTimeoutDuration() {
+    return getTotalTimeoutDurationInternal();
+  }
 
   /**
    * InitialRetryDelay controls the delay before the first retry. Subsequent retries will use this
@@ -165,11 +190,36 @@ public abstract class RetrySettings implements Serializable {
   public abstract static class Builder {
 
     /**
+     * Internal setter kept in sync with {@link #setTotalTimeoutDurationInternal(java.time.Duration)}
+     */
+    abstract Builder setTotalTimeoutInternal(org.threeten.bp.Duration totalTimeout);
+
+    /**
+     * Internal setter kept in sync with {@link #setTotalTimeoutInternal(org.threeten.bp.Duration)}
+     */
+    abstract Builder setTotalTimeoutDurationInternal(java.time.Duration totalTimeout);
+
+    /**
      * TotalTimeout has ultimate control over how long the logic should keep trying the remote call
      * until it gives up completely. The higher the total timeout, the more retries can be
      * attempted. The default value is {@code Duration.ZERO}.
+     * When set, it also sets {@link #setTotalTimeout(java.time.Duration)}
      */
-    public abstract Builder setTotalTimeout(Duration totalTimeout);
+    public final Builder setTotalTimeout(org.threeten.bp.Duration totalTimeout) {
+      return setTotalTimeoutInternal(totalTimeout)
+              .setTotalTimeoutDurationInternal(java.time.Duration.ofNanos(totalTimeout.toNanos()));
+    }
+
+    /**
+     * TotalTimeout has ultimate control over how long the logic should keep trying the remote call
+     * until it gives up completely. The higher the total timeout, the more retries can be
+     * attempted. The default value is {@code Duration.ZERO}.
+     * When set, it also sets {@link #setTotalTimeout(org.threeten.bp.Duration)}
+     */
+    public final Builder setTotalTimeout(java.time.Duration totalTimeout) {
+      return setTotalTimeoutDurationInternal(totalTimeout)
+              .setTotalTimeoutInternal(org.threeten.bp.Duration.ofNanos(totalTimeout.toNanos()));
+    }
 
     /**
      * InitialRetryDelay controls the delay before the first retry. Subsequent retries will use this
