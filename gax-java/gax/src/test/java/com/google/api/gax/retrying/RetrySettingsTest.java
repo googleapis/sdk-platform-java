@@ -75,4 +75,53 @@ public class RetrySettingsTest {
         .of(settingsB.getRetryDelayMultiplier());
     Truth.assertThat(settingsA.getMaxRetryDelay()).isEqualTo(settingsB.getMaxRetryDelay());
   }
+
+
+  @Test
+  public void testThreetenDeprecationPerformance() {
+    final long ITERATIONS = 100_000_000;
+    final long NANOS = 123_456_789l;
+
+    java.time.Instant start = java.time.Instant.now();
+    java.time.Instant end = null;
+    for (long i = 0; i < ITERATIONS; i++) {
+      RetrySettings.newBuilder()
+              .setTotalTimeoutDuration(java.time.Duration.ofNanos(NANOS))
+              .build();
+    }
+    end = java.time.Instant.now();
+    System.out.println(String.format("setTotalTimeout(java.time.Duration): %s ms",
+            java.time.temporal.ChronoUnit.MILLIS.between(start, end)));
+
+
+    start = java.time.Instant.now();
+    for (long i = 0; i < ITERATIONS; i++) {
+      RetrySettings.newBuilder()
+              .setTotalTimeout(org.threeten.bp.Duration.ofNanos(NANOS))
+              .build();
+    }
+    end = java.time.Instant.now();
+    System.out.println(String.format("setTotalTimeout(org.threeten.bp.Duration): %s ms",
+            java.time.temporal.ChronoUnit.MILLIS.between(start, end)));
+
+    RetrySettings settings = RetrySettings.newBuilder()
+            .setTotalTimeoutDuration(java.time.Duration.ofNanos(NANOS))
+            .build();
+
+    start = java.time.Instant.now();
+    for (long i = 0; i < ITERATIONS; i++) {
+      settings.getTotalTimeout();
+    }
+    end = java.time.Instant.now();
+    System.out.println(String.format("getTotalTimeout(): %s ms",
+            java.time.temporal.ChronoUnit.MILLIS.between(start, end)));
+
+    start = java.time.Instant.now();
+    for (long i = 0; i < ITERATIONS; i++) {
+      settings.getTotalTimeoutDuration();
+    }
+    end = java.time.Instant.now();
+    System.out.println(String.format("getTotalTimeoutDuration(): %s ms",
+            java.time.temporal.ChronoUnit.MILLIS.between(start, end)));
+  }
 }
