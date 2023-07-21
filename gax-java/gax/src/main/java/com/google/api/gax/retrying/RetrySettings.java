@@ -77,7 +77,15 @@ public abstract class RetrySettings implements Serializable {
    * until it gives up completely. The higher the total timeout, the more retries can be attempted.
    * The default value is {@code Duration.ZERO}.
    */
-  public abstract Duration getTotalTimeout();
+  public abstract org.threeten.bp.Duration getTotalTimeout();
+
+  /**
+   * Total timeout using {@link java.time}
+   * @return {@link java.time.Duration} version of total timeout
+   */
+  public final java.time.Duration getTotalTimeoutDuration() {
+    return java.time.Duration.ofNanos(getTotalTimeout().toNanos());
+  }
 
   /**
    * InitialRetryDelay controls the delay before the first retry. Subsequent retries will use this
@@ -169,7 +177,14 @@ public abstract class RetrySettings implements Serializable {
      * until it gives up completely. The higher the total timeout, the more retries can be
      * attempted. The default value is {@code Duration.ZERO}.
      */
-    public abstract Builder setTotalTimeout(Duration totalTimeout);
+    public abstract Builder setTotalTimeout(org.threeten.bp.Duration totalTimeout);
+
+    /**
+     * Sets total timeout using {@link java.time.Duration}
+     */
+    public final Builder setTotalTimeoutDuration(java.time.Duration totalTimeout) {
+      return setTotalTimeout(org.threeten.bp.Duration.ofNanos(totalTimeout.toNanos()));
+    }
 
     /**
      * InitialRetryDelay controls the delay before the first retry. Subsequent retries will use this
