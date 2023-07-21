@@ -265,12 +265,21 @@ public abstract class RetrySettings implements Serializable {
      */
     public abstract Builder setMaxRpcTimeout(Duration maxTimeout);
 
+
     /**
      * TotalTimeout has ultimate control over how long the logic should keep trying the remote call
      * until it gives up completely. The higher the total timeout, the more retries can be
      * attempted. The default value is {@code Duration.ZERO}.
      */
-    public abstract Duration getTotalTimeout();
+    public abstract long getTotalTimeoutNanos();
+
+    public final org.threeten.bp.Duration getTotalTimeout() {
+      return org.threeten.bp.Duration.ofNanos(getTotalTimeoutNanos());
+    }
+
+    public final java.time.Duration getTotalTimeoutDuration() {
+      return java.time.Duration.ofNanos(getTotalTimeoutNanos());
+    }
 
     /**
      * InitialRetryDelay controls the delay before the first retry. Subsequent retries will use this
