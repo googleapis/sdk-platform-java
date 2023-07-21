@@ -81,12 +81,14 @@ public class RetrySettingsTest {
   public void testThreetenDeprecationPerformance() {
     final long ITERATIONS = 100_000_000;
     final long NANOS = 123_456_789l;
+    final java.time.Duration javaTimeDuration = java.time.Duration.ofNanos(NANOS);
+    final org.threeten.bp.Duration threetenDuration = org.threeten.bp.Duration.ofNanos(NANOS);
 
     java.time.Instant start = java.time.Instant.now();
     java.time.Instant end = null;
     for (long i = 0; i < ITERATIONS; i++) {
       RetrySettings.newBuilder()
-              .setTotalTimeoutDuration(java.time.Duration.ofNanos(NANOS))
+              .setTotalTimeoutDuration(javaTimeDuration)
               .build();
     }
     end = java.time.Instant.now();
@@ -97,7 +99,7 @@ public class RetrySettingsTest {
     start = java.time.Instant.now();
     for (long i = 0; i < ITERATIONS; i++) {
       RetrySettings.newBuilder()
-              .setTotalTimeout(org.threeten.bp.Duration.ofNanos(NANOS))
+              .setTotalTimeout(threetenDuration)
               .build();
     }
     end = java.time.Instant.now();
@@ -105,7 +107,7 @@ public class RetrySettingsTest {
             java.time.temporal.ChronoUnit.MILLIS.between(start, end)));
 
     RetrySettings settings = RetrySettings.newBuilder()
-            .setTotalTimeoutDuration(java.time.Duration.ofNanos(NANOS))
+            .setTotalTimeoutDuration(javaTimeDuration)
             .build();
 
     start = java.time.Instant.now();
