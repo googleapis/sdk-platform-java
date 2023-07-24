@@ -1,8 +1,8 @@
 on:
   push:
     branches:
-      - main
-  pull_request:
+      - 2.22.x
+  pull_request: null
 name: ci
 env:
   SHOWCASE_VERSION: 0.28.0
