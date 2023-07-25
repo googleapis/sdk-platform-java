@@ -48,13 +48,6 @@
   <dependencyManagement>
     <dependencies>
       <dependency>
-        <groupId>com.google.cloud</groupId>
-        <artifactId>third-party-dependencies</artifactId>
-        <version>3.13.1-SNAPSHOT</version><!-- {x-version-update:google-cloud-shared-dependencies:current} -->
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-      <dependency>
         <groupId>com.google.api</groupId>
         <artifactId>api-common</artifactId>
         <version>2.14.2-SNAPSHOT</version><!-- {x-version-update:api-common:current} -->
@@ -67,6 +60,16 @@
         <scope>import</scope>
       </dependency>
       <dependency>
+        <groupId>org.threeten</groupId>
+        <artifactId>threetenbp</artifactId>
+        <version>1.6.8</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.code.findbugs</groupId>
+        <artifactId>jsr305</artifactId>
+        <version>3.0.2</version>
+      </dependency>
+      <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
         <version>${guava.version}</version>
@@ -76,6 +79,11 @@
             <artifactId>error_prone_annotations</artifactId>
           </exclusion>
         </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>io.opencensus</groupId>
+        <artifactId>opencensus-api</artifactId>
+        <version>0.31.1</version>
       </dependency>
       <dependency>
         <groupId>com.google.auto.value</groupId>
@@ -236,7 +244,6 @@
       </plugin>
     </plugins>
   </build>
-
 
   <profiles>
     <profile>
