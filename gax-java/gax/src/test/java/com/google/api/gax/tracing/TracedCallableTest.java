@@ -102,7 +102,7 @@ public class TracedCallableTest {
     // Verify that callables configured to not retry have the appropriate tracer interactions.
     UnaryCallSettings<Object, Object> callSettings =
         UnaryCallSettings.newUnaryCallSettingsBuilder()
-            .setSimpleTimeoutNoRetries(java.time.Duration.ofMillis(5L))
+            .setSimpleTimeoutNoRetries(org.threeten.bp.Duration.ofMillis(5L))
             .build();
     UnaryCallable<String, String> callable = setupTracedUnaryCallable(callSettings);
     innerResult.set("No, my refrigerator is not running!");

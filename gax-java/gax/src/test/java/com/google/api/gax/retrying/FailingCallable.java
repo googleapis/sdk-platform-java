@@ -39,24 +39,24 @@ class FailingCallable implements Callable<String> {
   static final RetrySettings FAST_RETRY_SETTINGS =
       RetrySettings.newBuilder()
           .setMaxAttempts(6)
-          .setInitialRetryDelay(java.time.Duration.ofMillis(8L))
+          .setInitialRetryDelay(org.threeten.bp.Duration.ofMillis(8L))
           .setRetryDelayMultiplier(1)
-          .setMaxRetryDelay(java.time.Duration.ofMillis(8L))
-          .setInitialRpcTimeout(java.time.Duration.ofMillis(8L))
+          .setMaxRetryDelay(org.threeten.bp.Duration.ofMillis(8L))
+          .setInitialRpcTimeout(org.threeten.bp.Duration.ofMillis(8L))
           .setRpcTimeoutMultiplier(1)
-          .setMaxRpcTimeout(java.time.Duration.ofMillis(8L))
-          .setTotalTimeout(java.time.Duration.ofMillis(400L))
+          .setMaxRpcTimeout(org.threeten.bp.Duration.ofMillis(8L))
+          .setTotalTimeout(org.threeten.bp.Duration.ofMillis(400L))
           .build();
   static final RetrySettings FAILING_RETRY_SETTINGS =
       RetrySettings.newBuilder()
           .setMaxAttempts(2)
-          .setInitialRetryDelay(java.time.Duration.ofNanos(1L))
+          .setInitialRetryDelay(org.threeten.bp.Duration.ofNanos(1L))
           .setRetryDelayMultiplier(1)
-          .setMaxRetryDelay(java.time.Duration.ofNanos(1L))
-          .setInitialRpcTimeout(java.time.Duration.ofNanos(1L))
+          .setMaxRetryDelay(org.threeten.bp.Duration.ofNanos(1L))
+          .setInitialRpcTimeout(org.threeten.bp.Duration.ofNanos(1L))
           .setRpcTimeoutMultiplier(1)
-          .setMaxRpcTimeout(java.time.Duration.ofNanos(1L))
-          .setTotalTimeout(java.time.Duration.ofNanos(1L))
+          .setMaxRpcTimeout(org.threeten.bp.Duration.ofNanos(1L))
+          .setTotalTimeout(org.threeten.bp.Duration.ofNanos(1L))
           .build();
 
   private AtomicInteger attemptsCount = new AtomicInteger(0);

@@ -74,15 +74,15 @@ public class GrpcLongRunningTest {
 
   private static final RetrySettings FAST_RETRY_SETTINGS =
       RetrySettings.newBuilder()
-          .setInitialRetryDelay(java.time.Duration.ofMillis(1L))
+          .setInitialRetryDelay(org.threeten.bp.Duration.ofMillis(1L))
           .setRetryDelayMultiplier(1)
-          .setMaxRetryDelay(java.time.Duration.ofMillis(1L))
-          .setInitialRpcTimeout(java.time.Duration.ofMillis(1L))
+          .setMaxRetryDelay(org.threeten.bp.Duration.ofMillis(1L))
+          .setInitialRpcTimeout(org.threeten.bp.Duration.ofMillis(1L))
           .setMaxAttempts(0)
           .setJittered(false)
           .setRpcTimeoutMultiplier(1)
-          .setMaxRpcTimeout(java.time.Duration.ofMillis(1L))
-          .setTotalTimeout(java.time.Duration.ofMillis(5L))
+          .setMaxRpcTimeout(org.threeten.bp.Duration.ofMillis(1L))
+          .setTotalTimeout(org.threeten.bp.Duration.ofMillis(5L))
           .build();
 
   private ManagedChannel channel;

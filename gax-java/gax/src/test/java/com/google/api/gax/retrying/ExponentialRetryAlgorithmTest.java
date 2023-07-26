@@ -46,26 +46,26 @@ public class ExponentialRetryAlgorithmTest {
   private final RetrySettings retrySettings =
       RetrySettings.newBuilder()
           .setMaxAttempts(6)
-          .setInitialRetryDelay(java.time.Duration.ofMillis(1L))
+          .setInitialRetryDelay(org.threeten.bp.Duration.ofMillis(1L))
           .setRetryDelayMultiplier(2.0)
-          .setMaxRetryDelay(java.time.Duration.ofMillis(8L))
-          .setInitialRpcTimeout(java.time.Duration.ofMillis(1L))
+          .setMaxRetryDelay(org.threeten.bp.Duration.ofMillis(8L))
+          .setInitialRpcTimeout(org.threeten.bp.Duration.ofMillis(1L))
           .setRpcTimeoutMultiplier(2.0)
-          .setMaxRpcTimeout(java.time.Duration.ofMillis(8L))
-          .setTotalTimeout(java.time.Duration.ofMillis(200L))
+          .setMaxRpcTimeout(org.threeten.bp.Duration.ofMillis(8L))
+          .setTotalTimeout(org.threeten.bp.Duration.ofMillis(200L))
           .build();
   private final ExponentialRetryAlgorithm algorithm =
       new ExponentialRetryAlgorithm(retrySettings, clock);
   private final RetrySettings retrySettingsOverride =
       RetrySettings.newBuilder()
           .setMaxAttempts(3)
-          .setInitialRetryDelay(java.time.Duration.ofMillis(2L))
+          .setInitialRetryDelay(org.threeten.bp.Duration.ofMillis(2L))
           .setRetryDelayMultiplier(3.0)
-          .setMaxRetryDelay(java.time.Duration.ofMillis(18L))
-          .setInitialRpcTimeout(java.time.Duration.ofMillis(2L))
+          .setMaxRetryDelay(org.threeten.bp.Duration.ofMillis(18L))
+          .setInitialRpcTimeout(org.threeten.bp.Duration.ofMillis(2L))
           .setRpcTimeoutMultiplier(3.0)
-          .setMaxRpcTimeout(java.time.Duration.ofMillis(18L))
-          .setTotalTimeout(java.time.Duration.ofMillis(300L))
+          .setMaxRpcTimeout(org.threeten.bp.Duration.ofMillis(18L))
+          .setTotalTimeout(org.threeten.bp.Duration.ofMillis(300L))
           .build();
   private final RetryingContext retryingContext =
       FakeCallContext.createDefault().withRetrySettings(retrySettingsOverride);
@@ -77,10 +77,10 @@ public class ExponentialRetryAlgorithmTest {
     // Checking only the most core values, to not make this test too implementation specific.
     assertEquals(0, attempt.getAttemptCount());
     assertEquals(0, attempt.getOverallAttemptCount());
-    assertEquals(java.time.Duration.ZERO, attempt.getRetryDelayDuration());
-    assertEquals(java.time.Duration.ZERO, attempt.getRandomizedRetryDelayDuration());
-    assertEquals(java.time.Duration.ofMillis(1L), attempt.getRpcTimeoutDuration());
-    assertEquals(java.time.Duration.ZERO, attempt.getRetryDelayDuration());
+    assertEquals(org.threeten.bp.Duration.ZERO, attempt.getRetryDelay());
+    assertEquals(org.threeten.bp.Duration.ZERO, attempt.getRandomizedRetryDelay());
+    assertEquals(org.threeten.bp.Duration.ofMillis(1L), attempt.getRpcTimeout());
+    assertEquals(org.threeten.bp.Duration.ZERO, attempt.getRetryDelay());
   }
 
   @Test
@@ -90,11 +90,11 @@ public class ExponentialRetryAlgorithmTest {
     // Checking only the most core values, to not make this test too implementation specific.
     assertEquals(0, attempt.getAttemptCount());
     assertEquals(0, attempt.getOverallAttemptCount());
-    assertEquals(java.time.Duration.ZERO, attempt.getRetryDelayDuration());
-    assertEquals(java.time.Duration.ZERO, attempt.getRandomizedRetryDelayDuration());
+    assertEquals(org.threeten.bp.Duration.ZERO, attempt.getRetryDelay());
+    assertEquals(org.threeten.bp.Duration.ZERO, attempt.getRandomizedRetryDelay());
     assertEquals(
-        retrySettingsOverride.getInitialRpcTimeoutDuration(), attempt.getRpcTimeoutDuration());
-    assertEquals(java.time.Duration.ZERO, attempt.getRetryDelayDuration());
+        retrySettingsOverride.getInitialRpcTimeoutDuration(), attempt.getRpcTimeout());
+    assertEquals(org.threeten.bp.Duration.ZERO, attempt.getRetryDelay());
   }
 
   @Test
@@ -105,13 +105,13 @@ public class ExponentialRetryAlgorithmTest {
     // Checking only the most core values, to not make this test too implementation specific.
     assertEquals(1, secondAttempt.getAttemptCount());
     assertEquals(1, secondAttempt.getOverallAttemptCount());
-    assertEquals(java.time.Duration.ofMillis(1L), secondAttempt.getRetryDelayDuration());
-    assertEquals(java.time.Duration.ofMillis(2L), secondAttempt.getRpcTimeoutDuration());
+    assertEquals(org.threeten.bp.Duration.ofMillis(1L), secondAttempt.getRetryDelay());
+    assertEquals(org.threeten.bp.Duration.ofMillis(2L), secondAttempt.getRpcTimeout());
 
     TimedAttemptSettings thirdAttempt = algorithm.createNextAttempt(secondAttempt);
     assertEquals(2, thirdAttempt.getAttemptCount());
-    assertEquals(java.time.Duration.ofMillis(2L), thirdAttempt.getRetryDelayDuration());
-    assertEquals(java.time.Duration.ofMillis(4L), thirdAttempt.getRpcTimeoutDuration());
+    assertEquals(org.threeten.bp.Duration.ofMillis(2L), thirdAttempt.getRetryDelay());
+    assertEquals(org.threeten.bp.Duration.ofMillis(4L), thirdAttempt.getRpcTimeout());
   }
 
   @Test
@@ -122,13 +122,13 @@ public class ExponentialRetryAlgorithmTest {
     // Checking only the most core values, to not make this test too implementation specific.
     assertEquals(1, secondAttempt.getAttemptCount());
     assertEquals(1, secondAttempt.getOverallAttemptCount());
-    assertEquals(java.time.Duration.ofMillis(2L), secondAttempt.getRetryDelayDuration());
-    assertEquals(java.time.Duration.ofMillis(6L), secondAttempt.getRpcTimeoutDuration());
+    assertEquals(org.threeten.bp.Duration.ofMillis(2L), secondAttempt.getRetryDelay());
+    assertEquals(org.threeten.bp.Duration.ofMillis(6L), secondAttempt.getRpcTimeout());
 
     TimedAttemptSettings thirdAttempt = algorithm.createNextAttempt(secondAttempt);
     assertEquals(2, thirdAttempt.getAttemptCount());
-    assertEquals(java.time.Duration.ofMillis(6L), thirdAttempt.getRetryDelayDuration());
-    assertEquals(java.time.Duration.ofMillis(18L), thirdAttempt.getRpcTimeoutDuration());
+    assertEquals(org.threeten.bp.Duration.ofMillis(6L), thirdAttempt.getRetryDelay());
+    assertEquals(org.threeten.bp.Duration.ofMillis(18L), thirdAttempt.getRpcTimeout());
   }
 
   @Test
@@ -136,19 +136,19 @@ public class ExponentialRetryAlgorithmTest {
     RetrySettings timeoutSettings =
         retrySettings
             .toBuilder()
-            .setInitialRpcTimeout(java.time.Duration.ofSeconds(4L))
-            .setMaxRpcTimeout(java.time.Duration.ofSeconds(4L))
-            .setTotalTimeout(java.time.Duration.ofSeconds(4L))
+            .setInitialRpcTimeout(org.threeten.bp.Duration.ofSeconds(4L))
+            .setMaxRpcTimeout(org.threeten.bp.Duration.ofSeconds(4L))
+            .setTotalTimeout(org.threeten.bp.Duration.ofSeconds(4L))
             .build();
     ExponentialRetryAlgorithm timeoutAlg = new ExponentialRetryAlgorithm(timeoutSettings, clock);
 
     TimedAttemptSettings firstAttempt = timeoutAlg.createFirstAttempt();
     TimedAttemptSettings secondAttempt = timeoutAlg.createNextAttempt(firstAttempt);
     assertThat(secondAttempt.getRpcTimeout()).isAtLeast(firstAttempt.getRpcTimeout());
-    assertThat(secondAttempt.getRpcTimeoutDuration()).isAtMost(java.time.Duration.ofSeconds(4L));
+    assertThat(secondAttempt.getRpcTimeout()).isAtMost(org.threeten.bp.Duration.ofSeconds(4L));
 
     TimedAttemptSettings thirdAttempt = timeoutAlg.createNextAttempt(secondAttempt);
-    assertThat(thirdAttempt.getRpcTimeoutDuration()).isAtMost(java.time.Duration.ofSeconds(4L));
+    assertThat(thirdAttempt.getRpcTimeout()).isAtMost(org.threeten.bp.Duration.ofSeconds(4L));
   }
 
   @Test

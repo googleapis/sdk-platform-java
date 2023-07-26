@@ -30,10 +30,12 @@
 package com.google.api.gax.batching;
 
 import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 
 import com.google.api.gax.batching.FlowController.LimitExceededBehavior;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
+
 import javax.annotation.Nullable;
 
 /**
@@ -149,21 +151,11 @@ public abstract class BatchingSettings {
      */
     public abstract Builder setRequestByteThreshold(Long requestByteThreshold);
 
-    /**
-     * Overload of {@link #setDelayThresholdDuration(java.time.Duration)} using {@link
-     * org.threeten.bp.Duration}
-     */
-    public final Builder setDelayThreshold(org.threeten.bp.Duration delayThreshold) {
-      return setDelayThresholdDuration(toJavaTimeDuration(delayThreshold));
-    }
 
     /**
-     * Overload of {@link #setDelayThresholdDuration(java.time.Duration)} using {@link
-     * org.threeten.bp.Duration} This is a convenience public method to keep name conformity
+     * Backport of {@link #setDelayThreshold(java.time.Duration)}
      */
-    public final Builder setDelayThreshold(java.time.Duration delayThreshold) {
-      return setDelayThresholdDuration(delayThreshold);
-    }
+    public abstract Builder setDelayThreshold(org.threeten.bp.Duration delayThreshold);
 
     /**
      * Set the delay threshold to use for batching. After this amount of time has elapsed (counting
@@ -171,7 +163,9 @@ public abstract class BatchingSettings {
      * value should not be set too high, usually on the order of milliseconds. Otherwise, calls
      * might appear to never complete.
      */
-    public abstract Builder setDelayThresholdDuration(java.time.Duration delayThreshold);
+    public final Builder setDelayThreshold(java.time.Duration delayThreshold) {
+      return setDelayThreshold(toThreetenDuration(delayThreshold));
+    }
 
     /**
      * Set if the batch should be enabled. If set to false, the batch logic will be disabled and the

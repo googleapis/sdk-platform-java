@@ -73,12 +73,12 @@ public class TimeoutTest {
   private static final ImmutableSet<StatusCode.Code> emptyRetryCodes = ImmutableSet.of();
   private static final ImmutableSet<StatusCode.Code> retryUnknownCode =
       ImmutableSet.of(StatusCode.Code.UNKNOWN);
-  private static final java.time.Duration totalTimeout =
-      java.time.Duration.ofDays(DEADLINE_IN_DAYS);
-  private static final java.time.Duration maxRpcTimeout =
-      java.time.Duration.ofMinutes(DEADLINE_IN_MINUTES);
-  private static final java.time.Duration initialRpcTimeout =
-      java.time.Duration.ofSeconds(DEADLINE_IN_SECONDS);
+  private static final org.threeten.bp.Duration totalTimeout =
+      org.threeten.bp.Duration.ofDays(DEADLINE_IN_DAYS);
+  private static final org.threeten.bp.Duration maxRpcTimeout =
+      org.threeten.bp.Duration.ofMinutes(DEADLINE_IN_MINUTES);
+  private static final org.threeten.bp.Duration initialRpcTimeout =
+      org.threeten.bp.Duration.ofSeconds(DEADLINE_IN_SECONDS);
   private static final GrpcCallContext defaultCallContext = GrpcCallContext.createDefault();
 
   @Rule public MockitoRule mockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
@@ -91,9 +91,9 @@ public class TimeoutTest {
     RetrySettings retrySettings =
         RetrySettings.newBuilder()
             .setTotalTimeout(totalTimeout)
-            .setInitialRetryDelay(java.time.Duration.ZERO)
+            .setInitialRetryDelay(org.threeten.bp.Duration.ZERO)
             .setRetryDelayMultiplier(1.0)
-            .setMaxRetryDelay(java.time.Duration.ZERO)
+            .setMaxRetryDelay(org.threeten.bp.Duration.ZERO)
             .setMaxAttempts(1)
             .setJittered(true)
             .setInitialRpcTimeout(initialRpcTimeout)
@@ -117,9 +117,9 @@ public class TimeoutTest {
     RetrySettings retrySettings =
         RetrySettings.newBuilder()
             .setTotalTimeout(totalTimeout)
-            .setInitialRetryDelay(java.time.Duration.ZERO)
+            .setInitialRetryDelay(org.threeten.bp.Duration.ZERO)
             .setRetryDelayMultiplier(1.0)
-            .setMaxRetryDelay(java.time.Duration.ZERO)
+            .setMaxRetryDelay(org.threeten.bp.Duration.ZERO)
             .setMaxAttempts(1)
             .setJittered(true)
             .setInitialRpcTimeout(initialRpcTimeout)

@@ -195,7 +195,7 @@ public class UnaryCallSettings<RequestT, ResponseT> {
 
     /** Disables retries and sets the RPC timeout. */
     public UnaryCallSettings.Builder<RequestT, ResponseT> setSimpleTimeoutNoRetries(
-        java.time.Duration timeout) {
+        org.threeten.bp.Duration timeout) {
       setRetryableCodes();
       setRetrySettings(
           RetrySettings.newBuilder()

@@ -82,13 +82,13 @@ public class RetryingTest {
 
   private static final RetrySettings FAST_RETRY_SETTINGS =
       RetrySettings.newBuilder()
-          .setInitialRetryDelay(java.time.Duration.ofMillis(2L))
+          .setInitialRetryDelay(org.threeten.bp.Duration.ofMillis(2L))
           .setRetryDelayMultiplier(1)
-          .setMaxRetryDelay(java.time.Duration.ofMillis(2L))
-          .setInitialRpcTimeout(java.time.Duration.ofMillis(2L))
+          .setMaxRetryDelay(org.threeten.bp.Duration.ofMillis(2L))
+          .setInitialRpcTimeout(org.threeten.bp.Duration.ofMillis(2L))
           .setRpcTimeoutMultiplier(1)
-          .setMaxRpcTimeout(java.time.Duration.ofMillis(2L))
-          .setTotalTimeout(java.time.Duration.ofMillis(10L))
+          .setMaxRpcTimeout(org.threeten.bp.Duration.ofMillis(2L))
+          .setTotalTimeout(org.threeten.bp.Duration.ofMillis(10L))
           .build();
 
   @Before
@@ -146,8 +146,8 @@ public class RetryingTest {
     RetrySettings retrySettings =
         FAST_RETRY_SETTINGS
             .toBuilder()
-            .setInitialRetryDelay(java.time.Duration.ofMillis(Integer.MAX_VALUE))
-            .setMaxRetryDelay(java.time.Duration.ofMillis(Integer.MAX_VALUE))
+            .setInitialRetryDelay(org.threeten.bp.Duration.ofMillis(Integer.MAX_VALUE))
+            .setMaxRetryDelay(org.threeten.bp.Duration.ofMillis(Integer.MAX_VALUE))
             .build();
     UnaryCallSettings<Integer, Integer> callSettings = createSettings(retryable, retrySettings);
     UnaryCallable<Integer, Integer> callable =

@@ -65,9 +65,9 @@ public class AttemptCallableTest {
             .setAttemptCount(0)
             .setOverallAttemptCount(0)
             .setFirstAttemptStartTimeNanos(0)
-            .setRetryDelay(java.time.Duration.ofSeconds(1))
-            .setRandomizedRetryDelay(java.time.Duration.ofSeconds(1))
-            .setRpcTimeout(java.time.Duration.ZERO)
+            .setRetryDelay(org.threeten.bp.Duration.ofSeconds(1))
+            .setRandomizedRetryDelay(org.threeten.bp.Duration.ofSeconds(1))
+            .setRpcTimeout(org.threeten.bp.Duration.ZERO)
             .build();
 
     Mockito.when(mockExternalFuture.getAttemptSettings())

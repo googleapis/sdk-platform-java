@@ -212,7 +212,7 @@ final class ServerStreamingAttemptCallable<RequestT, ResponseT> implements Calla
         && attemptContext.getTimeoutDuration() == null) {
       attemptContext =
           attemptContext.withTimeout(
-              outerRetryingFuture.getAttemptSettings().getRpcTimeoutDuration());
+              outerRetryingFuture.getAttemptSettings().getRpcTimeout());
     }
 
     attemptContext

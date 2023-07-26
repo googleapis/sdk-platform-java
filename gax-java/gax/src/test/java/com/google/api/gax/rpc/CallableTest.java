@@ -58,9 +58,9 @@ public class CallableTest {
 
   private RetrySettings retrySettings =
       RetrySettings.newBuilder()
-          .setInitialRpcTimeout(java.time.Duration.ofMillis(5L))
-          .setMaxRpcTimeout(java.time.Duration.ofMillis(5L))
-          .setTotalTimeout(java.time.Duration.ofMillis(10L))
+          .setInitialRpcTimeout(org.threeten.bp.Duration.ofMillis(5L))
+          .setMaxRpcTimeout(org.threeten.bp.Duration.ofMillis(5L))
+          .setTotalTimeout(org.threeten.bp.Duration.ofMillis(10L))
           .build();
 
   @Spy private ApiCallContext callContext = FakeCallContext.createDefault();
@@ -76,7 +76,7 @@ public class CallableTest {
   public void testNonRetriedCallable() throws Exception {
     innerResult = SettableApiFuture.create();
     when(innerCallable.futureCall(anyString(), any(ApiCallContext.class))).thenReturn(innerResult);
-    java.time.Duration timeout = java.time.Duration.ofMillis(5L);
+    org.threeten.bp.Duration timeout = org.threeten.bp.Duration.ofMillis(5L);
 
     UnaryCallSettings<Object, Object> callSettings =
         UnaryCallSettings.newUnaryCallSettingsBuilder().setSimpleTimeoutNoRetries(timeout).build();
@@ -97,13 +97,13 @@ public class CallableTest {
 
     UnaryCallSettings<Object, Object> callSettings =
         UnaryCallSettings.newUnaryCallSettingsBuilder()
-            .setSimpleTimeoutNoRetries(java.time.Duration.ofMillis(10L))
+            .setSimpleTimeoutNoRetries(org.threeten.bp.Duration.ofMillis(10L))
             .build();
     UnaryCallable<String, String> callable =
         Callables.retrying(innerCallable, callSettings, clientContext);
     innerResult.set("No, my refrigerator is not running!");
 
-    java.time.Duration timeout = retrySettings.getInitialRpcTimeoutDuration();
+    org.threeten.bp.Duration timeout = retrySettings.getInitialRpcTimeout();
 
     callable.futureCall("Is your refrigerator running?", callContextWithRetrySettings);
 
@@ -114,7 +114,7 @@ public class CallableTest {
 
   @Test
   public void testNonRetriedServerStreamingCallable() throws Exception {
-    java.time.Duration timeout = java.time.Duration.ofMillis(5L);
+    org.threeten.bp.Duration timeout = org.threeten.bp.Duration.ofMillis(5L);
     ServerStreamingCallSettings<Object, Object> callSettings =
         ServerStreamingCallSettings.newBuilder().setSimpleTimeoutNoRetries(timeout).build();
     ServerStreamingCallable<Object, Object> callable =
@@ -131,12 +131,12 @@ public class CallableTest {
   public void testNonRetriedServerStreamingCallableWithRetrySettings() throws Exception {
     ServerStreamingCallSettings<Object, Object> callSettings =
         ServerStreamingCallSettings.newBuilder()
-            .setSimpleTimeoutNoRetries(java.time.Duration.ofMillis(10L))
+            .setSimpleTimeoutNoRetries(org.threeten.bp.Duration.ofMillis(10L))
             .build();
     ServerStreamingCallable<Object, Object> callable =
         Callables.retrying(innerServerStreamingCallable, callSettings, clientContext);
 
-    java.time.Duration timeout = retrySettings.getInitialRpcTimeoutDuration();
+    org.threeten.bp.Duration timeout = retrySettings.getInitialRpcTimeout();
 
     callable.call("Is your refrigerator running?", callContextWithRetrySettings);
 

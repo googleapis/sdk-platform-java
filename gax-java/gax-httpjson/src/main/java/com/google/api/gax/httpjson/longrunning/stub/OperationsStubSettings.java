@@ -292,13 +292,13 @@ public class OperationsStubSettings extends StubSettings<OperationsStubSettings>
       RetrySettings settings = null;
       settings =
           RetrySettings.newBuilder()
-              .setInitialRetryDelay(java.time.Duration.ofMillis(500L))
+              .setInitialRetryDelay(org.threeten.bp.Duration.ofMillis(500L))
               .setRetryDelayMultiplier(2.0)
-              .setMaxRetryDelay(java.time.Duration.ofMillis(10000L))
-              .setInitialRpcTimeout(java.time.Duration.ofMillis(10000L))
+              .setMaxRetryDelay(org.threeten.bp.Duration.ofMillis(10000L))
+              .setInitialRpcTimeout(org.threeten.bp.Duration.ofMillis(10000L))
               .setRpcTimeoutMultiplier(1.0)
-              .setMaxRpcTimeout(java.time.Duration.ofMillis(10000L))
-              .setTotalTimeout(java.time.Duration.ofMillis(10000L))
+              .setMaxRpcTimeout(org.threeten.bp.Duration.ofMillis(10000L))
+              .setTotalTimeout(org.threeten.bp.Duration.ofMillis(10000L))
               .build();
       definitions.put("retry_policy_0_params", settings);
       RETRY_PARAM_DEFINITIONS = definitions.build();

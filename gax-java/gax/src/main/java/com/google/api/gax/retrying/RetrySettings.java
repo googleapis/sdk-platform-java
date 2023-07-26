@@ -30,10 +30,12 @@
 package com.google.api.gax.retrying;
 
 import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 
 import com.google.api.core.BetaApi;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
+
 import java.io.Serializable;
 
 /**
@@ -170,15 +172,15 @@ public abstract class RetrySettings implements Serializable {
 
   public static Builder newBuilder() {
     return new AutoValue_RetrySettings.Builder()
-        .setTotalTimeout(java.time.Duration.ZERO)
-        .setInitialRetryDelay(java.time.Duration.ZERO)
+        .setTotalTimeout(org.threeten.bp.Duration.ZERO)
+        .setInitialRetryDelay(org.threeten.bp.Duration.ZERO)
         .setRetryDelayMultiplier(1.0)
-        .setMaxRetryDelay(java.time.Duration.ZERO)
+        .setMaxRetryDelay(org.threeten.bp.Duration.ZERO)
         .setMaxAttempts(0)
         .setJittered(true)
-        .setInitialRpcTimeout(java.time.Duration.ZERO)
+        .setInitialRpcTimeout(org.threeten.bp.Duration.ZERO)
         .setRpcTimeoutMultiplier(1.0)
-        .setMaxRpcTimeout(java.time.Duration.ZERO);
+        .setMaxRpcTimeout(org.threeten.bp.Duration.ZERO);
   }
 
   public abstract Builder toBuilder();
@@ -191,50 +193,32 @@ public abstract class RetrySettings implements Serializable {
   public abstract static class Builder {
 
     /**
-     * Overload of {@link #setTotalTimeout(java.time.Duration)} using {@link
-     * org.threeten.bp.Duration}
+     * Backport of {@link #setTotalTimeout(java.time.Duration)}
      */
-    public final Builder setTotalTimeout(org.threeten.bp.Duration totalTimeout) {
-      return setTotalTimeoutDuration(toJavaTimeDuration(totalTimeout));
-    }
-
-    /**
-     * Overload of {@link #setTotalTimeout(java.time.Duration)} using {@link
-     * org.threeten.bp.Duration} This is a convenience public method to keep name conformity
-     */
-    public final Builder setTotalTimeout(java.time.Duration totalTimeout) {
-      return setTotalTimeoutDuration(totalTimeout);
-    }
+    public abstract Builder setTotalTimeout(org.threeten.bp.Duration totalTimeout);
 
     /**
      * TotalTimeout has ultimate control over how long the logic should keep trying the remote call
      * until it gives up completely. The higher the total timeout, the more retries can be
      * attempted. The default value is {@code Duration.ZERO}.
      */
-    public abstract Builder setTotalTimeoutDuration(java.time.Duration totalTimeout);
-
-    /**
-     * Overload of {@link #setInitialRetryDelay(java.time.Duration)} using {@link
-     * org.threeten.bp.Duration}
-     */
-    public final Builder setInitialRetryDelay(org.threeten.bp.Duration initialDelay) {
-      return setInitialRetryDelay(toJavaTimeDuration(initialDelay));
+    public final Builder setTotalTimeout(java.time.Duration totalTimeout) {
+      return setTotalTimeout(toThreetenDuration(totalTimeout));
     }
 
     /**
-     * Overload of {@link #setInitialRetryDelay(java.time.Duration)} using {@link
-     * org.threeten.bp.Duration}
+     * Backport of {@link #setInitialRetryDelay(java.time.Duration)}
      */
-    public final Builder setInitialRetryDelay(java.time.Duration initialDelay) {
-      return setInitialRetryDelayDuration(initialDelay);
-    }
+    public abstract Builder setInitialRetryDelay(org.threeten.bp.Duration initialDelay);
 
     /**
      * InitialRetryDelay controls the delay before the first retry. Subsequent retries will use this
      * value adjusted according to the RetryDelayMultiplier. The default value is {@code
      * Duration.ZERO}.
      */
-    public abstract Builder setInitialRetryDelayDuration(java.time.Duration initialDelay);
+    public final Builder setInitialRetryDelay(java.time.Duration initialDelay) {
+      return setInitialRetryDelay(toThreetenDuration(initialDelay));
+    }
 
     /**
      * RetryDelayMultiplier controls the change in retry delay. The retry delay of the previous call
@@ -244,27 +228,18 @@ public abstract class RetrySettings implements Serializable {
     public abstract Builder setRetryDelayMultiplier(double multiplier);
 
     /**
-     * Overload of {@link #setMaxRetryDelayDuration(java.time.Duration)} using {@link
-     * org.threeten.bp.Duration}
+     * Backport of {@link #setMaxRetryDelay(java.time.Duration)}
      */
-    public final Builder setMaxRetryDelay(org.threeten.bp.Duration maxDelay) {
-      return setMaxRetryDelayDuration(toJavaTimeDuration(maxDelay));
-    }
-
-    /**
-     * Overload of {@link #setMaxRetryDelayDuration(java.time.Duration)} using {@link
-     * org.threeten.bp.Duration}
-     */
-    public final Builder setMaxRetryDelay(java.time.Duration maxDelay) {
-      return setMaxRetryDelayDuration(maxDelay);
-    }
+    public abstract Builder setMaxRetryDelay(org.threeten.bp.Duration maxDelay);
 
     /**
      * MaxRetryDelay puts a limit on the value of the retry delay, so that the RetryDelayMultiplier
      * can't increase the retry delay higher than this amount. The default value is {@code
      * Duration.ZERO}.
      */
-    abstract Builder setMaxRetryDelayDuration(java.time.Duration maxDelay);
+    public final Builder setMaxRetryDelay(java.time.Duration maxDelay) {
+      return setMaxRetryDelay(toThreetenDuration(maxDelay));
+    }
 
     /**
      * MaxAttempts defines the maximum number of attempts to perform. The default value is {@code
@@ -288,27 +263,18 @@ public abstract class RetrySettings implements Serializable {
     public abstract Builder setJittered(boolean jittered);
 
     /**
-     * Overload of {@link #setInitialRpcTimeoutDuration(java.time.Duration)} using {@link
-     * org.threeten.bp.Duration}
+     * Backport of {@link #setInitialRpcTimeout(java.time.Duration)}
      */
-    public final Builder setInitialRpcTimeout(org.threeten.bp.Duration initialTimeout) {
-      return setInitialRpcTimeoutDuration(toJavaTimeDuration(initialTimeout));
-    }
-
-    /**
-     * Overload of {@link #setInitialRpcTimeoutDuration(java.time.Duration)} using {@link
-     * org.threeten.bp.Duration}
-     */
-    public final Builder setInitialRpcTimeout(java.time.Duration initialTimeout) {
-      return setInitialRpcTimeoutDuration(initialTimeout);
-    }
+    public abstract Builder setInitialRpcTimeout(org.threeten.bp.Duration initialTimeout);
 
     /**
      * InitialRpcTimeout controls the timeout for the initial RPC. Subsequent calls will use this
      * value adjusted according to the RpcTimeoutMultiplier. The default value is {@code
      * Duration.ZERO}.
      */
-    abstract Builder setInitialRpcTimeoutDuration(java.time.Duration initialTimeout);
+    public final Builder setInitialRpcTimeout(java.time.Duration initialTimeout) {
+      return setInitialRpcTimeout(toThreetenDuration(initialTimeout));
+    }
 
     /**
      * See the class documentation of {@link RetrySettings} for a description of what this value
@@ -317,27 +283,19 @@ public abstract class RetrySettings implements Serializable {
     public abstract Builder setRpcTimeoutMultiplier(double multiplier);
 
     /**
-     * Overload of {@link #setMaxRpcTimeoutDuration(java.time.Duration)} using {@link
-     * org.threeten.bp.Duration}
+     * Backport of {@link #setMaxRpcTimeout(java.time.Duration)}
      */
-    public final Builder setMaxRpcTimeout(org.threeten.bp.Duration maxTimeout) {
-      return setMaxRpcTimeoutDuration(toJavaTimeDuration(maxTimeout));
-    }
-
-    /**
-     * Overload of {@link #setMaxRpcTimeoutDuration(java.time.Duration)} using {@link
-     * java.time.Duration} This is a convenience public method to keep name conformity
-     */
-    public final Builder setMaxRpcTimeout(java.time.Duration maxTimeout) {
-      return setMaxRpcTimeoutDuration(maxTimeout);
-    }
+    public abstract Builder setMaxRpcTimeout(org.threeten.bp.Duration maxTimeout);
 
     /**
      * MaxRpcTimeout puts a limit on the value of the RPC timeout, so that the RpcTimeoutMultiplier
      * can't increase the RPC timeout higher than this amount. The default value is {@code
      * Duration.ZERO}.
      */
-    abstract Builder setMaxRpcTimeoutDuration(java.time.Duration maxTimeout);
+    public final Builder setMaxRpcTimeout(java.time.Duration maxTimeout) {
+      return setMaxRpcTimeout(toThreetenDuration(maxTimeout));
+    }
+
 
     /** Backport of {@link #getTotalTimeoutDuration()} */
     public abstract org.threeten.bp.Duration getTotalTimeout();
@@ -434,7 +392,10 @@ public abstract class RetrySettings implements Serializable {
      */
     @BetaApi
     public Builder setLogicalTimeout(org.threeten.bp.Duration timeout) {
-      return setLogicalTimeout(toJavaTimeDuration(timeout));
+      return setRpcTimeoutMultiplier(1)
+              .setInitialRpcTimeout(timeout)
+              .setMaxRpcTimeout(timeout)
+              .setTotalTimeout(timeout);
     }
 
     /**
@@ -448,10 +409,7 @@ public abstract class RetrySettings implements Serializable {
      */
     @BetaApi
     public Builder setLogicalTimeout(java.time.Duration timeout) {
-      return setRpcTimeoutMultiplier(1)
-          .setInitialRpcTimeout(timeout)
-          .setMaxRpcTimeout(timeout)
-          .setTotalTimeout(timeout);
+      return setLogicalTimeout(toThreetenDuration(timeout));
     }
 
     abstract RetrySettings autoBuild();

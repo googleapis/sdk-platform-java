@@ -30,6 +30,7 @@
 package com.google.api.gax.retrying;
 
 import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 
 import com.google.api.core.ApiClock;
 import com.google.auto.value.AutoValue;
@@ -102,67 +103,43 @@ public abstract class TimedAttemptSettings {
     public abstract Builder setGlobalSettings(RetrySettings value);
 
     /**
-     * Overload of {@link #setRetryDelayDuration(java.time.Duration)} using {@link
+     * Backport of {@link #setRetryDelay(java.time.Duration)} using {@link
      * org.threeten.bp.Duration}
      */
-    public final Builder setRetryDelay(org.threeten.bp.Duration value) {
-      return setRetryDelayDuration(toJavaTimeDuration(value));
-    }
-
-    /**
-     * Overload of {@link #setRetryDelayDuration(java.time.Duration)} using {@link
-     * java.time.Duration} This is a convenience public method to keep name conformity
-     */
-    public final Builder setRetryDelay(java.time.Duration value) {
-      return setRetryDelayDuration(value);
-    }
+    public abstract Builder setRetryDelay(org.threeten.bp.Duration value);
 
     /**
      * Sets the calculated retry delay. Note that the actual delay used for retry scheduling may be
      * different (randomized, based on this value).
      */
-    public abstract Builder setRetryDelayDuration(java.time.Duration value);
+    public final Builder setRetryDelay(java.time.Duration value) {
+      return setRetryDelay(toThreetenDuration(value));
+    }
 
     /**
-     * Overload of {@link #setRpcTimeoutDuration(java.time.Duration)} using {@link
+     * Backport of {@link #setRpcTimeout(java.time.Duration)} using {@link
      * org.threeten.bp.Duration}
      */
-    public final Builder setRpcTimeout(org.threeten.bp.Duration value) {
-      return setRpcTimeoutDuration(toJavaTimeDuration(value));
-    }
-
-    /**
-     * Overload of {@link #setRpcTimeoutDuration(java.time.Duration)} using {@link
-     * java.time.Duration} This is a convenience public method to keep name conformity
-     */
-    public final Builder setRpcTimeout(java.time.Duration value) {
-      return setRpcTimeoutDuration(value);
-    }
+    public abstract Builder setRpcTimeout(org.threeten.bp.Duration value);
 
     /** Sets rpc timeout used for this attempt. */
-    public abstract Builder setRpcTimeoutDuration(java.time.Duration value);
+    public final Builder setRpcTimeout(java.time.Duration value){
+      return setRpcTimeout(toThreetenDuration(value));
+    }
 
     /**
-     * Overload of {@link #setRandomizedRetryDelayDuration(java.time.Duration)} using {@link
+     * Backport of {@link #setRandomizedRetryDelay(java.time.Duration)} using {@link
      * org.threeten.bp.Duration}
      */
-    public final Builder setRandomizedRetryDelay(org.threeten.bp.Duration value) {
-      return setRandomizedRetryDelayDuration(toJavaTimeDuration(value));
-    }
-
-    /**
-     * Overload of {@link #setRandomizedRetryDelayDuration(java.time.Duration)} using {@link
-     * java.time.Duration} This is a convenience public method to keep name conformity
-     */
-    public final Builder setRandomizedRetryDelay(java.time.Duration value) {
-      return setRandomizedRetryDelayDuration(value);
-    }
+    public abstract Builder setRandomizedRetryDelay(org.threeten.bp.Duration value);
 
     /**
      * Sets randomized attempt delay. By default this value is calculated based on the {@code
      * retryDelay} value, and is used as the actual attempt execution delay.
      */
-    public abstract Builder setRandomizedRetryDelayDuration(java.time.Duration value);
+    public final Builder setRandomizedRetryDelay(java.time.Duration value) {
+      return setRandomizedRetryDelay(toThreetenDuration(value));
+    }
 
     /**
      * Set the attempt count. It is a zero-based value (first attempt will have this value set to

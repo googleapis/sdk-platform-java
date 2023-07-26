@@ -139,16 +139,16 @@ public class RetryOption implements Serializable {
     for (RetryOption option : options) {
       switch (option.type) {
         case TOTAL_TIMEOUT:
-          builder.setTotalTimeout((java.time.Duration) option.value);
+          builder.setTotalTimeout((org.threeten.bp.Duration) option.value);
           break;
         case INITIAL_RETRY_DELAY:
-          builder.setInitialRetryDelay((java.time.Duration) option.value);
+          builder.setInitialRetryDelay((org.threeten.bp.Duration) option.value);
           break;
         case RETRY_DELAY_MULTIPLIER:
           builder.setRetryDelayMultiplier((Double) option.value);
           break;
         case MAX_RETRY_DELAY:
-          builder.setMaxRetryDelay((java.time.Duration) option.value);
+          builder.setMaxRetryDelay((org.threeten.bp.Duration) option.value);
           break;
         case MAX_ATTEMPTS:
           builder.setMaxAttempts((Integer) option.value);
