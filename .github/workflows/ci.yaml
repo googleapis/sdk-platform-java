@@ -1,8 +1,8 @@
 on:
   push:
     branches:
-      - main
-  pull_request:
+      - 2.23.x
+  pull_request: null
 name: ci
 env:
   SHOWCASE_VERSION: 0.28.2
@@ -207,6 +207,36 @@ jobs:
             -P enable-integration-tests \
             --batch-mode \
             --no-transfer-progress
+
+  showcase-native:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          version: '22.3.2'
+          java-version: '17'
+          components: 'native-image'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - run: mvn -version
+      - run: native-image --version
+      - name: Install sdk-platform-java
+        run: mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+      - name: Parse showcase version
+        working-directory: showcase/gapic-showcase
+        run: echo "SHOWCASE_VERSION=$(mvn help:evaluate -Dexpression=gapic-showcase.version -q -DforceStdout)" >> "$GITHUB_ENV"
+      - name: Install showcase server
+        run: |
+          sudo mkdir -p /usr/src/showcase
+          sudo chown -R ${USER} /usr/src/
+          curl --location https://github.com/googleapis/gapic-showcase/releases/download/v${{env.SHOWCASE_VERSION}}/gapic-showcase-${{env.SHOWCASE_VERSION}}-linux-amd64.tar.gz --output /usr/src/showcase/showcase-${{env.SHOWCASE_VERSION}}-linux-amd64.tar.gz
+          cd /usr/src/showcase/
+          tar -xf showcase-*
+          ./gapic-showcase run &
+          cd -
+      - name: Build native image
+        working-directory: showcase
+        run: mvn test -Pnative,-showcase -ntp -B
 
   showcase-clirr:
     if: ${{ github.base_ref != '' }} # Only execute on pull_request trigger event

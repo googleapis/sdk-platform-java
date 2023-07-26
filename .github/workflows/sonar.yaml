@@ -4,9 +4,9 @@ env:
 on:
   push:
     branches:
-      - main
+      - 2.23.x
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: null
 jobs:
   build:
     name: Build
