@@ -33,6 +33,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.api.client.util.escape.PercentEscaper;
 import com.google.api.core.InternalApi;
+import com.google.common.annotations.VisibleForTesting;
+
 import java.util.Map;
 
 /**
@@ -90,7 +92,8 @@ public class RequestUrlParamsEncoder<RequestT> implements RequestParamsEncoder<R
   }
 
   // Percent encode the value passed in.
-  private String percentEncodeString(String value) {
+  @VisibleForTesting
+  String percentEncodeString(String value) {
     return PERCENT_ESCAPER.escape(value);
   }
 }

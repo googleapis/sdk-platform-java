@@ -87,4 +87,61 @@ public class RequestUrlParamsEncoderTest {
     when(extractor.extract(key)).thenReturn(output);
     return extractor;
   }
+
+  @Test
+  public void percentEncodeString_shouldEncodeAllSpecialCharacter() {
+    String[] specialCharactersToEncode = {
+            "xy",
+            "x/y",
+            "x;y",
+            "(xy)",
+            "x-y",
+            "x_y",
+            "x+y",
+            "x%y",
+            "x.y",
+            "x~y",
+            "x?y",
+            "x&y",
+            "x#y",
+            "[xy]",
+            "x$y",
+            "x y",
+            "x\\y",
+            "x😀y",
+            "x€y",
+            "x,y",
+            "x=y"};
+
+    String[] expectedEncodedSpecialCharacters = {
+            "xy",
+            "x%2Fy",
+            "x%3By",
+            "%28xy%29",
+            "x-y",
+            "x_y",
+            "x%2By",
+            "x%25y",
+            "x.y",
+            "x~y",
+            "x%3Fy",
+            "x%26y",
+            "x%23y",
+            "%5Bxy%5D",
+            "x%24y",
+            "x%20y",
+            "x%5Cy",
+            "x%F0%9F%98%80y",
+            "x%E2%82%ACy",
+            "x%2Cy",
+            "x%3Dy"
+    };
+    RequestUrlParamsEncoder<String> encoder = new RequestUrlParamsEncoder<>(getMockExtractor(Collections.emptyMap()));
+
+    for (int i = 0; i < specialCharactersToEncode.length; i++) {
+      String actual = encoder.percentEncodeString(specialCharactersToEncode[i]);
+      assertEquals(actual, expectedEncodedSpecialCharacters[i]);
+    }
+
+  }
 }
