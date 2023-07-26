@@ -30,7 +30,6 @@
 package com.google.api.gax.rpc;
 
 import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
-import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 
 import com.google.api.client.util.Strings;
 import com.google.api.core.ApiClock;
@@ -106,12 +105,12 @@ public abstract class ClientContext {
    * @return
    */
   @Nonnull
-  public final org.threeten.bp.Duration getStreamWatchdogCheckInterval() {
-    return toThreetenDuration(getStreamWatchdogCheckIntervalDuration());
-  }
+  public abstract org.threeten.bp.Duration getStreamWatchdogCheckInterval();
 
   @Nonnull
-  public abstract java.time.Duration getStreamWatchdogCheckIntervalDuration();
+  public final java.time.Duration getStreamWatchdogCheckIntervalDuration() {
+    return toJavaTimeDuration(getStreamWatchdogCheckInterval());
+  }
 
   @Nullable
   public abstract String getEndpoint();
@@ -259,7 +258,7 @@ public abstract class ClientContext {
     if (watchdogProvider != null) {
       if (watchdogProvider.needsCheckInterval()) {
         watchdogProvider =
-            watchdogProvider.withCheckInterval(settings.getStreamWatchdogCheckInterval());
+            watchdogProvider.withCheckInterval(settings.getStreamWatchdogCheckIntervalDuration());
       }
       if (watchdogProvider.needsClock()) {
         watchdogProvider = watchdogProvider.withClock(clock);
@@ -294,7 +293,7 @@ public abstract class ClientContext {
         .setEndpoint(settings.getEndpoint())
         .setQuotaProjectId(settings.getQuotaProjectId())
         .setStreamWatchdog(watchdog)
-        .setStreamWatchdogCheckInterval(settings.getStreamWatchdogCheckInterval())
+        .setStreamWatchdogCheckInterval(settings.getStreamWatchdogCheckIntervalDuration())
         .setTracerFactory(settings.getTracerFactory())
         .build();
   }

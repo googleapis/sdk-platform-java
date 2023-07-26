@@ -101,8 +101,8 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
             .setKeepAliveWithoutCalls(keepaliveWithoutCalls)
             .build();
 
-    assertEquals(provider.getKeepAliveTime(), keepaliveTime);
-    assertEquals(provider.getKeepAliveTimeout(), keepaliveTimeout);
+    assertEquals(provider.getKeepAliveTimeDuration(), keepaliveTime);
+    assertEquals(provider.getKeepAliveTimeoutDuration(), keepaliveTimeout);
     assertEquals(provider.getKeepAliveWithoutCalls(), keepaliveWithoutCalls);
   }
 

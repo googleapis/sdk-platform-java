@@ -30,7 +30,6 @@
 package com.google.api.gax.retrying;
 
 import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
-import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 
 import com.google.api.core.ApiClock;
 import com.google.auto.value.AutoValue;
@@ -43,34 +42,34 @@ public abstract class TimedAttemptSettings {
   public abstract RetrySettings getGlobalSettings();
 
   /** Backport of {@link #getRetryDelayDuration()} */
-  public final org.threeten.bp.Duration getRetryDelay() {
-    return toThreetenDuration(getRetryDelayDuration());
-  }
+  public abstract org.threeten.bp.Duration getRetryDelay();
 
   /**
    * Returns the calculated retry delay. Note that the actual delay used for retry scheduling may be
    * different (randomized, based on this value).
    */
-  public abstract java.time.Duration getRetryDelayDuration();
+  public final java.time.Duration getRetryDelayDuration() {
+    return toJavaTimeDuration(getRetryDelay());
+  }
 
   /** Backport of {@link #getRpcTimeoutDuration()} */
-  public final org.threeten.bp.Duration getRpcTimeout() {
-    return toThreetenDuration(getRpcTimeoutDuration());
-  }
+  public abstract org.threeten.bp.Duration getRpcTimeout();
 
   /** Returns rpc timeout used for this attempt. */
-  public abstract java.time.Duration getRpcTimeoutDuration();
+  public final java.time.Duration getRpcTimeoutDuration() {
+    return toJavaTimeDuration(getRpcTimeout());
+  }
 
   /** Backport of {@link #getRandomizedRetryDelayDuration()} */
-  public final org.threeten.bp.Duration getRandomizedRetryDelay() {
-    return toThreetenDuration(getRandomizedRetryDelayDuration());
-  }
+  public abstract org.threeten.bp.Duration getRandomizedRetryDelay();
 
   /**
    * Returns randomized attempt delay. By default this value is calculated based on the {@code
    * retryDelay} value, and is used as the actual attempt execution delay.
    */
-  public abstract java.time.Duration getRandomizedRetryDelayDuration();
+  public final java.time.Duration getRandomizedRetryDelayDuration() {
+    return toJavaTimeDuration(getRandomizedRetryDelay());
+  }
 
   /**
    * The attempt count. It is a zero-based value (first attempt will have this value set to 0). For

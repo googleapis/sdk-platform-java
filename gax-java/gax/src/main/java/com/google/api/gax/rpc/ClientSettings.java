@@ -30,7 +30,6 @@
 package com.google.api.gax.rpc;
 
 import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
-import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 
 import com.google.api.core.ApiClock;
 import com.google.api.core.ApiFunction;
@@ -115,12 +114,12 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
    */
   @Nonnull
   public final org.threeten.bp.Duration getWatchdogCheckInterval() {
-    return toThreetenDuration(getWatchdogCheckIntervalDuration());
+    return stubSettings.getStreamWatchdogCheckInterval();
   }
 
   @Nonnull
   public final java.time.Duration getWatchdogCheckIntervalDuration() {
-    return stubSettings.getStreamWatchdogCheckIntervalDuration();
+    return toJavaTimeDuration(getWatchdogCheckInterval());
   }
 
   /** Gets the GDCH API audience that was previously set in this Builder */
@@ -353,12 +352,12 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
 
     @Nullable
     public org.threeten.bp.Duration getWatchdogCheckInterval() {
-      return toThreetenDuration(getWatchdogCheckIntervalDuration());
+      return stubSettings.getStreamWatchdogCheckInterval();
     }
 
     @Nullable
     public java.time.Duration getWatchdogCheckIntervalDuration() {
-      return stubSettings.getStreamWatchdogCheckIntervalDuration();
+      return toJavaTimeDuration(getWatchdogCheckInterval());
     }
 
     /** Gets the GDCH API audience that was previously set in this Builder */

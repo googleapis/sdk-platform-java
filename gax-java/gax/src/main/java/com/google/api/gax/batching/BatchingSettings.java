@@ -30,7 +30,6 @@
 package com.google.api.gax.batching;
 
 import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
-import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 
 import com.google.api.gax.batching.FlowController.LimitExceededBehavior;
 import com.google.auto.value.AutoValue;
@@ -102,13 +101,13 @@ public abstract class BatchingSettings {
 
   /** Get the delay threshold to use for batching. */
   @Nullable
-  public final org.threeten.bp.Duration getDelayThreshold() {
-    return toThreetenDuration(getDelayThresholdDuration());
-  }
+  public abstract org.threeten.bp.Duration getDelayThreshold();
 
   /** Get the delay threshold to use for batching. */
   @Nullable
-  public abstract java.time.Duration getDelayThresholdDuration();
+  public final java.time.Duration getDelayThresholdDuration() {
+    return toJavaTimeDuration(getDelayThreshold());
+  }
 
   /** Returns the Boolean object to indicate if the batching is enabled. Default to true */
   public abstract Boolean getIsEnabled();
