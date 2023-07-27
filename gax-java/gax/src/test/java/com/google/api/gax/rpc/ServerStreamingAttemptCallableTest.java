@@ -60,8 +60,8 @@ public class ServerStreamingAttemptCallableTest {
   private AccumulatingObserver observer;
   private FakeRetryingFuture fakeRetryingFuture;
   private StreamResumptionStrategy<String, String> resumptionStrategy;
-  private static org.threeten.bp.Duration totalTimeout = org.threeten.bp.Duration.ofHours(1);
-  private static final org.threeten.bp.Duration attemptTimeout = org.threeten.bp.Duration.ofMinutes(1);
+  private static java.time.Duration totalTimeout = java.time.Duration.ofHours(1);
+  private static final java.time.Duration attemptTimeout = java.time.Duration.ofMinutes(1);
   private FakeCallContext mockedCallContext;
 
   @Before

@@ -563,7 +563,7 @@ public class OperationCallableImplTest {
             initialCallable, callSettings, initialContext, longRunningClient);
 
     ApiCallContext callContext =
-        FakeCallContext.createDefault().withTimeout(org.threeten.bp.Duration.ofMillis(10));
+        FakeCallContext.createDefault().withTimeout(java.time.Duration.ofMillis(10));
 
     callable.futureCall(2, callContext).get(10, TimeUnit.SECONDS);
 

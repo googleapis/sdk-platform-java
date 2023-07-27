@@ -76,7 +76,7 @@ public class CallableTest {
   public void testNonRetriedCallable() throws Exception {
     innerResult = SettableApiFuture.create();
     when(innerCallable.futureCall(anyString(), any(ApiCallContext.class))).thenReturn(innerResult);
-    org.threeten.bp.Duration timeout = org.threeten.bp.Duration.ofMillis(5L);
+    java.time.Duration timeout = java.time.Duration.ofMillis(5L);
 
     UnaryCallSettings<Object, Object> callSettings =
         UnaryCallSettings.newUnaryCallSettingsBuilder().setSimpleTimeoutNoRetries(timeout).build();
@@ -103,7 +103,7 @@ public class CallableTest {
         Callables.retrying(innerCallable, callSettings, clientContext);
     innerResult.set("No, my refrigerator is not running!");
 
-    org.threeten.bp.Duration timeout = retrySettings.getInitialRpcTimeout();
+    java.time.Duration timeout = retrySettings.getInitialRpcTimeoutDuration();
 
     callable.futureCall("Is your refrigerator running?", callContextWithRetrySettings);
 
@@ -114,7 +114,7 @@ public class CallableTest {
 
   @Test
   public void testNonRetriedServerStreamingCallable() throws Exception {
-    org.threeten.bp.Duration timeout = org.threeten.bp.Duration.ofMillis(5L);
+    java.time.Duration timeout = java.time.Duration.ofMillis(5L);
     ServerStreamingCallSettings<Object, Object> callSettings =
         ServerStreamingCallSettings.newBuilder().setSimpleTimeoutNoRetries(timeout).build();
     ServerStreamingCallable<Object, Object> callable =
@@ -136,7 +136,7 @@ public class CallableTest {
     ServerStreamingCallable<Object, Object> callable =
         Callables.retrying(innerServerStreamingCallable, callSettings, clientContext);
 
-    org.threeten.bp.Duration timeout = retrySettings.getInitialRpcTimeout();
+    java.time.Duration timeout = retrySettings.getInitialRpcTimeoutDuration();
 
     callable.call("Is your refrigerator running?", callContextWithRetrySettings);
 

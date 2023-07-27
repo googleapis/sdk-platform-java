@@ -116,7 +116,7 @@ public class HttpJsonCallContextTest {
 
   @Test
   public void testWithTimeout() {
-    org.threeten.bp.Duration timeout = null;
+    java.time.Duration timeout = null;
     assertNull(HttpJsonCallContext.createDefault().withTimeout(timeout).getTimeoutDuration());
   }
 
@@ -173,7 +173,7 @@ public class HttpJsonCallContextTest {
     HttpJsonCallContext defaultOverlay = HttpJsonCallContext.createDefault();
     Truth.assertThat(baseContext.merge(defaultOverlay).getTimeoutDuration()).isEqualTo(timeout);
 
-    org.threeten.bp.Duration callContextTimeout = null;
+    java.time.Duration callContextTimeout = null;
     HttpJsonCallContext explicitNullOverlay =
         HttpJsonCallContext.createDefault().withTimeout(callContextTimeout);
     Truth.assertThat(baseContext.merge(explicitNullOverlay).getTimeoutDuration()).isEqualTo(timeout);

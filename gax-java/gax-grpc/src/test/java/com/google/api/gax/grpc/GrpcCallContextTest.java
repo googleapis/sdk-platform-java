@@ -128,7 +128,7 @@ public class GrpcCallContextTest {
 
   @Test
   public void testWithTimeout() {
-    org.threeten.bp.Duration timeout = null;
+    java.time.Duration timeout = null;
     assertNull(GrpcCallContext.createDefault().withTimeout(timeout).getTimeoutDuration());
   }
 
@@ -183,7 +183,7 @@ public class GrpcCallContextTest {
     GrpcCallContext defaultOverlay = GrpcCallContext.createDefault();
     Truth.assertThat(baseContext.merge(defaultOverlay).getTimeoutDuration()).isEqualTo(timeout);
 
-    org.threeten.bp.Duration callContextTimeout = null;
+    java.time.Duration callContextTimeout = null;
     GrpcCallContext explicitNullOverlay =
         GrpcCallContext.createDefault().withTimeout(callContextTimeout);
     Truth.assertThat(baseContext.merge(explicitNullOverlay).getTimeoutDuration()).isEqualTo(timeout);
