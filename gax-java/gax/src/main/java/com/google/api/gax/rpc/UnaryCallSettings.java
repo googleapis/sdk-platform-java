@@ -34,7 +34,11 @@ import com.google.api.gax.retrying.RetrySettings;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
+import org.threeten.bp.Duration;
+
 import java.util.Set;
+
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 
 /**
  * A base settings class to configure a UnaryCallable. An instance of UnaryCallSettings is not
@@ -193,7 +197,9 @@ public class UnaryCallSettings<RequestT, ResponseT> {
       return this;
     }
 
-    /** Disables retries and sets the RPC timeout. */
+    /**
+     * Backport of {@link #setSimpleTimeoutNoRetries(java.time.Duration)}
+     */
     public UnaryCallSettings.Builder<RequestT, ResponseT> setSimpleTimeoutNoRetries(
         org.threeten.bp.Duration timeout) {
       setRetryableCodes();
@@ -209,6 +215,12 @@ public class UnaryCallSettings<RequestT, ResponseT> {
               .setMaxAttempts(1)
               .build());
       return this;
+    }
+
+    /** Disables retries and sets the RPC timeout. */
+    public UnaryCallSettings.Builder<RequestT, ResponseT> setSimpleTimeoutNoRetries(
+            java.time.Duration timeout) {
+      return setSimpleTimeoutNoRetries(toThreetenDuration(timeout));
     }
 
     /**

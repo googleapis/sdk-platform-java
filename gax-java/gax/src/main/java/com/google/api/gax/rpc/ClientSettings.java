@@ -119,7 +119,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
 
   @Nonnull
   public final java.time.Duration getWatchdogCheckIntervalDuration() {
-    return toJavaTimeDuration(getWatchdogCheckInterval());
+    return stubSettings.getStreamWatchdogCheckIntervalDuration();
   }
 
   /** Gets the GDCH API audience that was previously set in this Builder */
@@ -268,7 +268,8 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     }
 
     public B setWatchdogCheckInterval(@Nullable org.threeten.bp.Duration checkInterval) {
-      return setWatchdogCheckInterval(toJavaTimeDuration(checkInterval));
+      stubSettings.setStreamWatchdogCheckInterval(checkInterval);
+      return self();
     }
 
     public B setWatchdogCheckInterval(@Nullable java.time.Duration checkInterval) {
@@ -357,7 +358,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
 
     @Nullable
     public java.time.Duration getWatchdogCheckIntervalDuration() {
-      return toJavaTimeDuration(getWatchdogCheckInterval());
+      return stubSettings.getStreamWatchdogCheckIntervalDuration();
     }
 
     /** Gets the GDCH API audience that was previously set in this Builder */

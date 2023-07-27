@@ -30,6 +30,7 @@
 package com.google.api.gax.rpc;
 
 import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 
 import com.google.api.client.util.Strings;
 import com.google.api.core.ApiClock;
@@ -361,15 +362,11 @@ public abstract class ClientContext {
 
     public abstract Builder setStreamWatchdog(Watchdog watchdog);
 
-    public final Builder setStreamWatchdogCheckInterval(org.threeten.bp.Duration duration) {
-      return setStreamWatchdogCheckIntervalDuration(toJavaTimeDuration(duration));
-    }
+    public abstract Builder setStreamWatchdogCheckInterval(org.threeten.bp.Duration duration);
 
     public final Builder setStreamWatchdogCheckInterval(java.time.Duration duration) {
-      return setStreamWatchdogCheckIntervalDuration(duration);
+      return setStreamWatchdogCheckInterval(toThreetenDuration(duration));
     }
-
-    public abstract Builder setStreamWatchdogCheckIntervalDuration(java.time.Duration duration);
 
     /**
      * Set the {@link ApiTracerFactory} that will be used to generate traces for operations.
