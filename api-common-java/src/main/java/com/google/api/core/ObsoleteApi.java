@@ -43,7 +43,7 @@ import java.lang.annotation.Target;
  * <ol>
  *   <li>This annotation is used only on APIs with non-private visibility. Private interfaces should
  *       not use it.
- *   <li>This annotation should only be added if either an alternative API is provided or we plan to
+ *   <li>This annotation should only be added if either an alternative API is provided and/or we plan to
  *       stop supporting the API in the next major version.
  * </ol>
  */
