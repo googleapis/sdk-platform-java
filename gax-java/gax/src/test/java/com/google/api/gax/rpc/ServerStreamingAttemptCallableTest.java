@@ -91,8 +91,8 @@ public class ServerStreamingAttemptCallableTest {
   public void testUserProvidedContextTimeout() {
     // Mock up the ApiCallContext as if the user provided a timeout and streamWaitTimeout.
     Mockito.doReturn(BaseApiTracer.getInstance()).when(mockedCallContext).getTracer();
-    Mockito.doReturn(org.threeten.bp.Duration.ofHours(5)).when(mockedCallContext).getTimeout();
-    Mockito.doReturn(org.threeten.bp.Duration.ofHours(5))
+    Mockito.doReturn(java.time.Duration.ofHours(5)).when(mockedCallContext).getTimeoutDuration();
+    Mockito.doReturn(java.time.Duration.ofHours(5))
         .when(mockedCallContext)
         .getStreamWaitTimeoutDuration();
 
@@ -103,7 +103,7 @@ public class ServerStreamingAttemptCallableTest {
     Mockito.verify(mockedCallContext, Mockito.times(1)).getTimeoutDuration();
     Mockito.verify(mockedCallContext, Mockito.never()).withTimeout(totalTimeout);
     Mockito.verify(mockedCallContext, Mockito.never())
-        .withStreamWaitTimeout(Mockito.any(org.threeten.bp.Duration.class));
+        .withStreamWaitTimeout(Mockito.any(java.time.Duration.class));
 
     // Should notify outer observer
     Truth.assertThat(observer.controller).isNotNull();
@@ -132,7 +132,7 @@ public class ServerStreamingAttemptCallableTest {
     Mockito.doReturn(mockedCallContext).when(mockedCallContext).withTimeout(attemptTimeout);
     Mockito.doReturn(mockedCallContext)
         .when(mockedCallContext)
-        .withStreamWaitTimeout(Mockito.any(org.threeten.bp.Duration.class));
+        .withStreamWaitTimeout(Mockito.any(java.time.Duration.class));
 
     ServerStreamingAttemptCallable<String, String> callable = createCallable(mockedCallContext);
     callable.start();

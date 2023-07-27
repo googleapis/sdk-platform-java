@@ -69,7 +69,7 @@ class AttemptCallable<RequestT, ResponseT> implements Callable<ResponseT> {
 
     try {
       // Set the RPC timeout if the caller did not provide their own.
-      org.threeten.bp.Duration rpcTimeout = externalFuture.getAttemptSettings().getRpcTimeout();
+      java.time.Duration rpcTimeout = externalFuture.getAttemptSettings().getRpcTimeoutDuration();
       if (!rpcTimeout.isZero() && callContext.getTimeoutDuration() == null) {
         callContext = callContext.withTimeout(rpcTimeout);
       }

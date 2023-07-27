@@ -65,7 +65,7 @@ class CheckingAttemptCallable<RequestT, ResponseT> implements Callable<ResponseT
     ApiCallContext callContext = originalCallContext;
 
     try {
-      org.threeten.bp.Duration rpcTimeout = externalFuture.getAttemptSettings().getRpcTimeout();
+      java.time.Duration rpcTimeout = externalFuture.getAttemptSettings().getRpcTimeoutDuration();
       if (!rpcTimeout.isZero()) {
         callContext = callContext.withTimeout(rpcTimeout);
       }

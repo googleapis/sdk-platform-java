@@ -179,7 +179,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
     assertThat(builder.getEndpoint()).isEqualTo("fake.endpoint:443");
     assertThat(builder.getMaxInboundMessageSize()).isEqualTo(12345678);
     assertThat(builder.getMaxInboundMetadataSize()).isEqualTo(4096);
-    assertThat(builder.getKeepAliveTime()).isEqualTo(keepaliveTime);
+    assertThat(builder.getKeepAliveTimeDuration()).isEqualTo(keepaliveTime);
     assertThat(builder.getKeepAliveTimeoutDuration()).isEqualTo(keepaliveTimeout);
     assertThat(builder.getChannelConfigurator()).isEqualTo(channelConfigurator);
     assertThat(builder.getPoolSize()).isEqualTo(5);

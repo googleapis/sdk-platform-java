@@ -213,7 +213,7 @@ public class GrpcCallContextTest {
     GrpcCallContext defaultOverlay = GrpcCallContext.createDefault();
     Truth.assertThat(baseContext.merge(defaultOverlay).getStreamWaitTimeoutDuration()).isEqualTo(timeout);
 
-    org.threeten.bp.Duration streamWaitTimeout = null;
+    java.time.Duration streamWaitTimeout = null;
     GrpcCallContext explicitNullOverlay =
         GrpcCallContext.createDefault().withStreamWaitTimeout(streamWaitTimeout);
     Truth.assertThat(baseContext.merge(explicitNullOverlay).getStreamWaitTimeoutDuration())
@@ -252,7 +252,7 @@ public class GrpcCallContextTest {
     GrpcCallContext defaultOverlay = GrpcCallContext.createDefault();
     Truth.assertThat(baseContext.merge(defaultOverlay).getStreamIdleTimeoutDuration()).isEqualTo(timeout);
 
-    org.threeten.bp.Duration idleTimeout = null;
+    java.time.Duration idleTimeout = null;
     GrpcCallContext explicitNullOverlay =
         GrpcCallContext.createDefault().withStreamIdleTimeout(idleTimeout);
     Truth.assertThat(baseContext.merge(explicitNullOverlay).getStreamIdleTimeoutDuration())

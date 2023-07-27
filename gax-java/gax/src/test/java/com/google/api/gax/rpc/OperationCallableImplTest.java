@@ -522,17 +522,17 @@ public class OperationCallableImplTest {
 
     callable.futureCall(2, FakeCallContext.createDefault()).get(10, TimeUnit.SECONDS);
 
-    List<org.threeten.bp.Duration> actualTimeouts = Lists.newArrayList();
+    List<java.time.Duration> actualTimeouts = Lists.newArrayList();
 
     for (ApiCallContext callContext : callContextCaptor.getAllValues()) {
-      actualTimeouts.add(callContext.getTimeout());
+      actualTimeouts.add(callContext.getTimeoutDuration());
     }
 
-    List<org.threeten.bp.Duration> expectedTimeouts =
+    List<java.time.Duration> expectedTimeouts =
         Lists.newArrayList(
-            org.threeten.bp.Duration.ofMillis(100),
-            org.threeten.bp.Duration.ofMillis(200),
-            org.threeten.bp.Duration.ofMillis(400));
+            java.time.Duration.ofMillis(100),
+            java.time.Duration.ofMillis(200),
+            java.time.Duration.ofMillis(400));
     assertThat(actualTimeouts).isEqualTo(expectedTimeouts);
   }
 
