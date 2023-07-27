@@ -17,6 +17,7 @@
 package com.google.cloud;
 
 import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.api.core.BetaApi;
@@ -53,22 +54,22 @@ public class RetryOption implements Serializable {
 
   /** See {@link RetrySettings#getTotalTimeout()}. */
   public static RetryOption totalTimeout(org.threeten.bp.Duration totalTimeout) {
-    return totalTimeout(toJavaTimeDuration(totalTimeout));
+    return new RetryOption(OptionType.TOTAL_TIMEOUT, totalTimeout);
   }
 
   /** See {@link RetrySettings#getTotalTimeout()}. */
   public static RetryOption totalTimeout(java.time.Duration totalTimeout) {
-    return new RetryOption(OptionType.TOTAL_TIMEOUT, totalTimeout);
+    return totalTimeout(toThreetenDuration(totalTimeout));
   }
 
   /** See {@link RetrySettings#getInitialRetryDelay()}. */
   public static RetryOption initialRetryDelay(org.threeten.bp.Duration initialRetryDelay) {
-    return initialRetryDelay(toJavaTimeDuration(initialRetryDelay));
+    return new RetryOption(OptionType.INITIAL_RETRY_DELAY, initialRetryDelay);
   }
 
   /** See {@link RetrySettings#getInitialRetryDelay()}. */
   public static RetryOption initialRetryDelay(java.time.Duration initialRetryDelay) {
-    return new RetryOption(OptionType.INITIAL_RETRY_DELAY, initialRetryDelay);
+    return initialRetryDelay(toThreetenDuration(initialRetryDelay));
   }
 
   /** See {@link RetrySettings#getRetryDelayMultiplier()}. */
@@ -78,12 +79,12 @@ public class RetryOption implements Serializable {
 
   /** See {@link RetrySettings#getMaxRetryDelay()}. */
   public static RetryOption maxRetryDelay(org.threeten.bp.Duration maxRetryDelay) {
-    return maxRetryDelay(toJavaTimeDuration(maxRetryDelay));
+    return new RetryOption(OptionType.MAX_RETRY_DELAY, maxRetryDelay);
   }
 
   /** See {@link RetrySettings#getMaxRetryDelay()}. */
   public static RetryOption maxRetryDelay(java.time.Duration maxRetryDelay) {
-    return new RetryOption(OptionType.MAX_RETRY_DELAY, maxRetryDelay);
+    return maxRetryDelay(toThreetenDuration(maxRetryDelay));
   }
 
   /** See {@link RetrySettings#getMaxAttempts()}. */
