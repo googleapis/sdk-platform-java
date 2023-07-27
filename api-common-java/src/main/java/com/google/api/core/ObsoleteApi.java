@@ -41,10 +41,10 @@ import java.lang.annotation.Target;
  * <p>Usage guidelines:
  *
  * <ol>
- *   <li>This annotation is used only on APIs with non-private visibility. Private interfaces should
- *       not use it.
+ *   <li>This annotation must be used only on APIs with non-private visibility.
  *   <li>This annotation should only be added if either an alternative API is provided and/or we
  *       plan to stop supporting the API in the next major version.
+ *   <li>This annotation must be added with a description.
  * </ol>
  */
 @BetaApi
@@ -60,5 +60,5 @@ import java.lang.annotation.Target;
 @Documented
 public @interface ObsoleteApi {
   /** Context information such as links to a discussion thread, tracking issue, etc. */
-  String value() default "";
+  String description();
 }
