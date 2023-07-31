@@ -36,15 +36,16 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Indicates a public API is obsolete, and will be deprecated in a future major version.
+ * Indicates a public API is obsolete, and will be deprecated in a future version.
  *
  * <p>Usage guidelines:
  *
  * <ol>
  *   <li>This annotation must be used only on APIs with non-private visibility.
  *   <li>This annotation should only be added if either an alternative API is provided and/or we
- *       plan to stop supporting the API in a future major version.
- *   <li>This annotation must be added with a description.
+ *       plan to stop supporting the API in a future version.
+ *   <li>This annotation must be used with a description.
+ *   <li>Alternative APIs must be referenced in Javadoc and/or description if possible.
  * </ol>
  */
 @BetaApi
