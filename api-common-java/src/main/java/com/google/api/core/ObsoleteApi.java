@@ -61,5 +61,5 @@ import java.lang.annotation.Target;
 @Documented
 public @interface ObsoleteApi {
   /** Context information such as links to a discussion thread, tracking issue, etc. */
-  String description();
+  String value();
 }
