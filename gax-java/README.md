@@ -110,7 +110,7 @@ additional qualifications:
    code implementing the interface. See the javadocs for more details on other
    consequences of this annotation.
 1. Components marked with `@ObsoleteApi` are stable for usage in the current major version, 
-   but will be marked with `@Deprecated` in the next major version release.
+   but will be marked with `@Deprecated` in a future major version.
 
 ### Submodule notes
 
