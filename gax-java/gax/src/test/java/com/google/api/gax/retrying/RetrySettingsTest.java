@@ -40,9 +40,9 @@ public class RetrySettingsTest {
     RetrySettings retrySettings = RetrySettings.newBuilder().setLogicalTimeout(timeout).build();
 
     Truth.assertThat(retrySettings.getRpcTimeoutMultiplier()).isEqualTo(1);
-    Truth.assertThat(retrySettings.getInitialRpcTimeoutDuration()).isEqualTo(timeout);
-    Truth.assertThat(retrySettings.getMaxRpcTimeoutDuration()).isEqualTo(timeout);
-    Truth.assertThat(retrySettings.getTotalTimeoutDuration()).isEqualTo(timeout);
+    Truth.assertThat(retrySettings.getInitialRpcTimeout()).isEqualTo(timeout);
+    Truth.assertThat(retrySettings.getMaxRpcTimeout()).isEqualTo(timeout);
+    Truth.assertThat(retrySettings.getTotalTimeout()).isEqualTo(timeout);
   }
 
   @Test
