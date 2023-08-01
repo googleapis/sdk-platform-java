@@ -33,9 +33,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.api.core.ApiClock;
 import com.google.api.core.InternalApi;
-import org.threeten.bp.Duration;
-
 import java.util.concurrent.ThreadLocalRandom;
+import org.threeten.bp.Duration;
 
 /**
  * The timed retry algorithm which uses jittered exponential backoff factor for calculating the next
@@ -131,7 +130,8 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
           (long) (settings.getRetryDelayMultiplier() * previousSettings.getRetryDelay().toMillis());
       newRetryDelay = Math.min(newRetryDelay, settings.getMaxRetryDelay().toMillis());
     }
-    org.threeten.bp.Duration randomDelay = org.threeten.bp.Duration.ofMillis(nextRandomLong(newRetryDelay));
+    org.threeten.bp.Duration randomDelay =
+        org.threeten.bp.Duration.ofMillis(nextRandomLong(newRetryDelay));
 
     // The rpc timeout is determined as follows:
     //     attempt #0  - use the initialRpcTimeout;
@@ -146,8 +146,10 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
     // next attempt's delay, in order to truncate the RPC timeout should it exceed the totalTimeout.
     if (!settings.getTotalTimeout().isZero()) {
       org.threeten.bp.Duration timeElapsed =
-              org.threeten.bp.Duration.ofNanos(clock.nanoTime())
-              .minus(org.threeten.bp.Duration.ofNanos(previousSettings.getFirstAttemptStartTimeNanos()));
+          org.threeten.bp.Duration.ofNanos(clock.nanoTime())
+              .minus(
+                  org.threeten.bp.Duration.ofNanos(
+                      previousSettings.getFirstAttemptStartTimeNanos()));
       org.threeten.bp.Duration timeLeft =
           settings.getTotalTimeout().minus(timeElapsed).minus(randomDelay);
 

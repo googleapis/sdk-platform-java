@@ -16,7 +16,6 @@
 
 package com.google.cloud;
 
-import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
 import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 import static com.google.common.base.Preconditions.checkNotNull;
 

@@ -35,7 +35,6 @@ import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 import com.google.api.core.BetaApi;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
-
 import java.io.Serializable;
 
 /**
@@ -192,9 +191,7 @@ public abstract class RetrySettings implements Serializable {
   @AutoValue.Builder
   public abstract static class Builder {
 
-    /**
-     * Backport of {@link #setTotalTimeout(java.time.Duration)}
-     */
+    /** Backport of {@link #setTotalTimeout(java.time.Duration)} */
     public abstract Builder setTotalTimeout(org.threeten.bp.Duration totalTimeout);
 
     /**
@@ -206,9 +203,7 @@ public abstract class RetrySettings implements Serializable {
       return setTotalTimeout(toThreetenDuration(totalTimeout));
     }
 
-    /**
-     * Backport of {@link #setInitialRetryDelay(java.time.Duration)}
-     */
+    /** Backport of {@link #setInitialRetryDelay(java.time.Duration)} */
     public abstract Builder setInitialRetryDelay(org.threeten.bp.Duration initialDelay);
 
     /**
@@ -227,9 +222,7 @@ public abstract class RetrySettings implements Serializable {
      */
     public abstract Builder setRetryDelayMultiplier(double multiplier);
 
-    /**
-     * Backport of {@link #setMaxRetryDelay(java.time.Duration)}
-     */
+    /** Backport of {@link #setMaxRetryDelay(java.time.Duration)} */
     public abstract Builder setMaxRetryDelay(org.threeten.bp.Duration maxDelay);
 
     /**
@@ -262,9 +255,7 @@ public abstract class RetrySettings implements Serializable {
     @VisibleForTesting
     public abstract Builder setJittered(boolean jittered);
 
-    /**
-     * Backport of {@link #setInitialRpcTimeout(java.time.Duration)}
-     */
+    /** Backport of {@link #setInitialRpcTimeout(java.time.Duration)} */
     public abstract Builder setInitialRpcTimeout(org.threeten.bp.Duration initialTimeout);
 
     /**
@@ -282,9 +273,7 @@ public abstract class RetrySettings implements Serializable {
      */
     public abstract Builder setRpcTimeoutMultiplier(double multiplier);
 
-    /**
-     * Backport of {@link #setMaxRpcTimeout(java.time.Duration)}
-     */
+    /** Backport of {@link #setMaxRpcTimeout(java.time.Duration)} */
     public abstract Builder setMaxRpcTimeout(org.threeten.bp.Duration maxTimeout);
 
     /**
@@ -295,7 +284,6 @@ public abstract class RetrySettings implements Serializable {
     public final Builder setMaxRpcTimeout(java.time.Duration maxTimeout) {
       return setMaxRpcTimeout(toThreetenDuration(maxTimeout));
     }
-
 
     /** Backport of {@link #getTotalTimeoutDuration()} */
     public abstract org.threeten.bp.Duration getTotalTimeout();
@@ -393,9 +381,9 @@ public abstract class RetrySettings implements Serializable {
     @BetaApi
     public Builder setLogicalTimeout(org.threeten.bp.Duration timeout) {
       return setRpcTimeoutMultiplier(1)
-              .setInitialRpcTimeout(timeout)
-              .setMaxRpcTimeout(timeout)
-              .setTotalTimeout(timeout);
+          .setInitialRpcTimeout(timeout)
+          .setMaxRpcTimeout(timeout)
+          .setTotalTimeout(timeout);
     }
 
     /**

@@ -65,7 +65,8 @@ class HttpJsonClientCalls {
         callOptions =
             callOptions
                 .toBuilder()
-                .setTimeout(java.time.Duration.ofMillis(httpJsonContext.getTimeoutDuration().toMillis()))
+                .setTimeout(
+                    java.time.Duration.ofMillis(httpJsonContext.getTimeoutDuration().toMillis()))
                 .build();
       }
       httpJsonContext = httpJsonContext.withCallOptions(callOptions);

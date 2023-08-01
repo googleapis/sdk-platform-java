@@ -138,8 +138,8 @@ public interface ApiCallContext extends RetryingContext {
    * amount of timeout that can pass between a message being received by {@link
    * ResponseObserver#onResponse(Object)} and demand being signaled via {@link
    * StreamController#request(int)}. Please note that this timeout is best effort and the maximum
-   * resolution configured in {@link StubSettings#getStreamWatchdogCheckIntervalDuration()}. This is useful
-   * to clean up streams that were partially read but never closed. When the timeout has been
+   * resolution configured in {@link StubSettings#getStreamWatchdogCheckIntervalDuration()}. This is
+   * useful to clean up streams that were partially read but never closed. When the timeout has been
    * reached, the stream will be closed with a nonretryable {@link WatchdogTimeoutException} and a
    * status of {@link StatusCode.Code#ABORTED}.
    *

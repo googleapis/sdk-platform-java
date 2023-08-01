@@ -143,7 +143,9 @@ public class GrpcCallContextTest {
   @Test
   public void testWithZeroTimeout() {
     assertNull(
-        GrpcCallContext.createDefault().withTimeout(java.time.Duration.ofSeconds(0L)).getTimeoutDuration());
+        GrpcCallContext.createDefault()
+            .withTimeout(java.time.Duration.ofSeconds(0L))
+            .getTimeoutDuration());
   }
 
   @Test
@@ -152,12 +154,14 @@ public class GrpcCallContextTest {
         GrpcCallContext.createDefault().withTimeout(java.time.Duration.ofSeconds(10));
 
     // Sanity check
-    Truth.assertThat(ctxWithLongTimeout.getTimeoutDuration()).isEqualTo(java.time.Duration.ofSeconds(10));
+    Truth.assertThat(ctxWithLongTimeout.getTimeoutDuration())
+        .isEqualTo(java.time.Duration.ofSeconds(10));
 
     // Shorten the timeout and make sure it changed
     GrpcCallContext ctxWithShorterTimeout =
         ctxWithLongTimeout.withTimeout(java.time.Duration.ofSeconds(5));
-    Truth.assertThat(ctxWithShorterTimeout.getTimeoutDuration()).isEqualTo(java.time.Duration.ofSeconds(5));
+    Truth.assertThat(ctxWithShorterTimeout.getTimeoutDuration())
+        .isEqualTo(java.time.Duration.ofSeconds(5));
   }
 
   @Test
@@ -166,7 +170,8 @@ public class GrpcCallContextTest {
         GrpcCallContext.createDefault().withTimeout(java.time.Duration.ofSeconds(5));
 
     // Sanity check
-    Truth.assertThat(ctxWithShortTimeout.getTimeoutDuration()).isEqualTo(java.time.Duration.ofSeconds(5));
+    Truth.assertThat(ctxWithShortTimeout.getTimeoutDuration())
+        .isEqualTo(java.time.Duration.ofSeconds(5));
 
     // Try to extend the timeout and verify that it was ignored
     GrpcCallContext ctxWithUnchangedTimeout =
@@ -186,7 +191,8 @@ public class GrpcCallContextTest {
     java.time.Duration callContextTimeout = null;
     GrpcCallContext explicitNullOverlay =
         GrpcCallContext.createDefault().withTimeout(callContextTimeout);
-    Truth.assertThat(baseContext.merge(explicitNullOverlay).getTimeoutDuration()).isEqualTo(timeout);
+    Truth.assertThat(baseContext.merge(explicitNullOverlay).getTimeoutDuration())
+        .isEqualTo(timeout);
   }
 
   @Test
@@ -211,7 +217,8 @@ public class GrpcCallContextTest {
     GrpcCallContext baseContext = GrpcCallContext.createDefault().withStreamWaitTimeout(timeout);
 
     GrpcCallContext defaultOverlay = GrpcCallContext.createDefault();
-    Truth.assertThat(baseContext.merge(defaultOverlay).getStreamWaitTimeoutDuration()).isEqualTo(timeout);
+    Truth.assertThat(baseContext.merge(defaultOverlay).getStreamWaitTimeoutDuration())
+        .isEqualTo(timeout);
 
     java.time.Duration streamWaitTimeout = null;
     GrpcCallContext explicitNullOverlay =
@@ -224,7 +231,9 @@ public class GrpcCallContextTest {
   public void testWithZeroStreamingWaitTimeout() {
     java.time.Duration timeout = java.time.Duration.ZERO;
     Truth.assertThat(
-            GrpcCallContext.createDefault().withStreamWaitTimeout(timeout).getStreamWaitTimeoutDuration())
+            GrpcCallContext.createDefault()
+                .withStreamWaitTimeout(timeout)
+                .getStreamWaitTimeoutDuration())
         .isEqualTo(timeout);
   }
 
@@ -250,7 +259,8 @@ public class GrpcCallContextTest {
     GrpcCallContext baseContext = GrpcCallContext.createDefault().withStreamIdleTimeout(timeout);
 
     GrpcCallContext defaultOverlay = GrpcCallContext.createDefault();
-    Truth.assertThat(baseContext.merge(defaultOverlay).getStreamIdleTimeoutDuration()).isEqualTo(timeout);
+    Truth.assertThat(baseContext.merge(defaultOverlay).getStreamIdleTimeoutDuration())
+        .isEqualTo(timeout);
 
     java.time.Duration idleTimeout = null;
     GrpcCallContext explicitNullOverlay =
@@ -263,7 +273,9 @@ public class GrpcCallContextTest {
   public void testWithZeroStreamingIdleTimeout() {
     java.time.Duration timeout = java.time.Duration.ZERO;
     Truth.assertThat(
-            GrpcCallContext.createDefault().withStreamIdleTimeout(timeout).getStreamIdleTimeoutDuration())
+            GrpcCallContext.createDefault()
+                .withStreamIdleTimeout(timeout)
+                .getStreamIdleTimeoutDuration())
         .isEqualTo(timeout);
   }
 

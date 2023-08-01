@@ -92,8 +92,7 @@ public class ExponentialRetryAlgorithmTest {
     assertEquals(0, attempt.getOverallAttemptCount());
     assertEquals(org.threeten.bp.Duration.ZERO, attempt.getRetryDelay());
     assertEquals(org.threeten.bp.Duration.ZERO, attempt.getRandomizedRetryDelay());
-    assertEquals(
-        retrySettingsOverride.getInitialRpcTimeoutDuration(), attempt.getRpcTimeout());
+    assertEquals(retrySettingsOverride.getInitialRpcTimeoutDuration(), attempt.getRpcTimeout());
     assertEquals(org.threeten.bp.Duration.ZERO, attempt.getRetryDelay());
   }
 

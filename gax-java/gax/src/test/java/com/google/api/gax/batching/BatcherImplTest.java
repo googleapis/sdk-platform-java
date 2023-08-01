@@ -383,10 +383,7 @@ public class BatcherImplTest {
   @Test
   public void testWhenDelayThresholdExceeds() throws Exception {
     BatchingSettings settings =
-        batchingSettings
-            .toBuilder()
-            .setDelayThreshold(java.time.Duration.ofMillis(100))
-            .build();
+        batchingSettings.toBuilder().setDelayThreshold(java.time.Duration.ofMillis(100)).build();
     underTest = createDefaultBatcherImpl(settings, null);
     Future<Integer> result = underTest.add(6);
     assertThat(result.isDone()).isFalse();

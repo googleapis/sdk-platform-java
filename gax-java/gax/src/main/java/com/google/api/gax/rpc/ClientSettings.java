@@ -29,7 +29,6 @@
  */
 package com.google.api.gax.rpc;
 
-import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
 
 import com.google.api.core.ApiClock;
 import com.google.api.core.ApiFunction;

@@ -35,7 +35,6 @@ import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 import com.google.api.gax.batching.FlowController.LimitExceededBehavior;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
-
 import javax.annotation.Nullable;
 
 /**
@@ -151,10 +150,7 @@ public abstract class BatchingSettings {
      */
     public abstract Builder setRequestByteThreshold(Long requestByteThreshold);
 
-
-    /**
-     * Backport of {@link #setDelayThreshold(java.time.Duration)}
-     */
+    /** Backport of {@link #setDelayThreshold(java.time.Duration)} */
     public abstract Builder setDelayThreshold(org.threeten.bp.Duration delayThreshold);
 
     /**

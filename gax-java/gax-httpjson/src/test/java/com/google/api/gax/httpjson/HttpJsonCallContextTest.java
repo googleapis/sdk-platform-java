@@ -142,12 +142,14 @@ public class HttpJsonCallContextTest {
         HttpJsonCallContext.createDefault().withTimeout(java.time.Duration.ofSeconds(10));
 
     // Sanity check
-    Truth.assertThat(ctxWithLongTimeout.getTimeoutDuration()).isEqualTo(java.time.Duration.ofSeconds(10));
+    Truth.assertThat(ctxWithLongTimeout.getTimeoutDuration())
+        .isEqualTo(java.time.Duration.ofSeconds(10));
 
     // Shorten the timeout and make sure it changed
     HttpJsonCallContext ctxWithShorterTimeout =
         ctxWithLongTimeout.withTimeout(java.time.Duration.ofSeconds(5));
-    Truth.assertThat(ctxWithShorterTimeout.getTimeoutDuration()).isEqualTo(java.time.Duration.ofSeconds(5));
+    Truth.assertThat(ctxWithShorterTimeout.getTimeoutDuration())
+        .isEqualTo(java.time.Duration.ofSeconds(5));
   }
 
   @Test
@@ -156,7 +158,8 @@ public class HttpJsonCallContextTest {
         HttpJsonCallContext.createDefault().withTimeout(java.time.Duration.ofSeconds(5));
 
     // Sanity check
-    Truth.assertThat(ctxWithShortTimeout.getTimeoutDuration()).isEqualTo(java.time.Duration.ofSeconds(5));
+    Truth.assertThat(ctxWithShortTimeout.getTimeoutDuration())
+        .isEqualTo(java.time.Duration.ofSeconds(5));
 
     // Try to extend the timeout and verify that it was ignored
     HttpJsonCallContext ctxWithUnchangedTimeout =
@@ -176,7 +179,8 @@ public class HttpJsonCallContextTest {
     java.time.Duration callContextTimeout = null;
     HttpJsonCallContext explicitNullOverlay =
         HttpJsonCallContext.createDefault().withTimeout(callContextTimeout);
-    Truth.assertThat(baseContext.merge(explicitNullOverlay).getTimeoutDuration()).isEqualTo(timeout);
+    Truth.assertThat(baseContext.merge(explicitNullOverlay).getTimeoutDuration())
+        .isEqualTo(timeout);
   }
 
   @Test

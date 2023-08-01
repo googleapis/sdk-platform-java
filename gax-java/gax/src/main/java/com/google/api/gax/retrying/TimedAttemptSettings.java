@@ -103,8 +103,7 @@ public abstract class TimedAttemptSettings {
     public abstract Builder setGlobalSettings(RetrySettings value);
 
     /**
-     * Backport of {@link #setRetryDelay(java.time.Duration)} using {@link
-     * org.threeten.bp.Duration}
+     * Backport of {@link #setRetryDelay(java.time.Duration)} using {@link org.threeten.bp.Duration}
      */
     public abstract Builder setRetryDelay(org.threeten.bp.Duration value);
 
@@ -117,13 +116,12 @@ public abstract class TimedAttemptSettings {
     }
 
     /**
-     * Backport of {@link #setRpcTimeout(java.time.Duration)} using {@link
-     * org.threeten.bp.Duration}
+     * Backport of {@link #setRpcTimeout(java.time.Duration)} using {@link org.threeten.bp.Duration}
      */
     public abstract Builder setRpcTimeout(org.threeten.bp.Duration value);
 
     /** Sets rpc timeout used for this attempt. */
-    public final Builder setRpcTimeout(java.time.Duration value){
+    public final Builder setRpcTimeout(java.time.Duration value) {
       return setRpcTimeout(toThreetenDuration(value));
     }
 

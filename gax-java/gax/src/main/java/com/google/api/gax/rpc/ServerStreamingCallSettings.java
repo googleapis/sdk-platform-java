@@ -264,16 +264,16 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
         @Nonnull org.threeten.bp.Duration timeout) {
       setRetryableCodes();
       setRetrySettings(
-              RetrySettings.newBuilder()
-                      .setTotalTimeout(timeout)
-                      .setInitialRetryDelay(java.time.Duration.ZERO)
-                      .setRetryDelayMultiplier(1)
-                      .setMaxRetryDelay(java.time.Duration.ZERO)
-                      .setInitialRpcTimeout(timeout)
-                      .setRpcTimeoutMultiplier(1)
-                      .setMaxRpcTimeout(timeout)
-                      .setMaxAttempts(1)
-                      .build());
+          RetrySettings.newBuilder()
+              .setTotalTimeout(timeout)
+              .setInitialRetryDelay(java.time.Duration.ZERO)
+              .setRetryDelayMultiplier(1)
+              .setMaxRetryDelay(java.time.Duration.ZERO)
+              .setInitialRpcTimeout(timeout)
+              .setRpcTimeoutMultiplier(1)
+              .setMaxRpcTimeout(timeout)
+              .setMaxAttempts(1)
+              .build());
 
       return this;
     }

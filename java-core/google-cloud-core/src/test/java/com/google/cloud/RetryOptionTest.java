@@ -61,7 +61,8 @@ public class RetryOptionTest {
     assertNotEquals(JITTERED, MAX_ATTEMPTS);
 
     RetryOption totalTimeout = RetryOption.totalTimeout(org.threeten.bp.Duration.ofMillis(420L));
-    RetryOption initialRetryDelay = RetryOption.initialRetryDelay(org.threeten.bp.Duration.ofMillis(42L));
+    RetryOption initialRetryDelay =
+        RetryOption.initialRetryDelay(org.threeten.bp.Duration.ofMillis(42L));
     RetryOption retryDelayMultiplier = RetryOption.retryDelayMultiplier(1.5);
     RetryOption maxRetryDelay = RetryOption.maxRetryDelay(org.threeten.bp.Duration.ofMillis(100));
     RetryOption maxAttempts = RetryOption.maxAttempts(100);
@@ -100,17 +101,26 @@ public class RetryOptionTest {
     assertEquals(retrySettings, mergedRetrySettings);
 
     defRetrySettings =
-        defRetrySettings.toBuilder().setTotalTimeout(org.threeten.bp.Duration.ofMillis(420L)).build();
+        defRetrySettings
+            .toBuilder()
+            .setTotalTimeout(org.threeten.bp.Duration.ofMillis(420L))
+            .build();
     mergedRetrySettings = RetryOption.mergeToSettings(defRetrySettings, TOTAL_TIMEOUT);
     assertEquals(defRetrySettings, mergedRetrySettings);
 
     defRetrySettings =
-        defRetrySettings.toBuilder().setMaxRetryDelay(org.threeten.bp.Duration.ofMillis(100)).build();
+        defRetrySettings
+            .toBuilder()
+            .setMaxRetryDelay(org.threeten.bp.Duration.ofMillis(100))
+            .build();
     mergedRetrySettings = RetryOption.mergeToSettings(defRetrySettings, MAX_RETRY_DELAY);
     assertEquals(defRetrySettings, mergedRetrySettings);
 
     defRetrySettings =
-        defRetrySettings.toBuilder().setInitialRetryDelay(org.threeten.bp.Duration.ofMillis(42L)).build();
+        defRetrySettings
+            .toBuilder()
+            .setInitialRetryDelay(org.threeten.bp.Duration.ofMillis(42L))
+            .build();
     mergedRetrySettings = RetryOption.mergeToSettings(defRetrySettings, INITIAL_RETRY_DELAY);
     assertEquals(defRetrySettings, mergedRetrySettings);
 
