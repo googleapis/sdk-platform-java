@@ -30,7 +30,9 @@
 package com.google.api.gax.httpjson;
 
 import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeInstant;
 import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenInstant;
 
 import com.google.api.core.BetaApi;
 import com.google.api.core.ObsoleteApi;
@@ -439,14 +441,15 @@ public final class HttpJsonCallContext implements ApiCallContext {
   /** Backport of {@link #getDeadlineInstant()} */
   @Deprecated
   @Nullable
+  @ObsoleteApi("Use getDeadlineInstant() instead")
   public org.threeten.bp.Instant getDeadline() {
-    return org.threeten.bp.Instant.ofEpochMilli(getDeadlineInstant().toEpochMilli());
+    return getCallOptions() != null ? getCallOptions().getDeadline() : null;
   }
 
   @Deprecated
   @Nullable
   public java.time.Instant getDeadlineInstant() {
-    return getCallOptions() != null ? getCallOptions().getDeadlineInstant() : null;
+    return toJavaTimeInstant(getDeadline());
   }
 
   @Deprecated
@@ -525,15 +528,16 @@ public final class HttpJsonCallContext implements ApiCallContext {
 
   /** Overload of {@link #withDeadline(java.time.Instant)} using {@link org.threeten.bp.Instant} */
   @Deprecated
+  @ObsoleteApi("Use withDeadline(java.time.Instant) instead")
   public HttpJsonCallContext withDeadline(org.threeten.bp.Instant newDeadline) {
-    return withDeadline(java.time.Instant.ofEpochMilli(newDeadline.toEpochMilli()));
+    HttpJsonCallOptions.Builder builder =
+            callOptions != null ? callOptions.toBuilder() : HttpJsonCallOptions.newBuilder();
+    return withCallOptions(builder.setDeadline(newDeadline).build());
   }
 
   @Deprecated
   public HttpJsonCallContext withDeadline(java.time.Instant newDeadline) {
-    HttpJsonCallOptions.Builder builder =
-        callOptions != null ? callOptions.toBuilder() : HttpJsonCallOptions.newBuilder();
-    return withCallOptions(builder.setDeadline(newDeadline).build());
+    return withDeadline(toThreetenInstant(newDeadline));
   }
 
   @Nonnull

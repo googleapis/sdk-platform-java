@@ -29,11 +29,16 @@
  */
 package com.google.api.gax.httpjson;
 
+import com.google.api.core.ObsoleteApi;
 import com.google.auth.Credentials;
 import com.google.auto.value.AutoValue;
 import com.google.protobuf.TypeRegistry;
+
 import java.time.Duration;
 import javax.annotation.Nullable;
+
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeInstant;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenInstant;
 
 /** Options for an http-json call, including deadline and credentials. */
 @AutoValue
@@ -44,12 +49,13 @@ public abstract class HttpJsonCallOptions {
   public abstract Duration getTimeout();
 
   @Nullable
-  public final org.threeten.bp.Instant getDeadline() {
-    return org.threeten.bp.Instant.ofEpochMilli(getDeadlineInstant().toEpochMilli());
-  }
+  @ObsoleteApi("Use getDeadlineInstant() instead")
+  public abstract org.threeten.bp.Instant getDeadline();
 
   @Nullable
-  public abstract java.time.Instant getDeadlineInstant();
+  public final java.time.Instant getDeadlineInstant() {
+    return toJavaTimeInstant(getDeadline());
+  }
 
   @Nullable
   public abstract Credentials getCredentials();
@@ -70,7 +76,7 @@ public abstract class HttpJsonCallOptions {
 
     Builder builder = this.toBuilder();
 
-    java.time.Instant newDeadline = inputOptions.getDeadlineInstant();
+    org.threeten.bp.Instant newDeadline = inputOptions.getDeadline();
     if (newDeadline != null) {
       builder.setDeadline(newDeadline);
     }
@@ -100,22 +106,14 @@ public abstract class HttpJsonCallOptions {
     public abstract Builder setTimeout(java.time.Duration value);
 
     /**
-     * Overload of {@link #setDeadlineInstant(java.time.Instant)} using {@link
-     * org.threeten.bp.Instant}
+     * Backport of {@link #setDeadline(java.time.Instant)}
      */
-    public final Builder setDeadline(org.threeten.bp.Instant value) {
-      return setDeadlineInstant(java.time.Instant.ofEpochMilli(value.toEpochMilli()));
-    }
+    @ObsoleteApi("Use setDeadline(java.time.Instant) instead")
+    public abstract Builder setDeadline(org.threeten.bp.Instant value);
 
-    /**
-     * Overload of {@link #setDeadlineInstant(java.time.Instant)} using {@link
-     * org.threeten.bp.Instant} This is a convenience public method to keep name conformity
-     */
     public final Builder setDeadline(java.time.Instant value) {
-      return setDeadlineInstant(value);
+      return setDeadline(toThreetenInstant(value));
     }
-
-    public abstract Builder setDeadlineInstant(java.time.Instant value);
 
     public abstract Builder setCredentials(Credentials value);
 

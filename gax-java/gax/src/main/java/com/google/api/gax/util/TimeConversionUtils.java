@@ -44,4 +44,18 @@ public class TimeConversionUtils {
     }
     return org.threeten.bp.Duration.ofNanos(source.toNanos());
   }
+
+  public static java.time.Instant toJavaTimeInstant(org.threeten.bp.Instant source) {
+    if (source == null) {
+      return null;
+    }
+    return java.time.Instant.ofEpochMilli(source.toEpochMilli());
+  }
+
+  public static org.threeten.bp.Instant toThreetenInstant(java.time.Instant source) {
+    if (source == null) {
+      return null;
+    }
+    return org.threeten.bp.Instant.ofEpochMilli(source.toEpochMilli());
+  }
 }
