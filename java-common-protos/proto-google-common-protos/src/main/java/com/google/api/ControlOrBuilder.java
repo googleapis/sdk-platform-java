@@ -51,4 +51,55 @@ public interface ControlOrBuilder
    * @return The bytes for environment.
    */
   com.google.protobuf.ByteString getEnvironmentBytes();
+
+  /**
+   *
+   *
+   * <pre>
+   * Defines policies applying to the API methods of the service.
+   * </pre>
+   *
+   * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
+   */
+  java.util.List<com.google.api.MethodPolicy> getMethodPoliciesList();
+  /**
+   *
+   *
+   * <pre>
+   * Defines policies applying to the API methods of the service.
+   * </pre>
+   *
+   * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
+   */
+  com.google.api.MethodPolicy getMethodPolicies(int index);
+  /**
+   *
+   *
+   * <pre>
+   * Defines policies applying to the API methods of the service.
+   * </pre>
+   *
+   * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
+   */
+  int getMethodPoliciesCount();
+  /**
+   *
+   *
+   * <pre>
+   * Defines policies applying to the API methods of the service.
+   * </pre>
+   *
+   * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
+   */
+  java.util.List<? extends com.google.api.MethodPolicyOrBuilder> getMethodPoliciesOrBuilderList();
+  /**
+   *
+   *
+   * <pre>
+   * Defines policies applying to the API methods of the service.
+   * </pre>
+   *
+   * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
+   */
+  com.google.api.MethodPolicyOrBuilder getMethodPoliciesOrBuilder(int index);
 }
