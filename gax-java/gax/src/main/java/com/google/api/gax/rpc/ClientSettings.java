@@ -31,6 +31,7 @@ package com.google.api.gax.rpc;
 
 import com.google.api.core.ApiClock;
 import com.google.api.core.ApiFunction;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.ExecutorProvider;
 import com.google.common.base.MoreObjects;
@@ -111,6 +112,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
    * @return
    */
   @Nonnull
+  @ObsoleteApi("Use getWatchdogCheckIntervalDuration() instead")
   public final org.threeten.bp.Duration getWatchdogCheckInterval() {
     return stubSettings.getStreamWatchdogCheckInterval();
   }
@@ -265,6 +267,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
       return self();
     }
 
+    @ObsoleteApi("Use setWatchdogCheckInterval(java.time.Duration) instead")
     public B setWatchdogCheckInterval(@Nullable org.threeten.bp.Duration checkInterval) {
       stubSettings.setStreamWatchdogCheckInterval(checkInterval);
       return self();
@@ -350,6 +353,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     }
 
     @Nullable
+    @ObsoleteApi("Use getWatchdogCheckIntervalDuration() instead")
     public org.threeten.bp.Duration getWatchdogCheckInterval() {
       return stubSettings.getStreamWatchdogCheckInterval();
     }

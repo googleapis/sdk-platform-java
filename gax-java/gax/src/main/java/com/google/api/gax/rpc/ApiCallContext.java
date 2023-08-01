@@ -31,6 +31,7 @@ package com.google.api.gax.rpc;
 
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalExtensionOnly;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.retrying.RetryingContext;
 import com.google.api.gax.rpc.StatusCode.Code;
@@ -42,7 +43,6 @@ import java.util.Map;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.threeten.bp.Duration;
 
 /**
  * Context for an API call.
@@ -64,6 +64,7 @@ public interface ApiCallContext extends RetryingContext {
   ApiCallContext withTransportChannel(TransportChannel channel);
 
   /** Overload of {@link #withTimeout(java.time.Duration)} using {@link org.threeten.bp.Duration} */
+  @ObsoleteApi("Use withTimeout(java.time.Duration) instead")
   ApiCallContext withTimeout(@Nullable org.threeten.bp.Duration timeout);
 
   /**
@@ -82,6 +83,7 @@ public interface ApiCallContext extends RetryingContext {
 
   /** Backport of {@link #getTimeoutDuration()} */
   @Nullable
+  @ObsoleteApi("Use getTimeoutDuration() instead")
   org.threeten.bp.Duration getTimeout();
 
   /** Returns the configured per-RPC timeout. */
@@ -92,6 +94,7 @@ public interface ApiCallContext extends RetryingContext {
    * Overload of {@link #withStreamWaitTimeout(java.time.Duration)} using {@link
    * org.threeten.bp.Duration }
    */
+  @ObsoleteApi("Use withStreamWaitTimeout(java.time.Duration) instead")
   ApiCallContext withStreamWaitTimeout(@Nullable org.threeten.bp.Duration streamWaitTimeout);
 
   /**
@@ -115,6 +118,7 @@ public interface ApiCallContext extends RetryingContext {
 
   /** Backport of {@link #getStreamWaitTimeoutDuration()} */
   @Nullable
+  @ObsoleteApi("Use getStreamWaitTimeoutDuration() instead")
   org.threeten.bp.Duration getStreamWaitTimeout();
 
   /**
@@ -129,6 +133,7 @@ public interface ApiCallContext extends RetryingContext {
    * Overload of {@link #withStreamIdleTimeout(java.time.Duration)} using {@link
    * org.threeten.bp.Duration}
    */
+  @ObsoleteApi("Use withStreamIdleTimeout(java.time.Duration) instead")
   ApiCallContext withStreamIdleTimeout(@Nullable org.threeten.bp.Duration streamIdleTimeout);
 
   /**
@@ -153,16 +158,16 @@ public interface ApiCallContext extends RetryingContext {
 
   /** Backport of {@link #getStreamIdleTimeoutDuration()} */
   @Nullable
+  @ObsoleteApi("Use getStreamIdleTimeoutDuration() instead")
   org.threeten.bp.Duration getStreamIdleTimeout();
 
   /**
    * The stream idle timeout set for this context.
    *
-   * @see #withStreamIdleTimeout(Duration)
+   * @see #withStreamIdleTimeout(java.time.Duration)
    */
   @Nullable
   java.time.Duration getStreamIdleTimeoutDuration();
-
   /**
    * The {@link ApiTracer} that was previously set for this context.
    *
@@ -217,7 +222,7 @@ public interface ApiCallContext extends RetryingContext {
    * }</pre>
    *
    * Setting a logical call timeout for the context can be done similarly with {@link
-   * RetrySettings.Builder#setLogicalTimeout(Duration timeout)}.
+   * RetrySettings.Builder#setLogicalTimeout(java.time.Duration timeout)}.
    *
    * <p>Example usage:
    *

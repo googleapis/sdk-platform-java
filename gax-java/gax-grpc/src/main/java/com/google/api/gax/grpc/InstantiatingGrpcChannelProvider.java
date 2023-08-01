@@ -36,6 +36,7 @@ import com.google.api.core.ApiFunction;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.api.core.InternalExtensionOnly;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.api.gax.rpc.HeaderProvider;
@@ -402,6 +403,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return endpoint;
   }
 
+  @ObsoleteApi("Use getKeepAliveTimeDuration() instead")
   public org.threeten.bp.Duration getKeepAliveTime() {
     return toThreetenDuration(getKeepAliveTimeDuration());
   }
@@ -411,6 +413,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return keepAliveTime;
   }
 
+  @ObsoleteApi("Use getKeepAliveTimeoutDuration() instead")
   public org.threeten.bp.Duration getKeepAliveTimeout() {
     return toThreetenDuration(getKeepAliveTimeoutDuration());
   }
@@ -597,6 +600,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
      * Overload of {@link #setKeepAliveTime(java.time.Duration)} using {@link
      * org.threeten.bp.Duration}
      */
+    @ObsoleteApi("Use setKeepAliveTime(java.time.Duration) instead")
     public Builder setKeepAliveTime(org.threeten.bp.Duration duration) {
       return setKeepAliveTime(toJavaTimeDuration(duration));
     }
@@ -607,6 +611,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     }
 
     /** Backport of {@link #getKeepAliveTimeDuration()} */
+    @ObsoleteApi("Use getKeepAliveTimeDuration() instead")
     public org.threeten.bp.Duration getKeepAliveTime() {
       return toThreetenDuration(getKeepAliveTimeDuration());
     }
@@ -616,6 +621,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return keepAliveTime;
     }
 
+    @ObsoleteApi("Use setKeepAliveTimeout(java.time.Duration) instead")
     public Builder setKeepAliveTimeout(org.threeten.bp.Duration duration) {
       return setKeepAliveTimeout(toJavaTimeDuration(duration));
     }

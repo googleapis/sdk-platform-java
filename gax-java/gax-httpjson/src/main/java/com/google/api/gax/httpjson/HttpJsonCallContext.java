@@ -33,6 +33,7 @@ import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
 import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 
 import com.google.api.core.BetaApi;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.StatusCode;
@@ -51,7 +52,6 @@ import java.util.Objects;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.threeten.bp.Duration;
 
 /**
  * HttpJsonCallContext encapsulates context data used to make an http-json call.
@@ -236,6 +236,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
 
   /** Overload of {@link #withTimeout(java.time.Duration)} using {@link org.threeten.bp.Duration} */
   @Override
+  @ObsoleteApi("Use withTimeout(java.time.Duration) instead")
   public HttpJsonCallContext withTimeout(org.threeten.bp.Duration timeout) {
     return withTimeout(toJavaTimeDuration(timeout));
   }
@@ -268,6 +269,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
   /** Backport of {@link #getTimeoutDuration()} */
   @Nullable
   @Override
+  @ObsoleteApi("Use getTimeoutDuration instead")
   public org.threeten.bp.Duration getTimeout() {
     return toThreetenDuration(getTimeoutDuration());
   }
@@ -283,6 +285,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
    * org.threeten.bp.Duration}
    */
   @Override
+  @ObsoleteApi("Use withStreamWaitTimeout(java.time.Duration) instead")
   public HttpJsonCallContext withStreamWaitTimeout(
       @Nullable org.threeten.bp.Duration streamWaitTimeout) {
     return withStreamWaitTimeout(toJavaTimeDuration(streamWaitTimeout));
@@ -311,6 +314,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
   /** Backport of {@link #getStreamWaitTimeoutDuration()} */
   @Override
   @Nullable
+  @ObsoleteApi("Use getStreamWaitTimeoutDuration() instead")
   public org.threeten.bp.Duration getStreamWaitTimeout() {
     return toThreetenDuration(getStreamWaitTimeoutDuration());
   }
@@ -318,7 +322,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
   /**
    * The stream wait timeout set for this context.
    *
-   * @see ApiCallContext#withStreamWaitTimeout(Duration)
+   * @see ApiCallContext#withStreamWaitTimeout(java.time.Duration)
    */
   @Override
   @Nullable
@@ -331,6 +335,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
    * org.threeten.bp.Duration}
    */
   @Override
+  @ObsoleteApi("Use withStreamIdleTimeout(java.time.Duration) instead")
   public HttpJsonCallContext withStreamIdleTimeout(
       @Nullable org.threeten.bp.Duration streamIdleTimeout) {
     return withStreamIdleTimeout(toJavaTimeDuration(streamIdleTimeout));
@@ -359,6 +364,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
   /** Backport of {@link #getStreamIdleTimeoutDuration()} */
   @Override
   @Nullable
+  @ObsoleteApi("Use getStreamIdleTimeoutDuration() instead")
   public org.threeten.bp.Duration getStreamIdleTimeout() {
     return toThreetenDuration(getStreamIdleTimeoutDuration());
   }
@@ -366,7 +372,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
   /**
    * The stream idle timeout set for this context.
    *
-   * @see ApiCallContext#withStreamIdleTimeout(Duration)
+   * @see ApiCallContext#withStreamIdleTimeout(java.time.Duration)
    */
   @Override
   @Nullable

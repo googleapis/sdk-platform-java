@@ -33,6 +33,7 @@ import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
 import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 
 import com.google.api.core.ApiClock;
+import com.google.api.core.ObsoleteApi;
 import com.google.auto.value.AutoValue;
 
 /** Timed attempt execution settings. Defines time-specific properties of a retry attempt. */
@@ -43,6 +44,7 @@ public abstract class TimedAttemptSettings {
   public abstract RetrySettings getGlobalSettings();
 
   /** Backport of {@link #getRetryDelayDuration()} */
+  @ObsoleteApi("Use getRetryDelayDuration() instead")
   public abstract org.threeten.bp.Duration getRetryDelay();
 
   /**
@@ -54,6 +56,7 @@ public abstract class TimedAttemptSettings {
   }
 
   /** Backport of {@link #getRpcTimeoutDuration()} */
+  @ObsoleteApi("Use getRpcTimeoutDuration() instead")
   public abstract org.threeten.bp.Duration getRpcTimeout();
 
   /** Returns rpc timeout used for this attempt. */
@@ -62,6 +65,7 @@ public abstract class TimedAttemptSettings {
   }
 
   /** Backport of {@link #getRandomizedRetryDelayDuration()} */
+  @ObsoleteApi("Use getRandomizedRetryDelayDuration() instead")
   public abstract org.threeten.bp.Duration getRandomizedRetryDelay();
 
   /**
@@ -105,6 +109,7 @@ public abstract class TimedAttemptSettings {
     /**
      * Backport of {@link #setRetryDelay(java.time.Duration)} using {@link org.threeten.bp.Duration}
      */
+    @ObsoleteApi("Use setRetryDelay(java.time.Duration) instead")
     public abstract Builder setRetryDelay(org.threeten.bp.Duration value);
 
     /**
@@ -118,6 +123,7 @@ public abstract class TimedAttemptSettings {
     /**
      * Backport of {@link #setRpcTimeout(java.time.Duration)} using {@link org.threeten.bp.Duration}
      */
+    @ObsoleteApi("Use setRpcTimeout(java.time.Duration) instead")
     public abstract Builder setRpcTimeout(org.threeten.bp.Duration value);
 
     /** Sets rpc timeout used for this attempt. */
@@ -129,6 +135,7 @@ public abstract class TimedAttemptSettings {
      * Backport of {@link #setRandomizedRetryDelay(java.time.Duration)} using {@link
      * org.threeten.bp.Duration}
      */
+    @ObsoleteApi("Use setRandomizedRetryDelay(java.time.Duration) instead")
     public abstract Builder setRandomizedRetryDelay(org.threeten.bp.Duration value);
 
     /**

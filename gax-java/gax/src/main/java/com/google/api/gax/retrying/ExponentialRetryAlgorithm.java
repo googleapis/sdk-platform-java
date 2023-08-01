@@ -34,7 +34,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import com.google.api.core.ApiClock;
 import com.google.api.core.InternalApi;
 import java.util.concurrent.ThreadLocalRandom;
-import org.threeten.bp.Duration;
 
 /**
  * The timed retry algorithm which uses jittered exponential backoff factor for calculating the next
@@ -69,9 +68,9 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
   public TimedAttemptSettings createFirstAttempt() {
     return TimedAttemptSettings.newBuilder()
         .setGlobalSettings(globalSettings)
-        .setRetryDelay(Duration.ZERO)
+        .setRetryDelay(org.threeten.bp.Duration.ZERO)
         .setRpcTimeout(globalSettings.getInitialRpcTimeout())
-        .setRandomizedRetryDelay(Duration.ZERO)
+        .setRandomizedRetryDelay(org.threeten.bp.Duration.ZERO)
         .setAttemptCount(0)
         .setOverallAttemptCount(0)
         .setFirstAttemptStartTimeNanos(clock.nanoTime())
@@ -99,8 +98,8 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
         // retrySettings, but a new call will not (unless overridden again).
         .setGlobalSettings(retrySettings)
         .setRpcTimeout(retrySettings.getInitialRpcTimeout())
-        .setRetryDelay(Duration.ZERO)
-        .setRandomizedRetryDelay(Duration.ZERO)
+        .setRetryDelay(org.threeten.bp.Duration.ZERO)
+        .setRandomizedRetryDelay(org.threeten.bp.Duration.ZERO)
         .setAttemptCount(0)
         .setOverallAttemptCount(0)
         .setFirstAttemptStartTimeNanos(clock.nanoTime())
@@ -162,8 +161,8 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
 
     return TimedAttemptSettings.newBuilder()
         .setGlobalSettings(previousSettings.getGlobalSettings())
-        .setRetryDelay(Duration.ofMillis(newRetryDelay))
-        .setRpcTimeout(Duration.ofMillis(newRpcTimeout))
+        .setRetryDelay(org.threeten.bp.Duration.ofMillis(newRetryDelay))
+        .setRpcTimeout(org.threeten.bp.Duration.ofMillis(newRpcTimeout))
         .setRandomizedRetryDelay(randomDelay)
         .setAttemptCount(previousSettings.getAttemptCount() + 1)
         .setOverallAttemptCount(previousSettings.getOverallAttemptCount() + 1)

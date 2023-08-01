@@ -32,6 +32,7 @@ package com.google.api.gax.rpc;
 import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 
 import com.google.api.core.InternalExtensionOnly;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableSet;
@@ -196,6 +197,7 @@ public class UnaryCallSettings<RequestT, ResponseT> {
     }
 
     /** Backport of {@link #setSimpleTimeoutNoRetries(java.time.Duration)} */
+    @ObsoleteApi("Use setSimpleTimeoutNoRetries(java.time.Duration) instead")
     public UnaryCallSettings.Builder<RequestT, ResponseT> setSimpleTimeoutNoRetries(
         org.threeten.bp.Duration timeout) {
       setRetryableCodes();

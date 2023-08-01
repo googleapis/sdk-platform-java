@@ -32,6 +32,7 @@ package com.google.api.gax.rpc;
 import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
 import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.retrying.SimpleStreamResumptionStrategy;
 import com.google.api.gax.retrying.StreamResumptionStrategy;
@@ -122,6 +123,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
 
   /** Backport of {@link #getIdleTimeoutDuration()} */
   @Nonnull
+  @ObsoleteApi("Use getIdleTimeoutDuration() instead")
   public org.threeten.bp.Duration getIdleTimeout() {
     return toThreetenDuration(getIdleTimeoutDuration());
   }
@@ -137,6 +139,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
 
   /** Backport of {@link #getWaitTimeoutDuration()} */
   @Nonnull
+  @ObsoleteApi("Use getWaitTimeoutDuration() instead")
   public org.threeten.bp.Duration getWaitTimeout() {
     return toThreetenDuration(getWaitTimeoutDuration());
   }
@@ -260,6 +263,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
      * Overload of {@link #setSimpleTimeoutNoRetries(java.time.Duration)} using {@link
      * org.threeten.bp.Duration}
      */
+    @ObsoleteApi("Use setSimpleTimeoutNoRetries(java.time.Duration) instead")
     public Builder<RequestT, ResponseT> setSimpleTimeoutNoRetries(
         @Nonnull org.threeten.bp.Duration timeout) {
       setRetryableCodes();
@@ -302,6 +306,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
 
     /** Backport of {@link #getIdleTimeoutDuration()} */
     @Nonnull
+    @ObsoleteApi("Use getIdleTimeoutDuration() instead")
     public org.threeten.bp.Duration getIdleTimeout() {
       return toThreetenDuration(getIdleTimeoutDuration());
     }
@@ -314,6 +319,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
     /**
      * Overlad of {@link #setIdleTimeout(java.time.Duration)} using {@link org.threeten.bp.Duration}
      */
+    @ObsoleteApi("Use setIdleTimeout(java.time.Duration) instead")
     public Builder<RequestT, ResponseT> setIdleTimeout(
         @Nonnull org.threeten.bp.Duration idleTimeout) {
       return setIdleTimeout(toJavaTimeDuration(idleTimeout));
@@ -330,6 +336,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
 
     /** Backport of {@link #getWaitTimeoutDuration()} */
     @Nonnull
+    @ObsoleteApi("Use getWaitTimeoutDuration() instead")
     public org.threeten.bp.Duration getWaitTimeout() {
       return toThreetenDuration(getWaitTimeoutDuration());
     }
@@ -343,6 +350,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
      * Overload of {@link #setWaitTimeout(java.time.Duration)} using {@link
      * org.threeten.bp.Duration}
      */
+    @ObsoleteApi("Use setWaitTimeout(java.time.Duration) instead")
     public Builder<RequestT, ResponseT> setWaitTimeout(
         @Nonnull org.threeten.bp.Duration waitTimeout) {
       return setWaitTimeout(toJavaTimeDuration(waitTimeout));

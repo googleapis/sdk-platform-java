@@ -36,6 +36,7 @@ import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutureCallback;
 import com.google.api.core.ApiFutures;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.core.SettableApiFuture;
 import com.google.api.gax.batching.FlowController.FlowControlException;
 import com.google.common.annotations.VisibleForTesting;
@@ -124,6 +125,7 @@ public final class ThresholdBatcher<E> {
     }
 
     /** Set the max delay for a batch. This is counted from the first item added to a batch. */
+    @ObsoleteApi("Use setMaxDelay(java.time.Duration) instead")
     public Builder<E> setMaxDelay(org.threeten.bp.Duration maxDelay) {
       return setMaxDelay(toJavaTimeDuration(maxDelay));
     }

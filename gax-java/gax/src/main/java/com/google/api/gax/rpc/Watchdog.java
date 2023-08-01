@@ -32,6 +32,7 @@ package com.google.api.gax.rpc;
 import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
 
 import com.google.api.core.ApiClock;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.common.base.Preconditions;
 import java.time.Duration;
@@ -102,6 +103,7 @@ public final class Watchdog implements Runnable, BackgroundResource {
    * Overload of {@link #watch(ResponseObserver, java.time.Duration, java.time.Duration)} using
    * {@link org.threeten.bp.Duration}
    */
+  @ObsoleteApi("Use watch(ResponseObserver, java.time.Duration, java.time.Duration) instead")
   public <ResponseT> ResponseObserver<ResponseT> watch(
       ResponseObserver<ResponseT> innerObserver,
       @Nonnull org.threeten.bp.Duration waitTimeout,

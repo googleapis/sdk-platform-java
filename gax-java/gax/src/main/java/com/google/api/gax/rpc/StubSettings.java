@@ -36,6 +36,7 @@ import com.google.api.core.ApiClock;
 import com.google.api.core.ApiFunction;
 import com.google.api.core.BetaApi;
 import com.google.api.core.NanoClock;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.core.FixedCredentialsProvider;
@@ -163,6 +164,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
 
   /** Backport of {@link #getStreamWatchdogCheckIntervalDuration()} */
   @Nonnull
+  @ObsoleteApi("Use getStreamWatchdogCheckIntervalDuration() instead")
   public final org.threeten.bp.Duration getStreamWatchdogCheckInterval() {
     return toThreetenDuration(getStreamWatchdogCheckIntervalDuration());
   }
@@ -450,6 +452,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
      * Overload of {@link #setStreamWatchdogCheckInterval(java.time.Duration)} using {@link
      * org.threeten.bp.Duration}
      */
+    @ObsoleteApi("Use setStreamWatchdogCheckInterval(java.time.Duration) instead")
     public B setStreamWatchdogCheckInterval(@Nonnull org.threeten.bp.Duration checkInterval) {
       return setStreamWatchdogCheckInterval(toJavaTimeDuration(checkInterval));
     }
@@ -543,6 +546,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       return quotaProjectId;
     }
 
+    @ObsoleteApi("Use getStreamWatchdogCheckIntervalDuration() instead")
     public org.threeten.bp.Duration getStreamWatchdogCheckInterval() {
       return toThreetenDuration(getStreamWatchdogCheckIntervalDuration());
     }

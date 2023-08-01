@@ -33,6 +33,7 @@ import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
 
 import com.google.api.core.ApiClock;
 import com.google.api.core.InternalApi;
+import com.google.api.core.ObsoleteApi;
 import com.google.common.base.Preconditions;
 import java.util.concurrent.ScheduledExecutorService;
 import javax.annotation.Nonnull;
@@ -87,6 +88,7 @@ public final class InstantiatingWatchdogProvider implements WatchdogProvider {
    * @return
    */
   @Override
+  @ObsoleteApi("Use withCheckInterval(java.time.Duration) instead")
   public WatchdogProvider withCheckInterval(@Nonnull org.threeten.bp.Duration checkInterval) {
     return withCheckInterval(toJavaTimeDuration(Preconditions.checkNotNull(checkInterval)));
   }

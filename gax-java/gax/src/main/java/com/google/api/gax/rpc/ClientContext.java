@@ -36,6 +36,7 @@ import com.google.api.client.util.Strings;
 import com.google.api.core.ApiClock;
 import com.google.api.core.BetaApi;
 import com.google.api.core.NanoClock;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.ExecutorAsBackgroundResource;
 import com.google.api.gax.core.ExecutorProvider;
@@ -106,6 +107,7 @@ public abstract class ClientContext {
    * @return
    */
   @Nonnull
+  @ObsoleteApi("Use getStreamWatchdogCheckIntervalDuration() instead")
   public abstract org.threeten.bp.Duration getStreamWatchdogCheckInterval();
 
   @Nonnull
@@ -362,6 +364,7 @@ public abstract class ClientContext {
 
     public abstract Builder setStreamWatchdog(Watchdog watchdog);
 
+    @ObsoleteApi("Use setStreamWatchdogCheckInterval(java.time.Duration) instead")
     public abstract Builder setStreamWatchdogCheckInterval(org.threeten.bp.Duration duration);
 
     public final Builder setStreamWatchdogCheckInterval(java.time.Duration duration) {

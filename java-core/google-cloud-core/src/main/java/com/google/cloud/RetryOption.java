@@ -20,6 +20,7 @@ import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.api.core.BetaApi;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.retrying.RetrySettings;
 import java.io.Serializable;
 
@@ -52,6 +53,7 @@ public class RetryOption implements Serializable {
   }
 
   /** See {@link RetrySettings#getTotalTimeout()}. */
+  @ObsoleteApi("Use totalTimeout(java.time.Duration) instead")
   public static RetryOption totalTimeout(org.threeten.bp.Duration totalTimeout) {
     return new RetryOption(OptionType.TOTAL_TIMEOUT, totalTimeout);
   }
@@ -62,6 +64,7 @@ public class RetryOption implements Serializable {
   }
 
   /** See {@link RetrySettings#getInitialRetryDelay()}. */
+  @ObsoleteApi("Use initialRetryDelay(java.time.Duration) instead")
   public static RetryOption initialRetryDelay(org.threeten.bp.Duration initialRetryDelay) {
     return new RetryOption(OptionType.INITIAL_RETRY_DELAY, initialRetryDelay);
   }
@@ -77,6 +80,7 @@ public class RetryOption implements Serializable {
   }
 
   /** See {@link RetrySettings#getMaxRetryDelay()}. */
+  @ObsoleteApi("Use maxRetryDelay(java.time.Duration) instead")
   public static RetryOption maxRetryDelay(org.threeten.bp.Duration maxRetryDelay) {
     return new RetryOption(OptionType.MAX_RETRY_DELAY, maxRetryDelay);
   }
