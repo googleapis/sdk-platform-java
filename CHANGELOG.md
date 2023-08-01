@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.24.0](https://github.com/googleapis/sdk-platform-java/compare/v2.23.1...v2.24.0) (2023-08-01)
+
+
+### Features
+
+* [common-protos] Add a proto message to describe the `resource_type` and `resource_permission` for an API method ([#1878](https://github.com/googleapis/sdk-platform-java/issues/1878)) ([3e27ca9](https://github.com/googleapis/sdk-platform-java/commit/3e27ca9763e9639fb00b99bdef9cf95aacd33897))
+
 ## [2.23.1](https://github.com/googleapis/sdk-platform-java/compare/v2.23.0...v2.23.1) (2023-07-19)
 
 
