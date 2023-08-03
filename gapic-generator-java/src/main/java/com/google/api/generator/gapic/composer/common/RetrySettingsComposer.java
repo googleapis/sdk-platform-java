@@ -714,7 +714,7 @@ public class RetrySettingsComposer {
     List<Class<?>> concreteClazzes =
         Arrays.asList(
             BatchingSettings.class,
-            Duration.class,
+            org.threeten.bp.Duration.class,
             FlowControlSettings.class,
             FlowController.LimitExceededBehavior.class,
             ImmutableMap.class,
