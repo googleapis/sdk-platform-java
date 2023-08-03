@@ -29,7 +29,7 @@
  */
 package com.google.api.gax.rpc;
 
-import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
 
 import com.google.api.core.InternalExtensionOnly;
 import com.google.api.core.ObsoleteApi;
@@ -200,6 +200,12 @@ public class UnaryCallSettings<RequestT, ResponseT> {
     @ObsoleteApi("Use setSimpleTimeoutNoRetries(java.time.Duration) instead")
     public UnaryCallSettings.Builder<RequestT, ResponseT> setSimpleTimeoutNoRetries(
         org.threeten.bp.Duration timeout) {
+      return setSimpleTimeoutNoRetries(toJavaTimeDuration(timeout));
+    }
+
+    /** Disables retries and sets the RPC timeout. */
+    public UnaryCallSettings.Builder<RequestT, ResponseT> setSimpleTimeoutNoRetries(
+        java.time.Duration timeout) {
       setRetryableCodes();
       setRetrySettings(
           RetrySettings.newBuilder()
@@ -213,12 +219,6 @@ public class UnaryCallSettings<RequestT, ResponseT> {
               .setMaxAttempts(1)
               .build());
       return this;
-    }
-
-    /** Disables retries and sets the RPC timeout. */
-    public UnaryCallSettings.Builder<RequestT, ResponseT> setSimpleTimeoutNoRetries(
-        java.time.Duration timeout) {
-      return setSimpleTimeoutNoRetries(toThreetenDuration(timeout));
     }
 
     /**

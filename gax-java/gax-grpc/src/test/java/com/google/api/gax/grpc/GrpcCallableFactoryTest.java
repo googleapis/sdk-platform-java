@@ -96,7 +96,7 @@ public class GrpcCallableFactoryTest {
         ServerStreamingCallSettings.<Color, Money>newBuilder()
             .setRetrySettings(
                 RetrySettings.newBuilder()
-                    .setTotalTimeout(org.threeten.bp.Duration.ofSeconds(1))
+                    .setTotalTimeout(java.time.Duration.ofSeconds(1))
                     .setMaxAttempts(1)
                     .build())
             .build();
@@ -122,7 +122,7 @@ public class GrpcCallableFactoryTest {
             .setRetryableCodes(Code.INVALID_ARGUMENT)
             .setRetrySettings(
                 RetrySettings.newBuilder()
-                    .setTotalTimeout(org.threeten.bp.Duration.ofSeconds(1))
+                    .setTotalTimeout(java.time.Duration.ofSeconds(1))
                     .setMaxAttempts(1)
                     .build())
             .build();

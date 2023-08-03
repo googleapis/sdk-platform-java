@@ -531,7 +531,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
   @ObsoleteApi("Use withDeadline(java.time.Instant) instead")
   public HttpJsonCallContext withDeadline(org.threeten.bp.Instant newDeadline) {
     HttpJsonCallOptions.Builder builder =
-            callOptions != null ? callOptions.toBuilder() : HttpJsonCallOptions.newBuilder();
+        callOptions != null ? callOptions.toBuilder() : HttpJsonCallOptions.newBuilder();
     return withCallOptions(builder.setDeadline(newDeadline).build());
   }
 

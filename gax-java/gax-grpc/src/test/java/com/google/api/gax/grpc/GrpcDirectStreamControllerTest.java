@@ -100,11 +100,11 @@ public class GrpcDirectStreamControllerTest {
             .setRetryableCodes(StatusCode.Code.DEADLINE_EXCEEDED)
             .setRetrySettings(
                 RetrySettings.newBuilder()
-                    .setTotalTimeout(org.threeten.bp.Duration.ofMinutes(1))
-                    .setInitialRpcTimeout(org.threeten.bp.Duration.ofMillis(1))
-                    .setMaxRpcTimeout(org.threeten.bp.Duration.ofMillis(1))
-                    .setInitialRetryDelay(org.threeten.bp.Duration.ofMillis(1))
-                    .setMaxRetryDelay(org.threeten.bp.Duration.ofMillis(1))
+                    .setTotalTimeout(java.time.Duration.ofMinutes(1))
+                    .setInitialRpcTimeout(java.time.Duration.ofMillis(1))
+                    .setMaxRpcTimeout(java.time.Duration.ofMillis(1))
+                    .setInitialRetryDelay(java.time.Duration.ofMillis(1))
+                    .setMaxRetryDelay(java.time.Duration.ofMillis(1))
                     .build())
             .build();
     // Store a list of resources to manually close at the end of the test

@@ -371,7 +371,7 @@ public class BatcherImplTest {
         BatchingSettings.newBuilder()
             .setElementCountThreshold(null)
             .setRequestByteThreshold(null)
-            .setDelayThreshold((org.threeten.bp.Duration) null)
+            .setDelayThreshold((java.time.Duration) null)
             .build();
     underTest = createDefaultBatcherImpl(settings, null);
     Future<Integer> result = underTest.add(2);
@@ -414,10 +414,7 @@ public class BatcherImplTest {
           }
         };
     BatchingSettings settings =
-        batchingSettings
-            .toBuilder()
-            .setDelayThreshold(org.threeten.bp.Duration.ofMillis(50))
-            .build();
+        batchingSettings.toBuilder().setDelayThreshold(java.time.Duration.ofMillis(50)).build();
 
     try (final BatcherImpl<Integer, Integer, LabeledIntList, List<Integer>> batcherTest =
         new BatcherImpl<>(SQUARER_BATCHING_DESC_V2, callable, labeledIntList, settings, EXECUTOR)) {
@@ -463,7 +460,7 @@ public class BatcherImplTest {
     BatchingSettings settings =
         batchingSettings
             .toBuilder()
-            .setDelayThreshold(org.threeten.bp.Duration.ofMillis(DELAY_TIME))
+            .setDelayThreshold(java.time.Duration.ofMillis(DELAY_TIME))
             .build();
     BatcherImpl<Integer, Integer, LabeledIntList, List<Integer>> batcher =
         createDefaultBatcherImpl(settings, null);
@@ -989,7 +986,7 @@ public class BatcherImplTest {
     Object prototype = new Object();
     BatchingSettings batchingSettings =
         BatchingSettings.newBuilder()
-            .setDelayThreshold(org.threeten.bp.Duration.ofSeconds(1))
+            .setDelayThreshold(java.time.Duration.ofSeconds(1))
             .setElementCountThreshold(100L)
             .setRequestByteThreshold(100L)
             .setFlowControlSettings(FlowControlSettings.getDefaultInstance())

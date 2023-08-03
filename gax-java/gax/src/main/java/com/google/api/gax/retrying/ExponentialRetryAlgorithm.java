@@ -68,9 +68,9 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
   public TimedAttemptSettings createFirstAttempt() {
     return TimedAttemptSettings.newBuilder()
         .setGlobalSettings(globalSettings)
-        .setRetryDelay(org.threeten.bp.Duration.ZERO)
-        .setRpcTimeout(globalSettings.getInitialRpcTimeout())
-        .setRandomizedRetryDelay(org.threeten.bp.Duration.ZERO)
+        .setRetryDelay(java.time.Duration.ZERO)
+        .setRpcTimeout(globalSettings.getInitialRpcTimeoutDuration())
+        .setRandomizedRetryDelay(java.time.Duration.ZERO)
         .setAttemptCount(0)
         .setOverallAttemptCount(0)
         .setFirstAttemptStartTimeNanos(clock.nanoTime())
@@ -97,9 +97,9 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
         // Attempts created using the TimedAttemptSettings built here will use these
         // retrySettings, but a new call will not (unless overridden again).
         .setGlobalSettings(retrySettings)
-        .setRpcTimeout(retrySettings.getInitialRpcTimeout())
-        .setRetryDelay(org.threeten.bp.Duration.ZERO)
-        .setRandomizedRetryDelay(org.threeten.bp.Duration.ZERO)
+        .setRpcTimeout(retrySettings.getInitialRpcTimeoutDuration())
+        .setRetryDelay(java.time.Duration.ZERO)
+        .setRandomizedRetryDelay(java.time.Duration.ZERO)
         .setAttemptCount(0)
         .setOverallAttemptCount(0)
         .setFirstAttemptStartTimeNanos(clock.nanoTime())
@@ -123,34 +123,35 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
     //     attempt #1  - use initialRetryDelay;
     //     attempt #2+ - use the calculated value (i.e. the following if statement is true only
     //                   if we are about to calculate the value for the upcoming 2nd+ attempt).
-    long newRetryDelay = settings.getInitialRetryDelay().toMillis();
+    long newRetryDelay = settings.getInitialRetryDelayDuration().toMillis();
     if (previousSettings.getAttemptCount() > 0) {
       newRetryDelay =
-          (long) (settings.getRetryDelayMultiplier() * previousSettings.getRetryDelay().toMillis());
-      newRetryDelay = Math.min(newRetryDelay, settings.getMaxRetryDelay().toMillis());
+          (long)
+              (settings.getRetryDelayMultiplier()
+                  * previousSettings.getRetryDelayDuration().toMillis());
+      newRetryDelay = Math.min(newRetryDelay, settings.getMaxRetryDelayDuration().toMillis());
     }
-    org.threeten.bp.Duration randomDelay =
-        org.threeten.bp.Duration.ofMillis(nextRandomLong(newRetryDelay));
+    java.time.Duration randomDelay = java.time.Duration.ofMillis(nextRandomLong(newRetryDelay));
 
     // The rpc timeout is determined as follows:
     //     attempt #0  - use the initialRpcTimeout;
     //     attempt #1+ - use the calculated value, or the time remaining in totalTimeout if the
     //                   calculated value would exceed the totalTimeout.
     long newRpcTimeout =
-        (long) (settings.getRpcTimeoutMultiplier() * previousSettings.getRpcTimeout().toMillis());
-    newRpcTimeout = Math.min(newRpcTimeout, settings.getMaxRpcTimeout().toMillis());
+        (long)
+            (settings.getRpcTimeoutMultiplier()
+                * previousSettings.getRpcTimeoutDuration().toMillis());
+    newRpcTimeout = Math.min(newRpcTimeout, settings.getMaxRpcTimeoutDuration().toMillis());
 
     // The totalTimeout could be zero if a callable is only using maxAttempts to limit retries.
     // If set, calculate time remaining in the totalTimeout since the start, taking into account the
     // next attempt's delay, in order to truncate the RPC timeout should it exceed the totalTimeout.
-    if (!settings.getTotalTimeout().isZero()) {
-      org.threeten.bp.Duration timeElapsed =
-          org.threeten.bp.Duration.ofNanos(clock.nanoTime())
-              .minus(
-                  org.threeten.bp.Duration.ofNanos(
-                      previousSettings.getFirstAttemptStartTimeNanos()));
-      org.threeten.bp.Duration timeLeft =
-          settings.getTotalTimeout().minus(timeElapsed).minus(randomDelay);
+    if (!settings.getTotalTimeoutDuration().isZero()) {
+      java.time.Duration timeElapsed =
+          java.time.Duration.ofNanos(clock.nanoTime())
+              .minus(java.time.Duration.ofNanos(previousSettings.getFirstAttemptStartTimeNanos()));
+      java.time.Duration timeLeft =
+          settings.getTotalTimeoutDuration().minus(timeElapsed).minus(randomDelay);
 
       // If timeLeft at this point is < 0, the shouldRetry logic will prevent
       // the attempt from being made as it would exceed the totalTimeout. A negative RPC timeout
@@ -161,8 +162,8 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
 
     return TimedAttemptSettings.newBuilder()
         .setGlobalSettings(previousSettings.getGlobalSettings())
-        .setRetryDelay(org.threeten.bp.Duration.ofMillis(newRetryDelay))
-        .setRpcTimeout(org.threeten.bp.Duration.ofMillis(newRpcTimeout))
+        .setRetryDelay(java.time.Duration.ofMillis(newRetryDelay))
+        .setRpcTimeout(java.time.Duration.ofMillis(newRpcTimeout))
         .setRandomizedRetryDelay(randomDelay)
         .setAttemptCount(previousSettings.getAttemptCount() + 1)
         .setOverallAttemptCount(previousSettings.getOverallAttemptCount() + 1)
@@ -201,7 +202,7 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
     RetrySettings globalSettings = nextAttemptSettings.getGlobalSettings();
 
     int maxAttempts = globalSettings.getMaxAttempts();
-    org.threeten.bp.Duration totalTimeout = globalSettings.getTotalTimeout();
+    java.time.Duration totalTimeout = globalSettings.getTotalTimeoutDuration();
 
     // If total timeout and maxAttempts is not set then do not attempt retry.
     if (totalTimeout.isZero() && maxAttempts == 0) {
@@ -211,10 +212,10 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
     long totalTimeSpentNanos =
         clock.nanoTime()
             - nextAttemptSettings.getFirstAttemptStartTimeNanos()
-            + nextAttemptSettings.getRandomizedRetryDelay().toNanos();
+            + nextAttemptSettings.getRandomizedRetryDelayDuration().toNanos();
 
-    org.threeten.bp.Duration timeLeft =
-        totalTimeout.minus(org.threeten.bp.Duration.ofNanos(totalTimeSpentNanos));
+    java.time.Duration timeLeft =
+        totalTimeout.minus(java.time.Duration.ofNanos(totalTimeSpentNanos));
     // Convert time spent to milliseconds to standardize the units being used for
     // retries. Otherwise, we would be using nanoseconds to determine if retries
     // should be attempted and milliseconds for retry delays and rpc timeouts

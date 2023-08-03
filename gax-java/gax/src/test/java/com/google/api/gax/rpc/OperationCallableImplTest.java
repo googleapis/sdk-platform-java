@@ -79,31 +79,31 @@ public class OperationCallableImplTest {
 
   private static final RetrySettings FAST_RETRY_SETTINGS =
       RetrySettings.newBuilder()
-          .setInitialRetryDelay(org.threeten.bp.Duration.ofMillis(2L))
+          .setInitialRetryDelay(java.time.Duration.ofMillis(2L))
           .setRetryDelayMultiplier(1)
-          .setMaxRetryDelay(org.threeten.bp.Duration.ofMillis(2L))
-          .setInitialRpcTimeout(org.threeten.bp.Duration.ofMillis(2L))
+          .setMaxRetryDelay(java.time.Duration.ofMillis(2L))
+          .setInitialRpcTimeout(java.time.Duration.ofMillis(2L))
           .setRpcTimeoutMultiplier(1)
-          .setMaxRpcTimeout(org.threeten.bp.Duration.ofMillis(2L))
-          .setTotalTimeout(org.threeten.bp.Duration.ofMillis(10L))
+          .setMaxRpcTimeout(java.time.Duration.ofMillis(2L))
+          .setTotalTimeout(java.time.Duration.ofMillis(10L))
           .build();
 
   private static final RetrySettings FAST_RECHECKING_SETTINGS =
       RetrySettings.newBuilder()
-          .setInitialRetryDelay(org.threeten.bp.Duration.ofMillis(1L))
+          .setInitialRetryDelay(java.time.Duration.ofMillis(1L))
           .setRetryDelayMultiplier(1)
-          .setMaxRetryDelay(org.threeten.bp.Duration.ofMillis(1L))
+          .setMaxRetryDelay(java.time.Duration.ofMillis(1L))
           .setInitialRpcTimeout(
-              org.threeten.bp.Duration
+              java.time.Duration
                   .ZERO) // supposed to be ignored, but are not actually, so we set to zero
           .setMaxAttempts(0)
           .setJittered(false)
           .setRpcTimeoutMultiplier(
               1) // supposed to be ignored, but are not actually, so we set to one
           .setMaxRpcTimeout(
-              org.threeten.bp.Duration
+              java.time.Duration
                   .ZERO) // supposed to be ignored, but are not actually, so we set to zero
-          .setTotalTimeout(org.threeten.bp.Duration.ofMillis(5L))
+          .setTotalTimeout(java.time.Duration.ofMillis(5L))
           .build();
 
   private FakeChannel initialChannel;
@@ -485,10 +485,10 @@ public class OperationCallableImplTest {
                 // for LRO polling. They are not actually ignored in code, so they changing them
                 // here has an actual affect. This test verifies that they work as such, but in
                 // practice generated clients set the RPC timeouts to 0 to be ignored.
-                .setInitialRpcTimeout(org.threeten.bp.Duration.ofMillis(100))
-                .setMaxRpcTimeout(org.threeten.bp.Duration.ofSeconds(1))
+                .setInitialRpcTimeout(java.time.Duration.ofMillis(100))
+                .setMaxRpcTimeout(java.time.Duration.ofSeconds(1))
                 .setRpcTimeoutMultiplier(2)
-                .setTotalTimeout(org.threeten.bp.Duration.ofSeconds(5L))
+                .setTotalTimeout(java.time.Duration.ofSeconds(5L))
                 .build(),
             clock);
     callSettings = callSettings.toBuilder().setPollingAlgorithm(pollingAlgorithm).build();
@@ -593,7 +593,7 @@ public class OperationCallableImplTest {
         OperationTimedPollAlgorithm.create(
             FAST_RECHECKING_SETTINGS
                 .toBuilder()
-                .setTotalTimeout(org.threeten.bp.Duration.ofMillis(iterationsCount))
+                .setTotalTimeout(java.time.Duration.ofMillis(iterationsCount))
                 .build(),
             clock);
     callSettings = callSettings.toBuilder().setPollingAlgorithm(pollingAlgorithm).build();
@@ -703,7 +703,7 @@ public class OperationCallableImplTest {
         OperationTimedPollAlgorithm.create(
             FAST_RECHECKING_SETTINGS
                 .toBuilder()
-                .setTotalTimeout(org.threeten.bp.Duration.ofMillis(1000L))
+                .setTotalTimeout(java.time.Duration.ofMillis(1000L))
                 .build(),
             clock);
     callSettings = callSettings.toBuilder().setPollingAlgorithm(pollingAlgorithm).build();

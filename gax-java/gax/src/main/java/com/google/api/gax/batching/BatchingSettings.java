@@ -124,7 +124,7 @@ public abstract class BatchingSettings {
         .setIsEnabled(true)
         .setElementCountThreshold(1L)
         .setRequestByteThreshold(1L)
-        .setDelayThreshold(org.threeten.bp.Duration.ofMillis(1))
+        .setDelayThreshold(java.time.Duration.ofMillis(1))
         .setFlowControlSettings(
             FlowControlSettings.newBuilder()
                 .setLimitExceededBehavior(LimitExceededBehavior.Ignore)
@@ -187,8 +187,8 @@ public abstract class BatchingSettings {
           settings.getRequestByteThreshold() == null || settings.getRequestByteThreshold() > 0,
           "requestByteThreshold must be either unset or positive");
       Preconditions.checkArgument(
-          settings.getDelayThreshold() == null
-              || settings.getDelayThreshold().compareTo(org.threeten.bp.Duration.ZERO) > 0,
+          settings.getDelayThresholdDuration() == null
+              || settings.getDelayThresholdDuration().compareTo(java.time.Duration.ZERO) > 0,
           "delayThreshold must be either unset or positive");
       return settings;
     }

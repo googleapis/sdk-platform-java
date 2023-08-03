@@ -58,9 +58,9 @@ public class CallableTest {
 
   private RetrySettings retrySettings =
       RetrySettings.newBuilder()
-          .setInitialRpcTimeout(org.threeten.bp.Duration.ofMillis(5L))
-          .setMaxRpcTimeout(org.threeten.bp.Duration.ofMillis(5L))
-          .setTotalTimeout(org.threeten.bp.Duration.ofMillis(10L))
+          .setInitialRpcTimeout(java.time.Duration.ofMillis(5L))
+          .setMaxRpcTimeout(java.time.Duration.ofMillis(5L))
+          .setTotalTimeout(java.time.Duration.ofMillis(10L))
           .build();
 
   @Spy private ApiCallContext callContext = FakeCallContext.createDefault();
@@ -97,7 +97,7 @@ public class CallableTest {
 
     UnaryCallSettings<Object, Object> callSettings =
         UnaryCallSettings.newUnaryCallSettingsBuilder()
-            .setSimpleTimeoutNoRetries(org.threeten.bp.Duration.ofMillis(10L))
+            .setSimpleTimeoutNoRetries(java.time.Duration.ofMillis(10L))
             .build();
     UnaryCallable<String, String> callable =
         Callables.retrying(innerCallable, callSettings, clientContext);
@@ -131,7 +131,7 @@ public class CallableTest {
   public void testNonRetriedServerStreamingCallableWithRetrySettings() throws Exception {
     ServerStreamingCallSettings<Object, Object> callSettings =
         ServerStreamingCallSettings.newBuilder()
-            .setSimpleTimeoutNoRetries(org.threeten.bp.Duration.ofMillis(10L))
+            .setSimpleTimeoutNoRetries(java.time.Duration.ofMillis(10L))
             .build();
     ServerStreamingCallable<Object, Object> callable =
         Callables.retrying(innerServerStreamingCallable, callSettings, clientContext);

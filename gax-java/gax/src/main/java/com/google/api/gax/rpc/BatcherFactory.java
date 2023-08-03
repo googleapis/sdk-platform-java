@@ -113,7 +113,7 @@ public final class BatcherFactory<RequestT, ResponseT> {
     return ThresholdBatcher.<Batch<RequestT, ResponseT>>newBuilder()
         .setThresholds(getThresholds(batchingSettings))
         .setExecutor(executor)
-        .setMaxDelay(batchingSettings.getDelayThreshold())
+        .setMaxDelay(batchingSettings.getDelayThresholdDuration())
         .setReceiver(processor)
         .setFlowController(batchingFlowController)
         .setBatchMerger(new BatchMergerImpl<RequestT, ResponseT>())

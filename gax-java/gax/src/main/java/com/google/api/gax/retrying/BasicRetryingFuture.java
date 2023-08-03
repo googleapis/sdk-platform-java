@@ -183,7 +183,7 @@ class BasicRetryingFuture<ResponseT> extends AbstractFuture<ResponseT>
                           ? callable.getClass().getEnclosingMethod().getName()
                           : ""),
                   "attemptCount: " + attemptSettings.getAttemptCount(),
-                  "delay: " + attemptSettings.getRetryDelay(),
+                  "delay: " + attemptSettings.getRetryDelayDuration(),
                   "retriableException: " + throwable
                 });
           }

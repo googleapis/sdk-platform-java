@@ -478,9 +478,9 @@ public class ServerStreamingAttemptCallableTest {
               .setFirstAttemptStartTimeNanos(0)
               .setAttemptCount(0)
               .setOverallAttemptCount(0)
-              .setRandomizedRetryDelay(org.threeten.bp.Duration.ofMillis(1))
-              .setRetryDelay(org.threeten.bp.Duration.ofMillis(1))
-              .setRpcTimeout(org.threeten.bp.Duration.ofMinutes(1))
+              .setRandomizedRetryDelay(java.time.Duration.ofMillis(1))
+              .setRetryDelay(java.time.Duration.ofMillis(1))
+              .setRpcTimeout(java.time.Duration.ofMinutes(1))
               .build();
     }
 

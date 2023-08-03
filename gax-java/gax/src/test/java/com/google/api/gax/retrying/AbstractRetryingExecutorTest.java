@@ -232,9 +232,9 @@ public abstract class AbstractRetryingExecutorTest {
     RetrySettings retrySettings =
         FAST_RETRY_SETTINGS
             .toBuilder()
-            .setInitialRetryDelay(org.threeten.bp.Duration.ofMillis(1_000L))
-            .setMaxRetryDelay(org.threeten.bp.Duration.ofMillis(1_000L))
-            .setTotalTimeout(org.threeten.bp.Duration.ofMillis(10_000L))
+            .setInitialRetryDelay(java.time.Duration.ofMillis(1_000L))
+            .setMaxRetryDelay(java.time.Duration.ofMillis(1_000L))
+            .setTotalTimeout(java.time.Duration.ofMillis(10_000L))
             .build();
     RetryingExecutorWithContext<String> executor =
         getExecutor(getAlgorithm(retrySettings, 0, null));

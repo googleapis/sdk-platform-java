@@ -198,8 +198,8 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
     }
     this.flowController = flowController;
     currentOpenBatch = new Batch<>(prototype, batchingDescriptor, batcherStats);
-    if (batchingSettings.getDelayThreshold() != null) {
-      long delay = batchingSettings.getDelayThreshold().toMillis();
+    if (batchingSettings.getDelayThresholdDuration() != null) {
+      long delay = batchingSettings.getDelayThresholdDuration().toMillis();
       PushCurrentBatchRunnable<ElementT, ElementResultT, RequestT, ResponseT> runnable =
           new PushCurrentBatchRunnable<>(this);
       scheduledFuture =

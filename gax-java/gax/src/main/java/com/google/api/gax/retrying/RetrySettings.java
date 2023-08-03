@@ -177,15 +177,15 @@ public abstract class RetrySettings implements Serializable {
 
   public static Builder newBuilder() {
     return new AutoValue_RetrySettings.Builder()
-        .setTotalTimeout(org.threeten.bp.Duration.ZERO)
-        .setInitialRetryDelay(org.threeten.bp.Duration.ZERO)
+        .setTotalTimeout(java.time.Duration.ZERO)
+        .setInitialRetryDelay(java.time.Duration.ZERO)
         .setRetryDelayMultiplier(1.0)
-        .setMaxRetryDelay(org.threeten.bp.Duration.ZERO)
+        .setMaxRetryDelay(java.time.Duration.ZERO)
         .setMaxAttempts(0)
         .setJittered(true)
-        .setInitialRpcTimeout(org.threeten.bp.Duration.ZERO)
+        .setInitialRpcTimeout(java.time.Duration.ZERO)
         .setRpcTimeoutMultiplier(1.0)
-        .setMaxRpcTimeout(org.threeten.bp.Duration.ZERO);
+        .setMaxRpcTimeout(java.time.Duration.ZERO);
   }
 
   public abstract Builder toBuilder();
@@ -309,7 +309,7 @@ public abstract class RetrySettings implements Serializable {
       return toJavaTimeDuration(getTotalTimeout());
     }
 
-    /** Backport of {@link #getInitialRetryDelay()} */
+    /** Backport of {@link #getInitialRetryDelayDuration()} */
     @ObsoleteApi("Use getInitialRetryDelayDuration() instead")
     public abstract org.threeten.bp.Duration getInitialRetryDelay();
 
@@ -397,10 +397,7 @@ public abstract class RetrySettings implements Serializable {
     @BetaApi
     @ObsoleteApi("Use setLogicalTimeout(java.time.Duration) instead")
     public Builder setLogicalTimeout(org.threeten.bp.Duration timeout) {
-      return setRpcTimeoutMultiplier(1)
-          .setInitialRpcTimeout(timeout)
-          .setMaxRpcTimeout(timeout)
-          .setTotalTimeout(timeout);
+      return setLogicalTimeout(toJavaTimeDuration(timeout));
     }
 
     /**
@@ -414,32 +411,35 @@ public abstract class RetrySettings implements Serializable {
      */
     @BetaApi
     public Builder setLogicalTimeout(java.time.Duration timeout) {
-      return setLogicalTimeout(toThreetenDuration(timeout));
+      return setRpcTimeoutMultiplier(1)
+          .setInitialRpcTimeout(timeout)
+          .setMaxRpcTimeout(timeout)
+          .setTotalTimeout(timeout);
     }
 
     abstract RetrySettings autoBuild();
 
     public RetrySettings build() {
       RetrySettings params = autoBuild();
-      if (params.getTotalTimeout().toMillis() < 0) {
+      if (params.getTotalTimeoutDuration().toMillis() < 0) {
         throw new IllegalStateException("total timeout must not be negative");
       }
-      if (params.getInitialRetryDelay().toMillis() < 0) {
+      if (params.getInitialRetryDelayDuration().toMillis() < 0) {
         throw new IllegalStateException("initial retry delay must not be negative");
       }
       if (params.getRetryDelayMultiplier() < 1.0) {
         throw new IllegalStateException("retry delay multiplier must be at least 1");
       }
-      if (params.getMaxRetryDelay().compareTo(params.getInitialRetryDelay()) < 0) {
+      if (params.getMaxRetryDelayDuration().compareTo(params.getInitialRetryDelayDuration()) < 0) {
         throw new IllegalStateException("max retry delay must not be shorter than initial delay");
       }
       if (params.getMaxAttempts() < 0) {
         throw new IllegalStateException("max attempts must be non-negative");
       }
-      if (params.getInitialRpcTimeout().toMillis() < 0) {
+      if (params.getInitialRpcTimeoutDuration().toMillis() < 0) {
         throw new IllegalStateException("initial rpc timeout must not be negative");
       }
-      if (params.getMaxRpcTimeout().compareTo(params.getInitialRpcTimeout()) < 0) {
+      if (params.getMaxRpcTimeoutDuration().compareTo(params.getInitialRpcTimeoutDuration()) < 0) {
         throw new IllegalStateException("max rpc timeout must not be shorter than initial timeout");
       }
       if (params.getRpcTimeoutMultiplier() < 1.0) {
@@ -449,28 +449,28 @@ public abstract class RetrySettings implements Serializable {
     }
 
     public RetrySettings.Builder merge(RetrySettings.Builder newSettings) {
-      if (newSettings.getTotalTimeout() != null) {
-        setTotalTimeout(newSettings.getTotalTimeout());
+      if (newSettings.getTotalTimeoutDuration() != null) {
+        setTotalTimeout(newSettings.getTotalTimeoutDuration());
       }
-      if (newSettings.getInitialRetryDelay() != null) {
-        setInitialRetryDelay(newSettings.getInitialRetryDelay());
+      if (newSettings.getInitialRetryDelayDuration() != null) {
+        setInitialRetryDelay(newSettings.getInitialRetryDelayDuration());
       }
       if (newSettings.getRetryDelayMultiplier() >= 1) {
         setRetryDelayMultiplier(newSettings.getRetryDelayMultiplier());
       }
-      if (newSettings.getMaxRetryDelay() != null) {
-        setMaxRetryDelay(newSettings.getMaxRetryDelay());
+      if (newSettings.getMaxRetryDelayDuration() != null) {
+        setMaxRetryDelay(newSettings.getMaxRetryDelayDuration());
       }
       setMaxAttempts(newSettings.getMaxAttempts());
       setJittered(newSettings.isJittered());
-      if (newSettings.getInitialRpcTimeout() != null) {
-        setInitialRpcTimeout(newSettings.getInitialRpcTimeout());
+      if (newSettings.getInitialRpcTimeoutDuration() != null) {
+        setInitialRpcTimeout(newSettings.getInitialRpcTimeoutDuration());
       }
       if (newSettings.getRpcTimeoutMultiplier() >= 1) {
         setRpcTimeoutMultiplier(newSettings.getRpcTimeoutMultiplier());
       }
-      if (newSettings.getMaxRpcTimeout() != null) {
-        setMaxRpcTimeout(newSettings.getMaxRpcTimeout());
+      if (newSettings.getMaxRpcTimeoutDuration() != null) {
+        setMaxRpcTimeout(newSettings.getMaxRpcTimeoutDuration());
       }
       return this;
     }

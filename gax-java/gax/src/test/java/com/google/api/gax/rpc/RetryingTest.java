@@ -68,24 +68,24 @@ public class RetryingTest {
 
   private static final RetrySettings FAST_RETRY_SETTINGS =
       RetrySettings.newBuilder()
-          .setInitialRetryDelay(org.threeten.bp.Duration.ofMillis(2L))
+          .setInitialRetryDelay(java.time.Duration.ofMillis(2L))
           .setRetryDelayMultiplier(1)
-          .setMaxRetryDelay(org.threeten.bp.Duration.ofMillis(2L))
-          .setInitialRpcTimeout(org.threeten.bp.Duration.ofMillis(2L))
+          .setMaxRetryDelay(java.time.Duration.ofMillis(2L))
+          .setInitialRpcTimeout(java.time.Duration.ofMillis(2L))
           .setRpcTimeoutMultiplier(1)
-          .setMaxRpcTimeout(org.threeten.bp.Duration.ofMillis(2L))
-          .setTotalTimeout(org.threeten.bp.Duration.ofMillis(10L))
+          .setMaxRpcTimeout(java.time.Duration.ofMillis(2L))
+          .setTotalTimeout(java.time.Duration.ofMillis(10L))
           .build();
   private static final RetrySettings FAILING_RETRY_SETTINGS =
       RetrySettings.newBuilder()
           .setMaxAttempts(2)
-          .setInitialRetryDelay(org.threeten.bp.Duration.ofNanos(0L))
+          .setInitialRetryDelay(java.time.Duration.ofNanos(0L))
           .setRetryDelayMultiplier(1)
-          .setMaxRetryDelay(org.threeten.bp.Duration.ofMillis(0L))
-          .setInitialRpcTimeout(org.threeten.bp.Duration.ofNanos(1L))
+          .setMaxRetryDelay(java.time.Duration.ofMillis(0L))
+          .setInitialRpcTimeout(java.time.Duration.ofNanos(1L))
           .setRpcTimeoutMultiplier(1)
-          .setMaxRpcTimeout(org.threeten.bp.Duration.ofNanos(1L))
-          .setTotalTimeout(org.threeten.bp.Duration.ofNanos(1L))
+          .setMaxRpcTimeout(java.time.Duration.ofNanos(1L))
+          .setTotalTimeout(java.time.Duration.ofNanos(1L))
           .build();
 
   @Before
@@ -151,8 +151,8 @@ public class RetryingTest {
     RetrySettings retrySettings =
         FAST_RETRY_SETTINGS
             .toBuilder()
-            .setInitialRetryDelay(org.threeten.bp.Duration.ofMillis(Integer.MAX_VALUE))
-            .setMaxRetryDelay(org.threeten.bp.Duration.ofMillis(Integer.MAX_VALUE))
+            .setInitialRetryDelay(java.time.Duration.ofMillis(Integer.MAX_VALUE))
+            .setMaxRetryDelay(java.time.Duration.ofMillis(Integer.MAX_VALUE))
             .build();
 
     assertRetrying(retrySettings);
@@ -169,8 +169,8 @@ public class RetryingTest {
     RetrySettings retrySettings =
         FAST_RETRY_SETTINGS
             .toBuilder()
-            .setInitialRetryDelay(org.threeten.bp.Duration.ofMillis(Integer.MAX_VALUE))
-            .setMaxRetryDelay(org.threeten.bp.Duration.ofMillis(Integer.MAX_VALUE))
+            .setInitialRetryDelay(java.time.Duration.ofMillis(Integer.MAX_VALUE))
+            .setMaxRetryDelay(java.time.Duration.ofMillis(Integer.MAX_VALUE))
             .build();
 
     try {

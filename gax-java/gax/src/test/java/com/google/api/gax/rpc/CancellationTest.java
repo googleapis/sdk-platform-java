@@ -62,24 +62,24 @@ public class CancellationTest {
 
   private static final RetrySettings FAST_RETRY_SETTINGS =
       RetrySettings.newBuilder()
-          .setInitialRetryDelay(org.threeten.bp.Duration.ofMillis(2L))
+          .setInitialRetryDelay(java.time.Duration.ofMillis(2L))
           .setRetryDelayMultiplier(1)
-          .setMaxRetryDelay(org.threeten.bp.Duration.ofMillis(2L))
-          .setInitialRpcTimeout(org.threeten.bp.Duration.ofMillis(2L))
+          .setMaxRetryDelay(java.time.Duration.ofMillis(2L))
+          .setInitialRpcTimeout(java.time.Duration.ofMillis(2L))
           .setRpcTimeoutMultiplier(1)
-          .setMaxRpcTimeout(org.threeten.bp.Duration.ofMillis(2L))
-          .setTotalTimeout(org.threeten.bp.Duration.ofMillis(20L))
+          .setMaxRpcTimeout(java.time.Duration.ofMillis(2L))
+          .setTotalTimeout(java.time.Duration.ofMillis(20L))
           .build();
 
   private static final RetrySettings SLOW_RETRY_SETTINGS =
       RetrySettings.newBuilder()
-          .setInitialRetryDelay(org.threeten.bp.Duration.ofMillis(3000L))
+          .setInitialRetryDelay(java.time.Duration.ofMillis(3000L))
           .setRetryDelayMultiplier(1)
-          .setMaxRetryDelay(org.threeten.bp.Duration.ofMillis(3000L))
-          .setInitialRpcTimeout(org.threeten.bp.Duration.ofMillis(3000L))
+          .setMaxRetryDelay(java.time.Duration.ofMillis(3000L))
+          .setInitialRpcTimeout(java.time.Duration.ofMillis(3000L))
           .setRpcTimeoutMultiplier(1)
-          .setMaxRpcTimeout(org.threeten.bp.Duration.ofMillis(3000L))
-          .setTotalTimeout(org.threeten.bp.Duration.ofMillis(3000L))
+          .setMaxRpcTimeout(java.time.Duration.ofMillis(3000L))
+          .setTotalTimeout(java.time.Duration.ofMillis(3000L))
           .build();
 
   private FakeApiClock fakeClock;

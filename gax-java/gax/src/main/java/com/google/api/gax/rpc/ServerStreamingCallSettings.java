@@ -266,6 +266,12 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
     @ObsoleteApi("Use setSimpleTimeoutNoRetries(java.time.Duration) instead")
     public Builder<RequestT, ResponseT> setSimpleTimeoutNoRetries(
         @Nonnull org.threeten.bp.Duration timeout) {
+      return setSimpleTimeoutNoRetries(toJavaTimeDuration(timeout));
+    }
+
+    /** Disables retries and sets the overall timeout. */
+    public Builder<RequestT, ResponseT> setSimpleTimeoutNoRetries(
+        @Nonnull java.time.Duration timeout) {
       setRetryableCodes();
       setRetrySettings(
           RetrySettings.newBuilder()
@@ -280,12 +286,6 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
               .build());
 
       return this;
-    }
-
-    /** Disables retries and sets the overall timeout. */
-    public Builder<RequestT, ResponseT> setSimpleTimeoutNoRetries(
-        @Nonnull java.time.Duration timeout) {
-      return setSimpleTimeoutNoRetries(toThreetenDuration(timeout));
     }
 
     /**

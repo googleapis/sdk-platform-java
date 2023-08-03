@@ -49,7 +49,7 @@ public class BatchingCallSettingsTest {
       BatchingSettings.newBuilder()
           .setElementCountThreshold(10L)
           .setRequestByteThreshold(20L)
-          .setDelayThreshold(org.threeten.bp.Duration.ofMillis(5))
+          .setDelayThreshold(java.time.Duration.ofMillis(5))
           .setFlowControlSettings(
               FlowControlSettings.newBuilder()
                   .setMaxOutstandingElementCount(100L)
@@ -90,7 +90,7 @@ public class BatchingCallSettingsTest {
     BatchingCallSettings.Builder<Integer, Integer, LabeledIntList, List<Integer>> builder =
         BatchingCallSettings.newBuilder(SQUARER_BATCHING_DESC_V2);
     RetrySettings retrySettings =
-        RetrySettings.newBuilder().setTotalTimeout(org.threeten.bp.Duration.ofMinutes(1)).build();
+        RetrySettings.newBuilder().setTotalTimeout(java.time.Duration.ofMinutes(1)).build();
     builder
         .setBatchingSettings(BATCHING_SETTINGS)
         .setRetryableCodes(StatusCode.Code.UNAVAILABLE, StatusCode.Code.UNAUTHENTICATED)

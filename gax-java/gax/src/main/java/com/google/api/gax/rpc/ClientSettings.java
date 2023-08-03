@@ -390,7 +390,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
           .add("endpoint", getEndpoint())
           .add("quotaProjectId", getQuotaProjectId())
           .add("watchdogProvider", getWatchdogProvider())
-          .add("watchdogCheckInterval", getWatchdogCheckInterval())
+          .add("watchdogCheckInterval", getWatchdogCheckIntervalDuration())
           .add("gdchApiAudience", getGdchApiAudience())
           .toString();
     }

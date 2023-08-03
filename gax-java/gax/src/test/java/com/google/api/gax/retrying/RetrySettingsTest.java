@@ -36,42 +36,47 @@ public class RetrySettingsTest {
 
   @Test
   public void retrySettingsSetLogicalTimeout() {
-    org.threeten.bp.Duration timeout = org.threeten.bp.Duration.ofMillis(60000);
+    java.time.Duration timeout = java.time.Duration.ofMillis(60000);
     RetrySettings retrySettings = RetrySettings.newBuilder().setLogicalTimeout(timeout).build();
 
     Truth.assertThat(retrySettings.getRpcTimeoutMultiplier()).isEqualTo(1);
-    Truth.assertThat(retrySettings.getInitialRpcTimeout()).isEqualTo(timeout);
-    Truth.assertThat(retrySettings.getMaxRpcTimeout()).isEqualTo(timeout);
-    Truth.assertThat(retrySettings.getTotalTimeout()).isEqualTo(timeout);
+    Truth.assertThat(retrySettings.getInitialRpcTimeoutDuration()).isEqualTo(timeout);
+    Truth.assertThat(retrySettings.getMaxRpcTimeoutDuration()).isEqualTo(timeout);
+    Truth.assertThat(retrySettings.getTotalTimeoutDuration()).isEqualTo(timeout);
   }
 
   @Test
   public void retrySettingsMerge() {
     RetrySettings.Builder builder =
         RetrySettings.newBuilder()
-            .setTotalTimeout(org.threeten.bp.Duration.ofMillis(45000))
-            .setInitialRpcTimeout(org.threeten.bp.Duration.ofMillis(2000))
+            .setTotalTimeout(java.time.Duration.ofMillis(45000))
+            .setInitialRpcTimeout(java.time.Duration.ofMillis(2000))
             .setRpcTimeoutMultiplier(1.5)
-            .setMaxRpcTimeout(org.threeten.bp.Duration.ofMillis(30000))
-            .setInitialRetryDelay(org.threeten.bp.Duration.ofMillis(100))
+            .setMaxRpcTimeout(java.time.Duration.ofMillis(30000))
+            .setInitialRetryDelay(java.time.Duration.ofMillis(100))
             .setRetryDelayMultiplier(1.2)
-            .setMaxRetryDelay(org.threeten.bp.Duration.ofMillis(1000));
+            .setMaxRetryDelay(java.time.Duration.ofMillis(1000));
     RetrySettings.Builder mergedBuilder = RetrySettings.newBuilder();
     mergedBuilder.merge(builder);
 
     RetrySettings settingsA = builder.build();
     RetrySettings settingsB = mergedBuilder.build();
 
-    Truth.assertThat(settingsA.getTotalTimeout()).isEqualTo(settingsB.getTotalTimeout());
-    Truth.assertThat(settingsA.getInitialRetryDelay()).isEqualTo(settingsB.getInitialRetryDelay());
+    Truth.assertThat(settingsA.getTotalTimeoutDuration())
+        .isEqualTo(settingsB.getTotalTimeoutDuration());
+    Truth.assertThat(settingsA.getInitialRetryDelayDuration())
+        .isEqualTo(settingsB.getInitialRetryDelayDuration());
     Truth.assertThat(settingsA.getRpcTimeoutMultiplier())
         .isWithin(0)
         .of(settingsB.getRpcTimeoutMultiplier());
-    Truth.assertThat(settingsA.getMaxRpcTimeout()).isEqualTo(settingsB.getMaxRpcTimeout());
-    Truth.assertThat(settingsA.getInitialRetryDelay()).isEqualTo(settingsB.getInitialRetryDelay());
+    Truth.assertThat(settingsA.getMaxRpcTimeoutDuration())
+        .isEqualTo(settingsB.getMaxRpcTimeoutDuration());
+    Truth.assertThat(settingsA.getInitialRetryDelayDuration())
+        .isEqualTo(settingsB.getInitialRetryDelayDuration());
     Truth.assertThat(settingsA.getRetryDelayMultiplier())
         .isWithin(0)
         .of(settingsB.getRetryDelayMultiplier());
-    Truth.assertThat(settingsA.getMaxRetryDelay()).isEqualTo(settingsB.getMaxRetryDelay());
+    Truth.assertThat(settingsA.getMaxRetryDelayDuration())
+        .isEqualTo(settingsB.getMaxRetryDelayDuration());
   }
 }

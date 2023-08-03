@@ -29,16 +29,15 @@
  */
 package com.google.api.gax.httpjson;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeInstant;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenInstant;
+
 import com.google.api.core.ObsoleteApi;
 import com.google.auth.Credentials;
 import com.google.auto.value.AutoValue;
 import com.google.protobuf.TypeRegistry;
-
 import java.time.Duration;
 import javax.annotation.Nullable;
-
-import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeInstant;
-import static com.google.api.gax.util.TimeConversionUtils.toThreetenInstant;
 
 /** Options for an http-json call, including deadline and credentials. */
 @AutoValue
@@ -105,9 +104,7 @@ public abstract class HttpJsonCallOptions {
   public abstract static class Builder {
     public abstract Builder setTimeout(java.time.Duration value);
 
-    /**
-     * Backport of {@link #setDeadline(java.time.Instant)}
-     */
+    /** Backport of {@link #setDeadline(java.time.Instant)} */
     @ObsoleteApi("Use setDeadline(java.time.Instant) instead")
     public abstract Builder setDeadline(org.threeten.bp.Instant value);
 

@@ -92,7 +92,7 @@ public class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest 
       RetrySettings retrySettings =
           FAST_RETRY_SETTINGS
               .toBuilder()
-              .setTotalTimeout(org.threeten.bp.Duration.ofMillis(1000L))
+              .setTotalTimeout(java.time.Duration.ofMillis(1000L))
               .setMaxAttempts(maxRetries)
               .build();
 
@@ -143,7 +143,7 @@ public class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest 
       RetrySettings retrySettings =
           FAST_RETRY_SETTINGS
               .toBuilder()
-              .setTotalTimeout(org.threeten.bp.Duration.ofMillis(1000L))
+              .setTotalTimeout(java.time.Duration.ofMillis(1000L))
               .setMaxAttempts(maxRetries)
               .build();
 
@@ -197,7 +197,7 @@ public class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest 
       RetrySettings retrySettings =
           FAST_RETRY_SETTINGS
               .toBuilder()
-              .setTotalTimeout(org.threeten.bp.Duration.ofMillis(1000L))
+              .setTotalTimeout(java.time.Duration.ofMillis(1000L))
               .setMaxAttempts(maxRetries)
               .build();
 
@@ -255,9 +255,9 @@ public class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest 
       RetrySettings retrySettings =
           FAST_RETRY_SETTINGS
               .toBuilder()
-              .setInitialRetryDelay(org.threeten.bp.Duration.ofMillis(1_000L))
-              .setMaxRetryDelay(org.threeten.bp.Duration.ofMillis(1_000L))
-              .setTotalTimeout(org.threeten.bp.Duration.ofMillis(10_0000L))
+              .setInitialRetryDelay(java.time.Duration.ofMillis(1_000L))
+              .setMaxRetryDelay(java.time.Duration.ofMillis(1_000L))
+              .setTotalTimeout(java.time.Duration.ofMillis(10_0000L))
               .build();
       RetryingExecutorWithContext<String> executor =
           getRetryingExecutor(getAlgorithm(retrySettings, 0, null), localExecutor);
@@ -283,9 +283,9 @@ public class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest 
     RetrySettings retrySettings =
         FAST_RETRY_SETTINGS
             .toBuilder()
-            .setInitialRetryDelay(org.threeten.bp.Duration.ofMillis(1_000L))
-            .setMaxRetryDelay(org.threeten.bp.Duration.ofMillis(1_000L))
-            .setTotalTimeout(org.threeten.bp.Duration.ofMillis(10_0000L))
+            .setInitialRetryDelay(java.time.Duration.ofMillis(1_000L))
+            .setMaxRetryDelay(java.time.Duration.ofMillis(1_000L))
+            .setTotalTimeout(java.time.Duration.ofMillis(10_0000L))
             .build();
     RetryingExecutorWithContext<String> executor =
         getRetryingExecutor(getAlgorithm(retrySettings, 0, null), localExecutor);
@@ -313,9 +313,9 @@ public class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest 
       RetrySettings retrySettings =
           FAST_RETRY_SETTINGS
               .toBuilder()
-              .setInitialRetryDelay(org.threeten.bp.Duration.ofMillis(1_000L))
-              .setMaxRetryDelay(org.threeten.bp.Duration.ofMillis(1_000L))
-              .setTotalTimeout(org.threeten.bp.Duration.ofMillis(10_0000L))
+              .setInitialRetryDelay(java.time.Duration.ofMillis(1_000L))
+              .setMaxRetryDelay(java.time.Duration.ofMillis(1_000L))
+              .setTotalTimeout(java.time.Duration.ofMillis(10_0000L))
               .build();
       RetryingExecutorWithContext<String> executor =
           getRetryingExecutor(getAlgorithm(retrySettings, 0, null), localExecutor);
