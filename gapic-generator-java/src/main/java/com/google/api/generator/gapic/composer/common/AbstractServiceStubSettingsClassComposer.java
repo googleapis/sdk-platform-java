@@ -120,7 +120,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.annotation.Generated;
 import javax.annotation.Nullable;
-import org.threeten.bp.Duration;
+import java.time.Duration;
 
 public abstract class AbstractServiceStubSettingsClassComposer implements ClassComposer {
   private static final Statement EMPTY_LINE_STATEMENT = EmptyLineStatement.create();
