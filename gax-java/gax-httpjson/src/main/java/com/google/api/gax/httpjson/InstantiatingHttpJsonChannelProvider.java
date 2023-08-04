@@ -33,6 +33,7 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.core.InternalExtensionOnly;
 import com.google.api.gax.core.ExecutorProvider;
+import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.TransportChannelProvider;
@@ -142,6 +143,11 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
   @Override
   public String getTransportName() {
     return HttpJsonTransportChannel.getHttpJsonTransportName();
+  }
+
+  @Override
+  public ApiCallContext getEmptyCallContext() {
+    return HttpJsonCallContext.of(this);
   }
 
   @Override

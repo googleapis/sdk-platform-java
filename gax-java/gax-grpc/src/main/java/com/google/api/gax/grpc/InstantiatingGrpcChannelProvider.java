@@ -34,6 +34,7 @@ import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.api.core.InternalExtensionOnly;
 import com.google.api.gax.core.ExecutorProvider;
+import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.TransportChannel;
@@ -176,6 +177,11 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @Override
   public String getTransportName() {
     return GrpcTransportChannel.getGrpcTransportName();
+  }
+
+  @Override
+  public ApiCallContext getEmptyCallContext() {
+    return GrpcCallContext.of(this);
   }
 
   @Override

@@ -123,6 +123,8 @@ public abstract class UnaryCallable<RequestT, ResponseT> {
     return new UnaryCallable<RequestT, ResponseT>() {
       @Override
       public ApiFuture<ResponseT> futureCall(RequestT request, ApiCallContext thisCallContext) {
+        // TODO: Determine if we should instantiate the channel here. Reason is so the channel isn't
+        // instantiated multiple times
         return UnaryCallable.this.futureCall(request, defaultCallContext.merge(thisCallContext));
       }
     };

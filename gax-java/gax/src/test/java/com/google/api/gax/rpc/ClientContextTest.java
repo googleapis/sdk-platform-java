@@ -198,6 +198,11 @@ public class ClientContextTest {
     }
 
     @Override
+    public ApiCallContext getEmptyCallContext() {
+      return null;
+    }
+
+    @Override
     public boolean needsCredentials() {
       return credentials == null;
     }

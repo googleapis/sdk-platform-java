@@ -142,4 +142,6 @@ public interface TransportChannelProvider {
    * <p>This string can be used for identifying transports for switching logic.
    */
   String getTransportName();
+
+  ApiCallContext getEmptyCallContext();
 }

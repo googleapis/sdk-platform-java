@@ -33,6 +33,7 @@ import com.google.api.core.InternalApi;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.TransportChannel;
 import com.google.api.gax.rpc.internal.ApiCallContextOptions;
@@ -271,6 +272,11 @@ public class FakeCallContext implements ApiCallContext {
     }
     FakeTransportChannel transportChannel = (FakeTransportChannel) inputChannel;
     return withChannel(transportChannel.getChannel());
+  }
+
+  @Override
+  public ApiCallContext withEndpointContext(EndpointContext endpointContext) {
+    return null;
   }
 
   public FakeCallContext withChannel(FakeChannel channel) {

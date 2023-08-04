@@ -224,22 +224,24 @@ public abstract class ClientContext {
     if (transportChannelProvider.needsCredentials() && credentials != null) {
       transportChannelProvider = transportChannelProvider.withCredentials(credentials);
     }
-    String endpoint =
-        getEndpoint(
-            settings.getEndpoint(),
-            settings.getMtlsEndpoint(),
-            settings.getSwitchToMtlsEndpointAllowed(),
-            new MtlsProvider());
-    if (transportChannelProvider.needsEndpoint()) {
-      transportChannelProvider = transportChannelProvider.withEndpoint(endpoint);
-    }
-    TransportChannel transportChannel = transportChannelProvider.getTransportChannel();
+    //    String endpoint =
+    //        getEndpoint(
+    //            settings.getEndpoint(),
+    //            settings.getMtlsEndpoint(),
+    //            settings.getSwitchToMtlsEndpointAllowed(),
+    //            new MtlsProvider());
+    //    if (transportChannelProvider.needsEndpoint()) {
+    //      transportChannelProvider = transportChannelProvider.withEndpoint(endpoint);
+    //    }
+    //    TransportChannel transportChannel = transportChannelProvider.getTransportChannel();
 
-    ApiCallContext defaultCallContext =
-        transportChannel.getEmptyCallContext().withTransportChannel(transportChannel);
-    if (credentials != null) {
-      defaultCallContext = defaultCallContext.withCredentials(credentials);
-    }
+    ApiCallContext defaultCallContext = transportChannelProvider.getEmptyCallContext();
+    defaultCallContext =
+        defaultCallContext.withEndpointContext(
+            EndpointContext.of(credentials, settings.getEndpoint(), settings.getMtlsEndpoint()));
+    //    if (credentials != null) {
+    //      defaultCallContext = defaultCallContext.withCredentials(credentials);
+    //    }
 
     WatchdogProvider watchdogProvider = settings.getStreamWatchdogProvider();
     @Nullable Watchdog watchdog = null;
@@ -260,9 +262,9 @@ public abstract class ClientContext {
 
     ImmutableList.Builder<BackgroundResource> backgroundResources = ImmutableList.builder();
 
-    if (transportChannelProvider.shouldAutoClose()) {
-      backgroundResources.add(transportChannel);
-    }
+    //    if (transportChannelProvider.shouldAutoClose()) {
+    //      backgroundResources.add(transportChannel);
+    //    }
     if (backgroundExecutorProvider.shouldAutoClose()) {
       backgroundResources.add(new ExecutorAsBackgroundResource(backgroundExecutor));
     }
@@ -274,7 +276,7 @@ public abstract class ClientContext {
         .setBackgroundResources(backgroundResources.build())
         .setExecutor(backgroundExecutor)
         .setCredentials(credentials)
-        .setTransportChannel(transportChannel)
+        .setTransportChannel(null)
         .setHeaders(ImmutableMap.copyOf(settings.getHeaderProvider().getHeaders()))
         .setInternalHeaders(ImmutableMap.copyOf(settings.getInternalHeaderProvider().getHeaders()))
         .setClock(clock)

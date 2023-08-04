@@ -32,6 +32,7 @@ package com.google.api.gax.grpc.testing;
 import com.google.api.core.BetaApi;
 import com.google.api.gax.grpc.GrpcHeaderInterceptor;
 import com.google.api.gax.grpc.GrpcTransportChannel;
+import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.TransportChannel;
@@ -140,6 +141,11 @@ public class LocalChannelProvider implements TransportChannelProvider {
   @Override
   public String getTransportName() {
     return GrpcTransportChannel.getGrpcTransportName();
+  }
+
+  @Override
+  public ApiCallContext getEmptyCallContext() {
+    return null;
   }
 
   @Override

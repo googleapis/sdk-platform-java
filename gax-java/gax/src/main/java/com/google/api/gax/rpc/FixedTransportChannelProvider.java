@@ -115,6 +115,11 @@ public class FixedTransportChannelProvider implements TransportChannelProvider {
   }
 
   @Override
+  public ApiCallContext getEmptyCallContext() {
+    return null;
+  }
+
+  @Override
   public boolean needsCredentials() {
     return false;
   }
