@@ -1,20 +1,24 @@
 #!/usr/bin/env bash
 
-set -e
-
+set -ex
 GOOGLEAPIS_COMMIT=$1
 PROTOBUF_VERSION=$2
 GRPC_VERSION=$3
 GAPIC_GENERATOR_VERSION=$4
-PROTO_PATH=$5
+PROTO_PATH=$5 
 CONTAINS_CLOUD=$6
 TRANSPORT=$7 # grpc+rest or grpc
 REST_NUMERIC_ENUMS=$8 # true or false
 IS_GAPIC_LIBRARY=$9  # true or false
+INCLUDE_SAMPLES=${10} # true or false
+DESTINATION_PATH=${11}
+OWLBOT_SHA=${12}
+OWLBOT_PY_PATH=${13}
+REPO_METADATA_PATH=${14}
+
 if [ -z "${IS_GAPIC_LIBRARY}" ]; then
   IS_GAPIC_LIBRARY="true"
 fi
-INCLUDE_SAMPLES=${10} # true or false
 if [ -z "${INCLUDE_SAMPLES}" ]; then
   INCLUDE_SAMPLES="true"
 fi
@@ -25,7 +29,24 @@ fi
 
 LIBRARY_GEN_OUT=$(dirname "$(readlink -f "$0")")/../library_gen_out
 REPO_ROOT="${LIBRARY_GEN_OUT}"/..
-mkdir -p "${LIBRARY_GEN_OUT}/${PROTO_PATH}"
+GENERATED_LIBRARY_ROOT="${LIBRARY_GEN_OUT}/${PROTO_PATH}" 
+mkdir -p $GENERATED_LIBRARY_ROOT
+
+
+echo "GOOGLEAPIS_COMMIT=$GOOGLEAPIS_COMMIT"
+echo "PROTOBUF_VERSION=$PROTOBUF_VERSION"
+echo "GRPC_VERSION=$GRPC_VERSION"
+echo "GAPIC_GENERATOR_VERSION=$GAPIC_GENERATOR_VERSION"
+echo "PROTO_PATH=$PROTO_PATH"
+echo "CONTAINS_CLOUD=$CONTAINS_CLOUD"
+echo "TRANSPORT=$TRANSPORT"
+echo "REST_NUMERIC_ENUMS=$REST_NUMERIC_ENUMS"
+echo "IS_GAPIC_LIBRARY=$IS_GAPIC_LIBRARY"
+echo "INCLUDE_SAMPLES=$INCLUDE_SAMPLES"
+echo "DESTINATION_PATH=$DESTINATION_PATH"
+echo "OWLBOT_SHA=$OWLBOT_SHA"
+echo "OWLBOT_PY_PATH=$OWLBOT_PY_PATH"
+echo "REPO_METADATA_PATH=$REPO_METADATA_PATH"
 
 ##################### Section 0 #####################
 # prepare tooling
@@ -67,9 +88,10 @@ fi
 # define utility functions
 remove_empty_files() {
   FOLDER=$1
-  find "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/"${OUT_LAYER_FOLDER}"/"${FOLDER}"-"${OUT_LAYER_FOLDER}"/src/main/java -type f -size 0 | while read -r f; do rm -f "${f}"; done
-  if [ -d "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/"${OUT_LAYER_FOLDER}"/"${FOLDER}"-"${OUT_LAYER_FOLDER}"/src/main/java/samples ]; then
-      mv "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/"${OUT_LAYER_FOLDER}"/"${FOLDER}"-"${OUT_LAYER_FOLDER}"/src/main/java/samples "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/"${OUT_LAYER_FOLDER}"/"${FOLDER}"-"${OUT_LAYER_FOLDER}"
+  LIBRARY_ROOT="${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/"${OUT_LAYER_FOLDER}"/"${FOLDER}"-"${OUT_LAYER_FOLDER}"
+  find $LIBRARY_ROOT/src/main/java -type f -size 0 | while read -r f; do rm -f "${f}"; done
+  if [ -d $LIBRARY_ROOT/src/main/java/samples ]; then
+      mv $LIBRARY_ROOT/src/main/java/samples $LIBRARY_ROOT
   fi
 }
 
@@ -205,3 +227,72 @@ done
 #####################################################
 cd "${LIBRARY_GEN_OUT}/${PROTO_PATH}"
 rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_proto.jar temp-codegen.srcjar
+
+##################### Section 4 #####################
+# post-processing
+#####################################################
+# copy repo metadata to destination library folder
+WORKSPACE=$LIBRARY_GEN_OUT/workspace
+mkdir $WORKSPACE
+cp $REPO_METADATA_PATH $WORKSPACE/.repo-metadata.json
+
+# call owl-bot-copy
+OWLBOT_STAGING_FOLDER="$WORKSPACE/owl-bot-staging"
+OWLBOT_IMAGE=gcr.io/cloud-devrel-public-resources/owlbot-java@sha256:$OWLBOT_SHA
+
+# render owlbot yaml template
+DISTRIBUTION_NAME=$(cat $REPO_METADATA_PATH | jq -r '.distribution_name // empty' | rev | cut -d: -f1 | rev)
+API_SHORTNAME=$(cat $REPO_METADATA_PATH | jq -r '.api_shortname // empty')
+
+if [ -z ${var+x} ]; then
+  echo "owlbot will not use copy regex"
+else
+  OWLBOT_COPY_REGEX=$(cat <<-_EOT_
+deep-remove-regex:
+- "/${MODULE_NAME}/grpc-google-.*/src"
+- "/${MODULE_NAME}/proto-google-.*/src"
+- "/${MODULE_NAME}/google-.*/src"
+- "/${MODULE_NAME}/samples/snippets/generated"
+
+deep-preserve-regex:
+- "/${MODULE_NAME}/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java"
+
+deep-copy-regex:
+- source: "/{{ proto_path }}/(v.*)/.*-java/proto-google-.*/src"
+  dest: "/owl-bot-staging/${MODULE_NAME}/$1/proto-${DISTRIBUTION_NAME}-$1/src"
+- source: "/{{ proto_path }}/(v.*)/.*-java/grpc-google-.*/src"
+  dest: "/owl-bot-staging/${MODULE_NAME}/$1/grpc-${DISTRIBUTION_NAME}-$1/src"
+- source: "/{{ proto_path }}/(v.*)/.*-java/gapic-google-.*/src"
+  dest: "/owl-bot-staging/${MODULE_NAME}/$1/${DISTRIBUTION_NAME}/src"
+- source: "/{{ proto_path }}/(v.*)/.*-java/samples/snippets/generated"
+  dest: "/owl-bot-staging/${MODULE_NAME}/$1/samples/snippets/generated"
+_EOT_
+)
+fi
+OWLBOT_YAML_CONTENT=$(cat <<-_EOT_
+${OWLBOT_COPY_REGEX}
+
+api-name: ${API_SHORTNAME}
+_EOT_
+)
+
+# render owlbot.py template
+OWLBOT_PY_CONTENT=$(cat <<-_EOT_
+import synthtool as s
+from synthtool.languages import java
+
+
+for library in s.get_staging_dirs():
+    # put any special-case replacements here
+    s.move(library)
+
+s.remove_staging_dirs()
+java.common_templates(monorepo=True)
+_EOT_
+)
+
+cp -r $GENERATED_LIBRARY_ROOT $OWLBOT_STAGING_FOLDER
+echo "$OWLBOT_YAML_CONTENT" > $OWLBOT_STAGING_FOLDER/.OwlBot.yaml
+echo "$OWLBOT_PY_CONTENT" > $WORKSPACE/owlbot.py
+docker run --rm -v $WORKSPACE:/workspace --user $(id -u):$(id -g) $OWLBOT_IMAGE
+
