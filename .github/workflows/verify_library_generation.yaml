@@ -23,9 +23,11 @@ jobs:
     - name: checkout a commit hash in googleapis
       run: |
         git checkout de4d95879fe000e75977f782e5104014934bbbfa
+      working-directory: googleapis
     - name: clone google-cloud-java
       run: |
         git clone https://github.com/googleapis/google-cloud-java.git
     - name: checkout a commit hash in google-cloud-java
       run: |
         git checkout c7011dbd69189330de1c2946b736cd712d5c1f4e
+      working-directory: google-cloud-java
