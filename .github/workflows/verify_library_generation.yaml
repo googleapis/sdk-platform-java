@@ -31,3 +31,14 @@ jobs:
       run: |
         git checkout c7011dbd69189330de1c2946b736cd712d5c1f4e
       working-directory: google-cloud-java
+    - name: remove contents in destination path
+      run: |
+        rm -rf java-aiplatform
+      working-directory: google-cloud-java
+    - name: generate java-aiplatform
+      run: |
+        library_generation/generate_library.sh
+    - name: compare generation result
+      run: |
+        git diff java-aiplatform
+      working-directory: google-cloud-java
