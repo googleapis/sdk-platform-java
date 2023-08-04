@@ -136,13 +136,13 @@ To generate a production GAPIC API:
     
     local_repository(
         name = "gapic_generator_java",
-        path = "/absolute/path/to/your/local/gapic-generator-java",
+        path = "/absolute/path/to/your/local/sdk-platform-java",
     )
     
     # gax-java is part of sdk-platform-java repository
     local_repository(
         name = "com_google_api_gax_java",
-        path = "/absolute/path/to/your/local/gapic-generator-java/gax-java",
+        path = "/absolute/path/to/your/local/sdk-platform-java/gax-java",
     )
    ```
 

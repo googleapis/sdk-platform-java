@@ -17,8 +17,10 @@ cd ${BUILD_WORKSPACE_DIRECTORY}/test/integration/goldens/${API_NAME}
 # clear out existing Java and JSON files.
 find . -name '*.java' -delete
 find . -name 'gapic_metadata.json' -delete
+find . -name 'reflect-config.json' -delete
 
 mkdir -p ./src
+cp -r ${UNPACK_DIR}/src/main/resources/* ./src
 cp -r ${UNPACK_DIR}/src/main/java/* ./src
 cp -r ${UNPACK_DIR}/src/test/java/* ./src
 [ -d ${UNPACK_DIR}/proto ] && cp -r ${UNPACK_DIR}/proto/src/main/java/* ./src

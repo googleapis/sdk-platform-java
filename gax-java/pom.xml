@@ -4,14 +4,14 @@
   <groupId>com.google.api</groupId>
   <artifactId>gax-parent</artifactId>
   <packaging>pom</packaging>
-  <version>2.29.1-SNAPSHOT</version><!-- {x-version-update:gax:current} -->
+  <version>2.31.1-SNAPSHOT</version><!-- {x-version-update:gax:current} -->
   <name>GAX (Google Api eXtensions) for Java (Parent)</name>
   <description>Google Api eXtensions for Java (Parent)</description>
 
   <parent>
     <groupId>com.google.api</groupId>
     <artifactId>gapic-generator-java-pom-parent</artifactId>
-    <version>2.21.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
+    <version>2.23.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
     <relativePath>../gapic-generator-java-pom-parent</relativePath>
   </parent>
 
@@ -36,7 +36,6 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <auto-value.version>1.10.1</auto-value.version>
   </properties>
 
   <modules>
@@ -51,7 +50,7 @@
       <dependency>
         <groupId>com.google.api</groupId>
         <artifactId>api-common</artifactId>
-        <version>2.12.1-SNAPSHOT</version><!-- {x-version-update:api-common:current} -->
+        <version>2.14.1-SNAPSHOT</version><!-- {x-version-update:api-common:current} -->
       </dependency>
       <dependency>
         <groupId>com.google.auth</groupId>
@@ -109,24 +108,24 @@
       <dependency>
         <groupId>com.google.api</groupId>
         <artifactId>gax</artifactId>
-        <version>2.29.1-SNAPSHOT</version> <!-- {x-version-update:gax:current} -->
+        <version>2.31.1-SNAPSHOT</version> <!-- {x-version-update:gax:current} -->
       </dependency>
       <dependency>
         <groupId>com.google.api</groupId>
         <artifactId>gax</artifactId>
-        <version>2.29.1-SNAPSHOT</version> <!-- {x-version-update:gax:current} -->
+        <version>2.31.1-SNAPSHOT</version> <!-- {x-version-update:gax:current} -->
         <type>test-jar</type>
         <classifier>testlib</classifier>
       </dependency>
       <dependency>
         <groupId>com.google.api.grpc</groupId>
         <artifactId>proto-google-common-protos</artifactId>
-        <version>2.20.1-SNAPSHOT</version><!-- {x-version-update:proto-google-common-protos:current} -->
+        <version>2.22.1-SNAPSHOT</version><!-- {x-version-update:proto-google-common-protos:current} -->
       </dependency>
       <dependency>
         <groupId>com.google.api.grpc</groupId>
         <artifactId>grpc-google-common-protos</artifactId>
-        <version>2.20.1-SNAPSHOT</version><!-- {x-version-update:grpc-google-common-protos:current} -->
+        <version>2.22.1-SNAPSHOT</version><!-- {x-version-update:grpc-google-common-protos:current} -->
       </dependency>
       <dependency>
         <groupId>io.grpc</groupId>
@@ -148,7 +147,7 @@
       <dependency>
         <groupId>com.google.http-client</groupId>
         <artifactId>google-http-client-bom</artifactId>
-        <version>1.43.1</version>
+        <version>${google.http-client.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>

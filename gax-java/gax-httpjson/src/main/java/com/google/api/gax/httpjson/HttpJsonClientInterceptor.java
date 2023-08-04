@@ -29,8 +29,6 @@
  */
 package com.google.api.gax.httpjson;
 
-import com.google.api.core.BetaApi;
-
 /**
  * Interface for intercepting outgoing calls before they are dispatched by a {@link
  * HttpJsonChannel}.
@@ -38,7 +36,6 @@ import com.google.api.core.BetaApi;
  * <p>The interceptor may be called for multiple {@link HttpJsonClientCall calls} by one or more
  * threads without completing the previous ones first. The implementations must be thread-safe.
  */
-@BetaApi
 public interface HttpJsonClientInterceptor {
   /**
    * Intercept {@link HttpJsonClientCall} creation by the {@code next} {@link HttpJsonChannel}.

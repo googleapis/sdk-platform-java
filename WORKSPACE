@@ -60,7 +60,7 @@ maven_install(
     repositories = ["https://repo.maven.apache.org/maven2/"],
 )
 
-_gapic_generator_java_version = "2.21.1-SNAPSHOT"  # {x-version-update:gapic-generator-java:current}
+_gapic_generator_java_version = "2.23.1-SNAPSHOT"  # {x-version-update:gapic-generator-java:current}
 
 maven_install(
     artifacts = [
@@ -107,7 +107,7 @@ http_archive(
 )
 
 # Showcase
-_showcase_version = "0.28.1"
+_showcase_version = "0.28.2"
 
 http_archive(
     name = "com_google_gapic_showcase",

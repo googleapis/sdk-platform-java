@@ -13,6 +13,9 @@
             "GetEnum": {
               "methods": ["getEnum", "getEnumCallable"]
             },
+            "GetIamPolicy": {
+              "methods": ["getIamPolicy", "getIamPolicyCallable"]
+            },
             "GetLocation": {
               "methods": ["getLocation", "getLocationCallable"]
             },
@@ -43,6 +46,12 @@
             "RepeatDataSimplePath": {
               "methods": ["repeatDataSimplePath", "repeatDataSimplePathCallable"]
             },
+            "SetIamPolicy": {
+              "methods": ["setIamPolicy", "setIamPolicyCallable"]
+            },
+            "TestIamPermissions": {
+              "methods": ["testIamPermissions", "testIamPermissionsCallable"]
+            },
             "VerifyEnum": {
               "methods": ["verifyEnum", "verifyEnumCallable"]
             }
@@ -70,6 +79,9 @@
             "Expand": {
               "methods": ["expandCallable"]
             },
+            "GetIamPolicy": {
+              "methods": ["getIamPolicy", "getIamPolicyCallable"]
+            },
             "GetLocation": {
               "methods": ["getLocation", "getLocationCallable"]
             },
@@ -84,6 +96,12 @@
             },
             "PagedExpandLegacyMapped": {
               "methods": ["pagedExpandLegacyMapped", "pagedExpandLegacyMappedPagedCallable", "pagedExpandLegacyMappedCallable"]
+            },
+            "SetIamPolicy": {
+              "methods": ["setIamPolicy", "setIamPolicyCallable"]
+            },
+            "TestIamPermissions": {
+              "methods": ["testIamPermissions", "testIamPermissionsCallable"]
             },
             "Wait": {
               "methods": ["waitAsync", "waitOperationCallable", "waitCallable"]
@@ -103,6 +121,9 @@
             "DeleteUser": {
               "methods": ["deleteUser", "deleteUser", "deleteUser", "deleteUserCallable"]
             },
+            "GetIamPolicy": {
+              "methods": ["getIamPolicy", "getIamPolicyCallable"]
+            },
             "GetLocation": {
               "methods": ["getLocation", "getLocationCallable"]
             },
@@ -114,6 +135,12 @@
             },
             "ListUsers": {
               "methods": ["listUsers", "listUsersPagedCallable", "listUsersCallable"]
+            },
+            "SetIamPolicy": {
+              "methods": ["setIamPolicy", "setIamPolicyCallable"]
+            },
+            "TestIamPermissions": {
+              "methods": ["testIamPermissions", "testIamPermissionsCallable"]
             },
             "UpdateUser": {
               "methods": ["updateUser", "updateUserCallable"]
@@ -145,6 +172,9 @@
             "GetBlurb": {
               "methods": ["getBlurb", "getBlurb", "getBlurb", "getBlurbCallable"]
             },
+            "GetIamPolicy": {
+              "methods": ["getIamPolicy", "getIamPolicyCallable"]
+            },
             "GetLocation": {
               "methods": ["getLocation", "getLocationCallable"]
             },
@@ -166,8 +196,14 @@
             "SendBlurbs": {
               "methods": ["sendBlurbsCallable"]
             },
+            "SetIamPolicy": {
+              "methods": ["setIamPolicy", "setIamPolicyCallable"]
+            },
             "StreamBlurbs": {
               "methods": ["streamBlurbsCallable"]
+            },
+            "TestIamPermissions": {
+              "methods": ["testIamPermissions", "testIamPermissionsCallable"]
             },
             "UpdateBlurb": {
               "methods": ["updateBlurb", "updateBlurbCallable"]
@@ -196,6 +232,9 @@
             "CreateStreamingSequence": {
               "methods": ["createStreamingSequence", "createStreamingSequence", "createStreamingSequenceCallable"]
             },
+            "GetIamPolicy": {
+              "methods": ["getIamPolicy", "getIamPolicyCallable"]
+            },
             "GetLocation": {
               "methods": ["getLocation", "getLocationCallable"]
             },
@@ -207,6 +246,12 @@
             },
             "ListLocations": {
               "methods": ["listLocations", "listLocationsPagedCallable", "listLocationsCallable"]
+            },
+            "SetIamPolicy": {
+              "methods": ["setIamPolicy", "setIamPolicyCallable"]
+            },
+            "TestIamPermissions": {
+              "methods": ["testIamPermissions", "testIamPermissionsCallable"]
             }
           }
         }
@@ -226,6 +271,9 @@
             "DeleteTest": {
               "methods": ["deleteTest", "deleteTestCallable"]
             },
+            "GetIamPolicy": {
+              "methods": ["getIamPolicy", "getIamPolicyCallable"]
+            },
             "GetLocation": {
               "methods": ["getLocation", "getLocationCallable"]
             },
@@ -243,6 +291,12 @@
             },
             "ReportSession": {
               "methods": ["reportSession", "reportSessionCallable"]
+            },
+            "SetIamPolicy": {
+              "methods": ["setIamPolicy", "setIamPolicyCallable"]
+            },
+            "TestIamPermissions": {
+              "methods": ["testIamPermissions", "testIamPermissionsCallable"]
             },
             "VerifyTest": {
               "methods": ["verifyTest", "verifyTestCallable"]

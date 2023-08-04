@@ -15,8 +15,6 @@
 
 set -eo pipefail
 
-SHOWCASE_VERSION=0.28.0
-
 ## Get the directory of the build script
 scriptDir=$(realpath "$(dirname "${BASH_SOURCE[0]}")")
 ## cd to the parent directory, i.e. the root of the git repo
@@ -64,6 +62,9 @@ popd
 
 ### Round 3
 # Run showcase tests in GraalVM
+pushd showcase/gapic-showcase
+SHOWCASE_VERSION=$(mvn help:evaluate -Dexpression=gapic-showcase.version -q -DforceStdout)
+popd
 
 # Start showcase server
 mkdir -p /usr/src/showcase
@@ -71,9 +72,9 @@ curl --location https://github.com/googleapis/gapic-showcase/releases/download/v
 pushd /usr/src/showcase/
 tar -xf showcase-*
 ./gapic-showcase run &
+popd
 
 # Run showcase tests with `native` profile
-popd
 pushd showcase
 mvn test -Pnative,-showcase -Denforcer.skip=true -ntp -B
 popd

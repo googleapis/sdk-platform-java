@@ -131,7 +131,7 @@ public class ResourceNameHelperClassComposer {
             .setAnnotations(createClassAnnotations())
             .setScope(ScopeNode.PUBLIC)
             .setName(className)
-            .setImplementsTypes(createImplementsTypes())
+            .setImplementsTypes(Arrays.asList(createImplementsTypes(className)))
             .setStatements(
                 createClassStatements(
                     templateFinalVarExprs,
@@ -160,8 +160,26 @@ public class ResourceNameHelperClassComposer {
             .build());
   }
 
-  private static List<TypeNode> createImplementsTypes() {
-    return Arrays.asList(FIXED_TYPESTORE.get("ResourceName"));
+  /**
+   * Returns a singleton list with {@code ResourceName} as its only member. Checks for collisions
+   *
+   * @param implementingClassName class that is implementing the resulting list
+   */
+  private static TypeNode createImplementsTypes(String implementingClassName) {
+    // the original resource name reference has useFullName == false
+    TypeNode originalResourceName = FIXED_TYPESTORE.get("ResourceName");
+    if (implementingClassName.equals(originalResourceName.reference().name())) {
+      // we create a copy with useFullName == true
+      return TypeNode.withReference(
+          ConcreteReference.builder()
+              .setUseFullName(true)
+              .setClazz(com.google.api.resourcenames.ResourceName.class)
+              .setGenerics(originalResourceName.reference().generics())
+              .setIsStaticImport(originalResourceName.reference().isStaticImport())
+              .setWildcardUpperBound(originalResourceName.reference().wildcardUpperBound())
+              .build());
+    }
+    return originalResourceName;
   }
 
   private static List<VariableExpr> createTemplateClassMembers(

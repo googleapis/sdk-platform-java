@@ -33,6 +33,7 @@ import com.google.api.generator.gapic.composer.rest.HttpJsonServiceStubClassComp
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
+import com.google.api.generator.gapic.model.ReflectConfig;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.Transport;
@@ -53,6 +54,10 @@ public class Composer {
 
   public static GapicPackageInfo composePackageInfo(GapicContext context) {
     return addApacheLicense(ClientLibraryPackageInfoComposer.generatePackageInfo(context));
+  }
+
+  public static List<ReflectConfig> composeNativeReflectConfig(GapicContext context) {
+    return ClientLibraryReflectConfigComposer.generateReflectConfig(context);
   }
 
   public static List<GapicClass> generateServiceClasses(GapicContext context) {
