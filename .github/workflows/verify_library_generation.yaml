@@ -2,6 +2,7 @@ on:
   push:
     branches:
     - main
+  pull_requests:
 name: verify_library_generation
 jobs:
   verify_library_generation:
