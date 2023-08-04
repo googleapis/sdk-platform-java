@@ -165,6 +165,12 @@ public interface ApiTracer {
    */
   void batchRequestSent(long elementCount, long requestSize);
 
+  default void grpcTargetResolutionDelay(long elapsed) {};
+
+  default void grpcChannelReadinessDelay(long elapsed) {};
+
+  default void grpcCallSendDelay(long elapsed) {};
+
   /**
    * A context class to be used with {@link #inScope()} and a try-with-resources block. Closing a
    * {@link Scope} removes any context that the underlying implementation might've set in {@link

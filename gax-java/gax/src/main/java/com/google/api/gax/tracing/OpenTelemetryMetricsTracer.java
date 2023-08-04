@@ -57,6 +57,9 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
   private DoubleHistogram operationLatencyRecorder;
   private LongHistogram retryCountRecorder;
 
+  private DoubleHistogram targetResolutionDelayRecorder;
+  private DoubleHistogram channelReadinessDelayRecorder;
+  private DoubleHistogram callSendDelayRecorder;
   private Attributes defaultAttributes;
 
   Map<String, String> operationLatencyLabels = new HashMap<>();
@@ -83,6 +86,24 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
             .setDescription("Number of additional attempts per operation after initial attempt")
             .setUnit("1")
             .ofLongs()
+            .build();
+    this.targetResolutionDelayRecorder =
+        meter
+            .histogramBuilder("target_resolution_delay")
+            .setDescription("Delay caused by name resolution")
+            .setUnit("ns")
+            .build();
+    this.channelReadinessDelayRecorder =
+        meter
+            .histogramBuilder("channel_readiness_delay")
+            .setDescription("Delay caused by establishing connection")
+            .setUnit("ns")
+            .build();
+    this.callSendDelayRecorder =
+        meter
+            .histogramBuilder("call_send_delay")
+            .setDescription("Call send delay. (after the connection is ready)")
+            .setUnit("ns")
             .build();
     this.defaultAttributes = Attributes.of(stringKey("method_name"), spanName.toString());
   }
@@ -166,4 +187,19 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
 
   @Override
   public void batchRequestSent(long elementCount, long requestSize) {}
+
+  @Override
+  public void grpcTargetResolutionDelay(long elapsed) {
+    this.targetResolutionDelayRecorder.record(elapsed, defaultAttributes);
+  }
+
+  @Override
+  public void grpcChannelReadinessDelay(long elapsed) {
+    this.channelReadinessDelayRecorder.record(elapsed, defaultAttributes);
+  }
+
+  @Override
+  public void grpcCallSendDelay(long elapsed) {
+    this.callSendDelayRecorder.record(elapsed, defaultAttributes);
+  }
 }
