@@ -1,0 +1,44 @@
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+name: verify_library_generation
+jobs:
+  verify_library_generation:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        java: [ 8 ]
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-java@v3
+      with:
+        java-version: ${{ matrix.java }}
+        distribution: temurin
+        cache: maven
+    - name: clone googleapis
+      run: |
+        git clone https://github.com/googleapis/googleapis.git
+    - name: checkout a commit hash in googleapis
+      run: |
+        git checkout de4d95879fe000e75977f782e5104014934bbbfa
+      working-directory: googleapis
+    - name: clone google-cloud-java
+      run: |
+        git clone https://github.com/googleapis/google-cloud-java.git
+    - name: checkout a commit hash in google-cloud-java
+      run: |
+        git checkout c7011dbd69189330de1c2946b736cd712d5c1f4e
+      working-directory: google-cloud-java
+    - name: remove contents in destination path
+      run: |
+        rm -rf java-aiplatform
+      working-directory: google-cloud-java
+    - name: generate java-aiplatform
+      run: |
+        library_generation/generate_library.sh
+    - name: compare generation result
+      run: |
+        git diff java-aiplatform
+      working-directory: google-cloud-java
