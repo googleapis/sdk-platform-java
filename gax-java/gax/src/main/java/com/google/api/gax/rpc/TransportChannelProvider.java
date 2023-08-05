@@ -143,5 +143,7 @@ public interface TransportChannelProvider {
    */
   String getTransportName();
 
+  String getEndpoint();
+
   ApiCallContext getEmptyCallContext();
 }

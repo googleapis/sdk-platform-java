@@ -144,6 +144,11 @@ public class LocalChannelProvider implements TransportChannelProvider {
   }
 
   @Override
+  public String getEndpoint() {
+    return null;
+  }
+
+  @Override
   public ApiCallContext getEmptyCallContext() {
     return null;
   }

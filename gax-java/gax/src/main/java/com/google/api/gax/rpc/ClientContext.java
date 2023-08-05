@@ -238,7 +238,7 @@ public abstract class ClientContext {
     ApiCallContext defaultCallContext = transportChannelProvider.getEmptyCallContext();
     defaultCallContext =
         defaultCallContext.withEndpointContext(
-            EndpointContext.of(credentials, settings.getEndpoint(), settings.getMtlsEndpoint()));
+            EndpointContext.of(credentials, transportChannelProvider.needsEndpoint() ? settings.getEndpoint() : transportChannelProvider.getEndpoint(),settings.getMtlsEndpoint()));
     //    if (credentials != null) {
     //      defaultCallContext = defaultCallContext.withCredentials(credentials);
     //    }

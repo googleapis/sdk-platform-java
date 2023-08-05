@@ -198,6 +198,11 @@ public class ClientContextTest {
     }
 
     @Override
+    public String getEndpoint() {
+      return null;
+    }
+
+    @Override
     public ApiCallContext getEmptyCallContext() {
       return null;
     }
