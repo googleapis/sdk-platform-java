@@ -298,5 +298,9 @@ jobs:
           java-version: ${{ matrix.java }}
           distribution: temurin
       - run: mvn -version
+      - name: Install xmllint
+        run: |
+          apt-get update
+          apt-get -y install libxml2-utils
       - name: Perform downstream compatibility testing
         run: ./.kokoro/presubmit/downstream-compatibility.sh
