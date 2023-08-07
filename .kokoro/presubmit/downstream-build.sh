@@ -15,15 +15,21 @@
 
 set -eo pipefail
 
-## Get the directory of the build script
-scriptDir=$(realpath "$(dirname "${BASH_SOURCE[0]}")")
-## cd to the parent directory, i.e. the root of the git repo
-cd "${scriptDir}/../.."
-
+# Define the google-cloud-java modules to be tested
 if [ -z "${MODULES_UNDER_TEST}" ]; then
   echo "MODULES_UNDER_TEST must be set to run downstream-build.sh"
   exit 1
 fi
+# Define the dedicated client library repos to be tested
+if [ -z "${REPOS_UNDER_TEST}" ]; then
+  echo "REPOS_UNDER_TEST must be set to run downstream-build.sh"
+  exit 1
+fi
+
+## Get the directory of the build script
+scriptDir=$(realpath "$(dirname "${BASH_SOURCE[0]}")")
+cd "${scriptDir}/../.." # git repo root
+source "$scriptDir/common.sh"
 
 # Use GCP Maven Mirror
 mkdir -p "${HOME}/.m2"
@@ -34,38 +40,12 @@ cp settings.xml "${HOME}/.m2"
 mvn -B -ntp install --projects '!gapic-generator-java' \
   -Dcheckstyle.skip -Dfmt.skip -DskipTests
 
-# Read the shared dependencies version
-# Namespace (xmlns) prevents xmllint from specifying tag names in XPath
-SHARED_DEPS_VERSION=$(sed -e 's/xmlns=".*"//' java-shared-dependencies/pom.xml | xmllint --xpath '/project/version/text()' -)
+SHARED_DEPS_VERSION=$(parse_pom_version java-shared-dependencies)
 
-if [ -z "${SHARED_DEPS_VERSION}" ]; then
-  echo "Shared dependencies version is not found in pom.xml"
-  exit 1
-fi
-
-### Round 2
-# Update the shared-dependencies version in google-cloud-jar-parent
-git clone "https://github.com/googleapis/google-cloud-java.git" --depth=1
-pushd google-cloud-java/google-cloud-jar-parent
-xmllint --shell pom.xml <<EOF
-setns x=http://maven.apache.org/POM/4.0.0
-cd .//x:artifactId[text()="google-cloud-shared-dependencies"]
-cd ../x:version
-set ${SHARED_DEPS_VERSION}
-save pom.xml
-EOF
-
-echo "Modifications to java-shared-dependencies:"
-git diff
-echo
-popd
-
-### Round 3
-# Run showcase tests in GraalVM
+### Round 2 : Run showcase integration tests in GraalVM
 pushd showcase/gapic-showcase
 SHOWCASE_VERSION=$(mvn help:evaluate -Dexpression=gapic-showcase.version -q -DforceStdout)
 popd
-
 # Start showcase server
 mkdir -p /usr/src/showcase
 curl --location https://github.com/googleapis/gapic-showcase/releases/download/v"${SHOWCASE_VERSION}"/gapic-showcase-"${SHOWCASE_VERSION}"-linux-amd64.tar.gz --output /usr/src/showcase/showcase-"${SHOWCASE_VERSION}"-linux-amd64.tar.gz
@@ -73,21 +53,24 @@ pushd /usr/src/showcase/
 tar -xf showcase-*
 ./gapic-showcase run &
 popd
-
 # Run showcase tests with `native` profile
 pushd showcase
 mvn test -Pnative,-showcase -Denforcer.skip=true -ntp -B
 popd
 
+### Round 3
+# Update the shared-dependencies version in google-cloud-jar-parent
+git clone "https://github.com/googleapis/google-cloud-java.git" --depth=1
+update_all_poms_dependency google-cloud-java google-cloud-shared-dependencies "$SHARED_DEPS_VERSION"
+
 ### Round 4
-# Run the updated java-shared-dependencies BOM against google-cloud-java
+# Run the updated java-shared-dependencies BOM against google-cloud-java integration tests
 pushd google-cloud-java
 source ./.kokoro/common.sh
 RETURN_CODE=0
 setup_application_credentials
 setup_cloud "$MODULES_UNDER_TEST"
 run_graalvm_tests "$MODULES_UNDER_TEST"
+popd
 
-
-
-exit $RETURN_CODE
+exit "$RETURN_CODE"
