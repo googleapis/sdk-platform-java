@@ -300,7 +300,7 @@ jobs:
       - run: mvn -version
       - name: Install xmllint
         run: |
-          apt-get update
+          sudo apt-get update
           sudo apt-get -y install libxml2-utils
       - name: Perform downstream compatibility testing
         run: ./.kokoro/presubmit/downstream-compatibility.sh
