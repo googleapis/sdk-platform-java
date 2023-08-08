@@ -1,5 +1,27 @@
 # Changelog
 
+## [2.24.0](https://github.com/googleapis/sdk-platform-java/compare/v2.23.1...v2.24.0) (2023-08-01)
+
+
+### Features
+
+* [common-protos] Add a proto message to describe the `resource_type` and `resource_permission` for an API method ([#1878](https://github.com/googleapis/sdk-platform-java/issues/1878)) ([3e27ca9](https://github.com/googleapis/sdk-platform-java/commit/3e27ca9763e9639fb00b99bdef9cf95aacd33897))
+
+## [2.23.1](https://github.com/googleapis/sdk-platform-java/compare/v2.23.0...v2.23.1) (2023-07-19)
+
+
+### Bug Fixes
+
+* Resource name class deduplication ([#1854](https://github.com/googleapis/sdk-platform-java/issues/1854)) ([08eca7d](https://github.com/googleapis/sdk-platform-java/commit/08eca7de7e80c6f242a23a9d76659e0a413c896f))
+* Use bindings for resolving multi pattern resources ([#1818](https://github.com/googleapis/sdk-platform-java/issues/1818)) ([1352fab](https://github.com/googleapis/sdk-platform-java/commit/1352fab654052e670df6d5c8718fcc6e06ef086c))
+
+
+### Dependencies
+
+* Auto-value version 1.10.2 ([#1859](https://github.com/googleapis/sdk-platform-java/issues/1859)) ([54843c9](https://github.com/googleapis/sdk-platform-java/commit/54843c95e0f0e2d004b14e82650c01026bf2ad70))
+* Bump grpc version to 1.56.1 ([1fcdd89](https://github.com/googleapis/sdk-platform-java/commit/1fcdd893240a7e5da293c6a26df193131577bbdd))
+* Bump jackson version to 2.15.2 ([bde81d8](https://github.com/googleapis/sdk-platform-java/commit/bde81d8c6f15130f51ea4e2d9805de3c0a21ae39))
+
 ## [2.23.0](https://github.com/googleapis/sdk-platform-java/compare/v2.22.0...v2.23.0) (2023-07-07)
 
 

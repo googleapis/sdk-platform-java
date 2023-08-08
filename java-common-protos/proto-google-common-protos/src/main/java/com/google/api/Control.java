@@ -44,6 +44,7 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
 
   private Control() {
     environment_ = "";
+    methodPolicies_ = java.util.Collections.emptyList();
   }
 
   @java.lang.Override
@@ -119,6 +120,77 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
     }
   }
 
+  public static final int METHOD_POLICIES_FIELD_NUMBER = 4;
+
+  @SuppressWarnings("serial")
+  private java.util.List<com.google.api.MethodPolicy> methodPolicies_;
+  /**
+   *
+   *
+   * <pre>
+   * Defines policies applying to the API methods of the service.
+   * </pre>
+   *
+   * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
+   */
+  @java.lang.Override
+  public java.util.List<com.google.api.MethodPolicy> getMethodPoliciesList() {
+    return methodPolicies_;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Defines policies applying to the API methods of the service.
+   * </pre>
+   *
+   * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
+   */
+  @java.lang.Override
+  public java.util.List<? extends com.google.api.MethodPolicyOrBuilder>
+      getMethodPoliciesOrBuilderList() {
+    return methodPolicies_;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Defines policies applying to the API methods of the service.
+   * </pre>
+   *
+   * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
+   */
+  @java.lang.Override
+  public int getMethodPoliciesCount() {
+    return methodPolicies_.size();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Defines policies applying to the API methods of the service.
+   * </pre>
+   *
+   * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
+   */
+  @java.lang.Override
+  public com.google.api.MethodPolicy getMethodPolicies(int index) {
+    return methodPolicies_.get(index);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * Defines policies applying to the API methods of the service.
+   * </pre>
+   *
+   * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
+   */
+  @java.lang.Override
+  public com.google.api.MethodPolicyOrBuilder getMethodPoliciesOrBuilder(int index) {
+    return methodPolicies_.get(index);
+  }
+
   private byte memoizedIsInitialized = -1;
 
   @java.lang.Override
@@ -136,6 +208,9 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(environment_)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 1, environment_);
     }
+    for (int i = 0; i < methodPolicies_.size(); i++) {
+      output.writeMessage(4, methodPolicies_.get(i));
+    }
     getUnknownFields().writeTo(output);
   }
 
@@ -147,6 +222,9 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
     size = 0;
     if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(environment_)) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(1, environment_);
+    }
+    for (int i = 0; i < methodPolicies_.size(); i++) {
+      size += com.google.protobuf.CodedOutputStream.computeMessageSize(4, methodPolicies_.get(i));
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -164,6 +242,7 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
     com.google.api.Control other = (com.google.api.Control) obj;
 
     if (!getEnvironment().equals(other.getEnvironment())) return false;
+    if (!getMethodPoliciesList().equals(other.getMethodPoliciesList())) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -177,6 +256,10 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + ENVIRONMENT_FIELD_NUMBER;
     hash = (53 * hash) + getEnvironment().hashCode();
+    if (getMethodPoliciesCount() > 0) {
+      hash = (37 * hash) + METHOD_POLICIES_FIELD_NUMBER;
+      hash = (53 * hash) + getMethodPoliciesList().hashCode();
+    }
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -318,6 +401,13 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
       super.clear();
       bitField0_ = 0;
       environment_ = "";
+      if (methodPoliciesBuilder_ == null) {
+        methodPolicies_ = java.util.Collections.emptyList();
+      } else {
+        methodPolicies_ = null;
+        methodPoliciesBuilder_.clear();
+      }
+      bitField0_ = (bitField0_ & ~0x00000002);
       return this;
     }
 
@@ -343,11 +433,24 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
     @java.lang.Override
     public com.google.api.Control buildPartial() {
       com.google.api.Control result = new com.google.api.Control(this);
+      buildPartialRepeatedFields(result);
       if (bitField0_ != 0) {
         buildPartial0(result);
       }
       onBuilt();
       return result;
+    }
+
+    private void buildPartialRepeatedFields(com.google.api.Control result) {
+      if (methodPoliciesBuilder_ == null) {
+        if (((bitField0_ & 0x00000002) != 0)) {
+          methodPolicies_ = java.util.Collections.unmodifiableList(methodPolicies_);
+          bitField0_ = (bitField0_ & ~0x00000002);
+        }
+        result.methodPolicies_ = methodPolicies_;
+      } else {
+        result.methodPolicies_ = methodPoliciesBuilder_.build();
+      }
     }
 
     private void buildPartial0(com.google.api.Control result) {
@@ -407,6 +510,33 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
         bitField0_ |= 0x00000001;
         onChanged();
       }
+      if (methodPoliciesBuilder_ == null) {
+        if (!other.methodPolicies_.isEmpty()) {
+          if (methodPolicies_.isEmpty()) {
+            methodPolicies_ = other.methodPolicies_;
+            bitField0_ = (bitField0_ & ~0x00000002);
+          } else {
+            ensureMethodPoliciesIsMutable();
+            methodPolicies_.addAll(other.methodPolicies_);
+          }
+          onChanged();
+        }
+      } else {
+        if (!other.methodPolicies_.isEmpty()) {
+          if (methodPoliciesBuilder_.isEmpty()) {
+            methodPoliciesBuilder_.dispose();
+            methodPoliciesBuilder_ = null;
+            methodPolicies_ = other.methodPolicies_;
+            bitField0_ = (bitField0_ & ~0x00000002);
+            methodPoliciesBuilder_ =
+                com.google.protobuf.GeneratedMessageV3.alwaysUseFieldBuilders
+                    ? getMethodPoliciesFieldBuilder()
+                    : null;
+          } else {
+            methodPoliciesBuilder_.addAllMessages(other.methodPolicies_);
+          }
+        }
+      }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
       return this;
@@ -439,6 +569,18 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
                 bitField0_ |= 0x00000001;
                 break;
               } // case 10
+            case 34:
+              {
+                com.google.api.MethodPolicy m =
+                    input.readMessage(com.google.api.MethodPolicy.parser(), extensionRegistry);
+                if (methodPoliciesBuilder_ == null) {
+                  ensureMethodPoliciesIsMutable();
+                  methodPolicies_.add(m);
+                } else {
+                  methodPoliciesBuilder_.addMessage(m);
+                }
+                break;
+              } // case 34
             default:
               {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
@@ -572,6 +714,357 @@ public final class Control extends com.google.protobuf.GeneratedMessageV3
       bitField0_ |= 0x00000001;
       onChanged();
       return this;
+    }
+
+    private java.util.List<com.google.api.MethodPolicy> methodPolicies_ =
+        java.util.Collections.emptyList();
+
+    private void ensureMethodPoliciesIsMutable() {
+      if (!((bitField0_ & 0x00000002) != 0)) {
+        methodPolicies_ = new java.util.ArrayList<com.google.api.MethodPolicy>(methodPolicies_);
+        bitField0_ |= 0x00000002;
+      }
+    }
+
+    private com.google.protobuf.RepeatedFieldBuilderV3<
+            com.google.api.MethodPolicy,
+            com.google.api.MethodPolicy.Builder,
+            com.google.api.MethodPolicyOrBuilder>
+        methodPoliciesBuilder_;
+
+    /**
+     *
+     *
+     * <pre>
+     * Defines policies applying to the API methods of the service.
+     * </pre>
+     *
+     * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
+     */
+    public java.util.List<com.google.api.MethodPolicy> getMethodPoliciesList() {
+      if (methodPoliciesBuilder_ == null) {
+        return java.util.Collections.unmodifiableList(methodPolicies_);
+      } else {
+        return methodPoliciesBuilder_.getMessageList();
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Defines policies applying to the API methods of the service.
+     * </pre>
+     *
+     * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
+     */
+    public int getMethodPoliciesCount() {
+      if (methodPoliciesBuilder_ == null) {
+        return methodPolicies_.size();
+      } else {
+        return methodPoliciesBuilder_.getCount();
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Defines policies applying to the API methods of the service.
+     * </pre>
+     *
+     * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
+     */
+    public com.google.api.MethodPolicy getMethodPolicies(int index) {
+      if (methodPoliciesBuilder_ == null) {
+        return methodPolicies_.get(index);
+      } else {
+        return methodPoliciesBuilder_.getMessage(index);
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Defines policies applying to the API methods of the service.
+     * </pre>
+     *
+     * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
+     */
+    public Builder setMethodPolicies(int index, com.google.api.MethodPolicy value) {
+      if (methodPoliciesBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureMethodPoliciesIsMutable();
+        methodPolicies_.set(index, value);
+        onChanged();
+      } else {
+        methodPoliciesBuilder_.setMessage(index, value);
+      }
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Defines policies applying to the API methods of the service.
+     * </pre>
+     *
+     * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
+     */
+    public Builder setMethodPolicies(
+        int index, com.google.api.MethodPolicy.Builder builderForValue) {
+      if (methodPoliciesBuilder_ == null) {
+        ensureMethodPoliciesIsMutable();
+        methodPolicies_.set(index, builderForValue.build());
+        onChanged();
+      } else {
+        methodPoliciesBuilder_.setMessage(index, builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Defines policies applying to the API methods of the service.
+     * </pre>
+     *
+     * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
+     */
+    public Builder addMethodPolicies(com.google.api.MethodPolicy value) {
+      if (methodPoliciesBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureMethodPoliciesIsMutable();
+        methodPolicies_.add(value);
+        onChanged();
+      } else {
+        methodPoliciesBuilder_.addMessage(value);
+      }
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Defines policies applying to the API methods of the service.
+     * </pre>
+     *
+     * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
+     */
+    public Builder addMethodPolicies(int index, com.google.api.MethodPolicy value) {
+      if (methodPoliciesBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        ensureMethodPoliciesIsMutable();
+        methodPolicies_.add(index, value);
+        onChanged();
+      } else {
+        methodPoliciesBuilder_.addMessage(index, value);
+      }
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Defines policies applying to the API methods of the service.
+     * </pre>
+     *
+     * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
+     */
+    public Builder addMethodPolicies(com.google.api.MethodPolicy.Builder builderForValue) {
+      if (methodPoliciesBuilder_ == null) {
+        ensureMethodPoliciesIsMutable();
+        methodPolicies_.add(builderForValue.build());
+        onChanged();
+      } else {
+        methodPoliciesBuilder_.addMessage(builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Defines policies applying to the API methods of the service.
+     * </pre>
+     *
+     * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
+     */
+    public Builder addMethodPolicies(
+        int index, com.google.api.MethodPolicy.Builder builderForValue) {
+      if (methodPoliciesBuilder_ == null) {
+        ensureMethodPoliciesIsMutable();
+        methodPolicies_.add(index, builderForValue.build());
+        onChanged();
+      } else {
+        methodPoliciesBuilder_.addMessage(index, builderForValue.build());
+      }
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Defines policies applying to the API methods of the service.
+     * </pre>
+     *
+     * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
+     */
+    public Builder addAllMethodPolicies(
+        java.lang.Iterable<? extends com.google.api.MethodPolicy> values) {
+      if (methodPoliciesBuilder_ == null) {
+        ensureMethodPoliciesIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(values, methodPolicies_);
+        onChanged();
+      } else {
+        methodPoliciesBuilder_.addAllMessages(values);
+      }
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Defines policies applying to the API methods of the service.
+     * </pre>
+     *
+     * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
+     */
+    public Builder clearMethodPolicies() {
+      if (methodPoliciesBuilder_ == null) {
+        methodPolicies_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        onChanged();
+      } else {
+        methodPoliciesBuilder_.clear();
+      }
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Defines policies applying to the API methods of the service.
+     * </pre>
+     *
+     * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
+     */
+    public Builder removeMethodPolicies(int index) {
+      if (methodPoliciesBuilder_ == null) {
+        ensureMethodPoliciesIsMutable();
+        methodPolicies_.remove(index);
+        onChanged();
+      } else {
+        methodPoliciesBuilder_.remove(index);
+      }
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Defines policies applying to the API methods of the service.
+     * </pre>
+     *
+     * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
+     */
+    public com.google.api.MethodPolicy.Builder getMethodPoliciesBuilder(int index) {
+      return getMethodPoliciesFieldBuilder().getBuilder(index);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Defines policies applying to the API methods of the service.
+     * </pre>
+     *
+     * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
+     */
+    public com.google.api.MethodPolicyOrBuilder getMethodPoliciesOrBuilder(int index) {
+      if (methodPoliciesBuilder_ == null) {
+        return methodPolicies_.get(index);
+      } else {
+        return methodPoliciesBuilder_.getMessageOrBuilder(index);
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Defines policies applying to the API methods of the service.
+     * </pre>
+     *
+     * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
+     */
+    public java.util.List<? extends com.google.api.MethodPolicyOrBuilder>
+        getMethodPoliciesOrBuilderList() {
+      if (methodPoliciesBuilder_ != null) {
+        return methodPoliciesBuilder_.getMessageOrBuilderList();
+      } else {
+        return java.util.Collections.unmodifiableList(methodPolicies_);
+      }
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Defines policies applying to the API methods of the service.
+     * </pre>
+     *
+     * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
+     */
+    public com.google.api.MethodPolicy.Builder addMethodPoliciesBuilder() {
+      return getMethodPoliciesFieldBuilder()
+          .addBuilder(com.google.api.MethodPolicy.getDefaultInstance());
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Defines policies applying to the API methods of the service.
+     * </pre>
+     *
+     * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
+     */
+    public com.google.api.MethodPolicy.Builder addMethodPoliciesBuilder(int index) {
+      return getMethodPoliciesFieldBuilder()
+          .addBuilder(index, com.google.api.MethodPolicy.getDefaultInstance());
+    }
+    /**
+     *
+     *
+     * <pre>
+     * Defines policies applying to the API methods of the service.
+     * </pre>
+     *
+     * <code>repeated .google.api.MethodPolicy method_policies = 4;</code>
+     */
+    public java.util.List<com.google.api.MethodPolicy.Builder> getMethodPoliciesBuilderList() {
+      return getMethodPoliciesFieldBuilder().getBuilderList();
+    }
+
+    private com.google.protobuf.RepeatedFieldBuilderV3<
+            com.google.api.MethodPolicy,
+            com.google.api.MethodPolicy.Builder,
+            com.google.api.MethodPolicyOrBuilder>
+        getMethodPoliciesFieldBuilder() {
+      if (methodPoliciesBuilder_ == null) {
+        methodPoliciesBuilder_ =
+            new com.google.protobuf.RepeatedFieldBuilderV3<
+                com.google.api.MethodPolicy,
+                com.google.api.MethodPolicy.Builder,
+                com.google.api.MethodPolicyOrBuilder>(
+                methodPolicies_,
+                ((bitField0_ & 0x00000002) != 0),
+                getParentForChildren(),
+                isClean());
+        methodPolicies_ = null;
+      }
+      return methodPoliciesBuilder_;
     }
 
     @java.lang.Override
