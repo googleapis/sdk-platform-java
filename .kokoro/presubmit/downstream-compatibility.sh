@@ -21,21 +21,20 @@ if [ -z "${REPOS_UNDER_TEST}" ]; then
   exit 1
 fi
 
-## Get the directory of the build script
+# Get the directory of the build script
 scriptDir=$(realpath "$(dirname "${BASH_SOURCE[0]}")")
-## cd to the parent directory, i.e. the root of the git repo
-cd "${scriptDir}/../.."
+cd "${scriptDir}/../.." # cd to the root of this repo
 source "$scriptDir/common.sh"
 
-# Use GCP Maven Mirror
+echo "Setup maven mirror"
 mkdir -p "${HOME}/.m2"
 cp settings.xml "${HOME}/.m2"
 
-# Publish this repo's modules to local maven to make them available for downstream libraries
-mvn -B -ntp install --projects '!gapic-generator-java' \
+echo "Installing this repo's modules to local maven."
+mvn -q -B -ntp install --projects '!gapic-generator-java' \
   -Dcheckstyle.skip -Dfmt.skip -DskipTests -T 1C
-
 SHARED_DEPS_VERSION=$(parse_pom_version java-shared-dependencies)
+echo "Install complete. java-shared-dependencies = $SHARED_DEPS_VERSION"
 
 pushd java-shared-dependencies/target
 for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
