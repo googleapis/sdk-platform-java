@@ -7,7 +7,7 @@ GOOGLEAPIS_COMMIT=$1
 PROTOBUF_VERSION=$2
 GRPC_VERSION=$3
 GAPIC_GENERATOR_VERSION=$4
-PROTO_PATH=$5 
+PROTO_PATH=$5
 CONTAINS_CLOUD=$6
 TRANSPORT=$7 # grpc+rest or grpc
 REST_NUMERIC_ENUMS=$8 # true or false
@@ -32,7 +32,7 @@ fi
 
 LIBRARY_GEN_OUT=$(dirname "$(readlink -f "$0")")/../library_gen_out
 REPO_ROOT="${LIBRARY_GEN_OUT}"/..
-GENERATED_LIBRARY_ROOT="${LIBRARY_GEN_OUT}/${PROTO_PATH}" 
+GENERATED_LIBRARY_ROOT="${LIBRARY_GEN_OUT}/${PROTO_PATH}"
 mkdir -p $GENERATED_LIBRARY_ROOT
 
 
@@ -292,6 +292,9 @@ bash $SCRIPT_DIR/post-processing/update_owlbot_postprocessor_config.sh $WORKSPAC
 bash $SCRIPT_DIR/post-processing/delete_non_generated_samples.sh $WORKSPACE
 bash $SCRIPT_DIR/post-processing/consolidate_config.sh $WORKSPACE
 bash $SCRIPT_DIR/post-processing/readme_update.sh $WORKSPACE
+pushd $WORKSPACE
+bash $SCRIPT_DIR/post-processing/apply_current_versions.sh 
+popd
 rm $WORKSPACE/versions.txt
 if [ -z ${MONOREPO_TAG+x} ]; then
   echo "Will not add parent project to pom"
@@ -304,7 +307,7 @@ else
   popd
   # rm -rdf google-cloud-java
   popd
-  bash $SCRIPT_DIR/post-processing/set_parent_pom.sh $WORKSPACE $PARENT_POM
+  # bash $SCRIPT_DIR/post-processing/set_parent_pom.sh $WORKSPACE $PARENT_POM
 fi
 
 # rename folders properly (may not be necessary after all)

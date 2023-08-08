@@ -37,5 +37,5 @@ $MONOREPO_TAG
 cd google-cloud-java
 rm -rdf java-channel/*
 cp -r ../../library_gen_out/workspace/* java-channel/
-
+cd java-channel
 

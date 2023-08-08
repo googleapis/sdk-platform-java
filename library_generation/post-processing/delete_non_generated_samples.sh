@@ -2,7 +2,7 @@
 
 set -ex
 
-pushd $1/..
+pushd $1
 
 if [[ -d "samples/snippets/generated" ]]; then
   mkdir -p _TMP_/snippets
