@@ -289,6 +289,7 @@ jobs:
   downstream-compatibility:
     runs-on: ubuntu-22.04
     strategy:
+      fail-fast: false
       matrix:
         repo:
           - google-cloud-java
