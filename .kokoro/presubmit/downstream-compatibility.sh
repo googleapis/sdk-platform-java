@@ -15,24 +15,10 @@
 
 set -eo pipefail
 
-# Define the dedicated client library repos to be tested in a comma-separated list
+# Comma-delimited list of repos to test with the local java-shared-dependencies
 if [ -z "${REPOS_UNDER_TEST}" ]; then
-  REPOS_UNDER_TEST='
-    google-cloud-java
-    java-bigtable
-    java-bigquery
-    java-bigquerystorage
-    java-datastore
-    java-firestore
-    java-logging
-    java-logging-logback
-    java-pubsub
-    java-pubsublite
-    java-spanner-jdbc
-    java-spanner
-    java-storage
-    java-storage-nio
-  '
+  echo "REPOS_UNDER_TEST must be set to run downstream-compatibility.sh"
+  exit 1
 fi
 
 ## Get the directory of the build script
@@ -45,7 +31,6 @@ source "$scriptDir/common.sh"
 mkdir -p "${HOME}/.m2"
 cp settings.xml "${HOME}/.m2"
 
-### Round 1
 # Publish this repo's modules to local maven to make them available for downstream libraries
 mvn -B -ntp install --projects '!gapic-generator-java' \
   -Dcheckstyle.skip -Dfmt.skip -DskipTests -T 1C
@@ -53,7 +38,7 @@ mvn -B -ntp install --projects '!gapic-generator-java' \
 SHARED_DEPS_VERSION=$(parse_pom_version java-shared-dependencies)
 
 pushd java-shared-dependencies/target
-for repo in $REPOS_UNDER_TEST; do
+for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   git clone "https://github.com/googleapis/$repo.git" --depth=1
   update_all_poms_dependency "$repo" google-cloud-shared-dependencies "$SHARED_DEPS_VERSION"
   pushd "$repo"
