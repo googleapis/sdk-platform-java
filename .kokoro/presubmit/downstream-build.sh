@@ -15,16 +15,12 @@
 
 set -eo pipefail
 
-# Define the google-cloud-java modules to be tested
 if [ -z "${MODULES_UNDER_TEST}" ]; then
   echo "MODULES_UNDER_TEST must be set to run downstream-build.sh"
   exit 1
 fi
-# Define the dedicated client library repos to be tested
-if [ -z "${REPOS_UNDER_TEST}" ]; then
-  echo "REPOS_UNDER_TEST must be set to run downstream-build.sh"
-  exit 1
-fi
+# Use default value for REPOS_UNDER_TEST if unset. If set to empty string, maintain empty string.
+REPOS_UNDER_TEST=${REPOS_UNDER_TEST-"java-storage"}
 
 ## Get the directory of the build script
 scriptDir=$(realpath "$(dirname "${BASH_SOURCE[0]}")")
