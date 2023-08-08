@@ -17,6 +17,16 @@ jobs:
         java-version: ${{ matrix.java }}
         distribution: temurin
         cache: maven
+    - name: maven install
+      run: |
+        mvn clean install -DskipTests
+    - name: get gapic-generator-java version
+      run: |
+        echo "GENERATOR_VERSION=$(mvn help:effective-pom | grep -A 2 -B 2 -m 1 gapic-generator-java | grep version | sed 's/<version>\(.*\)<\/version>/\1/' | tr -s ' ')" >> $GITHUB_ENV
+      working-directory: java-shared-dependencies
+    - name: echo generator version
+      run: |
+        echo "generator version is $GENERATOR_VERSION"
     - name: clone googleapis
       run: |
         git clone https://github.com/googleapis/googleapis.git
