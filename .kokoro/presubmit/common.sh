@@ -54,3 +54,24 @@ function parse_pom_version {
   fi
   echo "$result"
 }
+
+# ex: find_last_release_version java-bigtable
+# ex: find_last_release_version java-storage 2.22.x
+function find_last_release_version {
+  branch=${2-"main"} # Default to using main branch
+  curl -s -o "versions_$1.txt" "https://raw.githubusercontent.com/googleapis/$1/$branch/versions.txt"
+
+  # First check to see if there's an entry for the overall repo. Used for google-cloud-java.
+  primary_artifact=$(grep -E "^$1" "versions_$1.txt" | head -n 1)
+  if [ -z "$primary_artifact" ]; then
+    # Otherwise, use the first google-cloud-* artifact's version.
+    primary_artifact=$(grep -E "^google-cloud-" "versions_$1.txt" | head -n 1)
+  fi
+  if [ -z "$primary_artifact" ]; then
+    echo "Unable to identify primary artifact for $1"
+    exit 1;
+  fi
+
+  parts=($(echo "$primary_artifact" | tr ":" "\n"))
+  echo "${parts[1]}";
+}
