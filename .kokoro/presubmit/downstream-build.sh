@@ -61,12 +61,11 @@ update_all_poms_dependency google-cloud-java google-cloud-shared-dependencies "$
 
 ### Round 4
 # Run the updated java-shared-dependencies BOM against google-cloud-java integration tests
-pushd google-cloud-java
+cd google-cloud-java
 source ./.kokoro/common.sh
 RETURN_CODE=0
 setup_application_credentials
 setup_cloud "$MODULES_UNDER_TEST"
 run_graalvm_tests "$MODULES_UNDER_TEST"
-popd
-
+# Exit must occur in google-cloud-java directory to correctly destroy IT resources
 exit "$RETURN_CODE"
