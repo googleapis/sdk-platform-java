@@ -19,7 +19,7 @@ jobs:
         cache: maven
     - name: maven install
       run: |
-        mvn clean install -DskipTests
+        mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
     - name: get gapic-generator-java version
       run: |
         echo "GENERATOR_VERSION=$(mvn help:effective-pom | grep -A 2 -B 2 -m 1 gapic-generator-java | grep version | sed 's/<version>\(.*\)<\/version>/\1/' | tr -s ' ')" >> $GITHUB_ENV
