@@ -40,22 +40,28 @@ public final class ControlProto {
 
   static {
     java.lang.String[] descriptorData = {
-      "\n\030google/api/control.proto\022\ngoogle.api\"\036"
-          + "\n\007Control\022\023\n\013environment\030\001 \001(\tBn\n\016com.go"
-          + "ogle.apiB\014ControlProtoP\001ZEgoogle.golang."
-          + "org/genproto/googleapis/api/serviceconfi"
-          + "g;serviceconfig\242\002\004GAPIb\006proto3"
+      "\n\030google/api/control.proto\022\ngoogle.api\032\027"
+          + "google/api/policy.proto\"Q\n\007Control\022\023\n\013en"
+          + "vironment\030\001 \001(\t\0221\n\017method_policies\030\004 \003(\013"
+          + "2\030.google.api.MethodPolicyBn\n\016com.google"
+          + ".apiB\014ControlProtoP\001ZEgoogle.golang.org/"
+          + "genproto/googleapis/api/serviceconfig;se"
+          + "rviceconfig\242\002\004GAPIb\006proto3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(
-            descriptorData, new com.google.protobuf.Descriptors.FileDescriptor[] {});
+            descriptorData,
+            new com.google.protobuf.Descriptors.FileDescriptor[] {
+              com.google.api.PolicyProto.getDescriptor(),
+            });
     internal_static_google_api_Control_descriptor = getDescriptor().getMessageTypes().get(0);
     internal_static_google_api_Control_fieldAccessorTable =
         new com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
             internal_static_google_api_Control_descriptor,
             new java.lang.String[] {
-              "Environment",
+              "Environment", "MethodPolicies",
             });
+    com.google.api.PolicyProto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)
