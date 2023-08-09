@@ -20,6 +20,9 @@ if [ -z "${MODULES_UNDER_TEST}" ]; then
   exit 1
 fi
 # Use default value for REPOS_UNDER_TEST if unset. If set to empty string, maintain empty string.
+#
+# java-storage is currently the only downstream repo that doesn't require cloud resources for its
+#   GraalVM integration tests.
 REPOS_UNDER_TEST=${REPOS_UNDER_TEST-"java-storage"}
 
 ## Get the directory of the build script
