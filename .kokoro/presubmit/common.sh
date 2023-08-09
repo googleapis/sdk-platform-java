@@ -18,7 +18,7 @@
 # ex: update_dependency google-cloud-java/google-cloud-jar-parent google-cloud-shared-dependencies 1.2.3
 function update_pom_dependency {
   pushd "$1" || exit 1
-  xmllint --shell pom.xml <<EOF
+  xmllint --shell pom.xml &>/dev/null <<EOF
 setns x=http://maven.apache.org/POM/4.0.0
 cd .//x:artifactId[text()="$2"]
 cd ../x:version
@@ -28,13 +28,25 @@ EOF
   popd || exit 1
 }
 
+# Find all pom.xml files that declare a specific version for the given artifact ($1)
+function find_all_poms_with_versioned_dependency {
+  poms=($(find . -name pom.xml))
+  for pom in "${poms[@]}"; do
+    if xmllint --xpath "//*[local-name()='artifactId' and text()='$1']/following-sibling::*[local-name()='version']" "$pom" &>/dev/null; then
+      found+=("$pom")
+    fi
+  done
+  POMS=(${found[@]})
+  unset found
+  export POMS
+}
+
 # In the given directory ($1),
 #   find and update all pom.xmls' dependencies on the given artifact ($2) to the given version ($3)
 # ex: update_all_poms_dependency google-cloud-java google-cloud-shared-dependencies 1.2.3
 function update_all_poms_dependency {
   pushd "$1" || exit 1
-  # Recursively find all pom.xmls with a dependency on the given artifact.
-  POMS=$(grep -Rl --include="pom.xml" "<artifactId>$2" .)
+  find_all_poms_with_versioned_dependency "$2"
   for pom in $POMS; do
     update_pom_dependency "$(dirname "$pom")" "$2" "$3"
   done
@@ -69,9 +81,9 @@ function find_last_release_version {
   fi
   if [ -z "$primary_artifact" ]; then
     echo "Unable to identify primary artifact for $1"
-    exit 1;
+    exit 1
   fi
 
   parts=($(echo "$primary_artifact" | tr ":" "\n"))
-  echo "${parts[1]}";
+  echo "${parts[1]}"
 }

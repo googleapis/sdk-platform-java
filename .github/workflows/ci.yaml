@@ -317,5 +317,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get -y install libxml2-utils
+      - name: Test helper scripts
+        run: ./.kokoro/presubmit/common_test.sh
       - name: Perform downstream compatibility testing
         run: REPOS_UNDER_TEST="${{ matrix.repo }}" ./.kokoro/presubmit/downstream-compatibility.sh
