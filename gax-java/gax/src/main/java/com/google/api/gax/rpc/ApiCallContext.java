@@ -57,6 +57,11 @@ import org.threeten.bp.Duration;
 @InternalExtensionOnly
 public interface ApiCallContext extends RetryingContext {
 
+  @FunctionalInterface
+  interface SetTransportChannelListener {
+    void setTransportChannel(TransportChannel transportChannel);
+  }
+
   /** Returns a new ApiCallContext with the given credentials set. */
   ApiCallContext withCredentials(Credentials credentials);
 
@@ -64,6 +69,8 @@ public interface ApiCallContext extends RetryingContext {
   ApiCallContext withTransportChannel(TransportChannel channel);
 
   ApiCallContext withEndpointContext(EndpointContext endpointContext);
+
+  ApiCallContext withTransportChannelResolver(TransportChannelResolver transportChannelResolver);
 
   /**
    * Returns a new ApiCallContext with the given timeout set.

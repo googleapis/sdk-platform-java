@@ -36,6 +36,7 @@ import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.TransportChannel;
+import com.google.api.gax.rpc.TransportChannelResolver;
 import com.google.api.gax.rpc.internal.ApiCallContextOptions;
 import com.google.api.gax.rpc.internal.Headers;
 import com.google.api.gax.tracing.ApiTracer;
@@ -276,6 +277,12 @@ public class FakeCallContext implements ApiCallContext {
 
   @Override
   public ApiCallContext withEndpointContext(EndpointContext endpointContext) {
+    return null;
+  }
+
+  @Override
+  public ApiCallContext withTransportChannelResolver(
+      TransportChannelResolver transportChannelResolver) {
     return null;
   }
 

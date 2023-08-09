@@ -31,7 +31,6 @@ package com.google.api.gax.rpc;
 
 import com.google.auth.Credentials;
 import com.google.auto.value.AutoValue;
-
 import javax.annotation.Nullable;
 
 @AutoValue
@@ -39,36 +38,57 @@ public abstract class EndpointContext {
   private static final String DEFAULT_PORT = "443";
   private static final String UNIVERSE_DOMAIN_TEMPLATE = "SERVICE.UNIVERSE_DOMAIN:PORT";
 
-  public static EndpointContext of(Credentials credentials, String endpoint, String mtlsEndpoint) {
-    return builder()
-        .setCredentials(credentials)
-        .setEndpoint(endpoint)
-        .setMtlsEndpoint(mtlsEndpoint)
-        .build();
-  }
-
   @Nullable
   public abstract Credentials credentials();
+
   @Nullable
-  public abstract String endpoint();
+  public abstract String clientSettingsEndpoint();
+
+  @Nullable
+  public abstract String transportChannelEndpoint();
+
   @Nullable
   public abstract String mtlsEndpoint();
 
+  public abstract boolean switchToMtlsEndpointAllowed();
+
+  public abstract Builder toBuilder();
+
+  private String endpoint;
+
   public static Builder builder() {
-    return new AutoValue_EndpointContext.Builder();
+    return new AutoValue_EndpointContext.Builder().setSwitchToMtlsEndpointAllowed(false);
+  }
+
+  private String determineEndpoint() {
+    // TODO: Logic for figuring out the endpoint
+    return transportChannelEndpoint() != null
+        ? transportChannelEndpoint()
+        : clientSettingsEndpoint();
   }
 
   public String resolveEndpoint() {
-    return endpoint();
+    return resolveEndpoint(credentials());
+  }
+
+  public String resolveEndpoint(Credentials credentials) {
+    if (endpoint == null) {
+      endpoint = determineEndpoint();
+    }
+    return endpoint;
   }
 
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setCredentials(Credentials credentials);
 
-    public abstract Builder setEndpoint(String endpoint);
+    public abstract Builder setClientSettingsEndpoint(String clientSettingsEndpoint);
+
+    public abstract Builder setTransportChannelEndpoint(String transportChannelEndpoint);
 
     public abstract Builder setMtlsEndpoint(String mtlsEndpoint);
+
+    public abstract Builder setSwitchToMtlsEndpointAllowed(boolean switchToMtlsEndpointAllowed);
 
     public abstract EndpointContext build();
   }

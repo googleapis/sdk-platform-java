@@ -235,13 +235,17 @@ public abstract class ClientContext {
     //    }
     //    TransportChannel transportChannel = transportChannelProvider.getTransportChannel();
 
+    TransportChannelResolver transportChannelResolver = new TransportChannelResolver();
     ApiCallContext defaultCallContext = transportChannelProvider.getEmptyCallContext();
-    defaultCallContext =
-        defaultCallContext.withEndpointContext(
-            EndpointContext.of(credentials, transportChannelProvider.needsEndpoint() ? settings.getEndpoint() : transportChannelProvider.getEndpoint(),settings.getMtlsEndpoint()));
-    //    if (credentials != null) {
-    //      defaultCallContext = defaultCallContext.withCredentials(credentials);
-    //    }
+    EndpointContext endpointContext =
+        settings
+            .getEndpointContext()
+            .toBuilder()
+            .setCredentials(credentials)
+            .setTransportChannelEndpoint(transportChannelProvider.getEndpoint())
+            .build();
+    defaultCallContext = defaultCallContext.withEndpointContext(endpointContext);
+    defaultCallContext = defaultCallContext.withTransportChannelResolver(transportChannelResolver);
 
     WatchdogProvider watchdogProvider = settings.getStreamWatchdogProvider();
     @Nullable Watchdog watchdog = null;
@@ -262,9 +266,9 @@ public abstract class ClientContext {
 
     ImmutableList.Builder<BackgroundResource> backgroundResources = ImmutableList.builder();
 
-    //    if (transportChannelProvider.shouldAutoClose()) {
-    //      backgroundResources.add(transportChannel);
-    //    }
+    if (transportChannelProvider.shouldAutoClose()) {
+      backgroundResources.add(transportChannelResolver);
+    }
     if (backgroundExecutorProvider.shouldAutoClose()) {
       backgroundResources.add(new ExecutorAsBackgroundResource(backgroundExecutor));
     }

@@ -78,6 +78,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   @Nonnull private final Duration streamWatchdogCheckInterval;
   @Nonnull private final ApiTracerFactory tracerFactory;
   // Track if deprecated setExecutorProvider is called
+  private final EndpointContext endpointContext;
   private boolean deprecatedExecutorProviderSet;
 
   /**
@@ -105,6 +106,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     this.tracerFactory = builder.tracerFactory;
     this.deprecatedExecutorProviderSet = builder.deprecatedExecutorProviderSet;
     this.gdchApiAudience = builder.gdchApiAudience;
+    this.endpointContext = builder.endpointContext;
   }
 
   /** @deprecated Please use {@link #getBackgroundExecutorProvider()}. */
@@ -138,7 +140,11 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   }
 
   public final String getEndpoint() {
-    return endpoint;
+    try {
+      return this.endpointContext.resolveEndpoint(getCredentialsProvider().getCredentials());
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   public final String getMtlsEndpoint() {
@@ -180,6 +186,10 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     return gdchApiAudience;
   }
 
+  public final EndpointContext getEndpointContext() {
+    return endpointContext;
+  }
+
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this)
@@ -218,6 +228,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     @Nullable private WatchdogProvider streamWatchdogProvider;
     @Nonnull private Duration streamWatchdogCheckInterval;
     @Nonnull private ApiTracerFactory tracerFactory;
+    private EndpointContext endpointContext;
     private boolean deprecatedExecutorProviderSet;
 
     /**
@@ -245,6 +256,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       this.tracerFactory = settings.tracerFactory;
       this.deprecatedExecutorProviderSet = settings.deprecatedExecutorProviderSet;
       this.gdchApiAudience = settings.gdchApiAudience;
+      this.endpointContext = settings.endpointContext;
     }
 
     /** Get Quota Project ID from Client Context * */
@@ -280,6 +292,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.tracerFactory = BaseApiTracerFactory.getInstance();
         this.deprecatedExecutorProviderSet = false;
         this.gdchApiAudience = null;
+        this.endpointContext = EndpointContext.builder().build();
       } else {
         ExecutorProvider fixedExecutorProvider =
             FixedExecutorProvider.create(clientContext.getExecutor());
@@ -302,6 +315,12 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.tracerFactory = clientContext.getTracerFactory();
         this.quotaProjectId = getQuotaProjectIdFromClientContext(clientContext);
         this.gdchApiAudience = clientContext.getGdchApiAudience();
+        this.endpointContext =
+            EndpointContext.builder()
+                .setClientSettingsEndpoint(this.endpoint)
+                .setMtlsEndpoint(this.mtlsEndpoint)
+                .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)
+                .build();
       }
     }
 
@@ -420,16 +439,29 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       if (this.endpoint != null && this.mtlsEndpoint == null) {
         this.mtlsEndpoint = this.endpoint.replace("googleapis.com", "mtls.googleapis.com");
       }
+      this.endpointContext =
+          this.endpointContext
+              .toBuilder()
+              .setClientSettingsEndpoint(this.endpoint)
+              .setMtlsEndpoint(this.mtlsEndpoint)
+              .setSwitchToMtlsEndpointAllowed(this.switchToMtlsEndpointAllowed)
+              .build();
       return self();
     }
 
     protected B setSwitchToMtlsEndpointAllowed(boolean switchToMtlsEndpointAllowed) {
       this.switchToMtlsEndpointAllowed = switchToMtlsEndpointAllowed;
+      this.endpointContext =
+          this.endpointContext
+              .toBuilder()
+              .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)
+              .build();
       return self();
     }
 
     public B setMtlsEndpoint(String mtlsEndpoint) {
       this.mtlsEndpoint = mtlsEndpoint;
+      this.endpointContext = this.endpointContext.toBuilder().setMtlsEndpoint(mtlsEndpoint).build();
       return self();
     }
 
@@ -543,6 +575,10 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       return gdchApiAudience;
     }
 
+    public EndpointContext getEndpointContext() {
+      return endpointContext;
+    }
+
     /** Applies the given settings updater function to the given method settings builders. */
     protected static void applyToAllUnaryMethods(
         Iterable<UnaryCallSettings.Builder<?, ?>> methodSettingsBuilders,
@@ -571,6 +607,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
           .add("streamWatchdogCheckInterval", streamWatchdogCheckInterval)
           .add("tracerFactory", tracerFactory)
           .add("gdchApiAudience", gdchApiAudience)
+          .add("endpointContext", endpointContext)
           .toString();
     }
   }
