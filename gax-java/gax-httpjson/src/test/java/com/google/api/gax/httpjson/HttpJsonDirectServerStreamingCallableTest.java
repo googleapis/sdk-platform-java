@@ -115,42 +115,45 @@ public class HttpJsonDirectServerStreamingCallableTest {
       Money.newBuilder().setCurrencyCode("USD").setUnits(127).build();
   private static final Money DEFAULTER_RESPONSE =
       Money.newBuilder().setCurrencyCode("UAH").setUnits(255).build();
+  private  static final int AWAIT_TERMINATION_SECONDS = 10;
 
-  private ManagedHttpJsonChannel channel;
-  private ClientContext clientContext;
   private ServerStreamingCallSettings<Color, Money> streamingCallSettings;
   private ServerStreamingCallable<Color, Money> streamingCallable;
 
+  private static ManagedHttpJsonChannel channel;
+  private static ClientContext clientContext;
   private static ExecutorService executorService;
 
   @BeforeClass
   public static void initialize() {
     executorService = Executors.newFixedThreadPool(2);
+    channel =
+            new ManagedHttpJsonInterceptorChannel(
+                    ManagedHttpJsonChannel.newBuilder()
+                            .setEndpoint("google.com:443")
+                            .setExecutor(executorService)
+                            .setHttpTransport(MOCK_SERVICE)
+                            .build(),
+                    new HttpJsonHeaderInterceptor(Collections.singletonMap("header-key", "headerValue")));
+    clientContext =
+            ClientContext.newBuilder()
+                    .setTransportChannel(HttpJsonTransportChannel.create(channel))
+                    .setDefaultCallContext(
+                            HttpJsonCallContext.of(channel, HttpJsonCallOptions.DEFAULT)
+                                    .withTimeout(Duration.ofSeconds(3)))
+                    .build();
   }
 
   @AfterClass
-  public static void destroy() {
+  public static void destroy() throws InterruptedException {
+    channel.shutdown();
+    channel.awaitTermination(AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
     executorService.shutdownNow();
+    executorService.awaitTermination(AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
   @Before
   public void setUp() {
-    channel =
-        new ManagedHttpJsonInterceptorChannel(
-            ManagedHttpJsonChannel.newBuilder()
-                .setEndpoint("google.com:443")
-                .setExecutor(executorService)
-                .setHttpTransport(MOCK_SERVICE)
-                .build(),
-            new HttpJsonHeaderInterceptor(Collections.singletonMap("header-key", "headerValue")));
-
-    clientContext =
-        ClientContext.newBuilder()
-            .setTransportChannel(HttpJsonTransportChannel.create(channel))
-            .setDefaultCallContext(
-                HttpJsonCallContext.of(channel, HttpJsonCallOptions.DEFAULT)
-                    .withTimeout(Duration.ofSeconds(3)))
-            .build();
     streamingCallSettings = ServerStreamingCallSettings.<Color, Money>newBuilder().build();
     streamingCallable =
         HttpJsonCallableFactory.createServerStreamingCallable(
@@ -161,7 +164,6 @@ public class HttpJsonDirectServerStreamingCallableTest {
 
   @After
   public void tearDown() {
-    channel.shutdown();
     MOCK_SERVICE.reset();
   }
 
