@@ -115,7 +115,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
       Money.newBuilder().setCurrencyCode("USD").setUnits(127).build();
   private static final Money DEFAULTER_RESPONSE =
       Money.newBuilder().setCurrencyCode("UAH").setUnits(255).build();
-  private  static final int AWAIT_TERMINATION_SECONDS = 10;
+  private static final int AWAIT_TERMINATION_SECONDS = 10;
 
   private ServerStreamingCallSettings<Color, Money> streamingCallSettings;
   private ServerStreamingCallable<Color, Money> streamingCallable;
@@ -128,20 +128,20 @@ public class HttpJsonDirectServerStreamingCallableTest {
   public static void initialize() {
     executorService = Executors.newFixedThreadPool(2);
     channel =
-            new ManagedHttpJsonInterceptorChannel(
-                    ManagedHttpJsonChannel.newBuilder()
-                            .setEndpoint("google.com:443")
-                            .setExecutor(executorService)
-                            .setHttpTransport(MOCK_SERVICE)
-                            .build(),
-                    new HttpJsonHeaderInterceptor(Collections.singletonMap("header-key", "headerValue")));
+        new ManagedHttpJsonInterceptorChannel(
+            ManagedHttpJsonChannel.newBuilder()
+                .setEndpoint("google.com:443")
+                .setExecutor(executorService)
+                .setHttpTransport(MOCK_SERVICE)
+                .build(),
+            new HttpJsonHeaderInterceptor(Collections.singletonMap("header-key", "headerValue")));
     clientContext =
-            ClientContext.newBuilder()
-                    .setTransportChannel(HttpJsonTransportChannel.create(channel))
-                    .setDefaultCallContext(
-                            HttpJsonCallContext.of(channel, HttpJsonCallOptions.DEFAULT)
-                                    .withTimeout(Duration.ofSeconds(3)))
-                    .build();
+        ClientContext.newBuilder()
+            .setTransportChannel(HttpJsonTransportChannel.create(channel))
+            .setDefaultCallContext(
+                HttpJsonCallContext.of(channel, HttpJsonCallOptions.DEFAULT)
+                    .withTimeout(Duration.ofSeconds(3)))
+            .build();
   }
 
   @AfterClass
