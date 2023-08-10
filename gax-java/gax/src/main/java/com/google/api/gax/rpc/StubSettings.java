@@ -292,7 +292,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.tracerFactory = BaseApiTracerFactory.getInstance();
         this.deprecatedExecutorProviderSet = false;
         this.gdchApiAudience = null;
-        this.endpointContext = EndpointContext.builder().build();
+        this.endpointContext = EndpointContext.newBuilder().build();
       } else {
         ExecutorProvider fixedExecutorProvider =
             FixedExecutorProvider.create(clientContext.getExecutor());
@@ -316,7 +316,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.quotaProjectId = getQuotaProjectIdFromClientContext(clientContext);
         this.gdchApiAudience = clientContext.getGdchApiAudience();
         this.endpointContext =
-            EndpointContext.builder()
+            EndpointContext.newBuilder()
                 .setClientSettingsEndpoint(this.endpoint)
                 .setMtlsEndpoint(this.mtlsEndpoint)
                 .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)

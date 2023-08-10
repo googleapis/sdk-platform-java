@@ -38,6 +38,8 @@ public abstract class EndpointContext {
   private static final String DEFAULT_PORT = "443";
   private static final String UNIVERSE_DOMAIN_TEMPLATE = "SERVICE.UNIVERSE_DOMAIN:PORT";
 
+  public abstract String serviceName();
+
   @Nullable
   public abstract Credentials credentials();
 
@@ -56,7 +58,7 @@ public abstract class EndpointContext {
 
   private String endpoint;
 
-  public static Builder builder() {
+  public static Builder newBuilder() {
     return new AutoValue_EndpointContext.Builder().setSwitchToMtlsEndpointAllowed(false);
   }
 
@@ -71,6 +73,7 @@ public abstract class EndpointContext {
     return resolveEndpoint(credentials());
   }
 
+  // This is needed for StubSettings getter if accessed before Credentials are ready
   public String resolveEndpoint(Credentials credentials) {
     if (endpoint == null) {
       endpoint = determineEndpoint();
@@ -80,6 +83,8 @@ public abstract class EndpointContext {
 
   @AutoValue.Builder
   public abstract static class Builder {
+    public abstract Builder setServiceName(String serviceName);
+
     public abstract Builder setCredentials(Credentials credentials);
 
     public abstract Builder setClientSettingsEndpoint(String clientSettingsEndpoint);
