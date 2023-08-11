@@ -44,6 +44,6 @@ jobs:
         true
     - name: checkout googleapis-gen
       run: |
-        git clone https://yoshi-approver:${{ secrets.CLOUD_JAVA_BOT_GITHUB_TOKEN }}@github.com/googleapis/googleapis-gen.git
+        git clone https://cloud-java-bot:${{ secrets.CLOUD_JAVA_BOT_GITHUB_TOKEN }}@github.com/googleapis/googleapis-gen.git
         cd googleapis-gen
         git checkout 30620b4f34713860083fff036982900b1004cbf5
