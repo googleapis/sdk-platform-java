@@ -46,24 +46,24 @@ unzip_src_files() {
 }
 
 find_additional_protos_in_yaml() {
-  PATTERN=$1
-  FIND_RESULT=$(grep --include=\*.yaml -rw "${proto_path}" -e "${PATTERN}")
-  if [ -n "${FIND_RESULT}" ]; then
-    echo "${FIND_RESULT}"
+  pattern=$1
+  find_result=$(grep --include=\*.yaml -rw "$proto_path" -e "$pattern")
+  if [ -n "$find_result" ]; then
+    echo "$find_result"
   fi
 }
 
 search_additional_protos() {
-  ADDITIONAL_PROTOS="google/cloud/common_resources.proto" # used by every library
-  IAM_POLICY=$(find_additional_protos_in_yaml "name: google.iam.v1.IAMPolicy")
-  if [ -n "${IAM_POLICY}" ]; then
-    ADDITIONAL_PROTOS="${ADDITIONAL_PROTOS} google/iam/v1/iam_policy.proto"
+  additional_protos="google/cloud/common_resources.proto" # used by every library
+  iam_policy=$(find_additional_protos_in_yaml "name: google.iam.v1.IAMPolicy")
+  if [ -n "$iam_policy" ]; then
+    additional_protos="$additional_protos google/iam/v1/iam_policy.proto"
   fi
-  LOCATIONS=$(find_additional_protos_in_yaml "name: google.cloud.location.Locations")
-  if [ -n "${LOCATIONS}" ]; then
-    ADDITIONAL_PROTOS="${ADDITIONAL_PROTOS} google/cloud/location/locations.proto"
+  locations=$(find_additional_protos_in_yaml "name: google.cloud.location.Locations")
+  if [ -n "$locations" ]; then
+    additional_protos="$additional_protos google/cloud/location/locations.proto"
   fi
-  echo "${ADDITIONAL_PROTOS}"
+  echo "$additional_protos"
 }
 
 get_gapic_opts() {
