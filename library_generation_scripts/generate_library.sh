@@ -2,14 +2,51 @@
 
 set -e
 
-proto_path=$1
-destination_path=$2
-gapic_generator_version=$3
-protobuf_version=$4
-grpc_version=$5
-transport=$6 # grpc+rest or grpc
-rest_numeric_enums=$7 # true or false
-include_samples=$8 # true or false
+while [[ $# -gt 0 ]]
+do
+key="$1"
+case $key in
+    -p|--proto_path)
+    proto_path="$2"
+    shift
+    ;;
+    -d|--destination_path)
+    destination_path="$2"
+    shift
+    ;;
+    --gapic_generator_version)
+    gapic_generator_version="$2"
+    shift
+    ;;
+    --protobuf_version)
+    protobuf_version="$2"
+    shift
+    ;;
+    --grpc_version)
+    grpc_version="$2"
+    shift
+    ;;
+    --transport)
+    transport="$2"
+    shift
+    ;;
+    --rest_numeric_enums)
+    rest_numeric_enums="$2"
+    shift
+    ;;
+    --include_samples)
+    include_samples="$2"
+    shift
+    ;;
+    *)
+    echo "Invalid option: [$1]"
+    print_usage
+    exit 1
+    ;;
+esac
+shift # past argument or value
+done
+
 if [ -z "${include_samples}" ]; then
   include_samples="true"
 fi
