@@ -17,24 +17,22 @@ remove_empty_files() {
 }
 
 mv_src_files() {
-  folder=$1 # one of gapic, proto, samples
-  TYPE=$2 # one of main, test
-  if [ "${folder}" == "samples" ]; then
-    folder_SUFFIX="samples/snippets/generated"
-    SRC_SUFFIX="samples/snippets/generated/src/main/java/com"
-  elif [ "${folder}" == "proto" ]; then
-    folder_SUFFIX="${folder}"-"${OUT_LAYER_folder}"/src/"${TYPE}"
-    SRC_SUFFIX="${folder}/src/${TYPE}/java"
+  category=$1 # one of gapic, proto, samples
+  type=$2 # one of main, test
+  if [ "$category" == "samples" ]; then
+    folder_suffix="samples/snippets/generated"
+    src_suffix="samples/snippets/generated/src/main/java/com"
+  elif [ "$category" == "proto" ]; then
+    folder_suffix="$category-$folder_name/src/$type"
+    src_suffix="$category/src/$type/java"
   else
-    folder_SUFFIX="${folder}"-"${OUT_LAYER_folder}"/src/"${TYPE}"
-    SRC_SUFFIX="src/${TYPE}/java"
+    folder_suffix="$category-$folder_name/src/$type"
+    src_suffix="src/$type/java"
   fi
-  if [ "${IS_GAPIC_LIBRARY}" == "true" ]; then
-    mkdir -p "${library_gen_out}"/"${proto_path}"/"${OUT_LAYER_folder}"/"${folder_SUFFIX}"
-    cp -r "${library_gen_out}"/"${proto_path}"/java_gapic_srcjar/"${SRC_SUFFIX}" "${library_gen_out}"/"${proto_path}"/"${OUT_LAYER_folder}"/"${folder_SUFFIX}"
-  fi
-  if [ "${folder}" != "samples" ]; then
-    rm -r -f "${library_gen_out}"/"${proto_path}"/"${OUT_LAYER_folder}"/"${folder_SUFFIX}"/java/META-INF
+  mkdir -p "${library_gen_out}/$destination_path/$folder_suffix"
+  cp -r "$library_gen_out/$destination_path/java_gapic_srcjar/$src_suffix" "$library_gen_out/$destination_path/$folder_suffix"
+  if [ "$category" != "samples" ]; then
+    rm -r -f "$library_gen_out/$destination_path/$folder_suffix/java/META-INF"
   fi
 }
 
@@ -69,18 +67,18 @@ search_additional_protos() {
 }
 
 get_gapic_opts() {
-  GAPIC_CONFIG=$(find "${proto_path}" -type f -name "*gapic.yaml")
-  if [ -z "${GAPIC_CONFIG}" ]; then
-    GAPIC_CONFIG=""
+  gapic_config=$(find "${proto_path}" -type f -name "*gapic.yaml")
+  if [ -z "${gapic_config}" ]; then
+    gapic_config=""
   else
-    GAPIC_CONFIG="gapic-config=${GAPIC_CONFIG},"
+    gapic_config="gapic-config=$gapic_config,"
   fi
-  GRPC_SERVICE_CONFIG=$(find "${proto_path}" -type f -name "*service_config.json")
-  API_SERVICE_CONFIG=$(find "${proto_path}" -maxdepth 1 -type f \( -name "*.yaml" ! -name "*gapic.yaml" \))
+  grpc_service_config=$(find "${proto_path}" -type f -name "*service_config.json")
+  api_service_config=$(find "${proto_path}" -maxdepth 1 -type f \( -name "*.yaml" ! -name "*gapic.yaml" \))
   if [ "${rest_numeric_enums}" == "true" ]; then
     rest_numeric_enums="rest-numeric-enums,"
   else
     rest_numeric_enums=""
   fi
-  echo "transport=${transport},${rest_numeric_enums}grpc-service-config=${GRPC_SERVICE_CONFIG},${GAPIC_CONFIG}api-service-config=${API_SERVICE_CONFIG}"
+  echo "transport=$transport,${rest_numeric_enums}grpc-service-config=$grpc_service_config,${gapic_config}api-service-config=$api_service_config"
 }

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -e
+
+working_directory=$(dirname "$(readlink -f "$0")")
+
+exec java -classpath "$working_directory"/../library_gen_out/gapic-generator-java.jar com.google.api.generator.Main
