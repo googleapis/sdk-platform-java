@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -xe
+set -e
 
 proto_path=$1
 destination_path=$2
@@ -34,7 +34,7 @@ cd "$library_gen_out"
 if [ ! -d protobuf ]; then
   curl -LJ -o protobuf.zip https://github.com/protocolbuffers/protobuf/releases/download/v"$protobuf_version"/protoc-"$protobuf_version"-linux-x86_64.zip
   unzip -o -q protobuf.zip -d protobuf/
-#  cp -r protobuf/include/google "$repo_root"
+  cp -r protobuf/include/google "$repo_root"
   echo "protoc version: $("$protoc_path"/protoc --version)"
 fi
 # pull protoc-gen-grpc-java plugin from maven central

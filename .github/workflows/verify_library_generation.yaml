@@ -19,18 +19,18 @@ jobs:
         java-version: ${{ matrix.java }}
         distribution: temurin
         cache: maven
-    - name: clone googleapis
+    - name: checkout googleapis
       run: |
         git clone https://github.com/googleapis/googleapis.git
-    - name: checkout a commit hash in googleapis
-      run: |
+        cd googleapis
         git checkout 90a551c2a02613507a2f0f05fd25d133113a1a1c
-      working-directory: googleapis
     - name: copy protos to proto_path
       run: |
         cp -r googleapis/google .
     - name: generate java-aiplatform
+      shell: bash
       run: |
+        set -x
         library_generation_scripts/generate_library.sh \
         google/cloud/aiplatform/v1 \
         google/cloud/aiplatfrom/v1/google-cloud-aiplatform-v1-java \
@@ -40,3 +40,8 @@ jobs:
         grpc \
         false \
         false
+    - name: checkout googleapis-gen
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        repository: myusername/myprivaterepo
