@@ -1,0 +1,42 @@
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+    paths:
+    - library_generation_scripts/**
+name: verify_library_generation
+jobs:
+  verify_library_generation:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        java: [ 8 ]
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-java@v3
+      with:
+        java-version: ${{ matrix.java }}
+        distribution: temurin
+        cache: maven
+    - name: clone googleapis
+      run: |
+        git clone https://github.com/googleapis/googleapis.git
+    - name: checkout a commit hash in googleapis
+      run: |
+        git checkout 90a551c2a02613507a2f0f05fd25d133113a1a1c
+      working-directory: googleapis
+    - name: copy protos to proto_path
+      run: |
+        cp -r googleapis/google .
+    - name: generate java-aiplatform
+      run: |
+        library_generation_scripts/generate_library.sh \
+        google/cloud/aiplatform/v1 \
+        google/cloud/aiplatfrom/v1/google-cloud-aiplatform-v1-java \
+        2.24.0 \
+        23.2 \
+        1.55.1 \
+        grpc \
+        false \
+        false
