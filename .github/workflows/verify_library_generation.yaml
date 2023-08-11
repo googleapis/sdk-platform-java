@@ -43,8 +43,7 @@ jobs:
         false \
         true
     - name: checkout googleapis-gen
-      uses: actions/checkout@v3
-      with:
-        token: ${{ secrets.CLOUD_JAVA_BOT_GITHUB_TOKEN }}
-        repository: googleapis/googleapis-gen
-        ref: 30620b4f34713860083fff036982900b1004cbf5
+      run: |
+        git clone https://yoshi-approver:${{ secrets.CLOUD_JAVA_BOT_GITHUB_TOKEN }}@github.com/googleapis/googleapis-gen.git
+        cd googleapis-gen
+        git checkout 30620b4f34713860083fff036982900b1004cbf5
