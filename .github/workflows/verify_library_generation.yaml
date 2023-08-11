@@ -5,6 +5,8 @@ on:
   pull_request:
     paths:
     - library_generation_scripts/**
+
+  workflow_dispatch:
 name: verify_library_generation
 jobs:
   verify_library_generation:
@@ -39,10 +41,10 @@ jobs:
         1.55.1 \
         grpc \
         false \
-        false
+        true
     - name: checkout googleapis-gen
       uses: actions/checkout@v3
       with:
-        token: ${{ secrets.YOSHI_CODE_BOT_TOKEN }}
+        token: ${{ secrets.CLOUD_JAVA_BOT_GITHUB_TOKEN }}
         repository: googleapis/googleapis-gen
         ref: 30620b4f34713860083fff036982900b1004cbf5
