@@ -45,3 +45,4 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         repository: googleapis/googleapis-gen
+        ref: 30620b4f34713860083fff036982900b1004cbf5
