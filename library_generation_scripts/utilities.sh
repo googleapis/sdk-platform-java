@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -xe
 
 # define utility functions
 extract_folder_name() {
@@ -26,8 +26,8 @@ mv_src_files() {
     folder_suffix="$category-$folder_name/src/$type"
     src_suffix="$category/src/$type/java"
   else
-    folder_suffix="$category-$folder_name/src/$type"
-    src_suffix="src/$type/java"
+    folder_suffix="$category-$folder_name/src"
+    src_suffix="src/$type"
   fi
   mkdir -p "${library_gen_out}/$destination_path/$folder_suffix"
   cp -r "$library_gen_out/$destination_path/java_gapic_srcjar/$src_suffix" "$library_gen_out/$destination_path/$folder_suffix"
