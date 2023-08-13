@@ -14,6 +14,7 @@ set -e
 SED_OPTIONS=""
 for versions_file in $(find . -mindepth 0 -maxdepth 2 -name versions.txt \
     |sort --dictionary-order); do
+  echo "Processing versions file: $versions_file"
   for KV in $(cut -f1,3 -d: $versions_file |grep -v "#"); do
     K=${KV%:*}; V=${KV#*:}
     echo Key:$K, Value:$V;

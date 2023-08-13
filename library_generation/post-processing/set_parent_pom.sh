@@ -1,19 +1,20 @@
 #!/bin/bash
 
-set -ef
+set -efx
 
 # For each library module in current working directory, this script
 # sets the parent to the root pom.xml
 
 # Run this script at the root of google-cloud-java repository
 module=$1
-parent_pom=$2
+parent_pom_path=$2
 
 function replaceParent {
+  parent_pom=$1
   # First, read the values from the parent pom.xml
-  parent_version=$(perl -nle 'print $1 if m|<version>(.+)</version>|' "$parent_pom"|head -1)
-  parent_group_id=$(perl -nle 'print $1 if m|<groupId>(.+)</groupId>|' "$parent_pom" |head -1)
-  parent_artifact_id=$(perl -nle 'print $1 if m|<artifactId>(.+)</artifactId>|' "$parent_pom"|head -1)
+  parent_version=$(perl -nle 'print $1 if m|<version>(.+)</version>|' "$parent_pom_path"|head -1)
+  parent_group_id=$(perl -nle 'print $1 if m|<groupId>(.+)</groupId>|' "$parent_pom_path" |head -1)
+  parent_artifact_id=$(perl -nle 'print $1 if m|<artifactId>(.+)</artifactId>|' "$parent_pom_path"|head -1)
   relativePath=$(echo "$parent_pom" | sed 's/\//\\\//g')
 
   # Search for <parent> tag in module pom and replace the next three lines -- groupId, artifcatId, and version
@@ -24,12 +25,6 @@ function replaceParent {
 
 # Then, apply the values as the parent pom of each module
 # example value of module is "./java-accessapproval"
-if [[ "${module}" = *gapic-libraries-bom ]] || \
-    [[ "${module}" = *google-cloud-jar-parent ]] || \
-    [[ "${module}" = *google-cloud-pom-parent ]] || \
-    [[ "${module}" = *java-shared-dependencies ]]; then
-  continue
-fi
 echo "Processing module $module"
 pushd $module
 

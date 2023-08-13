@@ -3,53 +3,50 @@
 set -ex
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-GOOGLEAPIS_COMMIT=$1
-PROTOBUF_VERSION=$2
-GRPC_VERSION=$3
-GAPIC_GENERATOR_VERSION=$4
-PROTO_PATH=$5
-CONTAINS_CLOUD=$6
+PROTO_PATH=$1
+DESTINATION_PATH=$2
+GAPIC_GENERATOR_VERSION=$3
+PROTOBUF_VERSION=$4
+GRPC_VERSION=$5
+OWLBOT_SHA=$6
 TRANSPORT=$7 # grpc+rest or grpc
 REST_NUMERIC_ENUMS=$8 # true or false
-IS_GAPIC_LIBRARY=$9  # true or false
-INCLUDE_SAMPLES=${10} # true or false
-DESTINATION_PATH=${11}
-OWLBOT_SHA=${12}
-OWLBOT_PY_PATH=${13}
-REPO_METADATA_PATH=${14}
-MONOREPO_TAG=${15}
+INCLUDE_SAMPLES=$9 # true or false
+OWLBOT_PY_PATH=${10}
+REPO_METADATA_PATH=${11}
+ENABLE_POSTPROCESSING=${12}
 
-if [ -z "${IS_GAPIC_LIBRARY}" ]; then
-  IS_GAPIC_LIBRARY="true"
-fi
+# commented out to keep input variables as in design
+#if [ -z "${IS_GAPIC_LIBRARY}" ]; then
+#  IS_GAPIC_LIBRARY="true"
+#fi
 if [ -z "${INCLUDE_SAMPLES}" ]; then
   INCLUDE_SAMPLES="true"
 fi
-OUT_LAYER_FOLDER="${PROTO_PATH////-}-java"
-if [ "${CONTAINS_CLOUD}" == true ]; then
-  OUT_LAYER_FOLDER="${OUT_LAYER_FOLDER//google/google-cloud}"
-fi
+# commented out to keep input variables as in design
+#if [ "${CONTAINS_CLOUD}" == true ]; then
+#  OUT_LAYER_FOLDER="${OUT_LAYER_FOLDER//google/google-cloud}"
+#fi
 
 LIBRARY_GEN_OUT=$(dirname "$(readlink -f "$0")")/../library_gen_out
+OUT_LAYER_FOLDER="out-layer"
 REPO_ROOT="${LIBRARY_GEN_OUT}"/..
-GENERATED_LIBRARY_ROOT="${LIBRARY_GEN_OUT}/${PROTO_PATH}"
-mkdir -p $GENERATED_LIBRARY_ROOT
+BUILD_FOLDER="${LIBRARY_GEN_OUT}/build"
+mkdir -p $BUILD_FOLDER
 
 
-echo "GOOGLEAPIS_COMMIT=$GOOGLEAPIS_COMMIT"
-echo "PROTOBUF_VERSION=$PROTOBUF_VERSION"
-echo "GRPC_VERSION=$GRPC_VERSION"
-echo "GAPIC_GENERATOR_VERSION=$GAPIC_GENERATOR_VERSION"
-echo "PROTO_PATH=$PROTO_PATH"
-echo "CONTAINS_CLOUD=$CONTAINS_CLOUD"
-echo "TRANSPORT=$TRANSPORT"
-echo "REST_NUMERIC_ENUMS=$REST_NUMERIC_ENUMS"
-echo "IS_GAPIC_LIBRARY=$IS_GAPIC_LIBRARY"
-echo "INCLUDE_SAMPLES=$INCLUDE_SAMPLES"
-echo "DESTINATION_PATH=$DESTINATION_PATH"
-echo "OWLBOT_SHA=$OWLBOT_SHA"
-echo "OWLBOT_PY_PATH=$OWLBOT_PY_PATH"
-echo "REPO_METADATA_PATH=$REPO_METADATA_PATH"
+echo "PROTO_PATH=$1"
+echo "DESTINATION_PATH=$2"
+echo "GAPIC_GENERATOR_VERSION=$3"
+echo "PROTOBUF_VERSION=$4"
+echo "GRPC_VERSION=$5"
+echo "OWLBOT_SHA=$6"
+echo "TRANSPORT=$7"
+echo "REST_NUMERIC_ENUMS=$8"
+echo "INCLUDE_SAMPLES=$9"
+echo "OWLBOT_PY_PATH=${10}"
+echo "REPO_METADATA_PATH=${11}"
+echo "ENABLE_POSTPROCESSING=${12}"
 
 ##################### Section 0 #####################
 # prepare tooling
@@ -62,12 +59,32 @@ if [ ! -d googleapis ]; then
 fi
 
 GOOGLEAPIS_ROOT=${REPO_ROOT}/googleapis
-cd "${GOOGLEAPIS_ROOT}"
-git checkout "${GOOGLEAPIS_COMMIT}"
+PROTOS_COPY_FOLDER=${GOOGLEAPIS_ROOT}/protos-copy
+mkdir -p $PROTOS_COPY_FOLDER
+
+# we need some files referenced by the input protos (e.g.
+# googleapis/google/api/annotations.proto). We can either supply them manually
+# or using a specific commit. For now, this is defaulting to HEAD (not hermetic)
+mkdir -p "$PROTOS_COPY_FOLDER/google/api"
+cd $GOOGLEAPIS_ROOT
+#
+# v[\d] folders are also required
+#for common_proto_path in $(find . -name '*.proto' -type f); do
+  ## create path if not existing
+  #mkdir -p "$PROTOS_COPY_FOLDER/$(dirname $common_proto_path)"
+  #cp $common_proto_path "$PROTOS_COPY_FOLDER/$common_proto_path"
+#done
+
+
+
+cd $PROTOS_COPY_FOLDER
 # the order of services entries in gapic_metadata.json is relevant to the
 # order of proto file, sort the proto files with respect to their name to
 # get a fixed order.
-PROTO_FILES=$(find "${PROTO_PATH}" -type f  -name "*.proto" | sort)
+cp -r $PROTO_PATH/* $PROTOS_COPY_FOLDER
+pushd $GOOGLEAPIS_ROOT
+PROTO_FILES=$(find "./protos-copy" -type f  -name "*.proto" | sort)
+popd
 # pull proto files and protoc from protobuf repository
 # maven central doesn't have proto files
 PROTOC_ROOT=${LIBRARY_GEN_OUT}/protobuf/bin
@@ -75,7 +92,11 @@ cd "${LIBRARY_GEN_OUT}"
 if [ ! -d protobuf ]; then
   curl -LJ -o protobuf.zip https://github.com/protocolbuffers/protobuf/releases/download/v"${PROTOBUF_VERSION}"/protoc-"${PROTOBUF_VERSION}"-linux-x86_64.zip
   unzip -o -q protobuf.zip -d protobuf/
-  cp -r protobuf/include/google "${GOOGLEAPIS_ROOT}"
+  #COMMON_PROTOBUF_DESTINATION="${PROTOS_COPY_FOLDER}/google/protobuf"
+  COMMON_PROTOBUF_DESTINATION="${GOOGLEAPIS_ROOT}/google/protobuf"
+  mkdir -p $COMMON_PROTOBUF_DESTINATION
+  cp -r protobuf/include/google/protobuf $COMMON_PROTOBUF_DESTINATION
+  ls $COMMON_PROTOBUF_DESTINATION
   echo "protoc version: $("${PROTOC_ROOT}"/protoc --version)"
 fi
 # pull protoc-gen-grpc-java plugin from maven central
@@ -171,7 +192,7 @@ get_gapic_opts() {
 #####################################################
 cd "${GOOGLEAPIS_ROOT}"
 "${PROTOC_ROOT}"/protoc "--plugin=protoc-gen-rpc-plugin=${LIBRARY_GEN_OUT}/protoc-gen-grpc-java" \
-"--rpc-plugin_out=:${LIBRARY_GEN_OUT}/${PROTO_PATH}/java_grpc.jar" \
+"--rpc-plugin_out=:${BUILD_FOLDER}/java_grpc.jar" \
 ${PROTO_FILES}
 
 unzip_src_files "grpc"
@@ -182,15 +203,15 @@ remove_empty_files "grpc"
 if [ "${IS_GAPIC_LIBRARY}" == "true" ]; then
   "${PROTOC_ROOT}"/protoc --experimental_allow_proto3_optional \
   "--plugin=protoc-gen-java_gapic=${REPO_ROOT}/library_generation/gapic-generator-java-wrapper" \
-  "--java_gapic_out=metadata:${LIBRARY_GEN_OUT}/${PROTO_PATH}/java_gapic_srcjar_raw.srcjar.zip" \
+  "--java_gapic_out=metadata:${BUILD_FOLDER}/java_gapic_srcjar_raw.srcjar.zip" \
   "--java_gapic_opt=$(get_gapic_opts)" \
   ${PROTO_FILES} $(search_additional_protos)
 
-  unzip -o -q "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/java_gapic_srcjar_raw.srcjar.zip -d "${LIBRARY_GEN_OUT}"/${PROTO_PATH}
+  unzip -o -q "${BUILD_FOLDER}"/java_gapic_srcjar_raw.srcjar.zip -d "${LIBRARY_GEN_OUT}"/${PROTO_PATH}
   # Sync'\''d to the output file name in Writer.java.
-  unzip -o -q "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/temp-codegen.srcjar -d "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/java_gapic_srcjar
+  unzip -o -q "${BUILD_FOLDER}"/temp-codegen.srcjar -d "${BUILD_FOLDER}"/java_gapic_srcjar
   # Resource name source files.
-  PROTO_DIR=${LIBRARY_GEN_OUT}/${PROTO_PATH}/java_gapic_srcjar/proto/src/main/java
+  PROTO_DIR=${BUILD_FOLDER}/java_gapic_srcjar/proto/src/main/java
   if [ ! -d "${PROTO_DIR}" ]
   then
     # Some APIs don'\''t have resource name helpers, like BigQuery v2.
@@ -216,13 +237,13 @@ fi
 # generate proto-*/
 #####################################################
 cd "${GOOGLEAPIS_ROOT}"
-"${PROTOC_ROOT}"/protoc "--java_out=${LIBRARY_GEN_OUT}/${PROTO_PATH}/java_proto.jar" ${PROTO_FILES}
+"${PROTOC_ROOT}"/protoc "--java_out=${BUILD_FOLDER}/java_proto.jar" ${PROTO_FILES}
 mv_src_files "proto" "main"
 unzip_src_files "proto"
 remove_empty_files "proto"
 
 for proto_src in ${PROTO_FILES}; do
-    mkdir -p "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/"${OUT_LAYER_FOLDER}"/proto-"${OUT_LAYER_FOLDER}"/src/main/proto
+    mkdir -p "$OUT_LAYER_FOLDER}"/proto-"${OUT_LAYER_FOLDER}"/src/main/proto
     cp -f --parents "${proto_src}" "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/"${OUT_LAYER_FOLDER}"/proto-"${OUT_LAYER_FOLDER}"/src/main/proto
 done
 ##################### Section 4 #####################
@@ -234,6 +255,11 @@ rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_pro
 ##################### Section 4 #####################
 # post-processing
 #####################################################
+if [ -z $ENABLE_POSTPROCESSING ];
+then
+  echo "post processing is disabled"
+  exit 0
+fi
 # copy repo metadata to destination library folder
 WORKSPACE=$LIBRARY_GEN_OUT/workspace
 mkdir $WORKSPACE
@@ -250,6 +276,7 @@ API_SHORTNAME=$(cat $REPO_METADATA_PATH | jq -r '.api_shortname // empty')
 if [ -z ${DISTRIBUTION_NAME+x} ]; then
   echo "owlbot will not use copy regex"
 else
+  MODULE_NAME=$PROTO_PATH
   OWLBOT_COPY_REGEX=$(cat <<-_EOT_
 deep-remove-regex:
 - "/${MODULE_NAME}/grpc-google-.*/src"
@@ -282,7 +309,7 @@ _EOT_
 # render owlbot.py template
 OWLBOT_PY_CONTENT=$(cat "$SCRIPT_DIR/post-processing/templates/owlbot.py.template")
 
-cp -r $GENERATED_LIBRARY_ROOT $OWLBOT_STAGING_FOLDER
+cp -r $BUILD_FOLDER $OWLBOT_STAGING_FOLDER
 echo "$OWLBOT_YAML_CONTENT" > $OWLBOT_STAGING_FOLDER/.OwlBot.yaml
 echo "$OWLBOT_PY_CONTENT" > $WORKSPACE/owlbot.py
 docker run --rm -v $WORKSPACE:/workspace --user $(id -u):$(id -g) $OWLBOT_IMAGE
@@ -292,9 +319,6 @@ bash $SCRIPT_DIR/post-processing/update_owlbot_postprocessor_config.sh $WORKSPAC
 bash $SCRIPT_DIR/post-processing/delete_non_generated_samples.sh $WORKSPACE
 bash $SCRIPT_DIR/post-processing/consolidate_config.sh $WORKSPACE
 bash $SCRIPT_DIR/post-processing/readme_update.sh $WORKSPACE
-pushd $WORKSPACE
-bash $SCRIPT_DIR/post-processing/apply_current_versions.sh 
-popd
 rm $WORKSPACE/versions.txt
 if [ -z ${MONOREPO_TAG+x} ]; then
   echo "Will not add parent project to pom"
@@ -302,23 +326,31 @@ else
   pushd $SCRIPT_DIR
   [ ! -d google-cloud-java ] && git clone https://github.com/googleapis/google-cloud-java
   pushd google-cloud-java
+  git reset --hard
   git checkout $MONOREPO_TAG
-  PARENT_POM="$(pwd)/google-cloud-jar-parent/pom.xml"
+  PARENT_POM="$(pwd)/google-cloud-pom-parent/pom.xml"
   popd
   # rm -rdf google-cloud-java
   popd
-  # bash $SCRIPT_DIR/post-processing/set_parent_pom.sh $WORKSPACE $PARENT_POM
+  bash $SCRIPT_DIR/post-processing/set_parent_pom.sh $WORKSPACE $PARENT_POM
+
+  # get existing versions.txt from downloaded monorepo
+  REPO_SHORT=$(cat $REPO_METADATA_PATH | jq -r '.repo_short // empty')
+  cp "$SCRIPT_DIR/google-cloud-java/versions.txt" $WORKSPACE
+  pushd $WORKSPACE
+  bash $SCRIPT_DIR/post-processing/apply_current_versions.sh
+  popd
 fi
 
 # rename folders properly (may not be necessary after all)
 pushd $WORKSPACE
-GAPIC_LIB_ORIGINAL_NAME=$(find . -name 'gapic-*')
+GAPIC_LIB_ORIGINAL_NAME=$(find . -name 'gapic-*' | sed "s/\.\///")
 GAPIC_LIB_NEW_NAME=$(echo "$GAPIC_LIB_ORIGINAL_NAME" |\
   sed 's/cloud-cloud/cloud/' | sed 's/-v[0-9a-zA-Z]-java//' | sed 's/gapic-//')
-PROTO_LIB_ORIGINAL_NAME=$(find . -name 'proto-*')
+PROTO_LIB_ORIGINAL_NAME=$(find . -name 'proto-*' | sed "s/\.\///")
 PROTO_LIB_NEW_NAME=$(echo "$PROTO_LIB_ORIGINAL_NAME" |\
   sed 's/cloud-cloud/cloud/' | sed 's/-java//')
-GRPC_LIB_ORIGINAL_NAME=$(find . -name 'grpc-*')
+GRPC_LIB_ORIGINAL_NAME=$(find . -name 'grpc-*' | sed "s/\.\///")
 GRPC_LIB_NEW_NAME=$(echo "$GRPC_LIB_ORIGINAL_NAME" |\
   sed 's/cloud-cloud/cloud/' | sed 's/-java//')
 # two folders exist, move the contents of one to the other
@@ -327,6 +359,13 @@ rm -rdf $GAPIC_LIB_ORIGINAL_NAME
 # just rename these two
 mv $PROTO_LIB_ORIGINAL_NAME $PROTO_LIB_NEW_NAME
 mv $GRPC_LIB_ORIGINAL_NAME $GRPC_LIB_NEW_NAME
+
+for pom_file in $(find . -mindepth 0 -maxdepth 2 -name pom.xml \
+    |sort --dictionary-order); do
+  sed -i "s/$GRPC_LIB_ORIGINAL_NAME/$GRPC_LIB_NEW_NAME/" $pom_file
+  sed -i "s/$PROTO_LIB_ORIGINAL_NAME/$PROTO_LIB_NEW_NAME/" $pom_file
+  sed -i "s/$GRPC_LIB_ORIGINAL_NAME/$GRPC_LIB_NEW_NAME/" $pom_file
+done
 popd
 
 
