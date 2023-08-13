@@ -2,7 +2,7 @@
 # convenience script to test locally - remove when ready for merge
 set -x
 
-PROTO_PATH=~/Desktop/sdk-platform-java/showcase/proto-gapic-showcase-v1beta1/src/main/proto/external/com_google_gapic_showcase/schema/google/showcase/v1beta1
+PROTO_PATH=~/Desktop/gapic-showcase/schema/google/showcase/v1beta1/
 DESTINATION_PATH=~/Desktop/sdk-platform-java/showcase
 GAPIC_GENERATOR_VERSION=2.24.0
 PROTOBUF_VERSION=23.2
@@ -12,8 +12,8 @@ TRANSPORT=grpc+rest # grpc+rest or grpc
 REST_NUMERIC_ENUMS=true # true or false
 INCLUDE_SAMPLES=false # true or false
 OWLBOT_PY_PATH="null"
-REPO_METADATA_PATH=${12}
-ENABLE_POSTPROCESSING=${13}
+REPO_METADATA_PATH='null'
+ENABLE_POSTPROCESSING='false'
 
 bash generate_library.sh \
 $PROTO_PATH \
@@ -29,7 +29,8 @@ $OWLBOT_PY_PATH \
 $REPO_METADATA_PATH \
 $ENABLE_POSTPROCESSING
 
-#cd ~/Desktop/sdk-platform-java/showcase
-#cp -r ~/Desktop/sdk-platform-java/library_gen_out/workspace/* ~/Desktop/sdk-platform-java/showcase
-#cd ~/Desktop/sdk-platform-java/showcase
+# manual folder renaming
+cp -r ~/Desktop/sdk-platform-java/library_gen_out/build/out-layer/gapic-out-layer/* ~/Desktop/sdk-platform-java/showcase/gapic-showcase
+cp -r ~/Desktop/sdk-platform-java/library_gen_out/build/out-layer/grpc-out-layer/* ~/Desktop/sdk-platform-java/showcase/grpc-gapic-showcase-v1beta1
+cp -r ~/Desktop/sdk-platform-java/library_gen_out/build/out-layer/proto-out-layer/* ~/Desktop/sdk-platform-java/showcase/proto-gapic-showcase-v1beta1
 set +x
