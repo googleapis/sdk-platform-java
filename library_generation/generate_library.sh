@@ -17,9 +17,9 @@ REPO_METADATA_PATH=${11}
 ENABLE_POSTPROCESSING=${12}
 
 # commented out to keep input variables as in design
-#if [ -z "${IS_GAPIC_LIBRARY}" ]; then
-#  IS_GAPIC_LIBRARY="true"
-#fi
+if [ -z "${IS_GAPIC_LIBRARY}" ]; then
+  IS_GAPIC_LIBRARY="true"
+fi
 if [ -z "${INCLUDE_SAMPLES}" ]; then
   INCLUDE_SAMPLES="true"
 fi
@@ -112,7 +112,7 @@ fi
 # define utility functions
 remove_empty_files() {
   FOLDER=$1
-  LIBRARY_ROOT="${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/"${OUT_LAYER_FOLDER}"/"${FOLDER}"-"${OUT_LAYER_FOLDER}"
+  LIBRARY_ROOT="${BUILD_FOLDER}/${OUT_LAYER_FOLDER}/${FOLDER}-${OUT_LAYER_FOLDER}"
   find $LIBRARY_ROOT/src/main/java -type f -size 0 | while read -r f; do rm -f "${f}"; done
   if [ -d $LIBRARY_ROOT/src/main/java/samples ]; then
       mv $LIBRARY_ROOT/src/main/java/samples $LIBRARY_ROOT
@@ -132,21 +132,24 @@ mv_src_files() {
     FOLDER_SUFFIX="${FOLDER}"-"${OUT_LAYER_FOLDER}"/src/"${TYPE}"
     SRC_SUFFIX="src/${TYPE}/java"
   fi
+  TARGET_FOLDER="$BUILD_FOLDER/$OUT_LAYER_FOLDER/$FOLDER_SUFFIX"
   if [ "${IS_GAPIC_LIBRARY}" == "true" ]; then
-    mkdir -p "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/"${OUT_LAYER_FOLDER}"/"${FOLDER_SUFFIX}"
-    cp -r "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/java_gapic_srcjar/"${SRC_SUFFIX}" "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/"${OUT_LAYER_FOLDER}"/"${FOLDER_SUFFIX}"
+    mkdir -p $TARGET_FOLDER
+    cp -r "$BUILD_FOLDER/java_gapic_srcjar/$SRC_SUFFIX" $TARGET_FOLDER
   fi
   if [ "${FOLDER}" != "samples" ]; then
-    rm -r -f "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/"${OUT_LAYER_FOLDER}"/"${FOLDER_SUFFIX}"/java/META-INF
+    rm -r -f $TARGET_FOLDER/java/META-INF
   fi
 }
 
 unzip_src_files() {
   FOLDER=$1
   JAR_FILE=java_"${FOLDER}".jar
-  mkdir -p "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/"${OUT_LAYER_FOLDER}"/"${FOLDER}"-"${OUT_LAYER_FOLDER}"/src/main/java
-  unzip -q -o "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/"${JAR_FILE}" -d "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/"${OUT_LAYER_FOLDER}"/"${FOLDER}"-"${OUT_LAYER_FOLDER}"/src/main/java
-  rm -r -f "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/"${OUT_LAYER_FOLDER}"/"${FOLDER}"-"${OUT_LAYER_FOLDER}"/src/main/java/META-INF
+  UNZIP_TARGET="$BUILD_FOLDER/$JAR_FILE"
+  UNZIP_OUTPUT_FOLDER="${BUILD_FOLDER}/${OUT_LAYER_FOLDER}/${FOLDER}-${OUT_LAYER_FOLDER}"
+  mkdir -p "$UNZIP_OUTPUT_FOLDER/src/main/java"
+  unzip -q -o $UNZIP_TARGET -d "$UNZIP_OUTPUT_FOLDER/src/main/java"
+  rm -r -f "$UNZIP_OUTPUT_FOLDER/src/main/java/META-INF"
 }
 
 find_additional_protos_in_yaml() {
@@ -198,7 +201,7 @@ ${PROTO_FILES}
 unzip_src_files "grpc"
 remove_empty_files "grpc"
 ##################### Section 2 #####################
-# generate gapic-*/, proto-*/, samples/
+# generate gapic-*/, samples/
 #####################################################
 if [ "${IS_GAPIC_LIBRARY}" == "true" ]; then
   "${PROTOC_ROOT}"/protoc --experimental_allow_proto3_optional \
@@ -207,7 +210,7 @@ if [ "${IS_GAPIC_LIBRARY}" == "true" ]; then
   "--java_gapic_opt=$(get_gapic_opts)" \
   ${PROTO_FILES} $(search_additional_protos)
 
-  unzip -o -q "${BUILD_FOLDER}"/java_gapic_srcjar_raw.srcjar.zip -d "${LIBRARY_GEN_OUT}"/${PROTO_PATH}
+  unzip -o -q "${BUILD_FOLDER}"/java_gapic_srcjar_raw.srcjar.zip -d $BUILD_FOLDER/$OUT_LAYER_DIR
   # Sync'\''d to the output file name in Writer.java.
   unzip -o -q "${BUILD_FOLDER}"/temp-codegen.srcjar -d "${BUILD_FOLDER}"/java_gapic_srcjar
   # Resource name source files.
@@ -242,14 +245,15 @@ mv_src_files "proto" "main"
 unzip_src_files "proto"
 remove_empty_files "proto"
 
+PROTO_TRANSFER_TARGET="$BUILD_FOLDER/$OUT_LAYER_FOLDER/proto-$OUT_LAYER_FOLDER/src/main/proto"
+mkdir -p $PROTO_TRANSFER_TARGET
 for proto_src in ${PROTO_FILES}; do
-    mkdir -p "$OUT_LAYER_FOLDER}"/proto-"${OUT_LAYER_FOLDER}"/src/main/proto
-    cp -f --parents "${proto_src}" "${LIBRARY_GEN_OUT}"/"${PROTO_PATH}"/"${OUT_LAYER_FOLDER}"/proto-"${OUT_LAYER_FOLDER}"/src/main/proto
+    cp -f --parents "${proto_src}" $PROTO_TRANSFER_TARGET
 done
 ##################### Section 4 #####################
 # rm tar files
 #####################################################
-cd "${LIBRARY_GEN_OUT}/${PROTO_PATH}"
+cd "$BUILD_FOLDER"
 rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_proto.jar temp-codegen.srcjar
 
 ##################### Section 4 #####################

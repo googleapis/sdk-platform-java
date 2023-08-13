@@ -29,7 +29,7 @@ $OWLBOT_PY_PATH \
 $REPO_METADATA_PATH \
 $ENABLE_POSTPROCESSING
 
-#cd ~/Desktop/sdk-platform-java/showcase
-#cp -r ~/Desktop/sdk-platform-java/library_gen_out/workspace/* ~/Desktop/sdk-platform-java/showcase
-#cd ~/Desktop/sdk-platform-java/showcase
+cp -r ~/Desktop/sdk-platform-java/library_gen_out/build/out-layer/gapic-out-layer/* ~/Desktop/sdk-platform-java/showcase/gapic-showcase
+cp -r ~/Desktop/sdk-platform-java/library_gen_out/build/out-layer/grpc-out-layer/* ~/Desktop/sdk-platform-java/showcase/grpc-gapic-showcase-v1beta1
+cp -r ~/Desktop/sdk-platform-java/library_gen_out/build/out-layer/proto-out-layer/* ~/Desktop/sdk-platform-java/showcase/proto-gapic-showcase-v1beta1
 set +x
