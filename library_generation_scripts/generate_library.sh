@@ -99,6 +99,8 @@ $proto_files
 
 unzip_src_files "grpc"
 remove_empty_files "grpc"
+# remove grpc version in *ServiceGrpc.java file so the content is identical with bazel build.
+remove_grpc_version
 ###################### Section 2 #####################
 ## generate gapic-*/, proto-*/, samples/
 ######################################################

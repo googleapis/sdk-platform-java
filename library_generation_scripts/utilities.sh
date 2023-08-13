@@ -82,3 +82,8 @@ get_gapic_opts() {
   fi
   echo "transport=$transport,${rest_numeric_enums}grpc-service-config=$grpc_service_config,${gapic_config}api-service-config=$api_service_config"
 }
+
+remove_grpc_version() {
+  find "$library_gen_out/$destination_path" -type f -name "*ServiceGrpc.java" -exec \
+  sed -i 's/value = \"by gRPC proto compiler.*/value = \"by gRPC proto compiler\",/g' {} \;
+}
