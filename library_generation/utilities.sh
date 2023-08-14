@@ -10,9 +10,9 @@ extract_folder_name() {
 }
 remove_empty_files() {
   category=$1
-  find "$library_gen_out/$destination_path/$category-$folder_name/src/main/java" -type f -size 0 | while read -r f; do rm -f "${f}"; done
-  if [ -d "$library_gen_out/$destination_path/$category-$folder_name/src/main/java/samples" ]; then
-      mv "$library_gen_out/$destination_path/$category-$folder_name/src/main/java/samples" "$library_gen_out/$destination_path/$category-$folder_name"
+  find "$destination_path/$category-$folder_name/src/main/java" -type f -size 0 | while read -r f; do rm -f "${f}"; done
+  if [ -d "$destination_path/$category-$folder_name/src/main/java/samples" ]; then
+      mv "$destination_path/$category-$folder_name/src/main/java/samples" "$destination_path/$category-$folder_name"
   fi
 }
 
@@ -29,10 +29,10 @@ mv_src_files() {
     folder_suffix="$category-$folder_name/src"
     src_suffix="src/$type"
   fi
-  mkdir -p "${library_gen_out}/$destination_path/$folder_suffix"
-  cp -r "$library_gen_out/$destination_path/java_gapic_srcjar/$src_suffix" "$library_gen_out/$destination_path/$folder_suffix"
+  mkdir -p "$destination_path/$folder_suffix"
+  cp -r "$destination_path/java_gapic_srcjar/$src_suffix" "$destination_path/$folder_suffix"
   if [ "$category" != "samples" ]; then
-    rm -r -f "$library_gen_out/$destination_path/$folder_suffix/java/META-INF"
+    rm -r -f "$destination_path/$folder_suffix/java/META-INF"
   fi
 }
 
@@ -40,9 +40,9 @@ mv_src_files() {
 unzip_src_files() {
   category=$1
   jar_file=java_$category.jar
-  mkdir -p "$library_gen_out/$destination_path/$category-$folder_name/src/main/java"
-  unzip -q -o "$library_gen_out/$destination_path/$jar_file" -d "$library_gen_out/$destination_path/$category-$folder_name/src/main/java"
-  rm -r -f "$library_gen_out/$destination_path/$category-$folder_name/src/main/java/META-INF"
+  mkdir -p "$destination_path/$category-$folder_name/src/main/java"
+  unzip -q -o "$destination_path/$jar_file" -d "$destination_path/$category-$folder_name/src/main/java"
+  rm -r -f "$destination_path/$category-$folder_name/src/main/java/META-INF"
 }
 
 find_additional_protos_in_yaml() {
@@ -84,6 +84,6 @@ get_gapic_opts() {
 }
 
 remove_grpc_version() {
-  find "$library_gen_out/$destination_path" -type f -name "*ServiceGrpc.java" -exec \
+  find "$destination_path" -type f -name "*ServiceGrpc.java" -exec \
   sed -i 's/value = \"by gRPC proto compiler.*/value = \"by gRPC proto compiler\",/g' {} \;
 }

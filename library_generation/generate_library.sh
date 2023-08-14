@@ -52,30 +52,30 @@ if [ -z "${include_samples}" ]; then
 fi
 
 working_directory=$(dirname "$(readlink -f "$0")")
-library_gen_out="$working_directory"/../library_gen_out
-mkdir -p "$library_gen_out/$destination_path"
-repo_root="${library_gen_out}"/..
+cd "$working_directory"
+mkdir -p "$destination_path"
+destination_path="$working_directory/$destination_path"
 
 ##################### Section 0 #####################
 # prepare tooling
 #####################################################
-cd "${repo_root}"
+cd "$working_directory"
 # the order of services entries in gapic_metadata.json is relevant to the
 # order of proto file, sort the proto files with respect to their name to
 # get a fixed order.
 proto_files=$(find "$proto_path" -type f  -name "*.proto" | sort)
 # pull proto files and protoc from protobuf repository
 # maven central doesn't have proto files
-protoc_path=$library_gen_out/protobuf/bin
-cd "$library_gen_out"
+protoc_path=$working_directory/protobuf/bin
+cd "$working_directory"
 if [ ! -d protobuf ]; then
   curl -LJ -o protobuf.zip https://github.com/protocolbuffers/protobuf/releases/download/v"$protobuf_version"/protoc-"$protobuf_version"-linux-x86_64.zip
   unzip -o -q protobuf.zip -d protobuf/
-  cp -r protobuf/include/google "$repo_root"
+  cp -r protobuf/include/google "$working_directory"
   echo "protoc version: $("$protoc_path"/protoc --version)"
 fi
 # pull protoc-gen-grpc-java plugin from maven central
-cd "$library_gen_out"
+cd "$working_directory"
 if [ ! -f protoc-gen-grpc-java ]; then
   curl -LJ -o protoc-gen-grpc-java https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/"$grpc_version"/protoc-gen-grpc-java-"$grpc_version"-linux-x86_64.exe
   chmod +x protoc-gen-grpc-java
@@ -92,9 +92,9 @@ folder_name=$(extract_folder_name "$destination_path")
 ##################### Section 1 #####################
 # generate grpc-*/
 #####################################################
-cd "$repo_root"
-"$protoc_path"/protoc "--plugin=protoc-gen-rpc-plugin=$library_gen_out/protoc-gen-grpc-java" \
-"--rpc-plugin_out=:$library_gen_out/$destination_path/java_grpc.jar" \
+cd "$working_directory"
+"$protoc_path"/protoc "--plugin=protoc-gen-rpc-plugin=$working_directory/protoc-gen-grpc-java" \
+"--rpc-plugin_out=:$destination_path/java_grpc.jar" \
 $proto_files
 
 unzip_src_files "grpc"
@@ -104,18 +104,18 @@ remove_grpc_version
 ###################### Section 2 #####################
 ## generate gapic-*/, proto-*/, samples/
 ######################################################
-cd "$repo_root"
+cd "$working_directory"
 "$protoc_path"/protoc --experimental_allow_proto3_optional \
 "--plugin=protoc-gen-java_gapic=$working_directory/gapic-generator-java-wrapper" \
-"--java_gapic_out=metadata:$library_gen_out/$destination_path/java_gapic_srcjar_raw.srcjar.zip" \
+"--java_gapic_out=metadata:$destination_path/java_gapic_srcjar_raw.srcjar.zip" \
 "--java_gapic_opt=$(get_gapic_opts)" \
 ${proto_files} $(search_additional_protos)
 
-unzip -o -q "$library_gen_out/$destination_path/java_gapic_srcjar_raw.srcjar.zip" -d "$library_gen_out/$destination_path"
+unzip -o -q "$destination_path/java_gapic_srcjar_raw.srcjar.zip" -d "$destination_path"
 # Sync'\''d to the output file name in Writer.java.
-unzip -o -q "$library_gen_out/$destination_path/temp-codegen.srcjar" -d "$library_gen_out/$destination_path/java_gapic_srcjar"
+unzip -o -q "$destination_path/temp-codegen.srcjar" -d "$destination_path/java_gapic_srcjar"
 # Resource name source files.
-proto_dir=$library_gen_out/$destination_path/java_gapic_srcjar/proto/src/main/java
+proto_dir=$destination_path/java_gapic_srcjar/proto/src/main/java
 if [ ! -d "$proto_dir" ]
 then
   # Some APIs don'\''t have resource name helpers, like BigQuery v2.
@@ -126,7 +126,7 @@ then
   touch "$proto_dir"/PlaceholderFile.java
 fi
 
-cd "$library_gen_out"
+cd "$working_directory"
 # Main source files.
 mv_src_files "gapic" "main"
 remove_empty_files "gapic"
@@ -139,18 +139,18 @@ fi
 ##################### Section 3 #####################
 # generate proto-*/
 #####################################################
-cd "$repo_root"
-"$protoc_path"/protoc "--java_out=$library_gen_out/$destination_path/java_proto.jar" $proto_files
+cd "$working_directory"
+"$protoc_path"/protoc "--java_out=$destination_path/java_proto.jar" $proto_files
 mv_src_files "proto" "main"
 unzip_src_files "proto"
 remove_empty_files "proto"
 
 for proto_src in $proto_files; do
-    mkdir -p "$library_gen_out/$destination_path/proto-$folder_name/src/main/proto"
-    cp -f --parents "$proto_src" "$library_gen_out/$destination_path/proto-$folder_name/src/main/proto"
+    mkdir -p "$destination_path/proto-$folder_name/src/main/proto"
+    cp -f --parents "$proto_src" "$destination_path/proto-$folder_name/src/main/proto"
 done
 ##################### Section 4 #####################
 # rm tar files
 #####################################################
-cd "$library_gen_out/$destination_path"
+cd "$destination_path"
 rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_proto.jar temp-codegen.srcjar

@@ -4,7 +4,7 @@ on:
     - main
   pull_request:
     paths:
-    - library_generation_scripts/**
+    - library_generation/**
 
   workflow_dispatch:
 name: verify_library_generation
@@ -23,19 +23,19 @@ jobs:
         cache: maven
     - name: checkout googleapis
       run: |
-        git clone https://github.com/googleapis/googleapis.git
+        git clone -q https://github.com/googleapis/googleapis.git
         cd googleapis
         git checkout 90a551c2a02613507a2f0f05fd25d133113a1a1c
     - name: copy protos to proto_path
       run: |
-        cp -r googleapis/google .
+        cp -r googleapis/google library_generation
     - name: generate java-aiplatform
       shell: bash
       run: |
         set -x
-        library_generation_scripts/generate_library.sh \
+        library_generation/generate_library.sh \
         -p google/cloud/aiplatform/v1 \
-        -d google/cloud/aiplatfrom/v1/google-cloud-aiplatform-v1-java \
+        -d google-cloud-aiplatform-v1-java \
         --gapic_generator_version 2.24.0 \
         --protobuf_version 23.2 \
         --grpc_version 1.55.1 \
