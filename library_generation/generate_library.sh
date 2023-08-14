@@ -59,7 +59,8 @@ if [ ! -d googleapis ]; then
 fi
 
 GOOGLEAPIS_ROOT=${REPO_ROOT}/googleapis
-PROTOS_COPY_FOLDER=${GOOGLEAPIS_ROOT}/protos-copy
+PROTOS_COPY_PATH=schema/google/showcase/v1beta1
+PROTOS_COPY_FOLDER=${GOOGLEAPIS_ROOT}/$PROTOS_COPY_PATH/
 mkdir -p $PROTOS_COPY_FOLDER
 
 # we need some files referenced by the input protos (e.g.
@@ -83,7 +84,7 @@ cd $PROTOS_COPY_FOLDER
 # get a fixed order.
 cp -r $PROTO_PATH/* $PROTOS_COPY_FOLDER
 pushd $GOOGLEAPIS_ROOT
-PROTO_FILES=$(find "./protos-copy" -type f  -name "*.proto" | sort)
+PROTO_FILES=$(find "./$PROTOS_COPY_PATH" -type f  -name "*.proto" | sort)
 popd
 # pull proto files and protoc from protobuf repository
 # maven central doesn't have proto files
@@ -162,11 +163,11 @@ find_additional_protos_in_yaml() {
 
 search_additional_protos() {
   ADDITIONAL_PROTOS="google/cloud/common_resources.proto" # used by every library
-  IAM_POLICY=$(find_additional_protos_in_yaml "name: google.iam.v1.IAMPolicy")
+  IAM_POLICY=$(find_additional_protos_in_yaml "name: '*google.iam.v1.IAMPolicy'*")
   if [ -n "${IAM_POLICY}" ]; then
     ADDITIONAL_PROTOS="${ADDITIONAL_PROTOS} google/iam/v1/iam_policy.proto"
   fi
-  LOCATIONS=$(find_additional_protos_in_yaml "name: google.cloud.location.Locations")
+  LOCATIONS=$(find_additional_protos_in_yaml "name: '*google.cloud.location.Locations'*")
   if [ -n "${LOCATIONS}" ]; then
     ADDITIONAL_PROTOS="${ADDITIONAL_PROTOS} google/cloud/location/locations.proto"
   fi
@@ -204,7 +205,7 @@ remove_empty_files "grpc"
 # generate gapic-*/, samples/
 #####################################################
 if [ "${IS_GAPIC_LIBRARY}" == "true" ]; then
-  "${PROTOC_ROOT}"/protoc --experimental_allow_proto3_optional \
+  "${PROTOC_ROOT}"/protoc --experimental_allow_proto3_optional --include_imports --include_source_info \
   "--plugin=protoc-gen-java_gapic=${REPO_ROOT}/library_generation/gapic-generator-java-wrapper" \
   "--java_gapic_out=metadata:${BUILD_FOLDER}/java_gapic_srcjar_raw.srcjar.zip" \
   "--java_gapic_opt=$(get_gapic_opts)" \
