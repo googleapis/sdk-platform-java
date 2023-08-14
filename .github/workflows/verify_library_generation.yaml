@@ -50,4 +50,4 @@ jobs:
     - name: compare generation result
       run: |
         # ignore gradle files
-        diff -r googleapis-gen/google/cloud/aiplatform/v1/google-cloud-aiplatform-v1-java/ library_generation/google-cloud-aiplatform-v1-java/ -x "*gradle*
+        diff -r googleapis-gen/google/cloud/aiplatform/v1/google-cloud-aiplatform-v1-java/ library_generation/google-cloud-aiplatform-v1-java/ -x "*gradle*"
