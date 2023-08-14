@@ -3,18 +3,19 @@
 set -ex
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-PROTO_PATH=$1
-DESTINATION_PATH=$2
-GAPIC_GENERATOR_VERSION=$3
-PROTOBUF_VERSION=$4
-GRPC_VERSION=$5
-OWLBOT_SHA=$6
-TRANSPORT=$7 # grpc+rest or grpc
-REST_NUMERIC_ENUMS=$8 # true or false
-INCLUDE_SAMPLES=$9 # true or false
-OWLBOT_PY_PATH=${10}
-REPO_METADATA_PATH=${11}
-ENABLE_POSTPROCESSING=${12}
+PROTO_LOCATION=$1
+PROTO_PATH=$2
+DESTINATION_PATH=$3
+GAPIC_GENERATOR_VERSION=$4
+PROTOBUF_VERSION=$5
+GRPC_VERSION=$6
+OWLBOT_SHA=$7
+TRANSPORT=$8 # grpc+rest or grpc
+REST_NUMERIC_ENUMS=$9 # true or false
+INCLUDE_SAMPLES=${10} # true or false
+OWLBOT_PY_PATH=${11}
+REPO_METADATA_PATH=${12}
+ENABLE_POSTPROCESSING=${13}
 
 # commented out to keep input variables as in design
 if [ -z "${IS_GAPIC_LIBRARY}" ]; then
@@ -35,7 +36,7 @@ BUILD_FOLDER="${LIBRARY_GEN_OUT}/build"
 mkdir -p $BUILD_FOLDER
 
 
-echo "PROTO_PATH=$1"
+echo "PROTO_LOCATION=$1"
 echo "DESTINATION_PATH=$2"
 echo "GAPIC_GENERATOR_VERSION=$3"
 echo "PROTOBUF_VERSION=$4"
@@ -59,8 +60,7 @@ if [ ! -d googleapis ]; then
 fi
 
 GOOGLEAPIS_ROOT=${REPO_ROOT}/googleapis
-PROTOS_COPY_PATH=schema/google/showcase/v1beta1
-PROTOS_COPY_FOLDER=${GOOGLEAPIS_ROOT}/$PROTOS_COPY_PATH/
+PROTOS_COPY_FOLDER=${GOOGLEAPIS_ROOT}/$PROTO_PATH/
 mkdir -p $PROTOS_COPY_FOLDER
 
 # we need some files referenced by the input protos (e.g.
@@ -82,9 +82,9 @@ cd $PROTOS_COPY_FOLDER
 # the order of services entries in gapic_metadata.json is relevant to the
 # order of proto file, sort the proto files with respect to their name to
 # get a fixed order.
-cp -r $PROTO_PATH/* $PROTOS_COPY_FOLDER
+cp -r $PROTO_LOCATION/* $PROTOS_COPY_FOLDER
 pushd $GOOGLEAPIS_ROOT
-PROTO_FILES=$(find "./$PROTOS_COPY_PATH" -type f  -name "*.proto" | sort)
+PROTO_FILES=$(find "./$PROTO_PATH" -type f  -name "*.proto" | sort)
 popd
 # pull proto files and protoc from protobuf repository
 # maven central doesn't have proto files
@@ -155,7 +155,7 @@ unzip_src_files() {
 
 find_additional_protos_in_yaml() {
   PATTERN=$1
-  FIND_RESULT=$(grep --include=\*.yaml -rw "${PROTO_PATH}" -e "${PATTERN}")
+  FIND_RESULT=$(grep --include=\*.yaml -rw "${PROTO_LOCATION}" -e "${PATTERN}")
   if [ -n "${FIND_RESULT}" ]; then
     echo "${FIND_RESULT}"
   fi
@@ -175,14 +175,14 @@ search_additional_protos() {
 }
 
 get_gapic_opts() {
-  GAPIC_CONFIG=$(find "${PROTO_PATH}" -type f -name "*gapic.yaml")
+  GAPIC_CONFIG=$(find "${PROTO_LOCATION}" -type f -name "*gapic.yaml")
   if [ -z "${GAPIC_CONFIG}" ]; then
     GAPIC_CONFIG=""
   else
     GAPIC_CONFIG="gapic-config=${GAPIC_CONFIG},"
   fi
-  GRPC_SERVICE_CONFIG=$(find "${PROTO_PATH}" -type f -name "*service_config.json")
-  API_SERVICE_CONFIG=$(find "${PROTO_PATH}" -maxdepth 1 -type f \( -name "*.yaml" ! -name "*gapic.yaml" \))
+  GRPC_SERVICE_CONFIG=$(find "${PROTO_LOCATION}" -type f -name "*service_config.json")
+  API_SERVICE_CONFIG=$(find "${PROTO_LOCATION}" -maxdepth 1 -type f \( -name "*.yaml" ! -name "*gapic.yaml" \))
   if [ "${REST_NUMERIC_ENUMS}" == "true" ]; then
     REST_NUMERIC_ENUMS="rest-numeric-enums,"
   else
@@ -281,7 +281,7 @@ API_SHORTNAME=$(cat $REPO_METADATA_PATH | jq -r '.api_shortname // empty')
 if [ -z ${DISTRIBUTION_NAME+x} ]; then
   echo "owlbot will not use copy regex"
 else
-  MODULE_NAME=$PROTO_PATH
+  MODULE_NAME=$PROTO_LOCATION
   OWLBOT_COPY_REGEX=$(cat <<-_EOT_
 deep-remove-regex:
 - "/${MODULE_NAME}/grpc-google-.*/src"
