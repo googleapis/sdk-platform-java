@@ -22,10 +22,10 @@ jobs:
         distribution: temurin
         cache: maven
     - name: checkout googleapis
-      run: |
-        git clone -q https://github.com/googleapis/googleapis.git
-        cd googleapis
-        git checkout 90a551c2a02613507a2f0f05fd25d133113a1a1c
+      uses: actions/checkout@v3
+      with:
+        repository: googleapis/googleapis
+        ref: 90a551c2a02613507a2f0f05fd25d133113a1a1c
     - name: copy protos to proto_path
       run: |
         cp -r googleapis/google library_generation
@@ -43,10 +43,11 @@ jobs:
         --rest_numeric_enums false \
         --include_samples true
     - name: checkout googleapis-gen
-      run: |
-        git clone https://cloud-java-bot:${{ secrets.CLOUD_JAVA_BOT_GITHUB_TOKEN }}@github.com/googleapis/googleapis-gen.git
-        cd googleapis-gen
-        git checkout 30620b4f34713860083fff036982900b1004cbf5
+      uses: actions/checkout@v3
+      with:
+        repository: googleapis/googleapis-gen
+        ref: 30620b4f34713860083fff036982900b1004cbf5
+        token: ${{ secrets.CLOUD_JAVA_BOT_GITHUB_TOKEN }}
     - name: compare generation result
       run: |
         # ignore gradle files
