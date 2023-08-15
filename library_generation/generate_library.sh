@@ -1,28 +1,83 @@
 #!/usr/bin/env bash
-
 set -ex
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
-PROTO_LOCATION=$1
-PROTO_PATH=$2
-DESTINATION_PATH=$3
-GAPIC_GENERATOR_VERSION=$4
-PROTOBUF_VERSION=$5
-GRPC_VERSION=$6
-OWLBOT_SHA=$7
-TRANSPORT=$8 # grpc+rest or grpc
-REST_NUMERIC_ENUMS=$9 # true or false
-INCLUDE_SAMPLES=${10} # true or false
-OWLBOT_PY_PATH=${11}
-REPO_METADATA_PATH=${12}
-ENABLE_POSTPROCESSING=${13}
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+# load utility functions
+source $SCRIPT_DIR/util.sh
+
+# parse arguments
+VALID_ARGS=$(getopt -o l:p:d:g:p:r:s:t:nio:m:e \
+  --long proto-location:,proto-path:,destination-location:,gapic-generator-java-version:,protobuf-version:,grpc-version:,\
+owlbot-sha:,transport:,use-rest-numeric-enums,include-samples,owlbot-py-path:,repo-metadata-path:,enable-postprocessing -- "$@")
+if [[ $? -ne 0 ]]; then
+    exit 1;
+fi
+
+eval set -- "$VALID_ARGS"
+while [ : ]; do
+  case "$1" in
+    -l | --proto-location)
+        PROTO_LOCATION=$(validate_arg "--proto-(l)ocation" $2)
+        shift 2
+        ;;
+    -l | --proto-path)
+        PROTO_PATH=$(validate_arg "--proto-(p)ath" $2)
+        shift 2
+        ;;
+    -d | --destination-location)
+        DESTINATION_LOCATION=$(validate_arg "--(d)estination-path" $2)
+        shift 2
+        ;;
+    -d | --gapic-generator-java-version)
+        GAPIC_GENERATOR_JAVA_VERSION=$(validate_arg "--(g)gapic-generator-java-version" $2)
+        shift 2
+        ;;
+    -x | --protobuf-version)
+        PROTOBUF_VERSION=$(validate_arg "--protobuf-version" $2)
+        shift 2
+        ;;
+    -r | --grpc-version)
+        GRPC_VERSION=$(validate_arg "--g(r)pc-version" $2)
+        shift 2
+        ;;
+    -s | --owlbot-sha)
+        OWLBOT_SHA=$(validate_arg "--owlbot-(s)ha" $2)
+        shift 2
+        ;;
+    -t | --transport)
+        TRANSPORT=$(validate_arg "--(t)ransport" $2)
+        shift 2
+        ;;
+    -n | --use-rest-numeric-enums)
+        USE_REST_NUMERIC_ENUMS="true"
+        shift
+        ;;
+    -i | --include-samples)
+        INCLUDE_SAMPLES="true"
+        shift
+        ;;
+    -o | --owlbot-py-path)
+        OWLBOT_PY_PATH=$(validate_arg "--(o)wlbot-py-path" $2)
+        shift 2
+        ;;
+    -m | --repo-metadata-path)
+        REPO_METADATA_PATH=$(validate_arg "--repo-(m)etadata-path" $2)
+        shift 2
+        ;;
+    -e | --enable-postprocessing)
+        ENABLE_POSTPROCESSING="true"
+        shift
+        ;;
+    --) shift;
+        break
+        ;;
+  esac
+done
+
 
 # commented out to keep input variables as in design
 if [ -z "${IS_GAPIC_LIBRARY}" ]; then
   IS_GAPIC_LIBRARY="true"
-fi
-if [ -z "${INCLUDE_SAMPLES}" ]; then
-  INCLUDE_SAMPLES="true"
 fi
 # commented out to keep input variables as in design
 #if [ "${CONTAINS_CLOUD}" == true ]; then
@@ -36,18 +91,22 @@ BUILD_FOLDER="${LIBRARY_GEN_OUT}/build"
 mkdir -p $BUILD_FOLDER
 
 
-echo "PROTO_LOCATION=$1"
-echo "DESTINATION_PATH=$2"
-echo "GAPIC_GENERATOR_VERSION=$3"
-echo "PROTOBUF_VERSION=$4"
-echo "GRPC_VERSION=$5"
-echo "OWLBOT_SHA=$6"
-echo "TRANSPORT=$7"
-echo "REST_NUMERIC_ENUMS=$8"
-echo "INCLUDE_SAMPLES=$9"
-echo "OWLBOT_PY_PATH=${10}"
-echo "REPO_METADATA_PATH=${11}"
-echo "ENABLE_POSTPROCESSING=${12}"
+echo "PROTO_LOCATION=$PROTO_LOCATION"
+echo "DESTINATION_LOCATION=$DESTINATION_LOCATION"
+echo "GAPIC_GENERATOR_JAVA_VERSION=$GAPIC_GENERATOR_JAVA_VERSION"
+echo "PROTOBUF_VERSION=$PROTOBUF_VERSION"
+echo "GRPC_VERSION=$GRPC_VERSION"
+echo "OWLBOT_SHA=$OWLBOT_SHA"
+echo "TRANSPORT=$TRANSPORT"
+echo "REST_NUMERIC_ENUMS=$REST_NUMERIC_ENUMS"
+echo "INCLUDE_SAMPLES=$INCLUDE_SAMPLES"
+echo "OWLBOT_PY_PATH=$OWLBOT_PY_PATH"
+echo "REPO_METADATA_PATH=$REPO_METADATA_PATH"
+echo "ENABLE_POSTPROCESSING=$ENABLE_POSTPROCESSING"
+echo "LIBRARY_GEN_OUT=$LIBRARY_GEN_OUT"
+echo "OUT_LAYER_FOLDER=$OUT_LAYER_FOLDER"
+echo "REPO_ROOT=$REPO_ROOT"
+echo "BUILD_FOLDER=$BUILD_FOLDER"
 
 ##################### Section 0 #####################
 # prepare tooling
@@ -108,7 +167,7 @@ if [ ! -f protoc-gen-grpc-java ]; then
 fi
 # gapic-generator-java
 if [ ! -f gapic-generator-java.jar ]; then
-  curl -LJ -o gapic-generator-java.jar https://repo1.maven.org/maven2/com/google/api/gapic-generator-java/"${GAPIC_GENERATOR_VERSION}"/gapic-generator-java-"${GAPIC_GENERATOR_VERSION}".jar
+  curl -LJ -o gapic-generator-java.jar https://repo1.maven.org/maven2/com/google/api/gapic-generator-java/"${GAPIC_GENERATOR_JAVA_VERSION}"/gapic-generator-java-"${GAPIC_GENERATOR_JAVA_VERSION}".jar
 fi
 # define utility functions
 remove_empty_files() {
@@ -120,76 +179,6 @@ remove_empty_files() {
   fi
 }
 
-mv_src_files() {
-  FOLDER=$1 # one of gapic, proto, samples
-  TYPE=$2 # one of main, test
-  if [ "${FOLDER}" == "samples" ]; then
-    FOLDER_SUFFIX="samples/snippets/generated"
-    SRC_SUFFIX="samples/snippets/generated/src/main/java/com"
-  elif [ "${FOLDER}" == "proto" ]; then
-    FOLDER_SUFFIX="${FOLDER}"-"${OUT_LAYER_FOLDER}"/src/"${TYPE}"
-    SRC_SUFFIX="${FOLDER}/src/${TYPE}/java"
-  else
-    FOLDER_SUFFIX="${FOLDER}"-"${OUT_LAYER_FOLDER}"/src/"${TYPE}"
-    SRC_SUFFIX="src/${TYPE}/java"
-  fi
-  TARGET_FOLDER="$BUILD_FOLDER/$OUT_LAYER_FOLDER/$FOLDER_SUFFIX"
-  if [ "${IS_GAPIC_LIBRARY}" == "true" ]; then
-    mkdir -p $TARGET_FOLDER
-    cp -r "$BUILD_FOLDER/java_gapic_srcjar/$SRC_SUFFIX" $TARGET_FOLDER
-  fi
-  if [ "${FOLDER}" != "samples" ]; then
-    rm -r -f $TARGET_FOLDER/java/META-INF
-  fi
-}
-
-unzip_src_files() {
-  FOLDER=$1
-  JAR_FILE=java_"${FOLDER}".jar
-  UNZIP_TARGET="$BUILD_FOLDER/$JAR_FILE"
-  UNZIP_OUTPUT_FOLDER="${BUILD_FOLDER}/${OUT_LAYER_FOLDER}/${FOLDER}-${OUT_LAYER_FOLDER}"
-  mkdir -p "$UNZIP_OUTPUT_FOLDER/src/main/java"
-  unzip -q -o $UNZIP_TARGET -d "$UNZIP_OUTPUT_FOLDER/src/main/java"
-  rm -r -f "$UNZIP_OUTPUT_FOLDER/src/main/java/META-INF"
-}
-
-find_additional_protos_in_yaml() {
-  PATTERN=$1
-  FIND_RESULT=$(grep --include=\*.yaml -rw "${PROTO_LOCATION}" -e "${PATTERN}")
-  if [ -n "${FIND_RESULT}" ]; then
-    echo "${FIND_RESULT}"
-  fi
-}
-
-search_additional_protos() {
-  ADDITIONAL_PROTOS="google/cloud/common_resources.proto" # used by every library
-  IAM_POLICY=$(find_additional_protos_in_yaml "name: '*google.iam.v1.IAMPolicy'*")
-  if [ -n "${IAM_POLICY}" ]; then
-    ADDITIONAL_PROTOS="${ADDITIONAL_PROTOS} google/iam/v1/iam_policy.proto"
-  fi
-  LOCATIONS=$(find_additional_protos_in_yaml "name: '*google.cloud.location.Locations'*")
-  if [ -n "${LOCATIONS}" ]; then
-    ADDITIONAL_PROTOS="${ADDITIONAL_PROTOS} google/cloud/location/locations.proto"
-  fi
-  echo "${ADDITIONAL_PROTOS}"
-}
-
-get_gapic_opts() {
-  GAPIC_CONFIG=$(find "${PROTO_LOCATION}" -type f -name "*gapic.yaml")
-  if [ -z "${GAPIC_CONFIG}" ]; then
-    GAPIC_CONFIG=""
-  else
-    GAPIC_CONFIG="gapic-config=${GAPIC_CONFIG},"
-  fi
-  GRPC_SERVICE_CONFIG=$(find "${PROTO_LOCATION}" -type f -name "*service_config.json")
-  API_SERVICE_CONFIG=$(find "${PROTO_LOCATION}" -maxdepth 1 -type f \( -name "*.yaml" ! -name "*gapic.yaml" \))
-  if [ "${REST_NUMERIC_ENUMS}" == "true" ]; then
-    REST_NUMERIC_ENUMS="rest-numeric-enums,"
-  else
-    REST_NUMERIC_ENUMS=""
-  fi
-  echo "transport=${TRANSPORT},${REST_NUMERIC_ENUMS}grpc-service-config=${GRPC_SERVICE_CONFIG},${GAPIC_CONFIG}api-service-config=${API_SERVICE_CONFIG}"
-}
 
 ##################### Section 1 #####################
 # generate grpc-*/
