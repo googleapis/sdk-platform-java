@@ -26,10 +26,9 @@ jobs:
       with:
         repository: googleapis/googleapis
         ref: 90a551c2a02613507a2f0f05fd25d133113a1a1c
-        path: googleapis
-    - name: copy protos to proto_path
-      run: |
-        cp -r googleapis/google library_generation
+        path: library_generation
+        sparse-checkout: |
+          google
     - name: generate java-aiplatform
       shell: bash
       run: |
