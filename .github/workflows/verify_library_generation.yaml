@@ -30,7 +30,7 @@ jobs:
     - name: copy protos to proto_path
       run: |
         cp -r googleapis/google library_generation
-    - name: generate java-aiplatform
+    - name: generate client library
       shell: bash
       run: |
         set -x
