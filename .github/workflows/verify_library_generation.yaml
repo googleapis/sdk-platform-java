@@ -35,13 +35,13 @@ jobs:
       run: |
         set -x
         library_generation/generate_library.sh \
-        -p google/cloud/aiplatform/v1 \
-        -d google-cloud-aiplatform-v1-java \
+        -p google/cloud/confidentialcomputing/v1 \
+        -d google-cloud-confidentialcomputing-v1-java \
         --gapic_generator_version 2.24.0 \
         --protobuf_version 23.2 \
         --grpc_version 1.55.1 \
-        --transport grpc \
-        --rest_numeric_enums false \
+        --transport grpc+rest \
+        --rest_numeric_enums true \
         --include_samples true
     - name: checkout googleapis-gen
       uses: actions/checkout@v3
@@ -53,4 +53,4 @@ jobs:
     - name: compare generation result
       run: |
         # ignore gradle files
-        diff -r googleapis-gen/google/cloud/aiplatform/v1/google-cloud-aiplatform-v1-java/ library_generation/google-cloud-aiplatform-v1-java/ -x "*gradle*"
+        diff -r googleapis-gen/google/cloud/confidentialcomputing/v1/google-cloud-confidentialcomputing-v1-java/ library_generation/google-cloud-confidentialcomputing-v1-java/ -x "*gradle*"

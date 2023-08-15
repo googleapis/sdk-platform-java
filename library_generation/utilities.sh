@@ -84,6 +84,6 @@ get_gapic_opts() {
 }
 
 remove_grpc_version() {
-  find "$destination_path" -type f -name "*ServiceGrpc.java" -exec \
+  find "$destination_path" -type f -name "*Grpc.java" -exec \
   sed -i 's/value = \"by gRPC proto compiler.*/value = \"by gRPC proto compiler\",/g' {} \;
 }
