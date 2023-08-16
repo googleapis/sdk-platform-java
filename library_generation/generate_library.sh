@@ -51,19 +51,23 @@ working_directory=$(dirname "$(readlink -f "$0")")
 cd "$working_directory"
 source ./utilities.sh
 
-if [ -z "${grpc_version}" ]; then
+if [ -z "$protobuf_version" ]; then
+  protobuf_version=$(get_protobuf_version "$gapic_generator_version")
+fi
+
+if [ -z "$grpc_version" ]; then
   grpc_version=$(get_grpc_version "$gapic_generator_version")
 fi
 
-if [ -z "${transport}" ]; then
+if [ -z "$transport" ]; then
   transport="grpc"
 fi
 
-if [ -z "${rest_numeric_enums}" ]; then
+if [ -z "$rest_numeric_enums" ]; then
   rest_numeric_enums="true"
 fi
 
-if [ -z "${include_samples}" ]; then
+if [ -z "$include_samples" ]; then
   include_samples="true"
 fi
 
@@ -79,6 +83,7 @@ cd "$working_directory"
 # order of proto file, sort the proto files with respect to their name to
 # get a fixed order.
 proto_files=$(find "$proto_path" -type f  -name "*.proto" | sort)
+folder_name=$(extract_folder_name "$destination_path")
 # pull proto files and protoc from protobuf repository
 # maven central doesn't have proto files
 protoc_path=$working_directory/protobuf/bin
@@ -99,11 +104,6 @@ fi
 if [ ! -f gapic-generator-java.jar ]; then
   curl -LJ -o gapic-generator-java.jar https://repo1.maven.org/maven2/com/google/api/gapic-generator-java/"$gapic_generator_version"/gapic-generator-java-"$gapic_generator_version".jar
 fi
-
-cd "$working_directory"
-source ./utilities.sh
-
-folder_name=$(extract_folder_name "$destination_path")
 ##################### Section 1 #####################
 # generate grpc-*/
 #####################################################
