@@ -59,9 +59,9 @@ while [ : ]; do
 done
 
 
-LIBRARY_GEN_OUT=$(dirname "$(readlink -f "$0")")/../library_gen_out
 OUT_LAYER_FOLDER="out-layer"
-REPO_ROOT="${LIBRARY_GEN_OUT}"/..
+REPO_ROOT="${SCRIPT_DIR}"/../..
+LIBRARY_GEN_OUT=$REPO_ROOT/library-gen-out
 BUILD_FOLDER="${LIBRARY_GEN_OUT}/build"
 mkdir -p $BUILD_FOLDER
 
@@ -86,13 +86,13 @@ echo "BUILD_FOLDER=$BUILD_FOLDER"
 # prepare tooling
 #####################################################
 # proto files from googleapis repository
-cd "${REPO_ROOT}"
+cd "${LIBRARY_GEN_OUT}"
 
 if [ ! -d googleapis ]; then
   git clone https://github.com/googleapis/googleapis.git
 fi
 
-GOOGLEAPIS_ROOT=${REPO_ROOT}/googleapis
+GOOGLEAPIS_ROOT=${LIBRARY_GEN_OUT}/googleapis
 PROTOS_COPY_FOLDER=${GOOGLEAPIS_ROOT}/$PROTO_PATH/
 mkdir -p $PROTOS_COPY_FOLDER
 
@@ -153,7 +153,7 @@ remove_empty_files "grpc"
 # generate gapic-*/, samples/
 #####################################################
 "${PROTOC_ROOT}"/protoc --experimental_allow_proto3_optional \
-"--plugin=protoc-gen-java_gapic=${REPO_ROOT}/library_generation/gapic-generator-java-wrapper" \
+"--plugin=protoc-gen-java_gapic=${SCRIPT_DIR}/gapic-generator-java-wrapper" \
 "--java_gapic_out=metadata:${BUILD_FOLDER}/java_gapic_srcjar_raw.srcjar.zip" \
 "--java_gapic_opt=$(get_gapic_opts)" \
 ${PROTO_FILES} $(search_additional_protos)
