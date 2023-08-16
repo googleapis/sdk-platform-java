@@ -6,9 +6,9 @@ SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 source $SCRIPT_DIR/util.sh
 
 # parse arguments
-VALID_ARGS=$(getopt -o l:p:d:g:p:r:s:t:nio:m:e \
+VALID_ARGS=$(getopt -o l:p:d:g:f:r:t:ni \
   --long proto-location:,proto-path:,destination-location:,gapic-generator-java-version:,protobuf-version:,grpc-version:,\
-owlbot-sha:,transport:,use-rest-numeric-enums,include-samples,owlbot-py-path:,repo-metadata-path:,enable-postprocessing -- "$@")
+transport:,use-rest-numeric-enums,include-samples -- "$@")
 if [[ $? -ne 0 ]]; then
     exit 1;
 fi
@@ -20,7 +20,7 @@ while [ : ]; do
         PROTO_LOCATION=$(validate_arg "--proto-(l)ocation" $2)
         shift 2
         ;;
-    -l | --proto-path)
+    -p | --proto-path)
         PROTO_PATH=$(validate_arg "--proto-(p)ath" $2)
         shift 2
         ;;
@@ -28,20 +28,16 @@ while [ : ]; do
         DESTINATION_LOCATION=$(validate_arg "--(d)estination-path" $2)
         shift 2
         ;;
-    -d | --gapic-generator-java-version)
+    -g | --gapic-generator-java-version)
         GAPIC_GENERATOR_JAVA_VERSION=$(validate_arg "--(g)gapic-generator-java-version" $2)
         shift 2
         ;;
-    -x | --protobuf-version)
-        PROTOBUF_VERSION=$(validate_arg "--protobuf-version" $2)
+    -f | --protobuf-version)
+        PROTOBUF_VERSION=$(validate_arg "--protobu(f)-version" $2)
         shift 2
         ;;
     -r | --grpc-version)
         GRPC_VERSION=$(validate_arg "--g(r)pc-version" $2)
-        shift 2
-        ;;
-    -s | --owlbot-sha)
-        OWLBOT_SHA=$(validate_arg "--owlbot-(s)ha" $2)
         shift 2
         ;;
     -t | --transport)
@@ -56,33 +52,12 @@ while [ : ]; do
         INCLUDE_SAMPLES="true"
         shift
         ;;
-    -o | --owlbot-py-path)
-        OWLBOT_PY_PATH=$(validate_arg "--(o)wlbot-py-path" $2)
-        shift 2
-        ;;
-    -m | --repo-metadata-path)
-        REPO_METADATA_PATH=$(validate_arg "--repo-(m)etadata-path" $2)
-        shift 2
-        ;;
-    -e | --enable-postprocessing)
-        ENABLE_POSTPROCESSING="true"
-        shift
-        ;;
     --) shift;
         break
         ;;
   esac
 done
 
-
-# commented out to keep input variables as in design
-if [ -z "${IS_GAPIC_LIBRARY}" ]; then
-  IS_GAPIC_LIBRARY="true"
-fi
-# commented out to keep input variables as in design
-#if [ "${CONTAINS_CLOUD}" == true ]; then
-#  OUT_LAYER_FOLDER="${OUT_LAYER_FOLDER//google/google-cloud}"
-#fi
 
 LIBRARY_GEN_OUT=$(dirname "$(readlink -f "$0")")/../library_gen_out
 OUT_LAYER_FOLDER="out-layer"
@@ -121,21 +96,6 @@ fi
 GOOGLEAPIS_ROOT=${REPO_ROOT}/googleapis
 PROTOS_COPY_FOLDER=${GOOGLEAPIS_ROOT}/$PROTO_PATH/
 mkdir -p $PROTOS_COPY_FOLDER
-
-# we need some files referenced by the input protos (e.g.
-# googleapis/google/api/annotations.proto). We can either supply them manually
-# or using a specific commit. For now, this is defaulting to HEAD (not hermetic)
-mkdir -p "$PROTOS_COPY_FOLDER/google/api"
-cd $GOOGLEAPIS_ROOT
-#
-# v[\d] folders are also required
-#for common_proto_path in $(find . -name '*.proto' -type f); do
-  ## create path if not existing
-  #mkdir -p "$PROTOS_COPY_FOLDER/$(dirname $common_proto_path)"
-  #cp $common_proto_path "$PROTOS_COPY_FOLDER/$common_proto_path"
-#done
-
-
 
 cd $PROTOS_COPY_FOLDER
 # the order of services entries in gapic_metadata.json is relevant to the
@@ -193,38 +153,36 @@ remove_empty_files "grpc"
 ##################### Section 2 #####################
 # generate gapic-*/, samples/
 #####################################################
-if [ "${IS_GAPIC_LIBRARY}" == "true" ]; then
-  "${PROTOC_ROOT}"/protoc --experimental_allow_proto3_optional --include_imports --include_source_info \
-  "--plugin=protoc-gen-java_gapic=${REPO_ROOT}/library_generation/gapic-generator-java-wrapper" \
-  "--java_gapic_out=metadata:${BUILD_FOLDER}/java_gapic_srcjar_raw.srcjar.zip" \
-  "--java_gapic_opt=$(get_gapic_opts)" \
-  ${PROTO_FILES} $(search_additional_protos)
+"${PROTOC_ROOT}"/protoc --experimental_allow_proto3_optional --include_imports --include_source_info \
+"--plugin=protoc-gen-java_gapic=${REPO_ROOT}/library_generation/gapic-generator-java-wrapper" \
+"--java_gapic_out=metadata:${BUILD_FOLDER}/java_gapic_srcjar_raw.srcjar.zip" \
+"--java_gapic_opt=$(get_gapic_opts)" \
+${PROTO_FILES} $(search_additional_protos)
 
-  unzip -o -q "${BUILD_FOLDER}"/java_gapic_srcjar_raw.srcjar.zip -d $BUILD_FOLDER/$OUT_LAYER_DIR
-  # Sync'\''d to the output file name in Writer.java.
-  unzip -o -q "${BUILD_FOLDER}"/temp-codegen.srcjar -d "${BUILD_FOLDER}"/java_gapic_srcjar
-  # Resource name source files.
-  PROTO_DIR=${BUILD_FOLDER}/java_gapic_srcjar/proto/src/main/java
-  if [ ! -d "${PROTO_DIR}" ]
-  then
-    # Some APIs don'\''t have resource name helpers, like BigQuery v2.
-    # Create an empty file so we can finish building. Gating the resource name rule definition
-    # on file existences go against Bazel'\''s design patterns, so we'\''ll simply delete all empty
-    # files during the final packaging process (see java_gapic_pkg.bzl)
-    mkdir -p "${PROTO_DIR}"
-    touch "${PROTO_DIR}"/PlaceholderFile.java
-  fi
+unzip -o -q "${BUILD_FOLDER}"/java_gapic_srcjar_raw.srcjar.zip -d $BUILD_FOLDER/$OUT_LAYER_DIR
+# Sync'\''d to the output file name in Writer.java.
+unzip -o -q "${BUILD_FOLDER}"/temp-codegen.srcjar -d "${BUILD_FOLDER}"/java_gapic_srcjar
+# Resource name source files.
+PROTO_DIR=${BUILD_FOLDER}/java_gapic_srcjar/proto/src/main/java
+if [ ! -d "${PROTO_DIR}" ]
+then
+  # Some APIs don'\''t have resource name helpers, like BigQuery v2.
+  # Create an empty file so we can finish building. Gating the resource name rule definition
+  # on file existences go against Bazel'\''s design patterns, so we'\''ll simply delete all empty
+  # files during the final packaging process (see java_gapic_pkg.bzl)
+  mkdir -p "${PROTO_DIR}"
+  touch "${PROTO_DIR}"/PlaceholderFile.java
+fi
 
-  cd "${LIBRARY_GEN_OUT}"
-  # Main source files.
-  mv_src_files "gapic" "main"
-  remove_empty_files "gapic"
-  # Test source files.
-  mv_src_files "gapic" "test"
-  if [ "${INCLUDE_SAMPLES}" == "true" ]; then
-    # Sample source files.
-    mv_src_files "samples" "main"
-  fi
+cd "${LIBRARY_GEN_OUT}"
+# Main source files.
+mv_src_files "gapic" "main"
+remove_empty_files "gapic"
+# Test source files.
+mv_src_files "gapic" "test"
+if [ "${INCLUDE_SAMPLES}" == "true" ]; then
+  # Sample source files.
+  mv_src_files "samples" "main"
 fi
 ##################### Section 3 #####################
 # generate proto-*/
@@ -246,123 +204,7 @@ done
 cd "$BUILD_FOLDER"
 rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_proto.jar temp-codegen.srcjar
 
-##################### Section 4 #####################
-# post-processing
+##################### Section 5 #####################
+# transfer to destination path
 #####################################################
-if [ -z $ENABLE_POSTPROCESSING ];
-then
-  echo "post processing is disabled"
-  exit 0
-fi
-# copy repo metadata to destination library folder
-WORKSPACE=$LIBRARY_GEN_OUT/workspace
-mkdir $WORKSPACE
-cp $REPO_METADATA_PATH $WORKSPACE/.repo-metadata.json
-
-# call owl-bot-copy
-OWLBOT_STAGING_FOLDER="$WORKSPACE/owl-bot-staging"
-OWLBOT_IMAGE=gcr.io/cloud-devrel-public-resources/owlbot-java@sha256:$OWLBOT_SHA
-
-# render owlbot yaml template
-DISTRIBUTION_NAME=$(cat $REPO_METADATA_PATH | jq -r '.distribution_name // empty' | rev | cut -d: -f1 | rev)
-API_SHORTNAME=$(cat $REPO_METADATA_PATH | jq -r '.api_shortname // empty')
-
-if [ -z ${DISTRIBUTION_NAME+x} ]; then
-  echo "owlbot will not use copy regex"
-else
-  MODULE_NAME=$PROTO_LOCATION
-  OWLBOT_COPY_REGEX=$(cat <<-_EOT_
-deep-remove-regex:
-- "/${MODULE_NAME}/grpc-google-.*/src"
-- "/${MODULE_NAME}/proto-google-.*/src"
-- "/${MODULE_NAME}/google-.*/src"
-- "/${MODULE_NAME}/samples/snippets/generated"
-
-deep-preserve-regex:
-- "/${MODULE_NAME}/google-.*/src/test/java/com/google/cloud/.*/v.*/it/IT.*Test.java"
-
-deep-copy-regex:
-- source: "/{{ proto_path }}/(v.*)/.*-java/proto-google-.*/src"
-  dest: "/owl-bot-staging/${MODULE_NAME}/\$1/proto-${DISTRIBUTION_NAME}-\$1/src"
-- source: "/{{ proto_path }}/(v.*)/.*-java/grpc-google-.*/src"
-  dest: "/owl-bot-staging/${MODULE_NAME}/\$1/grpc-${DISTRIBUTION_NAME}-\$1/src"
-- source: "/{{ proto_path }}/(v.*)/.*-java/gapic-google-.*/src"
-  dest: "/owl-bot-staging/${MODULE_NAME}/\$1/${DISTRIBUTION_NAME}/src"
-- source: "/{{ proto_path }}/(v.*)/.*-java/samples/snippets/generated"
-  dest: "/owl-bot-staging/${MODULE_NAME}/\$1/samples/snippets/generated"
-_EOT_
-)
-fi
-OWLBOT_YAML_CONTENT=$(cat <<-_EOT_
-${OWLBOT_COPY_REGEX}
-
-api-name: ${API_SHORTNAME}
-_EOT_
-)
-
-# render owlbot.py template
-OWLBOT_PY_CONTENT=$(cat "$SCRIPT_DIR/post-processing/templates/owlbot.py.template")
-
-cp -r $BUILD_FOLDER $OWLBOT_STAGING_FOLDER
-echo "$OWLBOT_YAML_CONTENT" > $OWLBOT_STAGING_FOLDER/.OwlBot.yaml
-echo "$OWLBOT_PY_CONTENT" > $WORKSPACE/owlbot.py
-docker run --rm -v $WORKSPACE:/workspace --user $(id -u):$(id -g) $OWLBOT_IMAGE
-
-# postprocessor cleanup
-bash $SCRIPT_DIR/post-processing/update_owlbot_postprocessor_config.sh $WORKSPACE
-bash $SCRIPT_DIR/post-processing/delete_non_generated_samples.sh $WORKSPACE
-bash $SCRIPT_DIR/post-processing/consolidate_config.sh $WORKSPACE
-bash $SCRIPT_DIR/post-processing/readme_update.sh $WORKSPACE
-rm $WORKSPACE/versions.txt
-if [ -z ${MONOREPO_TAG+x} ]; then
-  echo "Will not add parent project to pom"
-else
-  pushd $SCRIPT_DIR
-  [ ! -d google-cloud-java ] && git clone https://github.com/googleapis/google-cloud-java
-  pushd google-cloud-java
-  git reset --hard
-  git checkout $MONOREPO_TAG
-  PARENT_POM="$(pwd)/google-cloud-pom-parent/pom.xml"
-  popd
-  # rm -rdf google-cloud-java
-  popd
-  bash $SCRIPT_DIR/post-processing/set_parent_pom.sh $WORKSPACE $PARENT_POM
-
-  # get existing versions.txt from downloaded monorepo
-  REPO_SHORT=$(cat $REPO_METADATA_PATH | jq -r '.repo_short // empty')
-  cp "$SCRIPT_DIR/google-cloud-java/versions.txt" $WORKSPACE
-  pushd $WORKSPACE
-  bash $SCRIPT_DIR/post-processing/apply_current_versions.sh
-  popd
-fi
-
-# rename folders properly (may not be necessary after all)
-pushd $WORKSPACE
-GAPIC_LIB_ORIGINAL_NAME=$(find . -name 'gapic-*' | sed "s/\.\///")
-GAPIC_LIB_NEW_NAME=$(echo "$GAPIC_LIB_ORIGINAL_NAME" |\
-  sed 's/cloud-cloud/cloud/' | sed 's/-v[0-9a-zA-Z]-java//' | sed 's/gapic-//')
-PROTO_LIB_ORIGINAL_NAME=$(find . -name 'proto-*' | sed "s/\.\///")
-PROTO_LIB_NEW_NAME=$(echo "$PROTO_LIB_ORIGINAL_NAME" |\
-  sed 's/cloud-cloud/cloud/' | sed 's/-java//')
-GRPC_LIB_ORIGINAL_NAME=$(find . -name 'grpc-*' | sed "s/\.\///")
-GRPC_LIB_NEW_NAME=$(echo "$GRPC_LIB_ORIGINAL_NAME" |\
-  sed 's/cloud-cloud/cloud/' | sed 's/-java//')
-# two folders exist, move the contents of one to the other
-mv $GAPIC_LIB_ORIGINAL_NAME/* $GAPIC_LIB_NEW_NAME
-rm -rdf $GAPIC_LIB_ORIGINAL_NAME
-# just rename these two
-mv $PROTO_LIB_ORIGINAL_NAME $PROTO_LIB_NEW_NAME
-mv $GRPC_LIB_ORIGINAL_NAME $GRPC_LIB_NEW_NAME
-
-for pom_file in $(find . -mindepth 0 -maxdepth 2 -name pom.xml \
-    |sort --dictionary-order); do
-  sed -i "s/$GRPC_LIB_ORIGINAL_NAME/$GRPC_LIB_NEW_NAME/" $pom_file
-  sed -i "s/$PROTO_LIB_ORIGINAL_NAME/$PROTO_LIB_NEW_NAME/" $pom_file
-  sed -i "s/$GRPC_LIB_ORIGINAL_NAME/$GRPC_LIB_NEW_NAME/" $pom_file
-done
-popd
-
-
-
-
 

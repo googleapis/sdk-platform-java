@@ -10,12 +10,8 @@ print_usage() {
     -r|--grpc-version VERSION \\
     -t|--transport \"grpc\" or \"grpc+rest\" \\
     [-p|--proto-path PATH] \\
-    [-s|--owlbot-sha SHA] \\
     [-n|--use-rest-numeric-enums] \\
-    [-i|--include-samples] \\
-    [-o|--owlbot-py-path PATH] \\
-    [-m|--repo-metadata-path PATH] \\
-    [-e|--enable-postprocessing] \\
+    [-i|--include-samples]
   "
 }
 
