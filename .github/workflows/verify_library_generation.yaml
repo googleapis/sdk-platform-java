@@ -46,7 +46,7 @@ jobs:
         TRANSPORT=grpc+rest # grpc+rest or grpc
         REST_NUMERIC_ENUMS=false # true or false
         INCLUDE_SAMPLES=false # true or false
-        bash generate_library.sh \
+        bash sdk-platform-java/generate_library.sh \
             --proto-location $PROTO_LOCATION \
             --destination-location $DESTINATION_PATH \
             --gapic-generator-java-version $GAPIC_GENERATOR_VERSION \
