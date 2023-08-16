@@ -28,28 +28,32 @@ jobs:
         echo "GENERATOR_VERSION=$(xmllint --xpath "string(//*[local-name()='version'])" gapic-generator-java-pom-parent/pom.xml)" >> $GITHUB_ENV
         echo "PROTOBUF_VERSION=$(xmllint --xpath "string(//*[local-name()='protobuf.version'])" gapic-generator-java-pom-parent/pom.xml)" >> $$GITHUB_ENV
         echo "GRPC_VERSION=$(xmllint --xpath "string(//*[local-name()='grpc.version'])" gapic-generator-java-pom-parent/pom.xml)" >> $$GITHUB_ENV
-    - name: clone googleapis
+    - name: clone showcase
       run: |
-        git clone https://github.com/googleapis/googleapis.git
-    - name: checkout a commit hash in googleapis
+        git clone https://github.com/googleapis/gapic-showcase.git
+    - name: checkout a tag in showcase
       run: |
-        git checkout de4d95879fe000e75977f782e5104014934bbbfa
-      working-directory: googleapis
-    - name: clone google-cloud-java
-      run: |
-        git clone https://github.com/googleapis/google-cloud-java.git
-    - name: checkout a commit hash in google-cloud-java
-      run: |
-        git checkout c7011dbd69189330de1c2946b736cd712d5c1f4e
-      working-directory: google-cloud-java
-    - name: remove contents in destination path
-      run: |
-        rm -rf java-aiplatform
-      working-directory: google-cloud-java
+        git checkout v0.28.2
+      working-directory: gapic-showcase
     - name: generate java-aiplatform
       run: |
-        library_generation/generate_library.sh
+        PROTO_LOCATION=gapic-showcase/schema/google/showcase/v1beta1/
+        PROTO_PATH=schema/google/showcase/v1beta1
+        DESTINATION_PATH=sdk-platform-java/showcase
+        GAPIC_GENERATOR_VERSION=2.24.0
+        PROTOBUF_VERSION=23.2
+        GRPC_VERSION=1.56.1
+        TRANSPORT=grpc+rest # grpc+rest or grpc
+        REST_NUMERIC_ENUMS=false # true or false
+        INCLUDE_SAMPLES=false # true or false
+        bash generate_library.sh \
+            --proto-location $PROTO_LOCATION \
+            --destination-location $DESTINATION_PATH \
+            --gapic-generator-java-version $GAPIC_GENERATOR_VERSION \
+            --protobuf-version $PROTOBUF_VERSION \
+            --grpc-version $GRPC_VERSION \
+            --transport $TRANSPORT
     - name: compare generation result
       run: |
-        git diff java-aiplatform
-      working-directory: google-cloud-java
+        git diff showcase
+      working-directory: sdk-platform-java
