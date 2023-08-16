@@ -47,6 +47,14 @@ esac
 shift # past argument or value
 done
 
+if [ -z "${transport}" ]; then
+  transport="grpc"
+fi
+
+if [ -z "${rest_numeric_enums}" ]; then
+  rest_numeric_enums="true"
+fi
+
 if [ -z "${include_samples}" ]; then
   include_samples="true"
 fi
