@@ -147,8 +147,9 @@ public class HttpJsonDirectServerStreamingCallableTest {
   @AfterClass
   public static void destroy() throws InterruptedException {
     channel.shutdown();
+    executorService.shutdown();
+
     channel.awaitTermination(AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
-    executorService.shutdownNow();
     executorService.awaitTermination(AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
