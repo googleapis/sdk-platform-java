@@ -37,7 +37,7 @@ jobs:
       working-directory: gapic-showcase
     - name: generate java-aiplatform
       run: |
-        PROTO_LOCATION=$(pwd)/../gapic-showcase/schema/google/showcase/v1beta1/
+        PROTO_LOCATION=$(pwd)/../../gapic-showcase/schema/google/showcase/v1beta1/
         PROTO_PATH=schema/google/showcase/v1beta1
         DESTINATION_PATH=$(pwd)/showcase
         GAPIC_GENERATOR_VERSION=2.24.0
