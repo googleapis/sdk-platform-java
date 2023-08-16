@@ -47,6 +47,14 @@ esac
 shift # past argument or value
 done
 
+working_directory=$(dirname "$(readlink -f "$0")")
+cd "$working_directory"
+source ./utilities.sh
+
+if [ -z "${grpc_version}" ]; then
+  grpc_version=$(get_grpc_version "$gapic_generator_version")
+fi
+
 if [ -z "${transport}" ]; then
   transport="grpc"
 fi
@@ -59,7 +67,6 @@ if [ -z "${include_samples}" ]; then
   include_samples="true"
 fi
 
-working_directory=$(dirname "$(readlink -f "$0")")
 cd "$working_directory"
 mkdir -p "$destination_path"
 destination_path="$working_directory/$destination_path"

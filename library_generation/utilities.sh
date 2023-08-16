@@ -87,3 +87,17 @@ remove_grpc_version() {
   find "$destination_path" -type f -name "*Grpc.java" -exec \
   sed -i 's/value = \"by gRPC proto compiler.*/value = \"by gRPC proto compiler\",/g' {} \;
 }
+
+download_gapic_generator_parent_pom() {
+  gapic_generator_version=$1
+  if [ ! -f parent-pom.xml ]; then
+    curl -LJ -o parent-pom.xml "https://repo1.maven.org/maven2/com/google/api/gapic-generator-java-pom-parent/$gapic_generator_version/gapic-generator-java-pom-parent-$gapic_generator_version.pom"
+  fi
+}
+
+get_grpc_version() {
+  gapic_generator_version=$1
+  download_gapic_generator_parent_pom "$gapic_generator_version"
+  grpc_version=$(grep grpc.version parent-pom.xml | sed 's/<grpc\.version>\(.*\)<\/grpc\.version>/\1/' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+  echo "$grpc_version"
+}
