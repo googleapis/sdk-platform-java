@@ -61,7 +61,6 @@ import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -128,27 +127,27 @@ public class HttpJsonDirectServerStreamingCallableTest {
   public static void initialize() {
     executorService = Executors.newFixedThreadPool(2);
     channel =
-            new ManagedHttpJsonInterceptorChannel(
-                    ManagedHttpJsonChannel.newBuilder()
-                            .setEndpoint("google.com:443")
-                            .setExecutor(executorService)
-                            .setHttpTransport(MOCK_SERVICE)
-                            .build(),
-                    new HttpJsonHeaderInterceptor(Collections.singletonMap("header-key", "headerValue")));
+        new ManagedHttpJsonInterceptorChannel(
+            ManagedHttpJsonChannel.newBuilder()
+                .setEndpoint("google.com:443")
+                .setExecutor(executorService)
+                .setHttpTransport(MOCK_SERVICE)
+                .build(),
+            new HttpJsonHeaderInterceptor(Collections.singletonMap("header-key", "headerValue")));
     clientContext =
-            ClientContext.newBuilder()
-                    .setTransportChannel(HttpJsonTransportChannel.create(channel))
-                    .setDefaultCallContext(
-                            HttpJsonCallContext.of(channel, HttpJsonCallOptions.DEFAULT)
-                                    .withTimeout(Duration.ofSeconds(3)))
-                    .build();
+        ClientContext.newBuilder()
+            .setTransportChannel(HttpJsonTransportChannel.create(channel))
+            .setDefaultCallContext(
+                HttpJsonCallContext.of(channel, HttpJsonCallOptions.DEFAULT)
+                    .withTimeout(Duration.ofSeconds(3)))
+            .build();
 
     streamingCallSettings = ServerStreamingCallSettings.<Color, Money>newBuilder().build();
     streamingCallable =
-            HttpJsonCallableFactory.createServerStreamingCallable(
-                    HttpJsonCallSettings.create(METHOD_SERVER_STREAMING_RECOGNIZE),
-                    streamingCallSettings,
-                    clientContext);
+        HttpJsonCallableFactory.createServerStreamingCallable(
+            HttpJsonCallSettings.create(METHOD_SERVER_STREAMING_RECOGNIZE),
+            streamingCallSettings,
+            clientContext);
   }
 
   @AfterClass
@@ -170,13 +169,13 @@ public class HttpJsonDirectServerStreamingCallableTest {
     MOCK_SERVICE.addResponse(new Money[] {DEFAULT_RESPONSE});
     // Create a local callable with a bad context
     ServerStreamingCallable<Color, Money> streamingCallable =
-            HttpJsonCallableFactory.createServerStreamingCallable(
-                    HttpJsonCallSettings.create(METHOD_SERVER_STREAMING_RECOGNIZE),
-                    streamingCallSettings,
-                    clientContext
-                            .toBuilder()
-                            .setDefaultCallContext(FakeCallContext.createDefault())
-                            .build());
+        HttpJsonCallableFactory.createServerStreamingCallable(
+            HttpJsonCallSettings.create(METHOD_SERVER_STREAMING_RECOGNIZE),
+            streamingCallSettings,
+            clientContext
+                .toBuilder()
+                .setDefaultCallContext(FakeCallContext.createDefault())
+                .build());
 
     CountDownLatch latch = new CountDownLatch(1);
 
