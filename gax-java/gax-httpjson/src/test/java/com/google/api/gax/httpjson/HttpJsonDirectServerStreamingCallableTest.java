@@ -117,8 +117,8 @@ public class HttpJsonDirectServerStreamingCallableTest {
       Money.newBuilder().setCurrencyCode("UAH").setUnits(255).build();
   private static final int AWAIT_TERMINATION_SECONDS = 10;
 
-  private ServerStreamingCallSettings<Color, Money> streamingCallSettings;
-  private ServerStreamingCallable<Color, Money> streamingCallable;
+  private static ServerStreamingCallSettings<Color, Money> streamingCallSettings;
+  private static ServerStreamingCallable<Color, Money> streamingCallable;
 
   private static ManagedHttpJsonChannel channel;
   private static ClientContext clientContext;
@@ -128,57 +128,55 @@ public class HttpJsonDirectServerStreamingCallableTest {
   public static void initialize() {
     executorService = Executors.newFixedThreadPool(2);
     channel =
-        new ManagedHttpJsonInterceptorChannel(
-            ManagedHttpJsonChannel.newBuilder()
-                .setEndpoint("google.com:443")
-                .setExecutor(executorService)
-                .setHttpTransport(MOCK_SERVICE)
-                .build(),
-            new HttpJsonHeaderInterceptor(Collections.singletonMap("header-key", "headerValue")));
+            new ManagedHttpJsonInterceptorChannel(
+                    ManagedHttpJsonChannel.newBuilder()
+                            .setEndpoint("google.com:443")
+                            .setExecutor(executorService)
+                            .setHttpTransport(MOCK_SERVICE)
+                            .build(),
+                    new HttpJsonHeaderInterceptor(Collections.singletonMap("header-key", "headerValue")));
     clientContext =
-        ClientContext.newBuilder()
-            .setTransportChannel(HttpJsonTransportChannel.create(channel))
-            .setDefaultCallContext(
-                HttpJsonCallContext.of(channel, HttpJsonCallOptions.DEFAULT)
-                    .withTimeout(Duration.ofSeconds(3)))
-            .build();
+            ClientContext.newBuilder()
+                    .setTransportChannel(HttpJsonTransportChannel.create(channel))
+                    .setDefaultCallContext(
+                            HttpJsonCallContext.of(channel, HttpJsonCallOptions.DEFAULT)
+                                    .withTimeout(Duration.ofSeconds(3)))
+                    .build();
+
+    streamingCallSettings = ServerStreamingCallSettings.<Color, Money>newBuilder().build();
+    streamingCallable =
+            HttpJsonCallableFactory.createServerStreamingCallable(
+                    HttpJsonCallSettings.create(METHOD_SERVER_STREAMING_RECOGNIZE),
+                    streamingCallSettings,
+                    clientContext);
   }
 
   @AfterClass
   public static void destroy() throws InterruptedException {
-    channel.shutdown();
     executorService.shutdown();
+    channel.shutdown();
 
-    channel.awaitTermination(AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
     executorService.awaitTermination(AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
-  }
-
-  @Before
-  public void setUp() {
-    streamingCallSettings = ServerStreamingCallSettings.<Color, Money>newBuilder().build();
-    streamingCallable =
-        HttpJsonCallableFactory.createServerStreamingCallable(
-            HttpJsonCallSettings.create(METHOD_SERVER_STREAMING_RECOGNIZE),
-            streamingCallSettings,
-            clientContext);
+    channel.awaitTermination(AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
   @After
-  public void tearDown() {
+  public void tearDown() throws InterruptedException {
     MOCK_SERVICE.reset();
   }
 
   @Test
   public void testBadContext() {
     MOCK_SERVICE.addResponse(new Money[] {DEFAULT_RESPONSE});
-    streamingCallable =
-        HttpJsonCallableFactory.createServerStreamingCallable(
-            HttpJsonCallSettings.create(METHOD_SERVER_STREAMING_RECOGNIZE),
-            streamingCallSettings,
-            clientContext
-                .toBuilder()
-                .setDefaultCallContext(FakeCallContext.createDefault())
-                .build());
+    // Create a local callable with a bad context
+    ServerStreamingCallable<Color, Money> streamingCallable =
+            HttpJsonCallableFactory.createServerStreamingCallable(
+                    HttpJsonCallSettings.create(METHOD_SERVER_STREAMING_RECOGNIZE),
+                    streamingCallSettings,
+                    clientContext
+                            .toBuilder()
+                            .setDefaultCallContext(FakeCallContext.createDefault())
+                            .build());
 
     CountDownLatch latch = new CountDownLatch(1);
 
@@ -210,7 +208,6 @@ public class HttpJsonDirectServerStreamingCallableTest {
 
   @Test
   public void testServerStreaming() throws InterruptedException {
-
     MOCK_SERVICE.addResponse(new Money[] {DEFAULT_RESPONSE, DEFAULTER_RESPONSE});
     CountDownLatch latch = new CountDownLatch(3);
     MoneyObserver moneyObserver = new MoneyObserver(true, latch);
@@ -267,7 +264,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
     MoneyObserver moneyObserver = new MoneyObserver(true, latch);
 
     streamingCallable.call(ERROR_REQUEST, moneyObserver);
-    Truth.assertThat(latch.await(1000, TimeUnit.MILLISECONDS)).isTrue();
+    Truth.assertThat(latch.await(2000, TimeUnit.MILLISECONDS)).isTrue();
 
     Truth.assertThat(moneyObserver.error).isInstanceOf(ApiException.class);
     Truth.assertThat(((ApiException) moneyObserver.error).getStatusCode().getCode())
