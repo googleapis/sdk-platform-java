@@ -43,10 +43,8 @@ mv_src_files() {
     SRC_SUFFIX="src/${TYPE}/java"
   fi
   TARGET_FOLDER="$BUILD_FOLDER/$OUT_LAYER_FOLDER/$FOLDER_SUFFIX"
-  if [ "${IS_GAPIC_LIBRARY}" == "true" ]; then
-    mkdir -p $TARGET_FOLDER
-    cp -r "$BUILD_FOLDER/java_gapic_srcjar/$SRC_SUFFIX" $TARGET_FOLDER
-  fi
+  mkdir -p $TARGET_FOLDER
+  cp -r "$BUILD_FOLDER/java_gapic_srcjar/$SRC_SUFFIX" $TARGET_FOLDER
   if [ "${FOLDER}" != "samples" ]; then
     rm -r -f $TARGET_FOLDER/java/META-INF
   fi
@@ -109,6 +107,17 @@ get_service_name() {
     exit 1
   fi
   echo $PROTO_PATH | sed 's/\/$//' | rev | cut -d'/' -f2 | rev
+}
+
+# from a path that goes from repo-root to proto location "proto_path", extract
+# the last path element. This is considered the service version
+get_service_version() {
+  PROTO_PATH=$1
+  if [ -z $PROTO_PATH ]; then
+    echo -e 'usage: get_service_name path/from/repo/root/to/proto'
+    exit 1
+  fi
+  echo $PROTO_PATH | sed 's/\/$//' | rev | cut -d'/' -f1 | rev
 }
 
 # given a folder location, traverse folders upwards until finding a parent that

@@ -1,4 +1,0 @@
-CHANGELOG.md
-codecov.yaml
-*/src/main/resources/META-INF/native-image/*/reflect-config.json
-synth.metadata

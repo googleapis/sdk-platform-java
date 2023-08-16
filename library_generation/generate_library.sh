@@ -152,7 +152,7 @@ remove_empty_files "grpc"
 ##################### Section 2 #####################
 # generate gapic-*/, samples/
 #####################################################
-"${PROTOC_ROOT}"/protoc --experimental_allow_proto3_optional --include_imports --include_source_info \
+"${PROTOC_ROOT}"/protoc --experimental_allow_proto3_optional \
 "--plugin=protoc-gen-java_gapic=${REPO_ROOT}/library_generation/gapic-generator-java-wrapper" \
 "--java_gapic_out=metadata:${BUILD_FOLDER}/java_gapic_srcjar_raw.srcjar.zip" \
 "--java_gapic_opt=$(get_gapic_opts)" \
@@ -193,18 +193,40 @@ unzip_src_files "proto"
 remove_empty_files "proto"
 
 PROTO_TRANSFER_TARGET="$BUILD_FOLDER/$OUT_LAYER_FOLDER/proto-$OUT_LAYER_FOLDER/src/main/proto"
-mkdir -p $PROTO_TRANSFER_TARGET
+
+# this makes sense with showcase only
+PROTO_TRANSFER_PREFIX="external/com_google_gapic_showcase"
+if [ ! -z $PROTO_TRANSFER_PREFIX ]; then
+  PROTO_TRANSFER_TARGET="$PROTO_TRANSFER_TARGET/$PROTO_TRANSFER_PREFIX"
+fi
+mkdir --parents $PROTO_TRANSFER_TARGET
 for proto_src in ${PROTO_FILES}; do
+    # this may make sense when working with googleapis or google-cloud-java,
+    # but it produces a different folder structure (i.e. schema/google/showcase)
+    # than the already existing one in showcase
+    # We may want an argument to fix this with showcase
     cp -f --parents "${proto_src}" $PROTO_TRANSFER_TARGET
 done
 ##################### Section 4 #####################
+# transfer to destination path
+#####################################################
+SERVICE_NAME=$(get_service_name $PROTO_PATH)
+SERVICE_VERSION=$(get_service_version $PROTO_PATH)
+
+# Used as a prefix for proto and grpc libs
+# this prefix may depend on the proto_path. For example alloydb in
+# google-cloud-java has the name "proto-google-cloud-alloydb-v1beta1"
+#                     proto-path        ^^^^^^^^^^^^
+OUTPUT_FOLDER_PREFIX="gapic"
+
+cp -r $BUILD_FOLDER/$OUT_LAYER_FOLDER/proto-$OUT_LAYER_FOLDER/* "$DESTINATION_LOCATION/proto-$OUTPUT_FOLDER_PREFIX-$SERVICE_NAME-$SERVICE_VERSION"
+cp -r $BUILD_FOLDER/$OUT_LAYER_FOLDER/grpc-$OUT_LAYER_FOLDER/* "$DESTINATION_LOCATION/grpc-$OUTPUT_FOLDER_PREFIX-$SERVICE_NAME-$SERVICE_VERSION"
+# the gapic library prefix is different in showcase. This is temporary
+cp -r $BUILD_FOLDER/$OUT_LAYER_FOLDER/gapic-$OUT_LAYER_FOLDER/* "$DESTINATION_LOCATION/gapic-$SERVICE_NAME"
+
+##################### Section 5 #####################
 # rm tar files
 #####################################################
 cd "$BUILD_FOLDER"
-rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_proto.jar temp-codegen.srcjar
+#rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_proto.jar temp-codegen.srcjar
 
-##################### Section 5 #####################
-# transfer to destination path
-#####################################################
-LIBRARY_NAME=$(get_library_name)
-LIBRARY_VERSION=$(get_library_version)
