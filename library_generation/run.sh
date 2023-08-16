@@ -22,14 +22,7 @@ bash generate_library.sh \
     --gapic-generator-java-version $GAPIC_GENERATOR_VERSION \
     --protobuf-version $PROTOBUF_VERSION \
     --grpc-version $GRPC_VERSION \
-    --transport $TRANSPORT \
-    --proto-path $PROTO_PATH \
-    --owlbot-sha $OWLBOT_SHA \
-    #--use-rest-numeric-enums \
-    #--include-samples] \
-    #--owlbot-py-path PATH] \
-    #--repo-metadata-path PATH] \
-    #--enable-postprocessing 
+    --transport $TRANSPORT 
 
 # manual folder renaming
 cp -r ~/Desktop/sdk-platform-java/library_gen_out/build/out-layer/gapic-out-layer/* ~/Desktop/sdk-platform-java/showcase/gapic-showcase

@@ -99,3 +99,45 @@ get_gapic_opts() {
   fi
   echo "transport=${TRANSPORT},${REST_NUMERIC_ENUMS}grpc-service-config=${GRPC_SERVICE_CONFIG},${GAPIC_CONFIG}api-service-config=${API_SERVICE_CONFIG}"
 }
+
+# from a path that goes from repo-root to proto location "proto_path", extract
+# the second to last path element. This is considered the service name
+get_service_name() {
+  PROTO_PATH=$1
+  if [ -z $PROTO_PATH ]; then
+    echo -e 'usage: get_service_name path/from/repo/root/to/proto'
+    exit 1
+  fi
+  echo $PROTO_PATH | sed 's/\/$//' | rev | cut -d'/' -f2 | rev
+}
+
+# given a folder location, traverse folders upwards until finding a parent that
+# contains a .git folder. E.g. ~/googleapis/google/cloud/aiplatform/v1 will
+# traverse parents (i.e. cd ..) until it finds that ~/googleapis contains a .git
+# folder
+# it returns a path from repo root to proto location (e.g.
+# google/cloud/aiplatform/v1
+compute_proto_path_heuristically() {
+  PROTO_LOCATION=$1
+  if [ -z $PROTO_LOCATION ]; then
+    echo "usage: compute_proto_path_heuristically /path/to/protos"
+    exit 1
+  fi
+  cd $PROTO_LOCATION
+  RESULT=""
+  while true
+  do
+    if [ $(find . -maxdepth 1 -type d -wholename './.git' | wc -l) -gt 0 ]; then
+      echo $RESULT
+      return
+    elif [ $PWD == '/' ]; then
+      echo -e 'reached filesystem root without finding a git repo'
+      echo -e 'The script needs a reasonable proto path to generate the library if the proto location is not in a git repo'
+      echo -e 'Try running with "--proto-path arbitrary/proto/path"'
+      exit 1
+    fi
+    RESULT="$(basename "$PWD")/$RESULT"
+    cd ..
+  done
+}
+

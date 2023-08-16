@@ -65,19 +65,18 @@ REPO_ROOT="${LIBRARY_GEN_OUT}"/..
 BUILD_FOLDER="${LIBRARY_GEN_OUT}/build"
 mkdir -p $BUILD_FOLDER
 
+if [ -z $PROTO_PATH ]; then
+  PROTO_PATH=$(compute_proto_path_heuristically $PROTO_LOCATION)
+fi
 
 echo "PROTO_LOCATION=$PROTO_LOCATION"
 echo "DESTINATION_LOCATION=$DESTINATION_LOCATION"
 echo "GAPIC_GENERATOR_JAVA_VERSION=$GAPIC_GENERATOR_JAVA_VERSION"
 echo "PROTOBUF_VERSION=$PROTOBUF_VERSION"
 echo "GRPC_VERSION=$GRPC_VERSION"
-echo "OWLBOT_SHA=$OWLBOT_SHA"
 echo "TRANSPORT=$TRANSPORT"
 echo "REST_NUMERIC_ENUMS=$REST_NUMERIC_ENUMS"
 echo "INCLUDE_SAMPLES=$INCLUDE_SAMPLES"
-echo "OWLBOT_PY_PATH=$OWLBOT_PY_PATH"
-echo "REPO_METADATA_PATH=$REPO_METADATA_PATH"
-echo "ENABLE_POSTPROCESSING=$ENABLE_POSTPROCESSING"
 echo "LIBRARY_GEN_OUT=$LIBRARY_GEN_OUT"
 echo "OUT_LAYER_FOLDER=$OUT_LAYER_FOLDER"
 echo "REPO_ROOT=$REPO_ROOT"
@@ -207,4 +206,5 @@ rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_pro
 ##################### Section 5 #####################
 # transfer to destination path
 #####################################################
-
+LIBRARY_NAME=$(get_library_name)
+LIBRARY_VERSION=$(get_library_version)
