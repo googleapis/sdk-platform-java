@@ -228,5 +228,5 @@ cp -r $BUILD_FOLDER/$OUT_LAYER_FOLDER/gapic-$OUT_LAYER_FOLDER/* "$DESTINATION_LO
 # rm tar files
 #####################################################
 cd "$BUILD_FOLDER"
-#rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_proto.jar temp-codegen.srcjar
+rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_proto.jar temp-codegen.srcjar
 
