@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-
+# Convenience wrapper of gapic generator java that uses the current working
+# directory as the classpath. It assumes the location of the generator jar
 set -e
 
 # the script is running in google-cloud-java/googleapis.
