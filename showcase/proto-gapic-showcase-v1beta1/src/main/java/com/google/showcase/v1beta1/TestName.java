@@ -137,7 +137,7 @@ public class TestName implements ResourceName {
     if (o == this) {
       return true;
     }
-    if (o != null || getClass() == o.getClass()) {
+    if (o != null && getClass() == o.getClass()) {
       TestName that = ((TestName) o);
       return Objects.equals(this.session, that.session) && Objects.equals(this.test, that.test);
     }

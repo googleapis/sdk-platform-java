@@ -137,7 +137,7 @@ public class BookName implements ResourceName {
     if (o == this) {
       return true;
     }
-    if (o != null || getClass() == o.getClass()) {
+    if (o != null && getClass() == o.getClass()) {
       BookName that = ((BookName) o);
       return Objects.equals(this.shelf, that.shelf) && Objects.equals(this.book, that.book);
     }
