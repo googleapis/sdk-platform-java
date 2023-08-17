@@ -1349,8 +1349,8 @@ public class ResourceNameHelperClassComposer {
         RelationalOperationExpr.equalToWithExprs(
             getClassMethodInvocationExpr,
             getClassMethodInvocationExpr.toBuilder().setExprReferenceExpr(argVarExpr).build());
-    LogicalOperationExpr orLogicalExpr =
-        LogicalOperationExpr.logicalOrWithExprs(oNotEqualsNullExpr, getClassEqualsExpr);
+    LogicalOperationExpr andLogicalExpr =
+        LogicalOperationExpr.logicalAndWithExprs(oNotEqualsNullExpr, getClassEqualsExpr);
 
     // Create second if statement's body assignment expression.
     Variable thatVariable = Variable.builder().setName("that").setType(thisClassType).build();
@@ -1399,11 +1399,11 @@ public class ResourceNameHelperClassComposer {
             .setConditionExpr(oEqualsThisExpr)
             .setBody(Arrays.asList(ExprStatement.withExpr(returnTrueExpr)))
             .build();
-    // Code: if (o != null || getClass() == o.getClass()) { FoobarName that = ((FoobarName) o);
+    // Code: if (o != null && getClass() == o.getClass()) { FoobarName that = ((FoobarName) o);
     // return ..}
     IfStatement secondIfStatement =
         IfStatement.builder()
-            .setConditionExpr(orLogicalExpr)
+            .setConditionExpr(andLogicalExpr)
             .setBody(
                 Arrays.asList(
                     ExprStatement.withExpr(thatAssignmentExpr),
