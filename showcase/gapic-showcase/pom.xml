@@ -70,6 +70,7 @@
                   <executable>bazelisk</executable>
                   <arguments>
                     <argument>run</argument>
+                    <argument>--experimental_proto_descriptor_sets_include_source_info</argument>
                     <argument>//showcase:update_gapic</argument>
                   </arguments>
                 </configuration>
