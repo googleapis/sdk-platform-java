@@ -1,0 +1,235 @@
+++ PROTO_LOCATION=/usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/
+++ PROTO_PATH=schema/google/showcase/v1beta1
+++ DESTINATION_PATH=/usr/local/google/home/diegomarquezp/Desktop/sdk-platform-java/showcase
+++ GAPIC_GENERATOR_VERSION=2.24.0
+++ PROTOBUF_VERSION=23.2
+++ GRPC_VERSION=1.56.1
+++ OWLBOT_SHA=3a95f1b9b1102865ca551b76be51d2bdb850900c4db2f6d79269e7af81ac8f84
+++ TRANSPORT=grpc+rest
+++ REST_NUMERIC_ENUMS=false
+++ INCLUDE_SAMPLES=false
+++ OWLBOT_PY_PATH=null
+++ REPO_METADATA_PATH=null
+++ ENABLE_POSTPROCESSING=false
+++ bash generate_library.sh --proto-location /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/ --destination-location /usr/local/google/home/diegomarquezp/Desktop/sdk-platform-java/showcase --gapic-generator-java-version 2.24.0 --protobuf-version 23.2 --grpc-version 1.56.1 --transport grpc+rest
++++ dirname -- generate_library.sh
+++ cd -- .
+++ pwd
++ SCRIPT_DIR=/usr/local/google/home/diegomarquezp/Desktop/sdk-platform-java/gapic-generator-java/library-generation
++ source /usr/local/google/home/diegomarquezp/Desktop/sdk-platform-java/gapic-generator-java/library-generation/util.sh
+++ getopt -o l:p:d:g:f:r:t:ni --long proto-location:,proto-path:,destination-location:,gapic-generator-java-version:,protobuf-version:,grpc-version:,transport:,use-rest-numeric-enums,include-samples -- --proto-location /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/ --destination-location /usr/local/google/home/diegomarquezp/Desktop/sdk-platform-java/showcase --gapic-generator-java-version 2.24.0 --protobuf-version 23.2 --grpc-version 1.56.1 --transport grpc+rest
++ VALID_ARGS=' --proto-location '\''/usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/'\'' --destination-location '\''/usr/local/google/home/diegomarquezp/Desktop/sdk-platform-java/showcase'\'' --gapic-generator-java-version '\''2.24.0'\'' --protobuf-version '\''23.2'\'' --grpc-version '\''1.56.1'\'' --transport '\''grpc+rest'\'' --'
++ [[ 0 -ne 0 ]]
++ eval set -- ' --proto-location '\''/usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/'\'' --destination-location '\''/usr/local/google/home/diegomarquezp/Desktop/sdk-platform-java/showcase'\'' --gapic-generator-java-version '\''2.24.0'\'' --protobuf-version '\''23.2'\'' --grpc-version '\''1.56.1'\'' --transport '\''grpc+rest'\'' --'
+++ set -- --proto-location /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/ --destination-location /usr/local/google/home/diegomarquezp/Desktop/sdk-platform-java/showcase --gapic-generator-java-version 2.24.0 --protobuf-version 23.2 --grpc-version 1.56.1 --transport grpc+rest --
++ '[' : ']'
++ case "$1" in
+++ validate_arg '--proto-(l)ocation' /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/
+++ OPTION_NAME='--proto-(l)ocation'
+++ ARGUMENT=/usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/
+++ [[ -z /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/ ]]
+++ echo /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/
++ PROTO_LOCATION=/usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/
++ shift 2
++ '[' : ']'
++ case "$1" in
+++ validate_arg '--(d)estination-path' /usr/local/google/home/diegomarquezp/Desktop/sdk-platform-java/showcase
+++ OPTION_NAME='--(d)estination-path'
+++ ARGUMENT=/usr/local/google/home/diegomarquezp/Desktop/sdk-platform-java/showcase
+++ [[ -z /usr/local/google/home/diegomarquezp/Desktop/sdk-platform-java/showcase ]]
+++ echo /usr/local/google/home/diegomarquezp/Desktop/sdk-platform-java/showcase
++ DESTINATION_LOCATION=/usr/local/google/home/diegomarquezp/Desktop/sdk-platform-java/showcase
++ shift 2
++ '[' : ']'
++ case "$1" in
+++ validate_arg '--(g)gapic-generator-java-version' 2.24.0
+++ OPTION_NAME='--(g)gapic-generator-java-version'
+++ ARGUMENT=2.24.0
+++ [[ -z 2.24.0 ]]
+++ echo 2.24.0
++ GAPIC_GENERATOR_JAVA_VERSION=2.24.0
++ shift 2
++ '[' : ']'
++ case "$1" in
+++ validate_arg '--protobu(f)-version' 23.2
+++ OPTION_NAME='--protobu(f)-version'
+++ ARGUMENT=23.2
+++ [[ -z 23.2 ]]
+++ echo 23.2
++ PROTOBUF_VERSION=23.2
++ shift 2
++ '[' : ']'
++ case "$1" in
+++ validate_arg '--g(r)pc-version' 1.56.1
+++ OPTION_NAME='--g(r)pc-version'
+++ ARGUMENT=1.56.1
+++ [[ -z 1.56.1 ]]
+++ echo 1.56.1
++ GRPC_VERSION=1.56.1
++ shift 2
++ '[' : ']'
++ case "$1" in
+++ validate_arg '--(t)ransport' grpc+rest
+++ OPTION_NAME='--(t)ransport'
+++ ARGUMENT=grpc+rest
+++ [[ -z grpc+rest ]]
+++ echo grpc+rest
++ TRANSPORT=grpc+rest
++ shift 2
++ '[' : ']'
++ case "$1" in
++ shift
++ break
++ LIBRARY_GEN_OUT=/tmp/library-gen-out
++ OUT_LAYER_FOLDER=out-layer
++ REPO_ROOT=/usr/local/google/home/diegomarquezp/Desktop/sdk-platform-java/gapic-generator-java/library-generation/../..
++ BUILD_FOLDER=/tmp/library-gen-out/build
++ mkdir -p /tmp/library-gen-out/build
++ '[' -z ']'
+++ compute_proto_path_heuristically /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/
+++ PROTO_LOCATION=/usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/
+++ '[' -z /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/ ']'
+++ cd /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/
+++ RESULT=
+++ true
++++ find . -maxdepth 1 -type d -wholename ./.git
++++ wc -l
+++ '[' 0 -gt 0 ']'
+++ '[' /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1 == / ']'
++++ basename /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1
+++ RESULT=v1beta1/
+++ cd ..
+++ true
++++ find . -maxdepth 1 -type d -wholename ./.git
++++ wc -l
+++ '[' 0 -gt 0 ']'
+++ '[' /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase == / ']'
++++ basename /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase
+++ RESULT=showcase/v1beta1/
+++ cd ..
+++ true
++++ find . -maxdepth 1 -type d -wholename ./.git
++++ wc -l
+++ '[' 0 -gt 0 ']'
+++ '[' /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google == / ']'
++++ basename /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google
+++ RESULT=google/showcase/v1beta1/
+++ cd ..
+++ true
++++ find . -maxdepth 1 -type d -wholename ./.git
++++ wc -l
+++ '[' 0 -gt 0 ']'
+++ '[' /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema == / ']'
++++ basename /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema
+++ RESULT=schema/google/showcase/v1beta1/
+++ cd ..
+++ true
++++ find . -maxdepth 1 -type d -wholename ./.git
++++ wc -l
+++ '[' 1 -gt 0 ']'
+++ echo schema/google/showcase/v1beta1/
+++ return
++ PROTO_PATH=schema/google/showcase/v1beta1/
++ echo PROTO_LOCATION=/usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/
+PROTO_LOCATION=/usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/
++ echo DESTINATION_LOCATION=/usr/local/google/home/diegomarquezp/Desktop/sdk-platform-java/showcase
+DESTINATION_LOCATION=/usr/local/google/home/diegomarquezp/Desktop/sdk-platform-java/showcase
++ echo GAPIC_GENERATOR_JAVA_VERSION=2.24.0
+GAPIC_GENERATOR_JAVA_VERSION=2.24.0
++ echo PROTOBUF_VERSION=23.2
+PROTOBUF_VERSION=23.2
++ echo GRPC_VERSION=1.56.1
+GRPC_VERSION=1.56.1
++ echo TRANSPORT=grpc+rest
+TRANSPORT=grpc+rest
++ echo REST_NUMERIC_ENUMS=
+REST_NUMERIC_ENUMS=
++ echo INCLUDE_SAMPLES=
+INCLUDE_SAMPLES=
++ echo LIBRARY_GEN_OUT=/tmp/library-gen-out
+LIBRARY_GEN_OUT=/tmp/library-gen-out
++ echo OUT_LAYER_FOLDER=out-layer
+OUT_LAYER_FOLDER=out-layer
++ echo REPO_ROOT=/usr/local/google/home/diegomarquezp/Desktop/sdk-platform-java/gapic-generator-java/library-generation/../..
+REPO_ROOT=/usr/local/google/home/diegomarquezp/Desktop/sdk-platform-java/gapic-generator-java/library-generation/../..
++ echo BUILD_FOLDER=/tmp/library-gen-out/build
+BUILD_FOLDER=/tmp/library-gen-out/build
++ cd /tmp/library-gen-out
++ '[' '!' -d googleapis ']'
++ GOOGLEAPIS_ROOT=/tmp/library-gen-out/googleapis
++ PROTOS_COPY_FOLDER=/tmp/library-gen-out/googleapis/schema/google/showcase/v1beta1//
++ mkdir -p /tmp/library-gen-out/googleapis/schema/google/showcase/v1beta1//
++ cd /tmp/library-gen-out/googleapis/schema/google/showcase/v1beta1//
++ cp -r /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1//BUILD.bazel /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1//compliance.proto /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1//compliance_suite.json /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1//echo.proto /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1//identity.proto /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1//messaging.proto /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1//sequence.proto /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1//showcase_grpc_service_config.json /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1//showcase_v1beta1.yaml /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1//testing.proto /tmp/library-gen-out/googleapis/schema/google/showcase/v1beta1//
++ pushd /tmp/library-gen-out/googleapis
+/tmp/library-gen-out/googleapis /tmp/library-gen-out/googleapis/schema/google/showcase/v1beta1
+++ find ./schema/google/showcase/v1beta1/ -type f -name '*.proto'
+++ sort
++ PROTO_FILES='./schema/google/showcase/v1beta1/compliance.proto
+./schema/google/showcase/v1beta1/echo.proto
+./schema/google/showcase/v1beta1/identity.proto
+./schema/google/showcase/v1beta1/messaging.proto
+./schema/google/showcase/v1beta1/sequence.proto
+./schema/google/showcase/v1beta1/testing.proto'
++ popd
+/tmp/library-gen-out/googleapis/schema/google/showcase/v1beta1
++ PROTOC_ROOT=/tmp/library-gen-out/protobuf/bin
++ cd /tmp/library-gen-out
++ '[' '!' -d protobuf ']'
++ cd /tmp/library-gen-out
++ '[' '!' -f protoc-gen-grpc-java ']'
++ '[' '!' -f gapic-generator-java.jar ']'
++ cd /tmp/library-gen-out/googleapis
++ /tmp/library-gen-out/protobuf/bin/protoc --plugin=protoc-gen-rpc-plugin=/tmp/library-gen-out/protoc-gen-grpc-java --rpc-plugin_out=:/tmp/library-gen-out/build/java_grpc.jar ./schema/google/showcase/v1beta1/compliance.proto ./schema/google/showcase/v1beta1/echo.proto ./schema/google/showcase/v1beta1/identity.proto ./schema/google/showcase/v1beta1/messaging.proto ./schema/google/showcase/v1beta1/sequence.proto ./schema/google/showcase/v1beta1/testing.proto
++ unzip_src_files grpc
++ FOLDER=grpc
++ JAR_FILE=java_grpc.jar
++ UNZIP_TARGET=/tmp/library-gen-out/build/java_grpc.jar
++ UNZIP_OUTPUT_FOLDER=/tmp/library-gen-out/build/out-layer/grpc-out-layer
++ mkdir -p /tmp/library-gen-out/build/out-layer/grpc-out-layer/src/main/java
++ unzip -q -o /tmp/library-gen-out/build/java_grpc.jar -d /tmp/library-gen-out/build/out-layer/grpc-out-layer/src/main/java
++ rm -r -f /tmp/library-gen-out/build/out-layer/grpc-out-layer/src/main/java/META-INF
++ remove_empty_files grpc
++ FOLDER=grpc
++ LIBRARY_ROOT=/tmp/library-gen-out/build/out-layer/grpc-out-layer
++ find /tmp/library-gen-out/build/out-layer/grpc-out-layer/src/main/java -type f -size 0
++ read -r f
++ '[' -d /tmp/library-gen-out/build/out-layer/grpc-out-layer/src/main/java/samples ']'
+++ get_gapic_opts
++++ find /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/ -type f -name '*gapic.yaml'
+++ GAPIC_CONFIG=
+++ '[' -z '' ']'
+++ GAPIC_CONFIG=
++++ find /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/ -type f -name '*service_config.json'
+++ GRPC_SERVICE_CONFIG=/usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/showcase_grpc_service_config.json
++++ find /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/ -maxdepth 1 -type f '(' -name '*.yaml' '!' -name '*gapic.yaml' ')'
+++ API_SERVICE_CONFIG=/usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/showcase_v1beta1.yaml
+++ '[' '' == true ']'
+++ REST_NUMERIC_ENUMS=
+++ echo transport=grpc+rest,grpc-service-config=/usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/showcase_grpc_service_config.json,api-service-config=/usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/showcase_v1beta1.yaml
+++ search_additional_protos
+++ ADDITIONAL_PROTOS=google/cloud/common_resources.proto
++++ find_additional_protos_in_yaml 'name: '\''*google.iam.v1.IAMPolicy'\''*'
++++ PATTERN='name: '\''*google.iam.v1.IAMPolicy'\''*'
+++++ grep '--include=*.yaml' -rw /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/ -e 'name: '\''*google.iam.v1.IAMPolicy'\''*'
++++ FIND_RESULT='/usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/showcase_v1beta1.yaml:- name: '\''google.iam.v1.IAMPolicy'\'''
++++ '[' -n '/usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/showcase_v1beta1.yaml:- name: '\''google.iam.v1.IAMPolicy'\''' ']'
++++ echo '/usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/showcase_v1beta1.yaml:- name: '\''google.iam.v1.IAMPolicy'\'''
+++ IAM_POLICY='/usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/showcase_v1beta1.yaml:- name: '\''google.iam.v1.IAMPolicy'\'''
+++ '[' -n '/usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/showcase_v1beta1.yaml:- name: '\''google.iam.v1.IAMPolicy'\''' ']'
+++ ADDITIONAL_PROTOS='google/cloud/common_resources.proto google/iam/v1/iam_policy.proto'
++++ find_additional_protos_in_yaml 'name: '\''*google.cloud.location.Locations'\''*'
++++ PATTERN='name: '\''*google.cloud.location.Locations'\''*'
+++++ grep '--include=*.yaml' -rw /usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/ -e 'name: '\''*google.cloud.location.Locations'\''*'
++++ FIND_RESULT='/usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/showcase_v1beta1.yaml:- name: '\''google.cloud.location.Locations'\'''
++++ '[' -n '/usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/showcase_v1beta1.yaml:- name: '\''google.cloud.location.Locations'\''' ']'
++++ echo '/usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/showcase_v1beta1.yaml:- name: '\''google.cloud.location.Locations'\'''
+++ LOCATIONS='/usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/showcase_v1beta1.yaml:- name: '\''google.cloud.location.Locations'\'''
+++ '[' -n '/usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/showcase_v1beta1.yaml:- name: '\''google.cloud.location.Locations'\''' ']'
+++ ADDITIONAL_PROTOS='google/cloud/common_resources.proto google/iam/v1/iam_policy.proto google/cloud/location/locations.proto'
+++ echo 'google/cloud/common_resources.proto google/iam/v1/iam_policy.proto google/cloud/location/locations.proto'
++ /tmp/library-gen-out/protobuf/bin/protoc --experimental_allow_proto3_optional --plugin=protoc-gen-java_gapic=/usr/local/google/home/diegomarquezp/Desktop/sdk-platform-java/gapic-generator-java/library-generation/gapic-generator-java-wrapper --java_gapic_out=metadata:/tmp/library-gen-out/build/java_gapic_srcjar_raw.srcjar.zip --java_gapic_opt=transport=grpc+rest,grpc-service-config=/usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/showcase_grpc_service_config.json,api-service-config=/usr/local/google/home/diegomarquezp/Desktop/gapic-showcase/schema/google/showcase/v1beta1/showcase_v1beta1.yaml ./schema/google/showcase/v1beta1/compliance.proto ./schema/google/showcase/v1beta1/echo.proto ./schema/google/showcase/v1beta1/identity.proto ./schema/google/showcase/v1beta1/messaging.proto ./schema/google/showcase/v1beta1/sequence.proto ./schema/google/showcase/v1beta1/testing.proto google/cloud/common_resources.proto google/iam/v1/iam_policy.proto google/cloud/location/locations.proto
+Error: Could not find or load main class com.google.api.generator.Main
+Caused by: java.lang.ClassNotFoundException: com.google.api.generator.Main
+--java_gapic_out: protoc-gen-java_gapic: Plugin failed with status code 1.
+++ set +x
