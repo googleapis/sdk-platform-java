@@ -8,7 +8,7 @@ import static io.grpc.MethodDescriptor.generateFullMethodName;
  * </pre>
  */
 @javax.annotation.Generated(
-    value = "by gRPC proto compiler (version 1.56.1)",
+    value = "by gRPC proto compiler",
     comments = "Source: schema/google/showcase/v1beta1/identity.proto")
 @io.grpc.stub.annotations.GrpcGenerated
 public final class IdentityGrpc {
