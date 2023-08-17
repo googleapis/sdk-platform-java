@@ -20,15 +20,14 @@ jobs:
     - name: maven install
       run: |
         mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
-    - name: clone showcase
+    - name: setup showcase
       run: |
         git clone https://github.com/googleapis/gapic-showcase.git
-    - name: checkout a tag in showcase
-      run: |
+        cd gapic-showcase
         # Using hardcoded versions from sdk-platform-java v2.24.0 (showcase references this version)
         git checkout v0.28.2
       working-directory: gapic-showcase
-    - name: generate java-aiplatform
+    - name: generate showcase
       run: |
         # Using hardcoded versions from sdk-platform-java v2.24.0 (showcase references this version)
         GAPIC_GENERATOR_VERSION=2.24.0
