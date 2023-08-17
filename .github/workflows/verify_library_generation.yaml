@@ -33,8 +33,8 @@ jobs:
       run: |
         # Using hardcoded versions from sdk-platform-java v2.24.0 (showcase references this version)
         bash gapic-generator-java/library-generation/generate_library.sh \
-            --proto-location "$(pwd)/gapic-showcase/schema/google/showcase/v1beta1/" \
-            --destination-location "$(pwd)/showcase" \
+            --proto-location $(pwd)/gapic-showcase/schema/google/showcase/v1beta1/ \
+            --destination-location $(pwd)/showcase \
             --gapic-generator-java-version "2.24.0" \
             --protobuf-version "23.2" \
             --grpc-version "1.56.1" \
