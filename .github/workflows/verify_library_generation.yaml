@@ -4,7 +4,7 @@ on:
     - main
   pull_request:
     paths:
-    - library_generation/**
+    - gapic-generator-java/library-generation/**
 name: verify_library_generation
 jobs:
   verify_library_generation:
@@ -32,15 +32,12 @@ jobs:
     - name: generate showcase
       run: |
         # Using hardcoded versions from sdk-platform-java v2.24.0 (showcase references this version)
-        GAPIC_GENERATOR_VERSION=2.24.0
-        PROTOBUF_VERSION=23.2
-        GRPC_VERSION=1.56.1
         bash gapic-generator-java/library-generation/generate_library.sh \
             --proto-location "$(pwd)/gapic-showcase/schema/google/showcase/v1beta1/" \
             --destination-location "$(pwd)/showcase" \
-            --gapic-generator-java-version $GAPIC_GENERATOR_VERSION \
-            --protobuf-version $PROTOBUF_VERSION \
-            --grpc-version $GRPC_VERSION \
+            --gapic-generator-java-version "2.24.0" \
+            --protobuf-version "23.2" \
+            --grpc-version "1.56.1" \
             --transport "grpc+rest"
     - name: compare generation result (This fails if any diff exists)
       run: |
