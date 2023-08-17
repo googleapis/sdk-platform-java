@@ -127,6 +127,7 @@ get_service_version() {
 # it returns a path from repo root to proto location (e.g.
 # google/cloud/aiplatform/v1
 compute_proto_path_heuristically() {
+  set -e
   PROTO_LOCATION=$1
   if [ -z $PROTO_LOCATION ]; then
     echo "usage: compute_proto_path_heuristically /path/to/protos"

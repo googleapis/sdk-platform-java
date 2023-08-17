@@ -6,4 +6,4 @@ set -e
 # the script is running in google-cloud-java/googleapis.
 JAR_PATH=$(pwd)
 
-exec java -classpath "${JAR_PATH}"/../../library_gen_out/gapic-generator-java.jar com.google.api.generator.Main
+exec java -classpath "${JAR_PATH}"/../../library-gen-out/gapic-generator-java.jar com.google.api.generator.Main
