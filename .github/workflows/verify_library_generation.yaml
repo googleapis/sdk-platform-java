@@ -20,39 +20,27 @@ jobs:
     - name: maven install
       run: |
         mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
-    - name: get gapic-generator-java, protobuf, grpc version
-      run: |
-        set -x
-        sudo apt-get update
-        sudo apt-get install libxml2-utils
-        echo "GENERATOR_VERSION=$(xmllint --xpath "string(//*[local-name()='version'])" gapic-generator-java-pom-parent/pom.xml)" >> $GITHUB_ENV
-        echo "PROTOBUF_VERSION=$(xmllint --xpath "string(//*[local-name()='protobuf.version'])" gapic-generator-java-pom-parent/pom.xml)" >> $$GITHUB_ENV
-        echo "GRPC_VERSION=$(xmllint --xpath "string(//*[local-name()='grpc.version'])" gapic-generator-java-pom-parent/pom.xml)" >> $$GITHUB_ENV
     - name: clone showcase
       run: |
         git clone https://github.com/googleapis/gapic-showcase.git
     - name: checkout a tag in showcase
       run: |
+        # Using hardcoded versions from sdk-platform-java v2.24.0 (showcase references this version)
         git checkout v0.28.2
       working-directory: gapic-showcase
     - name: generate java-aiplatform
       run: |
-        PROTO_LOCATION=$(pwd)/gapic-showcase/schema/google/showcase/v1beta1/
-        PROTO_PATH=schema/google/showcase/v1beta1
-        DESTINATION_PATH=$(pwd)/showcase
+        # Using hardcoded versions from sdk-platform-java v2.24.0 (showcase references this version)
         GAPIC_GENERATOR_VERSION=2.24.0
         PROTOBUF_VERSION=23.2
         GRPC_VERSION=1.56.1
-        TRANSPORT=grpc+rest # grpc+rest or grpc
-        REST_NUMERIC_ENUMS=false # true or false
-        INCLUDE_SAMPLES=false # true or false
         bash gapic-generator-java/library-generation/generate_library.sh \
-            --proto-location $PROTO_LOCATION \
-            --destination-location $DESTINATION_PATH \
+            --proto-location "$(pwd)/gapic-showcase/schema/google/showcase/v1beta1/" \
+            --destination-location "$(pwd)/showcase" \
             --gapic-generator-java-version $GAPIC_GENERATOR_VERSION \
             --protobuf-version $PROTOBUF_VERSION \
             --grpc-version $GRPC_VERSION \
-            --transport $TRANSPORT
+            --transport "grpc+rest"
     - name: compare generation result
       run: |
         git diff showcase
