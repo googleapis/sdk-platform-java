@@ -3,6 +3,8 @@ on:
     branches:
     - main
   pull_request:
+    paths:
+    - library_generation/**
 name: verify_library_generation
 jobs:
   verify_library_generation:
