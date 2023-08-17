@@ -25,7 +25,7 @@ jobs:
       uses: actions/checkout@v3
       with:
         repository: googleapis/googleapis
-        ref: 90a551c2a02613507a2f0f05fd25d133113a1a1c
+        ref: master
         path: googleapis
     - name: copy protos to proto_path
       run: |
@@ -47,7 +47,7 @@ jobs:
       uses: actions/checkout@v3
       with:
         repository: googleapis/googleapis-gen
-        ref: 30620b4f34713860083fff036982900b1004cbf5
+        ref: master
         path: googleapis-gen
         token: ${{ secrets.CLOUD_JAVA_BOT_GITHUB_TOKEN }}
     - name: compare generation result
