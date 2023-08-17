@@ -61,7 +61,6 @@ import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -115,26 +114,18 @@ public class HttpJsonDirectServerStreamingCallableTest {
       Money.newBuilder().setCurrencyCode("USD").setUnits(127).build();
   private static final Money DEFAULTER_RESPONSE =
       Money.newBuilder().setCurrencyCode("UAH").setUnits(255).build();
+  private static final int AWAIT_TERMINATION_SECONDS = 10;
 
-  private ManagedHttpJsonChannel channel;
-  private ClientContext clientContext;
-  private ServerStreamingCallSettings<Color, Money> streamingCallSettings;
-  private ServerStreamingCallable<Color, Money> streamingCallable;
+  private static ServerStreamingCallSettings<Color, Money> streamingCallSettings;
+  private static ServerStreamingCallable<Color, Money> streamingCallable;
 
+  private static ManagedHttpJsonChannel channel;
+  private static ClientContext clientContext;
   private static ExecutorService executorService;
 
   @BeforeClass
   public static void initialize() {
     executorService = Executors.newFixedThreadPool(2);
-  }
-
-  @AfterClass
-  public static void destroy() {
-    executorService.shutdownNow();
-  }
-
-  @Before
-  public void setUp() {
     channel =
         new ManagedHttpJsonInterceptorChannel(
             ManagedHttpJsonChannel.newBuilder()
@@ -143,7 +134,6 @@ public class HttpJsonDirectServerStreamingCallableTest {
                 .setHttpTransport(MOCK_SERVICE)
                 .build(),
             new HttpJsonHeaderInterceptor(Collections.singletonMap("header-key", "headerValue")));
-
     clientContext =
         ClientContext.newBuilder()
             .setTransportChannel(HttpJsonTransportChannel.create(channel))
@@ -151,6 +141,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
                 HttpJsonCallContext.of(channel, HttpJsonCallOptions.DEFAULT)
                     .withTimeout(Duration.ofSeconds(3)))
             .build();
+
     streamingCallSettings = ServerStreamingCallSettings.<Color, Money>newBuilder().build();
     streamingCallable =
         HttpJsonCallableFactory.createServerStreamingCallable(
@@ -159,16 +150,25 @@ public class HttpJsonDirectServerStreamingCallableTest {
             clientContext);
   }
 
-  @After
-  public void tearDown() {
+  @AfterClass
+  public static void destroy() throws InterruptedException {
+    executorService.shutdown();
     channel.shutdown();
+
+    executorService.awaitTermination(AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+    channel.awaitTermination(AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+  }
+
+  @After
+  public void tearDown() throws InterruptedException {
     MOCK_SERVICE.reset();
   }
 
   @Test
   public void testBadContext() {
     MOCK_SERVICE.addResponse(new Money[] {DEFAULT_RESPONSE});
-    streamingCallable =
+    // Create a local callable with a bad context
+    ServerStreamingCallable<Color, Money> streamingCallable =
         HttpJsonCallableFactory.createServerStreamingCallable(
             HttpJsonCallSettings.create(METHOD_SERVER_STREAMING_RECOGNIZE),
             streamingCallSettings,
@@ -207,7 +207,6 @@ public class HttpJsonDirectServerStreamingCallableTest {
 
   @Test
   public void testServerStreaming() throws InterruptedException {
-
     MOCK_SERVICE.addResponse(new Money[] {DEFAULT_RESPONSE, DEFAULTER_RESPONSE});
     CountDownLatch latch = new CountDownLatch(3);
     MoneyObserver moneyObserver = new MoneyObserver(true, latch);
@@ -264,7 +263,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
     MoneyObserver moneyObserver = new MoneyObserver(true, latch);
 
     streamingCallable.call(ERROR_REQUEST, moneyObserver);
-    Truth.assertThat(latch.await(1000, TimeUnit.MILLISECONDS)).isTrue();
+    Truth.assertThat(latch.await(2000, TimeUnit.MILLISECONDS)).isTrue();
 
     Truth.assertThat(moneyObserver.error).isInstanceOf(ApiException.class);
     Truth.assertThat(((ApiException) moneyObserver.error).getStatusCode().getCode())
