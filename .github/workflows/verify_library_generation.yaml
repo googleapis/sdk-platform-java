@@ -40,7 +40,7 @@ jobs:
             --protobuf-version $PROTOBUF_VERSION \
             --grpc-version $GRPC_VERSION \
             --transport "grpc+rest"
-    - name: compare generation result
+    - name: compare generation result (This fails if any diff exists)
       run: |
         git diff showcase
       working-directory: sdk-platform-java
