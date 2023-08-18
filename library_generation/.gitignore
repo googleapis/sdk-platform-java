@@ -1,0 +1,6 @@
+gapic-generator-java*
+google/
+grpc-java-plugin*
+protobuf*
+output/
+schema/
