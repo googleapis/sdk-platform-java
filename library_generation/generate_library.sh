@@ -90,7 +90,7 @@ download_tools "$gapic_generator_version" "$protobuf_version" "$grpc_version"
 # generate grpc-*/
 #####################################################
 cd "$working_directory"
-"$protoc_path"/protoc "--plugin=protoc-gen-rpc-plugin=$working_directory/grpc-java-plugin-$grpc_version" \
+"$protoc_path"/protoc "--plugin=protoc-gen-rpc-plugin=$working_directory/protoc-gen-grpc-java-$grpc_version-linux-x86_64.exe" \
 "--rpc-plugin_out=:$destination_path/java_grpc.jar" \
 $proto_files
 
