@@ -90,22 +90,34 @@ remove_grpc_version() {
 
 download_gapic_generator_parent_pom() {
   gapic_generator_version=$1
-  if [ ! -f parent-pom.xml ]; then
-    curl -LJ -o parent-pom.xml "https://repo1.maven.org/maven2/com/google/api/gapic-generator-java-pom-parent/$gapic_generator_version/gapic-generator-java-pom-parent-$gapic_generator_version.pom"
+  cd "$working_directory"
+  if [[ "$gapic_generator_version" == *"-SNAPSHOT" ]]; then
+    # get SNAPSHOT from maven local repository.
+    parent_pom=$HOME/.m2/repository/com/google/api/gapic-generator-java-pom-parent/$gapic_generator_version/gapic-generator-java-pom-parent-$gapic_generator_version.pom
+    if [ ! -f "$parent_pom" ]; then
+      echo "Can't copy gapic-generator-java-pom-parent-$gapic_generator_version.pom from maven local repository."
+      exit 1
+    fi
+    cp "$parent_pom" "parent-pom-$gapic_generator_version.xml"
+  fi
+  if [ ! -f "parent-pom-$gapic_generator_version.xml" ]; then
+    curl -LJ -o "parent-pom-$gapic_generator_version.xml" "https://repo1.maven.org/maven2/com/google/api/gapic-generator-java-pom-parent/$gapic_generator_version/gapic-generator-java-pom-parent-$gapic_generator_version.pom"
   fi
 }
 
 get_grpc_version() {
   gapic_generator_version=$1
+  # get grpc version from gapic-generator-java-pom-parent/pom.xml
   download_gapic_generator_parent_pom "$gapic_generator_version"
-  grpc_version=$(grep grpc.version parent-pom.xml | sed 's/<grpc\.version>\(.*\)<\/grpc\.version>/\1/' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+  grpc_version=$(grep grpc.version "parent-pom-$gapic_generator_version.xml" | sed 's/<grpc\.version>\(.*\)<\/grpc\.version>/\1/' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
   echo "$grpc_version"
 }
 
 get_protobuf_version() {
   gapic_generator_version=$1
+  # get protobuf version from gapic-generator-java-pom-parent/pom.xml
   download_gapic_generator_parent_pom "$gapic_generator_version"
-  protobuf_version=$(grep protobuf.version parent-pom.xml | sed 's/<protobuf\.version>\(.*\)<\/protobuf\.version>/\1/' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | cut -d "." -f2-)
+  protobuf_version=$(grep protobuf.version "parent-pom-$gapic_generator_version.xml" | sed 's/<protobuf\.version>\(.*\)<\/protobuf\.version>/\1/' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | cut -d "." -f2-)
   echo "$protobuf_version"
 }
 
@@ -128,12 +140,13 @@ download_generator() {
       echo "Can't copy gapic-generator-java-$gapic_generator_version.jar from maven local repository."
       exit 1
     fi
-    cp "$generator_jar" gapic-generator-java.jar
+    cp "$generator_jar" "gapic-generator-java-$gapic_generator_version.jar"
     echo "Copy gapic-generator-java-$gapic_generator_version.jar from maven local repository."
   fi
 
   if [ ! -f "gapic-generator-java-$gapic_generator_version.jar" ]; then
     curl -LJ -o "gapic-generator-java-$gapic_generator_version.jar" https://repo1.maven.org/maven2/com/google/api/gapic-generator-java/"$gapic_generator_version"/gapic-generator-java-"$gapic_generator_version".jar
+    echo "Download gapic-generator-java-$gapic_generator_version.jar from maven central repository"
   fi
 }
 
@@ -146,6 +159,7 @@ download_protobuf() {
     curl -LJ -o "protobuf-$protobuf_version.zip" https://github.com/protocolbuffers/protobuf/releases/download/v"$protobuf_version"/protoc-"$protobuf_version"-linux-x86_64.zip
     unzip -o -q "protobuf-$protobuf_version.zip" -d "protobuf-$protobuf_version"
     cp -r "protobuf-$protobuf_version/include/google" "$working_directory"
+    rm "protobuf-$protobuf_version.zip"
   fi
 
   protoc_path=$working_directory/protobuf-$protobuf_version/bin
