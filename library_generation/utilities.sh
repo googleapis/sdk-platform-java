@@ -108,3 +108,55 @@ get_protobuf_version() {
   protobuf_version=$(grep protobuf.version parent-pom.xml | sed 's/<protobuf\.version>\(.*\)<\/protobuf\.version>/\1/' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | cut -d "." -f2-)
   echo "$protobuf_version"
 }
+
+download_tools() {
+  gapic_generator_version=$1
+  protobuf_version=$2
+  grpc_version=$3
+  download_generator "$gapic_generator_version"
+  download_protobuf "$protobuf_version"
+  download_grpc_plugin "$grpc_version"
+}
+
+download_generator() {
+  gapic_generator_version=$1
+  cd "$working_directory"
+  if [[ "$gapic_generator_version" == *"-SNAPSHOT" ]]; then
+    # get SNAPSHOT from maven local repository.
+    generator_jar=$HOME/.m2/repository/com/google/api/gapic-generator-java/$gapic_generator_version/gapic-generator-java-$gapic_generator_version.jar
+    if [ ! -f "$generator_jar" ]; then
+      echo "Can't copy gapic-generator-java-$gapic_generator_version.jar from maven local repository."
+      exit 1
+    fi
+    cp "$generator_jar" gapic-generator-java.jar
+    echo "Copy gapic-generator-java-$gapic_generator_version.jar from maven local repository."
+  fi
+
+  if [ ! -f "gapic-generator-java-$gapic_generator_version.jar" ]; then
+    curl -LJ -o "gapic-generator-java-$gapic_generator_version.jar" https://repo1.maven.org/maven2/com/google/api/gapic-generator-java/"$gapic_generator_version"/gapic-generator-java-"$gapic_generator_version".jar
+  fi
+}
+
+download_protobuf() {
+  protobuf_version=$1
+  cd "$working_directory"
+  if [ ! -d "protobuf-$protobuf_version" ]; then
+    # pull proto files and protoc from protobuf repository
+    # maven central doesn't have proto files
+    curl -LJ -o "protobuf-$protobuf_version.zip" https://github.com/protocolbuffers/protobuf/releases/download/v"$protobuf_version"/protoc-"$protobuf_version"-linux-x86_64.zip
+    unzip -o -q "protobuf-$protobuf_version.zip" -d "protobuf-$protobuf_version"
+    cp -r "protobuf-$protobuf_version/include/google" "$working_directory"
+  fi
+
+  protoc_path=$working_directory/protobuf-$protobuf_version/bin
+  echo "protoc version: $("$protoc_path"/protoc --version)"
+}
+
+download_grpc_plugin() {
+  grpc_version=$1
+  cd "$working_directory"
+  if [ ! -f "grpc-java-plugin-$grpc_version" ]; then
+    curl -LJ -o "grpc-java-plugin-$grpc_version" https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/"$grpc_version"/protoc-gen-grpc-java-"$grpc_version"-linux-x86_64.exe
+    chmod +x "grpc-java-plugin-$grpc_version"
+  fi
+}

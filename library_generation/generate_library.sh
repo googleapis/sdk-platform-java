@@ -16,6 +16,8 @@ case $key in
     ;;
     --gapic_generator_version)
     gapic_generator_version="$2"
+    # export this variable so that it can be used in gapic-generator-java-wrapper.sh
+    export gapic_generator_version
     shift
     ;;
     --protobuf_version)
@@ -40,7 +42,6 @@ case $key in
     ;;
     *)
     echo "Invalid option: [$1]"
-    print_usage
     exit 1
     ;;
 esac
@@ -74,7 +75,6 @@ fi
 cd "$working_directory"
 mkdir -p "$destination_path"
 destination_path="$working_directory/$destination_path"
-
 ##################### Section 0 #####################
 # prepare tooling
 #####################################################
@@ -84,31 +84,13 @@ cd "$working_directory"
 # get a fixed order.
 proto_files=$(find "$proto_path" -type f  -name "*.proto" | sort)
 folder_name=$(extract_folder_name "$destination_path")
-# pull proto files and protoc from protobuf repository
-# maven central doesn't have proto files
-protoc_path=$working_directory/protobuf/bin
-cd "$working_directory"
-if [ ! -d protobuf ]; then
-  curl -LJ -o protobuf.zip https://github.com/protocolbuffers/protobuf/releases/download/v"$protobuf_version"/protoc-"$protobuf_version"-linux-x86_64.zip
-  unzip -o -q protobuf.zip -d protobuf/
-  cp -r protobuf/include/google "$working_directory"
-  echo "protoc version: $("$protoc_path"/protoc --version)"
-fi
-# pull protoc-gen-grpc-java plugin from maven central
-cd "$working_directory"
-if [ ! -f protoc-gen-grpc-java ]; then
-  curl -LJ -o protoc-gen-grpc-java https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/"$grpc_version"/protoc-gen-grpc-java-"$grpc_version"-linux-x86_64.exe
-  chmod +x protoc-gen-grpc-java
-fi
-# gapic-generator-java
-if [ ! -f gapic-generator-java.jar ]; then
-  curl -LJ -o gapic-generator-java.jar https://repo1.maven.org/maven2/com/google/api/gapic-generator-java/"$gapic_generator_version"/gapic-generator-java-"$gapic_generator_version".jar
-fi
+
+download_tools "$gapic_generator_version" "$protobuf_version" "$grpc_version"
 ##################### Section 1 #####################
 # generate grpc-*/
 #####################################################
 cd "$working_directory"
-"$protoc_path"/protoc "--plugin=protoc-gen-rpc-plugin=$working_directory/protoc-gen-grpc-java" \
+"$protoc_path"/protoc "--plugin=protoc-gen-rpc-plugin=$working_directory/grpc-java-plugin-$grpc_version" \
 "--rpc-plugin_out=:$destination_path/java_grpc.jar" \
 $proto_files
 
