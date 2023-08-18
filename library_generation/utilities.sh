@@ -55,11 +55,11 @@ find_additional_protos_in_yaml() {
 
 search_additional_protos() {
   additional_protos="google/cloud/common_resources.proto" # used by every library
-  iam_policy=$(find_additional_protos_in_yaml "name: google.iam.v1.IAMPolicy")
+  iam_policy=$(find_additional_protos_in_yaml "name: '*google.iam.v1.IAMPolicy'*")
   if [ -n "$iam_policy" ]; then
     additional_protos="$additional_protos google/iam/v1/iam_policy.proto"
   fi
-  locations=$(find_additional_protos_in_yaml "name: google.cloud.location.Locations")
+  locations=$(find_additional_protos_in_yaml "name: '*google.cloud.location.Locations'*")
   if [ -n "$locations" ]; then
     additional_protos="$additional_protos google/cloud/location/locations.proto"
   fi

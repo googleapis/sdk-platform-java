@@ -12,20 +12,24 @@ if [ ! -d schema ]; then
   git checkout "v0.28.2"
   mv schema ..
   popd
+  rm -rdf gapic-showcase
 fi
 if [ ! -d google ];then
   git clone https://github.com/googleapis/googleapis
-  mv googleapis/google . 
+  mv googleapis/google .
   rm -rdf googleapis
 fi
 
+
+mkdir output
 bash generate_library.sh \
   --proto_path "schema/google/showcase/v1beta1" \
   --destination_path "output" \
   --gapic_generator_version "2.24.0" \
   --protobuf_version "23.2" \
   --grpc_version "1.56.1" \
-  --transport "grpc+rest"
+  --rest_numeric_enums "false" \
+  --transport "grpc+rest" &> output/out
 
 SHOWCASE_FOLDER=$SCRIPT_DIR/../showcase
 SHOWCASE_GAPIC_DIR=$SHOWCASE_FOLDER/gapic-showcase/src/main
