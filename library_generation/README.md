@@ -1,4 +1,4 @@
-# Generate Gapic Client Library without post-processing
+# Generate GAPIC Client Library without post-processing
 
 The script, `generate_library.sh`, allows you to generate a gapic client library from proto files.
 
