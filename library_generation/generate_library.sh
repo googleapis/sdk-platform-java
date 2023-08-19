@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -eo pipefail
 
 while [[ $# -gt 0 ]]
 do
@@ -113,8 +113,7 @@ unzip -o -q "$destination_path/java_gapic_srcjar_raw.srcjar.zip" -d "$destinatio
 unzip -o -q "$destination_path/temp-codegen.srcjar" -d "$destination_path/java_gapic_srcjar"
 # Resource name source files.
 proto_dir=$destination_path/java_gapic_srcjar/proto/src/main/java
-if [ ! -d "$proto_dir" ]
-then
+if [ ! -d "$proto_dir" ]; then
   # Some APIs don'\''t have resource name helpers, like BigQuery v2.
   # Create an empty file so we can finish building. Gating the resource name rule definition
   # on file existences go against Bazel'\''s design patterns, so we'\''ll simply delete all empty
