@@ -7,7 +7,7 @@ on:
     - library_generation/**
 
   workflow_dispatch:
-name: verify_library_generation
+name: verify_library_generation_against_googleapis-gen
 jobs:
   verify_library_generation:
     runs-on: ubuntu-22.04
@@ -22,39 +22,10 @@ jobs:
         distribution: temurin
         cache: maven
     # add maven central mirror repository
-    - uses: s4u/maven-settings-action@v2.8.0
-      with:
-        mirrors: '[{"id": "google-maven-central", "name": "GCS Maven Central mirror", "mirrorOf": "central", "url": "https://maven-central.storage-download.googleapis.com/maven2/"}]'
-    - name: checkout googleapis
-      uses: actions/checkout@v3
-      with:
-        repository: googleapis/googleapis
-        ref: master
-        path: googleapis
-    - name: copy protos to proto_path
-      run: |
-        cp -r googleapis/google library_generation
-    - name: generate client library
-      shell: bash
+    - name: Run integration tests
       run: |
         set -x
-        library_generation/generate_library.sh \
-        -p google/cloud/confidentialcomputing/v1 \
-        -d google-cloud-confidentialcomputing-v1-java \
-        --gapic_generator_version 2.24.0 \
-        --protobuf_version 23.2 \
-        --grpc_version 1.55.1 \
-        --transport grpc+rest \
-        --rest_numeric_enums true \
-        --include_samples true
-    - name: checkout googleapis-gen
-      uses: actions/checkout@v3
-      with:
-        repository: googleapis/googleapis-gen
-        ref: master
-        path: googleapis-gen
-        token: ${{ secrets.CLOUD_JAVA_BOT_GITHUB_TOKEN }}
-    - name: compare generation result
-      run: |
-        # ignore gradle files
-        diff -r googleapis-gen/google/cloud/confidentialcomputing/v1/google-cloud-confidentialcomputing-v1-java/ library_generation/google-cloud-confidentialcomputing-v1-java/ -x "*gradle*"
+        library_generation/generate_library_integration_test.sh \
+        -p google/bigtable/v2 \
+        -d google-cloud-bigtable-v2-java \
+        --googleapis_gen_url https://cloud-java-bot:${{ secrets.CLOUD_JAVA_BOT_GITHUB_TOKEN }}@github.com/googleapis/googleapis-gen.git
