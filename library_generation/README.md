@@ -1,4 +1,4 @@
-# Generate Gapic Client Library without post-processing
+# Generate GAPIC Client Library without post-processing
 
 The script, `generate_library.sh`, allows you to generate a gapic client library from proto files.
 
@@ -28,12 +28,15 @@ Use `-d` or `--destination_path` to specify the value.
    
    Note that you do not need to create `$detination_path` beforehand.
 
-### the version of gapic-generator-java
+### version of gapic-generator-java
 You can find the released version of gapic-generator-java in [maven central](https://repo1.maven.org/maven2/com/google/api/gapic-generator-java/).
 
 Use `--gapic_generator_version` to specify the value.
 
-### the version of protobuf (optional)
+Note that you can specify a `SNAPSHOT` version as long as you have build the SNAPSHOT of gapic-generator-java in your maven
+local repository.
+
+### version of protobuf (optional)
 You can find the released version of protobuf in [GitHub](https://github.com/protocolbuffers/protobuf/releases/).
 The default value is defined in `gapic-generator-java-pom-parent/pom.xml`.
 
@@ -41,7 +44,7 @@ Use `--protobuf_version` to specify the value.
 
 Note that if specified, the version should be compatible with gapic-generator-java.
 
-### the version of grpc  (optional)
+### version of grpc  (optional)
 You can find the released version of grpc in [maven central](https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/).
 The default value is defined in `gapic-generator-java-pom-parent/pom.xml`.
 

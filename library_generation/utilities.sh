@@ -1,13 +1,15 @@
 #!/usr/bin/env bash
 
-set -xe
+set -xeo pipefail
 
 # define utility functions
+
 extract_folder_name() {
   destination_path=$1
   folder_name=${destination_path##*/}
   echo "$folder_name"
 }
+
 remove_empty_files() {
   category=$1
   find "$destination_path/$category-$folder_name/src/main/java" -type f -size 0 | while read -r f; do rm -f "${f}"; done
@@ -16,18 +18,19 @@ remove_empty_files() {
   fi
 }
 
+# Move generated files to folders in destination_path.
 mv_src_files() {
   category=$1 # one of gapic, proto, samples
   type=$2 # one of main, test
   if [ "$category" == "samples" ]; then
-    folder_suffix="samples/snippets/generated"
     src_suffix="samples/snippets/generated/src/main/java/com"
+    folder_suffix="samples/snippets/generated"
   elif [ "$category" == "proto" ]; then
-    folder_suffix="$category-$folder_name/src/$type"
     src_suffix="$category/src/$type/java"
+    folder_suffix="$category-$folder_name/src/$type"
   else
-    folder_suffix="$category-$folder_name/src"
     src_suffix="src/$type"
+    folder_suffix="$category-$folder_name/src"
   fi
   mkdir -p "$destination_path/$folder_suffix"
   cp -r "$destination_path/java_gapic_srcjar/$src_suffix" "$destination_path/$folder_suffix"
@@ -53,6 +56,9 @@ find_additional_protos_in_yaml() {
   fi
 }
 
+# Apart from proto files in proto_path, additional protos are needed in order
+# to generate gapic client libraries.
+# Search additional protos in .yaml files.
 search_additional_protos() {
   additional_protos="google/cloud/common_resources.proto" # used by every library
   iam_policy=$(find_additional_protos_in_yaml "name: '*google.iam.v1.IAMPolicy'*")
@@ -66,6 +72,7 @@ search_additional_protos() {
   echo "$additional_protos"
 }
 
+# get gapic options from .yaml and .json files from proto_path.
 get_gapic_opts() {
   gapic_config=$(find "${proto_path}" -type f -name "*gapic.yaml")
   if [ -z "${gapic_config}" ]; then
@@ -88,36 +95,30 @@ remove_grpc_version() {
   sed -i 's/value = \"by gRPC proto compiler.*/value = \"by gRPC proto compiler\",/g' {} \;
 }
 
-download_gapic_generator_parent_pom() {
+download_gapic_generator_pom_parent() {
   gapic_generator_version=$1
   cd "$working_directory"
-  if [[ "$gapic_generator_version" == *"-SNAPSHOT" ]]; then
-    # get SNAPSHOT from maven local repository.
-    parent_pom=$HOME/.m2/repository/com/google/api/gapic-generator-java-pom-parent/$gapic_generator_version/gapic-generator-java-pom-parent-$gapic_generator_version.pom
-    if [ ! -f "$parent_pom" ]; then
-      echo "Can't copy gapic-generator-java-pom-parent-$gapic_generator_version.pom from maven local repository."
-      exit 1
-    fi
-    cp "$parent_pom" "parent-pom-$gapic_generator_version.xml"
-  fi
-  if [ ! -f "parent-pom-$gapic_generator_version.xml" ]; then
-    curl -LJ -o "parent-pom-$gapic_generator_version.xml" "https://repo1.maven.org/maven2/com/google/api/gapic-generator-java-pom-parent/$gapic_generator_version/gapic-generator-java-pom-parent-$gapic_generator_version.pom"
+  if [ ! -f "gapic-generator-java-pom-parent-$gapic_generator_version.pom" ]; then
+    mvn org.apache.maven.plugins:maven-dependency-plugin:copy -q \
+      -Dartifact=com.google.api:gapic-generator-java-pom-parent:"$gapic_generator_version":pom \
+      -DoutputDirectory="$working_directory" || \
+      download_fail "gapic-generator-java-pom-parent-$gapic_generator_version.pom"
   fi
 }
 
 get_grpc_version() {
   gapic_generator_version=$1
   # get grpc version from gapic-generator-java-pom-parent/pom.xml
-  download_gapic_generator_parent_pom "$gapic_generator_version"
-  grpc_version=$(grep grpc.version "parent-pom-$gapic_generator_version.xml" | sed 's/<grpc\.version>\(.*\)<\/grpc\.version>/\1/' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+  download_gapic_generator_pom_parent "$gapic_generator_version"
+  grpc_version=$(grep grpc.version "gapic-generator-java-pom-parent-$gapic_generator_version.pom" | sed 's/<grpc\.version>\(.*\)<\/grpc\.version>/\1/' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
   echo "$grpc_version"
 }
 
 get_protobuf_version() {
   gapic_generator_version=$1
   # get protobuf version from gapic-generator-java-pom-parent/pom.xml
-  download_gapic_generator_parent_pom "$gapic_generator_version"
-  protobuf_version=$(grep protobuf.version "parent-pom-$gapic_generator_version.xml" | sed 's/<protobuf\.version>\(.*\)<\/protobuf\.version>/\1/' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | cut -d "." -f2-)
+  download_gapic_generator_pom_parent "$gapic_generator_version"
+  protobuf_version=$(grep protobuf.version "gapic-generator-java-pom-parent-$gapic_generator_version.pom" | sed 's/<protobuf\.version>\(.*\)<\/protobuf\.version>/\1/' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | cut -d "." -f2-)
   echo "$protobuf_version"
 }
 
@@ -133,20 +134,11 @@ download_tools() {
 download_generator() {
   gapic_generator_version=$1
   cd "$working_directory"
-  if [[ "$gapic_generator_version" == *"-SNAPSHOT" ]]; then
-    # get SNAPSHOT from maven local repository.
-    generator_jar=$HOME/.m2/repository/com/google/api/gapic-generator-java/$gapic_generator_version/gapic-generator-java-$gapic_generator_version.jar
-    if [ ! -f "$generator_jar" ]; then
-      echo "Can't copy gapic-generator-java-$gapic_generator_version.jar from maven local repository."
-      exit 1
-    fi
-    cp "$generator_jar" "gapic-generator-java-$gapic_generator_version.jar"
-    echo "Copy gapic-generator-java-$gapic_generator_version.jar from maven local repository."
-  fi
-
   if [ ! -f "gapic-generator-java-$gapic_generator_version.jar" ]; then
-    curl -LJ -o "gapic-generator-java-$gapic_generator_version.jar" https://repo1.maven.org/maven2/com/google/api/gapic-generator-java/"$gapic_generator_version"/gapic-generator-java-"$gapic_generator_version".jar
-    echo "Download gapic-generator-java-$gapic_generator_version.jar from maven central repository"
+    mvn org.apache.maven.plugins:maven-dependency-plugin:copy -q \
+      -Dartifact=com.google.api:gapic-generator-java:"$gapic_generator_version" \
+      -DoutputDirectory="$working_directory" || \
+      download_fail "gapic-generator-java-$gapic_generator_version.jar"
   fi
 }
 
@@ -156,7 +148,8 @@ download_protobuf() {
   if [ ! -d "protobuf-$protobuf_version" ]; then
     # pull proto files and protoc from protobuf repository
     # maven central doesn't have proto files
-    curl -LJ -o "protobuf-$protobuf_version.zip" https://github.com/protocolbuffers/protobuf/releases/download/v"$protobuf_version"/protoc-"$protobuf_version"-linux-x86_64.zip
+    curl -LJ -o "protobuf-$protobuf_version.zip" https://github.com/protocolbuffers/protobuf/releases/download/v"$protobuf_version"/protoc-"$protobuf_version"-linux-x86_64.zip || \
+      download_fail "protobuf-$protobuf_version"
     unzip -o -q "protobuf-$protobuf_version.zip" -d "protobuf-$protobuf_version"
     cp -r "protobuf-$protobuf_version/include/google" "$working_directory"
     rm "protobuf-$protobuf_version.zip"
@@ -169,8 +162,17 @@ download_protobuf() {
 download_grpc_plugin() {
   grpc_version=$1
   cd "$working_directory"
-  if [ ! -f "grpc-java-plugin-$grpc_version" ]; then
-    curl -LJ -o "grpc-java-plugin-$grpc_version" https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/"$grpc_version"/protoc-gen-grpc-java-"$grpc_version"-linux-x86_64.exe
-    chmod +x "grpc-java-plugin-$grpc_version"
+  if [ ! -f "protoc-gen-grpc-java-$grpc_version-linux-x86_64.exe" ]; then
+    mvn org.apache.maven.plugins:maven-dependency-plugin:copy -q \
+      -Dartifact=io.grpc:protoc-gen-grpc-java:"$grpc_version":exe:linux-x86_64 \
+      -DoutputDirectory="$working_directory" || \
+      download_fail "protoc-gen-grpc-java-$grpc_version-linux-x86_64.exe"
+    chmod +x "protoc-gen-grpc-java-$grpc_version-linux-x86_64.exe"
   fi
+}
+
+download_fail() {
+  artifact=$1
+  >&2 echo "Fail to download $artifact from GitHub, maven local and central repository. Please install $artifact first if you want to download a SNAPSHOT."
+  exit 1
 }

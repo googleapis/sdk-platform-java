@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e
+set -eo pipefail
 
 while [[ $# -gt 0 ]]
 do
@@ -90,7 +90,7 @@ download_tools "$gapic_generator_version" "$protobuf_version" "$grpc_version"
 # generate grpc-*/
 #####################################################
 cd "$working_directory"
-"$protoc_path"/protoc "--plugin=protoc-gen-rpc-plugin=$working_directory/grpc-java-plugin-$grpc_version" \
+"$protoc_path"/protoc "--plugin=protoc-gen-rpc-plugin=$working_directory/protoc-gen-grpc-java-$grpc_version-linux-x86_64.exe" \
 "--rpc-plugin_out=:$destination_path/java_grpc.jar" \
 $proto_files
 
@@ -113,8 +113,7 @@ unzip -o -q "$destination_path/java_gapic_srcjar_raw.srcjar.zip" -d "$destinatio
 unzip -o -q "$destination_path/temp-codegen.srcjar" -d "$destination_path/java_gapic_srcjar"
 # Resource name source files.
 proto_dir=$destination_path/java_gapic_srcjar/proto/src/main/java
-if [ ! -d "$proto_dir" ]
-then
+if [ ! -d "$proto_dir" ]; then
   # Some APIs don'\''t have resource name helpers, like BigQuery v2.
   # Create an empty file so we can finish building. Gating the resource name rule definition
   # on file existences go against Bazel'\''s design patterns, so we'\''ll simply delete all empty
