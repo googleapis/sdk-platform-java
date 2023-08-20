@@ -50,3 +50,81 @@ java_binary(
     main_class = "com.google.googlejavaformat.java.Main",
     runtime_deps = ["@google_java_format_all_deps//jar"],
 )
+
+_transfer_cmd = """
+        set -x
+        OUTPUT_DIR=$$(dirname $(OUTS) | head -n1)
+        mkdir -p $$OUTPUT_DIR
+        for src in $(SRCS); do
+            basename=$$(basename $$src)
+            cp $$src $$OUTPUT_DIR/$$basename
+        done
+    """
+
+# prevents the `src/main/proto/external/com_google_showcase/schema/google/showcase` from containing bazel external repository reference prepended path
+#                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+#                              bazel external prepended path
+genrule(
+    name = 'transferred_showcase_proto_files',
+    srcs = [
+        "@com_google_gapic_showcase//schema/google/showcase/v1beta1:showcase_v1beta1.yaml",
+        "@com_google_gapic_showcase//schema/google/showcase/v1beta1:showcase_grpc_service_config.json",
+        "@com_google_gapic_showcase//schema/google/showcase/v1beta1:compliance.proto",
+        "@com_google_gapic_showcase//schema/google/showcase/v1beta1:echo.proto",
+        "@com_google_gapic_showcase//schema/google/showcase/v1beta1:identity.proto",
+        "@com_google_gapic_showcase//schema/google/showcase/v1beta1:messaging.proto",
+        "@com_google_gapic_showcase//schema/google/showcase/v1beta1:sequence.proto",
+        "@com_google_gapic_showcase//schema/google/showcase/v1beta1:testing.proto",
+    ],
+    outs = [
+        "schema/google/showcase/v1beta1/compliance.proto",
+        "schema/google/showcase/v1beta1/echo.proto",
+        "schema/google/showcase/v1beta1/identity.proto",
+        "schema/google/showcase/v1beta1/messaging.proto",
+        "schema/google/showcase/v1beta1/sequence.proto",
+        "schema/google/showcase/v1beta1/testing.proto",
+    ],
+    cmd = _transfer_cmd
+)
+
+
+proto_library(
+  name = "transferred_showcase_proto",
+  srcs = [":transferred_showcase_proto_files"],
+  deps = [
+    "@com_google_googleapis//google/api:annotations_proto",
+    "@com_google_googleapis//google/api:client_proto",
+    "@com_google_googleapis//google/api:field_behavior_proto",
+    "@com_google_googleapis//google/api:resource_proto",
+    "@com_google_googleapis//google/api:routing_proto",
+    "@com_google_googleapis//google/longrunning:operations_proto",
+    "@com_google_googleapis//google/rpc:status_proto",
+    "@com_google_googleapis//google/rpc:error_details_proto",
+    "@com_google_protobuf//:duration_proto",
+    "@com_google_protobuf//:empty_proto",
+    "@com_google_protobuf//:field_mask_proto",
+    "@com_google_protobuf//:timestamp_proto",
+  ]
+)
+
+genrule(
+    name = 'transferred_showcase_yaml_file',
+    srcs = [
+        '@com_google_gapic_showcase//schema/google/showcase/v1beta1:showcase_v1beta1.yaml'
+    ],
+    outs = [
+        "schema/google/showcase/v1beta1/showcase_v1beta1.yaml",
+    ],
+    cmd = _transfer_cmd
+)
+
+genrule(
+    name = 'transferred_showcase_config_json_file',
+    srcs = [
+        '@com_google_gapic_showcase//schema/google/showcase/v1beta1:showcase_grpc_service_config.json'
+    ],
+    outs = [
+        "schema/google/showcase/v1beta1/showcase_grpc_service_config.json",
+    ],
+    cmd = _transfer_cmd
+)

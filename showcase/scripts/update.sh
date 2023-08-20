@@ -34,7 +34,7 @@ case $1 in
     delete_unneeded
     cd "$BUILD_WORKSPACE_DIRECTORY/showcase/$PROTO_PROJECT_DIR"
     mkdir -p ./src
-    cp -r "$PROTO_UNPACK_DIR"/proto-google-cloud-showcase-v1beta1-java/src/* ./src
+    cp -fr "$PROTO_UNPACK_DIR"/proto-google-cloud-showcase-v1beta1-java/src/* ./src
     ;;
 
   grpc)

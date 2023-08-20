@@ -16,7 +16,7 @@ package(default_visibility = ["//visibility:public"])
 proto_library_with_info(
     name = "showcase_proto_with_info",
     deps = [
-        "@com_google_gapic_showcase//schema/google/showcase/v1beta1:showcase_proto",
+        "//:transferred_showcase_proto",
 #        "//showcase/gapic-showcase-extended/proto:showcase_proto_extended",
         "@com_google_googleapis//google/cloud:common_resources_proto",
         "@com_google_googleapis//google/cloud/location:location_proto",
@@ -24,17 +24,19 @@ proto_library_with_info(
     ],
 )
 
+
 java_proto_library(
     name = "showcase_java_proto",
     deps = [
-        "@com_google_gapic_showcase//schema/google/showcase/v1beta1:showcase_proto",
+        "//:transferred_showcase_proto",
+        #"@com_google_gapic_showcase//schema/google/showcase/v1beta1:showcase_proto",
 #       "//showcase/gapic-showcase-extended/proto:showcase_proto_extended"
 ],
 )
 
 java_grpc_library(
     name = "showcase_java_grpc",
-    srcs = ["@com_google_gapic_showcase//schema/google/showcase/v1beta1:showcase_proto"],
+    srcs = ["//:transferred_showcase_proto"],
     deps = [":showcase_java_proto"],
 )
 
@@ -54,7 +56,8 @@ java_gapic_library(
     # TODO(#1285): Enable rest_numeric_enums once https://github.com/googleapis/gapic-showcase/issues/1255 is
     # fixed.
     rest_numeric_enums = False,
-    service_yaml = "@com_google_gapic_showcase//schema/google/showcase/v1beta1:showcase_v1beta1.yaml",
+    service_yaml = "//:transferred_showcase_yaml_file",
+    #service_yaml = "@com_google_gapic_showcase//schema/google/showcase/v1beta1:showcase_v1beta1.yaml",
     test_deps = [
         ":showcase_java_grpc",
 #        ":showcase_java_grpc_extended",
@@ -80,7 +83,7 @@ java_gapic_assembly_gradle_pkg(
         # Need to figure out why it's being included
         ":showcase_java_grpc",
         ":showcase_java_proto",
-        "@com_google_gapic_showcase//schema/google/showcase/v1beta1:showcase_proto",
+        "//:transferred_showcase_proto",
     ],
 )
 
