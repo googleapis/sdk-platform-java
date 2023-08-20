@@ -35,6 +35,13 @@ case $1 in
     cd "$BUILD_WORKSPACE_DIRECTORY/showcase/$PROTO_PROJECT_DIR"
     mkdir -p ./src
     cp -r "$PROTO_UNPACK_DIR"/proto-google-cloud-showcase-v1beta1-java/src/* ./src
+    # when bazel references external repositories, the output of proto java
+    # libraries will store the source protos using the full bazel reference path
+    # (i.e. @com_google_gapic_showcase as "external" repo). This is a surface
+    # modification to have the proto structure matching the output of the
+    # hermetic build script
+    mv ./src/main/proto/external/com_google_gapic_showcase/schema ./src/main/proto
+    rm -rd ./src/main/proto/external
     ;;
 
   grpc)
