@@ -2,6 +2,7 @@
 
 set -eo pipefail
 
+# parse input parameters
 while [[ $# -gt 0 ]]
 do
 key="$1"
@@ -49,6 +50,7 @@ shift # past argument or value
 done
 
 working_directory=$(dirname "$(readlink -f "$0")")
+# source utility functions
 cd "$working_directory"
 source ./utilities.sh
 
@@ -84,7 +86,7 @@ cd "$working_directory"
 # get a fixed order.
 proto_files=$(find "$proto_path" -type f  -name "*.proto" | sort)
 folder_name=$(extract_folder_name "$destination_path")
-
+# download gapic-generator-java, protobuf and grpc plugin.
 download_tools "$gapic_generator_version" "$protobuf_version" "$grpc_version"
 ##################### Section 1 #####################
 # generate grpc-*/
@@ -93,13 +95,14 @@ cd "$working_directory"
 "$protoc_path"/protoc "--plugin=protoc-gen-rpc-plugin=$working_directory/protoc-gen-grpc-java-$grpc_version-linux-x86_64.exe" \
 "--rpc-plugin_out=:$destination_path/java_grpc.jar" \
 $proto_files
-
+# unzip java_grpc.jar to grpc-*/src/main/java
 unzip_src_files "grpc"
+# remove empty files in grpc-*/src/main/java
 remove_empty_files "grpc"
 # remove grpc version in *ServiceGrpc.java file so the content is identical with bazel build.
 remove_grpc_version
 ###################### Section 2 #####################
-## generate gapic-*/, proto-*/, samples/
+## generate gapic-*/, part of proto-*/, samples/
 ######################################################
 cd "$working_directory"
 "$protoc_path"/protoc --experimental_allow_proto3_optional \
@@ -123,13 +126,14 @@ if [ ! -d "$proto_dir" ]; then
 fi
 
 cd "$working_directory"
-# Main source files.
+# move java_gapic_srcjar/src/main to gapic-*/src.
 mv_src_files "gapic" "main"
+# remove empty files in gapic-*/src/main/java
 remove_empty_files "gapic"
-# Test source files.
+# move java_gapic_srcjar/src/test to gapic-*/src
 mv_src_files "gapic" "test"
 if [ "$include_samples" == "true" ]; then
-  # Sample source files.
+  # move java_gapic_srcjar/samples/snippets to samples/snippets
   mv_src_files "samples" "main"
 fi
 ##################### Section 3 #####################
@@ -137,10 +141,14 @@ fi
 #####################################################
 cd "$working_directory"
 "$protoc_path"/protoc "--java_out=$destination_path/java_proto.jar" $proto_files
+# move java_gapic_srcjar/proto/src/main/java (generated resource name helper class)
+# to proto-*/src/main
 mv_src_files "proto" "main"
+# unzip java_proto.jar to proto-*/src/main/java
 unzip_src_files "proto"
+# remove empty files in proto-*/src/main/java
 remove_empty_files "proto"
-
+# copy proto files to proto-*/src/main/proto
 for proto_src in $proto_files; do
     mkdir -p "$destination_path/proto-$folder_name/src/main/proto"
     cp -f --parents "$proto_src" "$destination_path/proto-$folder_name/src/main/proto"
