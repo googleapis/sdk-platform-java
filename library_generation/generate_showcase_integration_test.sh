@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ex
+set -e
 
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 source $SCRIPT_DIR/utilities.sh
@@ -53,13 +53,6 @@ include_samples=$(get_config_from_BUILD \
   "true"
 )
 
-# if we are in a snapshot, then ensure local availability
-if echo $ggj_version | grep -q 'SNAPSHOT'; then
-  pushd $SCRIPT_DIR/..
-  #mvn install -DskipTests -Dclirr.skip
-  popd
-fi
-
 mkdir output
 bash generate_library.sh \
   --proto_path "schema/google/showcase/v1beta1" \
@@ -79,4 +72,10 @@ cp -r $SCRIPT_DIR/output/gapic-output/src/main $SHOWCASE_GAPIC_DIR
 cp -r $SCRIPT_DIR/output/proto-output/src $SHOWCASE_PROTO_DIR
 cp -r $SCRIPT_DIR/output/grpc-output/src $SHOWCASE_GRPC_DIR
 
-set +ex
+echo "Compare generation result..."
+if $(git diff --numstat $SCRIPT_DIR/../showcase | wc -l) -gt 0; then
+  echo 'found differences in showcase folder'
+  exit -1
+fi
+
+set +e
