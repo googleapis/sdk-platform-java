@@ -80,6 +80,7 @@ echo "Generating library from $proto_path, to $destination_path..."
 --transport "$transport" \
 --rest_numeric_enums "$rest_numeric_enums" \
 --include_samples "$include_samples"
+
 echo "Generate library finished."
 echo "Checking out googleapis-gen repository..."
 git clone --branch=master --depth 1 -q "$googleapis_gen_url"
@@ -90,4 +91,4 @@ diff -r "googleapis-gen/$proto_path/$destination_path" "$destination_path" -x "*
 echo "Comparison finished, no difference is found."
 # clean up
 cd "$working_directory"
-rm -rf google WORKSPACE googleapis-gen "$destination_path"
+rm -rf WORKSPACE googleapis-gen "$destination_path"
