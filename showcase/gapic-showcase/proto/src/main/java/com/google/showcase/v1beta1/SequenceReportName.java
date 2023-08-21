@@ -127,7 +127,7 @@ public class SequenceReportName implements ResourceName {
     if (o == this) {
       return true;
     }
-    if (o != null || getClass() == o.getClass()) {
+    if (o != null && getClass() == o.getClass()) {
       SequenceReportName that = ((SequenceReportName) o);
       return Objects.equals(this.sequence, that.sequence);
     }

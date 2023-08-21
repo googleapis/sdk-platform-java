@@ -127,7 +127,7 @@ public class ProfileName implements ResourceName {
     if (o == this) {
       return true;
     }
-    if (o != null || getClass() == o.getClass()) {
+    if (o != null && getClass() == o.getClass()) {
       ProfileName that = ((ProfileName) o);
       return Objects.equals(this.user, that.user);
     }
