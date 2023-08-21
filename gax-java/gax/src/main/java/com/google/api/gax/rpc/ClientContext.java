@@ -237,13 +237,22 @@ public abstract class ClientContext {
 
     TransportChannelResolver transportChannelResolver = new TransportChannelResolver();
     ApiCallContext defaultCallContext = transportChannelProvider.getEmptyCallContext();
-    EndpointContext endpointContext =
-        settings
-            .getEndpointContext()
-            .toBuilder()
-            .setCredentials(credentials)
-            .setTransportChannelEndpoint(transportChannelProvider.getEndpoint())
-            .build();
+    EndpointContext endpointContext;
+    if (settings.getEndpointContext() != null) {
+      endpointContext =
+          settings
+              .getEndpointContext()
+              .toBuilder()
+              .setCredentials(credentials)
+              .setTransportChannelEndpoint(transportChannelProvider.getEndpoint())
+              .build();
+    } else {
+      endpointContext =
+          EndpointContext.newBuilder()
+              .setCredentials(credentials)
+              .setTransportChannelEndpoint(transportChannelProvider.getEndpoint())
+              .build();
+    }
     defaultCallContext = defaultCallContext.withEndpointContext(endpointContext);
     defaultCallContext = defaultCallContext.withTransportChannelResolver(transportChannelResolver);
 

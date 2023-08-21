@@ -192,7 +192,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
   @Override
   public HttpJsonCallContext merge(ApiCallContext inputCallContext) {
     synchronized (lock) {
-      if (channel == null) {
+      if (channel == null && getTransportChannelProvider() != null) {
         HttpJsonTransportChannel httpJsonTransportChannel;
         try {
           TransportChannelProvider transportChannelProvider = getTransportChannelProvider();

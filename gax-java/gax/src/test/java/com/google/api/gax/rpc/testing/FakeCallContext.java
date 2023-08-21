@@ -36,6 +36,7 @@ import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.TransportChannel;
+import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.TransportChannelResolver;
 import com.google.api.gax.rpc.internal.ApiCallContextOptions;
 import com.google.api.gax.rpc.internal.Headers;
@@ -64,6 +65,8 @@ public class FakeCallContext implements ApiCallContext {
   private final ApiTracer tracer;
   private final RetrySettings retrySettings;
   private final ImmutableSet<StatusCode.Code> retryableCodes;
+  private final EndpointContext endpointContext;
+  private final TransportChannelProvider transportChannelProvider;
 
   private FakeCallContext(
       Credentials credentials,
@@ -75,7 +78,9 @@ public class FakeCallContext implements ApiCallContext {
       ApiCallContextOptions options,
       ApiTracer tracer,
       RetrySettings retrySettings,
-      Set<StatusCode.Code> retryableCodes) {
+      Set<StatusCode.Code> retryableCodes,
+      EndpointContext endpointContext,
+      TransportChannelProvider transportChannelProvider) {
     this.credentials = credentials;
     this.channel = channel;
     this.timeout = timeout;
@@ -86,6 +91,8 @@ public class FakeCallContext implements ApiCallContext {
     this.tracer = tracer;
     this.retrySettings = retrySettings;
     this.retryableCodes = retryableCodes == null ? null : ImmutableSet.copyOf(retryableCodes);
+    this.endpointContext = endpointContext;
+    this.transportChannelProvider = transportChannelProvider;
   }
 
   public static FakeCallContext createDefault() {
@@ -97,6 +104,8 @@ public class FakeCallContext implements ApiCallContext {
         null,
         ImmutableMap.<String, List<String>>of(),
         ApiCallContextOptions.getDefaultOptions(),
+        null,
+        null,
         null,
         null,
         null);
@@ -185,7 +194,9 @@ public class FakeCallContext implements ApiCallContext {
         newOptions,
         newTracer,
         newRetrySettings,
-        newRetryableCodes);
+        newRetryableCodes,
+        endpointContext,
+        transportChannelProvider);
   }
 
   public RetrySettings getRetrySettings() {
@@ -203,7 +214,9 @@ public class FakeCallContext implements ApiCallContext {
         this.options,
         this.tracer,
         retrySettings,
-        this.retryableCodes);
+        this.retryableCodes,
+        this.endpointContext,
+        this.transportChannelProvider);
   }
 
   public Set<StatusCode.Code> getRetryableCodes() {
@@ -221,7 +234,9 @@ public class FakeCallContext implements ApiCallContext {
         this.options,
         this.tracer,
         this.retrySettings,
-        retryableCodes);
+        retryableCodes,
+        this.endpointContext,
+        this.transportChannelProvider);
   }
 
   public Credentials getCredentials() {
@@ -261,7 +276,9 @@ public class FakeCallContext implements ApiCallContext {
         this.options,
         this.tracer,
         this.retrySettings,
-        this.retryableCodes);
+        this.retryableCodes,
+        this.endpointContext,
+        this.transportChannelProvider);
   }
 
   @Override
@@ -277,13 +294,37 @@ public class FakeCallContext implements ApiCallContext {
 
   @Override
   public ApiCallContext withEndpointContext(EndpointContext endpointContext) {
-    return null;
+    return new FakeCallContext(
+        this.credentials,
+        this.channel,
+        this.timeout,
+        this.streamWaitTimeout,
+        this.streamIdleTimeout,
+        this.extraHeaders,
+        this.options,
+        this.tracer,
+        this.retrySettings,
+        this.retryableCodes,
+        endpointContext,
+        this.transportChannelProvider);
   }
 
   @Override
   public ApiCallContext withTransportChannelResolver(
       TransportChannelResolver transportChannelResolver) {
-    return null;
+    return new FakeCallContext(
+        this.credentials,
+        this.channel,
+        this.timeout,
+        this.streamWaitTimeout,
+        this.streamIdleTimeout,
+        this.extraHeaders,
+        this.options,
+        this.tracer,
+        this.retrySettings,
+        this.retryableCodes,
+        this.endpointContext,
+        transportChannelProvider);
   }
 
   public FakeCallContext withChannel(FakeChannel channel) {
@@ -297,7 +338,9 @@ public class FakeCallContext implements ApiCallContext {
         this.options,
         this.tracer,
         this.retrySettings,
-        this.retryableCodes);
+        this.retryableCodes,
+        this.endpointContext,
+        this.transportChannelProvider);
   }
 
   @Override
@@ -322,7 +365,9 @@ public class FakeCallContext implements ApiCallContext {
         this.options,
         this.tracer,
         this.retrySettings,
-        this.retryableCodes);
+        this.retryableCodes,
+        this.endpointContext,
+        this.transportChannelProvider);
   }
 
   @Override
@@ -337,7 +382,9 @@ public class FakeCallContext implements ApiCallContext {
         this.options,
         this.tracer,
         this.retrySettings,
-        this.retryableCodes);
+        this.retryableCodes,
+        this.endpointContext,
+        this.transportChannelProvider);
   }
 
   @Override
@@ -353,7 +400,9 @@ public class FakeCallContext implements ApiCallContext {
         this.options,
         this.tracer,
         this.retrySettings,
-        this.retryableCodes);
+        this.retryableCodes,
+        this.endpointContext,
+        this.transportChannelProvider);
   }
 
   @Override
@@ -371,7 +420,9 @@ public class FakeCallContext implements ApiCallContext {
         this.options,
         this.tracer,
         this.retrySettings,
-        this.retryableCodes);
+        this.retryableCodes,
+        this.endpointContext,
+        this.transportChannelProvider);
   }
 
   @Override
@@ -393,7 +444,9 @@ public class FakeCallContext implements ApiCallContext {
         newOptions,
         tracer,
         retrySettings,
-        retryableCodes);
+        retryableCodes,
+        endpointContext,
+        transportChannelProvider);
   }
 
   @Override
@@ -427,7 +480,9 @@ public class FakeCallContext implements ApiCallContext {
         this.options,
         tracer,
         this.retrySettings,
-        this.retryableCodes);
+        this.retryableCodes,
+        this.endpointContext,
+        this.transportChannelProvider);
   }
 
   public static FakeCallContext create(ClientContext clientContext) {

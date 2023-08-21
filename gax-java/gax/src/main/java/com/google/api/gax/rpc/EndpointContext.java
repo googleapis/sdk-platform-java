@@ -38,6 +38,7 @@ public abstract class EndpointContext {
   private static final String DEFAULT_PORT = "443";
   private static final String UNIVERSE_DOMAIN_TEMPLATE = "SERVICE.UNIVERSE_DOMAIN:PORT";
 
+  @Nullable
   public abstract String serviceName();
 
   @Nullable

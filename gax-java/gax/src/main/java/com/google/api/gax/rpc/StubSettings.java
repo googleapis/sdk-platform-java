@@ -449,6 +449,11 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       return self();
     }
 
+    protected B setEndpointContext(EndpointContext endpointContext) {
+      this.endpointContext = endpointContext;
+      return self();
+    }
+
     protected B setSwitchToMtlsEndpointAllowed(boolean switchToMtlsEndpointAllowed) {
       this.switchToMtlsEndpointAllowed = switchToMtlsEndpointAllowed;
       this.endpointContext =

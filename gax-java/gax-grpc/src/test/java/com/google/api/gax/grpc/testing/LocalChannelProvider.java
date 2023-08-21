@@ -30,6 +30,7 @@
 package com.google.api.gax.grpc.testing;
 
 import com.google.api.core.BetaApi;
+import com.google.api.gax.grpc.GrpcCallContext;
 import com.google.api.gax.grpc.GrpcHeaderInterceptor;
 import com.google.api.gax.grpc.GrpcTransportChannel;
 import com.google.api.gax.rpc.ApiCallContext;
@@ -61,7 +62,6 @@ public class LocalChannelProvider implements TransportChannelProvider {
 
   private final List<LocalHeaderInterceptor> interceptors;
   private final String address;
-
   private volatile HeaderProvider headerProvider;
 
   private LocalChannelProvider(String address, HeaderProvider headerProvider) {
@@ -104,7 +104,8 @@ public class LocalChannelProvider implements TransportChannelProvider {
 
   @Override
   public TransportChannelProvider withEndpoint(String endpoint) {
-    throw new UnsupportedOperationException("LocalChannelProvider doesn't need an endpoint");
+    return this;
+    //    throw new UnsupportedOperationException("LocalChannelProvider doesn't need an endpoint");
   }
 
   @Override
@@ -150,7 +151,7 @@ public class LocalChannelProvider implements TransportChannelProvider {
 
   @Override
   public ApiCallContext getEmptyCallContext() {
-    return null;
+    return GrpcCallContext.of(this);
   }
 
   @Override

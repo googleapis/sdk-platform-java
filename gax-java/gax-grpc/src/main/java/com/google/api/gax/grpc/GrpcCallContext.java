@@ -74,7 +74,7 @@ public final class GrpcCallContext implements ApiCallContext {
 
   private final Object lock = new Object();
 
-  private Channel channel;
+  private volatile Channel channel;
   private final CallOptions callOptions;
   @Nullable private final Duration timeout;
   @Nullable private final Duration streamWaitTimeout;
@@ -422,7 +422,7 @@ public final class GrpcCallContext implements ApiCallContext {
   @Override
   public ApiCallContext merge(ApiCallContext inputCallContext) {
     synchronized (lock) {
-      if (channel == null) {
+      if (channel == null && getTransportChannelProvider() != null) {
         GrpcTransportChannel grpcTransportChannel;
         try {
           TransportChannelProvider transportChannelProvider = getTransportChannelProvider();
