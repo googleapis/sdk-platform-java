@@ -22,10 +22,14 @@ jobs:
         distribution: temurin
         cache: maven
     # add maven central mirror repository
-    - name: Run integration tests
+    - name: Run googleapis integration test
       run: |
         set -x
         library_generation/generate_library_integration_test.sh \
         -p google/bigtable/v2 \
         -d google-cloud-bigtable-v2-java \
         --googleapis_gen_url https://cloud-java-bot:${{ secrets.CLOUD_JAVA_BOT_GITHUB_TOKEN }}@github.com/googleapis/googleapis-gen.git
+    - name: Run showcase integration test
+      run: |
+        set -x
+        library_generation/generate_showcase_integration_test.sh
