@@ -176,3 +176,37 @@ download_fail() {
   >&2 echo "Fail to download $artifact from GitHub, maven local and central repository. Please install $artifact first if you want to download a SNAPSHOT."
   exit 1
 }
+
+get_version_from_WORKSPACE() {
+  version_key_word=$1
+  workspace=$2
+  version=$(cat "$workspace" | grep "$version_key_word" | head -n 1 | sed 's/\(.*\) = "\(.*\)"\(.*\)/\2/')
+  echo "$version"
+}
+
+# Used to obtain configuration values from a bazel BUILD file
+#
+# inspects a $build_file for a certain $rule (e.g. java_gapic_library). If the
+# first 15 lines after the declaration of the rule contain $pattern, then
+# it will return $if_match if $pattern is found, otherwise $default
+get_config_from_BUILD() {
+  build_file=$1
+  rule=$2
+  pattern=$3
+  default=$4
+  if_match=$5
+
+  result="$default"
+  if grep -A 15 "$rule" "$build_file" | grep -q "$pattern"; then
+    result="$if_match"
+  fi
+  echo "$result"
+
+}
+
+get_version_from_properties() {
+  version_key_word=$1
+  properties_file=$2
+  version=$(cat "$properties_file" | grep "$version_key_word" | sed "s/.*=\(.*\)/\1/")
+  echo $version
+}

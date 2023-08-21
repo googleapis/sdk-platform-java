@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -xeo pipefail
+source utilities.sh
 
 # This script is used to test the result of `generate_library.sh` against generated
 # source code in googleapis-gen repository.
@@ -35,13 +36,6 @@ esac
 shift # past argument or value
 done
 
-get_version_from_WORKSPACE() {
-  version_key_word=$1
-  workspace=$2
-  version="$(grep -m 1 "$version_key_word"  "$workspace" | sed 's/\"\(.*\)\"/\1/' | cut -d "=" -f2 | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
-  echo "$version"
-}
-
 working_directory=$(dirname "$(readlink -f "$0")")
 cd "$working_directory"
 # checkout the master branch of googleapis/google (proto files) and WORKSPACE
@@ -57,18 +51,24 @@ grpc_version=$(get_version_from_WORKSPACE "_grpc_version" WORKSPACE)
 echo "The version of protoc-gen-grpc-java plugin is $gapic_generator_version."
 # parse GAPIC options from proto_path/BUILD.bazel
 cd $"$working_directory"
-transport="grpc"
-if grep -A 15 "java_gapic_library(" "$proto_path/BUILD.bazel" | grep -q "grpc+rest"; then
-  transport="grpc+rest"
-fi
-rest_numeric_enums="true"
-if grep -A 15 "java_gapic_library(" "$proto_path/BUILD.bazel" | grep -q "rest_numeric_enums = False"; then
-  rest_numeric_enums="false"
-fi
-include_samples="false"
-if grep -A 15 "java_gapic_assembly_gradle_pkg(" "$proto_path/BUILD.bazel" | grep -q "include_samples = True"; then
-  include_samples="true"
-fi
+transport=$(get_config_from_BUILD \
+  "$proto_path/BUILD.bazel" \
+  "java_gapic_library(" \
+  "grpc+rest" \
+  "grpc"
+)
+rest_numeric_enums=$(get_config_from_BUILD \
+  "$proto_path/BUILD.bazel" \
+  "java_gapic_library(" \
+  "rest_numeric_enums = False" \
+  "true"
+)
+include_samples=$(get_config_from_BUILD \
+  "$proto_path/BUILD.bazel" \
+  "java_gapic_assembly_gradle_pkg(" \
+  "include_samples = True" \
+  "false"
+)
 echo "GAPIC options are transport=$transport, rest_numeric_enums=$rest_numeric_enums, include_samples=$include_samples."
 # generate GAPIC client library
 echo "Generating library from $proto_path, to $destination_path..."
