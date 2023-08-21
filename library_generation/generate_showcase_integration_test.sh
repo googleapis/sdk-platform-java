@@ -73,7 +73,7 @@ cp -r $SCRIPT_DIR/output/proto-output/src $SHOWCASE_PROTO_DIR
 cp -r $SCRIPT_DIR/output/grpc-output/src $SHOWCASE_GRPC_DIR
 
 echo "Compare generation result..."
-if $(git diff --numstat $SCRIPT_DIR/../showcase | wc -l) -gt 0; then
+if [[ $(git diff --numstat $SCRIPT_DIR/../showcase | wc -l) -gt 0 ]]; then
   echo 'found differences in showcase folder'
   exit -1
 fi
