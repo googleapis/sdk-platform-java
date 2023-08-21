@@ -148,7 +148,7 @@ download_protobuf() {
   if [ ! -d "protobuf-$protobuf_version" ]; then
     # pull proto files and protoc from protobuf repository
     # maven central doesn't have proto files
-    curl -LJ -o "protobuf-$protobuf_version.zip" https://github.com/protocolbuffers/protobuf/releases/download/v"$protobuf_version"/protoc-"$protobuf_version"-linux-x86_64.zip || \
+    curl -LJ -o "protobuf-$protobuf_version.zip" --fail https://github.com/protocolbuffers/protobuf/releases/download/v"$protobuf_version"/protoc-"$protobuf_version"-linux-x86_64.zip || \
       download_fail "protobuf-$protobuf_version"
     unzip -o -q "protobuf-$protobuf_version.zip" -d "protobuf-$protobuf_version"
     cp -r "protobuf-$protobuf_version/include/google" "$working_directory"
