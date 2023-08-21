@@ -4,7 +4,14 @@ The script, `generate_library.sh`, allows you to generate a gapic client library
 
 ## Environment
 
-Use Linux environment and install java runtime environment.
+Use Linux environment and install java runtime environment (8 or above).
+
+## Prerequisite
+In order to generate a GAPIC library, you need to pull `google/` from [googleapis](https://github.com/googleapis/googleapis)
+and put it into the directory containing `generate_library.sh` since protos in `google/` 
+are likely referenced by protos from which the library are generated.
+
+In most cases, the `proto_path` is a subdirectory within `google/`.
 
 ## Parameters to run `generate_library.sh`
 
