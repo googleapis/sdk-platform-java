@@ -38,7 +38,6 @@ if [ $(echo $ggj_version | grep 'SNAPSHOT' | wc -l) -gt 0 ]; then
 fi
 
 
-grpc_version=$(get_version_from_properties "version.io_grpc" $GAX_PROPERTIES)
 rest_numeric_enums=$(get_config_from_BUILD \
   "$SHOWCASE_BUILD_FILE" \
   "java_gapic_library(" \
@@ -66,7 +65,6 @@ bash generate_library.sh \
   --proto_path "schema/google/showcase/v1beta1" \
   --destination_path "output" \
   --gapic_generator_version $ggj_version \
-  --grpc_version $grpc_version \
   --rest_numeric_enums $rest_numeric_enums \
   --include_samples $include_samples \
   --transport $transport &> output/out
