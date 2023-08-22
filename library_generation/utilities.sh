@@ -192,7 +192,8 @@ download_from() {
   url=$1
   save_as=$2
   repo=$3
-  curl -LJ -o "$save_as" --fail -m 2 "$url" || download_fail "$save_as" "$repo"
+  # fail-fast, 30 seconds at most, retry 2 times
+  curl -LJ -o "$save_as" --fail -m 30 --retry 2 "$url" || download_fail "$save_as" "$repo"
 }
 
 copy_from() {
