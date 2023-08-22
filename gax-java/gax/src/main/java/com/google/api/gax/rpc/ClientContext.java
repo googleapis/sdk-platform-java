@@ -87,6 +87,9 @@ public abstract class ClientContext {
   @Nullable
   public abstract TransportChannel getTransportChannel();
 
+  @Nullable
+  public abstract TransportChannelProvider getTransportChannelProvider();
+
   public abstract Map<String, String> getHeaders();
 
   protected abstract Map<String, String> getInternalHeaders();
@@ -224,37 +227,36 @@ public abstract class ClientContext {
     if (transportChannelProvider.needsCredentials() && credentials != null) {
       transportChannelProvider = transportChannelProvider.withCredentials(credentials);
     }
-    //    String endpoint =
-    //        getEndpoint(
-    //            settings.getEndpoint(),
-    //            settings.getMtlsEndpoint(),
-    //            settings.getSwitchToMtlsEndpointAllowed(),
-    //            new MtlsProvider());
-    //    if (transportChannelProvider.needsEndpoint()) {
-    //      transportChannelProvider = transportChannelProvider.withEndpoint(endpoint);
-    //    }
-    //    TransportChannel transportChannel = transportChannelProvider.getTransportChannel();
 
-    TransportChannelResolver transportChannelResolver = new TransportChannelResolver();
-    ApiCallContext defaultCallContext = transportChannelProvider.getEmptyCallContext();
     EndpointContext endpointContext;
-    if (settings.getEndpointContext() != null) {
-      endpointContext =
-          settings
-              .getEndpointContext()
-              .toBuilder()
-              .setCredentials(credentials)
-              .setTransportChannelEndpoint(transportChannelProvider.getEndpoint())
-              .build();
+    ApiCallContext defaultCallContext;
+    TransportChannelResolver transportChannelResolver = new TransportChannelResolver();
+    if (transportChannelProvider instanceof FixedTransportChannelProvider) {
+      TransportChannel transportChannel = transportChannelProvider.getTransportChannel();
+      defaultCallContext =
+          transportChannel.getEmptyCallContext().withTransportChannel(transportChannel);
+      transportChannelResolver.setTransportChannel(transportChannel);
     } else {
-      endpointContext =
-          EndpointContext.newBuilder()
-              .setCredentials(credentials)
-              .setTransportChannelEndpoint(transportChannelProvider.getEndpoint())
-              .build();
+      defaultCallContext = transportChannelProvider.getEmptyCallContext();
+      if (settings.getEndpointContext() != null) {
+        endpointContext =
+            settings
+                .getEndpointContext()
+                .toBuilder()
+                .setCredentials(credentials)
+                .setTransportChannelEndpoint(transportChannelProvider.getEndpoint())
+                .build();
+      } else {
+        endpointContext =
+            EndpointContext.newBuilder()
+                .setCredentials(credentials)
+                .setTransportChannelEndpoint(transportChannelProvider.getEndpoint())
+                .build();
+      }
+      defaultCallContext = defaultCallContext.withEndpointContext(endpointContext);
+      defaultCallContext =
+          defaultCallContext.withTransportChannelResolver(transportChannelResolver);
     }
-    defaultCallContext = defaultCallContext.withEndpointContext(endpointContext);
-    defaultCallContext = defaultCallContext.withTransportChannelResolver(transportChannelResolver);
 
     WatchdogProvider watchdogProvider = settings.getStreamWatchdogProvider();
     @Nullable Watchdog watchdog = null;
@@ -290,6 +292,7 @@ public abstract class ClientContext {
         .setExecutor(backgroundExecutor)
         .setCredentials(credentials)
         .setTransportChannel(null)
+        .setTransportChannelProvider(transportChannelProvider)
         .setHeaders(ImmutableMap.copyOf(settings.getHeaderProvider().getHeaders()))
         .setInternalHeaders(ImmutableMap.copyOf(settings.getInternalHeaderProvider().getHeaders()))
         .setClock(clock)
@@ -350,6 +353,9 @@ public abstract class ClientContext {
     public abstract Builder setCredentials(Credentials value);
 
     public abstract Builder setTransportChannel(TransportChannel transportChannel);
+
+    public abstract Builder setTransportChannelProvider(
+        TransportChannelProvider transportChannelProvider);
 
     public abstract Builder setHeaders(Map<String, String> headers);
 

@@ -298,8 +298,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
             FixedExecutorProvider.create(clientContext.getExecutor());
         this.deprecatedExecutorProviderSet = true;
         this.backgroundExecutorProvider = fixedExecutorProvider;
-        this.transportChannelProvider =
-            FixedTransportChannelProvider.create(clientContext.getTransportChannel());
+        this.transportChannelProvider = clientContext.getTransportChannelProvider();
         this.credentialsProvider = FixedCredentialsProvider.create(clientContext.getCredentials());
         this.headerProvider = FixedHeaderProvider.create(clientContext.getHeaders());
         this.internalHeaderProvider =

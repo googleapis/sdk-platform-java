@@ -214,10 +214,13 @@ public class ClientSettingsTest {
             Mockito.mock(ScheduledExecutorService.class));
     Duration watchdogCheckInterval = Duration.ofSeconds(12);
 
+    TransportChannel transportChannel = Mockito.mock(TransportChannel.class);
     ClientContext clientContext =
         ClientContext.newBuilder()
             .setExecutor(Mockito.mock(ScheduledExecutorService.class))
-            .setTransportChannel(Mockito.mock(TransportChannel.class))
+            .setTransportChannel(transportChannel)
+            .setTransportChannelProvider(
+                FixedTransportChannelProvider.create(transportChannel))
             .setCredentials(Mockito.mock(Credentials.class))
             .setClock(clock)
             .setDefaultCallContext(callContext)
