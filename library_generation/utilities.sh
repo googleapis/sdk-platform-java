@@ -101,11 +101,18 @@ download_gapic_generator_pom_parent() {
   gapic_generator_version=$1
   cd "$working_directory"
   if [ ! -f "gapic-generator-java-pom-parent-$gapic_generator_version.pom" ]; then
-    mvn org.apache.maven.plugins:maven-dependency-plugin:copy -q \
-      -Dartifact=com.google.api:gapic-generator-java-pom-parent:"$gapic_generator_version":pom \
-      -DoutputDirectory="$working_directory" || \
-      download_fail "gapic-generator-java-pom-parent-$gapic_generator_version.pom"
+    if [[ "$gapic_generator_version" == *"-SNAPSHOT" ]]; then
+      # copy a SNAPSHOT version from maven local repository.
+      copy_from "$HOME/.m2/repository/com/google/api/gapic-generator-java-pom-parent/$gapic_generator_version/gapic-generator-java-pom-parent-$gapic_generator_version.pom" \
+      "gapic-generator-java-pom-parent-$gapic_generator_version.pom"
+      return
+    fi
+    # download gapic-generator-java-pom-parent from Google maven central mirror.
+    download_from \
+    "https://maven-central.storage-download.googleapis.com/maven2/com/google/api/gapic-generator-java-pom-parent/$gapic_generator_version/gapic-generator-java-pom-parent-$gapic_generator_version.pom" \
+    "gapic-generator-java-pom-parent-$gapic_generator_version.pom"
   fi
+  # file exists, do not need to download again.
 }
 
 get_grpc_version() {
@@ -137,21 +144,29 @@ download_generator() {
   gapic_generator_version=$1
   cd "$working_directory"
   if [ ! -f "gapic-generator-java-$gapic_generator_version.jar" ]; then
-    mvn org.apache.maven.plugins:maven-dependency-plugin:copy -q \
-      -Dartifact=com.google.api:gapic-generator-java:"$gapic_generator_version" \
-      -DoutputDirectory="$working_directory" || \
-      download_fail "gapic-generator-java-$gapic_generator_version.jar"
+    if [[ "$gapic_generator_version" == *"-SNAPSHOT" ]]; then
+      # copy a SNAPSHOT version from maven local repository.
+      copy_from "$HOME/.m2/repository/com/google/api/gapic-generator-java/$gapic_generator_version/gapic-generator-java-$gapic_generator_version.jar" \
+      "gapic-generator-java-$gapic_generator_version.jar"
+      return
+    fi
+    # download gapic-generator-java from Google maven central mirror.
+    download_from \
+    "https://maven-central.storage-download.googleapis.com/maven2/com/google/api/gapic-generator-java/$gapic_generator_version/gapic-generator-java-$gapic_generator_version.jar" \
+    "gapic-generator-java-$gapic_generator_version.jar"
   fi
 }
 
 download_protobuf() {
   protobuf_version=$1
   cd "$working_directory"
-  if [ ! -d "protobuf-$protobuf_version" ]; then
-    # pull proto files and protoc from protobuf repository
-    # maven central doesn't have proto files
-    curl -LJ -o "protobuf-$protobuf_version.zip" --fail https://github.com/protocolbuffers/protobuf/releases/download/v"$protobuf_version"/protoc-"$protobuf_version"-linux-x86_64.zip || \
-      download_fail "protobuf-$protobuf_version"
+  if [ ! -d "protobuf-$protobuf_version.zip" ]; then
+    # pull proto files and protoc from protobuf repository as maven central
+    # doesn't have proto files
+    download_from \
+    "https://github.com/protocolbuffers/protobuf/releases/download/v$protobuf_version/protoc-$protobuf_version-linux-x86_64.zip" \
+    "protobuf-$protobuf_version.zip" \
+    "GitHub"
     unzip -o -q "protobuf-$protobuf_version.zip" -d "protobuf-$protobuf_version"
     cp -r "protobuf-$protobuf_version/include/google" "$working_directory"
     rm "protobuf-$protobuf_version.zip"
@@ -165,16 +180,31 @@ download_grpc_plugin() {
   grpc_version=$1
   cd "$working_directory"
   if [ ! -f "protoc-gen-grpc-java-$grpc_version-linux-x86_64.exe" ]; then
-    mvn org.apache.maven.plugins:maven-dependency-plugin:copy -q \
-      -Dartifact=io.grpc:protoc-gen-grpc-java:"$grpc_version":exe:linux-x86_64 \
-      -DoutputDirectory="$working_directory" || \
-      download_fail "protoc-gen-grpc-java-$grpc_version-linux-x86_64.exe"
+    # download protoc-gen-grpc-java plugin from Google maven central mirror.
+    download_from \
+    "https://maven-central.storage-download.googleapis.com/maven2/io/grpc/protoc-gen-grpc-java/$grpc_version/protoc-gen-grpc-java-$grpc_version-linux-x86_64.exe" \
+    "protoc-gen-grpc-java-$grpc_version-linux-x86_64.exe"
     chmod +x "protoc-gen-grpc-java-$grpc_version-linux-x86_64.exe"
   fi
 }
 
+download_from() {
+  url=$1
+  save_as=$2
+  repo=$3
+  curl -LJ -o "$save_as" --fail -m 2 "$url" || download_fail "$save_as" "$repo"
+}
+
+copy_from() {
+  local_repo=$1
+  save_as=$2
+  cp "$local_repo" "$save_as" || \
+    download_fail "$save_as" "maven local"
+}
+
 download_fail() {
   artifact=$1
-  >&2 echo "Fail to download $artifact from GitHub, maven local and central repository. Please install $artifact first if you want to download a SNAPSHOT."
+  repo=${2:-"maven central mirror"}
+  >&2 echo "Fail to download $artifact from $repo repository. Please install $artifact first if you want to download a SNAPSHOT."
   exit 1
 }
