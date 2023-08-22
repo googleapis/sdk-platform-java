@@ -1,12 +1,10 @@
 on:
-  workflow_dispatch:
   push:
     branches:
     - main
   pull_request:
     paths:
     - library_generation/**
-
   workflow_dispatch:
 name: verify_library_generation_scripts
 jobs:
