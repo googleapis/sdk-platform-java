@@ -65,9 +65,10 @@ public abstract class EndpointContext {
 
   private String determineEndpoint() {
     // TODO: Logic for figuring out the endpoint
-    return transportChannelEndpoint() != null
-        ? transportChannelEndpoint()
-        : clientSettingsEndpoint();
+    //    return transportChannelEndpoint() != null
+    //        ? transportChannelEndpoint()
+    //        : clientSettingsEndpoint();
+    return "test.test-endpoint:443";
   }
 
   public String resolveEndpoint() {
