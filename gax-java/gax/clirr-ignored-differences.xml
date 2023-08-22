@@ -19,4 +19,34 @@
     <method>*setWaitTimeout*</method>
     <to>com.google.api.gax.rpc.ServerStreamingCallSettings$Builder</to>
   </difference>
+  <difference>
+    <differenceType>7012</differenceType>
+    <className>com/google/api/gax/rpc/ApiCallContext</className>
+    <method>* withEndpointContext(*)</method>
+  </difference>
+  <difference>
+    <differenceType>7012</differenceType>
+    <className>com/google/api/gax/rpc/ApiCallContext</className>
+    <method>* withTransportChannelResolver(*)</method>
+  </difference>
+  <difference>
+    <differenceType>7013</differenceType>
+    <className>com/google/api/gax/rpc/ClientContext</className>
+    <method>* getTransportChannelProvider()</method>
+  </difference>
+  <difference>
+    <differenceType>7013</differenceType>
+    <className>com/google/api/gax/rpc/ClientContext$Builder</className>
+    <method>* setTransportChannelProvider(*)</method>
+  </difference>
+  <difference>
+    <differenceType>7012</differenceType>
+    <className>com/google/api/gax/rpc/TransportChannelProvider</className>
+    <method>* getEmptyCallContext()</method>
+  </difference>
+  <difference>
+    <differenceType>7012</differenceType>
+    <className>com/google/api/gax/rpc/TransportChannelProvider</className>
+    <method>* getEndpoint()</method>
+  </difference>
 </differences>
