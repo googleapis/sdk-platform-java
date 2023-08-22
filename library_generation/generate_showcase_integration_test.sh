@@ -15,7 +15,7 @@ if [ ! -d schema ]; then
   git clone https://github.com/googleapis/gapic-showcase
   pushd gapic-showcase
   showcase_version=$(get_version_from_WORKSPACE "_showcase_version" $SDK_WORKSPACE)
-  git checkout $showcase_version
+  git checkout "v$showcase_version"
   mv schema ..
   popd
   rm -rdf gapic-showcase
