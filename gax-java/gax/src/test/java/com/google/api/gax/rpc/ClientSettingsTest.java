@@ -219,8 +219,7 @@ public class ClientSettingsTest {
         ClientContext.newBuilder()
             .setExecutor(Mockito.mock(ScheduledExecutorService.class))
             .setTransportChannel(transportChannel)
-            .setTransportChannelProvider(
-                FixedTransportChannelProvider.create(transportChannel))
+            .setTransportChannelProvider(FixedTransportChannelProvider.create(transportChannel))
             .setCredentials(Mockito.mock(Credentials.class))
             .setClock(clock)
             .setDefaultCallContext(callContext)
