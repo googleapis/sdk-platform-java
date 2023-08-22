@@ -45,9 +45,11 @@ cp -r googleapis/google .
 cp googleapis/WORKSPACE .
 rm -rf googleapis
 # parse version of gapic-generator-java, protobuf and grpc from WORKSPACE
-gapic_generator_version=$(get_version_from_WORKSPACE "_gapic_generator_java_version" WORKSPACE)
+gapic_generator_version=$(get_version_from_WORKSPACE "_gapic_generator_java_version" WORKSPACE "=")
 echo "The version of gapic-generator-java is $gapic_generator_version."
-grpc_version=$(get_version_from_WORKSPACE "_grpc_version" WORKSPACE)
+protobuf_version=$(get_version_from_WORKSPACE "protobuf-" WORKSPACE "-")
+echo "The version of protobuf is $protobuf_version"
+grpc_version=$(get_version_from_WORKSPACE "_grpc_version" WORKSPACE "=")
 echo "The version of protoc-gen-grpc-java plugin is $gapic_generator_version."
 # parse GAPIC options from proto_path/BUILD.bazel
 cd $"$working_directory"
@@ -76,6 +78,7 @@ echo "Generating library from $proto_path, to $destination_path..."
 -p "$proto_path" \
 -d "$destination_path" \
 --gapic_generator_version "$gapic_generator_version" \
+--protobuf_version "$protobuf_version" \
 --grpc_version "$grpc_version" \
 --transport "$transport" \
 --rest_numeric_enums "$rest_numeric_enums" \
