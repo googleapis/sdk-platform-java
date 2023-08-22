@@ -32,6 +32,8 @@ package com.google.api.gax.tracing;
 
 import static io.opentelemetry.api.common.AttributeKey.stringKey;
 
+import com.google.api.gax.rpc.ApiException;
+import com.google.api.gax.rpc.StatusCode;
 import com.google.common.base.Stopwatch;
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.common.AttributesBuilder;
@@ -40,10 +42,13 @@ import io.opentelemetry.api.metrics.LongHistogram;
 import io.opentelemetry.api.metrics.Meter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.TimeUnit;
+import javax.annotation.Nullable;
 import org.threeten.bp.Duration;
 
 public class OpenTelemetryMetricsTracer implements ApiTracer {
+  public static final String STATUS_ATTRIBUTE = "status";
   protected Meter meter;
 
   private Stopwatch attemptTimer;
@@ -56,11 +61,12 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
 
   private DoubleHistogram operationLatencyRecorder;
   private LongHistogram retryCountRecorder;
+  private LongHistogram gfeLatencyRecorder;
 
   private DoubleHistogram targetResolutionDelayRecorder;
   private DoubleHistogram channelReadinessDelayRecorder;
   private DoubleHistogram callSendDelayRecorder;
-  private Attributes defaultAttributes;
+  private Attributes attributes;
 
   Map<String, String> operationLatencyLabels = new HashMap<>();
 
@@ -87,6 +93,13 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
             .setUnit("1")
             .ofLongs()
             .build();
+    this.gfeLatencyRecorder =
+        meter
+            .histogramBuilder("gfe_latency")
+            .setDescription("GFE latency")
+            .setUnit("1")
+            .ofLongs()
+            .build();
     this.targetResolutionDelayRecorder =
         meter
             .histogramBuilder("target_resolution_delay")
@@ -105,7 +118,7 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
             .setDescription("Call send delay. (after the connection is ready)")
             .setUnit("ns")
             .build();
-    this.defaultAttributes = Attributes.of(stringKey("method_name"), spanName.toString());
+    this.attributes = Attributes.of(stringKey("method_name"), spanName.toString());
   }
 
   @Override
@@ -125,7 +138,8 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
   @Override
   public void operationSucceeded(Object response) {
     AttributesBuilder attributesBuilder = Attributes.builder();
-    attributesBuilder.putAll(defaultAttributes);
+    attributesBuilder.putAll(attributes);
+    attributesBuilder.put(STATUS_ATTRIBUTE, StatusCode.Code.OK.toString());
     operationLatencyLabels.forEach((key, value) -> attributesBuilder.put(stringKey(key), value));
     operationLatencyRecorder.record(
         operationTimer.elapsed(TimeUnit.MILLISECONDS), attributesBuilder.build());
@@ -135,10 +149,11 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
   public void operationCancelled() {}
 
   @Override
-  public void operationFailed(Throwable error) {}
-
-  @Override
-  public void connectionSelected(String id) {}
+  public void operationFailed(Throwable error) {
+    Attributes newAttributes =
+        attributes.toBuilder().put(STATUS_ATTRIBUTE, extractStatus(error)).build();
+    operationLatencyRecorder.record(operationTimer.elapsed(TimeUnit.MILLISECONDS), newAttributes);
+  }
 
   @Override
   public void attemptStarted(int attemptNumber) {}
@@ -153,14 +168,20 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
 
   @Override
   public void attemptSucceeded(Object response) {
-    attemptLatencyRecorder.record(attemptTimer.elapsed(TimeUnit.MILLISECONDS), defaultAttributes);
+    Attributes newAttributes =
+        attributes.toBuilder().put(STATUS_ATTRIBUTE, StatusCode.Code.OK.toString()).build();
+    attemptLatencyRecorder.record(attemptTimer.elapsed(TimeUnit.MILLISECONDS), newAttributes);
   }
 
   @Override
   public void attemptCancelled() {}
 
   @Override
-  public void attemptFailed(Throwable error, Duration delay) {}
+  public void attemptFailed(Throwable error, Duration delay) {
+    Attributes newAttributes =
+        attributes.toBuilder().put(STATUS_ATTRIBUTE, extractStatus(error)).build();
+    attemptLatencyRecorder.record(attemptTimer.elapsed(TimeUnit.MILLISECONDS), newAttributes);
+  }
 
   @Override
   public void attemptFailedRetriesExhausted(Throwable error) {}
@@ -170,36 +191,42 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
 
   @Override
   public void retryCount(int count) {
-    retryCountRecorder.record(count, defaultAttributes);
+    retryCountRecorder.record(count, attributes);
   }
 
   @Override
-  public void lroStartFailed(Throwable error) {}
-
-  @Override
-  public void lroStartSucceeded() {}
-
-  @Override
-  public void responseReceived() {}
-
-  @Override
-  public void requestSent() {}
-
-  @Override
-  public void batchRequestSent(long elementCount, long requestSize) {}
-
-  @Override
   public void grpcTargetResolutionDelay(long elapsed) {
-    this.targetResolutionDelayRecorder.record(elapsed, defaultAttributes);
+    this.targetResolutionDelayRecorder.record(elapsed, attributes);
   }
 
   @Override
   public void grpcChannelReadinessDelay(long elapsed) {
-    this.channelReadinessDelayRecorder.record(elapsed, defaultAttributes);
+    this.channelReadinessDelayRecorder.record(elapsed, attributes);
   }
 
   @Override
   public void grpcCallSendDelay(long elapsed) {
-    this.callSendDelayRecorder.record(elapsed, defaultAttributes);
+    this.callSendDelayRecorder.record(elapsed, attributes);
+  }
+
+  @Override
+  public void recordGfeMetadata(long latency) {
+    this.gfeLatencyRecorder.record(latency);
+  }
+
+  static String extractStatus(@Nullable Throwable error) {
+    final String statusString;
+
+    if (error == null) {
+      return StatusCode.Code.OK.toString();
+    } else if (error instanceof CancellationException) {
+      statusString = StatusCode.Code.CANCELLED.toString();
+    } else if (error instanceof ApiException) {
+      statusString = ((ApiException) error).getStatusCode().getCode().toString();
+    } else {
+      statusString = StatusCode.Code.UNKNOWN.toString();
+    }
+
+    return statusString;
   }
 }

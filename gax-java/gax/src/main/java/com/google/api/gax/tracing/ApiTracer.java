@@ -78,7 +78,7 @@ public interface ApiTracer {
    *
    * @param id the local connection identifier of the selected connection.
    */
-  void connectionSelected(String id);
+  default void connectionSelected(String id) {};
 
   /**
    * Adds an annotation that an attempt is about to start. In general this should occur at the very
@@ -98,10 +98,10 @@ public interface ApiTracer {
    * @param attemptNumber the zero based sequential attempt number.
    * @param request request of this attempt.
    */
-  void attemptStarted(Object request, int attemptNumber);
+  default void attemptStarted(Object request, int attemptNumber) {};
 
   /** Adds an annotation that the attempt succeeded. */
-  void attemptSucceeded();
+  default void attemptSucceeded() {};
 
   default void attemptSucceeded(Object response) {};
 
@@ -143,19 +143,19 @@ public interface ApiTracer {
    *
    * @param error the error that caused the long running operation fail.
    */
-  void lroStartFailed(Throwable error);
+  default void lroStartFailed(Throwable error) {};
 
   /**
    * Signals that the initial RPC successfully started the long running operation. The long running
    * operation will now be polled for completion.
    */
-  void lroStartSucceeded();
+  default void lroStartSucceeded() {};
 
   /** Adds an annotation that a streaming response has been received. */
-  void responseReceived();
+  default void responseReceived() {};
 
   /** Adds an annotation that a streaming request has been sent. */
-  void requestSent();
+  default void requestSent() {};
 
   /**
    * Adds an annotation that a batch of writes has been flushed.
@@ -163,13 +163,15 @@ public interface ApiTracer {
    * @param elementCount the number of elements in the batch.
    * @param requestSize the size of the batch in bytes.
    */
-  void batchRequestSent(long elementCount, long requestSize);
+  default void batchRequestSent(long elementCount, long requestSize) {};
 
   default void grpcTargetResolutionDelay(long elapsed) {};
 
   default void grpcChannelReadinessDelay(long elapsed) {};
 
   default void grpcCallSendDelay(long elapsed) {};
+
+  default void recordGfeMetadata(long latency) {};
 
   /**
    * A context class to be used with {@link #inScope()} and a try-with-resources block. Closing a
