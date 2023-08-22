@@ -290,7 +290,7 @@ public class BlurbName implements ResourceName {
     if (o == this) {
       return true;
     }
-    if (o != null || getClass() == o.getClass()) {
+    if (o != null && getClass() == o.getClass()) {
       BlurbName that = ((BlurbName) o);
       return Objects.equals(this.user, that.user)
           && Objects.equals(this.legacyUser, that.legacyUser)

@@ -127,7 +127,7 @@ public class ShelfName implements ResourceName {
     if (o == this) {
       return true;
     }
-    if (o != null || getClass() == o.getClass()) {
+    if (o != null && getClass() == o.getClass()) {
       ShelfName that = ((ShelfName) o);
       return Objects.equals(this.shelfId, that.shelfId);
     }
