@@ -180,7 +180,13 @@ download_fail() {
 get_version_from_WORKSPACE() {
   version_key_word=$1
   workspace=$2
-  version=$(cat "$workspace" | grep "$version_key_word" | head -n 1 | sed 's/\(.*\) = "\(.*\)"\(.*\)/\2/')
+  version=$(\
+    cat "$workspace" |\
+    grep "$version_key_word" |\
+    head -n 1 |\
+    sed 's/\(.*\) = "\(.*\)"\(.*\)/\2/' |\
+    sed 's/[a-zA-Z-]*//'
+  )
   echo "$version"
 }
 
