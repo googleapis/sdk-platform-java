@@ -1,6 +1,6 @@
 # Generate GAPIC Client Library without post-processing
 
-The script, `generate_library.sh`, allows you to generate a gapic client library from proto files.
+The script, `generate_library.sh`, allows you to generate a GAPIC client library from proto files.
 
 ## Environment
 
@@ -81,13 +81,13 @@ Use `--grpc_version` to specify the value.
 Note that if specified, the version should be compatible with gapic-generator-java.
 
 ### transport (optional)
-One of gapic options passed to the generator. The value is either `grpc` or `grpc+rest`.
+One of GAPIC options passed to the generator. The value is either `grpc` or `grpc+rest`.
 The default value is `grpc`.
 
 Use `--transport` to specify the value.
 
 ### rest_numeric_enums (optional)
-One of gapic options passed to the generator. The value is either `true` or `false`.
+One of GAPIC options passed to the generator. The value is either `true` or `false`.
 The default value is `true`.
 
 Use `--rest_numeric_enums` to specify the value.

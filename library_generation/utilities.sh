@@ -57,7 +57,9 @@ find_additional_protos_in_yaml() {
 }
 
 # Apart from proto files in proto_path, additional protos are needed in order
-# to generate gapic client libraries.
+# to generate GAPIC client libraries.
+# In most cases, these protos should be within google/ directory, which is
+# pulled from googleapis as a prerequisite.
 # Search additional protos in .yaml files.
 search_additional_protos() {
   additional_protos="google/cloud/common_resources.proto" # used by every library
