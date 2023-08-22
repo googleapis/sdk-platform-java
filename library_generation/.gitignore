@@ -4,3 +4,5 @@ grpc-java-plugin*
 protobuf*
 output/
 schema/
+out
+protoc*

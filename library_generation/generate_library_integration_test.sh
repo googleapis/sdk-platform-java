@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 set -xeo pipefail
-source utilities.sh
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+source $SCRIPT_DIR/utilities.sh
 
 # This script is used to test the result of `generate_library.sh` against generated
 # source code in googleapis-gen repository.
