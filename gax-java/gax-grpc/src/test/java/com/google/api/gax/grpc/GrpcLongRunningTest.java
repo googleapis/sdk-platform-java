@@ -66,7 +66,6 @@ import io.grpc.Status.Code;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -171,7 +170,6 @@ public class GrpcLongRunningTest {
     assertThat(executor.getIterationsCount()).isEqualTo(0);
   }
 
-  @Ignore
   @Test
   public void testFutureCallPollDoneOnFirst() throws Exception {
     String opName = "testFutureCallPollDoneOnFirst";

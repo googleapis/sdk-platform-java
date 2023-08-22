@@ -82,6 +82,10 @@ public class TransportChannelResolver
     }
   }
 
+  public TransportChannel getTransportChannel() {
+    return transportChannel;
+  }
+
   @Override
   public void setTransportChannel(TransportChannel transportChannel) {
     this.transportChannel = transportChannel;

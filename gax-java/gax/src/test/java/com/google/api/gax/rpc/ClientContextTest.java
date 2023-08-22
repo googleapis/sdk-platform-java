@@ -69,14 +69,12 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.Mockito;
 import org.threeten.bp.Duration;
 
-@Ignore
 @RunWith(JUnit4.class)
 public class ClientContextTest {
 
@@ -299,9 +297,11 @@ public class ClientContextTest {
     ClientContext clientContext = ClientContext.create(settings);
 
     Truth.assertThat(clientContext.getExecutor()).isSameInstanceAs(executor);
-    Truth.assertThat(clientContext.getTransportChannel()).isSameInstanceAs(transportChannel);
+    Truth.assertThat(clientContext.getTransportChannelProvider().getTransportChannel())
+        .isSameInstanceAs(transportChannel);
 
-    FakeTransportChannel actualChannel = (FakeTransportChannel) clientContext.getTransportChannel();
+    FakeTransportChannel actualChannel =
+        (FakeTransportChannel) clientContext.getTransportChannelProvider().getTransportChannel();
     assert actualChannel != null;
     Truth.assertThat(actualChannel.getHeaders()).isEqualTo(headers);
     Truth.assertThat(clientContext.getCredentials()).isSameInstanceAs(credentials);
@@ -317,8 +317,13 @@ public class ClientContextTest {
     Truth.assertThat(transportChannel.isShutdown()).isFalse();
 
     List<BackgroundResource> resources = clientContext.getBackgroundResources();
-
     if (!resources.isEmpty()) {
+      assertThat(resources.get(0).getClass()).isEqualTo(TransportChannelResolver.class);
+      TransportChannelResolver transportChannelResolver =
+          (TransportChannelResolver) resources.get(0);
+      // Mock an RPC invocation so that the Channel has been created
+      transportChannelResolver.setTransportChannel(transportChannel);
+
       // This is slightly too implementation-specific, but we need to ensure that executor is shut
       // down after the transportChannel: https://github.com/googleapis/gax-java/issues/785
       Truth.assertThat(resources.size()).isEqualTo(2);
@@ -396,7 +401,13 @@ public class ClientContextTest {
 
     ClientContext context = ClientContext.create(builder.build());
     List<BackgroundResource> resources = context.getBackgroundResources();
-    FakeTransportChannel fakeTransportChannel = (FakeTransportChannel) resources.get(0);
+    assertThat(resources.get(0).getClass()).isEqualTo(TransportChannelResolver.class);
+    TransportChannelResolver transportChannelResolver = (TransportChannelResolver) resources.get(0);
+    // Mock an RPC invocation so that the Channel has been created
+    transportChannelResolver.setTransportChannel(transportChannel);
+
+    FakeTransportChannel fakeTransportChannel =
+        (FakeTransportChannel) transportChannelResolver.getTransportChannel();
     assertThat(fakeTransportChannel.getHeaders().size())
         .isEqualTo(
             headerProvider.getHeaders().size() + internalHeaderProvider.getHeaders().size() + 1);
@@ -445,7 +456,13 @@ public class ClientContextTest {
 
     ClientContext context = ClientContext.create(builder.build());
     List<BackgroundResource> resources = context.getBackgroundResources();
-    FakeTransportChannel fakeTransportChannel = (FakeTransportChannel) resources.get(0);
+    assertThat(resources.get(0).getClass()).isEqualTo(TransportChannelResolver.class);
+    TransportChannelResolver transportChannelResolver = (TransportChannelResolver) resources.get(0);
+    // Mock an RPC invocation so that the Channel has been created
+    transportChannelResolver.setTransportChannel(transportChannel);
+
+    FakeTransportChannel fakeTransportChannel =
+        (FakeTransportChannel) transportChannelResolver.getTransportChannel();
     assertThat(fakeTransportChannel.getHeaders().size())
         .isEqualTo(
             headerProvider.getHeaders().size() + internalHeaderProvider.getHeaders().size() - 1);
@@ -477,7 +494,13 @@ public class ClientContextTest {
 
     ClientContext context = ClientContext.create(builder.build());
     List<BackgroundResource> resources = context.getBackgroundResources();
-    FakeTransportChannel fakeTransportChannel = (FakeTransportChannel) resources.get(0);
+    assertThat(resources.get(0).getClass()).isEqualTo(TransportChannelResolver.class);
+    TransportChannelResolver transportChannelResolver = (TransportChannelResolver) resources.get(0);
+    // Mock an RPC invocation so that the Channel has been created
+    transportChannelResolver.setTransportChannel(transportChannel);
+
+    FakeTransportChannel fakeTransportChannel =
+        (FakeTransportChannel) transportChannelResolver.getTransportChannel();
     assertThat(fakeTransportChannel.getHeaders().size())
         .isEqualTo(headerProvider.getHeaders().size() + internalHeaderProvider.getHeaders().size());
     assertThat(fakeTransportChannel.getHeaders().containsKey(QUOTA_PROJECT_ID_KEY)).isFalse();
@@ -594,7 +617,7 @@ public class ClientContextTest {
 
     ClientContext clientContext = ClientContext.create(builder.build());
     FakeTransportChannel transportChannel =
-        (FakeTransportChannel) clientContext.getTransportChannel();
+        (FakeTransportChannel) clientContext.getTransportChannelProvider().getTransportChannel();
 
     assertThat(transportChannel.getHeaders()).containsEntry("user-agent", "internal-agent");
   }
@@ -617,7 +640,7 @@ public class ClientContextTest {
 
     ClientContext clientContext = ClientContext.create(builder.build());
     FakeTransportChannel transportChannel =
-        (FakeTransportChannel) clientContext.getTransportChannel();
+        (FakeTransportChannel) clientContext.getTransportChannelProvider().getTransportChannel();
 
     assertThat(transportChannel.getHeaders()).containsEntry("user-agent", "user-supplied-agent");
   }
@@ -641,7 +664,7 @@ public class ClientContextTest {
 
     ClientContext clientContext = ClientContext.create(builder.build());
     FakeTransportChannel transportChannel =
-        (FakeTransportChannel) clientContext.getTransportChannel();
+        (FakeTransportChannel) clientContext.getTransportChannelProvider().getTransportChannel();
 
     assertThat(transportChannel.getHeaders())
         .containsEntry("user-agent", "user-supplied-agent internal-agent");
@@ -775,7 +798,8 @@ public class ClientContextTest {
 
     // By default, if executor is not set, channel provider should not have an executor set
     ClientContext context = ClientContext.create(builder.build());
-    FakeTransportChannel transportChannel = (FakeTransportChannel) context.getTransportChannel();
+    FakeTransportChannel transportChannel =
+        (FakeTransportChannel) context.getTransportChannelProvider().getTransportChannel();
     assertThat(transportChannel.getExecutor()).isNull();
 
     ExecutorProvider channelExecutorProvider =
@@ -783,7 +807,8 @@ public class ClientContextTest {
     builder.setTransportChannelProvider(
         transportChannelProvider.withExecutor((Executor) channelExecutorProvider.getExecutor()));
     context = ClientContext.create(builder.build());
-    transportChannel = (FakeTransportChannel) context.getTransportChannel();
+    transportChannel =
+        (FakeTransportChannel) context.getTransportChannelProvider().getTransportChannel();
     assertThat(transportChannel.getExecutor())
         .isSameInstanceAs(channelExecutorProvider.getExecutor());
 
@@ -797,7 +822,8 @@ public class ClientContextTest {
     // transport channel's executor
     builder.setExecutorProvider(executorProvider);
     context = ClientContext.create(builder.build());
-    transportChannel = (FakeTransportChannel) context.getTransportChannel();
+    transportChannel =
+        (FakeTransportChannel) context.getTransportChannelProvider().getTransportChannel();
     assertThat(transportChannel.getExecutor())
         .isSameInstanceAs(channelExecutorProvider.getExecutor());
 
@@ -809,7 +835,8 @@ public class ClientContextTest {
         new FakeTransportProvider(
             FakeTransportChannel.create(new FakeChannel()), null, true, null, null));
     context = ClientContext.create(builder.build());
-    transportChannel = (FakeTransportChannel) context.getTransportChannel();
+    transportChannel =
+        (FakeTransportChannel) context.getTransportChannelProvider().getTransportChannel();
     assertThat(transportChannel.getExecutor()).isSameInstanceAs(executorProvider.getExecutor());
   }
 
