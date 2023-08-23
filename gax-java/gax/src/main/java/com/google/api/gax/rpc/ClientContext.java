@@ -250,13 +250,15 @@ public abstract class ClientContext {
         endpointContext =
             EndpointContext.newBuilder()
                 .setCredentials(credentials)
+                .setClientSettingsEndpoint(settings.getEndpoint())
+                .setMtlsEndpoint(settings.getMtlsEndpoint())
+                .setSwitchToMtlsEndpointAllowed(settings.getSwitchToMtlsEndpointAllowed())
                 .setTransportChannelEndpoint(transportChannelProvider.getEndpoint())
                 .build();
       }
       defaultCallContext = defaultCallContext.withEndpointContext(endpointContext);
-      defaultCallContext =
-          defaultCallContext.withTransportChannelResolver(transportChannelResolver);
     }
+    defaultCallContext = defaultCallContext.withTransportChannelResolver(transportChannelResolver);
 
     WatchdogProvider watchdogProvider = settings.getStreamWatchdogProvider();
     @Nullable Watchdog watchdog = null;
