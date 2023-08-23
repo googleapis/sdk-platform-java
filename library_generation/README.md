@@ -1,6 +1,6 @@
 # Generate GAPIC Client Library without post-processing
 
-The script, `generate_library.sh`, allows you to generate a gapic client library from proto files.
+The script, `generate_library.sh`, allows you to generate a GAPIC client library from proto files.
 
 ## Environment
 
@@ -23,17 +23,38 @@ The absolute path of `proto_path` is `$cwd/$proto_path`.
 
 Use `-p` or `--proto_path` to specify the value.
 
-   Note that usually additional proto files are needed to generate a gapic library, 
-   you should also copy `google/` folder from [googleapis](https://github.com/googleapis/googleapis) 
-   into `$cwd`.
-
 ### destination_path 
-A directory in `$cwd`. This is the path in which the generated library will reside. 
+A directory within `$cwd`. 
+This is the path in which the generated library will reside. 
 The absolute path of `destination_path` is `$cwd/$destination_path`. 
 
 Use `-d` or `--destination_path` to specify the value.
    
-   Note that you do not need to create `$detination_path` beforehand.
+Note that you do not need to create `$detination_path` beforehand.
+
+The directory structure of the generated library is
+```
+$destination_path
+  |_gapic-*
+  |    |_src
+  |       |_main
+  |          |_java
+  |          |_resources
+  |       |_test
+  |_grpc-*
+  |    |_src
+  |       |_main
+  |          |_java
+  |    
+  |_proto-*
+       |_src
+          |_main
+             |_java
+             |_proto
+```
+You can't build the library as-is since it does not have `pom.xml` or `build.gradle`.
+To use the library, copy the generated files to the corresponding directory
+of a library repository, e.g., `google-cloud-java`.
 
 ### version of gapic-generator-java
 You can find the released version of gapic-generator-java in [maven central](https://repo1.maven.org/maven2/com/google/api/gapic-generator-java/).
@@ -60,13 +81,13 @@ Use `--grpc_version` to specify the value.
 Note that if specified, the version should be compatible with gapic-generator-java.
 
 ### transport (optional)
-One of gapic options passed to the generator. The value is either `grpc` or `grpc+rest`.
+One of GAPIC options passed to the generator. The value is either `grpc` or `grpc+rest`.
 The default value is `grpc`.
 
 Use `--transport` to specify the value.
 
 ### rest_numeric_enums (optional)
-One of gapic options passed to the generator. The value is either `true` or `false`.
+One of GAPIC options passed to the generator. The value is either `true` or `false`.
 The default value is `true`.
 
 Use `--rest_numeric_enums` to specify the value.

@@ -20,7 +20,6 @@ jobs:
         java-version: ${{ matrix.java }}
         distribution: temurin
         cache: maven
-    # add maven central mirror repository
     - name: Run googleapis integration test
       run: |
         set -x
