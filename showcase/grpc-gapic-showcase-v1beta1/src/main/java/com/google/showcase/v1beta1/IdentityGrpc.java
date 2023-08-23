@@ -3,6 +3,9 @@ package com.google.showcase.v1beta1;
 import static io.grpc.MethodDescriptor.generateFullMethodName;
 
 /**
+ * <pre>
+ * A simple identity service.
+ * </pre>
  */
 @javax.annotation.Generated(
     value = "by gRPC proto compiler",
@@ -215,10 +218,16 @@ public final class IdentityGrpc {
   }
 
   /**
+   * <pre>
+   * A simple identity service.
+   * </pre>
    */
   public interface AsyncService {
 
     /**
+     * <pre>
+     * Creates a user.
+     * </pre>
      */
     default void createUser(com.google.showcase.v1beta1.CreateUserRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.User> responseObserver) {
@@ -226,6 +235,9 @@ public final class IdentityGrpc {
     }
 
     /**
+     * <pre>
+     * Retrieves the User with the given uri.
+     * </pre>
      */
     default void getUser(com.google.showcase.v1beta1.GetUserRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.User> responseObserver) {
@@ -233,6 +245,9 @@ public final class IdentityGrpc {
     }
 
     /**
+     * <pre>
+     * Updates a user.
+     * </pre>
      */
     default void updateUser(com.google.showcase.v1beta1.UpdateUserRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.User> responseObserver) {
@@ -240,6 +255,9 @@ public final class IdentityGrpc {
     }
 
     /**
+     * <pre>
+     * Deletes a user, their profile, and all of their authored messages.
+     * </pre>
      */
     default void deleteUser(com.google.showcase.v1beta1.DeleteUserRequest request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
@@ -247,6 +265,9 @@ public final class IdentityGrpc {
     }
 
     /**
+     * <pre>
+     * Lists all users.
+     * </pre>
      */
     default void listUsers(com.google.showcase.v1beta1.ListUsersRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.ListUsersResponse> responseObserver) {
@@ -256,6 +277,9 @@ public final class IdentityGrpc {
 
   /**
    * Base class for the server implementation of the service Identity.
+   * <pre>
+   * A simple identity service.
+   * </pre>
    */
   public static abstract class IdentityImplBase
       implements io.grpc.BindableService, AsyncService {
@@ -267,6 +291,9 @@ public final class IdentityGrpc {
 
   /**
    * A stub to allow clients to do asynchronous rpc calls to service Identity.
+   * <pre>
+   * A simple identity service.
+   * </pre>
    */
   public static final class IdentityStub
       extends io.grpc.stub.AbstractAsyncStub<IdentityStub> {
@@ -282,6 +309,9 @@ public final class IdentityGrpc {
     }
 
     /**
+     * <pre>
+     * Creates a user.
+     * </pre>
      */
     public void createUser(com.google.showcase.v1beta1.CreateUserRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.User> responseObserver) {
@@ -290,6 +320,9 @@ public final class IdentityGrpc {
     }
 
     /**
+     * <pre>
+     * Retrieves the User with the given uri.
+     * </pre>
      */
     public void getUser(com.google.showcase.v1beta1.GetUserRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.User> responseObserver) {
@@ -298,6 +331,9 @@ public final class IdentityGrpc {
     }
 
     /**
+     * <pre>
+     * Updates a user.
+     * </pre>
      */
     public void updateUser(com.google.showcase.v1beta1.UpdateUserRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.User> responseObserver) {
@@ -306,6 +342,9 @@ public final class IdentityGrpc {
     }
 
     /**
+     * <pre>
+     * Deletes a user, their profile, and all of their authored messages.
+     * </pre>
      */
     public void deleteUser(com.google.showcase.v1beta1.DeleteUserRequest request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
@@ -314,6 +353,9 @@ public final class IdentityGrpc {
     }
 
     /**
+     * <pre>
+     * Lists all users.
+     * </pre>
      */
     public void listUsers(com.google.showcase.v1beta1.ListUsersRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.ListUsersResponse> responseObserver) {
@@ -324,6 +366,9 @@ public final class IdentityGrpc {
 
   /**
    * A stub to allow clients to do synchronous rpc calls to service Identity.
+   * <pre>
+   * A simple identity service.
+   * </pre>
    */
   public static final class IdentityBlockingStub
       extends io.grpc.stub.AbstractBlockingStub<IdentityBlockingStub> {
@@ -339,6 +384,9 @@ public final class IdentityGrpc {
     }
 
     /**
+     * <pre>
+     * Creates a user.
+     * </pre>
      */
     public com.google.showcase.v1beta1.User createUser(com.google.showcase.v1beta1.CreateUserRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -346,6 +394,9 @@ public final class IdentityGrpc {
     }
 
     /**
+     * <pre>
+     * Retrieves the User with the given uri.
+     * </pre>
      */
     public com.google.showcase.v1beta1.User getUser(com.google.showcase.v1beta1.GetUserRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -353,6 +404,9 @@ public final class IdentityGrpc {
     }
 
     /**
+     * <pre>
+     * Updates a user.
+     * </pre>
      */
     public com.google.showcase.v1beta1.User updateUser(com.google.showcase.v1beta1.UpdateUserRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -360,6 +414,9 @@ public final class IdentityGrpc {
     }
 
     /**
+     * <pre>
+     * Deletes a user, their profile, and all of their authored messages.
+     * </pre>
      */
     public com.google.protobuf.Empty deleteUser(com.google.showcase.v1beta1.DeleteUserRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -367,6 +424,9 @@ public final class IdentityGrpc {
     }
 
     /**
+     * <pre>
+     * Lists all users.
+     * </pre>
      */
     public com.google.showcase.v1beta1.ListUsersResponse listUsers(com.google.showcase.v1beta1.ListUsersRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -376,6 +436,9 @@ public final class IdentityGrpc {
 
   /**
    * A stub to allow clients to do ListenableFuture-style rpc calls to service Identity.
+   * <pre>
+   * A simple identity service.
+   * </pre>
    */
   public static final class IdentityFutureStub
       extends io.grpc.stub.AbstractFutureStub<IdentityFutureStub> {
@@ -391,6 +454,9 @@ public final class IdentityGrpc {
     }
 
     /**
+     * <pre>
+     * Creates a user.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.User> createUser(
         com.google.showcase.v1beta1.CreateUserRequest request) {
@@ -399,6 +465,9 @@ public final class IdentityGrpc {
     }
 
     /**
+     * <pre>
+     * Retrieves the User with the given uri.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.User> getUser(
         com.google.showcase.v1beta1.GetUserRequest request) {
@@ -407,6 +476,9 @@ public final class IdentityGrpc {
     }
 
     /**
+     * <pre>
+     * Updates a user.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.User> updateUser(
         com.google.showcase.v1beta1.UpdateUserRequest request) {
@@ -415,6 +487,9 @@ public final class IdentityGrpc {
     }
 
     /**
+     * <pre>
+     * Deletes a user, their profile, and all of their authored messages.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.protobuf.Empty> deleteUser(
         com.google.showcase.v1beta1.DeleteUserRequest request) {
@@ -423,6 +498,9 @@ public final class IdentityGrpc {
     }
 
     /**
+     * <pre>
+     * Lists all users.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.ListUsersResponse> listUsers(
         com.google.showcase.v1beta1.ListUsersRequest request) {

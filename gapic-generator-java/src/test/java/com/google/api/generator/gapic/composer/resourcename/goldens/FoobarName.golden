@@ -262,7 +262,7 @@ public class FoobarName implements ResourceName {
     if (o == this) {
       return true;
     }
-    if (o != null || getClass() == o.getClass()) {
+    if (o != null && getClass() == o.getClass()) {
       FoobarName that = ((FoobarName) o);
       return Objects.equals(this.project, that.project)
           && Objects.equals(this.foobar, that.foobar)

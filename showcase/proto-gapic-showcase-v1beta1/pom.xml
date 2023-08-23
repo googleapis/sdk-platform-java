@@ -37,6 +37,7 @@
                   <executable>bazelisk</executable>
                   <arguments>
                     <argument>run</argument>
+                    <argument>--experimental_proto_descriptor_sets_include_source_info</argument>
                     <argument>//showcase:verify_proto</argument>
                   </arguments>
                 </configuration>
@@ -65,6 +66,7 @@
                   <executable>bazel</executable>
                   <arguments>
                     <argument>run</argument>
+                    <argument>--experimental_proto_descriptor_sets_include_source_info</argument>
                     <argument>//showcase:update_proto</argument>
                   </arguments>
                 </configuration>
