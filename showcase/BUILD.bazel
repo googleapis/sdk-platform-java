@@ -19,7 +19,8 @@ proto_library_with_info(
         "@com_google_gapic_showcase//schema/google/showcase/v1beta1:showcase_proto",
 #        "//showcase/gapic-showcase-extended/proto:showcase_proto_extended",
         "@com_google_googleapis//google/cloud:common_resources_proto",
-        "@com_google_googleapis//google/cloud/location:location_proto"
+        "@com_google_googleapis//google/cloud/location:location_proto",
+        "@com_google_googleapis//google/iam/v1:iam_policy_proto"
     ],
 )
 
@@ -57,13 +58,15 @@ java_gapic_library(
     test_deps = [
         ":showcase_java_grpc",
 #        ":showcase_java_grpc_extended",
-        "@com_google_googleapis//google/cloud/location:location_java_grpc"
+        "@com_google_googleapis//google/cloud/location:location_java_grpc",
+        "@com_google_googleapis//google/iam/v1:iam_java_grpc"
     ],
     transport = "grpc+rest",
     deps = [
         ":showcase_java_proto",
         "@com_google_googleapis//google/api:api_java_proto",
-        "@com_google_googleapis//google/cloud/location:location_java_proto"
+        "@com_google_googleapis//google/cloud/location:location_java_proto",
+        "@com_google_googleapis//google/iam/v1:iam_java_proto"
    ],
 )
 

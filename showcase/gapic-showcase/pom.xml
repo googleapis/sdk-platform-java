@@ -19,7 +19,7 @@
   </parent>
 
   <properties>
-    <gapic-showcase.version>0.28.0</gapic-showcase.version>
+    <gapic-showcase.version>0.28.2</gapic-showcase.version>
   </properties>
 
   <profiles>
@@ -42,6 +42,7 @@
                   <executable>bazel</executable>
                   <arguments>
                     <argument>run</argument>
+                    <argument>--experimental_proto_descriptor_sets_include_source_info</argument>
                     <argument>//showcase:verify_gapic</argument>
                   </arguments>
                 </configuration>
@@ -70,6 +71,7 @@
                   <executable>bazelisk</executable>
                   <arguments>
                     <argument>run</argument>
+                    <argument>--experimental_proto_descriptor_sets_include_source_info</argument>
                     <argument>//showcase:update_gapic</argument>
                   </arguments>
                 </configuration>
@@ -227,6 +229,18 @@
       <artifactId>gax-httpjson</artifactId>
       <type>test-jar</type>
       <classifier>testlib</classifier>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.auth</groupId>
+      <artifactId>google-auth-library-oauth2-http</artifactId>
+      <type>test-jar</type>
+      <classifier>testlib</classifier>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.api.grpc</groupId>
+      <artifactId>grpc-google-iam-v1</artifactId>
       <scope>test</scope>
     </dependency>
   </dependencies>

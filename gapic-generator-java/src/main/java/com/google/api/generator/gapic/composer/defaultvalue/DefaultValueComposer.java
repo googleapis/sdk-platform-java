@@ -102,7 +102,8 @@ public class DefaultValueComposer {
     }
 
     if (methodArg.type().equals(methodArg.field().type())) {
-      return createValue(methodArg.field(), false, resourceNames, messageTypes, valuePatterns);
+      return createValue(
+          methodArg.field(), false, resourceNames, messageTypes, valuePatterns, bindings);
     }
 
     return createValue(Field.builder().setName(methodArg.name()).setType(methodArg.type()).build());
@@ -110,7 +111,7 @@ public class DefaultValueComposer {
 
   public static Expr createValue(Field field) {
     return createValue(
-        field, false, Collections.emptyMap(), Collections.emptyMap(), Collections.emptyMap());
+        field, false, Collections.emptyMap(), Collections.emptyMap(), Collections.emptyMap(), null);
   }
 
   public static Expr createValue(
@@ -118,7 +119,8 @@ public class DefaultValueComposer {
       boolean useExplicitInitTypeInGenerics,
       Map<String, ResourceName> resourceNames,
       Map<String, Message> messageTypes,
-      Map<String, String> valuePatterns) {
+      Map<String, String> valuePatterns,
+      HttpBindings bindings) {
     if (field.isRepeated()) {
       ConcreteReference.Builder refBuilder =
           ConcreteReference.builder().setClazz(field.isMap() ? HashMap.class : ArrayList.class);
@@ -161,7 +163,7 @@ public class DefaultValueComposer {
         Message nestedMessage = messageTypes.get(field.type().reference().fullName());
         if (nestedMessage != null) {
           return createSimpleMessageBuilderValue(
-              nestedMessage, resourceNames, messageTypes, nestedValuePatterns, null);
+              nestedMessage, resourceNames, messageTypes, nestedValuePatterns, bindings);
         }
       }
 
@@ -274,7 +276,7 @@ public class DefaultValueComposer {
         if (!resname.isOnlyWildcard()
             && (bindings == null || resname.getMatchingPattern(bindings) != null)) {
           return createResourceHelperValue(
-              resname, false, unexaminedResnames, fieldOrMessageName, null);
+              resname, false, unexaminedResnames, fieldOrMessageName, bindings);
         }
       }
 
@@ -420,7 +422,8 @@ public class DefaultValueComposer {
         }
 
         if (defaultExpr == null) {
-          defaultExpr = createValue(field, true, resourceNames, messageTypes, valuePatterns);
+          defaultExpr =
+              createValue(field, true, resourceNames, messageTypes, valuePatterns, bindings);
         }
       }
       builderExpr =

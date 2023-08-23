@@ -1,5 +1,48 @@
 # Changelog
 
+## [2.24.0](https://github.com/googleapis/sdk-platform-java/compare/v2.23.1...v2.24.0) (2023-08-01)
+
+
+### Features
+
+* [common-protos] Add a proto message to describe the `resource_type` and `resource_permission` for an API method ([#1878](https://github.com/googleapis/sdk-platform-java/issues/1878)) ([3e27ca9](https://github.com/googleapis/sdk-platform-java/commit/3e27ca9763e9639fb00b99bdef9cf95aacd33897))
+
+## [2.23.1](https://github.com/googleapis/sdk-platform-java/compare/v2.23.0...v2.23.1) (2023-07-19)
+
+
+### Bug Fixes
+
+* Resource name class deduplication ([#1854](https://github.com/googleapis/sdk-platform-java/issues/1854)) ([08eca7d](https://github.com/googleapis/sdk-platform-java/commit/08eca7de7e80c6f242a23a9d76659e0a413c896f))
+* Use bindings for resolving multi pattern resources ([#1818](https://github.com/googleapis/sdk-platform-java/issues/1818)) ([1352fab](https://github.com/googleapis/sdk-platform-java/commit/1352fab654052e670df6d5c8718fcc6e06ef086c))
+
+
+### Dependencies
+
+* Auto-value version 1.10.2 ([#1859](https://github.com/googleapis/sdk-platform-java/issues/1859)) ([54843c9](https://github.com/googleapis/sdk-platform-java/commit/54843c95e0f0e2d004b14e82650c01026bf2ad70))
+* Bump grpc version to 1.56.1 ([1fcdd89](https://github.com/googleapis/sdk-platform-java/commit/1fcdd893240a7e5da293c6a26df193131577bbdd))
+* Bump jackson version to 2.15.2 ([bde81d8](https://github.com/googleapis/sdk-platform-java/commit/bde81d8c6f15130f51ea4e2d9805de3c0a21ae39))
+
+## [2.23.0](https://github.com/googleapis/sdk-platform-java/compare/v2.22.0...v2.23.0) (2023-07-07)
+
+
+### Features
+
+* Support GDC-H Credentials  ([#1642](https://github.com/googleapis/sdk-platform-java/issues/1642)) ([26da0d3](https://github.com/googleapis/sdk-platform-java/commit/26da0d3fb882e4f11c1cc43a81d34eb500c2c0cf))
+
+
+### Bug Fixes
+
+* [gapic-generator-java] handle response and metadata type ambiguity in LRO parsing ([#1726](https://github.com/googleapis/sdk-platform-java/issues/1726)) ([1ace494](https://github.com/googleapis/sdk-platform-java/commit/1ace49499175f2509062edb2fa5098e6cf8035d6))
+* Abstract batch resource and add method to determine if batch should be flushed ([#1790](https://github.com/googleapis/sdk-platform-java/issues/1790)) ([4c74107](https://github.com/googleapis/sdk-platform-java/commit/4c741077d614093d08665e9ddd83fb0e332b7881))
+
+
+### Dependencies
+
+* Bump grpc-java version to 1.55.3 ([1ff8cc0](https://github.com/googleapis/sdk-platform-java/commit/1ff8cc017bfb567933713ceeb06502f5eec9eaa6))
+* Bump guava version to 32.1.1-jre ([016e84d](https://github.com/googleapis/sdk-platform-java/commit/016e84d17febd68e2aa028cba40e2781a383f7ff))
+* Bump j2obc-annotations version to 2.8 ([4f45313](https://github.com/googleapis/sdk-platform-java/commit/4f4531373f313a7d68c2b9bfd5b0f1f71b21128f))
+* Update google-auth-java-library to 1.19.0 ([#1815](https://github.com/googleapis/sdk-platform-java/issues/1815)) ([41007a9](https://github.com/googleapis/sdk-platform-java/commit/41007a9efbd4cf08a5f933c23e01fce6cf2efac7))
+
 ## [2.22.0](https://github.com/googleapis/sdk-platform-java/compare/v2.21.0...v2.22.0) (2023-06-22)
 
 

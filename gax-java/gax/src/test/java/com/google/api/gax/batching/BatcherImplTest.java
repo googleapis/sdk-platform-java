@@ -93,7 +93,7 @@ public class BatcherImplTest {
       BatchingSettings.newBuilder()
           .setElementCountThreshold(1000L)
           .setRequestByteThreshold(1000L)
-          .setDelayThreshold(Duration.ofSeconds(1))
+          .setDelayThreshold(Duration.ofSeconds(1000))
           .build();
 
   @After
@@ -376,6 +376,7 @@ public class BatcherImplTest {
             .build();
     underTest = createDefaultBatcherImpl(settings, null);
     Future<Integer> result = underTest.add(2);
+    underTest.add(3);
     assertThat(result.isDone()).isTrue();
     assertThat(result.get()).isEqualTo(4);
   }
@@ -895,7 +896,7 @@ public class BatcherImplTest {
 
       // Mockito recommends using verify() as the ONLY way to interact with Argument
       // captors - otherwise it may incur in unexpected behaviour
-      Mockito.verify(callContext).withOption(key.capture(), value.capture());
+      Mockito.verify(callContext, Mockito.timeout(100)).withOption(key.capture(), value.capture());
 
       // Verify that throttled time is recorded in ApiCallContext
       assertThat(key.getValue()).isSameInstanceAs(Batcher.THROTTLED_TIME_KEY);
@@ -1008,12 +1009,37 @@ public class BatcherImplTest {
     Assert.assertThrows(RuntimeException.class, batcher::close);
   }
 
+  @Test
+  public void testDefaultShouldFlush() {
+    BatchResource resource =
+        DefaultBatchResource.builder().setElementCount(2).setByteCount(2).build();
+
+    assertThat(resource.shouldFlush(2, 2)).isFalse();
+    assertThat(resource.shouldFlush(1, 1)).isTrue();
+  }
+
+  @Test
+  public void testDefaultBatchResourceAdd() {
+    BatchResource resource =
+        DefaultBatchResource.builder().setElementCount(1).setByteCount(1).build();
+
+    BatchResource newResource =
+        resource.add(DefaultBatchResource.builder().setElementCount(1).setByteCount(1).build());
+
+    // Make sure add doesn't modify the old object
+    assertThat(resource.getElementCount()).isEqualTo(1);
+    assertThat(resource.getByteCount()).isEqualTo(1);
+    assertThat(newResource.getElementCount()).isEqualTo(2);
+    assertThat(newResource.getByteCount()).isEqualTo(2);
+  }
+
   private void testElementTriggers(BatchingSettings settings) throws Exception {
     underTest = createDefaultBatcherImpl(settings, null);
     Future<Integer> result = underTest.add(4);
     assertThat(result.isDone()).isFalse();
-    // After this element is added, the batch triggers sendOutstanding().
     Future<Integer> anotherResult = underTest.add(5);
+    // After this element is added, the batch triggers sendOutstanding().
+    underTest.add(6);
     // Both the elements should be resolved now.
     assertThat(result.isDone()).isTrue();
     assertThat(result.get()).isEqualTo(16);

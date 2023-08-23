@@ -129,7 +129,7 @@ public class StreamingSequenceReportName implements ResourceName {
     if (o == this) {
       return true;
     }
-    if (o != null || getClass() == o.getClass()) {
+    if (o != null && getClass() == o.getClass()) {
       StreamingSequenceReportName that = ((StreamingSequenceReportName) o);
       return Objects.equals(this.streamingSequence, that.streamingSequence);
     }

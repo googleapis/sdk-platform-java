@@ -2423,6 +2423,71 @@ public class JavaWriterVisitorTest {
   }
 
   @Test
+  public void writeClassDefinition_withImportCollision() {
+
+    VaporReference firstType =
+        VaporReference.builder()
+            .setName("Service")
+            .setPakkage("com.google.api.generator.gapic.model")
+            .build();
+
+    VaporReference secondType =
+        VaporReference.builder().setName("Service").setPakkage("com.google.api").build();
+
+    Variable secondTypeVar =
+        Variable.builder()
+            .setName("anotherServiceVar")
+            .setType(TypeNode.withReference(secondType))
+            .build();
+
+    MethodInvocationExpr genericMethodInvocation =
+        MethodInvocationExpr.builder()
+            .setMethodName("barMethod")
+            .setStaticReferenceType(TypeNode.withReference(firstType))
+            .setGenerics(Arrays.asList(secondType))
+            .setArguments(VariableExpr.withVariable(secondTypeVar))
+            .setReturnType(TypeNode.STRING)
+            .build();
+
+    List<Statement> statements = Arrays.asList(ExprStatement.withExpr(genericMethodInvocation));
+
+    MethodDefinition methodOne =
+        MethodDefinition.builder()
+            .setName("doSomething")
+            .setScope(ScopeNode.PRIVATE)
+            .setBody(statements)
+            .setReturnType(TypeNode.VOID)
+            .build();
+
+    List<MethodDefinition> methods = Arrays.asList(methodOne);
+
+    ClassDefinition classDef =
+        ClassDefinition.builder()
+            .setPackageString("com.google.example")
+            .setName("FooService")
+            .setScope(ScopeNode.PUBLIC)
+            .setMethods(methods)
+            .build();
+
+    classDef.accept(writerVisitor);
+
+    String expected =
+        LineFormatter.lines(
+            "package com.google.example;\n"
+                + "\n"
+                + "import com.google.api.generator.gapic.model.Service;\n"
+                + "\n"
+                + "public class FooService {\n"
+                + "\n"
+                + "  private void doSomething() {\n"
+                + "    Service.<com.google.api.Service>barMethod(anotherServiceVar);\n"
+                + "  }\n"
+                + "}\n");
+
+    assertThat(writerVisitor.write()).isEqualTo(expected);
+  }
+
+  @Test
   public void writeReferenceConstructorExpr_thisConstructorWithArguments() {
     VaporReference ref =
         VaporReference.builder().setName("Student").setPakkage("com.google.example.v1").build();
