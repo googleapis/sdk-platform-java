@@ -230,9 +230,10 @@ public abstract class ClientContext {
 
     EndpointContext endpointContext;
     ApiCallContext defaultCallContext;
+    TransportChannel transportChannel = null;
     TransportChannelResolver transportChannelResolver = new TransportChannelResolver();
     if (transportChannelProvider instanceof FixedTransportChannelProvider) {
-      TransportChannel transportChannel = transportChannelProvider.getTransportChannel();
+      transportChannel = transportChannelProvider.getTransportChannel();
       defaultCallContext =
           transportChannel.getEmptyCallContext().withTransportChannel(transportChannel);
       transportChannelResolver.setTransportChannel(transportChannel);
@@ -293,7 +294,7 @@ public abstract class ClientContext {
         .setBackgroundResources(backgroundResources.build())
         .setExecutor(backgroundExecutor)
         .setCredentials(credentials)
-        .setTransportChannel(null)
+        .setTransportChannel(transportChannel)
         .setTransportChannelProvider(transportChannelProvider)
         .setHeaders(ImmutableMap.copyOf(settings.getHeaderProvider().getHeaders()))
         .setInternalHeaders(ImmutableMap.copyOf(settings.getInternalHeaderProvider().getHeaders()))
