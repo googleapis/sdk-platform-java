@@ -55,18 +55,18 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
 
   private final Stopwatch operationTimer = Stopwatch.createStarted();
 
-  private SpanName spanName;
+  private final SpanName spanName;
 
-  private DoubleHistogram attemptLatencyRecorder;
+  protected DoubleHistogram attemptLatencyRecorder;
 
-  private DoubleHistogram operationLatencyRecorder;
-  private LongHistogram retryCountRecorder;
-  private LongHistogram gfeLatencyRecorder;
+  protected DoubleHistogram operationLatencyRecorder;
+  protected LongHistogram retryCountRecorder;
+  protected LongHistogram gfeLatencyRecorder;
 
-  private DoubleHistogram targetResolutionDelayRecorder;
-  private DoubleHistogram channelReadinessDelayRecorder;
-  private DoubleHistogram callSendDelayRecorder;
-  private Attributes attributes;
+  protected DoubleHistogram targetResolutionDelayRecorder;
+  protected DoubleHistogram channelReadinessDelayRecorder;
+  protected DoubleHistogram callSendDelayRecorder;
+  protected Attributes attributes;
 
   Map<String, String> operationLatencyLabels = new HashMap<>();
 
@@ -76,7 +76,7 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
     this.attemptLatencyRecorder =
         meter
             .histogramBuilder(attemptLatencyName())
-            .setDescription("Duration of an individual operation attempt")
+            .setDescription("Duration of an individual attempt")
             .setUnit("ms")
             .build();
     this.operationLatencyRecorder =
