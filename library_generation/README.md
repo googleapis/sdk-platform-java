@@ -7,16 +7,25 @@ The script, `generate_library.sh`, allows you to generate a GAPIC client library
 Use Linux environment and install java runtime environment (8 or above).
 
 ## Prerequisite
+Protos referenced by protos in `proto_path` (see `proto_path` below) should be copied to the current
+working directory (refers as `$cwd`, a directory contains `generate_library.sh`).
+The directory structure should be the same as import statements in protos.
+
+For example, we want to generate from `folder1/folder2/protoA`, so `proto_path` 
+should be set to `folder1/folder2` (a relative path from `$cwd`). 
+protoA imports protoB as `folder3/folder4/protoB`, then there should 
+be `folder3/folder4` (containing protoB) in `$cwd`.
+
 In order to generate a GAPIC library, you need to pull `google/` from [googleapis](https://github.com/googleapis/googleapis)
-and put it into the directory containing `generate_library.sh` since protos in `google/` 
-are likely referenced by protos from which the library are generated.
+and put it into `$cwd` since protos in `google/` are likely referenced by 
+protos from which the library are generated.
 
 ## Parameters to run `generate_library.sh`
 
 You need to run the script with the following parameters.
 
 ### proto_path
-A directory in the current working directory (refers as `$cwd`) and copy proto files into it. 
+A directory in `$cwd` and copy proto files into it. 
 The absolute path of `proto_path` is `$cwd/$proto_path`. 
 
 Use `-p` or `--proto_path` to specify the value.
