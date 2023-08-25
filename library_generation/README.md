@@ -47,16 +47,19 @@ $destination_path
   |          |_java
   |    
   |_proto-*
-       |_src
-          |_main
-             |_java
-             |_proto
+  |    |_src
+  |       |_main
+  |          |_java
+  |          |_proto
+  |_samples
+      |_snippets
+          |_generated
 ```
 You can't build the library as-is since it does not have `pom.xml` or `build.gradle`.
 To use the library, copy the generated files to the corresponding directory
 of a library repository, e.g., `google-cloud-java`.
 
-### version of gapic-generator-java
+### gapic_generator_version
 You can find the released version of gapic-generator-java in [maven central](https://repo1.maven.org/maven2/com/google/api/gapic-generator-java/).
 
 Use `--gapic_generator_version` to specify the value.
@@ -64,7 +67,7 @@ Use `--gapic_generator_version` to specify the value.
 Note that you can specify a `SNAPSHOT` version as long as you have build the SNAPSHOT of gapic-generator-java in your maven
 local repository.
 
-### version of protobuf (optional)
+### protobuf_version (optional)
 You can find the released version of protobuf in [GitHub](https://github.com/protocolbuffers/protobuf/releases/).
 The default value is defined in `gapic-generator-java-pom-parent/pom.xml`.
 
@@ -72,7 +75,7 @@ Use `--protobuf_version` to specify the value.
 
 Note that if specified, the version should be compatible with gapic-generator-java.
 
-### version of grpc  (optional)
+### grpc_version (optional)
 You can find the released version of grpc in [maven central](https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/).
 The default value is defined in `gapic-generator-java-pom-parent/pom.xml`.
 
