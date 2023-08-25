@@ -79,6 +79,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   @Nonnull private final ApiTracerFactory tracerFactory;
   // Track if deprecated setExecutorProvider is called
   private final EndpointContext endpointContext;
+  private final boolean delayChannelCreation;
   private boolean deprecatedExecutorProviderSet;
 
   /**
@@ -107,6 +108,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     this.deprecatedExecutorProviderSet = builder.deprecatedExecutorProviderSet;
     this.gdchApiAudience = builder.gdchApiAudience;
     this.endpointContext = builder.endpointContext;
+    this.delayChannelCreation = builder.delayChannelCreation;
   }
 
   /** @deprecated Please use {@link #getBackgroundExecutorProvider()}. */
@@ -140,10 +142,14 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   }
 
   public final String getEndpoint() {
-    try {
-      return this.endpointContext.resolveEndpoint(getCredentialsProvider().getCredentials());
-    } catch (IOException e) {
-      throw new RuntimeException(e);
+    if (delayChannelCreation) {
+      try {
+        return this.endpointContext.resolveEndpoint(getCredentialsProvider().getCredentials());
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+    } else {
+      return this.endpoint;
     }
   }
 
@@ -190,6 +196,10 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     return endpointContext;
   }
 
+  public boolean isDelayChannelCreation() {
+    return delayChannelCreation;
+  }
+
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this)
@@ -230,6 +240,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     @Nonnull private ApiTracerFactory tracerFactory;
     private EndpointContext endpointContext;
     private boolean deprecatedExecutorProviderSet;
+    private boolean delayChannelCreation;
 
     /**
      * Indicate when creating transport whether it is allowed to use mTLS endpoint instead of the
@@ -257,6 +268,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       this.deprecatedExecutorProviderSet = settings.deprecatedExecutorProviderSet;
       this.gdchApiAudience = settings.gdchApiAudience;
       this.endpointContext = settings.endpointContext;
+      this.delayChannelCreation = settings.delayChannelCreation;
     }
 
     /** Get Quota Project ID from Client Context * */
@@ -293,6 +305,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.deprecatedExecutorProviderSet = false;
         this.gdchApiAudience = null;
         this.endpointContext = EndpointContext.newBuilder().build();
+        this.delayChannelCreation = true;
       } else {
         ExecutorProvider fixedExecutorProvider =
             FixedExecutorProvider.create(clientContext.getExecutor());
@@ -323,6 +336,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
                 .setMtlsEndpoint(this.mtlsEndpoint)
                 .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)
                 .build();
+        this.delayChannelCreation = false;
       }
     }
 
@@ -511,6 +525,11 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       return self();
     }
 
+    public B setDelayChannelCreation(boolean delayChannelCreation) {
+      this.delayChannelCreation = delayChannelCreation;
+      return self();
+    }
+
     /** @deprecated Please use {@link #getBackgroundExecutorProvider()}. */
     @Deprecated
     public ExecutorProvider getExecutorProvider() {
@@ -582,6 +601,10 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       return gdchApiAudience;
     }
 
+    public boolean isDelayChannelCreation() {
+      return delayChannelCreation;
+    }
+
     public EndpointContext getEndpointContext() {
       return endpointContext;
     }
@@ -615,6 +638,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
           .add("tracerFactory", tracerFactory)
           .add("gdchApiAudience", gdchApiAudience)
           .add("endpointContext", endpointContext)
+          .add("delayChannelCreation", delayChannelCreation)
           .toString();
     }
   }

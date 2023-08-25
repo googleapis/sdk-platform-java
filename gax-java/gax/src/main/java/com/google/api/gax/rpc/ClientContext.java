@@ -228,38 +228,58 @@ public abstract class ClientContext {
       transportChannelProvider = transportChannelProvider.withCredentials(credentials);
     }
 
-    EndpointContext endpointContext;
     ApiCallContext defaultCallContext;
     TransportChannel transportChannel = null;
     TransportChannelResolver transportChannelResolver = new TransportChannelResolver();
-    if (transportChannelProvider instanceof FixedTransportChannelProvider) {
+    if (settings.isDelayChannelCreation()) {
+      EndpointContext endpointContext;
+      if (transportChannelProvider instanceof FixedTransportChannelProvider) {
+        transportChannel = transportChannelProvider.getTransportChannel();
+        defaultCallContext =
+            transportChannel.getEmptyCallContext().withTransportChannel(transportChannel);
+        transportChannelResolver.setTransportChannel(transportChannel);
+      } else {
+        defaultCallContext = transportChannelProvider.getEmptyCallContext();
+        if (settings.getEndpointContext() != null) {
+          endpointContext =
+              settings
+                  .getEndpointContext()
+                  .toBuilder()
+                  .setCredentials(credentials)
+                  .setTransportChannelEndpoint(transportChannelProvider.getEndpoint())
+                  .build();
+        } else {
+          endpointContext =
+              EndpointContext.newBuilder()
+                  .setCredentials(credentials)
+                  .setClientSettingsEndpoint(settings.getEndpoint())
+                  .setMtlsEndpoint(settings.getMtlsEndpoint())
+                  .setSwitchToMtlsEndpointAllowed(settings.getSwitchToMtlsEndpointAllowed())
+                  .setTransportChannelEndpoint(transportChannelProvider.getEndpoint())
+                  .build();
+        }
+        defaultCallContext = defaultCallContext.withEndpointContext(endpointContext);
+      }
+      defaultCallContext =
+          defaultCallContext.withTransportChannelResolver(transportChannelResolver);
+    } else {
+      String endpoint =
+          getEndpoint(
+              settings.getEndpoint(),
+              settings.getMtlsEndpoint(),
+              settings.getSwitchToMtlsEndpointAllowed(),
+              new MtlsProvider());
+      if (transportChannelProvider.needsEndpoint()) {
+        transportChannelProvider = transportChannelProvider.withEndpoint(endpoint);
+      }
       transportChannel = transportChannelProvider.getTransportChannel();
+      transportChannelResolver.setTransportChannel(transportChannel);
       defaultCallContext =
           transportChannel.getEmptyCallContext().withTransportChannel(transportChannel);
-      transportChannelResolver.setTransportChannel(transportChannel);
-    } else {
-      defaultCallContext = transportChannelProvider.getEmptyCallContext();
-      if (settings.getEndpointContext() != null) {
-        endpointContext =
-            settings
-                .getEndpointContext()
-                .toBuilder()
-                .setCredentials(credentials)
-                .setTransportChannelEndpoint(transportChannelProvider.getEndpoint())
-                .build();
-      } else {
-        endpointContext =
-            EndpointContext.newBuilder()
-                .setCredentials(credentials)
-                .setClientSettingsEndpoint(settings.getEndpoint())
-                .setMtlsEndpoint(settings.getMtlsEndpoint())
-                .setSwitchToMtlsEndpointAllowed(settings.getSwitchToMtlsEndpointAllowed())
-                .setTransportChannelEndpoint(transportChannelProvider.getEndpoint())
-                .build();
+      if (credentials != null) {
+        defaultCallContext = defaultCallContext.withCredentials(credentials);
       }
-      defaultCallContext = defaultCallContext.withEndpointContext(endpointContext);
     }
-    defaultCallContext = defaultCallContext.withTransportChannelResolver(transportChannelResolver);
 
     WatchdogProvider watchdogProvider = settings.getStreamWatchdogProvider();
     @Nullable Watchdog watchdog = null;
