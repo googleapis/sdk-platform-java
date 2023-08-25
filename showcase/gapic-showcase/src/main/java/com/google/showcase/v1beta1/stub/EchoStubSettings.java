@@ -682,6 +682,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
+      builder.setDelayChannelCreation(true);
 
       return initDefaults(builder);
     }
@@ -695,6 +696,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
+      builder.setDelayChannelCreation(true);
 
       return initDefaults(builder);
     }
