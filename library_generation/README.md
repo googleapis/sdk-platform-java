@@ -11,8 +11,6 @@ In order to generate a GAPIC library, you need to pull `google/` from [googleapi
 and put it into the directory containing `generate_library.sh` since protos in `google/` 
 are likely referenced by protos from which the library are generated.
 
-In most cases, the `proto_path` is a subdirectory within `google/`.
-
 ## Parameters to run `generate_library.sh`
 
 You need to run the script with the following parameters.
