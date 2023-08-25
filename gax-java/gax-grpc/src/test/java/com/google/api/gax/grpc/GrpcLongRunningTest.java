@@ -42,11 +42,10 @@ import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.longrunning.OperationTimedPollAlgorithm;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.ClientContext;
-import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.OperationCallSettings;
 import com.google.api.gax.rpc.OperationCallable;
+import com.google.api.gax.rpc.TransportChannel;
 import com.google.api.gax.rpc.TransportChannelProvider;
-import com.google.api.gax.rpc.TransportChannelResolver;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.longrunning.Operation;
 import com.google.longrunning.OperationsSettings;
@@ -99,21 +98,10 @@ public class GrpcLongRunningTest {
   @Before
   public void setUp() throws IOException {
     channel = mock(ManagedChannel.class);
-    TransportChannelProvider transportChannelProvider = mock(TransportChannelProvider.class);
-    TransportChannelResolver transportChannelResolver = mock(TransportChannelResolver.class);
-    GrpcTransportChannel grpcTransportChannel = mock(GrpcTransportChannel.class);
-    EndpointContext endpointContext = mock(EndpointContext.class);
-
-    GrpcCallContext defaultCallContext =
-        (GrpcCallContext)
-            GrpcCallContext.of(transportChannelProvider)
-                .withEndpointContext(endpointContext)
-                .withTransportChannelResolver(transportChannelResolver);
-    when(transportChannelProvider.withEndpoint(endpointContext.resolveEndpoint()))
-        .thenReturn(transportChannelProvider);
-    when(transportChannelProvider.getTransportChannel()).thenReturn(grpcTransportChannel);
-    when(transportChannelProvider.getEmptyCallContext()).thenReturn(defaultCallContext);
-    when(grpcTransportChannel.getChannel()).thenReturn(channel);
+    TransportChannelProvider operationsChannelProvider = mock(TransportChannelProvider.class);
+    TransportChannel transportChannel =
+        GrpcTransportChannel.newBuilder().setManagedChannel(channel).build();
+    when(operationsChannelProvider.getTransportChannel()).thenReturn(transportChannel);
 
     clock = new FakeApiClock(0L);
     executor = RecordingScheduler.create(clock);
@@ -125,7 +113,7 @@ public class GrpcLongRunningTest {
         .setRetrySettings(FAST_RETRY_SETTINGS.toBuilder().setMaxAttempts(1).build());
     OperationsSettings settings =
         OperationsSettings.newBuilder()
-            .setTransportChannelProvider(transportChannelProvider)
+            .setTransportChannelProvider(operationsChannelProvider)
             .build();
     operationsStub =
         GrpcOperationsStub.create(((OperationsStubSettings) settings.getStubSettings()));
@@ -147,9 +135,10 @@ public class GrpcLongRunningTest {
 
     initialContext =
         ClientContext.newBuilder()
-            .setTransportChannel(grpcTransportChannel)
+            .setTransportChannel(
+                GrpcTransportChannel.newBuilder().setManagedChannel(channel).build())
             .setExecutor(executor)
-            .setDefaultCallContext(defaultCallContext)
+            .setDefaultCallContext(GrpcCallContext.of(channel, CallOptions.DEFAULT))
             .setClock(clock)
             .build();
   }

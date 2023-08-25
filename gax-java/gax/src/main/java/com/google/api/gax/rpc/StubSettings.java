@@ -305,7 +305,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.deprecatedExecutorProviderSet = false;
         this.gdchApiAudience = null;
         this.endpointContext = EndpointContext.newBuilder().build();
-        this.delayChannelCreation = true;
+        this.delayChannelCreation = false;
       } else {
         ExecutorProvider fixedExecutorProvider =
             FixedExecutorProvider.create(clientContext.getExecutor());
