@@ -108,8 +108,16 @@ echo "Checking out googleapis-gen repository..."
 sparse_clone $googleapis_gen_url $proto_path
 
 echo "Compare generation result..."
-diff -r "googleapis-gen/$proto_path/$destination_path" "$destination_path" -x "*gradle*" \
- && echo "Comparison finished, no difference is found."
-# clean up
+RESULT=0
+diff -r "googleapis-gen/$proto_path/$destination_path" "$destination_path" -x "*gradle*" || RESULT=$?
+
+if [ $RESULT == 0 ] ; then
+ echo "SUCCESS: Comparison finished, no difference is found."
+else
+  echo "FAILURE: Differences found."
+fi
+
 cd ..
 rm -rf googleapis
+
+exit $RESULT
