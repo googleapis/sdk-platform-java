@@ -94,7 +94,7 @@ get_gapic_opts() {
 
 remove_grpc_version() {
   find "$destination_path" -type f -name "*Grpc.java" -exec \
-  sed -i '' 's/value = \"by gRPC proto compiler.*/value = \"by gRPC proto compiler\",/g' {} \;
+  sed -i.bak 's/value = \"by gRPC proto compiler.*/value = \"by gRPC proto compiler\",/g' {}  \; -exec rm {}.bak \;
 }
 
 download_gapic_generator_pom_parent() {
