@@ -41,6 +41,10 @@ case $key in
     include_samples="$2"
     shift
     ;;
+    --os_architecture)
+    os_architecture="$2"
+    shift
+    ;;
     *)
     echo "Invalid option: [$1]"
     exit 1
@@ -49,10 +53,9 @@ esac
 shift # past argument or value
 done
 
-working_directory=$(dirname "$(readlink -f "$0")")
+script_dir=$(dirname "$(readlink -f "$0")")
 # source utility functions
-cd "$working_directory"
-source ./utilities.sh
+source $script_dir/utilities.sh
 
 if [ -z "$protobuf_version" ]; then
   protobuf_version=$(get_protobuf_version "$gapic_generator_version")
@@ -74,25 +77,25 @@ if [ -z "$include_samples" ]; then
   include_samples="true"
 fi
 
-cd "$working_directory"
+if [ -z "$os_architecture" ]; then
+  os_architecture="linux-x86_64"
+fi
+
 mkdir -p "$destination_path"
-destination_path="$working_directory/$destination_path"
 ##################### Section 0 #####################
 # prepare tooling
 #####################################################
-cd "$working_directory"
 # the order of services entries in gapic_metadata.json is relevant to the
 # order of proto file, sort the proto files with respect to their name to
 # get a fixed order.
 proto_files=$(find "$proto_path" -type f  -name "*.proto" | sort)
 folder_name=$(extract_folder_name "$destination_path")
 # download gapic-generator-java, protobuf and grpc plugin.
-download_tools "$gapic_generator_version" "$protobuf_version" "$grpc_version"
+download_tools "$gapic_generator_version" "$protobuf_version" "$grpc_version" "$os_architecture"
 ##################### Section 1 #####################
 # generate grpc-*/
 #####################################################
-cd "$working_directory"
-"$protoc_path"/protoc "--plugin=protoc-gen-rpc-plugin=$working_directory/protoc-gen-grpc-java-$grpc_version-linux-x86_64.exe" \
+"$protoc_path"/protoc "--plugin=protoc-gen-rpc-plugin=protoc-gen-grpc-java-$grpc_version-${os_architecture}.exe" \
 "--rpc-plugin_out=:$destination_path/java_grpc.jar" \
 $proto_files
 # unzip java_grpc.jar to grpc-*/src/main/java
@@ -104,9 +107,8 @@ remove_grpc_version
 ###################### Section 2 #####################
 ## generate gapic-*/, part of proto-*/, samples/
 ######################################################
-cd "$working_directory"
 "$protoc_path"/protoc --experimental_allow_proto3_optional \
-"--plugin=protoc-gen-java_gapic=$working_directory/gapic-generator-java-wrapper" \
+"--plugin=protoc-gen-java_gapic=$script_dir/gapic-generator-java-wrapper" \
 "--java_gapic_out=metadata:$destination_path/java_gapic_srcjar_raw.srcjar.zip" \
 "--java_gapic_opt=$(get_gapic_opts)" \
 ${proto_files} $(search_additional_protos)
@@ -125,7 +127,6 @@ if [ ! -d "$proto_dir" ]; then
   touch "$proto_dir"/PlaceholderFile.java
 fi
 
-cd "$working_directory"
 # move java_gapic_srcjar/src/main to gapic-*/src.
 mv_src_files "gapic" "main"
 # remove empty files in gapic-*/src/main/java
@@ -139,7 +140,6 @@ fi
 ##################### Section 3 #####################
 # generate proto-*/
 #####################################################
-cd "$working_directory"
 "$protoc_path"/protoc "--java_out=$destination_path/java_proto.jar" $proto_files
 # move java_gapic_srcjar/proto/src/main/java (generated resource name helper class)
 # to proto-*/src/main
@@ -151,7 +151,7 @@ remove_empty_files "proto"
 # copy proto files to proto-*/src/main/proto
 for proto_src in $proto_files; do
     mkdir -p "$destination_path/proto-$folder_name/src/main/proto"
-    cp -f --parents "$proto_src" "$destination_path/proto-$folder_name/src/main/proto"
+    rsync -R "$proto_src" "$destination_path/proto-$folder_name/src/main/proto"
 done
 ##################### Section 4 #####################
 # rm tar files

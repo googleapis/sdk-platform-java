@@ -11,6 +11,10 @@ set -xeo pipefail
 #    `generate_library.sh`. GAPIC options to generate a library will be parsed
 #    from proto_path/BUILD.bazel.
 # 4. checkout the master branch googleapis-gen repository and compare the result.
+
+# defaults
+googleapis_gen_url="git@github.com:googleapis/googleapis-gen.git"
+
 while [[ $# -gt 0 ]]
 do
 key="$1"
@@ -25,6 +29,10 @@ case $key in
     ;;
     --googleapis_gen_url)
     googleapis_gen_url="$2"
+    shift
+    ;;
+    --os_architecture)
+    os_architecture="$2"
     shift
     ;;
     *)
@@ -43,14 +51,23 @@ get_version_from_WORKSPACE() {
   echo "$version"
 }
 
-working_directory=$(dirname "$(readlink -f "$0")")
-cd "$working_directory"
+sparse_clone() {
+  repo_url=$1
+  paths=$2
+  clone_dir=$(basename ${repo_url%.*})
+  rm -rf $clone_dir
+  git clone -n --depth=1 --filter=tree:0 "$repo_url"
+  cd $clone_dir
+  git sparse-checkout set --no-cone $paths
+  git checkout
+  cd ..
+}
+
+script_dir=$(dirname "$(readlink -f "$0")")
 # checkout the master branch of googleapis/google (proto files) and WORKSPACE
 echo "Checking out googlapis repository..."
-git clone --branch=master --depth 1 -q https://github.com/googleapis/googleapis.git
-cp -r googleapis/google .
-cp googleapis/WORKSPACE .
-rm -rf googleapis
+sparse_clone https://github.com/googleapis/googleapis.git "$proto_path WORKSPACE google/api google/rpc google/cloud/common_resources.proto"
+cd googleapis
 # parse version of gapic-generator-java, protobuf and grpc from WORKSPACE
 gapic_generator_version=$(get_version_from_WORKSPACE "_gapic_generator_java_version" WORKSPACE "=")
 echo "The version of gapic-generator-java is $gapic_generator_version."
@@ -59,7 +76,6 @@ echo "The version of protobuf is $protobuf_version"
 grpc_version=$(get_version_from_WORKSPACE "_grpc_version" WORKSPACE "=")
 echo "The version of protoc-gen-grpc-java plugin is $gapic_generator_version."
 # parse GAPIC options from proto_path/BUILD.bazel
-cd $"$working_directory"
 transport="grpc"
 if grep -A 15 "java_gapic_library(" "$proto_path/BUILD.bazel" | grep -q "grpc+rest"; then
   transport="grpc+rest"
@@ -75,7 +91,7 @@ fi
 echo "GAPIC options are transport=$transport, rest_numeric_enums=$rest_numeric_enums, include_samples=$include_samples."
 # generate GAPIC client library
 echo "Generating library from $proto_path, to $destination_path..."
-"$working_directory"/generate_library.sh \
+$script_dir/generate_library.sh \
 -p "$proto_path" \
 -d "$destination_path" \
 --gapic_generator_version "$gapic_generator_version" \
@@ -83,16 +99,17 @@ echo "Generating library from $proto_path, to $destination_path..."
 --grpc_version "$grpc_version" \
 --transport "$transport" \
 --rest_numeric_enums "$rest_numeric_enums" \
---include_samples "$include_samples"
+--include_samples "$include_samples" \
+--os_architecture "$os_architecture"
 
 echo "Generate library finished."
 echo "Checking out googleapis-gen repository..."
-git clone --branch=master --depth 1 -q "$googleapis_gen_url"
+
+sparse_clone $googleapis_gen_url $proto_path
 
 echo "Compare generation result..."
-cd "$working_directory"
-diff -r "googleapis-gen/$proto_path/$destination_path" "$destination_path" -x "*gradle*"
-echo "Comparison finished, no difference is found."
+diff -r "googleapis-gen/$proto_path/$destination_path" "$destination_path" -x "*gradle*" \
+ && echo "Comparison finished, no difference is found."
 # clean up
-cd "$working_directory"
-rm -rf WORKSPACE googleapis-gen "$destination_path"
+cd ..
+rm -rf googleapis

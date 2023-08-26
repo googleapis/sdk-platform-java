@@ -108,6 +108,10 @@ The default value is `true`.
 
 Use `--include_samples` to specify the value.
 
+### os_architecture (optional)
+Choose the protoc binary type from https://github.com/protocolbuffers/protobuf/releases.
+Default is "linux-x86_64".
+
 ## An example to generate a client library
 ```
 library_generation/generate_library.sh \
