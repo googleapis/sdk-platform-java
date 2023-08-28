@@ -116,6 +116,10 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     return stubSettings.getGdchApiAudience();
   }
 
+  public final boolean isUsingTPC() {
+    return stubSettings.isUsingTPC();
+  }
+
   public String toString() {
     return MoreObjects.toStringHelper(this)
         .add("executorProvider", getExecutorProvider())
@@ -261,6 +265,11 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
       return self();
     }
 
+    public B setUsingTPC(boolean usingTPC) {
+      stubSettings.setUsingTPC(usingTPC);
+      return self();
+    }
+
     /**
      * Sets the GDC-H api audience. This is intended only to be used with {@link
      * com.google.auth.oauth2.GdchCredentials} If this field is set and other type of {@link
@@ -346,6 +355,10 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
       return stubSettings.getGdchApiAudience();
     }
 
+    public boolean getUsingTPC() {
+      return stubSettings.getUsingTPC();
+    }
+
     /** Applies the given settings updater function to the given method settings builders. */
     protected static void applyToAllUnaryMethods(
         Iterable<UnaryCallSettings.Builder<?, ?>> methodSettingsBuilders,
@@ -369,6 +382,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
           .add("watchdogProvider", getWatchdogProvider())
           .add("watchdogCheckInterval", getWatchdogCheckInterval())
           .add("gdchApiAudience", getGdchApiAudience())
+          .add("usingTPC", getUsingTPC())
           .toString();
     }
   }

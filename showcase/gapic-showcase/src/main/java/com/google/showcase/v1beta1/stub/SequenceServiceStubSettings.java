@@ -510,7 +510,6 @@ public class SequenceServiceStubSettings extends StubSettings<SequenceServiceStu
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setDelayChannelCreation(true);
 
       return initDefaults(builder);
     }
@@ -524,7 +523,6 @@ public class SequenceServiceStubSettings extends StubSettings<SequenceServiceStu
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setDelayChannelCreation(true);
 
       return initDefaults(builder);
     }

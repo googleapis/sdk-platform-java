@@ -527,7 +527,6 @@ public class IdentityStubSettings extends StubSettings<IdentityStubSettings> {
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setDelayChannelCreation(true);
 
       return initDefaults(builder);
     }
@@ -541,7 +540,6 @@ public class IdentityStubSettings extends StubSettings<IdentityStubSettings> {
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setDelayChannelCreation(true);
 
       return initDefaults(builder);
     }

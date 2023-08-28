@@ -54,6 +54,7 @@ public class TestClientInitializer {
                     .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
                     .setInterceptorProvider(() -> interceptorList)
                     .build())
+            .setUsingTPC(true)
             .build();
     return EchoClient.create(grpcEchoSettings);
   }
@@ -74,6 +75,7 @@ public class TestClientInitializer {
                     .setEndpoint("http://localhost:7469")
                     .setInterceptorProvider(() -> interceptorList)
                     .build())
+            .setUsingTPC(true)
             .build();
     return EchoClient.create(httpJsonEchoSettings);
   }
@@ -94,6 +96,7 @@ public class TestClientInitializer {
                 EchoSettings.defaultGrpcTransportProviderBuilder()
                     .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
                     .build())
+            .setUsingTPC(true)
             .build();
     return EchoClient.create(grpcEchoSettings);
   }
@@ -116,6 +119,7 @@ public class TestClientInitializer {
                         new NetHttpTransport.Builder().doNotValidateCertificate().build())
                     .setEndpoint("http://localhost:7469")
                     .build())
+            .setUsingTPC(true)
             .build();
     return EchoClient.create(httpJsonEchoSettings);
   }
@@ -140,6 +144,7 @@ public class TestClientInitializer {
                 EchoSettings.defaultGrpcTransportProviderBuilder()
                     .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
                     .build())
+            .setUsingTPC(true)
             .build();
     return EchoClient.create(grpcEchoSettings);
   }
@@ -166,6 +171,7 @@ public class TestClientInitializer {
                         new NetHttpTransport.Builder().doNotValidateCertificate().build())
                     .setEndpoint("http://localhost:7469")
                     .build())
+            .setUsingTPC(true)
             .build();
     return EchoClient.create(httpJsonEchoSettings);
   }
@@ -178,6 +184,7 @@ public class TestClientInitializer {
                 IdentitySettings.defaultGrpcTransportProviderBuilder()
                     .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
                     .build())
+            .setUsingTPC(true)
             .build();
     return IdentityClient.create(grpcIdentitySettings);
   }
@@ -192,6 +199,7 @@ public class TestClientInitializer {
                         new NetHttpTransport.Builder().doNotValidateCertificate().build())
                     .setEndpoint("http://localhost:7469")
                     .build())
+            .setUsingTPC(true)
             .build();
     return IdentityClient.create(httpjsonIdentitySettings);
   }

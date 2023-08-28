@@ -384,7 +384,6 @@ public class MetricsServiceV2StubSettings extends StubSettings<MetricsServiceV2S
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setDelayChannelCreation(true);
 
       return initDefaults(builder);
     }

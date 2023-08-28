@@ -666,7 +666,6 @@ public class SubscriberStubSettings extends StubSettings<SubscriberStubSettings>
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setDelayChannelCreation(true);
 
       return initDefaults(builder);
     }

@@ -1899,14 +1899,6 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                 ValueExpr.withValue(
                     PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("true").build()))
             .build());
-    bodyExprs.add(
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(builderVarExpr)
-            .setMethodName("setDelayChannelCreation")
-            .setArguments(
-                ValueExpr.withValue(
-                    PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("true").build()))
-            .build());
     bodyStatements.addAll(
         bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
     bodyStatements.add(EMPTY_LINE_STATEMENT);

@@ -539,7 +539,6 @@ public class SchemaServiceStubSettings extends StubSettings<SchemaServiceStubSet
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setDelayChannelCreation(true);
 
       return initDefaults(builder);
     }

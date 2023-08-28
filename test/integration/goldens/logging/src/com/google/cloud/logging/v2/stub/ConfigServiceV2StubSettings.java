@@ -869,7 +869,6 @@ public class ConfigServiceV2StubSettings extends StubSettings<ConfigServiceV2Stu
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setDelayChannelCreation(true);
 
       return initDefaults(builder);
     }

@@ -79,7 +79,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   @Nonnull private final ApiTracerFactory tracerFactory;
   // Track if deprecated setExecutorProvider is called
   private final EndpointContext endpointContext;
-  private final boolean delayChannelCreation;
+  private final boolean usingTPC;
   private boolean deprecatedExecutorProviderSet;
 
   /**
@@ -108,7 +108,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     this.deprecatedExecutorProviderSet = builder.deprecatedExecutorProviderSet;
     this.gdchApiAudience = builder.gdchApiAudience;
     this.endpointContext = builder.endpointContext;
-    this.delayChannelCreation = builder.delayChannelCreation;
+    this.usingTPC = builder.usingTPC;
   }
 
   /** @deprecated Please use {@link #getBackgroundExecutorProvider()}. */
@@ -142,7 +142,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   }
 
   public final String getEndpoint() {
-    if (delayChannelCreation) {
+    if (usingTPC) {
       try {
         return this.endpointContext.resolveEndpoint(getCredentialsProvider().getCredentials());
       } catch (IOException e) {
@@ -196,8 +196,8 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     return endpointContext;
   }
 
-  public boolean isDelayChannelCreation() {
-    return delayChannelCreation;
+  public boolean isUsingTPC() {
+    return usingTPC;
   }
 
   @Override
@@ -240,7 +240,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     @Nonnull private ApiTracerFactory tracerFactory;
     private EndpointContext endpointContext;
     private boolean deprecatedExecutorProviderSet;
-    private boolean delayChannelCreation;
+    private boolean usingTPC;
 
     /**
      * Indicate when creating transport whether it is allowed to use mTLS endpoint instead of the
@@ -268,7 +268,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       this.deprecatedExecutorProviderSet = settings.deprecatedExecutorProviderSet;
       this.gdchApiAudience = settings.gdchApiAudience;
       this.endpointContext = settings.endpointContext;
-      this.delayChannelCreation = settings.delayChannelCreation;
+      this.usingTPC = settings.usingTPC;
     }
 
     /** Get Quota Project ID from Client Context * */
@@ -305,7 +305,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.deprecatedExecutorProviderSet = false;
         this.gdchApiAudience = null;
         this.endpointContext = EndpointContext.newBuilder().build();
-        this.delayChannelCreation = false;
+        this.usingTPC = false;
       } else {
         ExecutorProvider fixedExecutorProvider =
             FixedExecutorProvider.create(clientContext.getExecutor());
@@ -336,7 +336,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
                 .setMtlsEndpoint(this.mtlsEndpoint)
                 .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)
                 .build();
-        this.delayChannelCreation = false;
+        this.usingTPC = false;
       }
     }
 
@@ -525,8 +525,8 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       return self();
     }
 
-    public B setDelayChannelCreation(boolean delayChannelCreation) {
-      this.delayChannelCreation = delayChannelCreation;
+    public B setUsingTPC(boolean usingTPC) {
+      this.usingTPC = usingTPC;
       return self();
     }
 
@@ -601,8 +601,8 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       return gdchApiAudience;
     }
 
-    public boolean isDelayChannelCreation() {
-      return delayChannelCreation;
+    public boolean getUsingTPC() {
+      return usingTPC;
     }
 
     public EndpointContext getEndpointContext() {
@@ -638,7 +638,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
           .add("tracerFactory", tracerFactory)
           .add("gdchApiAudience", gdchApiAudience)
           .add("endpointContext", endpointContext)
-          .add("delayChannelCreation", delayChannelCreation)
+          .add("usingTPC", usingTPC)
           .toString();
     }
   }

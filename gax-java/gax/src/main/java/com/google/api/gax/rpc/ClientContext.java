@@ -231,7 +231,7 @@ public abstract class ClientContext {
     ApiCallContext defaultCallContext;
     TransportChannel transportChannel = null;
     TransportChannelResolver transportChannelResolver = new TransportChannelResolver();
-    if (settings.isDelayChannelCreation()) {
+    if (settings.isUsingTPC()) {
       EndpointContext endpointContext;
       if (transportChannelProvider instanceof FixedTransportChannelProvider) {
         transportChannel = transportChannelProvider.getTransportChannel();
@@ -273,7 +273,6 @@ public abstract class ClientContext {
         transportChannelProvider = transportChannelProvider.withEndpoint(endpoint);
       }
       transportChannel = transportChannelProvider.getTransportChannel();
-      transportChannelResolver.setTransportChannel(transportChannel);
       defaultCallContext =
           transportChannel.getEmptyCallContext().withTransportChannel(transportChannel);
       if (credentials != null) {
@@ -301,7 +300,11 @@ public abstract class ClientContext {
     ImmutableList.Builder<BackgroundResource> backgroundResources = ImmutableList.builder();
 
     if (transportChannelProvider.shouldAutoClose()) {
-      backgroundResources.add(transportChannelResolver);
+      if (settings.isUsingTPC()) {
+        backgroundResources.add(transportChannelResolver);
+      } else {
+        backgroundResources.add(transportChannel);
+      }
     }
     if (backgroundExecutorProvider.shouldAutoClose()) {
       backgroundResources.add(new ExecutorAsBackgroundResource(backgroundExecutor));

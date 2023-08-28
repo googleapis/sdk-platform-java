@@ -623,7 +623,6 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setDelayChannelCreation(true);
 
       return initDefaults(builder);
     }
