@@ -7,18 +7,25 @@ The script, `generate_library.sh`, allows you to generate a GAPIC client library
 Use Linux environment and install java runtime environment (8 or above).
 
 ## Prerequisite
-In order to generate a GAPIC library, you need to pull `google/` from [googleapis](https://github.com/googleapis/googleapis)
-and put it into the directory containing `generate_library.sh` since protos in `google/` 
-are likely referenced by protos from which the library are generated.
+Protos referenced by protos in `proto_path` (see `proto_path` below) should be copied to the current
+working directory (refers as `$cwd`, a directory contains `generate_library.sh`).
+The directory structure should be the same as import statements in protos.
 
-In most cases, the `proto_path` is a subdirectory within `google/`.
+For example, we want to generate from `folder1/folder2/protoA`, so `proto_path` 
+should be set to `folder1/folder2` (a relative path from `$cwd`). 
+protoA imports protoB as `folder3/folder4/protoB`, then there should 
+be `folder3/folder4` (containing protoB) in `$cwd`.
+
+In order to generate a GAPIC library, you need to pull `google/` from [googleapis](https://github.com/googleapis/googleapis)
+and put it into `$cwd` since protos in `google/` are likely referenced by 
+protos from which the library are generated.
 
 ## Parameters to run `generate_library.sh`
 
 You need to run the script with the following parameters.
 
 ### proto_path
-A directory in the current working directory (refers as `$cwd`) and copy proto files into it. 
+A directory in `$cwd` and copy proto files into it. 
 The absolute path of `proto_path` is `$cwd/$proto_path`. 
 
 Use `-p` or `--proto_path` to specify the value.
@@ -47,16 +54,19 @@ $destination_path
   |          |_java
   |    
   |_proto-*
-       |_src
-          |_main
-             |_java
-             |_proto
+  |    |_src
+  |       |_main
+  |          |_java
+  |          |_proto
+  |_samples
+      |_snippets
+          |_generated
 ```
 You can't build the library as-is since it does not have `pom.xml` or `build.gradle`.
 To use the library, copy the generated files to the corresponding directory
 of a library repository, e.g., `google-cloud-java`.
 
-### version of gapic-generator-java
+### gapic_generator_version
 You can find the released version of gapic-generator-java in [maven central](https://repo1.maven.org/maven2/com/google/api/gapic-generator-java/).
 
 Use `--gapic_generator_version` to specify the value.
@@ -64,7 +74,7 @@ Use `--gapic_generator_version` to specify the value.
 Note that you can specify a `SNAPSHOT` version as long as you have build the SNAPSHOT of gapic-generator-java in your maven
 local repository.
 
-### version of protobuf (optional)
+### protobuf_version (optional)
 You can find the released version of protobuf in [GitHub](https://github.com/protocolbuffers/protobuf/releases/).
 The default value is defined in `gapic-generator-java-pom-parent/pom.xml`.
 
@@ -72,7 +82,7 @@ Use `--protobuf_version` to specify the value.
 
 Note that if specified, the version should be compatible with gapic-generator-java.
 
-### version of grpc  (optional)
+### grpc_version (optional)
 You can find the released version of grpc in [maven central](https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/).
 The default value is defined in `gapic-generator-java-pom-parent/pom.xml`.
 
@@ -109,4 +119,17 @@ library_generation/generate_library.sh \
 --transport grpc+rest \
 --rest_numeric_enums true \
 --include_samples true
+```
+
+## An example to generate showcase client
+```
+library_generation/generate_library.sh \
+-p schema/google/showcase/v1beta1 \ # google/ should be in library_generation/.
+-d output \
+--gapic_generator_version 2.24.0 \
+--protobuf_version 23.2 \
+--grpc_version 1.55.1 \
+--transport grpc+rest \
+--rest_numeric_enums false \
+--include_samples false
 ```
