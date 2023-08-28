@@ -22,7 +22,7 @@ jobs:
         java-version: ${{ matrix.java }}
         distribution: temurin
         cache: maven
-    - uses: kanga333/variable-mapper@v0.3.0
+    - uses: kanga333/variable-mapper@3681b75f5c6c00162721168fb91ab74925eaebcb
       with:
         key: ${{ matrix.os }}
         map: |
