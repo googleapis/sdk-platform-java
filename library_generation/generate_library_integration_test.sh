@@ -69,6 +69,13 @@ if grep -A 15 "java_gapic_assembly_gradle_pkg(" "$proto_path/BUILD.bazel" | grep
   include_samples="true"
 fi
 echo "GAPIC options are transport=$transport, rest_numeric_enums=$rest_numeric_enums, include_samples=$include_samples."
+
+# clone monorepo
+if [ ! -d google-cloud-java ];
+then
+  git clone --branch=main --depth 1 -q "https://github.com/googleapis/google-cloud-java"
+fi
+repo_metadata_json_path="$(pwd)/google-cloud-java/java-channel/.repo-metadata.json"
 # generate GAPIC client library
 echo "Generating library from $proto_path, to $destination_path..."
 "$working_directory"/generate_library.sh \
@@ -79,16 +86,18 @@ echo "Generating library from $proto_path, to $destination_path..."
 --grpc_version "$grpc_version" \
 --transport "$transport" \
 --rest_numeric_enums "$rest_numeric_enums" \
---include_samples "$include_samples"
+--include_samples "$include_samples" \
+--enable_postprocessing "true" \
+--repo_metadata_json_path $repo_metadata_json_path \
+--owlbot_sha '3a95f1b9b1102865ca551b76be51d2bdb850900c4db2f6d79269e7af81ac8f84'
 
 echo "Generate library finished."
 echo "Checking out googleapis-gen repository..."
 #git clone --branch=master --depth 1 -q "$googleapis_gen_url"
-git clone --branch=master --depth 1 -q "https://github.com/googleapis/google-cloud-java"
 
 echo "Compare generation result..."
 cd "$working_directory"
-diff -r "google-cloud-java/java-bigtable" "$destination_path" -x "*gradle*"
+diff -r "google-cloud-java/java-channel" "$destination_path" -x "*gradle*"
 echo "Comparison finished, no difference is found."
 # clean up
 cd "$working_directory"

@@ -50,6 +50,10 @@ case $key in
     repo_metadata_json_path="$2"
     shift
     ;;
+    --owlbot_sha)
+    owlbot_sha="$2"
+    shift
+    ;;
     *)
     echo "Invalid option: [$1]"
     exit 1
@@ -175,7 +179,7 @@ rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_pro
 # post-processing
 #####################################################
 set -x
-if [ $enable_postprocessing -ne "true" ];
+if [ $enable_postprocessing != "true" ];
 then
   echo "post processing is disabled"
   exit 0
@@ -185,6 +189,11 @@ then
   echo "no repo_metadata.json provided. This is necessary for post-processing the generated library"
   exit 1
 fi
+if [ -z $owlbot_sha ];
+then
+  echo "no owlbot_sha provided. This is necessary for post-processing the generated library"
+  exit 1
+fi
 # copy repo metadata to destination library folder
 workspace=$destination_path/workspace
 mkdir -p $workspace
@@ -192,13 +201,57 @@ cp $repo_metadata_json_path $workspace/.repo-metadata.json
 
 # call owl-bot-copy
 owlbot_staging_folder="$workspace/owl-bot-staging"
-owlbot_image=gcr.io/cloud-devrel-public-resources/owlbot-java@sha256:$OWLBOT_SHA
+owlbot_image=gcr.io/cloud-devrel-public-resources/owlbot-java@sha256:$owlbot_sha
+
+#### yaml
+# render owlbot yaml template
+distribution_name=$(cat $repo_metadata_json_path | jq -r '.distribution_name // empty' | rev | cut -d: -f1 | rev)
+api_shortname=$(cat $repo_metadata_json_path | jq -r '.api_shortname // empty')
+
+if [ -z ${distribution_name+x} ]; then
+  echo "owlbot will not use copy regex"
+else
+  MODULE_NAME=$proto_path
+  OWLBOT_COPY_REGEX=$(cat <<-_EOT_
+deep-remove-regex:
+- "/${module_name}/grpc-google-.*/src"
+- "/${module_name}/proto-google-.*/src"
+- "/${module_name}/google-.*/src"
+- "/${module_name}/samples/snippets/generated"
+deep-preserve-regex:
+- "/${module_name}/google-.*/src/test/java/com/google/cloud/.*/v.*/it/it.*test.java"
+deep-copy-regex:
+- source: "/{{ proto_path }}/(v.*)/.*-java/proto-google-.*/src"
+  dest: "/owl-bot-staging/${module_name}/\$1/proto-${distribution_name}-\$1/src"
+- source: "/{{ proto_path }}/(v.*)/.*-java/grpc-google-.*/src"
+  dest: "/owl-bot-staging/${module_name}/\$1/grpc-${distribution_name}-\$1/src"
+- source: "/{{ proto_path }}/(v.*)/.*-java/gapic-google-.*/src"
+  dest: "/owl-bot-staging/${module_name}/\$1/${distribution_name}/src"
+- source: "/{{ proto_path }}/(v.*)/.*-java/samples/snippets/generated"
+  dest: "/owl-bot-staging/${module_name}/\$1/samples/snippets/generated"
+_EOT_
+)
+fi
+owlbot_yaml_content=$(cat <<-_eot_
+${owlbot_copy_regex}
+api-name: ${api_shortname}
+_eot_
+)
+#### end yaml
 
 # render owlbot.py template
-owlbot_py_content=$(cat "$script_dir/post-processing/templates/owlbot.py.template")
+owlbot_py_content=$(cat "$script_dir/templates/owlbot.py.template")
 
-cp -r $output_folder $owlbot_staging_folder
+#cp -r $(find $destination_path -not -wholename './workspace*') $owlbot_staging_folder
+versions_file="$script_dir/google-cloud-java/versions.txt"
+cp $versions_file $workspace
+cp -r $destination_path/gapic-$folder_name $owlbot_staging_folder/
+cp -r $destination_path/grpc-$folder_name $owlbot_staging_folder/
+cp -r $destination_path/proto-$folder_name $owlbot_staging_folder/
+
 echo "$owlbot_py_content" > $workspace/owlbot.py
+echo "$owlbot_yaml_content" > $owlbot_staging_folder/.OwlBot.yaml
+exit 0
 docker run --rm -v $workspace:/workspace --user $(id -u):$(id -g) $owlbot_image
 
 # postprocessor cleanup
@@ -206,7 +259,8 @@ bash $script_dir/post-processing/update_owlbot_postprocessor_config.sh $workspac
 bash $script_dir/post-processing/delete_non_generated_samples.sh $workspace
 bash $script_dir/post-processing/consolidate_config.sh $workspace
 bash $script_dir/post-processing/readme_update.sh $workspace
-rm $workspace/versions.txt
+#rm $workspace/versions.txt
+
 if [ -z ${monorepo_tag+x} ]; then
   echo "Will not add parent project to pom"
 else
@@ -230,29 +284,30 @@ else
 fi
 
 # rename folders properly (may not be necessary after all)
-pushd $workspace
-gapic_lib_original_name=$(find . -name 'gapic-*' | sed "s/\.\///")
-gapic_lib_new_name=$(echo "$gapic_lib_original_name" |\
-  sed 's/cloud-cloud/cloud/' | sed 's/-v[0-9a-za-z]-java//' | sed 's/gapic-//')
-proto_lib_original_name=$(find . -name 'proto-*' | sed "s/\.\///")
-proto_lib_new_name=$(echo "$proto_lib_original_name" |\
-  sed 's/cloud-cloud/cloud/' | sed 's/-java//')
-grpc_lib_original_name=$(find . -name 'grpc-*' | sed "s/\.\///")
-grpc_lib_new_name=$(echo "$grpc_lib_original_name" |\
-  sed 's/cloud-cloud/cloud/' | sed 's/-java//')
-# two folders exist, move the contents of one to the other
-mv $gapic_lib_original_name/* $gapic_lib_new_name
-rm -rdf $gapic_lib_original_name
-# just rename these two
-mv $proto_lib_original_name $proto_lib_new_name
-mv $grpc_lib_original_name $grpc_lib_new_name
-
-for pom_file in $(find . -mindepth 0 -maxdepth 2 -name pom.xml \
-    |sort --dictionary-order); do
-  sed -i "s/$grpc_lib_original_name/$grpc_lib_new_name/" $pom_file
-  sed -i "s/$proto_lib_original_name/$proto_lib_new_name/" $pom_file
-  sed -i "s/$grpc_lib_original_name/$grpc_lib_new_name/" $pom_file
-done
-popd
-
-
+exit 0
+#pushd $workspace
+#gapic_lib_original_name=$(find . -name 'gapic-*' | sed "s/\.\///")
+#gapic_lib_new_name=$(echo "$gapic_lib_original_name" |\
+  #sed 's/cloud-cloud/cloud/' | sed 's/-v[0-9a-za-z]-java//' | sed 's/gapic-//')
+#proto_lib_original_name=$(find . -name 'proto-*' | sed "s/\.\///")
+#proto_lib_new_name=$(echo "$proto_lib_original_name" |\
+  #sed 's/cloud-cloud/cloud/' | sed 's/-java//')
+#grpc_lib_original_name=$(find . -name 'grpc-*' | sed "s/\.\///")
+#grpc_lib_new_name=$(echo "$grpc_lib_original_name" |\
+  #sed 's/cloud-cloud/cloud/' | sed 's/-java//')
+## two folders exist, move the contents of one to the other
+#mv $gapic_lib_original_name/* $gapic_lib_new_name
+#rm -rdf $gapic_lib_original_name
+## just rename these two
+#mv $proto_lib_original_name $proto_lib_new_name
+#mv $grpc_lib_original_name $grpc_lib_new_name
+#
+#for pom_file in $(find . -mindepth 0 -maxdepth 2 -name pom.xml \
+    #|sort --dictionary-order); do
+  #sed -i "s/$grpc_lib_original_name/$grpc_lib_new_name/" $pom_file
+  #sed -i "s/$proto_lib_original_name/$proto_lib_new_name/" $pom_file
+  #sed -i "s/$grpc_lib_original_name/$grpc_lib_new_name/" $pom_file
+#done
+#popd
+#
+#
