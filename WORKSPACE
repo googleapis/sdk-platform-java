@@ -133,7 +133,7 @@ maven_install(
         'com.google.api:api-common:2.15.1-SNAPSHOT'
     ],
     repositories = [
-        'file:///usr/local/google/home/diegomarquezp/.m2/repository',
+        'm2Local',
     ]
 )
 
