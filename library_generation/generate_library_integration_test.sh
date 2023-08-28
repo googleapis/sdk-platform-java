@@ -55,9 +55,9 @@ sparse_clone() {
   repo_url=$1
   paths=$2
   clone_dir=$(basename ${repo_url%.*})
-  rm -rf $clone_dir
+  rm -rf" $clone_dir"
   git clone -n --depth=1 --filter=tree:0 "$repo_url"
-  cd $clone_dir
+  cd "$clone_dir"
   git sparse-checkout set --no-cone $paths
   git checkout
   cd ..
@@ -91,7 +91,7 @@ fi
 echo "GAPIC options are transport=$transport, rest_numeric_enums=$rest_numeric_enums, include_samples=$include_samples."
 # generate GAPIC client library
 echo "Generating library from $proto_path, to $destination_path..."
-$script_dir/generate_library.sh \
+"$script_dir"/generate_library.sh \
 -p "$proto_path" \
 -d "$destination_path" \
 --gapic_generator_version "$gapic_generator_version" \
@@ -105,7 +105,7 @@ $script_dir/generate_library.sh \
 echo "Generate library finished."
 echo "Checking out googleapis-gen repository..."
 
-sparse_clone $googleapis_gen_url $proto_path
+sparse_clone "$googleapis_gen_url" "$proto_path"
 
 echo "Compare generation result..."
 RESULT=0

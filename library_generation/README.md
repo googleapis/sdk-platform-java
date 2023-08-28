@@ -128,7 +128,7 @@ library_generation/generate_library.sh \
 ## An example to generate showcase client
 ```
 library_generation/generate_library.sh \
--p schema/google/showcase/v1beta1 \
+-p schema/google/showcase/v1beta1 \ # google/ should be in library_generation/.
 -d output \
 --gapic_generator_version 2.24.0 \
 --protobuf_version 23.2 \
