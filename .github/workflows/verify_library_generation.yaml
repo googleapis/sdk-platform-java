@@ -31,7 +31,7 @@ jobs:
               "os_architecture": "linux-x86_64"
             },
             "macos-12": {
-              "os_architecture": "osx-universal_binary"
+              "os_architecture": "osx-x86_64"
             }
           }
     - name: Run integration tests
