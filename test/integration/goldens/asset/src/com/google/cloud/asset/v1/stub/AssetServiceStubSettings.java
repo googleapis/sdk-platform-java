@@ -960,6 +960,7 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
+      builder.setDelayChannelCreation(true);
 
       return initDefaults(builder);
     }
@@ -973,6 +974,7 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
+      builder.setDelayChannelCreation(true);
 
       return initDefaults(builder);
     }

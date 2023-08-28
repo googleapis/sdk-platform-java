@@ -724,6 +724,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
+      builder.setDelayChannelCreation(true);
 
       return initDefaults(builder);
     }

@@ -382,6 +382,7 @@ public class BigtableStubSettings extends StubSettings<BigtableStubSettings> {
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
+      builder.setDelayChannelCreation(true);
 
       return initDefaults(builder);
     }

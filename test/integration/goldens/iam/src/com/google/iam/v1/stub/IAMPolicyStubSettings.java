@@ -263,6 +263,7 @@ public class IAMPolicyStubSettings extends StubSettings<IAMPolicyStubSettings> {
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
+      builder.setDelayChannelCreation(true);
 
       return initDefaults(builder);
     }
