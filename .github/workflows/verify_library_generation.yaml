@@ -31,7 +31,7 @@ jobs:
               "os_architecture": "linux-x86_64"
             },
             "macos-12": {
-              "os_architecture": "osx-aarch_64"
+              "os_architecture": "osx-universal_binary"
             }
           }
     - name: Run integration tests
@@ -40,5 +40,5 @@ jobs:
         library_generation/generate_library_integration_test.sh \
         -p google/bigtable/v2 \
         -d google-cloud-bigtable-v2-java \
-        --googleapis_gen_url https://cloud-java-bot:${{ secrets.CLOUD_JAVA_BOT_GITHUB_TOKEN }}@github.com/googleapis/googleapis-gen.git
+        --googleapis_gen_url https://cloud-java-bot:${{ secrets.CLOUD_JAVA_BOT_GITHUB_TOKEN }}@github.com/googleapis/googleapis-gen.git \
         --os_architecture ${{ env.os_architecture }}
