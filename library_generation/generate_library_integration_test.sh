@@ -23,10 +23,6 @@ case $key in
     destination_path="$2"
     shift
     ;;
-    --googleapis_gen_url)
-    googleapis_gen_url="$2"
-    shift
-    ;;
     *)
     echo "Invalid option: [$1]"
     exit 1
@@ -87,11 +83,12 @@ echo "Generating library from $proto_path, to $destination_path..."
 
 echo "Generate library finished."
 echo "Checking out googleapis-gen repository..."
-git clone --branch=master --depth 1 -q "$googleapis_gen_url"
+#git clone --branch=master --depth 1 -q "$googleapis_gen_url"
+git clone --branch=master --depth 1 -q "https://github.com/googleapis/google-cloud-java"
 
 echo "Compare generation result..."
 cd "$working_directory"
-diff -r "googleapis-gen/$proto_path/$destination_path" "$destination_path" -x "*gradle*"
+diff -r "google-cloud-java/java-bigtable" "$destination_path" -x "*gradle*"
 echo "Comparison finished, no difference is found."
 # clean up
 cd "$working_directory"
