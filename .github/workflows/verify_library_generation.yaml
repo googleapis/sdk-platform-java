@@ -1,0 +1,30 @@
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+    paths:
+    - library_generation/**
+
+  workflow_dispatch:
+name: verify_library_generation_against_googleapis-gen
+jobs:
+  verify_library_generation:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        java: [ 8 ]
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-java@v3
+      with:
+        java-version: ${{ matrix.java }}
+        distribution: temurin
+        cache: maven
+    - name: Run integration tests
+      run: |
+        set -x
+        library_generation/generate_library_integration_test.sh \
+        -p google/bigtable/v2 \
+        -d google-cloud-bigtable-v2-java \
+        --googleapis_gen_url https://cloud-java-bot:${{ secrets.CLOUD_JAVA_BOT_GITHUB_TOKEN }}@github.com/googleapis/googleapis-gen.git
