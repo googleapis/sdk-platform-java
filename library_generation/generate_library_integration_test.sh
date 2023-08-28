@@ -58,7 +58,7 @@ sparse_clone() {
   rm -rf "$clone_dir"
   git clone -n --depth=1 --filter=tree:0 "$repo_url"
   cd "$clone_dir"
-  git sparse-checkout set --no-cone "$paths"
+  git sparse-checkout set --no-cone $paths
   git checkout
   cd ..
 }

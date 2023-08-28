@@ -136,8 +136,8 @@ download_tools() {
   grpc_version=$3
   os_architecture=$4
   download_generator "$gapic_generator_version"
-  download_protobuf "$protobuf_version" $os_architecture
-  download_grpc_plugin "$grpc_version" $os_architecture
+  download_protobuf "$protobuf_version" "$os_architecture"
+  download_grpc_plugin "$grpc_version" "$os_architecture"
 }
 
 download_generator() {
