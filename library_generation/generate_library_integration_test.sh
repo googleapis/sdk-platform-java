@@ -54,11 +54,11 @@ get_version_from_WORKSPACE() {
 sparse_clone() {
   repo_url=$1
   paths=$2
-  clone_dir=$(basename ${repo_url%.*})
-  rm -rf" $clone_dir"
+  clone_dir=$(basename "${repo_url%.*}")
+  rm -rf "$clone_dir"
   git clone -n --depth=1 --filter=tree:0 "$repo_url"
   cd "$clone_dir"
-  git sparse-checkout set --no-cone $paths
+  git sparse-checkout set --no-cone "$paths"
   git checkout
   cd ..
 }

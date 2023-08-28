@@ -55,7 +55,7 @@ done
 
 script_dir=$(dirname "$(readlink -f "$0")")
 # source utility functions
-source $script_dir/utilities.sh
+source "$script_dir"/utilities.sh
 
 if [ -z "$protobuf_version" ]; then
   protobuf_version=$(get_protobuf_version "$gapic_generator_version")
