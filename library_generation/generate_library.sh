@@ -203,41 +203,8 @@ cp $repo_metadata_json_path $workspace/.repo-metadata.json
 owlbot_staging_folder="$workspace/owl-bot-staging"
 owlbot_image=gcr.io/cloud-devrel-public-resources/owlbot-java@sha256:$owlbot_sha
 
-#### yaml
-# render owlbot yaml template
 distribution_name=$(cat $repo_metadata_json_path | jq -r '.distribution_name // empty' | rev | cut -d: -f1 | rev)
 api_shortname=$(cat $repo_metadata_json_path | jq -r '.api_shortname // empty')
-
-if [ -z ${distribution_name+x} ]; then
-  echo "owlbot will not use copy regex"
-else
-  MODULE_NAME=$proto_path
-  OWLBOT_COPY_REGEX=$(cat <<-_EOT_
-deep-remove-regex:
-- "/${module_name}/grpc-google-.*/src"
-- "/${module_name}/proto-google-.*/src"
-- "/${module_name}/google-.*/src"
-- "/${module_name}/samples/snippets/generated"
-deep-preserve-regex:
-- "/${module_name}/google-.*/src/test/java/com/google/cloud/.*/v.*/it/it.*test.java"
-deep-copy-regex:
-- source: "/{{ proto_path }}/(v.*)/.*-java/proto-google-.*/src"
-  dest: "/owl-bot-staging/${module_name}/\$1/proto-${distribution_name}-\$1/src"
-- source: "/{{ proto_path }}/(v.*)/.*-java/grpc-google-.*/src"
-  dest: "/owl-bot-staging/${module_name}/\$1/grpc-${distribution_name}-\$1/src"
-- source: "/{{ proto_path }}/(v.*)/.*-java/gapic-google-.*/src"
-  dest: "/owl-bot-staging/${module_name}/\$1/${distribution_name}/src"
-- source: "/{{ proto_path }}/(v.*)/.*-java/samples/snippets/generated"
-  dest: "/owl-bot-staging/${module_name}/\$1/samples/snippets/generated"
-_EOT_
-)
-fi
-owlbot_yaml_content=$(cat <<-_eot_
-${owlbot_copy_regex}
-api-name: ${api_shortname}
-_eot_
-)
-#### end yaml
 
 # render owlbot.py template
 owlbot_py_content=$(cat "$script_dir/templates/owlbot.py.template")
@@ -245,13 +212,19 @@ owlbot_py_content=$(cat "$script_dir/templates/owlbot.py.template")
 #cp -r $(find $destination_path -not -wholename './workspace*') $owlbot_staging_folder
 versions_file="$script_dir/google-cloud-java/versions.txt"
 cp $versions_file $workspace
-cp -r $destination_path/gapic-$folder_name $owlbot_staging_folder/
-cp -r $destination_path/grpc-$folder_name $owlbot_staging_folder/
-cp -r $destination_path/proto-$folder_name $owlbot_staging_folder/
+staging_suffix="java-$module_name"
+mkdir -p $owlbot_staging_folder/$staging_suffix
+cp -r $destination_path/gapic-$folder_name $owlbot_staging_folder/$staging_suffix
+cp -r $destination_path/grpc-$folder_name $owlbot_staging_folder/$staging_suffix
+cp -r $destination_path/proto-$folder_name $owlbot_staging_folder/$staging_suffix
+if [ $include_samples == 'true' ]; then
+  generated_snippets_staging="$owlbot_staging_folder/$staging_suffix/samples/snippets/generated"
+  mkdir -p $generated_snippets_staging
+  cp -r $destination_path/samples $generated_snippets_staging
+fi
 
 echo "$owlbot_py_content" > $workspace/owlbot.py
-echo "$owlbot_yaml_content" > $owlbot_staging_folder/.OwlBot.yaml
-exit 0
+
 docker run --rm -v $workspace:/workspace --user $(id -u):$(id -g) $owlbot_image
 
 # postprocessor cleanup

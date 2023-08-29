@@ -97,8 +97,8 @@ echo "Checking out googleapis-gen repository..."
 
 echo "Compare generation result..."
 cd "$working_directory"
-diff -r "google-cloud-java/java-channel" "$destination_path" -x "*gradle*"
+diff -r "google-cloud-java/java-channel" "$destination_path/workspace" -x "*gradle*"
 echo "Comparison finished, no difference is found."
 # clean up
 cd "$working_directory"
-rm -rf WORKSPACE googleapis-gen "$destination_path"
+#rm -rf WORKSPACE googleapis-gen "$destination_path"
