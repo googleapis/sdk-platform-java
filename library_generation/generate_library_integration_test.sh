@@ -31,8 +31,8 @@ case $key in
     googleapis_gen_url="$2"
     shift
     ;;
-    --os_architecture)
-    os_architecture="$2"
+    --os_type)
+    os_type="$2"
     shift
     ;;
     *)
@@ -89,6 +89,11 @@ if grep -A 15 "java_gapic_assembly_gradle_pkg(" "$proto_path/BUILD.bazel" | grep
   include_samples="true"
 fi
 echo "GAPIC options are transport=$transport, rest_numeric_enums=$rest_numeric_enums, include_samples=$include_samples."
+os_architecture="linux-x86_64"
+if [[ "$os_type" == *"macos"* ]]; then
+ os_architecture="osx-x86_64"
+fi
+echo "OS Architecture is $os_architecture."
 # generate GAPIC client library
 echo "Generating library from $proto_path, to $destination_path..."
 "$script_dir"/generate_library.sh \
