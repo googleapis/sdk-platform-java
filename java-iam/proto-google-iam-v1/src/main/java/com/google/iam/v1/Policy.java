@@ -42,6 +42,7 @@ package com.google.iam.v1;
  *
  * **JSON example:**
  *
+ * ```
  *     {
  *       "bindings": [
  *         {
@@ -69,9 +70,11 @@ package com.google.iam.v1;
  *       "etag": "BwWWja0YfJA=",
  *       "version": 3
  *     }
+ * ```
  *
  * **YAML example:**
  *
+ * ```
  *     bindings:
  *     - members:
  *       - user:mike&#64;example.com
@@ -88,6 +91,7 @@ package com.google.iam.v1;
  *         expression: request.time &lt; timestamp('2020-10-01T00:00:00.000Z')
  *     etag: BwWWja0YfJA=
  *     version: 3
+ * ```
  *
  * For a description of IAM and its features, see the
  * [IAM documentation](https://cloud.google.com/iam/docs/).
@@ -598,6 +602,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
    *
    * **JSON example:**
    *
+   * ```
    *     {
    *       "bindings": [
    *         {
@@ -625,9 +630,11 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
    *       "etag": "BwWWja0YfJA=",
    *       "version": 3
    *     }
+   * ```
    *
    * **YAML example:**
    *
+   * ```
    *     bindings:
    *     - members:
    *       - user:mike&#64;example.com
@@ -644,6 +651,7 @@ public final class Policy extends com.google.protobuf.GeneratedMessageV3
    *         expression: request.time &lt; timestamp('2020-10-01T00:00:00.000Z')
    *     etag: BwWWja0YfJA=
    *     version: 3
+   * ```
    *
    * For a description of IAM and its features, see the
    * [IAM documentation](https://cloud.google.com/iam/docs/).
