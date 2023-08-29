@@ -11,16 +11,14 @@ script_dir=$(dirname "$(readlink -f "$0")")
 source "$script_dir"/../utilities.sh
 
 assertEquals() {
-  test_executed
   expected=$1
   actual=$2
   if [[ "$expected" == "$actual" ]]; then
-    test_succeed
-    return
+    return 0
   fi
 
-  test_failed
   echo "Error: expected $expected, got $actual instead."
+  return 1
 }
 
 test_executed() {
@@ -51,10 +49,24 @@ get_protobuf_version_test() {
   assertEquals "23.2" "$actual_version"
 }
 
-# Execute tests
-extract_folder_name_test
-get_grpc_version_test
-get_protobuf_version_test
+# Execute tests.
+# One line per test.
+test_list=(
+  extract_folder_name_test
+  get_grpc_version_test
+  get_protobuf_version_test
+)
+
+for ut in "${test_list[@]}"; do
+  test_executed
+  result=0
+  "$ut" || result=$?
+  if [[ "$result" == 0 ]]; then
+    test_succeed
+  else
+    test_failed
+  fi
+done
 
 echo "Test result: $total_num tests executed, $succeed_num succeed, $failed_num failed."
 if [[ "$total_num" == "$succeed_num" ]]; then
