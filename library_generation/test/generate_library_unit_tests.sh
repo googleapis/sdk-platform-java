@@ -46,9 +46,15 @@ get_grpc_version_test() {
   assertEquals "1.56.1" "$actual_version"
 }
 
+get_protobuf_version_test() {
+  actual_version=$(get_protobuf_version "2.24.0")
+  assertEquals "23.2" "$actual_version"
+}
+
 # Execute tests
 extract_folder_name_test
 get_grpc_version_test
+get_protobuf_version_test
 
 echo "Test result: $total_num tests executed, $succeed_num succeed, $failed_num failed."
 if [[ "$total_num" == "$succeed_num" ]]; then
