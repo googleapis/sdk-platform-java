@@ -112,7 +112,7 @@ public class ApiClientHeaderProvider implements HeaderProvider, Serializable {
     protected Builder() {
       // Initialize with default values
       apiClientHeaderKey = getDefaultApiClientHeaderKey();
-      setJvmToken(GaxProperties.getJavaVersion());
+      setJvmToken(GaxProperties.getJavaRuntimeInfo());
       clientLibToken = null;
       generatedLibToken = null;
       setClientRuntimeToken(GaxProperties.getGaxVersion());

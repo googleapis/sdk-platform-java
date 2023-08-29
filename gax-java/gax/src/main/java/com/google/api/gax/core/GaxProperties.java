@@ -33,6 +33,7 @@ import static org.graalvm.nativeimage.ImageInfo.PROPERTY_IMAGE_CODE_KEY;
 import static org.graalvm.nativeimage.ImageInfo.PROPERTY_IMAGE_CODE_VALUE_RUNTIME;
 
 import com.google.api.core.InternalApi;
+import com.google.common.annotations.VisibleForTesting;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -80,6 +81,15 @@ public class GaxProperties {
     }
 
     return version != null ? version : DEFAULT_VERSION;
+  }
+
+  @VisibleForTesting
+  public static String getJavaRuntimeInfo() {
+    String javaVersion = getJavaVersion();
+    String vendor = System.getProperty("java.vendor", "unknown");
+    String vendorVersion = System.getProperty("java.vendor.version", "unknown");
+    String combined = String.format("%s__%s__%s", javaVersion, vendor, vendorVersion);
+    return combined.replaceAll("[^0-9a-zA-Z_\\\\.]", "-");
   }
 
   /** Returns the version of the running JVM */
