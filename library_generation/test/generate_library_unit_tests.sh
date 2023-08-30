@@ -49,12 +49,28 @@ get_protobuf_version_test() {
   assertEquals "23.2" "$actual_version"
 }
 
+search_additional_protos_common_resources_test() {
+  proto_path="$script_dir/resources/monitoring"
+  addition_protos=$(search_additional_protos)
+  assertEquals "google/cloud/common_resources.proto" "$addition_protos"
+}
+
+search_additional_protos_location_test() {
+  proto_path="$script_dir/resources/firestore"
+  addition_protos=$(search_additional_protos)
+  assertEquals \
+  "google/cloud/common_resources.proto google/cloud/location/locations.proto" \
+  "$addition_protos"
+}
+
 # Execute tests.
 # One line per test.
 test_list=(
   extract_folder_name_test
   get_grpc_version_test
   get_protobuf_version_test
+  search_additional_protos_common_resources_test
+  search_additional_protos_location_test
 )
 
 for ut in "${test_list[@]}"; do
