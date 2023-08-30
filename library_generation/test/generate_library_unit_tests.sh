@@ -55,11 +55,27 @@ search_additional_protos_common_resources_test() {
   assertEquals "google/cloud/common_resources.proto" "$addition_protos"
 }
 
+search_additional_protos_iam_test() {
+  proto_path="$script_dir/resources/pubsub"
+  addition_protos=$(search_additional_protos)
+  assertEquals \
+  "google/cloud/common_resources.proto google/iam/v1/iam_policy.proto" \
+  "$addition_protos"
+}
+
 search_additional_protos_location_test() {
   proto_path="$script_dir/resources/firestore"
   addition_protos=$(search_additional_protos)
   assertEquals \
   "google/cloud/common_resources.proto google/cloud/location/locations.proto" \
+  "$addition_protos"
+}
+
+search_additional_protos_iam_location_test() {
+  proto_path="$script_dir/resources/alloydb"
+  addition_protos=$(search_additional_protos)
+  assertEquals \
+  "google/cloud/common_resources.proto google/iam/v1/iam_policy.proto google/cloud/location/locations.proto" \
   "$addition_protos"
 }
 
@@ -70,7 +86,9 @@ test_list=(
   get_grpc_version_test
   get_protobuf_version_test
   search_additional_protos_common_resources_test
+  search_additional_protos_iam_test
   search_additional_protos_location_test
+  search_additional_protos_iam_location_test
 )
 
 for ut in "${test_list[@]}"; do
