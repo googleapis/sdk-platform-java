@@ -25,6 +25,6 @@ jobs:
       run: |
         set -x
         library_generation/generate_library_integration_test.sh \
-        -p google/bigtable/v2 \
-        -d google-cloud-bigtable-v2-java \
-        --googleapis_gen_url https://cloud-java-bot:${{ secrets.CLOUD_JAVA_BOT_GITHUB_TOKEN }}@github.com/googleapis/googleapis-gen.git
+        -p google/cloud/channel/v1 \
+        -d google-cloud-channel-v1 \
+        -m java-channel

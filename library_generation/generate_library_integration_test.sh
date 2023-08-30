@@ -3,14 +3,14 @@
 set -xeo pipefail
 
 # This script is used to test the result of `generate_library.sh` against generated
-# source code in googleapis-gen repository.
+# source code in google-cloud-java repository.
 # Specifically, this script will do
 # 1. checkout the master branch of googleapis/google and WORKSPACE
 # 2. parse version of gapic-generator-java, protobuf and grpc from WORKSPACE
 # 3. generate a library with given proto_path and destination_path by invoking
 #    `generate_library.sh`. GAPIC options to generate a library will be parsed
 #    from proto_path/BUILD.bazel.
-# 4. checkout the master branch googleapis-gen repository and compare the result.
+# 4. checkout the master branch google-cloud-java repository and compare the result.
 while [[ $# -gt 0 ]]
 do
 key="$1"
@@ -21,6 +21,10 @@ case $key in
     ;;
     -d|--destination_path)
     destination_path="$2"
+    shift
+    ;;
+    -m|--monorepo_folder)
+    monorepo_folder="$2"
     shift
     ;;
     *)
@@ -75,7 +79,8 @@ if [ ! -d google-cloud-java ];
 then
   git clone --branch=main --depth 1 -q "https://github.com/googleapis/google-cloud-java"
 fi
-repo_metadata_json_path="$(pwd)/google-cloud-java/java-channel/.repo-metadata.json"
+target_folder="$(pwd)/google-cloud-java/$monorepo_folder"
+repo_metadata_json_path="$target_folder/.repo-metadata.json"
 # generate GAPIC client library
 echo "Generating library from $proto_path, to $destination_path..."
 "$working_directory"/generate_library.sh \
@@ -92,14 +97,10 @@ echo "Generating library from $proto_path, to $destination_path..."
 --owlbot_sha '3a95f1b9b1102865ca551b76be51d2bdb850900c4db2f6d79269e7af81ac8f84'
 
 echo "Generate library finished."
-echo "Checking out googleapis-gen repository..."
-#git clone --branch=master --depth 1 -q "$googleapis_gen_url"
-
 echo "Compare generation result..."
 cd "$working_directory"
-#diff -r "google-cloud-java/java-channel" "$destination_path/workspace" -x "*gradle*"
-cp -r $destination_path/workspace/* google-cloud-java/java-channel/
+diff -r "google-cloud-java/$monorepo_folder" "$destination_path/workspace" -x "*gradle*"
 echo "Comparison finished, no difference is found."
 # clean up
 cd "$working_directory"
-#rm -rf WORKSPACE googleapis-gen "$destination_path"
+rm -rf WORKSPACE googleapis-gen "$destination_path"
