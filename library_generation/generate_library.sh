@@ -207,20 +207,21 @@ distribution_name=$(cat $repo_metadata_json_path | jq -r '.distribution_name // 
 api_shortname=$(cat $repo_metadata_json_path | jq -r '.api_shortname // empty')
 
 # render owlbot.py template
-owlbot_py_content=$(cat "$script_dir/templates/owlbot.py.template")
+owlbot_py_content=$(cat "$script_dir/post-processing/templates/owlbot.py.template")
 
 #cp -r $(find $destination_path -not -wholename './workspace*') $owlbot_staging_folder
 versions_file="$script_dir/google-cloud-java/versions.txt"
-cp $versions_file $workspace
+#cp $versions_file $workspace
 staging_suffix="java-$module_name"
 mkdir -p $owlbot_staging_folder/$staging_suffix
-cp -r $destination_path/gapic-$folder_name $owlbot_staging_folder/$staging_suffix
+gapic_folder_name=$(echo "$folder_name" | sed 's/\(.*\)-.*/\1/')
+cp -r $destination_path/gapic-$folder_name $owlbot_staging_folder/$staging_suffix/$gapic_folder_name
 cp -r $destination_path/grpc-$folder_name $owlbot_staging_folder/$staging_suffix
 cp -r $destination_path/proto-$folder_name $owlbot_staging_folder/$staging_suffix
 if [ $include_samples == 'true' ]; then
   generated_snippets_staging="$owlbot_staging_folder/$staging_suffix/samples/snippets/generated"
   mkdir -p $generated_snippets_staging
-  cp -r $destination_path/samples $generated_snippets_staging
+  cp -r $destination_path/samples/snippets/generated/* $generated_snippets_staging
 fi
 
 echo "$owlbot_py_content" > $workspace/owlbot.py
@@ -234,30 +235,22 @@ bash $script_dir/post-processing/consolidate_config.sh $workspace
 bash $script_dir/post-processing/readme_update.sh $workspace
 #rm $workspace/versions.txt
 
-if [ -z ${monorepo_tag+x} ]; then
-  echo "Will not add parent project to pom"
-else
-  pushd $script_dir
-  [ ! -d google-cloud-java ] && git clone https://github.com/googleapis/google-cloud-java
-  pushd google-cloud-java
-  git reset --hard
-  git checkout $monorepo_tag
-  parent_pom="$(pwd)/google-cloud-pom-parent/pom.xml"
-  popd
-  # rm -rdf google-cloud-java
-  popd
-  bash $script_dir/post-processing/set_parent_pom.sh $workspace $parent_pom
+pushd $script_dir
+[ ! -d google-cloud-java ] && git clone https://github.com/googleapis/google-cloud-java
+pushd google-cloud-java
+parent_pom="$(pwd)/google-cloud-pom-parent/pom.xml"
+popd
+popd
+bash $script_dir/post-processing/set_parent_pom.sh $workspace $parent_pom
 
-  # get existing versions.txt from downloaded monorepo
-  repo_short=$(cat $repo_metadata_json_path | jq -r '.repo_short // empty')
-  cp "$script_dir/google-cloud-java/versions.txt" $workspace
-  pushd $workspace
-  bash $script_dir/post-processing/apply_current_versions.sh
-  popd
-fi
+# get existing versions.txt from downloaded monorepo
+repo_short=$(cat $repo_metadata_json_path | jq -r '.repo_short // empty')
+cp "$script_dir/google-cloud-java/versions.txt" $workspace
+pushd $workspace
+bash $script_dir/post-processing/apply_current_versions.sh
+popd
 
 # rename folders properly (may not be necessary after all)
-exit 0
 #pushd $workspace
 #gapic_lib_original_name=$(find . -name 'gapic-*' | sed "s/\.\///")
 #gapic_lib_new_name=$(echo "$gapic_lib_original_name" |\
