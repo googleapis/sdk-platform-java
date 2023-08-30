@@ -63,7 +63,7 @@ sparse_clone() {
 script_dir=$(dirname "$(readlink -f "$0")")
 # checkout the master branch of googleapis/google (proto files) and WORKSPACE
 echo "Checking out googlapis repository..."
-sparse_clone https://github.com/googleapis/googleapis.git "$proto_path WORKSPACE google/api google/rpc google/cloud/common_resources.proto"
+sparse_clone https://github.com/googleapis/googleapis.git "$proto_path WORKSPACE google/api google/type google/rpc google/longrunning google/cloud/common_resources.proto"
 cd googleapis
 # parse version of gapic-generator-java, protobuf and grpc from WORKSPACE
 gapic_generator_version=$(get_version_from_WORKSPACE "_gapic_generator_java_version" WORKSPACE "=")
@@ -95,8 +95,6 @@ fi
 target_folder="$(pwd)/google-cloud-java/$monorepo_folder"
 repo_metadata_json_path="$target_folder/.repo-metadata.json"
 # generate GAPIC client library
-echo "Generating library from $proto_path, to $destination_path..."
-"$working_directory"/generate_library.sh \
 os_architecture="linux-x86_64"
 if [[ "$os_type" == *"macos"* ]]; then
  os_architecture="osx-x86_64"
@@ -120,7 +118,7 @@ echo "Generating library from $proto_path, to $destination_path..."
 
 echo "Generate library finished."
 echo "Compare generation result..."
-cd "$working_directory"
+cd "$script_dir"
 
 RESULT=0
 diff -r "google-cloud-java/$monorepo_folder" "$destination_path/workspace" -x "*gradle*" || RESULT=$?
@@ -130,6 +128,6 @@ else
   echo "FAILURE: Differences found."
 fi
 # clean up
-cd "$working_directory"
+cd "$script_dir"
 rm -rf WORKSPACE googleapis-gen "$destination_path"
 exit $RESULT
