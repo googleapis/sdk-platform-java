@@ -11,6 +11,7 @@ set -xeo pipefail
 #    `generate_library.sh`. GAPIC options to generate a library will be parsed
 #    from proto_path/BUILD.bazel.
 # 4. checkout the master branch google-cloud-java repository and compare the result.
+
 while [[ $# -gt 0 ]]
 do
 key="$1"
@@ -25,6 +26,10 @@ case $key in
     ;;
     -m|--monorepo_folder)
     monorepo_folder="$2"
+    shift
+    ;;
+    --os_type)
+    os_type="$2"
     shift
     ;;
     *)
@@ -43,14 +48,23 @@ get_version_from_WORKSPACE() {
   echo "$version"
 }
 
-working_directory=$(dirname "$(readlink -f "$0")")
-cd "$working_directory"
+sparse_clone() {
+  repo_url=$1
+  paths=$2
+  clone_dir=$(basename "${repo_url%.*}")
+  rm -rf "$clone_dir"
+  git clone -n --depth=1 --filter=tree:0 "$repo_url"
+  cd "$clone_dir"
+  git sparse-checkout set --no-cone $paths
+  git checkout
+  cd ..
+}
+
+script_dir=$(dirname "$(readlink -f "$0")")
 # checkout the master branch of googleapis/google (proto files) and WORKSPACE
 echo "Checking out googlapis repository..."
-git clone --branch=master --depth 1 -q https://github.com/googleapis/googleapis.git
-cp -r googleapis/google .
-cp googleapis/WORKSPACE .
-rm -rf googleapis
+sparse_clone https://github.com/googleapis/googleapis.git "$proto_path WORKSPACE google/api google/rpc google/cloud/common_resources.proto"
+cd googleapis
 # parse version of gapic-generator-java, protobuf and grpc from WORKSPACE
 gapic_generator_version=$(get_version_from_WORKSPACE "_gapic_generator_java_version" WORKSPACE "=")
 echo "The version of gapic-generator-java is $gapic_generator_version."
@@ -59,7 +73,6 @@ echo "The version of protobuf is $protobuf_version"
 grpc_version=$(get_version_from_WORKSPACE "_grpc_version" WORKSPACE "=")
 echo "The version of protoc-gen-grpc-java plugin is $gapic_generator_version."
 # parse GAPIC options from proto_path/BUILD.bazel
-cd $"$working_directory"
 transport="grpc"
 if grep -A 15 "java_gapic_library(" "$proto_path/BUILD.bazel" | grep -q "grpc+rest"; then
   transport="grpc+rest"
@@ -84,6 +97,14 @@ repo_metadata_json_path="$target_folder/.repo-metadata.json"
 # generate GAPIC client library
 echo "Generating library from $proto_path, to $destination_path..."
 "$working_directory"/generate_library.sh \
+os_architecture="linux-x86_64"
+if [[ "$os_type" == *"macos"* ]]; then
+ os_architecture="osx-x86_64"
+fi
+echo "OS Architecture is $os_architecture."
+# generate GAPIC client library
+echo "Generating library from $proto_path, to $destination_path..."
+"$script_dir"/generate_library.sh \
 -p "$proto_path" \
 -d "$destination_path" \
 --gapic_generator_version "$gapic_generator_version" \
@@ -94,13 +115,21 @@ echo "Generating library from $proto_path, to $destination_path..."
 --include_samples "$include_samples" \
 --enable_postprocessing "true" \
 --repo_metadata_json_path $repo_metadata_json_path \
---owlbot_sha '3a95f1b9b1102865ca551b76be51d2bdb850900c4db2f6d79269e7af81ac8f84'
+--owlbot_sha '3a95f1b9b1102865ca551b76be51d2bdb850900c4db2f6d79269e7af81ac8f84' \
+--os_architecture "$os_architecture"
 
 echo "Generate library finished."
 echo "Compare generation result..."
 cd "$working_directory"
-diff -r "google-cloud-java/$monorepo_folder" "$destination_path/workspace" -x "*gradle*"
-echo "Comparison finished, no difference is found."
+
+RESULT=0
+diff -r "google-cloud-java/$monorepo_folder" "$destination_path/workspace" -x "*gradle*" || RESULT=$?
+if [ $RESULT == 0 ] ; then
+ echo "SUCCESS: Comparison finished, no difference is found."
+else
+  echo "FAILURE: Differences found."
+fi
 # clean up
 cd "$working_directory"
 rm -rf WORKSPACE googleapis-gen "$destination_path"
+exit $RESULT

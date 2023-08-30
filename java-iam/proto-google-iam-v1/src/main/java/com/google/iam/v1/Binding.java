@@ -122,7 +122,7 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * Specifies the principals requesting access for a Cloud Platform resource.
+   * Specifies the principals requesting access for a Google Cloud resource.
    * `members` can have the following values:
    *
    * * `allUsers`: A special identifier that represents anyone who is
@@ -177,7 +177,7 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * Specifies the principals requesting access for a Cloud Platform resource.
+   * Specifies the principals requesting access for a Google Cloud resource.
    * `members` can have the following values:
    *
    * * `allUsers`: A special identifier that represents anyone who is
@@ -232,7 +232,7 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * Specifies the principals requesting access for a Cloud Platform resource.
+   * Specifies the principals requesting access for a Google Cloud resource.
    * `members` can have the following values:
    *
    * * `allUsers`: A special identifier that represents anyone who is
@@ -288,7 +288,7 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * Specifies the principals requesting access for a Cloud Platform resource.
+   * Specifies the principals requesting access for a Google Cloud resource.
    * `members` can have the following values:
    *
    * * `allUsers`: A special identifier that represents anyone who is
@@ -947,7 +947,7 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Specifies the principals requesting access for a Cloud Platform resource.
+     * Specifies the principals requesting access for a Google Cloud resource.
      * `members` can have the following values:
      *
      * * `allUsers`: A special identifier that represents anyone who is
@@ -1003,7 +1003,7 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Specifies the principals requesting access for a Cloud Platform resource.
+     * Specifies the principals requesting access for a Google Cloud resource.
      * `members` can have the following values:
      *
      * * `allUsers`: A special identifier that represents anyone who is
@@ -1058,7 +1058,7 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Specifies the principals requesting access for a Cloud Platform resource.
+     * Specifies the principals requesting access for a Google Cloud resource.
      * `members` can have the following values:
      *
      * * `allUsers`: A special identifier that represents anyone who is
@@ -1114,7 +1114,7 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Specifies the principals requesting access for a Cloud Platform resource.
+     * Specifies the principals requesting access for a Google Cloud resource.
      * `members` can have the following values:
      *
      * * `allUsers`: A special identifier that represents anyone who is
@@ -1170,7 +1170,7 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Specifies the principals requesting access for a Cloud Platform resource.
+     * Specifies the principals requesting access for a Google Cloud resource.
      * `members` can have the following values:
      *
      * * `allUsers`: A special identifier that represents anyone who is
@@ -1234,7 +1234,7 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Specifies the principals requesting access for a Cloud Platform resource.
+     * Specifies the principals requesting access for a Google Cloud resource.
      * `members` can have the following values:
      *
      * * `allUsers`: A special identifier that represents anyone who is
@@ -1297,7 +1297,7 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Specifies the principals requesting access for a Cloud Platform resource.
+     * Specifies the principals requesting access for a Google Cloud resource.
      * `members` can have the following values:
      *
      * * `allUsers`: A special identifier that represents anyone who is
@@ -1357,7 +1357,7 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Specifies the principals requesting access for a Cloud Platform resource.
+     * Specifies the principals requesting access for a Google Cloud resource.
      * `members` can have the following values:
      *
      * * `allUsers`: A special identifier that represents anyone who is
@@ -1416,7 +1416,7 @@ public final class Binding extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * Specifies the principals requesting access for a Cloud Platform resource.
+     * Specifies the principals requesting access for a Google Cloud resource.
      * `members` can have the following values:
      *
      * * `allUsers`: A special identifier that represents anyone who is
