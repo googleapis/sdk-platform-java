@@ -72,6 +72,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   private final ApiClock clock;
   private final String endpoint;
   private final String mtlsEndpoint;
+  private final String universeDomain;
   private final String quotaProjectId;
   @Nullable private final String gdchApiAudience;
   @Nullable private final WatchdogProvider streamWatchdogProvider;
@@ -100,6 +101,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     this.clock = builder.clock;
     this.endpoint = builder.endpoint;
     this.mtlsEndpoint = builder.mtlsEndpoint;
+    this.universeDomain = builder.universeDomain;
     this.switchToMtlsEndpointAllowed = builder.switchToMtlsEndpointAllowed;
     this.quotaProjectId = builder.quotaProjectId;
     this.streamWatchdogProvider = builder.streamWatchdogProvider;
@@ -160,6 +162,19 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   /** Limit the visibility to this package only since only this package needs it. */
   final boolean getSwitchToMtlsEndpointAllowed() {
     return switchToMtlsEndpointAllowed;
+  }
+
+  public final String getUniverseDomain() {
+    if (usingTPC) {
+      try {
+        return this.endpointContext.resolveUniverseDomain(
+            getCredentialsProvider().getCredentials());
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+    } else {
+      return this.universeDomain;
+    }
   }
 
   public final String getQuotaProjectId() {
@@ -233,6 +248,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     private ApiClock clock;
     private String endpoint;
     private String mtlsEndpoint;
+    private String universeDomain;
     private String quotaProjectId;
     @Nullable private String gdchApiAudience;
     @Nullable private WatchdogProvider streamWatchdogProvider;
@@ -261,6 +277,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       this.endpoint = settings.endpoint;
       this.mtlsEndpoint = settings.mtlsEndpoint;
       this.switchToMtlsEndpointAllowed = settings.switchToMtlsEndpointAllowed;
+      this.universeDomain = settings.universeDomain;
       this.quotaProjectId = settings.quotaProjectId;
       this.streamWatchdogProvider = settings.streamWatchdogProvider;
       this.streamWatchdogCheckInterval = settings.streamWatchdogCheckInterval;
@@ -298,6 +315,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.clock = NanoClock.getDefaultClock();
         this.endpoint = null;
         this.mtlsEndpoint = null;
+        this.universeDomain = null;
         this.quotaProjectId = null;
         this.streamWatchdogProvider = InstantiatingWatchdogProvider.create();
         this.streamWatchdogCheckInterval = Duration.ofSeconds(10);
@@ -324,6 +342,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         if (this.endpoint != null) {
           this.mtlsEndpoint = this.endpoint.replace("googleapis.com", "mtls.googleapis.com");
         }
+        this.universeDomain = null;
         this.streamWatchdogProvider =
             FixedWatchdogProvider.create(clientContext.getStreamWatchdog());
         this.streamWatchdogCheckInterval = clientContext.getStreamWatchdogCheckInterval();
@@ -462,6 +481,12 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
               .setMtlsEndpoint(this.mtlsEndpoint)
               .setSwitchToMtlsEndpointAllowed(this.switchToMtlsEndpointAllowed)
               .build();
+      return self();
+    }
+
+    public B setUniverseDomain(String universeDomain) {
+      this.endpointContext =
+          this.endpointContext.toBuilder().setUniverseDomain(universeDomain).build();
       return self();
     }
 

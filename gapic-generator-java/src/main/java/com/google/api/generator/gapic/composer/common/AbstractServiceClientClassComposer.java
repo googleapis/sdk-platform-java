@@ -205,12 +205,21 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     Sample endpointSampleCode =
         ServiceClientHeaderSampleComposer.composeSetEndpointSample(
             clientType, settingsType, service);
-    samples.addAll(Arrays.asList(classMethodSampleCode, credentialsSampleCode, endpointSampleCode));
+    Sample universeDomainSampleCode =
+        ServiceClientHeaderSampleComposer.composeSetUniverseDomainSample(
+            clientType, settingsType, service);
+    samples.addAll(
+        Arrays.asList(
+            classMethodSampleCode,
+            credentialsSampleCode,
+            endpointSampleCode,
+            universeDomainSampleCode));
     return ServiceClientCommentComposer.createClassHeaderComments(
         service,
         SampleCodeWriter.writeInlineSample(classMethodSampleCode.body()),
         SampleCodeWriter.writeInlineSample(credentialsSampleCode.body()),
         SampleCodeWriter.writeInlineSample(endpointSampleCode.body()),
+        SampleCodeWriter.writeInlineSample(universeDomainSampleCode.body()),
         null,
         null,
         null);

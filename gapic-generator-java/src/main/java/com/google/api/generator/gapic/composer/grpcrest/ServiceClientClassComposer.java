@@ -64,18 +64,26 @@ public class ServiceClientClassComposer extends AbstractServiceClientClassCompos
     Sample endpointSampleCode =
         ServiceClientHeaderSampleComposer.composeSetEndpointSample(
             clientType, settingsType, service);
+    Sample universeDomainSampleCode =
+        ServiceClientHeaderSampleComposer.composeSetUniverseDomainSample(
+            clientType, settingsType, service);
     Sample transportSampleCode =
         ServiceClientHeaderSampleComposer.composeTransportSample(
             clientType, settingsType, "newHttpJsonBuilder", service);
     samples.addAll(
         Arrays.asList(
-            classMethodSampleCode, credentialsSampleCode, endpointSampleCode, transportSampleCode));
+            classMethodSampleCode,
+            credentialsSampleCode,
+            endpointSampleCode,
+            universeDomainSampleCode,
+            transportSampleCode));
 
     return ServiceClientCommentComposer.createClassHeaderComments(
         service,
         SampleCodeWriter.writeInlineSample(classMethodSampleCode.body()),
         SampleCodeWriter.writeInlineSample(credentialsSampleCode.body()),
         SampleCodeWriter.writeInlineSample(endpointSampleCode.body()),
+        SampleCodeWriter.writeInlineSample(universeDomainSampleCode.body()),
         SampleCodeWriter.writeInlineSample(transportSampleCode.body()),
         "gRPC",
         "REST (HTTP1.1/JSON)");

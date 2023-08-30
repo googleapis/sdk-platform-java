@@ -250,6 +250,11 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
       return self();
     }
 
+    public B setUniverseDomain(String universeDomain) {
+      stubSettings.setUniverseDomain(universeDomain);
+      return self();
+    }
+
     public B setQuotaProjectId(String quotaProjectId) {
       stubSettings.setQuotaProjectId(quotaProjectId);
       return self();

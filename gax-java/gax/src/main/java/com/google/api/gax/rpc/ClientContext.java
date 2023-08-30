@@ -256,6 +256,7 @@ public abstract class ClientContext {
                   .setMtlsEndpoint(settings.getMtlsEndpoint())
                   .setSwitchToMtlsEndpointAllowed(settings.getSwitchToMtlsEndpointAllowed())
                   .setTransportChannelEndpoint(transportChannelProvider.getEndpoint())
+                  .setUniverseDomain(settings.getUniverseDomain())
                   .build();
         }
         defaultCallContext = defaultCallContext.withEndpointContext(endpointContext);

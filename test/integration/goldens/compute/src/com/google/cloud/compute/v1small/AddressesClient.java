@@ -114,6 +114,32 @@ import javax.annotation.Generated;
  * AddressesClient addressesClient = AddressesClient.create(addressesSettings);
  * }</pre>
  *
+ * <p>To customize the Universe Domain:
+ *
+ * <pre>{@code
+ * // This snippet has been automatically generated and should be regarded as a code template only.
+ * // It will require modifications to work:
+ * // - It may require correct/in-range values for request initialization.
+ * // - It may require specifying regional endpoints when creating the service client as shown in
+ * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+ * AddressesSettings addressesSettings =
+ *     AddressesSettings.newBuilder().setUniverseDomain(myUniverseDomain).build();
+ * AddressesClient addressesClient = AddressesClient.create(addressesSettings);
+ * }</pre>
+ *
+ * <p>Difference between Endpoint and Universe Domain
+ *
+ * <ol>
+ *   <li>URL: https://{SERVICE}.googleapis.com:443, Endpoint: {SERVICE}.googleapis.com:443, Universe
+ *       Domain: googleapis.com
+ *   <li>URL: https://{SERVICE}.universe-domain.com:443, Endpoint:
+ *       {SERVICE}.universe-domain.com:443, Universe Domain: universe-domain.com
+ * </ol>
+ *
+ * <p>You may try to customize the Endpoint and Universe Domain for TPC. The source of truth for
+ * these values is in the Credentials. The client library will validate the custom values against
+ * the values in the Credentials and throw and Exception if there is a discrepancy.
+ *
  * <p>Please refer to the GitHub repository's samples for more quickstart code snippets.
  */
 @Generated("by gapic-generator-java")

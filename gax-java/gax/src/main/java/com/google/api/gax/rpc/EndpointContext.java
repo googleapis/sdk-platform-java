@@ -55,19 +55,23 @@ public abstract class EndpointContext {
 
   public abstract boolean switchToMtlsEndpointAllowed();
 
+  @Nullable
+  public abstract String universeDomain();
+
   public abstract Builder toBuilder();
 
-  private String endpoint;
+  private String resolvedEndpoint;
+  private String resolvedUniverseDomain;
 
   public static Builder newBuilder() {
     return new AutoValue_EndpointContext.Builder().setSwitchToMtlsEndpointAllowed(false);
   }
 
-  private String determineEndpoint() {
+  private void determineEndpoint() {
     // TODO: Logic for figuring out the endpoint
-    return transportChannelEndpoint() != null
-        ? transportChannelEndpoint()
-        : clientSettingsEndpoint();
+    resolvedEndpoint =
+        transportChannelEndpoint() != null ? transportChannelEndpoint() : clientSettingsEndpoint();
+    resolvedUniverseDomain = resolvedEndpoint;
   }
 
   public String resolveEndpoint() {
@@ -76,10 +80,17 @@ public abstract class EndpointContext {
 
   // This is needed for StubSettings getter if accessed before Credentials are ready
   public String resolveEndpoint(Credentials credentials) {
-    if (endpoint == null) {
-      endpoint = determineEndpoint();
+    if (resolvedEndpoint == null) {
+      determineEndpoint();
     }
-    return endpoint;
+    return resolvedEndpoint;
+  }
+
+  public String resolveUniverseDomain(Credentials credentials) {
+    if (resolvedUniverseDomain == null) {
+      determineEndpoint();
+    }
+    return resolvedUniverseDomain;
   }
 
   @AutoValue.Builder
@@ -95,6 +106,8 @@ public abstract class EndpointContext {
     public abstract Builder setMtlsEndpoint(String mtlsEndpoint);
 
     public abstract Builder setSwitchToMtlsEndpointAllowed(boolean switchToMtlsEndpointAllowed);
+
+    public abstract Builder setUniverseDomain(String universeDomain);
 
     public abstract EndpointContext build();
   }

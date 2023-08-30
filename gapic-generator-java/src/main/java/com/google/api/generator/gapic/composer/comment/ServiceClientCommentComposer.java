@@ -53,6 +53,22 @@ public class ServiceClientCommentComposer {
       "To customize credentials:";
   private static final String SERVICE_DESCRIPTION_ENDPOINT_SUMMARY_STRING =
       "To customize the endpoint:";
+
+  private static final String SERVICE_DESCRIPTION_UNIVERSE_DOMAIN_SUMMARY_STRING =
+      "To customize the Universe Domain:";
+
+  private static final String SERVICE_DESCRIPTION_ENDPOINT_VS_UNIVERSE_DOMAIN_STRING =
+      "Difference between Endpoint and Universe Domain";
+
+  private static final List<String> SERVICE_DESCRIPTION_ENDPOINT_VS_UNIVERSE_DOMAIN_DESCRIPTION =
+      Arrays.asList(
+          "URL: https://{SERVICE}.googleapis.com:443, Endpoint: {SERVICE}.googleapis.com:443, Universe Domain: googleapis.com",
+          "URL: https://{SERVICE}.universe-domain.com:443, Endpoint: {SERVICE}.universe-domain.com:443, Universe Domain: universe-domain.com");
+
+  private static final String SERVICE_DESCRIPTION_UNIVERSE_DOMAIN_EXPLANATION_STRING =
+      "You may try to customize the Endpoint and Universe Domain for TPC. The source of truth for these "
+          + "values is in the Credentials. The client library will validate the custom values against the values "
+          + "in the Credentials and throw and Exception if there is a discrepancy.";
   private static final String SERVICE_DESCRIPTION_TRANSPORT_SUMMARY_STRING =
       "To use %s transport (instead of %s) for sending and receiving requests over the wire:";
 
@@ -113,6 +129,7 @@ public class ServiceClientCommentComposer {
       String classMethodSampleCode,
       String credentialsSampleCode,
       String endpointSampleCode,
+      String universeDomainSampleCode,
       String transportSampleCode,
       String primaryTransport,
       String secondaryTransport) {
@@ -148,6 +165,12 @@ public class ServiceClientCommentComposer {
     classHeaderJavadocBuilder.addSampleCode(credentialsSampleCode);
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_ENDPOINT_SUMMARY_STRING);
     classHeaderJavadocBuilder.addSampleCode(endpointSampleCode);
+    classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_UNIVERSE_DOMAIN_SUMMARY_STRING);
+    classHeaderJavadocBuilder.addSampleCode(universeDomainSampleCode);
+    classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_ENDPOINT_VS_UNIVERSE_DOMAIN_STRING);
+    classHeaderJavadocBuilder.addOrderedList(
+        SERVICE_DESCRIPTION_ENDPOINT_VS_UNIVERSE_DOMAIN_DESCRIPTION);
+    classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_UNIVERSE_DOMAIN_EXPLANATION_STRING);
     if (transportSampleCode != null) {
       classHeaderJavadocBuilder.addParagraph(
           String.format(

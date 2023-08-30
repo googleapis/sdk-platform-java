@@ -292,6 +292,81 @@ public class ServiceClientHeaderSampleComposer {
     return Sample.builder().setBody(sampleBody).setRegionTag(regionTag).build();
   }
 
+  public static Sample composeSetUniverseDomainSample(
+      TypeNode clientType, TypeNode settingsType, Service service) {
+    // Initialize client settings with builder() method.
+    // e.g. EchoSettings echoSettings =
+    // EchoSettings.newBuilder().setUniverseDomain("myUniverseDomain").build();
+    String settingsName = JavaStyle.toLowerCamelCase(settingsType.reference().name());
+    String clientName = JavaStyle.toLowerCamelCase(clientType.reference().name());
+    TypeNode myUniverseDomainType =
+        TypeNode.withReference(
+            VaporReference.builder()
+                .setName("myUniverseDomain")
+                .setPakkage(clientType.reference().pakkage())
+                .build());
+    VariableExpr settingsVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName(settingsName).setType(settingsType).build());
+    MethodInvocationExpr newBuilderMethodExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(settingsType)
+            .setMethodName("newBuilder")
+            .build();
+    MethodInvocationExpr universeDomainMethodExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(newBuilderMethodExpr)
+            .setArguments(
+                VariableExpr.withVariable(
+                    Variable.builder()
+                        .setName("myUniverseDomain")
+                        .setType(myUniverseDomainType)
+                        .build()))
+            .setMethodName("setUniverseDomain")
+            .build();
+    MethodInvocationExpr buildMethodExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(universeDomainMethodExpr)
+            .setReturnType(settingsType)
+            .setMethodName("build")
+            .build();
+
+    Expr initSettingsVarExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(settingsVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(buildMethodExpr)
+            .build();
+
+    // Initialize client with create() method.
+    // e.g. EchoClient echoClient = EchoClient.create(echoSettings);
+    VariableExpr clientVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName(clientName).setType(clientType).build());
+    MethodInvocationExpr createMethodExpr =
+        MethodInvocationExpr.builder()
+            .setStaticReferenceType(clientType)
+            .setArguments(settingsVarExpr)
+            .setMethodName("create")
+            .setReturnType(clientType)
+            .build();
+    String rpcName = createMethodExpr.methodIdentifier().name();
+    Expr initClientVarExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(clientVarExpr.toBuilder().setIsDecl(true).build())
+            .setValueExpr(createMethodExpr)
+            .build();
+    RegionTag regionTag =
+        RegionTag.builder()
+            .setServiceName(service.name())
+            .setRpcName(rpcName)
+            .setOverloadDisambiguation("setUniverseDomain")
+            .build();
+    List<Statement> sampleBody =
+        Arrays.asList(
+            ExprStatement.withExpr(initSettingsVarExpr), ExprStatement.withExpr(initClientVarExpr));
+    return Sample.builder().setBody(sampleBody).setRegionTag(regionTag).build();
+  }
+
   public static Sample composeTransportSample(
       TypeNode clientType, TypeNode settingsType, String transportBuilderMethod, Service service) {
     String settingsName = JavaStyle.toLowerCamelCase(settingsType.reference().name());
