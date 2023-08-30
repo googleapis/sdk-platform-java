@@ -99,6 +99,22 @@ get_gapic_opts_without_rest_test() {
   "$gapic_opts"
 }
 
+remove_grpc_version_test() {
+  destination_path="$script_dir/resources/monitoring"
+  cp "$destination_path/QueryServiceGrpc_copy.java" "$destination_path/QueryServiceGrpc.java"
+  remove_grpc_version
+  return_code=0
+  if grep -q 'value = "by gRPC proto compiler",' "$destination_path/QueryServiceGrpc.java"; then
+    echo "grpc version is removed."
+  else
+    echo "Error: grpc version is not removed."
+    return_code=1
+  fi
+
+  rm "$destination_path/QueryServiceGrpc.java"
+  return "$return_code"
+}
+
 # Execute tests.
 # One line per test.
 test_list=(
@@ -111,6 +127,7 @@ test_list=(
   search_additional_protos_iam_location_test
   get_gapic_opts_test
   get_gapic_opts_without_rest_test
+  remove_grpc_version_test
 )
 
 for ut in "${test_list[@]}"; do
