@@ -4,7 +4,7 @@
 # Removes dependencyManagement and pluginManagement that should be handled in the parent
 # Also removes other configuration that is handled in google-cloud-pom-parent and google-cloud-jar-parent
 
-set -ex
+set -exa
 
 library_root=$1
 
@@ -65,9 +65,15 @@ function setGrafeasCheckstyleHeaderConfig {
   runRegexOnPoms "$pom_file" "$perl_command" ">Grafeas Client<"
 }
 
+function generalFormat {
+  pom_file=$1
+  perl_command="s/<\?.*xml version.*\?>/<?xml version='1.0' encoding='UTF-8'?>/s"
+  runRegexOnPoms "$pom_file" "$perl_command" "xml version"
+}
 
 function commonPomProcessing {
   pom_file=$1
+  generalFormat $pom_file
   setGrafeasCheckstyleHeaderConfig $pom_file
   removeManagedDependency $pom_file 'google-cloud-shared-dependencies'
   removeManagedDependency $pom_file 'junit'
@@ -117,6 +123,14 @@ function gapicPomProcessing {
   removeArtifact "$pom_file" 'dependency' "grpc-google-iam-v1" "dependencies"
 }
 
+function protoPomProcessing {
+  pom_file=$1
+  removeArtifact "$pom_file" 'dependency' "proto-google-iam-v1" "dependencies"
+}
+
+#export -f commonPomProcessing
+#export -f gapicPomProcessing
+
 find $library_root \
   -name 'pom.xml' \
   -type f \
@@ -129,3 +143,9 @@ find $library_root \
   -not -wholename '*/grpc*' \
   -not -wholename '*bom/*' \
   -exec bash -c 'gapicPomProcessing "$0"' {} \;
+
+find $library_root \
+  -name 'pom.xml' \
+  -wholename '*/proto-*' \
+  -type f \
+  -exec bash -c 'protoPomProcessing "$0"' {} \;
