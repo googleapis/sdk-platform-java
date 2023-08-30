@@ -192,7 +192,6 @@ then
   echo "no owlbot_sha provided. This is necessary for post-processing the generated library"
   exit 1
 fi
-# copy repo metadata to destination library folder
 workspace=$destination_path/workspace
 mkdir -p $workspace
 
@@ -200,25 +199,4 @@ source $script_dir/post-processing/postprocessing_utilities.sh
 run_owlbot_postprocessor $workspace $owlbot_sha $repo_metadata_json_path $include_samples \
   $script_dir $destination_path
 
-
-# postprocessor cleanup
-bash $script_dir/post-processing/update_owlbot_postprocessor_config.sh $workspace
-bash $script_dir/post-processing/delete_non_generated_samples.sh $workspace
-bash $script_dir/post-processing/consolidate_config.sh $workspace
-bash $script_dir/post-processing/readme_update.sh $workspace
-
-pushd $script_dir
-[ ! -d google-cloud-java ] && git clone https://github.com/googleapis/google-cloud-java
-pushd google-cloud-java
-parent_pom="$(pwd)/google-cloud-jar-parent/pom.xml"
-popd
-popd
-bash $script_dir/post-processing/set_parent_pom.sh $workspace $parent_pom
-
-# get existing versions.txt from downloaded monorepo
-repo_short=$(cat $repo_metadata_json_path | jq -r '.repo_short // empty')
-cp "$script_dir/google-cloud-java/versions.txt" $workspace
-pushd $workspace
-bash $script_dir/post-processing/apply_current_versions.sh
-rm versions.txt
-popd
+other_post_processing_scripts $script_dir $workspace $repo_metadata_json_path
