@@ -21,6 +21,26 @@ assertEquals() {
   return 1
 }
 
+assertFileExists() {
+  expected_file=$1
+  if [ -e "$expected_file" ]; then
+    return 0
+  fi
+
+  echo "Error: $expected_file does not exist."
+  return 1
+}
+
+assertFileDoesNotExist() {
+  expected_file=$1
+  if [ ! -f "$expected_file" ]; then
+    return 0
+  fi
+
+  echo "Error: $expected_file exists."
+  return 1
+}
+
 test_executed() {
   total_num=$((1 + total_num))
 }
@@ -40,13 +60,19 @@ extract_folder_name_test() {
 }
 
 get_grpc_version_test() {
+  pushd "$script_dir"
   actual_version=$(get_grpc_version "2.24.0")
   assertEquals "1.56.1" "$actual_version"
+  rm "gapic-generator-java-pom-parent-2.24.0.pom"
+  popd
 }
 
 get_protobuf_version_test() {
+  pushd "$script_dir"
   actual_version=$(get_protobuf_version "2.24.0")
   assertEquals "23.2" "$actual_version"
+  rm "gapic-generator-java-pom-parent-2.24.0.pom"
+  popd
 }
 
 search_additional_protos_common_resources_test() {
@@ -115,6 +141,46 @@ remove_grpc_version_test() {
   return "$return_code"
 }
 
+download_generator_success_test() {
+  pushd "$script_dir"
+  download_generator "2.24.0"
+  assertFileExists "gapic-generator-java-2.24.0.jar"
+  rm "gapic-generator-java-2.24.0.jar"
+  popd
+}
+
+download_protobuf_linux_test() {
+  pushd "$script_dir"
+  download_protobuf "23.2" "linux-x86_64"
+  assertFileExists "protobuf-23.2"
+  rm -rf "protobuf-23.2"
+  popd
+}
+
+download_protobuf_macos_test() {
+  pushd "$script_dir"
+  download_protobuf "23.2" "osx-x86_64"
+  assertFileExists "protobuf-23.2"
+  rm -rf "protobuf-23.2" "google"
+  popd
+}
+
+download_grpc_plugin_linux_test() {
+  pushd "$script_dir"
+  download_grpc_plugin "1.55.1" "linux-x86_64"
+  assertFileExists "protoc-gen-grpc-java-1.55.1-linux-x86_64.exe"
+  rm "protoc-gen-grpc-java-1.55.1-linux-x86_64.exe"
+  popd
+}
+
+download_grpc_plugin_macos_test() {
+  pushd "$script_dir"
+  download_grpc_plugin "1.55.1" "osx-x86_64"
+  assertFileExists "protoc-gen-grpc-java-1.55.1-osx-x86_64.exe"
+  rm "protoc-gen-grpc-java-1.55.1-osx-x86_64.exe"
+  popd
+}
+
 # Execute tests.
 # One line per test.
 test_list=(
@@ -128,6 +194,11 @@ test_list=(
   get_gapic_opts_test
   get_gapic_opts_without_rest_test
   remove_grpc_version_test
+  download_generator_success_test
+  download_protobuf_linux_test
+  download_protobuf_macos_test
+  download_grpc_plugin_linux_test
+  download_grpc_plugin_macos_test
 )
 
 for ut in "${test_list[@]}"; do
