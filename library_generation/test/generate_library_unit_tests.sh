@@ -79,6 +79,26 @@ search_additional_protos_iam_location_test() {
   "$addition_protos"
 }
 
+get_gapic_opts_test() {
+  proto_path="$script_dir/resources/monitoring"
+  transport="grpc"
+  rest_numeric_enums="true"
+  gapic_opts="$(get_gapic_opts)"
+  assertEquals \
+  "transport=grpc,rest-numeric-enums,grpc-service-config=$proto_path/monitoring_grpc_service_config.json,gapic-config=$proto_path/monitoring_gapic.yaml,api-service-config=$proto_path/monitoring.yaml" \
+  "$gapic_opts"
+}
+
+get_gapic_opts_without_rest_test() {
+  proto_path="$script_dir/resources/monitoring"
+  transport="grpc"
+  rest_numeric_enums="false"
+  gapic_opts="$(get_gapic_opts)"
+  assertEquals \
+  "transport=grpc,grpc-service-config=$proto_path/monitoring_grpc_service_config.json,gapic-config=$proto_path/monitoring_gapic.yaml,api-service-config=$proto_path/monitoring.yaml" \
+  "$gapic_opts"
+}
+
 # Execute tests.
 # One line per test.
 test_list=(
@@ -89,6 +109,8 @@ test_list=(
   search_additional_protos_iam_test
   search_additional_protos_location_test
   search_additional_protos_iam_location_test
+  get_gapic_opts_test
+  get_gapic_opts_without_rest_test
 )
 
 for ut in "${test_list[@]}"; do
