@@ -64,7 +64,7 @@ script_dir=$(dirname "$(readlink -f "$0")")
 # checkout the master branch of googleapis/google (proto files) and WORKSPACE
 echo "Checking out googlapis repository..."
 sparse_clone https://github.com/googleapis/googleapis.git "$proto_path WORKSPACE google/api google/type google/rpc google/longrunning google/cloud/common_resources.proto"
-cd googleapis
+cp -r googleapis/* .
 # parse version of gapic-generator-java, protobuf and grpc from WORKSPACE
 gapic_generator_version=$(get_version_from_WORKSPACE "_gapic_generator_java_version" WORKSPACE "=")
 echo "The version of gapic-generator-java is $gapic_generator_version."
@@ -129,5 +129,5 @@ else
 fi
 # clean up
 cd "$script_dir"
-rm -rf WORKSPACE googleapis-gen "$destination_path"
+rm -rf WORKSPACE googleapis-gen 
 exit $RESULT

@@ -1,9 +1,11 @@
 #!/bin/bash
 rm -rdf google-cloud-channel-v1
-pushd google-cloud-java
-git reset --hard
-git clean -d -f
-popd
+if [ -d google-cloud-java ]; then
+  pushd google-cloud-java
+  git reset --hard
+  git clean -d -f
+  popd
+fi
 workspace=$(pwd)
 bash generate_library_integration_test.sh \
   -p google/cloud/channel/v1 \
