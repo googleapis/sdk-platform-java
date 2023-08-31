@@ -80,7 +80,6 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   @Nonnull private final ApiTracerFactory tracerFactory;
   // Track if deprecated setExecutorProvider is called
   private final EndpointContext endpointContext;
-  private final boolean usingTPC;
   private boolean deprecatedExecutorProviderSet;
 
   /**
@@ -110,7 +109,6 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     this.deprecatedExecutorProviderSet = builder.deprecatedExecutorProviderSet;
     this.gdchApiAudience = builder.gdchApiAudience;
     this.endpointContext = builder.endpointContext;
-    this.usingTPC = builder.usingTPC;
   }
 
   /** @deprecated Please use {@link #getBackgroundExecutorProvider()}. */
@@ -144,14 +142,10 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   }
 
   public final String getEndpoint() {
-    if (usingTPC) {
-      try {
-        return this.endpointContext.resolveEndpoint(getCredentialsProvider().getCredentials());
-      } catch (IOException e) {
-        throw new RuntimeException(e);
-      }
-    } else {
-      return this.endpoint;
+    try {
+      return this.endpointContext.resolveEndpoint(getCredentialsProvider().getCredentials());
+    } catch (IOException e) {
+      throw new RuntimeException(e);
     }
   }
 
@@ -165,15 +159,10 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   }
 
   public final String getUniverseDomain() {
-    if (usingTPC) {
-      try {
-        return this.endpointContext.resolveUniverseDomain(
-            getCredentialsProvider().getCredentials());
-      } catch (IOException e) {
-        throw new RuntimeException(e);
-      }
-    } else {
-      return this.universeDomain;
+    try {
+      return this.endpointContext.resolveUniverseDomain(getCredentialsProvider().getCredentials());
+    } catch (IOException e) {
+      throw new RuntimeException(e);
     }
   }
 
@@ -209,10 +198,6 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
 
   public final EndpointContext getEndpointContext() {
     return endpointContext;
-  }
-
-  public boolean isUsingTPC() {
-    return usingTPC;
   }
 
   @Override
@@ -256,7 +241,6 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     @Nonnull private ApiTracerFactory tracerFactory;
     private EndpointContext endpointContext;
     private boolean deprecatedExecutorProviderSet;
-    private boolean usingTPC;
 
     /**
      * Indicate when creating transport whether it is allowed to use mTLS endpoint instead of the
@@ -285,7 +269,6 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       this.deprecatedExecutorProviderSet = settings.deprecatedExecutorProviderSet;
       this.gdchApiAudience = settings.gdchApiAudience;
       this.endpointContext = settings.endpointContext;
-      this.usingTPC = settings.usingTPC;
     }
 
     /** Get Quota Project ID from Client Context * */
@@ -323,7 +306,6 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.deprecatedExecutorProviderSet = false;
         this.gdchApiAudience = null;
         this.endpointContext = EndpointContext.newBuilder().build();
-        this.usingTPC = false;
       } else {
         ExecutorProvider fixedExecutorProvider =
             FixedExecutorProvider.create(clientContext.getExecutor());
@@ -355,7 +337,6 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
                 .setMtlsEndpoint(this.mtlsEndpoint)
                 .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)
                 .build();
-        this.usingTPC = false;
       }
     }
 
@@ -550,11 +531,6 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       return self();
     }
 
-    public B setUsingTPC(boolean usingTPC) {
-      this.usingTPC = usingTPC;
-      return self();
-    }
-
     /** @deprecated Please use {@link #getBackgroundExecutorProvider()}. */
     @Deprecated
     public ExecutorProvider getExecutorProvider() {
@@ -626,10 +602,6 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       return gdchApiAudience;
     }
 
-    public boolean getUsingTPC() {
-      return usingTPC;
-    }
-
     public EndpointContext getEndpointContext() {
       return endpointContext;
     }
@@ -663,7 +635,6 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
           .add("tracerFactory", tracerFactory)
           .add("gdchApiAudience", gdchApiAudience)
           .add("endpointContext", endpointContext)
-          .add("usingTPC", usingTPC)
           .toString();
     }
   }

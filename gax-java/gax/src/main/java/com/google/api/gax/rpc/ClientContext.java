@@ -231,55 +231,36 @@ public abstract class ClientContext {
     ApiCallContext defaultCallContext;
     TransportChannel transportChannel = null;
     TransportChannelResolver transportChannelResolver = new TransportChannelResolver();
-    if (settings.isUsingTPC()) {
-      EndpointContext endpointContext;
-      if (transportChannelProvider instanceof FixedTransportChannelProvider) {
-        transportChannel = transportChannelProvider.getTransportChannel();
-        defaultCallContext =
-            transportChannel.getEmptyCallContext().withTransportChannel(transportChannel);
-        transportChannelResolver.setTransportChannel(transportChannel);
-      } else {
-        defaultCallContext = transportChannelProvider.getEmptyCallContext();
-        if (settings.getEndpointContext() != null) {
-          endpointContext =
-              settings
-                  .getEndpointContext()
-                  .toBuilder()
-                  .setCredentials(credentials)
-                  .setTransportChannelEndpoint(transportChannelProvider.getEndpoint())
-                  .build();
-        } else {
-          endpointContext =
-              EndpointContext.newBuilder()
-                  .setCredentials(credentials)
-                  .setClientSettingsEndpoint(settings.getEndpoint())
-                  .setMtlsEndpoint(settings.getMtlsEndpoint())
-                  .setSwitchToMtlsEndpointAllowed(settings.getSwitchToMtlsEndpointAllowed())
-                  .setTransportChannelEndpoint(transportChannelProvider.getEndpoint())
-                  .setUniverseDomain(settings.getUniverseDomain())
-                  .build();
-        }
-        defaultCallContext = defaultCallContext.withEndpointContext(endpointContext);
-      }
-      defaultCallContext =
-          defaultCallContext.withTransportChannelResolver(transportChannelResolver);
-    } else {
-      String endpoint =
-          getEndpoint(
-              settings.getEndpoint(),
-              settings.getMtlsEndpoint(),
-              settings.getSwitchToMtlsEndpointAllowed(),
-              new MtlsProvider());
-      if (transportChannelProvider.needsEndpoint()) {
-        transportChannelProvider = transportChannelProvider.withEndpoint(endpoint);
-      }
+    EndpointContext endpointContext;
+    if (transportChannelProvider instanceof FixedTransportChannelProvider) {
       transportChannel = transportChannelProvider.getTransportChannel();
       defaultCallContext =
           transportChannel.getEmptyCallContext().withTransportChannel(transportChannel);
-      if (credentials != null) {
-        defaultCallContext = defaultCallContext.withCredentials(credentials);
+      transportChannelResolver.setTransportChannel(transportChannel);
+    } else {
+      defaultCallContext = transportChannelProvider.getEmptyCallContext();
+      if (settings.getEndpointContext() != null) {
+        endpointContext =
+            settings
+                .getEndpointContext()
+                .toBuilder()
+                .setCredentials(credentials)
+                .setTransportChannelEndpoint(transportChannelProvider.getEndpoint())
+                .build();
+      } else {
+        endpointContext =
+            EndpointContext.newBuilder()
+                .setCredentials(credentials)
+                .setClientSettingsEndpoint(settings.getEndpoint())
+                .setMtlsEndpoint(settings.getMtlsEndpoint())
+                .setSwitchToMtlsEndpointAllowed(settings.getSwitchToMtlsEndpointAllowed())
+                .setTransportChannelEndpoint(transportChannelProvider.getEndpoint())
+                .setUniverseDomain(settings.getUniverseDomain())
+                .build();
       }
+      defaultCallContext = defaultCallContext.withEndpointContext(endpointContext);
     }
+    defaultCallContext = defaultCallContext.withTransportChannelResolver(transportChannelResolver);
 
     WatchdogProvider watchdogProvider = settings.getStreamWatchdogProvider();
     @Nullable Watchdog watchdog = null;
@@ -301,11 +282,7 @@ public abstract class ClientContext {
     ImmutableList.Builder<BackgroundResource> backgroundResources = ImmutableList.builder();
 
     if (transportChannelProvider.shouldAutoClose()) {
-      if (settings.isUsingTPC()) {
-        backgroundResources.add(transportChannelResolver);
-      } else {
-        backgroundResources.add(transportChannel);
-      }
+      backgroundResources.add(transportChannelResolver);
     }
     if (backgroundExecutorProvider.shouldAutoClose()) {
       backgroundResources.add(new ExecutorAsBackgroundResource(backgroundExecutor));

@@ -83,7 +83,6 @@ public class ITGdch {
     settings =
         EchoSettings.newBuilder()
             .setCredentialsProvider(FixedCredentialsProvider.create(initialCredentials))
-            .setUsingTPC(true)
             .build();
   }
 
