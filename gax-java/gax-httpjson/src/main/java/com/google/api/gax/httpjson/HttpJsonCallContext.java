@@ -50,6 +50,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import org.threeten.bp.Duration;
@@ -65,7 +68,8 @@ import org.threeten.bp.Instant;
  */
 public final class HttpJsonCallContext implements ApiCallContext {
 
-  private final Object lock = new Object();
+  private final AtomicBoolean isChannelSet = new AtomicBoolean(false);
+  private final CountDownLatch channelCreatedLatch = new CountDownLatch(1);
   private volatile HttpJsonChannel channel;
   private final HttpJsonCallOptions callOptions;
   @Nullable private final Duration timeout;
@@ -191,7 +195,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
 
   @Override
   public HttpJsonCallContext merge(ApiCallContext inputCallContext) {
-    synchronized (lock) {
+    if (isChannelSet.compareAndSet(false, true)) {
       if (channel == null && getTransportChannelProvider() != null) {
         HttpJsonTransportChannel httpJsonTransportChannel;
         try {
@@ -208,6 +212,12 @@ public final class HttpJsonCallContext implements ApiCallContext {
         }
         channel = httpJsonTransportChannel.getChannel();
       }
+      channelCreatedLatch.countDown();
+    }
+    try {
+      channelCreatedLatch.await(10, TimeUnit.SECONDS);
+    } catch (InterruptedException e) {
+      throw new RuntimeException(e);
     }
     if (inputCallContext == null) {
       return this;

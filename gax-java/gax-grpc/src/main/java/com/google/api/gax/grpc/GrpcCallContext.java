@@ -56,6 +56,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import org.threeten.bp.Duration;
@@ -72,7 +75,8 @@ import org.threeten.bp.Duration;
 public final class GrpcCallContext implements ApiCallContext {
   static final CallOptions.Key<ApiTracer> TRACER_KEY = CallOptions.Key.create("gax.tracer");
 
-  private final Object lock = new Object();
+  private final AtomicBoolean isChannelSet = new AtomicBoolean(false);
+  private final CountDownLatch channelCreatedLatch = new CountDownLatch(1);
 
   private volatile Channel channel;
   private final CallOptions callOptions;
@@ -421,7 +425,7 @@ public final class GrpcCallContext implements ApiCallContext {
 
   @Override
   public ApiCallContext merge(ApiCallContext inputCallContext) {
-    synchronized (lock) {
+    if (isChannelSet.compareAndSet(false, true)) {
       if (channel == null && getTransportChannelProvider() != null) {
         GrpcTransportChannel grpcTransportChannel;
         try {
@@ -436,6 +440,12 @@ public final class GrpcCallContext implements ApiCallContext {
         }
         channel = grpcTransportChannel.getChannel();
       }
+      channelCreatedLatch.countDown();
+    }
+    try {
+      channelCreatedLatch.await(10, TimeUnit.SECONDS);
+    } catch (InterruptedException e) {
+      throw new RuntimeException(e);
     }
     if (inputCallContext == null) {
       return this;
