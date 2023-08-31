@@ -53,10 +53,13 @@ function other_post_processing_scripts {
   pushd $scripts_root
   [ ! -d google-cloud-java ] && git clone https://github.com/googleapis/google-cloud-java
   pushd google-cloud-java
-  parent_pom="$(pwd)/google-cloud-jar-parent/pom.xml"
+  jar_parent_pom="$(pwd)/google-cloud-jar-parent/pom.xml"
+  pom_parent_pom="$(pwd)/google-cloud-pom-parent/pom.xml"
   popd
   popd
-  bash $scripts_root/post-processing/set_parent_pom.sh $workspace $parent_pom
+  bash $scripts_root/post-processing/set_parent_pom.sh $workspace/pom.xml $jar_parent_pom ../google-cloud-jar-parent/pom.xml
+  workspace_bom=$(find -wholename '*-bom/pom.xml')
+  bash $scripts_root/post-processing/set_parent_pom.sh $workspace_bom $pom_parent_pom ../../google-cloud-pom-parent/pom.xml
 
   # get existing versions.txt from downloaded monorepo
   repo_short=$(cat $repo_metadata_json_path | jq -r '.repo_short // empty')
