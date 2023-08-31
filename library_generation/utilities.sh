@@ -94,12 +94,11 @@ get_gapic_opts() {
 
 remove_grpc_version() {
   find "$destination_path" -type f -name "*Grpc.java" -exec \
-  sed -i 's/value = \"by gRPC proto compiler.*/value = \"by gRPC proto compiler\",/g' {} \;
+  sed -i.bak 's/value = \"by gRPC proto compiler.*/value = \"by gRPC proto compiler\",/g' {}  \; -exec rm {}.bak \;
 }
 
 download_gapic_generator_pom_parent() {
   gapic_generator_version=$1
-  cd "$working_directory"
   if [ ! -f "gapic-generator-java-pom-parent-$gapic_generator_version.pom" ]; then
     if [[ "$gapic_generator_version" == *"-SNAPSHOT" ]]; then
       # copy a SNAPSHOT version from maven local repository.
@@ -135,14 +134,14 @@ download_tools() {
   gapic_generator_version=$1
   protobuf_version=$2
   grpc_version=$3
+  os_architecture=$4
   download_generator "$gapic_generator_version"
-  download_protobuf "$protobuf_version"
-  download_grpc_plugin "$grpc_version"
+  download_protobuf "$protobuf_version" "$os_architecture"
+  download_grpc_plugin "$grpc_version" "$os_architecture"
 }
 
 download_generator() {
   gapic_generator_version=$1
-  cd "$working_directory"
   if [ ! -f "gapic-generator-java-$gapic_generator_version.jar" ]; then
     if [[ "$gapic_generator_version" == *"-SNAPSHOT" ]]; then
       # copy a SNAPSHOT version from maven local repository.
@@ -159,32 +158,32 @@ download_generator() {
 
 download_protobuf() {
   protobuf_version=$1
-  cd "$working_directory"
+  os_architecture=$2
   if [ ! -d "protobuf-$protobuf_version.zip" ]; then
     # pull proto files and protoc from protobuf repository as maven central
     # doesn't have proto files
     download_from \
-    "https://github.com/protocolbuffers/protobuf/releases/download/v$protobuf_version/protoc-$protobuf_version-linux-x86_64.zip" \
+    "https://github.com/protocolbuffers/protobuf/releases/download/v$protobuf_version/protoc-${protobuf_version}-${os_architecture}.zip" \
     "protobuf-$protobuf_version.zip" \
     "GitHub"
     unzip -o -q "protobuf-$protobuf_version.zip" -d "protobuf-$protobuf_version"
-    cp -r "protobuf-$protobuf_version/include/google" "$working_directory"
+    cp -r "protobuf-$protobuf_version/include/google" .
     rm "protobuf-$protobuf_version.zip"
   fi
 
-  protoc_path=$working_directory/protobuf-$protobuf_version/bin
+  protoc_path=protobuf-$protobuf_version/bin
   echo "protoc version: $("$protoc_path"/protoc --version)"
 }
 
 download_grpc_plugin() {
   grpc_version=$1
-  cd "$working_directory"
-  if [ ! -f "protoc-gen-grpc-java-$grpc_version-linux-x86_64.exe" ]; then
+  os_architecture=$2
+  if [ ! -f "protoc-gen-grpc-java-$grpc_version-${os_architecture}.exe" ]; then
     # download protoc-gen-grpc-java plugin from Google maven central mirror.
     download_from \
-    "https://maven-central.storage-download.googleapis.com/maven2/io/grpc/protoc-gen-grpc-java/$grpc_version/protoc-gen-grpc-java-$grpc_version-linux-x86_64.exe" \
-    "protoc-gen-grpc-java-$grpc_version-linux-x86_64.exe"
-    chmod +x "protoc-gen-grpc-java-$grpc_version-linux-x86_64.exe"
+    "https://maven-central.storage-download.googleapis.com/maven2/io/grpc/protoc-gen-grpc-java/$grpc_version/protoc-gen-grpc-java-$grpc_version-${os_architecture}.exe" \
+    "protoc-gen-grpc-java-$grpc_version-${os_architecture}.exe"
+    chmod +x "protoc-gen-grpc-java-$grpc_version-${os_architecture}.exe"
   fi
 }
 

@@ -3,5 +3,4 @@
 set -e
 
 # Wrap gapic-generator-java.jar because protoc requires the plugin to be executable.
-working_directory=$(dirname "$(readlink -f "$0")")
-exec java -classpath "$working_directory/gapic-generator-java-$gapic_generator_version.jar" com.google.api.generator.Main
+exec java -classpath "gapic-generator-java-$gapic_generator_version.jar" com.google.api.generator.Main
