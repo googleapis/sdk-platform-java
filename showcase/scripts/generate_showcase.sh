@@ -1,29 +1,33 @@
 #!/bin/bash
-set -e
+set -ex
 
 script_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-source $script_dir/../../library_generation/utilities.sh
+lib_gen_scripts_dir=$script_dir/../../library_generation/
+source $lib_gen_scripts_dir/utilities.sh
 
 cd $script_dir
 
 # clone gapic-showcase
 if [ ! -d schema ]; then
-  git clone https://github.com/googleapis/gapic-showcase
-  pushd gapic-showcase
-  showcase_version=$(xmllint --xpath '/*[local-name()="project"]/*[local-name()="properties"]/*[local-name()="gapic-showcase.version"]/text()' $script_dir/../../showcase/gapic-showcase/pom.xml)
-  git checkout "v$showcase_version"
+  if [ -d gapic-showcase ]; then
+    rm -rdf gapic-showcase
+  fi
+  showcase_version=$(xmllint --xpath '/*[local-name()="project"]/*[local-name()="properties"]/*[local-name()="gapic-showcase.version"]/text()' $script_dir/../gapic-showcase/pom.xml)
+  sparse_clone https://github.com/googleapis/gapic-showcase.git "schema/google/showcase/v1beta1" "v$showcase_version"
+  cd gapic-showcase
   mv schema ..
-  popd
+  cd ..
   rm -rdf gapic-showcase
 fi
 if [ ! -d google ];then
-  git clone https://github.com/googleapis/googleapis
+  if [ -d googleapis ]; then
+    rm -rdf googleapis
+  fi
+  sparse_clone https://github.com/googleapis/googleapis.git "WORKSPACE google/api google/rpc google/cloud/common_resources.proto google/longrunning google/iam/v1 google/cloud/location google/type"
   mv googleapis/google .
-  mv googleapis/WORKSPACE ..
   rm -rdf googleapis
 fi
 
-GOOGLEAPIS_WORKSPACE=$script_dir/WORKSPACE
 
 ggj_version=$(get_version_from_versions_txt ../../versions.txt "gapic-generator-java")
 if [ $(echo $ggj_version | grep 'SNAPSHOT' | wc -l) -gt 0 ]; then
@@ -39,6 +43,7 @@ transport="grpc+rest"
 include_samples="false"
 rm -rdf showcase-output
 mkdir showcase-output
+set +e
 bash $script_dir/../../library_generation/generate_library.sh \
   --proto_path "schema/google/showcase/v1beta1" \
   --destination_path "showcase-output" \
@@ -47,4 +52,9 @@ bash $script_dir/../../library_generation/generate_library.sh \
   --include_samples $include_samples \
   --transport $transport &> out
 
-set +e
+exit_code=$?
+if [ $exit_code -ne 0 ]; then
+  rm -rdf showcase-output
+  exit $exit_code
+fi
+set +x

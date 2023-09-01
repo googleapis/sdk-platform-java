@@ -248,3 +248,20 @@ get_version_from_versions_txt() {
   version=$(cat "$versions" | grep "$key" | cut -d: -f3) # 3rd field is snapshot
   echo $version
 }
+
+
+sparse_clone() {
+  repo_url=$1
+  paths=$2
+  commitish=$3
+  clone_dir=$(basename "${repo_url%.*}")
+  rm -rf "$clone_dir"
+  git clone -n --depth=1 --no-single-branch --filter=tree:0 "$repo_url"
+  cd "$clone_dir"
+  if [ ! -z $commitish ]; then
+    git checkout $commitish
+  fi
+  git sparse-checkout set --no-cone $paths
+  git checkout
+  cd ..
+}
