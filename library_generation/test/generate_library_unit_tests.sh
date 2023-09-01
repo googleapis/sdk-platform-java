@@ -60,19 +60,15 @@ extract_folder_name_test() {
 }
 
 get_grpc_version_test() {
-  pushd "$script_dir"
   actual_version=$(get_grpc_version "2.24.0")
   assertEquals "1.56.1" "$actual_version"
   rm "gapic-generator-java-pom-parent-2.24.0.pom"
-  popd
 }
 
 get_protobuf_version_test() {
-  pushd "$script_dir"
   actual_version=$(get_protobuf_version "2.24.0")
   assertEquals "23.2" "$actual_version"
   rm "gapic-generator-java-pom-parent-2.24.0.pom"
-  popd
 }
 
 search_additional_protos_common_resources_test() {
@@ -141,44 +137,64 @@ remove_grpc_version_test() {
   return "$return_code"
 }
 
-download_generator_success_test() {
-  pushd "$script_dir"
+download_generator_success_with_valid_version_test() {
   download_generator "2.24.0"
   assertFileExists "gapic-generator-java-2.24.0.jar"
   rm "gapic-generator-java-2.24.0.jar"
-  popd
 }
 
-download_protobuf_linux_test() {
-  pushd "$script_dir"
+download_generator_failed_with_invalid_version_test() {
+  # The download function will exit the shell
+  # if download failed.
+  # Use $() to execute the function in subshell so that
+  # the other tests can continue executing in the current
+  # shell.
+  $(download_generator "1.99.0")
+  assertFileDoesNotExist "gapic-generator-java-1.99.0.jar"
+}
+
+download_protobuf_succeed_with_valid_version_linux_test() {
   download_protobuf "23.2" "linux-x86_64"
   assertFileExists "protobuf-23.2"
   rm -rf "protobuf-23.2"
-  popd
 }
 
-download_protobuf_macos_test() {
-  pushd "$script_dir"
+download_protobuf_succeed_with_valid_version_macos_test() {
   download_protobuf "23.2" "osx-x86_64"
   assertFileExists "protobuf-23.2"
   rm -rf "protobuf-23.2" "google"
-  popd
 }
 
-download_grpc_plugin_linux_test() {
-  pushd "$script_dir"
+download_protobuf_failed_with_invalid_version_linux_test() {
+  $(download_protobuf "22.99" "linux-x86_64")
+  assertFileDoesNotExist "protobuf-22.99"
+}
+
+download_protobuf_failed_with_invalid_arch_test() {
+  $(download_protobuf "23.2" "customized-x86_64")
+  assertFileDoesNotExist "protobuf-23.2"
+}
+
+download_grpc_plugin_succeed_with_valid_version_linux_test() {
   download_grpc_plugin "1.55.1" "linux-x86_64"
   assertFileExists "protoc-gen-grpc-java-1.55.1-linux-x86_64.exe"
   rm "protoc-gen-grpc-java-1.55.1-linux-x86_64.exe"
-  popd
 }
 
-download_grpc_plugin_macos_test() {
-  pushd "$script_dir"
+download_grpc_plugin_succeed_with_valid_version_macos_test() {
   download_grpc_plugin "1.55.1" "osx-x86_64"
   assertFileExists "protoc-gen-grpc-java-1.55.1-osx-x86_64.exe"
   rm "protoc-gen-grpc-java-1.55.1-osx-x86_64.exe"
-  popd
+}
+
+download_grpc_plugin_failed_with_invalid_version_linux_test() {
+  $(download_grpc_plugin "0.99.0" "linux-x86_64")
+  assertFileDoesNotExist "protoc-gen-grpc-java-0.99.0-linux-x86_64.exe"
+}
+
+download_grpc_plugin_failed_with_invalid_arch_test() {
+  $(download_grpc_plugin "1.55.1" "customized-x86_64")
+  assertFileDoesNotExist "protoc-gen-grpc-java-1.55.1-customized-x86_64.exe"
 }
 
 # Execute tests.
@@ -194,14 +210,18 @@ test_list=(
   get_gapic_opts_test
   get_gapic_opts_without_rest_test
   remove_grpc_version_test
-  download_generator_success_test
-  download_protobuf_linux_test
-  download_protobuf_macos_test
-  download_grpc_plugin_linux_test
-  download_grpc_plugin_macos_test
+  download_protobuf_succeed_with_valid_version_linux_test
+  download_protobuf_succeed_with_valid_version_macos_test
+  download_protobuf_failed_with_invalid_version_linux_test
+  download_protobuf_failed_with_invalid_arch_test
+  download_grpc_plugin_succeed_with_valid_version_linux_test
+  download_grpc_plugin_succeed_with_valid_version_macos_test
+  download_grpc_plugin_failed_with_invalid_version_linux_test
+  download_grpc_plugin_failed_with_invalid_arch_test
 )
 
 for ut in "${test_list[@]}"; do
+  pushd "$script_dir"
   test_executed
   result=0
   "$ut" || result=$?
@@ -210,6 +230,7 @@ for ut in "${test_list[@]}"; do
   else
     test_failed
   fi
+  popd
 done
 
 echo "Test result: $total_num tests executed, $succeed_num succeed, $failed_num failed."
