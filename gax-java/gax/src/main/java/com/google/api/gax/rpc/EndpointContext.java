@@ -71,6 +71,7 @@ public abstract class EndpointContext {
     // TODO: Logic for figuring out the endpoint
     resolvedEndpoint =
         transportChannelEndpoint() != null ? transportChannelEndpoint() : clientSettingsEndpoint();
+    resolvedEndpoint = resolvedEndpoint == null ? "test.googleapis.com" : resolvedEndpoint;
     resolvedUniverseDomain = resolvedEndpoint;
   }
 

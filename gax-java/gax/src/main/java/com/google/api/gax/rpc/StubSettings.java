@@ -32,6 +32,7 @@ package com.google.api.gax.rpc;
 import com.google.api.core.ApiClock;
 import com.google.api.core.ApiFunction;
 import com.google.api.core.BetaApi;
+import com.google.api.core.InternalApi;
 import com.google.api.core.NanoClock;
 import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.ExecutorProvider;
@@ -147,6 +148,11 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
+  }
+
+  @InternalApi
+  public final String getCustomSetEndpoint() {
+    return endpoint;
   }
 
   public final String getMtlsEndpoint() {

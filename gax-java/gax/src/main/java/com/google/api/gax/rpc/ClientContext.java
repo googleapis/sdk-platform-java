@@ -187,7 +187,7 @@ public abstract class ClientContext {
       String audienceString;
       if (!Strings.isNullOrEmpty(settingsGdchApiAudience)) {
         audienceString = settingsGdchApiAudience;
-      } else if (!Strings.isNullOrEmpty(settings.getEndpoint())) {
+      } else if (!Strings.isNullOrEmpty(settings.getCustomSetEndpoint())) {
         audienceString = settings.getEndpoint();
       } else {
         throw new IllegalArgumentException("Could not infer GDCH api audience from settings");
@@ -261,6 +261,9 @@ public abstract class ClientContext {
       defaultCallContext = defaultCallContext.withEndpointContext(endpointContext);
     }
     defaultCallContext = defaultCallContext.withTransportChannelResolver(transportChannelResolver);
+    if (credentials != null) {
+      defaultCallContext = defaultCallContext.withCredentials(credentials);
+    }
 
     WatchdogProvider watchdogProvider = settings.getStreamWatchdogProvider();
     @Nullable Watchdog watchdog = null;

@@ -74,10 +74,8 @@ import org.threeten.bp.Duration;
 @BetaApi("Reference ApiCallContext instead - this class is likely to experience breaking changes")
 public final class GrpcCallContext implements ApiCallContext {
   static final CallOptions.Key<ApiTracer> TRACER_KEY = CallOptions.Key.create("gax.tracer");
-
-  private final AtomicBoolean isChannelSet = new AtomicBoolean(false);
-  private final CountDownLatch channelCreatedLatch = new CountDownLatch(1);
-
+  private final AtomicBoolean isChannelSet;
+  private final CountDownLatch channelCreatedLatch;
   private volatile Channel channel;
   private final CallOptions callOptions;
   @Nullable private final Duration timeout;
@@ -112,8 +110,10 @@ public final class GrpcCallContext implements ApiCallContext {
         null,
         null,
         null,
+        EndpointContext.newBuilder().build(),
         null,
-        null);
+        new AtomicBoolean(false),
+        new CountDownLatch(1));
   }
 
   public static GrpcCallContext of(TransportChannelProvider transportChannelProvider) {
@@ -130,7 +130,9 @@ public final class GrpcCallContext implements ApiCallContext {
         null,
         transportChannelProvider,
         null,
-        null);
+        null,
+        new AtomicBoolean(false),
+        new CountDownLatch(1));
   }
 
   /** Returns an instance with the given channel and {@link CallOptions}. */
@@ -147,8 +149,10 @@ public final class GrpcCallContext implements ApiCallContext {
         null,
         null,
         null,
+        EndpointContext.newBuilder().build(),
         null,
-        null);
+        new AtomicBoolean(false),
+        new CountDownLatch(1));
   }
 
   private GrpcCallContext(
@@ -164,7 +168,9 @@ public final class GrpcCallContext implements ApiCallContext {
       @Nullable Set<StatusCode.Code> retryableCodes,
       @Nullable TransportChannelProvider transportChannelProvider,
       EndpointContext endpointContext,
-      TransportChannelResolver transportChannelResolver) {
+      TransportChannelResolver transportChannelResolver,
+      AtomicBoolean isChannelSet,
+      CountDownLatch channelCreatedLatch) {
     this.channel = channel;
     this.callOptions = Preconditions.checkNotNull(callOptions);
     this.timeout = timeout;
@@ -178,6 +184,8 @@ public final class GrpcCallContext implements ApiCallContext {
     this.transportChannelProvider = transportChannelProvider;
     this.endpointContext = endpointContext;
     this.transportChannelResolver = transportChannelResolver;
+    this.isChannelSet = isChannelSet;
+    this.channelCreatedLatch = channelCreatedLatch;
   }
 
   /**
@@ -235,7 +243,9 @@ public final class GrpcCallContext implements ApiCallContext {
         retryableCodes,
         transportChannelProvider,
         endpointContext,
-        transportChannelResolver);
+        transportChannelResolver,
+        isChannelSet,
+        channelCreatedLatch);
   }
 
   @Override
@@ -254,7 +264,9 @@ public final class GrpcCallContext implements ApiCallContext {
         retryableCodes,
         transportChannelProvider,
         endpointContext,
-        transportChannelResolver);
+        transportChannelResolver,
+        isChannelSet,
+        channelCreatedLatch);
   }
 
   @Override
@@ -282,7 +294,9 @@ public final class GrpcCallContext implements ApiCallContext {
         retryableCodes,
         transportChannelProvider,
         endpointContext,
-        transportChannelResolver);
+        transportChannelResolver,
+        isChannelSet,
+        channelCreatedLatch);
   }
 
   @Nullable
@@ -311,7 +325,9 @@ public final class GrpcCallContext implements ApiCallContext {
         retryableCodes,
         transportChannelProvider,
         endpointContext,
-        transportChannelResolver);
+        transportChannelResolver,
+        isChannelSet,
+        channelCreatedLatch);
   }
 
   @Override
@@ -334,7 +350,9 @@ public final class GrpcCallContext implements ApiCallContext {
         retryableCodes,
         transportChannelProvider,
         endpointContext,
-        transportChannelResolver);
+        transportChannelResolver,
+        isChannelSet,
+        channelCreatedLatch);
   }
 
   @BetaApi("The surface for channel affinity is not stable yet and may change in the future.")
@@ -352,7 +370,9 @@ public final class GrpcCallContext implements ApiCallContext {
         retryableCodes,
         transportChannelProvider,
         endpointContext,
-        transportChannelResolver);
+        transportChannelResolver,
+        isChannelSet,
+        channelCreatedLatch);
   }
 
   @BetaApi("The surface for extra headers is not stable yet and may change in the future.")
@@ -374,7 +394,9 @@ public final class GrpcCallContext implements ApiCallContext {
         retryableCodes,
         transportChannelProvider,
         endpointContext,
-        transportChannelResolver);
+        transportChannelResolver,
+        isChannelSet,
+        channelCreatedLatch);
   }
 
   @Override
@@ -397,7 +419,9 @@ public final class GrpcCallContext implements ApiCallContext {
         retryableCodes,
         transportChannelProvider,
         endpointContext,
-        transportChannelResolver);
+        transportChannelResolver,
+        isChannelSet,
+        channelCreatedLatch);
   }
 
   @Override
@@ -420,7 +444,9 @@ public final class GrpcCallContext implements ApiCallContext {
         retryableCodes,
         transportChannelProvider,
         endpointContext,
-        transportChannelResolver);
+        transportChannelResolver,
+        isChannelSet,
+        channelCreatedLatch);
   }
 
   @Override
@@ -429,11 +455,11 @@ public final class GrpcCallContext implements ApiCallContext {
       if (channel == null && getTransportChannelProvider() != null) {
         GrpcTransportChannel grpcTransportChannel;
         try {
-          TransportChannelProvider transportChannelProvider = getTransportChannelProvider();
-          transportChannelProvider =
-              transportChannelProvider.withEndpoint(endpointContext.resolveEndpoint());
+          TransportChannelProvider newTransportChannelProvider = getTransportChannelProvider();
+          newTransportChannelProvider =
+              newTransportChannelProvider.withEndpoint(endpointContext.resolveEndpoint());
           grpcTransportChannel =
-              (GrpcTransportChannel) transportChannelProvider.getTransportChannel();
+              (GrpcTransportChannel) newTransportChannelProvider.getTransportChannel();
           transportChannelResolver.setTransportChannel(grpcTransportChannel);
         } catch (IOException e) {
           throw new RuntimeException(e);
@@ -443,8 +469,13 @@ public final class GrpcCallContext implements ApiCallContext {
       channelCreatedLatch.countDown();
     }
     try {
-      channelCreatedLatch.await(10, TimeUnit.SECONDS);
+      boolean channelCreated = channelCreatedLatch.await(10, TimeUnit.SECONDS);
+      if (!channelCreated) {
+        throw new Exception("Unable to create Channel");
+      }
     } catch (InterruptedException e) {
+      throw new RuntimeException(e);
+    } catch (Exception e) {
       throw new RuntimeException(e);
     }
     if (inputCallContext == null) {
@@ -535,7 +566,9 @@ public final class GrpcCallContext implements ApiCallContext {
         newRetryableCodes,
         transportChannelProvider,
         endpointContext,
-        transportChannelResolver);
+        transportChannelResolver,
+        isChannelSet,
+        channelCreatedLatch);
   }
 
   /** The {@link Channel} set on this context. */
@@ -598,7 +631,9 @@ public final class GrpcCallContext implements ApiCallContext {
         retryableCodes,
         transportChannelProvider,
         endpointContext,
-        transportChannelResolver);
+        transportChannelResolver,
+        isChannelSet,
+        channelCreatedLatch);
   }
 
   public ApiCallContext withChannelProvider(TransportChannelProvider channelProvider) {
@@ -615,7 +650,9 @@ public final class GrpcCallContext implements ApiCallContext {
         retryableCodes,
         channelProvider,
         endpointContext,
-        transportChannelResolver);
+        transportChannelResolver,
+        isChannelSet,
+        channelCreatedLatch);
   }
 
   /** Returns a new instance with the call options set to the given call options. */
@@ -633,7 +670,9 @@ public final class GrpcCallContext implements ApiCallContext {
         retryableCodes,
         transportChannelProvider,
         endpointContext,
-        transportChannelResolver);
+        transportChannelResolver,
+        isChannelSet,
+        channelCreatedLatch);
   }
 
   public GrpcCallContext withRequestParamsDynamicHeaderOption(String requestParams) {
@@ -678,7 +717,9 @@ public final class GrpcCallContext implements ApiCallContext {
         retryableCodes,
         transportChannelProvider,
         endpointContext,
-        transportChannelResolver);
+        transportChannelResolver,
+        isChannelSet,
+        channelCreatedLatch);
   }
 
   /** {@inheritDoc} */

@@ -46,17 +46,23 @@ import com.google.auth.Credentials;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import org.threeten.bp.Duration;
 
 @InternalApi("for testing")
 public class FakeCallContext implements ApiCallContext {
+  private final AtomicBoolean isChannelSet = new AtomicBoolean(false);
+  private final CountDownLatch channelCreatedLatch = new CountDownLatch(1);
   private final Credentials credentials;
-  private final FakeChannel channel;
+  private volatile FakeChannel channel;
   private final Duration timeout;
   private final Duration streamWaitTimeout;
   private final Duration streamIdleTimeout;
@@ -107,7 +113,7 @@ public class FakeCallContext implements ApiCallContext {
         null,
         null,
         null,
-        null,
+        EndpointContext.newBuilder().build(),
         null);
   }
 
@@ -129,6 +135,32 @@ public class FakeCallContext implements ApiCallContext {
 
   @Override
   public ApiCallContext merge(ApiCallContext inputCallContext) {
+    if (isChannelSet.compareAndSet(false, true)) {
+      if (channel == null && transportChannelProvider != null) {
+        FakeTransportChannel fakeTransportChannel;
+        try {
+          TransportChannelProvider newTransportChannelProvider = transportChannelProvider;
+          newTransportChannelProvider =
+              newTransportChannelProvider.withEndpoint(endpointContext.resolveEndpoint());
+          fakeTransportChannel =
+              (FakeTransportChannel) newTransportChannelProvider.getTransportChannel();
+        } catch (IOException e) {
+          throw new RuntimeException(e);
+        }
+        channel = fakeTransportChannel.getChannel();
+      }
+      channelCreatedLatch.countDown();
+    }
+    try {
+      boolean channelCreated = channelCreatedLatch.await(10, TimeUnit.SECONDS);
+      if (!channelCreated) {
+        throw new Exception("Unable to create Channel");
+      }
+    } catch (InterruptedException e) {
+      throw new RuntimeException(e);
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
     if (inputCallContext == null) {
       return this;
     }

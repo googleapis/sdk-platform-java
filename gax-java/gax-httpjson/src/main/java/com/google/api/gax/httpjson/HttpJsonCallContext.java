@@ -67,9 +67,8 @@ import org.threeten.bp.Instant;
  * arguments solely depends on the arguments themselves.
  */
 public final class HttpJsonCallContext implements ApiCallContext {
-
-  private final AtomicBoolean isChannelSet = new AtomicBoolean(false);
-  private final CountDownLatch channelCreatedLatch = new CountDownLatch(1);
+  private final AtomicBoolean isChannelSet;
+  private final CountDownLatch channelCreatedLatch;
   private volatile HttpJsonChannel channel;
   private final HttpJsonCallOptions callOptions;
   @Nullable private final Duration timeout;
@@ -103,8 +102,10 @@ public final class HttpJsonCallContext implements ApiCallContext {
         null,
         null,
         null,
+        EndpointContext.newBuilder().build(),
         null,
-        null);
+        new AtomicBoolean(false),
+        new CountDownLatch(1));
   }
 
   public static HttpJsonCallContext of(TransportChannelProvider transportChannelProvider) {
@@ -121,7 +122,9 @@ public final class HttpJsonCallContext implements ApiCallContext {
         null,
         transportChannelProvider,
         null,
-        null);
+        null,
+        new AtomicBoolean(false),
+        new CountDownLatch(1));
   }
 
   public static HttpJsonCallContext of(HttpJsonChannel channel, HttpJsonCallOptions options) {
@@ -137,8 +140,10 @@ public final class HttpJsonCallContext implements ApiCallContext {
         null,
         null,
         null,
+        EndpointContext.newBuilder().build(),
         null,
-        null);
+        new AtomicBoolean(false),
+        new CountDownLatch(1));
   }
 
   private HttpJsonCallContext(
@@ -154,7 +159,9 @@ public final class HttpJsonCallContext implements ApiCallContext {
       Set<StatusCode.Code> defaultRetryableCodes,
       TransportChannelProvider transportChannelProvider,
       EndpointContext endpointContext,
-      TransportChannelResolver transportChannelResolver) {
+      TransportChannelResolver transportChannelResolver,
+      AtomicBoolean isChannelSet,
+      CountDownLatch channelCreatedLatch) {
     this.channel = channel;
     this.callOptions = callOptions;
     this.timeout = timeout;
@@ -169,6 +176,8 @@ public final class HttpJsonCallContext implements ApiCallContext {
     this.transportChannelProvider = transportChannelProvider;
     this.endpointContext = endpointContext;
     this.transportChannelResolver = transportChannelResolver;
+    this.isChannelSet = isChannelSet;
+    this.channelCreatedLatch = channelCreatedLatch;
   }
 
   /**
@@ -199,13 +208,11 @@ public final class HttpJsonCallContext implements ApiCallContext {
       if (channel == null && getTransportChannelProvider() != null) {
         HttpJsonTransportChannel httpJsonTransportChannel;
         try {
-          TransportChannelProvider transportChannelProvider = getTransportChannelProvider();
-          Preconditions.checkNotNull(transportChannelProvider, "TransportChannelProvider is null");
-          Preconditions.checkNotNull(endpointContext, "Unable to resolve endpoint");
-          transportChannelProvider =
-              transportChannelProvider.withEndpoint(endpointContext.resolveEndpoint());
+          TransportChannelProvider newTransportChannelProvider = getTransportChannelProvider();
+          newTransportChannelProvider =
+              newTransportChannelProvider.withEndpoint(endpointContext.resolveEndpoint());
           httpJsonTransportChannel =
-              (HttpJsonTransportChannel) transportChannelProvider.getTransportChannel();
+              (HttpJsonTransportChannel) newTransportChannelProvider.getTransportChannel();
           transportChannelResolver.setTransportChannel(httpJsonTransportChannel);
         } catch (IOException e) {
           throw new RuntimeException(e);
@@ -215,8 +222,13 @@ public final class HttpJsonCallContext implements ApiCallContext {
       channelCreatedLatch.countDown();
     }
     try {
-      channelCreatedLatch.await(10, TimeUnit.SECONDS);
+      boolean channelCreated = channelCreatedLatch.await(10, TimeUnit.SECONDS);
+      if (!channelCreated) {
+        throw new Exception("Unable to create Channel");
+      }
     } catch (InterruptedException e) {
+      throw new RuntimeException(e);
+    } catch (Exception e) {
       throw new RuntimeException(e);
     }
     if (inputCallContext == null) {
@@ -285,7 +297,9 @@ public final class HttpJsonCallContext implements ApiCallContext {
         newRetryableCodes,
         transportChannelProvider,
         endpointContext,
-        transportChannelResolver);
+        transportChannelResolver,
+        isChannelSet,
+        channelCreatedLatch);
   }
 
   @Override
@@ -321,7 +335,9 @@ public final class HttpJsonCallContext implements ApiCallContext {
         this.retryableCodes,
         this.transportChannelProvider,
         endpointContext,
-        transportChannelResolver);
+        this.transportChannelResolver,
+        this.isChannelSet,
+        this.channelCreatedLatch);
   }
 
   @Override
@@ -340,7 +356,9 @@ public final class HttpJsonCallContext implements ApiCallContext {
         this.retryableCodes,
         this.transportChannelProvider,
         this.endpointContext,
-        transportChannelResolver);
+        transportChannelResolver,
+        this.isChannelSet,
+        this.channelCreatedLatch);
   }
 
   @Override
@@ -368,7 +386,9 @@ public final class HttpJsonCallContext implements ApiCallContext {
         this.retryableCodes,
         this.transportChannelProvider,
         this.endpointContext,
-        transportChannelResolver);
+        this.transportChannelResolver,
+        this.isChannelSet,
+        this.channelCreatedLatch);
   }
 
   @Nullable
@@ -397,7 +417,9 @@ public final class HttpJsonCallContext implements ApiCallContext {
         this.retryableCodes,
         this.transportChannelProvider,
         this.endpointContext,
-        transportChannelResolver);
+        this.transportChannelResolver,
+        this.isChannelSet,
+        this.channelCreatedLatch);
   }
 
   /**
@@ -431,7 +453,9 @@ public final class HttpJsonCallContext implements ApiCallContext {
         this.retryableCodes,
         this.transportChannelProvider,
         this.endpointContext,
-        transportChannelResolver);
+        this.transportChannelResolver,
+        this.isChannelSet,
+        this.channelCreatedLatch);
   }
 
   /**
@@ -464,7 +488,9 @@ public final class HttpJsonCallContext implements ApiCallContext {
         this.retryableCodes,
         this.transportChannelProvider,
         this.endpointContext,
-        transportChannelResolver);
+        this.transportChannelResolver,
+        this.isChannelSet,
+        this.channelCreatedLatch);
   }
 
   @BetaApi("The surface for extra headers is not stable yet and may change in the future.")
@@ -490,7 +516,9 @@ public final class HttpJsonCallContext implements ApiCallContext {
         this.retryableCodes,
         this.transportChannelProvider,
         this.endpointContext,
-        transportChannelResolver);
+        this.transportChannelResolver,
+        this.isChannelSet,
+        this.channelCreatedLatch);
   }
 
   /** {@inheritDoc} */
@@ -539,7 +567,9 @@ public final class HttpJsonCallContext implements ApiCallContext {
         this.retryableCodes,
         this.transportChannelProvider,
         this.endpointContext,
-        transportChannelResolver);
+        this.transportChannelResolver,
+        this.isChannelSet,
+        this.channelCreatedLatch);
   }
 
   @Override
@@ -562,7 +592,9 @@ public final class HttpJsonCallContext implements ApiCallContext {
         retryableCodes,
         this.transportChannelProvider,
         this.endpointContext,
-        transportChannelResolver);
+        this.transportChannelResolver,
+        this.isChannelSet,
+        this.channelCreatedLatch);
   }
 
   public HttpJsonCallContext withChannel(HttpJsonChannel newChannel) {
@@ -579,7 +611,9 @@ public final class HttpJsonCallContext implements ApiCallContext {
         this.retryableCodes,
         this.transportChannelProvider,
         this.endpointContext,
-        transportChannelResolver);
+        this.transportChannelResolver,
+        this.isChannelSet,
+        this.channelCreatedLatch);
   }
 
   public HttpJsonCallContext withCallOptions(HttpJsonCallOptions newCallOptions) {
@@ -596,7 +630,9 @@ public final class HttpJsonCallContext implements ApiCallContext {
         this.retryableCodes,
         this.transportChannelProvider,
         this.endpointContext,
-        transportChannelResolver);
+        this.transportChannelResolver,
+        this.isChannelSet,
+        this.channelCreatedLatch);
   }
 
   @Deprecated
@@ -633,7 +669,9 @@ public final class HttpJsonCallContext implements ApiCallContext {
         this.retryableCodes,
         this.transportChannelProvider,
         this.endpointContext,
-        transportChannelResolver);
+        this.transportChannelResolver,
+        this.isChannelSet,
+        this.channelCreatedLatch);
   }
 
   @Override
