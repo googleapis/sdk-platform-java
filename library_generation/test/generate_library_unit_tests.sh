@@ -6,6 +6,7 @@ set -xeo pipefail
 total_num=0
 succeed_num=0
 failed_num=0
+failed_tests=""
 # Unit tests against ./utilities.sh
 script_dir=$(dirname "$(readlink -f "$0")")
 source "${script_dir}"/../utilities.sh
@@ -51,7 +52,9 @@ __test_succeed() {
 }
 
 __test_failed() {
+  failed_test=$1
   failed_num=$((1 + failed_num))
+  failed_tests="${failed_tests} ${failed_test}"
 }
 
 # Unit tests
@@ -98,7 +101,7 @@ search_additional_protos_iam_test() {
 }
 
 search_additional_protos_location_test() {
-  proto_path="{$script_dir}/resources/firestore"
+  proto_path="${script_dir}/resources/firestore"
   addition_protos=$(search_additional_protos)
   __assertEquals \
   "google/cloud/common_resources.proto google/cloud/location/locations.proto" \
@@ -238,11 +241,11 @@ for ut in "${test_list[@]}"; do
   pushd "${script_dir}"
   __test_executed
   result=0
-  "$ut" || result=$?
+  "${ut}" || result=$?
   if [[ "${result}" == 0 ]]; then
     __test_succeed
   else
-    __test_failed
+    __test_failed "${ut}"
   fi
   popd
 done
@@ -254,4 +257,5 @@ if [[ "${total_num}" == "${succeed_num}" ]]; then
 fi
 
 echo "Test failed."
+echo "Failed test(s): ${failed_tests}."
 exit 1
