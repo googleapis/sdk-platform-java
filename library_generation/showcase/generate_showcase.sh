@@ -60,6 +60,7 @@ include_samples=$(get_config_from_BUILD \
   "true"
 )
 
+rm -rdf showcase-output
 mkdir showcase-output
 bash ../generate_library.sh \
   --proto_path "schema/google/showcase/v1beta1" \

@@ -63,11 +63,10 @@
                 </goals>
                 <phase>generate-sources</phase>
                 <configuration>
-                  <executable>bazelisk</executable>
+                  <executable>bash</executable>
                   <arguments>
-                    <argument>run</argument>
-                    <argument>--experimental_proto_descriptor_sets_include_source_info</argument>
-                    <argument>//showcase:update_grpc</argument>
+                    <argument>../../library_generation/showcase/generate_component.sh</argument>
+                    <argument>gapic</argument>
                   </arguments>
                 </configuration>
               </execution>
