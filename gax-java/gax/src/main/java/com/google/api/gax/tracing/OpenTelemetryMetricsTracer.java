@@ -38,6 +38,7 @@ import com.google.common.base.Stopwatch;
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.common.AttributesBuilder;
 import io.opentelemetry.api.metrics.DoubleHistogram;
+import io.opentelemetry.api.metrics.LongCounter;
 import io.opentelemetry.api.metrics.LongHistogram;
 import io.opentelemetry.api.metrics.Meter;
 import java.util.HashMap;
@@ -66,6 +67,8 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
   protected DoubleHistogram targetResolutionDelayRecorder;
   protected DoubleHistogram channelReadinessDelayRecorder;
   protected DoubleHistogram callSendDelayRecorder;
+  protected LongCounter operationCountRecorder;
+
   protected Attributes attributes;
 
   Map<String, String> operationLatencyLabels = new HashMap<>();
@@ -118,6 +121,12 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
             .setDescription("Call send delay. (after the connection is ready)")
             .setUnit("ns")
             .build();
+    this.operationCountRecorder =
+        meter
+            .counterBuilder("operation_count")
+            .setDescription("Count of Operations")
+            .setUnit("1")
+            .build();
     this.attributes = Attributes.of(stringKey("method_name"), spanName.toString());
   }
 
@@ -141,8 +150,9 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
     attributesBuilder.putAll(attributes);
     attributesBuilder.put(STATUS_ATTRIBUTE, StatusCode.Code.OK.toString());
     operationLatencyLabels.forEach((key, value) -> attributesBuilder.put(stringKey(key), value));
-    operationLatencyRecorder.record(
-        operationTimer.elapsed(TimeUnit.MILLISECONDS), attributesBuilder.build());
+    Attributes allAttributes = attributesBuilder.build();
+    operationLatencyRecorder.record(operationTimer.elapsed(TimeUnit.MILLISECONDS), allAttributes);
+    operationCountRecorder.add(1, allAttributes);
   }
 
   @Override
