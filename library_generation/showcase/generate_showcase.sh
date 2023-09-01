@@ -14,7 +14,7 @@ rm -rdf output
 if [ ! -d schema ]; then
   git clone https://github.com/googleapis/gapic-showcase
   pushd gapic-showcase
-  showcase_version=$(get_version_from_WORKSPACE "_showcase_version" $sdk_workspace)
+  showcase_version=$(xmllint --xpath '/*[local-name()="project"]/*[local-name()="properties"]/*[local-name()="gapic-showcase.version"]/text()' $script_dir/../../showcase/gapic-showcase/pom.xml)
   git checkout "v$showcase_version"
   mv schema ..
   popd
@@ -29,7 +29,7 @@ fi
 
 GOOGLEAPIS_WORKSPACE=$script_dir/WORKSPACE
 
-ggj_version=$(get_version_from_WORKSPACE _gapic_generator_java_version $sdk_workspace)
+ggj_version=$(get_version_from_versions_txt ../../versions.txt "gapic-generator-java")
 if [ $(echo $ggj_version | grep 'SNAPSHOT' | wc -l) -gt 0 ]; then
   echo 'This repo is at a snapshot version. Installing locally...'
   pushd $script_dir/../..
@@ -38,28 +38,9 @@ if [ $(echo $ggj_version | grep 'SNAPSHOT' | wc -l) -gt 0 ]; then
 fi
 
 
-rest_numeric_enums=$(get_config_from_BUILD \
-  "$showcase_build_file" \
-  "java_gapic_library(" \
-  "rest_numeric_enums = False" \
-  "true" \
-  "false"
-)
-transport=$(get_config_from_BUILD \
-  "$showcase_build_file" \
-  "java_gapic_library(" \
-  "grpc+rest" \
-  "grpc" \
-  "grpc+rest"
-)
-include_samples=$(get_config_from_BUILD \
-  "$showcase_build_file" \
-  "java_gapic_assembly_gradle_pkg(" \
-  "include_samples = True" \
-  "false" \
-  "true"
-)
-
+rest_numeric_enums="false"
+transport="grpc+rest"
+include_samples="false"
 rm -rdf showcase-output
 mkdir showcase-output
 bash ../generate_library.sh \
