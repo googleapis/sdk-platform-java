@@ -70,8 +70,9 @@
                 <configuration>
                   <executable>bash</executable>
                   <arguments>
-                    <argument>../../library_generation/showcase/generate_component.sh</argument>
+                    <argument>../scripts/generate_component.sh</argument>
                     <argument>gapic</argument>
+                    <argument>true</argument> <!-- replace contents -->
                   </arguments>
                 </configuration>
               </execution>

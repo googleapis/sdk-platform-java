@@ -2,6 +2,10 @@
 set -x
 set +e
 component=$1 #one of gapic, proto, grpc
+replace=$2
+if [ -z $replace ]; then
+  replace="false"
+fi
 script_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 source $script_dir/showcase_utilities.sh
 
@@ -15,6 +19,9 @@ case $component in
     grpc )
         showcase_component_dir=$showcase_folder/grpc-gapic-showcase-v1beta1/src/main ;;
 esac
-rm -rdf $showcase_component_dir/*
-cp -r $script_dir/showcase-output/$component-showcase-output/src/main/* $showcase_component_dir/
+
+if [ $replace == "true" ]; then
+  rm -rdf $showcase_component_dir/*
+  cp -r $script_dir/showcase-output/$component-showcase-output/src/main/* $showcase_component_dir/
+fi
 set +x

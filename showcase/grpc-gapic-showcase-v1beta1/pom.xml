@@ -34,11 +34,10 @@
                 </goals>
                 <phase>test</phase>
                 <configuration>
-                  <executable>bazel</executable>
+                  <executable>bash</executable>
                   <arguments>
-                    <argument>run</argument>
-                    <argument>--experimental_proto_descriptor_sets_include_source_info</argument>
-                    <argument>//showcase:verify_grpc</argument>
+                    <argument>../scripts/verify.sh</argument>
+                    <argument>grpc</argument>
                   </arguments>
                 </configuration>
               </execution>
@@ -65,8 +64,9 @@
                 <configuration>
                   <executable>bash</executable>
                   <arguments>
-                    <argument>../../library_generation/showcase/generate_component.sh</argument>
+                    <argument>../scripts/generate_component.sh</argument>
                     <argument>grpc</argument>
+                    <argument>true</argument> <!-- replace contents -->
                   </arguments>
                 </configuration>
               </execution>
