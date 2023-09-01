@@ -1,0 +1,7 @@
+showcase-output/
+gapic-generator-java*
+google/
+out
+protobuf*
+protoc-gen*
+schema/

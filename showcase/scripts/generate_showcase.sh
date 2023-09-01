@@ -2,13 +2,9 @@
 set -e
 
 script_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-source $script_dir/../utilities.sh
-sdk_workspace=$script_dir/../../WORKSPACE
-gax_properties=$script_dir/../../gax-java/dependencies.properties
-showcase_build_file=$script_dir/../../showcase/BUILD.bazel
+source $script_dir/../../library_generation/utilities.sh
 
 cd $script_dir
-rm -rdf output
 
 # clone gapic-showcase
 if [ ! -d schema ]; then
@@ -43,7 +39,7 @@ transport="grpc+rest"
 include_samples="false"
 rm -rdf showcase-output
 mkdir showcase-output
-bash ../generate_library.sh \
+bash $script_dir/../../library_generation/generate_library.sh \
   --proto_path "schema/google/showcase/v1beta1" \
   --destination_path "showcase-output" \
   --gapic_generator_version $ggj_version \

@@ -6,7 +6,7 @@ script_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 source $script_dir/showcase_utilities.sh
 
 generateShowcaseIfMissing
-showcase_folder=$script_dir/../../showcase
+showcase_folder=$script_dir/..
 case $component in
     gapic )
         showcase_component_dir=$showcase_folder/gapic-showcase/src/main ;;
