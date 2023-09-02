@@ -23,16 +23,6 @@ __assertEquals() {
   return 1
 }
 
-__assertFileExists() {
-  expected_file=$1
-  if [ -e "${expected_file}" ]; then
-    return 0
-  fi
-
-  echo "Error: ${expected_file} does not exist."
-  return 1
-}
-
 __assertFileDoesNotExist() {
   expected_file=$1
   if [ ! -f "${expected_file}" ]; then
@@ -160,12 +150,14 @@ download_generator_success_with_valid_version_test() {
 
 download_generator_failed_with_invalid_version_test() {
   # The download function will exit the shell
-  # if download failed.
+  # if download failed. Test the exit code instead of
+  # downloaded file (there will be no downloaded file).
   # Use $() to execute the function in subshell so that
   # the other tests can continue executing in the current
   # shell.
-  $(download_generator "1.99.0")
-  __assertFileDoesNotExist "gapic-generator-java-1.99.0.jar"
+  res=0
+  $(download_generator "1.99.0") || res=$?
+  __assertEquals 1 $((res))
 }
 
 download_protobuf_succeed_with_valid_version_linux_test() {
@@ -181,13 +173,15 @@ download_protobuf_succeed_with_valid_version_macos_test() {
 }
 
 download_protobuf_failed_with_invalid_version_linux_test() {
-  $(download_protobuf "22.99" "linux-x86_64")
-  __assertFileDoesNotExist "protobuf-22.99"
+  res=0
+  $(download_protobuf "22.99" "linux-x86_64") || res=$?
+  __assertEquals 1 $((res))
 }
 
 download_protobuf_failed_with_invalid_arch_test() {
-  $(download_protobuf "23.2" "customized-x86_64")
-  __assertFileDoesNotExist "protobuf-23.2"
+  res=0
+  $(download_protobuf "23.2" "customized-x86_64") || res=$?
+  __assertEquals 1 $((res))
 }
 
 download_grpc_plugin_succeed_with_valid_version_linux_test() {
@@ -203,13 +197,15 @@ download_grpc_plugin_succeed_with_valid_version_macos_test() {
 }
 
 download_grpc_plugin_failed_with_invalid_version_linux_test() {
-  $(download_grpc_plugin "0.99.0" "linux-x86_64")
-  __assertFileDoesNotExist "protoc-gen-grpc-java-0.99.0-linux-x86_64.exe"
+  res=0
+  $(download_grpc_plugin "0.99.0" "linux-x86_64") || res=$?
+  __assertEquals 1 $((res))
 }
 
 download_grpc_plugin_failed_with_invalid_arch_test() {
-  $(download_grpc_plugin "1.55.1" "customized-x86_64")
-  __assertFileDoesNotExist "protoc-gen-grpc-java-1.55.1-customized-x86_64.exe"
+  res=0
+  $(download_grpc_plugin "1.55.1" "customized-x86_64") || res=$?
+  __assertEquals 1 $((res))
 }
 
 # Execute tests.
@@ -227,6 +223,8 @@ test_list=(
   get_gapic_opts_with_rest_test
   get_gapic_opts_without_rest_test
   remove_grpc_version_test
+  download_generator_success_with_valid_version_test
+  download_generator_failed_with_invalid_version_test
   download_protobuf_succeed_with_valid_version_linux_test
   download_protobuf_succeed_with_valid_version_macos_test
   download_protobuf_failed_with_invalid_version_linux_test
