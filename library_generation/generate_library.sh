@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 set -eo pipefail
-script_dir=$(dirname "$(readlink -f "$0")")
+readonly script_dir=$(dirname "$(readlink -f "$0")")
 # source utility functions
 source "$script_dir"/utilities.sh
 
@@ -173,34 +173,34 @@ done
 ##################### Section 4 #####################
 # rm tar files
 #####################################################
-cd "$destination_path"
+cd "${destination_path}"
 rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_proto.jar temp-codegen.srcjar
 ##################### Section 5 #####################
 # post-processing
 #####################################################
-source $script_dir/post-processing/postprocessing_utilities.sh
-if [ $enable_postprocessing != "true" ];
+source "${script_dir}/post-processing/postprocessing_utilities.sh"
+if [ "${enable_postprocessing}" != "true" ];
 then
   echo "post processing is disabled"
   exit 0
-elif [ -z $repo_metadata_json_path ];
+elif [ -z "${repo_metadata_json_path}" ];
 then
   echo "no repo_metadata.json provided. This is necessary for post-processing the generated library" >&2
   exit 1
-elif [ -z $owlbot_sha ];
+elif [ -z "${owlbot_sha}" ];
 then
-  if [ ! -d $script_dir/google-cloud-java ];
+  if [ ! -d "${script_dir}"/google-cloud-java ];
   then
     echo 'no owlbot_sha provided and no monorepo to infer it from. This is necessary for post-processing' >&2
     exit 1
   fi
   echo "no owlbot_sha provided. Will compute from monorepo's head"
-  owlbot_sha=$(grep 'sha256' $script_dir/google-cloud-java/.github/.OwlBot.lock.yaml | cut -d: -f3)
+  owlbot_sha=$(grep 'sha256' "${script_dir}/google-cloud-java/.github/.OwlBot.lock.yaml" | cut -d: -f3)
 fi
-workspace=$destination_path/workspace
-mkdir -p $workspace
+workspace="${destination_path}/workspace"
+mkdir -p "${workspace}"
 
-run_owlbot_postprocessor $workspace $owlbot_sha $repo_metadata_json_path $include_samples \
-  $script_dir $destination_path
+run_owlbot_postprocessor "${workspace}" "${owlbot_sha}" "${repo_metadata_json_path}" "${include_samples}" \
+  "${script_dir}" "${destination_path}"
 
-other_post_processing_scripts $script_dir $workspace $repo_metadata_json_path
+other_post_processing_scripts "${script_dir}" "${workspace}" "${repo_metadata_json_path}"

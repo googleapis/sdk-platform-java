@@ -14,12 +14,12 @@ target_pom=$1
 parent_pom_path=$2
 parent_pom_relative_path=$3
 # First, read the values from the parent pom.xml
-parent_version=$(perl -nle 'print $1 if m|<version>(.+)</version>|' "$parent_pom_path"|head -1)
-parent_group_id=$(perl -nle 'print $1 if m|<groupId>(.+)</groupId>|' "$parent_pom_path" |head -1)
-parent_artifact_id=$(perl -nle 'print $1 if m|<artifactId>(.+)</artifactId>|' "$parent_pom_path"|head -1)
-relativePath=$(echo "$parent_pom_relative_path" | sed 's/\//\\\//g')
+parent_version=$(perl -nle 'print $1 if m|<version>(.+)</version>|' "${parent_pom_path}"|head -1)
+parent_group_id=$(perl -nle 'print $1 if m|<groupId>(.+)</groupId>|' "${parent_pom_path}" |head -1)
+parent_artifact_id=$(perl -nle 'print $1 if m|<artifactId>(.+)</artifactId>|' "${parent_pom_path}"|head -1)
+relativePath=$(echo "${parent_pom_relative_path}" | sed 's/\//\\\//g')
 
 # Search for <parent> tag in module pom and replace the next three lines -- groupId, artifcatId, and version
 perl_command="s/\s*<parent>.*?<\/parent>/\n\n  <parent>\n    <groupId>${parent_group_id}<\/groupId>\n    <artifactId>${parent_artifact_id}<\/artifactId>\n    <version>${parent_version}<\/version><!-- {x-version-update:google-cloud-java:current} -->\n    <relativePath>${relativePath}<\/relativePath>\n  <\/parent>/s"
 # execute the replacement in pom.xml
-perl -i -0pe "$perl_command" $target_pom
+perl -i -0pe "${perl_command}" "${target_pom}"

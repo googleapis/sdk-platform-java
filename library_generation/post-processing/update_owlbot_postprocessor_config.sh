@@ -16,7 +16,7 @@ for exclusion in '.github/*' '.kokoro/*' 'samples/*' 'CODE_OF_CONDUCT.md' 'CONTR
   comma=","
 
   # delete files and directories
-  if [[ ${exclusion: -2} == '/*' && ${exclusion%??} != 'samples' ]]; then
+  if [[ "${exclusion: -2}" == '/*' && "${exclusion%??}" != 'samples' ]]; then
     rm -rf "${exclusion%??}" || true
   else
     rm "${exclusion}" || true
@@ -24,7 +24,7 @@ for exclusion in '.github/*' '.kokoro/*' 'samples/*' 'CODE_OF_CONDUCT.md' 'CONTR
 done
 perl_command+='\n])/s'
 # execute the replacement in owlbot.py
-perl -i -0pe "$perl_command" 'owlbot.py'
+perl -i -0pe "${perl_command}" 'owlbot.py'
 
 # remove newline at end of file
 truncate -s -1 owlbot.py
