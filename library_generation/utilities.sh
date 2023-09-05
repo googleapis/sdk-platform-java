@@ -76,7 +76,7 @@ search_additional_protos() {
 
 # get gapic options from .yaml and .json files from proto_path.
 get_gapic_opts() {
-  gapic_config=$(find "${proto_path}" -type f -name "*gapic.yaml")
+  gapic_config=$(find "$proto_path" -type f -name "*gapic.yaml")
   if [ -z "${gapic_config}" ]; then
     gapic_config=""
   else
