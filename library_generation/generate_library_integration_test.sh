@@ -114,5 +114,5 @@ else
 fi
 # clean up
 cd "$script_dir"
-rm -rf WORKSPACE googleapis-gen 
+rm -rf WORKSPACE googleapis-gen
 exit $RESULT

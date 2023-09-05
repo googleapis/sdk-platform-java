@@ -99,12 +99,9 @@ fi
 
 destination_path="$script_dir/$destination_path"
 mkdir -p "$destination_path"
-
-cd "$script_dir"
 ##################### Section 0 #####################
 # prepare tooling
 #####################################################
-cd "$script_dir"
 # the order of services entries in gapic_metadata.json is relevant to the
 # order of proto file, sort the proto files with respect to their name to
 # get a fixed order.
