@@ -7,9 +7,9 @@ on:
     - library_generation/**
 
   workflow_dispatch:
-name: verify_library_generation_against_googleapis-gen
+name: verify_library_generation
 jobs:
-  verify_library_generation:
+  integration_tests:
     strategy:
       matrix:
         java: [ 8 ]
@@ -30,3 +30,11 @@ jobs:
         -d google-cloud-bigtable-v2-java \
         --googleapis_gen_url https://cloud-java-bot:${{ secrets.CLOUD_JAVA_BOT_GITHUB_TOKEN }}@github.com/googleapis/googleapis-gen.git \
         --os_type ${{ matrix.os }}
+  unit_tests:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run unit tests
+      run: |
+        set -x
+        library_generation/test/generate_library_unit_tests.sh

@@ -76,15 +76,15 @@ search_additional_protos() {
 
 # get gapic options from .yaml and .json files from proto_path.
 get_gapic_opts() {
-  gapic_config=$(find "${proto_path}" -type f -name "*gapic.yaml")
+  gapic_config=$(find "$proto_path" -type f -name "*gapic.yaml")
   if [ -z "${gapic_config}" ]; then
     gapic_config=""
   else
     gapic_config="gapic-config=$gapic_config,"
   fi
-  grpc_service_config=$(find "${proto_path}" -type f -name "*service_config.json")
-  api_service_config=$(find "${proto_path}" -maxdepth 1 -type f \( -name "*.yaml" ! -name "*gapic.yaml" \))
-  if [ "${rest_numeric_enums}" == "true" ]; then
+  grpc_service_config=$(find "$proto_path" -type f -name "*service_config.json")
+  api_service_config=$(find "$proto_path" -maxdepth 1 -type f \( -name "*.yaml" ! -name "*gapic.yaml" \))
+  if [ "$rest_numeric_enums" == "true" ]; then
     rest_numeric_enums="rest-numeric-enums,"
   else
     rest_numeric_enums=""
