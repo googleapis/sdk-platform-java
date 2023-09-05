@@ -30,14 +30,6 @@ fi
 
 
 ggj_version=$(get_version_from_versions_txt ../../versions.txt "gapic-generator-java")
-if [ $(echo $ggj_version | grep 'SNAPSHOT' | wc -l) -gt 0 ]; then
-  echo 'This repo is at a snapshot version. Installing locally...'
-  pushd $script_dir/../..
-  #mvn clean install -DskipTests -Dclirr.skip
-  popd
-fi
-
-
 rest_numeric_enums="false"
 transport="grpc+rest"
 include_samples="false"
