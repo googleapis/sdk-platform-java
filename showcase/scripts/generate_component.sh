@@ -1,4 +1,8 @@
 #!/bin/bash
+#
+# Generates one of the three possible components of a [showcase] library:
+# gapic, proto or grpc libraries. The underlying generation script generates all
+# three possibilities, so its results are reused for convenience
 set -x
 set +e
 component=$1 #one of gapic, proto, grpc
@@ -9,7 +13,9 @@ fi
 script_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 source $script_dir/showcase_utilities.sh
 
-generateShowcaseIfMissing
+if [ ! -d $script_dir/showcase-output ]; then
+  bash $script_dir/generate_showcase.sh
+fi
 showcase_folder=$script_dir/..
 case $component in
     gapic )

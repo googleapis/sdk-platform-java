@@ -1,4 +1,8 @@
 #!/bin/bash
+# Generates showcase without post processing (i.e. raw gapic, grpc and proto
+# libraries). It will compute the showcase version from
+# `sdk-platform-java/showcase/gapic-showcase/pom.xml`. The generator version is
+# inferred from versions.txt
 set -ex
 
 script_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )

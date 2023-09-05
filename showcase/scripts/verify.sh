@@ -1,5 +1,6 @@
 #!/bin/sh
-# This script is executed by ../BUILD.bazel as a final post-generation step.
+# This script generates showcase in a temporary/untracked folder and compares
+# its contents with the actual showcase libraries. 
 
 set -o errexit
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )

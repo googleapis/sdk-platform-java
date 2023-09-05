@@ -47,7 +47,7 @@
       </build>
     </profile>
     <profile>
-      <id>update</id>
+      <id>update</id> <!-- updates the showcase libraries with the latest generator/showcase version -->
       <build>
         <plugins>
           <plugin>
