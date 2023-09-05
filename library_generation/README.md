@@ -125,15 +125,3 @@ library_generation/generate_library.sh \
 --include_samples true
 ```
 
-## An example to generate showcase client
-```
-library_generation/generate_library.sh \
--p schema/google/showcase/v1beta1 \ # google/ should be in library_generation/.
--d output \
---gapic_generator_version 2.24.0 \
---protobuf_version 23.2 \
---grpc_version 1.55.1 \
---transport grpc+rest \
---rest_numeric_enums false \
---include_samples false
-```
