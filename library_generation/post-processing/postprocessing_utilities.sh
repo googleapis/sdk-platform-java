@@ -22,16 +22,14 @@ function run_owlbot_postprocessor {
   #cp -r $(find $destination_path -not -wholename './workspace*') $owlbot_staging_folder
   versions_file="$scripts_root/google-cloud-java/versions.txt"
   #cp $versions_file $workspace
-  staging_suffix="java-$module_name"
+  staging_suffix="java-$api_shortname"
   mkdir -p $owlbot_staging_folder/$staging_suffix
   gapic_folder_name=$(echo "$folder_name" | sed 's/\(.*\)-.*/\1/')
   cp -r $destination_path/gapic-$folder_name $owlbot_staging_folder/$staging_suffix/$gapic_folder_name
   cp -r $destination_path/grpc-$folder_name $owlbot_staging_folder/$staging_suffix
   cp -r $destination_path/proto-$folder_name $owlbot_staging_folder/$staging_suffix
   if [ $include_samples == 'true' ]; then
-    generated_snippets_staging="$owlbot_staging_folder/$staging_suffix/samples/snippets/generated"
-    mkdir -p $generated_snippets_staging
-    cp -r $destination_path/samples/snippets/generated/* $generated_snippets_staging
+    cp -r $destination_path/samples $owlbot_staging_folder/$staging_suffix
   fi
 
   echo "$owlbot_py_content" > $workspace/owlbot.py

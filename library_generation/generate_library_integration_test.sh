@@ -87,8 +87,7 @@ if grep -A 15 "java_gapic_library(" "$proto_path/BUILD.bazel" | grep -q "rest_nu
 fi
 include_samples="false"
 if grep -A 15 "java_gapic_assembly_gradle_pkg(" "$proto_path/BUILD.bazel" | grep -q "include_samples = True"; then
-  #include_samples="true"
-  include_samples="false"
+  include_samples="true"
 fi
 echo "GAPIC options are transport=$transport, rest_numeric_enums=$rest_numeric_enums, include_samples=$include_samples."
 
