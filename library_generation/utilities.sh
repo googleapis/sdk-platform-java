@@ -83,13 +83,16 @@ get_gapic_opts() {
     gapic_config="gapic-config=$gapic_config,"
   fi
   grpc_service_config=$(find "${proto_path}" -type f -name "*service_config.json")
+  if [ ! -z $grpc_service_config ]; then
+    grpc_service_config_opt="grpc-service-config=$grpc_service_config,"
+  fi
   api_service_config=$(find "${proto_path}" -maxdepth 1 -type f \( -name "*.yaml" ! -name "*gapic.yaml" \))
   if [ "${rest_numeric_enums}" == "true" ]; then
     rest_numeric_enums="rest-numeric-enums,"
   else
     rest_numeric_enums=""
   fi
-  echo "transport=$transport,${rest_numeric_enums}grpc-service-config=$grpc_service_config,${gapic_config}api-service-config=$api_service_config"
+  echo "transport=$transport,${rest_numeric_enums}${grpc_service_config_opt}${gapic_config}api-service-config=$api_service_config"
 }
 
 remove_grpc_version() {

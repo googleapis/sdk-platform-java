@@ -28,8 +28,12 @@ case $key in
     monorepo_folder="$2"
     shift
     ;;
-    --os_type)
+    -o|--os_type)
     os_type="$2"
+    shift
+    ;;
+    -s|--owlbot_sha)
+    owlbot_sha="$2"
     shift
     ;;
     *)
@@ -63,7 +67,7 @@ sparse_clone() {
 script_dir=$(dirname "$(readlink -f "$0")")
 # checkout the master branch of googleapis/google (proto files) and WORKSPACE
 echo "Checking out googlapis repository..."
-sparse_clone https://github.com/googleapis/googleapis.git "$proto_path WORKSPACE google/api google/type google/rpc google/longrunning google/cloud/common_resources.proto"
+sparse_clone https://github.com/googleapis/googleapis.git "$proto_path WORKSPACE google/api google/type google/rpc google/longrunning google/cloud/common_resources.proto google/iam/v1"
 cp -r googleapis/* .
 # parse version of gapic-generator-java, protobuf and grpc from WORKSPACE
 gapic_generator_version=$(get_version_from_WORKSPACE "_gapic_generator_java_version" WORKSPACE "=")
@@ -83,7 +87,8 @@ if grep -A 15 "java_gapic_library(" "$proto_path/BUILD.bazel" | grep -q "rest_nu
 fi
 include_samples="false"
 if grep -A 15 "java_gapic_assembly_gradle_pkg(" "$proto_path/BUILD.bazel" | grep -q "include_samples = True"; then
-  include_samples="true"
+  #include_samples="true"
+  include_samples="false"
 fi
 echo "GAPIC options are transport=$transport, rest_numeric_enums=$rest_numeric_enums, include_samples=$include_samples."
 
@@ -113,7 +118,7 @@ echo "Generating library from $proto_path, to $destination_path..."
 --include_samples "$include_samples" \
 --enable_postprocessing "true" \
 --repo_metadata_json_path $repo_metadata_json_path \
---owlbot_sha '3a95f1b9b1102865ca551b76be51d2bdb850900c4db2f6d79269e7af81ac8f84' \
+--owlbot_sha $owlbot_sha \
 --os_architecture "$os_architecture"
 
 echo "Generate library finished."

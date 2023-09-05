@@ -128,24 +128,7 @@ function protoPomProcessing {
   removeArtifact "$pom_file" 'dependency' "proto-google-iam-v1" "dependencies"
 }
 
-#export -f commonPomProcessing
-#export -f gapicPomProcessing
-
 find $library_root \
   -name 'pom.xml' \
   -type f \
   -exec bash -c 'commonPomProcessing "$0"' {} \;
-
-find $library_root \
-  -mindepth 2 \
-  -name 'pom.xml' \
-  -not -wholename '*/proto-*' \
-  -not -wholename '*/grpc*' \
-  -not -wholename '*bom/*' \
-  -exec bash -c 'gapicPomProcessing "$0"' {} \;
-
-find $library_root \
-  -name 'pom.xml' \
-  -wholename '*/proto-*' \
-  -type f \
-  -exec bash -c 'protoPomProcessing "$0"' {} \;
