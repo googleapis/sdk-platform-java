@@ -64,6 +64,8 @@ sparse_clone() {
 }
 
 script_dir=$(dirname "$(readlink -f "$0")")
+library_generation_dir="$script_dir"/..
+cd "$library_generation_dir"
 # checkout the master branch of googleapis/google (proto files) and WORKSPACE
 echo "Checking out googlapis repository..."
 sparse_clone https://github.com/googleapis/googleapis.git "$proto_path WORKSPACE google/api google/rpc google/cloud/common_resources.proto"
@@ -96,7 +98,7 @@ fi
 echo "OS Architecture is $os_architecture."
 # generate GAPIC client library
 echo "Generating library from $proto_path, to $destination_path..."
-"$script_dir"/generate_library.sh \
+"$library_generation_dir"/generate_library.sh \
 -p "$proto_path" \
 -d "$destination_path" \
 --gapic_generator_version "$gapic_generator_version" \

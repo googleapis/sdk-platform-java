@@ -25,7 +25,7 @@ jobs:
     - name: Run integration tests
       run: |
         set -x
-        library_generation/generate_library_integration_test.sh \
+        library_generation/test/generate_library_integration_test.sh \
         -p google/bigtable/v2 \
         -d google-cloud-bigtable-v2-java \
         --googleapis_gen_url https://cloud-java-bot:${{ secrets.CLOUD_JAVA_BOT_GITHUB_TOKEN }}@github.com/googleapis/googleapis-gen.git \
