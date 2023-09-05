@@ -2,7 +2,9 @@
 #
 # Generates one of the three possible components of a [showcase] library:
 # gapic, proto or grpc libraries. The underlying generation script generates all
-# three possibilities, so its results are reused for convenience
+# three possibilities, so its results are reused for convenience.
+# If $2 replace is "true" then the output of the generation will be written as
+# the new showcase source code
 set -x
 set +e
 component=$1 #one of gapic, proto, grpc
