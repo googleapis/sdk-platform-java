@@ -211,3 +211,23 @@ download_fail() {
   >&2 echo "Fail to download $artifact from $repo repository. Please install $artifact first if you want to download a SNAPSHOT."
   exit 1
 }
+
+get_version_from_WORKSPACE() {
+  version_key_word=$1
+  workspace=$2
+  delimiter=$3
+  version="$(grep -m 1 "$version_key_word"  "$workspace" | sed 's/\"\(.*\)\".*/\1/' | cut -d "$delimiter" -f2 | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
+  echo "$version"
+}
+
+sparse_clone() {
+  repo_url=$1
+  paths=$2
+  clone_dir=$(basename "${repo_url%.*}")
+  rm -rf "$clone_dir"
+  git clone -n --depth=1 --filter=tree:0 "$repo_url"
+  cd "$clone_dir"
+  git sparse-checkout set --no-cone $paths
+  git checkout
+  cd ..
+}

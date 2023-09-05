@@ -44,27 +44,8 @@ esac
 shift # past argument or value
 done
 
-get_version_from_WORKSPACE() {
-  version_key_word=$1
-  workspace=$2
-  delimiter=$3
-  version="$(grep -m 1 "$version_key_word"  "$workspace" | sed 's/\"\(.*\)\".*/\1/' | cut -d "$delimiter" -f2 | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
-  echo "$version"
-}
-
-sparse_clone() {
-  repo_url=$1
-  paths=$2
-  clone_dir=$(basename "${repo_url%.*}")
-  rm -rf "$clone_dir"
-  git clone -n --depth=1 --filter=tree:0 "$repo_url"
-  cd "$clone_dir"
-  git sparse-checkout set --no-cone $paths
-  git checkout
-  cd ..
-}
-
 script_dir=$(dirname "$(readlink -f "$0")")
+source $script_dir/utilities.sh
 # checkout the master branch of googleapis/google (proto files) and WORKSPACE
 echo "Checking out googlapis repository..."
 sparse_clone https://github.com/googleapis/googleapis.git "$proto_path WORKSPACE google/api google/type google/rpc google/longrunning google/cloud/common_resources.proto google/iam/v1"
@@ -94,7 +75,7 @@ echo "GAPIC options are transport=$transport, rest_numeric_enums=$rest_numeric_e
 # clone monorepo
 if [ ! -d google-cloud-java ];
 then
-  git clone --branch=main --depth 1 -q "https://github.com/googleapis/google-cloud-java"
+  sparse_clone "https://github.com/googleapis/google-cloud-java.git" $monorepo_folder
 fi
 target_folder="$(pwd)/google-cloud-java/$monorepo_folder"
 repo_metadata_json_path="$target_folder/.repo-metadata.json"

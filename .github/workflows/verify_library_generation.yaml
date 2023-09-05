@@ -22,9 +22,6 @@ jobs:
         java-version: ${{ matrix.java }}
         distribution: temurin
         cache: maven
-    - name: Clone monorepo
-      run: |
-        git clone https://github.com/googleapis/google-cloud-java
     - name: Run integration tests
       run: |
         set -x
