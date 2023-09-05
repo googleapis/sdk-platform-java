@@ -19,9 +19,6 @@ function run_owlbot_postprocessor {
   # render owlbot.py template
   owlbot_py_content=$(cat "$scripts_root/post-processing/templates/owlbot.py.template")
 
-  #cp -r $(find $destination_path -not -wholename './workspace*') $owlbot_staging_folder
-  versions_file="$scripts_root/google-cloud-java/versions.txt"
-  #cp $versions_file $workspace
   staging_suffix="java-$api_shortname"
   mkdir -p $owlbot_staging_folder/$staging_suffix
   gapic_folder_name=$(echo "$folder_name" | sed 's/\(.*\)-.*/\1/')
@@ -49,21 +46,25 @@ function other_post_processing_scripts {
   bash $scripts_root/post-processing/readme_update.sh $workspace
 
   pushd $scripts_root
-  [ ! -d google-cloud-java ] && git clone https://github.com/googleapis/google-cloud-java
-  pushd google-cloud-java
-  jar_parent_pom="$(pwd)/google-cloud-jar-parent/pom.xml"
-  pom_parent_pom="$(pwd)/google-cloud-pom-parent/pom.xml"
-  popd
-  popd
-  bash $scripts_root/post-processing/set_parent_pom.sh $workspace/pom.xml $jar_parent_pom ../google-cloud-jar-parent/pom.xml
-  workspace_bom=$(find -wholename '*-bom/pom.xml')
-  bash $scripts_root/post-processing/set_parent_pom.sh $workspace_bom $pom_parent_pom ../../google-cloud-pom-parent/pom.xml
+  if [ -d google-cloud-java ]; then
+    pushd google-cloud-java
+    jar_parent_pom="$(pwd)/google-cloud-jar-parent/pom.xml"
+    pom_parent_pom="$(pwd)/google-cloud-pom-parent/pom.xml"
+    popd
+    popd
+    bash $scripts_root/post-processing/set_parent_pom.sh $workspace/pom.xml $jar_parent_pom ../google-cloud-jar-parent/pom.xml
+    workspace_bom=$(find -wholename '*-bom/pom.xml')
+    bash $scripts_root/post-processing/set_parent_pom.sh $workspace_bom $pom_parent_pom ../../google-cloud-pom-parent/pom.xml
 
-  # get existing versions.txt from downloaded monorepo
-  repo_short=$(cat $repo_metadata_json_path | jq -r '.repo_short // empty')
-  cp "$scripts_root/google-cloud-java/versions.txt" $workspace
-  pushd $workspace
-  bash $scripts_root/post-processing/apply_current_versions.sh
-  rm versions.txt
-  popd
+    # get existing versions.txt from downloaded monorepo
+    repo_short=$(cat $repo_metadata_json_path | jq -r '.repo_short // empty')
+    cp "$scripts_root/google-cloud-java/versions.txt" $workspace
+    pushd $workspace
+    bash $scripts_root/post-processing/apply_current_versions.sh
+    rm versions.txt
+    popd
+  else
+    echo 'google-cloud-java not found. Will not update parent poms nor update versions'
+    popd
+  fi
 }

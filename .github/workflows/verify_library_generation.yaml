@@ -22,11 +22,16 @@ jobs:
         java-version: ${{ matrix.java }}
         distribution: temurin
         cache: maven
+    - name: Clone monorepo
+      run: |
+        git clone https://github.com/googleapis/google-cloud-java
     - name: Run integration tests
       run: |
         set -x
         library_generation/generate_library_integration_test.sh \
-        -p google/cloud/channel/v1 \
-        -d google-cloud-channel-v1 \
-        -m java-channel \
-        --os_type ${{ matrix.os }}
+        -p google/cloud/policysimulator/v1 \
+        -d google-cloud-policysimulator-v1 \
+        -m java-policysimulator \
+        -o ${{ matrix.os }} \
+        # this is the sha initially used to generate policysimulator
+        -s 31c8276a1bfb43766597d32645721c029cb94571f1b8d996cb2c290744fe52f9
