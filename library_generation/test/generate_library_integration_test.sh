@@ -15,8 +15,7 @@ set -xeo pipefail
 # defaults
 googleapis_gen_url="git@github.com:googleapis/googleapis-gen.git"
 
-while [[ $# -gt 0 ]]
-do
+while [[ $# -gt 0 ]]; do
 key="$1"
 case $key in
   -p|--proto_path)
@@ -44,16 +43,18 @@ shift # past argument or value
 done
 
 get_version_from_WORKSPACE() {
-  version_key_word=$1
-  workspace=$2
-  delimiter=$3
+  local version_key_word=$1
+  local workspace=$2
+  local delimiter=$3
+  local version
   version="$(grep -m 1 "${version_key_word}"  "${workspace}" | sed 's/\"\(.*\)\".*/\1/' | cut -d "${delimiter}" -f2 | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
   echo "${version}"
 }
 
 sparse_clone() {
-  repo_url=$1
-  paths=$2
+  local repo_url=$1
+  local paths=$2
+  local clone_dir
   clone_dir=$(basename "${repo_url%.*}")
   rm -rf "${clone_dir}"
   git clone -n --depth=1 --filter=tree:0 "${repo_url}"
@@ -93,7 +94,7 @@ fi
 echo "GAPIC options are transport=${transport}, rest_numeric_enums=${rest_numeric_enums}, include_samples=${include_samples}."
 os_architecture="linux-x86_64"
 if [[ "$os_type" == *"macos"* ]]; then
- os_architecture="osx-x86_64"
+  os_architecture="osx-x86_64"
 fi
 echo "OS Architecture is ${os_architecture}."
 # generate GAPIC client library
@@ -119,7 +120,7 @@ RESULT=0
 diff -r "googleapis-gen/${proto_path}/${destination_path}" "${destination_path}" -x "*gradle*" || RESULT=$?
 
 if [ ${RESULT} == 0 ] ; then
- echo "SUCCESS: Comparison finished, no difference is found."
+  echo "SUCCESS: Comparison finished, no difference is found."
 else
   echo "FAILURE: Differences found."
 fi

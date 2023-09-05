@@ -5,13 +5,13 @@ set -xeo pipefail
 # define utility functions
 
 extract_folder_name() {
-  destination_path=$1
-  folder_name=${destination_path##*/}
+  local destination_path=$1
+  local folder_name=${destination_path##*/}
   echo "$folder_name"
 }
 
 remove_empty_files() {
-  category=$1
+  local category=$1
   find "${destination_path}/${category}-${folder_name}/src/main/java" -type f -size 0 | while read -r f; do rm -f "${f}"; done
   if [ -d "${destination_path}/${category}-${folder_name}/src/main/java/samples" ]; then
       mv "${destination_path}/${category}-${folder_name}/src/main/java/samples" "${destination_path}/${category}-${folder_name}"
@@ -20,8 +20,8 @@ remove_empty_files() {
 
 # Move generated files to folders in destination_path.
 mv_src_files() {
-  category=$1 # one of gapic, proto, samples
-  type=$2 # one of main, test
+  local category=$1 # one of gapic, proto, samples
+  local type=$2 # one of main, test
   if [ "${category}" == "samples" ]; then
     src_suffix="samples/snippets/generated/src/main/java/com"
     folder_suffix="samples/snippets/generated"
@@ -41,15 +41,16 @@ mv_src_files() {
 
 # unzip jar file
 unzip_src_files() {
-  category=$1
-  jar_file=java_$category.jar
+  local category=$1
+  local jar_file=java_${category}.jar
   mkdir -p "${destination_path}/${category}-${folder_name}/src/main/java"
   unzip -q -o "${destination_path}/${jar_file}" -d "${destination_path}/${category}-${folder_name}/src/main/java"
   rm -r -f "${destination_path}/${category}-${folder_name}/src/main/java/META-INF"
 }
 
 find_additional_protos_in_yaml() {
-  pattern=$1
+  local pattern=$1
+  local find_result
   find_result=$(grep --include=\*.yaml -rw "${proto_path}" -e "${pattern}")
   if [ -n "${find_result}" ]; then
     echo "${find_result}"
@@ -62,7 +63,9 @@ find_additional_protos_in_yaml() {
 # pulled from googleapis as a prerequisite.
 # Search additional protos in .yaml files.
 search_additional_protos() {
-  additional_protos="google/cloud/common_resources.proto" # used by every library
+  local additional_protos="google/cloud/common_resources.proto" # used by every library
+  local iam_policy
+  local locations
   iam_policy=$(find_additional_protos_in_yaml "name: google.iam.v1.IAMPolicy")
   if [ -n "${iam_policy}" ]; then
     additional_protos="${additional_protos} google/iam/v1/iam_policy.proto"
@@ -76,6 +79,9 @@ search_additional_protos() {
 
 # get gapic options from .yaml and .json files from proto_path.
 get_gapic_opts() {
+  local gapic_config
+  local grpc_service_config
+  local api_service_config
   gapic_config=$(find "${proto_path}" -type f -name "*gapic.yaml")
   if [ -z "${gapic_config}" ]; then
     gapic_config=""
@@ -98,7 +104,7 @@ remove_grpc_version() {
 }
 
 download_gapic_generator_pom_parent() {
-  gapic_generator_version=$1
+  local gapic_generator_version=$1
   if [ ! -f "gapic-generator-java-pom-parent-${gapic_generator_version}.pom" ]; then
     if [[ "${gapic_generator_version}" == *"-SNAPSHOT" ]]; then
       # copy a SNAPSHOT version from maven local repository.
@@ -115,7 +121,8 @@ download_gapic_generator_pom_parent() {
 }
 
 get_grpc_version() {
-  gapic_generator_version=$1
+  local gapic_generator_version=$1
+  local grpc_version
   # get grpc version from gapic-generator-java-pom-parent/pom.xml
   download_gapic_generator_pom_parent "${gapic_generator_version}"
   grpc_version=$(grep grpc.version "gapic-generator-java-pom-parent-${gapic_generator_version}.pom" | sed 's/<grpc\.version>\(.*\)<\/grpc\.version>/\1/' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
@@ -123,7 +130,8 @@ get_grpc_version() {
 }
 
 get_protobuf_version() {
-  gapic_generator_version=$1
+  local gapic_generator_version=$1
+  local protobuf_version
   # get protobuf version from gapic-generator-java-pom-parent/pom.xml
   download_gapic_generator_pom_parent "${gapic_generator_version}"
   protobuf_version=$(grep protobuf.version "gapic-generator-java-pom-parent-${gapic_generator_version}.pom" | sed 's/<protobuf\.version>\(.*\)<\/protobuf\.version>/\1/' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | cut -d "." -f2-)
@@ -131,17 +139,17 @@ get_protobuf_version() {
 }
 
 download_tools() {
-  gapic_generator_version=$1
-  protobuf_version=$2
-  grpc_version=$3
-  os_architecture=$4
+  local gapic_generator_version=$1
+  local protobuf_version=$2
+  local grpc_version=$3
+  local os_architecture=$4
   download_generator "${gapic_generator_version}"
   download_protobuf "${protobuf_version}" "${os_architecture}"
   download_grpc_plugin "${grpc_version}" "${os_architecture}"
 }
 
 download_generator() {
-  gapic_generator_version=$1
+  local gapic_generator_version=$1
   if [ ! -f "gapic-generator-java-${gapic_generator_version}.jar" ]; then
     if [[ "${gapic_generator_version}" == *"-SNAPSHOT" ]]; then
       # copy a SNAPSHOT version from maven local repository.
@@ -157,8 +165,8 @@ download_generator() {
 }
 
 download_protobuf() {
-  protobuf_version=$1
-  os_architecture=$2
+  local protobuf_version=$1
+  local os_architecture=$2
   if [ ! -d "protobuf-${protobuf_version}.zip" ]; then
     # pull proto files and protoc from protobuf repository as maven central
     # doesn't have proto files
@@ -176,8 +184,8 @@ download_protobuf() {
 }
 
 download_grpc_plugin() {
-  grpc_version=$1
-  os_architecture=$2
+  local grpc_version=$1
+  local os_architecture=$2
   if [ ! -f "protoc-gen-grpc-java-${grpc_version}-${os_architecture}.exe" ]; then
     # download protoc-gen-grpc-java plugin from Google maven central mirror.
     download_from \
@@ -188,23 +196,23 @@ download_grpc_plugin() {
 }
 
 download_from() {
-  url=$1
-  save_as=$2
-  repo=$3
+  local url=$1
+  local save_as=$2
+  local repo=$3
   # fail-fast, 30 seconds at most, retry 2 times
   curl -LJ -o "${save_as}" --fail -m 30 --retry 2 "$url" || download_fail "${save_as}" "${repo}"
 }
 
 copy_from() {
-  local_repo=$1
-  save_as=$2
+  local local_repo=$1
+  local save_as=$2
   cp "${local_repo}" "${save_as}" || \
     download_fail "${save_as}" "maven local"
 }
 
 download_fail() {
-  artifact=$1
-  repo=${2:-"maven central mirror"}
+  local artifact=$1
+  local repo=${2:-"maven central mirror"}
   >&2 echo "Fail to download ${artifact} from ${repo} repository. Please install ${artifact} first if you want to download a SNAPSHOT."
   exit 1
 }

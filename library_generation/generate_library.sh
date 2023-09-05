@@ -3,8 +3,7 @@
 set -eo pipefail
 
 # parse input parameters
-while [[ $# -gt 0 ]]
-do
+while [[ $# -gt 0 ]]; do
 key="$1"
 case $key in
   -p|--proto_path)
@@ -150,8 +149,8 @@ unzip_src_files "proto"
 remove_empty_files "proto"
 # copy proto files to proto-*/src/main/proto
 for proto_src in ${proto_files}; do
-    mkdir -p "${destination_path}/proto-${folder_name}/src/main/proto"
-    rsync -R "${proto_src}" "${destination_path}/proto-${folder_name}/src/main/proto"
+  mkdir -p "${destination_path}/proto-${folder_name}/src/main/proto"
+  rsync -R "${proto_src}" "${destination_path}/proto-${folder_name}/src/main/proto"
 done
 ##################### Section 4 #####################
 # rm tar files
