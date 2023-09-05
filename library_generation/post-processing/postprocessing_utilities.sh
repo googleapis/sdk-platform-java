@@ -1,4 +1,7 @@
 #!/bin/bash
+#
+# Main functions to interact with owlbot post-processor and postprocessing
+# scripts
 
 function run_owlbot_postprocessor {
   workspace=$1

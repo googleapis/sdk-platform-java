@@ -1,4 +1,7 @@
 #!/bin/bash
+#
+# Adjusts the folder structure of generated snippets if contained in
+# samples/snippets/generated. It also removes non-generated samples
 
 set -ex
 

@@ -2,10 +2,13 @@
 
 set -efx
 
-# For each library module in current working directory, this script
+# For the specified library module, this script
 # sets the parent to the root pom.xml
 
-# Run this script at the root of google-cloud-java repository
+# Arguments:
+# 1 - target pom to be modified
+# 2 - filesystem path to the actual parent pom
+# 3 - relative path to the parent pom. Used in monorepo
 
 target_pom=$1
 parent_pom_path=$2
