@@ -3,6 +3,17 @@
 # Main functions to interact with owlbot post-processor and postprocessing
 # scripts
 
+# Runs the owlbot post-processor docker image.
+# Arguments
+# 1 - workspace: the location of the grpc,proto and gapic libraries to be
+# processed
+# 2 - owlbot_sha: docker image sha that specifies the postprocessor version to
+# be used
+# 3 - repo_metadata_json_path: contains metadata about the library, used by
+# owlbot
+# 4 - include_samples: used to tell if samples are being generated/processed
+# 5 - scripts_root: location of the generation scripts
+# 6 - destination_path: used to transfer the raw grpc, proto and gapic libraries
 function run_owlbot_postprocessor {
   workspace=$1
   owlbot_sha=$2
@@ -38,6 +49,9 @@ function run_owlbot_postprocessor {
 }
 
 
+# calls several scripts to perform additional post processing after owlbot is
+# used. If google-cloud-java is downloaded in the root script location, then
+# more processing is performed.
 function other_post_processing_scripts {
   scripts_root=$1
   workspace=$2

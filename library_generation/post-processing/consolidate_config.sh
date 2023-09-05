@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# For each {module}/pom.xml
+# For the specified library path:
 # Removes dependencyManagement and pluginManagement that should be handled in the parent
 # Also removes other configuration that is handled in google-cloud-pom-parent and google-cloud-jar-parent
 
@@ -65,7 +65,8 @@ function setGrafeasCheckstyleHeaderConfig {
   runRegexOnPoms "$pom_file" "$perl_command" ">Grafeas Client<"
 }
 
-function generalFormat {
+# updates xml version header to specify encoding
+function formatXml {
   pom_file=$1
   perl_command="s/<\?.*xml version.*\?>/<?xml version='1.0' encoding='UTF-8'?>/s"
   runRegexOnPoms "$pom_file" "$perl_command" "xml version"
@@ -73,7 +74,7 @@ function generalFormat {
 
 function commonPomProcessing {
   pom_file=$1
-  generalFormat $pom_file
+  formatXml $pom_file
   setGrafeasCheckstyleHeaderConfig $pom_file
   removeManagedDependency $pom_file 'google-cloud-shared-dependencies'
   removeManagedDependency $pom_file 'junit'

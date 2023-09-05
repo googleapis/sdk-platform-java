@@ -212,6 +212,7 @@ download_fail() {
   exit 1
 }
 
+# convenience function to obtain versions from a bazel WORKSPACE file
 get_version_from_WORKSPACE() {
   version_key_word=$1
   workspace=$2
@@ -220,6 +221,8 @@ get_version_from_WORKSPACE() {
   echo "$version"
 }
 
+# speeds up cloning big repositories by only downloading the space-separated
+# $paths
 sparse_clone() {
   repo_url=$1
   paths=$2
