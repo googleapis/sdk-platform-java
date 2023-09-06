@@ -75,7 +75,7 @@ echo "GAPIC options are transport=$transport, rest_numeric_enums=$rest_numeric_e
 # clone monorepo
 if [ ! -d google-cloud-java ];
 then
-  sparse_clone "https://github.com/googleapis/google-cloud-java.git" $monorepo_folder
+  sparse_clone "https://github.com/googleapis/google-cloud-java.git" "${monorepo_folder} google-cloud-pom-parent google-cloud-jar-parent versions.txt"
 fi
 target_folder="$(pwd)/google-cloud-java/$monorepo_folder"
 repo_metadata_json_path="$target_folder/.repo-metadata.json"
