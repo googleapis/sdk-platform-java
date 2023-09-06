@@ -82,14 +82,14 @@ get_protobuf_version_failed_with_invalid_generator_version_test() {
 }
 
 search_additional_protos_common_resources_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos_common_resources"
+  local proto_path="${script_dir}/resources/search_additional_proto/common_resources"
   local addition_protos
   addition_protos=$(search_additional_protos)
   __assertEquals "google/cloud/common_resources.proto" "${addition_protos}"
 }
 
 search_additional_protos_iam_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos_iam"
+  local proto_path="${script_dir}/resources/search_additional_protos/iam"
   local addition_protos
   addition_protos=$(search_additional_protos)
   __assertEquals \
@@ -98,7 +98,7 @@ search_additional_protos_iam_test() {
 }
 
 search_additional_protos_location_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos_location"
+  local proto_path="${script_dir}/resources/search_additional_protos/location"
   local addition_protos
   addition_protos=$(search_additional_protos)
   __assertEquals \
@@ -107,7 +107,7 @@ search_additional_protos_location_test() {
 }
 
 search_additional_protos_iam_location_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos_iam_location"
+  local proto_path="${script_dir}/resources/search_additional_protos/iam_location"
   local addition_protos
   addition_protos=$(search_additional_protos)
   __assertEquals \
