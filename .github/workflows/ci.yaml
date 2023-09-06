@@ -174,7 +174,7 @@ jobs:
           java-version: ${{ matrix.java }}
           distribution: temurin
       - run: mvn -version
-      - run: sudo apt install -y xmllint
+      - run: sudo apt install -y libxml2-utils
       - name: Install Maven modules
         run: |
           mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
