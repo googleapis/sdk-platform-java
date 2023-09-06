@@ -285,6 +285,98 @@ generate_library_success_without_protobuf_version() {
   __diff_and_cleanup "${destination}"
 }
 
+generate_library_success_without_grpc_version() {
+  local os_architecture
+  local destination="google-cloud-alloydb-v1-java"
+  os_architecture=$(__get_os_architecture "${os_type}")
+  cd "${script_dir}/resources/protos"
+  "${script_dir}"/../generate_library.sh \
+    -p google/cloud/alloydb/v1 \
+    -d ../"${destination}" \
+    --gapic_generator_version 2.24.0 \
+    --protobuf_version 23.2 \
+    --transport grpc+rest \
+    --rest_numeric_enums true \
+    --os_architecture "${os_architecture}"
+
+  __diff_and_cleanup "${destination}"
+}
+
+generate_library_success_without_protobuf_and_grpc_version() {
+  local os_architecture
+  local destination="google-cloud-alloydb-v1-java"
+  os_architecture=$(__get_os_architecture "${os_type}")
+  cd "${script_dir}/resources/protos"
+  "${script_dir}"/../generate_library.sh \
+    -p google/cloud/alloydb/v1 \
+    -d ../"${destination}" \
+    --gapic_generator_version 2.24.0 \
+    --transport grpc+rest \
+    --rest_numeric_enums true \
+    --os_architecture "${os_architecture}"
+
+  __diff_and_cleanup "${destination}"
+}
+
+generate_library_failed_with_invalid_generator_version() {
+  local os_architecture
+  local destination="google-cloud-alloydb-v1-java"
+  local res=0
+  os_architecture=$(__get_os_architecture "${os_type}")
+  cd "${script_dir}/resources/protos"
+  $("${script_dir}"/../generate_library.sh \
+    -p google/cloud/alloydb/v1 \
+    -d ../"${destination}" \
+    --gapic_generator_version 1.99.0 \
+    --protobuf_version 23.2 \
+    --grpc_version 1.55.1 \
+    --transport grpc+rest \
+    --rest_numeric_enums true \
+    --os_architecture "${os_architecture}") || res=$?
+  # still need to clean up potential downloaded tooling.
+  __diff_and_cleanup "${destination}"
+  __assertEquals 1 $((res))
+}
+
+generate_library_failed_with_invalid_protobuf_version() {
+  local os_architecture
+  local destination="google-cloud-alloydb-v1-java"
+  local res=0
+  os_architecture=$(__get_os_architecture "${os_type}")
+  cd "${script_dir}/resources/protos"
+  $("${script_dir}"/../generate_library.sh \
+    -p google/cloud/alloydb/v1 \
+    -d ../"${destination}" \
+    --gapic_generator_version 2.24.0 \
+    --protobuf_version 22.99 \
+    --grpc_version 1.55.1 \
+    --transport grpc+rest \
+    --rest_numeric_enums true \
+    --os_architecture "${os_architecture}") || res=$?
+  # still need to clean up potential downloaded tooling.
+  __diff_and_cleanup "${destination}"
+  __assertEquals 1 $((res))
+}
+
+generate_library_failed_with_invalid_grpc_version() {
+  local os_architecture
+  local destination="google-cloud-alloydb-v1-java"
+  local res=0
+  os_architecture=$(__get_os_architecture "${os_type}")
+  cd "${script_dir}/resources/protos"
+  $("${script_dir}"/../generate_library.sh \
+    -p google/cloud/alloydb/v1 \
+    -d ../"${destination}" \
+    --gapic_generator_version 2.24.0 \
+    --grpc_version 0.99.0 \
+    --transport grpc+rest \
+    --rest_numeric_enums true \
+    --os_architecture "${os_architecture}") || res=$?
+  # still need to clean up potential downloaded tooling.
+  __diff_and_cleanup "${destination}"
+  __assertEquals 1 $((res))
+}
+
 # Execute tests.
 # One line per test.
 test_list=(
@@ -312,6 +404,11 @@ test_list=(
   download_grpc_plugin_failed_with_invalid_arch_test
   generate_library_success_with_valid_versions
   generate_library_success_without_protobuf_version
+  generate_library_success_without_grpc_version
+  generate_library_success_without_protobuf_and_grpc_version
+  generate_library_failed_with_invalid_generator_version
+  generate_library_failed_with_invalid_protobuf_version
+  generate_library_failed_with_invalid_grpc_version
 )
 
 for ut in "${test_list[@]}"; do
