@@ -2,6 +2,7 @@
 
 set -xeo pipefail
 
+os_type=$1
 # Variables used to generate final result
 total_num=0
 succeed_num=0
@@ -31,6 +32,25 @@ __assertFileDoesNotExist() {
 
   echo "Error: ${expected_file} exists."
   return 1
+}
+
+# Convert OS type to OS architecture, the default OS architecture is
+# osx-aarch_64 (used in local development).
+__get_os_architecture() {
+  local os_type=$1
+  local os_architecture
+  case "${os_type}" in
+    *"ubuntu"*)
+      os_architecture="linux-x86_64"
+      ;;
+    *"macos"*)
+      os_architecture="osx-x86_64"
+      ;;
+    *)
+      os_architecture="osx-aarch_64"
+      ;;
+  esac
+  echo "${os_architecture}"
 }
 
 # Compare the content of the given folder against resources/golden and,
@@ -231,7 +251,9 @@ download_grpc_plugin_failed_with_invalid_arch_test() {
 }
 
 generate_library_success_with_valid_versions() {
+  local os_architecture
   local destination="google-cloud-alloydb-v1-java"
+  os_architecture=$(__get_os_architecture "${os_type}")
   cd "${script_dir}/resources/protos"
   "${script_dir}"/../generate_library.sh \
     -p google/cloud/alloydb/v1 \
@@ -241,13 +263,15 @@ generate_library_success_with_valid_versions() {
     --grpc_version 1.55.1 \
     --transport grpc+rest \
     --rest_numeric_enums true \
-    --os_architecture osx-aarch_64
+    --os_architecture "${os_architecture}"
 
   __diff_and_cleanup "${destination}"
 }
 
 generate_library_success_without_protobuf_version() {
+  local os_architecture
   local destination="google-cloud-alloydb-v1-java"
+  os_architecture=$(__get_os_architecture "${os_type}")
   cd "${script_dir}/resources/protos"
   "${script_dir}"/../generate_library.sh \
     -p google/cloud/alloydb/v1 \
@@ -256,7 +280,7 @@ generate_library_success_without_protobuf_version() {
     --grpc_version 1.55.1 \
     --transport grpc+rest \
     --rest_numeric_enums true \
-    --os_architecture osx-aarch_64
+    --os_architecture "${os_architecture}"
 
   __diff_and_cleanup "${destination}"
 }
