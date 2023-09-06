@@ -12,6 +12,7 @@ if [ -z "${replace}" ]; then
   replace="false"
 fi
 readonly SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+source "${SCRIPT_DIR}/showcase_utilities.sh"
 
 if [ ! -d "${SCRIPT_DIR}/showcase-output" ]; then
   bash "${SCRIPT_DIR}/generate_showcase.sh"
@@ -36,9 +37,6 @@ if [ "${replace}" == "true" ]; then
   cp -r "${SCRIPT_DIR}/showcase-output/grpc-showcase-output/src/main"/* "${grpc_component_dir}/"
 fi
 
-# cleanup
-if [ "${perform_cleanup}" == 'true' ]; then
-  cd "${SCRIPT_DIR}"
-  rm -rdf gapic-generator-java* google schema protobuf-* protoc-gen-grpc-java* showcase-output out
+if [ "${perform_cleanup}" == 'true' ];then
+  cleanup "${SCRIPT_DIR}"
 fi
-set +xe
