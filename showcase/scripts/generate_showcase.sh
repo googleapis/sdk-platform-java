@@ -53,4 +53,7 @@ if [ $exit_code -ne 0 ]; then
   rm -rdf showcase-output
   exit $exit_code
 fi
+
+# cleanup
+rm -rdf gapic-generator-java* google schema protobuf-* protoc-gen-grpc-java* showcase-output out
 set +x
