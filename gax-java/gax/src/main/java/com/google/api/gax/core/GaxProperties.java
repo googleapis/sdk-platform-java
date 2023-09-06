@@ -100,6 +100,23 @@ public class GaxProperties {
 
   /** Returns the current runtime version */
   private static String getRuntimeVersion() {
-    return System.getProperty("java.version");
+    String javaVersion = System.getProperty("java.version");
+    String combined = javaVersion;
+
+    // append the vendor information to the java-version if vendor is present.
+    String vendor = System.getProperty("java.vendor");
+    if (vendor != null && !vendor.isEmpty()) {
+      combined = String.format("%s__%s", combined, vendor);
+    }
+
+    // appends the vendor version information to the java-version if vendor version is present.
+    String vendorVersion = System.getProperty("java.vendor.version");
+    if (vendorVersion != null && !vendorVersion.isEmpty()) {
+      combined = String.format("%s__%s", combined, vendorVersion);
+    }
+
+    // replacing all characters that are not numbers, letters, underscores, periods, or backslashes
+    // with hyphens.
+    return combined.replaceAll("[^0-9a-zA-Z_\\\\.]", "-");
   }
 }
