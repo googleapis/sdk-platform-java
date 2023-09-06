@@ -125,6 +125,16 @@ public class ComplianceSettings extends ClientSettings<ComplianceSettings> {
     return ((ComplianceStubSettings) getStubSettings()).repeatDataBodyPatchSettings();
   }
 
+  /** Returns the object with the settings used for calls to repeatDataPathEnum. */
+  public UnaryCallSettings<RepeatRequest, RepeatResponse> repeatDataPathEnumSettings() {
+    return ((ComplianceStubSettings) getStubSettings()).repeatDataPathEnumSettings();
+  }
+
+  /** Returns the object with the settings used for calls to repeatDataPathEnumOptional. */
+  public UnaryCallSettings<RepeatRequest, RepeatResponse> repeatDataPathEnumOptionalSettings() {
+    return ((ComplianceStubSettings) getStubSettings()).repeatDataPathEnumOptionalSettings();
+  }
+
   /** Returns the object with the settings used for calls to getEnum. */
   public UnaryCallSettings<EnumRequest, EnumResponse> getEnumSettings() {
     return ((ComplianceStubSettings) getStubSettings()).getEnumSettings();
@@ -316,6 +326,17 @@ public class ComplianceSettings extends ClientSettings<ComplianceSettings> {
     /** Returns the builder for the settings used for calls to repeatDataBodyPatch. */
     public UnaryCallSettings.Builder<RepeatRequest, RepeatResponse> repeatDataBodyPatchSettings() {
       return getStubSettingsBuilder().repeatDataBodyPatchSettings();
+    }
+
+    /** Returns the builder for the settings used for calls to repeatDataPathEnum. */
+    public UnaryCallSettings.Builder<RepeatRequest, RepeatResponse> repeatDataPathEnumSettings() {
+      return getStubSettingsBuilder().repeatDataPathEnumSettings();
+    }
+
+    /** Returns the builder for the settings used for calls to repeatDataPathEnumOptional. */
+    public UnaryCallSettings.Builder<RepeatRequest, RepeatResponse>
+        repeatDataPathEnumOptionalSettings() {
+      return getStubSettingsBuilder().repeatDataPathEnumOptionalSettings();
     }
 
     /** Returns the builder for the settings used for calls to getEnum. */

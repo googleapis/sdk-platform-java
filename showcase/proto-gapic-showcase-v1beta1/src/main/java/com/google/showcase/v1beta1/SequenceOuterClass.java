@@ -120,76 +120,76 @@ public final class SequenceOuterClass {
       "tobuf.Duration\022\026\n\016response_index\030\003 \001(\005:W" +
       "\352AT\n)showcase.googleapis.com/StreamingSe" +
       "quence\022\'streamingSequences/{streaming_se" +
-      "quence}\"\351\003\n\027StreamingSequenceReport\022\022\n\004n" +
+      "quence}\"\323\003\n\027StreamingSequenceReport\022\022\n\004n" +
       "ame\030\001 \001(\tB\004\342A\001\003\022J\n\010attempts\030\002 \003(\01328.goog" +
       "le.showcase.v1beta1.StreamingSequenceRep" +
-      "ort.Attempt\032\366\001\n\007Attempt\022\026\n\016attempt_numbe" +
+      "ort.Attempt\032\340\001\n\007Attempt\022\026\n\016attempt_numbe" +
       "r\030\001 \001(\005\0224\n\020attempt_deadline\030\002 \001(\0132\032.goog" +
       "le.protobuf.Timestamp\0221\n\rresponse_time\030\003" +
       " \001(\0132\032.google.protobuf.Timestamp\0220\n\ratte" +
       "mpt_delay\030\004 \001(\0132\031.google.protobuf.Durati" +
-      "on\022\"\n\006status\030\005 \001(\0132\022.google.rpc.Status\022\024" +
-      "\n\014content_sent\030\006 \001(\t:u\352Ar\n/showcase.goog" +
-      "leapis.com/StreamingSequenceReport\022?stre" +
-      "amingSequences/{streaming_sequence}/stre" +
-      "amingSequenceReport\"\234\003\n\016SequenceReport\022\022" +
-      "\n\004name\030\001 \001(\tB\004\342A\001\003\022A\n\010attempts\030\002 \003(\0132/.g" +
-      "oogle.showcase.v1beta1.SequenceReport.At" +
-      "tempt\032\340\001\n\007Attempt\022\026\n\016attempt_number\030\001 \001(" +
-      "\005\0224\n\020attempt_deadline\030\002 \001(\0132\032.google.pro" +
-      "tobuf.Timestamp\0221\n\rresponse_time\030\003 \001(\0132\032" +
-      ".google.protobuf.Timestamp\0220\n\rattempt_de" +
-      "lay\030\004 \001(\0132\031.google.protobuf.Duration\022\"\n\006" +
-      "status\030\005 \001(\0132\022.google.rpc.Status:P\352AM\n&s" +
-      "howcase.googleapis.com/SequenceReport\022#s" +
-      "equences/{sequence}/sequenceReport\"L\n\025Cr" +
-      "eateSequenceRequest\0223\n\010sequence\030\001 \001(\0132!." +
-      "google.showcase.v1beta1.Sequence\"h\n\036Crea" +
-      "teStreamingSequenceRequest\022F\n\022streaming_" +
-      "sequence\030\001 \001(\0132*.google.showcase.v1beta1" +
-      ".StreamingSequence\"Q\n\026AttemptSequenceReq" +
-      "uest\0227\n\004name\030\001 \001(\tB)\342A\001\002\372A\"\n showcase.go" +
-      "ogleapis.com/Sequence\"c\n\037AttemptStreamin" +
-      "gSequenceRequest\022@\n\004name\030\001 \001(\tB2\342A\001\002\372A+\n" +
-      ")showcase.googleapis.com/StreamingSequen" +
-      "ce\"3\n AttemptStreamingSequenceResponse\022\017" +
-      "\n\007content\030\001 \001(\t\"Y\n\030GetSequenceReportRequ" +
-      "est\022=\n\004name\030\001 \001(\tB/\342A\001\002\372A(\n&showcase.goo" +
-      "gleapis.com/SequenceReport\"k\n!GetStreami" +
-      "ngSequenceReportRequest\022F\n\004name\030\001 \001(\tB8\342" +
-      "A\001\002\372A1\n/showcase.googleapis.com/Streamin" +
-      "gSequenceReport2\360\010\n\017SequenceService\022\224\001\n\016" +
-      "CreateSequence\022..google.showcase.v1beta1" +
-      ".CreateSequenceRequest\032!.google.showcase" +
-      ".v1beta1.Sequence\"/\332A\010sequence\202\323\344\223\002\036\"\022/v" +
-      "1beta1/sequences:\010sequence\022\314\001\n\027CreateStr" +
-      "eamingSequence\0227.google.showcase.v1beta1" +
-      ".CreateStreamingSequenceRequest\032*.google" +
-      ".showcase.v1beta1.StreamingSequence\"L\332A\022" +
-      "streaming_sequence\202\323\344\223\0021\"\033/v1beta1/strea" +
-      "mingSequences:\022streaming_sequence\022\252\001\n\021Ge" +
-      "tSequenceReport\0221.google.showcase.v1beta" +
-      "1.GetSequenceReportRequest\032\'.google.show" +
-      "case.v1beta1.SequenceReport\"9\332A\004name\202\323\344\223" +
-      "\002,\022*/v1beta1/{name=sequences/*/sequenceR" +
-      "eport}\022\327\001\n\032GetStreamingSequenceReport\022:." +
-      "google.showcase.v1beta1.GetStreamingSequ" +
-      "enceReportRequest\0320.google.showcase.v1be" +
-      "ta1.StreamingSequenceReport\"K\332A\004name\202\323\344\223" +
-      "\002>\022</v1beta1/{name=streamingSequences/*/" +
-      "streamingSequenceReport}\022\211\001\n\017AttemptSequ" +
-      "ence\022/.google.showcase.v1beta1.AttemptSe" +
-      "quenceRequest\032\026.google.protobuf.Empty\"-\332" +
-      "A\004name\202\323\344\223\002 \"\033/v1beta1/{name=sequences/*" +
-      "}:\001*\022\320\001\n\030AttemptStreamingSequence\0228.goog" +
-      "le.showcase.v1beta1.AttemptStreamingSequ" +
-      "enceRequest\0329.google.showcase.v1beta1.At" +
-      "temptStreamingSequenceResponse\"=\332A\004name\202" +
-      "\323\344\223\0020\"+/v1beta1/{name=streamingSequences" +
-      "/*}:stream:\001*0\001\032\021\312A\016localhost:7469Bq\n\033co" +
-      "m.google.showcase.v1beta1P\001Z4github.com/" +
-      "googleapis/gapic-showcase/server/genprot" +
-      "o\352\002\031Google::Showcase::V1beta1b\006proto3"
+      "on\022\"\n\006status\030\005 \001(\0132\022.google.rpc.Status:u" +
+      "\352Ar\n/showcase.googleapis.com/StreamingSe" +
+      "quenceReport\022?streamingSequences/{stream" +
+      "ing_sequence}/streamingSequenceReport\"\234\003" +
+      "\n\016SequenceReport\022\022\n\004name\030\001 \001(\tB\004\342A\001\003\022A\n\010" +
+      "attempts\030\002 \003(\0132/.google.showcase.v1beta1" +
+      ".SequenceReport.Attempt\032\340\001\n\007Attempt\022\026\n\016a" +
+      "ttempt_number\030\001 \001(\005\0224\n\020attempt_deadline\030" +
+      "\002 \001(\0132\032.google.protobuf.Timestamp\0221\n\rres" +
+      "ponse_time\030\003 \001(\0132\032.google.protobuf.Times" +
+      "tamp\0220\n\rattempt_delay\030\004 \001(\0132\031.google.pro" +
+      "tobuf.Duration\022\"\n\006status\030\005 \001(\0132\022.google." +
+      "rpc.Status:P\352AM\n&showcase.googleapis.com" +
+      "/SequenceReport\022#sequences/{sequence}/se" +
+      "quenceReport\"L\n\025CreateSequenceRequest\0223\n" +
+      "\010sequence\030\001 \001(\0132!.google.showcase.v1beta" +
+      "1.Sequence\"h\n\036CreateStreamingSequenceReq" +
+      "uest\022F\n\022streaming_sequence\030\001 \001(\0132*.googl" +
+      "e.showcase.v1beta1.StreamingSequence\"Q\n\026" +
+      "AttemptSequenceRequest\0227\n\004name\030\001 \001(\tB)\342A" +
+      "\001\002\372A\"\n showcase.googleapis.com/Sequence\"" +
+      "c\n\037AttemptStreamingSequenceRequest\022@\n\004na" +
+      "me\030\001 \001(\tB2\342A\001\002\372A+\n)showcase.googleapis.c" +
+      "om/StreamingSequence\"3\n AttemptStreaming" +
+      "SequenceResponse\022\017\n\007content\030\001 \001(\t\"Y\n\030Get" +
+      "SequenceReportRequest\022=\n\004name\030\001 \001(\tB/\342A\001" +
+      "\002\372A(\n&showcase.googleapis.com/SequenceRe" +
+      "port\"k\n!GetStreamingSequenceReportReques" +
+      "t\022F\n\004name\030\001 \001(\tB8\342A\001\002\372A1\n/showcase.googl" +
+      "eapis.com/StreamingSequenceReport2\360\010\n\017Se" +
+      "quenceService\022\224\001\n\016CreateSequence\022..googl" +
+      "e.showcase.v1beta1.CreateSequenceRequest" +
+      "\032!.google.showcase.v1beta1.Sequence\"/\332A\010" +
+      "sequence\202\323\344\223\002\036\"\022/v1beta1/sequences:\010sequ" +
+      "ence\022\314\001\n\027CreateStreamingSequence\0227.googl" +
+      "e.showcase.v1beta1.CreateStreamingSequen" +
+      "ceRequest\032*.google.showcase.v1beta1.Stre" +
+      "amingSequence\"L\332A\022streaming_sequence\202\323\344\223" +
+      "\0021\"\033/v1beta1/streamingSequences:\022streami" +
+      "ng_sequence\022\252\001\n\021GetSequenceReport\0221.goog" +
+      "le.showcase.v1beta1.GetSequenceReportReq" +
+      "uest\032\'.google.showcase.v1beta1.SequenceR" +
+      "eport\"9\332A\004name\202\323\344\223\002,\022*/v1beta1/{name=seq" +
+      "uences/*/sequenceReport}\022\327\001\n\032GetStreamin" +
+      "gSequenceReport\022:.google.showcase.v1beta" +
+      "1.GetStreamingSequenceReportRequest\0320.go" +
+      "ogle.showcase.v1beta1.StreamingSequenceR" +
+      "eport\"K\332A\004name\202\323\344\223\002>\022</v1beta1/{name=str" +
+      "eamingSequences/*/streamingSequenceRepor" +
+      "t}\022\211\001\n\017AttemptSequence\022/.google.showcase" +
+      ".v1beta1.AttemptSequenceRequest\032\026.google" +
+      ".protobuf.Empty\"-\332A\004name\202\323\344\223\002 \"\033/v1beta1" +
+      "/{name=sequences/*}:\001*\022\320\001\n\030AttemptStream" +
+      "ingSequence\0228.google.showcase.v1beta1.At" +
+      "temptStreamingSequenceRequest\0329.google.s" +
+      "howcase.v1beta1.AttemptStreamingSequence" +
+      "Response\"=\332A\004name\202\323\344\223\0020\"+/v1beta1/{name=" +
+      "streamingSequences/*}:stream:\001*0\001\032\021\312A\016lo" +
+      "calhost:7469Bq\n\033com.google.showcase.v1be" +
+      "ta1P\001Z4github.com/googleapis/gapic-showc" +
+      "ase/server/genproto\352\002\031Google::Showcase::" +
+      "V1beta1b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -238,7 +238,7 @@ public final class SequenceOuterClass {
     internal_static_google_showcase_v1beta1_StreamingSequenceReport_Attempt_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_google_showcase_v1beta1_StreamingSequenceReport_Attempt_descriptor,
-        new java.lang.String[] { "AttemptNumber", "AttemptDeadline", "ResponseTime", "AttemptDelay", "Status", "ContentSent", });
+        new java.lang.String[] { "AttemptNumber", "AttemptDeadline", "ResponseTime", "AttemptDelay", "Status", });
     internal_static_google_showcase_v1beta1_SequenceReport_descriptor =
       getDescriptor().getMessageTypes().get(3);
     internal_static_google_showcase_v1beta1_SequenceReport_fieldAccessorTable = new

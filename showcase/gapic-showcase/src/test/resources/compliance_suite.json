@@ -2,7 +2,7 @@
   "group": [
     {
       "name": "Fully working conversions, no resources",
-      "rpcs": ["Compliance.RepeatDataBody", "Compliance.RepeatDataBodyPut", "Compliance.RepeatDataBodyPatch", "Compliance.RepeatDataQuery", "Compliance.RepeatDataSimplePath", "Compliance.RepeatDataBodyInfo"],
+      "rpcs": ["Compliance.RepeatDataBody", "Compliance.RepeatDataBodyPut", "Compliance.RepeatDataBodyPatch", "Compliance.RepeatDataQuery", "Compliance.RepeatDataSimplePath", "Compliance.RepeatDataBodyInfo", "Compliance.RepeatDataPathEnum"],
       "requests": [
         {
           "name": "Basic data types",
@@ -22,7 +22,7 @@
 	    "fDouble": -29e4,
 	    "fFloat": -31,
 	    "fBool": true,
-	    "fKingdom": "ANIMALIA", 
+	    "fKingdom": "ANIMALIA",
 
 	    "pString": "Goodbye",
 	    "pInt32": -37,
@@ -37,7 +37,7 @@
 	  "fInt32": -10,
 	  "fInt64": -110,
 	  "fDouble": -54e4,
-          
+
 	  "pInt32": -47,
           "pInt64": -477,
 	  "pDouble": -61.73
@@ -60,14 +60,14 @@
 	    "fDouble": -29e4,
 	    "fFloat": -31,
 	    "fBool": true,
-	    "fKingdom": "ANIMALIA", 
+	    "fKingdom": "ANIMALIA",
 
             "fChild": {
               "fString": "second/bool/salutation"
             }
           }
         },
-        
+
         {
           "name": "Zero values for non-string fields",
           "serverVerify": true,
@@ -157,6 +157,149 @@
             "fChild": {
               "fString": "second/zzz/bool/true"
             }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Explicitly set enums used in path",
+      "rpcs": ["Compliance.RepeatDataPathEnum", "Compliance.RepeatDataPathEnumOptional"],
+      "requests": [
+        {
+          "name": "Explicitly set regular and optional enums",
+          "serverVerify": true,
+          "info": {
+            "fString": "Hello",
+	    "fInt32": -1,
+	    "fSint32" : -2,
+	    "fSfixed32": -3,
+	    "fUint32": 5,
+	    "fFixed32": 7,
+	    "fInt64": -11,
+	    "fSint64": -13,
+	    "fSfixed64": -17,
+	    "fUint64": 19,
+	    "fFixed64":23,
+	    "fDouble": -29e4,
+	    "fFloat": -31,
+	    "fBool": true,
+	    "fKingdom": "ANIMALIA",
+
+	    "pString": "Goodbye",
+	    "pInt32": -37,
+	    "pDouble": -41.43,
+	    "pBool": true,
+	    "pKingdom": "PLANTAE"
+          }
+        },
+        {
+          "name": "Explicitly set optional enum only",
+          "serverVerify": true,
+          "info": {
+            "fString": "Hello",
+	    "fInt32": -1,
+	    "fSint32" : -2,
+	    "fSfixed32": -3,
+	    "fUint32": 5,
+	    "fFixed32": 7,
+	    "fInt64": -11,
+	    "fSint64": -13,
+	    "fSfixed64": -17,
+	    "fUint64": 19,
+	    "fFixed64":23,
+	    "fDouble": -29e4,
+	    "fFloat": -31,
+	    "fBool": true,
+
+	    "pString": "Goodbye",
+	    "pInt32": -37,
+	    "pDouble": -41.43,
+	    "pBool": true,
+	    "pKingdom": "PLANTAE"
+          }
+        },
+        {
+          "name": "Explicitly set regular and optional enums, zero values",
+          "serverVerify": true,
+          "info": {
+            "fString": "Hello",
+	    "fInt32": -1,
+	    "fSint32" : -2,
+	    "fSfixed32": -3,
+	    "fUint32": 5,
+	    "fFixed32": 7,
+	    "fInt64": -11,
+	    "fSint64": -13,
+	    "fSfixed64": -17,
+	    "fUint64": 19,
+	    "fFixed64":23,
+	    "fDouble": -29e4,
+	    "fFloat": -31,
+	    "fBool": true,
+	    "fKingdom": "LIFE_KINGDOM_UNSPECIFIED",
+
+	    "pString": "Goodbye",
+	    "pInt32": -37,
+	    "pDouble": -41.43,
+	    "pBool": true,
+	    "pKingdom": "LIFE_KINGDOM_UNSPECIFIED"
+          }
+        },
+        {
+          "name": "Explicitly set optional enum only, zero value",
+          "serverVerify": true,
+          "info": {
+            "fString": "Hello",
+	    "fInt32": -1,
+	    "fSint32" : -2,
+	    "fSfixed32": -3,
+	    "fUint32": 5,
+	    "fFixed32": 7,
+	    "fInt64": -11,
+	    "fSint64": -13,
+	    "fSfixed64": -17,
+	    "fUint64": 19,
+	    "fFixed64":23,
+	    "fDouble": -29e4,
+	    "fFloat": -31,
+	    "fBool": true,
+
+	    "pString": "Goodbye",
+	    "pInt32": -37,
+	    "pDouble": -41.43,
+	    "pBool": true,
+	    "pKingdom": "LIFE_KINGDOM_UNSPECIFIED"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Unset non-optional enums used in path",
+      "rpcs": ["Compliance.RepeatDataPathEnum"],
+      "requests": [
+        {
+          "name": "Unset enums",
+          "serverVerify": true,
+          "info": {
+            "fString": "Hello",
+	    "fInt32": -1,
+	    "fSint32" : -2,
+	    "fSfixed32": -3,
+	    "fUint32": 5,
+	    "fFixed32": 7,
+	    "fInt64": -11,
+	    "fSint64": -13,
+	    "fSfixed64": -17,
+	    "fUint64": 19,
+	    "fFixed64":23,
+	    "fDouble": -29e4,
+	    "fFloat": -31,
+	    "fBool": true,
+
+	    "pString": "Goodbye",
+	    "pInt32": -37,
+	    "pDouble": -41.43,
+	    "pBool": true
           }
         }
       ]

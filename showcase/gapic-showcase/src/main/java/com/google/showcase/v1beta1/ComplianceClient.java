@@ -130,6 +130,32 @@ import javax.annotation.Generated;
  * ComplianceClient complianceClient = ComplianceClient.create(complianceSettings);
  * }</pre>
  *
+ * <p>To customize the Universe Domain:
+ *
+ * <pre>{@code
+ * // This snippet has been automatically generated and should be regarded as a code template only.
+ * // It will require modifications to work:
+ * // - It may require correct/in-range values for request initialization.
+ * // - It may require specifying regional endpoints when creating the service client as shown in
+ * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+ * ComplianceSettings complianceSettings =
+ *     ComplianceSettings.newBuilder().setUniverseDomain(myUniverseDomain).build();
+ * ComplianceClient complianceClient = ComplianceClient.create(complianceSettings);
+ * }</pre>
+ *
+ * <p>Difference between Endpoint and Universe Domain
+ *
+ * <ol>
+ *   <li>URL: https://{SERVICE}.googleapis.com:443, Endpoint: {SERVICE}.googleapis.com:443, Universe
+ *       Domain: googleapis.com
+ *   <li>URL: https://{SERVICE}.universe-domain.com:443, Endpoint:
+ *       {SERVICE}.universe-domain.com:443, Universe Domain: universe-domain.com
+ * </ol>
+ *
+ * <p>You may try to customize the Endpoint and Universe Domain for TPC. The source of truth for
+ * these values is in the Credentials. The client library will validate the custom values against
+ * the values in the Credentials and throw and Exception if there is a discrepancy.
+ *
  * <p>To use REST (HTTP1.1/JSON) transport (instead of gRPC) for sending and receiving requests over
  * the wire:
  *
@@ -795,6 +821,172 @@ public class ComplianceClient implements BackgroundResource {
    */
   public final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataBodyPatchCallable() {
     return stub.repeatDataBodyPatchCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * This method echoes the ComplianceData request. This method exercises including a
+   * non-proto3-optional enum field in the URL path while sending the entire request object in the
+   * REST body.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (ComplianceClient complianceClient = ComplianceClient.create()) {
+   *   RepeatRequest request =
+   *       RepeatRequest.newBuilder()
+   *           .setName("name3373707")
+   *           .setInfo(ComplianceData.newBuilder().build())
+   *           .setServerVerify(true)
+   *           .setIntendedBindingUri("intendedBindingUri780142386")
+   *           .setFInt32(-1143775883)
+   *           .setFInt64(-1143775788)
+   *           .setFDouble(-1239459382)
+   *           .setPInt32(-858673665)
+   *           .setPInt64(-858673570)
+   *           .setPDouble(-991225216)
+   *           .build();
+   *   RepeatResponse response = complianceClient.repeatDataPathEnum(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final RepeatResponse repeatDataPathEnum(RepeatRequest request) {
+    return repeatDataPathEnumCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * This method echoes the ComplianceData request. This method exercises including a
+   * non-proto3-optional enum field in the URL path while sending the entire request object in the
+   * REST body.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (ComplianceClient complianceClient = ComplianceClient.create()) {
+   *   RepeatRequest request =
+   *       RepeatRequest.newBuilder()
+   *           .setName("name3373707")
+   *           .setInfo(ComplianceData.newBuilder().build())
+   *           .setServerVerify(true)
+   *           .setIntendedBindingUri("intendedBindingUri780142386")
+   *           .setFInt32(-1143775883)
+   *           .setFInt64(-1143775788)
+   *           .setFDouble(-1239459382)
+   *           .setPInt32(-858673665)
+   *           .setPInt64(-858673570)
+   *           .setPDouble(-991225216)
+   *           .build();
+   *   ApiFuture<RepeatResponse> future =
+   *       complianceClient.repeatDataPathEnumCallable().futureCall(request);
+   *   // Do something.
+   *   RepeatResponse response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataPathEnumCallable() {
+    return stub.repeatDataPathEnumCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * This method echoes the ComplianceData request. This method exercises including a
+   * proto3-optional enum field in the URL path while sending the entire request object in the REST
+   * body. Note that when the optional enum is unset for such an RPC, the GAPICs should error
+   * INSTEAD of issuing a request.
+   *
+   * <p>TODO: Capture in generator tests against Showcase the early generator error when the
+   * optional enum is unset. This is beyond the reach of the current Compliance Suite
+   * implementation.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (ComplianceClient complianceClient = ComplianceClient.create()) {
+   *   RepeatRequest request =
+   *       RepeatRequest.newBuilder()
+   *           .setName("name3373707")
+   *           .setInfo(ComplianceData.newBuilder().build())
+   *           .setServerVerify(true)
+   *           .setIntendedBindingUri("intendedBindingUri780142386")
+   *           .setFInt32(-1143775883)
+   *           .setFInt64(-1143775788)
+   *           .setFDouble(-1239459382)
+   *           .setPInt32(-858673665)
+   *           .setPInt64(-858673570)
+   *           .setPDouble(-991225216)
+   *           .build();
+   *   RepeatResponse response = complianceClient.repeatDataPathEnumOptional(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final RepeatResponse repeatDataPathEnumOptional(RepeatRequest request) {
+    return repeatDataPathEnumOptionalCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * This method echoes the ComplianceData request. This method exercises including a
+   * proto3-optional enum field in the URL path while sending the entire request object in the REST
+   * body. Note that when the optional enum is unset for such an RPC, the GAPICs should error
+   * INSTEAD of issuing a request.
+   *
+   * <p>TODO: Capture in generator tests against Showcase the early generator error when the
+   * optional enum is unset. This is beyond the reach of the current Compliance Suite
+   * implementation.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (ComplianceClient complianceClient = ComplianceClient.create()) {
+   *   RepeatRequest request =
+   *       RepeatRequest.newBuilder()
+   *           .setName("name3373707")
+   *           .setInfo(ComplianceData.newBuilder().build())
+   *           .setServerVerify(true)
+   *           .setIntendedBindingUri("intendedBindingUri780142386")
+   *           .setFInt32(-1143775883)
+   *           .setFInt64(-1143775788)
+   *           .setFDouble(-1239459382)
+   *           .setPInt32(-858673665)
+   *           .setPInt64(-858673570)
+   *           .setPDouble(-991225216)
+   *           .build();
+   *   ApiFuture<RepeatResponse> future =
+   *       complianceClient.repeatDataPathEnumOptionalCallable().futureCall(request);
+   *   // Do something.
+   *   RepeatResponse response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataPathEnumOptionalCallable() {
+    return stub.repeatDataPathEnumOptionalCallable();
   }
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.

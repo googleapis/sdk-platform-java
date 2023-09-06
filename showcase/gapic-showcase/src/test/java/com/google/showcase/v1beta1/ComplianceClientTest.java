@@ -677,6 +677,150 @@ public class ComplianceClientTest {
   }
 
   @Test
+  public void repeatDataPathEnumTest() throws Exception {
+    RepeatResponse expectedResponse =
+        RepeatResponse.newBuilder()
+            .setRequest(RepeatRequest.newBuilder().build())
+            .setBindingUri("bindingUri1514820775")
+            .build();
+    mockCompliance.addResponse(expectedResponse);
+
+    RepeatRequest request =
+        RepeatRequest.newBuilder()
+            .setName("name3373707")
+            .setInfo(ComplianceData.newBuilder().build())
+            .setServerVerify(true)
+            .setIntendedBindingUri("intendedBindingUri780142386")
+            .setFInt32(-1143775883)
+            .setFInt64(-1143775788)
+            .setFDouble(-1239459382)
+            .setPInt32(-858673665)
+            .setPInt64(-858673570)
+            .setPDouble(-991225216)
+            .build();
+
+    RepeatResponse actualResponse = client.repeatDataPathEnum(request);
+    Assert.assertEquals(expectedResponse, actualResponse);
+
+    List<AbstractMessage> actualRequests = mockCompliance.getRequests();
+    Assert.assertEquals(1, actualRequests.size());
+    RepeatRequest actualRequest = ((RepeatRequest) actualRequests.get(0));
+
+    Assert.assertEquals(request.getName(), actualRequest.getName());
+    Assert.assertEquals(request.getInfo(), actualRequest.getInfo());
+    Assert.assertEquals(request.getServerVerify(), actualRequest.getServerVerify());
+    Assert.assertEquals(request.getIntendedBindingUri(), actualRequest.getIntendedBindingUri());
+    Assert.assertEquals(request.getFInt32(), actualRequest.getFInt32());
+    Assert.assertEquals(request.getFInt64(), actualRequest.getFInt64());
+    Assert.assertEquals(request.getFDouble(), actualRequest.getFDouble(), 0.0001);
+    Assert.assertEquals(request.getPInt32(), actualRequest.getPInt32());
+    Assert.assertEquals(request.getPInt64(), actualRequest.getPInt64());
+    Assert.assertEquals(request.getPDouble(), actualRequest.getPDouble(), 0.0001);
+    Assert.assertTrue(
+        channelProvider.isHeaderSent(
+            ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
+            GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
+  }
+
+  @Test
+  public void repeatDataPathEnumExceptionTest() throws Exception {
+    StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
+    mockCompliance.addException(exception);
+
+    try {
+      RepeatRequest request =
+          RepeatRequest.newBuilder()
+              .setName("name3373707")
+              .setInfo(ComplianceData.newBuilder().build())
+              .setServerVerify(true)
+              .setIntendedBindingUri("intendedBindingUri780142386")
+              .setFInt32(-1143775883)
+              .setFInt64(-1143775788)
+              .setFDouble(-1239459382)
+              .setPInt32(-858673665)
+              .setPInt64(-858673570)
+              .setPDouble(-991225216)
+              .build();
+      client.repeatDataPathEnum(request);
+      Assert.fail("No exception raised");
+    } catch (InvalidArgumentException e) {
+      // Expected exception.
+    }
+  }
+
+  @Test
+  public void repeatDataPathEnumOptionalTest() throws Exception {
+    RepeatResponse expectedResponse =
+        RepeatResponse.newBuilder()
+            .setRequest(RepeatRequest.newBuilder().build())
+            .setBindingUri("bindingUri1514820775")
+            .build();
+    mockCompliance.addResponse(expectedResponse);
+
+    RepeatRequest request =
+        RepeatRequest.newBuilder()
+            .setName("name3373707")
+            .setInfo(ComplianceData.newBuilder().build())
+            .setServerVerify(true)
+            .setIntendedBindingUri("intendedBindingUri780142386")
+            .setFInt32(-1143775883)
+            .setFInt64(-1143775788)
+            .setFDouble(-1239459382)
+            .setPInt32(-858673665)
+            .setPInt64(-858673570)
+            .setPDouble(-991225216)
+            .build();
+
+    RepeatResponse actualResponse = client.repeatDataPathEnumOptional(request);
+    Assert.assertEquals(expectedResponse, actualResponse);
+
+    List<AbstractMessage> actualRequests = mockCompliance.getRequests();
+    Assert.assertEquals(1, actualRequests.size());
+    RepeatRequest actualRequest = ((RepeatRequest) actualRequests.get(0));
+
+    Assert.assertEquals(request.getName(), actualRequest.getName());
+    Assert.assertEquals(request.getInfo(), actualRequest.getInfo());
+    Assert.assertEquals(request.getServerVerify(), actualRequest.getServerVerify());
+    Assert.assertEquals(request.getIntendedBindingUri(), actualRequest.getIntendedBindingUri());
+    Assert.assertEquals(request.getFInt32(), actualRequest.getFInt32());
+    Assert.assertEquals(request.getFInt64(), actualRequest.getFInt64());
+    Assert.assertEquals(request.getFDouble(), actualRequest.getFDouble(), 0.0001);
+    Assert.assertEquals(request.getPInt32(), actualRequest.getPInt32());
+    Assert.assertEquals(request.getPInt64(), actualRequest.getPInt64());
+    Assert.assertEquals(request.getPDouble(), actualRequest.getPDouble(), 0.0001);
+    Assert.assertTrue(
+        channelProvider.isHeaderSent(
+            ApiClientHeaderProvider.getDefaultApiClientHeaderKey(),
+            GaxGrpcProperties.getDefaultApiClientHeaderPattern()));
+  }
+
+  @Test
+  public void repeatDataPathEnumOptionalExceptionTest() throws Exception {
+    StatusRuntimeException exception = new StatusRuntimeException(io.grpc.Status.INVALID_ARGUMENT);
+    mockCompliance.addException(exception);
+
+    try {
+      RepeatRequest request =
+          RepeatRequest.newBuilder()
+              .setName("name3373707")
+              .setInfo(ComplianceData.newBuilder().build())
+              .setServerVerify(true)
+              .setIntendedBindingUri("intendedBindingUri780142386")
+              .setFInt32(-1143775883)
+              .setFInt64(-1143775788)
+              .setFDouble(-1239459382)
+              .setPInt32(-858673665)
+              .setPInt64(-858673570)
+              .setPDouble(-991225216)
+              .build();
+      client.repeatDataPathEnumOptional(request);
+      Assert.fail("No exception raised");
+    } catch (InvalidArgumentException e) {
+      // Expected exception.
+    }
+  }
+
+  @Test
   public void getEnumTest() throws Exception {
     EnumResponse expectedResponse =
         EnumResponse.newBuilder()

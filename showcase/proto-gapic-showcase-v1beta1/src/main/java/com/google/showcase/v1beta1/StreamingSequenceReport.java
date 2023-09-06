@@ -167,18 +167,6 @@ private static final long serialVersionUID = 0L;
      * <code>.google.rpc.Status status = 5;</code>
      */
     com.google.rpc.StatusOrBuilder getStatusOrBuilder();
-
-    /**
-     * <code>string content_sent = 6;</code>
-     * @return The contentSent.
-     */
-    java.lang.String getContentSent();
-    /**
-     * <code>string content_sent = 6;</code>
-     * @return The bytes for contentSent.
-     */
-    com.google.protobuf.ByteString
-        getContentSentBytes();
   }
   /**
    * <pre>
@@ -197,7 +185,6 @@ private static final long serialVersionUID = 0L;
       super(builder);
     }
     private Attempt() {
-      contentSent_ = "";
     }
 
     @java.lang.Override
@@ -393,45 +380,6 @@ private static final long serialVersionUID = 0L;
       return status_ == null ? com.google.rpc.Status.getDefaultInstance() : status_;
     }
 
-    public static final int CONTENT_SENT_FIELD_NUMBER = 6;
-    @SuppressWarnings("serial")
-    private volatile java.lang.Object contentSent_ = "";
-    /**
-     * <code>string content_sent = 6;</code>
-     * @return The contentSent.
-     */
-    @java.lang.Override
-    public java.lang.String getContentSent() {
-      java.lang.Object ref = contentSent_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        contentSent_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string content_sent = 6;</code>
-     * @return The bytes for contentSent.
-     */
-    @java.lang.Override
-    public com.google.protobuf.ByteString
-        getContentSentBytes() {
-      java.lang.Object ref = contentSent_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        contentSent_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
     public final boolean isInitialized() {
@@ -461,9 +409,6 @@ private static final long serialVersionUID = 0L;
       if (status_ != null) {
         output.writeMessage(5, getStatus());
       }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(contentSent_)) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, contentSent_);
-      }
       getUnknownFields().writeTo(output);
     }
 
@@ -492,9 +437,6 @@ private static final long serialVersionUID = 0L;
       if (status_ != null) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(5, getStatus());
-      }
-      if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(contentSent_)) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, contentSent_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
@@ -533,8 +475,6 @@ private static final long serialVersionUID = 0L;
         if (!getStatus()
             .equals(other.getStatus())) return false;
       }
-      if (!getContentSent()
-          .equals(other.getContentSent())) return false;
       if (!getUnknownFields().equals(other.getUnknownFields())) return false;
       return true;
     }
@@ -564,8 +504,6 @@ private static final long serialVersionUID = 0L;
         hash = (37 * hash) + STATUS_FIELD_NUMBER;
         hash = (53 * hash) + getStatus().hashCode();
       }
-      hash = (37 * hash) + CONTENT_SENT_FIELD_NUMBER;
-      hash = (53 * hash) + getContentSent().hashCode();
       hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
@@ -722,7 +660,6 @@ private static final long serialVersionUID = 0L;
           statusBuilder_.dispose();
           statusBuilder_ = null;
         }
-        contentSent_ = "";
         return this;
       }
 
@@ -778,9 +715,6 @@ private static final long serialVersionUID = 0L;
           result.status_ = statusBuilder_ == null
               ? status_
               : statusBuilder_.build();
-        }
-        if (((from_bitField0_ & 0x00000020) != 0)) {
-          result.contentSent_ = contentSent_;
         }
       }
 
@@ -843,11 +777,6 @@ private static final long serialVersionUID = 0L;
         if (other.hasStatus()) {
           mergeStatus(other.getStatus());
         }
-        if (!other.getContentSent().isEmpty()) {
-          contentSent_ = other.contentSent_;
-          bitField0_ |= 0x00000020;
-          onChanged();
-        }
         this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
         return this;
@@ -907,11 +836,6 @@ private static final long serialVersionUID = 0L;
                 bitField0_ |= 0x00000010;
                 break;
               } // case 42
-              case 50: {
-                contentSent_ = input.readStringRequireUtf8();
-                bitField0_ |= 0x00000020;
-                break;
-              } // case 50
               default: {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                   done = true; // was an endgroup tag
@@ -1609,78 +1533,6 @@ private static final long serialVersionUID = 0L;
           status_ = null;
         }
         return statusBuilder_;
-      }
-
-      private java.lang.Object contentSent_ = "";
-      /**
-       * <code>string content_sent = 6;</code>
-       * @return The contentSent.
-       */
-      public java.lang.String getContentSent() {
-        java.lang.Object ref = contentSent_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          contentSent_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
-      }
-      /**
-       * <code>string content_sent = 6;</code>
-       * @return The bytes for contentSent.
-       */
-      public com.google.protobuf.ByteString
-          getContentSentBytes() {
-        java.lang.Object ref = contentSent_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          contentSent_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string content_sent = 6;</code>
-       * @param value The contentSent to set.
-       * @return This builder for chaining.
-       */
-      public Builder setContentSent(
-          java.lang.String value) {
-        if (value == null) { throw new NullPointerException(); }
-        contentSent_ = value;
-        bitField0_ |= 0x00000020;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string content_sent = 6;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearContentSent() {
-        contentSent_ = getDefaultInstance().getContentSent();
-        bitField0_ = (bitField0_ & ~0x00000020);
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string content_sent = 6;</code>
-       * @param value The bytes for contentSent to set.
-       * @return This builder for chaining.
-       */
-      public Builder setContentSentBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) { throw new NullPointerException(); }
-        checkByteStringIsUtf8(value);
-        contentSent_ = value;
-        bitField0_ |= 0x00000020;
-        onChanged();
-        return this;
       }
       @java.lang.Override
       public final Builder setUnknownFields(

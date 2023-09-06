@@ -79,6 +79,15 @@ public abstract class ComplianceStub implements BackgroundResource {
     throw new UnsupportedOperationException("Not implemented: repeatDataBodyPatchCallable()");
   }
 
+  public UnaryCallable<RepeatRequest, RepeatResponse> repeatDataPathEnumCallable() {
+    throw new UnsupportedOperationException("Not implemented: repeatDataPathEnumCallable()");
+  }
+
+  public UnaryCallable<RepeatRequest, RepeatResponse> repeatDataPathEnumOptionalCallable() {
+    throw new UnsupportedOperationException(
+        "Not implemented: repeatDataPathEnumOptionalCallable()");
+  }
+
   public UnaryCallable<EnumRequest, EnumResponse> getEnumCallable() {
     throw new UnsupportedOperationException("Not implemented: getEnumCallable()");
   }

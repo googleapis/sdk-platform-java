@@ -116,6 +116,8 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
       repeatDataPathTrailingResourceSettings;
   private final UnaryCallSettings<RepeatRequest, RepeatResponse> repeatDataBodyPutSettings;
   private final UnaryCallSettings<RepeatRequest, RepeatResponse> repeatDataBodyPatchSettings;
+  private final UnaryCallSettings<RepeatRequest, RepeatResponse> repeatDataPathEnumSettings;
+  private final UnaryCallSettings<RepeatRequest, RepeatResponse> repeatDataPathEnumOptionalSettings;
   private final UnaryCallSettings<EnumRequest, EnumResponse> getEnumSettings;
   private final UnaryCallSettings<EnumResponse, EnumResponse> verifyEnumSettings;
   private final PagedCallSettings<
@@ -218,6 +220,16 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
   /** Returns the object with the settings used for calls to repeatDataBodyPatch. */
   public UnaryCallSettings<RepeatRequest, RepeatResponse> repeatDataBodyPatchSettings() {
     return repeatDataBodyPatchSettings;
+  }
+
+  /** Returns the object with the settings used for calls to repeatDataPathEnum. */
+  public UnaryCallSettings<RepeatRequest, RepeatResponse> repeatDataPathEnumSettings() {
+    return repeatDataPathEnumSettings;
+  }
+
+  /** Returns the object with the settings used for calls to repeatDataPathEnumOptional. */
+  public UnaryCallSettings<RepeatRequest, RepeatResponse> repeatDataPathEnumOptionalSettings() {
+    return repeatDataPathEnumOptionalSettings;
   }
 
   /** Returns the object with the settings used for calls to getEnum. */
@@ -372,6 +384,9 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
         settingsBuilder.repeatDataPathTrailingResourceSettings().build();
     repeatDataBodyPutSettings = settingsBuilder.repeatDataBodyPutSettings().build();
     repeatDataBodyPatchSettings = settingsBuilder.repeatDataBodyPatchSettings().build();
+    repeatDataPathEnumSettings = settingsBuilder.repeatDataPathEnumSettings().build();
+    repeatDataPathEnumOptionalSettings =
+        settingsBuilder.repeatDataPathEnumOptionalSettings().build();
     getEnumSettings = settingsBuilder.getEnumSettings().build();
     verifyEnumSettings = settingsBuilder.verifyEnumSettings().build();
     listLocationsSettings = settingsBuilder.listLocationsSettings().build();
@@ -398,6 +413,10 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
         repeatDataBodyPutSettings;
     private final UnaryCallSettings.Builder<RepeatRequest, RepeatResponse>
         repeatDataBodyPatchSettings;
+    private final UnaryCallSettings.Builder<RepeatRequest, RepeatResponse>
+        repeatDataPathEnumSettings;
+    private final UnaryCallSettings.Builder<RepeatRequest, RepeatResponse>
+        repeatDataPathEnumOptionalSettings;
     private final UnaryCallSettings.Builder<EnumRequest, EnumResponse> getEnumSettings;
     private final UnaryCallSettings.Builder<EnumResponse, EnumResponse> verifyEnumSettings;
     private final PagedCallSettings.Builder<
@@ -443,6 +462,8 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
       repeatDataPathTrailingResourceSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       repeatDataBodyPutSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       repeatDataBodyPatchSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      repeatDataPathEnumSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      repeatDataPathEnumOptionalSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       getEnumSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       verifyEnumSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       listLocationsSettings = PagedCallSettings.newBuilder(LIST_LOCATIONS_PAGE_STR_FACT);
@@ -461,6 +482,8 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
               repeatDataPathTrailingResourceSettings,
               repeatDataBodyPutSettings,
               repeatDataBodyPatchSettings,
+              repeatDataPathEnumSettings,
+              repeatDataPathEnumOptionalSettings,
               getEnumSettings,
               verifyEnumSettings,
               listLocationsSettings,
@@ -483,6 +506,8 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
           settings.repeatDataPathTrailingResourceSettings.toBuilder();
       repeatDataBodyPutSettings = settings.repeatDataBodyPutSettings.toBuilder();
       repeatDataBodyPatchSettings = settings.repeatDataBodyPatchSettings.toBuilder();
+      repeatDataPathEnumSettings = settings.repeatDataPathEnumSettings.toBuilder();
+      repeatDataPathEnumOptionalSettings = settings.repeatDataPathEnumOptionalSettings.toBuilder();
       getEnumSettings = settings.getEnumSettings.toBuilder();
       verifyEnumSettings = settings.verifyEnumSettings.toBuilder();
       listLocationsSettings = settings.listLocationsSettings.toBuilder();
@@ -501,6 +526,8 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
               repeatDataPathTrailingResourceSettings,
               repeatDataBodyPutSettings,
               repeatDataBodyPatchSettings,
+              repeatDataPathEnumSettings,
+              repeatDataPathEnumOptionalSettings,
               getEnumSettings,
               verifyEnumSettings,
               listLocationsSettings,
@@ -574,6 +601,16 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
 
       builder
           .repeatDataBodyPatchSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_params"));
+
+      builder
+          .repeatDataPathEnumSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_params"));
+
+      builder
+          .repeatDataPathEnumOptionalSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_params"));
 
@@ -670,6 +707,17 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
     /** Returns the builder for the settings used for calls to repeatDataBodyPatch. */
     public UnaryCallSettings.Builder<RepeatRequest, RepeatResponse> repeatDataBodyPatchSettings() {
       return repeatDataBodyPatchSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to repeatDataPathEnum. */
+    public UnaryCallSettings.Builder<RepeatRequest, RepeatResponse> repeatDataPathEnumSettings() {
+      return repeatDataPathEnumSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to repeatDataPathEnumOptional. */
+    public UnaryCallSettings.Builder<RepeatRequest, RepeatResponse>
+        repeatDataPathEnumOptionalSettings() {
+      return repeatDataPathEnumOptionalSettings;
     }
 
     /** Returns the builder for the settings used for calls to getEnum. */

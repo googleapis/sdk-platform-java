@@ -111,9 +111,9 @@ _showcase_version = "0.28.2"
 
 http_archive(
     name = "com_google_gapic_showcase",
-    strip_prefix = "gapic-showcase-%s" % _showcase_version,
+    strip_prefix = "gapic-showcase-check-functionality-enum-in-path",
     urls = [
-        "https://github.com/googleapis/gapic-showcase/archive/refs/tags/v%s.zip" % _showcase_version,
+        "https://github.com/vchudnov-g/gapic-showcase/archive/refs/heads/check-functionality-enum-in-path.zip",
     ],
 )
 

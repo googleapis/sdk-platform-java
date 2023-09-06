@@ -227,6 +227,48 @@ public class MockComplianceImpl extends ComplianceImplBase {
   }
 
   @Override
+  public void repeatDataPathEnum(
+      RepeatRequest request, StreamObserver<RepeatResponse> responseObserver) {
+    Object response = responses.poll();
+    if (response instanceof RepeatResponse) {
+      requests.add(request);
+      responseObserver.onNext(((RepeatResponse) response));
+      responseObserver.onCompleted();
+    } else if (response instanceof Exception) {
+      responseObserver.onError(((Exception) response));
+    } else {
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method RepeatDataPathEnum, expected %s or %s",
+                  response == null ? "null" : response.getClass().getName(),
+                  RepeatResponse.class.getName(),
+                  Exception.class.getName())));
+    }
+  }
+
+  @Override
+  public void repeatDataPathEnumOptional(
+      RepeatRequest request, StreamObserver<RepeatResponse> responseObserver) {
+    Object response = responses.poll();
+    if (response instanceof RepeatResponse) {
+      requests.add(request);
+      responseObserver.onNext(((RepeatResponse) response));
+      responseObserver.onCompleted();
+    } else if (response instanceof Exception) {
+      responseObserver.onError(((Exception) response));
+    } else {
+      responseObserver.onError(
+          new IllegalArgumentException(
+              String.format(
+                  "Unrecognized response type %s for method RepeatDataPathEnumOptional, expected %s or %s",
+                  response == null ? "null" : response.getClass().getName(),
+                  RepeatResponse.class.getName(),
+                  Exception.class.getName())));
+    }
+  }
+
+  @Override
   public void getEnum(EnumRequest request, StreamObserver<EnumResponse> responseObserver) {
     Object response = responses.poll();
     if (response instanceof EnumResponse) {

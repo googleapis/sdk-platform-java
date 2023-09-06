@@ -125,7 +125,7 @@
             </goals>
             <configuration>
               <url>
-                https://raw.githubusercontent.com/googleapis/gapic-showcase/v${gapic-showcase.version}/server/services/compliance_suite.json
+                https://raw.githubusercontent.com/vchudnov-g/gapic-showcase/check-functionality-enum-in-path/server/services/compliance_suite.json
               </url>
               <outputDirectory>src/test/resources</outputDirectory>
               <!-- Set this to always download the latest version and overwrite the existing file -->

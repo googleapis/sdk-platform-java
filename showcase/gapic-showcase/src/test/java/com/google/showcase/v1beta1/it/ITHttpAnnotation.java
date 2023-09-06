@@ -110,7 +110,11 @@ public class ITHttpAnnotation {
             "Compliance.RepeatDataBodyPatch",
             httpjsonClient::repeatDataBodyPatch,
             "Compliance.RepeatDataPathResource",
-            httpjsonClient::repeatDataPathResource);
+            httpjsonClient::repeatDataPathResource,
+            "Compliance.RepeatDataPathEnum",
+            httpjsonClient::repeatDataPathEnum,
+            "Compliance.RepeatDataPathEnumOptional",
+            httpjsonClient::repeatDataPathEnumOptional);
   }
 
   @AfterClass

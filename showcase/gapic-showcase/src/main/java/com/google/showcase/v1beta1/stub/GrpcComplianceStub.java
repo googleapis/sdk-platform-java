@@ -129,6 +129,24 @@ public class GrpcComplianceStub extends ComplianceStub {
               .setResponseMarshaller(ProtoUtils.marshaller(RepeatResponse.getDefaultInstance()))
               .build();
 
+  private static final MethodDescriptor<RepeatRequest, RepeatResponse>
+      repeatDataPathEnumMethodDescriptor =
+          MethodDescriptor.<RepeatRequest, RepeatResponse>newBuilder()
+              .setType(MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName("google.showcase.v1beta1.Compliance/RepeatDataPathEnum")
+              .setRequestMarshaller(ProtoUtils.marshaller(RepeatRequest.getDefaultInstance()))
+              .setResponseMarshaller(ProtoUtils.marshaller(RepeatResponse.getDefaultInstance()))
+              .build();
+
+  private static final MethodDescriptor<RepeatRequest, RepeatResponse>
+      repeatDataPathEnumOptionalMethodDescriptor =
+          MethodDescriptor.<RepeatRequest, RepeatResponse>newBuilder()
+              .setType(MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName("google.showcase.v1beta1.Compliance/RepeatDataPathEnumOptional")
+              .setRequestMarshaller(ProtoUtils.marshaller(RepeatRequest.getDefaultInstance()))
+              .setResponseMarshaller(ProtoUtils.marshaller(RepeatResponse.getDefaultInstance()))
+              .build();
+
   private static final MethodDescriptor<EnumRequest, EnumResponse> getEnumMethodDescriptor =
       MethodDescriptor.<EnumRequest, EnumResponse>newBuilder()
           .setType(MethodDescriptor.MethodType.UNARY)
@@ -199,6 +217,8 @@ public class GrpcComplianceStub extends ComplianceStub {
   private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataPathTrailingResourceCallable;
   private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataBodyPutCallable;
   private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataBodyPatchCallable;
+  private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataPathEnumCallable;
+  private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataPathEnumOptionalCallable;
   private final UnaryCallable<EnumRequest, EnumResponse> getEnumCallable;
   private final UnaryCallable<EnumResponse, EnumResponse> verifyEnumCallable;
   private final UnaryCallable<ListLocationsRequest, ListLocationsResponse> listLocationsCallable;
@@ -314,6 +334,26 @@ public class GrpcComplianceStub extends ComplianceStub {
         GrpcCallSettings.<RepeatRequest, RepeatResponse>newBuilder()
             .setMethodDescriptor(repeatDataBodyPatchMethodDescriptor)
             .build();
+    GrpcCallSettings<RepeatRequest, RepeatResponse> repeatDataPathEnumTransportSettings =
+        GrpcCallSettings.<RepeatRequest, RepeatResponse>newBuilder()
+            .setMethodDescriptor(repeatDataPathEnumMethodDescriptor)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("info.f_kingdom", String.valueOf(request.getInfo().getFKingdom()));
+                  return builder.build();
+                })
+            .build();
+    GrpcCallSettings<RepeatRequest, RepeatResponse> repeatDataPathEnumOptionalTransportSettings =
+        GrpcCallSettings.<RepeatRequest, RepeatResponse>newBuilder()
+            .setMethodDescriptor(repeatDataPathEnumOptionalMethodDescriptor)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("info.p_kingdom", String.valueOf(request.getInfo().getPKingdom()));
+                  return builder.build();
+                })
+            .build();
     GrpcCallSettings<EnumRequest, EnumResponse> getEnumTransportSettings =
         GrpcCallSettings.<EnumRequest, EnumResponse>newBuilder()
             .setMethodDescriptor(getEnumMethodDescriptor)
@@ -410,6 +450,16 @@ public class GrpcComplianceStub extends ComplianceStub {
             repeatDataBodyPatchTransportSettings,
             settings.repeatDataBodyPatchSettings(),
             clientContext);
+    this.repeatDataPathEnumCallable =
+        callableFactory.createUnaryCallable(
+            repeatDataPathEnumTransportSettings,
+            settings.repeatDataPathEnumSettings(),
+            clientContext);
+    this.repeatDataPathEnumOptionalCallable =
+        callableFactory.createUnaryCallable(
+            repeatDataPathEnumOptionalTransportSettings,
+            settings.repeatDataPathEnumOptionalSettings(),
+            clientContext);
     this.getEnumCallable =
         callableFactory.createUnaryCallable(
             getEnumTransportSettings, settings.getEnumSettings(), clientContext);
@@ -483,6 +533,16 @@ public class GrpcComplianceStub extends ComplianceStub {
   @Override
   public UnaryCallable<RepeatRequest, RepeatResponse> repeatDataBodyPatchCallable() {
     return repeatDataBodyPatchCallable;
+  }
+
+  @Override
+  public UnaryCallable<RepeatRequest, RepeatResponse> repeatDataPathEnumCallable() {
+    return repeatDataPathEnumCallable;
+  }
+
+  @Override
+  public UnaryCallable<RepeatRequest, RepeatResponse> repeatDataPathEnumOptionalCallable() {
+    return repeatDataPathEnumOptionalCallable;
   }
 
   @Override

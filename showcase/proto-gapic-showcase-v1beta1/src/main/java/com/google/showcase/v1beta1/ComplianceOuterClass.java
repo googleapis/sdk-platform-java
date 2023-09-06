@@ -129,7 +129,7 @@ public final class ComplianceOuterClass {
       "se.v1beta1.Continent*i\n\tContinent\022\031\n\025CON" +
       "TINENT_UNSPECIFIED\020\000\022\n\n\006AFRICA\020\001\022\013\n\007AMER" +
       "ICA\020\002\022\r\n\tANTARTICA\020\003\022\r\n\tAUSTRALIA\020\004\022\n\n\006E" +
-      "UROPE\020\0052\330\r\n\nCompliance\022\202\001\n\016RepeatDataBod" +
+      "UROPE\020\0052\264\020\n\nCompliance\022\202\001\n\016RepeatDataBod" +
       "y\022&.google.showcase.v1beta1.RepeatReques" +
       "t\032\'.google.showcase.v1beta1.RepeatRespon" +
       "se\"\037\202\323\344\223\002\031\"\024/v1beta1/repeat:body:\001*\022\215\001\n\022" +
@@ -166,17 +166,25 @@ public final class ComplianceOuterClass {
       "eatDataBodyPatch\022&.google.showcase.v1bet" +
       "a1.RepeatRequest\032\'.google.showcase.v1bet" +
       "a1.RepeatResponse\"$\202\323\344\223\002\0362\031/v1beta1/repe" +
-      "at:bodypatch:\001*\022x\n\007GetEnum\022$.google.show" +
-      "case.v1beta1.EnumRequest\032%.google.showca" +
-      "se.v1beta1.EnumResponse\" \202\323\344\223\002\032\022\030/v1beta" +
-      "1/compliance/enum\022|\n\nVerifyEnum\022%.google" +
-      ".showcase.v1beta1.EnumResponse\032%.google." +
-      "showcase.v1beta1.EnumResponse\" \202\323\344\223\002\032\"\030/" +
-      "v1beta1/compliance/enum\032\021\312A\016localhost:74" +
-      "69Bq\n\033com.google.showcase.v1beta1P\001Z4git" +
-      "hub.com/googleapis/gapic-showcase/server" +
-      "/genproto\352\002\031Google::Showcase::V1beta1b\006p" +
-      "roto3"
+      "at:bodypatch:\001*\022\243\001\n\022RepeatDataPathEnum\022&" +
+      ".google.showcase.v1beta1.RepeatRequest\032\'" +
+      ".google.showcase.v1beta1.RepeatResponse\"" +
+      "<\202\323\344\223\0026\"1/v1beta1/repeat/kingdom/{info.f" +
+      "_kingdom}:pathenum:\001*\022\263\001\n\032RepeatDataPath" +
+      "EnumOptional\022&.google.showcase.v1beta1.R" +
+      "epeatRequest\032\'.google.showcase.v1beta1.R" +
+      "epeatResponse\"D\202\323\344\223\002>\"9/v1beta1/repeat/k" +
+      "ingdom/{info.p_kingdom}:pathenumoptional" +
+      ":\001*\022x\n\007GetEnum\022$.google.showcase.v1beta1" +
+      ".EnumRequest\032%.google.showcase.v1beta1.E" +
+      "numResponse\" \202\323\344\223\002\032\022\030/v1beta1/compliance" +
+      "/enum\022|\n\nVerifyEnum\022%.google.showcase.v1" +
+      "beta1.EnumResponse\032%.google.showcase.v1b" +
+      "eta1.EnumResponse\" \202\323\344\223\002\032\"\030/v1beta1/comp" +
+      "liance/enum\032\021\312A\016localhost:7469Bq\n\033com.go" +
+      "ogle.showcase.v1beta1P\001Z4github.com/goog" +
+      "leapis/gapic-showcase/server/genproto\352\002\031" +
+      "Google::Showcase::V1beta1b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,

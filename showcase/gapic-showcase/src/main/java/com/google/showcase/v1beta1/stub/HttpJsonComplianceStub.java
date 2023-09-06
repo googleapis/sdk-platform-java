@@ -457,6 +457,82 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                       .build())
               .build();
 
+  private static final ApiMethodDescriptor<RepeatRequest, RepeatResponse>
+      repeatDataPathEnumMethodDescriptor =
+          ApiMethodDescriptor.<RepeatRequest, RepeatResponse>newBuilder()
+              .setFullMethodName("google.showcase.v1beta1.Compliance/RepeatDataPathEnum")
+              .setHttpMethod("POST")
+              .setType(ApiMethodDescriptor.MethodType.UNARY)
+              .setRequestFormatter(
+                  ProtoMessageRequestFormatter.<RepeatRequest>newBuilder()
+                      .setPath(
+                          "/v1beta1/repeat/kingdom/{info.fKingdom}:pathenum",
+                          request -> {
+                            Map<String, String> fields = new HashMap<>();
+                            ProtoRestSerializer<RepeatRequest> serializer =
+                                ProtoRestSerializer.create();
+                            serializer.putPathParam(
+                                fields, "info.fKingdom", request.getInfo().getFKingdomValue());
+                            return fields;
+                          })
+                      .setQueryParamsExtractor(
+                          request -> {
+                            Map<String, List<String>> fields = new HashMap<>();
+                            ProtoRestSerializer<RepeatRequest> serializer =
+                                ProtoRestSerializer.create();
+                            return fields;
+                          })
+                      .setRequestBodyExtractor(
+                          request ->
+                              ProtoRestSerializer.create()
+                                  .toBody("*", request.toBuilder().build(), false))
+                      .build())
+              .setResponseParser(
+                  ProtoMessageResponseParser.<RepeatResponse>newBuilder()
+                      .setDefaultInstance(RepeatResponse.getDefaultInstance())
+                      .setDefaultTypeRegistry(typeRegistry)
+                      .build())
+              .build();
+
+  private static final ApiMethodDescriptor<RepeatRequest, RepeatResponse>
+      repeatDataPathEnumOptionalMethodDescriptor =
+          ApiMethodDescriptor.<RepeatRequest, RepeatResponse>newBuilder()
+              .setFullMethodName("google.showcase.v1beta1.Compliance/RepeatDataPathEnumOptional")
+              .setHttpMethod("POST")
+              .setType(ApiMethodDescriptor.MethodType.UNARY)
+              .setRequestFormatter(
+                  ProtoMessageRequestFormatter.<RepeatRequest>newBuilder()
+                      .setPath(
+                          "/v1beta1/repeat/kingdom/{info.pKingdom}:pathenumoptional",
+                          request -> {
+                            Map<String, String> fields = new HashMap<>();
+                            ProtoRestSerializer<RepeatRequest> serializer =
+                                ProtoRestSerializer.create();
+                            if (request.getInfo().hasPKingdom()) {
+                              serializer.putPathParam(
+                                  fields, "info.pKingdom", request.getInfo().getPKingdomValue());
+                            }
+                            return fields;
+                          })
+                      .setQueryParamsExtractor(
+                          request -> {
+                            Map<String, List<String>> fields = new HashMap<>();
+                            ProtoRestSerializer<RepeatRequest> serializer =
+                                ProtoRestSerializer.create();
+                            return fields;
+                          })
+                      .setRequestBodyExtractor(
+                          request ->
+                              ProtoRestSerializer.create()
+                                  .toBody("*", request.toBuilder().build(), false))
+                      .build())
+              .setResponseParser(
+                  ProtoMessageResponseParser.<RepeatResponse>newBuilder()
+                      .setDefaultInstance(RepeatResponse.getDefaultInstance())
+                      .setDefaultTypeRegistry(typeRegistry)
+                      .build())
+              .build();
+
   private static final ApiMethodDescriptor<EnumRequest, EnumResponse> getEnumMethodDescriptor =
       ApiMethodDescriptor.<EnumRequest, EnumResponse>newBuilder()
           .setFullMethodName("google.showcase.v1beta1.Compliance/GetEnum")
@@ -709,6 +785,8 @@ public class HttpJsonComplianceStub extends ComplianceStub {
   private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataPathTrailingResourceCallable;
   private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataBodyPutCallable;
   private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataBodyPatchCallable;
+  private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataPathEnumCallable;
+  private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataPathEnumOptionalCallable;
   private final UnaryCallable<EnumRequest, EnumResponse> getEnumCallable;
   private final UnaryCallable<EnumResponse, EnumResponse> verifyEnumCallable;
   private final UnaryCallable<ListLocationsRequest, ListLocationsResponse> listLocationsCallable;
@@ -832,6 +910,30 @@ public class HttpJsonComplianceStub extends ComplianceStub {
             .setMethodDescriptor(repeatDataBodyPatchMethodDescriptor)
             .setTypeRegistry(typeRegistry)
             .build();
+    HttpJsonCallSettings<RepeatRequest, RepeatResponse> repeatDataPathEnumTransportSettings =
+        HttpJsonCallSettings.<RepeatRequest, RepeatResponse>newBuilder()
+            .setMethodDescriptor(repeatDataPathEnumMethodDescriptor)
+            .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("info.f_kingdom", String.valueOf(request.getInfo().getFKingdom()));
+                  return builder.build();
+                })
+            .build();
+    HttpJsonCallSettings<RepeatRequest, RepeatResponse>
+        repeatDataPathEnumOptionalTransportSettings =
+            HttpJsonCallSettings.<RepeatRequest, RepeatResponse>newBuilder()
+                .setMethodDescriptor(repeatDataPathEnumOptionalMethodDescriptor)
+                .setTypeRegistry(typeRegistry)
+                .setParamsExtractor(
+                    request -> {
+                      RequestParamsBuilder builder = RequestParamsBuilder.create();
+                      builder.add(
+                          "info.p_kingdom", String.valueOf(request.getInfo().getPKingdom()));
+                      return builder.build();
+                    })
+                .build();
     HttpJsonCallSettings<EnumRequest, EnumResponse> getEnumTransportSettings =
         HttpJsonCallSettings.<EnumRequest, EnumResponse>newBuilder()
             .setMethodDescriptor(getEnumMethodDescriptor)
@@ -936,6 +1038,16 @@ public class HttpJsonComplianceStub extends ComplianceStub {
             repeatDataBodyPatchTransportSettings,
             settings.repeatDataBodyPatchSettings(),
             clientContext);
+    this.repeatDataPathEnumCallable =
+        callableFactory.createUnaryCallable(
+            repeatDataPathEnumTransportSettings,
+            settings.repeatDataPathEnumSettings(),
+            clientContext);
+    this.repeatDataPathEnumOptionalCallable =
+        callableFactory.createUnaryCallable(
+            repeatDataPathEnumOptionalTransportSettings,
+            settings.repeatDataPathEnumOptionalSettings(),
+            clientContext);
     this.getEnumCallable =
         callableFactory.createUnaryCallable(
             getEnumTransportSettings, settings.getEnumSettings(), clientContext);
@@ -978,6 +1090,8 @@ public class HttpJsonComplianceStub extends ComplianceStub {
     methodDescriptors.add(repeatDataPathTrailingResourceMethodDescriptor);
     methodDescriptors.add(repeatDataBodyPutMethodDescriptor);
     methodDescriptors.add(repeatDataBodyPatchMethodDescriptor);
+    methodDescriptors.add(repeatDataPathEnumMethodDescriptor);
+    methodDescriptors.add(repeatDataPathEnumOptionalMethodDescriptor);
     methodDescriptors.add(getEnumMethodDescriptor);
     methodDescriptors.add(verifyEnumMethodDescriptor);
     methodDescriptors.add(listLocationsMethodDescriptor);
@@ -1026,6 +1140,16 @@ public class HttpJsonComplianceStub extends ComplianceStub {
   @Override
   public UnaryCallable<RepeatRequest, RepeatResponse> repeatDataBodyPatchCallable() {
     return repeatDataBodyPatchCallable;
+  }
+
+  @Override
+  public UnaryCallable<RepeatRequest, RepeatResponse> repeatDataPathEnumCallable() {
+    return repeatDataPathEnumCallable;
+  }
+
+  @Override
+  public UnaryCallable<RepeatRequest, RepeatResponse> repeatDataPathEnumOptionalCallable() {
+    return repeatDataPathEnumOptionalCallable;
   }
 
   @Override

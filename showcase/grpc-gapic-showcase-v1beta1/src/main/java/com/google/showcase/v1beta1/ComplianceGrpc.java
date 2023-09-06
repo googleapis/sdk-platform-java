@@ -268,6 +268,68 @@ public final class ComplianceGrpc {
     return getRepeatDataBodyPatchMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.google.showcase.v1beta1.RepeatRequest,
+      com.google.showcase.v1beta1.RepeatResponse> getRepeatDataPathEnumMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "RepeatDataPathEnum",
+      requestType = com.google.showcase.v1beta1.RepeatRequest.class,
+      responseType = com.google.showcase.v1beta1.RepeatResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.google.showcase.v1beta1.RepeatRequest,
+      com.google.showcase.v1beta1.RepeatResponse> getRepeatDataPathEnumMethod() {
+    io.grpc.MethodDescriptor<com.google.showcase.v1beta1.RepeatRequest, com.google.showcase.v1beta1.RepeatResponse> getRepeatDataPathEnumMethod;
+    if ((getRepeatDataPathEnumMethod = ComplianceGrpc.getRepeatDataPathEnumMethod) == null) {
+      synchronized (ComplianceGrpc.class) {
+        if ((getRepeatDataPathEnumMethod = ComplianceGrpc.getRepeatDataPathEnumMethod) == null) {
+          ComplianceGrpc.getRepeatDataPathEnumMethod = getRepeatDataPathEnumMethod =
+              io.grpc.MethodDescriptor.<com.google.showcase.v1beta1.RepeatRequest, com.google.showcase.v1beta1.RepeatResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "RepeatDataPathEnum"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.google.showcase.v1beta1.RepeatRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.google.showcase.v1beta1.RepeatResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new ComplianceMethodDescriptorSupplier("RepeatDataPathEnum"))
+              .build();
+        }
+      }
+    }
+    return getRepeatDataPathEnumMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.google.showcase.v1beta1.RepeatRequest,
+      com.google.showcase.v1beta1.RepeatResponse> getRepeatDataPathEnumOptionalMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "RepeatDataPathEnumOptional",
+      requestType = com.google.showcase.v1beta1.RepeatRequest.class,
+      responseType = com.google.showcase.v1beta1.RepeatResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.google.showcase.v1beta1.RepeatRequest,
+      com.google.showcase.v1beta1.RepeatResponse> getRepeatDataPathEnumOptionalMethod() {
+    io.grpc.MethodDescriptor<com.google.showcase.v1beta1.RepeatRequest, com.google.showcase.v1beta1.RepeatResponse> getRepeatDataPathEnumOptionalMethod;
+    if ((getRepeatDataPathEnumOptionalMethod = ComplianceGrpc.getRepeatDataPathEnumOptionalMethod) == null) {
+      synchronized (ComplianceGrpc.class) {
+        if ((getRepeatDataPathEnumOptionalMethod = ComplianceGrpc.getRepeatDataPathEnumOptionalMethod) == null) {
+          ComplianceGrpc.getRepeatDataPathEnumOptionalMethod = getRepeatDataPathEnumOptionalMethod =
+              io.grpc.MethodDescriptor.<com.google.showcase.v1beta1.RepeatRequest, com.google.showcase.v1beta1.RepeatResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "RepeatDataPathEnumOptional"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.google.showcase.v1beta1.RepeatRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.google.showcase.v1beta1.RepeatResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new ComplianceMethodDescriptorSupplier("RepeatDataPathEnumOptional"))
+              .build();
+        }
+      }
+    }
+    return getRepeatDataPathEnumOptionalMethod;
+  }
+
   private static volatile io.grpc.MethodDescriptor<com.google.showcase.v1beta1.EnumRequest,
       com.google.showcase.v1beta1.EnumResponse> getGetEnumMethod;
 
@@ -471,6 +533,35 @@ public final class ComplianceGrpc {
 
     /**
      * <pre>
+     * This method echoes the ComplianceData request. This method exercises
+     * including a non-proto3-optional enum field in the URL path while sending the
+     * entire request object in the REST body.
+     * </pre>
+     */
+    default void repeatDataPathEnum(com.google.showcase.v1beta1.RepeatRequest request,
+        io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getRepeatDataPathEnumMethod(), responseObserver);
+    }
+
+    /**
+     * <pre>
+     * This method echoes the ComplianceData request. This method exercises
+     * including a proto3-optional enum field in the URL path while sending the
+     * entire request object in the REST body. Note that when the optional enum is
+     * unset for such an RPC, the GAPICs should error INSTEAD of issuing a
+     * request.
+     * TODO: Capture in generator tests against Showcase the early generator error
+     * when the optional enum is unset. This is beyond the reach of the current
+     * Compliance Suite implementation.
+     * </pre>
+     */
+    default void repeatDataPathEnumOptional(com.google.showcase.v1beta1.RepeatRequest request,
+        io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getRepeatDataPathEnumOptionalMethod(), responseObserver);
+    }
+
+    /**
+     * <pre>
      * This method requests an enum value from the server. Depending on the contents of EnumRequest, the enum value returned will be a known enum declared in the
      * .proto file, or a made-up enum value the is unknown to the client. To verify that clients can round-trip unknown enum vaues they receive, use the
      * response from this RPC as the request to VerifyEnum()
@@ -631,6 +722,37 @@ public final class ComplianceGrpc {
 
     /**
      * <pre>
+     * This method echoes the ComplianceData request. This method exercises
+     * including a non-proto3-optional enum field in the URL path while sending the
+     * entire request object in the REST body.
+     * </pre>
+     */
+    public void repeatDataPathEnum(com.google.showcase.v1beta1.RepeatRequest request,
+        io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getRepeatDataPathEnumMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     * <pre>
+     * This method echoes the ComplianceData request. This method exercises
+     * including a proto3-optional enum field in the URL path while sending the
+     * entire request object in the REST body. Note that when the optional enum is
+     * unset for such an RPC, the GAPICs should error INSTEAD of issuing a
+     * request.
+     * TODO: Capture in generator tests against Showcase the early generator error
+     * when the optional enum is unset. This is beyond the reach of the current
+     * Compliance Suite implementation.
+     * </pre>
+     */
+    public void repeatDataPathEnumOptional(com.google.showcase.v1beta1.RepeatRequest request,
+        io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getRepeatDataPathEnumOptionalMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     * <pre>
      * This method requests an enum value from the server. Depending on the contents of EnumRequest, the enum value returned will be a known enum declared in the
      * .proto file, or a made-up enum value the is unknown to the client. To verify that clients can round-trip unknown enum vaues they receive, use the
      * response from this RPC as the request to VerifyEnum()
@@ -765,6 +887,35 @@ public final class ComplianceGrpc {
     public com.google.showcase.v1beta1.RepeatResponse repeatDataBodyPatch(com.google.showcase.v1beta1.RepeatRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getRepeatDataBodyPatchMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * This method echoes the ComplianceData request. This method exercises
+     * including a non-proto3-optional enum field in the URL path while sending the
+     * entire request object in the REST body.
+     * </pre>
+     */
+    public com.google.showcase.v1beta1.RepeatResponse repeatDataPathEnum(com.google.showcase.v1beta1.RepeatRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getRepeatDataPathEnumMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * This method echoes the ComplianceData request. This method exercises
+     * including a proto3-optional enum field in the URL path while sending the
+     * entire request object in the REST body. Note that when the optional enum is
+     * unset for such an RPC, the GAPICs should error INSTEAD of issuing a
+     * request.
+     * TODO: Capture in generator tests against Showcase the early generator error
+     * when the optional enum is unset. This is beyond the reach of the current
+     * Compliance Suite implementation.
+     * </pre>
+     */
+    public com.google.showcase.v1beta1.RepeatResponse repeatDataPathEnumOptional(com.google.showcase.v1beta1.RepeatRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getRepeatDataPathEnumOptionalMethod(), getCallOptions(), request);
     }
 
     /**
@@ -913,6 +1064,37 @@ public final class ComplianceGrpc {
 
     /**
      * <pre>
+     * This method echoes the ComplianceData request. This method exercises
+     * including a non-proto3-optional enum field in the URL path while sending the
+     * entire request object in the REST body.
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.RepeatResponse> repeatDataPathEnum(
+        com.google.showcase.v1beta1.RepeatRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getRepeatDataPathEnumMethod(), getCallOptions()), request);
+    }
+
+    /**
+     * <pre>
+     * This method echoes the ComplianceData request. This method exercises
+     * including a proto3-optional enum field in the URL path while sending the
+     * entire request object in the REST body. Note that when the optional enum is
+     * unset for such an RPC, the GAPICs should error INSTEAD of issuing a
+     * request.
+     * TODO: Capture in generator tests against Showcase the early generator error
+     * when the optional enum is unset. This is beyond the reach of the current
+     * Compliance Suite implementation.
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.RepeatResponse> repeatDataPathEnumOptional(
+        com.google.showcase.v1beta1.RepeatRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getRepeatDataPathEnumOptionalMethod(), getCallOptions()), request);
+    }
+
+    /**
+     * <pre>
      * This method requests an enum value from the server. Depending on the contents of EnumRequest, the enum value returned will be a known enum declared in the
      * .proto file, or a made-up enum value the is unknown to the client. To verify that clients can round-trip unknown enum vaues they receive, use the
      * response from this RPC as the request to VerifyEnum()
@@ -950,8 +1132,10 @@ public final class ComplianceGrpc {
   private static final int METHODID_REPEAT_DATA_PATH_TRAILING_RESOURCE = 5;
   private static final int METHODID_REPEAT_DATA_BODY_PUT = 6;
   private static final int METHODID_REPEAT_DATA_BODY_PATCH = 7;
-  private static final int METHODID_GET_ENUM = 8;
-  private static final int METHODID_VERIFY_ENUM = 9;
+  private static final int METHODID_REPEAT_DATA_PATH_ENUM = 8;
+  private static final int METHODID_REPEAT_DATA_PATH_ENUM_OPTIONAL = 9;
+  private static final int METHODID_GET_ENUM = 10;
+  private static final int METHODID_VERIFY_ENUM = 11;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -1000,6 +1184,14 @@ public final class ComplianceGrpc {
           break;
         case METHODID_REPEAT_DATA_BODY_PATCH:
           serviceImpl.repeatDataBodyPatch((com.google.showcase.v1beta1.RepeatRequest) request,
+              (io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse>) responseObserver);
+          break;
+        case METHODID_REPEAT_DATA_PATH_ENUM:
+          serviceImpl.repeatDataPathEnum((com.google.showcase.v1beta1.RepeatRequest) request,
+              (io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse>) responseObserver);
+          break;
+        case METHODID_REPEAT_DATA_PATH_ENUM_OPTIONAL:
+          serviceImpl.repeatDataPathEnumOptional((com.google.showcase.v1beta1.RepeatRequest) request,
               (io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse>) responseObserver);
           break;
         case METHODID_GET_ENUM:
@@ -1085,6 +1277,20 @@ public final class ComplianceGrpc {
               com.google.showcase.v1beta1.RepeatResponse>(
                 service, METHODID_REPEAT_DATA_BODY_PATCH)))
         .addMethod(
+          getRepeatDataPathEnumMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.RepeatRequest,
+              com.google.showcase.v1beta1.RepeatResponse>(
+                service, METHODID_REPEAT_DATA_PATH_ENUM)))
+        .addMethod(
+          getRepeatDataPathEnumOptionalMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.RepeatRequest,
+              com.google.showcase.v1beta1.RepeatResponse>(
+                service, METHODID_REPEAT_DATA_PATH_ENUM_OPTIONAL)))
+        .addMethod(
           getGetEnumMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
             new MethodHandlers<
@@ -1154,6 +1360,8 @@ public final class ComplianceGrpc {
               .addMethod(getRepeatDataPathTrailingResourceMethod())
               .addMethod(getRepeatDataBodyPutMethod())
               .addMethod(getRepeatDataBodyPatchMethod())
+              .addMethod(getRepeatDataPathEnumMethod())
+              .addMethod(getRepeatDataPathEnumOptionalMethod())
               .addMethod(getGetEnumMethod())
               .addMethod(getVerifyEnumMethod())
               .build();
