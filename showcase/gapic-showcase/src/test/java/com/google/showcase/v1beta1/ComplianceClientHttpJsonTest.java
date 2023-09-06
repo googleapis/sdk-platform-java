@@ -55,7 +55,6 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 @Generated("by gapic-generator-java")
@@ -988,8 +987,6 @@ public class ComplianceClientHttpJsonTest {
                     .setPDouble(-991225216)
                     .setPBool(true)
                     .setPChild(ComplianceDataChild.newBuilder().build())
-                    .setFKingdom(ComplianceData.LifeKingdom.ANIMALIA)
-                    .setPKingdom(ComplianceData.LifeKingdom.ANIMALIA)
                     .build())
             .setServerVerify(true)
             .setIntendedBindingUri("intendedBindingUri780142386")
@@ -1053,8 +1050,6 @@ public class ComplianceClientHttpJsonTest {
                       .setPDouble(-991225216)
                       .setPBool(true)
                       .setPChild(ComplianceDataChild.newBuilder().build())
-                      .setFKingdom(ComplianceData.LifeKingdom.ANIMALIA)
-                      .setPKingdom(ComplianceData.LifeKingdom.ANIMALIA)
                       .build())
               .setServerVerify(true)
               .setIntendedBindingUri("intendedBindingUri780142386")
