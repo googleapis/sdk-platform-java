@@ -8,6 +8,7 @@ set -ex
 readonly SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 lib_gen_scripts_dir="${SCRIPT_DIR}/../../library_generation/"
 source "${lib_gen_scripts_dir}/utilities.sh"
+readonly perform_cleanup=$1
 
 cd "${SCRIPT_DIR}"
 
@@ -56,8 +57,4 @@ if [ "${exit_code}" -ne 0 ]; then
   rm -rdf showcase-output
   exit "${exit_code}"
 fi
-
-# cleanup
-cd "${SCRIPT_DIR}"
-rm -rdf gapic-generator-java* google schema protobuf-* protoc-gen-grpc-java* showcase-output out
 set +x
