@@ -82,14 +82,14 @@ get_protobuf_version_failed_with_invalid_generator_version_test() {
 }
 
 search_additional_protos_common_resources_test() {
-  local proto_path="${script_dir}/resources/monitoring"
+  local proto_path="${script_dir}/resources/search_additional_protos_common_resources"
   local addition_protos
   addition_protos=$(search_additional_protos)
   __assertEquals "google/cloud/common_resources.proto" "${addition_protos}"
 }
 
 search_additional_protos_iam_test() {
-  local proto_path="${script_dir}/resources/pubsub"
+  local proto_path="${script_dir}/resources/search_additional_protos_iam"
   local addition_protos
   addition_protos=$(search_additional_protos)
   __assertEquals \
@@ -98,7 +98,7 @@ search_additional_protos_iam_test() {
 }
 
 search_additional_protos_location_test() {
-  local proto_path="${script_dir}/resources/firestore"
+  local proto_path="${script_dir}/resources/search_additional_protos_location"
   local addition_protos
   addition_protos=$(search_additional_protos)
   __assertEquals \
@@ -107,7 +107,7 @@ search_additional_protos_location_test() {
 }
 
 search_additional_protos_iam_location_test() {
-  local proto_path="${script_dir}/resources/alloydb"
+  local proto_path="${script_dir}/resources/search_additional_protos_iam_location"
   local addition_protos
   addition_protos=$(search_additional_protos)
   __assertEquals \
@@ -116,29 +116,29 @@ search_additional_protos_iam_location_test() {
 }
 
 get_gapic_opts_with_rest_test() {
-  local proto_path="${script_dir}/resources/monitoring"
+  local proto_path="${script_dir}/resources/gapic_options"
   local transport="grpc"
   local rest_numeric_enums="true"
   local gapic_opts
   gapic_opts="$(get_gapic_opts)"
   __assertEquals \
-  "transport=grpc,rest-numeric-enums,grpc-service-config=${proto_path}/monitoring_grpc_service_config.json,gapic-config=${proto_path}/monitoring_gapic.yaml,api-service-config=${proto_path}/monitoring.yaml" \
+  "transport=grpc,rest-numeric-enums,grpc-service-config=${proto_path}/example_grpc_service_config.json,gapic-config=${proto_path}/example_gapic.yaml,api-service-config=${proto_path}/example.yaml" \
   "${gapic_opts}"
 }
 
 get_gapic_opts_without_rest_test() {
-  local proto_path="${script_dir}/resources/monitoring"
+  local proto_path="${script_dir}/resources/gapic_options"
   local transport="grpc"
   local rest_numeric_enums="false"
   local gapic_opts
   gapic_opts="$(get_gapic_opts)"
   __assertEquals \
-  "transport=grpc,grpc-service-config=${proto_path}/monitoring_grpc_service_config.json,gapic-config=${proto_path}/monitoring_gapic.yaml,api-service-config=${proto_path}/monitoring.yaml" \
+  "transport=grpc,grpc-service-config=${proto_path}/example_grpc_service_config.json,gapic-config=${proto_path}/example_gapic.yaml,api-service-config=${proto_path}/example.yaml" \
   "$gapic_opts"
 }
 
 remove_grpc_version_test() {
-  local destination_path="${script_dir}/resources/monitoring"
+  local destination_path="${script_dir}/resources/gapic_options"
   cp "${destination_path}/QueryServiceGrpc_copy.java" "${destination_path}/QueryServiceGrpc.java"
   remove_grpc_version
   local return_code=0
