@@ -13,8 +13,8 @@ source "${script_dir}"/../utilities.sh
 
 # Helper functions, they shouldn't be called outside this file.
 __assertEquals() {
-  expected=$1
-  actual=$2
+  local expected=$1
+  local actual=$2
   if [[ "${expected}" == "${actual}" ]]; then
     return 0
   fi
@@ -24,7 +24,7 @@ __assertEquals() {
 }
 
 __assertFileDoesNotExist() {
-  expected_file=$1
+  local expected_file=$1
   if [ ! -f "${expected_file}" ]; then
     return 0
   fi
@@ -49,41 +49,48 @@ __test_failed() {
 
 # Unit tests
 extract_folder_name_test() {
-  path="google/cloud/aiplatform/v1/google-cloud-aiplatform-v1-java"
+  local path="google/cloud/aiplatform/v1/google-cloud-aiplatform-v1-java"
+  local folder_name
   folder_name=$(extract_folder_name "${path}")
   __assertEquals "google-cloud-aiplatform-v1-java" "${folder_name}"
 }
 
 get_grpc_version_succeed_with_valid_generator_version_test() {
+  local actual_version
   actual_version=$(get_grpc_version "2.24.0")
   __assertEquals "1.56.1" "${actual_version}"
   rm "gapic-generator-java-pom-parent-2.24.0.pom"
 }
 
 get_grpc_version_failed_with_invalid_generator_version_test() {
+  local actual_version
   actual_version=$(get_grpc_version "1.99.0")
   __assertEquals "" "${actual_version}"
 }
 
 get_protobuf_version_succeed_with_valid_generator_version_test() {
+  local actual_version
   actual_version=$(get_protobuf_version "2.24.0")
   __assertEquals "23.2" "${actual_version}"
   rm "gapic-generator-java-pom-parent-2.24.0.pom"
 }
 
 get_protobuf_version_failed_with_invalid_generator_version_test() {
+  local actual_version
   actual_version=$(get_protobuf_version "1.99.0")
   __assertEquals "" "${actual_version}"
 }
 
 search_additional_protos_common_resources_test() {
-  proto_path="${script_dir}/resources/monitoring"
+  local proto_path="${script_dir}/resources/search_additional_proto/common_resources"
+  local addition_protos
   addition_protos=$(search_additional_protos)
   __assertEquals "google/cloud/common_resources.proto" "${addition_protos}"
 }
 
 search_additional_protos_iam_test() {
-  proto_path="${script_dir}/resources/pubsub"
+  local proto_path="${script_dir}/resources/search_additional_protos/iam"
+  local addition_protos
   addition_protos=$(search_additional_protos)
   __assertEquals \
   "google/cloud/common_resources.proto google/iam/v1/iam_policy.proto" \
@@ -91,7 +98,8 @@ search_additional_protos_iam_test() {
 }
 
 search_additional_protos_location_test() {
-  proto_path="${script_dir}/resources/firestore"
+  local proto_path="${script_dir}/resources/search_additional_protos/location"
+  local addition_protos
   addition_protos=$(search_additional_protos)
   __assertEquals \
   "google/cloud/common_resources.proto google/cloud/location/locations.proto" \
@@ -99,7 +107,8 @@ search_additional_protos_location_test() {
 }
 
 search_additional_protos_iam_location_test() {
-  proto_path="${script_dir}/resources/alloydb"
+  local proto_path="${script_dir}/resources/search_additional_protos/iam_location"
+  local addition_protos
   addition_protos=$(search_additional_protos)
   __assertEquals \
   "google/cloud/common_resources.proto google/iam/v1/iam_policy.proto google/cloud/location/locations.proto" \
@@ -107,30 +116,32 @@ search_additional_protos_iam_location_test() {
 }
 
 get_gapic_opts_with_rest_test() {
-  proto_path="${script_dir}/resources/monitoring"
-  transport="grpc"
-  rest_numeric_enums="true"
+  local proto_path="${script_dir}/resources/gapic_options"
+  local transport="grpc"
+  local rest_numeric_enums="true"
+  local gapic_opts
   gapic_opts="$(get_gapic_opts)"
   __assertEquals \
-  "transport=grpc,rest-numeric-enums,grpc-service-config=${proto_path}/monitoring_grpc_service_config.json,gapic-config=${proto_path}/monitoring_gapic.yaml,api-service-config=${proto_path}/monitoring.yaml" \
+  "transport=grpc,rest-numeric-enums,grpc-service-config=${proto_path}/example_grpc_service_config.json,gapic-config=${proto_path}/example_gapic.yaml,api-service-config=${proto_path}/example.yaml" \
   "${gapic_opts}"
 }
 
 get_gapic_opts_without_rest_test() {
-  proto_path="${script_dir}/resources/monitoring"
-  transport="grpc"
-  rest_numeric_enums="false"
+  local proto_path="${script_dir}/resources/gapic_options"
+  local transport="grpc"
+  local rest_numeric_enums="false"
+  local gapic_opts
   gapic_opts="$(get_gapic_opts)"
   __assertEquals \
-  "transport=grpc,grpc-service-config=${proto_path}/monitoring_grpc_service_config.json,gapic-config=${proto_path}/monitoring_gapic.yaml,api-service-config=${proto_path}/monitoring.yaml" \
+  "transport=grpc,grpc-service-config=${proto_path}/example_grpc_service_config.json,gapic-config=${proto_path}/example_gapic.yaml,api-service-config=${proto_path}/example.yaml" \
   "$gapic_opts"
 }
 
 remove_grpc_version_test() {
-  destination_path="${script_dir}/resources/monitoring"
+  local destination_path="${script_dir}/resources/gapic_options"
   cp "${destination_path}/QueryServiceGrpc_copy.java" "${destination_path}/QueryServiceGrpc.java"
   remove_grpc_version
-  return_code=0
+  local return_code=0
   if grep -q 'value = "by gRPC proto compiler",' "${destination_path}/QueryServiceGrpc.java"; then
     echo "grpc version is removed."
   else
@@ -155,7 +166,7 @@ download_generator_failed_with_invalid_version_test() {
   # Use $() to execute the function in subshell so that
   # the other tests can continue executing in the current
   # shell.
-  res=0
+  local res=0
   $(download_generator "1.99.0") || res=$?
   __assertEquals 1 $((res))
 }
@@ -173,13 +184,13 @@ download_protobuf_succeed_with_valid_version_macos_test() {
 }
 
 download_protobuf_failed_with_invalid_version_linux_test() {
-  res=0
+  local res=0
   $(download_protobuf "22.99" "linux-x86_64") || res=$?
   __assertEquals 1 $((res))
 }
 
 download_protobuf_failed_with_invalid_arch_test() {
-  res=0
+  local res=0
   $(download_protobuf "23.2" "customized-x86_64") || res=$?
   __assertEquals 1 $((res))
 }
@@ -197,13 +208,13 @@ download_grpc_plugin_succeed_with_valid_version_macos_test() {
 }
 
 download_grpc_plugin_failed_with_invalid_version_linux_test() {
-  res=0
+  local res=0
   $(download_grpc_plugin "0.99.0" "linux-x86_64") || res=$?
   __assertEquals 1 $((res))
 }
 
 download_grpc_plugin_failed_with_invalid_arch_test() {
-  res=0
+  local res=0
   $(download_grpc_plugin "1.55.1" "customized-x86_64") || res=$?
   __assertEquals 1 $((res))
 }
