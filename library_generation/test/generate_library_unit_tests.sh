@@ -7,7 +7,7 @@ total_num=0
 succeed_num=0
 failed_num=0
 failed_tests=""
-# Unit tests against ./utilities.sh
+# Unit tests against utilities.sh and generate_library.sh
 script_dir=$(dirname "$(readlink -f "$0")")
 source "${script_dir}"/../utilities.sh
 
@@ -31,6 +31,17 @@ __assertFileDoesNotExist() {
 
   echo "Error: ${expected_file} exists."
   return 1
+}
+
+# Compare the content of the given folder against resources/golden and,
+# after the comparison, clean up the given folder with downloaded tooling
+# used in library generation.
+__diff_and_cleanup() {
+  local library_directory=$1
+  local res=0
+  diff -r ../"${library_directory}" ../goldens/"${library_directory}" || res=$?
+  rm -rf ../"${library_directory}" google/protobuf protobuf-* gapic-generator-java-*.jar gapic-generator-java-pom-parent-*.pom protoc-gen-grpc-*.exe
+  return "${res}"
 }
 
 __test_executed() {
@@ -219,6 +230,37 @@ download_grpc_plugin_failed_with_invalid_arch_test() {
   __assertEquals 1 $((res))
 }
 
+generate_library_success_with_valid_versions() {
+  local destination="google-cloud-alloydb-v1-java"
+  cd "${script_dir}/resources/protos"
+  "${script_dir}"/../generate_library.sh \
+    -p google/cloud/alloydb/v1 \
+    -d ../"${destination}" \
+    --gapic_generator_version 2.24.0 \
+    --protobuf_version 23.2 \
+    --grpc_version 1.55.1 \
+    --transport grpc+rest \
+    --rest_numeric_enums true \
+    --os_architecture osx-aarch_64
+
+  __diff_and_cleanup "${destination}"
+}
+
+generate_library_success_without_protobuf_version() {
+  local destination="google-cloud-alloydb-v1-java"
+  cd "${script_dir}/resources/protos"
+  "${script_dir}"/../generate_library.sh \
+    -p google/cloud/alloydb/v1 \
+    -d ../"${destination}" \
+    --gapic_generator_version 2.24.0 \
+    --grpc_version 1.55.1 \
+    --transport grpc+rest \
+    --rest_numeric_enums true \
+    --os_architecture osx-aarch_64
+
+  __diff_and_cleanup "${destination}"
+}
+
 # Execute tests.
 # One line per test.
 test_list=(
@@ -244,6 +286,8 @@ test_list=(
   download_grpc_plugin_succeed_with_valid_version_macos_test
   download_grpc_plugin_failed_with_invalid_version_linux_test
   download_grpc_plugin_failed_with_invalid_arch_test
+  generate_library_success_with_valid_versions
+  generate_library_success_without_protobuf_version
 )
 
 for ut in "${test_list[@]}"; do
