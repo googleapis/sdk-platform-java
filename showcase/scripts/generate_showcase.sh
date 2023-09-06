@@ -5,19 +5,22 @@
 # inferred from versions.txt
 set -ex
 
-script_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-lib_gen_scripts_dir=$script_dir/../../library_generation/
-source $lib_gen_scripts_dir/utilities.sh
+readonly SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+lib_gen_scripts_dir="${SCRIPT_DIR}/../../library_generation/"
+source "${lib_gen_scripts_dir}/utilities.sh"
 
-cd $script_dir
+cd "${SCRIPT_DIR}"
 
 # clone gapic-showcase
 if [ ! -d schema ]; then
   if [ -d gapic-showcase ]; then
     rm -rdf gapic-showcase
   fi
-  showcase_version=$(xmllint --xpath '/*[local-name()="project"]/*[local-name()="properties"]/*[local-name()="gapic-showcase.version"]/text()' $script_dir/../gapic-showcase/pom.xml)
-  sparse_clone https://github.com/googleapis/gapic-showcase.git "schema/google/showcase/v1beta1" "v$showcase_version"
+  # looks at sdk-platform-java/showcase/gapic-showcase/pom.xml to extract the
+  # version of gapic-showcase
+  # see https://github.com/googleapis/gapic-showcase/releases
+  showcase_version=$(xmllint --xpath '/*[local-name()="project"]/*[local-name()="properties"]/*[local-name()="gapic-showcase.version"]/text()' "${SCRIPT_DIR}/../gapic-showcase/pom.xml")
+  sparse_clone https://github.com/googleapis/gapic-showcase.git "schema/google/showcase/v1beta1" "v${showcase_version}"
   cd gapic-showcase
   mv schema ..
   cd ..
@@ -40,20 +43,21 @@ include_samples="false"
 rm -rdf showcase-output
 mkdir showcase-output
 set +e
-bash $script_dir/../../library_generation/generate_library.sh \
+bash "${SCRIPT_DIR}/../../library_generation/generate_library.sh" \
   --proto_path "schema/google/showcase/v1beta1" \
   --destination_path "showcase-output" \
-  --gapic_generator_version $ggj_version \
-  --rest_numeric_enums $rest_numeric_enums \
-  --include_samples $include_samples \
-  --transport $transport &> out
+  --gapic_generator_version "${ggj_version}" \
+  --rest_numeric_enums "${rest_numeric_enums}" \
+  --include_samples "${include_samples}" \
+  --transport "${transport}" &> out
 
 exit_code=$?
-if [ $exit_code -ne 0 ]; then
+if [ "${exit_code}" -ne 0 ]; then
   rm -rdf showcase-output
-  exit $exit_code
+  exit "${exit_code}"
 fi
 
 # cleanup
+cd "${SCRIPT_DIR}"
 rm -rdf gapic-generator-java* google schema protobuf-* protoc-gen-grpc-java* showcase-output out
 set +x
