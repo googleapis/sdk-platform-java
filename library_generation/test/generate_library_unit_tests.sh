@@ -50,41 +50,48 @@ __test_failed() {
 # Unit tests
 extract_folder_name_test() {
   local path="google/cloud/aiplatform/v1/google-cloud-aiplatform-v1-java"
-  local folder_name=$(extract_folder_name "${path}")
+  local folder_name
+  folder_name=$(extract_folder_name "${path}")
   __assertEquals "google-cloud-aiplatform-v1-java" "${folder_name}"
 }
 
 get_grpc_version_succeed_with_valid_generator_version_test() {
-  local actual_version=$(get_grpc_version "2.24.0")
+  local actual_version
+  actual_version=$(get_grpc_version "2.24.0")
   __assertEquals "1.56.1" "${actual_version}"
   rm "gapic-generator-java-pom-parent-2.24.0.pom"
 }
 
 get_grpc_version_failed_with_invalid_generator_version_test() {
-  local actual_version=$(get_grpc_version "1.99.0")
+  local actual_version
+  actual_version=$(get_grpc_version "1.99.0")
   __assertEquals "" "${actual_version}"
 }
 
 get_protobuf_version_succeed_with_valid_generator_version_test() {
-  local actual_version=$(get_protobuf_version "2.24.0")
+  local actual_version
+  actual_version=$(get_protobuf_version "2.24.0")
   __assertEquals "23.2" "${actual_version}"
   rm "gapic-generator-java-pom-parent-2.24.0.pom"
 }
 
 get_protobuf_version_failed_with_invalid_generator_version_test() {
-  local actual_version=$(get_protobuf_version "1.99.0")
+  local actual_version
+  actual_version=$(get_protobuf_version "1.99.0")
   __assertEquals "" "${actual_version}"
 }
 
 search_additional_protos_common_resources_test() {
   local proto_path="${script_dir}/resources/monitoring"
-  local addition_protos=$(search_additional_protos)
+  local addition_protos
+  addition_protos=$(search_additional_protos)
   __assertEquals "google/cloud/common_resources.proto" "${addition_protos}"
 }
 
 search_additional_protos_iam_test() {
   local proto_path="${script_dir}/resources/pubsub"
-  local addition_protos=$(search_additional_protos)
+  local addition_protos
+  addition_protos=$(search_additional_protos)
   __assertEquals \
   "google/cloud/common_resources.proto google/iam/v1/iam_policy.proto" \
   "${addition_protos}"
@@ -92,7 +99,8 @@ search_additional_protos_iam_test() {
 
 search_additional_protos_location_test() {
   local proto_path="${script_dir}/resources/firestore"
-  local addition_protos=$(search_additional_protos)
+  local addition_protos
+  addition_protos=$(search_additional_protos)
   __assertEquals \
   "google/cloud/common_resources.proto google/cloud/location/locations.proto" \
   "${addition_protos}"
@@ -100,7 +108,8 @@ search_additional_protos_location_test() {
 
 search_additional_protos_iam_location_test() {
   local proto_path="${script_dir}/resources/alloydb"
-  local addition_protos=$(search_additional_protos)
+  local addition_protos
+  addition_protos=$(search_additional_protos)
   __assertEquals \
   "google/cloud/common_resources.proto google/iam/v1/iam_policy.proto google/cloud/location/locations.proto" \
   "${addition_protos}"
@@ -110,7 +119,8 @@ get_gapic_opts_with_rest_test() {
   local proto_path="${script_dir}/resources/monitoring"
   local transport="grpc"
   local rest_numeric_enums="true"
-  local gapic_opts="$(get_gapic_opts)"
+  local gapic_opts
+  gapic_opts="$(get_gapic_opts)"
   __assertEquals \
   "transport=grpc,rest-numeric-enums,grpc-service-config=${proto_path}/monitoring_grpc_service_config.json,gapic-config=${proto_path}/monitoring_gapic.yaml,api-service-config=${proto_path}/monitoring.yaml" \
   "${gapic_opts}"
@@ -120,7 +130,8 @@ get_gapic_opts_without_rest_test() {
   local proto_path="${script_dir}/resources/monitoring"
   local transport="grpc"
   local rest_numeric_enums="false"
-  local gapic_opts="$(get_gapic_opts)"
+  local gapic_opts
+  gapic_opts="$(get_gapic_opts)"
   __assertEquals \
   "transport=grpc,grpc-service-config=${proto_path}/monitoring_grpc_service_config.json,gapic-config=${proto_path}/monitoring_gapic.yaml,api-service-config=${proto_path}/monitoring.yaml" \
   "$gapic_opts"
