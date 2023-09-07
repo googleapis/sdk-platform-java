@@ -84,8 +84,9 @@ public class GaxPropertiesTest {
   }
 
   @Test
-  public void testGetJavaRuntimeInfo_graalVM_withSpaces() {
+  public void testGetJavaRuntimeInfo_graalVM() {
     // This case is one of major Java vendors
+    // testing if spaces are handled properly [ replaced with hyphen ("-") ]
     System.setProperty("java.version", "17.0.3");
     System.setProperty("java.vendor", "GraalVM Community");
     System.setProperty("java.vendor.version", "GraalVM CE 22.1.0");
@@ -95,8 +96,9 @@ public class GaxPropertiesTest {
   }
 
   @Test
-  public void testGetJavaRuntimeInfo_temurin_withSpacesAndSpecialCharacters() {
+  public void testGetJavaRuntimeInfo_temurin() {
     // This case is one of major Java vendors
+    // testing if spaces and special characters are handled properly [ replaced with hyphen ("-") ]
     System.setProperty("java.version", "11.0.19");
     System.setProperty("java.vendor", "Eclipse Adoptium");
     System.setProperty("java.vendor.version", "Temurin-11.0.19+7");
@@ -117,7 +119,7 @@ public class GaxPropertiesTest {
   }
 
   @Test
-  public void testGetJavaRuntimeInfo_oracle_nullVendorVersion() {
+  public void testGetJavaRuntimeInfo_nullVendorVersion() {
     System.setProperty("java.version", "20.0.1");
     System.setProperty("java.vendor", "Oracle Corporation");
     // case where java.vendor.version is null
