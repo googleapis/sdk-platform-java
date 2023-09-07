@@ -29,8 +29,6 @@
  */
 package com.google.api.gax.core;
 
-import static org.graalvm.nativeimage.ImageInfo.PROPERTY_IMAGE_CODE_KEY;
-import static org.graalvm.nativeimage.ImageInfo.PROPERTY_IMAGE_CODE_VALUE_RUNTIME;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
