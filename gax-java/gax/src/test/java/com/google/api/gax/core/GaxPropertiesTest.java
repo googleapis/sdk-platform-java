@@ -126,4 +126,16 @@ public class GaxPropertiesTest {
     assertEquals("20.0.1__Oracle-Corporation", runtimeInfo);
     cleanup();
   }
+
+  @Test
+  public void testGetJavaRuntimeInfoCaseFour() {
+    System.setProperty("java.version", "20.0.1");
+    // case where java.vendor and java.vendor.version is null
+    System.clearProperty("java.vendor");
+    System.clearProperty("java.vendor.version");
+
+    String runtimeInfo = GaxProperties.getRuntimeVersion();
+    assertEquals("20.0.1", runtimeInfo);
+    cleanup();
+  }
 }
