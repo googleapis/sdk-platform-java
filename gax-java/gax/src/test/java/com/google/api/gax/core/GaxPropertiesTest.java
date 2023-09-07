@@ -34,9 +34,8 @@ import static org.graalvm.nativeimage.ImageInfo.PROPERTY_IMAGE_CODE_VALUE_RUNTIM
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import com.google.common.base.Strings;
 import java.util.regex.Pattern;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -60,34 +59,73 @@ public class GaxPropertiesTest {
     }
   }
 
-  @Test
-  public void testGetVersion_nativeImage() {
-    System.setProperty(PROPERTY_IMAGE_CODE_KEY, PROPERTY_IMAGE_CODE_VALUE_RUNTIME);
-    String javaVersion = GaxProperties.getJavaVersion();
-    assertTrue(javaVersion.endsWith("-graalvm"));
-  }
-
   private static String originalJavaVersion = System.getProperty("java.version");
   private static String originalJavaVendor = System.getProperty("java.vendor");
   private static String originalJavaVendorVersion = System.getProperty("java.vendor.version");
 
-  @BeforeClass
-  public static void setup() {
-    System.setProperty("java.version", "11.1.2");
-    System.setProperty("java.vendor", "GraalVM Community");
-    System.setProperty("java.vendor.version", "GraalVM CE 22.3.0");
-  }
-
-  @AfterClass
   public static void cleanup() {
-    System.setProperty("java.version", originalJavaVersion);
-    System.setProperty("java.vendor", originalJavaVendor);
-    System.setProperty("java.vendor.version", originalJavaVendorVersion);
+    if (Strings.isNullOrEmpty(originalJavaVersion)) {
+      System.clearProperty("java.version");
+    } else {
+      System.setProperty("java.version", originalJavaVersion);
+    }
+
+    if (Strings.isNullOrEmpty(originalJavaVendor)) {
+      System.clearProperty("java.vendor");
+    } else {
+      System.setProperty("java.vendor", originalJavaVendor);
+    }
+
+    if (Strings.isNullOrEmpty(originalJavaVendorVersion)) {
+      System.clearProperty("java.vendor.version");
+    } else {
+      System.setProperty("java.vendor.version", originalJavaVendorVersion);
+    }
   }
 
   @Test
-  public void testGetJavaRuntimeInfo() {
-    String runtimeInfo = GaxProperties.getJavaVersion();
-    assertEquals("11.1.2__GraalVM-Community__GraalVM-CE-22.3.0", runtimeInfo);
+  public void testGetJavaRuntimeInfoCaseGraalVM() {
+
+    System.setProperty("java.version", "17.0.3");
+    System.setProperty("java.vendor", "GraalVM Community");
+    System.setProperty("java.vendor.version", "GraalVM CE 22.1.0");
+
+    String runtimeInfo = GaxProperties.getRuntimeVersion();
+    assertEquals("17.0.3__GraalVM-Community__GraalVM-CE-22.1.0", runtimeInfo);
+    cleanup();
+  }
+
+  @Test
+  public void testGetJavaRuntimeInfoCaseOne() {
+    System.setProperty("java.version", "11.0.19");
+    System.setProperty("java.vendor", "Eclipse Adoptium");
+    System.setProperty("java.vendor.version", "Temurin-11.0.19+7");
+
+    String runtimeInfo = GaxProperties.getRuntimeVersion();
+    assertEquals("11.0.19__Eclipse-Adoptium__Temurin-11.0.19-7", runtimeInfo);
+    cleanup();
+  }
+
+  @Test
+  public void testGetJavaRuntimeInfoCaseTwo() {
+    System.setProperty("java.version", "11.0.19");
+    System.setProperty("java.vendor", "Amazon.com Inc.");
+    System.setProperty("java.vendor.version", "Corretto-11.0.19.7.1");
+
+    String runtimeInfo = GaxProperties.getRuntimeVersion();
+    assertEquals("11.0.19__Amazon.com-Inc.__Corretto-11.0.19.7.1", runtimeInfo);
+    cleanup();
+  }
+
+  @Test
+  public void testGetJavaRuntimeInfoCaseThree() {
+    System.setProperty("java.version", "20.0.1");
+    System.setProperty("java.vendor", "Oracle Corporation");
+    // case where java.vendor.version is null
+    System.clearProperty("java.vendor.version");
+
+    String runtimeInfo = GaxProperties.getRuntimeVersion();
+    assertEquals("20.0.1__Oracle-Corporation", runtimeInfo);
+    cleanup();
   }
 }
