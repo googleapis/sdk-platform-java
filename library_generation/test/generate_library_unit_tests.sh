@@ -2,7 +2,7 @@
 
 set -xeo pipefail
 
-# Variables used to generate final result.
+# Variables used to generate final result
 total_num=0
 succeed_num=0
 failed_num=0
