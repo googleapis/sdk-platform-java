@@ -84,7 +84,7 @@ public class GaxPropertiesTest {
   }
 
   @Test
-  public void testGetJavaRuntimeInfo_spaces() {
+  public void testGetJavaRuntimeInfo_graalVM_withSpaces() {
     // This case is one of major Java vendors
     System.setProperty("java.version", "17.0.3");
     System.setProperty("java.vendor", "GraalVM Community");
@@ -95,7 +95,7 @@ public class GaxPropertiesTest {
   }
 
   @Test
-  public void testGetJavaRuntimeInfo_spacesAndSpecialCharacters() {
+  public void testGetJavaRuntimeInfo_temurin_withSpacesAndSpecialCharacters() {
     // This case is one of major Java vendors
     System.setProperty("java.version", "11.0.19");
     System.setProperty("java.vendor", "Eclipse Adoptium");
@@ -106,7 +106,7 @@ public class GaxPropertiesTest {
   }
 
   @Test
-  public void testGetJavaRuntimeInfo_nullVendorVersion() {
+  public void testGetJavaRuntimeInfo_oracle_nullVendorVersion() {
     System.setProperty("java.version", "20.0.1");
     System.setProperty("java.vendor", "Oracle Corporation");
     // case where java.vendor.version is null
