@@ -180,7 +180,6 @@ download_protobuf() {
   fi
 
   protoc_path=protobuf-${protobuf_version}/bin
-  echo "protoc version: $("$protoc_path"/protoc --version)"
 }
 
 download_grpc_plugin() {

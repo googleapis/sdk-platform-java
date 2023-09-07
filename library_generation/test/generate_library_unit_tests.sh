@@ -58,10 +58,10 @@ __get_os_architecture() {
 # used in library generation.
 __diff_and_cleanup() {
   local library_directory=$1
-  local res=0
-  diff -r ../"${library_directory}" ../goldens/"${library_directory}" || res=$?
+  local diff_res=0
+  diff -r ../"${library_directory}" ../goldens/"${library_directory}" || diff_res=$?
   rm -rf ../"${library_directory}" google/protobuf protobuf-* gapic-generator-java-*.jar gapic-generator-java-pom-parent-*.pom protoc-gen-grpc-*.exe
-  return "${res}"
+  return "${diff_res}"
 }
 
 __test_executed() {
