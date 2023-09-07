@@ -86,7 +86,6 @@ public class GaxPropertiesTest {
   @Test
   public void testGetJavaRuntimeInfo_graalVM() {
     // This case is one of major Java vendors
-    // testing if spaces are handled properly [ replaced with hyphen ("-") ]
     System.setProperty("java.version", "17.0.3");
     System.setProperty("java.vendor", "GraalVM Community");
     System.setProperty("java.vendor.version", "GraalVM CE 22.1.0");
@@ -98,7 +97,6 @@ public class GaxPropertiesTest {
   @Test
   public void testGetJavaRuntimeInfo_temurin() {
     // This case is one of major Java vendors
-    // testing if spaces and special characters are handled properly [ replaced with hyphen ("-") ]
     System.setProperty("java.version", "11.0.19");
     System.setProperty("java.vendor", "Eclipse Adoptium");
     System.setProperty("java.vendor.version", "Temurin-11.0.19+7");
@@ -119,20 +117,31 @@ public class GaxPropertiesTest {
   }
 
   @Test
+  public void testGetJavaRuntimeInfo_specialCharacters() {
+    // testing for unsupported characters and spaces
+    System.setProperty("java.version", "20%^.&0~.1#45`*");
+    System.setProperty("java.vendor", "A^!@#$*B()[]{} C ~%& D-E ?");
+    System.setProperty("java.vendor.version", "1!@%$@#.AB!346.9^");
+
+    String runtimeInfo = GaxProperties.getRuntimeVersion();
+    assertEquals("20--.-0-.1-45--__A------B-------C-----D-E--__1------.AB-346.9-", runtimeInfo);
+  }
+
+  @Test
   public void testGetJavaRuntimeInfo_nullVendorVersion() {
+    // testing for null java.vendor.version
     System.setProperty("java.version", "20.0.1");
-    System.setProperty("java.vendor", "Oracle Corporation");
-    // case where java.vendor.version is null
+    System.setProperty("java.vendor", "Oracle");
     System.clearProperty("java.vendor.version");
 
     String runtimeInfo = GaxProperties.getRuntimeVersion();
-    assertEquals("20.0.1__Oracle-Corporation", runtimeInfo);
+    assertEquals("20.0.1__Oracle", runtimeInfo);
   }
 
   @Test
   public void testGetJavaRuntimeInfo_nullVendorAndVendorVersion() {
+    // testing for null java.vendor and java.vendor.version
     System.setProperty("java.version", "20.0.1");
-    // case where java.vendor and java.vendor.version is null
     System.clearProperty("java.vendor");
     System.clearProperty("java.vendor.version");
 
@@ -142,10 +151,11 @@ public class GaxPropertiesTest {
 
   @Test
   public void testGetJavaRuntimeInfo_nullJavaVersion() {
+    // testing for null java.version
     // We don't expect this case to happen, however we don't want the method to fail when it really
     // happens.
+
     System.clearProperty("java.version");
-    // case where java.vendor and java.vendor.version is null
     System.setProperty("java.vendor", "oracle");
     System.setProperty("java.vendor.version", "20.0.1");
 
