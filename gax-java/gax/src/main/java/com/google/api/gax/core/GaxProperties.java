@@ -93,24 +93,22 @@ public class GaxProperties {
 
   /**
    * Returns the current runtime version. For GraalVM the values in this method will be fetched at
-   * build time and the values should not differ from runtime (executable)
+   * build time and the values should not differ from the runtime (executable)
    */
   @VisibleForTesting
   static String getRuntimeVersion() {
-    String javaRuntimeInformation = System.getProperty("java.version");
+    String javaRuntimeInformation = System.getProperty("java.version", "null");
 
     // append the vendor information to the java-version if vendor is present.
     String vendor = System.getProperty("java.vendor");
     if (!Strings.isNullOrEmpty(vendor)) {
       javaRuntimeInformation = String.format("%s__%s", javaRuntimeInformation, vendor);
+      // appends the vendor version information to the java-version if vendor version is present.
+      String vendorVersion = System.getProperty("java.vendor.version");
+      if (!Strings.isNullOrEmpty(vendorVersion)) {
+        javaRuntimeInformation = String.format("%s__%s", javaRuntimeInformation, vendorVersion);
+      }
     }
-
-    // appends the vendor version information to the java-version if vendor version is present.
-    String vendorVersion = System.getProperty("java.vendor.version");
-    if (!Strings.isNullOrEmpty(vendorVersion)) {
-      javaRuntimeInformation = String.format("%s__%s", javaRuntimeInformation, vendorVersion);
-    }
-
     // replacing all characters that are not numbers, letters, underscores, periods, or backslashes
     // with hyphens.
     return javaRuntimeInformation.replaceAll("[^0-9a-zA-Z_\\\\.]", "-");
