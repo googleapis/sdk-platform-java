@@ -106,6 +106,17 @@ public class GaxPropertiesTest {
   }
 
   @Test
+  public void testGetJavaRuntimeInfo_coretto() {
+    // This case is one of major Java vendors
+    System.setProperty("java.version", "11.0.19");
+    System.setProperty("java.vendor", "Amazon.com Inc.");
+    System.setProperty("java.vendor.version", "Corretto-11.0.19.7.1");
+
+    String runtimeInfo = GaxProperties.getRuntimeVersion();
+    assertEquals("11.0.19__Amazon.com-Inc.__Corretto-11.0.19.7.1", runtimeInfo);
+  }
+
+  @Test
   public void testGetJavaRuntimeInfo_oracle_nullVendorVersion() {
     System.setProperty("java.version", "20.0.1");
     System.setProperty("java.vendor", "Oracle Corporation");
