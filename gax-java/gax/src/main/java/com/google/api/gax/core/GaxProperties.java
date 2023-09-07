@@ -33,6 +33,7 @@ import static org.graalvm.nativeimage.ImageInfo.PROPERTY_IMAGE_CODE_KEY;
 import static org.graalvm.nativeimage.ImageInfo.PROPERTY_IMAGE_CODE_VALUE_RUNTIME;
 
 import com.google.api.core.InternalApi;
+import com.google.common.base.Strings;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -100,23 +101,22 @@ public class GaxProperties {
 
   /** Returns the current runtime version */
   private static String getRuntimeVersion() {
-    String javaVersion = System.getProperty("java.version");
-    String combined = javaVersion;
+    String javaRuntimeInformation = System.getProperty("java.version");
 
     // append the vendor information to the java-version if vendor is present.
     String vendor = System.getProperty("java.vendor");
-    if (vendor != null && !vendor.isEmpty()) {
-      combined = String.format("%s__%s", combined, vendor);
+    if (!Strings.isNullOrEmpty(vendor)) {
+      javaRuntimeInformation = String.format("%s__%s", javaRuntimeInformation, vendor);
     }
 
     // appends the vendor version information to the java-version if vendor version is present.
     String vendorVersion = System.getProperty("java.vendor.version");
-    if (vendorVersion != null && !vendorVersion.isEmpty()) {
-      combined = String.format("%s__%s", combined, vendorVersion);
+    if (!Strings.isNullOrEmpty(vendorVersion)) {
+      javaRuntimeInformation = String.format("%s__%s", javaRuntimeInformation, vendorVersion);
     }
 
     // replacing all characters that are not numbers, letters, underscores, periods, or backslashes
     // with hyphens.
-    return combined.replaceAll("[^0-9a-zA-Z_\\\\.]", "-");
+    return javaRuntimeInformation.replaceAll("[^0-9a-zA-Z_\\\\.]", "-");
   }
 }
