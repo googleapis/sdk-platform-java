@@ -48,6 +48,3 @@ jobs:
         scandir: 'library_generation'
         format: tty
         severity: error
-      env:
-        # exclude SC2317 (info): Command appears to be unreachable.
-        SHELLCHECK_OPTS: -e SC2317
