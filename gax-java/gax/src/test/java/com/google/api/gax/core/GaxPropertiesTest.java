@@ -84,8 +84,8 @@ public class GaxPropertiesTest {
   }
 
   @Test
-  public void testGetJavaRuntimeInfo_graalVM() {
-
+  public void testGetJavaRuntimeInfo_spaces() {
+    // This case is one of major Java vendors
     System.setProperty("java.version", "17.0.3");
     System.setProperty("java.vendor", "GraalVM Community");
     System.setProperty("java.vendor.version", "GraalVM CE 22.1.0");
@@ -95,7 +95,8 @@ public class GaxPropertiesTest {
   }
 
   @Test
-  public void testGetJavaRuntimeInfo_temurin() {
+  public void testGetJavaRuntimeInfo_spacesAndSpecialCharacters() {
+    // This case is one of major Java vendors
     System.setProperty("java.version", "11.0.19");
     System.setProperty("java.vendor", "Eclipse Adoptium");
     System.setProperty("java.vendor.version", "Temurin-11.0.19+7");
@@ -105,17 +106,7 @@ public class GaxPropertiesTest {
   }
 
   @Test
-  public void testGetJavaRuntimeInfo_coretto() {
-    System.setProperty("java.version", "11.0.19");
-    System.setProperty("java.vendor", "Amazon.com Inc.");
-    System.setProperty("java.vendor.version", "Corretto-11.0.19.7.1");
-
-    String runtimeInfo = GaxProperties.getRuntimeVersion();
-    assertEquals("11.0.19__Amazon.com-Inc.__Corretto-11.0.19.7.1", runtimeInfo);
-  }
-
-  @Test
-  public void testGetJavaRuntimeInfo_oracle() {
+  public void testGetJavaRuntimeInfo_nullVendorVersion() {
     System.setProperty("java.version", "20.0.1");
     System.setProperty("java.vendor", "Oracle Corporation");
     // case where java.vendor.version is null
@@ -126,7 +117,7 @@ public class GaxPropertiesTest {
   }
 
   @Test
-  public void testGetJavaRuntimeInfo_nullVendorVersion() {
+  public void testGetJavaRuntimeInfo_nullVendorAndVendorVersion() {
     System.setProperty("java.version", "20.0.1");
     // case where java.vendor and java.vendor.version is null
     System.clearProperty("java.vendor");
