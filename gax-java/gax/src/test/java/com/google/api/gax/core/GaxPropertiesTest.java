@@ -34,6 +34,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.google.common.base.Strings;
 import java.util.regex.Pattern;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -61,7 +62,8 @@ public class GaxPropertiesTest {
   private static String originalJavaVendor = System.getProperty("java.vendor");
   private static String originalJavaVendorVersion = System.getProperty("java.vendor.version");
 
-  public static void cleanup() {
+  @After
+  public void cleanup() {
     if (Strings.isNullOrEmpty(originalJavaVersion)) {
       System.clearProperty("java.version");
     } else {
@@ -90,33 +92,30 @@ public class GaxPropertiesTest {
 
     String runtimeInfo = GaxProperties.getRuntimeVersion();
     assertEquals("17.0.3__GraalVM-Community__GraalVM-CE-22.1.0", runtimeInfo);
-    cleanup();
   }
 
   @Test
-  public void testGetJavaRuntimeInfoCaseOne() {
+  public void testGetJavaRuntimeInfoCaseTemurin() {
     System.setProperty("java.version", "11.0.19");
     System.setProperty("java.vendor", "Eclipse Adoptium");
     System.setProperty("java.vendor.version", "Temurin-11.0.19+7");
 
     String runtimeInfo = GaxProperties.getRuntimeVersion();
     assertEquals("11.0.19__Eclipse-Adoptium__Temurin-11.0.19-7", runtimeInfo);
-    cleanup();
   }
 
   @Test
-  public void testGetJavaRuntimeInfoCaseTwo() {
+  public void testGetJavaRuntimeInfoCaseCoretto() {
     System.setProperty("java.version", "11.0.19");
     System.setProperty("java.vendor", "Amazon.com Inc.");
     System.setProperty("java.vendor.version", "Corretto-11.0.19.7.1");
 
     String runtimeInfo = GaxProperties.getRuntimeVersion();
     assertEquals("11.0.19__Amazon.com-Inc.__Corretto-11.0.19.7.1", runtimeInfo);
-    cleanup();
   }
 
   @Test
-  public void testGetJavaRuntimeInfoCaseThree() {
+  public void testGetJavaRuntimeInfoCaseOracle() {
     System.setProperty("java.version", "20.0.1");
     System.setProperty("java.vendor", "Oracle Corporation");
     // case where java.vendor.version is null
@@ -124,11 +123,10 @@ public class GaxPropertiesTest {
 
     String runtimeInfo = GaxProperties.getRuntimeVersion();
     assertEquals("20.0.1__Oracle-Corporation", runtimeInfo);
-    cleanup();
   }
 
   @Test
-  public void testGetJavaRuntimeInfoCaseFour() {
+  public void testGetJavaRuntimeInfoCaseNullValues() {
     System.setProperty("java.version", "20.0.1");
     // case where java.vendor and java.vendor.version is null
     System.clearProperty("java.vendor");
@@ -136,6 +134,5 @@ public class GaxPropertiesTest {
 
     String runtimeInfo = GaxProperties.getRuntimeVersion();
     assertEquals("20.0.1", runtimeInfo);
-    cleanup();
   }
 }
