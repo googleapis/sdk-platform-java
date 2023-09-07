@@ -88,7 +88,6 @@ public class GaxPropertiesTest {
   @Test
   public void testGetJavaRuntimeInfo() {
     String runtimeInfo = GaxProperties.getJavaVersion();
-    System.out.println(runtimeInfo);
     assertEquals("11.1.2__GraalVM-Community__GraalVM-CE-22.3.0", runtimeInfo);
   }
 }
