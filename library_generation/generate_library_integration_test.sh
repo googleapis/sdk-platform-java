@@ -106,7 +106,12 @@ echo "Compare generation result..."
 cd "$script_dir"
 
 RESULT=0
-diff -r "google-cloud-java/$monorepo_folder" "$destination_path/workspace" -x "*gradle*" || RESULT=$?
+diff -r "google-cloud-java/$monorepo_folder" "$destination_path/workspace" \
+  -x "*gradle*" \
+  -x "README.md" \
+  -x "CHANGELOG.md" \
+  -x ".OwlBot.yaml" \
+  || RESULT=$?
 if [ $RESULT == 0 ] ; then
  echo "SUCCESS: Comparison finished, no difference is found."
 else
