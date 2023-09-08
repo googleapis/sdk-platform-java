@@ -41,7 +41,7 @@ jobs:
     - name: Run unit tests
       run: |
         set -x
-        library_generation/test/generate_library_unit_tests.sh ${{ matrix.os }}
+        library_generation/test/generate_library_unit_tests.sh
   lint:
     runs-on: ubuntu-22.04
     steps:

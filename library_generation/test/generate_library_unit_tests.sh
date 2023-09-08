@@ -37,13 +37,14 @@ __assertFileDoesNotExist() {
 # Convert OS type to OS architecture, the default OS architecture is
 # osx-aarch_64 (used in local development).
 __get_os_architecture() {
-  local os_type=$1
+  local os_type
   local os_architecture
+  os_type=$(uname -sm)
   case "${os_type}" in
-    *"ubuntu"*)
+    *"Linux x86_64"*)
       os_architecture="linux-x86_64"
       ;;
-    *"macos"*)
+    *"Darwin x86_64"*)
       os_architecture="osx-x86_64"
       ;;
     *)
@@ -251,9 +252,7 @@ download_grpc_plugin_failed_with_invalid_arch_test() {
 }
 
 generate_library_success_with_valid_versions() {
-  local os_architecture
   local destination="google-cloud-alloydb-v1-java"
-  os_architecture=$(__get_os_architecture "${os_type}")
   cd "${script_dir}/resources/protos"
   "${script_dir}"/../generate_library.sh \
     -p google/cloud/alloydb/v1 \
@@ -263,15 +262,13 @@ generate_library_success_with_valid_versions() {
     --grpc_version 1.55.1 \
     --transport grpc+rest \
     --rest_numeric_enums true \
-    --os_architecture "${os_architecture}"
+    --os_architecture "$(__get_os_architecture)"
 
   __diff_and_cleanup "${destination}"
 }
 
 generate_library_success_without_protobuf_version() {
-  local os_architecture
   local destination="google-cloud-alloydb-v1-java"
-  os_architecture=$(__get_os_architecture "${os_type}")
   cd "${script_dir}/resources/protos"
   "${script_dir}"/../generate_library.sh \
     -p google/cloud/alloydb/v1 \
@@ -280,15 +277,13 @@ generate_library_success_without_protobuf_version() {
     --grpc_version 1.55.1 \
     --transport grpc+rest \
     --rest_numeric_enums true \
-    --os_architecture "${os_architecture}"
+    --os_architecture "$(__get_os_architecture)"
 
   __diff_and_cleanup "${destination}"
 }
 
 generate_library_success_without_grpc_version() {
-  local os_architecture
   local destination="google-cloud-alloydb-v1-java"
-  os_architecture=$(__get_os_architecture "${os_type}")
   cd "${script_dir}/resources/protos"
   "${script_dir}"/../generate_library.sh \
     -p google/cloud/alloydb/v1 \
@@ -297,15 +292,13 @@ generate_library_success_without_grpc_version() {
     --protobuf_version 23.2 \
     --transport grpc+rest \
     --rest_numeric_enums true \
-    --os_architecture "${os_architecture}"
+    --os_architecture "$(__get_os_architecture)"
 
   __diff_and_cleanup "${destination}"
 }
 
 generate_library_success_without_protobuf_and_grpc_version() {
-  local os_architecture
   local destination="google-cloud-alloydb-v1-java"
-  os_architecture=$(__get_os_architecture "${os_type}")
   cd "${script_dir}/resources/protos"
   "${script_dir}"/../generate_library.sh \
     -p google/cloud/alloydb/v1 \
@@ -313,16 +306,14 @@ generate_library_success_without_protobuf_and_grpc_version() {
     --gapic_generator_version 2.24.0 \
     --transport grpc+rest \
     --rest_numeric_enums true \
-    --os_architecture "${os_architecture}"
+    --os_architecture "$(__get_os_architecture)"
 
   __diff_and_cleanup "${destination}"
 }
 
 generate_library_failed_with_invalid_generator_version() {
-  local os_architecture
   local destination="google-cloud-alloydb-v1-java"
   local res=0
-  os_architecture=$(__get_os_architecture "${os_type}")
   cd "${script_dir}/resources/protos"
   $("${script_dir}"/../generate_library.sh \
     -p google/cloud/alloydb/v1 \
@@ -332,17 +323,15 @@ generate_library_failed_with_invalid_generator_version() {
     --grpc_version 1.55.1 \
     --transport grpc+rest \
     --rest_numeric_enums true \
-    --os_architecture "${os_architecture}") || res=$?
+    --os_architecture "$(__get_os_architecture)") || res=$?
   # still need to clean up potential downloaded tooling.
   __diff_and_cleanup "${destination}"
   __assertEquals 1 $((res))
 }
 
 generate_library_failed_with_invalid_protobuf_version() {
-  local os_architecture
   local destination="google-cloud-alloydb-v1-java"
   local res=0
-  os_architecture=$(__get_os_architecture "${os_type}")
   cd "${script_dir}/resources/protos"
   $("${script_dir}"/../generate_library.sh \
     -p google/cloud/alloydb/v1 \
@@ -352,17 +341,15 @@ generate_library_failed_with_invalid_protobuf_version() {
     --grpc_version 1.55.1 \
     --transport grpc+rest \
     --rest_numeric_enums true \
-    --os_architecture "${os_architecture}") || res=$?
+    --os_architecture "$(__get_os_architecture)") || res=$?
   # still need to clean up potential downloaded tooling.
   __diff_and_cleanup "${destination}"
   __assertEquals 1 $((res))
 }
 
 generate_library_failed_with_invalid_grpc_version() {
-  local os_architecture
   local destination="google-cloud-alloydb-v1-java"
   local res=0
-  os_architecture=$(__get_os_architecture "${os_type}")
   cd "${script_dir}/resources/protos"
   $("${script_dir}"/../generate_library.sh \
     -p google/cloud/alloydb/v1 \
@@ -371,7 +358,7 @@ generate_library_failed_with_invalid_grpc_version() {
     --grpc_version 0.99.0 \
     --transport grpc+rest \
     --rest_numeric_enums true \
-    --os_architecture "${os_architecture}") || res=$?
+    --os_architecture "$(__get_os_architecture)") || res=$?
   # still need to clean up potential downloaded tooling.
   __diff_and_cleanup "${destination}"
   __assertEquals 1 $((res))
