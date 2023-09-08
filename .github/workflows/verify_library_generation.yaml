@@ -42,3 +42,13 @@ jobs:
       run: |
         set -x
         library_generation/test/generate_library_unit_tests.sh ${{ matrix.os }}
+  lint:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run ShellCheck
+      uses: ludeeus/action-shellcheck@2.0.0
+      with:
+        scandir: 'library_generation'
+        format: tty
+        severity: error
