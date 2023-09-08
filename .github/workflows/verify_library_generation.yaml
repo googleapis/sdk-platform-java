@@ -38,7 +38,7 @@ jobs:
       run: |
         set -x
         library_generation/test/generate_library_unit_tests.sh
-  lint:
+  shellcheck:
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
@@ -48,3 +48,10 @@ jobs:
         scandir: 'library_generation'
         format: tty
         severity: error
+  lint:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3
+    - name: Shell Lint
+      run: |
+        find library_generation -type f -name "*.sh" -exec bash -n {} \;
