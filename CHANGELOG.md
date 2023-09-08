@@ -1,5 +1,26 @@
 # Changelog
 
+## [2.25.0](https://github.com/googleapis/sdk-platform-java/compare/v2.24.0...v2.25.0) (2023-09-08)
+
+
+### Features
+
+* [common-protos,common-protos] add new FieldBehavior value IDENTIFIER ([#1937](https://github.com/googleapis/sdk-platform-java/issues/1937)) ([24ae2a3](https://github.com/googleapis/sdk-platform-java/commit/24ae2a3e0237fb2821ea07ccdd874c92ead598a2))
+* Add `generate_library.sh` without post processing ([#1916](https://github.com/googleapis/sdk-platform-java/issues/1916)) ([ffc058a](https://github.com/googleapis/sdk-platform-java/commit/ffc058a08c523b3811b021ec1bc30201452a36c9))
+* Adding vendor and vendor information in header ([#1963](https://github.com/googleapis/sdk-platform-java/issues/1963)) ([ed44aa7](https://github.com/googleapis/sdk-platform-java/commit/ed44aa785f8e21ad07aed984220db6e30e07a6c6))
+* Introduce @ObsoleteApi ([#1887](https://github.com/googleapis/sdk-platform-java/issues/1887)) ([5df1aa3](https://github.com/googleapis/sdk-platform-java/commit/5df1aa3733852aaeed068080f6b48047e89dc799))
+
+
+### Bug Fixes
+
+* Remove -H:-RunReachabilityHandlersConcurrently ([#1892](https://github.com/googleapis/sdk-platform-java/issues/1892)) ([9cc52e1](https://github.com/googleapis/sdk-platform-java/commit/9cc52e1e788e4196c9e83ad5d8a9487042ae707e))
+* Use && in equals check to avoid possible NPE ([#1927](https://github.com/googleapis/sdk-platform-java/issues/1927)) ([815567c](https://github.com/googleapis/sdk-platform-java/commit/815567ca4085702ecee8fc95603574cd52d6c57d))
+
+
+### Documentation
+
+* [iam] Minor formatting ([#1902](https://github.com/googleapis/sdk-platform-java/issues/1902)) ([5ec1142](https://github.com/googleapis/sdk-platform-java/commit/5ec1142458a46ae1c561f608b2ef7ac18ab0bafd))
+
 ## [2.24.0](https://github.com/googleapis/sdk-platform-java/compare/v2.23.1...v2.24.0) (2023-08-01)
 
 
