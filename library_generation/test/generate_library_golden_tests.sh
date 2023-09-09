@@ -28,64 +28,62 @@ __get_os_architecture() {
 
 __diff_and_cleanup() {
   destination=$1
-  pushd "${script_dir}/resources"
   customized_diff "${destination}"
   cleanup "${destination}"
-  popd
 }
 
 generate_library_success_with_valid_versions() {
-  local destination="google-cloud-alloydb-v1-java"
+  local destination="google-cloud-gkeconnect-gateway-v1beta1-java"
   cd "${script_dir}/resources/protos"
   "${script_dir}"/../generate_library.sh \
-    -p google/cloud/alloydb/v1 \
+    -p google/cloud/gkeconnect/gateway/v1beta1 \
     -d ../"${destination}" \
     --gapic_generator_version 2.24.0 \
     --protobuf_version 23.2 \
     --grpc_version 1.55.1 \
-    --transport grpc+rest \
-    --rest_numeric_enums true \
+    --transport grpc \
+    --rest_numeric_enums false \
     --os_architecture "$(__get_os_architecture)"
   __diff_and_cleanup "${destination}"
 }
 
 generate_library_success_without_protobuf_version() {
-  local destination="google-cloud-alloydb-v1-java"
+  local destination="google-cloud-gkeconnect-gateway-v1beta1-java"
   cd "${script_dir}/resources/protos"
   "${script_dir}"/../generate_library.sh \
-    -p google/cloud/alloydb/v1 \
+    -p google/cloud/gkeconnect/gateway/v1beta1 \
     -d ../"${destination}" \
     --gapic_generator_version 2.24.0 \
     --grpc_version 1.55.1 \
-    --transport grpc+rest \
-    --rest_numeric_enums true \
+    --transport grpc \
+    --rest_numeric_enums false \
     --os_architecture "$(__get_os_architecture)"
   __diff_and_cleanup "${destination}"
 }
 
 generate_library_success_without_grpc_version() {
-  local destination="google-cloud-alloydb-v1-java"
+  local destination="google-cloud-gkeconnect-gateway-v1beta1-java"
   cd "${script_dir}/resources/protos"
   "${script_dir}"/../generate_library.sh \
-    -p google/cloud/alloydb/v1 \
+    -p google/cloud/gkeconnect/gateway/v1beta1 \
     -d ../"${destination}" \
     --gapic_generator_version 2.24.0 \
     --protobuf_version 23.2 \
-    --transport grpc+rest \
-    --rest_numeric_enums true \
+    --transport grpc \
+    --rest_numeric_enums false \
     --os_architecture "$(__get_os_architecture)"
   __diff_and_cleanup "${destination}"
 }
 
 generate_library_success_without_protobuf_and_grpc_version() {
-  local destination="google-cloud-alloydb-v1-java"
+  local destination="google-cloud-gkeconnect-gateway-v1beta1-java"
   cd "${script_dir}/resources/protos"
   "${script_dir}"/../generate_library.sh \
-    -p google/cloud/alloydb/v1 \
+    -p google/cloud/gkeconnect/gateway/v1beta1 \
     -d ../"${destination}" \
     --gapic_generator_version 2.24.0 \
-    --transport grpc+rest \
-    --rest_numeric_enums true \
+    --transport grpc \
+    --rest_numeric_enums false \
     --os_architecture "$(__get_os_architecture)"
   __diff_and_cleanup "${destination}"
 }

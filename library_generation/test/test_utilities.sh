@@ -50,19 +50,19 @@ assertFileOrDirectoryExists() {
 customized_diff() {
   local library_directory=$1
   local diff_res=0
-  diff -r "${library_directory}" "golden/${library_directory}" || diff_res=$?
+  diff -r ../"${library_directory}" ../"golden/${library_directory}" || diff_res=$?
   assertEquals 0 $((diff_res))
 }
 
 # Clean up generated files, tooling when testing `generate_library.sh`.
 cleanup() {
   local library_directory=$1
-  rm -rf "${library_directory}" \
-   protos/google/protobuf \
-   protos/protobuf-* \
-   protos/gapic-generator-java-*.jar \
-   protos/gapic-generator-java-pom-parent-*.pom \
-   protos/protoc-gen-grpc-*.exe
+  rm -rf ../"${library_directory}" \
+   google/protobuf \
+   protobuf-* \
+   gapic-generator-java-*.jar \
+   gapic-generator-java-pom-parent-*.pom \
+   protoc-gen-grpc-*.exe
 }
 
 execute_tests() {
