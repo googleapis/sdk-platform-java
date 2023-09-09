@@ -42,6 +42,18 @@ jobs:
       run: |
         set -x
         library_generation/test/generate_library_unit_tests.sh
+  generate_library_golden_tests:
+    strategy:
+      matrix:
+        java: [ 8 ]
+        os: [ ubuntu-22.04, macos-12 ]
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run unit tests
+      run: |
+        set -x
+        library_generation/test/generate_library_golden_tests.sh
   lint:
     runs-on: ubuntu-22.04
     steps:
