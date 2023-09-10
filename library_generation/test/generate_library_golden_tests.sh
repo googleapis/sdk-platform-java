@@ -2,7 +2,7 @@
 
 set -eo pipefail
 
-# Golden tests against ../utilities.sh
+# Golden unit tests against ../generate_library.sh
 script_dir=$(dirname "$(readlink -f "$0")")
 source "${script_dir}"/test_utilities.sh
 

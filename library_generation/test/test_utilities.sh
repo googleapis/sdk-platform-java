@@ -2,6 +2,8 @@
 
 set -xeo pipefail
 
+# Utility functions commonly used in test cases.
+
 # Variables used to generate final result
 total_num=0
 succeed_num=0
