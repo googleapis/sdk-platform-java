@@ -69,7 +69,7 @@ search_additional_protos() {
     additional_protos="$additional_protos google/iam/v1/iam_policy.proto"
   fi
   locations=$(find_additional_protos_in_yaml "name: '*google.cloud.location.Locations'*")
-  if [ -n "$locations" ]; then
+  if [ -n "${locations}" ]; then
     additional_protos="$additional_protos google/cloud/location/locations.proto"
   fi
   echo "${additional_protos}"
