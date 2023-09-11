@@ -20,8 +20,8 @@ if [ ! -d schema ]; then
   # looks at sdk-platform-java/showcase/gapic-showcase/pom.xml to extract the
   # version of gapic-showcase
   # see https://github.com/googleapis/gapic-showcase/releases
-  showcase_version=$(xmllint --xpath '/*[local-name()="project"]/*[local-name()="properties"]/*[local-name()="gapic-showcase.version"]/text()' "${SCRIPT_DIR}/../gapic-showcase/pom.xml")
-  sparse_clone https://github.com/googleapis/gapic-showcase.git "schema/google/showcase/v1beta1" "v${showcase_version}"
+  showcase_version=$(grep -e '<gapic-showcase.version>' "${SCRIPT_DIR}/../gapic-showcase/pom.xml" | cut -d'>' -f2 | cut -d'<' -f1)
+    sparse_clone https://github.com/googleapis/gapic-showcase.git "schema/google/showcase/v1beta1" "v${showcase_version}"
   cd gapic-showcase
   mv schema ..
   cd ..
