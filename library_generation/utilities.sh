@@ -215,6 +215,10 @@ download_fail() {
   exit 1
 }
 
+# Obtains a version from a bazel WORKSPACE file
+#
+# versions look like "_ggj_version="1.2.3"
+# It will return 1.2.3 for such example
 get_version_from_WORKSPACE() {
   version_key_word=$1
   workspace=$2
@@ -256,6 +260,7 @@ get_version_from_versions_txt() {
 }
 
 
+# Convenience function to clone only the necessary folders from a git repository
 sparse_clone() {
   repo_url=$1
   paths=$2

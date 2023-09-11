@@ -42,34 +42,13 @@ esac
 shift # past argument or value
 done
 
-get_version_from_WORKSPACE() {
-  local version_key_word=$1
-  local workspace=$2
-  local delimiter=$3
-  local version
-  version="$(grep -m 1 "${version_key_word}"  "${workspace}" | sed 's/\"\(.*\)\".*/\1/' | cut -d "${delimiter}" -f2 | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
-  echo "${version}"
-}
-
-sparse_clone() {
-  local repo_url=$1
-  local paths=$2
-  local clone_dir
-  clone_dir=$(basename "${repo_url%.*}")
-  rm -rf "${clone_dir}"
-  git clone -n --depth=1 --filter=tree:0 "${repo_url}"
-  cd "${clone_dir}"
-  git sparse-checkout set --no-cone ${paths}
-  git checkout
-  cd ..
-}
-
 script_dir=$(dirname "$(readlink -f "$0")")
+source "${script_dir}/../utilities.sh"
 library_generation_dir="${script_dir}"/..
 cd "${library_generation_dir}"
 # checkout the master branch of googleapis/google (proto files) and WORKSPACE
 echo "Checking out googlapis repository..."
-sparse_clone https://github.com/googleapis/googleapis.git "${proto_path} WORKSPACE google/api google/rpc google/cloud/common_resources.proto"
+sparse_clone https://github.com/googleapis/googleapis.git "${proto_path} WORKSPACE google/api google/rpc google/cloud/common_resources.proto google/iam/v1 google/type google/longrunning"
 cd googleapis
 # parse version of gapic-generator-java, protobuf and grpc from WORKSPACE
 gapic_generator_version=$(get_version_from_WORKSPACE "_gapic_generator_java_version" WORKSPACE "=")
@@ -79,18 +58,25 @@ echo "The version of protobuf is ${protobuf_version}"
 grpc_version=$(get_version_from_WORKSPACE "_grpc_version" WORKSPACE "=")
 echo "The version of protoc-gen-grpc-java plugin is ${gapic_generator_version}."
 # parse GAPIC options from proto_path/BUILD.bazel
-transport="grpc"
-if grep -A 15 "java_gapic_library(" "${proto_path}/BUILD.bazel" | grep -q "grpc+rest"; then
-  transport="grpc+rest"
-fi
-rest_numeric_enums="true"
-if grep -A 15 "java_gapic_library(" "${proto_path}/BUILD.bazel" | grep -q "rest_numeric_enums = False"; then
-  rest_numeric_enums="false"
-fi
-include_samples="false"
-if grep -A 15 "java_gapic_assembly_gradle_pkg(" "${proto_path}/BUILD.bazel" | grep -q "include_samples = True"; then
-  include_samples="true"
-fi
+proto_build_file_path="${script_dir}/../${proto_path}/BUILD.bazel"
+transport=$(get_config_from_BUILD \
+  "${proto_build_file_path}" \
+  "java_gapic_library(" \
+  "grpc+rest" \
+  "grpc"
+)
+rest_numeric_enums=$(get_config_from_BUILD \
+  "${proto_build_file_path}" \
+  "java_gapic_library(" \
+  "rest_numeric_enums = False" \
+  "true"
+)
+include_samples=$(get_config_from_BUILD \
+  "${proto_build_file_path}" \
+  "java_gapic_assembly_gradle_pkg(" \
+  "include_samples = True" \
+  "false"
+)
 echo "GAPIC options are transport=${transport}, rest_numeric_enums=${rest_numeric_enums}, include_samples=${include_samples}."
 os_architecture="linux-x86_64"
 if [[ "$os_type" == *"macos"* ]]; then
