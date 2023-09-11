@@ -58,7 +58,7 @@ echo "The version of protobuf is ${protobuf_version}"
 grpc_version=$(get_version_from_WORKSPACE "_grpc_version" WORKSPACE "=")
 echo "The version of protoc-gen-grpc-java plugin is ${gapic_generator_version}."
 # parse GAPIC options from proto_path/BUILD.bazel
-proto_build_file_path="${script_dir}/../${proto_path}/BUILD.bazel"
+proto_build_file_path="${proto_path}/BUILD.bazel"
 transport=$(get_config_from_BUILD \
   "${proto_build_file_path}" \
   "java_gapic_library(" \
