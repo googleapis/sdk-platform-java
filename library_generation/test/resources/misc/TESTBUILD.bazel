@@ -1,5 +1,4 @@
-# Note: The commented section is the framework for gapic-showcase-extended
-# See gapic-showcase-extended folder for more info
+# Test BUILD file, copied from sdk-platform-java/showcase/BUILD.bazel
 
 load(
     "//rules_java_gapic:java_gapic.bzl",

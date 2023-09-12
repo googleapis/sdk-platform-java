@@ -219,6 +219,48 @@ download_grpc_plugin_failed_with_invalid_arch_test() {
   __assertEquals 1 $((res))
 }
 
+get_config_from_valid_BUILD_test() {
+  build_file="${script_dir}/resources/misc/TESTBUILD.bazel"
+  rule="java_gapic_library("
+  # the pattern we expect to find in the BUILD file
+  pattern_should_match="name"
+  # the pattern that we should not find in the BUILD file
+  pattern_should_not_match="should-not-match"
+  # default value if the pattern was not found
+  if_matched_return="got-a-match"
+  if_not_matched_return="no-match"
+  pattern_matched_result=$(get_config_from_BUILD \
+    "${build_file}" \
+    "${rule}" \
+    "${pattern_should_match}" \
+    "${if_not_matched_return}" \
+    "${if_matched_return}"
+  )
+  __assertEquals "${pattern_matched_result}" "${if_matched_return}"
+  pattern_not_matched_result=$(get_config_from_BUILD \
+    "${build_file}" \
+    "${rule}" \
+    "${pattern_should_not_match}" \
+    "${if_not_matched_return}" \
+    "${if_matched_return}"
+  )
+  __assertEquals "${pattern_not_matched_result}" "${if_not_matched_return}"
+}
+
+get_version_from_valid_WORKSPACE_test() {
+  workspace_file="${script_dir}/resources/misc/TESTWORKSPACE"
+  obtained_ggj_version=$(get_version_from_WORKSPACE "_gapic_generator_java_version" "${workspace_file}")
+  __assertEquals '2.25.1-SNAPSHOT' "${obtained_ggj_version}"
+}
+
+get_version_from_valid_versions_txt_test() {
+  versions_file="${script_dir}/resources/misc/testversions.txt"
+  obtained_ggj_version=$(get_version_from_versions_txt "${versions_file}" "gapic-generator-java")
+  __assertEquals '2.25.1-SNAPSHOT' "${obtained_ggj_version}"
+  obtained_gax_version=$(get_version_from_versions_txt "${versions_file}" "gax")
+  __assertEquals '2.33.1-SNAPSHOT' "${obtained_gax_version}"
+}
+
 # Execute tests.
 # One line per test.
 test_list=(
@@ -244,6 +286,9 @@ test_list=(
   download_grpc_plugin_succeed_with_valid_version_macos_test
   download_grpc_plugin_failed_with_invalid_version_linux_test
   download_grpc_plugin_failed_with_invalid_arch_test
+  get_config_from_valid_BUILD_test
+  get_version_from_valid_WORKSPACE_test
+  get_version_from_valid_versions_txt_test
 )
 
 for ut in "${test_list[@]}"; do
