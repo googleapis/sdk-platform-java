@@ -1,0 +1,6 @@
+# this file is only used in testing `search_additional_protos` in utilities.sh
+apis:
+- name: google.iam.v1.IAMPolicy
+- name: google.pubsub.v1.Publisher
+- name: google.pubsub.v1.SchemaService
+- name: google.pubsub.v1.Subscriber

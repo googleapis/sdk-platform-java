@@ -33,10 +33,24 @@ jobs:
         # this is the sha initially used to generate policysimulator
         -s 31c8276a1bfb43766597d32645721c029cb94571f1b8d996cb2c290744fe52f9
   unit_tests:
-    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        java: [ 8 ]
+        os: [ ubuntu-22.04, macos-12 ]
+    runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v3
     - name: Run unit tests
       run: |
         set -x
         library_generation/test/generate_library_unit_tests.sh
+  lint:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3
+    - name: Run ShellCheck
+      uses: ludeeus/action-shellcheck@2.0.0
+      with:
+        scandir: 'library_generation'
+        format: tty
+        severity: error

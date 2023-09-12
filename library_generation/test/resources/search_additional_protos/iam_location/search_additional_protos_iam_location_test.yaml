@@ -1,0 +1,6 @@
+# this file is only used in testing `search_additional_protos` in utilities.sh
+apis:
+- name: google.cloud.alloydb.v1.AlloyDBAdmin
+- name: google.cloud.location.Locations
+- name: google.iam.v1.IAMPolicy
+- name: google.longrunning.Operations

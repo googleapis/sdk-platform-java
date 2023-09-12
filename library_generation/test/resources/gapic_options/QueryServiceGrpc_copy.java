@@ -1,5 +1,5 @@
 /**
- * This file is only used in tests.
+ * This file is only used in testing `remove_grpc_version` in utilities.sh.
  */
 @javax.annotation.processing.Generated(
     value = "by gRPC proto compiler 1.55.1",

@@ -29,11 +29,12 @@
  */
 package com.google.api.gax.core;
 
-import static org.graalvm.nativeimage.ImageInfo.PROPERTY_IMAGE_CODE_KEY;
-import static org.graalvm.nativeimage.ImageInfo.PROPERTY_IMAGE_CODE_VALUE_RUNTIME;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import com.google.common.base.Strings;
 import java.util.regex.Pattern;
+import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -57,10 +58,108 @@ public class GaxPropertiesTest {
     }
   }
 
+  private static String originalJavaVersion = System.getProperty("java.version");
+  private static String originalJavaVendor = System.getProperty("java.vendor");
+  private static String originalJavaVendorVersion = System.getProperty("java.vendor.version");
+
+  @After
+  public void cleanup() {
+    if (Strings.isNullOrEmpty(originalJavaVersion)) {
+      System.clearProperty("java.version");
+    } else {
+      System.setProperty("java.version", originalJavaVersion);
+    }
+
+    if (Strings.isNullOrEmpty(originalJavaVendor)) {
+      System.clearProperty("java.vendor");
+    } else {
+      System.setProperty("java.vendor", originalJavaVendor);
+    }
+
+    if (Strings.isNullOrEmpty(originalJavaVendorVersion)) {
+      System.clearProperty("java.vendor.version");
+    } else {
+      System.setProperty("java.vendor.version", originalJavaVendorVersion);
+    }
+  }
+
   @Test
-  public void testGetVersion_nativeImage() {
-    System.setProperty(PROPERTY_IMAGE_CODE_KEY, PROPERTY_IMAGE_CODE_VALUE_RUNTIME);
-    String javaVersion = GaxProperties.getJavaVersion();
-    assertTrue(javaVersion.endsWith("-graalvm"));
+  public void testGetJavaRuntimeInfo_graalVM() {
+    // This case is one of major Java vendors
+    System.setProperty("java.version", "17.0.3");
+    System.setProperty("java.vendor", "GraalVM Community");
+    System.setProperty("java.vendor.version", "GraalVM CE 22.1.0");
+
+    String runtimeInfo = GaxProperties.getRuntimeVersion();
+    assertEquals("17.0.3__GraalVM-Community__GraalVM-CE-22.1.0", runtimeInfo);
+  }
+
+  @Test
+  public void testGetJavaRuntimeInfo_temurin() {
+    // This case is one of major Java vendors
+    System.setProperty("java.version", "11.0.19");
+    System.setProperty("java.vendor", "Eclipse Adoptium");
+    System.setProperty("java.vendor.version", "Temurin-11.0.19+7");
+
+    String runtimeInfo = GaxProperties.getRuntimeVersion();
+    assertEquals("11.0.19__Eclipse-Adoptium__Temurin-11.0.19-7", runtimeInfo);
+  }
+
+  @Test
+  public void testGetJavaRuntimeInfo_coretto() {
+    // This case is one of major Java vendors
+    System.setProperty("java.version", "11.0.19");
+    System.setProperty("java.vendor", "Amazon.com Inc.");
+    System.setProperty("java.vendor.version", "Corretto-11.0.19.7.1");
+
+    String runtimeInfo = GaxProperties.getRuntimeVersion();
+    assertEquals("11.0.19__Amazon.com-Inc.__Corretto-11.0.19.7.1", runtimeInfo);
+  }
+
+  @Test
+  public void testGetJavaRuntimeInfo_specialCharacters() {
+    // testing for unsupported characters and spaces
+    System.setProperty("java.version", "20%^.&0~.1#45`*");
+    System.setProperty("java.vendor", "A^!@#$*B()[]{} C ~%& D-E ?");
+    System.setProperty("java.vendor.version", "1!@%$@#.AB!346.9^");
+
+    String runtimeInfo = GaxProperties.getRuntimeVersion();
+    assertEquals("20--.-0-.1-45--__A------B-------C-----D-E--__1------.AB-346.9-", runtimeInfo);
+  }
+
+  @Test
+  public void testGetJavaRuntimeInfo_nullVendorVersion() {
+    // testing for null java.vendor.version
+    System.setProperty("java.version", "20.0.1");
+    System.setProperty("java.vendor", "Oracle");
+    System.clearProperty("java.vendor.version");
+
+    String runtimeInfo = GaxProperties.getRuntimeVersion();
+    assertEquals("20.0.1__Oracle", runtimeInfo);
+  }
+
+  @Test
+  public void testGetJavaRuntimeInfo_nullVendorAndVendorVersion() {
+    // testing for null java.vendor and java.vendor.version
+    System.setProperty("java.version", "20.0.1");
+    System.clearProperty("java.vendor");
+    System.clearProperty("java.vendor.version");
+
+    String runtimeInfo = GaxProperties.getRuntimeVersion();
+    assertEquals("20.0.1", runtimeInfo);
+  }
+
+  @Test
+  public void testGetJavaRuntimeInfo_nullJavaVersion() {
+    // testing for null java.version
+    // We don't expect this case to happen, however we don't want the method to fail when it really
+    // happens.
+
+    System.clearProperty("java.version");
+    System.setProperty("java.vendor", "oracle");
+    System.setProperty("java.vendor.version", "20.0.1");
+
+    String runtimeInfo = GaxProperties.getRuntimeVersion();
+    assertEquals("null__oracle__20.0.1", runtimeInfo);
   }
 }

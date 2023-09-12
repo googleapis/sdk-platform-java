@@ -1,0 +1,5 @@
+# this file is only used in testing `search_additional_protos` in utilities.sh
+apis:
+- name: google.cloud.location.Locations
+- name: google.firestore.v1.Firestore
+- name: google.longrunning.Operations
