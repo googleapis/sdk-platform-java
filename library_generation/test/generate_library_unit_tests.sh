@@ -253,6 +253,14 @@ get_version_from_valid_WORKSPACE_test() {
   __assertEquals '2.25.1-SNAPSHOT' "${obtained_ggj_version}"
 }
 
+get_version_from_valid_versions_txt_test() {
+  versions_file="${script_dir}/resources/misc/testversions.txt"
+  obtained_ggj_version=$(get_version_from_versions_txt "${versions_file}" "gapic-generator-java")
+  __assertEquals '2.25.1-SNAPSHOT' "${obtained_ggj_version}"
+  obtained_gax_version=$(get_version_from_versions_txt "${versions_file}" "gax")
+  __assertEquals '2.33.1-SNAPSHOT' "${obtained_gax_version}"
+}
+
 # Execute tests.
 # One line per test.
 test_list=(
@@ -280,6 +288,7 @@ test_list=(
   download_grpc_plugin_failed_with_invalid_arch_test
   get_config_from_valid_BUILD_test
   get_version_from_valid_WORKSPACE_test
+  get_version_from_valid_versions_txt_test
 )
 
 for ut in "${test_list[@]}"; do

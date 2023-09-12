@@ -268,3 +268,13 @@ sparse_clone() {
   git checkout
   cd ..
 }
+
+# takes a versions.txt file and returns its version
+get_version_from_versions_txt() {
+  versions=$1
+  key=$2
+  version=$(cat "$versions" | grep "$key:" | cut -d: -f3) # 3rd field is snapshot
+  echo $version
+}
+
+
