@@ -70,6 +70,5 @@ function other_post_processing_scripts {
     popd
   else
     echo 'google-cloud-java not found. Will not update versions'
-    popd
   fi
 }

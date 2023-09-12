@@ -40,23 +40,19 @@ case $key in
     include_samples="$2"
     shift
     ;;
-<<<<<<< HEAD
-    --enable_postprocessing)
+  --enable_postprocessing)
     enable_postprocessing="$2"
     shift
     ;;
-    --repo_metadata_json_path)
+  --repo_metadata_json_path)
     repo_metadata_json_path="$2"
     shift
     ;;
-    --owlbot_sha)
+  --owlbot_sha)
     owlbot_sha="$2"
     shift
     ;;
-    --os_architecture)
-=======
   --os_architecture)
->>>>>>> origin/main
     os_architecture="$2"
     shift
     ;;
@@ -100,7 +96,7 @@ if [ -z "$os_architecture" ]; then
   os_architecture="linux-x86_64"
 fi
 
-destination_path="${SCRIPT_DIR}/$destination_path"
+destination_path="${script_dir}/$destination_path"
 mkdir -p "$destination_path"
 ##################### Section 0 #####################
 # prepare tooling
@@ -181,7 +177,7 @@ rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_pro
 ##################### Section 5 #####################
 # post-processing
 #####################################################
-source "${SCRIPT_DIR}/post-processing/postprocessing_utilities.sh"
+source "${script_dir}/post-processing/postprocessing_utilities.sh"
 if [ "${enable_postprocessing}" != "true" ];
 then
   echo "post processing is disabled"
@@ -192,19 +188,19 @@ then
   exit 1
 elif [ -z "${owlbot_sha}" ];
 then
-  if [ ! -d "${SCRIPT_DIR}"/google-cloud-java ];
+  if [ ! -d "${script_dir}"/google-cloud-java ];
   then
     echo 'no owlbot_sha provided and no monorepo to infer it from. This is necessary for post-processing' >&2
     exit 1
   fi
   echo "no owlbot_sha provided. Will compute from monorepo's head"
-  owlbot_sha=$(grep 'sha256' "${SCRIPT_DIR}/google-cloud-java/.github/.OwlBot.lock.yaml" | cut -d: -f3)
+  owlbot_sha=$(grep 'sha256' "${script_dir}/google-cloud-java/.github/.OwlBot.lock.yaml" | cut -d: -f3)
 fi
 workspace="${destination_path}/workspace"
 mkdir -p "${workspace}"
 
 run_owlbot_postprocessor "${workspace}" "${owlbot_sha}" "${repo_metadata_json_path}" "${include_samples}" \
-  "${SCRIPT_DIR}" "${destination_path}"
+  "${script_dir}" "${destination_path}"
 
-other_post_processing_scripts "${SCRIPT_DIR}" "${workspace}" "${repo_metadata_json_path}"
+other_post_processing_scripts "${script_dir}" "${workspace}" "${repo_metadata_json_path}"
 set +x
