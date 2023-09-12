@@ -63,10 +63,7 @@ transport=$(get_transport_from_BUILD "${proto_build_file_path}")
 rest_numeric_enums=$(get_rest_numeric_enums_from_BUILD "${proto_build_file_path}")
 include_samples=$(get_include_samples_from_BUILD "${proto_build_file_path}")
 echo "GAPIC options are transport=${transport}, rest_numeric_enums=${rest_numeric_enums}, include_samples=${include_samples}."
-os_architecture="osx-aarch_64"
-if [[ "$os_type" == *"macos"* ]]; then
-  os_architecture="osx-x86_64"
-fi
+os_architecture=$(get_os_architecture)
 echo "OS Architecture is ${os_architecture}."
 # generate GAPIC client library
 echo "Generating library from ${proto_path}, to ${destination_path}..."
