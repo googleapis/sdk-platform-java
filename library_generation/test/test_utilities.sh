@@ -48,14 +48,6 @@ assertFileOrDirectoryExists() {
   __test_failed "${ut}"
 }
 
-# Compare the content of the given folder against resources/golden.
-customized_diff() {
-  local library_directory=$1
-  local diff_res=0
-  diff -r ../"${library_directory}" ../"golden/${library_directory}" || diff_res=$?
-  assertEquals 0 $((diff_res))
-}
-
 # Clean up generated files, tooling when testing `generate_library.sh`.
 cleanup() {
   local library_directory=$1
