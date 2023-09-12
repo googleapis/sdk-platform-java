@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-set -eo pipefail
+set -xeo pipefail
+set -x
 
 # parse input parameters
 while [[ $# -gt 0 ]]; do
@@ -157,3 +158,4 @@ done
 #####################################################
 cd "${destination_path}"
 rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_proto.jar temp-codegen.srcjar
+set +x
