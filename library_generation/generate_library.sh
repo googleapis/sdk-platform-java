@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -xeo pipefail
+set -eo pipefail
 set -x
 
 # parse input parameters
