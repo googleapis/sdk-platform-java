@@ -63,19 +63,30 @@ transport=$(get_config_from_BUILD \
   "${proto_build_file_path}" \
   "java_gapic_library(" \
   "grpc+rest" \
-  "grpc"
+  "grpc" \
+  "grpc+rest"
+)
+# search again because the transport maybe `rest`.
+transport=$(get_config_from_BUILD \
+  "${proto_build_file_path}" \
+  "java_gapic_library(" \
+  "transport = \"rest\"" \
+  "grpc" \
+  "rest"
 )
 rest_numeric_enums=$(get_config_from_BUILD \
   "${proto_build_file_path}" \
   "java_gapic_library(" \
-  "rest_numeric_enums = False" \
+  "rest_numeric_enums = True" \
+  "false" \
   "true"
 )
 include_samples=$(get_config_from_BUILD \
   "${proto_build_file_path}" \
   "java_gapic_assembly_gradle_pkg(" \
   "include_samples = True" \
-  "false"
+  "false" \
+  "true"
 )
 echo "GAPIC options are transport=${transport}, rest_numeric_enums=${rest_numeric_enums}, include_samples=${include_samples}."
 os_architecture="linux-x86_64"
