@@ -45,11 +45,14 @@ done
 script_dir=$(dirname "$(readlink -f "$0")")
 source "${script_dir}/../utilities.sh"
 library_generation_dir="${script_dir}"/..
-cd "${library_generation_dir}"
+output_folder="${library_generation_dir}/output"
+mkdir -p "${output_folder}"
+pushd "${output_folder}"
 # checkout the master branch of googleapis/google (proto files) and WORKSPACE
 echo "Checking out googlapis repository..."
 sparse_clone https://github.com/googleapis/googleapis.git "${proto_path} WORKSPACE google/api google/rpc google/cloud/common_resources.proto google/iam/v1 google/type google/longrunning"
-cd googleapis
+pushd googleapis
+cp -r google "${output_folder}"
 # parse version of gapic-generator-java, protobuf and grpc from WORKSPACE
 gapic_generator_version=$(get_version_from_WORKSPACE "_gapic_generator_java_version" WORKSPACE "=")
 echo "The version of gapic-generator-java is ${gapic_generator_version}."
@@ -82,6 +85,7 @@ os_architecture="linux-x86_64"
 if [[ "$os_type" == *"macos"* ]]; then
   os_architecture="osx-x86_64"
 fi
+popd
 echo "OS Architecture is ${os_architecture}."
 # generate GAPIC client library
 echo "Generating library from ${proto_path}, to ${destination_path}..."

@@ -137,6 +137,7 @@ get_protobuf_version() {
 }
 
 download_tools() {
+  pushd "${output_folder}"
   local gapic_generator_version=$1
   local protobuf_version=$2
   local grpc_version=$3
@@ -144,6 +145,7 @@ download_tools() {
   download_generator "${gapic_generator_version}"
   download_protobuf "${protobuf_version}" "${os_architecture}"
   download_grpc_plugin "${grpc_version}" "${os_architecture}"
+  popd
 }
 
 download_generator() {
@@ -177,7 +179,7 @@ download_protobuf() {
     rm "protobuf-${protobuf_version}.zip"
   fi
 
-  protoc_path=protobuf-${protobuf_version}/bin
+  protoc_path="${output_folder}/protobuf-${protobuf_version}/bin"
 }
 
 download_grpc_plugin() {
@@ -257,13 +259,13 @@ sparse_clone() {
   clone_dir=$(basename "${repo_url%.*}")
   rm -rf "${clone_dir}"
   git clone -n --depth=1 --no-single-branch --filter=tree:0 "${repo_url}"
-  cd "${clone_dir}"
+  pushd "${clone_dir}"
   if [ -n "${commitish}" ]; then
     git checkout "${commitish}"
   fi
   git sparse-checkout set --no-cone ${paths}
   git checkout
-  cd ..
+  popd
 }
 
 # takes a versions.txt file and returns its version

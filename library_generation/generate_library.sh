@@ -54,6 +54,7 @@ shift # past argument or value
 done
 
 script_dir=$(dirname "$(readlink -f "$0")")
+output_folder="${script_dir}/output"
 # source utility functions
 source "${script_dir}"/utilities.sh
 
@@ -88,6 +89,7 @@ mkdir -p "${destination_path}"
 # the order of services entries in gapic_metadata.json is relevant to the
 # order of proto file, sort the proto files with respect to their name to
 # get a fixed order.
+pwd
 proto_files=$(find "${proto_path}" -type f  -name "*.proto" | sort)
 folder_name=$(extract_folder_name "${destination_path}")
 # download gapic-generator-java, protobuf and grpc plugin.
@@ -95,6 +97,7 @@ download_tools "${gapic_generator_version}" "${protobuf_version}" "${grpc_versio
 ##################### Section 1 #####################
 # generate grpc-*/
 #####################################################
+pushd "${output_folder}"
 "${protoc_path}"/protoc "--plugin=protoc-gen-rpc-plugin=protoc-gen-grpc-java-${grpc_version}-${os_architecture}.exe" \
 "--rpc-plugin_out=:${destination_path}/java_grpc.jar" \
 ${proto_files} # Do not quote because this variable should not be treated as one long string.
@@ -153,6 +156,7 @@ for proto_src in ${proto_files}; do
   mkdir -p "${destination_path}/proto-${folder_name}/src/main/proto"
   rsync -R "${proto_src}" "${destination_path}/proto-${folder_name}/src/main/proto"
 done
+popd # output_folder
 ##################### Section 4 #####################
 # rm tar files
 #####################################################
