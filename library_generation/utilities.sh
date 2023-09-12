@@ -265,7 +265,7 @@ get_transport_from_BUILD() {
     "${build_file}" \
     "java_gapic_library(" \
     "transport = \"rest\"" \
-    "grpc" \
+    "${transport}" \
     "rest"
   )
   echo "${transport}"
