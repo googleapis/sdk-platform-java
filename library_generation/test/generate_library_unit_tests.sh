@@ -180,7 +180,7 @@ download_grpc_plugin_failed_with_invalid_arch_test() {
 generate_library_failed_with_invalid_generator_version() {
   local destination="google-cloud-alloydb-v1-java"
   local res=0
-  cd "${script_dir}/resources/protos"
+  cd "${script_dir}/resources"
   $("${script_dir}"/../generate_library.sh \
     -p google/cloud/alloydb/v1 \
     -d ../"${destination}" \
@@ -198,7 +198,7 @@ generate_library_failed_with_invalid_generator_version() {
 generate_library_failed_with_invalid_protobuf_version() {
   local destination="google-cloud-alloydb-v1-java"
   local res=0
-  cd "${script_dir}/resources/protos"
+  cd "${script_dir}/resources"
   $("${script_dir}"/../generate_library.sh \
     -p google/cloud/alloydb/v1 \
     -d ../"${destination}" \
@@ -216,7 +216,7 @@ generate_library_failed_with_invalid_protobuf_version() {
 generate_library_failed_with_invalid_grpc_version() {
   local destination="google-cloud-alloydb-v1-java"
   local res=0
-  cd "${script_dir}/resources/protos"
+  cd "${script_dir}/resources"
   $("${script_dir}"/../generate_library.sh \
     -p google/cloud/alloydb/v1 \
     -d ../"${destination}" \
