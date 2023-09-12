@@ -252,14 +252,6 @@ get_config_from_BUILD() {
 
 }
 
-get_version_from_versions_txt() {
-  versions=$1
-  key=$2
-  version=$(cat "$versions" | grep "$key" | cut -d: -f3) # 3rd field is snapshot
-  echo $version
-}
-
-
 # Convenience function to clone only the necessary folders from a git repository
 sparse_clone() {
   repo_url=$1
