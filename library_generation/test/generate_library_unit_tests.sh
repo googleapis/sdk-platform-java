@@ -235,8 +235,6 @@ get_config_from_valid_BUILD_matched_test() {
   rule="java_gapic_library("
   # the pattern we expect to find in the BUILD file
   pattern_should_match="name"
-  # the pattern that we should not find in the BUILD file
-  pattern_should_not_match="should-not-match"
   # default value if the pattern was not found
   if_matched_return="got-a-match"
   if_not_matched_return="no-match"
@@ -253,8 +251,6 @@ get_config_from_valid_BUILD_matched_test() {
 get_config_from_valid_BUILD_not_match_test() {
   build_file="${script_dir}/resources/misc/TESTBUILD.bazel"
   rule="java_gapic_library("
-  # the pattern we expect to find in the BUILD file
-  pattern_should_match="name"
   # the pattern that we should not find in the BUILD file
   pattern_should_not_match="should-not-match"
   # default value if the pattern was not found
