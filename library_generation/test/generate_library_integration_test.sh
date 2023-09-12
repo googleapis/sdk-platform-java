@@ -48,7 +48,7 @@ library_generation_dir="${script_dir}"/..
 cd "${library_generation_dir}"
 # checkout the master branch of googleapis/google (proto files) and WORKSPACE
 echo "Checking out googlapis repository..."
-sparse_clone https://github.com/googleapis/googleapis.git "${proto_path} WORKSPACE google/api google/rpc google/cloud/common_resources.proto google/iam/v1 google/type google/longrunning"
+sparse_clone https://github.com/googleapis/googleapis.git "${proto_path} WORKSPACE google/api google/cloud/location google/longrunning google/iam/v1 google/rpc google/type google/cloud/common_resources.proto google/cloud/extended_operations.proto"
 cd googleapis
 # parse version of gapic-generator-java, protobuf and grpc from WORKSPACE
 gapic_generator_version=$(get_version_from_WORKSPACE "_gapic_generator_java_version" WORKSPACE "=")
