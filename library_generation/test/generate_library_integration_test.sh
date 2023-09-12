@@ -59,37 +59,11 @@ grpc_version=$(get_version_from_WORKSPACE "_grpc_version" WORKSPACE "=")
 echo "The version of protoc-gen-grpc-java plugin is ${gapic_generator_version}."
 # parse GAPIC options from proto_path/BUILD.bazel
 proto_build_file_path="${proto_path}/BUILD.bazel"
-transport=$(get_config_from_BUILD \
-  "${proto_build_file_path}" \
-  "java_gapic_library(" \
-  "grpc+rest" \
-  "grpc" \
-  "grpc+rest"
-)
-# search again because the transport maybe `rest`.
-transport=$(get_config_from_BUILD \
-  "${proto_build_file_path}" \
-  "java_gapic_library(" \
-  "transport = \"rest\"" \
-  "grpc" \
-  "rest"
-)
-rest_numeric_enums=$(get_config_from_BUILD \
-  "${proto_build_file_path}" \
-  "java_gapic_library(" \
-  "rest_numeric_enums = True" \
-  "false" \
-  "true"
-)
-include_samples=$(get_config_from_BUILD \
-  "${proto_build_file_path}" \
-  "java_gapic_assembly_gradle_pkg(" \
-  "include_samples = True" \
-  "false" \
-  "true"
-)
+transport=$(get_transport_from_BUILD "${proto_build_file_path}")
+rest_numeric_enums=$(get_rest_numeric_enums_from_BUILD "${proto_build_file_path}")
+include_samples=$(get_include_samples_from_BUILD "${proto_build_file_path}")
 echo "GAPIC options are transport=${transport}, rest_numeric_enums=${rest_numeric_enums}, include_samples=${include_samples}."
-os_architecture="linux-x86_64"
+os_architecture="osx-aarch_64"
 if [[ "$os_type" == *"macos"* ]]; then
   os_architecture="osx-x86_64"
 fi
