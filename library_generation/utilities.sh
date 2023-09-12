@@ -178,7 +178,6 @@ download_protobuf() {
   fi
 
   protoc_path=protobuf-${protobuf_version}/bin
-  echo "protoc version: $("$protoc_path"/protoc --version)"
 }
 
 download_grpc_plugin() {
@@ -223,13 +222,12 @@ get_version_from_WORKSPACE() {
   version_key_word=$1
   workspace=$2
   version=$(\
-    cat "$workspace" |\
-    grep "$version_key_word" |\
+    grep "${version_key_word}" "${workspace}" |\
     head -n 1 |\
     sed 's/\(.*\) = "\(.*\)"\(.*\)/\2/' |\
     sed 's/[a-zA-Z-]*//'
   )
-  echo "$version"
+  echo "${version}"
 }
 
 # Used to obtain configuration values from a bazel BUILD file
@@ -244,12 +242,11 @@ get_config_from_BUILD() {
   default=$4
   if_match=$5
 
-  result="$default"
-  if grep -A 15 "$rule" "$build_file" | grep -q "$pattern"; then
-    result="$if_match"
+  result="${default}"
+  if grep -A 15 "${rule}" "${build_file}" | grep -q "${pattern}"; then
+    result="${if_match}"
   fi
-  echo "$result"
-
+  echo "${result}"
 }
 
 # Convenience function to clone only the necessary folders from a git repository
@@ -258,13 +255,13 @@ sparse_clone() {
   paths=$2
   commitish=$3
   clone_dir=$(basename "${repo_url%.*}")
-  rm -rf "$clone_dir"
-  git clone -n --depth=1 --no-single-branch --filter=tree:0 "$repo_url"
-  cd "$clone_dir"
-  if [ ! -z $commitish ]; then
-    git checkout $commitish
+  rm -rf "${clone_dir}"
+  git clone -n --depth=1 --no-single-branch --filter=tree:0 "${repo_url}"
+  cd "${clone_dir}"
+  if [ -n "${commitish}" ]; then
+    git checkout "${commitish}"
   fi
-  git sparse-checkout set --no-cone $paths
+  git sparse-checkout set --no-cone ${paths}
   git checkout
   cd ..
 }
@@ -273,8 +270,6 @@ sparse_clone() {
 get_version_from_versions_txt() {
   versions=$1
   key=$2
-  version=$(cat "$versions" | grep "$key:" | cut -d: -f3) # 3rd field is snapshot
-  echo $version
+  version=$(grep "$key:" "${versions}" | cut -d: -f3) # 3rd field is snapshot
+  echo "${version}"
 }
-
-

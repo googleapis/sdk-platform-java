@@ -124,4 +124,3 @@ library_generation/generate_library.sh \
 --rest_numeric_enums true \
 --include_samples true
 ```
-
