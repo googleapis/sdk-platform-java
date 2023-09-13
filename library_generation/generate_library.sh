@@ -67,6 +67,7 @@ done
 script_dir=$(dirname "$(readlink -f "$0")")
 # source utility functions
 source "${script_dir}"/utilities.sh
+api_version=$(extract_api_version "${proto_path}")
 
 if [ -z "${protobuf_version}" ]; then
   protobuf_version=$(get_protobuf_version "${gapic_generator_version}")
@@ -115,9 +116,9 @@ download_tools "${gapic_generator_version}" "${protobuf_version}" "${grpc_versio
 "--rpc-plugin_out=:${destination_path}/java_grpc.jar" \
 ${proto_files} # Do not quote because this variable should not be treated as one long string.
 # unzip java_grpc.jar to grpc-*/src/main/java
-unzip_src_files "grpc"
+unzip_src_files "grpc" "${api_version}"
 # remove empty files in grpc-*/src/main/java
-remove_empty_files "grpc"
+remove_empty_files "grpc" "${api_version}"
 # remove grpc version in *ServiceGrpc.java file so the content is identical with bazel build.
 remove_grpc_version
 ###################### Section 2 #####################
@@ -144,11 +145,11 @@ if [ ! -d "${proto_dir}" ]; then
 fi
 
 # move java_gapic_srcjar/src/main to gapic-*/src.
-mv_src_files "gapic" "main"
+mv_src_files "gapic" "main" "${api_version}"
 # remove empty files in gapic-*/src/main/java
-remove_empty_files "gapic"
+remove_empty_files "gapic" "${api_version}"
 # move java_gapic_srcjar/src/test to gapic-*/src
-mv_src_files "gapic" "test"
+mv_src_files "gapic" "test" "${api_version}"
 if [ "${include_samples}" == "true" ]; then
   # move java_gapic_srcjar/samples/snippets to samples/snippets
   mv_src_files "samples" "main"
@@ -159,15 +160,15 @@ fi
 "$protoc_path"/protoc "--java_out=${destination_path}/java_proto.jar" ${proto_files}
 # move java_gapic_srcjar/proto/src/main/java (generated resource name helper class)
 # to proto-*/src/main
-mv_src_files "proto" "main"
+mv_src_files "proto" "main" "${api_version}"
 # unzip java_proto.jar to proto-*/src/main/java
-unzip_src_files "proto"
+unzip_src_files "proto" "${api_version}"
 # remove empty files in proto-*/src/main/java
-remove_empty_files "proto"
+remove_empty_files "proto" "${api_version}"
 # copy proto files to proto-*/src/main/proto
 for proto_src in ${proto_files}; do
-  mkdir -p "${destination_path}/proto-${folder_name}/src/main/proto"
-  rsync -R "${proto_src}" "${destination_path}/proto-${folder_name}/src/main/proto"
+  mkdir -p "${destination_path}/proto-${folder_name}-${api_version}/src/main/proto"
+  rsync -R "${proto_src}" "${destination_path}/proto-${folder_name}-${api_version}/src/main/proto"
 done
 ##################### Section 4 #####################
 # rm tar files
@@ -177,6 +178,7 @@ rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_pro
 ##################### Section 5 #####################
 # post-processing
 #####################################################
+exit 0
 source "${script_dir}/post-processing/postprocessing_utilities.sh"
 if [ "${enable_postprocessing}" != "true" ];
 then
