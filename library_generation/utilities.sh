@@ -273,3 +273,21 @@ get_version_from_versions_txt() {
   version=$(grep "$key:" "${versions}" | cut -d: -f3) # 3rd field is snapshot
   echo "${version}"
 }
+
+detect_os_architecture() {
+  local os_type
+  local os_architecture
+  os_type=$(uname -sm)
+  case "${os_type}" in
+    *"Linux x86_64"*)
+      os_architecture="linux-x86_64"
+      ;;
+    *"Darwin x86_64"*)
+      os_architecture="osx-x86_64"
+      ;;
+    *)
+      os_architecture="osx-aarch_64"
+      ;;
+  esac
+  echo "${os_architecture}"
+}
