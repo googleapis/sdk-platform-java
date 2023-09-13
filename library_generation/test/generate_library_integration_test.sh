@@ -30,10 +30,6 @@ case $key in
     googleapis_gen_url="$2"
     shift
     ;;
-  --os_type)
-    os_type="$2"
-    shift
-    ;;
   *)
     echo "Invalid option: [$1]"
     exit 1
