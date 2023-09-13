@@ -78,11 +78,6 @@ include_samples=$(get_config_from_BUILD \
   "false"
 )
 echo "GAPIC options are transport=${transport}, rest_numeric_enums=${rest_numeric_enums}, include_samples=${include_samples}."
-os_architecture="linux-x86_64"
-if [[ "$os_type" == *"macos"* ]]; then
-  os_architecture="osx-x86_64"
-fi
-echo "OS Architecture is ${os_architecture}."
 # generate GAPIC client library
 echo "Generating library from ${proto_path}, to ${destination_path}..."
 "${library_generation_dir}"/generate_library.sh \
@@ -93,8 +88,7 @@ echo "Generating library from ${proto_path}, to ${destination_path}..."
 --grpc_version "${grpc_version}" \
 --transport "${transport}" \
 --rest_numeric_enums "${rest_numeric_enums}" \
---include_samples "${include_samples}" \
---os_architecture "${os_architecture}"
+--include_samples "${include_samples}"
 
 echo "Generate library finished."
 echo "Checking out googleapis-gen repository..."
