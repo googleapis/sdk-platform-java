@@ -65,19 +65,22 @@ transport=$(get_config_from_BUILD \
   "${proto_build_file_path}" \
   "java_gapic_library(" \
   "grpc+rest" \
-  "grpc"
+  "grpc" \
+  "grpc+rest"
 )
 rest_numeric_enums=$(get_config_from_BUILD \
   "${proto_build_file_path}" \
   "java_gapic_library(" \
   "rest_numeric_enums = False" \
-  "true"
+  "true" \
+  "false"
 )
 include_samples=$(get_config_from_BUILD \
   "${proto_build_file_path}" \
   "java_gapic_assembly_gradle_pkg(" \
   "include_samples = True" \
-  "false"
+  "false" \
+  "true"
 )
 echo "GAPIC options are transport=${transport}, rest_numeric_enums=${rest_numeric_enums}, include_samples=${include_samples}."
 # clone monorepo
