@@ -104,6 +104,7 @@ echo "Generating library from ${proto_path}, to ${destination_path}..."
 echo "Generate library finished."
 echo "Checking out googleapis-gen repository..."
 
+pushd "${output_folder}"
 sparse_clone "${googleapis_gen_url}" "${proto_path}"
 
 echo "Compare generation result..."
@@ -116,7 +117,6 @@ else
   echo "FAILURE: Differences found."
 fi
 
-cd ..
-rm -rf googleapis
+popd
 
 exit ${RESULT}
