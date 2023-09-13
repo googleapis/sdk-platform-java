@@ -181,15 +181,14 @@ generate_library_failed_with_invalid_generator_version() {
   local destination="google-cloud-alloydb-v1-java"
   local res=0
   cd "${script_dir}/resources"
-  $("${script_dir}"/../generate_library.sh \
+  "${script_dir}"/../generate_library.sh \
     -p google/cloud/alloydb/v1 \
     -d ../"${destination}" \
     --gapic_generator_version 1.99.0 \
     --protobuf_version 23.2 \
     --grpc_version 1.55.1 \
     --transport grpc+rest \
-    --rest_numeric_enums true \
-    --os_architecture "$(__get_os_architecture)") || res=$?
+    --rest_numeric_enums true || res=$?
   assertEquals 1 $((res))
   # still need to clean up potential downloaded tooling.
   cleanup "${destination}"
@@ -199,15 +198,14 @@ generate_library_failed_with_invalid_protobuf_version() {
   local destination="google-cloud-alloydb-v1-java"
   local res=0
   cd "${script_dir}/resources"
-  $("${script_dir}"/../generate_library.sh \
+  "${script_dir}"/../generate_library.sh \
     -p google/cloud/alloydb/v1 \
     -d ../"${destination}" \
     --gapic_generator_version 2.24.0 \
     --protobuf_version 22.99 \
     --grpc_version 1.55.1 \
     --transport grpc+rest \
-    --rest_numeric_enums true \
-    --os_architecture "$(__get_os_architecture)") || res=$?
+    --rest_numeric_enums true || res=$?
   assertEquals 1 $((res))
   # still need to clean up potential downloaded tooling.
   cleanup "${destination}"
@@ -217,14 +215,13 @@ generate_library_failed_with_invalid_grpc_version() {
   local destination="google-cloud-alloydb-v1-java"
   local res=0
   cd "${script_dir}/resources"
-  $("${script_dir}"/../generate_library.sh \
+  "${script_dir}"/../generate_library.sh \
     -p google/cloud/alloydb/v1 \
-    -d ../"${destination}" \
+    -d ../output/"${destination}" \
     --gapic_generator_version 2.24.0 \
     --grpc_version 0.99.0 \
     --transport grpc+rest \
-    --rest_numeric_enums true \
-    --os_architecture "$(__get_os_architecture)") || res=$?
+    --rest_numeric_enums true || res=$?
   assertEquals 1 $((res))
   # still need to clean up potential downloaded tooling.
   cleanup "${destination}"
