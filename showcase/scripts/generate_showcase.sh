@@ -11,6 +11,7 @@ source "${lib_gen_scripts_dir}/utilities.sh"
 readonly perform_cleanup=$1
 
 cd "${SCRIPT_DIR}"
+mkdir -p "${SCRIPT_DIR}/output"
 
 # clone gapic-showcase
 if [ ! -d schema ]; then
@@ -23,7 +24,7 @@ if [ ! -d schema ]; then
   showcase_version=$(grep -e '<gapic-showcase.version>' "${SCRIPT_DIR}/../gapic-showcase/pom.xml" | cut -d'>' -f2 | cut -d'<' -f1)
     sparse_clone https://github.com/googleapis/gapic-showcase.git "schema/google/showcase/v1beta1" "v${showcase_version}"
   cd gapic-showcase
-  mv schema ..
+  mv schema ../output
   cd ..
   rm -rdf gapic-showcase
 fi
@@ -32,7 +33,7 @@ if [ ! -d google ];then
     rm -rdf googleapis
   fi
   sparse_clone https://github.com/googleapis/googleapis.git "WORKSPACE google/api google/rpc google/cloud/common_resources.proto google/longrunning google/iam/v1 google/cloud/location google/type"
-  mv googleapis/google .
+  mv googleapis/google output
   rm -rdf googleapis
 fi
 
@@ -41,8 +42,8 @@ ggj_version=$(get_version_from_versions_txt ../../versions.txt "gapic-generator-
 rest_numeric_enums="false"
 transport="grpc+rest"
 include_samples="false"
-rm -rdf showcase-output
-mkdir showcase-output
+rm -rdf output/showcase-output
+mkdir output/showcase-output
 set +e
 bash "${SCRIPT_DIR}/../../library_generation/generate_library.sh" \
   --proto_path "schema/google/showcase/v1beta1" \
@@ -54,7 +55,7 @@ bash "${SCRIPT_DIR}/../../library_generation/generate_library.sh" \
 
 exit_code=$?
 if [ "${exit_code}" -ne 0 ]; then
-  rm -rdf showcase-output
+  rm -rdf output
   exit "${exit_code}"
 fi
 set +x

@@ -54,7 +54,7 @@ shift # past argument or value
 done
 
 script_dir=$(dirname "$(readlink -f "$0")")
-output_folder="${script_dir}/output"
+output_folder="$(pwd)/output"
 # source utility functions
 source "${script_dir}"/utilities.sh
 
@@ -90,7 +90,6 @@ mkdir -p "${output_folder}/${destination_path}"
 # the order of services entries in gapic_metadata.json is relevant to the
 # order of proto file, sort the proto files with respect to their name to
 # get a fixed order.
-pwd
 proto_files=$(find "${proto_path}" -type f  -name "*.proto" | sort)
 folder_name=$(extract_folder_name "${destination_path}")
 # download gapic-generator-java, protobuf and grpc plugin.
