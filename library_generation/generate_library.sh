@@ -79,8 +79,19 @@ if [ -z "${include_samples}" ]; then
 fi
 
 if [ -z "${os_architecture}" ]; then
-  os_architecture="linux-x86_64"
+  if [[ "${OSTYPE}" == "linux-gnu"* ]] || [[ "${OSTYPE}" == "freebsd"* ]]; then
+    os_architecture="linux-x86_64"
+  elif [[ "${OSTYPE}" == "darwin"* ]]; then
+    os_architecture="osx-x86_64"
+  elif [[ "${OSTYPE}" == "cygwin" ]] || [[ "${OSTYPE}" == "msys" ]]; then
+    os_architecture="win32"
+  else
+    echo 'could not detect OS. Please specify it with --os_architecture'
+    exit 1
+  fi
+  echo "Using OS architecture: ${os_architecture}"
 fi
+
 
 mkdir -p "${destination_path}"
 ##################### Section 0 #####################
