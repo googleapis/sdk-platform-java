@@ -78,7 +78,7 @@ if [ -z "${include_samples}" ]; then
 fi
 
 if [ -z "${os_architecture}" ]; then
-  os_architecture="linux-x86_64"
+  os_architecture=$(detect_OS)
 fi
 
 mkdir -p "${destination_path}"
