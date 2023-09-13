@@ -83,7 +83,7 @@ echo "GAPIC options are transport=${transport}, rest_numeric_enums=${rest_numeri
 if [ ! -d "${script_dir}/../google-cloud-java" ];
 then
   pushd "${script_dir}/.."
-  sparse_clone "https://github.com/googleapis/google-cloud-java.git" "${monorepo_folder} google-cloud-pom-parent google-cloud-jar-parent versions.txt"
+  sparse_clone "https://github.com/googleapis/google-cloud-java.git" "${monorepo_folder} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"
   popd
 fi
 target_folder="${script_dir}/../google-cloud-java/${monorepo_folder}"
