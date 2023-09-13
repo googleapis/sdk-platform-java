@@ -21,6 +21,7 @@ function run_owlbot_postprocessor {
   include_samples=$4
   scripts_root=$5
   destination_path=$6
+  api_version=$7
   cp "${repo_metadata_json_path}" "${workspace}"/.repo-metadata.json
 
   # call owl-bot-copy
@@ -34,11 +35,17 @@ function run_owlbot_postprocessor {
   owlbot_py_content=$(cat ""${scripts_root}"/post-processing/templates/owlbot.py.template")
 
   staging_suffix="java-${api_shortname}"
+
+  # copy existing pom files if google-cloud-java is present
+  pushd "${scripts_root}"
+  #rsync -a --prune-empty-dirs --include '*/' --include '*' --exclude '*' google-cloud-java/java-biglake/ google-cloud-biglake-v1/workspace/
+  popd
+
   mkdir -p "${owlbot_staging_folder}/${staging_suffix}"
-  gapic_folder_name=$(echo "${folder_name}" | sed 's/\(.*\)-.*/\1/')
-  cp -r "${destination_path}/gapic-${folder_name}" "${owlbot_staging_folder}/${staging_suffix}/${gapic_folder_name}"
-  cp -r "${destination_path}/grpc-${folder_name}" "${owlbot_staging_folder}/${staging_suffix}"
-  cp -r "${destination_path}/proto-${folder_name}" "${owlbot_staging_folder}/${staging_suffix}"
+  gapic_folder_name="${folder_name}"
+  cp -r "${destination_path}/gapic-${folder_name}-${api_version}" "${owlbot_staging_folder}/${staging_suffix}/${gapic_folder_name}"
+  cp -r "${destination_path}/grpc-${folder_name}-${api_version}" "${owlbot_staging_folder}/${staging_suffix}"
+  cp -r "${destination_path}/proto-${folder_name}-${api_version}" "${owlbot_staging_folder}/${staging_suffix}"
   if [ "${include_samples}" == 'true' ]; then
     cp -r "${destination_path}/samples" "${owlbot_staging_folder}/${staging_suffix}"
   fi

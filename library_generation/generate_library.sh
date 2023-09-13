@@ -178,7 +178,6 @@ rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_pro
 ##################### Section 5 #####################
 # post-processing
 #####################################################
-exit 0
 source "${script_dir}/post-processing/postprocessing_utilities.sh"
 if [ "${enable_postprocessing}" != "true" ];
 then
@@ -202,7 +201,7 @@ workspace="${destination_path}/workspace"
 mkdir -p "${workspace}"
 
 run_owlbot_postprocessor "${workspace}" "${owlbot_sha}" "${repo_metadata_json_path}" "${include_samples}" \
-  "${script_dir}" "${destination_path}"
+  "${script_dir}" "${destination_path}" "${api_version}"
 
 other_post_processing_scripts "${script_dir}" "${workspace}" "${repo_metadata_json_path}"
 set +x
