@@ -60,7 +60,17 @@ function other_post_processing_scripts {
   bash "${scripts_root}/post-processing/update_owlbot_postprocessor_config.sh" "${workspace}"
   bash "${scripts_root}/post-processing/delete_non_generated_samples.sh" "${workspace}"
 
-  if [ -d "${scripts_root}/google-cloud-java" ]; then
+  pushd "${scripts_root}"
+  if [ -d google-cloud-java ]; then
+    pushd google-cloud-java
+    jar_parent_pom="$(pwd)/google-cloud-jar-parent/pom.xml"
+    pom_parent_pom="$(pwd)/google-cloud-pom-parent/pom.xml"
+    popd
+    popd
+    bash "${scripts_root}/post-processing/set_parent_pom.sh" "${workspace}/pom.xml" "${jar_parent_pom}" '../google-cloud-jar-parent/pom.xml'
+    workspace_bom=$(find -wholename '*-bom/pom.xml')
+    bash "${scripts_root}/post-processing/set_parent_pom.sh" "${workspace_bom}" "${pom_parent_pom}" '../../google-cloud-pom-parent/pom.xml'
+
     # get existing versions.txt from downloaded monorepo
     repo_short=$(cat ${repo_metadata_json_path} | jq -r '.repo_short // empty')
     cp "${scripts_root}/google-cloud-java/versions.txt" "${workspace}"
@@ -69,6 +79,7 @@ function other_post_processing_scripts {
     rm versions.txt
     popd
   else
-    echo 'google-cloud-java not found. Will not update versions'
+    echo 'google-cloud-java not found. Will not update parent poms nor update versions'
+    popd
   fi
 }
