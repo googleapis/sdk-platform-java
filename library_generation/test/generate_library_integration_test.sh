@@ -85,7 +85,7 @@ sparse_clone "${googleapis_gen_url}" "${proto_path}"
 
 echo "Compare generation result..."
 RESULT=0
-diff -r "googleapis-gen/${proto_path}/${destination_path}" "${destination_path}" -x "*gradle*" -x "gapic_metadata.json" -x "package-info.java" || RESULT=$?
+diff -r "googleapis-gen/${proto_path}/${destination_path}" "${destination_path}" -x "*gradle*" || RESULT=$?
 
 if [ ${RESULT} == 0 ] ; then
   echo "SUCCESS: Comparison finished, no difference is found."
