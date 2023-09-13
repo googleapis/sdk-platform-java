@@ -48,7 +48,7 @@ library_generation_dir="${script_dir}"/..
 cd "${library_generation_dir}"
 # checkout the master branch of googleapis/google (proto files) and WORKSPACE
 echo "Checking out googlapis repository..."
-sparse_clone https://github.com/googleapis/googleapis.git "${proto_path} WORKSPACE google/api google/cloud/location google/longrunning google/iam/v1 google/rpc google/type google/cloud/common_resources.proto google/cloud/extended_operations.proto"
+sparse_clone https://github.com/googleapis/googleapis.git "${proto_path} WORKSPACE google/api google/rpc google/cloud/common_resources.proto google/iam/v1 google/type google/longrunning"
 cd googleapis
 # parse version of gapic-generator-java, protobuf and grpc from WORKSPACE
 gapic_generator_version=$(get_version_from_WORKSPACE "_gapic_generator_java_version" WORKSPACE "=")
@@ -63,7 +63,10 @@ transport=$(get_transport_from_BUILD "${proto_build_file_path}")
 rest_numeric_enums=$(get_rest_numeric_enums_from_BUILD "${proto_build_file_path}")
 include_samples=$(get_include_samples_from_BUILD "${proto_build_file_path}")
 echo "GAPIC options are transport=${transport}, rest_numeric_enums=${rest_numeric_enums}, include_samples=${include_samples}."
-os_architecture=$(get_os_architecture)
+os_architecture="linux-x86_64"
+if [[ "$os_type" == *"macos"* ]]; then
+  os_architecture="osx-x86_64"
+fi
 echo "OS Architecture is ${os_architecture}."
 # generate GAPIC client library
 echo "Generating library from ${proto_path}, to ${destination_path}..."
