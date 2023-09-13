@@ -276,9 +276,9 @@ get_version_from_versions_txt() {
 
 detect_OS() {
   if [[ "${OSTYPE}" == "linux-gnu"* ]] || [[ "${OSTYPE}" == "freebsd"* ]]; then
-    os_architecture="linux-x86_64"
+    os_architecture="linux-$(uname -m)"
   elif [[ "${OSTYPE}" == "darwin"* ]]; then
-    os_architecture="osx-x86_64"
+    os_architecture="osx-$(uname -m)"
   elif [[ "${OSTYPE}" == "cygwin" ]] || [[ "${OSTYPE}" == "msys" ]]; then
     os_architecture="win32"
   else
