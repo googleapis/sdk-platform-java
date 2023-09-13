@@ -7,17 +7,18 @@ The script, `generate_library.sh`, allows you to generate a GAPIC client library
 Use Linux environment and install java runtime environment (8 or above).
 
 ## Prerequisite
-Protos referenced by protos in `proto_path` (see `proto_path` below) should be copied to the current
-working directory (refers as `$cwd`, a directory contains `generate_library.sh`).
+Protos referenced by protos in `proto_path` (see `proto_path` below) should be copied to an `output`
+directory located in the working directory
+(likely `library_generation/output` if planning to call from the same folder).
 The directory structure should be the same as import statements in protos.
 
 For example, we want to generate from `folder1/folder2/protoA`, so `proto_path` 
-should be set to `folder1/folder2` (a relative path from `$cwd`). 
+should be set to `folder1/folder2` (a relative path from `output`). 
 protoA imports protoB as `folder3/folder4/protoB`, then there should 
-be `folder3/folder4` (containing protoB) in `$cwd`.
+be `folder3/folder4` (containing protoB) in `output`.
 
 In order to generate a GAPIC library, you need to pull `google/` from [googleapis](https://github.com/googleapis/googleapis)
-and put it into `$cwd` since protos in `google/` are likely referenced by 
+and put it into `$cwd/output` since protos in `google/` are likely referenced by 
 protos from which the library are generated.
 
 ## Parameters to run `generate_library.sh`
@@ -25,19 +26,19 @@ protos from which the library are generated.
 You need to run the script with the following parameters.
 
 ### proto_path
-A directory in `$cwd` and copy proto files into it. 
-The absolute path of `proto_path` is `$cwd/$proto_path`. 
+A directory in `$cwd/output` and copy proto files into it. 
+The absolute path of `proto_path` is `$cwd/output/$proto_path`. 
 
 Use `-p` or `--proto_path` to specify the value.
 
 ### destination_path 
-A directory within `$cwd`. 
+A directory within `$cwd/output`. 
 This is the path in which the generated library will reside. 
 The absolute path of `destination_path` is `$cwd/$destination_path`. 
 
 Use `-d` or `--destination_path` to specify the value.
    
-Note that you do not need to create `$detination_path` beforehand.
+Note that you do not need to create `$destination_path` beforehand.
 
 The directory structure of the generated library is
 ```
