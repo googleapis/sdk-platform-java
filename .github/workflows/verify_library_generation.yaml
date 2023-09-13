@@ -14,14 +14,6 @@ jobs:
       matrix:
         java: [ 8 ]
         os: [ ubuntu-22.04, macos-12 ]
-        proto_path: [ google/bigtable/v2, google/cloud/aiplatform/v1, google/cloud/compute/v1 ]
-        include:
-        - proto_path: google/bigtable/v2
-          destination: google-cloud-bigtable-v2-java
-        - proto_path: google/cloud/aiplatform/v1
-          destination: google-cloud-aiplatform-v1-java
-        - proto_path: google/cloud/compute/v1
-          destination: google-cloud-compute-v1-java
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v3
@@ -34,8 +26,8 @@ jobs:
       run: |
         set -x
         library_generation/test/generate_library_integration_test.sh \
-        -p ${{ matrix.proto_path }} \
-        -d ${{ matrix.destination }} \
+        -p google/bigtable/v2 \
+        -d google-cloud-bigtable-v2-java \
         --googleapis_gen_url https://cloud-java-bot:${{ secrets.CLOUD_JAVA_BOT_GITHUB_TOKEN }}@github.com/googleapis/googleapis-gen.git \
         --os_type ${{ matrix.os }}
   unit_tests:
