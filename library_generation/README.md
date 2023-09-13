@@ -18,7 +18,7 @@ protoA imports protoB as `folder3/folder4/protoB`, then there should
 be `folder3/folder4` (containing protoB) in `output`.
 
 In order to generate a GAPIC library, you need to pull `google/` from [googleapis](https://github.com/googleapis/googleapis)
-and put it into `$cwd/output` since protos in `google/` are likely referenced by 
+and put it into `output` since protos in `google/` are likely referenced by 
 protos from which the library are generated.
 
 ## Parameters to run `generate_library.sh`
