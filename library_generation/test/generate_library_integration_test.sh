@@ -86,6 +86,7 @@ if [[ "$os_type" == *"macos"* ]]; then
   os_architecture="osx-x86_64"
 fi
 popd
+popd
 echo "OS Architecture is ${os_architecture}."
 # generate GAPIC client library
 echo "Generating library from ${proto_path}, to ${destination_path}..."

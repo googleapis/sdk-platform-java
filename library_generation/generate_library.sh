@@ -90,14 +90,14 @@ mkdir -p "${output_folder}/${destination_path}"
 # the order of services entries in gapic_metadata.json is relevant to the
 # order of proto file, sort the proto files with respect to their name to
 # get a fixed order.
-proto_files=$(find "${proto_path}" -type f  -name "*.proto" | sort)
 folder_name=$(extract_folder_name "${destination_path}")
+pushd "${output_folder}"
+proto_files=$(find "${proto_path}" -type f  -name "*.proto" | sort)
 # download gapic-generator-java, protobuf and grpc plugin.
 download_tools "${gapic_generator_version}" "${protobuf_version}" "${grpc_version}" "${os_architecture}"
 ##################### Section 1 #####################
 # generate grpc-*/
 #####################################################
-pushd "${output_folder}"
 "${protoc_path}"/protoc "--plugin=protoc-gen-rpc-plugin=protoc-gen-grpc-java-${grpc_version}-${os_architecture}.exe" \
 "--rpc-plugin_out=:${destination_path}/java_grpc.jar" \
 ${proto_files} # Do not quote because this variable should not be treated as one long string.
