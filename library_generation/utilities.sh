@@ -275,17 +275,22 @@ get_version_from_versions_txt() {
 }
 
 detect_os_architecture() {
-  if [[ "${OSTYPE}" == "linux-gnu"* ]] || [[ "${OSTYPE}" == "freebsd"* ]]; then
-    os_architecture="linux-$(uname -m)"
-  elif [[ "${OSTYPE}" == "darwin"* ]]; then
-    os_architecture="osx-$(uname -m)"
-  elif [[ "${OSTYPE}" == "cygwin" ]] || [[ "${OSTYPE}" == "msys" ]]; then
-    os_architecture="win32"
-  else
-    >&2 echo 'Could not detect OS. Please specify it with --os_architecture'
-    >&2 echo 'Also, see https://github.com/protocolbuffers/protobuf/releases for a list of available OS (e.g. linux-aarch_64)'
-    exit 1
-  fi
+  case "${OSTYPE}" in
+    "linux-gnu"*|"freebsd"*)
+      os_architecture="linux-$(uname -m)"
+      ;;
+    "darwin"*)
+      os_architecture="osx-$(uname -m)"
+      ;;
+    "cygwin"|"msys")
+      os_architecture="win32"
+      ;;
+    *)
+      >&2 echo 'Could not detect OS. Please specify it with --os_architecture'
+      >&2 echo 'Also, see https://github.com/protocolbuffers/protobuf/releases for a list of available OS (e.g. linux-aarch_64)'
+      exit 1
+      ;;
+  esac
   >&2 echo "Detected OS architecture: ${os_architecture}" >2
   echo "${os_architecture}"
 }
