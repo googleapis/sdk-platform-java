@@ -86,10 +86,11 @@ if [ -z "${os_architecture}" ]; then
   elif [[ "${OSTYPE}" == "cygwin" ]] || [[ "${OSTYPE}" == "msys" ]]; then
     os_architecture="win32"
   else
-    echo 'could not detect OS. Please specify it with --os_architecture'
+    echo 'Could not detect OS. Please specify it with --os_architecture'
+    echo 'Also, see https://github.com/protocolbuffers/protobuf/releases for a list of available OS (e.g. linux-aarch_64)'
     exit 1
   fi
-  echo "Using OS architecture: ${os_architecture}"
+  echo "Detected OS architecture: ${os_architecture}"
 fi
 
 
