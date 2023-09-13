@@ -274,7 +274,7 @@ get_version_from_versions_txt() {
   echo "${version}"
 }
 
-detect_OS() {
+detect_os_architecture() {
   if [[ "${OSTYPE}" == "linux-gnu"* ]] || [[ "${OSTYPE}" == "freebsd"* ]]; then
     os_architecture="linux-$(uname -m)"
   elif [[ "${OSTYPE}" == "darwin"* ]]; then

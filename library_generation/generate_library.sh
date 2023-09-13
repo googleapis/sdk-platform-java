@@ -78,7 +78,7 @@ if [ -z "${include_samples}" ]; then
 fi
 
 if [ -z "${os_architecture}" ]; then
-  os_architecture=$(detect_OS)
+  os_architecture=$(detect_os_architecture)
 fi
 
 mkdir -p "${destination_path}"
