@@ -79,22 +79,11 @@ if [ -z "${include_samples}" ]; then
 fi
 
 if [ -z "${os_architecture}" ]; then
-  if [[ "${OSTYPE}" == "linux-gnu"* ]] || [[ "${OSTYPE}" == "freebsd"* ]]; then
-    os_architecture="linux-x86_64"
-  elif [[ "${OSTYPE}" == "darwin"* ]]; then
-    os_architecture="osx-x86_64"
-  elif [[ "${OSTYPE}" == "cygwin" ]] || [[ "${OSTYPE}" == "msys" ]]; then
-    os_architecture="win32"
-  else
-    echo 'Could not detect OS. Please specify it with --os_architecture'
-    echo 'Also, see https://github.com/protocolbuffers/protobuf/releases for a list of available OS (e.g. linux-aarch_64)'
-    exit 1
-  fi
-  echo "Detected OS architecture: ${os_architecture}"
+  os_architecture=$(detect_OS)
 fi
 
 
-mkdir -p "${destination_path}"
+mkdir -p "${output_folder}/${destination_path}"
 ##################### Section 0 #####################
 # prepare tooling
 #####################################################
@@ -172,6 +161,6 @@ popd # output_folder
 ##################### Section 4 #####################
 # rm tar files
 #####################################################
-cd "${destination_path}"
+cd "${output_folder}/${destination_path}"
 rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_proto.jar temp-codegen.srcjar
 set +x
