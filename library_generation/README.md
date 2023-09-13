@@ -34,7 +34,7 @@ Use `-p` or `--proto_path` to specify the value.
 ### destination_path 
 A directory within `$cwd/output`. 
 This is the path in which the generated library will reside. 
-The absolute path of `destination_path` is `$cwd/$destination_path`. 
+The absolute path of `destination_path` is `$cwd/output/$destination_path`. 
 
 Use `-d` or `--destination_path` to specify the value.
    
