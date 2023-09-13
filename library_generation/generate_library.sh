@@ -82,7 +82,8 @@ if [ -z "${os_architecture}" ]; then
   os_architecture="linux-x86_64"
 fi
 
-mkdir -p "${destination_path}"
+
+mkdir -p "${output_folder}/${destination_path}"
 ##################### Section 0 #####################
 # prepare tooling
 #####################################################
@@ -160,6 +161,6 @@ popd # output_folder
 ##################### Section 4 #####################
 # rm tar files
 #####################################################
-cd "${destination_path}"
+cd "${output_folder}/${destination_path}"
 rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_proto.jar temp-codegen.srcjar
 set +x
