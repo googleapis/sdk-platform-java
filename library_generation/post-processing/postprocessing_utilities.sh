@@ -59,6 +59,7 @@ function other_post_processing_scripts {
   # postprocessor cleanup
   bash "${scripts_root}/post-processing/update_owlbot_postprocessor_config.sh" "${workspace}"
   bash "${scripts_root}/post-processing/delete_non_generated_samples.sh" "${workspace}"
+  bash "${scripts_root}/post-processing/consolidate_config.sh" "${workspace}"
 
   pushd "${scripts_root}"
   if [ -d google-cloud-java ]; then
