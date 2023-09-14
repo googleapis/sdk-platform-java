@@ -51,7 +51,7 @@ bash "${SCRIPT_DIR}/../../library_generation/generate_library.sh" \
   --gapic_generator_version "${ggj_version}" \
   --rest_numeric_enums "${rest_numeric_enums}" \
   --include_samples "${include_samples}" \
-  --transport "${transport}" &> out
+  --transport "${transport}" 
 
 exit_code=$?
 if [ "${exit_code}" -ne 0 ]; then
