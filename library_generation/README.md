@@ -12,7 +12,7 @@ directory located in the working directory
 (likely `library_generation/output` if planning to call from the same folder).
 The directory structure should be the same as import statements in protos.
 
-For example, we want to generate from `folder1/folder2/protoA`, so `proto_path` 
+For example, you want to generate from `folder1/folder2/protoA`, so `proto_path` 
 should be set to `folder1/folder2` (a relative path from `output`). 
 protoA imports protoB as `folder3/folder4/protoB`, then there should 
 be `folder3/folder4` (containing protoB) in `output`.
