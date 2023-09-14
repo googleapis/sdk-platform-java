@@ -85,8 +85,8 @@ os_architecture="linux-x86_64"
 if [[ "$os_type" == *"macos"* ]]; then
   os_architecture="osx-x86_64"
 fi
-popd
-popd
+popd # googleapis
+popd # output_folder
 echo "OS Architecture is ${os_architecture}."
 # generate GAPIC client library
 echo "Generating library from ${proto_path}, to ${destination_path}..."
@@ -117,6 +117,6 @@ else
   echo "FAILURE: Differences found."
 fi
 
-popd
+popd # output_folder
 
 exit ${RESULT}
