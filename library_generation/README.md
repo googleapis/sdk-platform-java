@@ -8,7 +8,7 @@ Use Linux environment and install java runtime environment (8 or above).
 
 ## Prerequisite
 Protos referenced by protos in `proto_path` (see `proto_path` below) should be copied to an `output`
-directory located in the working directory
+directory located in the working directory, referred as `$cwd`
 (likely `library_generation/output` if planning to call from the same folder).
 The directory structure should be the same as import statements in protos.
 
