@@ -55,24 +55,9 @@ grpc_version=$(get_version_from_WORKSPACE "_grpc_version" WORKSPACE "=")
 echo "The version of protoc-gen-grpc-java plugin is ${gapic_generator_version}."
 # parse GAPIC options from proto_path/BUILD.bazel
 proto_build_file_path="${proto_path}/BUILD.bazel"
-transport=$(get_config_from_BUILD \
-  "${proto_build_file_path}" \
-  "java_gapic_library(" \
-  "grpc+rest" \
-  "grpc"
-)
-rest_numeric_enums=$(get_config_from_BUILD \
-  "${proto_build_file_path}" \
-  "java_gapic_library(" \
-  "rest_numeric_enums = False" \
-  "true"
-)
-include_samples=$(get_config_from_BUILD \
-  "${proto_build_file_path}" \
-  "java_gapic_assembly_gradle_pkg(" \
-  "include_samples = True" \
-  "false"
-)
+transport=$(get_transport_from_BUILD "${proto_build_file_path}")
+rest_numeric_enums=$(get_rest_numeric_enums_from_BUILD "${proto_build_file_path}")
+include_samples=$(get_include_samples_from_BUILD "${proto_build_file_path}")
 echo "GAPIC options are transport=${transport}, rest_numeric_enums=${rest_numeric_enums}, include_samples=${include_samples}."
 # generate GAPIC client library
 echo "Generating library from ${proto_path}, to ${destination_path}..."
