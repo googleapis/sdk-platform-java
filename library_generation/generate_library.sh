@@ -193,21 +193,12 @@ elif [ -z "${repo_metadata_json_path}" ];
 then
   echo "no repo_metadata.json provided. This is necessary for post-processing the generated library" >&2
   exit 1
-elif [ -z "${owlbot_sha}" ];
-then
-  if [ ! -d "${script_dir}"/google-cloud-java ];
-  then
-    echo 'no owlbot_sha provided and no monorepo to infer it from. This is necessary for post-processing' >&2
-    exit 1
-  fi
-  echo "no owlbot_sha provided. Will compute from monorepo's head"
-  owlbot_sha=$(grep 'sha256' "${script_dir}/google-cloud-java/.github/.OwlBot.lock.yaml" | cut -d: -f3)
 fi
-workspace="${destination_path}/workspace"
+workspace="${output_folder}/${destination_path}/workspace"
 mkdir -p "${workspace}"
 
 run_owlbot_postprocessor "${workspace}" "${owlbot_sha}" "${repo_metadata_json_path}" "${include_samples}" \
-  "${script_dir}" "${destination_path}" "${api_version}"
+  "${script_dir}" "${output_folder}/${destination_path}" "${api_version}"
 
-other_post_processing_scripts "${script_dir}" "${workspace}" "${repo_metadata_json_path}"
+other_post_processing_scripts "${script_dir}" "${workspace}" "${repo_metadata_json_path}" "${output_folder}"
 set +x

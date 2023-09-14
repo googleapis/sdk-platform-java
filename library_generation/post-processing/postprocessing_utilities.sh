@@ -22,6 +22,16 @@ function run_owlbot_postprocessor {
   scripts_root=$5
   destination_path=$6
   api_version=$7
+
+  if [ -z "${owlbot_sha}" ]; then
+    if [ ! -d "${output_folder}"/google-cloud-java ];
+    then
+      echo 'no owlbot_sha provided and no monorepo to infer it from. This is necessary for post-processing' >&2
+      exit 1
+    fi
+    echo "no owlbot_sha provided. Will compute from monorepo's head"
+    owlbot_sha=$(grep 'sha256' "${output_folder}/google-cloud-java/.github/.OwlBot.lock.yaml" | cut -d: -f3)
+  fi
   cp "${repo_metadata_json_path}" "${workspace}"/.repo-metadata.json
 
   # call owl-bot-copy
@@ -63,12 +73,13 @@ function other_post_processing_scripts {
   scripts_root=$1
   workspace=$2
   repo_metadata_json_path=$3
+  output_folder=$4
   # postprocessor cleanup
   bash "${scripts_root}/post-processing/update_owlbot_postprocessor_config.sh" "${workspace}"
   bash "${scripts_root}/post-processing/delete_non_generated_samples.sh" "${workspace}"
   bash "${scripts_root}/post-processing/consolidate_config.sh" "${workspace}"
 
-  pushd "${scripts_root}"
+  pushd "${output_folder}"
   if [ -d google-cloud-java ]; then
     pushd google-cloud-java
     jar_parent_pom="$(pwd)/google-cloud-jar-parent/pom.xml"
@@ -76,12 +87,14 @@ function other_post_processing_scripts {
     popd
     popd
     bash "${scripts_root}/post-processing/set_parent_pom.sh" "${workspace}/pom.xml" "${jar_parent_pom}" '../google-cloud-jar-parent/pom.xml'
-    workspace_bom=$(find -wholename '*-bom/pom.xml')
+    workspace_bom=$(find "${workspace}" -wholename '*-bom/pom.xml')
+    pushd "${workspace}"
     bash "${scripts_root}/post-processing/set_parent_pom.sh" "${workspace_bom}" "${pom_parent_pom}" '../../google-cloud-pom-parent/pom.xml'
+    popd
 
     # get existing versions.txt from downloaded monorepo
     repo_short=$(cat ${repo_metadata_json_path} | jq -r '.repo_short // empty')
-    cp "${scripts_root}/google-cloud-java/versions.txt" "${workspace}"
+    cp "${output_folder}/google-cloud-java/versions.txt" "${workspace}"
     pushd "${workspace}"
     bash "${scripts_root}/post-processing/apply_current_versions.sh"
     rm versions.txt

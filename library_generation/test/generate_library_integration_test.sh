@@ -67,13 +67,13 @@ rest_numeric_enums=$(get_rest_numeric_enums_from_BUILD "${proto_build_file_path}
 include_samples=$(get_include_samples_from_BUILD "${proto_build_file_path}")
 echo "GAPIC options are transport=${transport}, rest_numeric_enums=${rest_numeric_enums}, include_samples=${include_samples}."
 # clone monorepo
-if [ ! -d "${script_dir}/../google-cloud-java" ];
+if [ ! -d "${output_folder}/google-cloud-java" ];
 then
-  pushd "${script_dir}/.."
+  pushd "${output_folder}"
   sparse_clone "https://github.com/googleapis/google-cloud-java.git" "${monorepo_folder} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"
   popd
 fi
-target_folder="${script_dir}/../google-cloud-java/${monorepo_folder}"
+target_folder="${output_folder}/google-cloud-java/${monorepo_folder}"
 repo_metadata_json_path="${target_folder}/.repo-metadata.json"
 # generate GAPIC client library
 popd
