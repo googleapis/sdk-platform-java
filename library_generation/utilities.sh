@@ -285,3 +285,21 @@ get_version_from_versions_txt() {
 extract_api_version() {
   echo $1 | rev | cut -d/ -f1 | rev
 }
+
+detect_os_architecture() {
+  local os_type
+  local os_architecture
+  os_type=$(uname -sm)
+  case "${os_type}" in
+    *"Linux x86_64"*)
+      os_architecture="linux-x86_64"
+      ;;
+    *"Darwin x86_64"*)
+      os_architecture="osx-x86_64"
+      ;;
+    *)
+      os_architecture="osx-aarch_64"
+      ;;
+  esac
+  echo "${os_architecture}"
+}

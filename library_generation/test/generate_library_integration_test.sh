@@ -27,10 +27,6 @@ case $key in
     monorepo_folder="$2"
     shift
     ;;
-  -o|--os_type)
-    os_type="$2"
-    shift
-    ;;
   -s|--owlbot_sha)
     owlbot_sha="$2"
     shift
@@ -92,11 +88,6 @@ then
 fi
 target_folder="${script_dir}/../google-cloud-java/${monorepo_folder}"
 repo_metadata_json_path="${target_folder}/.repo-metadata.json"
-os_architecture="linux-x86_64"
-if [[ "${os_type}" == *"macos"* ]]; then
-  os_architecture="osx-x86_64"
-fi
-echo "OS Architecture is ${os_architecture}."
 # generate GAPIC client library
 echo "Generating library from ${proto_path}, to ${destination_path}..."
 "${library_generation_dir}"/generate_library.sh \
@@ -110,8 +101,7 @@ echo "Generating library from ${proto_path}, to ${destination_path}..."
 --enable_postprocessing "true" \
 --repo_metadata_json_path "${repo_metadata_json_path}" \
 --owlbot_sha "${owlbot_sha}" \
---include_samples "${include_samples}" \
---os_architecture "${os_architecture}"
+--include_samples "${include_samples}"
 
 echo "Generate library finished."
 echo "Compare generation result..."

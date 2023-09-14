@@ -93,8 +93,8 @@ if [ -z "$enable_postprocessing" ]; then
   enable_postprocessing="false"
 fi
 
-if [ -z "$os_architecture" ]; then
-  os_architecture="linux-x86_64"
+if [ -z "${os_architecture}" ]; then
+  os_architecture=$(detect_os_architecture)
 fi
 
 destination_path="${script_dir}/$destination_path"
