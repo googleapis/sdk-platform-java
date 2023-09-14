@@ -1,0 +1,6 @@
+# This file is used in integration test against `generate_library.sh`.
+# Format:
+# proto_path destination_path
+google/bigtable/v2 google-cloud-bigtable-v2-java
+google/cloud/aiplatform/v1 google-cloud-aiplatform-v1-java
+google/cloud/compute/v1 google-cloud-compute-v1-java
