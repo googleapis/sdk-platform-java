@@ -14,6 +14,10 @@ set -xeo pipefail
 
 # defaults
 googleapis_gen_url="git@github.com:googleapis/googleapis-gen.git"
+script_dir=$(dirname "$(readlink -f "$0")")
+source "${script_dir}/../utilities.sh"
+library_generation_dir="${script_dir}"/..
+output_folder="$(get_output_folder)"
 
 while [[ $# -gt 0 ]]; do
 key="$1"
@@ -38,10 +42,6 @@ esac
 shift # past argument or value
 done
 
-script_dir=$(dirname "$(readlink -f "$0")")
-source "${script_dir}/../utilities.sh"
-library_generation_dir="${script_dir}"/..
-output_folder="$(get_output_folder)"
 mkdir -p "${output_folder}"
 pushd "${output_folder}"
 # checkout the master branch of googleapis/google (proto files) and WORKSPACE
@@ -63,6 +63,8 @@ rest_numeric_enums=$(get_rest_numeric_enums_from_BUILD "${proto_build_file_path}
 include_samples=$(get_include_samples_from_BUILD "${proto_build_file_path}")
 echo "GAPIC options are transport=${transport}, rest_numeric_enums=${rest_numeric_enums}, include_samples=${include_samples}."
 # generate GAPIC client library
+popd
+popd
 echo "Generating library from ${proto_path}, to ${destination_path}..."
 "${library_generation_dir}"/generate_library.sh \
 -p "${proto_path}" \

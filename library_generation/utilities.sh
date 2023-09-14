@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 set -xeo pipefail
-utilities_script_dir=$(echo "${BASH_SOURCE}" | rev | cut -d/ -f2- | rev)
 
 
 # private functions that should not be called outside this file.
@@ -330,7 +329,7 @@ get_version_from_versions_txt() {
 # relies on utilities_script_dir which points to the same location as
 # `generate_library.sh`
 get_output_folder() {
-  echo "${utilities_script_dir}/output"
+  echo "$(pwd)/output"
 }
 
 detect_os_architecture() {
