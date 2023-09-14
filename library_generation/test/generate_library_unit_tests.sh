@@ -181,15 +181,14 @@ generate_library_failed_with_invalid_generator_version() {
   local destination="google-cloud-alloydb-v1-java"
   local res=0
   cd "${script_dir}/resources"
-  $("${script_dir}"/../generate_library.sh \
+  bash "${script_dir}"/../generate_library.sh \
     -p google/cloud/alloydb/v1 \
     -d ../"${destination}" \
     --gapic_generator_version 1.99.0 \
     --protobuf_version 23.2 \
     --grpc_version 1.55.1 \
     --transport grpc+rest \
-    --rest_numeric_enums true \
-    --os_architecture "$(__get_os_architecture)") || res=$?
+    --rest_numeric_enums true || res=$?
   assertEquals 1 $((res))
   # still need to clean up potential downloaded tooling.
   cleanup "${destination}"
@@ -199,15 +198,14 @@ generate_library_failed_with_invalid_protobuf_version() {
   local destination="google-cloud-alloydb-v1-java"
   local res=0
   cd "${script_dir}/resources"
-  $("${script_dir}"/../generate_library.sh \
+  bash "${script_dir}"/../generate_library.sh \
     -p google/cloud/alloydb/v1 \
     -d ../"${destination}" \
     --gapic_generator_version 2.24.0 \
     --protobuf_version 22.99 \
     --grpc_version 1.55.1 \
     --transport grpc+rest \
-    --rest_numeric_enums true \
-    --os_architecture "$(__get_os_architecture)") || res=$?
+    --rest_numeric_enums true || res=$?
   assertEquals 1 $((res))
   # still need to clean up potential downloaded tooling.
   cleanup "${destination}"
@@ -217,53 +215,79 @@ generate_library_failed_with_invalid_grpc_version() {
   local destination="google-cloud-alloydb-v1-java"
   local res=0
   cd "${script_dir}/resources"
-  $("${script_dir}"/../generate_library.sh \
+  bash "${script_dir}"/../generate_library.sh \
     -p google/cloud/alloydb/v1 \
-    -d ../"${destination}" \
+    -d ../output/"${destination}" \
     --gapic_generator_version 2.24.0 \
     --grpc_version 0.99.0 \
     --transport grpc+rest \
-    --rest_numeric_enums true \
-    --os_architecture "$(__get_os_architecture)") || res=$?
+    --rest_numeric_enums true || res=$?
   assertEquals 1 $((res))
   # still need to clean up potential downloaded tooling.
   cleanup "${destination}"
 }
 
-get_config_from_valid_BUILD_matched_test() {
-  build_file="${script_dir}/resources/misc/TESTBUILD.bazel"
-  rule="java_gapic_library("
-  # the pattern we expect to find in the BUILD file
-  pattern_should_match="name"
-  # default value if the pattern was not found
-  if_matched_return="got-a-match"
-  if_not_matched_return="no-match"
-  pattern_matched_result=$(get_config_from_BUILD \
-    "${build_file}" \
-    "${rule}" \
-    "${pattern_should_match}" \
-    "${if_not_matched_return}" \
-    "${if_matched_return}"
-  )
-  assertEquals "${if_matched_return}" "${pattern_matched_result}"
+get_transport_from_BUILD_grpc_rest_test() {
+  local build_file="${script_dir}/resources/misc/BUILD_grpc_rest.bazel"
+  local transport
+  transport=$(get_transport_from_BUILD "${build_file}")
+  assertEquals "grpc+rest" "${transport}"
 }
 
-get_config_from_valid_BUILD_not_match_test() {
-  build_file="${script_dir}/resources/misc/TESTBUILD.bazel"
-  rule="java_gapic_library("
-  # the pattern that we should not find in the BUILD file
-  pattern_should_not_match="should-not-match"
-  # default value if the pattern was not found
-  if_matched_return="got-a-match"
-  if_not_matched_return="no-match"
-  pattern_not_matched_result=$(get_config_from_BUILD \
-    "${build_file}" \
-    "${rule}" \
-    "${pattern_should_not_match}" \
-    "${if_not_matched_return}" \
-    "${if_matched_return}"
-  )
-  assertEquals "${if_not_matched_return}" "${pattern_not_matched_result}"
+get_transport_from_BUILD_grpc_test() {
+  local build_file="${script_dir}/resources/misc/BUILD_grpc.bazel"
+  local transport
+  transport=$(get_transport_from_BUILD "${build_file}")
+  assertEquals "grpc" "${transport}"
+}
+
+get_transport_from_BUILD_rest_test() {
+  local build_file="${script_dir}/resources/misc/BUILD_rest.bazel"
+  local transport
+  transport=$(get_transport_from_BUILD "${build_file}")
+  assertEquals "rest" "${transport}"
+}
+
+get_rest_numeric_enums_from_BUILD_true_test() {
+  local build_file="${script_dir}/resources/misc/BUILD_rest_numeric_enums_true.bazel"
+  local rest_numeric_enums
+  rest_numeric_enums=$(get_rest_numeric_enums_from_BUILD "${build_file}")
+  assertEquals "true" "${rest_numeric_enums}"
+}
+
+get_rest_numeric_enums_from_BUILD_false_test() {
+  local build_file="${script_dir}/resources/misc/BUILD_rest_numeric_enums_false.bazel"
+  local rest_numeric_enums
+  rest_numeric_enums=$(get_rest_numeric_enums_from_BUILD "${build_file}")
+  assertEquals "false" "${rest_numeric_enums}"
+}
+
+get_rest_numeric_enums_from_BUILD_empty_test() {
+  local build_file="${script_dir}/resources/misc/BUILD_rest_numeric_enums_empty.bazel"
+  local rest_numeric_enums
+  rest_numeric_enums=$(get_rest_numeric_enums_from_BUILD "${build_file}")
+  assertEquals "false" "${rest_numeric_enums}"
+}
+
+get_include_samples_from_BUILD_true_test() {
+  local build_file="${script_dir}/resources/misc/BUILD_include_samples_true.bazel"
+  local include_samples
+  include_samples=$(get_include_samples_from_BUILD "${build_file}")
+  assertEquals "true" "${include_samples}"
+}
+
+get_include_samples_from_BUILD_false_test() {
+  local build_file="${script_dir}/resources/misc/BUILD_include_samples_false.bazel"
+  local include_samples
+  include_samples=$(get_include_samples_from_BUILD "${build_file}")
+  assertEquals "false" "${include_samples}"
+}
+
+get_include_samples_from_BUILD_empty_test() {
+  local build_file="${script_dir}/resources/misc/BUILD_include_samples_empty.bazel"
+  local include_samples
+  include_samples=$(get_include_samples_from_BUILD "${build_file}")
+  assertEquals "false" "${include_samples}"
 }
 
 get_version_from_valid_WORKSPACE_test() {
@@ -312,8 +336,15 @@ test_list=(
   generate_library_failed_with_invalid_generator_version
   generate_library_failed_with_invalid_protobuf_version
   generate_library_failed_with_invalid_grpc_version
-  get_config_from_valid_BUILD_matched_test
-  get_config_from_valid_BUILD_not_match_test
+  get_transport_from_BUILD_grpc_rest_test
+  get_transport_from_BUILD_grpc_test
+  get_transport_from_BUILD_rest_test
+  get_rest_numeric_enums_from_BUILD_true_test
+  get_rest_numeric_enums_from_BUILD_false_test
+  get_rest_numeric_enums_from_BUILD_empty_test
+  get_include_samples_from_BUILD_true_test
+  get_include_samples_from_BUILD_false_test
+  get_include_samples_from_BUILD_empty_test
   get_version_from_valid_WORKSPACE_test
   get_generator_version_from_valid_versions_txt_test
   get_gax_version_from_valid_versions_txt_test

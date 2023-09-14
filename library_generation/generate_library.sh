@@ -68,6 +68,7 @@ script_dir=$(dirname "$(readlink -f "$0")")
 # source utility functions
 source "${script_dir}"/utilities.sh
 api_version=$(extract_api_version "${proto_path}")
+output_folder="$(get_output_folder)"
 
 if [ -z "${protobuf_version}" ]; then
   protobuf_version=$(get_protobuf_version "${gapic_generator_version}")
@@ -97,30 +98,33 @@ if [ -z "${os_architecture}" ]; then
   os_architecture=$(detect_os_architecture)
 fi
 
-destination_path="${script_dir}/$destination_path"
-mkdir -p "$destination_path"
+
+mkdir -p "${output_folder}/${destination_path}"
 ##################### Section 0 #####################
 # prepare tooling
 #####################################################
 # the order of services entries in gapic_metadata.json is relevant to the
 # order of proto file, sort the proto files with respect to their name to
 # get a fixed order.
-proto_files=$(find "${proto_path}" -type f  -name "*.proto" | sort)
 folder_name=$(extract_folder_name "${destination_path}")
+pushd "${output_folder}"
+proto_files=$(find "${proto_path}" -type f  -name "*.proto" | sort)
 # download gapic-generator-java, protobuf and grpc plugin.
 download_tools "${gapic_generator_version}" "${protobuf_version}" "${grpc_version}" "${os_architecture}"
 ##################### Section 1 #####################
 # generate grpc-*/
 #####################################################
-"${protoc_path}"/protoc "--plugin=protoc-gen-rpc-plugin=protoc-gen-grpc-java-${grpc_version}-${os_architecture}.exe" \
-"--rpc-plugin_out=:${destination_path}/java_grpc.jar" \
-${proto_files} # Do not quote because this variable should not be treated as one long string.
-# unzip java_grpc.jar to grpc-*/src/main/java
-unzip_src_files "grpc" "${api_version}"
-# remove empty files in grpc-*/src/main/java
-remove_empty_files "grpc" "${api_version}"
-# remove grpc version in *ServiceGrpc.java file so the content is identical with bazel build.
-remove_grpc_version
+if [[ ! "${transport}" == "rest" ]]; then
+  "${protoc_path}"/protoc "--plugin=protoc-gen-rpc-plugin=protoc-gen-grpc-java-${grpc_version}-${os_architecture}.exe" \
+  "--rpc-plugin_out=:${destination_path}/java_grpc.jar" \
+  ${proto_files} # Do not quote because this variable should not be treated as one long string.
+  # unzip java_grpc.jar to grpc-*/src/main/java
+  unzip_src_files "grpc" "${api_version}"
+  # remove empty files in grpc-*/src/main/java
+  remove_empty_files "grpc" "${api_version}"
+  # remove grpc version in *ServiceGrpc.java file so the content is identical with bazel build.
+  remove_grpc_version
+fi
 ###################### Section 2 #####################
 ## generate gapic-*/, part of proto-*/, samples/
 ######################################################
@@ -170,11 +174,13 @@ for proto_src in ${proto_files}; do
   mkdir -p "${destination_path}/proto-${folder_name}-${api_version}/src/main/proto"
   rsync -R "${proto_src}" "${destination_path}/proto-${folder_name}-${api_version}/src/main/proto"
 done
+popd # output_folder
 ##################### Section 4 #####################
 # rm tar files
 #####################################################
-cd "${destination_path}"
+pushd "${output_folder}/${destination_path}"
 rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_proto.jar temp-codegen.srcjar
+popd # destination path
 ##################### Section 5 #####################
 # post-processing
 #####################################################

@@ -2,8 +2,29 @@
 
 set -xeo pipefail
 
-# define utility functions
 
+# private functions that should not be called outside this file.
+
+# Used to obtain configuration values from a bazel BUILD file
+#
+# inspects a $build_file for a certain $rule (e.g. java_gapic_library). If the
+# first 15 lines after the declaration of the rule contain $pattern, then
+# it will return $if_match if $pattern is found, otherwise $default
+__get_config_from_BUILD() {
+  build_file=$1
+  rule=$2
+  pattern=$3
+  default=$4
+  if_match=$5
+
+  result="${default}"
+  if grep -A 15 "${rule}" "${build_file}" | grep -q "${pattern}"; then
+    result="${if_match}"
+  fi
+  echo "${result}"
+}
+
+# define utility functions
 extract_folder_name() {
   local destination_path=$1
   local folder_name=${destination_path##*/}
@@ -143,6 +164,7 @@ get_protobuf_version() {
 }
 
 download_tools() {
+  pushd "${output_folder}"
   local gapic_generator_version=$1
   local protobuf_version=$2
   local grpc_version=$3
@@ -150,6 +172,7 @@ download_tools() {
   download_generator "${gapic_generator_version}"
   download_protobuf "${protobuf_version}" "${os_architecture}"
   download_grpc_plugin "${grpc_version}" "${os_architecture}"
+  popd
 }
 
 download_generator() {
@@ -183,7 +206,7 @@ download_protobuf() {
     rm "protobuf-${protobuf_version}.zip"
   fi
 
-  protoc_path=protobuf-${protobuf_version}/bin
+  protoc_path="${output_folder}/protobuf-${protobuf_version}/bin"
 }
 
 download_grpc_plugin() {
@@ -236,23 +259,51 @@ get_version_from_WORKSPACE() {
   echo "${version}"
 }
 
-# Used to obtain configuration values from a bazel BUILD file
-#
-# inspects a $build_file for a certain $rule (e.g. java_gapic_library). If the
-# first 15 lines after the declaration of the rule contain $pattern, then
-# it will return $if_match if $pattern is found, otherwise $default
-get_config_from_BUILD() {
-  build_file=$1
-  rule=$2
-  pattern=$3
-  default=$4
-  if_match=$5
+get_transport_from_BUILD() {
+  local build_file=$1
+  local transport
+  transport=$(__get_config_from_BUILD \
+    "${build_file}" \
+    "java_gapic_library(" \
+    "grpc+rest" \
+    "grpc" \
+    "grpc+rest"
+  )
+  # search again because the transport maybe `rest`.
+  transport=$(__get_config_from_BUILD \
+    "${build_file}" \
+    "java_gapic_library(" \
+    "transport = \"rest\"" \
+    "${transport}" \
+    "rest"
+  )
+  echo "${transport}"
+}
 
-  result="${default}"
-  if grep -A 15 "${rule}" "${build_file}" | grep -q "${pattern}"; then
-    result="${if_match}"
-  fi
-  echo "${result}"
+get_rest_numeric_enums_from_BUILD() {
+  local build_file=$1
+  local rest_numeric_enums
+  rest_numeric_enums=$(__get_config_from_BUILD \
+    "${build_file}" \
+    "java_gapic_library(" \
+    "rest_numeric_enums = True" \
+    "false" \
+    "true"
+  )
+  echo "${rest_numeric_enums}"
+}
+
+get_include_samples_from_BUILD() {
+  local build_file=$1
+  local include_samples
+  include_samples=$(__get_config_from_BUILD \
+    "${build_file}" \
+    "java_gapic_assembly_gradle_pkg(" \
+    "include_samples = True" \
+    "false" \
+    "true"
+  )
+  echo "${include_samples}"
 }
 
 # Convenience function to clone only the necessary folders from a git repository
@@ -263,13 +314,13 @@ sparse_clone() {
   clone_dir=$(basename "${repo_url%.*}")
   rm -rf "${clone_dir}"
   git clone -n --depth=1 --no-single-branch --filter=tree:0 "${repo_url}"
-  cd "${clone_dir}"
+  pushd "${clone_dir}"
   if [ -n "${commitish}" ]; then
     git checkout "${commitish}"
   fi
   git sparse-checkout set --no-cone ${paths}
   git checkout
-  cd ..
+  popd
 }
 
 # takes a versions.txt file and returns its version
@@ -284,6 +335,13 @@ get_version_from_versions_txt() {
 # element of the slash (/) separated path, in this case v1
 extract_api_version() {
   echo $1 | rev | cut -d/ -f1 | rev
+}
+
+# gets the output folder where all sources and dependencies will be located. It
+# relies on utilities_script_dir which points to the same location as
+# `generate_library.sh`
+get_output_folder() {
+  echo "$(pwd)/output"
 }
 
 detect_os_architecture() {

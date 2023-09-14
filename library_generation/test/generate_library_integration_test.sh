@@ -12,6 +12,13 @@ set -xeo pipefail
 #    from proto_path/BUILD.bazel.
 # 4. checkout the master branch google-cloud-java repository and compare the result.
 
+# defaults
+googleapis_gen_url="git@github.com:googleapis/googleapis-gen.git"
+script_dir=$(dirname "$(readlink -f "$0")")
+source "${script_dir}/../utilities.sh"
+library_generation_dir="${script_dir}"/..
+output_folder="$(get_output_folder)"
+
 while [[ $# -gt 0 ]]; do
 key="$1"
 case $key in
@@ -39,15 +46,13 @@ esac
 shift # past argument or value
 done
 
-script_dir=$(dirname "$(readlink -f "$0")")
-source "${script_dir}/../utilities.sh"
-library_generation_dir="${script_dir}"/..
-cd "${library_generation_dir}"
+mkdir -p "${output_folder}"
+pushd "${output_folder}"
 # checkout the master branch of googleapis/google (proto files) and WORKSPACE
 echo "Checking out googlapis repository..."
 sparse_clone https://github.com/googleapis/googleapis.git "${proto_path} WORKSPACE google/api google/type google/rpc google/longrunning google/cloud/common_resources.proto google/iam/v1 google/cloud/location"
-cd googleapis
-cp -r google ..
+pushd googleapis
+cp -r google "${output_folder}"
 # parse version of gapic-generator-java, protobuf and grpc from WORKSPACE
 gapic_generator_version=$(get_version_from_WORKSPACE "_gapic_generator_java_version" WORKSPACE "=")
 echo "The version of gapic-generator-java is ${gapic_generator_version}."
@@ -57,27 +62,9 @@ grpc_version=$(get_version_from_WORKSPACE "_grpc_version" WORKSPACE "=")
 echo "The version of protoc-gen-grpc-java plugin is ${gapic_generator_version}."
 # parse GAPIC options from proto_path/BUILD.bazel
 proto_build_file_path="${proto_path}/BUILD.bazel"
-transport=$(get_config_from_BUILD \
-  "${proto_build_file_path}" \
-  "java_gapic_library(" \
-  "grpc+rest" \
-  "grpc" \
-  "grpc+rest"
-)
-rest_numeric_enums=$(get_config_from_BUILD \
-  "${proto_build_file_path}" \
-  "java_gapic_library(" \
-  "rest_numeric_enums = False" \
-  "true" \
-  "false"
-)
-include_samples=$(get_config_from_BUILD \
-  "${proto_build_file_path}" \
-  "java_gapic_assembly_gradle_pkg(" \
-  "include_samples = True" \
-  "false" \
-  "true"
-)
+transport=$(get_transport_from_BUILD "${proto_build_file_path}")
+rest_numeric_enums=$(get_rest_numeric_enums_from_BUILD "${proto_build_file_path}")
+include_samples=$(get_include_samples_from_BUILD "${proto_build_file_path}")
 echo "GAPIC options are transport=${transport}, rest_numeric_enums=${rest_numeric_enums}, include_samples=${include_samples}."
 # clone monorepo
 if [ ! -d "${script_dir}/../google-cloud-java" ];
@@ -89,6 +76,8 @@ fi
 target_folder="${script_dir}/../google-cloud-java/${monorepo_folder}"
 repo_metadata_json_path="${target_folder}/.repo-metadata.json"
 # generate GAPIC client library
+popd
+popd
 echo "Generating library from ${proto_path}, to ${destination_path}..."
 "${library_generation_dir}"/generate_library.sh \
 -p "${proto_path}" \
@@ -105,7 +94,7 @@ echo "Generating library from ${proto_path}, to ${destination_path}..."
 
 echo "Generate library finished."
 echo "Compare generation result..."
-cd "${script_dir}/.."
+pushd "${output_folder}"
 
 RESULT=0
 diff -r "google-cloud-java/${monorepo_folder}" "${destination_path}/workspace" \
@@ -124,3 +113,6 @@ cd "${script_dir}"
 rm -rf WORKSPACE googleapis-gen
 exit "${RESULT}"
 
+popd # output_folder
+
+exit ${RESULT}
