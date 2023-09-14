@@ -16,3 +16,8 @@ target/
 .vscode/settings.json
 
 *.iml
+
+# library generation
+output/
+library_generation/output/
+showcase/scripts/output/

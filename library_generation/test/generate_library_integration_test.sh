@@ -14,6 +14,10 @@ set -xeo pipefail
 
 # defaults
 googleapis_gen_url="git@github.com:googleapis/googleapis-gen.git"
+script_dir=$(dirname "$(readlink -f "$0")")
+source "${script_dir}/../utilities.sh"
+library_generation_dir="${script_dir}"/..
+output_folder="$(get_output_folder)"
 
 while [[ $# -gt 0 ]]; do
 key="$1"
@@ -38,14 +42,13 @@ esac
 shift # past argument or value
 done
 
-script_dir=$(dirname "$(readlink -f "$0")")
-source "${script_dir}/../utilities.sh"
-library_generation_dir="${script_dir}"/..
-cd "${library_generation_dir}"
+mkdir -p "${output_folder}"
+pushd "${output_folder}"
 # checkout the master branch of googleapis/google (proto files) and WORKSPACE
 echo "Checking out googlapis repository..."
 sparse_clone https://github.com/googleapis/googleapis.git "${proto_path} WORKSPACE google/api google/rpc google/cloud/common_resources.proto google/iam/v1 google/type google/longrunning"
-cd googleapis
+pushd googleapis
+cp -r google "${output_folder}"
 # parse version of gapic-generator-java, protobuf and grpc from WORKSPACE
 gapic_generator_version=$(get_version_from_WORKSPACE "_gapic_generator_java_version" WORKSPACE "=")
 echo "The version of gapic-generator-java is ${gapic_generator_version}."
@@ -60,6 +63,8 @@ rest_numeric_enums=$(get_rest_numeric_enums_from_BUILD "${proto_build_file_path}
 include_samples=$(get_include_samples_from_BUILD "${proto_build_file_path}")
 echo "GAPIC options are transport=${transport}, rest_numeric_enums=${rest_numeric_enums}, include_samples=${include_samples}."
 # generate GAPIC client library
+popd
+popd
 echo "Generating library from ${proto_path}, to ${destination_path}..."
 "${library_generation_dir}"/generate_library.sh \
 -p "${proto_path}" \
@@ -74,11 +79,12 @@ echo "Generating library from ${proto_path}, to ${destination_path}..."
 echo "Generate library finished."
 echo "Checking out googleapis-gen repository..."
 
+pushd "${output_folder}"
 sparse_clone "${googleapis_gen_url}" "${proto_path}"
 
 echo "Compare generation result..."
 RESULT=0
-diff -r "googleapis-gen/${proto_path}/${destination_path}" "${destination_path}" -x "*gradle*" || RESULT=$?
+diff -r "googleapis-gen/${proto_path}/${destination_path}" "${output_folder}/${destination_path}" -x "*gradle*" || RESULT=$?
 
 if [ ${RESULT} == 0 ] ; then
   echo "SUCCESS: Comparison finished, no difference is found."
@@ -86,7 +92,6 @@ else
   echo "FAILURE: Differences found."
 fi
 
-cd ..
-rm -rf googleapis
+popd # output_folder
 
 exit ${RESULT}
