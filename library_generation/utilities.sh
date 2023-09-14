@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
 set -xeo pipefail
+utilities_script_dir=$(echo "${BASH_SOURCE}" | rev | cut -d/ -f2- | rev)
+
 
 # define utility functions
 
@@ -274,4 +276,11 @@ get_version_from_versions_txt() {
   key=$2
   version=$(grep "$key:" "${versions}" | cut -d: -f3) # 3rd field is snapshot
   echo "${version}"
+}
+
+# gets the output folder where all sources and dependencies will be located. It
+# relies on utilities_script_dir which points to the same location as
+# `generate_library.sh`
+get_output_folder() {
+  echo "${utilities_script_dir}/output"
 }

@@ -54,9 +54,9 @@ shift # past argument or value
 done
 
 script_dir=$(dirname "$(readlink -f "$0")")
-output_folder="$(pwd)/output"
-# source utility functions
 source "${script_dir}"/utilities.sh
+output_folder="$(get_output_folder)"
+# source utility functions
 
 if [ -z "${protobuf_version}" ]; then
   protobuf_version=$(get_protobuf_version "${gapic_generator_version}")

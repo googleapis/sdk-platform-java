@@ -45,7 +45,7 @@ done
 script_dir=$(dirname "$(readlink -f "$0")")
 source "${script_dir}/../utilities.sh"
 library_generation_dir="${script_dir}"/..
-output_folder="$(pwd)/output"
+output_folder="$(get_output_folder)"
 mkdir -p "${output_folder}"
 pushd "${output_folder}"
 # checkout the master branch of googleapis/google (proto files) and WORKSPACE
