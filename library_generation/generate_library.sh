@@ -160,7 +160,7 @@ popd # output_folder
 ##################### Section 4 #####################
 # rm tar files
 #####################################################
-pushd cd "${output_folder}/${destination_path}"
+pushd "${output_folder}/${destination_path}"
 rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_proto.jar temp-codegen.srcjar
 popd
 set +x
