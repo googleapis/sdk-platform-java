@@ -4,8 +4,28 @@ set -xeo pipefail
 utilities_script_dir=$(echo "${BASH_SOURCE}" | rev | cut -d/ -f2- | rev)
 
 
-# define utility functions
+# private functions that should not be called outside this file.
 
+# Used to obtain configuration values from a bazel BUILD file
+#
+# inspects a $build_file for a certain $rule (e.g. java_gapic_library). If the
+# first 15 lines after the declaration of the rule contain $pattern, then
+# it will return $if_match if $pattern is found, otherwise $default
+__get_config_from_BUILD() {
+  build_file=$1
+  rule=$2
+  pattern=$3
+  default=$4
+  if_match=$5
+
+  result="${default}"
+  if grep -A 15 "${rule}" "${build_file}" | grep -q "${pattern}"; then
+    result="${if_match}"
+  fi
+  echo "${result}"
+}
+
+# define utility functions
 extract_folder_name() {
   local destination_path=$1
   local folder_name=${destination_path##*/}
@@ -234,23 +254,51 @@ get_version_from_WORKSPACE() {
   echo "${version}"
 }
 
-# Used to obtain configuration values from a bazel BUILD file
-#
-# inspects a $build_file for a certain $rule (e.g. java_gapic_library). If the
-# first 15 lines after the declaration of the rule contain $pattern, then
-# it will return $if_match if $pattern is found, otherwise $default
-get_config_from_BUILD() {
-  build_file=$1
-  rule=$2
-  pattern=$3
-  default=$4
-  if_match=$5
+get_transport_from_BUILD() {
+  local build_file=$1
+  local transport
+  transport=$(__get_config_from_BUILD \
+    "${build_file}" \
+    "java_gapic_library(" \
+    "grpc+rest" \
+    "grpc" \
+    "grpc+rest"
+  )
+  # search again because the transport maybe `rest`.
+  transport=$(__get_config_from_BUILD \
+    "${build_file}" \
+    "java_gapic_library(" \
+    "transport = \"rest\"" \
+    "${transport}" \
+    "rest"
+  )
+  echo "${transport}"
+}
 
-  result="${default}"
-  if grep -A 15 "${rule}" "${build_file}" | grep -q "${pattern}"; then
-    result="${if_match}"
-  fi
-  echo "${result}"
+get_rest_numeric_enums_from_BUILD() {
+  local build_file=$1
+  local rest_numeric_enums
+  rest_numeric_enums=$(__get_config_from_BUILD \
+    "${build_file}" \
+    "java_gapic_library(" \
+    "rest_numeric_enums = True" \
+    "false" \
+    "true"
+  )
+  echo "${rest_numeric_enums}"
+}
+
+get_include_samples_from_BUILD() {
+  local build_file=$1
+  local include_samples
+  include_samples=$(__get_config_from_BUILD \
+    "${build_file}" \
+    "java_gapic_assembly_gradle_pkg(" \
+    "include_samples = True" \
+    "false" \
+    "true"
+  )
+  echo "${include_samples}"
 }
 
 # Convenience function to clone only the necessary folders from a git repository
@@ -283,4 +331,22 @@ get_version_from_versions_txt() {
 # `generate_library.sh`
 get_output_folder() {
   echo "${utilities_script_dir}/output"
+}
+
+detect_os_architecture() {
+  local os_type
+  local os_architecture
+  os_type=$(uname -sm)
+  case "${os_type}" in
+    *"Linux x86_64"*)
+      os_architecture="linux-x86_64"
+      ;;
+    *"Darwin x86_64"*)
+      os_architecture="osx-x86_64"
+      ;;
+    *)
+      os_architecture="osx-aarch_64"
+      ;;
+  esac
+  echo "${os_architecture}"
 }

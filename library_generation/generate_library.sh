@@ -79,7 +79,7 @@ if [ -z "${include_samples}" ]; then
 fi
 
 if [ -z "${os_architecture}" ]; then
-  os_architecture="linux-x86_64"
+  os_architecture=$(detect_os_architecture)
 fi
 
 
@@ -98,15 +98,18 @@ download_tools "${gapic_generator_version}" "${protobuf_version}" "${grpc_versio
 ##################### Section 1 #####################
 # generate grpc-*/
 #####################################################
-"${protoc_path}"/protoc "--plugin=protoc-gen-rpc-plugin=protoc-gen-grpc-java-${grpc_version}-${os_architecture}.exe" \
-"--rpc-plugin_out=:${destination_path}/java_grpc.jar" \
-${proto_files} # Do not quote because this variable should not be treated as one long string.
-# unzip java_grpc.jar to grpc-*/src/main/java
-unzip_src_files "grpc"
-# remove empty files in grpc-*/src/main/java
-remove_empty_files "grpc"
-# remove grpc version in *ServiceGrpc.java file so the content is identical with bazel build.
-remove_grpc_version
+if [[ ! "${transport}" == "rest" ]]; then
+  # do not need to generate grpc-* if the transport is `rest`.
+  "${protoc_path}"/protoc "--plugin=protoc-gen-rpc-plugin=protoc-gen-grpc-java-${grpc_version}-${os_architecture}.exe" \
+  "--rpc-plugin_out=:${destination_path}/java_grpc.jar" \
+  ${proto_files} # Do not quote because this variable should not be treated as one long string.
+  # unzip java_grpc.jar to grpc-*/src/main/java
+  unzip_src_files "grpc"
+  # remove empty files in grpc-*/src/main/java
+  remove_empty_files "grpc"
+  # remove grpc version in *ServiceGrpc.java file so the content is identical with bazel build.
+  remove_grpc_version
+fi
 ###################### Section 2 #####################
 ## generate gapic-*/, part of proto-*/, samples/
 ######################################################
