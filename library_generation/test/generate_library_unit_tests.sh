@@ -181,7 +181,7 @@ generate_library_failed_with_invalid_generator_version() {
   local destination="google-cloud-alloydb-v1-java"
   local res=0
   cd "${script_dir}/resources"
-  "${script_dir}"/../generate_library.sh \
+  bash "${script_dir}"/../generate_library.sh \
     -p google/cloud/alloydb/v1 \
     -d ../"${destination}" \
     --gapic_generator_version 1.99.0 \
@@ -198,7 +198,7 @@ generate_library_failed_with_invalid_protobuf_version() {
   local destination="google-cloud-alloydb-v1-java"
   local res=0
   cd "${script_dir}/resources"
-  "${script_dir}"/../generate_library.sh \
+  bash "${script_dir}"/../generate_library.sh \
     -p google/cloud/alloydb/v1 \
     -d ../"${destination}" \
     --gapic_generator_version 2.24.0 \
@@ -215,7 +215,7 @@ generate_library_failed_with_invalid_grpc_version() {
   local destination="google-cloud-alloydb-v1-java"
   local res=0
   cd "${script_dir}/resources"
-  "${script_dir}"/../generate_library.sh \
+  bash "${script_dir}"/../generate_library.sh \
     -p google/cloud/alloydb/v1 \
     -d ../output/"${destination}" \
     --gapic_generator_version 2.24.0 \
