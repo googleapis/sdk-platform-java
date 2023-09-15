@@ -48,7 +48,10 @@ public class OperationResponsePollAlgorithm implements ResultRetryAlgorithm<Oper
   public boolean shouldRetry(Throwable prevThrowable, OperationSnapshot prevResponse) {
     // `getErrorCode()` returns non-null if there was an error, so does `getErrorMessage()`
     if (prevResponse != null && prevResponse.getErrorCode() != null) {
-      throw new CancellationException(prevResponse.getErrorMessage());
+      throw new CancellationException(
+          String.format(
+              "Operation failed with error code %s: %s",
+              prevResponse.getErrorCode(), prevResponse.getErrorMessage()));
     }
     return prevThrowable == null && prevResponse != null && !prevResponse.isDone();
   }
