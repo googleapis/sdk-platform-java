@@ -835,7 +835,7 @@ public class BatcherImplTest {
   }
 
   @Test
-  public void testThrottlingBlocking() throws Exception {
+  public void testThrottlingBlocking_gax_test00() throws Exception {
     logger.info("Starting testThrottlingBlocking");
     BatchingSettings settings =
         BatchingSettings.newBuilder()
