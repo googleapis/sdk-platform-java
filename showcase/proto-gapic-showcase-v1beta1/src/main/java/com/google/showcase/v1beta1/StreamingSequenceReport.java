@@ -220,6 +220,7 @@ private static final long serialVersionUID = 0L;
               com.google.showcase.v1beta1.StreamingSequenceReport.Attempt.class, com.google.showcase.v1beta1.StreamingSequenceReport.Attempt.Builder.class);
     }
 
+    private int bitField0_;
     public static final int ATTEMPT_NUMBER_FIELD_NUMBER = 1;
     private int attemptNumber_ = 0;
     /**
@@ -247,7 +248,7 @@ private static final long serialVersionUID = 0L;
      */
     @java.lang.Override
     public boolean hasAttemptDeadline() {
-      return attemptDeadline_ != null;
+      return ((bitField0_ & 0x00000001) != 0);
     }
     /**
      * <pre>
@@ -286,7 +287,7 @@ private static final long serialVersionUID = 0L;
      */
     @java.lang.Override
     public boolean hasResponseTime() {
-      return responseTime_ != null;
+      return ((bitField0_ & 0x00000002) != 0);
     }
     /**
      * <pre>
@@ -327,7 +328,7 @@ private static final long serialVersionUID = 0L;
      */
     @java.lang.Override
     public boolean hasAttemptDelay() {
-      return attemptDelay_ != null;
+      return ((bitField0_ & 0x00000004) != 0);
     }
     /**
      * <pre>
@@ -367,7 +368,7 @@ private static final long serialVersionUID = 0L;
      */
     @java.lang.Override
     public boolean hasStatus() {
-      return status_ != null;
+      return ((bitField0_ & 0x00000008) != 0);
     }
     /**
      * <pre>
@@ -449,16 +450,16 @@ private static final long serialVersionUID = 0L;
       if (attemptNumber_ != 0) {
         output.writeInt32(1, attemptNumber_);
       }
-      if (attemptDeadline_ != null) {
+      if (((bitField0_ & 0x00000001) != 0)) {
         output.writeMessage(2, getAttemptDeadline());
       }
-      if (responseTime_ != null) {
+      if (((bitField0_ & 0x00000002) != 0)) {
         output.writeMessage(3, getResponseTime());
       }
-      if (attemptDelay_ != null) {
+      if (((bitField0_ & 0x00000004) != 0)) {
         output.writeMessage(4, getAttemptDelay());
       }
-      if (status_ != null) {
+      if (((bitField0_ & 0x00000008) != 0)) {
         output.writeMessage(5, getStatus());
       }
       if (!com.google.protobuf.GeneratedMessageV3.isStringEmpty(contentSent_)) {
@@ -477,19 +478,19 @@ private static final long serialVersionUID = 0L;
         size += com.google.protobuf.CodedOutputStream
           .computeInt32Size(1, attemptNumber_);
       }
-      if (attemptDeadline_ != null) {
+      if (((bitField0_ & 0x00000001) != 0)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(2, getAttemptDeadline());
       }
-      if (responseTime_ != null) {
+      if (((bitField0_ & 0x00000002) != 0)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(3, getResponseTime());
       }
-      if (attemptDelay_ != null) {
+      if (((bitField0_ & 0x00000004) != 0)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(4, getAttemptDelay());
       }
-      if (status_ != null) {
+      if (((bitField0_ & 0x00000008) != 0)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(5, getStatus());
       }
@@ -689,13 +690,22 @@ private static final long serialVersionUID = 0L;
 
       // Construct using com.google.showcase.v1beta1.StreamingSequenceReport.Attempt.newBuilder()
       private Builder() {
-
+        maybeForceBuilderInitialization();
       }
 
       private Builder(
           com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
         super(parent);
-
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessageV3
+                .alwaysUseFieldBuilders) {
+          getAttemptDeadlineFieldBuilder();
+          getResponseTimeFieldBuilder();
+          getAttemptDelayFieldBuilder();
+          getStatusFieldBuilder();
+        }
       }
       @java.lang.Override
       public Builder clear() {
@@ -759,29 +769,35 @@ private static final long serialVersionUID = 0L;
         if (((from_bitField0_ & 0x00000001) != 0)) {
           result.attemptNumber_ = attemptNumber_;
         }
+        int to_bitField0_ = 0;
         if (((from_bitField0_ & 0x00000002) != 0)) {
           result.attemptDeadline_ = attemptDeadlineBuilder_ == null
               ? attemptDeadline_
               : attemptDeadlineBuilder_.build();
+          to_bitField0_ |= 0x00000001;
         }
         if (((from_bitField0_ & 0x00000004) != 0)) {
           result.responseTime_ = responseTimeBuilder_ == null
               ? responseTime_
               : responseTimeBuilder_.build();
+          to_bitField0_ |= 0x00000002;
         }
         if (((from_bitField0_ & 0x00000008) != 0)) {
           result.attemptDelay_ = attemptDelayBuilder_ == null
               ? attemptDelay_
               : attemptDelayBuilder_.build();
+          to_bitField0_ |= 0x00000004;
         }
         if (((from_bitField0_ & 0x00000010) != 0)) {
           result.status_ = statusBuilder_ == null
               ? status_
               : statusBuilder_.build();
+          to_bitField0_ |= 0x00000008;
         }
         if (((from_bitField0_ & 0x00000020) != 0)) {
           result.contentSent_ = contentSent_;
         }
+        result.bitField0_ |= to_bitField0_;
       }
 
       @java.lang.Override
@@ -1059,8 +1075,10 @@ private static final long serialVersionUID = 0L;
         } else {
           attemptDeadlineBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000002;
-        onChanged();
+        if (attemptDeadline_ != null) {
+          bitField0_ |= 0x00000002;
+          onChanged();
+        }
         return this;
       }
       /**
@@ -1219,8 +1237,10 @@ private static final long serialVersionUID = 0L;
         } else {
           responseTimeBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000004;
-        onChanged();
+        if (responseTime_ != null) {
+          bitField0_ |= 0x00000004;
+          onChanged();
+        }
         return this;
       }
       /**
@@ -1383,8 +1403,10 @@ private static final long serialVersionUID = 0L;
         } else {
           attemptDelayBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000008;
-        onChanged();
+        if (attemptDelay_ != null) {
+          bitField0_ |= 0x00000008;
+          onChanged();
+        }
         return this;
       }
       /**
@@ -1542,8 +1564,10 @@ private static final long serialVersionUID = 0L;
         } else {
           statusBuilder_.mergeFrom(value);
         }
-        bitField0_ |= 0x00000010;
-        onChanged();
+        if (status_ != null) {
+          bitField0_ |= 0x00000010;
+          onChanged();
+        }
         return this;
       }
       /**
