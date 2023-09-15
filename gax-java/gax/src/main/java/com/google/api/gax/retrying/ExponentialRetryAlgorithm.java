@@ -33,6 +33,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.api.core.ApiClock;
 import com.google.api.core.InternalApi;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ThreadLocalRandom;
 import org.threeten.bp.Duration;
 
@@ -190,11 +191,27 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
    *
    * @param nextAttemptSettings attempt settings, which will be used for the next attempt, if
    *     accepted
+   * @param throwException true if should throw an exception explaining the reason why it would
+   *     otherwise return false
    * @return {@code true} if {@code nextAttemptSettings} does not exceed either maxAttempts limit or
    *     totalTimeout limit, or {@code false} otherwise
    */
   @Override
   public boolean shouldRetry(TimedAttemptSettings nextAttemptSettings) {
+    return shouldRetry(nextAttemptSettings, false);
+  }
+
+  /**
+   * Returns {@code true} if another attempt should be made, or {@code false} otherwise.
+   *
+   * @param nextAttemptSettings attempt settings, which will be used for the next attempt, if
+   *     accepted
+   * @param throwException true if should throw an exception explaining the reason why it would
+   *     otherwise return false
+   * @return {@code true} if {@code nextAttemptSettings} does not exceed either maxAttempts limit or
+   *     totalTimeout limit, or {@code false} otherwise
+   */
+  public boolean shouldRetry(TimedAttemptSettings nextAttemptSettings, boolean throwException) {
     RetrySettings globalSettings = nextAttemptSettings.getGlobalSettings();
 
     int maxAttempts = globalSettings.getMaxAttempts();
@@ -202,6 +219,9 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
 
     // If total timeout and maxAttempts is not set then do not attempt retry.
     if (totalTimeout.isZero() && maxAttempts == 0) {
+      if (throwException) {
+        throw new CancellationException("Operation is not set to be retried");
+      }
       return false;
     }
 
@@ -217,16 +237,31 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
     long timeLeftMs = timeLeft.toMillis();
     // If totalTimeout limit is defined, check that it hasn't been crossed.
     if (!totalTimeout.isZero() && shouldRPCTerminate(timeLeftMs)) {
+      if (throwException) {
+        throw new CancellationException(
+            String.format(
+                "Timeout exceeded after %s ms", Duration.ofNanos(totalTimeSpentNanos).toMillis()));
+      }
       return false;
     }
 
     // If maxAttempts limit is defined, check that it hasn't been crossed
     if (maxAttempts > 0 && nextAttemptSettings.getAttemptCount() >= maxAttempts) {
+      if (throwException) {
+        throw new CancellationException(
+            String.format("Max of %s attempts was exceeded", maxAttempts));
+      }
       return false;
     }
 
     // No limits crossed
     return true;
+  }
+
+  protected long getTotalTimeSpentNanos(TimedAttemptSettings attemptSettings) {
+    return clock.nanoTime()
+        - attemptSettings.getFirstAttemptStartTimeNanos()
+        + attemptSettings.getRandomizedRetryDelay().toNanos();
   }
 
   // For non-LRO RPCs, do not attempt to retry if the totalTime spend is over

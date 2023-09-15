@@ -74,10 +74,10 @@ public class OperationTimedPollAlgorithm extends ExponentialRetryAlgorithm {
   @Override
   public boolean shouldRetry(TimedAttemptSettings nextAttemptSettings)
       throws CancellationException {
-    if (super.shouldRetry(nextAttemptSettings)) {
+    if (super.shouldRetry(nextAttemptSettings, true /* throw exception on false */)) {
       return true;
     }
-    throw new CancellationException();
+    throw new CancellationException(); // never reached
   }
 
   // Note: if the potential time spent is exactly equal to the totalTimeout,
