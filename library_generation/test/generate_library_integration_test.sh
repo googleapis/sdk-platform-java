@@ -14,8 +14,8 @@ set -xeo pipefail
 
 # defaults
 googleapis_gen_url="git@github.com:googleapis/googleapis-gen.git"
-proto_path_list="${script_dir}/resources/proto_path_list.txt"
 script_dir=$(dirname "$(readlink -f "$0")")
+proto_path_list="${script_dir}/resources/proto_path_list.txt"
 source "${script_dir}/../utilities.sh"
 library_generation_dir="${script_dir}"/..
 output_folder="$(get_output_folder)"
