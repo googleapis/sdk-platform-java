@@ -31,6 +31,7 @@ package com.google.api.gax.longrunning;
 
 import com.google.api.gax.retrying.ResultRetryAlgorithm;
 import com.google.api.gax.retrying.TimedAttemptSettings;
+import java.util.concurrent.CancellationException;
 
 /**
  * Operation polling algorithm, which keeps retrying until {@link OperationSnapshot#isDone()} is
@@ -45,6 +46,10 @@ public class OperationResponsePollAlgorithm implements ResultRetryAlgorithm<Oper
 
   @Override
   public boolean shouldRetry(Throwable prevThrowable, OperationSnapshot prevResponse) {
+    // `getErrorCode()` returns non-null if there was an error, so does `getErrorMessage()`
+    if (prevResponse != null && prevResponse.getErrorCode() != null) {
+      throw new CancellationException(prevResponse.getErrorMessage());
+    }
     return prevThrowable == null && prevResponse != null && !prevResponse.isDone();
   }
 }
