@@ -69,6 +69,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
+import org.slf4j.MDC;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.threeten.bp.Duration;
 
@@ -83,6 +84,8 @@ public class BatcherImplTest {
 
     SLF4JBridgeHandler.removeHandlersForRootLogger();
     SLF4JBridgeHandler.install();
+
+    MDC.put("module", "gaxtest-00");
   }
 
   private static final ScheduledExecutorService EXECUTOR =
@@ -833,8 +836,7 @@ public class BatcherImplTest {
 
   @Test
   public void testThrottlingBlocking() throws Exception {
-    String module = "gax-test00";
-    logger.info(module + ": Starting testThrottlingBlocking");
+    logger.info("Starting testThrottlingBlocking");
     BatchingSettings settings =
         BatchingSettings.newBuilder()
             .setElementCountThreshold(1L)
@@ -871,39 +873,39 @@ public class BatcherImplTest {
               new Runnable() {
                 @Override
                 public void run() {
-                  logger.fine(module + ": calling batcher.add(1)");
+                  logger.fine("calling batcher.add(1)");
                   latch.countDown();
                   batcher.add(1);
-                  logger.fine(module + ": batcher.add(1) finished");
+                  logger.fine("batcher.add(1) finished");
                 }
               });
       latch.await();
       executor.submit(
           () -> {
             try {
-              logger.fine(module + ": start sleeping " + throttledTime + " ms");
+              logger.fine("start sleeping " + throttledTime + " ms");
               Thread.sleep(throttledTime);
-              logger.fine(module + ": Sleep finished. Calling flowController.release()");
+              logger.fine("Sleep finished. Calling flowController.release()");
               flowController.release(1, 1);
-              logger.fine(module + ": finished flowController.release()");
+              logger.fine("finished flowController.release()");
             } catch (InterruptedException e) {
-              logger.fine(module + ": It hit InterruptedException");
+              logger.fine("It hit InterruptedException");
             }
           });
 
       try {
         future.get(10, TimeUnit.MILLISECONDS);
-        logger.fine(module + ": future.get(10, TimeUnit.MILLISECONDS) returned unexpectedly");
+        logger.fine("future.get(10, TimeUnit.MILLISECONDS) returned unexpectedly");
         assertWithMessage("adding elements to batcher should be blocked by FlowControlled").fail();
       } catch (TimeoutException e) {
         // expected
-        logger.fine(module + ": Caught TimeoutException as expected");
+        logger.fine("Caught TimeoutException as expected");
       }
 
       try {
-        logger.fine(module + ": calling future.get(3, TimeUnit.SECONDS)");
+        logger.fine("calling future.get(3, TimeUnit.SECONDS)");
         future.get(3, TimeUnit.SECONDS);
-        logger.fine(module + ": finished future.get(3, TimeUnit.SECONDS)");
+        logger.fine("finished future.get(3, TimeUnit.SECONDS)");
       } catch (TimeoutException e) {
         assertWithMessage("adding elements to batcher should not be blocked").fail();
       }
@@ -911,7 +913,7 @@ public class BatcherImplTest {
       // Mockito recommends using verify() as the ONLY way to interact with Argument
       // captors - otherwise it may incur in unexpected behaviour
       Mockito.verify(callContext, Mockito.timeout(100)).withOption(key.capture(), value.capture());
-      logger.fine(module + ": Mockito.verify(callContext, ...) succeeded");
+      logger.fine("Mockito.verify(callContext, ...) succeeded");
 
       // Verify that throttled time is recorded in ApiCallContext
       assertThat(key.getValue()).isSameInstanceAs(Batcher.THROTTLED_TIME_KEY);
@@ -919,7 +921,7 @@ public class BatcherImplTest {
     } finally {
       executor.shutdownNow();
     }
-    logger.info(module + ": Finishing testThrottlingBlocking");
+    logger.info("Finishing testThrottlingBlocking");
   }
 
   @Test
