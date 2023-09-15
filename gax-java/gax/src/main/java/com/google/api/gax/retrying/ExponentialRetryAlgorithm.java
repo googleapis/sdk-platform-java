@@ -191,7 +191,6 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
    *
    * @param nextAttemptSettings attempt settings, which will be used for the next attempt, if
    *     accepted
-   * @param throwException true if should throw an exception explaining the reason why it would
    *     otherwise return false
    * @return {@code true} if {@code nextAttemptSettings} does not exceed either maxAttempts limit or
    *     totalTimeout limit, or {@code false} otherwise
@@ -206,8 +205,8 @@ public class ExponentialRetryAlgorithm implements TimedRetryAlgorithmWithContext
    *
    * @param nextAttemptSettings attempt settings, which will be used for the next attempt, if
    *     accepted
-   * @param throwException true if should throw an exception explaining the reason why it would
    *     otherwise return false
+   * @param throwException true if should throw an exception explaining the reason why it would
    * @return {@code true} if {@code nextAttemptSettings} does not exceed either maxAttempts limit or
    *     totalTimeout limit, or {@code false} otherwise
    */
