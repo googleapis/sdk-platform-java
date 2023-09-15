@@ -14,6 +14,10 @@ set -xeo pipefail
 
 # defaults
 googleapis_gen_url="git@github.com:googleapis/googleapis-gen.git"
+script_dir=$(dirname "$(readlink -f "$0")")
+source "${script_dir}/../utilities.sh"
+library_generation_dir="${script_dir}"/..
+output_folder="$(get_output_folder)"
 
 while [[ $# -gt 0 ]]; do
 key="$1"
@@ -34,13 +38,15 @@ script_dir=$(dirname "$(readlink -f "$0")")
 proto_path_list="${script_dir}/resources/proto_path_list.txt"
 source "${script_dir}/../utilities.sh"
 library_generation_dir="${script_dir}"/..
-pushd "${library_generation_dir}"
+mkdir -p "${output_folder}"
+pushd "${output_folder}"
 # checkout the master branch of googleapis/google (proto files) and WORKSPACE
 echo "Checking out googlapis repository..."
 # sparse_clone will remove folder contents first, so we have to checkout googleapis
 # only once.
 sparse_clone https://github.com/googleapis/googleapis.git "google WORKSPACE"
 pushd googleapis
+cp -r google "${output_folder}"
 # parse version of gapic-generator-java, protobuf and grpc from WORKSPACE
 gapic_generator_version=$(get_version_from_WORKSPACE "_gapic_generator_java_version" WORKSPACE "=")
 echo "The version of gapic-generator-java is ${gapic_generator_version}."
@@ -48,14 +54,19 @@ protobuf_version=$(get_version_from_WORKSPACE "protobuf-" WORKSPACE "-")
 echo "The version of protobuf is ${protobuf_version}"
 grpc_version=$(get_version_from_WORKSPACE "_grpc_version" WORKSPACE "=")
 echo "The version of protoc-gen-grpc-java plugin is ${gapic_generator_version}."
+popd # googleapis
+popd # output_folder
+
 grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   proto_path=$(echo "$line" | cut -d " " -f 1)
   destination_path=$(echo "$line" | cut -d " " -f 2)
   # parse GAPIC options from proto_path/BUILD.bazel
+  pushd "${output_folder}"
   proto_build_file_path="${proto_path}/BUILD.bazel"
   transport=$(get_transport_from_BUILD "${proto_build_file_path}")
   rest_numeric_enums=$(get_rest_numeric_enums_from_BUILD "${proto_build_file_path}")
   include_samples=$(get_include_samples_from_BUILD "${proto_build_file_path}")
+  popd # output_folder
   echo "GAPIC options are transport=${transport}, rest_numeric_enums=${rest_numeric_enums}, include_samples=${include_samples}."
   # generate GAPIC client library
   echo "Generating library from ${proto_path}, to ${destination_path}..."
@@ -68,16 +79,16 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   --transport "${transport}" \
   --rest_numeric_enums "${rest_numeric_enums}" \
   --include_samples "${include_samples}"
-
   echo "Generate library finished."
   echo "Checking out googleapis-gen repository..."
 
   echo "Compare generation result..."
-  sparse_clone "${googleapis_gen_url}" "${proto_path}"
+  pushd "${output_folder}"
+  sparse_clone "${googleapis_gen_url}" "${proto_path}/${destination_path}"
   RESULT=0
   # include gapic_metadata.json and package-info.java after
   # resolving https://github.com/googleapis/sdk-platform-java/issues/1986
-  diff -r "googleapis-gen/${proto_path}/${destination_path}" "${destination_path}" -x "*gradle*" -x "gapic_metadata.json" -x "package-info.java" || RESULT=$?
+  diff -r "googleapis-gen/${proto_path}/${destination_path}" "${output_folder}/${destination_path}" -x "*gradle*" -x "gapic_metadata.json" -x "package-info.java" || RESULT=$?
 
   if [ ${RESULT} == 0 ] ; then
     echo "SUCCESS: Comparison finished, no difference is found."
@@ -85,7 +96,7 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
     echo "FAILURE: Differences found in proto path: ${proto_path}."
     exit "${RESULT}"
   fi
+  popd # output_folder
 done
 
-popd # googleapis
-rm -rf googleapis
+rm -rf "${output_folder}"
