@@ -53,17 +53,7 @@ import com.google.common.collect.Queues;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Filter;
@@ -843,7 +833,8 @@ public class BatcherImplTest {
 
   @Test
   public void testThrottlingBlocking() throws Exception {
-    logger.info("Starting testThrottlingBlocking");
+    String module = "gax-test00";
+    logger.info(module + ": Starting testThrottlingBlocking");
     BatchingSettings settings =
         BatchingSettings.newBuilder()
             .setElementCountThreshold(1L)
@@ -874,43 +865,45 @@ public class BatcherImplTest {
             flowController,
             callContext)) {
       flowController.reserve(1, 1);
+      CountDownLatch latch = new CountDownLatch(1);
       Future future =
           executor.submit(
               new Runnable() {
                 @Override
                 public void run() {
-                  logger.log(Level.FINE, "calling batcher.add(1)");
+                  logger.fine(module + ": calling batcher.add(1)");
+                  latch.countDown();
                   batcher.add(1);
-                  logger.log(Level.FINE, "batcher.add(1) finished");
+                  logger.fine(module + ": batcher.add(1) finished");
                 }
               });
-      // Add a little delay ensuring that the next step starts after batcher.add(1)
-      Thread.sleep(10);
+      latch.await();
       executor.submit(
           () -> {
             try {
+              logger.fine(module + ": start sleeping " + throttledTime + " ms");
               Thread.sleep(throttledTime);
-              logger.log(Level.FINE, "calling flowController.release()");
+              logger.fine(module + ": Sleep finished. Calling flowController.release()");
               flowController.release(1, 1);
-              logger.log(Level.FINE, "finished flowController.release()");
+              logger.fine(module + ": finished flowController.release()");
             } catch (InterruptedException e) {
-              logger.log(Level.FINE, "It hit InterruptedException", e);
+              logger.fine(module + ": It hit InterruptedException");
             }
           });
 
       try {
         future.get(10, TimeUnit.MILLISECONDS);
-        logger.log(Level.FINE, "future.get(10, TimeUnit.MILLISECONDS) returned unexpectedly");
+        logger.fine(module + ": future.get(10, TimeUnit.MILLISECONDS) returned unexpectedly");
         assertWithMessage("adding elements to batcher should be blocked by FlowControlled").fail();
       } catch (TimeoutException e) {
         // expected
-        logger.log(Level.FINE, "Caught TimeoutException as expected");
+        logger.fine(module + ": Caught TimeoutException as expected");
       }
 
       try {
-        logger.log(Level.FINE, "calling future.get(3, TimeUnit.SECONDS)");
+        logger.fine(module + ": calling future.get(3, TimeUnit.SECONDS)");
         future.get(3, TimeUnit.SECONDS);
-        logger.log(Level.FINE, "finished future.get(3, TimeUnit.SECONDS)");
+        logger.fine(module + ": finished future.get(3, TimeUnit.SECONDS)");
       } catch (TimeoutException e) {
         assertWithMessage("adding elements to batcher should not be blocked").fail();
       }
@@ -918,7 +911,7 @@ public class BatcherImplTest {
       // Mockito recommends using verify() as the ONLY way to interact with Argument
       // captors - otherwise it may incur in unexpected behaviour
       Mockito.verify(callContext, Mockito.timeout(100)).withOption(key.capture(), value.capture());
-      logger.log(Level.FINE, "Mockito.verify(callContext, ...) succeeded");
+      logger.fine(module + ": Mockito.verify(callContext, ...) succeeded");
 
       // Verify that throttled time is recorded in ApiCallContext
       assertThat(key.getValue()).isSameInstanceAs(Batcher.THROTTLED_TIME_KEY);
@@ -926,7 +919,7 @@ public class BatcherImplTest {
     } finally {
       executor.shutdownNow();
     }
-    logger.info("Finishing testThrottlingBlocking");
+    logger.info(module + ": Finishing testThrottlingBlocking");
   }
 
   @Test

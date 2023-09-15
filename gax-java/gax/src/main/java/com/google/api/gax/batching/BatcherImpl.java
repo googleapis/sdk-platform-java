@@ -456,6 +456,7 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
       entries.add(BatchEntry.create(element, result));
       resource = resource.add(newResource);
       totalThrottledTimeMs += throttledTimeMs;
+      LOG.fine("add() called with throttledTimeMs= " + throttledTimeMs + " (now totalThrottledTimeMs: " +totalThrottledTimeMs + ")");
     }
 
     void onBatchSuccess(ResponseT response) {
