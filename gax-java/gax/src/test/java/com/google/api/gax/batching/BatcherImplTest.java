@@ -912,7 +912,7 @@ public class BatcherImplTest {
 
       // Mockito recommends using verify() as the ONLY way to interact with Argument
       // captors - otherwise it may incur in unexpected behaviour
-      Mockito.verify(callContext, Mockito.timeout(100)).withOption(key.capture(), value.capture());
+      Mockito.verify(callContext, Mockito.timeout(100).description("[gax-test00] callContext.withOption was not called")).withOption(key.capture(), value.capture());
       logger.fine("Mockito.verify(callContext, ...) succeeded");
 
       // Verify that throttled time is recorded in ApiCallContext
