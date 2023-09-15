@@ -79,10 +79,21 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
+import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
 public class BatcherImplTest {
+
+  private static final Logger logger = Logger.getLogger(BatcherImplTest.class.getName());
+
+  static {
+    // jul-to-slf4j bridge needs special instruction to set up
+    // https://www.slf4j.org/api/org/slf4j/bridge/SLF4JBridgeHandler.html
+
+    SLF4JBridgeHandler.removeHandlersForRootLogger();
+    SLF4JBridgeHandler.install();
+  }
 
   private static final ScheduledExecutorService EXECUTOR =
       Executors.newSingleThreadScheduledExecutor();
@@ -832,6 +843,7 @@ public class BatcherImplTest {
 
   @Test
   public void testThrottlingBlocking() throws Exception {
+    logger.info("Starting testThrottlingBlocking");
     BatchingSettings settings =
         BatchingSettings.newBuilder()
             .setElementCountThreshold(1L)
@@ -867,7 +879,9 @@ public class BatcherImplTest {
               new Runnable() {
                 @Override
                 public void run() {
+                  logger.log(Level.FINE, "calling batcher.add(1)");
                   batcher.add(1);
+                  logger.log(Level.FINE, "batcher.add(1) finished");
                 }
               });
       // Add a little delay ensuring that the next step starts after batcher.add(1)
@@ -876,20 +890,27 @@ public class BatcherImplTest {
           () -> {
             try {
               Thread.sleep(throttledTime);
+              logger.log(Level.FINE, "calling flowController.release()");
               flowController.release(1, 1);
+              logger.log(Level.FINE, "finished flowController.release()");
             } catch (InterruptedException e) {
+              logger.log(Level.FINE, "It hit InterruptedException", e);
             }
           });
 
       try {
         future.get(10, TimeUnit.MILLISECONDS);
+        logger.log(Level.FINE, "future.get(10, TimeUnit.MILLISECONDS) returned unexpectedly");
         assertWithMessage("adding elements to batcher should be blocked by FlowControlled").fail();
       } catch (TimeoutException e) {
         // expected
+        logger.log(Level.FINE, "Caught TimeoutException as expected");
       }
 
       try {
+        logger.log(Level.FINE, "calling future.get(3, TimeUnit.SECONDS)");
         future.get(3, TimeUnit.SECONDS);
+        logger.log(Level.FINE, "finished future.get(3, TimeUnit.SECONDS)");
       } catch (TimeoutException e) {
         assertWithMessage("adding elements to batcher should not be blocked").fail();
       }
@@ -897,6 +918,7 @@ public class BatcherImplTest {
       // Mockito recommends using verify() as the ONLY way to interact with Argument
       // captors - otherwise it may incur in unexpected behaviour
       Mockito.verify(callContext, Mockito.timeout(100)).withOption(key.capture(), value.capture());
+      logger.log(Level.FINE, "Mockito.verify(callContext, ...) succeeded");
 
       // Verify that throttled time is recorded in ApiCallContext
       assertThat(key.getValue()).isSameInstanceAs(Batcher.THROTTLED_TIME_KEY);
@@ -904,6 +926,7 @@ public class BatcherImplTest {
     } finally {
       executor.shutdownNow();
     }
+    logger.info("Finishing testThrottlingBlocking");
   }
 
   @Test

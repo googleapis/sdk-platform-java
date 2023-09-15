@@ -289,6 +289,7 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
     if (callContext != null) {
       callContextWithOption =
           callContext.withOption(THROTTLED_TIME_KEY, accumulatedBatch.totalThrottledTimeMs);
+      LOG.log(Level.FINE, "callContext.withOption called");
     }
     ApiFuture<ResponseT> batchResponse;
     try {
