@@ -873,16 +873,16 @@ public class BatcherImplTest {
               new Runnable() {
                 @Override
                 public void run() {
-                  logger.fine("calling batcher.add(1)");
                   latch.countDown();
+                  logger.fine("calling batcher.add(1)");
                   batcher.add(1);
                   logger.fine("batcher.add(1) finished");
                 }
               });
-      latch.await();
       executor.submit(
           () -> {
             try {
+              latch.await();
               logger.fine("start sleeping " + throttledTime + " ms");
               Thread.sleep(throttledTime);
               logger.fine("Sleep finished. Calling flowController.release()");
@@ -923,6 +923,19 @@ public class BatcherImplTest {
 
       // Verify that throttled time is recorded in ApiCallContext
       assertThat(key.getValue()).isSameInstanceAs(Batcher.THROTTLED_TIME_KEY);
+      // When the sleeping(50 ms) before flowController.release starts earlier than
+      // BatcherImpl's stopwatch start time, the recorded throttledTime may
+      // be shorter than throttledTime.
+      // Normal case:
+      //   1. throttle start (stopwatch start)
+      //   2. sleep(50 ms) starts
+      //   3. sleep(50 ms) finishes and calls flowController.release
+      //   4. stopwatch finishes, recording more than or equal to 50 ms.
+      // Rare cases:
+      //   1. sleep(50 ms) starts
+      //   2. throttle start (stopwatch start)
+      //   3. sleep(50 ms) finishes and calls flowController.release
+      //   4. stopwatch finishes, recording less than 50 ms.
       assertThat(value.getValue()).isAtLeast(throttledTime);
     } finally {
       executor.shutdownNow();
