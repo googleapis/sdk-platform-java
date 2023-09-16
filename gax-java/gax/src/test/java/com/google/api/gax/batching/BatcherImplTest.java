@@ -873,6 +873,7 @@ public class BatcherImplTest {
               new Runnable() {
                 @Override
                 public void run() {
+                  logger.fine("calling latch.countDown();");
                   latch.countDown();
                   logger.fine("calling batcher.add(1)");
                   batcher.add(1);
@@ -882,6 +883,7 @@ public class BatcherImplTest {
       executor.submit(
           () -> {
             try {
+              logger.fine("calling latch.await();");
               latch.await();
               logger.fine("start sleeping " + throttledTime + " ms");
               Thread.sleep(throttledTime);
