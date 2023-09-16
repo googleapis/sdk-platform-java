@@ -188,7 +188,7 @@ download_generator() {
 download_protobuf() {
   local protobuf_version=$1
   local os_architecture=$2
-  if [ ! -d "protobuf-${protobuf_version}.zip" ]; then
+  if [ ! -d "protobuf-${protobuf_version}" ]; then
     # pull proto files and protoc from protobuf repository as maven central
     # doesn't have proto files
     download_from \
