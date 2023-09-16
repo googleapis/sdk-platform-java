@@ -241,6 +241,7 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
     // implementations. Some refactoring may be needed for the optimized implementation. So we'll
     // defer it till we decide on if refactoring FlowController is necessary.
     Stopwatch stopwatch = Stopwatch.createStarted();
+    LOG.fine("stopwatch started");
     try {
       flowController.reserve(newResource.getElementCount(), newResource.getByteCount());
     } catch (FlowControlException e) {
@@ -248,6 +249,7 @@ public class BatcherImpl<ElementT, ElementResultT, RequestT, ResponseT>
       throw FlowControlRuntimeException.fromFlowControlException(e);
     }
     long throttledTimeMs = stopwatch.elapsed(TimeUnit.MILLISECONDS);
+    LOG.fine("stopwatch.elapsed (throttledTimeMs): " + throttledTimeMs);
 
     SettableApiFuture<ElementResultT> result = SettableApiFuture.create();
     synchronized (elementLock) {
