@@ -51,6 +51,7 @@ import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Queues;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.*;
@@ -867,24 +868,27 @@ public class BatcherImplTest {
             flowController,
             callContext)) {
       flowController.reserve(1, 1);
-      CountDownLatch latch = new CountDownLatch(1);
+      List<Thread> batcherAddThreadHolder = Collections.synchronizedList(new ArrayList<>());
       Future future =
           executor.submit(
               new Runnable() {
+                Thread batcherAddThread;
                 @Override
                 public void run() {
-                  logger.fine("calling latch.countDown();");
-                  latch.countDown();
+                  batcherAddThreadHolder.add(Thread.currentThread());
                   logger.fine("calling batcher.add(1)");
                   batcher.add(1);
                   logger.fine("batcher.add(1) finished");
                 }
               });
+      do {
+        // Wait until batcher.add blocks and starts the stopwatch.
+        Thread.sleep(10);
+      } while (batcherAddThreadHolder.isEmpty() || batcherAddThreadHolder.get(0).getState() != Thread.State.WAITING);
+
       executor.submit(
           () -> {
             try {
-              logger.fine("calling latch.await();");
-              latch.await();
               logger.fine("start sleeping " + throttledTime + " ms");
               Thread.sleep(throttledTime);
               logger.fine("Sleep finished. Calling flowController.release()");
