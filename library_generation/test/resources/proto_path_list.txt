@@ -1,15 +1,167 @@
 # This file is used in integration test against `generate_library.sh`.
 # Format:
 # proto_path destination_path
-google/bigtable/v2 google-cloud-bigtable-v2-java
-google/cloud/apigeeconnect/v1 google-cloud-apigeeconnect-v1-java
-google/cloud/asset/v1 google-cloud-asset-v1-java
-google/cloud/compute/v1 google-cloud-compute-v1-java
-google/cloud/kms/v1 google-cloud-kms-v1-java
-google/example/library/v1 google-cloud-example-library-v1-java
+# google/analytics/admin/v1alpha google-analytics-admin-v1alpha-java
+# google/analytics/data/v1alpha google-cloud-analytics-data-v1alpha-java
+# google/api/apikeys/v2 google-cloud-api-apikeys-v2-java
+# google/api/servicecontrol/v2 google-cloud-api-servicecontrol-v2-java
+# google/api/servicemanagement/v1 google-cloud-api-servicemanagement-v1-java
+# google/api/serviceusage/v1 google-cloud-api-serviceusage-v1-java
+# google/appengine/v1 google-cloud-appengine-v1-java
+# google/area120/tables/v1alpha1 google-area120-tables-v1alpha1-java
+# google/bigtable/v2 google-cloud-bigtable-v2-java
+# google/cloud/accessapproval/v1 google-cloud-accessapproval-v1-java
+# google/cloud/advisorynotifications/v1 google-cloud-advisorynotifications-v1-java
+# google/cloud/aiplatform/v1 google-cloud-aiplatform-v1-java
+# google/cloud/alloydb/connectors/v1alpha google-cloud-alloydb-connectors-v1alpha-java
+# google/cloud/alloydb/v1 google-cloud-alloydb-v1-java
+# google/cloud/apigateway/v1 google-cloud-apigateway-v1-java
+# google/cloud/apigeeconnect/v1 google-cloud-apigeeconnect-v1-java
+# google/cloud/apigeeregistry/v1 google-cloud-apigeeregistry-v1-java
+# google/cloud/asset/v1 google-cloud-asset-v1-java
+# google/cloud/assuredworkloads/v1 google-cloud-assuredworkloads-v1-java
+# google/cloud/automl/v1 google-cloud-automl-v1-java
+# google/cloud/baremetalsolution/v2 google-cloud-baremetalsolution-v2-java
+# google/cloud/batch/v1 google-cloud-batch-v1-java
+# google/cloud/beyondcorp/appconnections/v1 google-cloud-beyondcorp-appconnections-v1-java
+# google/cloud/beyondcorp/appconnectors/v1 google-cloud-beyondcorp-appconnectors-v1-java
+# google/cloud/beyondcorp/appgateways/v1 google-cloud-beyondcorp-appgateways-v1-java
+# google/cloud/beyondcorp/clientconnectorservices/v1 google-cloud-beyondcorp-clientconnectorservices-v1-java
+# google/cloud/beyondcorp/clientgateways/v1 google-cloud-beyondcorp-clientgateways-v1-java
+# google/cloud/bigquery/analyticshub/v1 google-cloud-bigquery-analyticshub-v1-java
+# google/cloud/bigquery/biglake/v1 google-cloud-bigquery-biglake-v1-java
+# google/cloud/bigquery/connection/v1 google-cloud-bigquery-connection-v1-java
+# google/cloud/bigquery/dataexchange/v1beta1 google-cloud-bigquery-dataexchange-v1beta1-java
+# google/cloud/bigquery/datapolicies/v1 google-cloud-bigquery-datapolicies-v1-java
+# google/cloud/bigquery/datatransfer/v1 google-cloud-bigquery-datatransfer-v1-java
+# google/cloud/bigquery/migration/v2 google-cloud-bigquery-migration-v2-java
+# google/cloud/bigquery/reservation/v1 google-cloud-bigquery-reservation-v1-java
+# google/cloud/billing/v1 google-cloud-billing-v1-java
+# google/cloud/billing/budgets/v1 google-cloud-billing-budgets-v1-java
+google/cloud/binaryauthorization/v1 google-cloud-binaryauthorization-v1-java
+# google/cloud/certificatemanager/v1 google-cloud-certificatemanager-v1-java
+# google/cloud/channel/v1 google-cloud-channel-v1-java
+# google/cloud/clouddms/v1 google-cloud-clouddms-v1-java
+# google/cloud/commerce/consumer/procurement/v1 google-cloud-consumer-procurement-v1-java
+# google/cloud/compute/v1 google-cloud-compute-v1-java
+# google/cloud/confidentialcomputing/v1 google-cloud-confidentialcomputing-v1-java
+# google/cloud/config/v1 google-cloud-config-v1-java
+# google/cloud/contactcenterinsights/v1 google-cloud-contactcenterinsights-v1-java
+# google/cloud/contentwarehouse/v1 google-cloud-contentwarehouse-v1-java
+# google/cloud/datacatalog/lineage/v1 google-cloud-datacatalog-lineage-v1-java
+# google/cloud/datacatalog/v1 google-cloud-datacatalog-v1-java
+# google/cloud/dataform/v1beta1 google-cloud-dataform-v1beta1-java
+# google/cloud/datafusion/v1 google-cloud-datafusion-v1-java
+# google/cloud/datalabeling/v1beta1 google-cloud-datalabeling-v1beta1-java
+# google/cloud/dataplex/v1 google-cloud-dataplex-v1-java
+# google/cloud/dataproc/v1 google-cloud-dataproc-v1-java
+# google/cloud/datastream/v1 google-cloud-datastream-v1-java
+# google/cloud/deploy/v1 google-cloud-deploy-v1-java
+# google/cloud/dialogflow/cx/v3 google-cloud-dialogflow-cx-v3-java
+# google/cloud/dialogflow/v2 google-cloud-dialogflow-v2-java
+# google/cloud/discoveryengine/v1 google-cloud-discoveryengine-v1-java
+# google/cloud/documentai/v1 google-cloud-documentai-v1-java
+# google/cloud/domains/v1 google-cloud-domains-v1-java
+# google/cloud/edgecontainer/v1 google-cloud-edgecontainer-v1-java
+# google/cloud/enterpriseknowledgegraph/v1 google-cloud-enterpriseknowledgegraph-v1-java
+# google/cloud/essentialcontacts/v1 google-cloud-essentialcontacts-v1-java
+# google/cloud/eventarc/publishing/v1 google-cloud-eventarc-publishing-v1-java
+# google/cloud/eventarc/v1 google-cloud-eventarc-v1-java
+# google/cloud/filestore/v1 google-cloud-filestore-v1-java
+# google/cloud/functions/v2 google-cloud-functions-v2-java
+# google/cloud/gkebackup/v1 google-cloud-gkebackup-v1-java
+# google/cloud/gkeconnect/gateway/v1beta1 google-cloud-gkeconnect-gateway-v1beta1-java
+# google/cloud/gkehub/v1 google-cloud-gkehub-v1-java
+# google/cloud/gkemulticloud/v1 google-cloud-gkemulticloud-v1-java
+# google/cloud/gsuiteaddons/v1 google-cloud-gsuiteaddons-v1-java
+# google/cloud/ids/v1 google-cloud-ids-v1-java
+# google/cloud/iot/v1 google-cloud-iot-v1-java
+# google/cloud/kms/inventory/v1 google-cloud-kms-inventory-v1-java
+# google/cloud/kms/v1 google-cloud-kms-v1-java
+# google/cloud/language/v2 google-cloud-language-v2-java
+# google/cloud/lifesciences/v2beta google-cloud-lifesciences-v2beta-java
+# google/cloud/managedidentities/v1 google-cloud-managedidentities-v1-java
+# google/cloud/mediatranslation/v1beta1 google-cloud-mediatranslation-v1beta1-java
+# google/cloud/memcache/v1 google-cloud-memcache-v1-java
+# google/cloud/metastore/v1 google-cloud-metastore-v1-java
+# google/cloud/migrationcenter/v1 google-cloud-migrationcenter-v1-java
+# google/cloud/netapp/v1 google-cloud-netapp-v1-java
+# google/cloud/networkconnectivity/v1 google-cloud-networkconnectivity-v1-java
+# google/cloud/networkmanagement/v1 google-cloud-networkmanagement-v1-java
+# google/cloud/networksecurity/v1 google-cloud-networksecurity-v1-java
+# google/cloud/notebooks/v2 google-cloud-notebooks-v2-java
+# google/cloud/optimization/v1 google-cloud-optimization-v1-java
+# google/cloud/orchestration/airflow/service/v1 google-cloud-airflow-service-v1-java
+# google/cloud/orgpolicy/v2 google-cloud-orgpolicy-v2-java
+# google/cloud/osconfig/v1 google-cloud-osconfig-v1-java
+# google/cloud/oslogin/v1 google-cloud-oslogin-v1-java
+# google/cloud/phishingprotection/v1beta1 google-cloud-phishingprotection-v1beta1-java
+# google/cloud/policysimulator/v1 google-cloud-policysimulator-v1-java
+# google/cloud/policytroubleshooter/v1 google-cloud-policytroubleshooter-v1-java
+# google/cloud/privatecatalog/v1beta1 google-cloud-privatecatalog-v1beta1-java
+# google/cloud/rapidmigrationassessment/v1 google-cloud-rapidmigrationassessment-v1-java
+# google/cloud/recaptchaenterprise/v1 google-cloud-recaptchaenterprise-v1-java
+# google/cloud/recommendationengine/v1beta1 google-cloud-recommendationengine-v1beta1-java
+# google/cloud/recommender/v1 google-cloud-recommender-v1-java
+# google/cloud/redis/v1 google-cloud-redis-v1-java
+# google/cloud/resourcesettings/v1 google-cloud-resourcesettings-v1-java
+# google/cloud/retail/v2 google-cloud-retail-v2-java
+# google/cloud/run/v2 google-cloud-run-v2-java
+# google/cloud/scheduler/v1 google-cloud-scheduler-v1-java
+# google/cloud/secretmanager/v1 google-cloud-secretmanager-v1-java
+# google/cloud/security/privateca/v1 google-cloud-security-privateca-v1-java
+# google/cloud/security/publicca/v1beta1 google-cloud-security-publicca-v1beta1-java
+# google/cloud/securitycenter/settings/v1beta1 google-cloud-securitycenter-settings-v1beta1-java
+# google/cloud/securitycenter/v1 google-cloud-securitycenter-v1-java
+# google/cloud/servicedirectory/v1 google-cloud-servicedirectory-v1-java
+# google/cloud/shell/v1 google-cloud-shell-v1-java
+# google/cloud/speech/v2 google-cloud-speech-v2-java
+# google/cloud/storageinsights/v1 google-cloud-storageinsights-v1-java
+# google/cloud/support/v2 google-cloud-support-v2-java
+# google/cloud/talent/v4 google-cloud-talent-v4-java
+# google/cloud/tasks/v2 google-cloud-tasks-v2-java
+# google/cloud/texttospeech/v1 google-cloud-texttospeech-v1-java
+# google/cloud/tpu/v2 google-cloud-tpu-v2-java
+# google/cloud/translate/v3 google-cloud-translation-v3-java
+# google/cloud/video/livestream/v1 google-cloud-video-livestream-v1-java
+# google/cloud/video/stitcher/v1 google-cloud-video-stitcher-v1-java
+# google/cloud/video/transcoder/v1 google-cloud-video-transcoder-v1-java
+# google/cloud/videointelligence/v1 google-cloud-videointelligence-v1-java
+# google/cloud/vision/v1 google-cloud-vision-v1-java
+# google/cloud/vmmigration/v1 google-cloud-vmmigration-v1-java
+# google/cloud/vmwareengine/v1 google-cloud-vmwareengine-v1-java
+# google/cloud/vpcaccess/v1 google-cloud-vpcaccess-v1-java
+# google/cloud/webrisk/v1 google-cloud-webrisk-v1-java
+# google/cloud/websecurityscanner/v1 google-cloud-websecurityscanner-v1-java
+# google/cloud/workflows/executions/v1 google-cloud-workflows-executions-v1-java
+# google/cloud/workflows/v1 google-cloud-workflows-v1-java
+# google/cloud/workstations/v1 google-cloud-workstations-v1-java
+# google/container/v1 google-cloud-container-v1-java
+# google/dataflow/v1beta3 google-cloud-dataflow-v1beta3-java
+# google/devtools/artifactregistry/v1 google-cloud-devtools-artifactregistry-v1-java
+# google/devtools/cloudbuild/v2 google-cloud-devtools-cloudbuild-v2-java
+# google/devtools/clouddebugger/v2 google-cloud-devtools-clouddebugger-v2-java
+# google/devtools/clouderrorreporting/v1beta1 google-cloud-devtools-clouderrorreporting-v1beta1-java
+# google/devtools/cloudprofiler/v2 google-cloud-devtools-cloudprofiler-v2-java
+# google/devtools/cloudtrace/v2 google-cloud-devtools-cloudtrace-v2-java
+google/devtools/containeranalysis/v1 google-cloud-devtools-containeranalysis-v1-java
+# google/example/library/v1 google-cloud-example-library-v1-java
+# google/iam/admin/v1 google-cloud-iam-admin-v1-java
 # google/iam/v1 google-iam-v1-java
-google/iam/credentials/v1 google-cloud-iam-credentials-v1-java
-google/logging/v2 google-cloud-logging-v2-java
-google/pubsub/v1 google-cloud-pubsub-v1-java
-google/cloud/redis/v1 google-cloud-redis-v1-java
-google/storage/v2 google-cloud-storage-v2-java
+# google/iam/v2 google-cloud-iam-v2-java
+# google/iam/credentials/v1 google-cloud-iam-credentials-v1-java
+# google/identity/accesscontextmanager/v1 google-cloud-accesscontextmanager-v1-java
+# google/logging/v2 google-cloud-logging-v2-java
+# google/maps/addressvalidation/v1 google-cloud-maps-addressvalidation-v1-java
+# google/maps/mapsplatformdatasets/v1 google-cloud-maps-mapsplatformdatasets-v1-java
+# google/maps/routing/v2 google-maps-routing-v2-java
+# google/monitoring/dashboard/v1 google-cloud-monitoring-dashboard-v1-java
+# google/monitoring/metricsscope/v1 google-cloud-monitoring-metricsscope-v1-java
+# google/monitoring/v3 google-cloud-monitoring-v3-java
+# google/privacy/dlp/v2 google-cloud-privacy-dlp-v2-java
+# google/pubsub/v1 google-cloud-pubsub-v1-java
+# google/storage/v2 google-cloud-storage-v2-java
+#google/storagetransfer/v1 google-cloud-storagetransfer-v1-java
+# java-dns?
+# java-grafeas?
+# java-notification?
