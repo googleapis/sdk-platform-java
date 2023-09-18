@@ -831,7 +831,7 @@ public class BatcherImplTest {
     }
   }
 
-  @Test
+  @Test(timeout = 60000)
   public void testThrottlingBlocking() throws Exception {
     BatchingSettings settings =
         BatchingSettings.newBuilder()
