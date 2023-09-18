@@ -48,9 +48,10 @@ pushd "${output_folder}"
 echo "Checking out googlapis repository..."
 # sparse_clone will remove folder contents first, so we have to checkout googleapis
 # only once.
-sparse_clone https://github.com/googleapis/googleapis.git "google WORKSPACE"
+sparse_clone https://github.com/googleapis/googleapis.git "google grafeas WORKSPACE"
 pushd googleapis
 cp -r google "${output_folder}"
+cp -r grafeas "${output_folder}"
 # parse version of gapic-generator-java, protobuf and grpc from WORKSPACE
 gapic_generator_version=$(get_version_from_WORKSPACE "_gapic_generator_java_version" WORKSPACE "=")
 echo "The version of gapic-generator-java is ${gapic_generator_version}."
