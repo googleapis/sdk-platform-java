@@ -17,67 +17,6 @@
     <fmt.skip>true</fmt.skip>
   </properties>
 
-  <profiles>
-    <profile>
-      <id>enable-golden-tests</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>exec-maven-plugin</artifactId>
-            <version>3.1.0</version>
-            <executions>
-              <execution>
-                <id>verify-showcase</id>
-                <goals>
-                  <goal>exec</goal>
-                </goals>
-                <phase>test</phase>
-                <configuration>
-                  <executable>bazelisk</executable>
-                  <arguments>
-                    <argument>run</argument>
-                    <argument>--experimental_proto_descriptor_sets_include_source_info</argument>
-                    <argument>//showcase:verify_proto</argument>
-                  </arguments>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-    <profile>
-      <id>update</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>exec-maven-plugin</artifactId>
-            <version>3.1.0</version>
-            <executions>
-              <execution>
-                <id>verify-showcase</id>
-                <goals>
-                  <goal>exec</goal>
-                </goals>
-                <phase>generate-sources</phase>
-                <configuration>
-                  <executable>bazel</executable>
-                  <arguments>
-                    <argument>run</argument>
-                    <argument>--experimental_proto_descriptor_sets_include_source_info</argument>
-                    <argument>//showcase:update_proto</argument>
-                  </arguments>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
-
   <dependencies>
     <dependency>
       <groupId>com.google.protobuf</groupId>
