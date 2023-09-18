@@ -246,7 +246,7 @@ get_version_from_WORKSPACE() {
 
 get_iam_policy_from_BUILD() {
   local build_file=$1
-  local contains_iam_polcy
+  local contains_iam_policy
   # search twice because it may be in two targets.
   contains_iam_policy=$(__get_config_from_BUILD \
     "${build_file}" \
@@ -262,7 +262,7 @@ get_iam_policy_from_BUILD() {
     "${contains_iam_policy}" \
     "true"
   )
-  echo "${contains_iam_polcy}"
+  echo "${contains_iam_policy}"
 }
 
 get_location_from_BUILD() {

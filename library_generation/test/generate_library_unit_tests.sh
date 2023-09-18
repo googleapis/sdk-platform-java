@@ -42,34 +42,30 @@ get_protobuf_version_failed_with_invalid_generator_version_test() {
 }
 
 search_additional_protos_common_resources_test() {
-  local proto_path="${script_dir}/resources/search_additional_proto/common_resources"
   local addition_protos
-  addition_protos=$(search_additional_protos)
+  addition_protos=$(search_additional_protos "false" "false")
   assertEquals "google/cloud/common_resources.proto" "${addition_protos}"
 }
 
 search_additional_protos_iam_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos/iam"
   local addition_protos
-  addition_protos=$(search_additional_protos)
+  addition_protos=$(search_additional_protos "true" "false")
   assertEquals \
   "google/cloud/common_resources.proto google/iam/v1/iam_policy.proto" \
   "${addition_protos}"
 }
 
 search_additional_protos_location_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos/location"
   local addition_protos
-  addition_protos=$(search_additional_protos)
+  addition_protos=$(search_additional_protos "false" "true")
   assertEquals \
   "google/cloud/common_resources.proto google/cloud/location/locations.proto" \
   "${addition_protos}"
 }
 
 search_additional_protos_iam_location_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos/iam_location"
   local addition_protos
-  addition_protos=$(search_additional_protos)
+  addition_protos=$(search_additional_protos "true" "true")
   assertEquals \
   "google/cloud/common_resources.proto google/iam/v1/iam_policy.proto google/cloud/location/locations.proto" \
   "${addition_protos}"
@@ -227,6 +223,62 @@ generate_library_failed_with_invalid_grpc_version() {
   cleanup "${destination}"
 }
 
+get_iam_policy_from_BUILD_without_match_test() {
+  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_iam_without_match.bazel"
+  local contains_iam_policy
+  contains_iam_policy=$(get_iam_policy_from_BUILD "${proto_path}")
+  assertEquals "false" "${contains_iam_policy}"
+}
+
+get_iam_policy_from_BUILD_proto_library_match_test() {
+  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_iam_proto_library_match.bazel"
+  local contains_iam_policy
+  contains_iam_policy=$(get_iam_policy_from_BUILD "${proto_path}")
+  assertEquals "true" "${contains_iam_policy}"
+}
+
+get_iam_policy_from_BUILD_proto_library_with_info_match_test() {
+  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_iam_proto_library_with_info_match.bazel"
+  local contains_iam_policy
+  contains_iam_policy=$(get_iam_policy_from_BUILD "${proto_path}")
+  assertEquals "true" "${contains_iam_policy}"
+}
+
+get_iam_policy_from_BUILD_two_targets_match_test() {
+  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_iam_two_targets_match.bazel"
+  local contains_iam_policy
+  contains_iam_policy=$(get_iam_policy_from_BUILD "${proto_path}")
+  assertEquals "true" "${contains_iam_policy}"
+}
+
+get_location_from_BUILD_without_match_test() {
+  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_location_without_match.bazel"
+  local contains_location
+  contains_location=$(get_location_from_BUILD "${proto_path}")
+  assertEquals "false" "${contains_location}"
+}
+
+get_location_from_BUILD_proto_library_match_test() {
+  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_location_proto_library_match.bazel"
+  local contains_location
+  contains_location=$(get_location_from_BUILD "${proto_path}")
+  assertEquals "true" "${contains_location}"
+}
+
+get_location_from_BUILD_proto_library_with_info_match_test() {
+  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_location_proto_library_with_info_match.bazel"
+  local contains_location
+  contains_location=$(get_location_from_BUILD "${proto_path}")
+  assertEquals "true" "${contains_location}"
+}
+
+get_location_from_BUILD_two_targets_match_test() {
+  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_location_two_targets_match.bazel"
+  local contains_location
+  contains_location=$(get_location_from_BUILD "${proto_path}")
+  assertEquals "true" "${contains_location}"
+}
+
 get_transport_from_BUILD_grpc_rest_test() {
   local build_file="${script_dir}/resources/misc/BUILD_grpc_rest.bazel"
   local transport
@@ -336,6 +388,14 @@ test_list=(
   generate_library_failed_with_invalid_generator_version
   generate_library_failed_with_invalid_protobuf_version
   generate_library_failed_with_invalid_grpc_version
+  get_iam_policy_from_BUILD_without_match_test
+  get_iam_policy_from_BUILD_proto_library_match_test
+  get_iam_policy_from_BUILD_proto_library_with_info_match_test
+  get_iam_policy_from_BUILD_two_targets_match_test
+  get_location_from_BUILD_without_match_test
+  get_location_from_BUILD_proto_library_match_test
+  get_location_from_BUILD_proto_library_with_info_match_test
+  get_location_from_BUILD_two_targets_match_test
   get_transport_from_BUILD_grpc_rest_test
   get_transport_from_BUILD_grpc_test
   get_transport_from_BUILD_rest_test
