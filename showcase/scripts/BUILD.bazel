@@ -1,6 +1,0 @@
-package(default_visibility = ["//showcase:update"])
-
-exports_files([
-    "update.sh",
-    "verify.sh",
-])

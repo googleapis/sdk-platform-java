@@ -2,8 +2,28 @@
 
 set -xeo pipefail
 
-# define utility functions
+# private functions that should not be called outside this file.
 
+# Used to obtain configuration values from a bazel BUILD file
+#
+# inspects a $build_file for a certain $rule (e.g. java_gapic_library). If the
+# first 15 lines after the declaration of the rule contain $pattern, then
+# it will return $if_match if $pattern is found, otherwise $default
+__get_config_from_BUILD() {
+  build_file=$1
+  rule=$2
+  pattern=$3
+  default=$4
+  if_match=$5
+
+  result="${default}"
+  if grep -A 15 "${rule}" "${build_file}" | grep -q "${pattern}"; then
+    result="${if_match}"
+  fi
+  echo "${result}"
+}
+
+# define utility functions
 extract_folder_name() {
   local destination_path=$1
   local folder_name=${destination_path##*/}
@@ -63,16 +83,14 @@ find_additional_protos_in_yaml() {
 # pulled from googleapis as a prerequisite.
 # Search additional protos in .yaml files.
 search_additional_protos() {
-  local additional_protos="google/cloud/common_resources.proto" # used by every library
-  local iam_policy
-  local locations
-  iam_policy=$(find_additional_protos_in_yaml "name: google.iam.v1.IAMPolicy")
-  if [ -n "${iam_policy}" ]; then
-    additional_protos="${additional_protos} google/iam/v1/iam_policy.proto"
+  additional_protos="google/cloud/common_resources.proto" # used by every library
+  iam_policy=$(find_additional_protos_in_yaml "name: '*google.iam.v1.IAMPolicy'*")
+  if [ -n "$iam_policy" ]; then
+    additional_protos="$additional_protos google/iam/v1/iam_policy.proto"
   fi
-  locations=$(find_additional_protos_in_yaml "name: google.cloud.location.Locations")
+  locations=$(find_additional_protos_in_yaml "name: '*google.cloud.location.Locations'*")
   if [ -n "${locations}" ]; then
-    additional_protos="${additional_protos} google/cloud/location/locations.proto"
+    additional_protos="$additional_protos google/cloud/location/locations.proto"
   fi
   echo "${additional_protos}"
 }
@@ -180,7 +198,6 @@ download_protobuf() {
   fi
 
   protoc_path=protobuf-${protobuf_version}/bin
-  echo "protoc version: $("$protoc_path"/protoc --version)"
 }
 
 download_grpc_plugin() {
@@ -215,4 +232,110 @@ download_fail() {
   local repo=${2:-"maven central mirror"}
   >&2 echo "Fail to download ${artifact} from ${repo} repository. Please install ${artifact} first if you want to download a SNAPSHOT."
   exit 1
+}
+
+# Obtains a version from a bazel WORKSPACE file
+#
+# versions look like "_ggj_version="1.2.3"
+# It will return 1.2.3 for such example
+get_version_from_WORKSPACE() {
+  version_key_word=$1
+  workspace=$2
+  version=$(\
+    grep "${version_key_word}" "${workspace}" |\
+    head -n 1 |\
+    sed 's/\(.*\) = "\(.*\)"\(.*\)/\2/' |\
+    sed 's/[a-zA-Z-]*//'
+  )
+  echo "${version}"
+}
+
+get_transport_from_BUILD() {
+  local build_file=$1
+  local transport
+  transport=$(__get_config_from_BUILD \
+    "${build_file}" \
+    "java_gapic_library(" \
+    "grpc+rest" \
+    "grpc" \
+    "grpc+rest"
+  )
+  # search again because the transport maybe `rest`.
+  transport=$(__get_config_from_BUILD \
+    "${build_file}" \
+    "java_gapic_library(" \
+    "transport = \"rest\"" \
+    "${transport}" \
+    "rest"
+  )
+  echo "${transport}"
+}
+
+get_rest_numeric_enums_from_BUILD() {
+  local build_file=$1
+  local rest_numeric_enums
+  rest_numeric_enums=$(__get_config_from_BUILD \
+    "${build_file}" \
+    "java_gapic_library(" \
+    "rest_numeric_enums = True" \
+    "false" \
+    "true"
+  )
+  echo "${rest_numeric_enums}"
+}
+
+get_include_samples_from_BUILD() {
+  local build_file=$1
+  local include_samples
+  include_samples=$(__get_config_from_BUILD \
+    "${build_file}" \
+    "java_gapic_assembly_gradle_pkg(" \
+    "include_samples = True" \
+    "false" \
+    "true"
+  )
+  echo "${include_samples}"
+}
+
+# Convenience function to clone only the necessary folders from a git repository
+sparse_clone() {
+  repo_url=$1
+  paths=$2
+  commitish=$3
+  clone_dir=$(basename "${repo_url%.*}")
+  rm -rf "${clone_dir}"
+  git clone -n --depth=1 --no-single-branch --filter=tree:0 "${repo_url}"
+  cd "${clone_dir}"
+  if [ -n "${commitish}" ]; then
+    git checkout "${commitish}"
+  fi
+  git sparse-checkout set --no-cone ${paths}
+  git checkout
+  cd ..
+}
+
+# takes a versions.txt file and returns its version
+get_version_from_versions_txt() {
+  versions=$1
+  key=$2
+  version=$(grep "$key:" "${versions}" | cut -d: -f3) # 3rd field is snapshot
+  echo "${version}"
+}
+
+detect_os_architecture() {
+  local os_type
+  local os_architecture
+  os_type=$(uname -sm)
+  case "${os_type}" in
+    *"Linux x86_64"*)
+      os_architecture="linux-x86_64"
+      ;;
+    *"Darwin x86_64"*)
+      os_architecture="osx-x86_64"
+      ;;
+    *)
+      os_architecture="osx-aarch_64"
+      ;;
+  esac
+  echo "${os_architecture}"
 }
