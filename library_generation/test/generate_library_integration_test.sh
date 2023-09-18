@@ -23,16 +23,12 @@ output_folder="$(get_output_folder)"
 while [[ $# -gt 0 ]]; do
 key="$1"
 case $key in
-  --proto_path_list)
+  -p|--proto_path_list)
     proto_path_list="$2"
     shift
     ;;
   -e|--enable_postprocessing)
     enable_postprocessing="$2"
-    shift
-    ;;
-  -m|--monorepo_folder)
-    monorepo_folder="$2"
     shift
     ;;
   -s|--owlbot_sha)
@@ -42,6 +38,7 @@ case $key in
   -g|--googleapis_gen_url)
     googleapis_gen_url="$2"
     shift
+    ;;
   *)
     echo "Invalid option: [$1]"
     exit 1
@@ -75,16 +72,10 @@ echo "The version of protobuf is ${protobuf_version}"
 grpc_version=$(get_version_from_WORKSPACE "_grpc_version" WORKSPACE "=")
 echo "The version of protoc-gen-grpc-java plugin is ${gapic_generator_version}."
 
-# clean up
-cd "${script_dir}"
-rm -rf WORKSPACE googleapis-gen
-exit "${RESULT}"
-
-popd # output_folder
+popd # googleapis
+popd # output
 
 grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
-  target_folder="${output_folder}/google-cloud-java/${monorepo_folder}"
-  repo_metadata_json_path="${target_folder}/.repo-metadata.json"
   proto_path=$(echo "$line" | cut -d " " -f 1)
   destination_path=$(echo "$line" | cut -d " " -f 2)
   # parse GAPIC options from proto_path/BUILD.bazel
@@ -97,39 +88,64 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   echo "GAPIC options are transport=${transport}, rest_numeric_enums=${rest_numeric_enums}, include_samples=${include_samples}."
   # generate GAPIC client library
   echo "Generating library from ${proto_path}, to ${destination_path}..."
-  if [ $enable_postprocessing == "true"]; then
-
-  "${library_generation_dir}"/generate_library.sh \
-  -p "${proto_path}" \
-  -d "${destination_path}" \
-  --gapic_generator_version "${gapic_generator_version}" \
-  --protobuf_version "${protobuf_version}" \
-  --grpc_version "${grpc_version}" \
-  --transport "${transport}" \
-  --rest_numeric_enums "${rest_numeric_enums}" \
-  --include_samples "${include_samples}" \
-  --repo_metadata_json_path "${repo_metadata_json_path}" \
-  --owlbot_sha "${owlbot_sha}" 
-  echo "Generate library finished."
+  if [ $enable_postprocessing == "true" ]; then
+    monorepo_folder=$(echo "$line" | cut -d " " -f 3)
+    if [ $monorepo_folder == "null" ]; then
+      echo 'this is not a monorepo library. Skipping...'
+      continue
+    fi
+    pushd "${output_folder}"
+    sparse_clone "https://github.com/googleapis/google-cloud-java.git" "${monorepo_folder} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"
+    popd # output_folder
+    target_folder="${output_folder}/google-cloud-java/${monorepo_folder}"
+    repo_metadata_json_path="${target_folder}/.repo-metadata.json"
+    "${library_generation_dir}"/generate_library.sh \
+      -p "${proto_path}" \
+      -d "${destination_path}" \
+      --gapic_generator_version "${gapic_generator_version}" \
+      --protobuf_version "${protobuf_version}" \
+      --grpc_version "${grpc_version}" \
+      --transport "${transport}" \
+      --rest_numeric_enums "${rest_numeric_enums}" \
+      --include_samples "${include_samples}" \
+      --repo_metadata_json_path "${repo_metadata_json_path}" \
+      --owlbot_sha "${owlbot_sha}" \
+      --enable_postprocessing "true"
+  else
+    "${library_generation_dir}"/generate_library.sh \
+      -p "${proto_path}" \
+      -d "${destination_path}" \
+      --gapic_generator_version "${gapic_generator_version}" \
+      --protobuf_version "${protobuf_version}" \
+      --grpc_version "${grpc_version}" \
+      --transport "${transport}" \
+      --rest_numeric_enums "${rest_numeric_enums}" \
+      --include_samples "${include_samples}" \
+      --enable_postprocessing "false"
   fi
 
+  echo "Generate library finished."
   echo "Compare generation result..."
   RESULT=0
-  if [ $enable_postprocesing == "true" ]; then
+  pushd "${output_folder}"
+  if [ $enable_postprocessing == "true" ]; then
     echo "Checking out google-cloud-java repository..."
-    pushd "${output_folder}"
     sparse_clone "https://github.com/googleapis/google-cloud-java.git" "${monorepo_folder}"
-    diff -r "google-cloud-java/${monorepo_folder}" "${destination_path}/workspace" \
-      -x "*gradle*" \
-      -x "README.md" \
-      -x "CHANGELOG.md" \
-      -x ".OwlBot.yaml" \
-      || RESULT=$?
+    #diff -r "google-cloud-java/${monorepo_folder}" "${destination_path}/workspace" \
+      #-x "*gradle*" \
+      #-x "README.md" \
+      #-x "CHANGELOG.md" \
+      #-x ".OwlBot.yaml" \
+      #|| RESULT=$?
+    monorepo_path="${output_folder}/google-cloud-java/${monorepo_folder}"
+    cp -r ${output_folder}/${destination_path}/workspace/* "${monorepo_path}"
+    pushd "${monorepo_path}"
+    git diff -r || RESULT=$?
+    popd
   else
     # include gapic_metadata.json and package-info.java after
     # resolving https://github.com/googleapis/sdk-platform-java/issues/1986
     echo "Checking out googleapis-gen repository..."
-    pushd "${output_folder}"
     sparse_clone "${googleapis_gen_url}" "${proto_path}/${destination_path}"
     diff -r "googleapis-gen/${proto_path}/${destination_path}" "${output_folder}/${destination_path}" \
       -x "*gradle*" \
@@ -151,4 +167,4 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   popd # output_folder
 done
 
-rm -rf "${output_folder}"
+# rm -rf "${output_folder}"
