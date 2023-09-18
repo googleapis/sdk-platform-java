@@ -76,12 +76,12 @@ unzip_src_files() {
 # Search additional protos in BUILD.bazel.
 search_additional_protos() {
   local contains_iam_policy=$1
-  local contains_location=$2
+  local contains_locations=$2
   additional_protos="google/cloud/common_resources.proto" # used by every library
   if [[ "${contains_iam_policy}" == "true" ]]; then
     additional_protos="$additional_protos google/iam/v1/iam_policy.proto"
   fi
-  if [[ "${contains_location}" == "true" ]]; then
+  if [[ "${contains_locations}" == "true" ]]; then
     additional_protos="$additional_protos google/cloud/location/locations.proto"
   fi
   echo "${additional_protos}"
@@ -265,25 +265,25 @@ get_iam_policy_from_BUILD() {
   echo "${contains_iam_policy}"
 }
 
-get_location_from_BUILD() {
+get_locations_from_BUILD() {
   local build_file=$1
-  local contains_location
+  local contains_locations
   # search twice because it may be in two targets.
-  contains_location=$(__get_config_from_BUILD \
+  contains_locations=$(__get_config_from_BUILD \
     "${build_file}" \
     "proto_library(" \
     "//google/cloud/location:location_proto" \
     "false" \
     "true"
   )
-  contains_location=$(__get_config_from_BUILD \
+  contains_locations=$(__get_config_from_BUILD \
     "${build_file}" \
     "proto_library_with_info(" \
     "//google/cloud/location:location_proto" \
-    "${contains_location}" \
+    "${contains_locations}" \
     "true"
   )
-  echo "${contains_location}"
+  echo "${contains_locations}"
 }
 
 get_transport_from_BUILD() {

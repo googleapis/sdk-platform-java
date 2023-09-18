@@ -91,14 +91,30 @@ Use `--grpc_version` to specify the value.
 
 Note that if specified, the version should be compatible with gapic-generator-java.
 
+### contains_iam_policy (optional)
+Whether to include `google/iam/v1/iam_policy.proto` into the library.
+The value is either `true` or `false`.
+The default value is `false`.
+
+Use `--contains_iam_policy` to specify the value.
+
+### contains_locations (optional)
+Whether to include `google/cloud/location/locations.proto` into the library.
+The value is either `true` or `false`.
+The default value is `false`.
+
+Use `--contains_locations` to specify the value.
+
 ### transport (optional)
-One of GAPIC options passed to the generator. The value is either `grpc` or `grpc+rest`.
+One of GAPIC options passed to the generator.
+The value is either `grpc` or `grpc+rest`.
 The default value is `grpc`.
 
 Use `--transport` to specify the value.
 
 ### rest_numeric_enums (optional)
-One of GAPIC options passed to the generator. The value is either `true` or `false`.
+One of GAPIC options passed to the generator.
+The value is either `true` or `false`.
 The default value is `true`.
 
 Use `--rest_numeric_enums` to specify the value.

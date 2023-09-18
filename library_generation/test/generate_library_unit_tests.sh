@@ -55,7 +55,7 @@ search_additional_protos_iam_test() {
   "${addition_protos}"
 }
 
-search_additional_protos_location_test() {
+search_additional_protos_locations_test() {
   local addition_protos
   addition_protos=$(search_additional_protos "false" "true")
   assertEquals \
@@ -63,7 +63,7 @@ search_additional_protos_location_test() {
   "${addition_protos}"
 }
 
-search_additional_protos_iam_location_test() {
+search_additional_protos_iam_locations_test() {
   local addition_protos
   addition_protos=$(search_additional_protos "true" "true")
   assertEquals \
@@ -251,32 +251,32 @@ get_iam_policy_from_BUILD_two_targets_match_test() {
   assertEquals "true" "${contains_iam_policy}"
 }
 
-get_location_from_BUILD_without_match_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_location_without_match.bazel"
-  local contains_location
-  contains_location=$(get_location_from_BUILD "${proto_path}")
-  assertEquals "false" "${contains_location}"
+get_locations_from_BUILD_without_match_test() {
+  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_locations_without_match.bazel"
+  local contains_locations
+  contains_locations=$(get_locations_from_BUILD "${proto_path}")
+  assertEquals "false" "${contains_locations}"
 }
 
-get_location_from_BUILD_proto_library_match_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_location_proto_library_match.bazel"
-  local contains_location
-  contains_location=$(get_location_from_BUILD "${proto_path}")
-  assertEquals "true" "${contains_location}"
+get_locations_from_BUILD_proto_library_match_test() {
+  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_locations_proto_library_match.bazel"
+  local contains_locations
+  contains_locations=$(get_locations_from_BUILD "${proto_path}")
+  assertEquals "true" "${contains_locations}"
 }
 
-get_location_from_BUILD_proto_library_with_info_match_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_location_proto_library_with_info_match.bazel"
-  local contains_location
-  contains_location=$(get_location_from_BUILD "${proto_path}")
-  assertEquals "true" "${contains_location}"
+get_locations_from_BUILD_proto_library_with_info_match_test() {
+  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_locations_proto_library_with_info_match.bazel"
+  local contains_locations
+  contains_locations=$(get_locations_from_BUILD "${proto_path}")
+  assertEquals "true" "${contains_locations}"
 }
 
-get_location_from_BUILD_two_targets_match_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_location_two_targets_match.bazel"
-  local contains_location
-  contains_location=$(get_location_from_BUILD "${proto_path}")
-  assertEquals "true" "${contains_location}"
+get_locations_from_BUILD_two_targets_match_test() {
+  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_locations_two_targets_match.bazel"
+  local contains_locations
+  contains_locations=$(get_locations_from_BUILD "${proto_path}")
+  assertEquals "true" "${contains_locations}"
 }
 
 get_transport_from_BUILD_grpc_rest_test() {
@@ -370,8 +370,8 @@ test_list=(
   get_protobuf_version_failed_with_invalid_generator_version_test
   search_additional_protos_common_resources_test
   search_additional_protos_iam_test
-  search_additional_protos_location_test
-  search_additional_protos_iam_location_test
+  search_additional_protos_locations_test
+  search_additional_protos_iam_locations_test
   get_gapic_opts_with_rest_test
   get_gapic_opts_without_rest_test
   remove_grpc_version_test
@@ -392,10 +392,10 @@ test_list=(
   get_iam_policy_from_BUILD_proto_library_match_test
   get_iam_policy_from_BUILD_proto_library_with_info_match_test
   get_iam_policy_from_BUILD_two_targets_match_test
-  get_location_from_BUILD_without_match_test
-  get_location_from_BUILD_proto_library_match_test
-  get_location_from_BUILD_proto_library_with_info_match_test
-  get_location_from_BUILD_two_targets_match_test
+  get_locations_from_BUILD_without_match_test
+  get_locations_from_BUILD_proto_library_match_test
+  get_locations_from_BUILD_proto_library_with_info_match_test
+  get_locations_from_BUILD_two_targets_match_test
   get_transport_from_BUILD_grpc_rest_test
   get_transport_from_BUILD_grpc_test
   get_transport_from_BUILD_rest_test
