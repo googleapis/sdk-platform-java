@@ -91,7 +91,7 @@ if [ -z "${include_samples}" ]; then
 fi
 
 if [ -z "$enable_postprocessing" ]; then
-  enable_postprocessing="false"
+  enable_postprocessing="true"
 fi
 
 if [ -z "${os_architecture}" ]; then
