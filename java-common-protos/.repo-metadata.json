@@ -1,7 +1,7 @@
 {
   "api_shortname": "common-protos",
   "name_pretty": "Common Protos",
-  "product_documentation": "https://github.com/googleapis/sdk-platform-java/tree/main/java-common-protos",
+  "product_documentation": "https://github.com/googleapis/api-common-protos",
   "api_description": "Protobuf classes for Google's common protos.",
   "client_documentation": "https://cloud.google.com/java/docs/reference/proto-google-common-protos/latest/history",
   "release_level": "stable",
