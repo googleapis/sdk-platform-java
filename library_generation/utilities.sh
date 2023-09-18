@@ -28,7 +28,7 @@ __get_config_from_BUILD() {
 extract_folder_name() {
   local destination_path=$1
   local folder_name=${destination_path##*/}
-  echo "$folder_name"
+  echo "$folder_name" | sed 's/-v[1-9a-zA-Z]-java//'
 }
 
 remove_empty_files() {
@@ -334,7 +334,7 @@ get_version_from_versions_txt() {
 # for a googleapis path like google/cloud/lib/v1 it will extract the last
 # element of the slash (/) separated path, in this case v1
 extract_api_version() {
-  echo $1 | rev | cut -d/ -f1 | rev
+  echo $1 | sed 's/-java\$//' | rev | cut -d/ -f1 | rev
 }
 
 # gets the output folder where all sources and dependencies will be located. It

@@ -188,8 +188,15 @@ source "${script_dir}/post-processing/postprocessing_utilities.sh"
 if [ "${enable_postprocessing}" != "true" ];
 then
   echo "post processing is disabled"
+  pushd "${output_folder}/${destination_path}"
+  mv "proto-${folder_name}-${api_version}" "proto-${folder_name}-${api_version}-java"
+  mv "gapic-${folder_name}-${api_version}" "gapic-${folder_name}-${api_version}-java"
+  if [[ ! "${transport}" == "rest" ]]; then
+    mv "grpc-${folder_name}-${api_version}" "grpc-${folder_name}-${api_version}-java"
+  fi
   exit 0
-elif [ -z "${repo_metadata_json_path}" ];
+fi
+if [ -z "${repo_metadata_json_path}" ];
 then
   echo "no repo_metadata.json provided. This is necessary for post-processing the generated library" >&2
   exit 1
