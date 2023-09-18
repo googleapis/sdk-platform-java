@@ -18,7 +18,7 @@ __get_config_from_BUILD() {
   if_match=$5
 
   result="${default}"
-  if grep -A 15 "${rule}" "${build_file}" | grep -q "${pattern}"; then
+  if grep -A 20 "${rule}" "${build_file}" | grep -q "${pattern}"; then
     result="${if_match}"
   fi
   echo "${result}"
@@ -69,28 +69,19 @@ unzip_src_files() {
   rm -r -f "${destination_path}/${category}-${folder_name}/src/main/java/META-INF"
 }
 
-find_additional_protos_in_yaml() {
-  local pattern=$1
-  local find_result
-  find_result=$(grep --include=\*.yaml -rw "${proto_path}" -e "${pattern}")
-  if [ -n "${find_result}" ]; then
-    echo "${find_result}"
-  fi
-}
-
 # Apart from proto files in proto_path, additional protos are needed in order
 # to generate GAPIC client libraries.
 # In most cases, these protos should be within google/ directory, which is
 # pulled from googleapis as a prerequisite.
-# Search additional protos in .yaml files.
+# Search additional protos in BUILD.bazel.
 search_additional_protos() {
+  local contains_iam_policy=$1
+  local contains_location=$2
   additional_protos="google/cloud/common_resources.proto" # used by every library
-  iam_policy=$(find_additional_protos_in_yaml "name: '*google.iam.v1.IAMPolicy'*")
-  if [ -n "$iam_policy" ]; then
+  if [[ "${contains_iam_policy}" == "true" ]]; then
     additional_protos="$additional_protos google/iam/v1/iam_policy.proto"
   fi
-  locations=$(find_additional_protos_in_yaml "name: '*google.cloud.location.Locations'*")
-  if [ -n "${locations}" ]; then
+  if [[ "${contains_location}" == "true" ]]; then
     additional_protos="$additional_protos google/cloud/location/locations.proto"
   fi
   echo "${additional_protos}"
@@ -251,6 +242,48 @@ get_version_from_WORKSPACE() {
     sed 's/[a-zA-Z-]*//'
   )
   echo "${version}"
+}
+
+get_iam_policy_from_BUILD() {
+  local build_file=$1
+  local contains_iam_polcy
+  # search twice because it may be in two targets.
+  contains_iam_policy=$(__get_config_from_BUILD \
+    "${build_file}" \
+    "proto_library(" \
+    "//google/iam/v1:iam_policy_proto" \
+    "false" \
+    "true"
+  )
+  contains_iam_policy=$(__get_config_from_BUILD \
+    "${build_file}" \
+    "proto_library_with_info(" \
+    "//google/iam/v1:iam_policy_proto" \
+    "${contains_iam_policy}" \
+    "true"
+  )
+  echo "${contains_iam_polcy}"
+}
+
+get_location_from_BUILD() {
+  local build_file=$1
+  local contains_location
+  # search twice because it may be in two targets.
+  contains_location=$(__get_config_from_BUILD \
+    "${build_file}" \
+    "proto_library(" \
+    "//google/cloud/location:location_proto" \
+    "false" \
+    "true"
+  )
+  contains_location=$(__get_config_from_BUILD \
+    "${build_file}" \
+    "proto_library_with_info(" \
+    "//google/cloud/location:location_proto" \
+    "${contains_location}" \
+    "true"
+  )
+  echo "${contains_location}"
 }
 
 get_transport_from_BUILD() {

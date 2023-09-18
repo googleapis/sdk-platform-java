@@ -25,6 +25,14 @@ case $key in
     protobuf_version="$2"
     shift
     ;;
+  --contains_iam_policy)
+    contains_iam_policy="$2"
+    shift
+    ;;
+  --contains_locations)
+    contains_locations="$2"
+    shift
+    ;;
   --grpc_version)
     grpc_version="$2"
     shift
@@ -64,6 +72,14 @@ fi
 
 if [ -z "${grpc_version}" ]; then
   grpc_version=$(get_grpc_version "${gapic_generator_version}")
+fi
+
+if [ -z "${contains_iam_policy}" ];then
+  contains_iam_policy="false"
+fi
+
+if [ -z "${contains_locations}" ];then
+  contains_locations="false"
 fi
 
 if [ -z "${transport}" ]; then
@@ -117,7 +133,7 @@ fi
 "--plugin=protoc-gen-java_gapic=${script_dir}/gapic-generator-java-wrapper" \
 "--java_gapic_out=metadata:${destination_path}/java_gapic_srcjar_raw.srcjar.zip" \
 "--java_gapic_opt=$(get_gapic_opts)" \
-${proto_files} $(search_additional_protos)
+${proto_files} $(search_additional_protos "${contains_iam_policy}" "${contains_locations}")
 
 unzip -o -q "${destination_path}/java_gapic_srcjar_raw.srcjar.zip" -d "${destination_path}"
 # Sync'\''d to the output file name in Writer.java.
