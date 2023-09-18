@@ -877,7 +877,8 @@ public class BatcherImplTest {
       // Wait until batcher.add blocks (Thread.State.WAITING) and the batcher starts the
       // stopwatch for total_throttled_time. Without this proper waiting, the
       // Thread.sleep(throttledTime) below may start before the stopwatch starts,
-      // resulting in a failure at the verification of throttledTime at the end of the test.
+      // resulting in a shorter total_throttled_time at the verification of throttledTime
+      // at the end of the test.
       // https://github.com/googleapis/sdk-platform-java/issues/1193
       do {
         Thread.sleep(10);
