@@ -1,10 +1,5 @@
 # this file is only used in testing `get_location_from_BUILD` in utilities.sh
 
-proto_library(
-  deps = [
-  ]
-)
-
 proto_library_with_info(
   deps = [
   ]

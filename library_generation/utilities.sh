@@ -247,19 +247,11 @@ get_version_from_WORKSPACE() {
 get_iam_policy_from_BUILD() {
   local build_file=$1
   local contains_iam_policy
-  # search twice because it may be in two targets.
-  contains_iam_policy=$(__get_config_from_BUILD \
-    "${build_file}" \
-    "proto_library(" \
-    "//google/iam/v1:iam_policy_proto" \
-    "false" \
-    "true"
-  )
   contains_iam_policy=$(__get_config_from_BUILD \
     "${build_file}" \
     "proto_library_with_info(" \
     "//google/iam/v1:iam_policy_proto" \
-    "${contains_iam_policy}" \
+    "false" \
     "true"
   )
   echo "${contains_iam_policy}"
@@ -268,19 +260,11 @@ get_iam_policy_from_BUILD() {
 get_locations_from_BUILD() {
   local build_file=$1
   local contains_locations
-  # search twice because it may be in two targets.
-  contains_locations=$(__get_config_from_BUILD \
-    "${build_file}" \
-    "proto_library(" \
-    "//google/cloud/location:location_proto" \
-    "false" \
-    "true"
-  )
   contains_locations=$(__get_config_from_BUILD \
     "${build_file}" \
     "proto_library_with_info(" \
     "//google/cloud/location:location_proto" \
-    "${contains_locations}" \
+    "false" \
     "true"
   )
   echo "${contains_locations}"

@@ -230,22 +230,8 @@ get_iam_policy_from_BUILD_without_match_test() {
   assertEquals "false" "${contains_iam_policy}"
 }
 
-get_iam_policy_from_BUILD_proto_library_match_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_iam_proto_library_match.bazel"
-  local contains_iam_policy
-  contains_iam_policy=$(get_iam_policy_from_BUILD "${proto_path}")
-  assertEquals "true" "${contains_iam_policy}"
-}
-
-get_iam_policy_from_BUILD_proto_library_with_info_match_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_iam_proto_library_with_info_match.bazel"
-  local contains_iam_policy
-  contains_iam_policy=$(get_iam_policy_from_BUILD "${proto_path}")
-  assertEquals "true" "${contains_iam_policy}"
-}
-
-get_iam_policy_from_BUILD_two_targets_match_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_iam_two_targets_match.bazel"
+get_iam_policy_from_BUILD_match_test() {
+  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_iam_match.bazel"
   local contains_iam_policy
   contains_iam_policy=$(get_iam_policy_from_BUILD "${proto_path}")
   assertEquals "true" "${contains_iam_policy}"
@@ -258,22 +244,8 @@ get_locations_from_BUILD_without_match_test() {
   assertEquals "false" "${contains_locations}"
 }
 
-get_locations_from_BUILD_proto_library_match_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_locations_proto_library_match.bazel"
-  local contains_locations
-  contains_locations=$(get_locations_from_BUILD "${proto_path}")
-  assertEquals "true" "${contains_locations}"
-}
-
-get_locations_from_BUILD_proto_library_with_info_match_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_locations_proto_library_with_info_match.bazel"
-  local contains_locations
-  contains_locations=$(get_locations_from_BUILD "${proto_path}")
-  assertEquals "true" "${contains_locations}"
-}
-
-get_locations_from_BUILD_two_targets_match_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_locations_two_targets_match.bazel"
+get_locations_from_BUILD_match_test() {
+  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_locations_match.bazel"
   local contains_locations
   contains_locations=$(get_locations_from_BUILD "${proto_path}")
   assertEquals "true" "${contains_locations}"
@@ -389,13 +361,9 @@ test_list=(
   generate_library_failed_with_invalid_protobuf_version
   generate_library_failed_with_invalid_grpc_version
   get_iam_policy_from_BUILD_without_match_test
-  get_iam_policy_from_BUILD_proto_library_match_test
-  get_iam_policy_from_BUILD_proto_library_with_info_match_test
-  get_iam_policy_from_BUILD_two_targets_match_test
+  get_iam_policy_from_BUILD_match_test
   get_locations_from_BUILD_without_match_test
-  get_locations_from_BUILD_proto_library_match_test
-  get_locations_from_BUILD_proto_library_with_info_match_test
-  get_locations_from_BUILD_two_targets_match_test
+  get_locations_from_BUILD_match_test
   get_transport_from_BUILD_grpc_rest_test
   get_transport_from_BUILD_grpc_test
   get_transport_from_BUILD_rest_test

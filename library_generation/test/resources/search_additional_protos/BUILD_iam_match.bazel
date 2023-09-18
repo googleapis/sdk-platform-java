@@ -1,11 +1,5 @@
 # this file is only used in testing `get_iam_policy_from_BUILD` in utilities.sh
 
-proto_library(
-  deps = [
-    "//google/iam/v1:iam_policy_proto",
-  ]
-)
-
 proto_library_with_info(
   deps = [
     "//google/iam/v1:iam_policy_proto",
