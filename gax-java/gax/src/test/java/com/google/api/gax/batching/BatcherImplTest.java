@@ -911,10 +911,9 @@ public class BatcherImplTest {
       // captors - otherwise it may incur in unexpected behaviour.
       // The callContext.withOption method is called by BatcherImpl.sendOutstanding() method via
       // BatcherImpl$PushCurrentBatchRunnable in another thread. Technically, there's no guarantee
-      // that the
-      // thread calls the withOption method within a certain timeframe. 1000 ms just works good to
-      // prevent
-      // false positives. https://github.com/googleapis/sdk-platform-java/issues/1193
+      // that the thread calls the withOption method within a certain timeframe. 1000 ms just works
+      // fine to prevent false positives.
+      // https://github.com/googleapis/sdk-platform-java/issues/1193
       Mockito.verify(callContext, Mockito.timeout(1000)).withOption(key.capture(), value.capture());
 
       // Verify that throttled time is recorded in ApiCallContext
