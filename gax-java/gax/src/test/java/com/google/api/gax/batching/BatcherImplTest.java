@@ -51,6 +51,7 @@ import com.google.common.base.Stopwatch;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Queues;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.Callable;
@@ -862,16 +863,27 @@ public class BatcherImplTest {
             flowController,
             callContext)) {
       flowController.reserve(1, 1);
+      List<Thread> batcherAddThreadHolder = Collections.synchronizedList(new ArrayList<>());
       Future future =
           executor.submit(
               new Runnable() {
                 @Override
                 public void run() {
+                  batcherAddThreadHolder.add(Thread.currentThread());
                   batcher.add(1);
                 }
               });
-      // Add a little delay ensuring that the next step starts after batcher.add(1)
-      Thread.sleep(10);
+
+      // Wait until batcher.add blocks (Thread.State.WAITING) and the batcher starts the
+      // stopwatch for total_throttled_time. Without this proper waiting, the
+      // Thread.sleep(throttledTime) below may start before the stopwatch starts,
+      // resulting in a failure at the verification of throttledTime at the end of the test.
+      // https://github.com/googleapis/sdk-platform-java/issues/1193
+      do {
+        Thread.sleep(10);
+      } while (batcherAddThreadHolder.isEmpty()
+          || batcherAddThreadHolder.get(0).getState() != Thread.State.WAITING);
+
       executor.submit(
           () -> {
             try {
@@ -895,11 +907,19 @@ public class BatcherImplTest {
       }
 
       // Mockito recommends using verify() as the ONLY way to interact with Argument
-      // captors - otherwise it may incur in unexpected behaviour
-      Mockito.verify(callContext, Mockito.timeout(100)).withOption(key.capture(), value.capture());
+      // captors - otherwise it may incur in unexpected behaviour.
+      // The callContext.withOption method is called by BatcherImpl.sendOutstanding() method via
+      // BatcherImpl$PushCurrentBatchRunnable in another thread. Technically, there's no guarantee
+      // that the
+      // thread calls the withOption method within a certain timeframe. 1000 ms just works good to
+      // prevent
+      // false positives. https://github.com/googleapis/sdk-platform-java/issues/1193
+      Mockito.verify(callContext, Mockito.timeout(1000)).withOption(key.capture(), value.capture());
 
       // Verify that throttled time is recorded in ApiCallContext
       assertThat(key.getValue()).isSameInstanceAs(Batcher.THROTTLED_TIME_KEY);
+      // Because this test waited for throttledTime before flowController.release() method,
+      // the recorded total_throttled_time should be higher than or equal to that.
       assertThat(value.getValue()).isAtLeast(throttledTime);
     } finally {
       executor.shutdownNow();
