@@ -24,17 +24,17 @@ if [ "${replace}" == "true" ]; then
   # replace contents of gapic library
   gapic_component_dir="${showcase_folder}/gapic-showcase/src/main"
   rm -rdf "${gapic_component_dir}/*"
-  cp -r "${SCRIPT_DIR}/showcase-output/gapic-showcase-output/src/main"/* "${gapic_component_dir}/"
+  cp -r "${SCRIPT_DIR}/output/showcase-output/gapic-showcase-output/src/main"/* "${gapic_component_dir}/"
 
   # replace contents of proto library
   proto_component_dir="${showcase_folder}/proto-gapic-showcase-v1beta1/src/main"
   rm -rdf "${proto_component_dir}/*"
-  cp -r "${SCRIPT_DIR}/showcase-output/proto-showcase-output/src/main"/* "${proto_component_dir}/"
+  cp -r "${SCRIPT_DIR}/output/showcase-output/proto-showcase-output/src/main"/* "${proto_component_dir}/"
 
   # replace contents of grpc library
   grpc_component_dir="${showcase_folder}/grpc-gapic-showcase-v1beta1/src/main"
   rm -rdf "${grpc_component_dir}/*"
-  cp -r "${SCRIPT_DIR}/showcase-output/grpc-showcase-output/src/main"/* "${grpc_component_dir}/"
+  cp -r "${SCRIPT_DIR}/output/showcase-output/grpc-showcase-output/src/main"/* "${grpc_component_dir}/"
 fi
 
 if [ "${perform_cleanup}" == 'true' ];then
