@@ -93,12 +93,9 @@ Note that if specified, the version should be compatible with gapic-generator-ja
 
 ### gapic_additional_protos (optional)
 Additional protos that pass to the generator.
-The default value is empty string, i.e., no additional proto.
+The default value is `google/cloud/common_resources.proto`.
 
 Use `--gapic_additional_protos` to specify the value.
-
-Note that `google/cloud/common_resources.proto` is always pass to the generator, so
-no need to specify this proto.
 
 ### transport (optional)
 One of GAPIC options passed to the generator.
@@ -132,7 +129,7 @@ library_generation/generate_library.sh \
 --gapic_generator_version 2.24.0 \
 --protobuf_version 23.2 \
 --grpc_version 1.55.1 \
---gapic_additional_protos google/cloud/location/locations.proto\
+--gapic_additional_protos "google/cloud/common_resources.proto google/cloud/location/locations.proto" \
 --transport grpc+rest \
 --rest_numeric_enums true \
 --include_samples true

@@ -70,7 +70,7 @@ if [ -z "${grpc_version}" ]; then
 fi
 
 if [ -z "${gapic_additional_protos}" ]; then
-  gapic_additional_protos=""
+  gapic_additional_protos="google/cloud/common_resources.proto"
 fi
 
 if [ -z "${transport}" ]; then
