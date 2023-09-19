@@ -68,8 +68,7 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   # parse GAPIC options from proto_path/BUILD.bazel
   pushd "${output_folder}"
   proto_build_file_path="${proto_path}/BUILD.bazel"
-  contains_iam_policy=$(get_iam_policy_from_BUILD "${proto_build_file_path}")
-  contains_locations=$(get_locations_from_BUILD "${proto_build_file_path}")
+  gapic_additional_protos=$(get_gapic_additional_protos_from_BUILD "${proto_build_file_path}")
   transport=$(get_transport_from_BUILD "${proto_build_file_path}")
   rest_numeric_enums=$(get_rest_numeric_enums_from_BUILD "${proto_build_file_path}")
   include_samples=$(get_include_samples_from_BUILD "${proto_build_file_path}")
@@ -83,8 +82,7 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   --gapic_generator_version "${gapic_generator_version}" \
   --protobuf_version "${protobuf_version}" \
   --grpc_version "${grpc_version}" \
-  --contains_iam_policy "${contains_iam_policy}" \
-  --contains_locations "${contains_locations}" \
+  --gapic_additional_protos "${gapic_additional_protos}" \
   --transport "${transport}" \
   --rest_numeric_enums "${rest_numeric_enums}" \
   --include_samples "${include_samples}"

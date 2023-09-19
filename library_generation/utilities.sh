@@ -24,6 +24,32 @@ __get_config_from_BUILD() {
   echo "${result}"
 }
 
+__get_iam_policy_from_BUILD() {
+  local build_file=$1
+  local contains_iam_policy
+  contains_iam_policy=$(__get_config_from_BUILD \
+    "${build_file}" \
+    "proto_library_with_info(" \
+    "//google/iam/v1:iam_policy_proto" \
+    "false" \
+    "true"
+  )
+  echo "${contains_iam_policy}"
+}
+
+__get_locations_from_BUILD() {
+  local build_file=$1
+  local contains_locations
+  contains_locations=$(__get_config_from_BUILD \
+    "${build_file}" \
+    "proto_library_with_info(" \
+    "//google/cloud/location:location_proto" \
+    "false" \
+    "true"
+  )
+  echo "${contains_locations}"
+}
+
 # define utility functions
 extract_folder_name() {
   local destination_path=$1
@@ -244,30 +270,16 @@ get_version_from_WORKSPACE() {
   echo "${version}"
 }
 
-get_iam_policy_from_BUILD() {
+get_gapic_additional_protos_from_BUILD() {
   local build_file=$1
-  local contains_iam_policy
-  contains_iam_policy=$(__get_config_from_BUILD \
-    "${build_file}" \
-    "proto_library_with_info(" \
-    "//google/iam/v1:iam_policy_proto" \
-    "false" \
-    "true"
-  )
-  echo "${contains_iam_policy}"
-}
-
-get_locations_from_BUILD() {
-  local build_file=$1
-  local contains_locations
-  contains_locations=$(__get_config_from_BUILD \
-    "${build_file}" \
-    "proto_library_with_info(" \
-    "//google/cloud/location:location_proto" \
-    "false" \
-    "true"
-  )
-  echo "${contains_locations}"
+  local gapic_additional_protos="google/cloud/common_resources.proto"
+  if [[ $(__get_iam_policy_from_BUILD "${build_file}") == "true" ]]; then
+    gapic_additional_protos="${gapic_additional_protos} google/iam/v1/iam_policy.proto"
+  fi
+  if [[ $(__get_locations_from_BUILD "${build_file}") == "true" ]]; then
+    gapic_additional_protos="${gapic_additional_protos} google/cloud/location/locations.proto"
+  fi
+  echo "${gapic_additional_protos}"
 }
 
 get_transport_from_BUILD() {

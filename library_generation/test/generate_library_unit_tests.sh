@@ -41,36 +41,6 @@ get_protobuf_version_failed_with_invalid_generator_version_test() {
   assertEquals 1 $((res))
 }
 
-search_additional_protos_common_resources_test() {
-  local addition_protos
-  addition_protos=$(search_additional_protos "false" "false")
-  assertEquals "google/cloud/common_resources.proto" "${addition_protos}"
-}
-
-search_additional_protos_iam_test() {
-  local addition_protos
-  addition_protos=$(search_additional_protos "true" "false")
-  assertEquals \
-  "google/cloud/common_resources.proto google/iam/v1/iam_policy.proto" \
-  "${addition_protos}"
-}
-
-search_additional_protos_locations_test() {
-  local addition_protos
-  addition_protos=$(search_additional_protos "false" "true")
-  assertEquals \
-  "google/cloud/common_resources.proto google/cloud/location/locations.proto" \
-  "${addition_protos}"
-}
-
-search_additional_protos_iam_locations_test() {
-  local addition_protos
-  addition_protos=$(search_additional_protos "true" "true")
-  assertEquals \
-  "google/cloud/common_resources.proto google/iam/v1/iam_policy.proto google/cloud/location/locations.proto" \
-  "${addition_protos}"
-}
-
 get_gapic_opts_with_rest_test() {
   local proto_path="${script_dir}/resources/gapic_options"
   local transport="grpc"
@@ -223,32 +193,32 @@ generate_library_failed_with_invalid_grpc_version() {
   cleanup "${destination}"
 }
 
-get_iam_policy_from_BUILD_without_match_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_iam_without_match.bazel"
-  local contains_iam_policy
-  contains_iam_policy=$(get_iam_policy_from_BUILD "${proto_path}")
-  assertEquals "false" "${contains_iam_policy}"
+get_gapic_additional_protos_from_BUILD_common_resources_test() {
+  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_common_resources.bazel"
+  local addition_protos
+  addition_protos=$(get_gapic_additional_protos_from_BUILD "${proto_path}")
+  assertEquals "google/cloud/common_resources.proto" "${addition_protos}"
 }
 
-get_iam_policy_from_BUILD_match_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_iam_match.bazel"
-  local contains_iam_policy
-  contains_iam_policy=$(get_iam_policy_from_BUILD "${proto_path}")
-  assertEquals "true" "${contains_iam_policy}"
+get_gapic_additional_protos_from_BUILD_iam_policy_test() {
+  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_iam_policy.bazel"
+  local addition_protos
+  addition_protos=$(get_gapic_additional_protos_from_BUILD "${proto_path}")
+  assertEquals "google/cloud/common_resources.proto google/iam/v1/iam_policy.proto" "${addition_protos}"
 }
 
-get_locations_from_BUILD_without_match_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_locations_without_match.bazel"
-  local contains_locations
-  contains_locations=$(get_locations_from_BUILD "${proto_path}")
-  assertEquals "false" "${contains_locations}"
+get_gapic_additional_protos_from_BUILD_locations_test() {
+  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_locations.bazel"
+  local addition_protos
+  addition_protos=$(get_gapic_additional_protos_from_BUILD "${proto_path}")
+  assertEquals "google/cloud/common_resources.proto google/cloud/location/locations.proto" "${addition_protos}"
 }
 
-get_locations_from_BUILD_match_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_locations_match.bazel"
-  local contains_locations
-  contains_locations=$(get_locations_from_BUILD "${proto_path}")
-  assertEquals "true" "${contains_locations}"
+get_gapic_additional_protos_from_BUILD_iam_locations_test() {
+  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_iam_locations.bazel"
+  local addition_protos
+  addition_protos=$(get_gapic_additional_protos_from_BUILD "${proto_path}")
+  assertEquals "google/cloud/common_resources.proto google/iam/v1/iam_policy.proto google/cloud/location/locations.proto" "${addition_protos}"
 }
 
 get_transport_from_BUILD_grpc_rest_test() {
@@ -340,10 +310,6 @@ test_list=(
   get_grpc_version_failed_with_invalid_generator_version_test
   get_protobuf_version_succeed_with_valid_generator_version_test
   get_protobuf_version_failed_with_invalid_generator_version_test
-  search_additional_protos_common_resources_test
-  search_additional_protos_iam_test
-  search_additional_protos_locations_test
-  search_additional_protos_iam_locations_test
   get_gapic_opts_with_rest_test
   get_gapic_opts_without_rest_test
   remove_grpc_version_test
@@ -360,10 +326,10 @@ test_list=(
   generate_library_failed_with_invalid_generator_version
   generate_library_failed_with_invalid_protobuf_version
   generate_library_failed_with_invalid_grpc_version
-  get_iam_policy_from_BUILD_without_match_test
-  get_iam_policy_from_BUILD_match_test
-  get_locations_from_BUILD_without_match_test
-  get_locations_from_BUILD_match_test
+  get_gapic_additional_protos_from_BUILD_common_resources_test
+  get_gapic_additional_protos_from_BUILD_iam_policy_test
+  get_gapic_additional_protos_from_BUILD_locations_test
+  get_gapic_additional_protos_from_BUILD_iam_locations_test
   get_transport_from_BUILD_grpc_rest_test
   get_transport_from_BUILD_grpc_test
   get_transport_from_BUILD_rest_test
