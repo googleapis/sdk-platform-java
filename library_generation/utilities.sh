@@ -95,24 +95,6 @@ unzip_src_files() {
   rm -r -f "${destination_path}/${category}-${folder_name}/src/main/java/META-INF"
 }
 
-# Apart from proto files in proto_path, additional protos are needed in order
-# to generate GAPIC client libraries.
-# In most cases, these protos should be within google/ directory, which is
-# pulled from googleapis as a prerequisite.
-# Search additional protos in BUILD.bazel.
-search_additional_protos() {
-  local contains_iam_policy=$1
-  local contains_locations=$2
-  additional_protos="google/cloud/common_resources.proto" # used by every library
-  if [[ "${contains_iam_policy}" == "true" ]]; then
-    additional_protos="$additional_protos google/iam/v1/iam_policy.proto"
-  fi
-  if [[ "${contains_locations}" == "true" ]]; then
-    additional_protos="$additional_protos google/cloud/location/locations.proto"
-  fi
-  echo "${additional_protos}"
-}
-
 # get gapic options from .yaml and .json files from proto_path.
 get_gapic_opts() {
   local gapic_config
@@ -270,6 +252,11 @@ get_version_from_WORKSPACE() {
   echo "${version}"
 }
 
+# Apart from proto files in proto_path, additional protos are needed in order
+# to generate GAPIC client libraries.
+# In most cases, these protos should be within google/ directory, which is
+# pulled from googleapis as a prerequisite.
+# Get additional protos in BUILD.bazel.
 get_gapic_additional_protos_from_BUILD() {
   local build_file=$1
   local gapic_additional_protos="google/cloud/common_resources.proto"
