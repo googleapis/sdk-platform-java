@@ -39,8 +39,7 @@ fi
 
 
 ggj_version=$(get_version_from_versions_txt ../../versions.txt "gapic-generator-java")
-contains_iam_policy="true"
-contains_locations="true"
+gapic_additional_protos="google/iam/v1/iam_policy.proto google/cloud/location/locations.proto"
 rest_numeric_enums="false"
 transport="grpc+rest"
 include_samples="false"
@@ -51,8 +50,7 @@ bash "${SCRIPT_DIR}/../../library_generation/generate_library.sh" \
   --proto_path "schema/google/showcase/v1beta1" \
   --destination_path "showcase-output" \
   --gapic_generator_version "${ggj_version}" \
-  --contains_iam_policy "${contains_iam_policy}" \
-  --contains_locations "${contains_locations}" \
+  --gapic_additional_protos "${gapic_additional_protos}" \
   --rest_numeric_enums "${rest_numeric_enums}" \
   --include_samples "${include_samples}" \
   --transport "${transport}" 
