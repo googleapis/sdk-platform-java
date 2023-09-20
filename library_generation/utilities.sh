@@ -59,7 +59,7 @@ get_gapic_opts() {
     gapic_config="gapic-config=${gapic_config},"
   fi
   grpc_service_config=$(find "${proto_path}" -type f -name "*service_config.json")
-  api_service_config=$(find "${proto_path}" -maxdepth 1 -type f \( -name "*.yaml" ! -name "*gapic.yaml" \))
+  api_service_config=$(find "${proto_path}" -maxdepth 1 -type f \( -name "*.yaml" ! -name "*gapic*.yaml" \))
   if [ "${rest_numeric_enums}" == "true" ]; then
     rest_numeric_enums="rest-numeric-enums,"
   else
