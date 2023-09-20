@@ -3,6 +3,13 @@ on:
     branches:
       - main
   pull_request:
+    # Changes to these directories do not directly affect the downstream libraries
+    paths-ignore:
+      - gapic-generator-java/**
+      - library_generation/**
+      - showcase/**
+      - test/**
+
 name: Downstream Check
 jobs:
   downstream-compatibility:
