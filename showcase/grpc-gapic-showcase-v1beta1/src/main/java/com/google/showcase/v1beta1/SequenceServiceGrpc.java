@@ -12,7 +12,7 @@ public final class SequenceServiceGrpc {
 
   private SequenceServiceGrpc() {}
 
-  public static final String SERVICE_NAME = "google.showcase.v1beta1.SequenceService";
+  public static final java.lang.String SERVICE_NAME = "google.showcase.v1beta1.SequenceService";
 
   // Static method descriptors that strictly reflect the proto.
   private static volatile io.grpc.MethodDescriptor<com.google.showcase.v1beta1.CreateSequenceRequest,
@@ -688,9 +688,9 @@ public final class SequenceServiceGrpc {
   private static final class SequenceServiceMethodDescriptorSupplier
       extends SequenceServiceBaseDescriptorSupplier
       implements io.grpc.protobuf.ProtoMethodDescriptorSupplier {
-    private final String methodName;
+    private final java.lang.String methodName;
 
-    SequenceServiceMethodDescriptorSupplier(String methodName) {
+    SequenceServiceMethodDescriptorSupplier(java.lang.String methodName) {
       this.methodName = methodName;
     }
 

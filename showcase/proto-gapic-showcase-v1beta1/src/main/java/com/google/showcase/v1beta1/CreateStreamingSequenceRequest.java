@@ -38,6 +38,7 @@ private static final long serialVersionUID = 0L;
             com.google.showcase.v1beta1.CreateStreamingSequenceRequest.class, com.google.showcase.v1beta1.CreateStreamingSequenceRequest.Builder.class);
   }
 
+  private int bitField0_;
   public static final int STREAMING_SEQUENCE_FIELD_NUMBER = 1;
   private com.google.showcase.v1beta1.StreamingSequence streamingSequence_;
   /**
@@ -46,7 +47,7 @@ private static final long serialVersionUID = 0L;
    */
   @java.lang.Override
   public boolean hasStreamingSequence() {
-    return streamingSequence_ != null;
+    return ((bitField0_ & 0x00000001) != 0);
   }
   /**
    * <code>.google.showcase.v1beta1.StreamingSequence streaming_sequence = 1;</code>
@@ -78,7 +79,7 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (streamingSequence_ != null) {
+    if (((bitField0_ & 0x00000001) != 0)) {
       output.writeMessage(1, getStreamingSequence());
     }
     getUnknownFields().writeTo(output);
@@ -90,7 +91,7 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (streamingSequence_ != null) {
+    if (((bitField0_ & 0x00000001) != 0)) {
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(1, getStreamingSequence());
     }
@@ -248,13 +249,19 @@ private static final long serialVersionUID = 0L;
 
     // Construct using com.google.showcase.v1beta1.CreateStreamingSequenceRequest.newBuilder()
     private Builder() {
-
+      maybeForceBuilderInitialization();
     }
 
     private Builder(
         com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
-
+      maybeForceBuilderInitialization();
+    }
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessageV3
+              .alwaysUseFieldBuilders) {
+        getStreamingSequenceFieldBuilder();
+      }
     }
     @java.lang.Override
     public Builder clear() {
@@ -298,11 +305,14 @@ private static final long serialVersionUID = 0L;
 
     private void buildPartial0(com.google.showcase.v1beta1.CreateStreamingSequenceRequest result) {
       int from_bitField0_ = bitField0_;
+      int to_bitField0_ = 0;
       if (((from_bitField0_ & 0x00000001) != 0)) {
         result.streamingSequence_ = streamingSequenceBuilder_ == null
             ? streamingSequence_
             : streamingSequenceBuilder_.build();
+        to_bitField0_ |= 0x00000001;
       }
+      result.bitField0_ |= to_bitField0_;
     }
 
     @java.lang.Override
@@ -468,8 +478,10 @@ private static final long serialVersionUID = 0L;
       } else {
         streamingSequenceBuilder_.mergeFrom(value);
       }
-      bitField0_ |= 0x00000001;
-      onChanged();
+      if (streamingSequence_ != null) {
+        bitField0_ |= 0x00000001;
+        onChanged();
+      }
       return this;
     }
     /**
