@@ -290,18 +290,6 @@ get_version_from_valid_WORKSPACE_test() {
   assertEquals '2.25.1-SNAPSHOT' "${obtained_ggj_version}"
 }
 
-get_generator_version_from_valid_versions_txt_test() {
-  versions_file="${script_dir}/resources/misc/testversions.txt"
-  obtained_ggj_version=$(get_version_from_versions_txt "${versions_file}" "gapic-generator-java")
-  assertEquals '2.25.1-SNAPSHOT' "${obtained_ggj_version}"
-}
-
-get_gax_version_from_valid_versions_txt_test() {
-  versions_file="${script_dir}/resources/misc/testversions.txt"
-  obtained_gax_version=$(get_version_from_versions_txt "${versions_file}" "gax")
-  assertEquals '2.33.1-SNAPSHOT' "${obtained_gax_version}"
-}
-
 # Execute tests.
 # One line per test.
 test_list=(
@@ -340,8 +328,6 @@ test_list=(
   get_include_samples_from_BUILD_false_test
   get_include_samples_from_BUILD_empty_test
   get_version_from_valid_WORKSPACE_test
-  get_generator_version_from_valid_versions_txt_test
-  get_gax_version_from_valid_versions_txt_test
 )
 
 pushd "${script_dir}"

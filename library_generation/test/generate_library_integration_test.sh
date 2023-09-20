@@ -16,9 +16,9 @@ set -xeo pipefail
 googleapis_gen_url="git@github.com:googleapis/googleapis-gen.git"
 script_dir=$(dirname "$(readlink -f "$0")")
 proto_path_list="${script_dir}/resources/proto_path_list.txt"
-source "${script_dir}/../utilities.sh"
 library_generation_dir="${script_dir}"/..
-output_folder="$(get_output_folder)"
+source "${script_dir}/test_utilities.sh"
+output_folder="$(pwd)/output"
 
 while [[ $# -gt 0 ]]; do
 key="$1"
@@ -39,8 +39,6 @@ esac
 shift # past argument or value
 done
 
-script_dir=$(dirname "$(readlink -f "$0")")
-source "${script_dir}/../utilities.sh"
 library_generation_dir="${script_dir}"/..
 mkdir -p "${output_folder}"
 pushd "${output_folder}"
