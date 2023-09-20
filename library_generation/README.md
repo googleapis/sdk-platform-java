@@ -91,14 +91,22 @@ Use `--grpc_version` to specify the value.
 
 Note that if specified, the version should be compatible with gapic-generator-java.
 
+### gapic_additional_protos (optional)
+Additional protos that pass to the generator.
+The default value is `google/cloud/common_resources.proto`.
+
+Use `--gapic_additional_protos` to specify the value.
+
 ### transport (optional)
-One of GAPIC options passed to the generator. The value is either `grpc` or `grpc+rest`.
+One of GAPIC options passed to the generator.
+The value is either `grpc` or `grpc+rest`.
 The default value is `grpc`.
 
 Use `--transport` to specify the value.
 
 ### rest_numeric_enums (optional)
-One of GAPIC options passed to the generator. The value is either `true` or `false`.
+One of GAPIC options passed to the generator.
+The value is either `true` or `false`.
 The default value is `true`.
 
 Use `--rest_numeric_enums` to specify the value.
@@ -121,6 +129,7 @@ library_generation/generate_library.sh \
 --gapic_generator_version 2.24.0 \
 --protobuf_version 23.2 \
 --grpc_version 1.55.1 \
+--gapic_additional_protos "google/cloud/common_resources.proto google/cloud/location/locations.proto" \
 --transport grpc+rest \
 --rest_numeric_enums true \
 --include_samples true

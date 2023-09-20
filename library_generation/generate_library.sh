@@ -29,6 +29,10 @@ case $key in
     grpc_version="$2"
     shift
     ;;
+  --gapic_additional_protos)
+    gapic_additional_protos="$2"
+    shift
+    ;;
   --transport)
     transport="$2"
     shift
@@ -56,7 +60,6 @@ done
 script_dir=$(dirname "$(readlink -f "$0")")
 source "${script_dir}"/utilities.sh
 output_folder="$(get_output_folder)"
-# source utility functions
 
 if [ -z "${protobuf_version}" ]; then
   protobuf_version=$(get_protobuf_version "${gapic_generator_version}")
@@ -64,6 +67,10 @@ fi
 
 if [ -z "${grpc_version}" ]; then
   grpc_version=$(get_grpc_version "${gapic_generator_version}")
+fi
+
+if [ -z "${gapic_additional_protos}" ]; then
+  gapic_additional_protos="google/cloud/common_resources.proto"
 fi
 
 if [ -z "${transport}" ]; then
@@ -117,7 +124,7 @@ fi
 "--plugin=protoc-gen-java_gapic=${script_dir}/gapic-generator-java-wrapper" \
 "--java_gapic_out=metadata:${destination_path}/java_gapic_srcjar_raw.srcjar.zip" \
 "--java_gapic_opt=$(get_gapic_opts)" \
-${proto_files} $(search_additional_protos)
+${proto_files} ${gapic_additional_protos}
 
 unzip -o -q "${destination_path}/java_gapic_srcjar_raw.srcjar.zip" -d "${destination_path}"
 # Sync'\''d to the output file name in Writer.java.

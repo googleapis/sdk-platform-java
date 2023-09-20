@@ -41,40 +41,6 @@ get_protobuf_version_failed_with_invalid_generator_version_test() {
   assertEquals 1 $((res))
 }
 
-search_additional_protos_common_resources_test() {
-  local proto_path="${script_dir}/resources/search_additional_proto/common_resources"
-  local addition_protos
-  addition_protos=$(search_additional_protos)
-  assertEquals "google/cloud/common_resources.proto" "${addition_protos}"
-}
-
-search_additional_protos_iam_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos/iam"
-  local addition_protos
-  addition_protos=$(search_additional_protos)
-  assertEquals \
-  "google/cloud/common_resources.proto google/iam/v1/iam_policy.proto" \
-  "${addition_protos}"
-}
-
-search_additional_protos_location_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos/location"
-  local addition_protos
-  addition_protos=$(search_additional_protos)
-  assertEquals \
-  "google/cloud/common_resources.proto google/cloud/location/locations.proto" \
-  "${addition_protos}"
-}
-
-search_additional_protos_iam_location_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos/iam_location"
-  local addition_protos
-  addition_protos=$(search_additional_protos)
-  assertEquals \
-  "google/cloud/common_resources.proto google/iam/v1/iam_policy.proto google/cloud/location/locations.proto" \
-  "${addition_protos}"
-}
-
 get_gapic_opts_with_rest_test() {
   local proto_path="${script_dir}/resources/gapic_options"
   local transport="grpc"
@@ -227,6 +193,34 @@ generate_library_failed_with_invalid_grpc_version() {
   cleanup "${destination}"
 }
 
+get_gapic_additional_protos_from_BUILD_common_resources_test() {
+  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_common_resources.bazel"
+  local addition_protos
+  addition_protos=$(get_gapic_additional_protos_from_BUILD "${proto_path}")
+  assertEquals "google/cloud/common_resources.proto" "${addition_protos}"
+}
+
+get_gapic_additional_protos_from_BUILD_iam_policy_test() {
+  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_iam_policy.bazel"
+  local addition_protos
+  addition_protos=$(get_gapic_additional_protos_from_BUILD "${proto_path}")
+  assertEquals "google/cloud/common_resources.proto google/iam/v1/iam_policy.proto" "${addition_protos}"
+}
+
+get_gapic_additional_protos_from_BUILD_locations_test() {
+  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_locations.bazel"
+  local addition_protos
+  addition_protos=$(get_gapic_additional_protos_from_BUILD "${proto_path}")
+  assertEquals "google/cloud/common_resources.proto google/cloud/location/locations.proto" "${addition_protos}"
+}
+
+get_gapic_additional_protos_from_BUILD_iam_locations_test() {
+  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_iam_locations.bazel"
+  local addition_protos
+  addition_protos=$(get_gapic_additional_protos_from_BUILD "${proto_path}")
+  assertEquals "google/cloud/common_resources.proto google/iam/v1/iam_policy.proto google/cloud/location/locations.proto" "${addition_protos}"
+}
+
 get_transport_from_BUILD_grpc_rest_test() {
   local build_file="${script_dir}/resources/misc/BUILD_grpc_rest.bazel"
   local transport
@@ -316,10 +310,6 @@ test_list=(
   get_grpc_version_failed_with_invalid_generator_version_test
   get_protobuf_version_succeed_with_valid_generator_version_test
   get_protobuf_version_failed_with_invalid_generator_version_test
-  search_additional_protos_common_resources_test
-  search_additional_protos_iam_test
-  search_additional_protos_location_test
-  search_additional_protos_iam_location_test
   get_gapic_opts_with_rest_test
   get_gapic_opts_without_rest_test
   remove_grpc_version_test
@@ -336,6 +326,10 @@ test_list=(
   generate_library_failed_with_invalid_generator_version
   generate_library_failed_with_invalid_protobuf_version
   generate_library_failed_with_invalid_grpc_version
+  get_gapic_additional_protos_from_BUILD_common_resources_test
+  get_gapic_additional_protos_from_BUILD_iam_policy_test
+  get_gapic_additional_protos_from_BUILD_locations_test
+  get_gapic_additional_protos_from_BUILD_iam_locations_test
   get_transport_from_BUILD_grpc_rest_test
   get_transport_from_BUILD_grpc_test
   get_transport_from_BUILD_rest_test
