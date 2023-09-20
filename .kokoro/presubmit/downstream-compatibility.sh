@@ -15,8 +15,6 @@
 
 set -eo pipefail
 
-REPOS_UNDER_TEST=google-cloud-java
-
 # Comma-delimited list of repos to test with the local java-shared-dependencies
 if [ -z "${REPOS_UNDER_TEST}" ]; then
   echo "REPOS_UNDER_TEST must be set to run downstream-compatibility.sh"
