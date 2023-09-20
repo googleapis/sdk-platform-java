@@ -15,6 +15,8 @@
 
 set -eo pipefail
 
+REPOS_UNDER_TEST=google-cloud-java
+
 # Comma-delimited list of repos to test with the local java-shared-dependencies
 if [ -z "${REPOS_UNDER_TEST}" ]; then
   echo "REPOS_UNDER_TEST must be set to run downstream-compatibility.sh"
@@ -38,9 +40,14 @@ echo "Install complete. java-shared-dependencies = $SHARED_DEPS_VERSION"
 
 pushd java-shared-dependencies/target
 for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
-  # Perform testing on last release, not HEAD
-  last_release=$(find_last_release_version "$repo")
-  git clone "https://github.com/googleapis/$repo.git" --depth=1 --branch "v$last_release"
+  # Perform testing on HEAD for google-cloud-java
+  if [ $repo == "google-cloud-java" ]; then
+    git clone "https://github.com/googleapis/$repo.git" --depth=1
+  else
+    # Perform testing on last release, not HEAD
+    last_release=$(find_last_release_version "$repo")
+    git clone "https://github.com/googleapis/$repo.git" --depth=1 --branch "v$last_release"
+  fi
   update_all_poms_dependency "$repo" google-cloud-shared-dependencies "$SHARED_DEPS_VERSION"
   pushd "$repo"
   JOB_TYPE="test" ./.kokoro/build.sh
