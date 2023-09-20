@@ -38,14 +38,9 @@ echo "Install complete. java-shared-dependencies = $SHARED_DEPS_VERSION"
 
 pushd java-shared-dependencies/target
 for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
-  # Perform testing on HEAD for google-cloud-java
-  if [ $repo == "google-cloud-java" ]; then
-    git clone "https://github.com/googleapis/$repo.git" --depth=1
-  else
-    # Perform testing on last release, not HEAD
-    last_release=$(find_last_release_version "$repo")
-    git clone "https://github.com/googleapis/$repo.git" --depth=1 --branch "v$last_release"
-  fi
+  # Perform testing on last release, not HEAD
+  last_release=$(find_last_release_version "$repo")
+  git clone "https://github.com/googleapis/$repo.git" --depth=1 --branch "v$last_release"
   update_all_poms_dependency "$repo" google-cloud-shared-dependencies "$SHARED_DEPS_VERSION"
   pushd "$repo"
   JOB_TYPE="test" ./.kokoro/build.sh
