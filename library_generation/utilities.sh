@@ -76,7 +76,9 @@ remove_grpc_version() {
 download_gapic_generator_pom_parent() {
   local gapic_generator_version=$1
   if [ ! -f "gapic-generator-java-pom-parent-${gapic_generator_version}.pom" ]; then
-    if [[ "${gapic_generator_version}" == *"-SNAPSHOT" ]]; then
+    # release please branches will point to a non-snapshot that hasn't been
+    # published. We want to get the generator pom locally in this case
+    if [[ "${gapic_generator_version}" == *"-SNAPSHOT" ]] || [[ "$(is_release_branch)" == "true" ]]; then
       # copy a SNAPSHOT version from maven local repository.
       copy_from "$HOME/.m2/repository/com/google/api/gapic-generator-java-pom-parent/${gapic_generator_version}/gapic-generator-java-pom-parent-${gapic_generator_version}.pom" \
       "gapic-generator-java-pom-parent-${gapic_generator_version}.pom"
@@ -123,7 +125,9 @@ download_tools() {
 download_generator() {
   local gapic_generator_version=$1
   if [ ! -f "gapic-generator-java-${gapic_generator_version}.jar" ]; then
-    if [[ "${gapic_generator_version}" == *"-SNAPSHOT" ]]; then
+    # release please branches will point to a non-snapshot that hasn't been
+    # published. We want to get the generator locally in this case
+    if [[ "${gapic_generator_version}" == *"-SNAPSHOT" ]] || [[ "$(is_release_branch)" == "true" ]]; then
       # copy a SNAPSHOT version from maven local repository.
       copy_from "$HOME/.m2/repository/com/google/api/gapic-generator-java/${gapic_generator_version}/gapic-generator-java-${gapic_generator_version}.jar" \
       "gapic-generator-java-${gapic_generator_version}.jar"
@@ -211,4 +215,13 @@ detect_os_architecture() {
       ;;
   esac
   echo "${os_architecture}"
+}
+
+# returns true if we are on a release branch
+is_release_branch() {
+  if [ $(git rev-parse --abbrev-ref HEAD) == "release-please--branches--main" ]; then
+    echo "true"
+    return
+  fi
+  echo "false"
 }

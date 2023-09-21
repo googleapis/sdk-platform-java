@@ -73,7 +73,8 @@ You can find the released version of gapic-generator-java in [maven central](htt
 Use `--gapic_generator_version` to specify the value.
 
 Note that you can specify a `SNAPSHOT` version as long as you have build the SNAPSHOT of gapic-generator-java in your maven
-local repository.
+local repository. If this is a release branch (i.e.
+`release-please--branches--main`) it will also be obtained locally.
 
 ### protobuf_version (optional)
 You can find the released version of protobuf in [GitHub](https://github.com/protocolbuffers/protobuf/releases/).
