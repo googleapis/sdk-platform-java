@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -xeo pipefail
+util_script_dir=$(dirname "${BASH_SOURCE}")
 
 # Utility functions used in `generate_library.sh` and showcase generation.
 extract_folder_name() {
@@ -76,18 +77,15 @@ remove_grpc_version() {
 download_gapic_generator_pom_parent() {
   local gapic_generator_version=$1
   if [ ! -f "gapic-generator-java-pom-parent-${gapic_generator_version}.pom" ]; then
-    # release please branches will point to a non-snapshot that hasn't been
-    # published. We want to get the generator pom locally in this case
-    if [[ "${gapic_generator_version}" == *"-SNAPSHOT" ]] || [[ "$(is_release_branch)" == "true" ]]; then
-      # copy a SNAPSHOT version from maven local repository.
-      copy_from "$HOME/.m2/repository/com/google/api/gapic-generator-java-pom-parent/${gapic_generator_version}/gapic-generator-java-pom-parent-${gapic_generator_version}.pom" \
+    # first, try to fetch the generator pom locally
+    bash -c "source ${util_script_dir}/utilities.sh && copy_from \"$HOME/.m2/repository/com/google/api/gapic-generator-java-pom-parent/${gapic_generator_version}/gapic-generator-java-pom-parent-${gapic_generator_version}.pom\" \
+    \"gapic-generator-java-pom-parent-${gapic_generator_version}.pom\"" || not_found_locally="true"
+    if [[ "${not_found_locally}" == "true" ]];then 
+      # download gapic-generator-java-pom-parent from Google maven central mirror.
+      download_from \
+      "https://maven-central.storage-download.googleapis.com/maven2/com/google/api/gapic-generator-java-pom-parent/${gapic_generator_version}/gapic-generator-java-pom-parent-${gapic_generator_version}.pom" \
       "gapic-generator-java-pom-parent-${gapic_generator_version}.pom"
-      return
     fi
-    # download gapic-generator-java-pom-parent from Google maven central mirror.
-    download_from \
-    "https://maven-central.storage-download.googleapis.com/maven2/com/google/api/gapic-generator-java-pom-parent/${gapic_generator_version}/gapic-generator-java-pom-parent-${gapic_generator_version}.pom" \
-    "gapic-generator-java-pom-parent-${gapic_generator_version}.pom"
   fi
   # file exists, do not need to download again.
 }
@@ -125,18 +123,16 @@ download_tools() {
 download_generator() {
   local gapic_generator_version=$1
   if [ ! -f "gapic-generator-java-${gapic_generator_version}.jar" ]; then
-    # release please branches will point to a non-snapshot that hasn't been
-    # published. We want to get the generator locally in this case
-    if [[ "${gapic_generator_version}" == *"-SNAPSHOT" ]] || [[ "$(is_release_branch)" == "true" ]]; then
-      # copy a SNAPSHOT version from maven local repository.
-      copy_from "$HOME/.m2/repository/com/google/api/gapic-generator-java/${gapic_generator_version}/gapic-generator-java-${gapic_generator_version}.jar" \
+    # first, try to fetch the generator locally
+    bash -c "source ${util_script_dir}/utilities.sh && copy_from \"$HOME/.m2/repository/com/google/api/gapic-generator-java/${gapic_generator_version}/gapic-generator-java-${gapic_generator_version}.jar\" \
+    \"gapic-generator-java-${gapic_generator_version}.jar\"" || not_found_locally="true"
+    if [[ "${not_found_locally}" == "true" ]];then 
+      # download gapic-generator-java from Google maven central mirror if not
+      # found locally
+      download_from \
+      "https://maven-central.storage-download.googleapis.com/maven2/com/google/api/gapic-generator-java/${gapic_generator_version}/gapic-generator-java-${gapic_generator_version}.jar" \
       "gapic-generator-java-${gapic_generator_version}.jar"
-      return
     fi
-    # download gapic-generator-java from Google maven central mirror.
-    download_from \
-    "https://maven-central.storage-download.googleapis.com/maven2/com/google/api/gapic-generator-java/${gapic_generator_version}/gapic-generator-java-${gapic_generator_version}.jar" \
-    "gapic-generator-java-${gapic_generator_version}.jar"
   fi
 }
 
@@ -215,13 +211,4 @@ detect_os_architecture() {
       ;;
   esac
   echo "${os_architecture}"
-}
-
-# returns true if we are on a release branch
-is_release_branch() {
-  if [ $(git rev-parse --abbrev-ref HEAD) == "release-please--branches--main" ]; then
-    echo "true"
-    return
-  fi
-  echo "false"
 }
