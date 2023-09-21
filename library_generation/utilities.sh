@@ -166,7 +166,8 @@ download_from() {
 }
 
 # copies the specified file in $1 to $2
-# will print "true" if $1 (local_repo) points to a non-existent file
+# will return "false" if the copy was successful, otherwise true (to indicate
+# that there is a failure)
 copy_from() {
   local local_repo=$1
   local save_as=$2
