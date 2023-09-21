@@ -252,28 +252,28 @@ public class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest 
   @Test
   public void testCancelOuterFutureAfterStart() throws Exception {
     ScheduledExecutorService localExecutor = Executors.newSingleThreadScheduledExecutor();
+    RetrySettings retrySettings =
+        FAST_RETRY_SETTINGS
+            .toBuilder()
+            // These params were selected to ensure that future tries to run and fail (at least
+            // once) but does not complete before it is cancelled. Assuming no computation time,
+            // it would take 25 + 50 + 100 + 100 = 275ms for the future to complete, which should
+            // be more than enough time to cancel the future.
+            .setInitialRetryDelay(Duration.ofMillis(25L))
+            .setMaxRetryDelay(Duration.ofMillis(100L))
+            .setRetryDelayMultiplier(2.0)
+            .setTotalTimeout(Duration.ofMillis(1000L))
+            // Set this test to not use jitter as the randomized retry delay (RRD) may introduce
+            // flaky results. For example, if every RRD value is calculated to be a small value
+            // (i.e. 2ms), four retries would result a "SUCCESS" result after 8ms, far below
+            // both the sleep value (50ms) and timeout (1000ms). This could potentially result
+            // in the future.cancel() returning false as you can't cancel a future that has
+            // already succeeded. The possibility of having each of the four retries produce a
+            // tiny RRD value is small, but not impossible.
+            .setJittered(false)
+            .build();
     for (int executionsCount = 0; executionsCount < EXECUTIONS_COUNT; executionsCount++) {
       FailingCallable callable = new FailingCallable(4, "request", "SUCCESS", tracer);
-      RetrySettings retrySettings =
-          FAST_RETRY_SETTINGS
-              .toBuilder()
-              // These params were selected to ensure that future tries to run and fail (at least
-              // once) but does not complete before it is cancelled. Assuming no computation time,
-              // it would take 25 + 50 + 100 + 100 = 275ms for the future to complete, which should
-              // be more than enough time to cancel the future.
-              .setInitialRetryDelay(Duration.ofMillis(25L))
-              .setMaxRetryDelay(Duration.ofMillis(100L))
-              .setRetryDelayMultiplier(2.0)
-              .setTotalTimeout(Duration.ofMillis(1000L))
-              // Set this test to not use jitter as the randomized retry delay (RRD) may introduce
-              // flaky results. For example, if every RRD value is calculated to be a small value
-              // (i.e. 2ms), four retries would result a "SUCCESS" result after 8ms, far below
-              // both the sleep value (50ms) and timeout (1000ms). This could potentially result
-              // in the future.cancel() returning false as you can't cancel a future that has
-              // already succeeded. The possibility of have each of the four retries produce
-              // tiny RRD value is small, but not impossible.
-              .setJittered(false)
-              .build();
       RetryingExecutorWithContext<String> executor =
           getRetryingExecutor(getAlgorithm(retrySettings, 0, null), localExecutor);
       RetryingFuture<String> future =
