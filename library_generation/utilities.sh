@@ -114,9 +114,9 @@ download_generator_artifact() {
   local project=${3:-"gapic-generator-java"}
   if [ ! -f "gapic-generator-java-${gapic_generator_version}.jar" ]; then
     # first, try to fetch the generator locally
-    local not_found_locally=$(copy_from "$HOME/.m2/repository/com/google/api/${project}/${gapic_generator_version}/${artifact}" \
+    local local_fetch_successful=$(copy_from "$HOME/.m2/repository/com/google/api/${project}/${gapic_generator_version}/${artifact}" \
       "${artifact}")
-    if [[ "${not_found_locally}" == "true" ]];then 
+    if [[ "${local_fetch_successful}" == "false" ]];then 
       # download gapic-generator-java artifact from Google maven central mirror if not
       # found locally
       >&2 echo "${artifact} not found locally. Attempting a download from Maven Central"
@@ -166,13 +166,12 @@ download_from() {
 }
 
 # copies the specified file in $1 to $2
-# will return "false" if the copy was successful, otherwise true (to indicate
-# that there is a failure)
+# will return "true" if the copy was successful
 copy_from() {
   local local_repo=$1
   local save_as=$2
-  not_found_locally=$(cp "${local_repo}" "${save_as}" && echo "false" || echo "true")
-  echo "${not_found_locally}"
+  copy_successful=$(cp "${local_repo}" "${save_as}" && echo "true" || echo "false")
+  echo "${copy_successful}"
 }
 
 download_fail() {
