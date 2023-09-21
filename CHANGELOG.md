@@ -1,5 +1,33 @@
 # Changelog
 
+## [2.26.0](https://github.com/googleapis/sdk-platform-java/compare/v2.25.0...v2.26.0) (2023-09-21)
+
+
+### Features
+
+* Filter out `*gapic.legacy.yaml` when parsing `java_gapic_opts` ([#2015](https://github.com/googleapis/sdk-platform-java/issues/2015)) ([1ad5ec0](https://github.com/googleapis/sdk-platform-java/commit/1ad5ec0c2d99e41f4fddf9ed131c6dc9bffe17b4))
+* Generate showcase without post-processing ([#1935](https://github.com/googleapis/sdk-platform-java/issues/1935)) ([7218d80](https://github.com/googleapis/sdk-platform-java/commit/7218d8035946c350d7857fede93d32df3b2b8a86))
+* Hermetic build OS detection ([#1988](https://github.com/googleapis/sdk-platform-java/issues/1988)) ([4fc844e](https://github.com/googleapis/sdk-platform-java/commit/4fc844ee0ffdaae26ef3d32c18bbe7604da5c16f))
+* Hermetic build scripts to use a single output/generation folder ([#1987](https://github.com/googleapis/sdk-platform-java/issues/1987)) ([f5efb0e](https://github.com/googleapis/sdk-platform-java/commit/f5efb0edb097980db95832469188c754ec3f1779))
+* Search gapic additional protos in `BUILD.bazel` ([#2004](https://github.com/googleapis/sdk-platform-java/issues/2004)) ([ed16ac7](https://github.com/googleapis/sdk-platform-java/commit/ed16ac74ab8430ee0def437147298d7d88da6b0c))
+
+
+### Bug Fixes
+
+* **hermetic-build:** Obtain gapic-generator-java locally on release branch ([#2023](https://github.com/googleapis/sdk-platform-java/issues/2023)) ([f3088d5](https://github.com/googleapis/sdk-platform-java/commit/f3088d55478ab049110d8c2e67ff1dd056a5e71d))
+* Showcase update goal fix ([#2002](https://github.com/googleapis/sdk-platform-java/issues/2002)) ([47811f7](https://github.com/googleapis/sdk-platform-java/commit/47811f79848d6efd9dda8b3e8e4286dc3045423f))
+* Skip generating `grpc-*` directory if transport is `rest` ([#1979](https://github.com/googleapis/sdk-platform-java/issues/1979)) ([9c0316b](https://github.com/googleapis/sdk-platform-java/commit/9c0316bfed890ed7d8e40340a3510d2058dc5d71))
+
+
+### Documentation
+
+* Add repo-metadata.json files for modules we publish Cloud RAD d… ([#2003](https://github.com/googleapis/sdk-platform-java/issues/2003)) ([2212ba3](https://github.com/googleapis/sdk-platform-java/commit/2212ba300c215b00cf852fd3d8615f3d3c3458e1))
+
+
+### Dependencies
+
+* Update protobuf dependencies to v3.24.3 ([#2020](https://github.com/googleapis/sdk-platform-java/issues/2020)) ([2b45049](https://github.com/googleapis/sdk-platform-java/commit/2b45049fd6fbd38acded8ae900ef4b530a441bdf))
+
 ## [2.25.0](https://github.com/googleapis/sdk-platform-java/compare/v2.24.0...v2.25.0) (2023-09-08)
 
 
