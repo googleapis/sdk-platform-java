@@ -75,19 +75,7 @@ remove_grpc_version() {
 
 download_gapic_generator_pom_parent() {
   local gapic_generator_version=$1
-  if [ ! -f "gapic-generator-java-pom-parent-${gapic_generator_version}.pom" ]; then
-    if [[ "${gapic_generator_version}" == *"-SNAPSHOT" ]]; then
-      # copy a SNAPSHOT version from maven local repository.
-      copy_from "$HOME/.m2/repository/com/google/api/gapic-generator-java-pom-parent/${gapic_generator_version}/gapic-generator-java-pom-parent-${gapic_generator_version}.pom" \
-      "gapic-generator-java-pom-parent-${gapic_generator_version}.pom"
-      return
-    fi
-    # download gapic-generator-java-pom-parent from Google maven central mirror.
-    download_from \
-    "https://maven-central.storage-download.googleapis.com/maven2/com/google/api/gapic-generator-java-pom-parent/${gapic_generator_version}/gapic-generator-java-pom-parent-${gapic_generator_version}.pom" \
-    "gapic-generator-java-pom-parent-${gapic_generator_version}.pom"
-  fi
-  # file exists, do not need to download again.
+  download_generator_artifact "${gapic_generator_version}" "gapic-generator-java-pom-parent-${gapic_generator_version}.pom" "gapic-generator-java-pom-parent"
 }
 
 get_grpc_version() {
@@ -114,25 +102,31 @@ download_tools() {
   local protobuf_version=$2
   local grpc_version=$3
   local os_architecture=$4
-  download_generator "${gapic_generator_version}"
+  download_generator_artifact "${gapic_generator_version}" "gapic-generator-java-${gapic_generator_version}.jar"
   download_protobuf "${protobuf_version}" "${os_architecture}"
   download_grpc_plugin "${grpc_version}" "${os_architecture}"
   popd
 }
 
-download_generator() {
+download_generator_artifact() {
   local gapic_generator_version=$1
+  local artifact=$2
+  local project=${3:-"gapic-generator-java"}
   if [ ! -f "gapic-generator-java-${gapic_generator_version}.jar" ]; then
-    if [[ "${gapic_generator_version}" == *"-SNAPSHOT" ]]; then
-      # copy a SNAPSHOT version from maven local repository.
-      copy_from "$HOME/.m2/repository/com/google/api/gapic-generator-java/${gapic_generator_version}/gapic-generator-java-${gapic_generator_version}.jar" \
-      "gapic-generator-java-${gapic_generator_version}.jar"
-      return
+    # first, try to fetch the generator locally
+    local local_fetch_successful=$(copy_from "$HOME/.m2/repository/com/google/api/${project}/${gapic_generator_version}/${artifact}" \
+      "${artifact}")
+    if [[ "${local_fetch_successful}" == "false" ]];then 
+      # download gapic-generator-java artifact from Google maven central mirror if not
+      # found locally
+      >&2 echo "${artifact} not found locally. Attempting a download from Maven Central"
+      download_from \
+      "https://maven-central.storage-download.googleapis.com/maven2/com/google/api/${project}/${gapic_generator_version}/${artifact}" \
+      "${artifact}"
+      >&2 echo "${artifact} found and downloaded from Maven Central"
+    else
+      >&2 echo "${artifact} found copied from local repository (~/.m2)"
     fi
-    # download gapic-generator-java from Google maven central mirror.
-    download_from \
-    "https://maven-central.storage-download.googleapis.com/maven2/com/google/api/gapic-generator-java/${gapic_generator_version}/gapic-generator-java-${gapic_generator_version}.jar" \
-    "gapic-generator-java-${gapic_generator_version}.jar"
   fi
 }
 
@@ -174,17 +168,19 @@ download_from() {
   curl -LJ -o "${save_as}" --fail -m 30 --retry 2 "$url" || download_fail "${save_as}" "${repo}"
 }
 
+# copies the specified file in $1 to $2
+# will return "true" if the copy was successful
 copy_from() {
   local local_repo=$1
   local save_as=$2
-  cp "${local_repo}" "${save_as}" || \
-    download_fail "${save_as}" "maven local"
+  copy_successful=$(cp "${local_repo}" "${save_as}" && echo "true" || echo "false")
+  echo "${copy_successful}"
 }
 
 download_fail() {
   local artifact=$1
   local repo=${2:-"maven central mirror"}
-  >&2 echo "Fail to download ${artifact} from ${repo} repository. Please install ${artifact} first if you want to download a SNAPSHOT."
+  >&2 echo "Fail to download ${artifact} from ${repo} repository. Please install ${artifact} first if you want to use a non-published artifact."
   exit 1
 }
 

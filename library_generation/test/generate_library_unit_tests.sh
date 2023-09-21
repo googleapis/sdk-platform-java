@@ -78,9 +78,11 @@ remove_grpc_version_test() {
 }
 
 download_generator_success_with_valid_version_test() {
-  download_generator "2.24.0"
-  assertFileOrDirectoryExists "gapic-generator-java-2.24.0.jar"
-  rm "gapic-generator-java-2.24.0.jar"
+  local version="2.24.0"
+  local artifact="gapic-generator-java-${version}.jar"
+  download_generator_artifact "${version}" "${artifact}"
+  assertFileOrDirectoryExists "${artifact}"
+  rm "${artifact}"
 }
 
 download_generator_failed_with_invalid_version_test() {
@@ -91,7 +93,9 @@ download_generator_failed_with_invalid_version_test() {
   # the other tests can continue executing in the current
   # shell.
   local res=0
-  $(download_generator "1.99.0") || res=$?
+  local version="1.99.0"
+  local artifact="gapic-generator-java-${version}.jar"
+  $(download_generator_artifact "${version}" "${artifact}") || res=$?
   assertEquals 1 $((res))
 }
 
