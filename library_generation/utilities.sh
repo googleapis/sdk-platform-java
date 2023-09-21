@@ -171,7 +171,8 @@ download_from() {
 copy_from() {
   local local_repo=$1
   local save_as=$2
-  cp "${local_repo}" "${save_as}" && echo "false" || echo "true"
+  not_found_locally=$(cp "${local_repo}" "${save_as}" && echo "false" || echo "true")
+  echo "${not_found_locally}"
 }
 
 download_fail() {
