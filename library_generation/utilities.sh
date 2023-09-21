@@ -119,7 +119,7 @@ download_generator_artifact() {
     if [[ "${not_found_locally}" == "true" ]];then 
       # download gapic-generator-java artifact from Google maven central mirror if not
       # found locally
-      echo "${artifact} not found locally. Attempting a download from Maven Central"
+      >&2 echo "${artifact} not found locally. Attempting a download from Maven Central"
       download_from \
       "https://maven-central.storage-download.googleapis.com/maven2/com/google/api/${project}/${gapic_generator_version}/${artifact}" \
       "${artifact}"
