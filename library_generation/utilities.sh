@@ -123,6 +123,9 @@ download_generator_artifact() {
       download_from \
       "https://maven-central.storage-download.googleapis.com/maven2/com/google/api/${project}/${gapic_generator_version}/${artifact}" \
       "${artifact}"
+      >&2 echo "${artifact} found and downloaded from Maven Central"
+    else
+      >&2 echo "${artifact} found copied from local repository (~/.m2)"
     fi
   fi
 }
