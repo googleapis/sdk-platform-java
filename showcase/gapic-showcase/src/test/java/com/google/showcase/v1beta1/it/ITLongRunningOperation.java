@@ -185,7 +185,8 @@ public class ITLongRunningOperation {
               .build();
       OperationFuture<WaitResponse, WaitMetadata> operationFuture =
           httpjsonClient.waitOperationCallable().futureCall(waitRequest);
-      assertThrows(CancellationException.class, operationFuture::get);
+      CancellationException cancellationException = assertThrows(CancellationException.class, operationFuture::get);
+      assertThat(cancellationException).hasMessageThat().contains("https://github.com/googleapis/google-cloud-java#lro-timeouts");
       int attemptCount = operationFuture.getPollingFuture().getAttemptSettings().getAttemptCount();
       assertThat(attemptCount).isGreaterThan(1);
     } finally {
