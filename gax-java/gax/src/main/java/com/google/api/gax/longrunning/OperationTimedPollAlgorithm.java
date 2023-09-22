@@ -77,7 +77,9 @@ public class OperationTimedPollAlgorithm extends ExponentialRetryAlgorithm {
     if (super.shouldRetry(nextAttemptSettings)) {
       return true;
     }
-    throw new CancellationException();
+    throw new CancellationException(
+        "The task has been cancelled. Please refer to "
+            + "https://github.com/googleapis/google-cloud-java#lro-timeouts for more information");
   }
 
   // Note: if the potential time spent is exactly equal to the totalTimeout,
