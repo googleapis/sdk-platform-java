@@ -1,0 +1,16 @@
+# This file is used in integration test against `generate_library.sh`.
+# Format:
+# proto_path destination_path
+google/bigtable/v2 google-cloud-bigtable-v2-java
+google/cloud/apigeeconnect/v1 google-cloud-apigeeconnect-v1-java
+google/cloud/asset/v1 google-cloud-asset-v1-java
+google/cloud/compute/v1 google-cloud-compute-v1-java
+google/cloud/kms/v1 google-cloud-kms-v1-java
+google/cloud/redis/v1 google-cloud-redis-v1-java
+google/example/library/v1 google-cloud-example-library-v1-java
+google/devtools/containeranalysis/v1 google-cloud-devtools-containeranalysis-v1-java
+# google/iam/v1 google-iam-v1-java
+google/iam/credentials/v1 google-cloud-iam-credentials-v1-java
+google/logging/v2 google-cloud-logging-v2-java
+google/pubsub/v1 google-cloud-pubsub-v1-java
+google/storage/v2 google-cloud-storage-v2-java
