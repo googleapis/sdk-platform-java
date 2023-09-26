@@ -16,7 +16,7 @@ public final class TestingGrpc {
 
   private TestingGrpc() {}
 
-  public static final String SERVICE_NAME = "google.showcase.v1beta1.Testing";
+  public static final java.lang.String SERVICE_NAME = "google.showcase.v1beta1.Testing";
 
   // Static method descriptors that strictly reflect the proto.
   private static volatile io.grpc.MethodDescriptor<com.google.showcase.v1beta1.CreateSessionRequest,
@@ -920,9 +920,9 @@ public final class TestingGrpc {
   private static final class TestingMethodDescriptorSupplier
       extends TestingBaseDescriptorSupplier
       implements io.grpc.protobuf.ProtoMethodDescriptorSupplier {
-    private final String methodName;
+    private final java.lang.String methodName;
 
-    TestingMethodDescriptorSupplier(String methodName) {
+    TestingMethodDescriptorSupplier(java.lang.String methodName) {
       this.methodName = methodName;
     }
 

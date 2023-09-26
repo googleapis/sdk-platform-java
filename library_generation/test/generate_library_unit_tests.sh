@@ -41,40 +41,6 @@ get_protobuf_version_failed_with_invalid_generator_version_test() {
   assertEquals 1 $((res))
 }
 
-search_additional_protos_common_resources_test() {
-  local proto_path="${script_dir}/resources/search_additional_proto/common_resources"
-  local addition_protos
-  addition_protos=$(search_additional_protos)
-  assertEquals "google/cloud/common_resources.proto" "${addition_protos}"
-}
-
-search_additional_protos_iam_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos/iam"
-  local addition_protos
-  addition_protos=$(search_additional_protos)
-  assertEquals \
-  "google/cloud/common_resources.proto google/iam/v1/iam_policy.proto" \
-  "${addition_protos}"
-}
-
-search_additional_protos_location_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos/location"
-  local addition_protos
-  addition_protos=$(search_additional_protos)
-  assertEquals \
-  "google/cloud/common_resources.proto google/cloud/location/locations.proto" \
-  "${addition_protos}"
-}
-
-search_additional_protos_iam_location_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos/iam_location"
-  local addition_protos
-  addition_protos=$(search_additional_protos)
-  assertEquals \
-  "google/cloud/common_resources.proto google/iam/v1/iam_policy.proto google/cloud/location/locations.proto" \
-  "${addition_protos}"
-}
-
 get_gapic_opts_with_rest_test() {
   local proto_path="${script_dir}/resources/gapic_options"
   local transport="grpc"
@@ -112,9 +78,11 @@ remove_grpc_version_test() {
 }
 
 download_generator_success_with_valid_version_test() {
-  download_generator "2.24.0"
-  assertFileOrDirectoryExists "gapic-generator-java-2.24.0.jar"
-  rm "gapic-generator-java-2.24.0.jar"
+  local version="2.24.0"
+  local artifact="gapic-generator-java-${version}.jar"
+  download_generator_artifact "${version}" "${artifact}"
+  assertFileOrDirectoryExists "${artifact}"
+  rm "${artifact}"
 }
 
 download_generator_failed_with_invalid_version_test() {
@@ -125,7 +93,9 @@ download_generator_failed_with_invalid_version_test() {
   # the other tests can continue executing in the current
   # shell.
   local res=0
-  $(download_generator "1.99.0") || res=$?
+  local version="1.99.0"
+  local artifact="gapic-generator-java-${version}.jar"
+  $(download_generator_artifact "${version}" "${artifact}") || res=$?
   assertEquals 1 $((res))
 }
 
@@ -181,15 +151,14 @@ generate_library_failed_with_invalid_generator_version() {
   local destination="google-cloud-alloydb-v1-java"
   local res=0
   cd "${script_dir}/resources"
-  $("${script_dir}"/../generate_library.sh \
+  bash "${script_dir}"/../generate_library.sh \
     -p google/cloud/alloydb/v1 \
     -d ../"${destination}" \
     --gapic_generator_version 1.99.0 \
     --protobuf_version 23.2 \
     --grpc_version 1.55.1 \
     --transport grpc+rest \
-    --rest_numeric_enums true \
-    --os_architecture "$(__get_os_architecture)") || res=$?
+    --rest_numeric_enums true || res=$?
   assertEquals 1 $((res))
   # still need to clean up potential downloaded tooling.
   cleanup "${destination}"
@@ -199,15 +168,14 @@ generate_library_failed_with_invalid_protobuf_version() {
   local destination="google-cloud-alloydb-v1-java"
   local res=0
   cd "${script_dir}/resources"
-  $("${script_dir}"/../generate_library.sh \
+  bash "${script_dir}"/../generate_library.sh \
     -p google/cloud/alloydb/v1 \
     -d ../"${destination}" \
     --gapic_generator_version 2.24.0 \
     --protobuf_version 22.99 \
     --grpc_version 1.55.1 \
     --transport grpc+rest \
-    --rest_numeric_enums true \
-    --os_architecture "$(__get_os_architecture)") || res=$?
+    --rest_numeric_enums true || res=$?
   assertEquals 1 $((res))
   # still need to clean up potential downloaded tooling.
   cleanup "${destination}"
@@ -217,71 +185,113 @@ generate_library_failed_with_invalid_grpc_version() {
   local destination="google-cloud-alloydb-v1-java"
   local res=0
   cd "${script_dir}/resources"
-  $("${script_dir}"/../generate_library.sh \
+  bash "${script_dir}"/../generate_library.sh \
     -p google/cloud/alloydb/v1 \
-    -d ../"${destination}" \
+    -d ../output/"${destination}" \
     --gapic_generator_version 2.24.0 \
     --grpc_version 0.99.0 \
     --transport grpc+rest \
-    --rest_numeric_enums true \
-    --os_architecture "$(__get_os_architecture)") || res=$?
+    --rest_numeric_enums true || res=$?
   assertEquals 1 $((res))
   # still need to clean up potential downloaded tooling.
   cleanup "${destination}"
 }
 
-get_config_from_valid_BUILD_matched_test() {
-  build_file="${script_dir}/resources/misc/TESTBUILD.bazel"
-  rule="java_gapic_library("
-  # the pattern we expect to find in the BUILD file
-  pattern_should_match="name"
-  # default value if the pattern was not found
-  if_matched_return="got-a-match"
-  if_not_matched_return="no-match"
-  pattern_matched_result=$(get_config_from_BUILD \
-    "${build_file}" \
-    "${rule}" \
-    "${pattern_should_match}" \
-    "${if_not_matched_return}" \
-    "${if_matched_return}"
-  )
-  assertEquals "${if_matched_return}" "${pattern_matched_result}"
+get_gapic_additional_protos_from_BUILD_common_resources_test() {
+  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_common_resources.bazel"
+  local addition_protos
+  addition_protos=$(get_gapic_additional_protos_from_BUILD "${proto_path}")
+  assertEquals "google/cloud/common_resources.proto" "${addition_protos}"
 }
 
-get_config_from_valid_BUILD_not_match_test() {
-  build_file="${script_dir}/resources/misc/TESTBUILD.bazel"
-  rule="java_gapic_library("
-  # the pattern that we should not find in the BUILD file
-  pattern_should_not_match="should-not-match"
-  # default value if the pattern was not found
-  if_matched_return="got-a-match"
-  if_not_matched_return="no-match"
-  pattern_not_matched_result=$(get_config_from_BUILD \
-    "${build_file}" \
-    "${rule}" \
-    "${pattern_should_not_match}" \
-    "${if_not_matched_return}" \
-    "${if_matched_return}"
-  )
-  assertEquals "${if_not_matched_return}" "${pattern_not_matched_result}"
+get_gapic_additional_protos_from_BUILD_iam_policy_test() {
+  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_iam_policy.bazel"
+  local addition_protos
+  addition_protos=$(get_gapic_additional_protos_from_BUILD "${proto_path}")
+  assertEquals "google/cloud/common_resources.proto google/iam/v1/iam_policy.proto" "${addition_protos}"
+}
+
+get_gapic_additional_protos_from_BUILD_locations_test() {
+  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_locations.bazel"
+  local addition_protos
+  addition_protos=$(get_gapic_additional_protos_from_BUILD "${proto_path}")
+  assertEquals "google/cloud/common_resources.proto google/cloud/location/locations.proto" "${addition_protos}"
+}
+
+get_gapic_additional_protos_from_BUILD_iam_locations_test() {
+  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_iam_locations.bazel"
+  local addition_protos
+  addition_protos=$(get_gapic_additional_protos_from_BUILD "${proto_path}")
+  assertEquals "google/cloud/common_resources.proto google/iam/v1/iam_policy.proto google/cloud/location/locations.proto" "${addition_protos}"
+}
+
+get_transport_from_BUILD_grpc_rest_test() {
+  local build_file="${script_dir}/resources/misc/BUILD_grpc_rest.bazel"
+  local transport
+  transport=$(get_transport_from_BUILD "${build_file}")
+  assertEquals "grpc+rest" "${transport}"
+}
+
+get_transport_from_BUILD_grpc_test() {
+  local build_file="${script_dir}/resources/misc/BUILD_grpc.bazel"
+  local transport
+  transport=$(get_transport_from_BUILD "${build_file}")
+  assertEquals "grpc" "${transport}"
+}
+
+get_transport_from_BUILD_rest_test() {
+  local build_file="${script_dir}/resources/misc/BUILD_rest.bazel"
+  local transport
+  transport=$(get_transport_from_BUILD "${build_file}")
+  assertEquals "rest" "${transport}"
+}
+
+get_rest_numeric_enums_from_BUILD_true_test() {
+  local build_file="${script_dir}/resources/misc/BUILD_rest_numeric_enums_true.bazel"
+  local rest_numeric_enums
+  rest_numeric_enums=$(get_rest_numeric_enums_from_BUILD "${build_file}")
+  assertEquals "true" "${rest_numeric_enums}"
+}
+
+get_rest_numeric_enums_from_BUILD_false_test() {
+  local build_file="${script_dir}/resources/misc/BUILD_rest_numeric_enums_false.bazel"
+  local rest_numeric_enums
+  rest_numeric_enums=$(get_rest_numeric_enums_from_BUILD "${build_file}")
+  assertEquals "false" "${rest_numeric_enums}"
+}
+
+get_rest_numeric_enums_from_BUILD_empty_test() {
+  local build_file="${script_dir}/resources/misc/BUILD_rest_numeric_enums_empty.bazel"
+  local rest_numeric_enums
+  rest_numeric_enums=$(get_rest_numeric_enums_from_BUILD "${build_file}")
+  assertEquals "false" "${rest_numeric_enums}"
+}
+
+get_include_samples_from_BUILD_true_test() {
+  local build_file="${script_dir}/resources/misc/BUILD_include_samples_true.bazel"
+  local include_samples
+  include_samples=$(get_include_samples_from_BUILD "${build_file}")
+  assertEquals "true" "${include_samples}"
+}
+
+get_include_samples_from_BUILD_false_test() {
+  local build_file="${script_dir}/resources/misc/BUILD_include_samples_false.bazel"
+  local include_samples
+  include_samples=$(get_include_samples_from_BUILD "${build_file}")
+  assertEquals "false" "${include_samples}"
+}
+
+get_include_samples_from_BUILD_empty_test() {
+  local build_file="${script_dir}/resources/misc/BUILD_include_samples_empty.bazel"
+  local include_samples
+  include_samples=$(get_include_samples_from_BUILD "${build_file}")
+  assertEquals "false" "${include_samples}"
 }
 
 get_version_from_valid_WORKSPACE_test() {
   workspace_file="${script_dir}/resources/misc/TESTWORKSPACE"
   obtained_ggj_version=$(get_version_from_WORKSPACE "_gapic_generator_java_version" "${workspace_file}")
   assertEquals '2.25.1-SNAPSHOT' "${obtained_ggj_version}"
-}
-
-get_generator_version_from_valid_versions_txt_test() {
-  versions_file="${script_dir}/resources/misc/testversions.txt"
-  obtained_ggj_version=$(get_version_from_versions_txt "${versions_file}" "gapic-generator-java")
-  assertEquals '2.25.1-SNAPSHOT' "${obtained_ggj_version}"
-}
-
-get_gax_version_from_valid_versions_txt_test() {
-  versions_file="${script_dir}/resources/misc/testversions.txt"
-  obtained_gax_version=$(get_version_from_versions_txt "${versions_file}" "gax")
-  assertEquals '2.33.1-SNAPSHOT' "${obtained_gax_version}"
 }
 
 # Execute tests.
@@ -292,10 +302,6 @@ test_list=(
   get_grpc_version_failed_with_invalid_generator_version_test
   get_protobuf_version_succeed_with_valid_generator_version_test
   get_protobuf_version_failed_with_invalid_generator_version_test
-  search_additional_protos_common_resources_test
-  search_additional_protos_iam_test
-  search_additional_protos_location_test
-  search_additional_protos_iam_location_test
   get_gapic_opts_with_rest_test
   get_gapic_opts_without_rest_test
   remove_grpc_version_test
@@ -312,11 +318,20 @@ test_list=(
   generate_library_failed_with_invalid_generator_version
   generate_library_failed_with_invalid_protobuf_version
   generate_library_failed_with_invalid_grpc_version
-  get_config_from_valid_BUILD_matched_test
-  get_config_from_valid_BUILD_not_match_test
+  get_gapic_additional_protos_from_BUILD_common_resources_test
+  get_gapic_additional_protos_from_BUILD_iam_policy_test
+  get_gapic_additional_protos_from_BUILD_locations_test
+  get_gapic_additional_protos_from_BUILD_iam_locations_test
+  get_transport_from_BUILD_grpc_rest_test
+  get_transport_from_BUILD_grpc_test
+  get_transport_from_BUILD_rest_test
+  get_rest_numeric_enums_from_BUILD_true_test
+  get_rest_numeric_enums_from_BUILD_false_test
+  get_rest_numeric_enums_from_BUILD_empty_test
+  get_include_samples_from_BUILD_true_test
+  get_include_samples_from_BUILD_false_test
+  get_include_samples_from_BUILD_empty_test
   get_version_from_valid_WORKSPACE_test
-  get_generator_version_from_valid_versions_txt_test
-  get_gax_version_from_valid_versions_txt_test
 )
 
 pushd "${script_dir}"

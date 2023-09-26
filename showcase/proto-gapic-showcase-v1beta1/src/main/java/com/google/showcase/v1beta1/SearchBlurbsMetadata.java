@@ -43,6 +43,7 @@ private static final long serialVersionUID = 0L;
             com.google.showcase.v1beta1.SearchBlurbsMetadata.class, com.google.showcase.v1beta1.SearchBlurbsMetadata.Builder.class);
   }
 
+  private int bitField0_;
   public static final int RETRY_INFO_FIELD_NUMBER = 1;
   private com.google.rpc.RetryInfo retryInfo_;
   /**
@@ -55,7 +56,7 @@ private static final long serialVersionUID = 0L;
    */
   @java.lang.Override
   public boolean hasRetryInfo() {
-    return retryInfo_ != null;
+    return ((bitField0_ & 0x00000001) != 0);
   }
   /**
    * <pre>
@@ -95,7 +96,7 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (retryInfo_ != null) {
+    if (((bitField0_ & 0x00000001) != 0)) {
       output.writeMessage(1, getRetryInfo());
     }
     getUnknownFields().writeTo(output);
@@ -107,7 +108,7 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (retryInfo_ != null) {
+    if (((bitField0_ & 0x00000001) != 0)) {
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(1, getRetryInfo());
     }
@@ -270,13 +271,19 @@ private static final long serialVersionUID = 0L;
 
     // Construct using com.google.showcase.v1beta1.SearchBlurbsMetadata.newBuilder()
     private Builder() {
-
+      maybeForceBuilderInitialization();
     }
 
     private Builder(
         com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
-
+      maybeForceBuilderInitialization();
+    }
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessageV3
+              .alwaysUseFieldBuilders) {
+        getRetryInfoFieldBuilder();
+      }
     }
     @java.lang.Override
     public Builder clear() {
@@ -320,11 +327,14 @@ private static final long serialVersionUID = 0L;
 
     private void buildPartial0(com.google.showcase.v1beta1.SearchBlurbsMetadata result) {
       int from_bitField0_ = bitField0_;
+      int to_bitField0_ = 0;
       if (((from_bitField0_ & 0x00000001) != 0)) {
         result.retryInfo_ = retryInfoBuilder_ == null
             ? retryInfo_
             : retryInfoBuilder_.build();
+        to_bitField0_ |= 0x00000001;
       }
+      result.bitField0_ |= to_bitField0_;
     }
 
     @java.lang.Override
@@ -510,8 +520,10 @@ private static final long serialVersionUID = 0L;
       } else {
         retryInfoBuilder_.mergeFrom(value);
       }
-      bitField0_ |= 0x00000001;
-      onChanged();
+      if (retryInfo_ != null) {
+        bitField0_ |= 0x00000001;
+        onChanged();
+      }
       return this;
     }
     /**

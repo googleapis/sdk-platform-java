@@ -7,17 +7,18 @@ The script, `generate_library.sh`, allows you to generate a GAPIC client library
 Use Linux environment and install java runtime environment (8 or above).
 
 ## Prerequisite
-Protos referenced by protos in `proto_path` (see `proto_path` below) should be copied to the current
-working directory (refers as `$cwd`, a directory contains `generate_library.sh`).
+Protos referenced by protos in `proto_path` (see `proto_path` below) should be copied to an `output`
+directory located in the working directory, referred as `$cwd`
+(for example, `library_generation/output` if planning to call from the same folder).
 The directory structure should be the same as import statements in protos.
 
-For example, we want to generate from `folder1/folder2/protoA`, so `proto_path` 
-should be set to `folder1/folder2` (a relative path from `$cwd`). 
+For example, you want to generate from `folder1/folder2/protoA`, so `proto_path` 
+should be set to `folder1/folder2` (a relative path from `output`). 
 protoA imports protoB as `folder3/folder4/protoB`, then there should 
-be `folder3/folder4` (containing protoB) in `$cwd`.
+be `folder3/folder4` (containing protoB) in `output`.
 
 In order to generate a GAPIC library, you need to pull `google/` from [googleapis](https://github.com/googleapis/googleapis)
-and put it into `$cwd` since protos in `google/` are likely referenced by 
+and put it into `output` since protos in `google/` are likely referenced by 
 protos from which the library are generated.
 
 ## Parameters to run `generate_library.sh`
@@ -25,19 +26,19 @@ protos from which the library are generated.
 You need to run the script with the following parameters.
 
 ### proto_path
-A directory in `$cwd` and copy proto files into it. 
-The absolute path of `proto_path` is `$cwd/$proto_path`. 
+A directory in `$cwd/output` and copy proto files into it. 
+The absolute path of `proto_path` is `$cwd/output/$proto_path`. 
 
 Use `-p` or `--proto_path` to specify the value.
 
 ### destination_path 
-A directory within `$cwd`. 
+A directory within `$cwd/output`. 
 This is the path in which the generated library will reside. 
-The absolute path of `destination_path` is `$cwd/$destination_path`. 
+The absolute path of `destination_path` is `$cwd/output/$destination_path`. 
 
 Use `-d` or `--destination_path` to specify the value.
    
-Note that you do not need to create `$detination_path` beforehand.
+Note that you do not need to create `$destination_path` beforehand.
 
 The directory structure of the generated library is
 ```
@@ -71,8 +72,8 @@ You can find the released version of gapic-generator-java in [maven central](htt
 
 Use `--gapic_generator_version` to specify the value.
 
-Note that you can specify a `SNAPSHOT` version as long as you have build the SNAPSHOT of gapic-generator-java in your maven
-local repository.
+Note that you can specify any non-published version (e.g. a SNAPSHOT) as long as you have installed it in your maven
+local repository. The script will search locally first.
 
 ### protobuf_version (optional)
 You can find the released version of protobuf in [GitHub](https://github.com/protocolbuffers/protobuf/releases/).
@@ -90,14 +91,22 @@ Use `--grpc_version` to specify the value.
 
 Note that if specified, the version should be compatible with gapic-generator-java.
 
+### gapic_additional_protos (optional)
+Additional protos that pass to the generator.
+The default value is `google/cloud/common_resources.proto`.
+
+Use `--gapic_additional_protos` to specify the value.
+
 ### transport (optional)
-One of GAPIC options passed to the generator. The value is either `grpc` or `grpc+rest`.
+One of GAPIC options passed to the generator.
+The value is either `grpc` or `grpc+rest`.
 The default value is `grpc`.
 
 Use `--transport` to specify the value.
 
 ### rest_numeric_enums (optional)
-One of GAPIC options passed to the generator. The value is either `true` or `false`.
+One of GAPIC options passed to the generator.
+The value is either `true` or `false`.
 The default value is `true`.
 
 Use `--rest_numeric_enums` to specify the value.
@@ -120,6 +129,7 @@ library_generation/generate_library.sh \
 --gapic_generator_version 2.24.0 \
 --protobuf_version 23.2 \
 --grpc_version 1.55.1 \
+--gapic_additional_protos "google/cloud/common_resources.proto google/cloud/location/locations.proto" \
 --transport grpc+rest \
 --rest_numeric_enums true \
 --include_samples true

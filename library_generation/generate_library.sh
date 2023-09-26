@@ -29,6 +29,10 @@ case $key in
     grpc_version="$2"
     shift
     ;;
+  --gapic_additional_protos)
+    gapic_additional_protos="$2"
+    shift
+    ;;
   --transport)
     transport="$2"
     shift
@@ -54,8 +58,8 @@ shift # past argument or value
 done
 
 script_dir=$(dirname "$(readlink -f "$0")")
-# source utility functions
 source "${script_dir}"/utilities.sh
+output_folder="$(get_output_folder)"
 
 if [ -z "${protobuf_version}" ]; then
   protobuf_version=$(get_protobuf_version "${gapic_generator_version}")
@@ -63,6 +67,10 @@ fi
 
 if [ -z "${grpc_version}" ]; then
   grpc_version=$(get_grpc_version "${gapic_generator_version}")
+fi
+
+if [ -z "${gapic_additional_protos}" ]; then
+  gapic_additional_protos="google/cloud/common_resources.proto"
 fi
 
 if [ -z "${transport}" ]; then
@@ -78,32 +86,37 @@ if [ -z "${include_samples}" ]; then
 fi
 
 if [ -z "${os_architecture}" ]; then
-  os_architecture="linux-x86_64"
+  os_architecture=$(detect_os_architecture)
 fi
 
-mkdir -p "${destination_path}"
+
+mkdir -p "${output_folder}/${destination_path}"
 ##################### Section 0 #####################
 # prepare tooling
 #####################################################
 # the order of services entries in gapic_metadata.json is relevant to the
 # order of proto file, sort the proto files with respect to their name to
 # get a fixed order.
-proto_files=$(find "${proto_path}" -type f  -name "*.proto" | sort)
 folder_name=$(extract_folder_name "${destination_path}")
+pushd "${output_folder}"
+proto_files=$(find "${proto_path}" -type f  -name "*.proto" | sort)
 # download gapic-generator-java, protobuf and grpc plugin.
 download_tools "${gapic_generator_version}" "${protobuf_version}" "${grpc_version}" "${os_architecture}"
 ##################### Section 1 #####################
 # generate grpc-*/
 #####################################################
-"${protoc_path}"/protoc "--plugin=protoc-gen-rpc-plugin=protoc-gen-grpc-java-${grpc_version}-${os_architecture}.exe" \
-"--rpc-plugin_out=:${destination_path}/java_grpc.jar" \
-${proto_files} # Do not quote because this variable should not be treated as one long string.
-# unzip java_grpc.jar to grpc-*/src/main/java
-unzip_src_files "grpc"
-# remove empty files in grpc-*/src/main/java
-remove_empty_files "grpc"
-# remove grpc version in *ServiceGrpc.java file so the content is identical with bazel build.
-remove_grpc_version
+if [[ ! "${transport}" == "rest" ]]; then
+  # do not need to generate grpc-* if the transport is `rest`.
+  "${protoc_path}"/protoc "--plugin=protoc-gen-rpc-plugin=protoc-gen-grpc-java-${grpc_version}-${os_architecture}.exe" \
+  "--rpc-plugin_out=:${destination_path}/java_grpc.jar" \
+  ${proto_files} # Do not quote because this variable should not be treated as one long string.
+  # unzip java_grpc.jar to grpc-*/src/main/java
+  unzip_src_files "grpc"
+  # remove empty files in grpc-*/src/main/java
+  remove_empty_files "grpc"
+  # remove grpc version in *ServiceGrpc.java file so the content is identical with bazel build.
+  remove_grpc_version
+fi
 ###################### Section 2 #####################
 ## generate gapic-*/, part of proto-*/, samples/
 ######################################################
@@ -111,7 +124,7 @@ remove_grpc_version
 "--plugin=protoc-gen-java_gapic=${script_dir}/gapic-generator-java-wrapper" \
 "--java_gapic_out=metadata:${destination_path}/java_gapic_srcjar_raw.srcjar.zip" \
 "--java_gapic_opt=$(get_gapic_opts)" \
-${proto_files} $(search_additional_protos)
+${proto_files} ${gapic_additional_protos}
 
 unzip -o -q "${destination_path}/java_gapic_srcjar_raw.srcjar.zip" -d "${destination_path}"
 # Sync'\''d to the output file name in Writer.java.
@@ -153,9 +166,11 @@ for proto_src in ${proto_files}; do
   mkdir -p "${destination_path}/proto-${folder_name}/src/main/proto"
   rsync -R "${proto_src}" "${destination_path}/proto-${folder_name}/src/main/proto"
 done
+popd # output_folder
 ##################### Section 4 #####################
 # rm tar files
 #####################################################
-cd "${destination_path}"
+pushd "${output_folder}/${destination_path}"
 rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_proto.jar temp-codegen.srcjar
+popd
 set +x

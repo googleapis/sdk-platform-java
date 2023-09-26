@@ -2,8 +2,7 @@
 
 set -xeo pipefail
 
-# define utility functions
-
+# Utility functions used in `generate_library.sh` and showcase generation.
 extract_folder_name() {
   local destination_path=$1
   local folder_name=${destination_path##*/}
@@ -48,33 +47,6 @@ unzip_src_files() {
   rm -r -f "${destination_path}/${category}-${folder_name}/src/main/java/META-INF"
 }
 
-find_additional_protos_in_yaml() {
-  local pattern=$1
-  local find_result
-  find_result=$(grep --include=\*.yaml -rw "${proto_path}" -e "${pattern}")
-  if [ -n "${find_result}" ]; then
-    echo "${find_result}"
-  fi
-}
-
-# Apart from proto files in proto_path, additional protos are needed in order
-# to generate GAPIC client libraries.
-# In most cases, these protos should be within google/ directory, which is
-# pulled from googleapis as a prerequisite.
-# Search additional protos in .yaml files.
-search_additional_protos() {
-  additional_protos="google/cloud/common_resources.proto" # used by every library
-  iam_policy=$(find_additional_protos_in_yaml "name: '*google.iam.v1.IAMPolicy'*")
-  if [ -n "$iam_policy" ]; then
-    additional_protos="$additional_protos google/iam/v1/iam_policy.proto"
-  fi
-  locations=$(find_additional_protos_in_yaml "name: '*google.cloud.location.Locations'*")
-  if [ -n "${locations}" ]; then
-    additional_protos="$additional_protos google/cloud/location/locations.proto"
-  fi
-  echo "${additional_protos}"
-}
-
 # get gapic options from .yaml and .json files from proto_path.
 get_gapic_opts() {
   local gapic_config
@@ -87,7 +59,7 @@ get_gapic_opts() {
     gapic_config="gapic-config=${gapic_config},"
   fi
   grpc_service_config=$(find "${proto_path}" -type f -name "*service_config.json")
-  api_service_config=$(find "${proto_path}" -maxdepth 1 -type f \( -name "*.yaml" ! -name "*gapic.yaml" \))
+  api_service_config=$(find "${proto_path}" -maxdepth 1 -type f \( -name "*.yaml" ! -name "*gapic*.yaml" \))
   if [ "${rest_numeric_enums}" == "true" ]; then
     rest_numeric_enums="rest-numeric-enums,"
   else
@@ -103,19 +75,7 @@ remove_grpc_version() {
 
 download_gapic_generator_pom_parent() {
   local gapic_generator_version=$1
-  if [ ! -f "gapic-generator-java-pom-parent-${gapic_generator_version}.pom" ]; then
-    if [[ "${gapic_generator_version}" == *"-SNAPSHOT" ]]; then
-      # copy a SNAPSHOT version from maven local repository.
-      copy_from "$HOME/.m2/repository/com/google/api/gapic-generator-java-pom-parent/${gapic_generator_version}/gapic-generator-java-pom-parent-${gapic_generator_version}.pom" \
-      "gapic-generator-java-pom-parent-${gapic_generator_version}.pom"
-      return
-    fi
-    # download gapic-generator-java-pom-parent from Google maven central mirror.
-    download_from \
-    "https://maven-central.storage-download.googleapis.com/maven2/com/google/api/gapic-generator-java-pom-parent/${gapic_generator_version}/gapic-generator-java-pom-parent-${gapic_generator_version}.pom" \
-    "gapic-generator-java-pom-parent-${gapic_generator_version}.pom"
-  fi
-  # file exists, do not need to download again.
+  download_generator_artifact "${gapic_generator_version}" "gapic-generator-java-pom-parent-${gapic_generator_version}.pom" "gapic-generator-java-pom-parent"
 }
 
 get_grpc_version() {
@@ -137,35 +97,43 @@ get_protobuf_version() {
 }
 
 download_tools() {
+  pushd "${output_folder}"
   local gapic_generator_version=$1
   local protobuf_version=$2
   local grpc_version=$3
   local os_architecture=$4
-  download_generator "${gapic_generator_version}"
+  download_generator_artifact "${gapic_generator_version}" "gapic-generator-java-${gapic_generator_version}.jar"
   download_protobuf "${protobuf_version}" "${os_architecture}"
   download_grpc_plugin "${grpc_version}" "${os_architecture}"
+  popd
 }
 
-download_generator() {
+download_generator_artifact() {
   local gapic_generator_version=$1
+  local artifact=$2
+  local project=${3:-"gapic-generator-java"}
   if [ ! -f "gapic-generator-java-${gapic_generator_version}.jar" ]; then
-    if [[ "${gapic_generator_version}" == *"-SNAPSHOT" ]]; then
-      # copy a SNAPSHOT version from maven local repository.
-      copy_from "$HOME/.m2/repository/com/google/api/gapic-generator-java/${gapic_generator_version}/gapic-generator-java-${gapic_generator_version}.jar" \
-      "gapic-generator-java-${gapic_generator_version}.jar"
-      return
+    # first, try to fetch the generator locally
+    local local_fetch_successful=$(copy_from "$HOME/.m2/repository/com/google/api/${project}/${gapic_generator_version}/${artifact}" \
+      "${artifact}")
+    if [[ "${local_fetch_successful}" == "false" ]];then 
+      # download gapic-generator-java artifact from Google maven central mirror if not
+      # found locally
+      >&2 echo "${artifact} not found locally. Attempting a download from Maven Central"
+      download_from \
+      "https://maven-central.storage-download.googleapis.com/maven2/com/google/api/${project}/${gapic_generator_version}/${artifact}" \
+      "${artifact}"
+      >&2 echo "${artifact} found and downloaded from Maven Central"
+    else
+      >&2 echo "${artifact} found copied from local repository (~/.m2)"
     fi
-    # download gapic-generator-java from Google maven central mirror.
-    download_from \
-    "https://maven-central.storage-download.googleapis.com/maven2/com/google/api/gapic-generator-java/${gapic_generator_version}/gapic-generator-java-${gapic_generator_version}.jar" \
-    "gapic-generator-java-${gapic_generator_version}.jar"
   fi
 }
 
 download_protobuf() {
   local protobuf_version=$1
   local os_architecture=$2
-  if [ ! -d "protobuf-${protobuf_version}.zip" ]; then
+  if [ ! -d "protobuf-${protobuf_version}" ]; then
     # pull proto files and protoc from protobuf repository as maven central
     # doesn't have proto files
     download_from \
@@ -177,7 +145,7 @@ download_protobuf() {
     rm "protobuf-${protobuf_version}.zip"
   fi
 
-  protoc_path=protobuf-${protobuf_version}/bin
+  protoc_path="${output_folder}/protobuf-${protobuf_version}/bin"
 }
 
 download_grpc_plugin() {
@@ -200,76 +168,43 @@ download_from() {
   curl -LJ -o "${save_as}" --fail -m 30 --retry 2 "$url" || download_fail "${save_as}" "${repo}"
 }
 
+# copies the specified file in $1 to $2
+# will return "true" if the copy was successful
 copy_from() {
   local local_repo=$1
   local save_as=$2
-  cp "${local_repo}" "${save_as}" || \
-    download_fail "${save_as}" "maven local"
+  copy_successful=$(cp "${local_repo}" "${save_as}" && echo "true" || echo "false")
+  echo "${copy_successful}"
 }
 
 download_fail() {
   local artifact=$1
   local repo=${2:-"maven central mirror"}
-  >&2 echo "Fail to download ${artifact} from ${repo} repository. Please install ${artifact} first if you want to download a SNAPSHOT."
+  >&2 echo "Fail to download ${artifact} from ${repo} repository. Please install ${artifact} first if you want to use a non-published artifact."
   exit 1
 }
 
-# Obtains a version from a bazel WORKSPACE file
-#
-# versions look like "_ggj_version="1.2.3"
-# It will return 1.2.3 for such example
-get_version_from_WORKSPACE() {
-  version_key_word=$1
-  workspace=$2
-  version=$(\
-    grep "${version_key_word}" "${workspace}" |\
-    head -n 1 |\
-    sed 's/\(.*\) = "\(.*\)"\(.*\)/\2/' |\
-    sed 's/[a-zA-Z-]*//'
-  )
-  echo "${version}"
+# gets the output folder where all sources and dependencies will be located. It
+# relies on utilities_script_dir which points to the same location as
+# `generate_library.sh`
+get_output_folder() {
+  echo "$(pwd)/output"
 }
 
-# Used to obtain configuration values from a bazel BUILD file
-#
-# inspects a $build_file for a certain $rule (e.g. java_gapic_library). If the
-# first 15 lines after the declaration of the rule contain $pattern, then
-# it will return $if_match if $pattern is found, otherwise $default
-get_config_from_BUILD() {
-  build_file=$1
-  rule=$2
-  pattern=$3
-  default=$4
-  if_match=$5
-
-  result="${default}"
-  if grep -A 15 "${rule}" "${build_file}" | grep -q "${pattern}"; then
-    result="${if_match}"
-  fi
-  echo "${result}"
-}
-
-# Convenience function to clone only the necessary folders from a git repository
-sparse_clone() {
-  repo_url=$1
-  paths=$2
-  commitish=$3
-  clone_dir=$(basename "${repo_url%.*}")
-  rm -rf "${clone_dir}"
-  git clone -n --depth=1 --no-single-branch --filter=tree:0 "${repo_url}"
-  cd "${clone_dir}"
-  if [ -n "${commitish}" ]; then
-    git checkout "${commitish}"
-  fi
-  git sparse-checkout set --no-cone ${paths}
-  git checkout
-  cd ..
-}
-
-# takes a versions.txt file and returns its version
-get_version_from_versions_txt() {
-  versions=$1
-  key=$2
-  version=$(grep "$key:" "${versions}" | cut -d: -f3) # 3rd field is snapshot
-  echo "${version}"
+detect_os_architecture() {
+  local os_type
+  local os_architecture
+  os_type=$(uname -sm)
+  case "${os_type}" in
+    *"Linux x86_64"*)
+      os_architecture="linux-x86_64"
+      ;;
+    *"Darwin x86_64"*)
+      os_architecture="osx-x86_64"
+      ;;
+    *)
+      os_architecture="osx-aarch_64"
+      ;;
+  esac
+  echo "${os_architecture}"
 }

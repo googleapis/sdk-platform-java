@@ -21,7 +21,7 @@ public final class EchoGrpc {
 
   private EchoGrpc() {}
 
-  public static final String SERVICE_NAME = "google.showcase.v1beta1.Echo";
+  public static final java.lang.String SERVICE_NAME = "google.showcase.v1beta1.Echo";
 
   // Static method descriptors that strictly reflect the proto.
   private static volatile io.grpc.MethodDescriptor<com.google.showcase.v1beta1.EchoRequest,
@@ -1004,9 +1004,9 @@ public final class EchoGrpc {
   private static final class EchoMethodDescriptorSupplier
       extends EchoBaseDescriptorSupplier
       implements io.grpc.protobuf.ProtoMethodDescriptorSupplier {
-    private final String methodName;
+    private final java.lang.String methodName;
 
-    EchoMethodDescriptorSupplier(String methodName) {
+    EchoMethodDescriptorSupplier(java.lang.String methodName) {
       this.methodName = methodName;
     }
 
