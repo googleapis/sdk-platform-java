@@ -55,8 +55,6 @@ gapic_generator_version=$(get_version_from_WORKSPACE "_gapic_generator_java_vers
 echo "The version of gapic-generator-java is ${gapic_generator_version}."
 protobuf_version=$(get_version_from_WORKSPACE "protobuf-" WORKSPACE "-")
 echo "The version of protobuf is ${protobuf_version}"
-grpc_version=$(get_version_from_WORKSPACE "_grpc_version" WORKSPACE "=")
-echo "The version of protoc-gen-grpc-java plugin is ${gapic_generator_version}."
 popd # googleapis
 popd # output_folder
 
@@ -79,7 +77,6 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   -d "${destination_path}" \
   --gapic_generator_version "${gapic_generator_version}" \
   --protobuf_version "${protobuf_version}" \
-  --grpc_version "${grpc_version}" \
   --gapic_additional_protos "${gapic_additional_protos}" \
   --transport "${transport}" \
   --rest_numeric_enums "${rest_numeric_enums}" \
