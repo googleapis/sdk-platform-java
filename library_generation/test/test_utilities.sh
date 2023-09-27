@@ -126,17 +126,17 @@ execute_tests() {
 }
 
 ############# Utility functions used in `generate_library_integration_tests.sh` #############
-get_is_gapic_from_BUILD() {
+get_proto_only_from_BUILD() {
   local build_file=$1
-  local is_gapic
-  is_gapic=$(__get_config_from_BUILD \
+  local proto_only
+  proto_only=$(__get_config_from_BUILD \
     "${build_file}" \
     "java_gapic_library(" \
     "java_gapic_library" \
-    "false" \
-    "true"
+    "true" \
+    "false"
   )
-  echo "${is_gapic}"
+  echo "${proto_only}"
 }
 
 # Apart from proto files in proto_path, additional protos are needed in order

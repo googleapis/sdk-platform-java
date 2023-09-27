@@ -29,8 +29,8 @@ case $key in
     grpc_version="$2"
     shift
     ;;
-  --is_gapic)
-    is_gapic="$2"
+  --proto_only)
+    proto_only="$2"
     shift
     ;;
   --gapic_additional_protos)
@@ -73,8 +73,8 @@ if [ -z "${grpc_version}" ]; then
   grpc_version=$(get_grpc_version "${gapic_generator_version}")
 fi
 
-if [ -z "${is_gapic}" ]; then
-  is_gapic="true"
+if [ -z "${proto_only}" ]; then
+  proto_only="false"
 fi
 
 if [ -z "${gapic_additional_protos}" ]; then
@@ -128,7 +128,7 @@ fi
 ###################### Section 2 #####################
 ## generate gapic-*/, part of proto-*/, samples/
 ######################################################
-if [[ "${is_gapic}" == "true" ]]; then
+if [[ "${proto_only}" == "false" ]]; then
   "$protoc_path"/protoc --experimental_allow_proto3_optional \
   "--plugin=protoc-gen-java_gapic=${script_dir}/gapic-generator-java-wrapper" \
   "--java_gapic_out=metadata:${destination_path}/java_gapic_srcjar_raw.srcjar.zip" \
@@ -163,7 +163,7 @@ fi
 # generate proto-*/
 #####################################################
 "$protoc_path"/protoc "--java_out=${destination_path}/java_proto.jar" ${proto_files}
-if [[ "${is_gapic}" == "true" ]]; then
+if [[ "${proto_only}" == "false" ]]; then
   # move java_gapic_srcjar/proto/src/main/java (generated resource name helper class)
   # to proto-*/src/main
   mv_src_files "proto" "main"
