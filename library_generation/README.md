@@ -91,6 +91,17 @@ Use `--grpc_version` to specify the value.
 
 Note that if specified, the version should be compatible with gapic-generator-java.
 
+### proto_only (optional)
+Whether this is a proto-only library (no `gapic-*` directory in the generated 
+library).
+The default value is `false`.
+
+When set to `true`, the GAPIC generator will not be invoked.
+Therefore, GAPIC options (`transport`, `rest_numeric_enums`) and 
+`gapic_additional_protos` will be ignored.
+
+Use `--proto_only` to specify the value.
+
 ### gapic_additional_protos (optional)
 Additional protos that pass to the generator.
 The default value is `google/cloud/common_resources.proto`.
