@@ -81,22 +81,22 @@ download_gapic_generator_pom_parent() {
 get_grpc_version() {
   local gapic_generator_version=$1
   local grpc_version
-  cd "${output_folder}"
+  pushd "${output_folder}" > /dev/null
   # get grpc version from gapic-generator-java-pom-parent/pom.xml
   download_gapic_generator_pom_parent "${gapic_generator_version}"
   grpc_version=$(grep grpc.version "gapic-generator-java-pom-parent-${gapic_generator_version}.pom" | sed 's/<grpc\.version>\(.*\)<\/grpc\.version>/\1/' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
-  cd ..
+  popd > /dev/null
   echo "${grpc_version}"
 }
 
 get_protobuf_version() {
   local gapic_generator_version=$1
   local protobuf_version
-  cd "${output_folder}"
+  pushd "${output_folder}" > /dev/null
   # get protobuf version from gapic-generator-java-pom-parent/pom.xml
   download_gapic_generator_pom_parent "${gapic_generator_version}"
   protobuf_version=$(grep protobuf.version "gapic-generator-java-pom-parent-${gapic_generator_version}.pom" | sed 's/<protobuf\.version>\(.*\)<\/protobuf\.version>/\1/' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//' | cut -d "." -f2-)
-  cd ..
+  popd > /dev/null
   echo "${protobuf_version}"
 }
 
@@ -118,7 +118,8 @@ download_generator_artifact() {
   local project=${3:-"gapic-generator-java"}
   if [ ! -f "${artifact}" ]; then
     # first, try to fetch the generator locally
-    local local_fetch_successful=$(copy_from "$HOME/.m2/repository/com/google/api/${project}/${gapic_generator_version}/${artifact}" \
+    local local_fetch_successful
+    local_fetch_successful=$(copy_from "$HOME/.m2/repository/com/google/api/${project}/${gapic_generator_version}/${artifact}" \
       "${artifact}")
     if [[ "${local_fetch_successful}" == "false" ]];then 
       # download gapic-generator-java artifact from Google maven central mirror if not
