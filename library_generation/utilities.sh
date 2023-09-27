@@ -13,8 +13,8 @@ remove_empty_files() {
   local category=$1
   local file_num
   find "${destination_path}/${category}-${folder_name}/src/main/java" -type f -size 0 | while read -r f; do rm -f "${f}"; done
+  # remove the directory if the directory has no files.
   file_num=$(find "${destination_path}/${category}-${folder_name}" -type f | wc -l | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
-  # remove the directory is the directory is empty.
   if [[ "${file_num}" == 0 ]]; then
     rm -rf "${destination_path}/${category}-${folder_name}"
   fi
