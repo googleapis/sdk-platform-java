@@ -11,7 +11,14 @@ extract_folder_name() {
 
 remove_empty_files() {
   local category=$1
+  local file_num
   find "${destination_path}/${category}-${folder_name}/src/main/java" -type f -size 0 | while read -r f; do rm -f "${f}"; done
+  # remove the directory if the directory has no files.
+  file_num=$(find "${destination_path}/${category}-${folder_name}" -type f | wc -l | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+  if [[ "${file_num}" == 0 ]]; then
+    rm -rf "${destination_path}/${category}-${folder_name}"
+  fi
+
   if [ -d "${destination_path}/${category}-${folder_name}/src/main/java/samples" ]; then
       mv "${destination_path}/${category}-${folder_name}/src/main/java/samples" "${destination_path}/${category}-${folder_name}"
   fi

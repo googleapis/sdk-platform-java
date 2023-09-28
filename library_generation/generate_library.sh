@@ -29,6 +29,10 @@ case $key in
     grpc_version="$2"
     shift
     ;;
+  --proto_only)
+    proto_only="$2"
+    shift
+    ;;
   --gapic_additional_protos)
     gapic_additional_protos="$2"
     shift
@@ -67,6 +71,10 @@ fi
 
 if [ -z "${grpc_version}" ]; then
   grpc_version=$(get_grpc_version "${gapic_generator_version}")
+fi
+
+if [ -z "${proto_only}" ]; then
+  proto_only="false"
 fi
 
 if [ -z "${gapic_additional_protos}" ]; then
@@ -120,43 +128,46 @@ fi
 ###################### Section 2 #####################
 ## generate gapic-*/, part of proto-*/, samples/
 ######################################################
-"$protoc_path"/protoc --experimental_allow_proto3_optional \
-"--plugin=protoc-gen-java_gapic=${script_dir}/gapic-generator-java-wrapper" \
-"--java_gapic_out=metadata:${destination_path}/java_gapic_srcjar_raw.srcjar.zip" \
-"--java_gapic_opt=$(get_gapic_opts)" \
-${proto_files} ${gapic_additional_protos}
+if [[ "${proto_only}" == "false" ]]; then
+  "$protoc_path"/protoc --experimental_allow_proto3_optional \
+  "--plugin=protoc-gen-java_gapic=${script_dir}/gapic-generator-java-wrapper" \
+  "--java_gapic_out=metadata:${destination_path}/java_gapic_srcjar_raw.srcjar.zip" \
+  "--java_gapic_opt=$(get_gapic_opts)" \
+  ${proto_files} ${gapic_additional_protos}
 
-unzip -o -q "${destination_path}/java_gapic_srcjar_raw.srcjar.zip" -d "${destination_path}"
-# Sync'\''d to the output file name in Writer.java.
-unzip -o -q "${destination_path}/temp-codegen.srcjar" -d "${destination_path}/java_gapic_srcjar"
-# Resource name source files.
-proto_dir=${destination_path}/java_gapic_srcjar/proto/src/main/java
-if [ ! -d "${proto_dir}" ]; then
-  # Some APIs don'\''t have resource name helpers, like BigQuery v2.
-  # Create an empty file so we can finish building. Gating the resource name rule definition
-  # on file existences go against Bazel'\''s design patterns, so we'\''ll simply delete all empty
-  # files during the final packaging process (see java_gapic_pkg.bzl)
-  mkdir -p "${proto_dir}"
-  touch "${proto_dir}"/PlaceholderFile.java
-fi
-
-# move java_gapic_srcjar/src/main to gapic-*/src.
-mv_src_files "gapic" "main"
-# remove empty files in gapic-*/src/main/java
-remove_empty_files "gapic"
-# move java_gapic_srcjar/src/test to gapic-*/src
-mv_src_files "gapic" "test"
-if [ "${include_samples}" == "true" ]; then
-  # move java_gapic_srcjar/samples/snippets to samples/snippets
-  mv_src_files "samples" "main"
+  unzip -o -q "${destination_path}/java_gapic_srcjar_raw.srcjar.zip" -d "${destination_path}"
+  # Sync'\''d to the output file name in Writer.java.
+  unzip -o -q "${destination_path}/temp-codegen.srcjar" -d "${destination_path}/java_gapic_srcjar"
+  # Resource name source files.
+  proto_dir=${destination_path}/java_gapic_srcjar/proto/src/main/java
+  if [ ! -d "${proto_dir}" ]; then
+    # Some APIs don't have resource name helpers, like BigQuery v2.
+    # Create an empty file so we can finish building. Gating the resource name rule definition
+    # on file existences go against Bazel's design patterns, so we'll simply delete all empty
+    # files during the final packaging process (see java_gapic_pkg.bzl)
+    mkdir -p "${proto_dir}"
+    touch "${proto_dir}"/PlaceholderFile.java
+  fi
+  # move java_gapic_srcjar/src/main to gapic-*/src.
+  mv_src_files "gapic" "main"
+  # remove empty files in gapic-*/src/main/java
+  remove_empty_files "gapic"
+  # move java_gapic_srcjar/src/test to gapic-*/src
+  mv_src_files "gapic" "test"
+  if [ "${include_samples}" == "true" ]; then
+    # move java_gapic_srcjar/samples/snippets to samples/snippets
+    mv_src_files "samples" "main"
+  fi
 fi
 ##################### Section 3 #####################
 # generate proto-*/
 #####################################################
 "$protoc_path"/protoc "--java_out=${destination_path}/java_proto.jar" ${proto_files}
-# move java_gapic_srcjar/proto/src/main/java (generated resource name helper class)
-# to proto-*/src/main
-mv_src_files "proto" "main"
+if [[ "${proto_only}" == "false" ]]; then
+  # move java_gapic_srcjar/proto/src/main/java (generated resource name helper class)
+  # to proto-*/src/main
+  mv_src_files "proto" "main"
+fi
 # unzip java_proto.jar to proto-*/src/main/java
 unzip_src_files "proto"
 # remove empty files in proto-*/src/main/java
