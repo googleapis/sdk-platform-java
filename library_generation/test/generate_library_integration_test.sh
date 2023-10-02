@@ -84,6 +84,7 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   transport=$(get_transport_from_BUILD "${proto_build_file_path}")
   rest_numeric_enums=$(get_rest_numeric_enums_from_BUILD "${proto_build_file_path}")
   include_samples=$(get_include_samples_from_BUILD "${proto_build_file_path}")
+  more_versions_coming=$(echo "${line}" | cut -d " " -f 4)
   popd # output_folder
   echo "GAPIC options are transport=${transport}, rest_numeric_enums=${rest_numeric_enums}, include_samples=${include_samples}."
   # generate GAPIC client library
@@ -128,21 +129,21 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   echo "Compare generation result..."
   RESULT=0
   pushd "${output_folder}"
-  if [ $enable_postprocessing == "true" ]; then
+  if [ $enable_postprocessing == "true" ] && [ "${more_versions_coming}" == "false" ]; then
     echo "Checking out google-cloud-java repository..."
     sparse_clone "https://github.com/googleapis/google-cloud-java.git" "${monorepo_folder}"
-    #diff -r "google-cloud-java/${monorepo_folder}" "${destination_path}/workspace" \
-      #-x "*gradle*" \
-      #-x "README.md" \
-      #-x "CHANGELOG.md" \
-      #-x ".OwlBot.yaml" \
-      #|| RESULT=$?
     monorepo_path="${output_folder}/google-cloud-java/${monorepo_folder}"
     cp -r ${output_folder}/${destination_path}/workspace/* "${monorepo_path}"
     pushd "${monorepo_path}"
-    git diff -r || RESULT=$?
-    popd
-  else
+    git diff -r --exit-code -- ':!*pom.xml' ':!*README.md'  || RESULT=$?
+    diff_lines=$(compare_poms "${monorepo_path}")
+    find . -name '*.xml.new' -exec rm -f {} \;
+    if [ "${diff_lines}" != "0" ]; then
+      echo differences found in pom structure
+      exit 1
+    fi
+    popd # monorepo_path
+  elif [ $enable_postprocessing == "false" ]; then
     # include gapic_metadata.json and package-info.java after
     # resolving https://github.com/googleapis/sdk-platform-java/issues/1986
     echo "Checking out googleapis-gen repository..."
@@ -158,11 +159,6 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   else
     echo "FAILURE: Differences found in proto path: ${proto_path}."
     exit "${RESULT}"
-  fi
-  if [ "${RESULT}" == 0 ] ; then
-  echo "SUCCESS: Comparison finished, no difference is found."
-  else
-    echo "FAILURE: Differences found."
   fi
   popd # output_folder
 done

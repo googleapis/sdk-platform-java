@@ -361,3 +361,16 @@ detect_os_architecture() {
   esac
   echo "${os_architecture}"
 }
+
+# performs a deep structural comparison between the current pom in a git folder and the one at HEAD
+compare_poms() {
+  target_dir=$1
+  pushd "${target_dir}"
+  find . -name 'pom.xml' -exec cp {} {}.new \;
+  find . -name 'pom.xml' -exec git checkout HEAD -- {} \;
+  diff_in_poms=$(find . -name 'pom.xml' -exec xmldiff {} {}.new \; | grep -v '\[move')
+  echo "${diff_in_poms}"
+  diff_lines=$(echo "${diff_in_poms}" | wc -l)
+  popd # target_dir
+  echo "${diff_lines}"
+}
