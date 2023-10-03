@@ -36,7 +36,7 @@ import com.google.api.gax.retrying.StreamResumptionStrategy;
 import com.google.common.base.Preconditions;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CancellationException;
-import javax.annotation.concurrent.GuardedBy;
+import com.google.errorprone.annotations.concurrent.GuardedBy;
 
 /**
  * A callable that generates Server Streaming attempts. At any one time, it is responsible for at
