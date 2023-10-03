@@ -96,7 +96,9 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
       continue
     fi
     pushd "${output_folder}"
-    sparse_clone "https://github.com/googleapis/google-cloud-java.git" "${monorepo_folder} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"
+    if [ ! -d "google-cloud-java" ]; then
+      sparse_clone "https://github.com/googleapis/google-cloud-java.git" "${monorepo_folder} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"
+    fi
     popd # output_folder
     target_folder="${output_folder}/google-cloud-java/${monorepo_folder}"
     repo_metadata_json_path="${target_folder}/.repo-metadata.json"
@@ -136,12 +138,7 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
     cp -r ${output_folder}/${destination_path}/workspace/* "${monorepo_path}"
     pushd "${monorepo_path}"
     git diff -r --exit-code -- ':!*pom.xml' ':!*README.md'  || RESULT=$?
-    diff_lines=$(compare_poms "${monorepo_path}")
-    find . -name '*.xml.new' -exec rm -f {} \;
-    if [ "${diff_lines}" != "0" ]; then
-      echo differences found in pom structure
-      exit 1
-    fi
+    compare_poms "${monorepo_path}"
     popd # monorepo_path
   elif [ $enable_postprocessing == "false" ]; then
     # include gapic_metadata.json and package-info.java after

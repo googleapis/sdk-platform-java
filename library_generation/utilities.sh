@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -xeo pipefail
+utilities_script_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 
 # private functions that should not be called outside this file.
@@ -368,9 +369,8 @@ compare_poms() {
   pushd "${target_dir}"
   find . -name 'pom.xml' -exec cp {} {}.new \;
   find . -name 'pom.xml' -exec git checkout HEAD -- {} \;
-  diff_in_poms=$(find . -name 'pom.xml' -exec xmldiff {} {}.new \; | grep -v '\[move')
-  echo "${diff_in_poms}"
-  diff_lines=$(echo "${diff_in_poms}" | wc -l)
+  # compare_poms.py exits with non-zero if diffs are found
+  find . -name 'pom.xml' -exec python "${utilities_script_dir}/test/compare_poms.py" {} {}.new \;
   popd # target_dir
   echo "${diff_lines}"
 }
