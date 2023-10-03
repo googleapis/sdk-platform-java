@@ -284,14 +284,12 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
         // make sure that the activeDeliveryLoops counter stays correct.
         //
         // Note, we must enter the loop before doing the check.
-        synchronized (lock) {
-          if (inDelivery && newActiveDeliveryLoop) {
-            // EXIT delivery loop because another active delivery loop has been detected.
-            break;
-          }
-          newActiveDeliveryLoop = false;
-          inDelivery = true;
+        if (inDelivery && newActiveDeliveryLoop) {
+          // EXIT delivery loop because another active delivery loop has been detected.
+          break;
         }
+        newActiveDeliveryLoop = false;
+        inDelivery = true;
 
         if (Thread.interrupted()) {
           // The catch block below will properly cancel the call. Note Thread.interrupted() clears
