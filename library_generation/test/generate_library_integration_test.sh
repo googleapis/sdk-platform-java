@@ -16,9 +16,9 @@ set -xeo pipefail
 googleapis_gen_url="git@github.com:googleapis/googleapis-gen.git"
 script_dir=$(dirname "$(readlink -f "$0")")
 proto_path_list="${script_dir}/resources/proto_path_list.txt"
-source "${script_dir}/../utilities.sh"
 library_generation_dir="${script_dir}"/..
-output_folder="$(get_output_folder)"
+source "${script_dir}/test_utilities.sh"
+output_folder="$(pwd)/output"
 
 while [[ $# -gt 0 ]]; do
 key="$1"
@@ -69,9 +69,6 @@ gapic_generator_version=$(get_version_from_WORKSPACE "_gapic_generator_java_vers
 echo "The version of gapic-generator-java is ${gapic_generator_version}."
 protobuf_version=$(get_version_from_WORKSPACE "protobuf-" WORKSPACE "-")
 echo "The version of protobuf is ${protobuf_version}"
-grpc_version=$(get_version_from_WORKSPACE "_grpc_version" WORKSPACE "=")
-echo "The version of protoc-gen-grpc-java plugin is ${gapic_generator_version}."
-
 popd # googleapis
 popd # output
 
@@ -81,6 +78,8 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   # parse GAPIC options from proto_path/BUILD.bazel
   pushd "${output_folder}"
   proto_build_file_path="${proto_path}/BUILD.bazel"
+  proto_only=$(get_proto_only_from_BUILD "${proto_build_file_path}")
+  gapic_additional_protos=$(get_gapic_additional_protos_from_BUILD "${proto_build_file_path}")
   transport=$(get_transport_from_BUILD "${proto_build_file_path}")
   rest_numeric_enums=$(get_rest_numeric_enums_from_BUILD "${proto_build_file_path}")
   include_samples=$(get_include_samples_from_BUILD "${proto_build_file_path}")
@@ -107,7 +106,8 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
       -d "${destination_path}" \
       --gapic_generator_version "${gapic_generator_version}" \
       --protobuf_version "${protobuf_version}" \
-      --grpc_version "${grpc_version}" \
+      --proto_only "${proto_only}" \
+      --gapic_additional_protos "${gapic_additional_protos}" \
       --transport "${transport}" \
       --rest_numeric_enums "${rest_numeric_enums}" \
       --include_samples "${include_samples}" \
@@ -120,7 +120,8 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
       -d "${destination_path}" \
       --gapic_generator_version "${gapic_generator_version}" \
       --protobuf_version "${protobuf_version}" \
-      --grpc_version "${grpc_version}" \
+      --proto_only "${proto_only}" \
+      --gapic_additional_protos "${gapic_additional_protos}" \
       --transport "${transport}" \
       --rest_numeric_enums "${rest_numeric_enums}" \
       --include_samples "${include_samples}" \

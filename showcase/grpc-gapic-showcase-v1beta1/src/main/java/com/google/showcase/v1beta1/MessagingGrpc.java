@@ -17,7 +17,7 @@ public final class MessagingGrpc {
 
   private MessagingGrpc() {}
 
-  public static final String SERVICE_NAME = "google.showcase.v1beta1.Messaging";
+  public static final java.lang.String SERVICE_NAME = "google.showcase.v1beta1.Messaging";
 
   // Static method descriptors that strictly reflect the proto.
   private static volatile io.grpc.MethodDescriptor<com.google.showcase.v1beta1.CreateRoomRequest,
@@ -1385,9 +1385,9 @@ public final class MessagingGrpc {
   private static final class MessagingMethodDescriptorSupplier
       extends MessagingBaseDescriptorSupplier
       implements io.grpc.protobuf.ProtoMethodDescriptorSupplier {
-    private final String methodName;
+    private final java.lang.String methodName;
 
-    MessagingMethodDescriptorSupplier(String methodName) {
+    MessagingMethodDescriptorSupplier(java.lang.String methodName) {
       this.methodName = methodName;
     }
 
