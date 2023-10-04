@@ -16,7 +16,7 @@ remove_empty_files() {
   local api_version=$2
   find "${destination_path}/${category}-${folder_name}-${api_version}/src/main/java" -type f -size 0 | while read -r f; do rm -f "${f}"; done
   # remove the directory if the directory has no files.
-  file_num=$(find "${destination_path}/${category}-${folder_name}" -type f | wc -l | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+  file_num=$(find "${destination_path}/${category}-${folder_name}-${api_version}" -type f | wc -l | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
   if [[ "${file_num}" == 0 ]]; then
     rm -rf "${destination_path}/${category}-${folder_name}"
   fi
@@ -241,16 +241,4 @@ detect_os_architecture() {
       ;;
   esac
   echo "${os_architecture}"
-}
-
-# performs a deep structural comparison between the current pom in a git folder and the one at HEAD
-compare_poms() {
-  target_dir=$1
-  pushd "${target_dir}"
-  find . -name 'pom.xml' -exec cp {} {}.new \;
-  find . -name 'pom.xml' -exec git checkout HEAD -- {} \;
-  # compare_poms.py exits with non-zero if diffs are found
-  find . -name 'pom.xml' -exec python "${utilities_script_dir}/test/compare_poms.py" {} {}.new \;
-  popd # target_dir
-  echo "${diff_lines}"
 }
