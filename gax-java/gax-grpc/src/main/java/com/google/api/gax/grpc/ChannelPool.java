@@ -381,14 +381,14 @@ class ChannelPool extends ManagedChannel {
    * Get and retain a Channel Entry. The returned Entry will have its rpc count incremented,
    * preventing it from getting recycled.
    */
-  Entry getRetainedEntry(int affinity) {
+  RetainedEntry getRetainedEntry(int affinity) {
     // The maximum number of concurrent calls to this method for any given time span is at most 2,
     // so the loop can actually be 2 times. But going for 5 times for a safety margin for potential
     // code evolving
     for (int i = 0; i < 5; i++) {
       Entry entry = getEntry(affinity);
       if (entry.retain()) {
-        return entry;
+        return new RetainedEntry(entry);
       }
     }
     // It is unlikely to reach here unless the pool code evolves to increase the maximum possible
@@ -413,6 +413,29 @@ class ChannelPool extends ManagedChannel {
     int index = Math.abs(affinity % localEntries.size());
 
     return localEntries.get(index);
+  }
+
+  private static class RetainedEntry {
+    private final Entry entry;
+    private AtomicBoolean wasReleased;
+
+    public RetainedEntry(Entry entry) {
+      this.entry = entry;
+      wasReleased = new AtomicBoolean(false);
+    }
+
+    void release() {
+      if (!wasReleased.compareAndSet(false, true)) {
+        Exception e =  new IllegalStateException("Entry was already released");
+        LOG.log(Level.WARNING, e.getMessage(), e);
+        return;
+      }
+      entry.release();
+    }
+
+    public Channel getChannel() {
+      return entry.channel;
+    }
   }
 
   /** Bundles a gRPC {@link ManagedChannel} with some usage accounting. */
@@ -511,18 +534,18 @@ class ChannelPool extends ManagedChannel {
     public <RequestT, ResponseT> ClientCall<RequestT, ResponseT> newCall(
         MethodDescriptor<RequestT, ResponseT> methodDescriptor, CallOptions callOptions) {
 
-      Entry entry = getRetainedEntry(affinity);
+      RetainedEntry entry = getRetainedEntry(affinity);
 
-      return new ReleasingClientCall<>(entry.channel.newCall(methodDescriptor, callOptions), entry);
+      return new ReleasingClientCall<>(entry.getChannel().newCall(methodDescriptor, callOptions), entry);
     }
   }
 
   /** ClientCall wrapper that makes sure to decrement the outstanding RPC count on completion. */
   static class ReleasingClientCall<ReqT, RespT> extends SimpleForwardingClientCall<ReqT, RespT> {
     @Nullable private CancellationException cancellationException;
-    final Entry entry;
+    final RetainedEntry entry;
 
-    public ReleasingClientCall(ClientCall<ReqT, RespT> delegate, Entry entry) {
+    public ReleasingClientCall(ClientCall<ReqT, RespT> delegate, RetainedEntry entry) {
       super(delegate);
       this.entry = entry;
     }
