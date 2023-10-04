@@ -134,13 +134,15 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   pushd "${output_folder}"
   if [ $enable_postprocessing == "true" ] && [ "${more_versions_coming}" == "false" ]; then
     echo "Checking out google-cloud-java repository..."
-    sparse_clone "https://github.com/googleapis/google-cloud-java.git" "${monorepo_folder}"
     monorepo_path="${output_folder}/google-cloud-java/${monorepo_folder}"
     cp -r ${output_folder}/${destination_path}/workspace/* "${monorepo_path}"
     pushd "${monorepo_path}"
     git diff -r --exit-code -- ':!*pom.xml' ':!*README.md'  || RESULT=$?
     compare_poms "${monorepo_path}"
     popd # monorepo_path
+    # this is the last api version being processed. Delete google-cloud-java to
+    # allow a sparse clone of the next library
+    rm -rdf google-cloud-java
   elif [ $enable_postprocessing == "false" ]; then
     # include gapic_metadata.json and package-info.java after
     # resolving https://github.com/googleapis/sdk-platform-java/issues/1986

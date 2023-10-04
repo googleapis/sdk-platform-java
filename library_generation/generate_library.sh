@@ -225,7 +225,7 @@ workspace="${output_folder}/${destination_path}/workspace"
 mkdir -p "${workspace}"
 
 run_owlbot_postprocessor "${workspace}" "${owlbot_sha}" "${repo_metadata_json_path}" "${include_samples}" \
-  "${script_dir}" "${output_folder}/${destination_path}" "${api_version}"
+  "${script_dir}" "${output_folder}/${destination_path}" "${api_version}" "${transport}"
 
 other_post_processing_scripts "${script_dir}" "${workspace}" "${repo_metadata_json_path}" "${output_folder}"
 set +x

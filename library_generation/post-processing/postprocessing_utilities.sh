@@ -22,6 +22,7 @@ function run_owlbot_postprocessor {
   scripts_root=$5
   destination_path=$6
   api_version=$7
+  transport=$8
 
   if [ -z "${owlbot_sha}" ]; then
     if [ ! -d "${output_folder}"/google-cloud-java ];
@@ -54,7 +55,9 @@ function run_owlbot_postprocessor {
   mkdir -p "${owlbot_staging_folder}/${staging_suffix}"
   gapic_folder_name="${folder_name}"
   cp -r "${destination_path}/gapic-${folder_name}-${api_version}" "${owlbot_staging_folder}/${staging_suffix}/${gapic_folder_name}"
-  cp -r "${destination_path}/grpc-${folder_name}-${api_version}" "${owlbot_staging_folder}/${staging_suffix}"
+  if [ "${transport}" != "rest" ];then
+    cp -r "${destination_path}/grpc-${folder_name}-${api_version}" "${owlbot_staging_folder}/${staging_suffix}"
+  fi
   cp -r "${destination_path}/proto-${folder_name}-${api_version}" "${owlbot_staging_folder}/${staging_suffix}"
   if [ "${include_samples}" == 'true' ]; then
     cp -r "${destination_path}/samples" "${owlbot_staging_folder}/${staging_suffix}"

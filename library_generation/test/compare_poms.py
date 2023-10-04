@@ -34,15 +34,16 @@ def append_to_element_list(node, path, elements):
   if tag_name == 'dependency':
     group_id = get_text_from_element(node, 'groupId', namespace)
     artifact_id = get_text_from_element(node, 'artifactId', namespace)
-    version = get_text_from_element(node, 'version', namespace)
     artifact_str = ''
     artifact_str += group_id
     artifact_str += ':' + artifact_id
-    if version:
-      artifact_str += ':' + version
     elements.append(path + '/' + tag_name + '=' + artifact_str)
   if node.text and len(node.text.strip()) > 0:
     elements.append(path + '/' + tag_name + '=' + node.text)
+
+  if tag_name == 'version':
+    # versions may be yet to be processed, we disregard them
+    return elements
 
   for child in node:
     child_path = path + '/' + tag_name
