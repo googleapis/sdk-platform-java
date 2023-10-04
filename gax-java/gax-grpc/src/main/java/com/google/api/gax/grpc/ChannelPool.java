@@ -68,7 +68,8 @@ import org.threeten.bp.Duration;
  * <p>Package-private for internal use.
  */
 class ChannelPool extends ManagedChannel {
-  private static final Logger LOG = Logger.getLogger(ChannelPool.class.getName());
+  @VisibleForTesting
+  static final Logger LOG = Logger.getLogger(ChannelPool.class.getName());
   private static final Duration REFRESH_PERIOD = Duration.ofMinutes(50);
 
   private final ChannelPoolSettings settings;
@@ -439,9 +440,9 @@ class ChannelPool extends ManagedChannel {
   }
 
   /** Bundles a gRPC {@link ManagedChannel} with some usage accounting. */
-  private static class Entry {
+  static class Entry {
     private final ManagedChannel channel;
-    private final AtomicInteger outstandingRpcs = new AtomicInteger(0);
+    final AtomicInteger outstandingRpcs = new AtomicInteger(0);
     private final AtomicInteger maxOutstanding = new AtomicInteger();
 
     // Flag that the channel should be closed once all of the outstanding RPC complete.

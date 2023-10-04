@@ -29,9 +29,11 @@
  */
 package com.google.api.gax.grpc;
 
+import static com.google.api.gax.grpc.testing.FakeServiceGrpc.METHOD_RECOGNIZE;
 import static com.google.api.gax.grpc.testing.FakeServiceGrpc.METHOD_SERVER_STREAMING_RECOGNIZE;
 import static com.google.common.truth.Truth.assertThat;
 
+import com.google.api.core.ApiFuture;
 import com.google.api.gax.grpc.testing.FakeChannelFactory;
 import com.google.api.gax.grpc.testing.FakeMethodDescriptor;
 import com.google.api.gax.grpc.testing.FakeServiceGrpc;
@@ -40,6 +42,8 @@ import com.google.api.gax.rpc.ResponseObserver;
 import com.google.api.gax.rpc.ServerStreamingCallSettings;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.StreamController;
+import com.google.api.gax.rpc.UnaryCallSettings;
+import com.google.api.gax.rpc.UnaryCallable;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -63,6 +67,13 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.logging.Filter;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.stream.Collectors;
+
+import org.graalvm.nativeimage.LogHandler;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -662,5 +673,75 @@ public class ChannelPoolTest {
                     }));
     assertThat(e.getCause()).isInstanceOf(CancellationException.class);
     assertThat(e.getMessage()).isEqualTo("Call is already cancelled");
+  }
+
+  @Test
+  public void testDoubleRelease() throws Exception {
+    FakeLogHandler logHandler = new FakeLogHandler();
+    ChannelPool.LOG.addHandler(logHandler);
+
+    try {
+      // Create a fake channel pool thats backed by mock channels that simply record invocations
+      ClientCall mockClientCall = Mockito.mock(ClientCall.class);
+      ManagedChannel fakeChannel = Mockito.mock(ManagedChannel.class);
+      Mockito.when(fakeChannel.newCall(Mockito.any(), Mockito.any())).thenReturn(mockClientCall);
+      ChannelPoolSettings channelPoolSettings = ChannelPoolSettings.staticallySized(1);
+      ChannelFactory factory = new FakeChannelFactory(ImmutableList.of(fakeChannel));
+
+      pool = ChannelPool.create(channelPoolSettings, factory);
+
+      // Construct a fake callable to use the channel pool
+      ClientContext context =
+              ClientContext.newBuilder()
+                      .setTransportChannel(GrpcTransportChannel.create(pool))
+                      .setDefaultCallContext(GrpcCallContext.of(pool, CallOptions.DEFAULT))
+                      .build();
+
+      UnaryCallSettings<Color, Money> settings = UnaryCallSettings.<Color, Money>newUnaryCallSettingsBuilder().build();
+      UnaryCallable<Color, Money> callable =
+              GrpcCallableFactory.createUnaryCallable(
+                      GrpcCallSettings.create(METHOD_RECOGNIZE), settings, context);
+
+      // Start the RPC
+      ApiFuture<Money> rpcFuture = callable.futureCall(Color.getDefaultInstance(), context.getDefaultCallContext());
+
+      // Get the server side listener and intentionally close it twice
+      ArgumentCaptor<ClientCall.Listener<?>> clientCallListenerCaptor = ArgumentCaptor.forClass(ClientCall.Listener.class);
+      Mockito.verify(mockClientCall).start(clientCallListenerCaptor.capture(), Mockito.any());
+      clientCallListenerCaptor.getValue().onClose(Status.INTERNAL, new Metadata());
+      clientCallListenerCaptor.getValue().onClose(Status.UNKNOWN, new Metadata());
+
+      // Ensure that the channel pool properly logged the double call and kept the refCount correct
+      assertThat(logHandler.getAllMessages()).contains("Entry was already released");
+      assertThat(pool.entries.get()).hasSize(1);
+      ChannelPool.Entry entry = pool.entries.get().get(0);
+      assertThat(entry.outstandingRpcs.get()).isEqualTo(0);
+    } finally {
+      ChannelPool.LOG.removeHandler(logHandler);
+    }
+
+  }
+
+  private static class FakeLogHandler extends Handler {
+    List<LogRecord> records = new ArrayList<>();
+
+    @Override
+    public void publish(LogRecord record) {
+      records.add(record);
+    }
+
+    @Override
+    public void flush() {
+
+    }
+
+    @Override
+    public void close() throws SecurityException {
+
+    }
+
+    List<String> getAllMessages() {
+      return records.stream().map(LogRecord::getMessage).collect(Collectors.toList());
+    }
   }
 }
