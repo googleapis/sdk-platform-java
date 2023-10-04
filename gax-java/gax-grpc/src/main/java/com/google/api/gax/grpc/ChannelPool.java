@@ -68,8 +68,7 @@ import org.threeten.bp.Duration;
  * <p>Package-private for internal use.
  */
 class ChannelPool extends ManagedChannel {
-  @VisibleForTesting
-  static final Logger LOG = Logger.getLogger(ChannelPool.class.getName());
+  @VisibleForTesting static final Logger LOG = Logger.getLogger(ChannelPool.class.getName());
   private static final Duration REFRESH_PERIOD = Duration.ofMinutes(50);
 
   private final ChannelPoolSettings settings;
@@ -427,7 +426,7 @@ class ChannelPool extends ManagedChannel {
 
     void release() {
       if (!wasReleased.compareAndSet(false, true)) {
-        Exception e =  new IllegalStateException("Entry was already released");
+        Exception e = new IllegalStateException("Entry was already released");
         LOG.log(Level.WARNING, e.getMessage(), e);
         return;
       }
@@ -537,7 +536,8 @@ class ChannelPool extends ManagedChannel {
 
       RetainedEntry entry = getRetainedEntry(affinity);
 
-      return new ReleasingClientCall<>(entry.getChannel().newCall(methodDescriptor, callOptions), entry);
+      return new ReleasingClientCall<>(
+          entry.getChannel().newCall(methodDescriptor, callOptions), entry);
     }
   }
 

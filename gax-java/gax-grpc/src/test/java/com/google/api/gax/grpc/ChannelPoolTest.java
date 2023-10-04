@@ -67,13 +67,9 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Filter;
 import java.util.logging.Handler;
-import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.stream.Collectors;
-
-import org.graalvm.nativeimage.LogHandler;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -692,21 +688,24 @@ public class ChannelPoolTest {
 
       // Construct a fake callable to use the channel pool
       ClientContext context =
-              ClientContext.newBuilder()
-                      .setTransportChannel(GrpcTransportChannel.create(pool))
-                      .setDefaultCallContext(GrpcCallContext.of(pool, CallOptions.DEFAULT))
-                      .build();
+          ClientContext.newBuilder()
+              .setTransportChannel(GrpcTransportChannel.create(pool))
+              .setDefaultCallContext(GrpcCallContext.of(pool, CallOptions.DEFAULT))
+              .build();
 
-      UnaryCallSettings<Color, Money> settings = UnaryCallSettings.<Color, Money>newUnaryCallSettingsBuilder().build();
+      UnaryCallSettings<Color, Money> settings =
+          UnaryCallSettings.<Color, Money>newUnaryCallSettingsBuilder().build();
       UnaryCallable<Color, Money> callable =
-              GrpcCallableFactory.createUnaryCallable(
-                      GrpcCallSettings.create(METHOD_RECOGNIZE), settings, context);
+          GrpcCallableFactory.createUnaryCallable(
+              GrpcCallSettings.create(METHOD_RECOGNIZE), settings, context);
 
       // Start the RPC
-      ApiFuture<Money> rpcFuture = callable.futureCall(Color.getDefaultInstance(), context.getDefaultCallContext());
+      ApiFuture<Money> rpcFuture =
+          callable.futureCall(Color.getDefaultInstance(), context.getDefaultCallContext());
 
       // Get the server side listener and intentionally close it twice
-      ArgumentCaptor<ClientCall.Listener<?>> clientCallListenerCaptor = ArgumentCaptor.forClass(ClientCall.Listener.class);
+      ArgumentCaptor<ClientCall.Listener<?>> clientCallListenerCaptor =
+          ArgumentCaptor.forClass(ClientCall.Listener.class);
       Mockito.verify(mockClientCall).start(clientCallListenerCaptor.capture(), Mockito.any());
       clientCallListenerCaptor.getValue().onClose(Status.INTERNAL, new Metadata());
       clientCallListenerCaptor.getValue().onClose(Status.UNKNOWN, new Metadata());
@@ -719,7 +718,6 @@ public class ChannelPoolTest {
     } finally {
       ChannelPool.LOG.removeHandler(logHandler);
     }
-
   }
 
   private static class FakeLogHandler extends Handler {
@@ -731,14 +729,10 @@ public class ChannelPoolTest {
     }
 
     @Override
-    public void flush() {
-
-    }
+    public void flush() {}
 
     @Override
-    public void close() throws SecurityException {
-
-    }
+    public void close() throws SecurityException {}
 
     List<String> getAllMessages() {
       return records.stream().map(LogRecord::getMessage).collect(Collectors.toList());
