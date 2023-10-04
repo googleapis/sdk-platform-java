@@ -425,6 +425,7 @@ class ChannelPool extends ManagedChannel {
     private final AtomicBoolean shutdownRequested = new AtomicBoolean();
     // Flag that the channel has been closed.
     private final AtomicBoolean shutdownInitiated = new AtomicBoolean();
+    private final AtomicBoolean wasRelease = new AtomicBoolean();
 
     private Entry(ManagedChannel channel) {
       this.channel = channel;
@@ -463,6 +464,13 @@ class ChannelPool extends ManagedChannel {
      * previously requested, this method will shutdown the channel if its the last outstanding RPC.
      */
     private void release() {
+      // Ensure that the ref count never goes negative due to extra release() calls
+      if (!wasRelease.compareAndSet(false, true)) {
+        IllegalStateException ex = new IllegalStateException("Tried to release a ChannelPool.Entry multiple times");
+        LOG.log(Level.WARNING, ex.getMessage(), ex);
+        return;
+      }
+
       int newCount = outstandingRpcs.decrementAndGet();
       if (newCount < 0) {
         throw new IllegalStateException("Bug: reference count is negative!: " + newCount);
