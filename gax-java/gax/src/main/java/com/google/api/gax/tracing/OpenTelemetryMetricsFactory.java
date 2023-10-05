@@ -46,6 +46,8 @@ import io.opentelemetry.api.metrics.Meter;
 public class OpenTelemetryMetricsFactory implements ApiTracerFactory {
   protected Meter meter;
 
+  protected MetricsRecorder metricsRecorder;
+
   public OpenTelemetryMetricsFactory(
       OpenTelemetry openTelemetry, String libraryName, String libraryVersion) {
     meter =
