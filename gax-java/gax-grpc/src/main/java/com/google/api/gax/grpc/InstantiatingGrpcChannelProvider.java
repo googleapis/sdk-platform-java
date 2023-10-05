@@ -233,9 +233,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   private TransportChannel createChannel() throws IOException {
-    return GrpcTransportChannel.create(
-        ChannelPool.create(
-            channelPoolSettings, InstantiatingGrpcChannelProvider.this::createSingleChannel));
+    return new GrpcTransportChannelDelegate(channelPoolSettings, this, credentials);
   }
 
   private boolean isDirectPathEnabled() {
@@ -305,7 +303,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return null;
   }
 
-  private ManagedChannel createSingleChannel() throws IOException {
+  ManagedChannel createSingleChannel(String endpoint) throws IOException {
     GrpcHeaderInterceptor headerInterceptor =
         new GrpcHeaderInterceptor(headerProvider.getHeaders());
     GrpcMetadataHandlerInterceptor metadataHandlerInterceptor =
