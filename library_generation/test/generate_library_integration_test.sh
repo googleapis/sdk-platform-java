@@ -139,7 +139,15 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
     pushd "${monorepo_path}"
     SOURCE_DIFF_RESULT=0
     #git diff --ignore-space-at-eol -r --exit-code -- ':!*pom.xml' ':!*README.md' ':!*package-info.java' || SOURCE_DIFF_RESULT=$?
-    git diff --ignore-space-at-eol -r --exit-code -- ':!*pom.xml' ':!*README.md' || SOURCE_DIFF_RESULT=$?
+    git diff \
+      --ignore-space-at-eol \
+      -r \
+      --exit-code \
+      -- \
+      ':!*pom.xml' \
+      ':!*README.md' \
+      ':!*package-info.java' \
+      || SOURCE_DIFF_RESULT=$?
 
     POM_DIFF_RESULT=$(compare_poms "${monorepo_path}")
     popd # monorepo_path
