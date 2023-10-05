@@ -137,22 +137,23 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
     monorepo_path="${output_folder}/google-cloud-java/${monorepo_folder}"
     cp -r ${output_folder}/${destination_path}/workspace/* "${monorepo_path}"
     pushd "${monorepo_path}"
-    MONOREPO_DIFF_RESULT=0
-    git diff --ignore-space-at-eol -r --exit-code -- ':!*pom.xml' ':!*README.md'  || RESULT=$?
+    SOURCE_DIFF_RESULT=0
+    #git diff --ignore-space-at-eol -r --exit-code -- ':!*pom.xml' ':!*README.md' ':!*package-info.java' || SOURCE_DIFF_RESULT=$?
+    git diff --ignore-space-at-eol -r --exit-code -- ':!*pom.xml' ':!*README.md' || SOURCE_DIFF_RESULT=$?
 
     POM_DIFF_RESULT=$(compare_poms "${monorepo_path}")
     popd # monorepo_path
-    if [[ ${MONOREPO_DIFF_RESULT} == 0 ]] && [[ ${POM_DIFF_RESULT} == 0 ]] ; then
+    if [[ ${SOURCE_DIFF_RESULT} == 0 ]] && [[ ${POM_DIFF_RESULT} == 0 ]] ; then
       echo "SUCCESS: Comparison finished, no difference is found."
       # this is the last api version being processed. Delete google-cloud-java to
       # allow a sparse clone of the next library
       # We only perform this action here in case the script has failed to keep
       # the folder for further investigation
       rm -rdf google-cloud-java
-    elif [ ${MONOREPO_DIFF_RESULT} == 0 ]; then
+    elif [ ${SOURCE_DIFF_RESULT} != 0 ]; then
       echo "FAILURE: Differences found in proto path: ${proto_path}."
-      exit "${MONOREPO_DIFF_RESULT}"
-    elif [ ${POM_DIFF_RESULT} == 0 ]; then
+      exit "${SOURCE_DIFF_RESULT}"
+    elif [ ${POM_DIFF_RESULT} != 0 ]; then
       echo "FAILURE: Differences found in generated poms"
       exit "${POM_DIFF_RESULT}"
     fi
@@ -161,16 +162,16 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
     # resolving https://github.com/googleapis/sdk-platform-java/issues/1986
     echo "Checking out googleapis-gen repository..."
     sparse_clone "${googleapis_gen_url}" "${proto_path}/${destination_path}"
-    RESULT=0
+    SOURCE_DIFF_RESULT=0
     diff --strip-trailing-cr -r "googleapis-gen/${proto_path}/${destination_path}" "${output_folder}/${destination_path}" \
       -x "*gradle*" \
       -x "gapic_metadata.json" \
       -x "package-info.java" || RESULT=$?
-    if [ ${RESULT} == 0 ] ; then
+    if [ ${SOURCE_DIFF_RESULT} == 0 ] ; then
       echo "SUCCESS: Comparison finished, no difference is found."
     else
       echo "FAILURE: Differences found in proto path: ${proto_path}." 
-      exit "${RESULT}"
+      exit "${SOURCE_DIFF_RESULT}"
     fi
   fi
 

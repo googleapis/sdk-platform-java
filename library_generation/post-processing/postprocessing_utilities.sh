@@ -46,7 +46,7 @@ function run_owlbot_postprocessor {
   # render owlbot.py template
   owlbot_py_content=$(cat ""${scripts_root}"/post-processing/templates/owlbot.py.template")
 
-  staging_suffix="java-${api_shortname}"
+  staging_suffix="${api_version}"
 
 
   mkdir -p "${owlbot_staging_folder}/${staging_suffix}"
@@ -60,12 +60,21 @@ function run_owlbot_postprocessor {
     cp -r "${destination_path}/samples" "${owlbot_staging_folder}/${staging_suffix}"
   fi
 
+  echo "${owlbot_py_content}" > "${workspace}/owlbot.py"
+
   # copy existing pom files if google-cloud-java is present
   if [[ -n "${monorepo_folder}" ]] && [[ -d "${output_folder}/google-cloud-java/${monorepo_folder}" ]];then
-    rsync -avm --include='*/' --include='pom.xml' --exclude='*' "${output_folder}/google-cloud-java/${monorepo_folder}/" "${workspace}"
+    rsync -avm \
+      --include='*/' \
+      --include='*.xml' \
+      --include='package-info.java' \
+      --include='owlbot.py' \
+      --include='.OwlBot.yaml' \
+      --exclude='*' \
+      "${output_folder}/google-cloud-java/${monorepo_folder}/" \
+      "${workspace}"
   fi
 
-  echo "${owlbot_py_content}" > "${workspace}/owlbot.py"
 
   docker run --rm -v "${workspace}:/workspace" --user $(id -u):$(id -g) "${owlbot_image}"
 }
