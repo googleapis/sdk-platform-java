@@ -154,10 +154,10 @@ class ChannelPool extends ManagedChannel {
   public ManagedChannel shutdown() {
     if (LOG.isLoggable(Level.FINE)) {
       // Synthetic exception to generate a stacktrace in the logs
-      RuntimeException e = new RuntimeException("Initiating graceful shutdown due to explicit request");
+      RuntimeException e =
+          new RuntimeException("Initiating graceful shutdown due to explicit request");
       LOG.log(Level.FINE, e.getMessage(), e);
     }
-
 
     List<Entry> localEntries = entries.get();
     for (Entry entry : localEntries) {
@@ -200,7 +200,8 @@ class ChannelPool extends ManagedChannel {
   public ManagedChannel shutdownNow() {
     if (LOG.isLoggable(Level.FINE)) {
       // Synthetic exception to generate a stacktrace in the logs
-      RuntimeException e = new RuntimeException("Initiating immediate shutdown due to explicit request");
+      RuntimeException e =
+          new RuntimeException("Initiating immediate shutdown due to explicit request");
       LOG.log(Level.FINE, e.getMessage(), e);
     }
     List<Entry> localEntries = entries.get();
