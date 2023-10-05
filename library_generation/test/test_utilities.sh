@@ -239,12 +239,13 @@ sparse_clone() {
 # performs a deep structural comparison between the current pom in a git folder and the one at HEAD
 compare_poms() {
   target_dir=$1
-  pushd "${target_dir}"
+  pushd "${target_dir}" &> /dev/null
   find . -name 'pom.xml' -exec cp {} {}.new \;
   find . -name 'pom.xml' -exec git checkout HEAD -- {} \;
   # compare_poms.py exits with non-zero if diffs are found
   set -e
-  find . -name 'pom.xml' -print0 | xargs -i python "${utilities_script_dir}/test/compare_poms.py" {} {}.new 
-  popd # target_dir
-  echo "${diff_lines}"
+  result=0
+  find . -name 'pom.xml' -print0 | xargs -i -0 python "${utilities_script_dir}/test/compare_poms.py" {} {}.new false || result=$?
+  popd &> /dev/null # target_dir
+  echo ${result}
 }

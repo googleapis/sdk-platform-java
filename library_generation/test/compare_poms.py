@@ -21,7 +21,7 @@ Convenience method to pretty print the contents of a Counter (or dict)
 """
 def print_counter(counter):
   for key, value in counter.items():
-    print(f'{key}: {value}')
+    eprint(f'{key}: {value}')
 
 """
 Recursively traverses a node tree and appends element text to a given
@@ -51,7 +51,11 @@ def append_to_element_list(node, path, elements):
 
   return elements
 
-def compare_xml(file1, file2):
+"""
+compares two XMLs for content differences
+the argument print_whole_trees determines if both trees should be printed
+"""
+def compare_xml(file1, file2, print_whole_trees):
   try:
     tree1 = ET.parse(file1)
     tree2 = ET.parse(file2)
@@ -71,33 +75,38 @@ def compare_xml(file1, file2):
   intersection = tree1_counter & tree2_counter
   only_in_tree1 = tree1_counter - intersection
   only_in_tree2 = tree2_counter - intersection
-  print('tree1')
-  print_counter(tree2_counter)
-  print('tree2')
-  print_counter(tree1_counter)
+  if print_whole_trees == 'true':
+    eprint('tree1')
+    print_counter(tree2_counter)
+    eprint('tree2')
+    print_counter(tree1_counter)
   if len(only_in_tree1) > 0 or len(only_in_tree2) > 0:
-    print('only in XML 1:')
+    eprint('only in ' + file1)
     print_counter(only_in_tree1)
-    print('only in XML 2:')
+    eprint('only in ' + file2)
     print_counter(only_in_tree2)
     return True
   else:
     return False
 
+def eprint(*args, **kwargs):
+  print(*args, file=sys.stderr, **kwargs)
+
 if __name__ == "__main__":
-  if len(sys.argv) != 3:
-    print("Usage: python compare_xml.py <file1> <file2>")
+  if len(sys.argv) != 4:
+    eprint("Usage: python compare_xml.py <file1> <file2> <print_whole_trees(true|false)>")
     sys.exit(1)
 
   file1 = sys.argv[1]
   file2 = sys.argv[2]
-  has_diff = compare_xml(file1, file2)
+  print_whole_trees = sys.argv[3]
+  has_diff = compare_xml(file1, file2, print_whole_trees)
 
   if has_diff:
-    print(f'Differences found')
+    eprint(f'The poms are different')
     sys.exit(1)
   else:
-    print('The XML files are the same.')
+    eprint('The XML files are the same.')
     sys.exit(0)
 
 
