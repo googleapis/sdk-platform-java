@@ -60,6 +60,10 @@ case $key in
     owlbot_sha="$2"
     shift
     ;;
+  --monorepo_folder)
+    monorepo_folder="$2"
+    shift
+    ;;
   --os_architecture)
     os_architecture="$2"
     shift
@@ -225,7 +229,7 @@ workspace="${output_folder}/${destination_path}/workspace"
 mkdir -p "${workspace}"
 
 run_owlbot_postprocessor "${workspace}" "${owlbot_sha}" "${repo_metadata_json_path}" "${include_samples}" \
-  "${script_dir}" "${output_folder}/${destination_path}" "${api_version}" "${transport}"
+  "${script_dir}" "${output_folder}/${destination_path}" "${api_version}" "${transport}" "${monorepo_folder}"
 
 other_post_processing_scripts "${script_dir}" "${workspace}" "${repo_metadata_json_path}" "${output_folder}"
 set +x

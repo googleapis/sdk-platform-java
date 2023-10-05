@@ -23,6 +23,7 @@ function run_owlbot_postprocessor {
   destination_path=$6
   api_version=$7
   transport=$8
+  monorepo_folder=$9
 
   if [ -z "${owlbot_sha}" ]; then
     if [ ! -d "${output_folder}"/google-cloud-java ];
@@ -47,10 +48,6 @@ function run_owlbot_postprocessor {
 
   staging_suffix="java-${api_shortname}"
 
-  # copy existing pom files if google-cloud-java is present
-  pushd "${scripts_root}"
-  #rsync -a --prune-empty-dirs --include '*/' --include '*' --exclude '*' google-cloud-java/java-biglake/ google-cloud-biglake-v1/workspace/
-  popd
 
   mkdir -p "${owlbot_staging_folder}/${staging_suffix}"
   gapic_folder_name="${folder_name}"
@@ -61,6 +58,11 @@ function run_owlbot_postprocessor {
   cp -r "${destination_path}/proto-${folder_name}-${api_version}" "${owlbot_staging_folder}/${staging_suffix}"
   if [ "${include_samples}" == 'true' ]; then
     cp -r "${destination_path}/samples" "${owlbot_staging_folder}/${staging_suffix}"
+  fi
+
+  # copy existing pom files if google-cloud-java is present
+  if [[ -n "${monorepo_folder}" ]] && [[ -d "${output_folder}/google-cloud-java/${monorepo_folder}" ]];then
+    rsync -avm --include='*/' --include='pom.xml' --exclude='*' "${output_folder}/google-cloud-java/${monorepo_folder}/" "${workspace}"
   fi
 
   echo "${owlbot_py_content}" > "${workspace}/owlbot.py"

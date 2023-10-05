@@ -113,6 +113,7 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
       --include_samples "${include_samples}" \
       --repo_metadata_json_path "${repo_metadata_json_path}" \
       --owlbot_sha "${owlbot_sha}" \
+      --monorepo_folder "${monorepo_folder}" \
       --enable_postprocessing "true"
   else
     "${library_generation_dir}"/generate_library.sh \
