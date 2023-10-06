@@ -415,6 +415,10 @@ class ChannelPool extends ManagedChannel {
     return localEntries.get(index);
   }
 
+  /**
+   * This represents the reserved refcount of a single RPC using a channel. It the responsibility of
+   * that RPC to call release exactly once when it completes to release the Channel.
+   */
   private static class RetainedEntry {
     private final Entry entry;
     private final AtomicBoolean wasReleased;
