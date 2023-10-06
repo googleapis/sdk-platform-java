@@ -42,6 +42,9 @@ import io.grpc.ManagedChannel;
 import io.grpc.Metadata;
 import io.grpc.MethodDescriptor;
 import io.grpc.Status;
+import org.threeten.bp.Duration;
+
+import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +57,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.Nullable;
-import org.threeten.bp.Duration;
 
 /**
  * A {@link ManagedChannel} that will send requests round-robin via a set of channels.
@@ -152,12 +153,7 @@ class ChannelPool extends ManagedChannel {
   /** {@inheritDoc} */
   @Override
   public ManagedChannel shutdown() {
-    if (LOG.isLoggable(Level.FINE)) {
-      // Synthetic exception to generate a stacktrace in the logs
-      RuntimeException e =
-          new RuntimeException("Initiating graceful shutdown due to explicit request");
-      LOG.log(Level.FINE, e.getMessage(), e);
-    }
+    LOG.fine("Initiating graceful shutdown due to explicit request");
 
     List<Entry> localEntries = entries.get();
     for (Entry entry : localEntries) {
@@ -198,12 +194,8 @@ class ChannelPool extends ManagedChannel {
   /** {@inheritDoc} */
   @Override
   public ManagedChannel shutdownNow() {
-    if (LOG.isLoggable(Level.FINE)) {
-      // Synthetic exception to generate a stacktrace in the logs
-      RuntimeException e =
-          new RuntimeException("Initiating immediate shutdown due to explicit request");
-      LOG.log(Level.FINE, e.getMessage(), e);
-    }
+    LOG.fine("Initiating immediate shutdown due to explicit request");
+
     List<Entry> localEntries = entries.get();
     for (Entry entry : localEntries) {
       entry.channel.shutdownNow();
