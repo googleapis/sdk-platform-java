@@ -417,7 +417,7 @@ class ChannelPool extends ManagedChannel {
 
   private static class RetainedEntry {
     private final Entry entry;
-    private AtomicBoolean wasReleased;
+    private final AtomicBoolean wasReleased;
 
     public RetainedEntry(Entry entry) {
       this.entry = entry;
