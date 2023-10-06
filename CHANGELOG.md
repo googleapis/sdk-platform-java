@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.27.0](https://github.com/googleapis/sdk-platform-java/compare/v2.26.1...v2.27.0) (2023-10-06)
+
+
+### Features
+
+* [common-protos] public google.api.FieldInfo type and extension ([#2037](https://github.com/googleapis/sdk-platform-java/issues/2037)) ([f2b8280](https://github.com/googleapis/sdk-platform-java/commit/f2b828005e6b21a2af0e646bb8cc6d0f8c39d4e4))
+* Generate proto-only library ([#2046](https://github.com/googleapis/sdk-platform-java/issues/2046)) ([f9ac8fb](https://github.com/googleapis/sdk-platform-java/commit/f9ac8fb0020372be4b62d5dffe7e1b73a1ac493f))
+* More logging for ChannelPool shutdown ([#2070](https://github.com/googleapis/sdk-platform-java/issues/2070)) ([b8365c2](https://github.com/googleapis/sdk-platform-java/commit/b8365c2a0c56db1ee286c582cd9ebe31a3d614e8))
+
+
+### Dependencies
+
+* Bumping java-shared-config to 1.5.8 ([#2072](https://github.com/googleapis/sdk-platform-java/issues/2072)) ([fa5e937](https://github.com/googleapis/sdk-platform-java/commit/fa5e937e98ad19b997f8c0e11cd03e61f707f3fe))
+
 ## [2.26.1](https://github.com/googleapis/sdk-platform-java/compare/v2.26.0...v2.26.1) (2023-09-25)
 
 
