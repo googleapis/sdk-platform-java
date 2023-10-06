@@ -152,6 +152,8 @@ class ChannelPool extends ManagedChannel {
   /** {@inheritDoc} */
   @Override
   public ManagedChannel shutdown() {
+    LOG.fine("Initiating graceful shutdown due to explicit request");
+
     List<Entry> localEntries = entries.get();
     for (Entry entry : localEntries) {
       entry.channel.shutdown();
@@ -191,6 +193,8 @@ class ChannelPool extends ManagedChannel {
   /** {@inheritDoc} */
   @Override
   public ManagedChannel shutdownNow() {
+    LOG.fine("Initiating immediate shutdown due to explicit request");
+
     List<Entry> localEntries = entries.get();
     for (Entry entry : localEntries) {
       entry.channel.shutdownNow();
@@ -356,6 +360,7 @@ class ChannelPool extends ManagedChannel {
     // - then thread2 will shut down channel that thread1 will put back into circulation (after it
     //   replaces the list)
     synchronized (entryWriteLock) {
+      LOG.fine("Refreshing all channels");
       ArrayList<Entry> newEntries = new ArrayList<>(entries.get());
 
       for (int i = 0; i < newEntries.size(); i++) {
