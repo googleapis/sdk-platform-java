@@ -60,18 +60,18 @@ public class GrpcTransportChannelDelegate extends GrpcTransportChannel {
         if (grpcTransportChannel == null) {
           //            String universeDomain = credentials.getUniverseDomain(); Auth should throw
           // exception if it does not exist
-          String universeDomain = "googleapis.com";
-          String endpoint =
-              instantiatingGrpcChannelProvider.getEndpoint().split(".")[0]
-                  + "."
-                  + universeDomain
-                  + ":443";
+//          String universeDomain = "googleapis.com";
+//          String endpoint =
+//              instantiatingGrpcChannelProvider.getEndpoint().split(".")[0]
+//                  + "."
+//                  + universeDomain
+//                  + ":443";
           try {
             grpcTransportChannel =
                 GrpcTransportChannel.create(
                     ChannelPool.create(
                         channelPoolSettings,
-                        () -> instantiatingGrpcChannelProvider.createSingleChannel(endpoint)));
+                        () -> instantiatingGrpcChannelProvider.createSingleChannel(instantiatingGrpcChannelProvider.getEndpoint())));
           } catch (IOException e) {
             throw new RuntimeException(e);
           }
