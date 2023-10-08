@@ -7,7 +7,7 @@
   <version>2.25.0</version><!-- {x-version-update:google-cloud-core:current} -->
   <name>Google Cloud Core Parent</name>
   <description>
-    Java idiomatic client for Google Cloud Platform services
+    Java idiomatic client for Google Cloud Platform services.
   </description>
 
   <parent>
