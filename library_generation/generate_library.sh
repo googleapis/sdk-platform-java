@@ -115,6 +115,10 @@ case "${proto_path}" in
   "google/cloud/oslogin"*)
     proto_files="${proto_files} google/cloud/oslogin/common/common.proto"
     ;;
+  "google/devtools/containeranalysis/v1beta1"*)
+    removed_proto="google/devtools/containeranalysis/v1beta1/cvss/cvss.proto"
+    proto_files="${proto_files//${removed_proto}/}"
+    ;;
 esac
 # download gapic-generator-java, protobuf and grpc plugin.
 download_tools "${gapic_generator_version}" "${protobuf_version}" "${grpc_version}" "${os_architecture}"
