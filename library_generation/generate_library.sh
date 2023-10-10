@@ -177,6 +177,9 @@ unzip_src_files "proto"
 remove_empty_files "proto"
 # copy proto files to proto-*/src/main/proto
 for proto_src in ${proto_files}; do
+  if [[ "${proto_src}" == "google/cloud/common/operation_metadata.proto" ]]; then
+    continue
+  fi
   mkdir -p "${destination_path}/proto-${folder_name}/src/main/proto"
   rsync -R "${proto_src}" "${destination_path}/proto-${folder_name}/src/main/proto"
 done
