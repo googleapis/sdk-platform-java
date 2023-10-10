@@ -108,6 +108,9 @@ mkdir -p "${output_folder}/${destination_path}"
 folder_name=$(extract_folder_name "${destination_path}")
 pushd "${output_folder}"
 proto_files=$(find "${proto_path}" -type f  -name "*.proto" | sort)
+if [[ "${proto_path}" == "google/cloud/filestore"* ]]; then
+  proto_files="${proto_files} google/cloud/common/operation_metadata.proto"
+fi
 # download gapic-generator-java, protobuf and grpc plugin.
 download_tools "${gapic_generator_version}" "${protobuf_version}" "${grpc_version}" "${os_architecture}"
 ##################### Section 1 #####################
