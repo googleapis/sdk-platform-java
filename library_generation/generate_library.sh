@@ -109,15 +109,15 @@ folder_name=$(extract_folder_name "${destination_path}")
 pushd "${output_folder}"
 proto_files=$(find "${proto_path}" -type f  -name "*.proto" | sort)
 case "${proto_path}" in
+  "google/cloud/aiplatform/v1beta1"*)
+    removed_proto="google/cloud/aiplatform/v1beta1/schema/io_format.proto"
+    proto_files="${proto_files//${removed_proto}/}"
+    ;;
   "google/cloud/filestore"*)
     proto_files="${proto_files} google/cloud/common/operation_metadata.proto"
     ;;
   "google/cloud/oslogin"*)
     proto_files="${proto_files} google/cloud/oslogin/common/common.proto"
-    ;;
-  "google/devtools/containeranalysis/v1beta1"*)
-    removed_proto="google/devtools/containeranalysis/v1beta1/cvss/cvss.proto"
-    proto_files="${proto_files//${removed_proto}/}"
     ;;
 esac
 # download gapic-generator-java, protobuf and grpc plugin.
@@ -174,6 +174,19 @@ fi
 ##################### Section 3 #####################
 # generate proto-*/
 #####################################################
+case "${proto_path}" in
+  "google/cloud/aiplatform/v1beta1"*)
+    prefix="google/cloud/aiplatform/v1beta1/schema"
+    protos="${prefix}/annotation_payload.proto ${prefix}/annotation_spec_color.proto ${prefix}/data_item_payload.proto ${prefix}/dataset_metadata.proto ${prefix}/geometry.proto"
+    for removed_proto in ${protos}; do
+      proto_files="${proto_files//${removed_proto}/}"
+    done
+    ;;
+  "google/devtools/containeranalysis/v1beta1"*)
+    removed_proto="google/devtools/containeranalysis/v1beta1/cvss/cvss.proto"
+    proto_files="${proto_files//${removed_proto}/}"
+    ;;
+esac
 "$protoc_path"/protoc "--java_out=${destination_path}/java_proto.jar" ${proto_files}
 if [[ "${proto_only}" == "false" ]]; then
   # move java_gapic_srcjar/proto/src/main/java (generated resource name helper class)
@@ -185,6 +198,18 @@ unzip_src_files "proto"
 # remove empty files in proto-*/src/main/java
 remove_empty_files "proto"
 # copy proto files to proto-*/src/main/proto
+case "${proto_path}" in
+  "google/cloud/aiplatform/v1beta1"*)
+    prefix="google/cloud/aiplatform/v1beta1/schema"
+    protos="${prefix}/annotation_payload.proto ${prefix}/annotation_spec_color.proto ${prefix}/data_item_payload.proto ${prefix}/dataset_metadata.proto ${prefix}/geometry.proto"
+    for added_proto in ${protos}; do
+      proto_files="${proto_files} ${added_proto}"
+    done
+    ;;
+  "google/devtools/containeranalysis/v1beta1"*)
+    proto_files="${proto_files} google/devtools/containeranalysis/v1beta1/cvss/cvss.proto"
+    ;;
+esac
 for proto_src in ${proto_files}; do
   if [[ "${proto_src}" == "google/cloud/common/operation_metadata.proto" ]]; then
     continue
