@@ -111,13 +111,18 @@ proto_files=$(find "${proto_path}" -type f  -name "*.proto" | sort)
 # include or exclude certain protos in grpc plugin and gapic generator java.
 case "${proto_path}" in
   "google/cloud/aiplatform/v1beta1"*)
+    # this proto is excluded from //google/cloud/aiplatform/v1beta1/schema:schema_proto
     removed_proto="google/cloud/aiplatform/v1beta1/schema/io_format.proto"
     proto_files="${proto_files//${removed_proto}/}"
     ;;
   "google/cloud/filestore"*)
+    # this proto is included in //google/cloud/filestore/v1:google-cloud-filestore-v1-java
+    # and //google/cloud/filestore/v1beta1:google-cloud-filestore-v1-java
     proto_files="${proto_files} google/cloud/common/operation_metadata.proto"
     ;;
   "google/cloud/oslogin"*)
+    # this proto is included in //google/cloud/oslogin/v1:google-cloud-oslogin-v1-java
+    # and //google/cloud/oslogin/v1beta1:google-cloud-oslogin-v1-java
     proto_files="${proto_files} google/cloud/oslogin/common/common.proto"
     ;;
 esac
@@ -178,6 +183,7 @@ fi
 # exclude certain protos to java compiler.
 case "${proto_path}" in
   "google/cloud/aiplatform/v1beta1"*)
+    # these protos are excluded from //google/cloud/aiplatform/v1beta1:google-cloud-aiplatform-v1beta1-java
     prefix="google/cloud/aiplatform/v1beta1/schema"
     protos="${prefix}/annotation_payload.proto ${prefix}/annotation_spec_color.proto ${prefix}/data_item_payload.proto ${prefix}/dataset_metadata.proto ${prefix}/geometry.proto"
     for removed_proto in ${protos}; do
@@ -185,6 +191,7 @@ case "${proto_path}" in
     done
     ;;
   "google/devtools/containeranalysis/v1beta1"*)
+    # this proto is excluded from //google/devtools/containeranalysis/v1beta1:google-cloud-devtools-containeranalysis-v1beta1-java
     removed_proto="google/devtools/containeranalysis/v1beta1/cvss/cvss.proto"
     proto_files="${proto_files//${removed_proto}/}"
     ;;
