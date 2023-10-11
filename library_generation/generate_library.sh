@@ -109,7 +109,7 @@ folder_name=$(extract_folder_name "${destination_path}")
 pushd "${output_folder}"
 find_depth=""
 case "${proto_path}" in
-  "google/api" | "google/cloud")
+  "google/api" | "google/cloud" | "google/rpc")
     find_depth="-maxdepth 1"
     ;;
 esac
@@ -135,6 +135,11 @@ case "${proto_path}" in
     # this proto is included in //google/cloud/oslogin/v1:google-cloud-oslogin-v1-java
     # and //google/cloud/oslogin/v1beta1:google-cloud-oslogin-v1-java
     proto_files="${proto_files} google/cloud/oslogin/common/common.proto"
+    ;;
+  "google/rpc")
+    # this proto is excluded from //google/rpc:google-rpc-java
+    removed_proto="google/rpc/http.proto"
+    proto_files="${proto_files//${removed_proto}/}"
     ;;
 esac
 # download gapic-generator-java, protobuf and grpc plugin.
