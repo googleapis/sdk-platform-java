@@ -101,6 +101,7 @@ function run_owlbot_postprocessor {
   fi
 
 
+  # run the postprocessor once all api versions have been pre-processed
   if [[ "${more_versions_coming}" == "false" ]]; then
     docker run --rm -v "${workspace}:/workspace" --user $(id -u):$(id -g) "${owlbot_image}"
   fi
@@ -130,9 +131,6 @@ function new_library_scripts {
   fi
 
   # postprocessor cleanup
-  bash "${scripts_root}/post-processing/update_owlbot_postprocessor_config.sh" "${workspace}"
-  bash "${scripts_root}/post-processing/delete_non_generated_samples.sh" "${workspace}"
-  bash "${scripts_root}/post-processing/consolidate_config.sh" "${workspace}"
 
   pushd "${output_folder}"
   if [ -d google-cloud-java ]; then
