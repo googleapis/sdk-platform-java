@@ -1,20 +1,21 @@
 # This file is used in integration test against `generate_library.sh`.
 # Format:
-# proto_path destination_path monorepo_path more_versions_coming
-google/bigtable/v2 google-cloud-bigtable-v2-java null null
-google/cloud/apigeeconnect/v1 google-cloud-apigeeconnect-v1-java java-apigee-connect false
-# google/cloud/asset/v1p5beta1 google-cloud-asset java-asset true
-# google/cloud/asset/v1p2beta1 google-cloud-asset java-asset true
-# google/cloud/asset/v1p1beta1 google-cloud-asset java-asset true
-# google/cloud/asset/v1p7beta1 google-cloud-asset java-asset true
-# google/cloud/asset/v1 google-cloud-asset java-asset false
-google/cloud/compute/v1 google-cloud-compute-v1-java java-compute false
-google/cloud/kms/v1 google-cloud-kms-v1-java java-kms false
-google/cloud/redis/v1 google-cloud-redis-v1-java java-redis false
-google/example/library/v1 google-cloud-example-library-v1-java null null
-google/devtools/containeranalysis/v1 google-cloud-devtools-containeranalysis-v1-java java-containeranalysis false
-# google/iam/v1 google-iam-v1-java java-iam null
-google/iam/credentials/v1 google-cloud-iam-credentials-v1-java java-iamcredentials false
-google/logging/v2 google-cloud-logging-v2-java null null
-google/pubsub/v1 google-cloud-pubsub-v1-java null null
-google/storage/v2 google-cloud-storage-v2-java null null
+# proto_path destination_path repository_path more_versions_coming is_handwritten
+# google/bigtable/v2,google/bigtable/admin/v2 google-cloud-bigtable-v2-java java-bigtable false true
+google/cloud/apigeeconnect/v1 google-cloud-apigee-connect java-apigee-connect false false
+google/cloud/asset/v1p5beta1 google-cloud-asset java-asset true false
+google/cloud/asset/v1p2beta1 google-cloud-asset java-asset true false
+google/cloud/asset/v1p1beta1 google-cloud-asset java-asset true false
+google/cloud/asset/v1p7beta1 google-cloud-asset java-asset true false
+google/cloud/asset/v1 google-cloud-asset java-asset false false
+google/cloud/compute/v1 google-cloud-compute java-compute false false
+google/cloud/kms/v1 google-cloud-kms java-kms false false
+google/cloud/redis/v1 google-cloud-redis java-redis true false
+google/cloud/redis/v1beta1 google-cloud-redis java-redis false false
+# google/example/library/v1 google-cloud-example-library-v1-java null null false
+google/devtools/containeranalysis/v1 google-cloud-containeranalysis java-containeranalysis false false
+# google/iam/v1 google-iam-v1-java java-iam false false
+google/iam/credentials/v1 google-cloud-iamcredentials-v1-java java-iamcredentials false false
+google/logging/v2 google-cloud-logging-v2-java java-logging false true
+google/pubsub/v1 google-cloud-pubsub-v1-java java-pubsub false true
+google/storage/v2 google-cloud-storage-v2-java java-storage false true

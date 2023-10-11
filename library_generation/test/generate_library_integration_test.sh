@@ -73,11 +73,13 @@ popd # googleapis
 popd # output
 
 grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
-  proto_path=$(echo "$line" | cut -d " " -f 1)
+  proto_path=$(echo "$line" | cut -d " " -f 1 | sed 's/,/ /g')
+  # the first one is the main one
+  first_proto_path=$(echo "${proto_path}" | cut -d " " -f1)
   destination_path=$(echo "$line" | cut -d " " -f 2)
   # parse GAPIC options from proto_path/BUILD.bazel
   pushd "${output_folder}"
-  proto_build_file_path="${proto_path}/BUILD.bazel"
+  proto_build_file_path="${first_proto_path}/BUILD.bazel"
   proto_only=$(get_proto_only_from_BUILD "${proto_build_file_path}")
   gapic_additional_protos=$(get_gapic_additional_protos_from_BUILD "${proto_build_file_path}")
   transport=$(get_transport_from_BUILD "${proto_build_file_path}")
@@ -87,9 +89,14 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   popd # output_folder
   echo "GAPIC options are transport=${transport}, rest_numeric_enums=${rest_numeric_enums}, include_samples=${include_samples}."
   # generate GAPIC client library
-  echo "Generating library from ${proto_path}, to ${destination_path}..."
+  echo "Generating library from ${first_proto_path}, to ${destination_path}..."
   if [ $enable_postprocessing == "true" ]; then
     repository_path=$(echo "$line" | cut -d " " -f 3)
+    if [[ "${repository_path}" == "null" ]]; then
+      # we need a repository to compare the generated results with. Skip this
+      # library
+      continue
+    fi
     is_handwritten=$(echo "$line" | cut -d " " -f 5)
     if [ "${is_handwritten}" == "true" ]; then
       echo 'this is a handwritten library'
@@ -176,7 +183,7 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
         rm -rdf google-cloud-java
       fi
     elif [ ${SOURCE_DIFF_RESULT} != 0 ]; then
-      echo "FAILURE: Differences found in proto path: ${proto_path}."
+      echo "FAILURE: Differences found in proto path: ${first_proto_path}."
       exit "${SOURCE_DIFF_RESULT}"
     elif [ ${POM_DIFF_RESULT} != 0 ]; then
       echo "FAILURE: Differences found in generated poms"
@@ -186,9 +193,9 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
     # include gapic_metadata.json and package-info.java after
     # resolving https://github.com/googleapis/sdk-platform-java/issues/1986
     echo "Checking out googleapis-gen repository..."
-    sparse_clone "${googleapis_gen_url}" "${proto_path}/${destination_path}"
+    sparse_clone "${googleapis_gen_url}" "${first_proto_path}/${destination_path}"
     SOURCE_DIFF_RESULT=0
-    diff --strip-trailing-cr -r "googleapis-gen/${proto_path}/${destination_path}" "${output_folder}/${destination_path}" \
+    diff --strip-trailing-cr -r "googleapis-gen/${first_proto_path}/${destination_path}" "${output_folder}/${destination_path}" \
       -x "*gradle*" \
       -x "gapic_metadata.json" \
       -x "package-info.java" || RESULT=$?

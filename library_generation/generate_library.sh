@@ -128,7 +128,7 @@ mkdir -p "${output_folder}/${destination_path}"
 # get a fixed order.
 folder_name=$(extract_folder_name "${destination_path}")
 pushd "${output_folder}"
-proto_files=$(find "${proto_path}" -type f  -name "*.proto" | LC_COLLATE=C sort)
+proto_files=$(find ${proto_path} -type f  -name "*.proto" | LC_COLLATE=C sort)
 # download gapic-generator-java, protobuf and grpc plugin.
 download_tools "${gapic_generator_version}" "${protobuf_version}" "${grpc_version}" "${os_architecture}"
 ##################### Section 1 #####################

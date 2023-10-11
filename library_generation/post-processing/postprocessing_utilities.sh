@@ -81,6 +81,15 @@ function run_owlbot_postprocessor {
 
 
   docker run --rm -v "${workspace}:/workspace" --user $(id -u):$(id -g) "${owlbot_image}"
+
+  if [ -d "${output_folder}/google-cloud-java" ];then
+    # get existing versions.txt from downloaded monorepo
+    cp "${output_folder}/google-cloud-java/versions.txt" "${workspace}"
+    pushd "${workspace}"
+    bash "${scripts_root}/post-processing/apply_current_versions.sh"
+    rm versions.txt
+    popd # workspace
+  fi
 }
 
 
@@ -103,14 +112,6 @@ function new_library_scripts {
   bash "${scripts_root}/post-processing/consolidate_config.sh" "${workspace}"
 
   pushd "${output_folder}"
-  if [ -d "${repository_path}" ]; then
-    # get existing versions.txt from downloaded monorepo
-    cp "${output_folder}/"${repository_path}"/versions.txt" "${workspace}"
-    pushd "${workspace}"
-    bash "${scripts_root}/post-processing/apply_current_versions.sh"
-    rm versions.txt
-    popd
-  fi
   if [ -d google-cloud-java ]; then
     pushd google-cloud-java
     jar_parent_pom="$(pwd)/google-cloud-jar-parent/pom.xml"
