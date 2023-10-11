@@ -108,6 +108,7 @@ mkdir -p "${output_folder}/${destination_path}"
 folder_name=$(extract_folder_name "${destination_path}")
 pushd "${output_folder}"
 proto_files=$(find "${proto_path}" -type f  -name "*.proto" | sort)
+# include or exclude certain protos in grpc plugin and gapic generator java.
 case "${proto_path}" in
   "google/cloud/aiplatform/v1beta1"*)
     removed_proto="google/cloud/aiplatform/v1beta1/schema/io_format.proto"
@@ -174,6 +175,7 @@ fi
 ##################### Section 3 #####################
 # generate proto-*/
 #####################################################
+# exclude certain protos to java compiler.
 case "${proto_path}" in
   "google/cloud/aiplatform/v1beta1"*)
     prefix="google/cloud/aiplatform/v1beta1/schema"
@@ -197,7 +199,7 @@ fi
 unzip_src_files "proto"
 # remove empty files in proto-*/src/main/java
 remove_empty_files "proto"
-# copy proto files to proto-*/src/main/proto
+# include certain protos in generated library.
 case "${proto_path}" in
   "google/cloud/aiplatform/v1beta1"*)
     prefix="google/cloud/aiplatform/v1beta1/schema"
@@ -210,6 +212,7 @@ case "${proto_path}" in
     proto_files="${proto_files} google/devtools/containeranalysis/v1beta1/cvss/cvss.proto"
     ;;
 esac
+# copy proto files to proto-*/src/main/proto
 for proto_src in ${proto_files}; do
   if [[ "${proto_src}" == "google/cloud/common/operation_metadata.proto" ]]; then
     continue
