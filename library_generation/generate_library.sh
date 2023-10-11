@@ -107,7 +107,13 @@ mkdir -p "${output_folder}/${destination_path}"
 # get a fixed order.
 folder_name=$(extract_folder_name "${destination_path}")
 pushd "${output_folder}"
-proto_files=$(find "${proto_path}" -type f  -name "*.proto" | sort)
+depth=""
+case "${proto_path}" in
+  "google/api")
+    depth="-maxdepth 1"
+    ;;
+esac
+proto_files=$(find "${proto_path}" ${depth} -type f  -name "*.proto" | sort)
 # include or exclude certain protos in grpc plugin and gapic generator java.
 case "${proto_path}" in
   "google/cloud/aiplatform/v1beta1"*)
