@@ -109,7 +109,7 @@ folder_name=$(extract_folder_name "${destination_path}")
 pushd "${output_folder}"
 find_depth=""
 case "${proto_path}" in
-  "google/api" | "google/cloud" | "google/rpc")
+  "google/api" | "google/cloud" | "google/iam/v1" | "google/rpc")
     find_depth="-maxdepth 1"
     ;;
 esac
