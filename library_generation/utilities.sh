@@ -81,7 +81,7 @@ get_gapic_opts() {
   if [ ! -z $grpc_service_config ]; then
     grpc_service_config_opt="grpc-service-config=$grpc_service_config,"
   fi
-  api_service_config=$(find "${proto_path}" -maxdepth 1 -type f \( -name "*.yaml" ! -name "*gapic.yaml" \))
+  api_service_config=$(find "${proto_path}" -maxdepth 1 -type f \( -name "*.yaml" ! -name "*gapic.yaml" \) | LC_COLLATE=C sort | head -n1)
   if [ "${rest_numeric_enums}" == "true" ]; then
     rest_numeric_enums="rest-numeric-enums,"
   else
