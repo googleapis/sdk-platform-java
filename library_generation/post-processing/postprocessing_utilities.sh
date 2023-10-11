@@ -23,16 +23,18 @@ function run_owlbot_postprocessor {
   destination_path=$6
   api_version=$7
   transport=$8
-  monorepo_folder=$9
+  repository_path=$9
+
+  repository_root=$(echo "${repository_path}" | cut -d/ -f1)
 
   if [ -z "${owlbot_sha}" ]; then
-    if [ ! -d "${output_folder}"/google-cloud-java ];
+    if [ ! -d "${output_folder}/${repository_root}" ];
     then
-      echo 'no owlbot_sha provided and no monorepo to infer it from. This is necessary for post-processing' >&2
+      echo 'no owlbot_sha provided and no repository to infer it from. This is necessary for post-processing' >&2
       exit 1
     fi
     echo "no owlbot_sha provided. Will compute from monorepo's head"
-    owlbot_sha=$(grep 'sha256' "${output_folder}/google-cloud-java/.github/.OwlBot.lock.yaml" | cut -d: -f3)
+    owlbot_sha=$(grep 'sha256' "${output_folder}/${repository_root}/.github/.OwlBot.lock.yaml" | cut -d: -f3)
   fi
   cp "${repo_metadata_json_path}" "${workspace}"/.repo-metadata.json
 
@@ -63,15 +65,16 @@ function run_owlbot_postprocessor {
   echo "${owlbot_py_content}" > "${workspace}/owlbot.py"
 
   # copy existing pom files if google-cloud-java is present
-  if [[ -n "${monorepo_folder}" ]] && [[ -d "${output_folder}/google-cloud-java/${monorepo_folder}" ]];then
+  if [[ -n "${output_folder}/${repository_path}" ]]; then
     rsync -avm \
       --include='*/' \
       --include='*.xml' \
       --include='package-info.java' \
       --include='owlbot.py' \
+      --include='versions.txt' \
       --include='.OwlBot.yaml' \
       --exclude='*' \
-      "${output_folder}/google-cloud-java/${monorepo_folder}/" \
+      "${output_folder}/${repository_path}/" \
       "${workspace}"
 
   fi
@@ -81,20 +84,33 @@ function run_owlbot_postprocessor {
 }
 
 
-# calls several scripts to perform additional post processing after owlbot is
-# used. If google-cloud-java is downloaded in the root script location, then
-# more processing is performed.
-function other_post_processing_scripts {
+# calls several scripts to perform post processing for new libraries after owlbot is
+# used. 
+function new_library_scripts {
   scripts_root=$1
   workspace=$2
   repo_metadata_json_path=$3
   output_folder=$4
+  repository_path=$5
+
+  if [[ "${is_new_library}" != "true" ]];then
+    return
+  fi
+
   # postprocessor cleanup
   bash "${scripts_root}/post-processing/update_owlbot_postprocessor_config.sh" "${workspace}"
   bash "${scripts_root}/post-processing/delete_non_generated_samples.sh" "${workspace}"
   bash "${scripts_root}/post-processing/consolidate_config.sh" "${workspace}"
 
   pushd "${output_folder}"
+  if [ -d "${repository_path}" ]; then
+    # get existing versions.txt from downloaded monorepo
+    cp "${output_folder}/"${repository_path}"/versions.txt" "${workspace}"
+    pushd "${workspace}"
+    bash "${scripts_root}/post-processing/apply_current_versions.sh"
+    rm versions.txt
+    popd
+  fi
   if [ -d google-cloud-java ]; then
     pushd google-cloud-java
     jar_parent_pom="$(pwd)/google-cloud-jar-parent/pom.xml"
@@ -107,13 +123,6 @@ function other_post_processing_scripts {
     bash "${scripts_root}/post-processing/set_parent_pom.sh" "${workspace_bom}" "${pom_parent_pom}" '../../google-cloud-pom-parent/pom.xml'
     popd
 
-    # get existing versions.txt from downloaded monorepo
-    repo_short=$(cat ${repo_metadata_json_path} | jq -r '.repo_short // empty')
-    cp "${output_folder}/google-cloud-java/versions.txt" "${workspace}"
-    pushd "${workspace}"
-    bash "${scripts_root}/post-processing/apply_current_versions.sh"
-    rm versions.txt
-    popd
   else
     echo 'google-cloud-java not found. Will not update parent poms nor update versions'
     popd

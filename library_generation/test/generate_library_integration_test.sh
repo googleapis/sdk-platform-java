@@ -89,18 +89,33 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   # generate GAPIC client library
   echo "Generating library from ${proto_path}, to ${destination_path}..."
   if [ $enable_postprocessing == "true" ]; then
-    monorepo_folder=$(echo "$line" | cut -d " " -f 3)
-    if [ $monorepo_folder == "null" ]; then
-      echo 'this is not a monorepo library. Skipping...'
-      continue
-    fi
-    pushd "${output_folder}"
-    if [ ! -d "google-cloud-java" ]; then
-      sparse_clone "https://github.com/googleapis/google-cloud-java.git" "${monorepo_folder} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"
+    repository_path=$(echo "$line" | cut -d " " -f 3)
+    is_handwritten=$(echo "$line" | cut -d " " -f 5)
+    if [ "${is_handwritten}" == "true" ]; then
+      echo 'this is a handwritten library'
+      hw_library=$(echo "${repository_path}" | cut -d: -f2)
+      pushd "${output_folder}"
+      git clone "https://github.com/googleapis/${hw_library}.git"
+      target_folder="${output_folder}/${hw_library}"
+      owlbot_sha=$(grep 'sha256' "${target_folder}/.github/.OwlBot.lock.yaml" | cut -d: -f3)
+    else 
+      echo 'this is a monorepo library'
+      pushd "${output_folder}"
+      if [ ! -d "google-cloud-java" ]; then
+        sparse_clone "https://github.com/googleapis/google-cloud-java.git" "${repository_path} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"
+      fi
+      repository_path="google-cloud-java/${repository_path}"
+      target_folder="${output_folder}/${repository_path}"
     fi
     popd # output_folder
-    target_folder="${output_folder}/google-cloud-java/${monorepo_folder}"
-    repo_metadata_json_path="${target_folder}/.repo-metadata.json"
+    # will check if a custom path exists in `test/resources/repo_metadatas` and
+    # use that one if so.
+    repo_metadata_json_path="${script_dir}/resources/repo_metadatas/$(echo "${repository_path}" | cut -d: -f2).json"
+    if [ ! -f "${repo_metadata_json_path}" ]; then
+      echo 'using default repo_metadata.json file'
+      repo_metadata_json_path="${target_folder}/.repo-metadata.json"
+    fi
+
     "${library_generation_dir}"/generate_library.sh \
       -p "${proto_path}" \
       -d "${destination_path}" \
@@ -113,7 +128,7 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
       --include_samples "${include_samples}" \
       --repo_metadata_json_path "${repo_metadata_json_path}" \
       --owlbot_sha "${owlbot_sha}" \
-      --monorepo_folder "${monorepo_folder}" \
+      --repository_path "${repository_path}" \
       --enable_postprocessing "true"
   else
     "${library_generation_dir}"/generate_library.sh \
@@ -133,12 +148,10 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   echo "Compare generation result..."
   pushd "${output_folder}"
   if [ $enable_postprocessing == "true" ] && [ "${more_versions_coming}" == "false" ]; then
-    echo "Checking out google-cloud-java repository..."
-    monorepo_path="${output_folder}/google-cloud-java/${monorepo_folder}"
-    cp -r ${output_folder}/${destination_path}/workspace/* "${monorepo_path}"
-    pushd "${monorepo_path}"
+    echo "Checking out repository..."
+    cp -r ${output_folder}/${destination_path}/workspace/* "${target_folder}"
+    pushd "${target_folder}"
     SOURCE_DIFF_RESULT=0
-    #git diff --ignore-space-at-eol -r --exit-code -- ':!*pom.xml' ':!*README.md' ':!*package-info.java' || SOURCE_DIFF_RESULT=$?
     git diff \
       --ignore-space-at-eol \
       -r \
@@ -149,15 +162,19 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
       ':!*package-info.java' \
       || SOURCE_DIFF_RESULT=$?
 
-    POM_DIFF_RESULT=$(compare_poms "${monorepo_path}")
-    popd # monorepo_path
+    POM_DIFF_RESULT=$(compare_poms "${target_folder}")
+    popd # target_folder
     if [[ ${SOURCE_DIFF_RESULT} == 0 ]] && [[ ${POM_DIFF_RESULT} == 0 ]] ; then
       echo "SUCCESS: Comparison finished, no difference is found."
       # this is the last api version being processed. Delete google-cloud-java to
       # allow a sparse clone of the next library
       # We only perform this action here in case the script has failed to keep
       # the folder for further investigation
-      rm -rdf google-cloud-java
+      if [ "${repository_path}" == "hw:*" ]; then
+        rm -rdf "${hw_library}"
+      else
+        rm -rdf google-cloud-java
+      fi
     elif [ ${SOURCE_DIFF_RESULT} != 0 ]; then
       echo "FAILURE: Differences found in proto path: ${proto_path}."
       exit "${SOURCE_DIFF_RESULT}"

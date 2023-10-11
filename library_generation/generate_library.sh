@@ -60,8 +60,8 @@ case $key in
     owlbot_sha="$2"
     shift
     ;;
-  --monorepo_folder)
-    monorepo_folder="$2"
+  --repository_path)
+    repository_path="$2"
     shift
     ;;
   --os_architecture)
@@ -124,11 +124,11 @@ mkdir -p "${output_folder}/${destination_path}"
 # prepare tooling
 #####################################################
 # the order of services entries in gapic_metadata.json is relevant to the
-# order of proto file, sort the proto files with respect to their name to
+# order of proto file, sort the proto files with respect to their bytes to
 # get a fixed order.
 folder_name=$(extract_folder_name "${destination_path}")
 pushd "${output_folder}"
-proto_files=$(find "${proto_path}" -type f  -name "*.proto" | sort)
+proto_files=$(find "${proto_path}" -type f  -name "*.proto" | LC_COLLATE=C sort)
 # download gapic-generator-java, protobuf and grpc plugin.
 download_tools "${gapic_generator_version}" "${protobuf_version}" "${grpc_version}" "${os_architecture}"
 ##################### Section 1 #####################
@@ -154,6 +154,8 @@ if [[ "${proto_only}" == "false" ]]; then
   "--java_gapic_out=metadata:${destination_path}/java_gapic_srcjar_raw.srcjar.zip" \
   "--java_gapic_opt=$(get_gapic_opts)" \
   ${proto_files} ${gapic_additional_protos}
+
+# /usr/local/google/home/diegomarquezp/Desktop/sdk-platform-java/library_generation/output/protobuf-23.2/bin/protoc --experimental_allow_proto3_optional --plugin=protoc-gen-java_gapic=/usr/local/google/home/diegomarquezp/Desktop/sdk-platform-java/library_generation/gapic-generator-java-wrapper --java_gapic_out=metadata:google-cloud-logging-v2-java/java_gapic_srcjar_raw.srcjar.zip --java_gapic_opt=transport=grpc,rest-numeric-enums,grpc-service-config=google/logging/v2/logging_grpc_service_config.json,gapic-config=google/logging/v2/logging_gapic.yaml,api-service-config=google/logging/v2/logging_v2.yaml google/logging/v2/logging.proto  google/logging/v2/log_entry.proto google/logging/v2/logging_config.proto google/logging/v2/logging_metrics.proto google/cloud/common_resources.proto
 
   unzip -o -q "${destination_path}/java_gapic_srcjar_raw.srcjar.zip" -d "${destination_path}"
   # Sync'\''d to the output file name in Writer.java.
@@ -226,10 +228,12 @@ then
   exit 1
 fi
 workspace="${output_folder}/${destination_path}/workspace"
+is_new_library="false" #always
+
 mkdir -p "${workspace}"
 
 run_owlbot_postprocessor "${workspace}" "${owlbot_sha}" "${repo_metadata_json_path}" "${include_samples}" \
-  "${script_dir}" "${output_folder}/${destination_path}" "${api_version}" "${transport}" "${monorepo_folder}"
+  "${script_dir}" "${output_folder}/${destination_path}" "${api_version}" "${transport}" "${repository_path}"
 
-other_post_processing_scripts "${script_dir}" "${workspace}" "${repo_metadata_json_path}" "${output_folder}"
+new_library_scripts "${script_dir}" "${workspace}" "${repo_metadata_json_path}" "${output_folder}" "${repository_path}" "${is_new_library}"
 set +x
