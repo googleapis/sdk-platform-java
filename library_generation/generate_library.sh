@@ -222,7 +222,6 @@ fi
 unzip_src_files "proto"
 # remove empty files in proto-*/src/main/java
 remove_empty_files "proto"
-# include certain protos in generated library.
 case "${proto_path}" in
   "google/cloud/aiplatform/v1beta1"*)
     prefix="google/cloud/aiplatform/v1beta1/schema"
@@ -233,6 +232,14 @@ case "${proto_path}" in
     ;;
   "google/devtools/containeranalysis/v1beta1"*)
     proto_files="${proto_files} google/devtools/containeranalysis/v1beta1/cvss/cvss.proto"
+    ;;
+  "google/iam/v1")
+    # these protos are excluded from //google/iam/v1:google-iam-v1-java
+    prefix="google/iam/v1"
+    protos="${prefix}/options.proto ${prefix}/policy.proto"
+    for removed_proto in ${protos}; do
+      proto_files="${proto_files//${removed_proto}/}"
+    done
     ;;
 esac
 # copy proto files to proto-*/src/main/proto
