@@ -3,6 +3,26 @@
 # Main functions to interact with owlbot post-processor and postprocessing
 # scripts
 
+# returns the metadata json path if given, or defaults to the one found in
+# $repository_path
+get_repo_metadata_json_or_default() {
+  local initial_metadata_json_path=$1
+  local repository_path=$2
+  local output_folder=$3
+  if [ -z "${initial_metadata_json_path}" ]; then
+    >&2 echo 'no .repo_metadata.json provided. Attempting to obtain it from repository_path'
+    local default_metadata_json_path="${output_folder}/${repository_path}/.repo_metadata.json"
+    if [ -f "${default_metadata_json_path}" ]; then
+      echo "${default_metadata_json_path}"
+    else
+      >&2 echo 'failed to obtain json from repository_path'
+      exit 1
+    fi
+  else
+    echo "${initial_metadata_json_path}"
+  fi
+}
+
 # Runs the owlbot post-processor docker image.
 # Arguments
 # 1 - workspace: the location of the grpc,proto and gapic libraries to be

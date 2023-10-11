@@ -119,11 +119,12 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
     fi
     popd # output_folder
     # will check if a custom path exists in `test/resources/repo_metadatas` and
-    # use that one if so.
+    # use that one if so. The script will default to the one contained in
+    # `target_path`
     repo_metadata_json_path="${script_dir}/resources/repo_metadatas/$(echo "${repository_path}" | cut -d: -f2).json"
     if [ ! -f "${repo_metadata_json_path}" ]; then
       echo 'using default repo_metadata.json file'
-      repo_metadata_json_path="${target_folder}/.repo-metadata.json"
+      repo_metadata_json_path=""
     fi
 
     "${library_generation_dir}"/generate_library.sh \

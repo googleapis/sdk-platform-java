@@ -131,6 +131,8 @@ if [ -z "${more_versions_coming}" ]; then
 fi
 
 if [ -z "${custom_gapic_name}" ]; then
+  # default to null in order to use the default name (i.e.
+  # gapic-google-cloud-library-name-v1-java)
   custom_gapic_name="null"
 fi
 
@@ -151,6 +153,7 @@ download_tools "${gapic_generator_version}" "${protobuf_version}" "${grpc_versio
 # generate grpc-*/
 #####################################################
 if [[ ! "${transport}" == "rest" ]]; then
+  # do not need to generate grpc-* if the transport is `rest`.
   "${protoc_path}"/protoc "--plugin=protoc-gen-rpc-plugin=protoc-gen-grpc-java-${grpc_version}-${os_architecture}.exe" \
   "--rpc-plugin_out=:${destination_path}/java_grpc.jar" \
   ${proto_files} # Do not quote because this variable should not be treated as one long string.
@@ -171,21 +174,19 @@ if [[ "${proto_only}" == "false" ]]; then
   "--java_gapic_opt=$(get_gapic_opts)" \
   ${proto_files} ${gapic_additional_protos}
 
-
   unzip -o -q "${destination_path}/java_gapic_srcjar_raw.srcjar.zip" -d "${destination_path}"
   # Sync'\''d to the output file name in Writer.java.
   unzip -o -q "${destination_path}/temp-codegen.srcjar" -d "${destination_path}/java_gapic_srcjar"
   # Resource name source files.
   proto_dir=${destination_path}/java_gapic_srcjar/proto/src/main/java
   if [ ! -d "${proto_dir}" ]; then
-    # Some APIs don'\''t have resource name helpers, like BigQuery v2.
+    # Some APIs don't have resource name helpers, like BigQuery v2.
     # Create an empty file so we can finish building. Gating the resource name rule definition
-    # on file existences go against Bazel'\''s design patterns, so we'\''ll simply delete all empty
+    # on file existences go against Bazel's design patterns, so we'll simply delete all empty
     # files during the final packaging process (see java_gapic_pkg.bzl)
     mkdir -p "${proto_dir}"
     touch "${proto_dir}"/PlaceholderFile.java
   fi
-
   # move java_gapic_srcjar/src/main to gapic-*/src.
   mv_src_files "gapic" "main" "${api_version}" "${custom_gapic_name}"
   # remove empty files in gapic-*/src/main/java
@@ -228,6 +229,7 @@ popd # destination path
 source "${script_dir}/post-processing/postprocessing_utilities.sh"
 if [ "${enable_postprocessing}" != "true" ];
 then
+  # arrange files for non-post-processing integration test
   echo "post processing is disabled"
   pushd "${output_folder}/${destination_path}"
   mv "proto-${folder_name}-${api_version}" "proto-${folder_name}-${api_version}-java"
@@ -237,11 +239,11 @@ then
   fi
   exit 0
 fi
-if [ -z "${repo_metadata_json_path}" ];
-then
-  echo "no repo_metadata.json provided. This is necessary for post-processing the generated library" >&2
-  exit 1
-fi
+repo_metadata_json_path=$(get_repo_metadata_json_or_default \
+  "${repo_metadata_json_path}" \
+  "${repository_path}" \
+  "${output_folder}"
+)
 # various versions can use the same workspace, for example for bigtable +
 # bigtable-admin
 workspace="${output_folder}/workspace"
