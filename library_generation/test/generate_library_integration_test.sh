@@ -77,6 +77,10 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   # the first one is the main one
   first_proto_path=$(echo "${proto_path}" | cut -d " " -f1)
   destination_path=$(echo "$line" | cut -d " " -f 2)
+  repository_path=$(echo "$line" | cut -d " " -f 3)
+  more_versions_coming=$(echo "${line}" | cut -d " " -f 4)
+  is_handwritten=$(echo "$line" | cut -d " " -f 5)
+  custom_gapic_name=$(echo "$line" | cut -d " " -f 6)
   # parse GAPIC options from proto_path/BUILD.bazel
   pushd "${output_folder}"
   proto_build_file_path="${first_proto_path}/BUILD.bazel"
@@ -85,24 +89,23 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   transport=$(get_transport_from_BUILD "${proto_build_file_path}")
   rest_numeric_enums=$(get_rest_numeric_enums_from_BUILD "${proto_build_file_path}")
   include_samples=$(get_include_samples_from_BUILD "${proto_build_file_path}")
-  more_versions_coming=$(echo "${line}" | cut -d " " -f 4)
   popd # output_folder
   echo "GAPIC options are transport=${transport}, rest_numeric_enums=${rest_numeric_enums}, include_samples=${include_samples}."
   # generate GAPIC client library
   echo "Generating library from ${first_proto_path}, to ${destination_path}..."
   if [ $enable_postprocessing == "true" ]; then
-    repository_path=$(echo "$line" | cut -d " " -f 3)
     if [[ "${repository_path}" == "null" ]]; then
       # we need a repository to compare the generated results with. Skip this
       # library
       continue
     fi
-    is_handwritten=$(echo "$line" | cut -d " " -f 5)
     if [ "${is_handwritten}" == "true" ]; then
       echo 'this is a handwritten library'
       hw_library=$(echo "${repository_path}" | cut -d: -f2)
       pushd "${output_folder}"
-      git clone "https://github.com/googleapis/${hw_library}.git"
+      if [ ! -d "${hw_library}" ];then
+        git clone "https://github.com/googleapis/${hw_library}.git"
+      fi
       target_folder="${output_folder}/${hw_library}"
       owlbot_sha=$(grep 'sha256' "${target_folder}/.github/.OwlBot.lock.yaml" | cut -d: -f3)
     else 
@@ -136,6 +139,8 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
       --repo_metadata_json_path "${repo_metadata_json_path}" \
       --owlbot_sha "${owlbot_sha}" \
       --repository_path "${repository_path}" \
+      --more_versions_coming "${more_versions_coming}" \
+      --custom_gapic_name "${custom_gapic_name}" \
       --enable_postprocessing "true"
   else
     "${library_generation_dir}"/generate_library.sh \
@@ -156,7 +161,7 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   pushd "${output_folder}"
   if [ $enable_postprocessing == "true" ] && [ "${more_versions_coming}" == "false" ]; then
     echo "Checking out repository..."
-    cp -r ${output_folder}/${destination_path}/workspace/* "${target_folder}"
+    cp -r ${output_folder}/workspace/* "${target_folder}"
     pushd "${target_folder}"
     SOURCE_DIFF_RESULT=0
     git diff \

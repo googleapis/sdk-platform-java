@@ -64,6 +64,14 @@ case $key in
     repository_path="$2"
     shift
     ;;
+  --more_versions_coming)
+    more_versions_coming="$2"
+    shift
+    ;;
+  --custom_gapic_name)
+    more_versions_coming="$2"
+    shift
+    ;;
   --os_architecture)
     os_architecture="$2"
     shift
@@ -118,6 +126,14 @@ if [ -z "${os_architecture}" ]; then
   os_architecture=$(detect_os_architecture)
 fi
 
+if [ -z "${more_versions_coming}" ]; then
+  more_versions_coming="false"
+fi
+
+if [ -z "${custom_gapic_name}" ]; then
+  custom_gapic_name="null"
+fi
+
 
 mkdir -p "${output_folder}/${destination_path}"
 ##################### Section 0 #####################
@@ -155,7 +171,6 @@ if [[ "${proto_only}" == "false" ]]; then
   "--java_gapic_opt=$(get_gapic_opts)" \
   ${proto_files} ${gapic_additional_protos}
 
-# /usr/local/google/home/diegomarquezp/Desktop/sdk-platform-java/library_generation/output/protobuf-23.2/bin/protoc --experimental_allow_proto3_optional --plugin=protoc-gen-java_gapic=/usr/local/google/home/diegomarquezp/Desktop/sdk-platform-java/library_generation/gapic-generator-java-wrapper --java_gapic_out=metadata:google-cloud-logging-v2-java/java_gapic_srcjar_raw.srcjar.zip --java_gapic_opt=transport=grpc,rest-numeric-enums,grpc-service-config=google/logging/v2/logging_grpc_service_config.json,gapic-config=google/logging/v2/logging_gapic.yaml,api-service-config=google/logging/v2/logging_v2.yaml google/logging/v2/logging.proto  google/logging/v2/log_entry.proto google/logging/v2/logging_config.proto google/logging/v2/logging_metrics.proto google/cloud/common_resources.proto
 
   unzip -o -q "${destination_path}/java_gapic_srcjar_raw.srcjar.zip" -d "${destination_path}"
   # Sync'\''d to the output file name in Writer.java.
@@ -172,7 +187,7 @@ if [[ "${proto_only}" == "false" ]]; then
   fi
 
   # move java_gapic_srcjar/src/main to gapic-*/src.
-  mv_src_files "gapic" "main" "${api_version}"
+  mv_src_files "gapic" "main" "${api_version}" "${custom_gapic_name}"
   # remove empty files in gapic-*/src/main/java
   remove_empty_files "gapic" "${api_version}"
   # move java_gapic_srcjar/src/test to gapic-*/src
@@ -227,13 +242,15 @@ then
   echo "no repo_metadata.json provided. This is necessary for post-processing the generated library" >&2
   exit 1
 fi
-workspace="${output_folder}/${destination_path}/workspace"
+# various versions can use the same workspace, for example for bigtable +
+# bigtable-admin
+workspace="${output_folder}/workspace"
 is_new_library="false" #always
 
 mkdir -p "${workspace}"
 
 run_owlbot_postprocessor "${workspace}" "${owlbot_sha}" "${repo_metadata_json_path}" "${include_samples}" \
-  "${script_dir}" "${output_folder}/${destination_path}" "${api_version}" "${transport}" "${repository_path}"
+  "${script_dir}" "${output_folder}/${destination_path}" "${api_version}" "${transport}" "${repository_path}" "${more_versions_coming}"
 
 new_library_scripts "${script_dir}" "${workspace}" "${repo_metadata_json_path}" "${output_folder}" "${repository_path}" "${is_new_library}"
 set +x

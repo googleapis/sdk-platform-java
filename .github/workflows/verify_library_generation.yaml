@@ -27,7 +27,7 @@ jobs:
         set -x
         library_generation/test/generate_library_integration_test.sh \
         --googleapis_gen_url https://cloud-java-bot:${{ secrets.CLOUD_JAVA_BOT_GITHUB_TOKEN }}@github.com/googleapis/googleapis-gen.git \
-        --enable_postprocessing "false"
+        --enable_postprocessing "true"
   unit_tests:
     strategy:
       matrix:

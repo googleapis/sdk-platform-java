@@ -24,6 +24,7 @@ function run_owlbot_postprocessor {
   api_version=$7
   transport=$8
   repository_path=$9
+  more_versions_coming=${10}
 
   repository_root=$(echo "${repository_path}" | cut -d/ -f1)
 
@@ -80,7 +81,9 @@ function run_owlbot_postprocessor {
   fi
 
 
-  docker run --rm -v "${workspace}:/workspace" --user $(id -u):$(id -g) "${owlbot_image}"
+  if [[ "${more_versions_coming}" == "false" ]]; then
+    docker run --rm -v "${workspace}:/workspace" --user $(id -u):$(id -g) "${owlbot_image}"
+  fi
 
   if [ -d "${output_folder}/google-cloud-java" ];then
     # get existing versions.txt from downloaded monorepo
