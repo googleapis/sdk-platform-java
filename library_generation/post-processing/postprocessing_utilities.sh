@@ -11,7 +11,7 @@ get_repo_metadata_json_or_default() {
   local output_folder=$3
   if [ -z "${initial_metadata_json_path}" ]; then
     >&2 echo 'no .repo_metadata.json provided. Attempting to obtain it from repository_path'
-    local default_metadata_json_path="${output_folder}/${repository_path}/.repo_metadata.json"
+    local default_metadata_json_path="${output_folder}/${repository_path}/.repo-metadata.json"
     if [ -f "${default_metadata_json_path}" ]; then
       echo "${default_metadata_json_path}"
     else
