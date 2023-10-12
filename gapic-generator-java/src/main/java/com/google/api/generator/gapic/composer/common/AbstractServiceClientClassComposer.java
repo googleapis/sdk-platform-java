@@ -595,7 +595,10 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
           if (m.arguments().isEmpty()) {
             s = m.methodIdentifier().name() + "()";
           } else {
-            String argument = m.arguments().get(0).variable().type().reference() != null ? m.arguments().get(0).variable().type().reference().name() + " " : "";
+            String argument =
+                m.arguments().get(0).variable().type().reference() != null
+                    ? m.arguments().get(0).variable().type().reference().name() + " "
+                    : "";
             s =
                 m.methodIdentifier().name()
                     + "("
