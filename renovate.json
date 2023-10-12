@@ -49,26 +49,6 @@
       ],
       "depNameTemplate": "io.grpc:grpc-core",
       "datasourceTemplate": "maven"
-    },
-    {
-      "customType": "regex",
-      "fileMatch": [
-        "^\\.kokoro/presubmit/.*\\.sh"
-      ],
-      "matchStrings": [
-        "SHOWCASE_VERSION=(?<currentValue>.+?)\\n"
-      ],
-      "datasourceTemplate": "go"
-    },
-    {
-      "customType": "regex",
-      "fileMatch": [
-        "^showcase/gapic-showcase/pom\\.xml$"
-      ],
-      "matchStrings": [
-        "<gapic-showcase.version>(?<currentValue>.+?)</gapic-showcase.version>\\n"
-      ],
-      "datasourceTemplate": "go"
     }
   ],
   "packageRules": [
