@@ -126,7 +126,7 @@
         </plugins>
     </build>
 
-    <!-- Skip api-common-java when analyzing showcase test coverage on SonarCloud   -->
+    <!-- Skip api-common-java when analyzing showcase test coverage on SonarCloud -->
     <profiles>
         <profile>
             <id>showcase-sonar-analysis</id>

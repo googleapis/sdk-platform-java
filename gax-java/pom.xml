@@ -266,5 +266,17 @@
         </plugins>
       </build>
     </profile>
+    <!-- Skip gax-java when analyzing showcase test coverage on SonarCloud -->
+    <profile>
+      <id>showcase-sonar-analysis</id>
+      <activation>
+        <property>
+          <name>enableShowcaseTestCoverage</name>
+        </property>
+      </activation>
+      <properties>
+        <sonar.skip>true</sonar.skip>
+      </properties>
+    </profile>
   </profiles>
 </project>
