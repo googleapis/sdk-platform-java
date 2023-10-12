@@ -4,7 +4,7 @@
   <groupId>com.google.cloud</groupId>
   <artifactId>shared-dependencies-upper-bound-test</artifactId>
   <packaging>pom</packaging>
-  <version>3.16.1</version><!-- {x-version-update:google-cloud-shared-dependencies:current} -->
+  <version>3.17.1-SNAPSHOT</version><!-- {x-version-update:google-cloud-shared-dependencies:current} -->
   <name>Upper bound test for Google Cloud Shared Dependencies</name>
   <description>
     An upper bound test case for the shared dependencies BOM. A failure of this test case means
@@ -16,7 +16,7 @@
     <groupId>com.google.cloud</groupId>
     <!-- The shared config has RequireUpperBoundDeps enforcer rule -->
     <artifactId>google-cloud-shared-config</artifactId>
-    <version>1.5.7</version>
+    <version>1.5.8</version>
     <relativePath/>
   </parent>
 
@@ -30,7 +30,7 @@
       <dependency>
         <groupId>com.google.cloud</groupId>
         <artifactId>google-cloud-shared-dependencies</artifactId>
-        <version>3.16.1</version><!-- {x-version-update:google-cloud-shared-dependencies:current} -->
+        <version>3.17.1-SNAPSHOT</version><!-- {x-version-update:google-cloud-shared-dependencies:current} -->
         <type>pom</type>
         <scope>import</scope>
       </dependency>
