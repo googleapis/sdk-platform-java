@@ -105,9 +105,9 @@
       </modules>
       <properties>
         <sonar.coverage.jacoco.xmlReportPaths>${maven.multiModuleProjectDirectory}/coverage-report/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
-        <sonar.projectBaseDir>showcase/gapic-showcase/</sonar.projectBaseDir>
-        <sonar.sources>src/main/java/</sonar.sources>
-        <sonar.tests>src/test/java/com/google/showcase/v1beta1/it/</sonar.tests>
+<!--        <sonar.projectBaseDir>showcase/gapic-showcase/</sonar.projectBaseDir>-->
+<!--        <sonar.sources>src/main/java/</sonar.sources>-->
+<!--        <sonar.tests>src/test/java/com/google/showcase/v1beta1/it/</sonar.tests>-->
       </properties>
     </profile>
   </profiles>

@@ -47,4 +47,19 @@
       <artifactId>guava</artifactId>
     </dependency>
   </dependencies>
+
+  <!-- Skip grpc-gapic-showcase-v1beta1 when analyzing showcase test coverage on SonarCloud -->
+  <profiles>
+    <profile>
+      <id>showcase-sonar-analysis</id>
+      <activation>
+        <property>
+          <name>enableShowcaseTestCoverage</name>
+        </property>
+      </activation>
+      <properties>
+        <sonar.skip>true</sonar.skip>
+      </properties>
+    </profile>
+  </profiles>
 </project>
