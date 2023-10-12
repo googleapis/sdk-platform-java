@@ -77,19 +77,428 @@ import javax.annotation.Generated;
  * <p>Note: close() needs to be called on the MessagingClient object to clean up resources such as
  * threads. In the example above, try-with-resources is used, which automatically calls close().
  *
- * <p>The surface of this class includes several types of Java methods for each of the API's
- * methods:
+ * <table>
+ *    <tr>
+ *      <th>Method</th>
+ *      <th>Description</th>
+ *      <th>Method Variants</th>
+ *    <tr>
+ *      <td>SearchBlurbs</td>
+ *      <td>This method searches through all blurbs across all rooms and profiles
+ *  for blurbs containing to words found in the query. Only posts that
+ *  contain an exact match of a queried word will be returned.</td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
  *
- * <ol>
- *   <li>A "flattened" method. With this type of method, the fields of the request type have been
- *       converted into function parameters. It may be the case that not all fields are available as
- *       parameters, and not every API method will have a flattened method entry point.
- *   <li>A "request object" method. This type of method only takes one parameter, a request object,
- *       which must be constructed before the call. Not every API method will have a request object
- *       method.
- *   <li>A "callable" method. This type of method takes no parameters and returns an immutable API
- *       callable object, which can be used to initiate calls to the service.
- * </ol>
+ *      <ul>
+ *      <li>searchBlurbsAsync(SearchBlurbsRequest request)
+ *      </ul>
+ *
+ *      <p>Methods that return long-running operations have "Async" method variants that return `OperationFuture` which is used to track polling of the service.</p>
+ *
+ *      <ul>
+ *      <li>searchBlurbsAsync(ProfileName parent)
+ *      <li>searchBlurbsAsync(RoomName parent)
+ *      <li>searchBlurbsAsync(String parent)
+ *      </ul>
+ *
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *
+ *      <ul>
+ *      <li>searchBlurbsOperationCallable()
+ *      <li>searchBlurbsCallable()
+ *      </ul>
+ *
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>Connect</td>
+ *      <td>This method starts a bidirectional stream that receives all blurbs that
+ *  are being created after the stream has started and sends requests to create
+ *  blurbs. If an invalid blurb is requested to be created, the stream will
+ *  close with an error.</td>
+ *      <td>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *
+ *      <ul>
+ *      <li>connectCallable()
+ *      </ul>
+ *
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>GetIamPolicy</td>
+ *      <td>Gets the access control policy for a resource.
+ *  Returns an empty policy if the resource exists and does not have a policy
+ *  set.</td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *
+ *      <ul>
+ *      <li>getIamPolicy(GetIamPolicyRequest request)
+ *      </ul>
+ *
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *
+ *      <ul>
+ *      <li>getIamPolicyCallable()
+ *      </ul>
+ *
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>SendBlurbs</td>
+ *      <td>This is a stream to create multiple blurbs. If an invalid blurb is
+ *  requested to be created, the stream will close with an error.</td>
+ *      <td>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *
+ *      <ul>
+ *      <li>sendBlurbsCallable()
+ *      </ul>
+ *
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>UpdateRoom</td>
+ *      <td>Updates a room.</td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *
+ *      <ul>
+ *      <li>updateRoom(UpdateRoomRequest request)
+ *      </ul>
+ *
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *
+ *      <ul>
+ *      <li>updateRoomCallable()
+ *      </ul>
+ *
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>GetBlurb</td>
+ *      <td>Retrieves the Blurb with the given resource name.</td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *
+ *      <ul>
+ *      <li>getBlurb(GetBlurbRequest request)
+ *      </ul>
+ *
+ *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *
+ *      <ul>
+ *      <li>getBlurb(BlurbName name)
+ *      <li>getBlurb(String name)
+ *      </ul>
+ *
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *
+ *      <ul>
+ *      <li>getBlurbCallable()
+ *      </ul>
+ *
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>GetRoom</td>
+ *      <td>Retrieves the Room with the given resource name.</td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *
+ *      <ul>
+ *      <li>getRoom(GetRoomRequest request)
+ *      </ul>
+ *
+ *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *
+ *      <ul>
+ *      <li>getRoom(RoomName name)
+ *      <li>getRoom(String name)
+ *      </ul>
+ *
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *
+ *      <ul>
+ *      <li>getRoomCallable()
+ *      </ul>
+ *
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>SetIamPolicy</td>
+ *      <td>Sets the access control policy on the specified resource. Replaces any
+ *  existing policy.
+ *
+ *  Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.</td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *
+ *      <ul>
+ *      <li>setIamPolicy(SetIamPolicyRequest request)
+ *      </ul>
+ *
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *
+ *      <ul>
+ *      <li>setIamPolicyCallable()
+ *      </ul>
+ *
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>UpdateBlurb</td>
+ *      <td>Updates a blurb.</td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *
+ *      <ul>
+ *      <li>updateBlurb(UpdateBlurbRequest request)
+ *      </ul>
+ *
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *
+ *      <ul>
+ *      <li>updateBlurbCallable()
+ *      </ul>
+ *
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>ListBlurbs</td>
+ *      <td>Lists blurbs for a specific chat room or user profile depending on the
+ *  parent resource name.</td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *
+ *      <ul>
+ *      <li>listBlurbs(ListBlurbsRequest request)
+ *      </ul>
+ *
+ *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *
+ *      <ul>
+ *      <li>listBlurbs(ProfileName parent)
+ *      <li>listBlurbs(RoomName parent)
+ *      <li>listBlurbs(String parent)
+ *      </ul>
+ *
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *
+ *      <ul>
+ *      <li>listBlurbsPagedCallable()
+ *      <li>listBlurbsCallable()
+ *      </ul>
+ *
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>StreamBlurbs</td>
+ *      <td>This returns a stream that emits the blurbs that are created for a
+ *  particular chat room or user profile.</td>
+ *      <td>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *
+ *      <ul>
+ *      <li>streamBlurbsCallable()
+ *      </ul>
+ *
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>DeleteRoom</td>
+ *      <td>Deletes a room and all of its blurbs.</td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *
+ *      <ul>
+ *      <li>deleteRoom(DeleteRoomRequest request)
+ *      </ul>
+ *
+ *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *
+ *      <ul>
+ *      <li>deleteRoom(RoomName name)
+ *      <li>deleteRoom(String name)
+ *      </ul>
+ *
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *
+ *      <ul>
+ *      <li>deleteRoomCallable()
+ *      </ul>
+ *
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>ListRooms</td>
+ *      <td>Lists all chat rooms.</td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *
+ *      <ul>
+ *      <li>listRooms(ListRoomsRequest request)
+ *      </ul>
+ *
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *
+ *      <ul>
+ *      <li>listRoomsPagedCallable()
+ *      <li>listRoomsCallable()
+ *      </ul>
+ *
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>GetLocation</td>
+ *      <td>Gets information about a location.</td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *
+ *      <ul>
+ *      <li>getLocation(GetLocationRequest request)
+ *      </ul>
+ *
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *
+ *      <ul>
+ *      <li>getLocationCallable()
+ *      </ul>
+ *
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>TestIamPermissions</td>
+ *      <td>Returns permissions that a caller has on the specified resource.
+ *  If the resource does not exist, this will return an empty set of
+ *  permissions, not a `NOT_FOUND` error.
+ *
+ *  Note: This operation is designed to be used for building permission-aware
+ *  UIs and command-line tools, not for authorization checking. This operation
+ *  may "fail open" without warning.</td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *
+ *      <ul>
+ *      <li>testIamPermissions(TestIamPermissionsRequest request)
+ *      </ul>
+ *
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *
+ *      <ul>
+ *      <li>testIamPermissionsCallable()
+ *      </ul>
+ *
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>CreateRoom</td>
+ *      <td>Creates a room.</td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *
+ *      <ul>
+ *      <li>createRoom(CreateRoomRequest request)
+ *      </ul>
+ *
+ *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *
+ *      <ul>
+ *      <li>createRoom(String displayName)
+ *      </ul>
+ *
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *
+ *      <ul>
+ *      <li>createRoomCallable()
+ *      </ul>
+ *
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>ListLocations</td>
+ *      <td>Lists information about the supported locations for this service.</td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *
+ *      <ul>
+ *      <li>listLocations(ListLocationsRequest request)
+ *      </ul>
+ *
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *
+ *      <ul>
+ *      <li>listLocationsPagedCallable()
+ *      <li>listLocationsCallable()
+ *      </ul>
+ *
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>CreateBlurb</td>
+ *      <td>Creates a blurb. If the parent is a room, the blurb is understood to be a
+ *  message in that room. If the parent is a profile, the blurb is understood
+ *  to be a post on the profile.</td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *
+ *      <ul>
+ *      <li>createBlurb(CreateBlurbRequest request)
+ *      </ul>
+ *
+ *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *
+ *      <ul>
+ *      <li>createBlurb(ProfileName parent)
+ *      <li>createBlurb(ProfileName parent)
+ *      <li>createBlurb(ProfileName parent)
+ *      <li>createBlurb(ProfileName parent)
+ *      <li>createBlurb(RoomName parent)
+ *      <li>createBlurb(RoomName parent)
+ *      <li>createBlurb(RoomName parent)
+ *      <li>createBlurb(RoomName parent)
+ *      <li>createBlurb(String parent)
+ *      <li>createBlurb(String parent)
+ *      <li>createBlurb(String parent)
+ *      <li>createBlurb(String parent)
+ *      </ul>
+ *
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *
+ *      <ul>
+ *      <li>createBlurbCallable()
+ *      </ul>
+ *
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>DeleteBlurb</td>
+ *      <td>Deletes a blurb.</td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *
+ *      <ul>
+ *      <li>deleteBlurb(DeleteBlurbRequest request)
+ *      </ul>
+ *
+ *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *
+ *      <ul>
+ *      <li>deleteBlurb(BlurbName name)
+ *      <li>deleteBlurb(String name)
+ *      </ul>
+ *
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *
+ *      <ul>
+ *      <li>deleteBlurbCallable()
+ *      </ul>
+ *
+ *    </td>
+ *    </tr>
+ *  </table>
  *
  * <p>See the individual methods for example code.
  *
