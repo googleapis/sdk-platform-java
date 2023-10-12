@@ -165,7 +165,6 @@ case "${proto_path}" in
     proto_files="${proto_files} google/cloud/oslogin/common/common.proto"
     ;;
 esac
->>>>>>> origin/main
 # download gapic-generator-java, protobuf and grpc plugin.
 download_tools "${gapic_generator_version}" "${protobuf_version}" "${grpc_version}" "${os_architecture}"
 ##################### Section 1 #####################
