@@ -204,7 +204,7 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
     diff --strip-trailing-cr -r "googleapis-gen/${first_proto_path}/${destination_path}" "${output_folder}/${destination_path}" \
       -x "*gradle*" \
       -x "gapic_metadata.json" \
-      -x "package-info.java" || RESULT=$?
+      -x "package-info.java" || SOURCE_DIFF_RESULT=$?
     if [ ${SOURCE_DIFF_RESULT} == 0 ] ; then
       echo "SUCCESS: Comparison finished, no difference is found."
     else

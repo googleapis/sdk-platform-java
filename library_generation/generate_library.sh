@@ -192,7 +192,7 @@ if [[ "${proto_only}" == "false" ]]; then
   # remove empty files in gapic-*/src/main/java
   remove_empty_files "gapic" "${api_version}"
   # move java_gapic_srcjar/src/test to gapic-*/src
-  mv_src_files "gapic" "test" "${api_version}"
+  mv_src_files "gapic" "test" "${api_version}" "${custom_gapic_name}"
   if [ "${include_samples}" == "true" ]; then
     # move java_gapic_srcjar/samples/snippets to samples/snippets
     mv_src_files "samples" "main"
