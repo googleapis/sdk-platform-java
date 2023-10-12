@@ -71,19 +71,171 @@ import javax.annotation.Generated;
  * such as threads. In the example above, try-with-resources is used, which automatically calls
  * close().
  *
- * <p>The surface of this class includes several types of Java methods for each of the API's
- * methods:
+ * <table>
+ *    <tr>
+ *      <th>Method</th>
+ *      <th>Description</th>
+ *      <th>Method Variants</th>
+ *    <tr>
+ *      <td>MutateRows</td>
+ *      <td>Mutates multiple rows in a batch. Each individual row is mutated
+ *  atomically as in MutateRow, but the entire batch is not executed
+ *  atomically.</td>
+ *      <td>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *
- * <ol>
- *   <li>A "flattened" method. With this type of method, the fields of the request type have been
- *       converted into function parameters. It may be the case that not all fields are available as
- *       parameters, and not every API method will have a flattened method entry point.
- *   <li>A "request object" method. This type of method only takes one parameter, a request object,
- *       which must be constructed before the call. Not every API method will have a request object
- *       method.
- *   <li>A "callable" method. This type of method takes no parameters and returns an immutable API
- *       callable object, which can be used to initiate calls to the service.
- * </ol>
+ *      <ul>
+ *      <li>mutateRowsCallable()
+ *      </ul>
+ *
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>PingAndWarm</td>
+ *      <td>Warm up associated instance metadata for this connection.
+ *  This call is not required but may be useful for connection keep-alive.</td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *
+ *      <ul>
+ *      <li>pingAndWarm(PingAndWarmRequest request)
+ *      </ul>
+ *
+ *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *
+ *      <ul>
+ *      <li>pingAndWarm(InstanceName name)
+ *      <li>pingAndWarm(String name)
+ *      <li>pingAndWarm(InstanceName name)
+ *      <li>pingAndWarm(String name)
+ *      </ul>
+ *
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *
+ *      <ul>
+ *      <li>pingAndWarmCallable()
+ *      </ul>
+ *
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>ReadRows</td>
+ *      <td>Streams back the contents of all requested rows in key order, optionally
+ *  applying the same Reader filter to each. Depending on their size,
+ *  rows and cells may be broken up across multiple responses, but
+ *  atomicity of each row will still be preserved. See the
+ *  ReadRowsResponse documentation for details.</td>
+ *      <td>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *
+ *      <ul>
+ *      <li>readRowsCallable()
+ *      </ul>
+ *
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>ReadModifyWriteRow</td>
+ *      <td>Modifies a row atomically on the server. The method reads the latest
+ *  existing timestamp and value from the specified columns and writes a new
+ *  entry based on pre-defined read/modify/write rules. The new value for the
+ *  timestamp is the greater of the existing timestamp or the current server
+ *  time. The method returns the new contents of all modified cells.</td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *
+ *      <ul>
+ *      <li>readModifyWriteRow(ReadModifyWriteRowRequest request)
+ *      </ul>
+ *
+ *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *
+ *      <ul>
+ *      <li>readModifyWriteRow(TableName tableName)
+ *      <li>readModifyWriteRow(String tableName)
+ *      <li>readModifyWriteRow(TableName tableName)
+ *      <li>readModifyWriteRow(String tableName)
+ *      </ul>
+ *
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *
+ *      <ul>
+ *      <li>readModifyWriteRowCallable()
+ *      </ul>
+ *
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>MutateRow</td>
+ *      <td>Mutates a row atomically. Cells already present in the row are left
+ *  unchanged unless explicitly changed by `mutation`.</td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *
+ *      <ul>
+ *      <li>mutateRow(MutateRowRequest request)
+ *      </ul>
+ *
+ *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *
+ *      <ul>
+ *      <li>mutateRow(TableName tableName)
+ *      <li>mutateRow(String tableName)
+ *      <li>mutateRow(TableName tableName)
+ *      <li>mutateRow(String tableName)
+ *      </ul>
+ *
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *
+ *      <ul>
+ *      <li>mutateRowCallable()
+ *      </ul>
+ *
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>SampleRowKeys</td>
+ *      <td>Returns a sample of row keys in the table. The returned row keys will
+ *  delimit contiguous sections of the table of approximately equal size,
+ *  which can be used to break up the data for distributed tasks like
+ *  mapreduces.</td>
+ *      <td>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *
+ *      <ul>
+ *      <li>sampleRowKeysCallable()
+ *      </ul>
+ *
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>CheckAndMutateRow</td>
+ *      <td>Mutates a row atomically based on the output of a predicate Reader filter.</td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *
+ *      <ul>
+ *      <li>checkAndMutateRow(CheckAndMutateRowRequest request)
+ *      </ul>
+ *
+ *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *
+ *      <ul>
+ *      <li>checkAndMutateRow(TableName tableName)
+ *      <li>checkAndMutateRow(String tableName)
+ *      <li>checkAndMutateRow(TableName tableName)
+ *      <li>checkAndMutateRow(String tableName)
+ *      </ul>
+ *
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *
+ *      <ul>
+ *      <li>checkAndMutateRowCallable()
+ *      </ul>
+ *
+ *    </td>
+ *    </tr>
+ *  </table>
  *
  * <p>See the individual methods for example code.
  *

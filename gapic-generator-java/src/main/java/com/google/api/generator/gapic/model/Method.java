@@ -71,6 +71,14 @@ public abstract class Method {
 
   public abstract boolean operationPollingMethod();
 
+  public String getName() {
+    return name();
+  }
+
+  public String getDescription() {
+    return description();
+  }
+
   public boolean hasLro() {
     return lro() != null;
   }
