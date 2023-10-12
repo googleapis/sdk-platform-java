@@ -237,6 +237,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   private TransportChannel createChannel() throws IOException {
+    logDirectPathMisconfig();
     return GrpcTransportChannel.create(
         ChannelPool.create(
             channelPoolSettings, InstantiatingGrpcChannelProvider.this::createSingleChannel));
@@ -270,35 +271,25 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return false;
   }
 
-  private void logDirectPathMisconfig(String serviceAddress) {
+  private void logDirectPathMisconfig() {
     boolean isDirectPathOptionSet = Boolean.TRUE.equals(attemptDirectPath);
     boolean isDirectPathXdsEnvSet =
         Boolean.parseBoolean(envProvider.getenv(DIRECT_PATH_ENV_ENABLE_XDS));
     boolean isDirectPathXdsOptionSet = Boolean.TRUE.equals(attemptDirectPathXds);
-    if (isDirectPathOptionSet || isDirectPathXdsEnvSet || isDirectPathXdsOptionSet) {
-      // Case 1: use DirectPath with gRPCLB
-      if (isDirectPathOptionSet && !(isDirectPathXdsEnvSet || isDirectPathXdsOptionSet)) {
-        // TODO: Add the warning once we move traffic out from gRPCLB
-      }
-
-      // Case 2: just enable DirectPath xDS
-      if (!isDirectPathOptionSet && (isDirectPathXdsEnvSet || isDirectPathXdsOptionSet)) {
+    if (isDirectPathXdsEnvSet || isDirectPathXdsOptionSet) {
+      // Case 1: does not enable DirectPath
+      if (!isDirectPathOptionSet) {
         LOG.log(
             Level.WARNING, "DirectPath is misconfigured. Please set the attemptDirectPath option.");
-      }
-
-      // The following WARNING logs are GCS only.
-      if (serviceAddress.contains("storage.googleapis.com")
-          && isDirectPathXdsEnvSet
-          && (isDirectPathOptionSet || isDirectPathXdsOptionSet)) {
-        // Case 3: credential is not correctly set
+      } else {
+        // Case 2: credential is not correctly set
         if (!isNonDefaultServiceAccountAllowed()) {
           LOG.log(
               Level.WARNING,
               "DirectPath is misconfigured. Please make sure the credential is an instance of"
                   + " ComputeEngineCredentials.");
         }
-        // Case 4: not running on GCE
+        // Case 3: not running on GCE
         if (!isOnComputeEngine()) {
           LOG.log(
               Level.WARNING, "DirectPath is misconfigured. Please run in the GCE environment. ");
@@ -382,7 +373,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       builder.keepAliveTime(DIRECT_PATH_KEEP_ALIVE_TIME_SECONDS, TimeUnit.SECONDS);
       builder.keepAliveTimeout(DIRECT_PATH_KEEP_ALIVE_TIMEOUT_SECONDS, TimeUnit.SECONDS);
     } else {
-      logDirectPathMisconfig(serviceAddress);
       ChannelCredentials channelCredentials;
       try {
         channelCredentials = createMtlsChannelCredentials();
