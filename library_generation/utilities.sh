@@ -7,7 +7,7 @@ utilities_script_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null
 extract_folder_name() {
   local destination_path=$1
   local folder_name=${destination_path##*/}
-  echo "$folder_name" | sed 's/-v[1-9a-zA-Z]\+-java//'
+  echo "${folder_name//-v[A-Za-z0-9]*-java/}"
 }
 
 remove_empty_files() {
