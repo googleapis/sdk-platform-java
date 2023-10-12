@@ -270,7 +270,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return false;
   }
 
-  private void logDirectPathMisconfig() {
+  private void logDirectPathMisconfig(String serviceAddress) {
     boolean isDirectPathOptionSet = Boolean.TRUE.equals(attemptDirectPath);
     boolean isDirectPathXdsEnvSet =
         Boolean.parseBoolean(envProvider.getenv(DIRECT_PATH_ENV_ENABLE_XDS));
@@ -287,7 +287,10 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
             Level.WARNING, "DirectPath is misconfigured. Please set the attemptDirectPath option.");
       }
 
-      if (isDirectPathXdsEnvSet && (isDirectPathOptionSet || isDirectPathXdsOptionSet)) {
+      // The following WARNING logs are GCS only.
+      if (serviceAddress.contains("storage.googleapis.com")
+          && isDirectPathXdsEnvSet
+          && (isDirectPathOptionSet || isDirectPathXdsOptionSet)) {
         // Case 3: credential is not correctly set
         if (!isNonDefaultServiceAccountAllowed()) {
           LOG.log(
@@ -379,7 +382,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       builder.keepAliveTime(DIRECT_PATH_KEEP_ALIVE_TIME_SECONDS, TimeUnit.SECONDS);
       builder.keepAliveTimeout(DIRECT_PATH_KEEP_ALIVE_TIMEOUT_SECONDS, TimeUnit.SECONDS);
     } else {
-      logDirectPathMisconfig();
+      logDirectPathMisconfig(serviceAddress);
       ChannelCredentials channelCredentials;
       try {
         channelCredentials = createMtlsChannelCredentials();
