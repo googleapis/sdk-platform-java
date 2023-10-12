@@ -13,7 +13,7 @@ google/cloud/compute/v1 google-cloud-compute-v1-java java-compute false false nu
 google/cloud/kms/v1 google-cloud-kms-v1-java java-kms false false null
 google/cloud/redis/v1 google-cloud-redis-v1-java java-redis true false null
 google/cloud/redis/v1beta1 google-cloud-redis-v1beta1-java java-redis false false null
-# google/example/library/v1 google-cloud-example-library-v1-java null null false null
+google/example/library/v1 google-cloud-example-library-v1-java null null false null
 google/devtools/containeranalysis/v1 google-cloud-devtools-containeranalysis-v1-java java-containeranalysis false false null
 # google/iam/v1 google-iam-v1-java java-iam false false null
 google/iam/credentials/v1 google-cloud-iam-credentials-v1-java java-iamcredentials false false null
