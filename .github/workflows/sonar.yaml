@@ -74,5 +74,6 @@ jobs:
               -Dsonar.organization=googleapis \
               -Dsonar.host.url=https://sonarcloud.io \
               -Dsonar.projectName=java_showcase_integration_tests \
-              -Dsonar.sources=showcase/gapic-showcase/src/main/java/ \
-              -Dsonar.tests=showcase/gapic-showcase/src/test/java/com/google/showcase/v1beta1/it/
+              -Dsonar.projectBaseDir=showcase/gapic-showcase/ \
+              -Dsonar.sources=src/main/java/ \
+              -Dsonar.tests=src/test/java/com/google/showcase/v1beta1/it/
