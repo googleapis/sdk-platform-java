@@ -68,20 +68,18 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>Egress</td>
- *      <td>Egress streams egress requests and responses. Logically, this is not
+ *      <td><p>Egress streams egress requests and responses. Logically, this is not
  *  actually a streaming request, but uses streaming as a mechanism to flip
  *  the client-server relationship of gRPC so that the server can act as a
  *  client.
  *  The listener, the RPC server, accepts connections from the dialer,
  *  the RPC client.
- *  The listener streams http requests and the dialer streams http responses.</td>
+ *  The listener streams http requests and the dialer streams http responses.</p></td>
  *      <td>
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>egressCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *  </table>

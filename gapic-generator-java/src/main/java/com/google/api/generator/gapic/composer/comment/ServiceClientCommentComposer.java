@@ -228,13 +228,13 @@ public class ServiceClientCommentComposer {
 
   private static String createTableOfMethods(List<MethodAndVariants> methodAndVariantsList) {
     String FLATTENED_METHODS =
-        "<p>\"Flattened\" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>\n\n";
+        "<p>\"Flattened\" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>\n";
     String REQUEST_OBJECT_METHODS =
-        "<p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>\n\n";
+        "<p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>\n";
     String CALLABLE_METHODS =
-        "<p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>\n\n";
+        "<p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>\n";
     String ASYNC_METHODS =
-        "<p>Methods that return long-running operations have \"Async\" method variants that return `OperationFuture` which is used to track polling of the service.</p>\n\n";
+        "<p>Methods that return long-running operations have \"Async\" method variants that return `OperationFuture` which is used to track polling of the service.</p>\n";
 
     StringBuilder tableBuilder = new StringBuilder();
     tableBuilder
@@ -250,7 +250,7 @@ public class ServiceClientCommentComposer {
           .append(method.method)
           .append("</td>\n")
           .append("     <td>")
-          .append(method.description)
+          .append("<p>"+ method.description + "</p>")
           .append("</td>\n")
           .append("     <td>\n");
       if (method.hasRequestObjectVariants) {
@@ -261,7 +261,7 @@ public class ServiceClientCommentComposer {
             .append(String.join("\n     <li>", method.requestObjectVariants))
             .append("\n")
             .append("     </ul>")
-            .append("\n\n");
+            .append("\n");
       }
       if (method.hasFlattenedVariants) {
         tableBuilder
@@ -271,7 +271,7 @@ public class ServiceClientCommentComposer {
             .append(String.join("\n     <li>", method.flattenedVariants))
             .append("\n")
             .append("     </ul>")
-            .append("\n\n");
+            .append("\n");
       }
       if (method.hasAsyncVariants) {
         tableBuilder
@@ -281,7 +281,7 @@ public class ServiceClientCommentComposer {
             .append(String.join("\n     <li>", method.asyncVariants))
             .append("\n")
             .append("     </ul>")
-            .append("\n\n");
+            .append("\n");
       }
       if (method.hasCallableVariants) {
         tableBuilder
@@ -291,7 +291,7 @@ public class ServiceClientCommentComposer {
             .append(String.join("\n     <li>", method.callableVariants))
             .append("\n")
             .append("     </ul>")
-            .append("\n\n");
+            .append("\n");
       }
       tableBuilder.append("   </td>\n").append("   </tr>\n");
     }

@@ -67,102 +67,78 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>GenerateAccessToken</td>
- *      <td>Generates an OAuth 2.0 access token for a service account.</td>
+ *      <td><p>Generates an OAuth 2.0 access token for a service account.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>generateAccessToken(GenerateAccessTokenRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>generateAccessToken(ServiceAccountName name)
  *      <li>generateAccessToken(String name)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>generateAccessTokenCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>GenerateIdToken</td>
- *      <td>Generates an OpenID Connect ID token for a service account.</td>
+ *      <td><p>Generates an OpenID Connect ID token for a service account.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>generateIdToken(GenerateIdTokenRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>generateIdToken(ServiceAccountName name)
  *      <li>generateIdToken(String name)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>generateIdTokenCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>SignBlob</td>
- *      <td>Signs a blob using a service account's system-managed private key.</td>
+ *      <td><p>Signs a blob using a service account's system-managed private key.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>signBlob(SignBlobRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>signBlob(ServiceAccountName name)
  *      <li>signBlob(String name)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>signBlobCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>SignJwt</td>
- *      <td>Signs a JWT using a service account's system-managed private key.</td>
+ *      <td><p>Signs a JWT using a service account's system-managed private key.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>signJwt(SignJwtRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>signJwt(ServiceAccountName name)
  *      <li>signJwt(String name)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>signJwtCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *  </table>

@@ -121,55 +121,45 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>DeleteSink</td>
- *      <td>Deletes a sink. If the sink has a unique `writer_identity`, then that
- *  service account is also deleted.</td>
+ *      <td><p>Deletes a sink. If the sink has a unique `writer_identity`, then that
+ *  service account is also deleted.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>deleteSink(DeleteSinkRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>deleteSink(LogSinkName sinkName)
  *      <li>deleteSink(String sinkName)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>deleteSinkCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>UpdateView</td>
- *      <td>Updates a view on a log bucket. This method replaces the following fields
+ *      <td><p>Updates a view on a log bucket. This method replaces the following fields
  *  in the existing view with values from the new view: `filter`.
  *  If an `UNAVAILABLE` error is returned, this indicates that system is not in
  *  a state where it can update the view. If this occurs, please try again in a
- *  few minutes.</td>
+ *  few minutes.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>updateView(UpdateViewRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>updateViewCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>UpdateCmekSettings</td>
- *      <td>Updates the Log Router CMEK settings for the given resource.
+ *      <td><p>Updates the Log Router CMEK settings for the given resource.
  *
  *  Note: CMEK for the Log Router can currently only be configured for Google
  *  Cloud organizations. Once configured, it applies to all projects and
@@ -183,71 +173,56 @@ import javax.annotation.Generated;
  *
  *  See [Enabling CMEK for Log
  *  Router](https://cloud.google.com/logging/docs/routing/managed-encryption)
- *  for more information.</td>
+ *  for more information.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>updateCmekSettings(UpdateCmekSettingsRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>updateCmekSettingsCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>GetView</td>
- *      <td>Gets a view on a log bucket..</td>
+ *      <td><p>Gets a view on a log bucket..</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>getView(GetViewRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>getViewCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>UndeleteBucket</td>
- *      <td>Undeletes a log bucket. A bucket that has been deleted can be undeleted
- *  within the grace period of 7 days.</td>
+ *      <td><p>Undeletes a log bucket. A bucket that has been deleted can be undeleted
+ *  within the grace period of 7 days.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>undeleteBucket(UndeleteBucketRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>undeleteBucketCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>ListExclusions</td>
- *      <td>Lists all the exclusions on the _Default sink in a parent resource.</td>
+ *      <td><p>Lists all the exclusions on the _Default sink in a parent resource.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>listExclusions(ListExclusionsRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>listExclusions(BillingAccountName parent)
  *      <li>listExclusions(FolderName parent)
@@ -255,19 +230,16 @@ import javax.annotation.Generated;
  *      <li>listExclusions(ProjectName parent)
  *      <li>listExclusions(String parent)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>listExclusionsPagedCallable()
  *      <li>listExclusionsCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>UpdateSettings</td>
- *      <td>Updates the Log Router settings for the given resource.
+ *      <td><p>Updates the Log Router settings for the given resource.
  *
  *  Note: Settings for the Log Router can currently only be configured for
  *  Google Cloud organizations. Once configured, it applies to all projects and
@@ -282,133 +254,104 @@ import javax.annotation.Generated;
  *
  *  See [Enabling CMEK for Log
  *  Router](https://cloud.google.com/logging/docs/routing/managed-encryption)
- *  for more information.</td>
+ *  for more information.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>updateSettings(UpdateSettingsRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>updateSettings(Settings settings)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>updateSettingsCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>CreateView</td>
- *      <td>Creates a view over log entries in a log bucket. A bucket may contain a
- *  maximum of 30 views.</td>
+ *      <td><p>Creates a view over log entries in a log bucket. A bucket may contain a
+ *  maximum of 30 views.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>createView(CreateViewRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>createViewCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>DeleteView</td>
- *      <td>Deletes a view on a log bucket.
+ *      <td><p>Deletes a view on a log bucket.
  *  If an `UNAVAILABLE` error is returned, this indicates that system is not in
  *  a state where it can delete the view. If this occurs, please try again in a
- *  few minutes.</td>
+ *  few minutes.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>deleteView(DeleteViewRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>deleteViewCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>UpdateExclusion</td>
- *      <td>Changes one or more properties of an existing exclusion in the _Default
- *  sink.</td>
+ *      <td><p>Changes one or more properties of an existing exclusion in the _Default
+ *  sink.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>updateExclusion(UpdateExclusionRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>updateExclusion(LogExclusionName name)
  *      <li>updateExclusion(String name)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>updateExclusionCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>GetSink</td>
- *      <td>Gets a sink.</td>
+ *      <td><p>Gets a sink.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>getSink(GetSinkRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>getSink(LogSinkName sinkName)
  *      <li>getSink(String sinkName)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>getSinkCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>CreateExclusion</td>
- *      <td>Creates a new exclusion in the _Default sink in a specified parent
+ *      <td><p>Creates a new exclusion in the _Default sink in a specified parent
  *  resource. Only log entries belonging to that resource can be excluded. You
- *  can have up to 10 exclusions in a resource.</td>
+ *  can have up to 10 exclusions in a resource.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>createExclusion(CreateExclusionRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>createExclusion(BillingAccountName parent)
  *      <li>createExclusion(FolderName parent)
@@ -416,49 +359,39 @@ import javax.annotation.Generated;
  *      <li>createExclusion(ProjectName parent)
  *      <li>createExclusion(String parent)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>createExclusionCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>DeleteBucket</td>
- *      <td>Deletes a log bucket.
+ *      <td><p>Deletes a log bucket.
  *
  *  Changes the bucket's `lifecycle_state` to the `DELETE_REQUESTED` state.
  *  After 7 days, the bucket will be purged and all log entries in the bucket
- *  will be permanently deleted.</td>
+ *  will be permanently deleted.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>deleteBucket(DeleteBucketRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>deleteBucketCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>ListBuckets</td>
- *      <td>Lists log buckets.</td>
+ *      <td><p>Lists log buckets.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>listBuckets(ListBucketsRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>listBuckets(BillingAccountLocationName parent)
  *      <li>listBuckets(FolderLocationName parent)
@@ -466,19 +399,16 @@ import javax.annotation.Generated;
  *      <li>listBuckets(OrganizationLocationName parent)
  *      <li>listBuckets(String parent)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>listBucketsPagedCallable()
  *      <li>listBucketsCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>GetCmekSettings</td>
- *      <td>Gets the Logging CMEK settings for the given resource.
+ *      <td><p>Gets the Logging CMEK settings for the given resource.
  *
  *  Note: CMEK for the Log Router can be configured for Google Cloud projects,
  *  folders, organizations and billing accounts. Once configured for an
@@ -487,37 +417,30 @@ import javax.annotation.Generated;
  *
  *  See [Enabling CMEK for Log
  *  Router](https://cloud.google.com/logging/docs/routing/managed-encryption)
- *  for more information.</td>
+ *  for more information.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>getCmekSettings(GetCmekSettingsRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>getCmekSettingsCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>CreateSink</td>
- *      <td>Creates a sink that exports specified log entries to a destination. The
+ *      <td><p>Creates a sink that exports specified log entries to a destination. The
  *  export of newly-ingested log entries begins immediately, unless the sink's
  *  `writer_identity` is not permitted to write to the destination. A sink can
- *  export log entries only from the resource owning the sink.</td>
+ *  export log entries only from the resource owning the sink.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>createSink(CreateSinkRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>createSink(BillingAccountName parent)
  *      <li>createSink(FolderName parent)
@@ -525,70 +448,54 @@ import javax.annotation.Generated;
  *      <li>createSink(ProjectName parent)
  *      <li>createSink(String parent)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>createSinkCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>GetBucket</td>
- *      <td>Gets a log bucket.</td>
+ *      <td><p>Gets a log bucket.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>getBucket(GetBucketRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>getBucketCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>ListViews</td>
- *      <td>Lists views on a log bucket.</td>
+ *      <td><p>Lists views on a log bucket.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>listViews(ListViewsRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>listViews(String parent)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>listViewsPagedCallable()
  *      <li>listViewsCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>ListSinks</td>
- *      <td>Lists sinks.</td>
+ *      <td><p>Lists sinks.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>listSinks(ListSinksRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>listSinks(BillingAccountName parent)
  *      <li>listSinks(FolderName parent)
@@ -596,50 +503,41 @@ import javax.annotation.Generated;
  *      <li>listSinks(ProjectName parent)
  *      <li>listSinks(String parent)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>listSinksPagedCallable()
  *      <li>listSinksCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>UpdateSink</td>
- *      <td>Updates a sink. This method replaces the following fields in the existing
+ *      <td><p>Updates a sink. This method replaces the following fields in the existing
  *  sink with values from the new sink: `destination`, and `filter`.
  *
  *  The updated sink might also have a new `writer_identity`; see the
- *  `unique_writer_identity` field.</td>
+ *  `unique_writer_identity` field.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>updateSink(UpdateSinkRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>updateSink(LogSinkName sinkName)
  *      <li>updateSink(String sinkName)
  *      <li>updateSink(LogSinkName sinkName)
  *      <li>updateSink(String sinkName)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>updateSinkCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>UpdateBucket</td>
- *      <td>Updates a log bucket. This method replaces the following fields in the
+ *      <td><p>Updates a log bucket. This method replaces the following fields in the
  *  existing bucket with values from the new bucket: `retention_period`
  *
  *  If the retention period is decreased and the bucket is locked,
@@ -648,113 +546,89 @@ import javax.annotation.Generated;
  *  If the bucket has a `lifecycle_state` of `DELETE_REQUESTED`, then
  *  `FAILED_PRECONDITION` will be returned.
  *
- *  After a bucket has been created, the bucket's location cannot be changed.</td>
+ *  After a bucket has been created, the bucket's location cannot be changed.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>updateBucket(UpdateBucketRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>updateBucketCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>GetExclusion</td>
- *      <td>Gets the description of an exclusion in the _Default sink.</td>
+ *      <td><p>Gets the description of an exclusion in the _Default sink.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>getExclusion(GetExclusionRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>getExclusion(LogExclusionName name)
  *      <li>getExclusion(String name)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>getExclusionCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>DeleteExclusion</td>
- *      <td>Deletes an exclusion in the _Default sink.</td>
+ *      <td><p>Deletes an exclusion in the _Default sink.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>deleteExclusion(DeleteExclusionRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>deleteExclusion(LogExclusionName name)
  *      <li>deleteExclusion(String name)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>deleteExclusionCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>CopyLogEntries</td>
- *      <td>Copies a set of log entries from a log bucket to a Cloud Storage bucket.</td>
+ *      <td><p>Copies a set of log entries from a log bucket to a Cloud Storage bucket.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>copyLogEntriesAsync(CopyLogEntriesRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>copyLogEntriesOperationCallable()
  *      <li>copyLogEntriesCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>CreateBucket</td>
- *      <td>Creates a log bucket that can be used to store log entries. After a bucket
- *  has been created, the bucket's location cannot be changed.</td>
+ *      <td><p>Creates a log bucket that can be used to store log entries. After a bucket
+ *  has been created, the bucket's location cannot be changed.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>createBucket(CreateBucketRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>createBucketCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>GetSettings</td>
- *      <td>Gets the Log Router settings for the given resource.
+ *      <td><p>Gets the Log Router settings for the given resource.
  *
  *  Note: Settings for the Log Router can be get for Google Cloud projects,
  *  folders, organizations and billing accounts. Currently it can only be
@@ -763,27 +637,21 @@ import javax.annotation.Generated;
  *
  *  See [Enabling CMEK for Log
  *  Router](https://cloud.google.com/logging/docs/routing/managed-encryption)
- *  for more information.</td>
+ *  for more information.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>getSettings(GetSettingsRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>getSettings(SettingsName name)
  *      <li>getSettings(String name)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>getSettingsCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *  </table>

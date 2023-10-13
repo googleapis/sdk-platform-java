@@ -64,29 +64,23 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>ListConnections</td>
- *      <td>Lists connections that are currently active for the given Apigee Connect
- *  endpoint.</td>
+ *      <td><p>Lists connections that are currently active for the given Apigee Connect
+ *  endpoint.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>listConnections(ListConnectionsRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>listConnections(EndpointName parent)
  *      <li>listConnections(String parent)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>listConnectionsPagedCallable()
  *      <li>listConnectionsCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *  </table>

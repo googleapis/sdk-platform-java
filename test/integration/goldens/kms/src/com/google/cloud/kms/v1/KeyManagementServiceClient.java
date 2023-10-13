@@ -87,442 +87,348 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>UpdateCryptoKey</td>
- *      <td>Update a [CryptoKey][google.cloud.kms.v1.CryptoKey].</td>
+ *      <td><p>Update a [CryptoKey][google.cloud.kms.v1.CryptoKey].</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>updateCryptoKey(UpdateCryptoKeyRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>updateCryptoKey(CryptoKey cryptoKey)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>updateCryptoKeyCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>Decrypt</td>
- *      <td>Decrypts data that was protected by
+ *      <td><p>Decrypts data that was protected by
  *  [Encrypt][google.cloud.kms.v1.KeyManagementService.Encrypt]. The
  *  [CryptoKey.purpose][google.cloud.kms.v1.CryptoKey.purpose] must be
- *  [ENCRYPT_DECRYPT][google.cloud.kms.v1.CryptoKey.CryptoKeyPurpose.ENCRYPT_DECRYPT].</td>
+ *  [ENCRYPT_DECRYPT][google.cloud.kms.v1.CryptoKey.CryptoKeyPurpose.ENCRYPT_DECRYPT].</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>decrypt(DecryptRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>decrypt(CryptoKeyName name)
  *      <li>decrypt(String name)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>decryptCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>ListKeyRings</td>
- *      <td>Lists [KeyRings][google.cloud.kms.v1.KeyRing].</td>
+ *      <td><p>Lists [KeyRings][google.cloud.kms.v1.KeyRing].</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>listKeyRings(ListKeyRingsRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>listKeyRings(LocationName parent)
  *      <li>listKeyRings(String parent)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>listKeyRingsPagedCallable()
  *      <li>listKeyRingsCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>AsymmetricDecrypt</td>
- *      <td>Decrypts data that was encrypted with a public key retrieved from
+ *      <td><p>Decrypts data that was encrypted with a public key retrieved from
  *  [GetPublicKey][google.cloud.kms.v1.KeyManagementService.GetPublicKey]
  *  corresponding to a [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion]
  *  with [CryptoKey.purpose][google.cloud.kms.v1.CryptoKey.purpose]
- *  ASYMMETRIC_DECRYPT.</td>
+ *  ASYMMETRIC_DECRYPT.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>asymmetricDecrypt(AsymmetricDecryptRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>asymmetricDecrypt(CryptoKeyVersionName name)
  *      <li>asymmetricDecrypt(String name)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>asymmetricDecryptCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>ListImportJobs</td>
- *      <td>Lists [ImportJobs][google.cloud.kms.v1.ImportJob].</td>
+ *      <td><p>Lists [ImportJobs][google.cloud.kms.v1.ImportJob].</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>listImportJobs(ListImportJobsRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>listImportJobs(KeyRingName parent)
  *      <li>listImportJobs(String parent)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>listImportJobsPagedCallable()
  *      <li>listImportJobsCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>GetImportJob</td>
- *      <td>Returns metadata for a given [ImportJob][google.cloud.kms.v1.ImportJob].</td>
+ *      <td><p>Returns metadata for a given [ImportJob][google.cloud.kms.v1.ImportJob].</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>getImportJob(GetImportJobRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>getImportJob(ImportJobName name)
  *      <li>getImportJob(String name)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>getImportJobCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>CreateImportJob</td>
- *      <td>Create a new [ImportJob][google.cloud.kms.v1.ImportJob] within a
+ *      <td><p>Create a new [ImportJob][google.cloud.kms.v1.ImportJob] within a
  *  [KeyRing][google.cloud.kms.v1.KeyRing].
  *
  *  [ImportJob.import_method][google.cloud.kms.v1.ImportJob.import_method] is
- *  required.</td>
+ *  required.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>createImportJob(CreateImportJobRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>createImportJob(KeyRingName parent)
  *      <li>createImportJob(String parent)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>createImportJobCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>ImportCryptoKeyVersion</td>
- *      <td>Imports a new [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] into
+ *      <td><p>Imports a new [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] into
  *  an existing [CryptoKey][google.cloud.kms.v1.CryptoKey] using the wrapped
  *  key material provided in the request.
  *
  *  The version ID will be assigned the next sequential id within the
- *  [CryptoKey][google.cloud.kms.v1.CryptoKey].</td>
+ *  [CryptoKey][google.cloud.kms.v1.CryptoKey].</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>importCryptoKeyVersion(ImportCryptoKeyVersionRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>importCryptoKeyVersionCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>GetPublicKey</td>
- *      <td>Returns the public key for the given
+ *      <td><p>Returns the public key for the given
  *  [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion]. The
  *  [CryptoKey.purpose][google.cloud.kms.v1.CryptoKey.purpose] must be
  *  [ASYMMETRIC_SIGN][google.cloud.kms.v1.CryptoKey.CryptoKeyPurpose.ASYMMETRIC_SIGN]
  *  or
- *  [ASYMMETRIC_DECRYPT][google.cloud.kms.v1.CryptoKey.CryptoKeyPurpose.ASYMMETRIC_DECRYPT].</td>
+ *  [ASYMMETRIC_DECRYPT][google.cloud.kms.v1.CryptoKey.CryptoKeyPurpose.ASYMMETRIC_DECRYPT].</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>getPublicKey(GetPublicKeyRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>getPublicKey(CryptoKeyVersionName name)
  *      <li>getPublicKey(String name)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>getPublicKeyCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>GetLocation</td>
- *      <td>Gets information about a location.</td>
+ *      <td><p>Gets information about a location.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>getLocation(GetLocationRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>getLocationCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>TestIamPermissions</td>
- *      <td>This is a different comment for TestIamPermissions in the yaml file that should clobber the documentation in iam_policy.proto.</td>
+ *      <td><p>This is a different comment for TestIamPermissions in the yaml file that should clobber the documentation in iam_policy.proto.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>testIamPermissions(TestIamPermissionsRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>testIamPermissionsCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>CreateKeyRing</td>
- *      <td>Create a new [KeyRing][google.cloud.kms.v1.KeyRing] in a given Project and
- *  Location.</td>
+ *      <td><p>Create a new [KeyRing][google.cloud.kms.v1.KeyRing] in a given Project and
+ *  Location.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>createKeyRing(CreateKeyRingRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>createKeyRing(LocationName parent)
  *      <li>createKeyRing(String parent)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>createKeyRingCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>GetKeyRing</td>
- *      <td>Returns metadata for a given [KeyRing][google.cloud.kms.v1.KeyRing].</td>
+ *      <td><p>Returns metadata for a given [KeyRing][google.cloud.kms.v1.KeyRing].</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>getKeyRing(GetKeyRingRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>getKeyRing(KeyRingName name)
  *      <li>getKeyRing(String name)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>getKeyRingCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>ListLocations</td>
- *      <td>Lists information about the supported locations for this service.</td>
+ *      <td><p>Lists information about the supported locations for this service.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>listLocations(ListLocationsRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>listLocationsPagedCallable()
  *      <li>listLocationsCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>CreateCryptoKey</td>
- *      <td>Create a new [CryptoKey][google.cloud.kms.v1.CryptoKey] within a
+ *      <td><p>Create a new [CryptoKey][google.cloud.kms.v1.CryptoKey] within a
  *  [KeyRing][google.cloud.kms.v1.KeyRing].
  *
  *  [CryptoKey.purpose][google.cloud.kms.v1.CryptoKey.purpose] and
  *  [CryptoKey.version_template.algorithm][google.cloud.kms.v1.CryptoKeyVersionTemplate.algorithm]
- *  are required.</td>
+ *  are required.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>createCryptoKey(CreateCryptoKeyRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>createCryptoKey(KeyRingName parent)
  *      <li>createCryptoKey(String parent)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>createCryptoKeyCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>CreateCryptoKeyVersion</td>
- *      <td>Create a new [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] in a
+ *      <td><p>Create a new [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] in a
  *  [CryptoKey][google.cloud.kms.v1.CryptoKey].
  *
  *  The server will assign the next sequential id. If unset,
  *  [state][google.cloud.kms.v1.CryptoKeyVersion.state] will be set to
- *  [ENABLED][google.cloud.kms.v1.CryptoKeyVersion.CryptoKeyVersionState.ENABLED].</td>
+ *  [ENABLED][google.cloud.kms.v1.CryptoKeyVersion.CryptoKeyVersionState.ENABLED].</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>createCryptoKeyVersion(CreateCryptoKeyVersionRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>createCryptoKeyVersion(CryptoKeyName parent)
  *      <li>createCryptoKeyVersion(String parent)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>createCryptoKeyVersionCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>UpdateCryptoKeyPrimaryVersion</td>
- *      <td>Update the version of a [CryptoKey][google.cloud.kms.v1.CryptoKey] that
+ *      <td><p>Update the version of a [CryptoKey][google.cloud.kms.v1.CryptoKey] that
  *  will be used in
  *  [Encrypt][google.cloud.kms.v1.KeyManagementService.Encrypt].
  *
- *  Returns an error if called on an asymmetric key.</td>
+ *  Returns an error if called on an asymmetric key.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>updateCryptoKeyPrimaryVersion(UpdateCryptoKeyPrimaryVersionRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>updateCryptoKeyPrimaryVersion(CryptoKeyName name)
  *      <li>updateCryptoKeyPrimaryVersion(String name)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>updateCryptoKeyPrimaryVersionCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>DestroyCryptoKeyVersion</td>
- *      <td>Schedule a [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] for
+ *      <td><p>Schedule a [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] for
  *  destruction.
  *
  *  Upon calling this method,
@@ -539,78 +445,62 @@ import javax.annotation.Generated;
  *  [destroy_time][google.cloud.kms.v1.CryptoKeyVersion.destroy_time] is
  *  reached,
  *  [RestoreCryptoKeyVersion][google.cloud.kms.v1.KeyManagementService.RestoreCryptoKeyVersion]
- *  may be called to reverse the process.</td>
+ *  may be called to reverse the process.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>destroyCryptoKeyVersion(DestroyCryptoKeyVersionRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>destroyCryptoKeyVersion(CryptoKeyVersionName name)
  *      <li>destroyCryptoKeyVersion(String name)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>destroyCryptoKeyVersionCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>GetIamPolicy</td>
- *      <td>Gets the access control policy for a resource. ADDED ONLY FOR MIXIN TESTS.
+ *      <td><p>Gets the access control policy for a resource. ADDED ONLY FOR MIXIN TESTS.
  *  Returns an empty policy if the resource exists and does not have a policy
- *  set.</td>
+ *  set.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>getIamPolicy(GetIamPolicyRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>getIamPolicyCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>GetCryptoKeyVersion</td>
- *      <td>Returns metadata for a given
- *  [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion].</td>
+ *      <td><p>Returns metadata for a given
+ *  [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion].</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>getCryptoKeyVersion(GetCryptoKeyVersionRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>getCryptoKeyVersion(CryptoKeyVersionName name)
  *      <li>getCryptoKeyVersion(String name)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>getCryptoKeyVersionCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>UpdateCryptoKeyVersion</td>
- *      <td>Update a [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion]'s
+ *      <td><p>Update a [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion]'s
  *  metadata.
  *
  *  [state][google.cloud.kms.v1.CryptoKeyVersion.state] may be changed between
@@ -621,141 +511,111 @@ import javax.annotation.Generated;
  *  [DestroyCryptoKeyVersion][google.cloud.kms.v1.KeyManagementService.DestroyCryptoKeyVersion]
  *  and
  *  [RestoreCryptoKeyVersion][google.cloud.kms.v1.KeyManagementService.RestoreCryptoKeyVersion]
- *  to move between other states.</td>
+ *  to move between other states.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>updateCryptoKeyVersion(UpdateCryptoKeyVersionRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>updateCryptoKeyVersion(CryptoKeyVersion cryptoKeyVersion)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>updateCryptoKeyVersionCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>ListCryptoKeyVersions</td>
- *      <td>Lists [CryptoKeyVersions][google.cloud.kms.v1.CryptoKeyVersion].</td>
+ *      <td><p>Lists [CryptoKeyVersions][google.cloud.kms.v1.CryptoKeyVersion].</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>listCryptoKeyVersions(ListCryptoKeyVersionsRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>listCryptoKeyVersions(CryptoKeyName parent)
  *      <li>listCryptoKeyVersions(String parent)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>listCryptoKeyVersionsPagedCallable()
  *      <li>listCryptoKeyVersionsCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>AsymmetricSign</td>
- *      <td>Signs data using a [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion]
+ *      <td><p>Signs data using a [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion]
  *  with [CryptoKey.purpose][google.cloud.kms.v1.CryptoKey.purpose]
  *  ASYMMETRIC_SIGN, producing a signature that can be verified with the public
  *  key retrieved from
- *  [GetPublicKey][google.cloud.kms.v1.KeyManagementService.GetPublicKey].</td>
+ *  [GetPublicKey][google.cloud.kms.v1.KeyManagementService.GetPublicKey].</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>asymmetricSign(AsymmetricSignRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>asymmetricSign(CryptoKeyVersionName name)
  *      <li>asymmetricSign(String name)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>asymmetricSignCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>Encrypt</td>
- *      <td>Encrypts data, so that it can only be recovered by a call to
+ *      <td><p>Encrypts data, so that it can only be recovered by a call to
  *  [Decrypt][google.cloud.kms.v1.KeyManagementService.Decrypt]. The
  *  [CryptoKey.purpose][google.cloud.kms.v1.CryptoKey.purpose] must be
- *  [ENCRYPT_DECRYPT][google.cloud.kms.v1.CryptoKey.CryptoKeyPurpose.ENCRYPT_DECRYPT].</td>
+ *  [ENCRYPT_DECRYPT][google.cloud.kms.v1.CryptoKey.CryptoKeyPurpose.ENCRYPT_DECRYPT].</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>encrypt(EncryptRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>encrypt(ResourceName name)
  *      <li>encrypt(String name)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>encryptCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>GetCryptoKey</td>
- *      <td>Returns metadata for a given [CryptoKey][google.cloud.kms.v1.CryptoKey], as
+ *      <td><p>Returns metadata for a given [CryptoKey][google.cloud.kms.v1.CryptoKey], as
  *  well as its [primary][google.cloud.kms.v1.CryptoKey.primary]
- *  [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion].</td>
+ *  [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion].</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>getCryptoKey(GetCryptoKeyRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>getCryptoKey(CryptoKeyName name)
  *      <li>getCryptoKey(String name)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>getCryptoKeyCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>RestoreCryptoKeyVersion</td>
- *      <td>Restore a [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] in the
+ *      <td><p>Restore a [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] in the
  *  [DESTROY_SCHEDULED][google.cloud.kms.v1.CryptoKeyVersion.CryptoKeyVersionState.DESTROY_SCHEDULED]
  *  state.
  *
@@ -763,53 +623,41 @@ import javax.annotation.Generated;
  *  [state][google.cloud.kms.v1.CryptoKeyVersion.state] will be set to
  *  [DISABLED][google.cloud.kms.v1.CryptoKeyVersion.CryptoKeyVersionState.DISABLED],
  *  and [destroy_time][google.cloud.kms.v1.CryptoKeyVersion.destroy_time] will
- *  be cleared.</td>
+ *  be cleared.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>restoreCryptoKeyVersion(RestoreCryptoKeyVersionRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>restoreCryptoKeyVersion(CryptoKeyVersionName name)
  *      <li>restoreCryptoKeyVersion(String name)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>restoreCryptoKeyVersionCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>ListCryptoKeys</td>
- *      <td>Lists [CryptoKeys][google.cloud.kms.v1.CryptoKey].</td>
+ *      <td><p>Lists [CryptoKeys][google.cloud.kms.v1.CryptoKey].</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>listCryptoKeys(ListCryptoKeysRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>listCryptoKeys(KeyRingName parent)
  *      <li>listCryptoKeys(String parent)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>listCryptoKeysPagedCallable()
  *      <li>listCryptoKeysCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *  </table>

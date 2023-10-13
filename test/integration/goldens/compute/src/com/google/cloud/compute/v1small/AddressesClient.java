@@ -70,102 +70,78 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>Delete</td>
- *      <td>Deletes the specified address resource.</td>
+ *      <td><p>Deletes the specified address resource.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>deleteAsync(DeleteAddressRequest request)
  *      </ul>
- *
  *      <p>Methods that return long-running operations have "Async" method variants that return `OperationFuture` which is used to track polling of the service.</p>
- *
  *      <ul>
  *      <li>deleteAsync(String project)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>deleteOperationCallable()
  *      <li>deleteCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>List</td>
- *      <td>Retrieves a list of addresses contained within the specified region.</td>
+ *      <td><p>Retrieves a list of addresses contained within the specified region.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>list(ListAddressesRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>list(String project)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>listPagedCallable()
  *      <li>listCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>Insert</td>
- *      <td>Creates an address resource in the specified project by using the data included in the request.</td>
+ *      <td><p>Creates an address resource in the specified project by using the data included in the request.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>insertAsync(InsertAddressRequest request)
  *      </ul>
- *
  *      <p>Methods that return long-running operations have "Async" method variants that return `OperationFuture` which is used to track polling of the service.</p>
- *
  *      <ul>
  *      <li>insertAsync(String project)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>insertOperationCallable()
  *      <li>insertCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>AggregatedList</td>
- *      <td>Retrieves an aggregated list of addresses.</td>
+ *      <td><p>Retrieves an aggregated list of addresses.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>aggregatedList(AggregatedListAddressesRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>aggregatedList(String project)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>aggregatedListPagedCallable()
  *      <li>aggregatedListCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *  </table>

@@ -83,67 +83,54 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>WriteLogEntries</td>
- *      <td>Writes log entries to Logging. This API method is the
+ *      <td><p>Writes log entries to Logging. This API method is the
  *  only way to send log entries to Logging. This method
  *  is used, directly or indirectly, by the Logging agent
  *  (fluentd) and all logging libraries configured to use Logging.
  *  A single request may contain log entries for a maximum of 1000
  *  different resources (projects, organizations, billing accounts or
- *  folders)</td>
+ *  folders)</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>writeLogEntries(WriteLogEntriesRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>writeLogEntries(LogName logName)
  *      <li>writeLogEntries(String logName)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>writeLogEntriesCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>ListMonitoredResourceDescriptors</td>
- *      <td>Lists the descriptors for monitored resource types used by Logging.</td>
+ *      <td><p>Lists the descriptors for monitored resource types used by Logging.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>listMonitoredResourceDescriptors(ListMonitoredResourceDescriptorsRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>listMonitoredResourceDescriptorsPagedCallable()
  *      <li>listMonitoredResourceDescriptorsCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>ListLogs</td>
- *      <td>Lists the logs in projects, organizations, folders, or billing accounts.
- *  Only logs that have entries are listed.</td>
+ *      <td><p>Lists the logs in projects, organizations, folders, or billing accounts.
+ *  Only logs that have entries are listed.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>listLogs(ListLogsRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>listLogs(BillingAccountName parent)
  *      <li>listLogs(FolderName parent)
@@ -151,83 +138,66 @@ import javax.annotation.Generated;
  *      <li>listLogs(ProjectName parent)
  *      <li>listLogs(String parent)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>listLogsPagedCallable()
  *      <li>listLogsCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>DeleteLog</td>
- *      <td>Deletes all the log entries in a log for the _Default Log Bucket. The log
+ *      <td><p>Deletes all the log entries in a log for the _Default Log Bucket. The log
  *  reappears if it receives new entries. Log entries written shortly before
  *  the delete operation might not be deleted. Entries received after the
- *  delete operation with a timestamp before the operation will be deleted.</td>
+ *  delete operation with a timestamp before the operation will be deleted.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>deleteLog(DeleteLogRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>deleteLog(LogName logName)
  *      <li>deleteLog(String logName)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>deleteLogCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>ListLogEntries</td>
- *      <td>Lists log entries.  Use this method to retrieve log entries that originated
+ *      <td><p>Lists log entries.  Use this method to retrieve log entries that originated
  *  from a project/folder/organization/billing account.  For ways to export log
  *  entries, see [Exporting
- *  Logs](https://cloud.google.com/logging/docs/export).</td>
+ *  Logs](https://cloud.google.com/logging/docs/export).</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>listLogEntries(ListLogEntriesRequest request)
  *      </ul>
- *
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *
  *      <ul>
  *      <li>listLogEntries(List<String> resourceNames)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>listLogEntriesPagedCallable()
  *      <li>listLogEntriesCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>TailLogEntries</td>
- *      <td>Streaming read of log entries as they are ingested. Until the stream is
- *  terminated, it will continue reading logs.</td>
+ *      <td><p>Streaming read of log entries as they are ingested. Until the stream is
+ *  terminated, it will continue reading logs.</p></td>
  *      <td>
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>tailLogEntriesCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *  </table>

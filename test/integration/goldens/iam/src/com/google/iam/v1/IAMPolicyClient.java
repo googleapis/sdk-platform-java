@@ -79,67 +79,55 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>GetIamPolicy</td>
- *      <td>Gets the access control policy for a resource.
+ *      <td><p>Gets the access control policy for a resource.
  *  Returns an empty policy if the resource exists and does not have a policy
- *  set.</td>
+ *  set.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>getIamPolicy(GetIamPolicyRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>getIamPolicyCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>TestIamPermissions</td>
- *      <td>Returns permissions that a caller has on the specified resource.
+ *      <td><p>Returns permissions that a caller has on the specified resource.
  *  If the resource does not exist, this will return an empty set of
  *  permissions, not a `NOT_FOUND` error.
  *
  *  Note: This operation is designed to be used for building permission-aware
  *  UIs and command-line tools, not for authorization checking. This operation
- *  may "fail open" without warning.</td>
+ *  may "fail open" without warning.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>testIamPermissions(TestIamPermissionsRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>testIamPermissionsCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>SetIamPolicy</td>
- *      <td>Sets the access control policy on the specified resource. Replaces any
+ *      <td><p>Sets the access control policy on the specified resource. Replaces any
  *  existing policy.
  *
- *  Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.</td>
+ *  Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>setIamPolicy(SetIamPolicyRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>setIamPolicyCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *  </table>
