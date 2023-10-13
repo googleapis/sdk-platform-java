@@ -250,7 +250,7 @@ public class ServiceClientCommentComposer {
           .append(method.method)
           .append("</td>\n")
           .append("     <td>")
-          .append("<p>"+ method.description + "</p>")
+          .append("<p>" + method.description + "</p>")
           .append("</td>\n")
           .append("     <td>\n");
       if (method.hasRequestObjectVariants) {
