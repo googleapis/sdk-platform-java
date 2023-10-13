@@ -44,6 +44,28 @@ __get_config_from_BUILD() {
   echo "${result}"
 }
 
+__get_gapic_option_from_BUILD() {
+  local build_file=$1
+  local pattern=$2
+  local gapic_option
+  local file_path
+  gapic_option=$(grep "${pattern}" "${build_file}" |\
+    head -1 |\
+    sed 's/.*\"\([^]]*\)\".*/\1/g' |\
+    sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
+  )
+  if [ -z "${gapic_option}" ] || [[ "${gapic_option}" == *"None"* ]]; then
+    gapic_option=""
+  fi
+
+  if [[ "${gapic_option}" == ":"* ]] || [[ "${gapic_option}" == "*"* ]]; then
+    # if gapic_option starts with : or *, remove the first character.
+    gapic_option="${gapic_option:1}"
+  fi
+  file_path="${build_file%/*}"
+  echo "${file_path}/${gapic_option}"
+}
+
 __get_iam_policy_from_BUILD() {
   local build_file=$1
   local contains_iam_policy
@@ -188,6 +210,27 @@ get_rest_numeric_enums_from_BUILD() {
     "true"
   )
   echo "${rest_numeric_enums}"
+}
+
+get_gapic_yaml_from_BUILD() {
+  local build_file=$1
+  local gapic_yaml
+  gapic_yaml=$(__get_gapic_option_from_BUILD "${build_file}" "gapic_yaml = ")
+  echo "${gapic_yaml}"
+}
+
+get_grpc_service_config_from_BUILD() {
+  local build_file=$1
+  local grpc_service_config
+  grpc_service_config=$(__get_gapic_option_from_BUILD "${build_file}" "grpc_service_config = ")
+  echo "${grpc_service_config}"
+}
+
+get_service_yaml_from_BUILD() {
+  local build_file=$1
+  local service_yaml
+  service_yaml=$(__get_gapic_option_from_BUILD "${build_file}" "service_yaml")
+  echo "${service_yaml}"
 }
 
 get_include_samples_from_BUILD() {

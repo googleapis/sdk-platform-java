@@ -68,6 +68,9 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   gapic_additional_protos=$(get_gapic_additional_protos_from_BUILD "${proto_build_file_path}")
   transport=$(get_transport_from_BUILD "${proto_build_file_path}")
   rest_numeric_enums=$(get_rest_numeric_enums_from_BUILD "${proto_build_file_path}")
+  gapic_yaml=$(get_gapic_yaml_from_BUILD "${proto_build_file_path}")
+  grpc_service_config=$(get_grpc_service_config_from_BUILD "${proto_build_file_path}")
+  service_yaml=$(get_service_yaml_from_BUILD "${proto_build_file_path}")
   include_samples=$(get_include_samples_from_BUILD "${proto_build_file_path}")
   popd # output_folder
   echo "GAPIC options are transport=${transport}, rest_numeric_enums=${rest_numeric_enums}, include_samples=${include_samples}."
@@ -82,6 +85,9 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   --gapic_additional_protos "${gapic_additional_protos}" \
   --transport "${transport}" \
   --rest_numeric_enums "${rest_numeric_enums}" \
+  --gapic_yaml "${gapic_yaml}" \
+  --grpc_service_config "${grpc_service_config}" \
+  --service_yaml "${service_yaml}" \
   --include_samples "${include_samples}"
   echo "Generate library finished."
   echo "Checking out googleapis-gen repository..."
