@@ -39,7 +39,7 @@ public final class OperationsGrpc {
 
   private OperationsGrpc() {}
 
-  public static final String SERVICE_NAME = "google.longrunning.Operations";
+  public static final java.lang.String SERVICE_NAME = "google.longrunning.Operations";
 
   // Static method descriptors that strictly reflect the proto.
   private static volatile io.grpc.MethodDescriptor<
@@ -935,9 +935,9 @@ public final class OperationsGrpc {
   private static final class OperationsMethodDescriptorSupplier
       extends OperationsBaseDescriptorSupplier
       implements io.grpc.protobuf.ProtoMethodDescriptorSupplier {
-    private final String methodName;
+    private final java.lang.String methodName;
 
-    OperationsMethodDescriptorSupplier(String methodName) {
+    OperationsMethodDescriptorSupplier(java.lang.String methodName) {
       this.methodName = methodName;
     }
 

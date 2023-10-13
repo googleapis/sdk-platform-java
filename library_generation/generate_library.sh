@@ -29,6 +29,10 @@ case $key in
     grpc_version="$2"
     shift
     ;;
+  --proto_only)
+    proto_only="$2"
+    shift
+    ;;
   --gapic_additional_protos)
     gapic_additional_protos="$2"
     shift
@@ -69,6 +73,10 @@ if [ -z "${grpc_version}" ]; then
   grpc_version=$(get_grpc_version "${gapic_generator_version}")
 fi
 
+if [ -z "${proto_only}" ]; then
+  proto_only="false"
+fi
+
 if [ -z "${gapic_additional_protos}" ]; then
   gapic_additional_protos="google/cloud/common_resources.proto"
 fi
@@ -99,7 +107,41 @@ mkdir -p "${output_folder}/${destination_path}"
 # get a fixed order.
 folder_name=$(extract_folder_name "${destination_path}")
 pushd "${output_folder}"
-proto_files=$(find "${proto_path}" -type f  -name "*.proto" | sort)
+find_depth=""
+case "${proto_path}" in
+  "google/api" | "google/cloud" | "google/iam/v1" | "google/rpc")
+    find_depth="-maxdepth 1"
+    ;;
+esac
+proto_files=$(find "${proto_path}" ${find_depth} -type f  -name "*.proto" | sort)
+# include or exclude certain protos in grpc plugin and gapic generator java.
+case "${proto_path}" in
+  "google/cloud")
+    # this proto is excluded from //google/cloud:google-apps-script-type-java
+    removed_proto="google/cloud/common_resources.proto"
+    proto_files="${proto_files//${removed_proto}/}"
+    ;;
+  "google/cloud/aiplatform/v1beta1"*)
+    # this proto is excluded from //google/cloud/aiplatform/v1beta1/schema:schema_proto
+    removed_proto="google/cloud/aiplatform/v1beta1/schema/io_format.proto"
+    proto_files="${proto_files//${removed_proto}/}"
+    ;;
+  "google/cloud/filestore"*)
+    # this proto is included in //google/cloud/filestore/v1:google-cloud-filestore-v1-java
+    # and //google/cloud/filestore/v1beta1:google-cloud-filestore-v1-java
+    proto_files="${proto_files} google/cloud/common/operation_metadata.proto"
+    ;;
+  "google/cloud/oslogin"*)
+    # this proto is included in //google/cloud/oslogin/v1:google-cloud-oslogin-v1-java
+    # and //google/cloud/oslogin/v1beta1:google-cloud-oslogin-v1-java
+    proto_files="${proto_files} google/cloud/oslogin/common/common.proto"
+    ;;
+  "google/rpc")
+    # this proto is excluded from //google/rpc:google-rpc-java
+    removed_proto="google/rpc/http.proto"
+    proto_files="${proto_files//${removed_proto}/}"
+    ;;
+esac
 # download gapic-generator-java, protobuf and grpc plugin.
 download_tools "${gapic_generator_version}" "${protobuf_version}" "${grpc_version}" "${os_architecture}"
 ##################### Section 1 #####################
@@ -120,49 +162,91 @@ fi
 ###################### Section 2 #####################
 ## generate gapic-*/, part of proto-*/, samples/
 ######################################################
-"$protoc_path"/protoc --experimental_allow_proto3_optional \
-"--plugin=protoc-gen-java_gapic=${script_dir}/gapic-generator-java-wrapper" \
-"--java_gapic_out=metadata:${destination_path}/java_gapic_srcjar_raw.srcjar.zip" \
-"--java_gapic_opt=$(get_gapic_opts)" \
-${proto_files} ${gapic_additional_protos}
+if [[ "${proto_only}" == "false" ]]; then
+  "$protoc_path"/protoc --experimental_allow_proto3_optional \
+  "--plugin=protoc-gen-java_gapic=${script_dir}/gapic-generator-java-wrapper" \
+  "--java_gapic_out=metadata:${destination_path}/java_gapic_srcjar_raw.srcjar.zip" \
+  "--java_gapic_opt=$(get_gapic_opts)" \
+  ${proto_files} ${gapic_additional_protos}
 
-unzip -o -q "${destination_path}/java_gapic_srcjar_raw.srcjar.zip" -d "${destination_path}"
-# Sync'\''d to the output file name in Writer.java.
-unzip -o -q "${destination_path}/temp-codegen.srcjar" -d "${destination_path}/java_gapic_srcjar"
-# Resource name source files.
-proto_dir=${destination_path}/java_gapic_srcjar/proto/src/main/java
-if [ ! -d "${proto_dir}" ]; then
-  # Some APIs don'\''t have resource name helpers, like BigQuery v2.
-  # Create an empty file so we can finish building. Gating the resource name rule definition
-  # on file existences go against Bazel'\''s design patterns, so we'\''ll simply delete all empty
-  # files during the final packaging process (see java_gapic_pkg.bzl)
-  mkdir -p "${proto_dir}"
-  touch "${proto_dir}"/PlaceholderFile.java
-fi
-
-# move java_gapic_srcjar/src/main to gapic-*/src.
-mv_src_files "gapic" "main"
-# remove empty files in gapic-*/src/main/java
-remove_empty_files "gapic"
-# move java_gapic_srcjar/src/test to gapic-*/src
-mv_src_files "gapic" "test"
-if [ "${include_samples}" == "true" ]; then
-  # move java_gapic_srcjar/samples/snippets to samples/snippets
-  mv_src_files "samples" "main"
+  unzip -o -q "${destination_path}/java_gapic_srcjar_raw.srcjar.zip" -d "${destination_path}"
+  # Sync'\''d to the output file name in Writer.java.
+  unzip -o -q "${destination_path}/temp-codegen.srcjar" -d "${destination_path}/java_gapic_srcjar"
+  # Resource name source files.
+  proto_dir=${destination_path}/java_gapic_srcjar/proto/src/main/java
+  if [ ! -d "${proto_dir}" ]; then
+    # Some APIs don't have resource name helpers, like BigQuery v2.
+    # Create an empty file so we can finish building. Gating the resource name rule definition
+    # on file existences go against Bazel's design patterns, so we'll simply delete all empty
+    # files during the final packaging process (see java_gapic_pkg.bzl)
+    mkdir -p "${proto_dir}"
+    touch "${proto_dir}"/PlaceholderFile.java
+  fi
+  # move java_gapic_srcjar/src/main to gapic-*/src.
+  mv_src_files "gapic" "main"
+  # remove empty files in gapic-*/src/main/java
+  remove_empty_files "gapic"
+  # move java_gapic_srcjar/src/test to gapic-*/src
+  mv_src_files "gapic" "test"
+  if [ "${include_samples}" == "true" ]; then
+    # move java_gapic_srcjar/samples/snippets to samples/snippets
+    mv_src_files "samples" "main"
+  fi
 fi
 ##################### Section 3 #####################
 # generate proto-*/
 #####################################################
+# exclude certain protos to java compiler.
+case "${proto_path}" in
+  "google/cloud/aiplatform/v1beta1"*)
+    # these protos are excluded from //google/cloud/aiplatform/v1beta1:google-cloud-aiplatform-v1beta1-java
+    prefix="google/cloud/aiplatform/v1beta1/schema"
+    protos="${prefix}/annotation_payload.proto ${prefix}/annotation_spec_color.proto ${prefix}/data_item_payload.proto ${prefix}/dataset_metadata.proto ${prefix}/geometry.proto"
+    for removed_proto in ${protos}; do
+      proto_files="${proto_files//${removed_proto}/}"
+    done
+    ;;
+  "google/devtools/containeranalysis/v1beta1"*)
+    # this proto is excluded from //google/devtools/containeranalysis/v1beta1:google-cloud-devtools-containeranalysis-v1beta1-java
+    removed_proto="google/devtools/containeranalysis/v1beta1/cvss/cvss.proto"
+    proto_files="${proto_files//${removed_proto}/}"
+    ;;
+esac
 "$protoc_path"/protoc "--java_out=${destination_path}/java_proto.jar" ${proto_files}
-# move java_gapic_srcjar/proto/src/main/java (generated resource name helper class)
-# to proto-*/src/main
-mv_src_files "proto" "main"
+if [[ "${proto_only}" == "false" ]]; then
+  # move java_gapic_srcjar/proto/src/main/java (generated resource name helper class)
+  # to proto-*/src/main
+  mv_src_files "proto" "main"
+fi
 # unzip java_proto.jar to proto-*/src/main/java
 unzip_src_files "proto"
 # remove empty files in proto-*/src/main/java
 remove_empty_files "proto"
+case "${proto_path}" in
+  "google/cloud/aiplatform/v1beta1"*)
+    prefix="google/cloud/aiplatform/v1beta1/schema"
+    protos="${prefix}/annotation_payload.proto ${prefix}/annotation_spec_color.proto ${prefix}/data_item_payload.proto ${prefix}/dataset_metadata.proto ${prefix}/geometry.proto"
+    for added_proto in ${protos}; do
+      proto_files="${proto_files} ${added_proto}"
+    done
+    ;;
+  "google/devtools/containeranalysis/v1beta1"*)
+    proto_files="${proto_files} google/devtools/containeranalysis/v1beta1/cvss/cvss.proto"
+    ;;
+  "google/iam/v1")
+    # these protos are excluded from //google/iam/v1:google-iam-v1-java
+    prefix="google/iam/v1"
+    protos="${prefix}/options.proto ${prefix}/policy.proto"
+    for removed_proto in ${protos}; do
+      proto_files="${proto_files//${removed_proto}/}"
+    done
+    ;;
+esac
 # copy proto files to proto-*/src/main/proto
 for proto_src in ${proto_files}; do
+  if [[ "${proto_src}" == "google/cloud/common/operation_metadata.proto" ]]; then
+    continue
+  fi
   mkdir -p "${destination_path}/proto-${folder_name}/src/main/proto"
   rsync -R "${proto_src}" "${destination_path}/proto-${folder_name}/src/main/proto"
 done

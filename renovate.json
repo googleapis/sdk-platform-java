@@ -1,64 +1,81 @@
 {
   "extends": [
-    "config:base"
+    "config:recommended"
   ],
-  "ignoreDeps": ["rules_pkg"],
-  "regexManagers": [
+  "dependencyDashboard": true,
+  "ignoreDeps": [
+    "rules_pkg"
+  ],
+  "customManagers": [
     {
-      "fileMatch": ["^gax-java/dependencies\\.properties$"],
-      "matchStrings": ["=(?<depName>.+\\:.+?):(?<currentValue>.+?)\\n"],
+      "customType": "regex",
+      "fileMatch": [
+        "^gax-java/dependencies\\.properties$"
+      ],
+      "matchStrings": [
+        "=(?<depName>.+\\:.+?):(?<currentValue>.+?)\\n"
+      ],
       "datasourceTemplate": "maven"
     },
     {
-      "fileMatch": ["^gax-java/dependencies\\.properties$"],
-      "matchStrings": ["version\\.com_google_protobuf=(?<currentValue>.+?)\\n"],
+      "customType": "regex",
+      "fileMatch": [
+        "^gax-java/dependencies\\.properties$"
+      ],
+      "matchStrings": [
+        "version\\.com_google_protobuf=(?<currentValue>.+?)\\n"
+      ],
       "depNameTemplate": "com.google.protobuf:protobuf-java",
       "datasourceTemplate": "maven"
     },
     {
-      "fileMatch": ["^gax-java/dependencies\\.properties$"],
-      "matchStrings": ["version\\.google_java_format=(?<currentValue>.+?)\\n"],
+      "customType": "regex",
+      "fileMatch": [
+        "^gax-java/dependencies\\.properties$"
+      ],
+      "matchStrings": [
+        "version\\.google_java_format=(?<currentValue>.+?)\\n"
+      ],
       "depNameTemplate": "com.google.googlejavaformat:google-java-format",
       "datasourceTemplate": "maven"
     },
     {
-      "fileMatch": ["^gax-java/dependencies\\.properties$"],
-      "matchStrings": ["version\\.io_grpc=(?<currentValue>.+?)\\n"],
+      "customType": "regex",
+      "fileMatch": [
+        "^gax-java/dependencies\\.properties$"
+      ],
+      "matchStrings": [
+        "version\\.io_grpc=(?<currentValue>.+?)\\n"
+      ],
       "depNameTemplate": "io.grpc:grpc-core",
       "datasourceTemplate": "maven"
-    },
-    {
-      "fileMatch": ["^\\.kokoro/presubmit/.*\\.sh"],
-      "matchStrings": ["SHOWCASE_VERSION=(?<currentValue>.+?)\\n"],
-      "datasourceTemplate": "go"
-    },
-    {
-      "fileMatch": ["^showcase/gapic-showcase/pom\\.xml$"],
-      "matchStrings": ["<gapic-showcase.version>(?<currentValue>.+?)</gapic-showcase.version>\\n"],
-      "datasourceTemplate": "go"
     }
   ],
   "packageRules": [
-     {
-      "matchUpdateTypes": ["major"],
-      "matchPackagePatterns": ["*"],
+    {
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "matchPackagePatterns": [
+        "*"
+      ],
       "enabled": false
     },
     {
-      "packagePatterns": [
+      "matchPackagePatterns": [
         "^com.google.guava:"
       ],
-      "versionScheme": "docker"
+      "versioning": "docker"
     },
     {
-      "packagePatterns": [
+      "matchPackagePatterns": [
         "*"
       ],
       "semanticCommitType": "deps",
       "semanticCommitScope": null
     },
     {
-      "packagePatterns": [
+      "matchPackagePatterns": [
         "^org.apache.maven",
         "^org.jacoco:",
         "^org.codehaus.mojo:",
@@ -70,7 +87,7 @@
       "semanticCommitScope": "deps"
     },
     {
-      "packagePatterns": [
+      "matchPackagePatterns": [
         "^{{metadata['repo']['distribution_name']}}",
         "^com.google.cloud:libraries-bom",
         "^com.google.cloud.samples:shared-configuration"
@@ -79,7 +96,7 @@
       "semanticCommitScope": "deps"
     },
     {
-      "packagePatterns": [
+      "matchPackagePatterns": [
         "^junit:junit",
         "^com.google.truth:truth",
         "^org.mockito:mockito-core",
@@ -90,55 +107,55 @@
       "semanticCommitScope": "deps"
     },
     {
-      "packagePatterns": [
+      "matchPackagePatterns": [
         "^com.google.cloud:google-cloud-"
       ],
       "ignoreUnstable": false
     },
     {
-      "packagePatterns": [
+      "matchPackagePatterns": [
         "^com.fasterxml.jackson.core"
       ],
       "groupName": "jackson dependencies"
     },
     {
-      "packagePatterns": [
+      "matchPackagePatterns": [
         "^com.google.protobuf"
       ],
       "groupName": "Protobuf dependencies"
     },
     {
-      "packagePatterns": [
+      "matchPackagePatterns": [
         "^io.grpc"
       ],
       "groupName": "gRPC dependencies"
     },
     {
-      "packagePatterns": [
+      "matchPackagePatterns": [
         "^com.google.auth"
       ],
       "groupName": "Google Auth Library dependencies"
     },
     {
-      "packagePatterns": [
+      "matchPackagePatterns": [
         "^com.google.api"
       ],
       "groupName": "Google API dependencies"
     },
     {
-      "packagePatterns": [
+      "matchPackagePatterns": [
         "^com.google.http-client"
       ],
       "groupName": "Google HTTP Client dependencies"
     },
     {
-      "packagePatterns": [
+      "matchPackagePatterns": [
         "^io.opencensus"
       ],
       "groupName": "OpenCensus dependencies"
     },
     {
-      "packagePatterns": [
+      "matchPackagePatterns": [
         "^io.netty"
       ],
       "groupName": "Netty dependencies"
