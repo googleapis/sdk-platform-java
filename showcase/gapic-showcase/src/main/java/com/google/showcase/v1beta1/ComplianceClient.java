@@ -86,300 +86,240 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>GetEnum</td>
- *      <td>This method requests an enum value from the server. Depending on the contents of EnumRequest, the enum value returned will be a known enum declared in the
+ *      <td><p>This method requests an enum value from the server. Depending on the contents of EnumRequest, the enum value returned will be a known enum declared in the
  *  .proto file, or a made-up enum value the is unknown to the client. To verify that clients can round-trip unknown enum vaues they receive, use the
  *  response from this RPC as the request to VerifyEnum()
  *
  *  The values of enums sent by the server when a known or unknown value is requested will be the same within a single Showcase server run (this is needed for
- *  VerifyEnum() to work) but are not guaranteed to be the same across separate Showcase server runs.</td>
+ *  VerifyEnum() to work) but are not guaranteed to be the same across separate Showcase server runs.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>getEnum(EnumRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>getEnumCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>RepeatDataPathTrailingResource</td>
- *      <td>Same as RepeatDataSimplePath, but with a trailing resource.</td>
+ *      <td><p>Same as RepeatDataSimplePath, but with a trailing resource.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>repeatDataPathTrailingResource(RepeatRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>repeatDataPathTrailingResourceCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>VerifyEnum</td>
- *      <td>This method is used to verify that clients can round-trip enum values, which is particularly important for unknown enum values over REST. VerifyEnum()
+ *      <td><p>This method is used to verify that clients can round-trip enum values, which is particularly important for unknown enum values over REST. VerifyEnum()
  *  verifies that its request, which is presumably the response that the client previously got to a GetEnum(), contains the correct data. If so, it responds
  *  with the same EnumResponse; otherwise, the RPC errors.
  *
  *  This works because the values of enums sent by the server when a known or unknown value is requested will be the same within a single Showcase server run,
- *  although they are not guaranteed to be the same across separate Showcase server runs.</td>
+ *  although they are not guaranteed to be the same across separate Showcase server runs.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>verifyEnum(EnumResponse request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>verifyEnumCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>RepeatDataQuery</td>
- *      <td>This method echoes the ComplianceData request. This method exercises
- *  sending all request fields as query parameters.</td>
+ *      <td><p>This method echoes the ComplianceData request. This method exercises
+ *  sending all request fields as query parameters.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>repeatDataQuery(RepeatRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>repeatDataQueryCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>GetIamPolicy</td>
- *      <td>Gets the access control policy for a resource.
+ *      <td><p>Gets the access control policy for a resource.
  *  Returns an empty policy if the resource exists and does not have a policy
- *  set.</td>
+ *  set.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>getIamPolicy(GetIamPolicyRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>getIamPolicyCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>SetIamPolicy</td>
- *      <td>Sets the access control policy on the specified resource. Replaces any
+ *      <td><p>Sets the access control policy on the specified resource. Replaces any
  *  existing policy.
  *
- *  Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.</td>
+ *  Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>setIamPolicy(SetIamPolicyRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>setIamPolicyCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>RepeatDataSimplePath</td>
- *      <td>This method echoes the ComplianceData request. This method exercises
+ *      <td><p>This method echoes the ComplianceData request. This method exercises
  *  sending some parameters as "simple" path variables (i.e., of the form
- *  "/bar/{foo}" rather than "/{foo=bar/*}"), and the rest as query parameters.</td>
+ *  "/bar/{foo}" rather than "/{foo=bar/*}"), and the rest as query parameters.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>repeatDataSimplePath(RepeatRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>repeatDataSimplePathCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>RepeatDataBodyPut</td>
- *      <td>This method echoes the ComplianceData request, using the HTTP PUT method.</td>
+ *      <td><p>This method echoes the ComplianceData request, using the HTTP PUT method.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>repeatDataBodyPut(RepeatRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>repeatDataBodyPutCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>RepeatDataBodyPatch</td>
- *      <td>This method echoes the ComplianceData request, using the HTTP PATCH method.</td>
+ *      <td><p>This method echoes the ComplianceData request, using the HTTP PATCH method.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>repeatDataBodyPatch(RepeatRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>repeatDataBodyPatchCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>GetLocation</td>
- *      <td>Gets information about a location.</td>
+ *      <td><p>Gets information about a location.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>getLocation(GetLocationRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>getLocationCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>TestIamPermissions</td>
- *      <td>Returns permissions that a caller has on the specified resource.
+ *      <td><p>Returns permissions that a caller has on the specified resource.
  *  If the resource does not exist, this will return an empty set of
  *  permissions, not a `NOT_FOUND` error.
  *
  *  Note: This operation is designed to be used for building permission-aware
  *  UIs and command-line tools, not for authorization checking. This operation
- *  may "fail open" without warning.</td>
+ *  may "fail open" without warning.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>testIamPermissions(TestIamPermissionsRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>testIamPermissionsCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>RepeatDataPathResource</td>
- *      <td>Same as RepeatDataSimplePath, but with a path resource.</td>
+ *      <td><p>Same as RepeatDataSimplePath, but with a path resource.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>repeatDataPathResource(RepeatRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>repeatDataPathResourceCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>ListLocations</td>
- *      <td>Lists information about the supported locations for this service.</td>
+ *      <td><p>Lists information about the supported locations for this service.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>listLocations(ListLocationsRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>listLocationsPagedCallable()
  *      <li>listLocationsCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>RepeatDataBody</td>
- *      <td>This method echoes the ComplianceData request. This method exercises
- *  sending the entire request object in the REST body.</td>
+ *      <td><p>This method echoes the ComplianceData request. This method exercises
+ *  sending the entire request object in the REST body.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>repeatDataBody(RepeatRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>repeatDataBodyCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>RepeatDataBodyInfo</td>
- *      <td>This method echoes the ComplianceData request. This method exercises
+ *      <td><p>This method echoes the ComplianceData request. This method exercises
  *  sending the a message-type field in the REST body. Per AIP-127, only
- *  top-level, non-repeated fields can be sent this way.</td>
+ *  top-level, non-repeated fields can be sent this way.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>repeatDataBodyInfo(RepeatRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>repeatDataBodyInfoCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *  </table>

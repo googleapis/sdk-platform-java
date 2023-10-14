@@ -89,266 +89,216 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>PagedExpandLegacyMapped</td>
- *      <td>This method returns a map containing lists of words that appear in the input, keyed by their
+ *      <td><p>This method returns a map containing lists of words that appear in the input, keyed by their
  *  initial character. The only words returned are the ones included in the current page,
  *  as determined by page_token and page_size, which both refer to the word indices in the
  *  input. This paging result consisting of a map of lists is a pattern used by some legacy
- *  APIs. New APIs should NOT use this pattern.</td>
+ *  APIs. New APIs should NOT use this pattern.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>pagedExpandLegacyMapped(PagedExpandRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>pagedExpandLegacyMappedPagedCallable()
  *      <li>pagedExpandLegacyMappedCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>Echo</td>
- *      <td>This method simply echoes the request. This method showcases unary RPCs.</td>
+ *      <td><p>This method simply echoes the request. This method showcases unary RPCs.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>echo(EchoRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>echoCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>Collect</td>
- *      <td>This method will collect the words given to it. When the stream is closed
+ *      <td><p>This method will collect the words given to it. When the stream is closed
  *  by the client, this method will return the a concatenation of the strings
- *  passed to it. This method showcases client-side streaming RPCs.</td>
+ *  passed to it. This method showcases client-side streaming RPCs.</p></td>
  *      <td>
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>collectCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>PagedExpand</td>
- *      <td>This is similar to the Expand method but instead of returning a stream of
- *  expanded words, this method returns a paged list of expanded words.</td>
+ *      <td><p>This is similar to the Expand method but instead of returning a stream of
+ *  expanded words, this method returns a paged list of expanded words.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>pagedExpand(PagedExpandRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>pagedExpandPagedCallable()
  *      <li>pagedExpandCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>GetIamPolicy</td>
- *      <td>Gets the access control policy for a resource.
+ *      <td><p>Gets the access control policy for a resource.
  *  Returns an empty policy if the resource exists and does not have a policy
- *  set.</td>
+ *  set.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>getIamPolicy(GetIamPolicyRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>getIamPolicyCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>SetIamPolicy</td>
- *      <td>Sets the access control policy on the specified resource. Replaces any
+ *      <td><p>Sets the access control policy on the specified resource. Replaces any
  *  existing policy.
  *
- *  Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.</td>
+ *  Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>setIamPolicy(SetIamPolicyRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>setIamPolicyCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>PagedExpandLegacy</td>
- *      <td>This is similar to the PagedExpand except that it uses
+ *      <td><p>This is similar to the PagedExpand except that it uses
  *  max_results instead of page_size, as some legacy APIs still
- *  do. New APIs should NOT use this pattern.</td>
+ *  do. New APIs should NOT use this pattern.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>pagedExpandLegacy(PagedExpandLegacyRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>pagedExpandLegacyCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>Expand</td>
- *      <td>This method splits the given content into words and will pass each word back
- *  through the stream. This method showcases server-side streaming RPCs.</td>
+ *      <td><p>This method splits the given content into words and will pass each word back
+ *  through the stream. This method showcases server-side streaming RPCs.</p></td>
  *      <td>
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>expandCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>Chat</td>
- *      <td>This method, upon receiving a request on the stream, will pass the same
+ *      <td><p>This method, upon receiving a request on the stream, will pass the same
  *  content back on the stream. This method showcases bidirectional
- *  streaming RPCs.</td>
+ *  streaming RPCs.</p></td>
  *      <td>
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>chatCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>GetLocation</td>
- *      <td>Gets information about a location.</td>
+ *      <td><p>Gets information about a location.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>getLocation(GetLocationRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>getLocationCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>TestIamPermissions</td>
- *      <td>Returns permissions that a caller has on the specified resource.
+ *      <td><p>Returns permissions that a caller has on the specified resource.
  *  If the resource does not exist, this will return an empty set of
  *  permissions, not a `NOT_FOUND` error.
  *
  *  Note: This operation is designed to be used for building permission-aware
  *  UIs and command-line tools, not for authorization checking. This operation
- *  may "fail open" without warning.</td>
+ *  may "fail open" without warning.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>testIamPermissions(TestIamPermissionsRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>testIamPermissionsCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>Block</td>
- *      <td>This method will block (wait) for the requested amount of time
+ *      <td><p>This method will block (wait) for the requested amount of time
  *  and then return the response or error.
- *  This method showcases how a client handles delays or retries.</td>
+ *  This method showcases how a client handles delays or retries.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>block(BlockRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>blockCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>Wait</td>
- *      <td>This method will wait for the requested amount of time and then return.
- *  This method showcases how a client handles a request timeout.</td>
+ *      <td><p>This method will wait for the requested amount of time and then return.
+ *  This method showcases how a client handles a request timeout.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>waitAsync(WaitRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>waitOperationCallable()
  *      <li>waitCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *    <tr>
  *      <td>ListLocations</td>
- *      <td>Lists information about the supported locations for this service.</td>
+ *      <td><p>Lists information about the supported locations for this service.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *
  *      <ul>
  *      <li>listLocations(ListLocationsRequest request)
  *      </ul>
- *
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *
  *      <ul>
  *      <li>listLocationsPagedCallable()
  *      <li>listLocationsCallable()
  *      </ul>
- *
  *    </td>
  *    </tr>
  *  </table>
