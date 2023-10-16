@@ -55,15 +55,32 @@ __get_gapic_option_from_BUILD() {
     sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
   )
   if [ -z "${gapic_option}" ] || [[ "${gapic_option}" == *"None"* ]]; then
-    gapic_option=""
+    echo ""
+    return
   fi
 
   if [[ "${gapic_option}" == ":"* ]] || [[ "${gapic_option}" == "*"* ]]; then
     # if gapic_option starts with : or *, remove the first character.
     gapic_option="${gapic_option:1}"
+  elif [[ "${gapic_option}" == "//"* ]]; then
+    # gapic option is a bazel target, use the file path and name directly.
+    # remove the leading "//".
+    gapic_option="${gapic_option:2}"
+    # replace ":" with "/"
+    gapic_option="${gapic_option//://}"
+    echo "${gapic_option}"
+    return
   fi
+
   file_path="${build_file%/*}"
-  echo "${file_path}/${gapic_option}"
+  # Make sure gapic option (*.yaml or *.json) exists in proto_path; otherwise
+  # reset gapic option to empty string.
+  if [ -f "${file_path}/${gapic_option}" ]; then
+    gapic_option="${file_path}/${gapic_option}"
+  else
+    gapic_option=""
+  fi
+  echo "${gapic_option}"
 }
 
 __get_iam_policy_from_BUILD() {
