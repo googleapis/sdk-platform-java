@@ -69,7 +69,7 @@ case $key in
     shift
     ;;
   --custom_gapic_name)
-    more_versions_coming="$2"
+    custom_gapic_name="$2"
     shift
     ;;
   --os_architecture)
@@ -129,13 +129,6 @@ fi
 if [ -z "${more_versions_coming}" ]; then
   more_versions_coming="false"
 fi
-
-if [ -z "${custom_gapic_name}" ]; then
-  # default to null in order to use the default name (i.e.
-  # gapic-google-cloud-library-name-v1-java)
-  custom_gapic_name="null"
-fi
-
 
 mkdir -p "${output_folder}/${destination_path}"
 ##################### Section 0 #####################
@@ -206,11 +199,11 @@ if [[ "${proto_only}" == "false" ]]; then
     touch "${proto_dir}"/PlaceholderFile.java
   fi
   # move java_gapic_srcjar/src/main to gapic-*/src.
-  mv_src_files "gapic" "main" "${api_version}" "${custom_gapic_name}"
+  mv_src_files "gapic" "main" "${api_version}"
   # remove empty files in gapic-*/src/main/java
   remove_empty_files "gapic" "${api_version}"
   # move java_gapic_srcjar/src/test to gapic-*/src
-  mv_src_files "gapic" "test" "${api_version}" "${custom_gapic_name}"
+  mv_src_files "gapic" "test" "${api_version}"
   if [ "${include_samples}" == "true" ]; then
     # move java_gapic_srcjar/samples/snippets to samples/snippets
     mv_src_files "samples" "main"
@@ -302,5 +295,5 @@ is_new_library="false" #always
 mkdir -p "${workspace}"
 
 run_owlbot_postprocessor "${workspace}" "${owlbot_sha}" "${repo_metadata_json_path}" "${include_samples}" \
-  "${script_dir}" "${output_folder}/${destination_path}" "${api_version}" "${transport}" "${repository_path}" "${more_versions_coming}"
+  "${script_dir}" "${output_folder}/${destination_path}" "${api_version}" "${transport}" "${repository_path}" "${more_versions_coming}" "${custom_gapic_name}"
 

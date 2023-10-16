@@ -96,17 +96,16 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
       # library
       continue
     fi
+    pushd "${output_folder}"
     if [ "${is_handwritten}" == "true" ]; then
       echo 'this is a handwritten library'
       hw_library=$(echo "${repository_path}" | cut -d: -f2)
-      pushd "${output_folder}"
       if [ ! -d "${hw_library}" ];then
         git clone "https://github.com/googleapis/${hw_library}.git"
       fi
       target_folder="${output_folder}/${hw_library}"
     else
       echo 'this is a monorepo library'
-      pushd "${output_folder}"
       if [ ! -d "google-cloud-java" ]; then
         sparse_clone "https://github.com/googleapis/google-cloud-java.git" "${repository_path} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"
       fi
@@ -162,6 +161,7 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   if [ $enable_postprocessing == "true" ]; then
     if [ "${more_versions_coming}" != "false" ]; then
       # we only do a diff check when all versions have been processed
+      popd # output_folder
       continue
     fi
     echo "Checking out repository..."

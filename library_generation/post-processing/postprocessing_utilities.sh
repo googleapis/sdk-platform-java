@@ -54,6 +54,7 @@ function run_owlbot_postprocessor {
   transport=$8
   repository_path=$9
   more_versions_coming=${10}
+  custom_gapic_name=${11}
 
   repository_root=$(echo "${repository_path}" | cut -d/ -f1)
 
@@ -83,7 +84,7 @@ function run_owlbot_postprocessor {
 
   # move generated libraries to the staging folder
   mkdir -p "${owlbot_staging_folder}/${staging_suffix}"
-  gapic_folder_name="${folder_name}"
+  gapic_folder_name="${custom_gapic_name:-"${folder_name}"}"
   cp -r "${destination_path}/gapic-${folder_name}-${api_version}" "${owlbot_staging_folder}/${staging_suffix}/${gapic_folder_name}"
   if [ "${transport}" != "rest" ];then
     cp -r "${destination_path}/grpc-${folder_name}-${api_version}" "${owlbot_staging_folder}/${staging_suffix}"
@@ -112,9 +113,9 @@ function run_owlbot_postprocessor {
 
 
   # run the postprocessor once all api versions have been pre-processed
-  if [[ "${more_versions_coming}" == "false" ]]; then
+  # if [[ "${more_versions_coming}" == "false" ]]; then
     docker run --rm -v "${workspace}:/workspace" --user $(id -u):$(id -g) "${owlbot_image}"
-  fi
+  # fi
 
   # get existing versions.txt from downloaded repository
   if [ -d "${output_folder}/google-cloud-java" ];then

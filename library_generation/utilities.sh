@@ -31,20 +31,12 @@ mv_src_files() {
   local category=$1 # one of gapic, proto, samples
   local type=$2 # one of main, test
   local api_version=$3
-  local custom_gapic_name=$4
   if [ "${category}" == "samples" ]; then
     src_suffix="samples/snippets/generated/src/main/java/com"
     folder_suffix="samples/snippets/generated"
   elif [ "${category}" == "proto" ]; then
     src_suffix="${category}/src/${type}/java"
     folder_suffix="${category}-${folder_name}-${api_version}/src/${type}"
-  elif [ "${category}" == "gapic" ]; then
-    src_suffix="src/${type}"
-    if [ "${custom_gapic_name}" != "null" ]; then
-      folder_suffix="${custom_gapic_name}/src"
-    else
-      folder_suffix="${category}-${folder_name}-${api_version}/src"
-    fi
   else
     src_suffix="src/${type}"
     folder_suffix="${category}-${folder_name}-${api_version}/src"
