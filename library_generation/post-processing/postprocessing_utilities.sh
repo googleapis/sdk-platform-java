@@ -55,6 +55,7 @@ function run_owlbot_postprocessor {
   repository_path=$9
   more_versions_coming=${10}
   custom_gapic_name=${11}
+  proto_path=${12}
 
   repository_root=$(echo "${repository_path}" | cut -d/ -f1)
 
@@ -82,18 +83,6 @@ function run_owlbot_postprocessor {
   staging_suffix="${api_version}"
 
 
-  # move generated libraries to the staging folder
-  mkdir -p "${owlbot_staging_folder}/${staging_suffix}"
-  gapic_folder_name="${custom_gapic_name:-"${folder_name}"}"
-  cp -r "${destination_path}/gapic-${folder_name}-${api_version}" "${owlbot_staging_folder}/${staging_suffix}/${gapic_folder_name}"
-  if [ "${transport}" != "rest" ];then
-    cp -r "${destination_path}/grpc-${folder_name}-${api_version}" "${owlbot_staging_folder}/${staging_suffix}"
-  fi
-  cp -r "${destination_path}/proto-${folder_name}-${api_version}" "${owlbot_staging_folder}/${staging_suffix}"
-  if [ "${include_samples}" == 'true' ]; then
-    cp -r "${destination_path}/samples" "${owlbot_staging_folder}/${staging_suffix}"
-  fi
-
   echo "${owlbot_py_content}" > "${workspace}/owlbot.py"
 
   # copy existing pom, owlbot and version files if the source of truth repo is present
@@ -111,7 +100,32 @@ function run_owlbot_postprocessor {
 
   fi
 
+  echo 'Running owl-bot-copy'
+  pre_processed_libs_folder="${destination_path}/pre-processed"
+  mkdir -p "${pre_processed_libs_folder}/${proto_path}/$(basename "${destination_path}")"
+  find "${destination_path}" -maxdepth 1 -type d \
+    -exec cp -pr {} "${pre_processed_libs_folder}/${proto_path}/$(basename "${destination_path}")" \;
+  pushd "${pre_processed_libs_folder}"
+  # create an empty repository so owl-bot-copy can process this as a repo
+  # (cannot process non-git-repositories)
+  git init
+  git commit --allow-empty -m 'empty commit'
+  popd # pre_processed_libs_folder
 
+   docker run --rm \
+     --user $(id -u):$(id -g) \
+     -v "${workspace}:/repo" \
+     -v "${pre_processed_libs_folder}:/pre-processed-libraries" \
+     -w /repo \
+     --env HOME=/tmp \
+     gcr.io/cloud-devrel-public-resources/owlbot-cli:latest \
+     copy-code \
+     --source-repo-commit-hash=none \
+     --source-repo=/pre-processed-libraries \
+     --config-file=.OwlBot.yaml
+
+
+  echo 'running owl-bot post-processor'
   # run the postprocessor once all api versions have been pre-processed
   # if [[ "${more_versions_coming}" == "false" ]]; then
     docker run --rm -v "${workspace}:/workspace" --user $(id -u):$(id -g) "${owlbot_image}"

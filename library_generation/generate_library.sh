@@ -265,6 +265,14 @@ popd # output_folder
 #####################################################
 pushd "${output_folder}/${destination_path}"
 rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_proto.jar temp-codegen.srcjar
+
+# produce folder structure similar to googleapis-gen
+# TODO: make this structure a normal outcome of previous sections
+mv "proto-${folder_name}-${api_version}" "proto-${folder_name}-${api_version}-java"
+mv "gapic-${folder_name}-${api_version}" "gapic-${folder_name}-${api_version}-java"
+if [[ ! "${transport}" == "rest" ]]; then
+  mv "grpc-${folder_name}-${api_version}" "grpc-${folder_name}-${api_version}-java"
+fi
 popd # destination path
 ##################### Section 5 #####################
 # post-processing
@@ -274,12 +282,6 @@ if [ "${enable_postprocessing}" != "true" ];
 then
   # arrange files for non-post-processing integration test
   echo "post processing is disabled"
-  pushd "${output_folder}/${destination_path}"
-  mv "proto-${folder_name}-${api_version}" "proto-${folder_name}-${api_version}-java"
-  mv "gapic-${folder_name}-${api_version}" "gapic-${folder_name}-${api_version}-java"
-  if [[ ! "${transport}" == "rest" ]]; then
-    mv "grpc-${folder_name}-${api_version}" "grpc-${folder_name}-${api_version}-java"
-  fi
   exit 0
 fi
 repo_metadata_json_path=$(get_repo_metadata_json_or_default \
@@ -295,5 +297,5 @@ is_new_library="false" #always
 mkdir -p "${workspace}"
 
 run_owlbot_postprocessor "${workspace}" "${owlbot_sha}" "${repo_metadata_json_path}" "${include_samples}" \
-  "${script_dir}" "${output_folder}/${destination_path}" "${api_version}" "${transport}" "${repository_path}" "${more_versions_coming}" "${custom_gapic_name}"
+  "${script_dir}" "${output_folder}/${destination_path}" "${api_version}" "${transport}" "${repository_path}" "${more_versions_coming}" "${custom_gapic_name}" "${proto_path}"
 
