@@ -78,6 +78,7 @@ __get_gapic_option_from_BUILD() {
   if [ -f "${file_path}/${gapic_option}" ]; then
     gapic_option="${file_path}/${gapic_option}"
   else
+    echo "WARNING: file ${file_path}/${gapic_option} does not exist, reset gapic option to empty string." >&2
     gapic_option=""
   fi
   echo "${gapic_option}"
