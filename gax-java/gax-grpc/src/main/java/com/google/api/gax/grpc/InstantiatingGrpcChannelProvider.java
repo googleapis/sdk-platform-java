@@ -280,19 +280,23 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       // Case 1: does not enable DirectPath
       if (!isDirectPathOptionSet) {
         LOG.log(
-            Level.WARNING, "DirectPath is misconfigured. Please set the attemptDirectPath option.");
+            Level.WARNING,
+            "DirectPath is misconfigured. Please set the attemptDirectPath option along with the"
+                + " attemptDirectPathXds option.");
       } else {
         // Case 2: credential is not correctly set
         if (!isNonDefaultServiceAccountAllowed()) {
           LOG.log(
               Level.WARNING,
-              "DirectPath is misconfigured. Please make sure the credential is an instance of"
-                  + " ComputeEngineCredentials.");
+              "DirectPath is misconfigured. Please make sure the credential is an instance of "
+                  + ComputeEngineCredentials.class.getName()
+                  + " .");
         }
         // Case 3: not running on GCE
         if (!isOnComputeEngine()) {
           LOG.log(
-              Level.WARNING, "DirectPath is misconfigured. Please run in the GCE environment. ");
+              Level.WARNING,
+              "DirectPath is misconfigured. DirectPath is only available in a GCE environment.");
         }
       }
     }
