@@ -73,7 +73,13 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   service_yaml=$(get_service_yaml_from_BUILD "${proto_build_file_path}")
   include_samples=$(get_include_samples_from_BUILD "${proto_build_file_path}")
   popd # output_folder
-  echo "GAPIC options are transport=${transport}, rest_numeric_enums=${rest_numeric_enums}, include_samples=${include_samples}."
+  echo "GAPIC options are
+    transport=${transport},
+    rest_numeric_enums=${rest_numeric_enums},
+    gapic_yaml=${gapic_yaml},
+    grpc_service_config=${grpc_service_config},
+    service_yaml=${service_yaml},
+    include_samples=${include_samples}."
   # generate GAPIC client library
   echo "Generating library from ${proto_path}, to ${destination_path}..."
   "${library_generation_dir}"/generate_library.sh \
