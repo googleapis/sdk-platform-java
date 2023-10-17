@@ -144,6 +144,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
         builder.directPathServiceConfig == null
             ? getDefaultDirectPathServiceConfig()
             : builder.directPathServiceConfig;
+    logDirectPathMisconfig();
   }
 
   /**
@@ -237,7 +238,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   private TransportChannel createChannel() throws IOException {
-    logDirectPathMisconfig();
     return GrpcTransportChannel.create(
         ChannelPool.create(
             channelPoolSettings, InstantiatingGrpcChannelProvider.this::createSingleChannel));
@@ -272,13 +272,9 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   private void logDirectPathMisconfig() {
-    boolean isDirectPathOptionSet = Boolean.TRUE.equals(attemptDirectPath);
-    boolean isDirectPathXdsEnvSet =
-        Boolean.parseBoolean(envProvider.getenv(DIRECT_PATH_ENV_ENABLE_XDS));
-    boolean isDirectPathXdsOptionSet = Boolean.TRUE.equals(attemptDirectPathXds);
-    if (isDirectPathXdsEnvSet || isDirectPathXdsOptionSet) {
+    if (isDirectPathXdsEnabled()) {
       // Case 1: does not enable DirectPath
-      if (!isDirectPathOptionSet) {
+      if (!isDirectPathXdsEnabled()) {
         LOG.log(
             Level.WARNING,
             "DirectPath is misconfigured. Please set the attemptDirectPath option along with the"
