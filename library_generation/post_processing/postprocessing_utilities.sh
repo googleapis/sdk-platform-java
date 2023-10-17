@@ -122,9 +122,9 @@ function run_owlbot_postprocessor {
 
   echo 'running owl-bot post-processor'
   # run the postprocessor once all api versions have been pre-processed
-  # if [[ "${more_versions_coming}" == "false" ]]; then
+  if [[ "${more_versions_coming}" == "false" ]]; then
     docker run --rm -v "${workspace}:/workspace" --user $(id -u):$(id -g) "${owlbot_postprocessor_image}"
-  # fi
+  fi
 
   # get existing versions.txt from downloaded repository
   if [ -d "${output_folder}/google-cloud-java" ];then
