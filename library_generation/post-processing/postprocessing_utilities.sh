@@ -50,12 +50,11 @@ function run_owlbot_postprocessor {
   include_samples=$4
   scripts_root=$5
   destination_path=$6
-  api_version=$7
-  transport=$8
-  repository_path=$9
-  more_versions_coming=${10}
-  custom_gapic_name=${11}
-  proto_path=${12}
+  transport=$7
+  repository_path=$8
+  more_versions_coming=$9
+  custom_gapic_name=${10}
+  proto_path=${11}
 
   repository_root=$(echo "${repository_path}" | cut -d/ -f1)
 

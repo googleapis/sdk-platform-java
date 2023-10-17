@@ -87,7 +87,6 @@ done
 script_dir=$(dirname "$(readlink -f "$0")")
 # source utility functions
 source "${script_dir}"/utilities.sh
-api_version=$(extract_api_version "${proto_path}")
 output_folder="$(get_output_folder)"
 
 if [ -z "${protobuf_version}" ]; then
@@ -169,9 +168,9 @@ if [[ ! "${transport}" == "rest" ]]; then
   "--rpc-plugin_out=:${destination_path}/java_grpc.jar" \
   ${proto_files} # Do not quote because this variable should not be treated as one long string.
   # unzip java_grpc.jar to grpc-*/src/main/java
-  unzip_src_files "grpc" "${api_version}"
+  unzip_src_files "grpc"
   # remove empty files in grpc-*/src/main/java
-  remove_empty_files "grpc" "${api_version}"
+  remove_empty_files "grpc"
   # remove grpc version in *ServiceGrpc.java file so the content is identical with bazel build.
   remove_grpc_version
 fi
@@ -199,11 +198,11 @@ if [[ "${proto_only}" == "false" ]]; then
     touch "${proto_dir}"/PlaceholderFile.java
   fi
   # move java_gapic_srcjar/src/main to gapic-*/src.
-  mv_src_files "gapic" "main" "${api_version}"
+  mv_src_files "gapic" "main"
   # remove empty files in gapic-*/src/main/java
-  remove_empty_files "gapic" "${api_version}"
+  remove_empty_files "gapic"
   # move java_gapic_srcjar/src/test to gapic-*/src
-  mv_src_files "gapic" "test" "${api_version}"
+  mv_src_files "gapic" "test"
   if [ "${include_samples}" == "true" ]; then
     # move java_gapic_srcjar/samples/snippets to samples/snippets
     mv_src_files "samples" "main"
@@ -232,12 +231,12 @@ esac
 if [[ "${proto_only}" == "false" ]]; then
   # move java_gapic_srcjar/proto/src/main/java (generated resource name helper class)
   # to proto-*/src/main
-  mv_src_files "proto" "main" "${api_version}"
+  mv_src_files "proto" "main"
 fi
 # unzip java_proto.jar to proto-*/src/main/java
-unzip_src_files "proto" "${api_version}"
+unzip_src_files "proto"
 # remove empty files in proto-*/src/main/java
-remove_empty_files "proto" "${api_version}"
+remove_empty_files "proto"
 # include certain protos in generated library.
 case "${proto_path}" in
   "google/cloud/aiplatform/v1beta1"*)
@@ -256,8 +255,8 @@ for proto_src in ${proto_files}; do
   if [[ "${proto_src}" == "google/cloud/common/operation_metadata.proto" ]]; then
     continue
   fi
-  mkdir -p "${destination_path}/proto-${folder_name}-${api_version}/src/main/proto"
-  rsync -R "${proto_src}" "${destination_path}/proto-${folder_name}-${api_version}/src/main/proto"
+  mkdir -p "${destination_path}/proto-${folder_name}/src/main/proto"
+  rsync -R "${proto_src}" "${destination_path}/proto-${folder_name}/src/main/proto"
 done
 popd # output_folder
 ##################### Section 4 #####################
@@ -265,14 +264,6 @@ popd # output_folder
 #####################################################
 pushd "${output_folder}/${destination_path}"
 rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_proto.jar temp-codegen.srcjar
-
-# produce folder structure similar to googleapis-gen
-# TODO: make this structure a normal outcome of previous sections
-mv "proto-${folder_name}-${api_version}" "proto-${folder_name}-${api_version}-java"
-mv "gapic-${folder_name}-${api_version}" "gapic-${folder_name}-${api_version}-java"
-if [[ ! "${transport}" == "rest" ]]; then
-  mv "grpc-${folder_name}-${api_version}" "grpc-${folder_name}-${api_version}-java"
-fi
 popd # destination path
 ##################### Section 5 #####################
 # post-processing
@@ -297,5 +288,5 @@ is_new_library="false" #always
 mkdir -p "${workspace}"
 
 run_owlbot_postprocessor "${workspace}" "${owlbot_sha}" "${repo_metadata_json_path}" "${include_samples}" \
-  "${script_dir}" "${output_folder}/${destination_path}" "${api_version}" "${transport}" "${repository_path}" "${more_versions_coming}" "${custom_gapic_name}" "${proto_path}"
+  "${script_dir}" "${output_folder}/${destination_path}" "${transport}" "${repository_path}" "${more_versions_coming}" "${custom_gapic_name}" "${proto_path}"
 

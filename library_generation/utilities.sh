@@ -7,22 +7,21 @@ utilities_script_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null
 extract_folder_name() {
   local destination_path=$1
   local folder_name=${destination_path##*/}
-  echo "${folder_name//-v[A-Za-z0-9]*-java/}"
+  echo "${folder_name}"
 }
 
 remove_empty_files() {
   local category=$1
   local file_num
-  local api_version=$2
-  find "${destination_path}/${category}-${folder_name}-${api_version}/src/main/java" -type f -size 0 | while read -r f; do rm -f "${f}"; done
+  find "${destination_path}/${category}-${folder_name}/src/main/java" -type f -size 0 | while read -r f; do rm -f "${f}"; done
   # remove the directory if the directory has no files.
-  file_num=$(find "${destination_path}/${category}-${folder_name}-${api_version}" -type f | wc -l | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+  file_num=$(find "${destination_path}/${category}-${folder_name}" -type f | wc -l | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
   if [[ "${file_num}" == 0 ]]; then
     rm -rf "${destination_path}/${category}-${folder_name}"
   fi
 
-  if [ -d "${destination_path}/${category}-${folder_name}-${api_version}/src/main/java/samples" ]; then
-      mv "${destination_path}/${category}-${folder_name}-${api_version}/src/main/java/samples" "${destination_path}/${category}-${folder_name}-${api_version}"
+  if [ -d "${destination_path}/${category}-${folder_name}/src/main/java/samples" ]; then
+      mv "${destination_path}/${category}-${folder_name}/src/main/java/samples" "${destination_path}/${category}-${folder_name}"
   fi
 }
 
@@ -30,16 +29,15 @@ remove_empty_files() {
 mv_src_files() {
   local category=$1 # one of gapic, proto, samples
   local type=$2 # one of main, test
-  local api_version=$3
   if [ "${category}" == "samples" ]; then
     src_suffix="samples/snippets/generated/src/main/java/com"
     folder_suffix="samples/snippets/generated"
   elif [ "${category}" == "proto" ]; then
     src_suffix="${category}/src/${type}/java"
-    folder_suffix="${category}-${folder_name}-${api_version}/src/${type}"
+    folder_suffix="${category}-${folder_name}/src/${type}"
   else
     src_suffix="src/${type}"
-    folder_suffix="${category}-${folder_name}-${api_version}/src"
+    folder_suffix="${category}-${folder_name}/src"
   fi
   mkdir -p "${destination_path}/${folder_suffix}"
   cp -r "${destination_path}/java_gapic_srcjar/${src_suffix}" "${destination_path}/${folder_suffix}"
@@ -51,11 +49,10 @@ mv_src_files() {
 # unzip jar file
 unzip_src_files() {
   local category=$1
-  local api_version=$2
   local jar_file=java_${category}.jar
-  mkdir -p "${destination_path}/${category}-${folder_name}-${api_version}/src/main/java"
-  unzip -q -o "${destination_path}/${jar_file}" -d "${destination_path}/${category}-${folder_name}-${api_version}/src/main/java"
-  rm -r -f "${destination_path}/${category}-${folder_name}-${api_version}/src/main/java/META-INF"
+  mkdir -p "${destination_path}/${category}-${folder_name}/src/main/java"
+  unzip -q -o "${destination_path}/${jar_file}" -d "${destination_path}/${category}-${folder_name}/src/main/java"
+  rm -r -f "${destination_path}/${category}-${folder_name}/src/main/java/META-INF"
 }
 
 # get gapic options from .yaml and .json files from proto_path.
@@ -210,12 +207,6 @@ get_version_from_versions_txt() {
   key=$2
   version=$(grep "$key:" "${versions}" | cut -d: -f3) # 3rd field is snapshot
   echo "${version}"
-}
-
-# for a googleapis path like google/cloud/lib/v1 it will extract the last
-# element of the slash (/) separated path, in this case v1
-extract_api_version() {
-  echo $1 | sed 's/-java\$//' | rev | cut -d/ -f1 | rev
 }
 
 # gets the output folder where all sources and dependencies will be located. It
