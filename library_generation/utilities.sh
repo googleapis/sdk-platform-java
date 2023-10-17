@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 set -xeo pipefail
-utilities_script_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 # Utility functions used in `generate_library.sh` and showcase generation.
 extract_folder_name() {
@@ -200,9 +199,7 @@ download_fail() {
   exit 1
 }
 
-# gets the output folder where all sources and dependencies will be located. It
-# relies on utilities_script_dir which points to the same location as
-# `generate_library.sh`
+# gets the output folder where all sources and dependencies will be located.
 get_output_folder() {
   echo "$(pwd)/output"
 }
