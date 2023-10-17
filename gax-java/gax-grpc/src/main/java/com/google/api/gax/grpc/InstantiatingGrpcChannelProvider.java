@@ -84,8 +84,9 @@ import org.threeten.bp.Duration;
  */
 @InternalExtensionOnly
 public final class InstantiatingGrpcChannelProvider implements TransportChannelProvider {
-  private static final Logger LOG =
-      Logger.getLogger(InstantiatingGrpcChannelProvider.class.getName());
+  @VisibleForTesting
+  static final Logger LOG = Logger.getLogger(InstantiatingGrpcChannelProvider.class.getName());
+
   private static final String DIRECT_PATH_ENV_DISABLE_DIRECT_PATH =
       "GOOGLE_CLOUD_DISABLE_DIRECT_PATH";
   private static final String DIRECT_PATH_ENV_ENABLE_XDS = "GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS";
@@ -274,7 +275,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   private void logDirectPathMisconfig() {
     if (isDirectPathXdsEnabled()) {
       // Case 1: does not enable DirectPath
-      if (!isDirectPathXdsEnabled()) {
+      if (!isDirectPathEnabled()) {
         LOG.log(
             Level.WARNING,
             "DirectPath is misconfigured. Please set the attemptDirectPath option along with the"
@@ -307,6 +308,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
   // DirectPath should only be used on Compute Engine.
   // Notice Windows is supported for now.
+  @VisibleForTesting
   static boolean isOnComputeEngine() {
     String osName = System.getProperty("os.name");
     if ("Linux".equals(osName)) {

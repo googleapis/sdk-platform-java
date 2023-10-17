@@ -56,6 +56,9 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
+import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -502,5 +505,59 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
             .setExecutor(Mockito.mock(Executor.class))
             .build();
     return channelProvider.createMtlsChannelCredentials();
+  }
+
+  @Test
+  public void testDirectPathMisconfigLog() {
+    {
+      FakeLogHandler logHandler = new FakeLogHandler();
+      InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
+      InstantiatingGrpcChannelProvider provider =
+          InstantiatingGrpcChannelProvider.newBuilder().setAttemptDirectPathXds().build();
+      assertThat(logHandler.getAllMessages())
+          .contains(
+              "DirectPath is misconfigured. Please set the attemptDirectPath option along with the"
+                  + " attemptDirectPathXds option.");
+      InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
+    }
+
+    {
+      FakeLogHandler logHandler = new FakeLogHandler();
+      InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
+      InstantiatingGrpcChannelProvider provider =
+          InstantiatingGrpcChannelProvider.newBuilder()
+              .setAttemptDirectPathXds()
+              .setAttemptDirectPath(true)
+              .build();
+      assertThat(logHandler.getAllMessages())
+          .contains(
+              "DirectPath is misconfigured. Please make sure the credential is an instance of"
+                  + " com.google.auth.oauth2.ComputeEngineCredentials .");
+      if (!InstantiatingGrpcChannelProvider.isOnComputeEngine()) {
+        assertThat(logHandler.getAllMessages())
+            .contains(
+                "DirectPath is misconfigured. DirectPath is only available in a GCE environment");
+      }
+      InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
+    }
+  }
+
+  private static class FakeLogHandler extends Handler {
+    List<LogRecord> records = new ArrayList<>();
+
+    @Override
+    public void publish(LogRecord record) {
+      records.add(record);
+    }
+
+    @Override
+    public void flush() {}
+
+    @Override
+    public void close() throws SecurityException {}
+
+    List<String> getAllMessages() {
+      return records.stream().map(LogRecord::getMessage).collect(Collectors.toList());
+    }
   }
 }
