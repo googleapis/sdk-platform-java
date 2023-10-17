@@ -508,38 +508,50 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testDirectPathMisconfigLog() {
-    {
-      FakeLogHandler logHandler = new FakeLogHandler();
-      InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
-      InstantiatingGrpcChannelProvider provider =
-          InstantiatingGrpcChannelProvider.newBuilder().setAttemptDirectPathXds().build();
-      assertThat(logHandler.getAllMessages())
-          .contains(
-              "DirectPath is misconfigured. Please set the attemptDirectPath option along with the"
-                  + " attemptDirectPathXds option.");
-      InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
-    }
+  public void testLogDirectPathMisconfigAttrempDirectPathNotSet() {
+    FakeLogHandler logHandler = new FakeLogHandler();
+    InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder().setAttemptDirectPathXds().build();
+    assertThat(logHandler.getAllMessages())
+        .contains(
+            "DirectPath is misconfigured. Please set the attemptDirectPath option along with the"
+                + " attemptDirectPathXds option.");
+    InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
+  }
 
-    {
-      FakeLogHandler logHandler = new FakeLogHandler();
-      InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
-      InstantiatingGrpcChannelProvider provider =
-          InstantiatingGrpcChannelProvider.newBuilder()
-              .setAttemptDirectPathXds()
-              .setAttemptDirectPath(true)
-              .build();
+  @Test
+  public void testLogDirectPathMisconfigWrongCredential() {
+    FakeLogHandler logHandler = new FakeLogHandler();
+    InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setAttemptDirectPathXds()
+            .setAttemptDirectPath(true)
+            .build();
+    assertThat(logHandler.getAllMessages())
+        .contains(
+            "DirectPath is misconfigured. Please make sure the credential is an instance of"
+                + " com.google.auth.oauth2.ComputeEngineCredentials .");
+    InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
+  }
+
+  @Test
+  public void testLogDirectPathMisconfigNotOnGCE() {
+    FakeLogHandler logHandler = new FakeLogHandler();
+    InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setAttemptDirectPathXds()
+            .setAttemptDirectPath(true)
+            .setAllowNonDefaultServiceAccount(true)
+            .build();
+    if (!InstantiatingGrpcChannelProvider.isOnComputeEngine()) {
       assertThat(logHandler.getAllMessages())
           .contains(
-              "DirectPath is misconfigured. Please make sure the credential is an instance of"
-                  + " com.google.auth.oauth2.ComputeEngineCredentials .");
-      if (!InstantiatingGrpcChannelProvider.isOnComputeEngine()) {
-        assertThat(logHandler.getAllMessages())
-            .contains(
-                "DirectPath is misconfigured. DirectPath is only available in a GCE environment");
-      }
-      InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
+              "DirectPath is misconfigured. DirectPath is only available in a GCE environment");
     }
+    InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
   }
 
   private static class FakeLogHandler extends Handler {
