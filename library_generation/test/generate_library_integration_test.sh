@@ -71,7 +71,7 @@ popd # googleapis
 popd # output_folder
 
 grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
-  proto_path=$(echo "$line" | cut -d " " -f 1 | sed 's/,/ /g')
+  proto_path=$(echo "$line" | cut -d " " -f 1)
   destination_path=$(echo "$line" | cut -d " " -f 2)
   repository_path=$(echo "$line" | cut -d " " -f 3)
   more_versions_coming=$(echo "${line}" | cut -d " " -f 4)
