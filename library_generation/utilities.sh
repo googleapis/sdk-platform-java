@@ -71,7 +71,6 @@ get_gapic_opts() {
   if [[ "${gapic_yaml}" == "" ]]; then
     gapic_yaml=$(find "${proto_path}" -type f -name "*gapic.yaml")
   fi
-  gapic_yaml="gapic-config=${gapic_yaml},"
 
   if [[ "${service_config}" == "" ]]; then
     service_config=$(find "${proto_path}" -type f -name "*service_config.json")
@@ -80,7 +79,7 @@ get_gapic_opts() {
   if [[ "${service_yaml}" == "" ]]; then
     service_yaml=$(find "${proto_path}" -maxdepth 1 -type f \( -name "*.yaml" ! -name "*gapic*.yaml" \))
   fi
-  echo "transport=${transport},${rest_numeric_enums}grpc-service-config=${service_config},${gapic_yaml}api-service-config=${service_yaml}"
+  echo "transport=${transport},${rest_numeric_enums},grpc-service-config=${service_config},gapic-config=${gapic_yaml},api-service-config=${service_yaml}"
 }
 
 remove_grpc_version() {
