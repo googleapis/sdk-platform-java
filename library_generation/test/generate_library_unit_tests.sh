@@ -59,7 +59,7 @@ get_gapic_opts_without_rest_test() {
   local gapic_opts
   gapic_opts="$(get_gapic_opts "${transport}" "${rest_numeric_enums}" "" "" "")"
   assertEquals \
-  "transport=grpc,grpc-service-config=${proto_path}/example_grpc_service_config.json,gapic-config=${proto_path}/example_gapic.yaml,api-service-config=${proto_path}/example.yaml" \
+  "transport=grpc,,grpc-service-config=${proto_path}/example_grpc_service_config.json,gapic-config=${proto_path}/example_gapic.yaml,api-service-config=${proto_path}/example.yaml" \
   "$gapic_opts"
 }
 
@@ -70,7 +70,7 @@ get_gapic_opts_with_non_default_test() {
   local gapic_opts
   gapic_opts="$(get_gapic_opts "${transport}" "${rest_numeric_enums}" "${proto_path}/example_gapic.yaml" "${proto_path}/example_grpc_service_config.json" "${proto_path}/example.yaml")"
   assertEquals \
-  "transport=grpc,grpc-service-config=${proto_path}/example_grpc_service_config.json,gapic-config=${proto_path}/example_gapic.yaml,api-service-config=${proto_path}/example.yaml" \
+  "transport=grpc,,grpc-service-config=${proto_path}/example_grpc_service_config.json,gapic-config=${proto_path}/example_gapic.yaml,api-service-config=${proto_path}/example.yaml" \
   "$gapic_opts"
 }
 

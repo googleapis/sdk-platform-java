@@ -62,7 +62,7 @@ get_gapic_opts() {
   local service_config=$4
   local service_yaml=$5
   if [ "${rest_numeric_enums}" == "true" ]; then
-    rest_numeric_enums="rest-numeric-enums,"
+    rest_numeric_enums="rest-numeric-enums"
   else
     rest_numeric_enums=""
   fi
