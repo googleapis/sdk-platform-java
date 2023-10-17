@@ -200,15 +200,6 @@ download_fail() {
   exit 1
 }
 
-
-# takes a versions.txt file and returns its version
-get_version_from_versions_txt() {
-  versions=$1
-  key=$2
-  version=$(grep "$key:" "${versions}" | cut -d: -f3) # 3rd field is snapshot
-  echo "${version}"
-}
-
 # gets the output folder where all sources and dependencies will be located. It
 # relies on utilities_script_dir which points to the same location as
 # `generate_library.sh`
