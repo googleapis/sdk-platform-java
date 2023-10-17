@@ -42,22 +42,24 @@ get_protobuf_version_failed_with_invalid_generator_version_test() {
 }
 
 get_gapic_opts_with_rest_test() {
+  local proto_path="${script_dir}/resources/gapic_options"
   local transport="grpc"
   local rest_numeric_enums="true"
   local gapic_opts
   gapic_opts="$(get_gapic_opts "${transport}" "${rest_numeric_enums}" "" "" "")"
   assertEquals \
-  "transport=grpc,rest-numeric-enums,grpc-service-config=,gapic-config=,api-service-config=" \
+  "transport=grpc,rest-numeric-enums,grpc-service-config=${proto_path}/example_grpc_service_config.json,gapic-config=${proto_path}/example_gapic.yaml,api-service-config=${proto_path}/example.yaml" \
   "${gapic_opts}"
 }
 
 get_gapic_opts_without_rest_test() {
+  local proto_path="${script_dir}/resources/gapic_options"
   local transport="grpc"
   local rest_numeric_enums="false"
   local gapic_opts
   gapic_opts="$(get_gapic_opts "${transport}" "${rest_numeric_enums}" "" "" "")"
   assertEquals \
-  "transport=grpc,grpc-service-config=,gapic-config=,api-service-config=" \
+  "transport=grpc,grpc-service-config=${proto_path}/example_grpc_service_config.json,gapic-config=${proto_path}/example_gapic.yaml,api-service-config=${proto_path}/example.yaml" \
   "$gapic_opts"
 }
 
