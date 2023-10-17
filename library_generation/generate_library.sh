@@ -264,7 +264,7 @@ popd # destination path
 ##################### Section 5 #####################
 # post-processing
 #####################################################
-source "${script_dir}/post-processing/postprocessing_utilities.sh"
+source "${script_dir}/post_processing/postprocessing_utilities.sh"
 if [ "${enable_postprocessing}" != "true" ];
 then
   # arrange files for non-post-processing integration test

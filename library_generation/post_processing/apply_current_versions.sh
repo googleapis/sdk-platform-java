@@ -1,13 +1,11 @@
 #!/bin/bash
 
 # This script sets the "current-version" written in versions.txt applied to all
-# pom.xml files in this monorepo.
-# This script plays supplemental role just in case Release Please pull request
-# fails to update all files.
+# pom.xml files.
 
 # Usage:
-# # Run this script at the root of the monorepo
-# bash generation/apply_current_versions.sh
+# # Run this script at the root of a post-processed library
+# bash library_generation/post_processing/apply_current_versions.sh
 
 set -e
 

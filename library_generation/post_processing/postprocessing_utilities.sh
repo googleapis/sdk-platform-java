@@ -76,7 +76,7 @@ function run_owlbot_postprocessor {
   distribution_name=$(cat "${repo_metadata_json_path}" | jq -r '.distribution_name // empty' | rev | cut -d: -f1 | rev)
   api_shortname=$(cat "${repo_metadata_json_path}" | jq -r '.api_shortname // empty')
   # render default owlbot.py template
-  owlbot_py_content=$(cat ""${scripts_root}"/post-processing/templates/owlbot.py.template")
+  owlbot_py_content=$(cat ""${scripts_root}"/post_processing/templates/owlbot.py.template")
   # used with owl-bot-staging/
   staging_suffix="${api_version}"
 
@@ -133,7 +133,7 @@ function run_owlbot_postprocessor {
   if [ -d "${output_folder}/google-cloud-java" ];then
     cp "${output_folder}/google-cloud-java/versions.txt" "${workspace}"
     pushd "${workspace}"
-    bash "${scripts_root}/post-processing/apply_current_versions.sh"
+    bash "${scripts_root}/post_processing/apply_current_versions.sh"
     rm versions.txt
     popd # workspace
   fi
