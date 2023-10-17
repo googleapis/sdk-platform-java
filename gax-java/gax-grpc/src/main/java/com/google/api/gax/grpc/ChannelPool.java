@@ -156,7 +156,8 @@ class ChannelPool extends ManagedChannel {
 
     List<Entry> localEntries = entries.get();
     for (Entry entry : localEntries) {
-      entry.channel.shutdown();
+      entry.shutdown();
+//      entry.channel.shutdown();
     }
     if (executor != null) {
       // shutdownNow will cancel scheduled tasks
@@ -468,7 +469,9 @@ class ChannelPool extends ManagedChannel {
      * previously requested, this method will shutdown the channel if its the last outstanding RPC.
      */
     private void release() {
+      LOG.log(Level.INFO, "Rpc count before: " + outstandingRpcs.get());
       int newCount = outstandingRpcs.decrementAndGet();
+      LOG.log(Level.INFO, "Rpc count after: " + newCount);
       if (newCount < 0) {
         throw new IllegalStateException("Bug: reference count is negative!: " + newCount);
       }
@@ -493,6 +496,7 @@ class ChannelPool extends ManagedChannel {
 
     /** Ensure that shutdown is only called once. */
     private void shutdown() {
+      LOG.log(Level.SEVERE, "RPC count on shutdown: " + outstandingRpcs.get());
       if (shutdownInitiated.compareAndSet(false, true)) {
         channel.shutdown();
       }
@@ -545,13 +549,18 @@ class ChannelPool extends ManagedChannel {
                 try {
                   super.onClose(status, trailers);
                 } finally {
+                  LOG.log(Level.INFO, "Releasing from onClose()");
                   entry.release();
+//                  entry.entry.release();
                 }
               }
             },
             headers);
+      throw new RuntimeException("Mock exceptions being throw from super.start()");
       } catch (Exception e) {
         // In case start failed, make sure to release
+        LOG.log(Level.INFO, "Releasing from start()");
+        //The original exception is being swallowed if entry.release() throws an exception
         entry.release();
         throw e;
       }

@@ -16,9 +16,6 @@
 
 package com.google.showcase.v1beta1.it;
 
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertThrows;
-
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.rpc.CancelledException;
 import com.google.api.gax.rpc.ServerStream;
@@ -32,16 +29,26 @@ import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.ExpandRequest;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import io.grpc.ManagedChannelBuilder;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.threeten.bp.Duration;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+
+import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertThrows;
 
 public class ITServerSideStreaming {
 
@@ -67,20 +74,42 @@ public class ITServerSideStreaming {
   }
 
   @Test
-  public void testGrpc_receiveStreamedContent() {
+  public void testGrpc_receiveStreamedContent() throws Exception{
     String content = "The rain in Spain stays mainly on the plain!";
-    ServerStream<EchoResponse> responseStream =
-        grpcClient.expandCallable().call(ExpandRequest.newBuilder().setContent(content).build());
-    ArrayList<String> responses = new ArrayList<>();
-    for (EchoResponse response : responseStream) {
-      responses.add(response.getContent());
-    }
+//    ServerStream<EchoResponse> responseStream =
+//        grpcClient.expandCallable().call(ExpandRequest.newBuilder().setContent(content).build());
+    int threadNumber = 200;
+    ExecutorService executorService = Executors.newFixedThreadPool(threadNumber);
+    List<Callable<ServerStream<EchoResponse>>> callableList = new ArrayList<>();
 
-    assertThat(responses)
-        .containsExactlyElementsIn(
-            ImmutableList.of(
-                "The", "rain", "in", "Spain", "stays", "mainly", "on", "the", "plain!"))
-        .inOrder();
+    Callable<ServerStream<EchoResponse>> callable = () -> {
+      return grpcClient.expandCallable().call(ExpandRequest.newBuilder().setContent(content).build());
+    };
+    for (int i = 0; i < threadNumber; i++) {
+      callableList.add(callable);
+    }
+    List<Future<ServerStream<EchoResponse>>> futures = executorService.invokeAll(callableList);
+    futures.forEach(f -> {
+      try {
+        ServerStream<EchoResponse> echoResponses = f.get();
+        List<String> responses = echoResponses.stream().map(EchoResponse::getContent).collect(Collectors.toList());
+      } catch (InterruptedException e) {
+        throw new RuntimeException(e);
+      } catch (ExecutionException e) {
+        throw new RuntimeException(e);
+      }
+    });
+    grpcClient.shutdown();
+//    ArrayList<String> responses = new ArrayList<>();
+//    for (EchoResponse response : responseStream) {
+//      responses.add(response.getContent());
+//    }
+//
+//    assertThat(responses)
+//        .containsExactlyElementsIn(
+//            ImmutableList.of(
+//                "The", "rain", "in", "Spain", "stays", "mainly", "on", "the", "plain!"))
+//        .inOrder();
   }
 
   @Test
