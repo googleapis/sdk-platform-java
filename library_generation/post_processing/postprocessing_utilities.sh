@@ -34,15 +34,16 @@ get_repo_metadata_json_or_default() {
 # 4 - include_samples: used to tell if samples are being generated/processed
 # 5 - scripts_root: location of the generation scripts
 # 6 - destination_path: used to transfer the raw grpc, proto and gapic libraries
-# 7 - api_version: version string of the library (e.g. v1beta1)
-# 8 - transport: used to decide if the grpc library should be processed
-# 9 - repository_path: path from output_folder to the location of the source of
+# 7 - transport: used to decide if the grpc library should be processed
+# 8 - repository_path: path from output_folder to the location of the source of
 # truth/pre-existing poms. This can either be a folder in google-cloud-java or
 # the root of a HW library
-# 10 - more_versions_coming: some libraries (e.g. bitable) require other
+# 9 - more_versions_coming: some libraries (e.g. bitable) require other
 # libraries to be present in the workspace before running post-processing. This
 # flag disables the postprocessor when it's 'true', in order to run it only at
 # the final version.
+# 10 - proto_path: googleapis path of the library. This is used to prepare the
+# folder structure to run `owlbot-cli copy-code`
 function run_owlbot_postprocessor {
   workspace=$1
   owlbot_sha=$2
@@ -72,16 +73,12 @@ function run_owlbot_postprocessor {
 
   # call owl-bot-copy
   owlbot_staging_folder="${workspace}/owl-bot-staging"
-  owlbot_image="gcr.io/cloud-devrel-public-resources/owlbot-java@sha256:${owlbot_sha}"
-  distribution_name=$(cat "${repo_metadata_json_path}" | jq -r '.distribution_name // empty' | rev | cut -d: -f1 | rev)
-  api_shortname=$(cat "${repo_metadata_json_path}" | jq -r '.api_shortname // empty')
+  owlbot_postprocessor_image="gcr.io/cloud-devrel-public-resources/owlbot-java@sha256:${owlbot_sha}"
   # render default owlbot.py template
   owlbot_py_content=$(cat ""${scripts_root}"/post_processing/templates/owlbot.py.template")
-  # used with owl-bot-staging/
-  staging_suffix="${api_version}"
-
-
   echo "${owlbot_py_content}" > "${workspace}/owlbot.py"
+
+
 
   # copy existing pom, owlbot and version files if the source of truth repo is present
   if [[ -n "${output_folder}/${repository_path}" ]]; then
@@ -126,7 +123,7 @@ function run_owlbot_postprocessor {
   echo 'running owl-bot post-processor'
   # run the postprocessor once all api versions have been pre-processed
   # if [[ "${more_versions_coming}" == "false" ]]; then
-    docker run --rm -v "${workspace}:/workspace" --user $(id -u):$(id -g) "${owlbot_image}"
+    docker run --rm -v "${workspace}:/workspace" --user $(id -u):$(id -g) "${owlbot_postprocessor_image}"
   # fi
 
   # get existing versions.txt from downloaded repository
