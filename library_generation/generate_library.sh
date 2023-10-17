@@ -49,8 +49,8 @@ case $key in
     gapic_yaml="$2"
     shift
     ;;
-  --grpc_service_config)
-    grpc_service_config="$2"
+  --service_config)
+    service_config="$2"
     shift
     ;;
   --service_yaml)
@@ -105,8 +105,8 @@ if [ -z "${gapic_yaml}" ]; then
   gapic_yaml=""
 fi
 
-if [ -z "${grpc_service_config}" ]; then
-  grpc_service_config=""
+if [ -z "${service_config}" ]; then
+  service_config=""
 fi
 
 if [ -z "${service_yaml}" ]; then
@@ -190,7 +190,7 @@ if [[ "${proto_only}" == "false" ]]; then
   "$protoc_path"/protoc --experimental_allow_proto3_optional \
   "--plugin=protoc-gen-java_gapic=${script_dir}/gapic-generator-java-wrapper" \
   "--java_gapic_out=metadata:${destination_path}/java_gapic_srcjar_raw.srcjar.zip" \
-  "--java_gapic_opt=$(get_gapic_opts "${transport}" "${rest_numeric_enums}" "${gapic_yaml}" "${grpc_service_config}" "${service_yaml}")" \
+  "--java_gapic_opt=$(get_gapic_opts "${transport}" "${rest_numeric_enums}" "${gapic_yaml}" "${service_config}" "${service_yaml}")" \
   ${proto_files} ${gapic_additional_protos}
 
   unzip -o -q "${destination_path}/java_gapic_srcjar_raw.srcjar.zip" -d "${destination_path}"

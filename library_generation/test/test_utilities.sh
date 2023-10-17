@@ -237,11 +237,11 @@ get_gapic_yaml_from_BUILD() {
   echo "${gapic_yaml}"
 }
 
-get_grpc_service_config_from_BUILD() {
+get_service_config_from_BUILD() {
   local build_file=$1
-  local grpc_service_config
-  grpc_service_config=$(__get_gapic_option_from_BUILD "${build_file}" "grpc_service_config = ")
-  echo "${grpc_service_config}"
+  local service_config
+  service_config=$(__get_gapic_option_from_BUILD "${build_file}" "grpc_service_config = ")
+  echo "${service_config}"
 }
 
 get_service_yaml_from_BUILD() {

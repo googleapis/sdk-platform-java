@@ -50,7 +50,7 @@ gapic_additional_protos="google/iam/v1/iam_policy.proto google/cloud/location/lo
 rest_numeric_enums="false"
 transport="grpc+rest"
 gapic_yaml=""
-grpc_service_config="schema/google/showcase/v1beta1/showcase_grpc_service_config.json"
+service_config="schema/google/showcase/v1beta1/showcase_grpc_service_config.json"
 service_yaml="schema/google/showcase/v1beta1/showcase_v1beta1.yaml"
 include_samples="false"
 rm -rdf output/showcase-output
@@ -63,7 +63,7 @@ bash "${SCRIPT_DIR}/../../library_generation/generate_library.sh" \
   --gapic_additional_protos "${gapic_additional_protos}" \
   --rest_numeric_enums "${rest_numeric_enums}" \
   --gapic_yaml "${gapic_yaml}" \
-  --grpc_service_config "${grpc_service_config}" \
+  --service_config "${service_config}" \
   --service_yaml "${service_yaml}" \
   --include_samples "${include_samples}" \
   --transport "${transport}" 

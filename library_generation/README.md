@@ -128,11 +128,11 @@ The default value is an empty string.
 
 Use `--gapic_yaml` to specify the value.
 
-### grpc_service_config (optional)
+### service_config (optional)
 One of GAPIC options passed to the generator.
 The default value is an empty string.
 
-Use `--grpc_service_config` to specify the value.
+Use `--service_config` to specify the value.
 
 ### service_yaml (optional)
 One of GAPIC options passed to the generator.
