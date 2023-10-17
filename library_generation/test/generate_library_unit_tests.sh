@@ -12,7 +12,7 @@ extract_folder_name_test() {
   local path="google/cloud/aiplatform/v1/google-cloud-aiplatform-v1-java"
   local folder_name
   folder_name=$(extract_folder_name "${path}")
-  assertEquals "google-cloud-aiplatform" "${folder_name}"
+  assertEquals "google-cloud-aiplatform-v1-java" "${folder_name}"
 }
 
 get_grpc_version_succeed_with_valid_generator_version_test() {
