@@ -16,12 +16,14 @@ set -xeo pipefail
 
 # defaults
 googleapis_gen_url="git@github.com:googleapis/googleapis-gen.git"
+enable_postprocessing="true"
+
 script_dir=$(dirname "$(readlink -f "$0")")
 proto_path_list="${script_dir}/resources/proto_path_list.txt"
 library_generation_dir="${script_dir}"/..
 source "${script_dir}/test_utilities.sh"
+source "${script_dir}/../utilities.sh"
 output_folder="$(pwd)/output"
-enable_postprocessing="true"
 
 while [[ $# -gt 0 ]]; do
 key="$1"
@@ -50,9 +52,6 @@ esac
 shift # past argument or value
 done
 
-script_dir=$(dirname "$(readlink -f "$0")")
-source "${script_dir}/../utilities.sh"
-library_generation_dir="${script_dir}"/..
 mkdir -p "${output_folder}"
 pushd "${output_folder}"
 # checkout the master branch of googleapis/google (proto files) and WORKSPACE
@@ -69,7 +68,7 @@ echo "The version of gapic-generator-java is ${gapic_generator_version}."
 protobuf_version=$(get_version_from_WORKSPACE "protobuf-" WORKSPACE "-")
 echo "The version of protobuf is ${protobuf_version}"
 popd # googleapis
-popd # output
+popd # output_folder
 
 grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   proto_path=$(echo "$line" | cut -d " " -f 1 | sed 's/,/ /g')
@@ -116,7 +115,7 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
     popd # output_folder
     # will check if a custom path exists in `test/resources/repo_metadatas` and
     # use that one if so. The script will default to the one contained in
-    # `target_path`
+    # `target_path` otherwise.
     repo_metadata_json_path="${script_dir}/resources/repo_metadatas/$(echo "${repository_path}" | cut -d: -f2).json"
     if [ ! -f "${repo_metadata_json_path}" ]; then
       echo 'using default repo_metadata.json file'
@@ -182,9 +181,7 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
       echo "SUCCESS: Comparison finished, no difference is found."
       # this is the last api version being processed. Delete google-cloud-java or 
       # the handwritten repo to allow a sparse clone of the next library
-      if [ "${is_handwritten}" == "true" ]; then
-        rm -rdf "${hw_library}"
-      else
+      if [ "${is_handwritten}" != "true" ]; then
         rm -rdf google-cloud-java
       fi
     elif [ ${SOURCE_DIFF_RESULT} != 0 ]; then
@@ -214,5 +211,3 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
 
   popd # output_folder
 done
-
-# rm -rf "${output_folder}"
