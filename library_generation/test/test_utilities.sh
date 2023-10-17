@@ -44,6 +44,46 @@ __get_config_from_BUILD() {
   echo "${result}"
 }
 
+__get_gapic_option_from_BUILD() {
+  local build_file=$1
+  local pattern=$2
+  local gapic_option
+  local file_path
+  gapic_option=$(grep "${pattern}" "${build_file}" |\
+    head -1 |\
+    sed 's/.*\"\([^]]*\)\".*/\1/g' |\
+    sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
+  )
+  if [ -z "${gapic_option}" ] || [[ "${gapic_option}" == *"None"* ]]; then
+    echo ""
+    return
+  fi
+
+  if [[ "${gapic_option}" == ":"* ]] || [[ "${gapic_option}" == "*"* ]]; then
+    # if gapic_option starts with : or *, remove the first character.
+    gapic_option="${gapic_option:1}"
+  elif [[ "${gapic_option}" == "//"* ]]; then
+    # gapic option is a bazel target, use the file path and name directly.
+    # remove the leading "//".
+    gapic_option="${gapic_option:2}"
+    # replace ":" with "/"
+    gapic_option="${gapic_option//://}"
+    echo "${gapic_option}"
+    return
+  fi
+
+  file_path="${build_file%/*}"
+  # Make sure gapic option (*.yaml or *.json) exists in proto_path; otherwise
+  # reset gapic option to empty string.
+  if [ -f "${file_path}/${gapic_option}" ]; then
+    gapic_option="${file_path}/${gapic_option}"
+  else
+    echo "WARNING: file ${file_path}/${gapic_option} does not exist, reset gapic option to empty string." >&2
+    gapic_option=""
+  fi
+  echo "${gapic_option}"
+}
+
 __get_iam_policy_from_BUILD() {
   local build_file=$1
   local contains_iam_policy
@@ -188,6 +228,27 @@ get_rest_numeric_enums_from_BUILD() {
     "true"
   )
   echo "${rest_numeric_enums}"
+}
+
+get_gapic_yaml_from_BUILD() {
+  local build_file=$1
+  local gapic_yaml
+  gapic_yaml=$(__get_gapic_option_from_BUILD "${build_file}" "gapic_yaml = ")
+  echo "${gapic_yaml}"
+}
+
+get_service_config_from_BUILD() {
+  local build_file=$1
+  local service_config
+  service_config=$(__get_gapic_option_from_BUILD "${build_file}" "grpc_service_config = ")
+  echo "${service_config}"
+}
+
+get_service_yaml_from_BUILD() {
+  local build_file=$1
+  local service_yaml
+  service_yaml=$(__get_gapic_option_from_BUILD "${build_file}" "service_yaml")
+  echo "${service_yaml}"
 }
 
 get_include_samples_from_BUILD() {
