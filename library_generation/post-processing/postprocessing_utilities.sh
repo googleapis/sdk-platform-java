@@ -53,8 +53,7 @@ function run_owlbot_postprocessor {
   transport=$7
   repository_path=$8
   more_versions_coming=$9
-  custom_gapic_name=${10}
-  proto_path=${11}
+  proto_path=${10}
 
   repository_root=$(echo "${repository_path}" | cut -d/ -f1)
 

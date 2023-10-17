@@ -68,10 +68,6 @@ case $key in
     more_versions_coming="$2"
     shift
     ;;
-  --custom_gapic_name)
-    custom_gapic_name="$2"
-    shift
-    ;;
   --os_architecture)
     os_architecture="$2"
     shift
@@ -288,5 +284,5 @@ is_new_library="false" #always
 mkdir -p "${workspace}"
 
 run_owlbot_postprocessor "${workspace}" "${owlbot_sha}" "${repo_metadata_json_path}" "${include_samples}" \
-  "${script_dir}" "${output_folder}/${destination_path}" "${transport}" "${repository_path}" "${more_versions_coming}" "${custom_gapic_name}" "${proto_path}"
+  "${script_dir}" "${output_folder}/${destination_path}" "${transport}" "${repository_path}" "${more_versions_coming}" "${proto_path}"
 

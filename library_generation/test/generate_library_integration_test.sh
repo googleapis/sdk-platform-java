@@ -77,7 +77,6 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   repository_path=$(echo "$line" | cut -d " " -f 3)
   more_versions_coming=$(echo "${line}" | cut -d " " -f 4)
   is_handwritten=$(echo "$line" | cut -d " " -f 5)
-  custom_gapic_name=$(echo "$line" | cut -d " " -f 6)
   # parse GAPIC options from proto_path/BUILD.bazel
   pushd "${output_folder}"
   proto_build_file_path="${proto_path}/BUILD.bazel"
@@ -139,7 +138,6 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
       --owlbot_sha "${owlbot_sha}" \
       --repository_path "${repository_path}" \
       --more_versions_coming "${more_versions_coming}" \
-      --custom_gapic_name "${custom_gapic_name}" \
       --enable_postprocessing "true"
   else
     "${library_generation_dir}"/generate_library.sh \
