@@ -279,7 +279,6 @@ repo_metadata_json_path=$(get_repo_metadata_json_or_default \
 # various versions can use the same workspace, for example for bigtable +
 # bigtable-admin
 workspace="${output_folder}/workspace"
-is_new_library="false" #always
 
 mkdir -p "${workspace}"
 
