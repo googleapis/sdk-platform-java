@@ -76,10 +76,6 @@ case $key in
     repository_path="$2"
     shift
     ;;
-  --more_versions_coming)
-    more_versions_coming="$2"
-    shift
-    ;;
   --os_architecture)
     os_architecture="$2"
     shift
@@ -143,10 +139,6 @@ fi
 
 if [ -z "${os_architecture}" ]; then
   os_architecture=$(detect_os_architecture)
-fi
-
-if [ -z "${more_versions_coming}" ]; then
-  more_versions_coming="false"
 fi
 
 mkdir -p "${output_folder}/${destination_path}"
@@ -314,7 +306,6 @@ popd # destination path
 source "${script_dir}/post_processing/postprocessing_utilities.sh"
 if [ "${enable_postprocessing}" != "true" ];
 then
-  # arrange files for non-post-processing integration test
   echo "post processing is disabled"
   exit 0
 fi
@@ -323,12 +314,9 @@ repo_metadata_json_path=$(get_repo_metadata_json_or_default \
   "${repository_path}" \
   "${output_folder}"
 )
-# various versions can use the same workspace, for example for bigtable +
-# bigtable-admin
-workspace="${output_folder}/workspace"
+workspace="${output_folder}/${destination_path}/workspace"
 
 mkdir -p "${workspace}"
 
 run_owlbot_postprocessor "${workspace}" "${owlbot_sha}" "${repo_metadata_json_path}" "${include_samples}" \
-  "${script_dir}" "${output_folder}/${destination_path}" "${transport}" "${repository_path}" "${more_versions_coming}" "${proto_path}"
-
+  "${script_dir}" "${output_folder}/${destination_path}" "${transport}" "${repository_path}" "${proto_path}"

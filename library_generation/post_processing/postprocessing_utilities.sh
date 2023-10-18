@@ -38,11 +38,7 @@ get_repo_metadata_json_or_default() {
 # 8 - repository_path: path from output_folder to the location of the source of
 # truth/pre-existing poms. This can either be a folder in google-cloud-java or
 # the root of a HW library
-# 9 - more_versions_coming: some libraries (e.g. bitable) require other
-# libraries to be present in the workspace before running post-processing. This
-# flag disables the postprocessor when it's 'true', in order to run it only at
-# the final version.
-# 10 - proto_path: googleapis path of the library. This is used to prepare the
+# 9 - proto_path: googleapis path of the library. This is used to prepare the
 # folder structure to run `owlbot-cli copy-code`
 function run_owlbot_postprocessor {
   workspace=$1
@@ -53,8 +49,7 @@ function run_owlbot_postprocessor {
   destination_path=$6
   transport=$7
   repository_path=$8
-  more_versions_coming=$9
-  proto_path=${10}
+  proto_path=${9}
 
   repository_root=$(echo "${repository_path}" | cut -d/ -f1)
 
@@ -93,12 +88,16 @@ function run_owlbot_postprocessor {
       "${output_folder}/${repository_path}/" \
       "${workspace}"
 
+    # for HW libraries, put .OwlBot.yaml file from .github into workspace root
+    if [ -f "${workspace}/.github/.OwlBot.yaml" ]; then
+      cp "${workspace}/.github/.OwlBot.yaml" "${workspace}"
+    fi
   fi
 
   echo 'Running owl-bot-copy'
   pre_processed_libs_folder="${destination_path}/pre-processed"
   mkdir -p "${pre_processed_libs_folder}/${proto_path}/$(basename "${destination_path}")"
-  find "${destination_path}" -maxdepth 1 -type d \
+  find "${destination_path}" -mindepth 1 -maxdepth 1 -type d -not -name 'pre-processed' \
     -exec cp -pr {} "${pre_processed_libs_folder}/${proto_path}/$(basename "${destination_path}")" \;
   pushd "${pre_processed_libs_folder}"
   # create an empty repository so owl-bot-copy can process this as a repo
@@ -121,10 +120,8 @@ function run_owlbot_postprocessor {
 
 
   echo 'running owl-bot post-processor'
-  # run the postprocessor once all api versions have been pre-processed
-  if [[ "${more_versions_coming}" == "false" ]]; then
-    docker run --rm -v "${workspace}:/workspace" --user $(id -u):$(id -g) "${owlbot_postprocessor_image}"
-  fi
+  # run the postprocessor
+  docker run --rm -v "${workspace}:/workspace" --user $(id -u):$(id -g) "${owlbot_postprocessor_image}"
 
   # get existing versions.txt from downloaded repository
   if [ -d "${output_folder}/google-cloud-java" ];then

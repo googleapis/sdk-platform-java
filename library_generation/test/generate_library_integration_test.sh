@@ -74,8 +74,7 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   proto_path=$(echo "$line" | cut -d " " -f 1)
   destination_path=$(echo "$line" | cut -d " " -f 2)
   repository_path=$(echo "$line" | cut -d " " -f 3)
-  more_versions_coming=$(echo "${line}" | cut -d " " -f 4)
-  is_handwritten=$(echo "$line" | cut -d " " -f 5)
+  is_handwritten=$(echo "$line" | cut -d " " -f 4)
   # parse GAPIC options from proto_path/BUILD.bazel
   pushd "${output_folder}"
   proto_build_file_path="${proto_path}/BUILD.bazel"
@@ -148,7 +147,6 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
       --repo_metadata_json_path "${repo_metadata_json_path}" \
       --owlbot_sha "${owlbot_sha}" \
       --repository_path "${repository_path}" \
-      --more_versions_coming "${more_versions_coming}" \
       --enable_postprocessing "true"
   else
     "${library_generation_dir}"/generate_library.sh \
@@ -163,20 +161,16 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
     --gapic_yaml "${gapic_yaml}" \
     --service_config "${service_config}" \
     --service_yaml "${service_yaml}" \
-    --include_samples "${include_samples}"
+    --include_samples "${include_samples}" \
+      --enable_postprocessing "false"
   fi
 
   echo "Generate library finished."
   echo "Compare generation result..."
   pushd "${output_folder}"
   if [ $enable_postprocessing == "true" ]; then
-    if [ "${more_versions_coming}" != "false" ]; then
-      # we only do a diff check when all versions have been processed
-      popd # output_folder
-      continue
-    fi
     echo "Checking out repository..."
-    cp -r ${output_folder}/workspace/* "${target_folder}"
+    cp -r ${output_folder}/${destination_path}/workspace/* "${target_folder}"
     pushd "${target_folder}"
     SOURCE_DIFF_RESULT=0
     git diff \

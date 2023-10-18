@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -xeo pipefail
+test_utilities_script_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 # Utility functions commonly used in test cases.
 
@@ -306,7 +307,7 @@ compare_poms() {
   # compare_poms.py exits with non-zero if diffs are found
   set -e
   result=0
-  find . -name 'pom.xml' -print0 | xargs -i -0 python "${utilities_script_dir}/test/compare_poms.py" {} {}.new false || result=$?
+  find . -name 'pom.xml' -print0 | xargs -i -0 python "${test_utilities_script_dir}/compare_poms.py" {} {}.new false || result=$?
   popd &> /dev/null # target_dir
   echo ${result}
 }
