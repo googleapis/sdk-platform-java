@@ -549,7 +549,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
     if (!InstantiatingGrpcChannelProvider.isOnComputeEngine()) {
       assertThat(logHandler.getAllMessages())
           .contains(
-              "DirectPath is misconfigured. DirectPath is only available in a GCE environment");
+              "DirectPath is misconfigured. DirectPath is only available in a GCE environment.");
     }
     InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
   }
