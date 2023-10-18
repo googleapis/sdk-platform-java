@@ -147,10 +147,10 @@ public class ITLongRunningOperation {
       OperationFuture<WaitResponse, WaitMetadata> operationFuture =
           grpcClient.waitOperationCallable().futureCall(waitRequest);
       CancellationException cancellationException =
-              assertThrows(CancellationException.class, operationFuture::get);
+          assertThrows(CancellationException.class, operationFuture::get);
       assertThat(cancellationException)
-              .hasMessageThat()
-              .contains("https://github.com/googleapis/google-cloud-java#lro-timeouts");
+          .hasMessageThat()
+          .contains("https://github.com/googleapis/google-cloud-java#lro-timeouts");
       int attemptCount = operationFuture.getPollingFuture().getAttemptSettings().getAttemptCount();
       assertThat(attemptCount).isGreaterThan(1);
     } finally {
