@@ -446,6 +446,14 @@ class ChannelPool extends ManagedChannel {
      * it.
      */
     private boolean retain() {
+      // abort if the channel is closing
+      if (shutdownRequested.get()) {
+        return false;
+      }
+      return true;
+    }
+
+    private void increment() {
       // register desire to start RPC
       int currentOutstanding = outstandingRpcs.incrementAndGet();
 
@@ -454,13 +462,6 @@ class ChannelPool extends ManagedChannel {
       if (currentOutstanding > prevMax) {
         maxOutstanding.incrementAndGet();
       }
-
-      // abort if the channel is closing
-      if (shutdownRequested.get()) {
-        release();
-        return false;
-      }
-      return true;
     }
 
     /**
@@ -537,24 +538,19 @@ class ChannelPool extends ManagedChannel {
       if (cancellationException != null) {
         throw new IllegalStateException("Call is already cancelled", cancellationException);
       }
-      try {
-        super.start(
-            new SimpleForwardingClientCallListener<RespT>(responseListener) {
-              @Override
-              public void onClose(Status status, Metadata trailers) {
-                try {
-                  super.onClose(status, trailers);
-                } finally {
-                  entry.release();
-                }
+      super.start(
+          new SimpleForwardingClientCallListener<RespT>(responseListener) {
+            @Override
+            public void onClose(Status status, Metadata trailers) {
+              try {
+                super.onClose(status, trailers);
+              } finally {
+                entry.release();
               }
-            },
-            headers);
-      } catch (Exception e) {
-        // In case start failed, make sure to release
-        entry.release();
-        throw e;
-      }
+            }
+          },
+          headers);
+      entry.increment();
     }
 
     @Override
