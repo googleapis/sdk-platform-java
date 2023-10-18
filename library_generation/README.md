@@ -122,6 +122,24 @@ The default value is `true`.
 
 Use `--rest_numeric_enums` to specify the value.
 
+### gapic_yaml (optional)
+One of GAPIC options passed to the generator.
+The default value is an empty string.
+
+Use `--gapic_yaml` to specify the value.
+
+### service_config (optional)
+One of GAPIC options passed to the generator.
+The default value is an empty string.
+
+Use `--service_config` to specify the value.
+
+### service_yaml (optional)
+One of GAPIC options passed to the generator.
+The default value is an empty string.
+
+Use `--service_yaml` to specify the value.
+
 ### include_samples (optional)
 Whether generates code samples. The value is either `true` or `false`. 
 The default value is `true`.

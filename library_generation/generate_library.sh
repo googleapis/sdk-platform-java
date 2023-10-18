@@ -45,6 +45,18 @@ case $key in
     rest_numeric_enums="$2"
     shift
     ;;
+  --gapic_yaml)
+    gapic_yaml="$2"
+    shift
+    ;;
+  --service_config)
+    service_config="$2"
+    shift
+    ;;
+  --service_yaml)
+    service_yaml="$2"
+    shift
+    ;;
   --include_samples)
     include_samples="$2"
     shift
@@ -89,6 +101,18 @@ if [ -z "${rest_numeric_enums}" ]; then
   rest_numeric_enums="true"
 fi
 
+if [ -z "${gapic_yaml}" ]; then
+  gapic_yaml=""
+fi
+
+if [ -z "${service_config}" ]; then
+  service_config=""
+fi
+
+if [ -z "${service_yaml}" ]; then
+  service_yaml=""
+fi
+
 if [ -z "${include_samples}" ]; then
   include_samples="true"
 fi
@@ -107,9 +131,20 @@ mkdir -p "${output_folder}/${destination_path}"
 # get a fixed order.
 folder_name=$(extract_folder_name "${destination_path}")
 pushd "${output_folder}"
-proto_files=$(find "${proto_path}" -type f  -name "*.proto" | sort)
+find_depth=""
+case "${proto_path}" in
+  "google/api" | "google/cloud" | "google/iam/v1" | "google/rpc")
+    find_depth="-maxdepth 1"
+    ;;
+esac
+proto_files=$(find "${proto_path}" ${find_depth} -type f  -name "*.proto" | sort)
 # include or exclude certain protos in grpc plugin and gapic generator java.
 case "${proto_path}" in
+  "google/cloud")
+    # this proto is excluded from //google/cloud:google-apps-script-type-java
+    removed_proto="google/cloud/common_resources.proto"
+    proto_files="${proto_files//${removed_proto}/}"
+    ;;
   "google/cloud/aiplatform/v1beta1"*)
     # this proto is excluded from //google/cloud/aiplatform/v1beta1/schema:schema_proto
     removed_proto="google/cloud/aiplatform/v1beta1/schema/io_format.proto"
@@ -124,6 +159,11 @@ case "${proto_path}" in
     # this proto is included in //google/cloud/oslogin/v1:google-cloud-oslogin-v1-java
     # and //google/cloud/oslogin/v1beta1:google-cloud-oslogin-v1-java
     proto_files="${proto_files} google/cloud/oslogin/common/common.proto"
+    ;;
+  "google/rpc")
+    # this proto is excluded from //google/rpc:google-rpc-java
+    removed_proto="google/rpc/http.proto"
+    proto_files="${proto_files//${removed_proto}/}"
     ;;
 esac
 # download gapic-generator-java, protobuf and grpc plugin.
@@ -150,7 +190,7 @@ if [[ "${proto_only}" == "false" ]]; then
   "$protoc_path"/protoc --experimental_allow_proto3_optional \
   "--plugin=protoc-gen-java_gapic=${script_dir}/gapic-generator-java-wrapper" \
   "--java_gapic_out=metadata:${destination_path}/java_gapic_srcjar_raw.srcjar.zip" \
-  "--java_gapic_opt=$(get_gapic_opts)" \
+  "--java_gapic_opt=$(get_gapic_opts "${transport}" "${rest_numeric_enums}" "${gapic_yaml}" "${service_config}" "${service_yaml}")" \
   ${proto_files} ${gapic_additional_protos}
 
   unzip -o -q "${destination_path}/java_gapic_srcjar_raw.srcjar.zip" -d "${destination_path}"
@@ -206,7 +246,6 @@ fi
 unzip_src_files "proto"
 # remove empty files in proto-*/src/main/java
 remove_empty_files "proto"
-# include certain protos in generated library.
 case "${proto_path}" in
   "google/cloud/aiplatform/v1beta1"*)
     prefix="google/cloud/aiplatform/v1beta1/schema"
@@ -217,6 +256,14 @@ case "${proto_path}" in
     ;;
   "google/devtools/containeranalysis/v1beta1"*)
     proto_files="${proto_files} google/devtools/containeranalysis/v1beta1/cvss/cvss.proto"
+    ;;
+  "google/iam/v1")
+    # these protos are excluded from //google/iam/v1:google-iam-v1-java
+    prefix="google/iam/v1"
+    protos="${prefix}/options.proto ${prefix}/policy.proto"
+    for removed_proto in ${protos}; do
+      proto_files="${proto_files//${removed_proto}/}"
+    done
     ;;
 esac
 # copy proto files to proto-*/src/main/proto
