@@ -568,7 +568,7 @@ class ChannelPool extends ManagedChannel {
         } else {
           LOG.log(
               Level.WARNING,
-              "The entry is already released, this indicates that onClose() has already being called previously");
+              "The entry is already released. This indicates that onClose() has already been called previously");
         }
         throw e;
       }
