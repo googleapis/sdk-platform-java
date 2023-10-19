@@ -556,7 +556,7 @@ class ChannelPool extends ManagedChannel {
                 } else {
                   LOG.log(
                       Level.WARNING,
-                      "onClose() has already being called, please make sure onClose() is not being manually called, otherwise this may indicate a bug in gRPC library");
+                      "Call is being closed more than once. Please make sure that onClose() is not being manually called.");
                 }
               }
             },
