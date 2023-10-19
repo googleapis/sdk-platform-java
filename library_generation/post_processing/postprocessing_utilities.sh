@@ -70,9 +70,6 @@ function run_owlbot_postprocessor {
   owlbot_staging_folder="${workspace}/owl-bot-staging"
   mkdir -p "${owlbot_staging_folder}"
   owlbot_postprocessor_image="gcr.io/cloud-devrel-public-resources/owlbot-java@sha256:${owlbot_sha}"
-  # render default owlbot.py template
-  owlbot_py_content=$(cat ""${scripts_root}"/post_processing/templates/owlbot.py.template")
-  echo "${owlbot_py_content}" > "${workspace}/owlbot.py"
 
 
 
