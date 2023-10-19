@@ -150,6 +150,26 @@ Use `--include_samples` to specify the value.
 Choose the protoc binary type from https://github.com/protocolbuffers/protobuf/releases.
 Default is "linux-x86_64".
 
+### enable_postprocessing (optional)
+Whether to enable the post-processing steps (usage of owlbot) in the generation
+of this library
+Default is "true".
+
+### repo_metadata_json_path (optional)
+Custom `.repo-metadata.json` file to be used in the library generation (this is
+consumed by owlbot)
+If not provided, it will default to the one contained in `repository_path`
+
+### owlbot_sha (optional)
+Owlbot image sha to be used in post-processing
+If not provided, it will default to the one contained in `repository_path`
+
+### repository_path (optional)
+Relative path from `output_folder` to the location of the original,
+post-processed source code of the library being generated. It is necessary when
+`enable_postprocessing` is `"true"`
+
+
 ## An example to generate a client library
 ```
 library_generation/generate_library.sh \
