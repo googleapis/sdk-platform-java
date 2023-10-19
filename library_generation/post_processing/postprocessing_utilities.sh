@@ -74,7 +74,7 @@ function run_owlbot_postprocessor {
 
 
   # copy existing pom, owlbot and version files if the source of truth repo is present
-  if [[ -n "${output_folder}/${repository_path}" ]]; then
+  if [[ -d "${output_folder}/${repository_path}" ]]; then
     rsync -avm \
       --include='*/' \
       --include='*.xml' \
