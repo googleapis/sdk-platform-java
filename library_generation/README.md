@@ -21,6 +21,12 @@ In order to generate a GAPIC library, you need to pull `google/` from [googleapi
 and put it into `output` since protos in `google/` are likely referenced by 
 protos from which the library are generated.
 
+In order to generate a post-processed GAPIC library, you need to pull the
+original repository (e.g. google-cloud-java/java-asset) and pass it as
+`repository_path`. This repository will be the source of truth for pre-existing
+pom.xml files, owlbot.py and .OwlBot.yaml files. See the option belows for
+custom postprocessed generations (e.g. custom `.repo-metadata.json` path).
+
 ## Parameters to run `generate_library.sh`
 
 You need to run the script with the following parameters.
@@ -171,7 +177,7 @@ post-processed source code of the library being generated. It is necessary when
 
 
 ## An example to generate a client library
-```
+```bash
 library_generation/generate_library.sh \
 -p google/cloud/confidentialcomputing/v1 \
 -d google-cloud-confidentialcomputing-v1-java \
@@ -181,5 +187,7 @@ library_generation/generate_library.sh \
 --gapic_additional_protos "google/cloud/common_resources.proto google/cloud/location/locations.proto" \
 --transport grpc+rest \
 --rest_numeric_enums true \
+--enable_postprocessing true \
+--repository_path "java-logging" \
 --include_samples true
 ```
