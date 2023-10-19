@@ -105,6 +105,7 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
     pushd "${output_folder}"
     if [ "${is_handwritten}" == "true" ]; then
       echo 'this is a handwritten library'
+      popd # output folder
       continue
     else
       echo 'this is a monorepo library'
@@ -199,4 +200,5 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   fi
 
   popd # output_folder
+  echo "ALL TESTS SUCCEEDED"
 done
