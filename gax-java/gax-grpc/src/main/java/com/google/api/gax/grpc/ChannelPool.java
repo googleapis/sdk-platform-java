@@ -561,13 +561,16 @@ class ChannelPool extends ManagedChannel {
               @Override
               public void onClose(Status status, Metadata trailers) {
                 if (wasClosed.compareAndSet(false, true)) {
-                  super.onClose(status, trailers);
-                  if (wasReleased.compareAndSet(false, true)) {
-                    entry.release();
-                  } else {
-                    LOG.log(
-                        Level.WARNING,
-                        "Call was not closed but entry was released. This may be due to an exception on start of the call.");
+                  try {
+                    super.onClose(status, trailers);
+                  } finally {
+                    if (wasReleased.compareAndSet(false, true)) {
+                      entry.release();
+                    } else {
+                      LOG.log(
+                          Level.WARNING,
+                          "Call was not closed but entry was released. This may be due to an exception on start of the call.");
+                    }
                   }
                 } else {
                   LOG.log(
