@@ -176,7 +176,22 @@ post-processed source code of the library being generated. It is necessary when
 `enable_postprocessing` is `"true"`
 
 
-## An example to generate a client library
+## An example to generate a non post-processed client library
+```bash
+library_generation/generate_library.sh \
+-p google/cloud/confidentialcomputing/v1 \
+-d google-cloud-confidentialcomputing-v1-java \
+--gapic_generator_version 2.24.0 \
+--protobuf_version 23.2 \
+--grpc_version 1.55.1 \
+--gapic_additional_protos "google/cloud/common_resources.proto google/cloud/location/locations.proto" \
+--transport grpc+rest \
+--rest_numeric_enums true \
+--enable_postprocessing false \
+--include_samples true
+```
+
+## An example to generate a library with postprocessing
 ```bash
 library_generation/generate_library.sh \
 -p google/cloud/confidentialcomputing/v1 \
