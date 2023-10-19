@@ -470,7 +470,7 @@ class ChannelPool extends ManagedChannel {
     private void release() {
       int newCount = outstandingRpcs.decrementAndGet();
       if (newCount < 0) {
-        LOG.log(Level.WARNING, "Bug: Reference count is negative!: " + newCount);
+        LOG.log(Level.WARNING, "Bug! Reference count is negative (" + newCount + ")!");
       }
 
       // Must check outstandingRpcs after shutdownRequested (in reverse order of retain()) to ensure
