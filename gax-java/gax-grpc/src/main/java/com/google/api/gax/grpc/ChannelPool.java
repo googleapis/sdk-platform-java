@@ -569,7 +569,7 @@ class ChannelPool extends ManagedChannel {
                     } else {
                       LOG.log(
                           Level.WARNING,
-                          "Call was not closed but entry was released. This may be due to an exception on start of the call.");
+                          "Entry was released before the call is closed. This may be due to an exception on start of the call.");
                     }
                   }
                 } else {
