@@ -560,22 +560,22 @@ class ChannelPool extends ManagedChannel {
             new SimpleForwardingClientCallListener<RespT>(responseListener) {
               @Override
               public void onClose(Status status, Metadata trailers) {
-                if (wasClosed.compareAndSet(false, true)) {
-                  try {
-                    super.onClose(status, trailers);
-                  } finally {
-                    if (wasReleased.compareAndSet(false, true)) {
-                      entry.release();
-                    } else {
-                      LOG.log(
-                          Level.WARNING,
-                          "Entry was released before the call is closed. This may be due to an exception on start of the call.");
-                    }
-                  }
-                } else {
+                if (!wasClosed.compareAndSet(false, true)) {
                   LOG.log(
                       Level.WARNING,
                       "Call is being closed more than once. Please make sure that onClose() is not being manually called.");
+                  return;
+                }
+                try {
+                  super.onClose(status, trailers);
+                } finally {
+                  if (wasReleased.compareAndSet(false, true)) {
+                    entry.release();
+                  } else {
+                    LOG.log(
+                        Level.WARNING,
+                        "Entry was released before the call is closed. This may be due to an exception on start of the call.");
+                  }
                 }
               }
             },
