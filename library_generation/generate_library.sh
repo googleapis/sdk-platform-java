@@ -314,7 +314,10 @@ repo_metadata_json_path=$(get_repo_metadata_json_or_default \
   "${repository_path}" \
   "${output_folder}"
 )
-workspace="${output_folder}/${destination_path}/workspace"
+workspace="${output_folder}/workspace"
+if [ -d "${workspace}" ]; then
+  rm -rdf "${workspace}"
+fi
 
 mkdir -p "${workspace}"
 

@@ -68,6 +68,7 @@ function run_owlbot_postprocessor {
 
   # call owl-bot-copy
   owlbot_staging_folder="${workspace}/owl-bot-staging"
+  mkdir -p "${owlbot_staging_folder}"
   owlbot_postprocessor_image="gcr.io/cloud-devrel-public-resources/owlbot-java@sha256:${owlbot_sha}"
   # render default owlbot.py template
   owlbot_py_content=$(cat ""${scripts_root}"/post_processing/templates/owlbot.py.template")
@@ -92,6 +93,7 @@ function run_owlbot_postprocessor {
     if [ -f "${workspace}/.github/.OwlBot.yaml" ]; then
       cp "${workspace}/.github/.OwlBot.yaml" "${workspace}"
     fi
+    cp "${workspace}/.OwlBot.yaml" "${owlbot_staging_folder}"
   fi
 
   echo 'Running owl-bot-copy'
@@ -106,17 +108,17 @@ function run_owlbot_postprocessor {
   git commit --allow-empty -m 'empty commit'
   popd # pre_processed_libs_folder
 
-   docker run --rm \
-     --user $(id -u):$(id -g) \
-     -v "${workspace}:/repo" \
-     -v "${pre_processed_libs_folder}:/pre-processed-libraries" \
-     -w /repo \
-     --env HOME=/tmp \
-     gcr.io/cloud-devrel-public-resources/owlbot-cli:latest \
-     copy-code \
-     --source-repo-commit-hash=none \
-     --source-repo=/pre-processed-libraries \
-     --config-file=.OwlBot.yaml
+  docker run --rm \
+    --user $(id -u):$(id -g) \
+    -v "${workspace}:/repo" \
+    -v "${pre_processed_libs_folder}:/pre-processed-libraries" \
+    -w /repo \
+    --env HOME=/tmp \
+    gcr.io/cloud-devrel-public-resources/owlbot-cli:latest \
+    copy-code \
+    --source-repo-commit-hash=none \
+    --source-repo=/pre-processed-libraries \
+    --config-file=.OwlBot.yaml
 
 
   echo 'running owl-bot post-processor'
