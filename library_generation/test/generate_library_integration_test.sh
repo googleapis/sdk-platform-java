@@ -105,16 +105,10 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
     pushd "${output_folder}"
     if [ "${is_handwritten}" == "true" ]; then
       echo 'this is a handwritten library'
-      hw_library=$(echo "${repository_path}" | cut -d: -f2)
-      if [ ! -d "${hw_library}" ];then
-        git clone "https://github.com/googleapis/${hw_library}.git"
-      fi
-      target_folder="${output_folder}/${hw_library}"
+      continue
     else
       echo 'this is a monorepo library'
-      if [ ! -d "google-cloud-java" ]; then
-        sparse_clone "https://github.com/googleapis/google-cloud-java.git" "${repository_path} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"
-      fi
+      sparse_clone "https://github.com/googleapis/google-cloud-java.git" "${repository_path} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"
       # compute path from output_folder to source of truth library location
       # (e.g. google-cloud-java/java-compute)
       repository_path="google-cloud-java/${repository_path}"
@@ -177,11 +171,8 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
     popd # target_folder
     if [[ ${SOURCE_DIFF_RESULT} == 0 ]] && [[ ${POM_DIFF_RESULT} == 0 ]] ; then
       echo "SUCCESS: Comparison finished, no difference is found."
-      # this is the last api version being processed. Delete google-cloud-java or 
-      # the handwritten repo to allow a sparse clone of the next library
-      if [ "${is_handwritten}" != "true" ]; then
-        rm -rdf google-cloud-java
-      fi
+      # Delete google-cloud-java to allow a sparse clone of the next library
+      rm -rdf google-cloud-java
     elif [ ${SOURCE_DIFF_RESULT} != 0 ]; then
       echo "FAILURE: Differences found in proto path: ${proto_path}."
       exit "${SOURCE_DIFF_RESULT}"
