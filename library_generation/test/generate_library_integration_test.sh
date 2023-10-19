@@ -121,15 +121,6 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
       target_folder="${output_folder}/${repository_path}"
     fi
     popd # output_folder
-    # will check if a custom path exists in `test/resources/repo_metadatas` and
-    # use that one if so. The script will default to the one contained in
-    # `target_path` otherwise.
-    repo_metadata_json_path="${script_dir}/resources/repo_metadatas/$(echo "${repository_path}" | cut -d: -f2).json"
-    if [ ! -f "${repo_metadata_json_path}" ]; then
-      echo 'using default repo_metadata.json file'
-      # an empty string forces generate_library.sh to infer the default json
-      repo_metadata_json_path=""
-    fi
 
     "${library_generation_dir}"/generate_library.sh \
       -p "${proto_path}" \
@@ -144,7 +135,6 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
       --service_config "${service_config}" \
       --service_yaml "${service_yaml}" \
       --include_samples "${include_samples}" \
-      --repo_metadata_json_path "${repo_metadata_json_path}" \
       --owlbot_sha "${owlbot_sha}" \
       --repository_path "${repository_path}" \
       --enable_postprocessing "true"
@@ -170,7 +160,7 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   pushd "${output_folder}"
   if [ $enable_postprocessing == "true" ]; then
     echo "Checking out repository..."
-    cp -r ${output_folder}/${destination_path}/workspace/* "${target_folder}"
+    cp -r ${output_folder}/workspace/* "${target_folder}"
     pushd "${target_folder}"
     SOURCE_DIFF_RESULT=0
     git diff \
