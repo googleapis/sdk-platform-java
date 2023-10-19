@@ -470,7 +470,7 @@ class ChannelPool extends ManagedChannel {
     private void release() {
       int newCount = outstandingRpcs.decrementAndGet();
       if (newCount < 0) {
-        throw new IllegalStateException("Bug: reference count is negative!: " + newCount);
+        LOG.log(Level.WARNING, "Bug: Reference count is negative!: " + newCount);
       }
 
       // Must check outstandingRpcs after shutdownRequested (in reverse order of retain()) to ensure
@@ -526,6 +526,8 @@ class ChannelPool extends ManagedChannel {
   static class ReleasingClientCall<ReqT, RespT> extends SimpleForwardingClientCall<ReqT, RespT> {
     @Nullable private CancellationException cancellationException;
     final Entry entry;
+    private final AtomicBoolean wasClosed = new AtomicBoolean();
+    private final AtomicBoolean wasReleased = new AtomicBoolean();
 
     public ReleasingClientCall(ClientCall<ReqT, RespT> delegate, Entry entry) {
       super(delegate);
@@ -542,17 +544,32 @@ class ChannelPool extends ManagedChannel {
             new SimpleForwardingClientCallListener<RespT>(responseListener) {
               @Override
               public void onClose(Status status, Metadata trailers) {
-                try {
+                if (wasClosed.compareAndSet(false, true)) {
                   super.onClose(status, trailers);
-                } finally {
-                  entry.release();
+                  if (wasReleased.compareAndSet(false, true)) {
+                    entry.release();
+                  } else {
+                    LOG.log(
+                        Level.WARNING,
+                        "The entry is already released, this indicates that there is an exception on start of the call");
+                  }
+                } else {
+                  LOG.log(
+                      Level.WARNING,
+                      "onClose() has already being called, please make sure onClose() is not being manually called, otherwise this may indicate a bug in gRPC library");
                 }
               }
             },
             headers);
       } catch (Exception e) {
         // In case start failed, make sure to release
-        entry.release();
+        if (wasReleased.compareAndSet(false, true)) {
+          entry.release();
+        } else {
+          LOG.log(
+              Level.WARNING,
+              "The entry is already released, this indicates that onClose() has already being called previously");
+        }
         throw e;
       }
     }
