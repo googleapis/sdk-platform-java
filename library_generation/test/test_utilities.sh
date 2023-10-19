@@ -298,16 +298,25 @@ sparse_clone() {
   popd
 }
 
-# performs a deep structural comparison between the current pom in a git folder and the one at HEAD
+# performs a deep structural comparison between the current pom in a git 
+# folder and the one at HEAD.
+# This function is OS-dependent, so it sources the main utilities script to
+# perform detection
 compare_poms() {
   target_dir=$1
+  source "${test_utilities_script_dir}/../utilities.sh"
+  os_architecture=$(detect_os_architecture)
   pushd "${target_dir}" &> /dev/null
   find . -name 'pom.xml' -exec cp {} {}.new \;
   find . -name 'pom.xml' -exec git checkout HEAD -- {} \;
   # compare_poms.py exits with non-zero if diffs are found
   set -e
   result=0
-  find . -name 'pom.xml' -print0 | xargs -i -0 python "${test_utilities_script_dir}/compare_poms.py" {} {}.new false || result=$?
+  if [ "${os_architecture}" == "linux-x86_64" ]; then
+    find . -name 'pom.xml' -print0 | xargs -i -0 python "${test_utilities_script_dir}/compare_poms.py" {} {}.new false || result=$?
+  else
+    find . -name 'pom.xml' -print0 | xargs -I -0 python "${test_utilities_script_dir}/compare_poms.py" {} {}.new false || result=$?
+  fi
   popd &> /dev/null # target_dir
   echo ${result}
 }
