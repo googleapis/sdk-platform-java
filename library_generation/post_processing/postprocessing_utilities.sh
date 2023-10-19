@@ -93,7 +93,6 @@ function run_owlbot_postprocessor {
     if [ -f "${workspace}/.github/.OwlBot.yaml" ]; then
       cp "${workspace}/.github/.OwlBot.yaml" "${workspace}"
     fi
-    cp "${workspace}/.OwlBot.yaml" "${owlbot_staging_folder}"
   fi
 
   echo 'Running owl-bot-copy'
