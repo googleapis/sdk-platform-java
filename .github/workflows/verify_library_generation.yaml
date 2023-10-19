@@ -23,6 +23,8 @@ jobs:
         java-version: ${{ matrix.java }}
         distribution: temurin
         cache: maven
+    - uses: docker-practice/actions-setup-docker@d7be7913d15a6b821cc3ed75b4c03b48e1dde22c
+      timeout-minutes: 12
     - name: Run integration tests 
       run: |
         set -x
