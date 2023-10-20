@@ -10,6 +10,12 @@ import xml.etree.ElementTree as ET
 from collections import Counter
 
 """
+prints to stderr
+"""
+def eprint(*args, **kwargs):
+  print(*args, file=sys.stderr, **kwargs)
+
+"""
 Convenience method to access a node's child elements via path and get its text
 """
 def get_text_from_element(node, element_name, namespace):
@@ -60,9 +66,11 @@ def compare_xml(file1, file2, print_whole_trees):
     tree1 = ET.parse(file1)
     tree2 = ET.parse(file2)
   except ET.ParseError as e:
-    return f'Error parsing XML: {e}'
+    eprint(f'Error parsing XML')
+    raise e
   except FileNotFoundError as e:
-    return f'Error reading file: {e}'
+    eprint(f'Error reading file')
+    raise e
 
   tree1_elements = []
   tree2_elements = []
@@ -89,8 +97,6 @@ def compare_xml(file1, file2, print_whole_trees):
   else:
     return False
 
-def eprint(*args, **kwargs):
-  print(*args, file=sys.stderr, **kwargs)
 
 if __name__ == "__main__":
   if len(sys.argv) != 4:
