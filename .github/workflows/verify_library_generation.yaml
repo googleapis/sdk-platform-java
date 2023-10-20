@@ -24,6 +24,8 @@ jobs:
         distribution: temurin
         cache: maven
     - uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
     - uses: docker-practice/actions-setup-docker@d7be7913d15a6b821cc3ed75b4c03b48e1dde22c
       if: matrix.os == 'ubuntu-22.04'
       timeout-minutes: 12
