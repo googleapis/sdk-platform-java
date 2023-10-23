@@ -105,8 +105,14 @@ public class Parser {
 
   private static final Map<String, Map.Entry<String, FileDescriptor>> MIXIN_PROTO_FILE_DESCRIPTORS =
       ImmutableMap.of(
-          "google.iam.v1.IAMPolicy", Maps.immutableEntry("google/cloud/location/locations.proto", LocationsProto.getDescriptor()),
-          "google.cloud.location.Locations", Maps.immutableEntry("google/iam/v1/iam_policy.proto", IamPolicyProto.getDescriptor()));
+          "google.iam.v1.IAMPolicy",
+              Maps.immutableEntry(
+                  "google/cloud/location/locations.proto", LocationsProto.getDescriptor()),
+          "google.cloud.location.Locations",
+              Maps.immutableEntry(
+                  "google/iam/v1/iam_policy.proto", IamPolicyProto.getDescriptor()));
+
+  private static Map<String, FileDescriptor> extraMixins = new HashMap<>();
 
   // Allow other parsers to access this.
   protected static final SourceCodeInfoParser SOURCE_CODE_INFO_PARSER = new SourceCodeInfoParser();
@@ -146,6 +152,7 @@ public class Parser {
         PluginArgumentParser.parseServiceYamlConfigPath(request);
     Optional<com.google.api.Service> serviceYamlProtoOpt =
         serviceYamlConfigPathOpt.flatMap(ServiceYamlParser::parse);
+    parseExtraMixins(serviceYamlProtoOpt, extraMixins);
 
     // Collect the resource references seen in messages.
     Set<ResourceReference> outputResourceReferencesSeen = new HashSet<>();
@@ -241,9 +248,7 @@ public class Parser {
       Transport transport) {
     Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
     List<Service> services = new ArrayList<>();
-    List<String> files = new ArrayList<>(request.getFileToGenerateList());
-    files.add("google/cloud/location/locations.proto");
-    for (String fileToGenerate : files) {
+    for (String fileToGenerate : fileDescriptors.keySet()) {
       FileDescriptor fileDescriptor =
           Preconditions.checkNotNull(
               fileDescriptors.get(fileToGenerate),
@@ -664,7 +669,7 @@ public class Parser {
     String javaPackage = parseServiceJavaPackage(request);
     Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
     Map<String, ResourceName> resourceNames = new HashMap<>();
-    for (String fileToGenerate : request.getFileToGenerateList()) {
+    for (String fileToGenerate : fileDescriptors.keySet()) {
       FileDescriptor fileDescriptor =
           Preconditions.checkNotNull(
               fileDescriptors.get(fileToGenerate),
@@ -1068,38 +1073,35 @@ public class Parser {
 
       fileDescriptors.put(fileDescriptor.getName(), fileDescriptor);
     }
-
-    // Map<String, FileDescriptor> extraMixins = parseExtraMixins(serviceYamlProtoOpt);
-    // extraMixins.forEach(fileDescriptors::putIfAbsent);
+    extraMixins.forEach(fileDescriptors::putIfAbsent);
 
     return fileDescriptors;
   }
 
-  private static Map<String, FileDescriptor> parseExtraMixins(
-      Optional<com.google.api.Service> serviceYamlProtoOpt) {
-    Map<String, FileDescriptor> extraMixins = new HashMap<>();
+  private static void parseExtraMixins(
+      Optional<com.google.api.Service> serviceYamlProtoOpt,
+      Map<String, FileDescriptor> extraMixins) {
     if (!serviceYamlProtoOpt.isPresent()) {
-      return extraMixins;
+      return;
     }
 
     com.google.api.Service serviceYamlProto = serviceYamlProtoOpt.get();
-    serviceYamlProto.getApisList().forEach(
-        api -> {
-          String apiName = api.getName();
-          if (MIXIN_PROTO_FILE_DESCRIPTORS.containsKey(apiName)) {
-            Map.Entry<String, FileDescriptor> entry = MIXIN_PROTO_FILE_DESCRIPTORS.get(apiName);
-            extraMixins.put(entry.getKey(), entry.getValue());
-          }
-        }
-    );
-
-    return extraMixins;
+    serviceYamlProto
+        .getApisList()
+        .forEach(
+            api -> {
+              String apiName = api.getName();
+              if (MIXIN_PROTO_FILE_DESCRIPTORS.containsKey(apiName)) {
+                Map.Entry<String, FileDescriptor> entry = MIXIN_PROTO_FILE_DESCRIPTORS.get(apiName);
+                extraMixins.put(entry.getKey(), entry.getValue());
+              }
+            });
   }
 
   private static String parseServiceJavaPackage(CodeGeneratorRequest request) {
     Map<String, Integer> javaPackageCount = new HashMap<>();
     Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
-    for (String fileToGenerate : request.getFileToGenerateList()) {
+    for (String fileToGenerate : fileDescriptors.keySet()) {
       FileDescriptor fileDescriptor =
           Preconditions.checkNotNull(
               fileDescriptors.get(fileToGenerate),
