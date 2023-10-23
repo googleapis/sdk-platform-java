@@ -106,11 +106,10 @@ public class Parser {
   private static final Map<String, Map.Entry<String, FileDescriptor>> MIXIN_PROTO_FILE_DESCRIPTORS =
       ImmutableMap.of(
           "google.iam.v1.IAMPolicy",
-              Maps.immutableEntry(
-                  "google/iam/v1/iam_policy.proto", LocationsProto.getDescriptor()),
+              Maps.immutableEntry("google/iam/v1/iam_policy.proto", IamPolicyProto.getDescriptor()),
           "google.cloud.location.Locations",
               Maps.immutableEntry(
-                  "google/cloud/location/locations.proto", IamPolicyProto.getDescriptor()));
+                  "google/cloud/location/locations.proto", LocationsProto.getDescriptor()));
 
   private static Map<String, FileDescriptor> extraMixins = new HashMap<>();
 
