@@ -41,14 +41,17 @@ import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.utils.ResourceNameConstants;
 import com.google.cloud.ExtendedOperationsProto;
 import com.google.cloud.OperationResponseMapping;
+import com.google.cloud.location.LocationsProto;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
+import com.google.iam.v1.IamPolicyProto;
 import com.google.longrunning.OperationInfo;
 import com.google.longrunning.OperationsProto;
 import com.google.protobuf.DescriptorProtos.FieldOptions;
@@ -99,6 +102,11 @@ public class Parser {
   // These must be kept in sync with the above protos' java_package options.
   private static final Set<String> MIXIN_JAVA_PACKAGE_ALLOWLIST =
       ImmutableSet.of("com.google.iam.v1", "com.google.longrunning", "com.google.cloud.location");
+
+  private static final Map<String, Map.Entry<String, FileDescriptor>> MIXIN_PROTO_FILE_DESCRIPTORS =
+      ImmutableMap.of(
+          "google.iam.v1.IAMPolicy", Maps.immutableEntry("google/cloud/location/locations.proto", LocationsProto.getDescriptor()),
+          "google.cloud.location.Locations", Maps.immutableEntry("google/iam/v1/iam_policy.proto", IamPolicyProto.getDescriptor()));
 
   // Allow other parsers to access this.
   protected static final SourceCodeInfoParser SOURCE_CODE_INFO_PARSER = new SourceCodeInfoParser();
@@ -232,9 +240,10 @@ public class Parser {
       List<Service> outputMixinServices,
       Transport transport) {
     Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
-
     List<Service> services = new ArrayList<>();
-    for (String fileToGenerate : request.getFileToGenerateList()) {
+    List<String> files = new ArrayList<>(request.getFileToGenerateList());
+    files.add("google/cloud/location/locations.proto");
+    for (String fileToGenerate : files) {
       FileDescriptor fileDescriptor =
           Preconditions.checkNotNull(
               fileDescriptors.get(fileToGenerate),
@@ -1059,7 +1068,32 @@ public class Parser {
 
       fileDescriptors.put(fileDescriptor.getName(), fileDescriptor);
     }
+
+    // Map<String, FileDescriptor> extraMixins = parseExtraMixins(serviceYamlProtoOpt);
+    // extraMixins.forEach(fileDescriptors::putIfAbsent);
+
     return fileDescriptors;
+  }
+
+  private static Map<String, FileDescriptor> parseExtraMixins(
+      Optional<com.google.api.Service> serviceYamlProtoOpt) {
+    Map<String, FileDescriptor> extraMixins = new HashMap<>();
+    if (!serviceYamlProtoOpt.isPresent()) {
+      return extraMixins;
+    }
+
+    com.google.api.Service serviceYamlProto = serviceYamlProtoOpt.get();
+    serviceYamlProto.getApisList().forEach(
+        api -> {
+          String apiName = api.getName();
+          if (MIXIN_PROTO_FILE_DESCRIPTORS.containsKey(apiName)) {
+            Map.Entry<String, FileDescriptor> entry = MIXIN_PROTO_FILE_DESCRIPTORS.get(apiName);
+            extraMixins.put(entry.getKey(), entry.getValue());
+          }
+        }
+    );
+
+    return extraMixins;
   }
 
   private static String parseServiceJavaPackage(CodeGeneratorRequest request) {
