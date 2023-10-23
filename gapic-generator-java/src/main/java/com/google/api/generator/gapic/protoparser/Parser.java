@@ -248,7 +248,7 @@ public class Parser {
       Transport transport) {
     Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
     List<Service> services = new ArrayList<>();
-    for (String fileToGenerate : fileDescriptors.keySet()) {
+    for (String fileToGenerate : mergeExtraMixinsWith(request.getFileToGenerateList())) {
       FileDescriptor fileDescriptor =
           Preconditions.checkNotNull(
               fileDescriptors.get(fileToGenerate),
@@ -669,7 +669,7 @@ public class Parser {
     String javaPackage = parseServiceJavaPackage(request);
     Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
     Map<String, ResourceName> resourceNames = new HashMap<>();
-    for (String fileToGenerate : fileDescriptors.keySet()) {
+    for (String fileToGenerate : mergeExtraMixinsWith(request.getFileToGenerateList())) {
       FileDescriptor fileDescriptor =
           Preconditions.checkNotNull(
               fileDescriptors.get(fileToGenerate),
@@ -1098,10 +1098,16 @@ public class Parser {
             });
   }
 
+  private static List<String> mergeExtraMixinsWith(List<String> filesToGenerate) {
+    List<String> res = new ArrayList<>(filesToGenerate);
+    res.addAll(extraMixins.keySet());
+    return res.stream().sorted().distinct().collect(Collectors.toList());
+  }
+
   private static String parseServiceJavaPackage(CodeGeneratorRequest request) {
     Map<String, Integer> javaPackageCount = new HashMap<>();
     Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
-    for (String fileToGenerate : fileDescriptors.keySet()) {
+    for (String fileToGenerate : mergeExtraMixinsWith(request.getFileToGenerateList())) {
       FileDescriptor fileDescriptor =
           Preconditions.checkNotNull(
               fileDescriptors.get(fileToGenerate),
