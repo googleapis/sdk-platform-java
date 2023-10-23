@@ -72,11 +72,14 @@ popd # output_folder
 
 grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   proto_path=$(echo "$line" | cut -d " " -f 1)
-  destination_path=$(echo "$line" | cut -d " " -f 2)
-  repository_path=$(echo "$line" | cut -d " " -f 3)
-  is_handwritten=$(echo "$line" | cut -d " " -f 4)
-  # parse GAPIC options from proto_path/BUILD.bazel
+  repository_path=$(echo "$line" | cut -d " " -f 2)
+  is_handwritten=$(echo "$line" | cut -d " " -f 3)
+  # parse destination_path
   pushd "${output_folder}"
+  echo "Checking out googleapis-gen repository..."
+  sparse_clone "${googleapis_gen_url}" "${proto_path}"
+  destination_path=$(compute_destination_path "${proto_path}" "${output_folder}")
+  # parse GAPIC options from proto_path/BUILD.bazel
   proto_build_file_path="${proto_path}/BUILD.bazel"
   proto_only=$(get_proto_only_from_BUILD "${proto_build_file_path}")
   gapic_additional_protos=$(get_gapic_additional_protos_from_BUILD "${proto_build_file_path}")
@@ -94,6 +97,20 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
     service_config=${service_config},
     service_yaml=${service_yaml},
     include_samples=${include_samples}."
+  pushd "${output_folder}"
+  if [ "${is_handwritten}" == "true" ]; then
+    echo 'this is a handwritten library'
+    popd # output folder
+    continue
+  else
+    echo 'this is a monorepo library'
+    sparse_clone "https://github.com/googleapis/google-cloud-java.git" "${repository_path} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"
+    # compute path from output_folder to source of truth library location
+    # (e.g. google-cloud-java/java-compute)
+    repository_path="google-cloud-java/${repository_path}"
+    target_folder="${output_folder}/${repository_path}"
+    popd # output_folder
+  fi
   # generate GAPIC client library
   echo "Generating library from ${proto_path}, to ${destination_path}..."
   if [ $enable_postprocessing == "true" ]; then
@@ -102,20 +119,6 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
       # library
       continue
     fi
-    pushd "${output_folder}"
-    if [ "${is_handwritten}" == "true" ]; then
-      echo 'this is a handwritten library'
-      popd # output folder
-      continue
-    else
-      echo 'this is a monorepo library'
-      sparse_clone "https://github.com/googleapis/google-cloud-java.git" "${repository_path} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"
-      # compute path from output_folder to source of truth library location
-      # (e.g. google-cloud-java/java-compute)
-      repository_path="google-cloud-java/${repository_path}"
-      target_folder="${output_folder}/${repository_path}"
-    fi
-    popd # output_folder
 
     "${library_generation_dir}"/generate_library.sh \
       -p "${proto_path}" \
@@ -184,8 +187,6 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   elif [ $enable_postprocessing == "false" ]; then
     # include gapic_metadata.json and package-info.java after
     # resolving https://github.com/googleapis/sdk-platform-java/issues/1986
-    echo "Checking out googleapis-gen repository..."
-    sparse_clone "${googleapis_gen_url}" "${proto_path}/${destination_path}"
     SOURCE_DIFF_RESULT=0
     diff --strip-trailing-cr -r "googleapis-gen/${proto_path}/${destination_path}" "${output_folder}/${destination_path}" \
       -x "*gradle*" \

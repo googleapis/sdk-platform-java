@@ -320,3 +320,19 @@ compare_poms() {
   popd &> /dev/null # target_dir
   echo ${result}
 }
+
+# computes the `destination_path` variable by inspecting the contents of the
+# googleapis-gen at $proto_path. 
+compute_destination_path() {
+  local proto_path=$1
+  local output_folder=$2
+  pushd "${output_folder}" &> /dev/null
+  local destination_path=$(find "googleapis-gen/${proto_path}" -maxdepth 1 -name 'google-*-java' \
+    | rev \
+    | cut -d'/' -f1 \
+    | rev
+  )
+  popd &> /dev/null # output_folder
+  echo "${destination_path}"
+}
+
