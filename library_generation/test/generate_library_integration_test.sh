@@ -69,6 +69,9 @@ protobuf_version=$(get_version_from_WORKSPACE "protobuf-" WORKSPACE "-")
 echo "The version of protobuf is ${protobuf_version}"
 popd # googleapis
 popd # output_folder
+if [ -f "${output_folder}/generation_times" ];then
+  rm "${output_folder}/generation_times"
+fi
 
 grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   proto_path=$(echo "$line" | cut -d " " -f 1)
@@ -113,13 +116,13 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   fi
   # generate GAPIC client library
   echo "Generating library from ${proto_path}, to ${destination_path}..."
+  generation_start=$(date "+%s")
   if [ $enable_postprocessing == "true" ]; then
     if [[ "${repository_path}" == "null" ]]; then
       # we need a repository to compare the generated results with. Skip this
       # library
       continue
     fi
-
     "${library_generation_dir}"/generate_library.sh \
       -p "${proto_path}" \
       -d "${destination_path}" \
@@ -152,10 +155,14 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
     --include_samples "${include_samples}" \
       --enable_postprocessing "false"
   fi
+  generation_end=$(date "+%s")
+  generation_duration_seconds=$(expr "${generation_end}" - "${generation_start}")
+  echo "Generation time for ${repository_path} was ${generation_duration_seconds} seconds."
+  pushd "${output_folder}"
+  echo "${repository_path} ${generation_duration_seconds}" >> generation_times
 
   echo "Generate library finished."
   echo "Compare generation result..."
-  pushd "${output_folder}"
   if [ $enable_postprocessing == "true" ]; then
     echo "Checking out repository..."
     cp -r ${output_folder}/workspace/* "${target_folder}"
@@ -203,3 +210,5 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   popd # output_folder
   echo "ALL TESTS SUCCEEDED"
 done
+echo "generation times in seconds:"
+cat "${output_folder}/generation_times"
