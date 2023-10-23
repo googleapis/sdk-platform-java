@@ -94,8 +94,7 @@ def compare_xml(file1, file2, print_whole_trees):
     eprint('only in ' + file2)
     print_counter(only_in_tree2)
     return True
-  else:
-    return False
+  return False
 
 
 if __name__ == "__main__":
@@ -111,8 +110,7 @@ if __name__ == "__main__":
   if has_diff:
     eprint(f'The poms are different')
     sys.exit(1)
-  else:
-    eprint('The XML files are the same.')
-    sys.exit(0)
+  eprint('The XML files are the same.')
+  sys.exit(0)
 
 
