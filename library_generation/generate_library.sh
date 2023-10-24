@@ -309,11 +309,6 @@ then
   echo "post processing is disabled"
   exit 0
 fi
-repo_metadata_json_path=$(get_repo_metadata_json_or_default \
-  "${repo_metadata_json_path}" \
-  "${repository_path}" \
-  "${output_folder}"
-)
 workspace="${output_folder}/workspace"
 if [ -d "${workspace}" ]; then
   rm -rdf "${workspace}"
@@ -322,8 +317,6 @@ fi
 mkdir -p "${workspace}"
 
 run_owlbot_postprocessor "${workspace}" \
-  "${owlbot_sha}" \
-  "${repo_metadata_json_path}" \
   "${script_dir}" \
   "${output_folder}/${destination_path}" \
   "${repository_path}" \
