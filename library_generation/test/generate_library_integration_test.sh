@@ -208,7 +208,7 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   fi
 
   popd # output_folder
-  echo "ALL TESTS SUCCEEDED"
 done
-echo "generation times in seconds:"
+echo "ALL TESTS SUCCEEDED"
+echo "generation times in seconds (does not consider repo checkout):"
 cat "${output_folder}/generation_times"
