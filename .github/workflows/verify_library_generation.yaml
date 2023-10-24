@@ -29,11 +29,13 @@ jobs:
     - name: install docker (ubuntu)
       if: matrix.os == 'ubuntu-22.04'
       run: |
-        # Install Docker
-        sudo apt install docker.io
-        sudo apt install docker-compose
+        set -x
+        # install docker
+        sudo apt-get install docker-ce docker-ce-cli containerd.io
+        sudo apt-get install docker.io
+        sudo apt-get install docker-compose
 
-        # Start it
+        # launch docker
         sudo systemctl start docker
     - name: install docker (macos)
       if: matrix.os == 'macos-12'
