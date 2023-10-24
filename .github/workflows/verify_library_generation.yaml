@@ -39,7 +39,7 @@ jobs:
     - name: install docker (macos)
       if: matrix.os == 'macos-12'
       run: |
-        brew cask install docker
+        brew --cask install docker
         open /Applications/Docker.app
         docker --version
     - name: Run integration tests
