@@ -26,11 +26,15 @@ jobs:
     - uses: actions/setup-python@v4
       with:
         python-version: '3.11'
-    - uses: docker-practice/actions-setup-docker@d7be7913d15a6b821cc3ed75b4c03b48e1dde22c
+    - name: install docker (ubuntu)
       if: matrix.os == 'ubuntu-22.04'
-      timeout-minutes: 12
-    - uses: douglascamata/setup-docker-macos-action@a9f6a5bfeceee5f4bd081e32403859394d2538e1
+      run: |
+        docker --version
+    - name: install docker (macos)
       if: matrix.os == 'macos-12'
+      run: |
+        brew install docker
+        docker --version
     - name: Run integration tests
       run: |
         set -x
