@@ -166,7 +166,8 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
       --enable_postprocessing "false"
   fi
   generation_end=$(date "+%s")
-  generation_duration_seconds=$(expr "${generation_end}" - "${generation_start}")
+  # some generations are less than 1 second (0 produces exit code 1 in `expr`)
+  generation_duration_seconds=$(expr "${generation_end}" - "${generation_start}" || true)
   echo "Generation time for ${repository_path} was ${generation_duration_seconds} seconds."
   pushd "${output_folder}"
   echo "${repository_path} ${generation_duration_seconds}" >> generation_times
