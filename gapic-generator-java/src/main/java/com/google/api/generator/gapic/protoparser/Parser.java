@@ -54,6 +54,7 @@ import com.google.common.collect.Maps;
 import com.google.iam.v1.IamPolicyProto;
 import com.google.longrunning.OperationInfo;
 import com.google.longrunning.OperationsProto;
+import com.google.protobuf.Api;
 import com.google.protobuf.DescriptorProtos.FieldOptions;
 import com.google.protobuf.DescriptorProtos.FileDescriptorProto;
 import com.google.protobuf.DescriptorProtos.MessageOptions;
@@ -111,7 +112,7 @@ public class Parser {
               Maps.immutableEntry(
                   "google/cloud/location/locations.proto", LocationsProto.getDescriptor()));
 
-  private static Map<String, FileDescriptor> extraMixins = new HashMap<>();
+  private static final Map<String, FileDescriptor> extraMixins = new HashMap<>();
 
   // Allow other parsers to access this.
   protected static final SourceCodeInfoParser SOURCE_CODE_INFO_PARSER = new SourceCodeInfoParser();
