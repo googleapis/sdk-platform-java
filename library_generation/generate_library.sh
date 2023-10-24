@@ -321,5 +321,10 @@ fi
 
 mkdir -p "${workspace}"
 
-run_owlbot_postprocessor "${workspace}" "${owlbot_sha}" "${repo_metadata_json_path}" "${include_samples}" \
-  "${script_dir}" "${output_folder}/${destination_path}" "${transport}" "${repository_path}" "${proto_path}"
+run_owlbot_postprocessor "${workspace}" \
+  "${owlbot_sha}" \
+  "${repo_metadata_json_path}" \
+  "${script_dir}" \
+  "${output_folder}/${destination_path}" \
+  "${repository_path}" \
+  "${proto_path}"

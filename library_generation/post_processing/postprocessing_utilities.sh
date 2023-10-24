@@ -31,25 +31,21 @@ get_repo_metadata_json_or_default() {
 # be used
 # 3 - repo_metadata_json_path: contains metadata about the library, used by
 # owlbot
-# 4 - include_samples: used to tell if samples are being generated/processed
-# 5 - scripts_root: location of the generation scripts
-# 6 - destination_path: used to transfer the raw grpc, proto and gapic libraries
-# 7 - transport: used to decide if the grpc library should be processed
-# 8 - repository_path: path from output_folder to the location of the source of
+# 4 - scripts_root: location of the generation scripts
+# 5 - destination_path: used to transfer the raw grpc, proto and gapic libraries
+# 6 - repository_path: path from output_folder to the location of the source of
 # truth/pre-existing poms. This can either be a folder in google-cloud-java or
 # the root of a HW library
-# 9 - proto_path: googleapis path of the library. This is used to prepare the
+# 7 - proto_path: googleapis path of the library. This is used to prepare the
 # folder structure to run `owlbot-cli copy-code`
 function run_owlbot_postprocessor {
   workspace=$1
   owlbot_sha=$2
   repo_metadata_json_path=$3
-  include_samples=$4
-  scripts_root=$5
-  destination_path=$6
-  transport=$7
-  repository_path=$8
-  proto_path=${9}
+  scripts_root=$4
+  destination_path=$5
+  repository_path=$6
+  proto_path=$7
 
   repository_root=$(echo "${repository_path}" | cut -d/ -f1)
 
