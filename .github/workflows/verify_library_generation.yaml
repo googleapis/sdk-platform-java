@@ -31,7 +31,7 @@ jobs:
       run: |
         set -x
         # install docker
-        sudo apt-get install docker-ce docker-ce-cli containerd containerd.io
+        sudo apt-get install docker-ce docker-ce-cli containerd
         sudo apt-get install docker.io
         sudo apt-get install docker-compose
 
