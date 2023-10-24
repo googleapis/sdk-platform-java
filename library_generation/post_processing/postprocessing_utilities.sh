@@ -81,11 +81,6 @@ function run_owlbot_postprocessor {
       --exclude='*' \
       "${output_folder}/${repository_path}/" \
       "${workspace}"
-
-    # for HW libraries, put .OwlBot.yaml file from .github into workspace root
-    if [ -f "${workspace}/.github/.OwlBot.yaml" ]; then
-      cp "${workspace}/.github/.OwlBot.yaml" "${workspace}"
-    fi
   fi
 
   echo 'Running owl-bot-copy'
@@ -115,8 +110,13 @@ function run_owlbot_postprocessor {
 
   echo 'running owl-bot post-processor'
   # run the postprocessor
-  docker run --rm -v "${workspace}:/workspace" --user $(id -u):$(id -g) "${owlbot_postprocessor_image}"
+  docker run --rm \
+    -v "${workspace}:/workspace" \
+    -v "${output_folder}/google-cloud-java/versions.txt:/versions.txt" \
+    --user $(id -u):$(id -g) \
+    "${owlbot_postprocessor_image}"
 
+  return
   # get existing versions.txt from downloaded repository
   if [ -d "${output_folder}/google-cloud-java" ];then
     cp "${output_folder}/google-cloud-java/versions.txt" "${workspace}"
