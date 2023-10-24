@@ -54,7 +54,6 @@ import com.google.common.collect.Maps;
 import com.google.iam.v1.IamPolicyProto;
 import com.google.longrunning.OperationInfo;
 import com.google.longrunning.OperationsProto;
-import com.google.protobuf.Api;
 import com.google.protobuf.DescriptorProtos.FieldOptions;
 import com.google.protobuf.DescriptorProtos.FileDescriptorProto;
 import com.google.protobuf.DescriptorProtos.MessageOptions;
@@ -95,24 +94,16 @@ public class Parser {
       ResourceName.createWildcard("*", "com.google.api.wildcard.placeholder");
 
   // Mirrors the sanitizer allowlist.
-  private static final Set<String> MIXIN_ALLOWLIST =
-      ImmutableSet.of(
-          "google.iam.v1.IAMPolicy",
-          "google.longrunning.Operations",
-          "google.cloud.location.Locations");
+  private static final Map<String, FileDescriptor> MIXIN_ALLOWLIST =
+      ImmutableMap.of(
+          "google.iam.v1.IAMPolicy", IamPolicyProto.getDescriptor(),
+          "google.longrunning.Operations", LocationsProto.getDescriptor(),
+          "google.cloud.location.Locations", LocationsProto.getDescriptor());
   // These must be kept in sync with the above protos' java_package options.
   private static final Set<String> MIXIN_JAVA_PACKAGE_ALLOWLIST =
       ImmutableSet.of("com.google.iam.v1", "com.google.longrunning", "com.google.cloud.location");
 
-  private static final Map<String, Map.Entry<String, FileDescriptor>> MIXIN_PROTO_FILE_DESCRIPTORS =
-      ImmutableMap.of(
-          "google.iam.v1.IAMPolicy",
-              Maps.immutableEntry("google/iam/v1/iam_policy.proto", IamPolicyProto.getDescriptor()),
-          "google.cloud.location.Locations",
-              Maps.immutableEntry(
-                  "google/cloud/location/locations.proto", LocationsProto.getDescriptor()));
-
-  private static final Map<String, FileDescriptor> extraMixins = new HashMap<>();
+  private static final Set<FileDescriptor> extraMixins = new HashSet<>();
 
   // Allow other parsers to access this.
   protected static final SourceCodeInfoParser SOURCE_CODE_INFO_PARSER = new SourceCodeInfoParser();
@@ -152,7 +143,7 @@ public class Parser {
         PluginArgumentParser.parseServiceYamlConfigPath(request);
     Optional<com.google.api.Service> serviceYamlProtoOpt =
         serviceYamlConfigPathOpt.flatMap(ServiceYamlParser::parse);
-    parseExtraMixins(serviceYamlProtoOpt, extraMixins);
+    parseExtraMixins(serviceYamlProtoOpt);
 
     // Collect the resource references seen in messages.
     Set<ResourceReference> outputResourceReferencesSeen = new HashSet<>();
@@ -273,7 +264,7 @@ public class Parser {
     Set<Service> blockedCodegenMixinApis = new HashSet<>();
     Set<Service> definedServices = new HashSet<>();
     for (Service s : services) {
-      if (MIXIN_ALLOWLIST.contains(serviceFullNameFn.apply(s))) {
+      if (MIXIN_ALLOWLIST.containsKey(serviceFullNameFn.apply(s))) {
         blockedCodegenMixinApis.add(s);
       } else {
         definedServices.add(s);
@@ -288,7 +279,7 @@ public class Parser {
         !serviceYamlProtoOpt.isPresent()
             ? Collections.emptySet()
             : serviceYamlProtoOpt.get().getApisList().stream()
-                .filter(a -> MIXIN_ALLOWLIST.contains(a.getName()))
+                .filter(a -> MIXIN_ALLOWLIST.containsKey(a.getName()))
                 .map(a -> a.getName())
                 .collect(Collectors.toSet());
     // Holds the methods to be mixed in.
@@ -397,7 +388,7 @@ public class Parser {
     if (servicesContainBlocklistedApi) {
       services =
           services.stream()
-              .filter(s -> !MIXIN_ALLOWLIST.contains(serviceFullNameFn.apply(s)))
+              .filter(s -> !MIXIN_ALLOWLIST.containsKey(serviceFullNameFn.apply(s)))
               .collect(Collectors.toList());
     }
 
@@ -1073,14 +1064,24 @@ public class Parser {
 
       fileDescriptors.put(fileDescriptor.getName(), fileDescriptor);
     }
-    extraMixins.forEach(fileDescriptors::putIfAbsent);
+    extraMixins.forEach(fileDescriptor -> parseDependencies(fileDescriptor, fileDescriptors));
 
     return fileDescriptors;
   }
 
-  private static void parseExtraMixins(
-      Optional<com.google.api.Service> serviceYamlProtoOpt,
-      Map<String, FileDescriptor> extraMixins) {
+  private static void parseDependencies(
+      FileDescriptor fileDescriptor, Map<String, FileDescriptor> fileDescriptors) {
+    if (fileDescriptors.containsKey(fileDescriptor.getFullName())) {
+      return;
+    }
+
+    fileDescriptors.put(fileDescriptor.getFullName(), fileDescriptor);
+    for (FileDescriptor dependency : fileDescriptor.getDependencies()) {
+      parseDependencies(dependency, fileDescriptors);
+    }
+  }
+
+  private static void parseExtraMixins(Optional<com.google.api.Service> serviceYamlProtoOpt) {
     if (!serviceYamlProtoOpt.isPresent()) {
       return;
     }
@@ -1091,16 +1092,15 @@ public class Parser {
         .forEach(
             api -> {
               String apiName = api.getName();
-              if (MIXIN_PROTO_FILE_DESCRIPTORS.containsKey(apiName)) {
-                Map.Entry<String, FileDescriptor> entry = MIXIN_PROTO_FILE_DESCRIPTORS.get(apiName);
-                extraMixins.put(entry.getKey(), entry.getValue());
+              if (MIXIN_ALLOWLIST.containsKey(apiName)) {
+                extraMixins.add(MIXIN_ALLOWLIST.get(apiName));
               }
             });
   }
 
   private static List<String> mergeExtraMixinsWith(List<String> filesToGenerate) {
     List<String> res = new ArrayList<>(filesToGenerate);
-    res.addAll(extraMixins.keySet());
+    res.addAll(extraMixins.stream().map(FileDescriptor::getFullName).collect(Collectors.toList()));
     return res.stream().sorted().distinct().collect(Collectors.toList());
   }
 
