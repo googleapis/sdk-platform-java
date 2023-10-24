@@ -29,11 +29,17 @@ jobs:
     - name: install docker (ubuntu)
       if: matrix.os == 'ubuntu-22.04'
       run: |
-        docker --version
+        # Install Docker
+        sudo apt install docker.io
+        sudo apt install docker-compose
+
+        # Start it
+        sudo systemctl start docker
     - name: install docker (macos)
       if: matrix.os == 'macos-12'
       run: |
-        brew install docker
+        brew cask install docker
+        open /Applications/Docker.app
         docker --version
     - name: Run integration tests
       run: |
