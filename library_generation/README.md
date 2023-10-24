@@ -25,7 +25,7 @@ In order to generate a post-processed GAPIC library, you need to pull the
 original repository (e.g. google-cloud-java/java-asset) and pass it as
 `repository_path`. This repository will be the source of truth for pre-existing
 pom.xml files, owlbot.py and .OwlBot.yaml files. See the option belows for
-custom postprocessed generations (e.g. custom `.repo-metadata.json` path).
+custom postprocessed generations (e.g. custom `versions.txt` file).
 
 ## Parameters to run `generate_library.sh`
 
