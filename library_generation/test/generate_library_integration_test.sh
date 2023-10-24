@@ -145,7 +145,6 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
       --service_config "${service_config}" \
       --service_yaml "${service_yaml}" \
       --include_samples "${include_samples}" \
-      --owlbot_sha "${owlbot_sha}" \
       --repository_path "${repository_path}" \
       --enable_postprocessing "true" \
       --versions_file "${output_folder}/google-cloud-java/versions.txt"

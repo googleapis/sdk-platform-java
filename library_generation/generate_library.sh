@@ -64,14 +64,6 @@ case $key in
     enable_postprocessing="$2"
     shift
     ;;
-  --repo_metadata_json_path)
-    repo_metadata_json_path="$2"
-    shift
-    ;;
-  --owlbot_sha)
-    owlbot_sha="$2"
-    shift
-    ;;
   --repository_path)
     repository_path="$2"
     shift
