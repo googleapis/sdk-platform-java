@@ -44,6 +44,10 @@ case $key in
     googleapis_gen_url="$2"
     shift
     ;;
+  -v|--versions_file)
+    versions_file="$2"
+    shift
+    ;;
   *)
     echo "Invalid option: [$1]"
     exit 1
@@ -71,6 +75,11 @@ popd # googleapis
 popd # output_folder
 if [ -f "${output_folder}/generation_times" ];then
   rm "${output_folder}/generation_times"
+fi
+if [ -z "${versions_file}" ]; then
+  # google-cloud-java will be downloaded before each call of
+  # `generate_library.sh`
+  versions_file="${output_folder}/google-cloud-java/versions.txt"
 fi
 
 grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
@@ -138,7 +147,8 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
       --include_samples "${include_samples}" \
       --owlbot_sha "${owlbot_sha}" \
       --repository_path "${repository_path}" \
-      --enable_postprocessing "true"
+      --enable_postprocessing "true" \
+      --versions_file "${output_folder}/google-cloud-java/versions.txt"
   else
     "${library_generation_dir}"/generate_library.sh \
     -p "${proto_path}" \

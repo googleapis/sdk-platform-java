@@ -60,6 +60,7 @@ function run_owlbot_postprocessor {
   destination_path=$3
   repository_path=$4
   proto_path=$5
+  versions_file=$6
 
   repository_root=$(echo "${repository_path}" | cut -d/ -f1)
   repo_metadata_json_path=$(get_repo_metadata_json "${repository_path}" "${output_folder}")
@@ -83,7 +84,6 @@ function run_owlbot_postprocessor {
       --include='*.xml' \
       --include='package-info.java' \
       --include='owlbot.py' \
-      --include='versions.txt' \
       --include='.OwlBot.yaml' \
       --exclude='*' \
       "${output_folder}/${repository_path}/" \
@@ -116,20 +116,14 @@ function run_owlbot_postprocessor {
 
 
   echo 'running owl-bot post-processor'
+  versions_file_arg=""
+  if [ -f "${versions_file}" ];then
+    versions_file_arg="-v ${versions_file}:/versions.txt"
+  fi
   # run the postprocessor
   docker run --rm \
     -v "${workspace}:/workspace" \
-    -v "${output_folder}/google-cloud-java/versions.txt:/versions.txt" \
+    ${versions_file_arg} \
     --user $(id -u):$(id -g) \
     "${owlbot_postprocessor_image}"
-
-  return
-  # get existing versions.txt from downloaded repository
-  if [ -d "${output_folder}/google-cloud-java" ];then
-    cp "${output_folder}/google-cloud-java/versions.txt" "${workspace}"
-    pushd "${workspace}"
-    bash "${scripts_root}/post_processing/apply_current_versions.sh"
-    rm versions.txt
-    popd # workspace
-  fi
 }

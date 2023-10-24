@@ -166,6 +166,10 @@ Relative path from `output_folder` to the location of the original,
 post-processed source code of the library being generated. It is necessary when
 `enable_postprocessing` is `"true"`
 
+### versions_file (optional)
+It must point to a versions.txt file containing the versions the post-processed
+poms will have. It is required when `enable_postprocessing` is `"true"`
+
 
 ## An example to generate a non post-processed client library
 ```bash
@@ -195,5 +199,6 @@ library_generation/generate_library.sh \
 --rest_numeric_enums true \
 --enable_postprocessing true \
 --repository_path "java-logging" \
+--versions_file "path/to/versions.txt" \
 --include_samples true
 ```

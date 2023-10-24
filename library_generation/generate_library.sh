@@ -80,6 +80,10 @@ case $key in
     os_architecture="$2"
     shift
     ;;
+  --versions_file)
+    versions_file="$2"
+    shift
+    ;;
   *)
     echo "Invalid option: [$1]"
     exit 1
@@ -309,6 +313,10 @@ then
   echo "post processing is disabled"
   exit 0
 fi
+if [ -z "${versions_file}" ];then
+  echo "no versions.txt argument provided. Please provide one in order to enable post-processing"
+  exit 1
+fi
 workspace="${output_folder}/workspace"
 if [ -d "${workspace}" ]; then
   rm -rdf "${workspace}"
@@ -320,4 +328,5 @@ run_owlbot_postprocessor "${workspace}" \
   "${script_dir}" \
   "${output_folder}/${destination_path}" \
   "${repository_path}" \
-  "${proto_path}"
+  "${proto_path}" \
+  "${versions_file}"
