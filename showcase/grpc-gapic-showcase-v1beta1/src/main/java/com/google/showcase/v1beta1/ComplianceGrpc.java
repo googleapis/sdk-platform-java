@@ -17,7 +17,7 @@ public final class ComplianceGrpc {
 
   private ComplianceGrpc() {}
 
-  public static final String SERVICE_NAME = "google.showcase.v1beta1.Compliance";
+  public static final java.lang.String SERVICE_NAME = "google.showcase.v1beta1.Compliance";
 
   // Static method descriptors that strictly reflect the proto.
   private static volatile io.grpc.MethodDescriptor<com.google.showcase.v1beta1.RepeatRequest,
@@ -1124,9 +1124,9 @@ public final class ComplianceGrpc {
   private static final class ComplianceMethodDescriptorSupplier
       extends ComplianceBaseDescriptorSupplier
       implements io.grpc.protobuf.ProtoMethodDescriptorSupplier {
-    private final String methodName;
+    private final java.lang.String methodName;
 
-    ComplianceMethodDescriptorSupplier(String methodName) {
+    ComplianceMethodDescriptorSupplier(java.lang.String methodName) {
       this.methodName = methodName;
     }
 

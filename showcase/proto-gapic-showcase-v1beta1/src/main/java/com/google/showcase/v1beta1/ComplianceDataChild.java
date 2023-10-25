@@ -141,7 +141,7 @@ private static final long serialVersionUID = 0L;
    */
   @java.lang.Override
   public boolean hasFChild() {
-    return fChild_ != null;
+    return ((bitField0_ & 0x00000001) != 0);
   }
   /**
    * <code>.google.showcase.v1beta1.ComplianceDataGrandchild f_child = 5;</code>
@@ -168,7 +168,7 @@ private static final long serialVersionUID = 0L;
    */
   @java.lang.Override
   public boolean hasPString() {
-    return ((bitField0_ & 0x00000001) != 0);
+    return ((bitField0_ & 0x00000002) != 0);
   }
   /**
    * <code>optional string p_string = 6;</code>
@@ -214,7 +214,7 @@ private static final long serialVersionUID = 0L;
    */
   @java.lang.Override
   public boolean hasPFloat() {
-    return ((bitField0_ & 0x00000002) != 0);
+    return ((bitField0_ & 0x00000004) != 0);
   }
   /**
    * <code>optional float p_float = 7;</code>
@@ -233,7 +233,7 @@ private static final long serialVersionUID = 0L;
    */
   @java.lang.Override
   public boolean hasPDouble() {
-    return ((bitField0_ & 0x00000004) != 0);
+    return ((bitField0_ & 0x00000008) != 0);
   }
   /**
    * <code>optional double p_double = 8;</code>
@@ -252,7 +252,7 @@ private static final long serialVersionUID = 0L;
    */
   @java.lang.Override
   public boolean hasPBool() {
-    return ((bitField0_ & 0x00000008) != 0);
+    return ((bitField0_ & 0x00000010) != 0);
   }
   /**
    * <code>optional bool p_bool = 9;</code>
@@ -289,7 +289,7 @@ private static final long serialVersionUID = 0L;
    */
   @java.lang.Override
   public boolean hasPChild() {
-    return ((bitField0_ & 0x00000010) != 0);
+    return ((bitField0_ & 0x00000020) != 0);
   }
   /**
    * <code>optional .google.showcase.v1beta1.ComplianceDataGrandchild p_child = 10;</code>
@@ -333,22 +333,22 @@ private static final long serialVersionUID = 0L;
     if (fBool_ != false) {
       output.writeBool(4, fBool_);
     }
-    if (fChild_ != null) {
+    if (((bitField0_ & 0x00000001) != 0)) {
       output.writeMessage(5, getFChild());
     }
-    if (((bitField0_ & 0x00000001) != 0)) {
+    if (((bitField0_ & 0x00000002) != 0)) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 6, pString_);
     }
-    if (((bitField0_ & 0x00000002) != 0)) {
+    if (((bitField0_ & 0x00000004) != 0)) {
       output.writeFloat(7, pFloat_);
     }
-    if (((bitField0_ & 0x00000004) != 0)) {
+    if (((bitField0_ & 0x00000008) != 0)) {
       output.writeDouble(8, pDouble_);
     }
-    if (((bitField0_ & 0x00000008) != 0)) {
+    if (((bitField0_ & 0x00000010) != 0)) {
       output.writeBool(9, pBool_);
     }
-    if (((bitField0_ & 0x00000010) != 0)) {
+    if (((bitField0_ & 0x00000020) != 0)) {
       output.writeMessage(10, getPChild());
     }
     if (fContinent_ != com.google.showcase.v1beta1.Continent.CONTINENT_UNSPECIFIED.getNumber()) {
@@ -381,26 +381,26 @@ private static final long serialVersionUID = 0L;
       size += com.google.protobuf.CodedOutputStream
         .computeBoolSize(4, fBool_);
     }
-    if (fChild_ != null) {
+    if (((bitField0_ & 0x00000001) != 0)) {
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(5, getFChild());
     }
-    if (((bitField0_ & 0x00000001) != 0)) {
-      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, pString_);
-    }
     if (((bitField0_ & 0x00000002) != 0)) {
-      size += com.google.protobuf.CodedOutputStream
-        .computeFloatSize(7, pFloat_);
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, pString_);
     }
     if (((bitField0_ & 0x00000004) != 0)) {
       size += com.google.protobuf.CodedOutputStream
-        .computeDoubleSize(8, pDouble_);
+        .computeFloatSize(7, pFloat_);
     }
     if (((bitField0_ & 0x00000008) != 0)) {
       size += com.google.protobuf.CodedOutputStream
-        .computeBoolSize(9, pBool_);
+        .computeDoubleSize(8, pDouble_);
     }
     if (((bitField0_ & 0x00000010) != 0)) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeBoolSize(9, pBool_);
+    }
+    if (((bitField0_ & 0x00000020) != 0)) {
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(10, getPChild());
     }
@@ -730,27 +730,28 @@ private static final long serialVersionUID = 0L;
       if (((from_bitField0_ & 0x00000010) != 0)) {
         result.fContinent_ = fContinent_;
       }
+      int to_bitField0_ = 0;
       if (((from_bitField0_ & 0x00000020) != 0)) {
         result.fChild_ = fChildBuilder_ == null
             ? fChild_
             : fChildBuilder_.build();
+        to_bitField0_ |= 0x00000001;
       }
-      int to_bitField0_ = 0;
       if (((from_bitField0_ & 0x00000040) != 0)) {
         result.pString_ = pString_;
-        to_bitField0_ |= 0x00000001;
+        to_bitField0_ |= 0x00000002;
       }
       if (((from_bitField0_ & 0x00000080) != 0)) {
         result.pFloat_ = pFloat_;
-        to_bitField0_ |= 0x00000002;
+        to_bitField0_ |= 0x00000004;
       }
       if (((from_bitField0_ & 0x00000100) != 0)) {
         result.pDouble_ = pDouble_;
-        to_bitField0_ |= 0x00000004;
+        to_bitField0_ |= 0x00000008;
       }
       if (((from_bitField0_ & 0x00000200) != 0)) {
         result.pBool_ = pBool_;
-        to_bitField0_ |= 0x00000008;
+        to_bitField0_ |= 0x00000010;
       }
       if (((from_bitField0_ & 0x00000400) != 0)) {
         result.pContinent_ = pContinent_;
@@ -759,7 +760,7 @@ private static final long serialVersionUID = 0L;
         result.pChild_ = pChildBuilder_ == null
             ? pChild_
             : pChildBuilder_.build();
-        to_bitField0_ |= 0x00000010;
+        to_bitField0_ |= 0x00000020;
       }
       result.bitField0_ |= to_bitField0_;
     }
@@ -1242,8 +1243,10 @@ private static final long serialVersionUID = 0L;
       } else {
         fChildBuilder_.mergeFrom(value);
       }
-      bitField0_ |= 0x00000020;
-      onChanged();
+      if (fChild_ != null) {
+        bitField0_ |= 0x00000020;
+        onChanged();
+      }
       return this;
     }
     /**
@@ -1613,8 +1616,10 @@ private static final long serialVersionUID = 0L;
       } else {
         pChildBuilder_.mergeFrom(value);
       }
-      bitField0_ |= 0x00000800;
-      onChanged();
+      if (pChild_ != null) {
+        bitField0_ |= 0x00000800;
+        onChanged();
+      }
       return this;
     }
     /**

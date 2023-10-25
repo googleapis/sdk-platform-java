@@ -333,6 +333,7 @@ def java_gapic_library(
     # Test deps.
     actual_test_deps = [
         "@com_google_googleapis//google/type:type_java_proto",  # Commonly used.
+        "@com_google_googleapis//google/geo/type:viewport_java_proto",  # Used by Geo.
         "@com_google_api_gax_java//gax:gax_testlib",
         "@com_google_code_gson_gson//jar",
         "@junit_junit//jar",

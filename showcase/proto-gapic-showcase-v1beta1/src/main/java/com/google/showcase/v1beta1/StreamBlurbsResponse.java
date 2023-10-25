@@ -198,6 +198,7 @@ private static final long serialVersionUID = 0L;
     // @@protoc_insertion_point(enum_scope:google.showcase.v1beta1.StreamBlurbsResponse.Action)
   }
 
+  private int bitField0_;
   public static final int BLURB_FIELD_NUMBER = 1;
   private com.google.showcase.v1beta1.Blurb blurb_;
   /**
@@ -210,7 +211,7 @@ private static final long serialVersionUID = 0L;
    */
   @java.lang.Override
   public boolean hasBlurb() {
-    return blurb_ != null;
+    return ((bitField0_ & 0x00000001) != 0);
   }
   /**
    * <pre>
@@ -276,7 +277,7 @@ private static final long serialVersionUID = 0L;
   @java.lang.Override
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (blurb_ != null) {
+    if (((bitField0_ & 0x00000001) != 0)) {
       output.writeMessage(1, getBlurb());
     }
     if (action_ != com.google.showcase.v1beta1.StreamBlurbsResponse.Action.ACTION_UNSPECIFIED.getNumber()) {
@@ -291,7 +292,7 @@ private static final long serialVersionUID = 0L;
     if (size != -1) return size;
 
     size = 0;
-    if (blurb_ != null) {
+    if (((bitField0_ & 0x00000001) != 0)) {
       size += com.google.protobuf.CodedOutputStream
         .computeMessageSize(1, getBlurb());
     }
@@ -461,13 +462,19 @@ private static final long serialVersionUID = 0L;
 
     // Construct using com.google.showcase.v1beta1.StreamBlurbsResponse.newBuilder()
     private Builder() {
-
+      maybeForceBuilderInitialization();
     }
 
     private Builder(
         com.google.protobuf.GeneratedMessageV3.BuilderParent parent) {
       super(parent);
-
+      maybeForceBuilderInitialization();
+    }
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessageV3
+              .alwaysUseFieldBuilders) {
+        getBlurbFieldBuilder();
+      }
     }
     @java.lang.Override
     public Builder clear() {
@@ -512,14 +519,17 @@ private static final long serialVersionUID = 0L;
 
     private void buildPartial0(com.google.showcase.v1beta1.StreamBlurbsResponse result) {
       int from_bitField0_ = bitField0_;
+      int to_bitField0_ = 0;
       if (((from_bitField0_ & 0x00000001) != 0)) {
         result.blurb_ = blurbBuilder_ == null
             ? blurb_
             : blurbBuilder_.build();
+        to_bitField0_ |= 0x00000001;
       }
       if (((from_bitField0_ & 0x00000002) != 0)) {
         result.action_ = action_;
       }
+      result.bitField0_ |= to_bitField0_;
     }
 
     @java.lang.Override
@@ -713,8 +723,10 @@ private static final long serialVersionUID = 0L;
       } else {
         blurbBuilder_.mergeFrom(value);
       }
-      bitField0_ |= 0x00000001;
-      onChanged();
+      if (blurb_ != null) {
+        bitField0_ |= 0x00000001;
+        onChanged();
+      }
       return this;
     }
     /**

@@ -35,7 +35,7 @@ import com.google.api.core.ApiClock;
 import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.common.base.Preconditions;
-import java.time.Duration;
+import com.google.errorprone.annotations.concurrent.GuardedBy;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.concurrent.CancellationException;
@@ -48,7 +48,6 @@ import java.util.concurrent.TimeoutException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
-import javax.annotation.concurrent.GuardedBy;
 
 /**
  * Prevents the streams from hanging indefinitely. This middleware garbage collects idle streams in
@@ -200,8 +199,8 @@ public final class Watchdog implements Runnable, BackgroundResource {
   class WatchdogStream<ResponseT> extends StateCheckingResponseObserver<ResponseT> {
     private final Object lock = new Object();
 
-    private final Duration waitTimeout;
-    private final Duration idleTimeout;
+    private final java.time.Duration waitTimeout;
+    private final java.time.Duration idleTimeout;
     private boolean hasStarted;
     private boolean autoAutoFlowControl = true;
 
@@ -220,7 +219,7 @@ public final class Watchdog implements Runnable, BackgroundResource {
     private volatile Throwable error;
 
     WatchdogStream(
-        ResponseObserver<ResponseT> responseObserver, Duration waitTimeout, Duration idleTimeout) {
+        ResponseObserver<ResponseT> responseObserver, java.time.Duration waitTimeout, java.time.Duration idleTimeout) {
       this.waitTimeout = waitTimeout;
       this.idleTimeout = idleTimeout;
       this.outerResponseObserver = responseObserver;

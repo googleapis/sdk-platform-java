@@ -29,10 +29,9 @@
  */
 package com.google.api.gax.core;
 
-import static org.graalvm.nativeimage.ImageInfo.PROPERTY_IMAGE_CODE_KEY;
-import static org.graalvm.nativeimage.ImageInfo.PROPERTY_IMAGE_CODE_VALUE_RUNTIME;
-
 import com.google.api.core.InternalApi;
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Strings;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -84,12 +83,6 @@ public class GaxProperties {
 
   /** Returns the version of the running JVM */
   public static String getJavaVersion() {
-    // When running the application as a native image, append `-graalvm` to the
-    // version.
-    String imageCode = System.getProperty(PROPERTY_IMAGE_CODE_KEY);
-    if (imageCode != null && imageCode.equals(PROPERTY_IMAGE_CODE_VALUE_RUNTIME)) {
-      return System.getProperty("java.version") + "-graalvm";
-    }
     return JAVA_VERSION;
   }
 
@@ -98,8 +91,26 @@ public class GaxProperties {
     return GAX_VERSION;
   }
 
-  /** Returns the current runtime version */
-  private static String getRuntimeVersion() {
-    return System.getProperty("java.version");
+  /**
+   * Returns the current runtime version. For GraalVM the values in this method will be fetched at
+   * build time and the values should not differ from the runtime (executable)
+   */
+  @VisibleForTesting
+  static String getRuntimeVersion() {
+    String javaRuntimeInformation = System.getProperty("java.version", "null");
+
+    // append the vendor information to the java-version if vendor is present.
+    String vendor = System.getProperty("java.vendor");
+    if (!Strings.isNullOrEmpty(vendor)) {
+      javaRuntimeInformation = String.format("%s__%s", javaRuntimeInformation, vendor);
+      // appends the vendor version information to the java-version if vendor version is present.
+      String vendorVersion = System.getProperty("java.vendor.version");
+      if (!Strings.isNullOrEmpty(vendorVersion)) {
+        javaRuntimeInformation = String.format("%s__%s", javaRuntimeInformation, vendorVersion);
+      }
+    }
+    // replacing all characters that are not numbers, letters, underscores, periods, or backslashes
+    // with hyphens.
+    return javaRuntimeInformation.replaceAll("[^0-9a-zA-Z_\\\\.]", "-");
   }
 }

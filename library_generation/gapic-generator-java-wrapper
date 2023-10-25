@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+set -e
+
+# Wrap gapic-generator-java.jar because protoc requires the plugin to be executable.
+exec java -classpath "gapic-generator-java-${gapic_generator_version}.jar" com.google.api.generator.Main

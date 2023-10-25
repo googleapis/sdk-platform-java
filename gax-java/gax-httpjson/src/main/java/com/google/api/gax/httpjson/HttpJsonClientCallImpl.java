@@ -35,6 +35,7 @@ import com.google.api.gax.httpjson.HttpRequestRunnable.ResultListener;
 import com.google.api.gax.httpjson.HttpRequestRunnable.RunnableResult;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.common.base.Preconditions;
+import com.google.errorprone.annotations.concurrent.GuardedBy;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -47,7 +48,6 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Nullable;
-import javax.annotation.concurrent.GuardedBy;
 
 /**
  * This class serves as main implementation of {@link HttpJsonClientCall} for REST transport and is
