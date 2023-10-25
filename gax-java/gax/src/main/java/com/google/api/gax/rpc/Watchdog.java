@@ -219,7 +219,9 @@ public final class Watchdog implements Runnable, BackgroundResource {
     private volatile Throwable error;
 
     WatchdogStream(
-        ResponseObserver<ResponseT> responseObserver, java.time.Duration waitTimeout, java.time.Duration idleTimeout) {
+        ResponseObserver<ResponseT> responseObserver,
+        java.time.Duration waitTimeout,
+        java.time.Duration idleTimeout) {
       this.waitTimeout = waitTimeout;
       this.idleTimeout = idleTimeout;
       this.outerResponseObserver = responseObserver;
