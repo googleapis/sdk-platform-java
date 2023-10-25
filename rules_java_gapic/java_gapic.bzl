@@ -279,7 +279,7 @@ def java_gapic_library(
         name = resource_name_name,
         srcs = ["%s-resource-name.srcjar" % srcjar_name],
         deps = [
-            "@maven//:com_google_api_api_common",
+            "@com_google_api_api_common//jar",
             "@com_google_guava_guava//jar",
             "@javax_annotation_javax_annotation_api//jar",
         ],
@@ -291,7 +291,7 @@ def java_gapic_library(
         "@com_google_googleapis//google/rpc:rpc_java_proto",
         "@com_google_googleapis//google/longrunning:longrunning_java_proto",
         "@com_google_protobuf//:protobuf_java",
-        "@maven//:com_google_api_api_common",
+        "@com_google_api_api_common//jar",
         "@com_google_api_gax_java//gax:gax",
         "@com_google_guava_guava//jar",
         "@com_google_code_findbugs_jsr305//jar",
