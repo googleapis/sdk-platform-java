@@ -34,6 +34,8 @@ import static com.google.common.truth.Truth.assertThat;
 import com.google.api.core.ApiFutures;
 import com.google.api.gax.batching.FlowController.FlowControlException;
 import com.google.api.gax.batching.FlowController.LimitExceededBehavior;
+import com.google.api.gax.util.TimeConversionTestUtils;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -355,5 +357,27 @@ public class ThresholdBatcherTest {
         .isEqualTo(trackedFlowController.getElementsReleased());
     assertThat(trackedFlowController.getBytesReserved())
         .isEqualTo(trackedFlowController.getBytesReleased());
+  }
+
+  @Test
+  public void testTimeObjectsEquivalence() throws NoSuchMethodException {
+    AccumulatingBatchReceiver<SimpleBatch> receiver =
+        new AccumulatingBatchReceiver<>(ApiFutures.<Void>immediateFuture(null));
+    Method build = ThresholdBatcher.Builder.class.getMethod("build");
+    Method getMaxDelay = ThresholdBatcher.class.getMethod("getMaxDelay");
+
+    TimeConversionTestUtils.testDurationGetterAndSetter(
+        java.time.Duration.ofNanos(123l),
+        createSimpleBatcherBuidler(receiver),
+        ThresholdBatcher.Builder.class.getMethod("setMaxDelay", java.time.Duration.class),
+        build,
+        getMaxDelay);
+
+    TimeConversionTestUtils.testDurationGetterAndSetter(
+        org.threeten.bp.Duration.ofNanos(123l),
+        createSimpleBatcherBuidler(receiver),
+        ThresholdBatcher.Builder.class.getMethod("setMaxDelay", org.threeten.bp.Duration.class),
+        build,
+        getMaxDelay);
   }
 }

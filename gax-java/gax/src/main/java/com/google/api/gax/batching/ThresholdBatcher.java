@@ -101,6 +101,11 @@ public final class ThresholdBatcher<E> {
     resetThresholds();
   }
 
+  @VisibleForTesting
+  public java.time.Duration getMaxDelay() {
+    return this.maxDelay;
+  }
+
   /** Builder for a ThresholdBatcher. */
   public static class Builder<E> {
     private Collection<BatchingThreshold<E>> thresholds;
