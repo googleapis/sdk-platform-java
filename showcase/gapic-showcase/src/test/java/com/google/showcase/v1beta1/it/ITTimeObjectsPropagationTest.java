@@ -9,7 +9,7 @@ import org.junit.Test;
  * Tests to confirm that usage of retry settings can be done regardless of whether threeten or
  * java.time is being used
  */
-public class ITRetrySettingsPropagationTest {
+public class ITTimeObjectsPropagationTest {
   @Test
   public void testRetrySettings_fromJavaTimeHasEquivalentThreetenValues() {
     java.time.Duration javaTimeCommonValue = java.time.Duration.ofMillis(123l);
