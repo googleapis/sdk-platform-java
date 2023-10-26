@@ -288,6 +288,11 @@ public class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest 
       boolean res = future.cancel(false);
       assertTrue(res);
       assertFutureCancel(future);
+
+      // Verify that the cancelled future is traced. Every attempt increases the number
+      // of cancellation attempts from the tracer.
+      Mockito.verify(tracer, Mockito.times(executionsCount + 1)).attemptCancelled();
+
       // Assert that future has at least been attempted once
       // i.e. The future from executor.submit() has been run by the ScheduledExecutor
       assertTrue(future.getAttemptSettings().getAttemptCount() > 0);
@@ -295,34 +300,6 @@ public class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest 
     }
     localExecutor.shutdown();
     localExecutor.awaitTermination(10, TimeUnit.SECONDS);
-  }
-
-  @Test
-  public void testCancelIsTraced() throws Exception {
-    ScheduledExecutorService localExecutor = Executors.newSingleThreadScheduledExecutor();
-    FailingCallable callable = new FailingCallable(4, "request", "SUCCESS", tracer);
-    RetrySettings retrySettings =
-        FAST_RETRY_SETTINGS
-            .toBuilder()
-            .setInitialRetryDelay(Duration.ofMillis(1_000L))
-            .setMaxRetryDelay(Duration.ofMillis(1_000L))
-            .setTotalTimeout(Duration.ofMillis(10_0000L))
-            .build();
-    RetryingExecutorWithContext<String> executor =
-        getRetryingExecutor(getAlgorithm(retrySettings, 0, null), localExecutor);
-    RetryingFuture<String> future =
-        executor.createFuture(callable, FakeCallContext.createDefault().withTracer(tracer));
-    callable.setExternalFuture(future);
-    future.setAttemptFuture(executor.submit(future));
-
-    Thread.sleep(30L);
-
-    boolean res = future.cancel(false);
-    assertTrue(res);
-    assertFutureCancel(future);
-
-    Mockito.verify(tracer).attemptCancelled();
-    localExecutor.shutdownNow();
   }
 
   @Test
