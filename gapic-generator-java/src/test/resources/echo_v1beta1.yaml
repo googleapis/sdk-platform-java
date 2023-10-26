@@ -25,9 +25,9 @@ apis:
   - name: google.showcase.v1beta1.SequenceService
   - name: google.showcase.v1beta1.Testing
   # Mix-in services
-  - name: 'google.cloud.location.Locations'
-  - name: 'google.iam.v1.IAMPolicy'
-  - name: 'google.longrunning.Operations'
+  - name: google.cloud.location.Locations
+  - name: google.iam.v1.IAMPolicy
+  - name: google.longrunning.Operations
 
 documentation:
   summary: |-

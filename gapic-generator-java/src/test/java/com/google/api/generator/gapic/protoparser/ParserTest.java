@@ -20,11 +20,18 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
+import com.google.api.AnnotationsProto;
+import com.google.api.ClientProto;
+import com.google.api.FieldBehaviorProto;
+import com.google.api.HttpProto;
+import com.google.api.LaunchStageProto;
+import com.google.api.ResourceProto;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.Field;
+import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
@@ -33,9 +40,17 @@ import com.google.api.generator.gapic.model.ResourceReference;
 import com.google.api.generator.gapic.model.Transport;
 import com.google.bookshop.v1beta1.BookshopProto;
 import com.google.common.collect.ImmutableList;
+import com.google.longrunning.OperationsProto;
+import com.google.protobuf.AnyProto;
+import com.google.protobuf.DescriptorProtos;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
+import com.google.protobuf.DurationProto;
+import com.google.protobuf.EmptyProto;
+import com.google.protobuf.TimestampProto;
+import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
+import com.google.rpc.StatusProto;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import com.google.showcase.v1beta1.TestingOuterClass;
 import com.google.testgapic.v1beta1.LockerProto;
@@ -446,6 +461,33 @@ public class ParserTest {
 
     defaultHost = "logging.googleapis.com";
     assertEquals(String.format("%s:443", defaultHost), Parser.sanitizeDefaultHost(defaultHost));
+  }
+
+  @Test
+  public void parseRequest() {
+    CodeGeneratorRequest request =
+        CodeGeneratorRequest.newBuilder()
+            .setParameter(
+                "metadata,transport=grpc,rest-numeric-enums,api-service-config=src/test/resources/echo_v1beta1.yaml")
+            .addProtoFile(HttpProto.getDescriptor().toProto())
+            .addProtoFile(LaunchStageProto.getDescriptor().toProto())
+            .addProtoFile(AnyProto.getDescriptor().toProto())
+            .addProtoFile(DescriptorProtos.getDescriptor().toProto())
+            .addProtoFile(DurationProto.getDescriptor().toProto())
+            .addProtoFile(EmptyProto.getDescriptor().toProto())
+            .addProtoFile(StatusProto.getDescriptor().toProto())
+            .addProtoFile(AnnotationsProto.getDescriptor().toProto())
+            .addProtoFile(ClientProto.getDescriptor().toProto())
+            .addProtoFile(FieldBehaviorProto.getDescriptor().toProto())
+            .addProtoFile(ResourceProto.getDescriptor().toProto())
+            .addProtoFile(OperationsProto.getDescriptor().toProto())
+            .addProtoFile(TimestampProto.getDescriptor().toProto())
+            .addProtoFile(EchoOuterClass.getDescriptor().toProto())
+            .addFileToGenerate("echo.proto")
+            .build();
+
+    GapicContext context = Parser.parse(request);
+    assertEquals(1, context.services().size());
   }
 
   @Test
