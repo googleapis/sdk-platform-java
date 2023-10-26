@@ -290,7 +290,7 @@ public class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest 
       assertTrue(res);
       assertFutureCancel(future);
 
-      // Verify that the tracer has cancelled the attempt. Every attempt increases the number
+      // Verify that the cancelled future is traced. Every attempt increases the number
       // of cancellation attempts from the tracer.
       Mockito.verify(tracer, Mockito.times(executionsCount + 1)).attemptCancelled();
 
