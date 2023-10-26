@@ -39,7 +39,9 @@ jobs:
     - name: install docker (macos)
       if: matrix.os == 'macos-12'
       run: |
-        brew install --cask docker
+        brew update --preinstall
+        brew install docker docker-compose qemu 
+        brew upgrade qemu
         colima start
         open -a /Applications/Docker.app --args --unattended --accept-license
         docker run --rm hello-world
