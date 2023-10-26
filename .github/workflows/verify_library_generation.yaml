@@ -43,8 +43,7 @@ jobs:
         brew install docker docker-compose qemu 
         brew upgrade qemu
         colima start
-        open -a /Applications/Docker.app --args --unattended --accept-license
-        docker run --rm hello-world
+        docker run --user $(id -u):$(id -g) --rm hello-world
     - name: Run integration tests
       run: |
         set -x
