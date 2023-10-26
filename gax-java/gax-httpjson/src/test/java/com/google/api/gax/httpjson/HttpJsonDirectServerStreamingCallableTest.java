@@ -65,7 +65,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
 public class HttpJsonDirectServerStreamingCallableTest {
@@ -139,7 +138,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
             .setTransportChannel(HttpJsonTransportChannel.create(channel))
             .setDefaultCallContext(
                 HttpJsonCallContext.of(channel, HttpJsonCallOptions.DEFAULT)
-                    .withTimeout(Duration.ofSeconds(3)))
+                    .withTimeout(java.time.Duration.ofSeconds(3)))
             .build();
 
     streamingCallSettings = ServerStreamingCallSettings.<Color, Money>newBuilder().build();

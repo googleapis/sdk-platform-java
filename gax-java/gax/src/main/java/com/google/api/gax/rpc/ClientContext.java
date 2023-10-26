@@ -29,10 +29,14 @@
  */
 package com.google.api.gax.rpc;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
+
 import com.google.api.client.util.Strings;
 import com.google.api.core.ApiClock;
 import com.google.api.core.BetaApi;
 import com.google.api.core.NanoClock;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.ExecutorAsBackgroundResource;
 import com.google.api.gax.core.ExecutorProvider;
@@ -57,7 +61,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.threeten.bp.Duration;
 
 /**
  * Encapsulates client state, including executor, credentials, and transport channel.
@@ -98,8 +101,19 @@ public abstract class ClientContext {
   @Nullable
   public abstract Watchdog getStreamWatchdog();
 
+  /**
+   * Backport of {@link #getStreamWatchdogCheckIntervalDuration()}
+   *
+   * @return
+   */
   @Nonnull
-  public abstract Duration getStreamWatchdogCheckInterval();
+  @ObsoleteApi("Use getStreamWatchdogCheckIntervalDuration() instead")
+  public abstract org.threeten.bp.Duration getStreamWatchdogCheckInterval();
+
+  @Nonnull
+  public final java.time.Duration getStreamWatchdogCheckIntervalDuration() {
+    return toJavaTimeDuration(getStreamWatchdogCheckInterval());
+  }
 
   @Nullable
   public abstract String getEndpoint();
@@ -127,7 +141,7 @@ public abstract class ClientContext {
         .setInternalHeaders(Collections.<String, String>emptyMap())
         .setClock(NanoClock.getDefaultClock())
         .setStreamWatchdog(null)
-        .setStreamWatchdogCheckInterval(Duration.ZERO)
+        .setStreamWatchdogCheckInterval(java.time.Duration.ZERO)
         .setTracerFactory(BaseApiTracerFactory.getInstance())
         .setQuotaProjectId(null)
         .setGdchApiAudience(null);
@@ -247,7 +261,7 @@ public abstract class ClientContext {
     if (watchdogProvider != null) {
       if (watchdogProvider.needsCheckInterval()) {
         watchdogProvider =
-            watchdogProvider.withCheckInterval(settings.getStreamWatchdogCheckInterval());
+            watchdogProvider.withCheckInterval(settings.getStreamWatchdogCheckIntervalDuration());
       }
       if (watchdogProvider.needsClock()) {
         watchdogProvider = watchdogProvider.withClock(clock);
@@ -282,7 +296,7 @@ public abstract class ClientContext {
         .setEndpoint(settings.getEndpoint())
         .setQuotaProjectId(settings.getQuotaProjectId())
         .setStreamWatchdog(watchdog)
-        .setStreamWatchdogCheckInterval(settings.getStreamWatchdogCheckInterval())
+        .setStreamWatchdogCheckInterval(settings.getStreamWatchdogCheckIntervalDuration())
         .setTracerFactory(settings.getTracerFactory())
         .build();
   }
@@ -350,7 +364,12 @@ public abstract class ClientContext {
 
     public abstract Builder setStreamWatchdog(Watchdog watchdog);
 
-    public abstract Builder setStreamWatchdogCheckInterval(Duration duration);
+    @ObsoleteApi("Use setStreamWatchdogCheckInterval(java.time.Duration) instead")
+    public abstract Builder setStreamWatchdogCheckInterval(org.threeten.bp.Duration duration);
+
+    public final Builder setStreamWatchdogCheckInterval(java.time.Duration duration) {
+      return setStreamWatchdogCheckInterval(toThreetenDuration(duration));
+    }
 
     /**
      * Set the {@link ApiTracerFactory} that will be used to generate traces for operations.

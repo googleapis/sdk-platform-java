@@ -29,12 +29,15 @@
  */
 package com.google.api.gax.httpjson;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeInstant;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenInstant;
+
+import com.google.api.core.ObsoleteApi;
 import com.google.auth.Credentials;
 import com.google.auto.value.AutoValue;
 import com.google.protobuf.TypeRegistry;
 import java.time.Duration;
 import javax.annotation.Nullable;
-import org.threeten.bp.Instant;
 
 /** Options for an http-json call, including deadline and credentials. */
 @AutoValue
@@ -45,7 +48,13 @@ public abstract class HttpJsonCallOptions {
   public abstract Duration getTimeout();
 
   @Nullable
-  public abstract Instant getDeadline();
+  @ObsoleteApi("Use getDeadlineInstant() instead")
+  public abstract org.threeten.bp.Instant getDeadline();
+
+  @Nullable
+  public final java.time.Instant getDeadlineInstant() {
+    return toJavaTimeInstant(getDeadline());
+  }
 
   @Nullable
   public abstract Credentials getCredentials();
@@ -66,7 +75,7 @@ public abstract class HttpJsonCallOptions {
 
     Builder builder = this.toBuilder();
 
-    Instant newDeadline = inputOptions.getDeadline();
+    org.threeten.bp.Instant newDeadline = inputOptions.getDeadline();
     if (newDeadline != null) {
       builder.setDeadline(newDeadline);
     }
@@ -95,7 +104,13 @@ public abstract class HttpJsonCallOptions {
   public abstract static class Builder {
     public abstract Builder setTimeout(java.time.Duration value);
 
-    public abstract Builder setDeadline(Instant value);
+    /** Backport of {@link #setDeadline(java.time.Instant)} */
+    @ObsoleteApi("Use setDeadline(java.time.Instant) instead")
+    public abstract Builder setDeadline(org.threeten.bp.Instant value);
+
+    public final Builder setDeadline(java.time.Instant value) {
+      return setDeadline(toThreetenInstant(value));
+    }
 
     public abstract Builder setCredentials(Credentials value);
 

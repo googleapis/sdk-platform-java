@@ -65,7 +65,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
 public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportChannelTest {
@@ -94,8 +93,8 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
 
   @Test
   public void testKeepAlive() {
-    Duration keepaliveTime = Duration.ofSeconds(1);
-    Duration keepaliveTimeout = Duration.ofSeconds(2);
+    java.time.Duration keepaliveTime = java.time.Duration.ofSeconds(1);
+    java.time.Duration keepaliveTimeout = java.time.Duration.ofSeconds(2);
     boolean keepaliveWithoutCalls = true;
 
     InstantiatingGrpcChannelProvider provider =
@@ -105,8 +104,8 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
             .setKeepAliveWithoutCalls(keepaliveWithoutCalls)
             .build();
 
-    assertEquals(provider.getKeepAliveTime(), keepaliveTime);
-    assertEquals(provider.getKeepAliveTimeout(), keepaliveTimeout);
+    assertEquals(provider.getKeepAliveTimeDuration(), keepaliveTime);
+    assertEquals(provider.getKeepAliveTimeoutDuration(), keepaliveTimeout);
     assertEquals(provider.getKeepAliveWithoutCalls(), keepaliveWithoutCalls);
   }
 
@@ -156,8 +155,8 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
 
   @Test
   public void testToBuilder() {
-    Duration keepaliveTime = Duration.ofSeconds(1);
-    Duration keepaliveTimeout = Duration.ofSeconds(2);
+    java.time.Duration keepaliveTime = java.time.Duration.ofSeconds(1);
+    java.time.Duration keepaliveTimeout = java.time.Duration.ofSeconds(2);
     ApiFunction<ManagedChannelBuilder, ManagedChannelBuilder> channelConfigurator =
         builder -> {
           throw new UnsupportedOperationException();
@@ -183,8 +182,8 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
     assertThat(builder.getEndpoint()).isEqualTo("fake.endpoint:443");
     assertThat(builder.getMaxInboundMessageSize()).isEqualTo(12345678);
     assertThat(builder.getMaxInboundMetadataSize()).isEqualTo(4096);
-    assertThat(builder.getKeepAliveTime()).isEqualTo(keepaliveTime);
-    assertThat(builder.getKeepAliveTimeout()).isEqualTo(keepaliveTimeout);
+    assertThat(builder.getKeepAliveTimeDuration()).isEqualTo(keepaliveTime);
+    assertThat(builder.getKeepAliveTimeoutDuration()).isEqualTo(keepaliveTimeout);
     assertThat(builder.getChannelConfigurator()).isEqualTo(channelConfigurator);
     assertThat(builder.getPoolSize()).isEqualTo(5);
     assertThat(builder.build().directPathServiceConfig).isEqualTo(directPathServiceConfig);

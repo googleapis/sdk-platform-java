@@ -46,32 +46,31 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
 public class StreamingRetryAlgorithmTest {
   private static final RetrySettings DEFAULT_RETRY_SETTINGS =
       RetrySettings.newBuilder()
-          .setInitialRetryDelay(Duration.ofMillis(10L))
-          .setInitialRpcTimeout(Duration.ofMillis(100L))
+          .setInitialRetryDelay(java.time.Duration.ofMillis(10L))
+          .setInitialRpcTimeout(java.time.Duration.ofMillis(100L))
           .setMaxAttempts(10)
-          .setMaxRetryDelay(Duration.ofSeconds(10L))
-          .setMaxRpcTimeout(Duration.ofSeconds(30L))
+          .setMaxRetryDelay(java.time.Duration.ofSeconds(10L))
+          .setMaxRpcTimeout(java.time.Duration.ofSeconds(30L))
           .setRetryDelayMultiplier(1.4)
           .setRpcTimeoutMultiplier(1.5)
-          .setTotalTimeout(Duration.ofMinutes(10L))
+          .setTotalTimeout(java.time.Duration.ofMinutes(10L))
           .build();
 
   private static final RetrySettings CONTEXT_RETRY_SETTINGS =
       RetrySettings.newBuilder()
-          .setInitialRetryDelay(Duration.ofMillis(20L))
-          .setInitialRpcTimeout(Duration.ofMillis(200L))
+          .setInitialRetryDelay(java.time.Duration.ofMillis(20L))
+          .setInitialRpcTimeout(java.time.Duration.ofMillis(200L))
           .setMaxAttempts(10)
-          .setMaxRetryDelay(Duration.ofSeconds(20L))
-          .setMaxRpcTimeout(Duration.ofSeconds(60L))
+          .setMaxRetryDelay(java.time.Duration.ofSeconds(20L))
+          .setMaxRpcTimeout(java.time.Duration.ofSeconds(60L))
           .setRetryDelayMultiplier(2.4)
           .setRpcTimeoutMultiplier(2.5)
-          .setTotalTimeout(Duration.ofMinutes(20L))
+          .setTotalTimeout(java.time.Duration.ofMinutes(20L))
           .build();
 
   @Test
@@ -86,7 +85,8 @@ public class StreamingRetryAlgorithmTest {
 
     TimedAttemptSettings attempt = algorithm.createFirstAttempt(context);
     assertThat(attempt.getGlobalSettings()).isSameInstanceAs(DEFAULT_RETRY_SETTINGS);
-    assertThat(attempt.getRpcTimeout()).isEqualTo(DEFAULT_RETRY_SETTINGS.getInitialRpcTimeout());
+    assertThat(attempt.getRpcTimeoutDuration())
+        .isEqualTo(DEFAULT_RETRY_SETTINGS.getInitialRpcTimeoutDuration());
   }
 
   @Test
@@ -102,7 +102,8 @@ public class StreamingRetryAlgorithmTest {
 
     TimedAttemptSettings attempt = algorithm.createFirstAttempt(context);
     assertThat(attempt.getGlobalSettings()).isSameInstanceAs(CONTEXT_RETRY_SETTINGS);
-    assertThat(attempt.getRpcTimeout()).isEqualTo(CONTEXT_RETRY_SETTINGS.getInitialRpcTimeout());
+    assertThat(attempt.getRpcTimeoutDuration())
+        .isEqualTo(CONTEXT_RETRY_SETTINGS.getInitialRpcTimeoutDuration());
   }
 
   @Test
@@ -175,7 +176,7 @@ public class StreamingRetryAlgorithmTest {
     assertThat(third.getFirstAttemptStartTimeNanos())
         .isEqualTo(first.getFirstAttemptStartTimeNanos());
     // The timeout values are reset to the second call.
-    assertThat(third.getRpcTimeout()).isEqualTo(second.getRpcTimeout());
+    assertThat(third.getRpcTimeoutDuration()).isEqualTo(second.getRpcTimeoutDuration());
   }
 
   @Test

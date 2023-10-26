@@ -63,7 +63,7 @@ public class Callables {
       settings =
           settings
               .toBuilder()
-              .setSimpleTimeoutNoRetries(settings.getRetrySettings().getTotalTimeout())
+              .setSimpleTimeoutNoRetries(settings.getRetrySettings().getTotalTimeoutDuration())
               .build();
     }
 
@@ -88,7 +88,7 @@ public class Callables {
       settings =
           settings
               .toBuilder()
-              .setSimpleTimeoutNoRetries(settings.getRetrySettings().getTotalTimeout())
+              .setSimpleTimeoutNoRetries(settings.getRetrySettings().getTotalTimeoutDuration())
               .build();
     }
 
@@ -115,8 +115,8 @@ public class Callables {
         callable.withDefaultCallContext(
             clientContext
                 .getDefaultCallContext()
-                .withStreamIdleTimeout(callSettings.getIdleTimeout())
-                .withStreamWaitTimeout(callSettings.getWaitTimeout()));
+                .withStreamIdleTimeout(callSettings.getIdleTimeoutDuration())
+                .withStreamWaitTimeout(callSettings.getWaitTimeoutDuration()));
 
     return callable;
   }
@@ -231,6 +231,7 @@ public class Callables {
       Collection<StatusCode.Code> retryableCodes, RetrySettings retrySettings) {
     return retrySettings.getMaxAttempts() == 1
         || retryableCodes.isEmpty()
-        || (retrySettings.getMaxAttempts() == 0 && retrySettings.getTotalTimeout().isZero());
+        || (retrySettings.getMaxAttempts() == 0
+            && retrySettings.getTotalTimeoutDuration().isZero());
   }
 }

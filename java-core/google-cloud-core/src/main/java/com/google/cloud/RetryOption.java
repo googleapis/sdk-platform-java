@@ -16,12 +16,13 @@
 
 package com.google.cloud;
 
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import com.google.api.core.BetaApi;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.retrying.RetrySettings;
 import java.io.Serializable;
-import org.threeten.bp.Duration;
 
 /**
  * This class represents an options wrapper around the {@link RetrySettings} class and is an
@@ -52,13 +53,25 @@ public class RetryOption implements Serializable {
   }
 
   /** See {@link RetrySettings#getTotalTimeout()}. */
-  public static RetryOption totalTimeout(Duration totalTimeout) {
+  @ObsoleteApi("Use totalTimeout(java.time.Duration) instead")
+  public static RetryOption totalTimeout(org.threeten.bp.Duration totalTimeout) {
     return new RetryOption(OptionType.TOTAL_TIMEOUT, totalTimeout);
   }
 
+  /** See {@link RetrySettings#getTotalTimeout()}. */
+  public static RetryOption totalTimeout(java.time.Duration totalTimeout) {
+    return totalTimeout(toThreetenDuration(totalTimeout));
+  }
+
   /** See {@link RetrySettings#getInitialRetryDelay()}. */
-  public static RetryOption initialRetryDelay(Duration initialRetryDelay) {
+  @ObsoleteApi("Use initialRetryDelay(java.time.Duration) instead")
+  public static RetryOption initialRetryDelay(org.threeten.bp.Duration initialRetryDelay) {
     return new RetryOption(OptionType.INITIAL_RETRY_DELAY, initialRetryDelay);
+  }
+
+  /** See {@link RetrySettings#getInitialRetryDelay()}. */
+  public static RetryOption initialRetryDelay(java.time.Duration initialRetryDelay) {
+    return initialRetryDelay(toThreetenDuration(initialRetryDelay));
   }
 
   /** See {@link RetrySettings#getRetryDelayMultiplier()}. */
@@ -67,8 +80,14 @@ public class RetryOption implements Serializable {
   }
 
   /** See {@link RetrySettings#getMaxRetryDelay()}. */
-  public static RetryOption maxRetryDelay(Duration maxRetryDelay) {
+  @ObsoleteApi("Use maxRetryDelay(java.time.Duration) instead")
+  public static RetryOption maxRetryDelay(org.threeten.bp.Duration maxRetryDelay) {
     return new RetryOption(OptionType.MAX_RETRY_DELAY, maxRetryDelay);
+  }
+
+  /** See {@link RetrySettings#getMaxRetryDelay()}. */
+  public static RetryOption maxRetryDelay(java.time.Duration maxRetryDelay) {
+    return maxRetryDelay(toThreetenDuration(maxRetryDelay));
   }
 
   /** See {@link RetrySettings#getMaxAttempts()}. */
@@ -124,16 +143,16 @@ public class RetryOption implements Serializable {
     for (RetryOption option : options) {
       switch (option.type) {
         case TOTAL_TIMEOUT:
-          builder.setTotalTimeout((Duration) option.value);
+          builder.setTotalTimeout((org.threeten.bp.Duration) option.value);
           break;
         case INITIAL_RETRY_DELAY:
-          builder.setInitialRetryDelay((Duration) option.value);
+          builder.setInitialRetryDelay((org.threeten.bp.Duration) option.value);
           break;
         case RETRY_DELAY_MULTIPLIER:
           builder.setRetryDelayMultiplier((Double) option.value);
           break;
         case MAX_RETRY_DELAY:
-          builder.setMaxRetryDelay((Duration) option.value);
+          builder.setMaxRetryDelay((org.threeten.bp.Duration) option.value);
           break;
         case MAX_ATTEMPTS:
           builder.setMaxAttempts((Integer) option.value);

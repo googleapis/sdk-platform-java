@@ -12,4 +12,10 @@
         <className>com/google/cloud/ReadChannel</className>
         <method>long limit()</method>
     </difference>
+    <difference>
+        <differenceType>7005</differenceType>
+        <className>com/google/cloud/testing/*</className>
+        <method>* *(org.threeten.bp.Duration)</method>
+        <to>*</to>
+    </difference>
 </differences>

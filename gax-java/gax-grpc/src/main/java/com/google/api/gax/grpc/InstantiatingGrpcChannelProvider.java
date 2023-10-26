@@ -29,10 +29,14 @@
  */
 package com.google.api.gax.grpc;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
+
 import com.google.api.core.ApiFunction;
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.api.core.InternalExtensionOnly;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.api.gax.rpc.HeaderProvider;
@@ -68,7 +72,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.Nullable;
 import javax.net.ssl.KeyManagerFactory;
-import org.threeten.bp.Duration;
 
 /**
  * InstantiatingGrpcChannelProvider is a TransportChannelProvider which constructs a gRPC
@@ -106,8 +109,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   @Nullable private final GrpcInterceptorProvider interceptorProvider;
   @Nullable private final Integer maxInboundMessageSize;
   @Nullable private final Integer maxInboundMetadataSize;
-  @Nullable private final Duration keepAliveTime;
-  @Nullable private final Duration keepAliveTimeout;
+  @Nullable private final java.time.Duration keepAliveTime;
+  @Nullable private final java.time.Duration keepAliveTimeout;
   @Nullable private final Boolean keepAliveWithoutCalls;
   private final ChannelPoolSettings channelPoolSettings;
   @Nullable private final Credentials credentials;
@@ -434,13 +437,23 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return endpoint;
   }
 
+  @ObsoleteApi("Use getKeepAliveTimeDuration() instead")
+  public org.threeten.bp.Duration getKeepAliveTime() {
+    return toThreetenDuration(getKeepAliveTimeDuration());
+  }
+
   /** The time without read activity before sending a keepalive ping. */
-  public Duration getKeepAliveTime() {
+  public java.time.Duration getKeepAliveTimeDuration() {
     return keepAliveTime;
   }
 
+  @ObsoleteApi("Use getKeepAliveTimeoutDuration() instead")
+  public org.threeten.bp.Duration getKeepAliveTimeout() {
+    return toThreetenDuration(getKeepAliveTimeoutDuration());
+  }
+
   /** The time without read activity after sending a keepalive ping. */
-  public Duration getKeepAliveTimeout() {
+  public java.time.Duration getKeepAliveTimeoutDuration() {
     return keepAliveTimeout;
   }
 
@@ -478,8 +491,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     @Nullable private GrpcInterceptorProvider interceptorProvider;
     @Nullable private Integer maxInboundMessageSize;
     @Nullable private Integer maxInboundMetadataSize;
-    @Nullable private Duration keepAliveTime;
-    @Nullable private Duration keepAliveTimeout;
+    @Nullable private java.time.Duration keepAliveTime;
+    @Nullable private java.time.Duration keepAliveTimeout;
     @Nullable private Boolean keepAliveWithoutCalls;
     @Nullable private ApiFunction<ManagedChannelBuilder, ManagedChannelBuilder> channelConfigurator;
     @Nullable private Credentials credentials;
@@ -617,25 +630,44 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       return maxInboundMetadataSize;
     }
 
+    /**
+     * Overload of {@link #setKeepAliveTime(java.time.Duration)} using {@link
+     * org.threeten.bp.Duration}
+     */
+    @ObsoleteApi("Use setKeepAliveTime(java.time.Duration) instead")
+    public Builder setKeepAliveTime(org.threeten.bp.Duration duration) {
+      return setKeepAliveTime(toJavaTimeDuration(duration));
+    }
     /** The time without read activity before sending a keepalive ping. */
-    public Builder setKeepAliveTime(Duration duration) {
+    public Builder setKeepAliveTime(java.time.Duration duration) {
       this.keepAliveTime = duration;
       return this;
     }
 
+    /** Backport of {@link #getKeepAliveTimeDuration()} */
+    @ObsoleteApi("Use getKeepAliveTimeDuration() instead")
+    public org.threeten.bp.Duration getKeepAliveTime() {
+      return toThreetenDuration(getKeepAliveTimeDuration());
+    }
+
     /** The time without read activity before sending a keepalive ping. */
-    public Duration getKeepAliveTime() {
+    public java.time.Duration getKeepAliveTimeDuration() {
       return keepAliveTime;
     }
 
+    @ObsoleteApi("Use setKeepAliveTimeout(java.time.Duration) instead")
+    public Builder setKeepAliveTimeout(org.threeten.bp.Duration duration) {
+      return setKeepAliveTimeout(toJavaTimeDuration(duration));
+    }
+
     /** The time without read activity after sending a keepalive ping. */
-    public Builder setKeepAliveTimeout(Duration duration) {
+    public Builder setKeepAliveTimeout(java.time.Duration duration) {
       this.keepAliveTimeout = duration;
       return this;
     }
 
     /** The time without read activity after sending a keepalive ping. */
-    public Duration getKeepAliveTimeout() {
+    public java.time.Duration getKeepAliveTimeoutDuration() {
       return keepAliveTimeout;
     }
 

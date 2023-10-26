@@ -50,16 +50,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
 public class WatchdogTest {
   private static final ScheduledExecutorService EXECUTOR = Executors.newScheduledThreadPool(1);
 
   private FakeApiClock clock;
-  private final Duration checkInterval = Duration.ofMillis(1000);
-  private Duration waitTime = Duration.ofSeconds(10);
-  private Duration idleTime = Duration.ofMinutes(5);
+  private final java.time.Duration checkInterval = java.time.Duration.ofMillis(1000);
+  private java.time.Duration waitTime = java.time.Duration.ofSeconds(10);
+  private java.time.Duration idleTime = java.time.Duration.ofMinutes(5);
 
   private Watchdog watchdog;
   private MockServerStreamingCallable<String, String> callable;

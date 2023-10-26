@@ -43,7 +43,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
 public class BasicRetryingFutureTest {
@@ -96,7 +95,8 @@ public class BasicRetryingFutureTest {
     future.handleAttempt(null, null);
 
     Mockito.verify(tracer)
-        .attemptFailed(ArgumentMatchers.<Throwable>any(), ArgumentMatchers.<Duration>any());
+        .attemptFailed(
+            ArgumentMatchers.<Throwable>any(), ArgumentMatchers.<java.time.Duration>any());
     Mockito.verifyNoMoreInteractions(tracer);
   }
 

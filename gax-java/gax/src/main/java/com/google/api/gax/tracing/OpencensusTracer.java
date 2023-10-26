@@ -47,7 +47,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.annotation.Nonnull;
-import org.threeten.bp.Duration;
 
 /**
  * Implementation of {@link ApiTracer} that uses OpenCensus.
@@ -342,7 +341,7 @@ public class OpencensusTracer extends BaseApiTracer {
 
   /** {@inheritDoc} */
   @Override
-  public void attemptFailed(Throwable error, Duration delay) {
+  public void attemptFailed(Throwable error, java.time.Duration delay) {
     Map<String, AttributeValue> attributes = baseAttemptAttributes();
     attributes.put("delay ms", AttributeValue.longAttributeValue(delay.toMillis()));
     populateError(attributes, error);

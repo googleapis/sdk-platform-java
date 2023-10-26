@@ -39,13 +39,12 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.threeten.bp.Duration;
 
 @RunWith(MockitoJUnitRunner.class)
 public class InstantiatingWatchdogProviderTest {
   @Mock private ScheduledExecutorService executor;
   @Mock private ApiClock clock;
-  private Duration checkInterval = Duration.ofSeconds(11);
+  private java.time.Duration checkInterval = java.time.Duration.ofSeconds(11);
 
   @Test
   public void happyPath() {

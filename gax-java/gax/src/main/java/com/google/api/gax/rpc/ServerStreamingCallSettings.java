@@ -29,6 +29,10 @@
  */
 package com.google.api.gax.rpc;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
+
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.retrying.SimpleStreamResumptionStrategy;
 import com.google.api.gax.retrying.StreamResumptionStrategy;
@@ -39,7 +43,6 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
 import java.util.Set;
 import javax.annotation.Nonnull;
-import org.threeten.bp.Duration;
 
 /**
  * A settings class to configure a {@link ServerStreamingCallable}.
@@ -51,7 +54,7 @@ import org.threeten.bp.Duration;
  * will terminate any stream that has not has seen any demand (via {@link
  * StreamController#request(int)}) in the configured interval or has not seen a message from the
  * server in {@code waitTimeout}. To turn off idle checks, set the interval to {@link
- * Duration#ZERO}.
+ * java.time.Duration#ZERO}.
  *
  * <p>Retry configuration allows for the stream to be restarted and resumed. It is composed of 3
  * parts: the retryable codes, the retry settings and the stream resumption strategy. The retryable
@@ -67,7 +70,7 @@ import org.threeten.bp.Duration;
  *   <li>RPC timeouts apply to the time interval between caller demanding more responses via {@link
  *       StreamController#request(int)} and the {@link ResponseObserver} receiving the message.
  *   <li>RPC timeouts are best effort and are checked once every {@link
- *       StubSettings#getStreamWatchdogCheckInterval()}.
+ *       StubSettings#getStreamWatchdogCheckIntervalDuration()}.
  *   <li>Attempt counts are reset as soon as a response is received. This means that max attempts is
  *       the maximum number of failures in a row.
  *   <li>totalTimeout still applies to the entire stream.
@@ -80,8 +83,8 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
   @Nonnull private final RetrySettings retrySettings;
   @Nonnull private final StreamResumptionStrategy<RequestT, ResponseT> resumptionStrategy;
 
-  @Nonnull private final Duration idleTimeout;
-  @Nonnull private final Duration waitTimeout;
+  @Nonnull private final java.time.Duration idleTimeout;
+  @Nonnull private final java.time.Duration waitTimeout;
 
   private ServerStreamingCallSettings(Builder<RequestT, ResponseT> builder) {
     this.retryableCodes = ImmutableSet.copyOf(builder.retryableCodes);
@@ -118,13 +121,27 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
     return resumptionStrategy;
   }
 
+  /** Backport of {@link #getIdleTimeoutDuration()} */
+  @Nonnull
+  @ObsoleteApi("Use getIdleTimeoutDuration() instead")
+  public org.threeten.bp.Duration getIdleTimeout() {
+    return toThreetenDuration(getIdleTimeoutDuration());
+  }
+
   /**
    * See the class documentation of {@link ServerStreamingCallSettings} for a description of what
    * the {@link #idleTimeout} does.
    */
   @Nonnull
-  public Duration getIdleTimeout() {
+  public java.time.Duration getIdleTimeoutDuration() {
     return idleTimeout;
+  }
+
+  /** Backport of {@link #getWaitTimeoutDuration()} */
+  @Nonnull
+  @ObsoleteApi("Use getWaitTimeoutDuration() instead")
+  public org.threeten.bp.Duration getWaitTimeout() {
+    return toThreetenDuration(getWaitTimeoutDuration());
   }
 
   /**
@@ -132,7 +149,7 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
    * the {@link #waitTimeout} does.
    */
   @Nonnull
-  public Duration getWaitTimeout() {
+  public java.time.Duration getWaitTimeoutDuration() {
     return waitTimeout;
   }
 
@@ -160,9 +177,9 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
     @Nonnull private RetrySettings.Builder retrySettingsBuilder;
     @Nonnull private StreamResumptionStrategy<RequestT, ResponseT> resumptionStrategy;
 
-    @Nonnull private Duration idleTimeout;
+    @Nonnull private java.time.Duration idleTimeout;
 
-    @Nonnull private Duration waitTimeout;
+    @Nonnull private java.time.Duration waitTimeout;
 
     /** Initialize the builder with default settings */
     private Builder() {
@@ -170,8 +187,8 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
       this.retrySettingsBuilder = RetrySettings.newBuilder();
       this.resumptionStrategy = new SimpleStreamResumptionStrategy<>();
 
-      this.idleTimeout = Duration.ZERO;
-      this.waitTimeout = Duration.ZERO;
+      this.idleTimeout = java.time.Duration.ZERO;
+      this.waitTimeout = java.time.Duration.ZERO;
     }
 
     private Builder(ServerStreamingCallSettings<RequestT, ResponseT> settings) {
@@ -242,15 +259,26 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
       return retrySettingsBuilder.build();
     }
 
+    /**
+     * Overload of {@link #setSimpleTimeoutNoRetries(java.time.Duration)} using {@link
+     * org.threeten.bp.Duration}
+     */
+    @ObsoleteApi("Use setSimpleTimeoutNoRetries(java.time.Duration) instead")
+    public Builder<RequestT, ResponseT> setSimpleTimeoutNoRetries(
+        @Nonnull org.threeten.bp.Duration timeout) {
+      return setSimpleTimeoutNoRetries(toJavaTimeDuration(timeout));
+    }
+
     /** Disables retries and sets the overall timeout. */
-    public Builder<RequestT, ResponseT> setSimpleTimeoutNoRetries(@Nonnull Duration timeout) {
+    public Builder<RequestT, ResponseT> setSimpleTimeoutNoRetries(
+        @Nonnull java.time.Duration timeout) {
       setRetryableCodes();
       setRetrySettings(
           RetrySettings.newBuilder()
               .setTotalTimeout(timeout)
-              .setInitialRetryDelay(Duration.ZERO)
+              .setInitialRetryDelay(java.time.Duration.ZERO)
               .setRetryDelayMultiplier(1)
-              .setMaxRetryDelay(Duration.ZERO)
+              .setMaxRetryDelay(java.time.Duration.ZERO)
               .setInitialRpcTimeout(timeout)
               .setRpcTimeoutMultiplier(1)
               .setMaxRpcTimeout(timeout)
@@ -276,30 +304,63 @@ public final class ServerStreamingCallSettings<RequestT, ResponseT>
       return resumptionStrategy;
     }
 
+    /** Backport of {@link #getIdleTimeoutDuration()} */
     @Nonnull
-    public Duration getIdleTimeout() {
+    @ObsoleteApi("Use getIdleTimeoutDuration() instead")
+    public org.threeten.bp.Duration getIdleTimeout() {
+      return toThreetenDuration(getIdleTimeoutDuration());
+    }
+
+    @Nonnull
+    public java.time.Duration getIdleTimeoutDuration() {
       return idleTimeout;
     }
 
     /**
-     * Set how long to wait before considering the stream orphaned by the user and closing it.
-     * {@link Duration#ZERO} disables the check for abandoned streams.
+     * Overlad of {@link #setIdleTimeout(java.time.Duration)} using {@link org.threeten.bp.Duration}
      */
-    public Builder<RequestT, ResponseT> setIdleTimeout(@Nonnull Duration idleTimeout) {
+    @ObsoleteApi("Use setIdleTimeout(java.time.Duration) instead")
+    public Builder<RequestT, ResponseT> setIdleTimeout(
+        @Nonnull org.threeten.bp.Duration idleTimeout) {
+      return setIdleTimeout(toJavaTimeDuration(idleTimeout));
+    }
+
+    /**
+     * Set how long to wait before considering the stream orphaned by the user and closing it.
+     * {@link java.time.Duration#ZERO} disables the check for abandoned streams.
+     */
+    public Builder<RequestT, ResponseT> setIdleTimeout(@Nonnull java.time.Duration idleTimeout) {
       this.idleTimeout = Preconditions.checkNotNull(idleTimeout);
       return this;
     }
 
+    /** Backport of {@link #getWaitTimeoutDuration()} */
     @Nonnull
-    public Duration getWaitTimeout() {
+    @ObsoleteApi("Use getWaitTimeoutDuration() instead")
+    public org.threeten.bp.Duration getWaitTimeout() {
+      return toThreetenDuration(getWaitTimeoutDuration());
+    }
+
+    @Nonnull
+    public java.time.Duration getWaitTimeoutDuration() {
       return waitTimeout;
     }
 
     /**
-     * Set the maximum amount of time to wait for the next message from the server. {@link
-     * Duration#ZERO} disables the check for abandoned streams.
+     * Overload of {@link #setWaitTimeout(java.time.Duration)} using {@link
+     * org.threeten.bp.Duration}
      */
-    public Builder<RequestT, ResponseT> setWaitTimeout(@Nonnull Duration waitTimeout) {
+    @ObsoleteApi("Use setWaitTimeout(java.time.Duration) instead")
+    public Builder<RequestT, ResponseT> setWaitTimeout(
+        @Nonnull org.threeten.bp.Duration waitTimeout) {
+      return setWaitTimeout(toJavaTimeDuration(waitTimeout));
+    }
+
+    /**
+     * Set the maximum amount of time to wait for the next message from the server. {@link
+     * java.time.Duration#ZERO} disables the check for abandoned streams.
+     */
+    public Builder<RequestT, ResponseT> setWaitTimeout(@Nonnull java.time.Duration waitTimeout) {
       this.waitTimeout = waitTimeout;
       return this;
     }

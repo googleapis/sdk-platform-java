@@ -29,11 +29,14 @@
  */
 package com.google.api.gax.batching;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
+import static com.google.api.gax.util.TimeConversionUtils.toThreetenDuration;
+
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.batching.FlowController.LimitExceededBehavior;
 import com.google.auto.value.AutoValue;
 import com.google.common.base.Preconditions;
 import javax.annotation.Nullable;
-import org.threeten.bp.Duration;
 
 /**
  * Represents the batching settings to use for an API method that is capable of batching.
@@ -100,7 +103,14 @@ public abstract class BatchingSettings {
 
   /** Get the delay threshold to use for batching. */
   @Nullable
-  public abstract Duration getDelayThreshold();
+  @ObsoleteApi("Use getDelayThresholdDuration() instead")
+  public abstract org.threeten.bp.Duration getDelayThreshold();
+
+  /** Get the delay threshold to use for batching. */
+  @Nullable
+  public final java.time.Duration getDelayThresholdDuration() {
+    return toJavaTimeDuration(getDelayThreshold());
+  }
 
   /** Returns the Boolean object to indicate if the batching is enabled. Default to true */
   public abstract Boolean getIsEnabled();
@@ -114,7 +124,7 @@ public abstract class BatchingSettings {
         .setIsEnabled(true)
         .setElementCountThreshold(1L)
         .setRequestByteThreshold(1L)
-        .setDelayThreshold(Duration.ofMillis(1))
+        .setDelayThreshold(java.time.Duration.ofMillis(1))
         .setFlowControlSettings(
             FlowControlSettings.newBuilder()
                 .setLimitExceededBehavior(LimitExceededBehavior.Ignore)
@@ -142,13 +152,19 @@ public abstract class BatchingSettings {
      */
     public abstract Builder setRequestByteThreshold(Long requestByteThreshold);
 
+    /** Backport of {@link #setDelayThreshold(java.time.Duration)} */
+    @ObsoleteApi("Use setDelayThreshold(java.time.Duration) instead")
+    public abstract Builder setDelayThreshold(org.threeten.bp.Duration delayThreshold);
+
     /**
      * Set the delay threshold to use for batching. After this amount of time has elapsed (counting
      * from the first element added), the elements will be wrapped up in a batch and sent. This
      * value should not be set too high, usually on the order of milliseconds. Otherwise, calls
      * might appear to never complete.
      */
-    public abstract Builder setDelayThreshold(Duration delayThreshold);
+    public final Builder setDelayThreshold(java.time.Duration delayThreshold) {
+      return setDelayThreshold(toThreetenDuration(delayThreshold));
+    }
 
     /**
      * Set if the batch should be enabled. If set to false, the batch logic will be disabled and the
@@ -171,8 +187,8 @@ public abstract class BatchingSettings {
           settings.getRequestByteThreshold() == null || settings.getRequestByteThreshold() > 0,
           "requestByteThreshold must be either unset or positive");
       Preconditions.checkArgument(
-          settings.getDelayThreshold() == null
-              || settings.getDelayThreshold().compareTo(Duration.ZERO) > 0,
+          settings.getDelayThresholdDuration() == null
+              || settings.getDelayThresholdDuration().compareTo(java.time.Duration.ZERO) > 0,
           "delayThreshold must be either unset or positive");
       return settings;
     }

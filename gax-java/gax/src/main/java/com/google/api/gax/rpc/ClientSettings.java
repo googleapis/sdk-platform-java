@@ -31,6 +31,7 @@ package com.google.api.gax.rpc;
 
 import com.google.api.core.ApiClock;
 import com.google.api.core.ApiFunction;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.ExecutorProvider;
 import com.google.common.base.MoreObjects;
@@ -38,7 +39,6 @@ import java.io.IOException;
 import java.util.concurrent.Executor;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import org.threeten.bp.Duration;
 
 /**
  * A base settings class to configure a client class.
@@ -106,9 +106,20 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     return stubSettings.getStreamWatchdogProvider();
   }
 
+  /**
+   * Backport of {@link #getWatchdogCheckIntervalDuration()}
+   *
+   * @return
+   */
   @Nonnull
-  public final Duration getWatchdogCheckInterval() {
+  @ObsoleteApi("Use getWatchdogCheckIntervalDuration() instead")
+  public final org.threeten.bp.Duration getWatchdogCheckInterval() {
     return stubSettings.getStreamWatchdogCheckInterval();
+  }
+
+  @Nonnull
+  public final java.time.Duration getWatchdogCheckIntervalDuration() {
+    return stubSettings.getStreamWatchdogCheckIntervalDuration();
   }
 
   /** Gets the GDCH API audience that was previously set in this Builder */
@@ -256,7 +267,13 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
       return self();
     }
 
-    public B setWatchdogCheckInterval(@Nullable Duration checkInterval) {
+    @ObsoleteApi("Use setWatchdogCheckInterval(java.time.Duration) instead")
+    public B setWatchdogCheckInterval(@Nullable org.threeten.bp.Duration checkInterval) {
+      stubSettings.setStreamWatchdogCheckInterval(checkInterval);
+      return self();
+    }
+
+    public B setWatchdogCheckInterval(@Nullable java.time.Duration checkInterval) {
       stubSettings.setStreamWatchdogCheckInterval(checkInterval);
       return self();
     }
@@ -336,8 +353,14 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     }
 
     @Nullable
-    public Duration getWatchdogCheckInterval() {
+    @ObsoleteApi("Use getWatchdogCheckIntervalDuration() instead")
+    public org.threeten.bp.Duration getWatchdogCheckInterval() {
       return stubSettings.getStreamWatchdogCheckInterval();
+    }
+
+    @Nullable
+    public java.time.Duration getWatchdogCheckIntervalDuration() {
+      return stubSettings.getStreamWatchdogCheckIntervalDuration();
     }
 
     /** Gets the GDCH API audience that was previously set in this Builder */
@@ -367,7 +390,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
           .add("endpoint", getEndpoint())
           .add("quotaProjectId", getQuotaProjectId())
           .add("watchdogProvider", getWatchdogProvider())
-          .add("watchdogCheckInterval", getWatchdogCheckInterval())
+          .add("watchdogCheckInterval", getWatchdogCheckIntervalDuration())
           .add("gdchApiAudience", getGdchApiAudience())
           .toString();
     }

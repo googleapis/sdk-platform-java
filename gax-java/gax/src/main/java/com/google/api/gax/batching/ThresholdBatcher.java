@@ -29,12 +29,14 @@
  */
 package com.google.api.gax.batching;
 
+import static com.google.api.gax.util.TimeConversionUtils.toJavaTimeDuration;
 import static com.google.common.util.concurrent.MoreExecutors.directExecutor;
 
 import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutureCallback;
 import com.google.api.core.ApiFutures;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.core.SettableApiFuture;
 import com.google.api.gax.batching.FlowController.FlowControlException;
 import com.google.common.annotations.VisibleForTesting;
@@ -45,7 +47,6 @@ import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
-import org.threeten.bp.Duration;
 
 /**
  * Queues up elements until either a duration of time has passed or any threshold in a given set of
@@ -77,7 +78,7 @@ public final class ThresholdBatcher<E> {
 
   private final ArrayList<BatchingThreshold<E>> thresholds;
   private final ScheduledExecutorService executor;
-  private final Duration maxDelay;
+  private final java.time.Duration maxDelay;
   private final ThresholdBatchReceiver<E> receiver;
   private final BatchingFlowController<E> flowController;
   private final BatchMerger<E> batchMerger;
@@ -104,7 +105,7 @@ public final class ThresholdBatcher<E> {
   public static class Builder<E> {
     private Collection<BatchingThreshold<E>> thresholds;
     private ScheduledExecutorService executor;
-    private Duration maxDelay;
+    private java.time.Duration maxDelay;
     private ThresholdBatchReceiver<E> receiver;
     private BatchingFlowController<E> flowController;
     private BatchMerger<E> batchMerger;
@@ -118,9 +119,15 @@ public final class ThresholdBatcher<E> {
     }
 
     /** Set the max delay for a batch. This is counted from the first item added to a batch. */
-    public Builder<E> setMaxDelay(Duration maxDelay) {
+    public Builder<E> setMaxDelay(java.time.Duration maxDelay) {
       this.maxDelay = maxDelay;
       return this;
+    }
+
+    /** Set the max delay for a batch. This is counted from the first item added to a batch. */
+    @ObsoleteApi("Use setMaxDelay(java.time.Duration) instead")
+    public Builder<E> setMaxDelay(org.threeten.bp.Duration maxDelay) {
+      return setMaxDelay(toJavaTimeDuration(maxDelay));
     }
 
     /** Set the thresholds for the ThresholdBatcher. */

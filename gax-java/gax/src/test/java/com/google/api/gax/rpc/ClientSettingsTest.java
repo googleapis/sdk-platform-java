@@ -58,7 +58,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.mockito.Mockito;
-import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
 public class ClientSettingsTest {
@@ -119,7 +118,8 @@ public class ClientSettingsTest {
     Truth.assertThat(builder.getInternalHeaderProvider()).isInstanceOf(NoHeaderProvider.class);
     Truth.assertThat(builder.getWatchdogProvider())
         .isInstanceOf(InstantiatingWatchdogProvider.class);
-    Truth.assertThat(builder.getWatchdogCheckInterval()).isGreaterThan(Duration.ZERO);
+    Truth.assertThat(builder.getWatchdogCheckIntervalDuration())
+        .isGreaterThan(java.time.Duration.ZERO);
     Truth.assertThat(builder.getQuotaProjectId()).isNull();
 
     FakeClientSettings settings = builder.build();
@@ -137,7 +137,8 @@ public class ClientSettingsTest {
         .isSameInstanceAs(builder.getInternalHeaderProvider());
     Truth.assertThat(settings.getWatchdogProvider())
         .isInstanceOf(InstantiatingWatchdogProvider.class);
-    Truth.assertThat(settings.getWatchdogCheckInterval()).isGreaterThan(Duration.ZERO);
+    Truth.assertThat(settings.getWatchdogCheckIntervalDuration())
+        .isGreaterThan(java.time.Duration.ZERO);
     Truth.assertThat((settings.getQuotaProjectId())).isSameInstanceAs(builder.getQuotaProjectId());
 
     String settingsString = settings.toString();
@@ -163,7 +164,7 @@ public class ClientSettingsTest {
     HeaderProvider headerProvider = Mockito.mock(HeaderProvider.class);
     HeaderProvider internalHeaderProvider = Mockito.mock(HeaderProvider.class);
     WatchdogProvider watchdogProvider = Mockito.mock(WatchdogProvider.class);
-    Duration watchdogCheckInterval = Duration.ofSeconds(13);
+    java.time.Duration watchdogCheckInterval = java.time.Duration.ofSeconds(13);
     String quotaProjectId = "test_quota_project_id";
 
     builder.setExecutorProvider(executorProvider);
@@ -185,7 +186,8 @@ public class ClientSettingsTest {
     Truth.assertThat(builder.getHeaderProvider()).isSameInstanceAs(headerProvider);
     Truth.assertThat(builder.getInternalHeaderProvider()).isSameInstanceAs(internalHeaderProvider);
     Truth.assertThat(builder.getWatchdogProvider()).isSameInstanceAs(watchdogProvider);
-    Truth.assertThat(builder.getWatchdogCheckInterval()).isSameInstanceAs(watchdogCheckInterval);
+    Truth.assertThat(builder.getWatchdogCheckIntervalDuration())
+        .isSameInstanceAs(watchdogCheckInterval);
     Truth.assertThat(builder.getQuotaProjectId()).isEqualTo(quotaProjectId);
 
     String builderString = builder.toString();
@@ -210,9 +212,9 @@ public class ClientSettingsTest {
     Watchdog watchdog =
         Watchdog.create(
             Mockito.mock(ApiClock.class),
-            Duration.ZERO,
+            java.time.Duration.ZERO,
             Mockito.mock(ScheduledExecutorService.class));
-    Duration watchdogCheckInterval = Duration.ofSeconds(12);
+    java.time.Duration watchdogCheckInterval = java.time.Duration.ofSeconds(12);
 
     ClientContext clientContext =
         ClientContext.newBuilder()
@@ -242,7 +244,7 @@ public class ClientSettingsTest {
         .containsEntry("spiffykey", "spiffyvalue");
     Truth.assertThat(builder.getWatchdogProvider()).isInstanceOf(FixedWatchdogProvider.class);
     Truth.assertThat(builder.getWatchdogProvider().getWatchdog()).isSameInstanceAs(watchdog);
-    Truth.assertThat(builder.getWatchdogCheckInterval()).isEqualTo(watchdogCheckInterval);
+    Truth.assertThat(builder.getWatchdogCheckIntervalDuration()).isEqualTo(watchdogCheckInterval);
     Truth.assertThat(builder.getQuotaProjectId()).isEqualTo(QUOTA_PROJECT_ID_FROM_CONTEXT);
   }
 
@@ -257,7 +259,7 @@ public class ClientSettingsTest {
     HeaderProvider headerProvider = Mockito.mock(HeaderProvider.class);
     HeaderProvider internalHeaderProvider = Mockito.mock(HeaderProvider.class);
     WatchdogProvider watchdogProvider = Mockito.mock(WatchdogProvider.class);
-    Duration watchdogCheckInterval = Duration.ofSeconds(14);
+    java.time.Duration watchdogCheckInterval = java.time.Duration.ofSeconds(14);
     String quotaProjectId = "test_builder_from_settings_quotaProjectId";
 
     builder.setExecutorProvider(executorProvider);
@@ -282,7 +284,8 @@ public class ClientSettingsTest {
     Truth.assertThat(newBuilder.getInternalHeaderProvider())
         .isSameInstanceAs(internalHeaderProvider);
     Truth.assertThat(newBuilder.getWatchdogProvider()).isSameInstanceAs(watchdogProvider);
-    Truth.assertThat(newBuilder.getWatchdogCheckInterval()).isEqualTo(watchdogCheckInterval);
+    Truth.assertThat(newBuilder.getWatchdogCheckIntervalDuration())
+        .isEqualTo(watchdogCheckInterval);
     Truth.assertThat(newBuilder.getQuotaProjectId()).isEqualTo(quotaProjectId);
   }
 
