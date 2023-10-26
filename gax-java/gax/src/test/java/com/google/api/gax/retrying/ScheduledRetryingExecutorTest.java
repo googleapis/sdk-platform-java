@@ -249,7 +249,6 @@ public class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest 
     }
   }
 
-  // This test also verifies that the tracer has cancelled the attempt
   @Test
   public void testCancelOuterFutureAfterStart() throws Exception {
     ScheduledExecutorService localExecutor = Executors.newSingleThreadScheduledExecutor();
