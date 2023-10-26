@@ -169,7 +169,7 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   generation_duration_seconds=$(expr "${generation_end}" - "${generation_start}" || true)
   echo "Generation time for ${repository_path} was ${generation_duration_seconds} seconds."
   pushd "${output_folder}"
-  echo "${repository_path} ${generation_duration_seconds}" >> generation_times
+  echo "${proto_path} ${generation_duration_seconds}" >> generation_times
 
   echo "Generate library finished."
   echo "Compare generation result..."
