@@ -506,9 +506,9 @@ public class ParserTest {
     GapicContext context = Parser.parse(request);
     assertEquals(1, context.services().size());
     assertThat(
-        context.services().get(0).methods().stream()
-            .map(Method::name)
-            .collect(Collectors.toList()))
+            context.services().get(0).methods().stream()
+                .map(Method::name)
+                .collect(Collectors.toList()))
         .containsAnyIn(
             ImmutableList.of(
                 "ListLocations",
