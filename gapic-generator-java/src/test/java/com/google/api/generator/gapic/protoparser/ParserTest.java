@@ -507,7 +507,7 @@ public class ParserTest {
   }
 
   @Test
-  public void parseWithoutMixinsInServiceYamlWithoutProtos() {
+  public void parseWithoutMixinsInServiceYamlWithProtos() {
     CodeGeneratorRequest request =
         echoBuilder("echo_without_mixins_v1beta1.yaml")
             .addFileToGenerate("google/iam/v1/iam_policy.proto")
@@ -530,7 +530,7 @@ public class ParserTest {
   }
 
   @Test
-  public void parseWithoutMixinsInServiceYamlWithProtos() {
+  public void parseWithoutMixinsInServiceYamlWithoutProtos() {
     CodeGeneratorRequest request = echoBuilder("echo_without_mixins_v1beta1.yaml").build();
 
     GapicContext context = Parser.parse(request);
