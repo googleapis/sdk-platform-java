@@ -39,11 +39,7 @@ import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.ResourceReference;
 import com.google.api.generator.gapic.model.Transport;
 import com.google.bookshop.v1beta1.BookshopProto;
-import com.google.cloud.location.LocationsProto;
 import com.google.common.collect.ImmutableList;
-import com.google.iam.v1.IamPolicyProto;
-import com.google.iam.v1.OptionsProto;
-import com.google.iam.v1.PolicyProto;
 import com.google.longrunning.OperationsProto;
 import com.google.protobuf.AnyProto;
 import com.google.protobuf.DescriptorProtos;
@@ -52,14 +48,12 @@ import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.protobuf.DurationProto;
 import com.google.protobuf.EmptyProto;
-import com.google.protobuf.FieldMaskProto;
 import com.google.protobuf.TimestampProto;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import com.google.rpc.StatusProto;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import com.google.showcase.v1beta1.TestingOuterClass;
 import com.google.testgapic.v1beta1.LockerProto;
-import com.google.type.ExprProto;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -471,8 +465,8 @@ public class ParserTest {
   }
 
   @Test
-  public void parseWithoutMixinProtos() {
-    CodeGeneratorRequest request = echoBuilder().build();
+  public void parseWithMixinsInServiceYamlWithoutProtos() {
+    CodeGeneratorRequest request = echoBuilder("echo_v1beta1.yaml").build();
 
     GapicContext context = Parser.parse(request);
     assertEquals(1, context.services().size());
@@ -490,15 +484,9 @@ public class ParserTest {
   }
 
   @Test
-  public void parseWithMixinProtos() {
+  public void parseWithMixinsInServiceYamlWithProtos() {
     CodeGeneratorRequest request =
-        echoBuilder()
-            .addProtoFile(ExprProto.getDescriptor().toProto())
-            .addProtoFile(FieldMaskProto.getDescriptor().toProto())
-            .addProtoFile(OptionsProto.getDescriptor().toProto())
-            .addProtoFile(PolicyProto.getDescriptor().toProto())
-            .addProtoFile(IamPolicyProto.getDescriptor().toProto())
-            .addProtoFile(LocationsProto.getDescriptor().toProto())
+        echoBuilder("echo_v1beta1.yaml")
             .addFileToGenerate("google/iam/v1/iam_policy.proto")
             .addFileToGenerate("google/cloud/location/locations.proto")
             .build();
@@ -510,6 +498,48 @@ public class ParserTest {
                 .map(Method::name)
                 .collect(Collectors.toList()))
         .containsAnyIn(
+            ImmutableList.of(
+                "ListLocations",
+                "GetLocation",
+                "SetIamPolicy",
+                "GetIamPolicy",
+                "TestIamPermissions"));
+  }
+
+  @Test
+  public void parseWithoutMixinsInServiceYamlWithoutProtos() {
+    CodeGeneratorRequest request =
+        echoBuilder("echo_without_mixins_v1beta1.yaml")
+            .addFileToGenerate("google/iam/v1/iam_policy.proto")
+            .addFileToGenerate("google/cloud/location/locations.proto")
+            .build();
+
+    GapicContext context = Parser.parse(request);
+    assertEquals(1, context.services().size());
+    assertThat(
+            context.services().get(0).methods().stream()
+                .map(Method::name)
+                .collect(Collectors.toList()))
+        .containsNoneIn(
+            ImmutableList.of(
+                "ListLocations",
+                "GetLocation",
+                "SetIamPolicy",
+                "GetIamPolicy",
+                "TestIamPermissions"));
+  }
+
+  @Test
+  public void parseWithoutMixinsInServiceYamlWithProtos() {
+    CodeGeneratorRequest request = echoBuilder("echo_without_mixins_v1beta1.yaml").build();
+
+    GapicContext context = Parser.parse(request);
+    assertEquals(1, context.services().size());
+    assertThat(
+            context.services().get(0).methods().stream()
+                .map(Method::name)
+                .collect(Collectors.toList()))
+        .containsNoneIn(
             ImmutableList.of(
                 "ListLocations",
                 "GetLocation",
@@ -541,10 +571,12 @@ public class ParserTest {
     return VaporReference.builder().setName("Status").setPakkage("com.google.rpc").build();
   }
 
-  private CodeGeneratorRequest.Builder echoBuilder() {
+  private CodeGeneratorRequest.Builder echoBuilder(String serviceYaml) {
     return CodeGeneratorRequest.newBuilder()
         .setParameter(
-            "metadata,transport=grpc,rest-numeric-enums,api-service-config=src/test/resources/echo_v1beta1.yaml")
+            String.format(
+                "metadata,transport=grpc,rest-numeric-enums,api-service-config=src/test/resources/%s",
+                serviceYaml))
         .addProtoFile(HttpProto.getDescriptor().toProto())
         .addProtoFile(LaunchStageProto.getDescriptor().toProto())
         .addProtoFile(AnyProto.getDescriptor().toProto())

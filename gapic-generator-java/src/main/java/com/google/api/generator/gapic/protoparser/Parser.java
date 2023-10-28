@@ -54,6 +54,7 @@ import com.google.common.collect.Maps;
 import com.google.iam.v1.IamPolicyProto;
 import com.google.longrunning.OperationInfo;
 import com.google.longrunning.OperationsProto;
+import com.google.protobuf.Api;
 import com.google.protobuf.DescriptorProtos.FieldOptions;
 import com.google.protobuf.DescriptorProtos.FileDescriptorProto;
 import com.google.protobuf.DescriptorProtos.MessageOptions;
@@ -276,12 +277,14 @@ public class Parser {
     // Service names that are stated in the YAML file (as mixins). Used to filter
     // blockedCodegenMixinApis.
     Set<String> mixedInApis =
-        !serviceYamlProtoOpt.isPresent()
-            ? Collections.emptySet()
-            : serviceYamlProtoOpt.get().getApisList().stream()
-                .filter(a -> MIXIN_ALLOWLIST.containsKey(a.getName()))
-                .map(a -> a.getName())
-                .collect(Collectors.toSet());
+        serviceYamlProtoOpt
+            .map(
+                value ->
+                    value.getApisList().stream()
+                        .map(Api::getName)
+                        .filter(MIXIN_ALLOWLIST::containsKey)
+                        .collect(Collectors.toSet()))
+            .orElse(Collections.emptySet());
     // Holds the methods to be mixed in.
     // Key: proto_package.ServiceName.RpcName.
     // Value: HTTP rules, which clobber those in the proto.
@@ -323,9 +326,9 @@ public class Parser {
       apiDefinedRpcs.addAll(
           service.methods().stream().map(m -> m.name()).collect(Collectors.toSet()));
     }
-    // Mix-in APIs only if the protos are present and they're defined in the service.yaml file.
+    // Mix-in APIs if they're defined in the service.yaml file.
     Set<Service> outputMixinServiceSet = new HashSet<>();
-    if (servicesContainBlocklistedApi && !mixedInApis.isEmpty()) {
+    if (servicesContainBlocklistedApi) {
       for (int i = 0; i < services.size(); i++) {
         Service originalService = services.get(i);
         List<Method> updatedOriginalServiceMethods = new ArrayList<>(originalService.methods());
@@ -1064,7 +1067,9 @@ public class Parser {
 
       fileDescriptors.put(fileDescriptor.getName(), fileDescriptor);
     }
-    extraMixins.forEach(fileDescriptor -> parseDependencies(fileDescriptor, fileDescriptors));
+    // always add Mixin protos.
+    MIXIN_ALLOWLIST.forEach(
+        (k, fileDescriptor) -> parseDependencies(fileDescriptor, fileDescriptors));
 
     return fileDescriptors;
   }
