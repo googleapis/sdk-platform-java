@@ -1070,22 +1070,9 @@ public class Parser {
       fileDescriptors.put(fileDescriptor.getName(), fileDescriptor);
     }
     // always add Mixin protos.
-    MIXIN_ALLOWLIST.forEach(
-        (k, fileDescriptor) -> parseDependencies(fileDescriptor, fileDescriptors));
+    MIXIN_ALLOWLIST.forEach((k, descriptor) -> fileDescriptors.put(descriptor.getFullName(), descriptor));
 
     return fileDescriptors;
-  }
-
-  private static void parseDependencies(
-      FileDescriptor fileDescriptor, Map<String, FileDescriptor> fileDescriptors) {
-    if (fileDescriptors.containsKey(fileDescriptor.getFullName())) {
-      return;
-    }
-
-    fileDescriptors.put(fileDescriptor.getFullName(), fileDescriptor);
-    for (FileDescriptor dependency : fileDescriptor.getDependencies()) {
-      parseDependencies(dependency, fileDescriptors);
-    }
   }
 
   private static void parseExtraMixins(Optional<com.google.api.Service> serviceYamlProtoOpt) {
@@ -1113,12 +1100,11 @@ public class Parser {
     }
 
     filesToGenerate = new ArrayList<>(request.getFileToGenerateList());
-    filesToGenerate.addAll(
-        extraMixins.stream()
-            .map(FileDescriptor::getFullName)
+    extraMixins.forEach(mixin -> filesToGenerate.add(mixin.getFullName()));
+    filesToGenerate = filesToGenerate.stream()
             .sorted()
             .distinct()
-            .collect(Collectors.toList()));
+            .collect(Collectors.toList());
     return filesToGenerate;
   }
 
