@@ -35,6 +35,13 @@ import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
+import com.google.longrunning.CancelOperationRequest;
+import com.google.longrunning.DeleteOperationRequest;
+import com.google.longrunning.GetOperationRequest;
+import com.google.longrunning.ListOperationsRequest;
+import com.google.longrunning.ListOperationsResponse;
+import com.google.longrunning.Operation;
+import com.google.protobuf.Empty;
 import com.google.showcase.v1beta1.stub.ComplianceStub;
 import com.google.showcase.v1beta1.stub.ComplianceStubSettings;
 import java.io.IOException;
@@ -933,6 +940,435 @@ public class ComplianceClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
+   * Lists operations that match the specified filter in the request. If the server doesn't support
+   * this method, it returns `UNIMPLEMENTED`.
+   *
+   * <p>NOTE: the `name` binding allows API services to override the binding to use different
+   * resource name schemes, such as `users/&#42;/operations`. To override the binding, API services
+   * can add a binding such as `"/v1/{name=users/&#42;}/operations"` to their service configuration.
+   * For backwards compatibility, the default name includes the operations collection id, however
+   * overriding users must ensure the name binding is the parent resource, without the operations
+   * collection id.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (ComplianceClient complianceClient = ComplianceClient.create()) {
+   *   String name = "name3373707";
+   *   String filter = "filter-1274492040";
+   *   for (Operation element : complianceClient.listOperations(name, filter).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
+   * @param name The name of the operation's parent resource.
+   * @param filter The standard list filter.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final ListOperationsPagedResponse listOperations(String name, String filter) {
+    ListOperationsRequest request =
+        ListOperationsRequest.newBuilder().setName(name).setFilter(filter).build();
+    return listOperations(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Lists operations that match the specified filter in the request. If the server doesn't support
+   * this method, it returns `UNIMPLEMENTED`.
+   *
+   * <p>NOTE: the `name` binding allows API services to override the binding to use different
+   * resource name schemes, such as `users/&#42;/operations`. To override the binding, API services
+   * can add a binding such as `"/v1/{name=users/&#42;}/operations"` to their service configuration.
+   * For backwards compatibility, the default name includes the operations collection id, however
+   * overriding users must ensure the name binding is the parent resource, without the operations
+   * collection id.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (ComplianceClient complianceClient = ComplianceClient.create()) {
+   *   ListOperationsRequest request =
+   *       ListOperationsRequest.newBuilder()
+   *           .setName("name3373707")
+   *           .setFilter("filter-1274492040")
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
+   *   for (Operation element : complianceClient.listOperations(request).iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final ListOperationsPagedResponse listOperations(ListOperationsRequest request) {
+    return listOperationsPagedCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Lists operations that match the specified filter in the request. If the server doesn't support
+   * this method, it returns `UNIMPLEMENTED`.
+   *
+   * <p>NOTE: the `name` binding allows API services to override the binding to use different
+   * resource name schemes, such as `users/&#42;/operations`. To override the binding, API services
+   * can add a binding such as `"/v1/{name=users/&#42;}/operations"` to their service configuration.
+   * For backwards compatibility, the default name includes the operations collection id, however
+   * overriding users must ensure the name binding is the parent resource, without the operations
+   * collection id.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (ComplianceClient complianceClient = ComplianceClient.create()) {
+   *   ListOperationsRequest request =
+   *       ListOperationsRequest.newBuilder()
+   *           .setName("name3373707")
+   *           .setFilter("filter-1274492040")
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
+   *   ApiFuture<Operation> future =
+   *       complianceClient.listOperationsPagedCallable().futureCall(request);
+   *   // Do something.
+   *   for (Operation element : future.get().iterateAll()) {
+   *     // doThingsWith(element);
+   *   }
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<ListOperationsRequest, ListOperationsPagedResponse>
+      listOperationsPagedCallable() {
+    return stub.listOperationsPagedCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Lists operations that match the specified filter in the request. If the server doesn't support
+   * this method, it returns `UNIMPLEMENTED`.
+   *
+   * <p>NOTE: the `name` binding allows API services to override the binding to use different
+   * resource name schemes, such as `users/&#42;/operations`. To override the binding, API services
+   * can add a binding such as `"/v1/{name=users/&#42;}/operations"` to their service configuration.
+   * For backwards compatibility, the default name includes the operations collection id, however
+   * overriding users must ensure the name binding is the parent resource, without the operations
+   * collection id.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (ComplianceClient complianceClient = ComplianceClient.create()) {
+   *   ListOperationsRequest request =
+   *       ListOperationsRequest.newBuilder()
+   *           .setName("name3373707")
+   *           .setFilter("filter-1274492040")
+   *           .setPageSize(883849137)
+   *           .setPageToken("pageToken873572522")
+   *           .build();
+   *   while (true) {
+   *     ListOperationsResponse response = complianceClient.listOperationsCallable().call(request);
+   *     for (Operation element : response.getOperationsList()) {
+   *       // doThingsWith(element);
+   *     }
+   *     String nextPageToken = response.getNextPageToken();
+   *     if (!Strings.isNullOrEmpty(nextPageToken)) {
+   *       request = request.toBuilder().setPageToken(nextPageToken).build();
+   *     } else {
+   *       break;
+   *     }
+   *   }
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<ListOperationsRequest, ListOperationsResponse>
+      listOperationsCallable() {
+    return stub.listOperationsCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Gets the latest state of a long-running operation. Clients can use this method to poll the
+   * operation result at intervals as recommended by the API service.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (ComplianceClient complianceClient = ComplianceClient.create()) {
+   *   String name = "name3373707";
+   *   Operation response = complianceClient.getOperation(name);
+   * }
+   * }</pre>
+   *
+   * @param name The name of the operation resource.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final Operation getOperation(String name) {
+    GetOperationRequest request = GetOperationRequest.newBuilder().setName(name).build();
+    return getOperation(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Gets the latest state of a long-running operation. Clients can use this method to poll the
+   * operation result at intervals as recommended by the API service.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (ComplianceClient complianceClient = ComplianceClient.create()) {
+   *   GetOperationRequest request = GetOperationRequest.newBuilder().setName("name3373707").build();
+   *   Operation response = complianceClient.getOperation(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final Operation getOperation(GetOperationRequest request) {
+    return getOperationCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Gets the latest state of a long-running operation. Clients can use this method to poll the
+   * operation result at intervals as recommended by the API service.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (ComplianceClient complianceClient = ComplianceClient.create()) {
+   *   GetOperationRequest request = GetOperationRequest.newBuilder().setName("name3373707").build();
+   *   ApiFuture<Operation> future = complianceClient.getOperationCallable().futureCall(request);
+   *   // Do something.
+   *   Operation response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<GetOperationRequest, Operation> getOperationCallable() {
+    return stub.getOperationCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Deletes a long-running operation. This method indicates that the client is no longer interested
+   * in the operation result. It does not cancel the operation. If the server doesn't support this
+   * method, it returns `google.rpc.Code.UNIMPLEMENTED`.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (ComplianceClient complianceClient = ComplianceClient.create()) {
+   *   String name = "name3373707";
+   *   complianceClient.deleteOperation(name);
+   * }
+   * }</pre>
+   *
+   * @param name The name of the operation resource to be deleted.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final void deleteOperation(String name) {
+    DeleteOperationRequest request = DeleteOperationRequest.newBuilder().setName(name).build();
+    deleteOperation(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Deletes a long-running operation. This method indicates that the client is no longer interested
+   * in the operation result. It does not cancel the operation. If the server doesn't support this
+   * method, it returns `google.rpc.Code.UNIMPLEMENTED`.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (ComplianceClient complianceClient = ComplianceClient.create()) {
+   *   DeleteOperationRequest request =
+   *       DeleteOperationRequest.newBuilder().setName("name3373707").build();
+   *   complianceClient.deleteOperation(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final void deleteOperation(DeleteOperationRequest request) {
+    deleteOperationCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Deletes a long-running operation. This method indicates that the client is no longer interested
+   * in the operation result. It does not cancel the operation. If the server doesn't support this
+   * method, it returns `google.rpc.Code.UNIMPLEMENTED`.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (ComplianceClient complianceClient = ComplianceClient.create()) {
+   *   DeleteOperationRequest request =
+   *       DeleteOperationRequest.newBuilder().setName("name3373707").build();
+   *   ApiFuture<Empty> future = complianceClient.deleteOperationCallable().futureCall(request);
+   *   // Do something.
+   *   future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<DeleteOperationRequest, Empty> deleteOperationCallable() {
+    return stub.deleteOperationCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Starts asynchronous cancellation on a long-running operation. The server makes a best effort to
+   * cancel the operation, but success is not guaranteed. If the server doesn't support this method,
+   * it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
+   * [Operations.GetOperation][google.longrunning.Operations.GetOperation] or other methods to check
+   * whether the cancellation succeeded or whether the operation completed despite cancellation. On
+   * successful cancellation, the operation is not deleted; instead, it becomes an operation with an
+   * [Operation.error][google.longrunning.Operation.error] value with a
+   * [google.rpc.Status.code][google.rpc.Status.code] of 1, corresponding to `Code.CANCELLED`.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (ComplianceClient complianceClient = ComplianceClient.create()) {
+   *   String name = "name3373707";
+   *   complianceClient.cancelOperation(name);
+   * }
+   * }</pre>
+   *
+   * @param name The name of the operation resource to be cancelled.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final void cancelOperation(String name) {
+    CancelOperationRequest request = CancelOperationRequest.newBuilder().setName(name).build();
+    cancelOperation(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Starts asynchronous cancellation on a long-running operation. The server makes a best effort to
+   * cancel the operation, but success is not guaranteed. If the server doesn't support this method,
+   * it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
+   * [Operations.GetOperation][google.longrunning.Operations.GetOperation] or other methods to check
+   * whether the cancellation succeeded or whether the operation completed despite cancellation. On
+   * successful cancellation, the operation is not deleted; instead, it becomes an operation with an
+   * [Operation.error][google.longrunning.Operation.error] value with a
+   * [google.rpc.Status.code][google.rpc.Status.code] of 1, corresponding to `Code.CANCELLED`.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (ComplianceClient complianceClient = ComplianceClient.create()) {
+   *   CancelOperationRequest request =
+   *       CancelOperationRequest.newBuilder().setName("name3373707").build();
+   *   complianceClient.cancelOperation(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final void cancelOperation(CancelOperationRequest request) {
+    cancelOperationCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * Starts asynchronous cancellation on a long-running operation. The server makes a best effort to
+   * cancel the operation, but success is not guaranteed. If the server doesn't support this method,
+   * it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
+   * [Operations.GetOperation][google.longrunning.Operations.GetOperation] or other methods to check
+   * whether the cancellation succeeded or whether the operation completed despite cancellation. On
+   * successful cancellation, the operation is not deleted; instead, it becomes an operation with an
+   * [Operation.error][google.longrunning.Operation.error] value with a
+   * [google.rpc.Status.code][google.rpc.Status.code] of 1, corresponding to `Code.CANCELLED`.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (ComplianceClient complianceClient = ComplianceClient.create()) {
+   *   CancelOperationRequest request =
+   *       CancelOperationRequest.newBuilder().setName("name3373707").build();
+   *   ApiFuture<Empty> future = complianceClient.cancelOperationCallable().futureCall(request);
+   *   // Do something.
+   *   future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<CancelOperationRequest, Empty> cancelOperationCallable() {
+    return stub.cancelOperationCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
    * Lists information about the supported locations for this service.
    *
    * <p>Sample code:
@@ -1305,6 +1741,82 @@ public class ComplianceClient implements BackgroundResource {
   @Override
   public boolean awaitTermination(long duration, TimeUnit unit) throws InterruptedException {
     return stub.awaitTermination(duration, unit);
+  }
+
+  public static class ListOperationsPagedResponse
+      extends AbstractPagedListResponse<
+          ListOperationsRequest,
+          ListOperationsResponse,
+          Operation,
+          ListOperationsPage,
+          ListOperationsFixedSizeCollection> {
+
+    public static ApiFuture<ListOperationsPagedResponse> createAsync(
+        PageContext<ListOperationsRequest, ListOperationsResponse, Operation> context,
+        ApiFuture<ListOperationsResponse> futureResponse) {
+      ApiFuture<ListOperationsPage> futurePage =
+          ListOperationsPage.createEmptyPage().createPageAsync(context, futureResponse);
+      return ApiFutures.transform(
+          futurePage,
+          input -> new ListOperationsPagedResponse(input),
+          MoreExecutors.directExecutor());
+    }
+
+    private ListOperationsPagedResponse(ListOperationsPage page) {
+      super(page, ListOperationsFixedSizeCollection.createEmptyCollection());
+    }
+  }
+
+  public static class ListOperationsPage
+      extends AbstractPage<
+          ListOperationsRequest, ListOperationsResponse, Operation, ListOperationsPage> {
+
+    private ListOperationsPage(
+        PageContext<ListOperationsRequest, ListOperationsResponse, Operation> context,
+        ListOperationsResponse response) {
+      super(context, response);
+    }
+
+    private static ListOperationsPage createEmptyPage() {
+      return new ListOperationsPage(null, null);
+    }
+
+    @Override
+    protected ListOperationsPage createPage(
+        PageContext<ListOperationsRequest, ListOperationsResponse, Operation> context,
+        ListOperationsResponse response) {
+      return new ListOperationsPage(context, response);
+    }
+
+    @Override
+    public ApiFuture<ListOperationsPage> createPageAsync(
+        PageContext<ListOperationsRequest, ListOperationsResponse, Operation> context,
+        ApiFuture<ListOperationsResponse> futureResponse) {
+      return super.createPageAsync(context, futureResponse);
+    }
+  }
+
+  public static class ListOperationsFixedSizeCollection
+      extends AbstractFixedSizeCollection<
+          ListOperationsRequest,
+          ListOperationsResponse,
+          Operation,
+          ListOperationsPage,
+          ListOperationsFixedSizeCollection> {
+
+    private ListOperationsFixedSizeCollection(List<ListOperationsPage> pages, int collectionSize) {
+      super(pages, collectionSize);
+    }
+
+    private static ListOperationsFixedSizeCollection createEmptyCollection() {
+      return new ListOperationsFixedSizeCollection(null, 0);
+    }
+
+    @Override
+    protected ListOperationsFixedSizeCollection createCollection(
+        List<ListOperationsPage> pages, int collectionSize) {
+      return new ListOperationsFixedSizeCollection(pages, collectionSize);
+    }
   }
 
   public static class ListLocationsPagedResponse

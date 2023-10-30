@@ -17,6 +17,7 @@
 package com.google.showcase.v1beta1.stub;
 
 import static com.google.showcase.v1beta1.EchoClient.ListLocationsPagedResponse;
+import static com.google.showcase.v1beta1.EchoClient.ListOperationsPagedResponse;
 import static com.google.showcase.v1beta1.EchoClient.PagedExpandLegacyMappedPagedResponse;
 import static com.google.showcase.v1beta1.EchoClient.PagedExpandPagedResponse;
 
@@ -42,8 +43,14 @@ import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
+import com.google.longrunning.CancelOperationRequest;
+import com.google.longrunning.DeleteOperationRequest;
+import com.google.longrunning.GetOperationRequest;
+import com.google.longrunning.ListOperationsRequest;
+import com.google.longrunning.ListOperationsResponse;
 import com.google.longrunning.Operation;
 import com.google.longrunning.stub.GrpcOperationsStub;
+import com.google.protobuf.Empty;
 import com.google.showcase.v1beta1.BlockRequest;
 import com.google.showcase.v1beta1.BlockResponse;
 import com.google.showcase.v1beta1.EchoRequest;
@@ -151,6 +158,46 @@ public class GrpcEchoStub extends EchoStub {
           .setResponseMarshaller(ProtoUtils.marshaller(BlockResponse.getDefaultInstance()))
           .build();
 
+  private static final MethodDescriptor<ListOperationsRequest, ListOperationsResponse>
+      listOperationsMethodDescriptor =
+          MethodDescriptor.<ListOperationsRequest, ListOperationsResponse>newBuilder()
+              .setType(MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName("google.longrunning.Operations/ListOperations")
+              .setRequestMarshaller(
+                  ProtoUtils.marshaller(ListOperationsRequest.getDefaultInstance()))
+              .setResponseMarshaller(
+                  ProtoUtils.marshaller(ListOperationsResponse.getDefaultInstance()))
+              .build();
+
+  private static final MethodDescriptor<GetOperationRequest, Operation>
+      getOperationMethodDescriptor =
+          MethodDescriptor.<GetOperationRequest, Operation>newBuilder()
+              .setType(MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName("google.longrunning.Operations/GetOperation")
+              .setRequestMarshaller(ProtoUtils.marshaller(GetOperationRequest.getDefaultInstance()))
+              .setResponseMarshaller(ProtoUtils.marshaller(Operation.getDefaultInstance()))
+              .build();
+
+  private static final MethodDescriptor<DeleteOperationRequest, Empty>
+      deleteOperationMethodDescriptor =
+          MethodDescriptor.<DeleteOperationRequest, Empty>newBuilder()
+              .setType(MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName("google.longrunning.Operations/DeleteOperation")
+              .setRequestMarshaller(
+                  ProtoUtils.marshaller(DeleteOperationRequest.getDefaultInstance()))
+              .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+              .build();
+
+  private static final MethodDescriptor<CancelOperationRequest, Empty>
+      cancelOperationMethodDescriptor =
+          MethodDescriptor.<CancelOperationRequest, Empty>newBuilder()
+              .setType(MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName("google.longrunning.Operations/CancelOperation")
+              .setRequestMarshaller(
+                  ProtoUtils.marshaller(CancelOperationRequest.getDefaultInstance()))
+              .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
+              .build();
+
   private static final MethodDescriptor<ListLocationsRequest, ListLocationsResponse>
       listLocationsMethodDescriptor =
           MethodDescriptor.<ListLocationsRequest, ListLocationsResponse>newBuilder()
@@ -213,6 +260,12 @@ public class GrpcEchoStub extends EchoStub {
   private final UnaryCallable<WaitRequest, Operation> waitCallable;
   private final OperationCallable<WaitRequest, WaitResponse, WaitMetadata> waitOperationCallable;
   private final UnaryCallable<BlockRequest, BlockResponse> blockCallable;
+  private final UnaryCallable<ListOperationsRequest, ListOperationsResponse> listOperationsCallable;
+  private final UnaryCallable<ListOperationsRequest, ListOperationsPagedResponse>
+      listOperationsPagedCallable;
+  private final UnaryCallable<GetOperationRequest, Operation> getOperationCallable;
+  private final UnaryCallable<DeleteOperationRequest, Empty> deleteOperationCallable;
+  private final UnaryCallable<CancelOperationRequest, Empty> cancelOperationCallable;
   private final UnaryCallable<ListLocationsRequest, ListLocationsResponse> listLocationsCallable;
   private final UnaryCallable<ListLocationsRequest, ListLocationsPagedResponse>
       listLocationsPagedCallable;
@@ -325,6 +378,41 @@ public class GrpcEchoStub extends EchoStub {
         GrpcCallSettings.<BlockRequest, BlockResponse>newBuilder()
             .setMethodDescriptor(blockMethodDescriptor)
             .build();
+    GrpcCallSettings<ListOperationsRequest, ListOperationsResponse>
+        listOperationsTransportSettings =
+            GrpcCallSettings.<ListOperationsRequest, ListOperationsResponse>newBuilder()
+                .setMethodDescriptor(listOperationsMethodDescriptor)
+                .build();
+    GrpcCallSettings<GetOperationRequest, Operation> getOperationTransportSettings =
+        GrpcCallSettings.<GetOperationRequest, Operation>newBuilder()
+            .setMethodDescriptor(getOperationMethodDescriptor)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
+                })
+            .build();
+    GrpcCallSettings<DeleteOperationRequest, Empty> deleteOperationTransportSettings =
+        GrpcCallSettings.<DeleteOperationRequest, Empty>newBuilder()
+            .setMethodDescriptor(deleteOperationMethodDescriptor)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
+                })
+            .build();
+    GrpcCallSettings<CancelOperationRequest, Empty> cancelOperationTransportSettings =
+        GrpcCallSettings.<CancelOperationRequest, Empty>newBuilder()
+            .setMethodDescriptor(cancelOperationMethodDescriptor)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
+                })
+            .build();
     GrpcCallSettings<ListLocationsRequest, ListLocationsResponse> listLocationsTransportSettings =
         GrpcCallSettings.<ListLocationsRequest, ListLocationsResponse>newBuilder()
             .setMethodDescriptor(listLocationsMethodDescriptor)
@@ -419,6 +507,21 @@ public class GrpcEchoStub extends EchoStub {
     this.blockCallable =
         callableFactory.createUnaryCallable(
             blockTransportSettings, settings.blockSettings(), clientContext);
+    this.listOperationsCallable =
+        callableFactory.createUnaryCallable(
+            listOperationsTransportSettings, settings.listOperationsSettings(), clientContext);
+    this.listOperationsPagedCallable =
+        callableFactory.createPagedCallable(
+            listOperationsTransportSettings, settings.listOperationsSettings(), clientContext);
+    this.getOperationCallable =
+        callableFactory.createUnaryCallable(
+            getOperationTransportSettings, settings.getOperationSettings(), clientContext);
+    this.deleteOperationCallable =
+        callableFactory.createUnaryCallable(
+            deleteOperationTransportSettings, settings.deleteOperationSettings(), clientContext);
+    this.cancelOperationCallable =
+        callableFactory.createUnaryCallable(
+            cancelOperationTransportSettings, settings.cancelOperationSettings(), clientContext);
     this.listLocationsCallable =
         callableFactory.createUnaryCallable(
             listLocationsTransportSettings, settings.listLocationsSettings(), clientContext);
@@ -508,6 +611,32 @@ public class GrpcEchoStub extends EchoStub {
   @Override
   public UnaryCallable<BlockRequest, BlockResponse> blockCallable() {
     return blockCallable;
+  }
+
+  @Override
+  public UnaryCallable<ListOperationsRequest, ListOperationsResponse> listOperationsCallable() {
+    return listOperationsCallable;
+  }
+
+  @Override
+  public UnaryCallable<ListOperationsRequest, ListOperationsPagedResponse>
+      listOperationsPagedCallable() {
+    return listOperationsPagedCallable;
+  }
+
+  @Override
+  public UnaryCallable<GetOperationRequest, Operation> getOperationCallable() {
+    return getOperationCallable;
+  }
+
+  @Override
+  public UnaryCallable<DeleteOperationRequest, Empty> deleteOperationCallable() {
+    return deleteOperationCallable;
+  }
+
+  @Override
+  public UnaryCallable<CancelOperationRequest, Empty> cancelOperationCallable() {
+    return cancelOperationCallable;
   }
 
   @Override

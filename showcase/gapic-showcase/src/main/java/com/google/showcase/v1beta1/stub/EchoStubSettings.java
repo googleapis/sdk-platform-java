@@ -17,6 +17,7 @@
 package com.google.showcase.v1beta1.stub;
 
 import static com.google.showcase.v1beta1.EchoClient.ListLocationsPagedResponse;
+import static com.google.showcase.v1beta1.EchoClient.ListOperationsPagedResponse;
 import static com.google.showcase.v1beta1.EchoClient.PagedExpandLegacyMappedPagedResponse;
 import static com.google.showcase.v1beta1.EchoClient.PagedExpandPagedResponse;
 
@@ -64,7 +65,13 @@ import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
+import com.google.longrunning.CancelOperationRequest;
+import com.google.longrunning.DeleteOperationRequest;
+import com.google.longrunning.GetOperationRequest;
+import com.google.longrunning.ListOperationsRequest;
+import com.google.longrunning.ListOperationsResponse;
 import com.google.longrunning.Operation;
+import com.google.protobuf.Empty;
 import com.google.showcase.v1beta1.BlockRequest;
 import com.google.showcase.v1beta1.BlockResponse;
 import com.google.showcase.v1beta1.EchoRequest;
@@ -143,6 +150,12 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
   private final OperationCallSettings<WaitRequest, WaitResponse, WaitMetadata>
       waitOperationSettings;
   private final UnaryCallSettings<BlockRequest, BlockResponse> blockSettings;
+  private final PagedCallSettings<
+          ListOperationsRequest, ListOperationsResponse, ListOperationsPagedResponse>
+      listOperationsSettings;
+  private final UnaryCallSettings<GetOperationRequest, Operation> getOperationSettings;
+  private final UnaryCallSettings<DeleteOperationRequest, Empty> deleteOperationSettings;
+  private final UnaryCallSettings<CancelOperationRequest, Empty> cancelOperationSettings;
   private final PagedCallSettings<
           ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
       listLocationsSettings;
@@ -231,6 +244,43 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
             }
           };
 
+  private static final PagedListDescriptor<ListOperationsRequest, ListOperationsResponse, Operation>
+      LIST_OPERATIONS_PAGE_STR_DESC =
+          new PagedListDescriptor<ListOperationsRequest, ListOperationsResponse, Operation>() {
+            @Override
+            public String emptyToken() {
+              return "";
+            }
+
+            @Override
+            public ListOperationsRequest injectToken(ListOperationsRequest payload, String token) {
+              return ListOperationsRequest.newBuilder(payload).setPageToken(token).build();
+            }
+
+            @Override
+            public ListOperationsRequest injectPageSize(
+                ListOperationsRequest payload, int pageSize) {
+              return ListOperationsRequest.newBuilder(payload).setPageSize(pageSize).build();
+            }
+
+            @Override
+            public Integer extractPageSize(ListOperationsRequest payload) {
+              return payload.getPageSize();
+            }
+
+            @Override
+            public String extractNextToken(ListOperationsResponse payload) {
+              return payload.getNextPageToken();
+            }
+
+            @Override
+            public Iterable<Operation> extractResources(ListOperationsResponse payload) {
+              return payload.getOperationsList() == null
+                  ? ImmutableList.<Operation>of()
+                  : payload.getOperationsList();
+            }
+          };
+
   private static final PagedListDescriptor<ListLocationsRequest, ListLocationsResponse, Location>
       LIST_LOCATIONS_PAGE_STR_DESC =
           new PagedListDescriptor<ListLocationsRequest, ListLocationsResponse, Location>() {
@@ -309,6 +359,23 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
           };
 
   private static final PagedListResponseFactory<
+          ListOperationsRequest, ListOperationsResponse, ListOperationsPagedResponse>
+      LIST_OPERATIONS_PAGE_STR_FACT =
+          new PagedListResponseFactory<
+              ListOperationsRequest, ListOperationsResponse, ListOperationsPagedResponse>() {
+            @Override
+            public ApiFuture<ListOperationsPagedResponse> getFuturePagedResponse(
+                UnaryCallable<ListOperationsRequest, ListOperationsResponse> callable,
+                ListOperationsRequest request,
+                ApiCallContext context,
+                ApiFuture<ListOperationsResponse> futureResponse) {
+              PageContext<ListOperationsRequest, ListOperationsResponse, Operation> pageContext =
+                  PageContext.create(callable, LIST_OPERATIONS_PAGE_STR_DESC, request, context);
+              return ListOperationsPagedResponse.createAsync(pageContext, futureResponse);
+            }
+          };
+
+  private static final PagedListResponseFactory<
           ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
       LIST_LOCATIONS_PAGE_STR_FACT =
           new PagedListResponseFactory<
@@ -377,6 +444,28 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
   /** Returns the object with the settings used for calls to block. */
   public UnaryCallSettings<BlockRequest, BlockResponse> blockSettings() {
     return blockSettings;
+  }
+
+  /** Returns the object with the settings used for calls to listOperations. */
+  public PagedCallSettings<
+          ListOperationsRequest, ListOperationsResponse, ListOperationsPagedResponse>
+      listOperationsSettings() {
+    return listOperationsSettings;
+  }
+
+  /** Returns the object with the settings used for calls to get. */
+  public UnaryCallSettings<GetOperationRequest, Operation> getOperationSettings() {
+    return getOperationSettings;
+  }
+
+  /** Returns the object with the settings used for calls to delete. */
+  public UnaryCallSettings<DeleteOperationRequest, Empty> deleteOperationSettings() {
+    return deleteOperationSettings;
+  }
+
+  /** Returns the object with the settings used for calls to cancel. */
+  public UnaryCallSettings<CancelOperationRequest, Empty> cancelOperationSettings() {
+    return cancelOperationSettings;
   }
 
   /** Returns the object with the settings used for calls to listLocations. */
@@ -520,6 +609,10 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
     waitSettings = settingsBuilder.waitSettings().build();
     waitOperationSettings = settingsBuilder.waitOperationSettings().build();
     blockSettings = settingsBuilder.blockSettings().build();
+    listOperationsSettings = settingsBuilder.listOperationsSettings().build();
+    getOperationSettings = settingsBuilder.getOperationSettings().build();
+    deleteOperationSettings = settingsBuilder.deleteOperationSettings().build();
+    cancelOperationSettings = settingsBuilder.cancelOperationSettings().build();
     listLocationsSettings = settingsBuilder.listLocationsSettings().build();
     getLocationSettings = settingsBuilder.getLocationSettings().build();
     setIamPolicySettings = settingsBuilder.setIamPolicySettings().build();
@@ -548,6 +641,12 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
     private final OperationCallSettings.Builder<WaitRequest, WaitResponse, WaitMetadata>
         waitOperationSettings;
     private final UnaryCallSettings.Builder<BlockRequest, BlockResponse> blockSettings;
+    private final PagedCallSettings.Builder<
+            ListOperationsRequest, ListOperationsResponse, ListOperationsPagedResponse>
+        listOperationsSettings;
+    private final UnaryCallSettings.Builder<GetOperationRequest, Operation> getOperationSettings;
+    private final UnaryCallSettings.Builder<DeleteOperationRequest, Empty> deleteOperationSettings;
+    private final UnaryCallSettings.Builder<CancelOperationRequest, Empty> cancelOperationSettings;
     private final PagedCallSettings.Builder<
             ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
         listLocationsSettings;
@@ -617,6 +716,10 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
       waitSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       waitOperationSettings = OperationCallSettings.newBuilder();
       blockSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      listOperationsSettings = PagedCallSettings.newBuilder(LIST_OPERATIONS_PAGE_STR_FACT);
+      getOperationSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      deleteOperationSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      cancelOperationSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       listLocationsSettings = PagedCallSettings.newBuilder(LIST_LOCATIONS_PAGE_STR_FACT);
       getLocationSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       setIamPolicySettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
@@ -631,6 +734,10 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
               pagedExpandLegacyMappedSettings,
               waitSettings,
               blockSettings,
+              listOperationsSettings,
+              getOperationSettings,
+              deleteOperationSettings,
+              cancelOperationSettings,
               listLocationsSettings,
               getLocationSettings,
               setIamPolicySettings,
@@ -652,6 +759,10 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
       waitSettings = settings.waitSettings.toBuilder();
       waitOperationSettings = settings.waitOperationSettings.toBuilder();
       blockSettings = settings.blockSettings.toBuilder();
+      listOperationsSettings = settings.listOperationsSettings.toBuilder();
+      getOperationSettings = settings.getOperationSettings.toBuilder();
+      deleteOperationSettings = settings.deleteOperationSettings.toBuilder();
+      cancelOperationSettings = settings.cancelOperationSettings.toBuilder();
       listLocationsSettings = settings.listLocationsSettings.toBuilder();
       getLocationSettings = settings.getLocationSettings.toBuilder();
       setIamPolicySettings = settings.setIamPolicySettings.toBuilder();
@@ -666,6 +777,10 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
               pagedExpandLegacyMappedSettings,
               waitSettings,
               blockSettings,
+              listOperationsSettings,
+              getOperationSettings,
+              deleteOperationSettings,
+              cancelOperationSettings,
               listLocationsSettings,
               getLocationSettings,
               setIamPolicySettings,
@@ -732,6 +847,26 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
 
       builder
           .blockSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
+
+      builder
+          .listOperationsSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
+
+      builder
+          .getOperationSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
+
+      builder
+          .deleteOperationSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
+
+      builder
+          .cancelOperationSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
 
@@ -859,6 +994,28 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
     /** Returns the builder for the settings used for calls to block. */
     public UnaryCallSettings.Builder<BlockRequest, BlockResponse> blockSettings() {
       return blockSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to listOperations. */
+    public PagedCallSettings.Builder<
+            ListOperationsRequest, ListOperationsResponse, ListOperationsPagedResponse>
+        listOperationsSettings() {
+      return listOperationsSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to get. */
+    public UnaryCallSettings.Builder<GetOperationRequest, Operation> getOperationSettings() {
+      return getOperationSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to delete. */
+    public UnaryCallSettings.Builder<DeleteOperationRequest, Empty> deleteOperationSettings() {
+      return deleteOperationSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to cancel. */
+    public UnaryCallSettings.Builder<CancelOperationRequest, Empty> cancelOperationSettings() {
+      return cancelOperationSettings;
     }
 
     /** Returns the builder for the settings used for calls to listLocations. */

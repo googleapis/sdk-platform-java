@@ -17,6 +17,7 @@
 package com.google.showcase.v1beta1.stub;
 
 import static com.google.showcase.v1beta1.TestingClient.ListLocationsPagedResponse;
+import static com.google.showcase.v1beta1.TestingClient.ListOperationsPagedResponse;
 import static com.google.showcase.v1beta1.TestingClient.ListSessionsPagedResponse;
 import static com.google.showcase.v1beta1.TestingClient.ListTestsPagedResponse;
 
@@ -58,6 +59,12 @@ import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
+import com.google.longrunning.CancelOperationRequest;
+import com.google.longrunning.DeleteOperationRequest;
+import com.google.longrunning.GetOperationRequest;
+import com.google.longrunning.ListOperationsRequest;
+import com.google.longrunning.ListOperationsResponse;
+import com.google.longrunning.Operation;
 import com.google.protobuf.Empty;
 import com.google.showcase.v1beta1.CreateSessionRequest;
 import com.google.showcase.v1beta1.DeleteSessionRequest;
@@ -132,6 +139,12 @@ public class TestingStubSettings extends StubSettings<TestingStubSettings> {
       listTestsSettings;
   private final UnaryCallSettings<DeleteTestRequest, Empty> deleteTestSettings;
   private final UnaryCallSettings<VerifyTestRequest, VerifyTestResponse> verifyTestSettings;
+  private final PagedCallSettings<
+          ListOperationsRequest, ListOperationsResponse, ListOperationsPagedResponse>
+      listOperationsSettings;
+  private final UnaryCallSettings<GetOperationRequest, Operation> getOperationSettings;
+  private final UnaryCallSettings<DeleteOperationRequest, Empty> deleteOperationSettings;
+  private final UnaryCallSettings<CancelOperationRequest, Empty> cancelOperationSettings;
   private final PagedCallSettings<
           ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
       listLocationsSettings;
@@ -213,6 +226,43 @@ public class TestingStubSettings extends StubSettings<TestingStubSettings> {
             }
           };
 
+  private static final PagedListDescriptor<ListOperationsRequest, ListOperationsResponse, Operation>
+      LIST_OPERATIONS_PAGE_STR_DESC =
+          new PagedListDescriptor<ListOperationsRequest, ListOperationsResponse, Operation>() {
+            @Override
+            public String emptyToken() {
+              return "";
+            }
+
+            @Override
+            public ListOperationsRequest injectToken(ListOperationsRequest payload, String token) {
+              return ListOperationsRequest.newBuilder(payload).setPageToken(token).build();
+            }
+
+            @Override
+            public ListOperationsRequest injectPageSize(
+                ListOperationsRequest payload, int pageSize) {
+              return ListOperationsRequest.newBuilder(payload).setPageSize(pageSize).build();
+            }
+
+            @Override
+            public Integer extractPageSize(ListOperationsRequest payload) {
+              return payload.getPageSize();
+            }
+
+            @Override
+            public String extractNextToken(ListOperationsResponse payload) {
+              return payload.getNextPageToken();
+            }
+
+            @Override
+            public Iterable<Operation> extractResources(ListOperationsResponse payload) {
+              return payload.getOperationsList() == null
+                  ? ImmutableList.<Operation>of()
+                  : payload.getOperationsList();
+            }
+          };
+
   private static final PagedListDescriptor<ListLocationsRequest, ListLocationsResponse, Location>
       LIST_LOCATIONS_PAGE_STR_DESC =
           new PagedListDescriptor<ListLocationsRequest, ListLocationsResponse, Location>() {
@@ -284,6 +334,23 @@ public class TestingStubSettings extends StubSettings<TestingStubSettings> {
           };
 
   private static final PagedListResponseFactory<
+          ListOperationsRequest, ListOperationsResponse, ListOperationsPagedResponse>
+      LIST_OPERATIONS_PAGE_STR_FACT =
+          new PagedListResponseFactory<
+              ListOperationsRequest, ListOperationsResponse, ListOperationsPagedResponse>() {
+            @Override
+            public ApiFuture<ListOperationsPagedResponse> getFuturePagedResponse(
+                UnaryCallable<ListOperationsRequest, ListOperationsResponse> callable,
+                ListOperationsRequest request,
+                ApiCallContext context,
+                ApiFuture<ListOperationsResponse> futureResponse) {
+              PageContext<ListOperationsRequest, ListOperationsResponse, Operation> pageContext =
+                  PageContext.create(callable, LIST_OPERATIONS_PAGE_STR_DESC, request, context);
+              return ListOperationsPagedResponse.createAsync(pageContext, futureResponse);
+            }
+          };
+
+  private static final PagedListResponseFactory<
           ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
       LIST_LOCATIONS_PAGE_STR_FACT =
           new PagedListResponseFactory<
@@ -340,6 +407,28 @@ public class TestingStubSettings extends StubSettings<TestingStubSettings> {
   /** Returns the object with the settings used for calls to verifyTest. */
   public UnaryCallSettings<VerifyTestRequest, VerifyTestResponse> verifyTestSettings() {
     return verifyTestSettings;
+  }
+
+  /** Returns the object with the settings used for calls to listOperations. */
+  public PagedCallSettings<
+          ListOperationsRequest, ListOperationsResponse, ListOperationsPagedResponse>
+      listOperationsSettings() {
+    return listOperationsSettings;
+  }
+
+  /** Returns the object with the settings used for calls to get. */
+  public UnaryCallSettings<GetOperationRequest, Operation> getOperationSettings() {
+    return getOperationSettings;
+  }
+
+  /** Returns the object with the settings used for calls to delete. */
+  public UnaryCallSettings<DeleteOperationRequest, Empty> deleteOperationSettings() {
+    return deleteOperationSettings;
+  }
+
+  /** Returns the object with the settings used for calls to cancel. */
+  public UnaryCallSettings<CancelOperationRequest, Empty> cancelOperationSettings() {
+    return cancelOperationSettings;
   }
 
   /** Returns the object with the settings used for calls to listLocations. */
@@ -481,6 +570,10 @@ public class TestingStubSettings extends StubSettings<TestingStubSettings> {
     listTestsSettings = settingsBuilder.listTestsSettings().build();
     deleteTestSettings = settingsBuilder.deleteTestSettings().build();
     verifyTestSettings = settingsBuilder.verifyTestSettings().build();
+    listOperationsSettings = settingsBuilder.listOperationsSettings().build();
+    getOperationSettings = settingsBuilder.getOperationSettings().build();
+    deleteOperationSettings = settingsBuilder.deleteOperationSettings().build();
+    cancelOperationSettings = settingsBuilder.cancelOperationSettings().build();
     listLocationsSettings = settingsBuilder.listLocationsSettings().build();
     getLocationSettings = settingsBuilder.getLocationSettings().build();
     setIamPolicySettings = settingsBuilder.setIamPolicySettings().build();
@@ -505,6 +598,12 @@ public class TestingStubSettings extends StubSettings<TestingStubSettings> {
     private final UnaryCallSettings.Builder<DeleteTestRequest, Empty> deleteTestSettings;
     private final UnaryCallSettings.Builder<VerifyTestRequest, VerifyTestResponse>
         verifyTestSettings;
+    private final PagedCallSettings.Builder<
+            ListOperationsRequest, ListOperationsResponse, ListOperationsPagedResponse>
+        listOperationsSettings;
+    private final UnaryCallSettings.Builder<GetOperationRequest, Operation> getOperationSettings;
+    private final UnaryCallSettings.Builder<DeleteOperationRequest, Empty> deleteOperationSettings;
+    private final UnaryCallSettings.Builder<CancelOperationRequest, Empty> cancelOperationSettings;
     private final PagedCallSettings.Builder<
             ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
         listLocationsSettings;
@@ -548,6 +647,10 @@ public class TestingStubSettings extends StubSettings<TestingStubSettings> {
       listTestsSettings = PagedCallSettings.newBuilder(LIST_TESTS_PAGE_STR_FACT);
       deleteTestSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       verifyTestSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      listOperationsSettings = PagedCallSettings.newBuilder(LIST_OPERATIONS_PAGE_STR_FACT);
+      getOperationSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      deleteOperationSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      cancelOperationSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       listLocationsSettings = PagedCallSettings.newBuilder(LIST_LOCATIONS_PAGE_STR_FACT);
       getLocationSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       setIamPolicySettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
@@ -564,6 +667,10 @@ public class TestingStubSettings extends StubSettings<TestingStubSettings> {
               listTestsSettings,
               deleteTestSettings,
               verifyTestSettings,
+              listOperationsSettings,
+              getOperationSettings,
+              deleteOperationSettings,
+              cancelOperationSettings,
               listLocationsSettings,
               getLocationSettings,
               setIamPolicySettings,
@@ -583,6 +690,10 @@ public class TestingStubSettings extends StubSettings<TestingStubSettings> {
       listTestsSettings = settings.listTestsSettings.toBuilder();
       deleteTestSettings = settings.deleteTestSettings.toBuilder();
       verifyTestSettings = settings.verifyTestSettings.toBuilder();
+      listOperationsSettings = settings.listOperationsSettings.toBuilder();
+      getOperationSettings = settings.getOperationSettings.toBuilder();
+      deleteOperationSettings = settings.deleteOperationSettings.toBuilder();
+      cancelOperationSettings = settings.cancelOperationSettings.toBuilder();
       listLocationsSettings = settings.listLocationsSettings.toBuilder();
       getLocationSettings = settings.getLocationSettings.toBuilder();
       setIamPolicySettings = settings.setIamPolicySettings.toBuilder();
@@ -599,6 +710,10 @@ public class TestingStubSettings extends StubSettings<TestingStubSettings> {
               listTestsSettings,
               deleteTestSettings,
               verifyTestSettings,
+              listOperationsSettings,
+              getOperationSettings,
+              deleteOperationSettings,
+              cancelOperationSettings,
               listLocationsSettings,
               getLocationSettings,
               setIamPolicySettings,
@@ -670,6 +785,26 @@ public class TestingStubSettings extends StubSettings<TestingStubSettings> {
 
       builder
           .verifyTestSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_params"));
+
+      builder
+          .listOperationsSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_params"));
+
+      builder
+          .getOperationSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_params"));
+
+      builder
+          .deleteOperationSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_params"));
+
+      builder
+          .cancelOperationSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_params"));
 
@@ -758,6 +893,28 @@ public class TestingStubSettings extends StubSettings<TestingStubSettings> {
     /** Returns the builder for the settings used for calls to verifyTest. */
     public UnaryCallSettings.Builder<VerifyTestRequest, VerifyTestResponse> verifyTestSettings() {
       return verifyTestSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to listOperations. */
+    public PagedCallSettings.Builder<
+            ListOperationsRequest, ListOperationsResponse, ListOperationsPagedResponse>
+        listOperationsSettings() {
+      return listOperationsSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to get. */
+    public UnaryCallSettings.Builder<GetOperationRequest, Operation> getOperationSettings() {
+      return getOperationSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to delete. */
+    public UnaryCallSettings.Builder<DeleteOperationRequest, Empty> deleteOperationSettings() {
+      return deleteOperationSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to cancel. */
+    public UnaryCallSettings.Builder<CancelOperationRequest, Empty> cancelOperationSettings() {
+      return cancelOperationSettings;
     }
 
     /** Returns the builder for the settings used for calls to listLocations. */

@@ -17,6 +17,7 @@
 package com.google.showcase.v1beta1.stub;
 
 import static com.google.showcase.v1beta1.ComplianceClient.ListLocationsPagedResponse;
+import static com.google.showcase.v1beta1.ComplianceClient.ListOperationsPagedResponse;
 
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
@@ -40,6 +41,13 @@ import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
+import com.google.longrunning.CancelOperationRequest;
+import com.google.longrunning.DeleteOperationRequest;
+import com.google.longrunning.GetOperationRequest;
+import com.google.longrunning.ListOperationsRequest;
+import com.google.longrunning.ListOperationsResponse;
+import com.google.longrunning.Operation;
+import com.google.protobuf.Empty;
 import com.google.protobuf.TypeRegistry;
 import com.google.showcase.v1beta1.EnumRequest;
 import com.google.showcase.v1beta1.EnumResponse;
@@ -518,6 +526,137 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                   .build())
           .build();
 
+  private static final ApiMethodDescriptor<ListOperationsRequest, ListOperationsResponse>
+      listOperationsMethodDescriptor =
+          ApiMethodDescriptor.<ListOperationsRequest, ListOperationsResponse>newBuilder()
+              .setFullMethodName("google.longrunning.Operations/ListOperations")
+              .setHttpMethod("GET")
+              .setType(ApiMethodDescriptor.MethodType.UNARY)
+              .setRequestFormatter(
+                  ProtoMessageRequestFormatter.<ListOperationsRequest>newBuilder()
+                      .setPath(
+                          "/v1beta1/operations",
+                          request -> {
+                            Map<String, String> fields = new HashMap<>();
+                            ProtoRestSerializer<ListOperationsRequest> serializer =
+                                ProtoRestSerializer.create();
+                            return fields;
+                          })
+                      .setQueryParamsExtractor(
+                          request -> {
+                            Map<String, List<String>> fields = new HashMap<>();
+                            ProtoRestSerializer<ListOperationsRequest> serializer =
+                                ProtoRestSerializer.create();
+                            return fields;
+                          })
+                      .setRequestBodyExtractor(request -> null)
+                      .build())
+              .setResponseParser(
+                  ProtoMessageResponseParser.<ListOperationsResponse>newBuilder()
+                      .setDefaultInstance(ListOperationsResponse.getDefaultInstance())
+                      .setDefaultTypeRegistry(typeRegistry)
+                      .build())
+              .build();
+
+  private static final ApiMethodDescriptor<GetOperationRequest, Operation>
+      getOperationMethodDescriptor =
+          ApiMethodDescriptor.<GetOperationRequest, Operation>newBuilder()
+              .setFullMethodName("google.longrunning.Operations/GetOperation")
+              .setHttpMethod("GET")
+              .setType(ApiMethodDescriptor.MethodType.UNARY)
+              .setRequestFormatter(
+                  ProtoMessageRequestFormatter.<GetOperationRequest>newBuilder()
+                      .setPath(
+                          "/v1beta1/{name=operations/**}",
+                          request -> {
+                            Map<String, String> fields = new HashMap<>();
+                            ProtoRestSerializer<GetOperationRequest> serializer =
+                                ProtoRestSerializer.create();
+                            serializer.putPathParam(fields, "name", request.getName());
+                            return fields;
+                          })
+                      .setQueryParamsExtractor(
+                          request -> {
+                            Map<String, List<String>> fields = new HashMap<>();
+                            ProtoRestSerializer<GetOperationRequest> serializer =
+                                ProtoRestSerializer.create();
+                            return fields;
+                          })
+                      .setRequestBodyExtractor(request -> null)
+                      .build())
+              .setResponseParser(
+                  ProtoMessageResponseParser.<Operation>newBuilder()
+                      .setDefaultInstance(Operation.getDefaultInstance())
+                      .setDefaultTypeRegistry(typeRegistry)
+                      .build())
+              .build();
+
+  private static final ApiMethodDescriptor<DeleteOperationRequest, Empty>
+      deleteOperationMethodDescriptor =
+          ApiMethodDescriptor.<DeleteOperationRequest, Empty>newBuilder()
+              .setFullMethodName("google.longrunning.Operations/DeleteOperation")
+              .setHttpMethod("DELETE")
+              .setType(ApiMethodDescriptor.MethodType.UNARY)
+              .setRequestFormatter(
+                  ProtoMessageRequestFormatter.<DeleteOperationRequest>newBuilder()
+                      .setPath(
+                          "/v1beta1/{name=operations/**}",
+                          request -> {
+                            Map<String, String> fields = new HashMap<>();
+                            ProtoRestSerializer<DeleteOperationRequest> serializer =
+                                ProtoRestSerializer.create();
+                            serializer.putPathParam(fields, "name", request.getName());
+                            return fields;
+                          })
+                      .setQueryParamsExtractor(
+                          request -> {
+                            Map<String, List<String>> fields = new HashMap<>();
+                            ProtoRestSerializer<DeleteOperationRequest> serializer =
+                                ProtoRestSerializer.create();
+                            return fields;
+                          })
+                      .setRequestBodyExtractor(request -> null)
+                      .build())
+              .setResponseParser(
+                  ProtoMessageResponseParser.<Empty>newBuilder()
+                      .setDefaultInstance(Empty.getDefaultInstance())
+                      .setDefaultTypeRegistry(typeRegistry)
+                      .build())
+              .build();
+
+  private static final ApiMethodDescriptor<CancelOperationRequest, Empty>
+      cancelOperationMethodDescriptor =
+          ApiMethodDescriptor.<CancelOperationRequest, Empty>newBuilder()
+              .setFullMethodName("google.longrunning.Operations/CancelOperation")
+              .setHttpMethod("POST")
+              .setType(ApiMethodDescriptor.MethodType.UNARY)
+              .setRequestFormatter(
+                  ProtoMessageRequestFormatter.<CancelOperationRequest>newBuilder()
+                      .setPath(
+                          "/v1beta1/{name=operations/**}:cancel",
+                          request -> {
+                            Map<String, String> fields = new HashMap<>();
+                            ProtoRestSerializer<CancelOperationRequest> serializer =
+                                ProtoRestSerializer.create();
+                            serializer.putPathParam(fields, "name", request.getName());
+                            return fields;
+                          })
+                      .setQueryParamsExtractor(
+                          request -> {
+                            Map<String, List<String>> fields = new HashMap<>();
+                            ProtoRestSerializer<CancelOperationRequest> serializer =
+                                ProtoRestSerializer.create();
+                            return fields;
+                          })
+                      .setRequestBodyExtractor(request -> null)
+                      .build())
+              .setResponseParser(
+                  ProtoMessageResponseParser.<Empty>newBuilder()
+                      .setDefaultInstance(Empty.getDefaultInstance())
+                      .setDefaultTypeRegistry(typeRegistry)
+                      .build())
+              .build();
+
   private static final ApiMethodDescriptor<ListLocationsRequest, ListLocationsResponse>
       listLocationsMethodDescriptor =
           ApiMethodDescriptor.<ListLocationsRequest, ListLocationsResponse>newBuilder()
@@ -711,6 +850,12 @@ public class HttpJsonComplianceStub extends ComplianceStub {
   private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataBodyPatchCallable;
   private final UnaryCallable<EnumRequest, EnumResponse> getEnumCallable;
   private final UnaryCallable<EnumResponse, EnumResponse> verifyEnumCallable;
+  private final UnaryCallable<ListOperationsRequest, ListOperationsResponse> listOperationsCallable;
+  private final UnaryCallable<ListOperationsRequest, ListOperationsPagedResponse>
+      listOperationsPagedCallable;
+  private final UnaryCallable<GetOperationRequest, Operation> getOperationCallable;
+  private final UnaryCallable<DeleteOperationRequest, Empty> deleteOperationCallable;
+  private final UnaryCallable<CancelOperationRequest, Empty> cancelOperationCallable;
   private final UnaryCallable<ListLocationsRequest, ListLocationsResponse> listLocationsCallable;
   private final UnaryCallable<ListLocationsRequest, ListLocationsPagedResponse>
       listLocationsPagedCallable;
@@ -842,6 +987,45 @@ public class HttpJsonComplianceStub extends ComplianceStub {
             .setMethodDescriptor(verifyEnumMethodDescriptor)
             .setTypeRegistry(typeRegistry)
             .build();
+    HttpJsonCallSettings<ListOperationsRequest, ListOperationsResponse>
+        listOperationsTransportSettings =
+            HttpJsonCallSettings.<ListOperationsRequest, ListOperationsResponse>newBuilder()
+                .setMethodDescriptor(listOperationsMethodDescriptor)
+                .setTypeRegistry(typeRegistry)
+                .build();
+    HttpJsonCallSettings<GetOperationRequest, Operation> getOperationTransportSettings =
+        HttpJsonCallSettings.<GetOperationRequest, Operation>newBuilder()
+            .setMethodDescriptor(getOperationMethodDescriptor)
+            .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
+                })
+            .build();
+    HttpJsonCallSettings<DeleteOperationRequest, Empty> deleteOperationTransportSettings =
+        HttpJsonCallSettings.<DeleteOperationRequest, Empty>newBuilder()
+            .setMethodDescriptor(deleteOperationMethodDescriptor)
+            .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
+                })
+            .build();
+    HttpJsonCallSettings<CancelOperationRequest, Empty> cancelOperationTransportSettings =
+        HttpJsonCallSettings.<CancelOperationRequest, Empty>newBuilder()
+            .setMethodDescriptor(cancelOperationMethodDescriptor)
+            .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("name", String.valueOf(request.getName()));
+                  return builder.build();
+                })
+            .build();
     HttpJsonCallSettings<ListLocationsRequest, ListLocationsResponse>
         listLocationsTransportSettings =
             HttpJsonCallSettings.<ListLocationsRequest, ListLocationsResponse>newBuilder()
@@ -942,6 +1126,21 @@ public class HttpJsonComplianceStub extends ComplianceStub {
     this.verifyEnumCallable =
         callableFactory.createUnaryCallable(
             verifyEnumTransportSettings, settings.verifyEnumSettings(), clientContext);
+    this.listOperationsCallable =
+        callableFactory.createUnaryCallable(
+            listOperationsTransportSettings, settings.listOperationsSettings(), clientContext);
+    this.listOperationsPagedCallable =
+        callableFactory.createPagedCallable(
+            listOperationsTransportSettings, settings.listOperationsSettings(), clientContext);
+    this.getOperationCallable =
+        callableFactory.createUnaryCallable(
+            getOperationTransportSettings, settings.getOperationSettings(), clientContext);
+    this.deleteOperationCallable =
+        callableFactory.createUnaryCallable(
+            deleteOperationTransportSettings, settings.deleteOperationSettings(), clientContext);
+    this.cancelOperationCallable =
+        callableFactory.createUnaryCallable(
+            cancelOperationTransportSettings, settings.cancelOperationSettings(), clientContext);
     this.listLocationsCallable =
         callableFactory.createUnaryCallable(
             listLocationsTransportSettings, settings.listLocationsSettings(), clientContext);
@@ -980,6 +1179,10 @@ public class HttpJsonComplianceStub extends ComplianceStub {
     methodDescriptors.add(repeatDataBodyPatchMethodDescriptor);
     methodDescriptors.add(getEnumMethodDescriptor);
     methodDescriptors.add(verifyEnumMethodDescriptor);
+    methodDescriptors.add(listOperationsMethodDescriptor);
+    methodDescriptors.add(getOperationMethodDescriptor);
+    methodDescriptors.add(deleteOperationMethodDescriptor);
+    methodDescriptors.add(cancelOperationMethodDescriptor);
     methodDescriptors.add(listLocationsMethodDescriptor);
     methodDescriptors.add(getLocationMethodDescriptor);
     methodDescriptors.add(setIamPolicyMethodDescriptor);
@@ -1036,6 +1239,32 @@ public class HttpJsonComplianceStub extends ComplianceStub {
   @Override
   public UnaryCallable<EnumResponse, EnumResponse> verifyEnumCallable() {
     return verifyEnumCallable;
+  }
+
+  @Override
+  public UnaryCallable<ListOperationsRequest, ListOperationsResponse> listOperationsCallable() {
+    return listOperationsCallable;
+  }
+
+  @Override
+  public UnaryCallable<ListOperationsRequest, ListOperationsPagedResponse>
+      listOperationsPagedCallable() {
+    return listOperationsPagedCallable;
+  }
+
+  @Override
+  public UnaryCallable<GetOperationRequest, Operation> getOperationCallable() {
+    return getOperationCallable;
+  }
+
+  @Override
+  public UnaryCallable<DeleteOperationRequest, Empty> deleteOperationCallable() {
+    return deleteOperationCallable;
+  }
+
+  @Override
+  public UnaryCallable<CancelOperationRequest, Empty> cancelOperationCallable() {
+    return cancelOperationCallable;
   }
 
   @Override

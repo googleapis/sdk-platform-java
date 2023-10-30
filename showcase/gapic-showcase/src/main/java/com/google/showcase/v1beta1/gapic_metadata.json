@@ -10,6 +10,12 @@
         "grpc": {
           "libraryClient": "ComplianceClient",
           "rpcs": {
+            "CancelOperation": {
+              "methods": ["cancelOperation", "cancelOperation", "cancelOperationCallable"]
+            },
+            "DeleteOperation": {
+              "methods": ["deleteOperation", "deleteOperation", "deleteOperationCallable"]
+            },
             "GetEnum": {
               "methods": ["getEnum", "getEnumCallable"]
             },
@@ -19,8 +25,14 @@
             "GetLocation": {
               "methods": ["getLocation", "getLocationCallable"]
             },
+            "GetOperation": {
+              "methods": ["getOperation", "getOperation", "getOperationCallable"]
+            },
             "ListLocations": {
               "methods": ["listLocations", "listLocationsPagedCallable", "listLocationsCallable"]
+            },
+            "ListOperations": {
+              "methods": ["listOperations", "listOperations", "listOperationsPagedCallable", "listOperationsCallable"]
             },
             "RepeatDataBody": {
               "methods": ["repeatDataBody", "repeatDataBodyCallable"]
@@ -67,11 +79,17 @@
             "Block": {
               "methods": ["block", "blockCallable"]
             },
+            "CancelOperation": {
+              "methods": ["cancelOperation", "cancelOperation", "cancelOperationCallable"]
+            },
             "Chat": {
               "methods": ["chatCallable"]
             },
             "Collect": {
               "methods": ["collectCallable"]
+            },
+            "DeleteOperation": {
+              "methods": ["deleteOperation", "deleteOperation", "deleteOperationCallable"]
             },
             "Echo": {
               "methods": ["echo", "echoCallable"]
@@ -85,8 +103,14 @@
             "GetLocation": {
               "methods": ["getLocation", "getLocationCallable"]
             },
+            "GetOperation": {
+              "methods": ["getOperation", "getOperation", "getOperationCallable"]
+            },
             "ListLocations": {
               "methods": ["listLocations", "listLocationsPagedCallable", "listLocationsCallable"]
+            },
+            "ListOperations": {
+              "methods": ["listOperations", "listOperations", "listOperationsPagedCallable", "listOperationsCallable"]
             },
             "PagedExpand": {
               "methods": ["pagedExpand", "pagedExpandPagedCallable", "pagedExpandCallable"]
@@ -115,8 +139,14 @@
         "grpc": {
           "libraryClient": "IdentityClient",
           "rpcs": {
+            "CancelOperation": {
+              "methods": ["cancelOperation", "cancelOperation", "cancelOperationCallable"]
+            },
             "CreateUser": {
               "methods": ["createUser", "createUser", "createUser", "createUserCallable"]
+            },
+            "DeleteOperation": {
+              "methods": ["deleteOperation", "deleteOperation", "deleteOperationCallable"]
             },
             "DeleteUser": {
               "methods": ["deleteUser", "deleteUser", "deleteUser", "deleteUserCallable"]
@@ -127,11 +157,17 @@
             "GetLocation": {
               "methods": ["getLocation", "getLocationCallable"]
             },
+            "GetOperation": {
+              "methods": ["getOperation", "getOperation", "getOperationCallable"]
+            },
             "GetUser": {
               "methods": ["getUser", "getUser", "getUser", "getUserCallable"]
             },
             "ListLocations": {
               "methods": ["listLocations", "listLocationsPagedCallable", "listLocationsCallable"]
+            },
+            "ListOperations": {
+              "methods": ["listOperations", "listOperations", "listOperationsPagedCallable", "listOperationsCallable"]
             },
             "ListUsers": {
               "methods": ["listUsers", "listUsersPagedCallable", "listUsersCallable"]
@@ -154,6 +190,9 @@
         "grpc": {
           "libraryClient": "MessagingClient",
           "rpcs": {
+            "CancelOperation": {
+              "methods": ["cancelOperation", "cancelOperation", "cancelOperationCallable"]
+            },
             "Connect": {
               "methods": ["connectCallable"]
             },
@@ -165,6 +204,9 @@
             },
             "DeleteBlurb": {
               "methods": ["deleteBlurb", "deleteBlurb", "deleteBlurb", "deleteBlurbCallable"]
+            },
+            "DeleteOperation": {
+              "methods": ["deleteOperation", "deleteOperation", "deleteOperationCallable"]
             },
             "DeleteRoom": {
               "methods": ["deleteRoom", "deleteRoom", "deleteRoom", "deleteRoomCallable"]
@@ -178,6 +220,9 @@
             "GetLocation": {
               "methods": ["getLocation", "getLocationCallable"]
             },
+            "GetOperation": {
+              "methods": ["getOperation", "getOperation", "getOperationCallable"]
+            },
             "GetRoom": {
               "methods": ["getRoom", "getRoom", "getRoom", "getRoomCallable"]
             },
@@ -186,6 +231,9 @@
             },
             "ListLocations": {
               "methods": ["listLocations", "listLocationsPagedCallable", "listLocationsCallable"]
+            },
+            "ListOperations": {
+              "methods": ["listOperations", "listOperations", "listOperationsPagedCallable", "listOperationsCallable"]
             },
             "ListRooms": {
               "methods": ["listRooms", "listRoomsPagedCallable", "listRoomsCallable"]
@@ -226,17 +274,26 @@
             "AttemptStreamingSequence": {
               "methods": ["attemptStreamingSequenceCallable"]
             },
+            "CancelOperation": {
+              "methods": ["cancelOperation", "cancelOperation", "cancelOperationCallable"]
+            },
             "CreateSequence": {
               "methods": ["createSequence", "createSequence", "createSequenceCallable"]
             },
             "CreateStreamingSequence": {
               "methods": ["createStreamingSequence", "createStreamingSequence", "createStreamingSequenceCallable"]
             },
+            "DeleteOperation": {
+              "methods": ["deleteOperation", "deleteOperation", "deleteOperationCallable"]
+            },
             "GetIamPolicy": {
               "methods": ["getIamPolicy", "getIamPolicyCallable"]
             },
             "GetLocation": {
               "methods": ["getLocation", "getLocationCallable"]
+            },
+            "GetOperation": {
+              "methods": ["getOperation", "getOperation", "getOperationCallable"]
             },
             "GetSequenceReport": {
               "methods": ["getSequenceReport", "getSequenceReport", "getSequenceReport", "getSequenceReportCallable"]
@@ -246,6 +303,9 @@
             },
             "ListLocations": {
               "methods": ["listLocations", "listLocationsPagedCallable", "listLocationsCallable"]
+            },
+            "ListOperations": {
+              "methods": ["listOperations", "listOperations", "listOperationsPagedCallable", "listOperationsCallable"]
             },
             "SetIamPolicy": {
               "methods": ["setIamPolicy", "setIamPolicyCallable"]
@@ -262,8 +322,14 @@
         "grpc": {
           "libraryClient": "TestingClient",
           "rpcs": {
+            "CancelOperation": {
+              "methods": ["cancelOperation", "cancelOperation", "cancelOperationCallable"]
+            },
             "CreateSession": {
               "methods": ["createSession", "createSessionCallable"]
+            },
+            "DeleteOperation": {
+              "methods": ["deleteOperation", "deleteOperation", "deleteOperationCallable"]
             },
             "DeleteSession": {
               "methods": ["deleteSession", "deleteSessionCallable"]
@@ -277,11 +343,17 @@
             "GetLocation": {
               "methods": ["getLocation", "getLocationCallable"]
             },
+            "GetOperation": {
+              "methods": ["getOperation", "getOperation", "getOperationCallable"]
+            },
             "GetSession": {
               "methods": ["getSession", "getSessionCallable"]
             },
             "ListLocations": {
               "methods": ["listLocations", "listLocationsPagedCallable", "listLocationsCallable"]
+            },
+            "ListOperations": {
+              "methods": ["listOperations", "listOperations", "listOperationsPagedCallable", "listOperationsCallable"]
             },
             "ListSessions": {
               "methods": ["listSessions", "listSessionsPagedCallable", "listSessionsCallable"]

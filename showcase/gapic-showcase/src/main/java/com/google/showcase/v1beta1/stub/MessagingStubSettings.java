@@ -18,6 +18,7 @@ package com.google.showcase.v1beta1.stub;
 
 import static com.google.showcase.v1beta1.MessagingClient.ListBlurbsPagedResponse;
 import static com.google.showcase.v1beta1.MessagingClient.ListLocationsPagedResponse;
+import static com.google.showcase.v1beta1.MessagingClient.ListOperationsPagedResponse;
 import static com.google.showcase.v1beta1.MessagingClient.ListRoomsPagedResponse;
 
 import com.google.api.core.ApiFunction;
@@ -64,6 +65,11 @@ import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
+import com.google.longrunning.CancelOperationRequest;
+import com.google.longrunning.DeleteOperationRequest;
+import com.google.longrunning.GetOperationRequest;
+import com.google.longrunning.ListOperationsRequest;
+import com.google.longrunning.ListOperationsResponse;
 import com.google.longrunning.Operation;
 import com.google.protobuf.Empty;
 import com.google.showcase.v1beta1.Blurb;
@@ -156,6 +162,12 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
   private final StreamingCallSettings<CreateBlurbRequest, SendBlurbsResponse> sendBlurbsSettings;
   private final StreamingCallSettings<ConnectRequest, StreamBlurbsResponse> connectSettings;
   private final PagedCallSettings<
+          ListOperationsRequest, ListOperationsResponse, ListOperationsPagedResponse>
+      listOperationsSettings;
+  private final UnaryCallSettings<GetOperationRequest, Operation> getOperationSettings;
+  private final UnaryCallSettings<DeleteOperationRequest, Empty> deleteOperationSettings;
+  private final UnaryCallSettings<CancelOperationRequest, Empty> cancelOperationSettings;
+  private final PagedCallSettings<
           ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
       listLocationsSettings;
   private final UnaryCallSettings<GetLocationRequest, Location> getLocationSettings;
@@ -236,6 +248,43 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
             }
           };
 
+  private static final PagedListDescriptor<ListOperationsRequest, ListOperationsResponse, Operation>
+      LIST_OPERATIONS_PAGE_STR_DESC =
+          new PagedListDescriptor<ListOperationsRequest, ListOperationsResponse, Operation>() {
+            @Override
+            public String emptyToken() {
+              return "";
+            }
+
+            @Override
+            public ListOperationsRequest injectToken(ListOperationsRequest payload, String token) {
+              return ListOperationsRequest.newBuilder(payload).setPageToken(token).build();
+            }
+
+            @Override
+            public ListOperationsRequest injectPageSize(
+                ListOperationsRequest payload, int pageSize) {
+              return ListOperationsRequest.newBuilder(payload).setPageSize(pageSize).build();
+            }
+
+            @Override
+            public Integer extractPageSize(ListOperationsRequest payload) {
+              return payload.getPageSize();
+            }
+
+            @Override
+            public String extractNextToken(ListOperationsResponse payload) {
+              return payload.getNextPageToken();
+            }
+
+            @Override
+            public Iterable<Operation> extractResources(ListOperationsResponse payload) {
+              return payload.getOperationsList() == null
+                  ? ImmutableList.<Operation>of()
+                  : payload.getOperationsList();
+            }
+          };
+
   private static final PagedListDescriptor<ListLocationsRequest, ListLocationsResponse, Location>
       LIST_LOCATIONS_PAGE_STR_DESC =
           new PagedListDescriptor<ListLocationsRequest, ListLocationsResponse, Location>() {
@@ -303,6 +352,23 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
               PageContext<ListBlurbsRequest, ListBlurbsResponse, Blurb> pageContext =
                   PageContext.create(callable, LIST_BLURBS_PAGE_STR_DESC, request, context);
               return ListBlurbsPagedResponse.createAsync(pageContext, futureResponse);
+            }
+          };
+
+  private static final PagedListResponseFactory<
+          ListOperationsRequest, ListOperationsResponse, ListOperationsPagedResponse>
+      LIST_OPERATIONS_PAGE_STR_FACT =
+          new PagedListResponseFactory<
+              ListOperationsRequest, ListOperationsResponse, ListOperationsPagedResponse>() {
+            @Override
+            public ApiFuture<ListOperationsPagedResponse> getFuturePagedResponse(
+                UnaryCallable<ListOperationsRequest, ListOperationsResponse> callable,
+                ListOperationsRequest request,
+                ApiCallContext context,
+                ApiFuture<ListOperationsResponse> futureResponse) {
+              PageContext<ListOperationsRequest, ListOperationsResponse, Operation> pageContext =
+                  PageContext.create(callable, LIST_OPERATIONS_PAGE_STR_DESC, request, context);
+              return ListOperationsPagedResponse.createAsync(pageContext, futureResponse);
             }
           };
 
@@ -400,6 +466,28 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
   /** Returns the object with the settings used for calls to connect. */
   public StreamingCallSettings<ConnectRequest, StreamBlurbsResponse> connectSettings() {
     return connectSettings;
+  }
+
+  /** Returns the object with the settings used for calls to listOperations. */
+  public PagedCallSettings<
+          ListOperationsRequest, ListOperationsResponse, ListOperationsPagedResponse>
+      listOperationsSettings() {
+    return listOperationsSettings;
+  }
+
+  /** Returns the object with the settings used for calls to get. */
+  public UnaryCallSettings<GetOperationRequest, Operation> getOperationSettings() {
+    return getOperationSettings;
+  }
+
+  /** Returns the object with the settings used for calls to delete. */
+  public UnaryCallSettings<DeleteOperationRequest, Empty> deleteOperationSettings() {
+    return deleteOperationSettings;
+  }
+
+  /** Returns the object with the settings used for calls to cancel. */
+  public UnaryCallSettings<CancelOperationRequest, Empty> cancelOperationSettings() {
+    return cancelOperationSettings;
   }
 
   /** Returns the object with the settings used for calls to listLocations. */
@@ -548,6 +636,10 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
     streamBlurbsSettings = settingsBuilder.streamBlurbsSettings().build();
     sendBlurbsSettings = settingsBuilder.sendBlurbsSettings().build();
     connectSettings = settingsBuilder.connectSettings().build();
+    listOperationsSettings = settingsBuilder.listOperationsSettings().build();
+    getOperationSettings = settingsBuilder.getOperationSettings().build();
+    deleteOperationSettings = settingsBuilder.deleteOperationSettings().build();
+    cancelOperationSettings = settingsBuilder.cancelOperationSettings().build();
     listLocationsSettings = settingsBuilder.listLocationsSettings().build();
     getLocationSettings = settingsBuilder.getLocationSettings().build();
     setIamPolicySettings = settingsBuilder.setIamPolicySettings().build();
@@ -582,6 +674,12 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
         sendBlurbsSettings;
     private final StreamingCallSettings.Builder<ConnectRequest, StreamBlurbsResponse>
         connectSettings;
+    private final PagedCallSettings.Builder<
+            ListOperationsRequest, ListOperationsResponse, ListOperationsPagedResponse>
+        listOperationsSettings;
+    private final UnaryCallSettings.Builder<GetOperationRequest, Operation> getOperationSettings;
+    private final UnaryCallSettings.Builder<DeleteOperationRequest, Empty> deleteOperationSettings;
+    private final UnaryCallSettings.Builder<CancelOperationRequest, Empty> cancelOperationSettings;
     private final PagedCallSettings.Builder<
             ListLocationsRequest, ListLocationsResponse, ListLocationsPagedResponse>
         listLocationsSettings;
@@ -655,6 +753,10 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
       streamBlurbsSettings = ServerStreamingCallSettings.newBuilder();
       sendBlurbsSettings = StreamingCallSettings.newBuilder();
       connectSettings = StreamingCallSettings.newBuilder();
+      listOperationsSettings = PagedCallSettings.newBuilder(LIST_OPERATIONS_PAGE_STR_FACT);
+      getOperationSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      deleteOperationSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      cancelOperationSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       listLocationsSettings = PagedCallSettings.newBuilder(LIST_LOCATIONS_PAGE_STR_FACT);
       getLocationSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       setIamPolicySettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
@@ -674,6 +776,10 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
               deleteBlurbSettings,
               listBlurbsSettings,
               searchBlurbsSettings,
+              listOperationsSettings,
+              getOperationSettings,
+              deleteOperationSettings,
+              cancelOperationSettings,
               listLocationsSettings,
               getLocationSettings,
               setIamPolicySettings,
@@ -700,6 +806,10 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
       streamBlurbsSettings = settings.streamBlurbsSettings.toBuilder();
       sendBlurbsSettings = settings.sendBlurbsSettings.toBuilder();
       connectSettings = settings.connectSettings.toBuilder();
+      listOperationsSettings = settings.listOperationsSettings.toBuilder();
+      getOperationSettings = settings.getOperationSettings.toBuilder();
+      deleteOperationSettings = settings.deleteOperationSettings.toBuilder();
+      cancelOperationSettings = settings.cancelOperationSettings.toBuilder();
       listLocationsSettings = settings.listLocationsSettings.toBuilder();
       getLocationSettings = settings.getLocationSettings.toBuilder();
       setIamPolicySettings = settings.setIamPolicySettings.toBuilder();
@@ -719,6 +829,10 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
               deleteBlurbSettings,
               listBlurbsSettings,
               searchBlurbsSettings,
+              listOperationsSettings,
+              getOperationSettings,
+              deleteOperationSettings,
+              cancelOperationSettings,
               listLocationsSettings,
               getLocationSettings,
               setIamPolicySettings,
@@ -810,6 +924,26 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
 
       builder
           .streamBlurbsSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
+
+      builder
+          .listOperationsSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
+
+      builder
+          .getOperationSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
+
+      builder
+          .deleteOperationSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
+
+      builder
+          .cancelOperationSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
 
@@ -961,6 +1095,28 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
     /** Returns the builder for the settings used for calls to connect. */
     public StreamingCallSettings.Builder<ConnectRequest, StreamBlurbsResponse> connectSettings() {
       return connectSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to listOperations. */
+    public PagedCallSettings.Builder<
+            ListOperationsRequest, ListOperationsResponse, ListOperationsPagedResponse>
+        listOperationsSettings() {
+      return listOperationsSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to get. */
+    public UnaryCallSettings.Builder<GetOperationRequest, Operation> getOperationSettings() {
+      return getOperationSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to delete. */
+    public UnaryCallSettings.Builder<DeleteOperationRequest, Empty> deleteOperationSettings() {
+      return deleteOperationSettings;
+    }
+
+    /** Returns the builder for the settings used for calls to cancel. */
+    public UnaryCallSettings.Builder<CancelOperationRequest, Empty> cancelOperationSettings() {
+      return cancelOperationSettings;
     }
 
     /** Returns the builder for the settings used for calls to listLocations. */

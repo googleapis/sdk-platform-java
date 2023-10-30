@@ -17,6 +17,7 @@
 package com.google.showcase.v1beta1;
 
 import static com.google.showcase.v1beta1.TestingClient.ListLocationsPagedResponse;
+import static com.google.showcase.v1beta1.TestingClient.ListOperationsPagedResponse;
 import static com.google.showcase.v1beta1.TestingClient.ListSessionsPagedResponse;
 import static com.google.showcase.v1beta1.TestingClient.ListTestsPagedResponse;
 
@@ -42,6 +43,12 @@ import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
+import com.google.longrunning.CancelOperationRequest;
+import com.google.longrunning.DeleteOperationRequest;
+import com.google.longrunning.GetOperationRequest;
+import com.google.longrunning.ListOperationsRequest;
+import com.google.longrunning.ListOperationsResponse;
+import com.google.longrunning.Operation;
 import com.google.protobuf.Empty;
 import com.google.showcase.v1beta1.stub.TestingStubSettings;
 import java.io.IOException;
@@ -128,6 +135,28 @@ public class TestingSettings extends ClientSettings<TestingSettings> {
   /** Returns the object with the settings used for calls to verifyTest. */
   public UnaryCallSettings<VerifyTestRequest, VerifyTestResponse> verifyTestSettings() {
     return ((TestingStubSettings) getStubSettings()).verifyTestSettings();
+  }
+
+  /** Returns the object with the settings used for calls to listOperations. */
+  public PagedCallSettings<
+          ListOperationsRequest, ListOperationsResponse, ListOperationsPagedResponse>
+      listOperationsSettings() {
+    return ((TestingStubSettings) getStubSettings()).listOperationsSettings();
+  }
+
+  /** Returns the object with the settings used for calls to get. */
+  public UnaryCallSettings<GetOperationRequest, Operation> getOperationSettings() {
+    return ((TestingStubSettings) getStubSettings()).getOperationSettings();
+  }
+
+  /** Returns the object with the settings used for calls to delete. */
+  public UnaryCallSettings<DeleteOperationRequest, Empty> deleteOperationSettings() {
+    return ((TestingStubSettings) getStubSettings()).deleteOperationSettings();
+  }
+
+  /** Returns the object with the settings used for calls to cancel. */
+  public UnaryCallSettings<CancelOperationRequest, Empty> cancelOperationSettings() {
+    return ((TestingStubSettings) getStubSettings()).cancelOperationSettings();
   }
 
   /** Returns the object with the settings used for calls to listLocations. */
@@ -313,6 +342,28 @@ public class TestingSettings extends ClientSettings<TestingSettings> {
     /** Returns the builder for the settings used for calls to verifyTest. */
     public UnaryCallSettings.Builder<VerifyTestRequest, VerifyTestResponse> verifyTestSettings() {
       return getStubSettingsBuilder().verifyTestSettings();
+    }
+
+    /** Returns the builder for the settings used for calls to listOperations. */
+    public PagedCallSettings.Builder<
+            ListOperationsRequest, ListOperationsResponse, ListOperationsPagedResponse>
+        listOperationsSettings() {
+      return getStubSettingsBuilder().listOperationsSettings();
+    }
+
+    /** Returns the builder for the settings used for calls to get. */
+    public UnaryCallSettings.Builder<GetOperationRequest, Operation> getOperationSettings() {
+      return getStubSettingsBuilder().getOperationSettings();
+    }
+
+    /** Returns the builder for the settings used for calls to delete. */
+    public UnaryCallSettings.Builder<DeleteOperationRequest, Empty> deleteOperationSettings() {
+      return getStubSettingsBuilder().deleteOperationSettings();
+    }
+
+    /** Returns the builder for the settings used for calls to cancel. */
+    public UnaryCallSettings.Builder<CancelOperationRequest, Empty> cancelOperationSettings() {
+      return getStubSettingsBuilder().cancelOperationSettings();
     }
 
     /** Returns the builder for the settings used for calls to listLocations. */

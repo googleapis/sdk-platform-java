@@ -18,6 +18,7 @@ package com.google.showcase.v1beta1.stub;
 
 import static com.google.showcase.v1beta1.MessagingClient.ListBlurbsPagedResponse;
 import static com.google.showcase.v1beta1.MessagingClient.ListLocationsPagedResponse;
+import static com.google.showcase.v1beta1.MessagingClient.ListOperationsPagedResponse;
 import static com.google.showcase.v1beta1.MessagingClient.ListRoomsPagedResponse;
 
 import com.google.api.core.BetaApi;
@@ -36,6 +37,11 @@ import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
+import com.google.longrunning.CancelOperationRequest;
+import com.google.longrunning.DeleteOperationRequest;
+import com.google.longrunning.GetOperationRequest;
+import com.google.longrunning.ListOperationsRequest;
+import com.google.longrunning.ListOperationsResponse;
 import com.google.longrunning.Operation;
 import com.google.longrunning.stub.OperationsStub;
 import com.google.protobuf.Empty;
@@ -147,6 +153,27 @@ public abstract class MessagingStub implements BackgroundResource {
 
   public BidiStreamingCallable<ConnectRequest, StreamBlurbsResponse> connectCallable() {
     throw new UnsupportedOperationException("Not implemented: connectCallable()");
+  }
+
+  public UnaryCallable<ListOperationsRequest, ListOperationsPagedResponse>
+      listOperationsPagedCallable() {
+    throw new UnsupportedOperationException("Not implemented: listOperationsPagedCallable()");
+  }
+
+  public UnaryCallable<ListOperationsRequest, ListOperationsResponse> listOperationsCallable() {
+    throw new UnsupportedOperationException("Not implemented: listOperationsCallable()");
+  }
+
+  public UnaryCallable<GetOperationRequest, Operation> getOperationCallable() {
+    throw new UnsupportedOperationException("Not implemented: getOperationCallable()");
+  }
+
+  public UnaryCallable<DeleteOperationRequest, Empty> deleteOperationCallable() {
+    throw new UnsupportedOperationException("Not implemented: deleteOperationCallable()");
+  }
+
+  public UnaryCallable<CancelOperationRequest, Empty> cancelOperationCallable() {
+    throw new UnsupportedOperationException("Not implemented: cancelOperationCallable()");
   }
 
   public UnaryCallable<ListLocationsRequest, ListLocationsPagedResponse>

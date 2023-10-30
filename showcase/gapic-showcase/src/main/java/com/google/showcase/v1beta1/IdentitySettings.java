@@ -17,6 +17,7 @@
 package com.google.showcase.v1beta1;
 
 import static com.google.showcase.v1beta1.IdentityClient.ListLocationsPagedResponse;
+import static com.google.showcase.v1beta1.IdentityClient.ListOperationsPagedResponse;
 import static com.google.showcase.v1beta1.IdentityClient.ListUsersPagedResponse;
 
 import com.google.api.core.ApiFunction;
@@ -41,6 +42,12 @@ import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
 import com.google.iam.v1.TestIamPermissionsRequest;
 import com.google.iam.v1.TestIamPermissionsResponse;
+import com.google.longrunning.CancelOperationRequest;
+import com.google.longrunning.DeleteOperationRequest;
+import com.google.longrunning.GetOperationRequest;
+import com.google.longrunning.ListOperationsRequest;
+import com.google.longrunning.ListOperationsResponse;
+import com.google.longrunning.Operation;
 import com.google.protobuf.Empty;
 import com.google.showcase.v1beta1.stub.IdentityStubSettings;
 import java.io.IOException;
@@ -111,6 +118,28 @@ public class IdentitySettings extends ClientSettings<IdentitySettings> {
   public PagedCallSettings<ListUsersRequest, ListUsersResponse, ListUsersPagedResponse>
       listUsersSettings() {
     return ((IdentityStubSettings) getStubSettings()).listUsersSettings();
+  }
+
+  /** Returns the object with the settings used for calls to listOperations. */
+  public PagedCallSettings<
+          ListOperationsRequest, ListOperationsResponse, ListOperationsPagedResponse>
+      listOperationsSettings() {
+    return ((IdentityStubSettings) getStubSettings()).listOperationsSettings();
+  }
+
+  /** Returns the object with the settings used for calls to get. */
+  public UnaryCallSettings<GetOperationRequest, Operation> getOperationSettings() {
+    return ((IdentityStubSettings) getStubSettings()).getOperationSettings();
+  }
+
+  /** Returns the object with the settings used for calls to delete. */
+  public UnaryCallSettings<DeleteOperationRequest, Empty> deleteOperationSettings() {
+    return ((IdentityStubSettings) getStubSettings()).deleteOperationSettings();
+  }
+
+  /** Returns the object with the settings used for calls to cancel. */
+  public UnaryCallSettings<CancelOperationRequest, Empty> cancelOperationSettings() {
+    return ((IdentityStubSettings) getStubSettings()).cancelOperationSettings();
   }
 
   /** Returns the object with the settings used for calls to listLocations. */
@@ -278,6 +307,28 @@ public class IdentitySettings extends ClientSettings<IdentitySettings> {
     public PagedCallSettings.Builder<ListUsersRequest, ListUsersResponse, ListUsersPagedResponse>
         listUsersSettings() {
       return getStubSettingsBuilder().listUsersSettings();
+    }
+
+    /** Returns the builder for the settings used for calls to listOperations. */
+    public PagedCallSettings.Builder<
+            ListOperationsRequest, ListOperationsResponse, ListOperationsPagedResponse>
+        listOperationsSettings() {
+      return getStubSettingsBuilder().listOperationsSettings();
+    }
+
+    /** Returns the builder for the settings used for calls to get. */
+    public UnaryCallSettings.Builder<GetOperationRequest, Operation> getOperationSettings() {
+      return getStubSettingsBuilder().getOperationSettings();
+    }
+
+    /** Returns the builder for the settings used for calls to delete. */
+    public UnaryCallSettings.Builder<DeleteOperationRequest, Empty> deleteOperationSettings() {
+      return getStubSettingsBuilder().deleteOperationSettings();
+    }
+
+    /** Returns the builder for the settings used for calls to cancel. */
+    public UnaryCallSettings.Builder<CancelOperationRequest, Empty> cancelOperationSettings() {
+      return getStubSettingsBuilder().cancelOperationSettings();
     }
 
     /** Returns the builder for the settings used for calls to listLocations. */
