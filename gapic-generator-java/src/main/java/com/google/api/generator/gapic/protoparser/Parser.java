@@ -98,13 +98,15 @@ public class Parser {
   private static final Map<String, FileDescriptor> MIXIN_ALLOWLIST =
       ImmutableMap.of(
           "google.iam.v1.IAMPolicy", IamPolicyProto.getDescriptor(),
-          "google.longrunning.Operations", LocationsProto.getDescriptor(),
+          "google.longrunning.Operations", OperationsProto.getDescriptor(),
           "google.cloud.location.Locations", LocationsProto.getDescriptor());
   // These must be kept in sync with the above protos' java_package options.
   private static final Set<String> MIXIN_JAVA_PACKAGE_ALLOWLIST =
       ImmutableSet.of("com.google.iam.v1", "com.google.longrunning", "com.google.cloud.location");
 
   private static final Set<FileDescriptor> extraMixins = new HashSet<>();
+
+  private static List<String> filesToGenerate;
 
   // Allow other parsers to access this.
   protected static final SourceCodeInfoParser SOURCE_CODE_INFO_PARSER = new SourceCodeInfoParser();
@@ -238,9 +240,9 @@ public class Parser {
       Optional<GapicServiceConfig> serviceConfigOpt,
       List<Service> outputMixinServices,
       Transport transport) {
-    Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
+    Map<String, FileDescriptor> fileDescriptors = getFileDescriptorsFrom(request);
     List<Service> services = new ArrayList<>();
-    for (String fileToGenerate : mergeExtraMixinsWith(request.getFileToGenerateList())) {
+    for (String fileToGenerate : getFilesToGenerateFrom(request)) {
       FileDescriptor fileDescriptor =
           Preconditions.checkNotNull(
               fileDescriptors.get(fileToGenerate),
@@ -510,7 +512,7 @@ public class Parser {
 
   public static Map<String, Message> parseMessages(
       CodeGeneratorRequest request, Set<ResourceReference> outputResourceReferencesSeen) {
-    Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
+    Map<String, FileDescriptor> fileDescriptors = getFileDescriptorsFrom(request);
     Map<String, Message> messages = new HashMap<>();
     // Look for message types amongst all the protos, not just the ones to generate. This will
     // ensure we track commonly-used protos like Empty.
@@ -661,9 +663,9 @@ public class Parser {
 
   public static Map<String, ResourceName> parseResourceNames(CodeGeneratorRequest request) {
     String javaPackage = parseServiceJavaPackage(request);
-    Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
+    Map<String, FileDescriptor> fileDescriptors = getFileDescriptorsFrom(request);
     Map<String, ResourceName> resourceNames = new HashMap<>();
-    for (String fileToGenerate : mergeExtraMixinsWith(request.getFileToGenerateList())) {
+    for (String fileToGenerate : getFilesToGenerateFrom(request)) {
       FileDescriptor fileDescriptor =
           Preconditions.checkNotNull(
               fileDescriptors.get(fileToGenerate),
@@ -1043,7 +1045,7 @@ public class Parser {
         .build();
   }
 
-  private static Map<String, FileDescriptor> getFilesToGenerate(CodeGeneratorRequest request) {
+  private static Map<String, FileDescriptor> getFileDescriptorsFrom(CodeGeneratorRequest request) {
     // Build the fileDescriptors map so that we can create the FDs for the filesToGenerate.
     Map<String, FileDescriptor> fileDescriptors = Maps.newHashMap();
     for (FileDescriptorProto fileDescriptorProto : request.getProtoFileList()) {
@@ -1103,16 +1105,27 @@ public class Parser {
             });
   }
 
-  private static List<String> mergeExtraMixinsWith(List<String> filesToGenerate) {
-    List<String> res = new ArrayList<>(filesToGenerate);
-    res.addAll(extraMixins.stream().map(FileDescriptor::getFullName).collect(Collectors.toList()));
-    return res.stream().sorted().distinct().collect(Collectors.toList());
+  // get files to generate list from request, merging Mixins if they defined in
+  // service yaml.
+  private static List<String> getFilesToGenerateFrom(CodeGeneratorRequest request) {
+    if (filesToGenerate != null) {
+      return filesToGenerate;
+    }
+
+    filesToGenerate = new ArrayList<>(request.getFileToGenerateList());
+    filesToGenerate.addAll(
+        extraMixins.stream()
+            .map(FileDescriptor::getFullName)
+            .sorted()
+            .distinct()
+            .collect(Collectors.toList()));
+    return filesToGenerate;
   }
 
   private static String parseServiceJavaPackage(CodeGeneratorRequest request) {
     Map<String, Integer> javaPackageCount = new HashMap<>();
-    Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
-    for (String fileToGenerate : mergeExtraMixinsWith(request.getFileToGenerateList())) {
+    Map<String, FileDescriptor> fileDescriptors = getFileDescriptorsFrom(request);
+    for (String fileToGenerate : getFilesToGenerateFrom(request)) {
       FileDescriptor fileDescriptor =
           Preconditions.checkNotNull(
               fileDescriptors.get(fileToGenerate),
