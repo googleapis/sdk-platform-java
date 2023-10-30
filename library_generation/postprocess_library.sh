@@ -58,7 +58,7 @@ pre_processed_libs_folder="${output_folder}/pre-processed"
 # references a wildcard pattern matching a folder
 # ending with `-java` at the leaf of proto_path. We can simply hardcode
 mkdir -p "${pre_processed_libs_folder}/${proto_path}/generated-java"
-find "${destination_path}" -mindepth 1 -maxdepth 1 -type d -not -name 'pre-processed' \
+find "${output_folder}/${destination_path}" -mindepth 1 -maxdepth 1 -type d -not -name 'pre-processed' \
   -exec cp -pr {} "${pre_processed_libs_folder}/${proto_path}/$(basename "${destination_path}")" \;
 pushd "${pre_processed_libs_folder}"
 # create an empty repository so owl-bot-copy can process this as a repo
