@@ -305,6 +305,43 @@ get_version_from_valid_WORKSPACE_test() {
   assertEquals '2.25.1-SNAPSHOT' "${obtained_ggj_version}"
 }
 
+get_repo_metadata_json_valid_repo_succeeds() {
+  local output_folder="${script_dir}/resources"
+  local repository_path="google-cloud-java/java-asset"
+  local repo_metadata_json=$(get_repo_metadata_json "${repository_path}" "${output_folder}")
+  assertEquals "${output_folder}/${repository_path}/.repo-metadata.json" \
+    "${repo_metadata_json}"
+}
+
+get_repo_metadata_json_invalid_repo_fails() {
+  local output_folder="${script_dir}/resources"
+  local repository_path="google-cloud-java/java-nonexistent"
+  $(get_repo_metadata_json "${repository_path}" "${output_folder}") || res=$?
+  assertEquals 1 ${res}
+}
+
+get_repo_metadata_json_invalid_repo_fails() {
+  local output_folder="${script_dir}/resources"
+  local repository_path="google-cloud-java/java-nonexistent"
+  $(get_repo_metadata_json "${repository_path}" "${output_folder}") || res=$?
+  assertEquals 1 ${res}
+}
+
+get_owlbot_sha_valid_repo_succeeds() {
+  local output_folder="${script_dir}/resources"
+  local repository_root="google-cloud-java"
+  local owlbot_sha=$(get_owlbot_sha "${output_folder}" "${repository_root}")
+  assertEquals 'fb7584f6adb3847ac480ed49a4bfe1463965026b2919a1be270e3174f3ce1191' \
+    "${owlbot_sha}"
+}
+
+get_owlbot_sha_invalid_repo_fails() {
+  local output_folder="${script_dir}/resources"
+  local repository_root="nonexistent-repo"
+  $(get_owlbot_sha "${output_folder}" "${repository_root}") || res=$?
+  assertEquals 1 ${res}
+}
+
 # Execute tests.
 # One line per test.
 test_list=(
@@ -344,6 +381,10 @@ test_list=(
   get_include_samples_from_BUILD_false_test
   get_include_samples_from_BUILD_empty_test
   get_version_from_valid_WORKSPACE_test
+  get_repo_metadata_json_valid_repo_succeeds
+  get_repo_metadata_json_invalid_repo_fails
+  get_owlbot_sha_valid_repo_succeeds
+  get_owlbot_sha_invalid_repo_fails
 )
 
 pushd "${script_dir}"
