@@ -64,10 +64,6 @@ case $key in
     enable_postprocessing="$2"
     shift
     ;;
-  --repository_path)
-    repository_path="$2"
-    shift
-    ;;
   --os_architecture)
     os_architecture="$2"
     shift
@@ -317,8 +313,7 @@ mkdir -p "${workspace}"
 
 bash -x "${script_dir}/postprocess_library.sh" "${workspace}" \
   "${script_dir}" \
-  "${output_folder}/${destination_path}" \
-  "${repository_path}" \
+  "${destination_path}" \
   "${proto_path}" \
   "${versions_file}" \
   "${output_folder}"

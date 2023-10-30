@@ -134,7 +134,7 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
     fi
     "${library_generation_dir}"/generate_library.sh \
       -p "${proto_path}" \
-      -d "${destination_path}" \
+      -d "${repository_path}" \
       --gapic_generator_version "${gapic_generator_version}" \
       --protobuf_version "${protobuf_version}" \
       --proto_only "${proto_only}" \
@@ -145,7 +145,6 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
       --service_config "${service_config}" \
       --service_yaml "${service_yaml}" \
       --include_samples "${include_samples}" \
-      --repository_path "${repository_path}" \
       --enable_postprocessing "true" \
       --versions_file "${output_folder}/google-cloud-java/versions.txt"
   else

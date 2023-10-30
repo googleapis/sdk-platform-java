@@ -10,9 +10,6 @@
 # processed
 # 2 - scripts_root: location of the generation scripts
 # 3 - destination_path: used to transfer the raw grpc, proto and gapic libraries
-# 4 - repository_path: path from output_folder to the location of the source of
-# truth/pre-existing poms. This can either be a folder in google-cloud-java or
-# the root of a HW library
 # 5 - proto_path: googleapis path of the library. This is used to prepare the
 # folder structure to run `owlbot-cli copy-code`
 # 6 - versions_file: path to file containing versions to be applied to the poms
@@ -21,15 +18,14 @@
 workspace=$1
 scripts_root=$2
 destination_path=$3
-repository_path=$4
-proto_path=$5
-versions_file=$6
-output_folder=$7
+proto_path=$4
+versions_file=$5
+output_folder=$6
 
 source "${scripts_root}"/utilities.sh
 
-repository_root=$(echo "${repository_path}" | cut -d/ -f1)
-repo_metadata_json_path=$(get_repo_metadata_json "${repository_path}" "${output_folder}")
+repository_root=$(echo "${destination_path}" | cut -d/ -f1)
+repo_metadata_json_path=$(get_repo_metadata_json "${destination_path}" "${output_folder}")
 owlbot_sha=$(get_owlbot_sha "${output_folder}" "${repository_root}")
 
 # read or infer owlbot sha
@@ -44,7 +40,7 @@ owlbot_postprocessor_image="gcr.io/cloud-devrel-public-resources/owlbot-java@sha
 
 
 # copy existing pom, owlbot and version files if the source of truth repo is present
-if [[ -d "${output_folder}/${repository_path}" ]]; then
+if [[ -d "${output_folder}/${destination_path}" ]]; then
   rsync -avm \
     --include='*/' \
     --include='*.xml' \
@@ -52,13 +48,16 @@ if [[ -d "${output_folder}/${repository_path}" ]]; then
     --include='owlbot.py' \
     --include='.OwlBot.yaml' \
     --exclude='*' \
-    "${output_folder}/${repository_path}/" \
+    "${output_folder}/${destination_path}/" \
     "${workspace}"
 fi
 
 echo 'Running owl-bot-copy'
-pre_processed_libs_folder="${destination_path}/pre-processed"
-mkdir -p "${pre_processed_libs_folder}/${proto_path}/$(basename "${destination_path}")"
+pre_processed_libs_folder="${output_folder}/pre-processed"
+# By default (thanks to generation templates), .OwlBot.yaml `deep-copy` section
+# references a wildcard pattern matching a folder
+# ending with `-java` at the leaf of proto_path. We can simply hardcode
+mkdir -p "${pre_processed_libs_folder}/${proto_path}/generated-java"
 find "${destination_path}" -mindepth 1 -maxdepth 1 -type d -not -name 'pre-processed' \
   -exec cp -pr {} "${pre_processed_libs_folder}/${proto_path}/$(basename "${destination_path}")" \;
 pushd "${pre_processed_libs_folder}"
