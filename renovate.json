@@ -49,6 +49,14 @@
       ],
       "depNameTemplate": "io.grpc:grpc-core",
       "datasourceTemplate": "maven"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": ["^.kokoro/presubmit/graalvm-native.*.cfg$"],
+      "matchStrings": ["value: \"gcr.io/cloud-devrel-kokoro-resources/graalvm:(?<currentValue>.*?)\"",
+        "value: \"gcr.io/cloud-devrel-kokoro-resources/graalvm17:(?<currentValue>.*?)\""],
+      "depNameTemplate": "ghcr.io/graalvm/graalvm-ce",
+      "datasourceTemplate": "docker"
     }
   ],
   "packageRules": [
