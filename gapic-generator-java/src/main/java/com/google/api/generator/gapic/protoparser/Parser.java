@@ -277,12 +277,14 @@ public class Parser {
     // Service names that are stated in the YAML file (as mixins). Used to filter
     // blockedCodegenMixinApis.
     Set<String> mixedInApis =
-        !serviceYamlProtoOpt.isPresent()
-            ? Collections.emptySet()
-            : serviceYamlProtoOpt.get().getApisList().stream()
-                .filter(a -> MIXIN_ALLOWLIST.containsKey(a.getName()))
-                .map(a -> a.getName())
-                .collect(Collectors.toSet());
+        serviceYamlProtoOpt
+            .map(
+                value ->
+                    value.getApisList().stream()
+                        .map(Api::getName)
+                        .filter(MIXIN_ALLOWLIST::containsKey)
+                        .collect(Collectors.toSet()))
+            .orElse(Collections.emptySet());
     // Holds the methods to be mixed in.
     // Key: proto_package.ServiceName.RpcName.
     // Value: HTTP rules, which clobber those in the proto.
