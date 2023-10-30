@@ -8,22 +8,25 @@
 # Arguments
 # 1 - workspace: the location of the grpc,proto and gapic libraries to be
 # processed
-# owlbot
-# 4 - scripts_root: location of the generation scripts
-# 5 - destination_path: used to transfer the raw grpc, proto and gapic libraries
-# 6 - repository_path: path from output_folder to the location of the source of
+# 2 - scripts_root: location of the generation scripts
+# 3 - destination_path: used to transfer the raw grpc, proto and gapic libraries
+# 4 - repository_path: path from output_folder to the location of the source of
 # truth/pre-existing poms. This can either be a folder in google-cloud-java or
 # the root of a HW library
-# 7 - proto_path: googleapis path of the library. This is used to prepare the
+# 5 - proto_path: googleapis path of the library. This is used to prepare the
 # folder structure to run `owlbot-cli copy-code`
+# 6 - versions_file: path to file containing versions to be applied to the poms
+# 7 - output_folder: main workspace of the generation process
+
 workspace=$1
 scripts_root=$2
 destination_path=$3
 repository_path=$4
 proto_path=$5
 versions_file=$6
+output_folder=$7
 
-source "${scripts_root}/utilities.sh"
+source "${scripts_root}"/utilities.sh
 
 repository_root=$(echo "${repository_path}" | cut -d/ -f1)
 repo_metadata_json_path=$(get_repo_metadata_json "${repository_path}" "${output_folder}")
