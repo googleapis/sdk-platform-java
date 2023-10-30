@@ -299,7 +299,6 @@ popd # destination path
 ##################### Section 5 #####################
 # post-processing
 #####################################################
-source "${script_dir}/post_processing/postprocessing_utilities.sh"
 if [ "${enable_postprocessing}" != "true" ];
 then
   echo "post processing is disabled"
@@ -316,7 +315,7 @@ fi
 
 mkdir -p "${workspace}"
 
-run_owlbot_postprocessor "${workspace}" \
+"${script_dir}/postprocess_library.sh" "${workspace}" \
   "${script_dir}" \
   "${output_folder}/${destination_path}" \
   "${repository_path}" \
