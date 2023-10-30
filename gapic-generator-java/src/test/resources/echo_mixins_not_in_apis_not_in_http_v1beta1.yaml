@@ -1,0 +1,40 @@
+# Copyright 2020 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+type: google.api.Service
+config_version: 3
+name: showcase.googleapis.com
+title: Client Libraries Showcase API
+
+apis:
+  - name: google.showcase.v1beta1.Compliance
+  - name: google.showcase.v1beta1.Echo
+  - name: google.showcase.v1beta1.Identity
+  - name: google.showcase.v1beta1.Messaging
+  - name: google.showcase.v1beta1.SequenceService
+  - name: google.showcase.v1beta1.Testing
+
+documentation:
+  summary: |-
+    Showcase represents both a model API and an integration testing surface for
+    client library generator consumption.
+
+backend:
+  rules:
+    - selector: 'google.cloud.location.Locations.*'
+      deadline: 60.0
+    - selector: 'google.iam.v1.IAMPolicy.*'
+      deadline: 60.0
+    - selector: 'google.longrunning.Operations.*'
+      deadline: 60.0

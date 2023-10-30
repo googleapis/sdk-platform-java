@@ -465,7 +465,7 @@ public class ParserTest {
   }
 
   @Test
-  public void parseWithMixinsInServiceYamlWithoutProtos() {
+  public void generateMixinMethodsWhenMixinsInApisAndHttpWithoutProtos() {
     CodeGeneratorRequest request = echoBuilder("echo_v1beta1.yaml").build();
 
     GapicContext context = Parser.parse(request);
@@ -474,17 +474,21 @@ public class ParserTest {
             context.services().get(0).methods().stream()
                 .map(Method::name)
                 .collect(Collectors.toList()))
-        .containsAnyIn(
+        .containsAtLeastElementsIn(
             ImmutableList.of(
                 "ListLocations",
                 "GetLocation",
                 "SetIamPolicy",
                 "GetIamPolicy",
-                "TestIamPermissions"));
+                "TestIamPermissions",
+                "ListOperations",
+                "GetOperation",
+                "DeleteOperation",
+                "CancelOperation"));
   }
 
   @Test
-  public void parseWithMixinsInServiceYamlWithProtos() {
+  public void generateMixinMethodsWhenMixinsInApisAndHttpWithProtos() {
     CodeGeneratorRequest request =
         echoBuilder("echo_v1beta1.yaml")
             .addFileToGenerate("google/iam/v1/iam_policy.proto")
@@ -497,19 +501,47 @@ public class ParserTest {
             context.services().get(0).methods().stream()
                 .map(Method::name)
                 .collect(Collectors.toList()))
-        .containsAnyIn(
+        .containsAtLeastElementsIn(
             ImmutableList.of(
                 "ListLocations",
                 "GetLocation",
                 "SetIamPolicy",
                 "GetIamPolicy",
-                "TestIamPermissions"));
+                "TestIamPermissions",
+                "ListOperations",
+                "GetOperation",
+                "DeleteOperation",
+                "CancelOperation"));
   }
 
   @Test
-  public void parseWithoutMixinsInServiceYamlWithProtos() {
+  public void dontGenerateMixinMethodsWhenMixinsInApisButNotInHttpWithoutProtos() {
     CodeGeneratorRequest request =
-        echoBuilder("echo_without_mixins_v1beta1.yaml")
+        echoBuilder("echo_mixins_in_apis_not_in_http_v1beta1.yaml").build();
+
+    GapicContext context = Parser.parse(request);
+    assertEquals(1, context.services().size());
+    assertThat(
+            context.services().get(0).methods().stream()
+                .map(Method::name)
+                .collect(Collectors.toList()))
+        .containsNoneIn(
+            ImmutableList.of(
+                "ListLocations",
+                "GetLocation",
+                "SetIamPolicy",
+                "GetIamPolicy",
+                "TestIamPermissions",
+                "ListOperations",
+                "GetOperation",
+                "DeleteOperation",
+                "CancelOperation"));
+  }
+
+  @Test
+  public void dontGenerateMixinMethodsWhenMixinsInApisButNotInHttpWithProtos() {
+    CodeGeneratorRequest request =
+        echoBuilder("echo_mixins_in_apis_not_in_http_v1beta1.yaml")
             .addFileToGenerate("google/iam/v1/iam_policy.proto")
             .addFileToGenerate("google/cloud/location/locations.proto")
             .build();
@@ -526,12 +558,17 @@ public class ParserTest {
                 "GetLocation",
                 "SetIamPolicy",
                 "GetIamPolicy",
-                "TestIamPermissions"));
+                "TestIamPermissions",
+                "ListOperations",
+                "GetOperation",
+                "DeleteOperation",
+                "CancelOperation"));
   }
 
   @Test
-  public void parseWithoutMixinsInServiceYamlWithoutProtos() {
-    CodeGeneratorRequest request = echoBuilder("echo_without_mixins_v1beta1.yaml").build();
+  public void dontGenerateMixinMethodsWhenMixinsNotInApisButInHttpWithoutProtos() {
+    CodeGeneratorRequest request =
+        echoBuilder("echo_mixins_not_in_apis_in_http_v1beta1.yaml").build();
 
     GapicContext context = Parser.parse(request);
     assertEquals(1, context.services().size());
@@ -545,7 +582,89 @@ public class ParserTest {
                 "GetLocation",
                 "SetIamPolicy",
                 "GetIamPolicy",
-                "TestIamPermissions"));
+                "TestIamPermissions",
+                "ListOperations",
+                "GetOperation",
+                "DeleteOperation",
+                "CancelOperation"));
+  }
+
+  @Test
+  public void dontGenerateMixinMethodsWhenMixinsNotInApisButInHttpWithProtos() {
+    CodeGeneratorRequest request =
+        echoBuilder("echo_mixins_not_in_apis_in_http_v1beta1.yaml")
+            .addFileToGenerate("google/iam/v1/iam_policy.proto")
+            .addFileToGenerate("google/cloud/location/locations.proto")
+            .build();
+
+    GapicContext context = Parser.parse(request);
+    assertEquals(1, context.services().size());
+    assertThat(
+            context.services().get(0).methods().stream()
+                .map(Method::name)
+                .collect(Collectors.toList()))
+        .containsNoneIn(
+            ImmutableList.of(
+                "ListLocations",
+                "GetLocation",
+                "SetIamPolicy",
+                "GetIamPolicy",
+                "TestIamPermissions",
+                "ListOperations",
+                "GetOperation",
+                "DeleteOperation",
+                "CancelOperation"));
+  }
+
+  @Test
+  public void dontGenerateMixinMethodsWhenMixinsNotInApisNotInHttpWithoutProtos() {
+    CodeGeneratorRequest request =
+        echoBuilder("echo_with_mixins_not_in_apis_not_in_http_v1beta1.yaml").build();
+
+    GapicContext context = Parser.parse(request);
+    assertEquals(1, context.services().size());
+    assertThat(
+            context.services().get(0).methods().stream()
+                .map(Method::name)
+                .collect(Collectors.toList()))
+        .containsNoneIn(
+            ImmutableList.of(
+                "ListLocations",
+                "GetLocation",
+                "SetIamPolicy",
+                "GetIamPolicy",
+                "TestIamPermissions",
+                "ListOperations",
+                "GetOperation",
+                "DeleteOperation",
+                "CancelOperation"));
+  }
+
+  @Test
+  public void dontGenerateMixinMethodsWhenMixinsNotInApisNotInHttpWithProtos() {
+    CodeGeneratorRequest request =
+        echoBuilder("echo_with_mixins_not_in_apis_not_in_http_v1beta1.yaml")
+            .addFileToGenerate("google/iam/v1/iam_policy.proto")
+            .addFileToGenerate("google/cloud/location/locations.proto")
+            .build();
+
+    GapicContext context = Parser.parse(request);
+    assertEquals(1, context.services().size());
+    assertThat(
+            context.services().get(0).methods().stream()
+                .map(Method::name)
+                .collect(Collectors.toList()))
+        .containsNoneIn(
+            ImmutableList.of(
+                "ListLocations",
+                "GetLocation",
+                "SetIamPolicy",
+                "GetIamPolicy",
+                "TestIamPermissions",
+                "ListOperations",
+                "GetOperation",
+                "DeleteOperation",
+                "CancelOperation"));
   }
 
   @Test

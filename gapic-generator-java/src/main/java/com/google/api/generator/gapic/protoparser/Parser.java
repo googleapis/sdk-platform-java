@@ -330,7 +330,7 @@ public class Parser {
     }
     // Mix-in APIs if they're defined in the service.yaml file.
     Set<Service> outputMixinServiceSet = new HashSet<>();
-    if (servicesContainBlocklistedApi) {
+    if (servicesContainBlocklistedApi && !mixedInApis.isEmpty()) {
       for (int i = 0; i < services.size(); i++) {
         Service originalService = services.get(i);
         List<Method> updatedOriginalServiceMethods = new ArrayList<>(originalService.methods());
