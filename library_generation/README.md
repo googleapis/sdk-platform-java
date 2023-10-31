@@ -22,8 +22,9 @@ and put it into `output` since protos in `google/` are likely referenced by
 protos from which the library are generated.
 
 In order to generate a post-processed GAPIC library, you need to pull the
-original repository (e.g. google-cloud-java/java-asset) and pass it as
-`repository_path`. This repository will be the source of truth for pre-existing
+original repository (i.e. google-cloud-java) and pass the monorepo as
+`destination_path` (e.g. `google-cloud-java/java-asset`). 
+This repository will be the source of truth for pre-existing
 pom.xml files, owlbot.py and .OwlBot.yaml files. See the option belows for
 custom postprocessed generations (e.g. custom `versions.txt` file).
 
@@ -161,11 +162,6 @@ Whether to enable the post-processing steps (usage of owlbot) in the generation
 of this library
 Default is "true".
 
-### repository_path (optional)
-Relative path from `output_folder` to the location of the original,
-post-processed source code of the library being generated. It is necessary when
-`enable_postprocessing` is `"true"`
-
 ### versions_file (optional)
 It must point to a versions.txt file containing the versions the post-processed
 poms will have. It is required when `enable_postprocessing` is `"true"`
@@ -198,7 +194,6 @@ library_generation/generate_library.sh \
 --transport grpc+rest \
 --rest_numeric_enums true \
 --enable_postprocessing true \
---repository_path "java-logging" \
 --versions_file "path/to/versions.txt" \
 --include_samples true
 ```
