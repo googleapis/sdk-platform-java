@@ -104,10 +104,6 @@ public class Parser {
   private static final Set<String> MIXIN_JAVA_PACKAGE_ALLOWLIST =
       ImmutableSet.of("com.google.iam.v1", "com.google.longrunning", "com.google.cloud.location");
 
-  private static final Set<FileDescriptor> extraMixins = new HashSet<>();
-
-  private static List<String> filesToGenerate;
-
   // Allow other parsers to access this.
   protected static final SourceCodeInfoParser SOURCE_CODE_INFO_PARSER = new SourceCodeInfoParser();
 
@@ -146,7 +142,6 @@ public class Parser {
         PluginArgumentParser.parseServiceYamlConfigPath(request);
     Optional<com.google.api.Service> serviceYamlProtoOpt =
         serviceYamlConfigPathOpt.flatMap(ServiceYamlParser::parse);
-    parseExtraMixins(serviceYamlProtoOpt);
 
     // Collect the resource references seen in messages.
     Set<ResourceReference> outputResourceReferencesSeen = new HashSet<>();
@@ -1063,23 +1058,6 @@ public class Parser {
         (k, descriptor) -> fileDescriptors.put(descriptor.getFullName(), descriptor));
 
     return fileDescriptors;
-  }
-
-  private static void parseExtraMixins(Optional<com.google.api.Service> serviceYamlProtoOpt) {
-    if (!serviceYamlProtoOpt.isPresent()) {
-      return;
-    }
-
-    com.google.api.Service serviceYamlProto = serviceYamlProtoOpt.get();
-    serviceYamlProto
-        .getApisList()
-        .forEach(
-            api -> {
-              String apiName = api.getName();
-              if (MIXIN_ALLOWLIST.containsKey(apiName)) {
-                extraMixins.add(MIXIN_ALLOWLIST.get(apiName));
-              }
-            });
   }
 
   private static String parseServiceJavaPackage(CodeGeneratorRequest request) {
