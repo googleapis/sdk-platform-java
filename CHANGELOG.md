@@ -1,5 +1,26 @@
 # Changelog
 
+## [2.29.0](https://github.com/googleapis/sdk-platform-java/compare/v2.28.0...v2.29.0) (2023-10-31)
+
+
+### Features
+
+* `generate_library.sh` with postprocessing ([#1951](https://github.com/googleapis/sdk-platform-java/issues/1951)) ([39b9f0e](https://github.com/googleapis/sdk-platform-java/commit/39b9f0e956b7967d118873ee2e365fe6a02a029b))
+
+
+### Dependencies
+
+* update dependency cryptography to v41.0.5 ([#2206](https://github.com/googleapis/sdk-platform-java/issues/2206)) ([6d1f84a](https://github.com/googleapis/sdk-platform-java/commit/6d1f84a7923573346fbfbfa3107a3da4c0a19bfe))
+* update dependency google-auth to v2.23.4 ([#2217](https://github.com/googleapis/sdk-platform-java/issues/2217)) ([f1ee04d](https://github.com/googleapis/sdk-platform-java/commit/f1ee04d902000c5f8dd6a9c51dea57c9de01a25e))
+* update dependency google-cloud-storage to v2.13.0 ([#2216](https://github.com/googleapis/sdk-platform-java/issues/2216)) ([1af12a8](https://github.com/googleapis/sdk-platform-java/commit/1af12a8881c2036d4ddb844c061b5f6b17e991d9))
+* update google api dependencies ([#2187](https://github.com/googleapis/sdk-platform-java/issues/2187)) ([448b0d1](https://github.com/googleapis/sdk-platform-java/commit/448b0d1eea5c4bd5f89176315c21cf7d49bc1af5))
+* update googleapis/java-cloud-bom digest to 41d86db ([#2205](https://github.com/googleapis/sdk-platform-java/issues/2205)) ([9152f24](https://github.com/googleapis/sdk-platform-java/commit/9152f24e7aafa165326205b12d3709c61c842a3f))
+* update googleapis/java-cloud-bom digest to b8394a1 ([#2201](https://github.com/googleapis/sdk-platform-java/issues/2201)) ([f9957df](https://github.com/googleapis/sdk-platform-java/commit/f9957df04bc00d72e1a26dfd5c4c4805172d58d7))
+* update googleapis/java-cloud-bom digest to d06156f ([#2200](https://github.com/googleapis/sdk-platform-java/issues/2200)) ([097e37e](https://github.com/googleapis/sdk-platform-java/commit/097e37e560646ed47925e3620c5a490a78889ec7))
+* update googleapis/java-cloud-bom digest to e896c4e ([#2198](https://github.com/googleapis/sdk-platform-java/issues/2198)) ([15a796f](https://github.com/googleapis/sdk-platform-java/commit/15a796f718e7e27991d27a337223314addb0375a))
+* update graal-sdk to 22.3.3 in bazel dependencies file ([#2209](https://github.com/googleapis/sdk-platform-java/issues/2209)) ([25957d3](https://github.com/googleapis/sdk-platform-java/commit/25957d3b8cc0424d5b1ac293e771a15f0fc54721))
+* update grpc dependencies to v1.59.0 ([#2211](https://github.com/googleapis/sdk-platform-java/issues/2211)) ([7dafa8d](https://github.com/googleapis/sdk-platform-java/commit/7dafa8d452615e5ac5dd5fbb95e645a1ce4a9226))
+
 ## [2.28.0](https://github.com/googleapis/sdk-platform-java/compare/v2.27.0...v2.28.0) (2023-10-19)
 
 
