@@ -1963,17 +1963,7 @@ public class MessagingClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists operations that match the specified filter in the request. If the server doesn't support
-   * this method, it returns `UNIMPLEMENTED`.
-   *
-   * <p>NOTE: the `name` binding allows API services to override the binding to use different
-   * resource name schemes, such as `users/&#42;/operations`. To override the binding, API services
-   * can add a binding such as `"/v1/{name=users/&#42;}/operations"` to their service configuration.
-   * For backwards compatibility, the default name includes the operations collection id, however
-   * overriding users must ensure the name binding is the parent resource, without the operations
-   * collection id.
-   *
-   * <p>Sample code:
+   * Sample code:
    *
    * <pre>{@code
    * // This snippet has been automatically generated and should be regarded as a code template only.
@@ -1990,8 +1980,8 @@ public class MessagingClient implements BackgroundResource {
    * }
    * }</pre>
    *
-   * @param name The name of the operation's parent resource.
-   * @param filter The standard list filter.
+   * @param name
+   * @param filter
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListOperationsPagedResponse listOperations(String name, String filter) {
@@ -2002,17 +1992,7 @@ public class MessagingClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists operations that match the specified filter in the request. If the server doesn't support
-   * this method, it returns `UNIMPLEMENTED`.
-   *
-   * <p>NOTE: the `name` binding allows API services to override the binding to use different
-   * resource name schemes, such as `users/&#42;/operations`. To override the binding, API services
-   * can add a binding such as `"/v1/{name=users/&#42;}/operations"` to their service configuration.
-   * For backwards compatibility, the default name includes the operations collection id, however
-   * overriding users must ensure the name binding is the parent resource, without the operations
-   * collection id.
-   *
-   * <p>Sample code:
+   * Sample code:
    *
    * <pre>{@code
    * // This snippet has been automatically generated and should be regarded as a code template only.
@@ -2043,17 +2023,7 @@ public class MessagingClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists operations that match the specified filter in the request. If the server doesn't support
-   * this method, it returns `UNIMPLEMENTED`.
-   *
-   * <p>NOTE: the `name` binding allows API services to override the binding to use different
-   * resource name schemes, such as `users/&#42;/operations`. To override the binding, API services
-   * can add a binding such as `"/v1/{name=users/&#42;}/operations"` to their service configuration.
-   * For backwards compatibility, the default name includes the operations collection id, however
-   * overriding users must ensure the name binding is the parent resource, without the operations
-   * collection id.
-   *
-   * <p>Sample code:
+   * Sample code:
    *
    * <pre>{@code
    * // This snippet has been automatically generated and should be regarded as a code template only.
@@ -2085,17 +2055,7 @@ public class MessagingClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists operations that match the specified filter in the request. If the server doesn't support
-   * this method, it returns `UNIMPLEMENTED`.
-   *
-   * <p>NOTE: the `name` binding allows API services to override the binding to use different
-   * resource name schemes, such as `users/&#42;/operations`. To override the binding, API services
-   * can add a binding such as `"/v1/{name=users/&#42;}/operations"` to their service configuration.
-   * For backwards compatibility, the default name includes the operations collection id, however
-   * overriding users must ensure the name binding is the parent resource, without the operations
-   * collection id.
-   *
-   * <p>Sample code:
+   * Sample code:
    *
    * <pre>{@code
    * // This snippet has been automatically generated and should be regarded as a code template only.
@@ -2133,10 +2093,7 @@ public class MessagingClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Gets the latest state of a long-running operation. Clients can use this method to poll the
-   * operation result at intervals as recommended by the API service.
-   *
-   * <p>Sample code:
+   * Sample code:
    *
    * <pre>{@code
    * // This snippet has been automatically generated and should be regarded as a code template only.
@@ -2150,7 +2107,7 @@ public class MessagingClient implements BackgroundResource {
    * }
    * }</pre>
    *
-   * @param name The name of the operation resource.
+   * @param name
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Operation getOperation(String name) {
@@ -2160,10 +2117,7 @@ public class MessagingClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Gets the latest state of a long-running operation. Clients can use this method to poll the
-   * operation result at intervals as recommended by the API service.
-   *
-   * <p>Sample code:
+   * Sample code:
    *
    * <pre>{@code
    * // This snippet has been automatically generated and should be regarded as a code template only.
@@ -2186,10 +2140,7 @@ public class MessagingClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Gets the latest state of a long-running operation. Clients can use this method to poll the
-   * operation result at intervals as recommended by the API service.
-   *
-   * <p>Sample code:
+   * Sample code:
    *
    * <pre>{@code
    * // This snippet has been automatically generated and should be regarded as a code template only.
@@ -2211,11 +2162,7 @@ public class MessagingClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Deletes a long-running operation. This method indicates that the client is no longer interested
-   * in the operation result. It does not cancel the operation. If the server doesn't support this
-   * method, it returns `google.rpc.Code.UNIMPLEMENTED`.
-   *
-   * <p>Sample code:
+   * Sample code:
    *
    * <pre>{@code
    * // This snippet has been automatically generated and should be regarded as a code template only.
@@ -2229,7 +2176,7 @@ public class MessagingClient implements BackgroundResource {
    * }
    * }</pre>
    *
-   * @param name The name of the operation resource to be deleted.
+   * @param name
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteOperation(String name) {
@@ -2239,11 +2186,7 @@ public class MessagingClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Deletes a long-running operation. This method indicates that the client is no longer interested
-   * in the operation result. It does not cancel the operation. If the server doesn't support this
-   * method, it returns `google.rpc.Code.UNIMPLEMENTED`.
-   *
-   * <p>Sample code:
+   * Sample code:
    *
    * <pre>{@code
    * // This snippet has been automatically generated and should be regarded as a code template only.
@@ -2267,11 +2210,7 @@ public class MessagingClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Deletes a long-running operation. This method indicates that the client is no longer interested
-   * in the operation result. It does not cancel the operation. If the server doesn't support this
-   * method, it returns `google.rpc.Code.UNIMPLEMENTED`.
-   *
-   * <p>Sample code:
+   * Sample code:
    *
    * <pre>{@code
    * // This snippet has been automatically generated and should be regarded as a code template only.
@@ -2294,16 +2233,7 @@ public class MessagingClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Starts asynchronous cancellation on a long-running operation. The server makes a best effort to
-   * cancel the operation, but success is not guaranteed. If the server doesn't support this method,
-   * it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
-   * [Operations.GetOperation][google.longrunning.Operations.GetOperation] or other methods to check
-   * whether the cancellation succeeded or whether the operation completed despite cancellation. On
-   * successful cancellation, the operation is not deleted; instead, it becomes an operation with an
-   * [Operation.error][google.longrunning.Operation.error] value with a
-   * [google.rpc.Status.code][google.rpc.Status.code] of 1, corresponding to `Code.CANCELLED`.
-   *
-   * <p>Sample code:
+   * Sample code:
    *
    * <pre>{@code
    * // This snippet has been automatically generated and should be regarded as a code template only.
@@ -2317,7 +2247,7 @@ public class MessagingClient implements BackgroundResource {
    * }
    * }</pre>
    *
-   * @param name The name of the operation resource to be cancelled.
+   * @param name
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void cancelOperation(String name) {
@@ -2327,16 +2257,7 @@ public class MessagingClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Starts asynchronous cancellation on a long-running operation. The server makes a best effort to
-   * cancel the operation, but success is not guaranteed. If the server doesn't support this method,
-   * it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
-   * [Operations.GetOperation][google.longrunning.Operations.GetOperation] or other methods to check
-   * whether the cancellation succeeded or whether the operation completed despite cancellation. On
-   * successful cancellation, the operation is not deleted; instead, it becomes an operation with an
-   * [Operation.error][google.longrunning.Operation.error] value with a
-   * [google.rpc.Status.code][google.rpc.Status.code] of 1, corresponding to `Code.CANCELLED`.
-   *
-   * <p>Sample code:
+   * Sample code:
    *
    * <pre>{@code
    * // This snippet has been automatically generated and should be regarded as a code template only.
@@ -2360,16 +2281,7 @@ public class MessagingClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Starts asynchronous cancellation on a long-running operation. The server makes a best effort to
-   * cancel the operation, but success is not guaranteed. If the server doesn't support this method,
-   * it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use
-   * [Operations.GetOperation][google.longrunning.Operations.GetOperation] or other methods to check
-   * whether the cancellation succeeded or whether the operation completed despite cancellation. On
-   * successful cancellation, the operation is not deleted; instead, it becomes an operation with an
-   * [Operation.error][google.longrunning.Operation.error] value with a
-   * [google.rpc.Status.code][google.rpc.Status.code] of 1, corresponding to `Code.CANCELLED`.
-   *
-   * <p>Sample code:
+   * Sample code:
    *
    * <pre>{@code
    * // This snippet has been automatically generated and should be regarded as a code template only.
@@ -2392,9 +2304,7 @@ public class MessagingClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists information about the supported locations for this service.
-   *
-   * <p>Sample code:
+   * Sample code:
    *
    * <pre>{@code
    * // This snippet has been automatically generated and should be regarded as a code template only.
@@ -2425,9 +2335,7 @@ public class MessagingClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists information about the supported locations for this service.
-   *
-   * <p>Sample code:
+   * Sample code:
    *
    * <pre>{@code
    * // This snippet has been automatically generated and should be regarded as a code template only.
@@ -2458,9 +2366,7 @@ public class MessagingClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists information about the supported locations for this service.
-   *
-   * <p>Sample code:
+   * Sample code:
    *
    * <pre>{@code
    * // This snippet has been automatically generated and should be regarded as a code template only.
@@ -2497,9 +2403,7 @@ public class MessagingClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Gets information about a location.
-   *
-   * <p>Sample code:
+   * Sample code:
    *
    * <pre>{@code
    * // This snippet has been automatically generated and should be regarded as a code template only.
@@ -2522,9 +2426,7 @@ public class MessagingClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Gets information about a location.
-   *
-   * <p>Sample code:
+   * Sample code:
    *
    * <pre>{@code
    * // This snippet has been automatically generated and should be regarded as a code template only.
@@ -2546,11 +2448,7 @@ public class MessagingClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Sets the access control policy on the specified resource. Replaces any existing policy.
-   *
-   * <p>Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
-   *
-   * <p>Sample code:
+   * Sample code:
    *
    * <pre>{@code
    * // This snippet has been automatically generated and should be regarded as a code template only.
@@ -2578,11 +2476,7 @@ public class MessagingClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Sets the access control policy on the specified resource. Replaces any existing policy.
-   *
-   * <p>Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
-   *
-   * <p>Sample code:
+   * Sample code:
    *
    * <pre>{@code
    * // This snippet has been automatically generated and should be regarded as a code template only.
@@ -2609,10 +2503,7 @@ public class MessagingClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Gets the access control policy for a resource. Returns an empty policy if the resource exists
-   * and does not have a policy set.
-   *
-   * <p>Sample code:
+   * Sample code:
    *
    * <pre>{@code
    * // This snippet has been automatically generated and should be regarded as a code template only.
@@ -2639,10 +2530,7 @@ public class MessagingClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Gets the access control policy for a resource. Returns an empty policy if the resource exists
-   * and does not have a policy set.
-   *
-   * <p>Sample code:
+   * Sample code:
    *
    * <pre>{@code
    * // This snippet has been automatically generated and should be regarded as a code template only.
@@ -2668,14 +2556,7 @@ public class MessagingClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Returns permissions that a caller has on the specified resource. If the resource does not
-   * exist, this will return an empty set of permissions, not a `NOT_FOUND` error.
-   *
-   * <p>Note: This operation is designed to be used for building permission-aware UIs and
-   * command-line tools, not for authorization checking. This operation may "fail open" without
-   * warning.
-   *
-   * <p>Sample code:
+   * Sample code:
    *
    * <pre>{@code
    * // This snippet has been automatically generated and should be regarded as a code template only.
@@ -2702,14 +2583,7 @@ public class MessagingClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Returns permissions that a caller has on the specified resource. If the resource does not
-   * exist, this will return an empty set of permissions, not a `NOT_FOUND` error.
-   *
-   * <p>Note: This operation is designed to be used for building permission-aware UIs and
-   * command-line tools, not for authorization checking. This operation may "fail open" without
-   * warning.
-   *
-   * <p>Sample code:
+   * Sample code:
    *
    * <pre>{@code
    * // This snippet has been automatically generated and should be regarded as a code template only.
