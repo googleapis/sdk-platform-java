@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -xeo pipefail
+test_utilities_script_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 # Utility functions commonly used in test cases.
 
@@ -296,3 +297,42 @@ sparse_clone() {
   git checkout
   popd
 }
+
+# performs a deep structural comparison between the current pom in a git 
+# folder and the one at HEAD.
+# This function is OS-dependent, so it sources the main utilities script to
+# perform detection
+compare_poms() {
+  target_dir=$1
+  source "${test_utilities_script_dir}/../utilities.sh"
+  os_architecture=$(detect_os_architecture)
+  pushd "${target_dir}" &> /dev/null
+  find . -name 'pom.xml' -exec cp {} {}.new \;
+  find . -name 'pom.xml' -exec git checkout HEAD -- {} \;
+  # compare_poms.py exits with non-zero if diffs are found
+  set -e
+  result=0
+  if [ "${os_architecture}" == "linux-x86_64" ]; then
+    find . -name 'pom.xml' -print0 | xargs -i -0 python "${test_utilities_script_dir}/compare_poms.py" {} {}.new false || result=$?
+  else
+    find . -name 'pom.xml' -print0 | xargs -I{} -0 python "${test_utilities_script_dir}/compare_poms.py" {} {}.new false || result=$?
+  fi
+  popd &> /dev/null # target_dir
+  echo ${result}
+}
+
+# computes the `destination_path` variable by inspecting the contents of the
+# googleapis-gen at $proto_path. 
+compute_destination_path() {
+  local proto_path=$1
+  local output_folder=$2
+  pushd "${output_folder}" &> /dev/null
+  local destination_path=$(find "googleapis-gen/${proto_path}" -maxdepth 1 -name 'google-*-java' \
+    | rev \
+    | cut -d'/' -f1 \
+    | rev
+  )
+  popd &> /dev/null # output_folder
+  echo "${destination_path}"
+}
+
