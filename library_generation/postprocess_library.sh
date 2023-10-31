@@ -44,10 +44,8 @@ owlbot_postprocessor_image="gcr.io/cloud-devrel-public-resources/owlbot-java@sha
 # pre-processed folders are ommited
 if [[ -d "${output_folder}/${destination_path}" ]]; then
   rsync -avm \
-    --exclude="*-$(basename "${destination_path}")/" \
     --include='*/' \
     --include='*.xml' \
-    --include='package-info.java' \
     --include='owlbot.py' \
     --include='.OwlBot.yaml' \
     --exclude='*' \
