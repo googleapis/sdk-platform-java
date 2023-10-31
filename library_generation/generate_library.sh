@@ -318,5 +318,14 @@ bash -x "${script_dir}/postprocess_library.sh" "${workspace}" \
   "${versions_file}" \
   "${output_folder}"
 
+# for post-procesed libraries, remove pre-processed folders
+pushd "${output_folder}/${destination_path}"
+rm -rdf "proto-${folder_name}"
+rm -rdf "grpc-${folder_name}"
+rm -rdf "gapic-${folder_name}"
+if [ "${include_samples}" == "false" ]; then
+  rm -rdf "samples"
+fi
+popd # output_folder
 # move contents of the post-processed library into destination_path
 cp -r ${workspace}/* "${output_folder}/${destination_path}"

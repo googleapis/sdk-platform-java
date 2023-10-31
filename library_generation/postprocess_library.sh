@@ -41,8 +41,10 @@ owlbot_postprocessor_image="gcr.io/cloud-devrel-public-resources/owlbot-java@sha
 
 
 # copy existing pom, owlbot and version files if the source of truth repo is present
+# pre-processed folders are ommited
 if [[ -d "${output_folder}/${destination_path}" ]]; then
   rsync -avm \
+    --exclude="*-$(basename "${destination_path}")/" \
     --include='*/' \
     --include='*.xml' \
     --include='package-info.java' \
