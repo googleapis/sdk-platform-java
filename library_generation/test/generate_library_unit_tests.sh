@@ -342,6 +342,26 @@ get_owlbot_sha_invalid_repo_fails() {
   assertEquals 1 ${res}
 }
 
+copy_directory_if_exists_valid_folder_succeeds() {
+  local source_folder="${script_dir}/resources"
+  local destination="${script_dir}/test_destination_folder"
+  mkdir -p "${destination}"
+  copy_directory_if_exists "${source_folder}" "${destination}/copied-folder"
+  n_matching_folders=$(ls "${destination}" | grep -e 'copied-folder' | wc -l)
+  rm -rdf "${destination}"
+  assertEquals 1 ${n_matching_folders}
+}
+
+copy_directory_if_exists_invalid_folder_does_not_copy() {
+  local source_folder="${script_dir}/non-existent"
+  local destination="${script_dir}/test_destination_folder"
+  mkdir -p "${destination}"
+  copy_directory_if_exists "${source_folder}" "${destination}/copied-folder"
+  n_matching_folders=$(ls "${destination}" | grep -e 'copied-folder' | wc -l) || res=$?
+  rm -rdf "${destination}"
+  assertEquals 0 ${n_matching_folders}
+}
+
 # Execute tests.
 # One line per test.
 test_list=(
@@ -385,6 +405,8 @@ test_list=(
   get_repo_metadata_json_invalid_repo_fails
   get_owlbot_sha_valid_repo_succeeds
   get_owlbot_sha_invalid_repo_fails
+  copy_directory_if_exists_valid_folder_succeeds
+  copy_directory_if_exists_invalid_folder_does_not_copy
 )
 
 pushd "${script_dir}"
