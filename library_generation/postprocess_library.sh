@@ -4,7 +4,8 @@
 # scripts
 
 
-# Runs the owlbot post-processor docker image.
+# Runs the owlbot post-processor docker image. The resulting post-processed
+# library gets stored in `${output_folder}/workspace`
 # Arguments
 # 1 - workspace: the location of the grpc,proto and gapic libraries to be
 # processed

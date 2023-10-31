@@ -317,3 +317,6 @@ bash -x "${script_dir}/postprocess_library.sh" "${workspace}" \
   "${proto_path}" \
   "${versions_file}" \
   "${output_folder}"
+
+# move contents of the post-processed library into destination_path
+cp -r ${workspace}/* "${output_folder}/${destination_path}"

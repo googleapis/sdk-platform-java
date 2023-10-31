@@ -174,7 +174,6 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   echo "Compare generation result..."
   if [ $enable_postprocessing == "true" ]; then
     echo "Checking out repository..."
-    cp -r ${output_folder}/workspace/* "${target_folder}"
     pushd "${target_folder}"
     SOURCE_DIFF_RESULT=0
     git diff \
