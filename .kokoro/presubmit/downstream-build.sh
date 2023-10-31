@@ -14,6 +14,7 @@
 # limitations under the License.
 
 set -o pipefail
+set -x
 
 if [ -z "${MODULES_UNDER_TEST}" ]; then
   echo "MODULES_UNDER_TEST must be set to run downstream-build.sh"
