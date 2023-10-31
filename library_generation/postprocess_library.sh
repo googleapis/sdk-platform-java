@@ -11,10 +11,10 @@
 # processed
 # 2 - scripts_root: location of the generation scripts
 # 3 - destination_path: used to transfer the raw grpc, proto and gapic libraries
-# 5 - proto_path: googleapis path of the library. This is used to prepare the
+# 4 - proto_path: googleapis path of the library. This is used to prepare the
 # folder structure to run `owlbot-cli copy-code`
-# 6 - versions_file: path to file containing versions to be applied to the poms
-# 7 - output_folder: main workspace of the generation process
+# 5 - versions_file: path to file containing versions to be applied to the poms
+# 6 - output_folder: main workspace of the generation process
 
 workspace=$1
 scripts_root=$2
