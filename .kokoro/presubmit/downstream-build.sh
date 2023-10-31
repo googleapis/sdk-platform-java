@@ -13,8 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -o pipefail
-set -x
+set -eo pipefail
 
 if [ -z "${MODULES_UNDER_TEST}" ]; then
   echo "MODULES_UNDER_TEST must be set to run downstream-build.sh"
@@ -43,12 +42,9 @@ mvn -B -ntp install --projects '!gapic-generator-java' \
 SHARED_DEPS_VERSION=$(parse_pom_version java-shared-dependencies)
 
 ### Round 2 : Run showcase integration tests in GraalVM
-echo "SHOWCASE STARTS HERE"
 pushd showcase/gapic-showcase
 SHOWCASE_VERSION=$(mvn help:evaluate -Dexpression=gapic-showcase.version -q -DforceStdout)
 popd
-echo "AFTER SHOWCASE_VERSION is grabbed"
-
 # Start showcase server
 mkdir -p /usr/src/showcase
 curl --location https://github.com/googleapis/gapic-showcase/releases/download/v"${SHOWCASE_VERSION}"/gapic-showcase-"${SHOWCASE_VERSION}"-linux-amd64.tar.gz --output /usr/src/showcase/showcase-"${SHOWCASE_VERSION}"-linux-amd64.tar.gz
