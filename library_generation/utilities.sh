@@ -270,6 +270,6 @@ copy_directory_if_exists() {
   local source_folder=$1
   local destination_folder=$2
   if [ -d "${source_folder}" ]; then
-    cp -rdf "${source_folder}" "${destination_folder}"
+    cp -r "${source_folder}" "${destination_folder}"
   fi
 }
