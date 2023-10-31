@@ -57,10 +57,17 @@ echo 'Running owl-bot-copy'
 pre_processed_libs_folder="${output_folder}/pre-processed"
 # By default (thanks to generation templates), .OwlBot.yaml `deep-copy` section
 # references a wildcard pattern matching a folder
-# ending with `-java` at the leaf of proto_path. We can simply hardcode
+# ending with `-java` at the leaf of proto_path. 
 mkdir -p "${pre_processed_libs_folder}/${proto_path}/generated-java"
-find "${output_folder}/${destination_path}" -mindepth 1 -maxdepth 1 -type d -not -name 'pre-processed' \
-  -exec cp -pr {} "${pre_processed_libs_folder}/${proto_path}/$(basename "${destination_path}")" \;
+folder_name=$(extract_folder_name "${destination_path}")
+copy_directory_if_exists "${output_folder}/${destination_path}/proto-${folder_name}" \
+  "${pre_processed_libs_folder}/${proto_path}/generated-java/proto-google-cloud-${folder_name}"
+copy_directory_if_exists "${output_folder}/${destination_path}/grpc-${folder_name}" \
+  "${pre_processed_libs_folder}/${proto_path}/generated-java/grpc-google-cloud-${folder_name}"
+copy_directory_if_exists "${output_folder}/${destination_path}/gapic-${folder_name}" \
+  "${pre_processed_libs_folder}/${proto_path}/generated-java/gapic-google-cloud-${folder_name}"
+copy_directory_if_exists "${output_folder}/${destination_path}/samples" \
+  "${pre_processed_libs_folder}/${proto_path}/generated-java/samples"
 pushd "${pre_processed_libs_folder}"
 # create an empty repository so owl-bot-copy can process this as a repo
 # (cannot process non-git-repositories)

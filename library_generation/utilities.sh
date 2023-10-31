@@ -264,3 +264,12 @@ get_owlbot_sha() {
   owlbot_sha=$(grep 'sha256' "${output_folder}/${repository_root}/.github/.OwlBot.lock.yaml" | cut -d: -f3)
   echo "${owlbot_sha}"
 }
+
+# copies $1 as a folder as $2 only if $1 exists
+copy_directory_if_exists() {
+  local source_folder=$1
+  local destination_folder=$2
+  if [ -d "${source_folder}" ]; then
+    cp -rdf "${source_folder}" "${destination_folder}"
+  fi
+}
