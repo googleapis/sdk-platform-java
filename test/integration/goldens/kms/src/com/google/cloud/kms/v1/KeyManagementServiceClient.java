@@ -3685,9 +3685,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists information about the supported locations for this service.
-   *
-   * <p>Sample code:
+   * Sample code:
    *
    * <pre>{@code
    * // This snippet has been automatically generated and should be regarded as a code template only.
@@ -3719,9 +3717,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists information about the supported locations for this service.
-   *
-   * <p>Sample code:
+   * Sample code:
    *
    * <pre>{@code
    * // This snippet has been automatically generated and should be regarded as a code template only.
@@ -3754,9 +3750,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Lists information about the supported locations for this service.
-   *
-   * <p>Sample code:
+   * Sample code:
    *
    * <pre>{@code
    * // This snippet has been automatically generated and should be regarded as a code template only.
@@ -3795,9 +3789,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Gets information about a location.
-   *
-   * <p>Sample code:
+   * Sample code:
    *
    * <pre>{@code
    * // This snippet has been automatically generated and should be regarded as a code template only.
@@ -3821,9 +3813,7 @@ public class KeyManagementServiceClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Gets information about a location.
-   *
-   * <p>Sample code:
+   * Sample code:
    *
    * <pre>{@code
    * // This snippet has been automatically generated and should be regarded as a code template only.

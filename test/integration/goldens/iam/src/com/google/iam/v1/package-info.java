@@ -19,29 +19,6 @@
  *
  * <p>======================= IAMPolicyClient =======================
  *
- * <p>Service Description: API Overview
- *
- * <p>Manages Identity and Access Management (IAM) policies.
- *
- * <p>Any implementation of an API that offers access control features implements the
- * google.iam.v1.IAMPolicy interface.
- *
- * <p>## Data model
- *
- * <p>Access control is applied when a principal (user or service account), takes some action on a
- * resource exposed by a service. Resources, identified by URI-like names, are the unit of access
- * control specification. Service implementations can choose the granularity of access control and
- * the supported permissions for their resources. For example one database service may allow access
- * control to be specified only at the Table level, whereas another might allow access control to
- * also be specified at the Column level.
- *
- * <p>## Policy Structure
- *
- * <p>See google.iam.v1.Policy
- *
- * <p>This is intentionally not a CRUD style API because access control policies are created and
- * deleted implicitly with the resources to which they are attached.
- *
  * <p>Sample for IAMPolicyClient:
  *
  * <pre>{@code
