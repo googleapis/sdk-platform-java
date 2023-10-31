@@ -242,7 +242,7 @@ public class Parser {
       Transport transport) {
     Map<String, FileDescriptor> fileDescriptors = getFileDescriptorsFrom(request);
     List<Service> services = new ArrayList<>();
-    for (String fileToGenerate : getFilesToGenerateFrom(request)) {
+    for (String fileToGenerate : request.getFileToGenerateList()) {
       FileDescriptor fileDescriptor =
           Preconditions.checkNotNull(
               fileDescriptors.get(fileToGenerate),
@@ -260,25 +260,8 @@ public class Parser {
               transport));
     }
 
-    // Prevent codegen for mixed-in services if there are other services present, since that is an
-    // indicator that we are not generating a GAPIC client for the mixed-in service on its own.
-    Function<Service, String> serviceFullNameFn =
-        s -> String.format("%s.%s", s.protoPakkage(), s.name());
-    Set<Service> blockedCodegenMixinApis = new HashSet<>();
-    Set<Service> definedServices = new HashSet<>();
-    for (Service s : services) {
-      if (MIXIN_ALLOWLIST.containsKey(serviceFullNameFn.apply(s))) {
-        blockedCodegenMixinApis.add(s);
-      } else {
-        definedServices.add(s);
-      }
-    }
-    // It's very unlikely the blocklisted APIs will contain the other, or any other service.
-    boolean servicesContainBlocklistedApi =
-        !blockedCodegenMixinApis.isEmpty() && !definedServices.isEmpty();
-    // Service names that are stated in the YAML file (as mixins). Used to filter
-    // blockedCodegenMixinApis.
-    Set<String> mixedInApis =
+    // Service names that are stated in the YAML file (as mixins).
+    Set<String> mixinApis =
         serviceYamlProtoOpt
             .map(
                 value ->
@@ -287,6 +270,21 @@ public class Parser {
                         .filter(MIXIN_ALLOWLIST::containsKey)
                         .collect(Collectors.toSet()))
             .orElse(Collections.emptySet());
+    List<Service> mixinServices =
+        mixinApis.stream()
+            .flatMap(
+                mixinApi ->
+                    parseService(
+                        MIXIN_ALLOWLIST.get(mixinApi),
+                        messageTypes,
+                        resourceNames,
+                        serviceYamlProtoOpt,
+                        serviceConfigOpt,
+                        outputArgResourceNames,
+                        transport)
+                        .stream())
+            .sorted((s1, s2) -> s2.name().compareTo(s1.name()))
+            .collect(Collectors.toList());
     // Holds the methods to be mixed in.
     // Key: proto_package.ServiceName.RpcName.
     // Value: HTTP rules, which clobber those in the proto.
@@ -314,32 +312,25 @@ public class Parser {
       }
     }
 
-    // Sort potential mixin services alphabetically.
-    List<Service> orderedBlockedCodegenMixinApis =
-        blockedCodegenMixinApis.stream()
-            .sorted((s1, s2) -> s2.name().compareTo(s1.name()))
-            .collect(Collectors.toList());
-
     Set<String> apiDefinedRpcs = new HashSet<>();
     for (Service service : services) {
-      if (orderedBlockedCodegenMixinApis.contains(service)) {
+      if (mixinServices.contains(service)) {
         continue;
       }
       apiDefinedRpcs.addAll(
-          service.methods().stream().map(m -> m.name()).collect(Collectors.toSet()));
+          service.methods().stream().map(Method::name).collect(Collectors.toSet()));
     }
-    // Mix-in APIs if they're defined in the service.yaml file.
+
     Set<Service> outputMixinServiceSet = new HashSet<>();
-    if (servicesContainBlocklistedApi && !mixedInApis.isEmpty()) {
+    Function<Service, String> serviceFullNameFn =
+        s -> String.format("%s.%s", s.protoPakkage(), s.name());
+    if (!mixinApis.isEmpty()) {
       for (int i = 0; i < services.size(); i++) {
         Service originalService = services.get(i);
         List<Method> updatedOriginalServiceMethods = new ArrayList<>(originalService.methods());
         // If mixin APIs are present, add the methods to all other services.
-        for (Service mixinService : orderedBlockedCodegenMixinApis) {
+        for (Service mixinService : mixinServices) {
           final String mixinServiceFullName = serviceFullNameFn.apply(mixinService);
-          if (!mixedInApis.contains(mixinServiceFullName)) {
-            continue;
-          }
           Function<Method, String> methodToFullProtoNameFn =
               m -> String.format("%s.%s", mixinServiceFullName, m.name());
           // Filter mixed-in methods based on those listed in the HTTP rules section of
@@ -390,12 +381,10 @@ public class Parser {
       }
     }
 
-    if (servicesContainBlocklistedApi) {
-      services =
-          services.stream()
-              .filter(s -> !MIXIN_ALLOWLIST.containsKey(serviceFullNameFn.apply(s)))
-              .collect(Collectors.toList());
-    }
+    services =
+        services.stream()
+            .filter(s -> !MIXIN_ALLOWLIST.containsKey(serviceFullNameFn.apply(s)))
+            .collect(Collectors.toList());
 
     // Use a list to ensure ordering for deterministic tests.
     outputMixinServices.addAll(
@@ -665,7 +654,7 @@ public class Parser {
     String javaPackage = parseServiceJavaPackage(request);
     Map<String, FileDescriptor> fileDescriptors = getFileDescriptorsFrom(request);
     Map<String, ResourceName> resourceNames = new HashMap<>();
-    for (String fileToGenerate : getFilesToGenerateFrom(request)) {
+    for (String fileToGenerate : request.getFileToGenerateList()) {
       FileDescriptor fileDescriptor =
           Preconditions.checkNotNull(
               fileDescriptors.get(fileToGenerate),
@@ -1093,23 +1082,10 @@ public class Parser {
             });
   }
 
-  // get files to generate list from request, merging Mixins if they defined in
-  // service yaml.
-  private static List<String> getFilesToGenerateFrom(CodeGeneratorRequest request) {
-    if (filesToGenerate != null) {
-      return filesToGenerate;
-    }
-
-    filesToGenerate = new ArrayList<>(request.getFileToGenerateList());
-    extraMixins.forEach(mixin -> filesToGenerate.add(mixin.getFullName()));
-    filesToGenerate = filesToGenerate.stream().sorted().distinct().collect(Collectors.toList());
-    return filesToGenerate;
-  }
-
   private static String parseServiceJavaPackage(CodeGeneratorRequest request) {
     Map<String, Integer> javaPackageCount = new HashMap<>();
     Map<String, FileDescriptor> fileDescriptors = getFileDescriptorsFrom(request);
-    for (String fileToGenerate : getFilesToGenerateFrom(request)) {
+    for (String fileToGenerate : request.getFileToGenerateList()) {
       FileDescriptor fileDescriptor =
           Preconditions.checkNotNull(
               fileDescriptors.get(fileToGenerate),
