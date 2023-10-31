@@ -376,7 +376,7 @@ public class Parser {
       }
     }
 
-    services =
+    List<Service> definedServices =
         services.stream()
             .filter(s -> !MIXIN_ALLOWLIST.containsKey(serviceFullNameFn.apply(s)))
             .collect(Collectors.toList());
@@ -386,7 +386,8 @@ public class Parser {
         outputMixinServiceSet.stream()
             .sorted((s1, s2) -> s2.name().compareTo(s1.name()))
             .collect(Collectors.toList()));
-    return services;
+    // likely standalone Mixin services if definedServices is empty.
+    return !definedServices.isEmpty() ? definedServices : services;
   }
 
   @VisibleForTesting
