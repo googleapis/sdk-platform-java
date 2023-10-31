@@ -1070,7 +1070,8 @@ public class Parser {
       fileDescriptors.put(fileDescriptor.getName(), fileDescriptor);
     }
     // always add Mixin protos.
-    MIXIN_ALLOWLIST.forEach((k, descriptor) -> fileDescriptors.put(descriptor.getFullName(), descriptor));
+    MIXIN_ALLOWLIST.forEach(
+        (k, descriptor) -> fileDescriptors.put(descriptor.getFullName(), descriptor));
 
     return fileDescriptors;
   }
@@ -1101,10 +1102,7 @@ public class Parser {
 
     filesToGenerate = new ArrayList<>(request.getFileToGenerateList());
     extraMixins.forEach(mixin -> filesToGenerate.add(mixin.getFullName()));
-    filesToGenerate = filesToGenerate.stream()
-            .sorted()
-            .distinct()
-            .collect(Collectors.toList());
+    filesToGenerate = filesToGenerate.stream().sorted().distinct().collect(Collectors.toList());
     return filesToGenerate;
   }
 
