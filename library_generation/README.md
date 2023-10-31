@@ -47,7 +47,7 @@ Use `-d` or `--destination_path` to specify the value.
    
 Note that you do not need to create `$destination_path` beforehand.
 
-The directory structure of the generated library is
+The directory structure of the generated library _withtout_ postprocessing is
 ```
 $destination_path
   |_gapic-*
@@ -72,7 +72,35 @@ $destination_path
 ```
 You can't build the library as-is since it does not have `pom.xml` or `build.gradle`.
 To use the library, copy the generated files to the corresponding directory
-of a library repository, e.g., `google-cloud-java`.
+of a library repository, e.g., `google-cloud-java` or use the
+`enable_postprocessing` flag on top of a pre-existing generated library to
+produce the necessary pom files.
+
+For `asset/v1` the directory structure of the generated library _with_ postprocessing is
+```
+
+├── google-cloud-asset
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   └── resources
+│       └── test
+│           └── java
+├── google-cloud-asset-bom
+├── grpc-google-cloud-asset-v*
+│   └── src
+│       └── main
+│           └── java
+├── proto-google-cloud-asset-v*
+│   └── src
+│       └── main
+│           ├── java
+│           └── proto
+└── samples
+    └── snippets
+        └── generated
+
+```
 
 ### gapic_generator_version
 You can find the released version of gapic-generator-java in [maven central](https://repo1.maven.org/maven2/com/google/api/gapic-generator-java/).
