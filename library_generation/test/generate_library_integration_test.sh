@@ -126,7 +126,7 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   # generate GAPIC client library
   echo "Generating library from ${proto_path}, to ${destination_path}..."
   generation_start=$(date "+%s")
-  if [ $enable_postprocessing == "true" ]; then
+  if [ "${enable_postprocessing}" == "true" ]; then
     if [[ "${repository_path}" == "null" ]]; then
       # we need a repository to compare the generated results with. Skip this
       # library
@@ -172,10 +172,10 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
 
   echo "Generate library finished."
   echo "Compare generation result..."
-  if [ $enable_postprocessing == "true" ]; then
+  if [ "${enable_postprocessing}" == "true" ]; then
     echo "Checking out repository..."
     pushd "${target_folder}"
-    SOURCE_DIFF_RESULT=0
+    source_diff_result=0
     git diff \
       --ignore-space-at-eol \
       -r \
@@ -184,34 +184,34 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
       ':!*pom.xml' \
       ':!*README.md' \
       ':!*package-info.java' \
-      || SOURCE_DIFF_RESULT=$?
+      || source_diff_result=$?
 
-    POM_DIFF_RESULT=$(compare_poms "${target_folder}")
+    pom_diff_result=$(compare_poms "${target_folder}")
     popd # target_folder
-    if [[ ${SOURCE_DIFF_RESULT} == 0 ]] && [[ ${POM_DIFF_RESULT} == 0 ]] ; then
+    if [[ ${source_diff_result} == 0 ]] && [[ ${pom_diff_result} == 0 ]] ; then
       echo "SUCCESS: Comparison finished, no difference is found."
       # Delete google-cloud-java to allow a sparse clone of the next library
       rm -rdf google-cloud-java
-    elif [ ${SOURCE_DIFF_RESULT} != 0 ]; then
+    elif [ ${source_diff_result} != 0 ]; then
       echo "FAILURE: Differences found in proto path: ${proto_path}."
-      exit "${SOURCE_DIFF_RESULT}"
-    elif [ ${POM_DIFF_RESULT} != 0 ]; then
+      exit "${source_diff_result}"
+    elif [ ${pom_diff_result} != 0 ]; then
       echo "FAILURE: Differences found in generated poms"
-      exit "${POM_DIFF_RESULT}"
+      exit "${pom_diff_result}"
     fi
-  elif [ $enable_postprocessing == "false" ]; then
+  elif [ "${enable_postprocessing}" == "false" ]; then
     # include gapic_metadata.json and package-info.java after
     # resolving https://github.com/googleapis/sdk-platform-java/issues/1986
-    SOURCE_DIFF_RESULT=0
+    source_diff_result=0
     diff --strip-trailing-cr -r "googleapis-gen/${proto_path}/${destination_path}" "${output_folder}/${destination_path}" \
       -x "*gradle*" \
       -x "gapic_metadata.json" \
-      -x "package-info.java" || SOURCE_DIFF_RESULT=$?
-    if [ ${SOURCE_DIFF_RESULT} == 0 ] ; then
+      -x "package-info.java" || source_diff_result=$?
+    if [ ${source_diff_result} == 0 ] ; then
       echo "SUCCESS: Comparison finished, no difference is found."
     else
       echo "FAILURE: Differences found in proto path: ${proto_path}." 
-      exit "${SOURCE_DIFF_RESULT}"
+      exit "${source_diff_result}"
     fi
   fi
 
