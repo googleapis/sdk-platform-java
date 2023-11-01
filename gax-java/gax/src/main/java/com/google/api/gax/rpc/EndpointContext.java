@@ -29,12 +29,14 @@
  */
 package com.google.api.gax.rpc;
 
+import com.google.api.core.InternalApi;
 import com.google.auth.Credentials;
 import com.google.auto.value.AutoValue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.Nullable;
 
+@InternalApi
 @AutoValue
 public abstract class EndpointContext {
   private static final String DEFAULT_UNIVERSE_DOMAIN = "googleapis.com";

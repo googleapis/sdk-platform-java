@@ -227,13 +227,7 @@ public abstract class ClientContext {
     if (transportChannelProvider.needsCredentials() && credentials != null) {
       transportChannelProvider = transportChannelProvider.withCredentials(credentials);
     }
-    EndpointContext endpointContext =
-        EndpointContext.newBuilder()
-            .setClientSettingsEndpoint(settings.getEndpoint())
-            .setMtlsEndpoint(settings.getMtlsEndpoint())
-            .setTransportChannelEndpoint(transportChannelProvider.getEndpoint())
-            .setUniverseDomain(settings.getUniverseDomain())
-            .build();
+    EndpointContext endpointContext = settings.getEndpointContext();
     String endpoint = endpointContext.resolveEndpoint(credentials);
     String universeDomain = endpointContext.resolveUniverseDomain(credentials);
     //    String endpoint =
