@@ -235,7 +235,7 @@ public class Parser {
       Optional<GapicServiceConfig> serviceConfigOpt,
       List<Service> outputMixinServices,
       Transport transport) {
-    Map<String, FileDescriptor> fileDescriptors = getFileDescriptorsFrom(request);
+    Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
     List<Service> services = new ArrayList<>();
     for (String fileToGenerate : request.getFileToGenerateList()) {
       FileDescriptor fileDescriptor =
@@ -255,31 +255,29 @@ public class Parser {
               transport));
     }
 
-    // Service names that are stated in the YAML file (as mixins).
-    Set<String> mixinApis =
+    // Mixin services that are stated in the service yaml file.
+    List<Service> mixinServices =
         serviceYamlProtoOpt
             .map(
                 value ->
                     value.getApisList().stream()
                         .map(Api::getName)
                         .filter(MIXIN_ALLOWLIST::containsKey)
-                        .collect(Collectors.toSet()))
-            .orElse(Collections.emptySet());
-    List<Service> mixinServices =
-        mixinApis.stream()
-            .flatMap(
-                mixinApi ->
-                    parseService(
-                        MIXIN_ALLOWLIST.get(mixinApi),
-                        messageTypes,
-                        resourceNames,
-                        serviceYamlProtoOpt,
-                        serviceConfigOpt,
-                        outputArgResourceNames,
-                        transport)
-                        .stream())
-            .sorted((s1, s2) -> s2.name().compareTo(s1.name()))
-            .collect(Collectors.toList());
+                        .flatMap(
+                            mixinApi ->
+                                parseService(
+                                    MIXIN_ALLOWLIST.get(mixinApi),
+                                    messageTypes,
+                                    resourceNames,
+                                    serviceYamlProtoOpt,
+                                    serviceConfigOpt,
+                                    outputArgResourceNames,
+                                    transport)
+                                    .stream())
+                        .sorted((s1, s2) -> s2.name().compareTo(s1.name()))
+                        .distinct()
+                        .collect(Collectors.toList()))
+            .orElse(Collections.emptyList());
     // Holds the methods to be mixed in.
     // Key: proto_package.ServiceName.RpcName.
     // Value: HTTP rules, which clobber those in the proto.
@@ -319,7 +317,7 @@ public class Parser {
     Set<Service> outputMixinServiceSet = new HashSet<>();
     Function<Service, String> serviceFullNameFn =
         s -> String.format("%s.%s", s.protoPakkage(), s.name());
-    if (!mixinApis.isEmpty()) {
+    if (!mixinServices.isEmpty()) {
       for (int i = 0; i < services.size(); i++) {
         Service originalService = services.get(i);
         List<Method> updatedOriginalServiceMethods = new ArrayList<>(originalService.methods());
@@ -497,7 +495,7 @@ public class Parser {
 
   public static Map<String, Message> parseMessages(
       CodeGeneratorRequest request, Set<ResourceReference> outputResourceReferencesSeen) {
-    Map<String, FileDescriptor> fileDescriptors = getFileDescriptorsFrom(request);
+    Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
     Map<String, Message> messages = new HashMap<>();
     // Look for message types amongst all the protos, not just the ones to generate. This will
     // ensure we track commonly-used protos like Empty.
@@ -648,7 +646,7 @@ public class Parser {
 
   public static Map<String, ResourceName> parseResourceNames(CodeGeneratorRequest request) {
     String javaPackage = parseServiceJavaPackage(request);
-    Map<String, FileDescriptor> fileDescriptors = getFileDescriptorsFrom(request);
+    Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
     Map<String, ResourceName> resourceNames = new HashMap<>();
     for (String fileToGenerate : request.getFileToGenerateList()) {
       FileDescriptor fileDescriptor =
@@ -1030,7 +1028,7 @@ public class Parser {
         .build();
   }
 
-  private static Map<String, FileDescriptor> getFileDescriptorsFrom(CodeGeneratorRequest request) {
+  private static Map<String, FileDescriptor> getFilesToGenerate(CodeGeneratorRequest request) {
     // Build the fileDescriptors map so that we can create the FDs for the filesToGenerate.
     Map<String, FileDescriptor> fileDescriptors = Maps.newHashMap();
     for (FileDescriptorProto fileDescriptorProto : request.getProtoFileList()) {
@@ -1063,7 +1061,7 @@ public class Parser {
 
   private static String parseServiceJavaPackage(CodeGeneratorRequest request) {
     Map<String, Integer> javaPackageCount = new HashMap<>();
-    Map<String, FileDescriptor> fileDescriptors = getFileDescriptorsFrom(request);
+    Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
     for (String fileToGenerate : request.getFileToGenerateList()) {
       FileDescriptor fileDescriptor =
           Preconditions.checkNotNull(
