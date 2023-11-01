@@ -41,11 +41,8 @@ import javax.annotation.Nullable;
 public abstract class EndpointContext {
   private static final String DEFAULT_UNIVERSE_DOMAIN = "googleapis.com";
   private static final String DEFAULT_PORT = "443";
-  private static final String UNIVERSE_DOMAIN_TEMPLATE = "SERVICE.UNIVERSE_DOMAIN:PORT";
+  private static final String UNIVERSE_DOMAIN_TEMPLATE = "SERVICE_NAME.UNIVERSE_DOMAIN:PORT";
   private static final Pattern ENDPOINT_REGEX = Pattern.compile("^[a-zA-Z]+\\.[\\S]+:\\d+$");
-
-  @Nullable
-  public abstract String serviceName();
 
   @Nullable
   public abstract String clientSettingsEndpoint();
@@ -70,41 +67,44 @@ public abstract class EndpointContext {
     return new AutoValue_EndpointContext.Builder().setSwitchToMtlsEndpointAllowed(false);
   }
 
+  // By default, the clientSettingsEndpoint value is the default_host endpoint
+  // value configured in the service. Users can override this value by the Setter
+  // exposed in the Client/Stub Settings or in the TransportChannelProvider.
   private void determineEndpoint() {
     if (resolvedEndpoint != null && resolvedUniverseDomain != null) {
       return;
     }
     String customEndpoint =
         transportChannelEndpoint() != null ? transportChannelEndpoint() : clientSettingsEndpoint();
+    // If both endpoint values are null, the client is unable to parse the serviceName
     if (customEndpoint == null) {
-      resolvedEndpoint = buildEndpoint("test");
-      resolvedUniverseDomain = DEFAULT_UNIVERSE_DOMAIN;
-    } else {
-      Matcher matcher = ENDPOINT_REGEX.matcher(customEndpoint);
-      // Check if it matches the format in the template
-      if (!matcher.matches()) {
-        // Throw an exception if user's endpoint is not valid
-        // throw new Exception("Invalid endpoint: " + customEndpoint);
-        return;
-      }
-      int periodIndex = customEndpoint.indexOf('.');
-      int colonIndex = customEndpoint.indexOf(':');
-      String serviceName = customEndpoint.substring(0, periodIndex);
-      String universeDomain = customEndpoint.substring(periodIndex + 1, colonIndex);
-      String port = customEndpoint.substring(colonIndex + 1);
-      // TODO: Build out logic for resolving endpoint
-      resolvedEndpoint = buildEndpoint(serviceName, universeDomain, port);
-      resolvedUniverseDomain = universeDomain;
+      // throw new Exception("No endpoint was set for the client");
+      return;
     }
+    Matcher matcher = ENDPOINT_REGEX.matcher(customEndpoint);
+    // Check if it matches the format in the template
+    if (!matcher.matches()) {
+      // Throw an exception if user's endpoint is not valid
+      // throw new Exception("Invalid endpoint: " + customEndpoint);
+      return;
+    }
+    int periodIndex = customEndpoint.indexOf('.');
+    int colonIndex = customEndpoint.indexOf(':');
+    String serviceName = customEndpoint.substring(0, periodIndex);
+    String universeDomain = customEndpoint.substring(periodIndex + 1, colonIndex);
+    String port = customEndpoint.substring(colonIndex + 1);
+    // TODO: Build out logic for resolving endpoint
+    resolvedEndpoint = buildEndpoint(serviceName, universeDomain, port);
+    resolvedUniverseDomain = universeDomain;
   }
 
-  private String buildEndpoint(String service) {
-    return buildEndpoint(service, DEFAULT_UNIVERSE_DOMAIN, DEFAULT_PORT);
+  private String buildEndpoint(String serviceName) {
+    return buildEndpoint(serviceName, DEFAULT_UNIVERSE_DOMAIN, DEFAULT_PORT);
   }
 
-  private String buildEndpoint(String service, String universeDomain, String port) {
+  private String buildEndpoint(String serviceName, String universeDomain, String port) {
     return UNIVERSE_DOMAIN_TEMPLATE
-        .replace("SERVICE", service)
+        .replace("SERVICE_NAME", serviceName)
         .replace("UNIVERSE_DOMAIN", universeDomain)
         .replace("PORT", port);
   }
@@ -125,8 +125,6 @@ public abstract class EndpointContext {
 
   @AutoValue.Builder
   public abstract static class Builder {
-    public abstract Builder setServiceName(String serviceName);
-
     public abstract Builder setClientSettingsEndpoint(String clientSettingsEndpoint);
 
     public abstract Builder setTransportChannelEndpoint(String transportChannelEndpoint);
