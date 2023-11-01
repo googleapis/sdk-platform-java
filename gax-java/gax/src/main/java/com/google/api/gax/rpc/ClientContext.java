@@ -105,6 +105,9 @@ public abstract class ClientContext {
   public abstract String getEndpoint();
 
   @Nullable
+  public abstract String getUniverseDomain();
+
+  @Nullable
   public abstract String getQuotaProjectId();
 
   /** Gets the {@link ApiTracerFactory} that will be used to generate traces for operations. */
@@ -224,12 +227,21 @@ public abstract class ClientContext {
     if (transportChannelProvider.needsCredentials() && credentials != null) {
       transportChannelProvider = transportChannelProvider.withCredentials(credentials);
     }
-    String endpoint =
-        getEndpoint(
-            settings.getEndpoint(),
-            settings.getMtlsEndpoint(),
-            settings.getSwitchToMtlsEndpointAllowed(),
-            new MtlsProvider());
+    EndpointContext endpointContext =
+        EndpointContext.newBuilder()
+            .setClientSettingsEndpoint(settings.getEndpoint())
+            .setMtlsEndpoint(settings.getMtlsEndpoint())
+            .setTransportChannelEndpoint(transportChannelProvider.getEndpoint())
+            .setUniverseDomain(settings.getUniverseDomain())
+            .build();
+    String endpoint = endpointContext.resolveEndpoint(credentials);
+    String universeDomain = endpointContext.resolveUniverseDomain(credentials);
+    //    String endpoint =
+    //        getEndpoint(
+    //            settings.getEndpoint(),
+    //            settings.getMtlsEndpoint(),
+    //            settings.getSwitchToMtlsEndpointAllowed(),
+    //            new MtlsProvider());
     if (transportChannelProvider.needsEndpoint()) {
       transportChannelProvider = transportChannelProvider.withEndpoint(endpoint);
     }
@@ -279,7 +291,8 @@ public abstract class ClientContext {
         .setInternalHeaders(ImmutableMap.copyOf(settings.getInternalHeaderProvider().getHeaders()))
         .setClock(clock)
         .setDefaultCallContext(defaultCallContext)
-        .setEndpoint(settings.getEndpoint())
+        .setEndpoint(endpoint)
+        .setUniverseDomain(universeDomain)
         .setQuotaProjectId(settings.getQuotaProjectId())
         .setStreamWatchdog(watchdog)
         .setStreamWatchdogCheckInterval(settings.getStreamWatchdogCheckInterval())
@@ -345,6 +358,8 @@ public abstract class ClientContext {
     public abstract Builder setDefaultCallContext(ApiCallContext defaultCallContext);
 
     public abstract Builder setEndpoint(String endpoint);
+
+    public abstract Builder setUniverseDomain(String universeDomain);
 
     public abstract Builder setQuotaProjectId(String QuotaProjectId);
 

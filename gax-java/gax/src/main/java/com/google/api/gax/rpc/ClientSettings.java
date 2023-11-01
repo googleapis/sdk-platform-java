@@ -97,6 +97,10 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     return stubSettings.getEndpoint();
   }
 
+  public final String getUniverseDomain() {
+    return stubSettings.getUniverseDomain();
+  }
+
   public final String getQuotaProjectId() {
     return stubSettings.getQuotaProjectId();
   }
@@ -126,6 +130,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
         .add("internalHeaderProvider", getInternalHeaderProvider())
         .add("clock", getClock())
         .add("endpoint", getEndpoint())
+        .add("universeDomain", getUniverseDomain())
         .add("quotaProjectId", getQuotaProjectId())
         .add("watchdogProvider", getWatchdogProvider())
         .add("watchdogCheckInterval", getWatchdogCheckInterval())
@@ -246,6 +251,11 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
       return self();
     }
 
+    public B setUniverseDomain(String endpoint) {
+      stubSettings.setUniverseDomain(endpoint);
+      return self();
+    }
+
     public B setQuotaProjectId(String quotaProjectId) {
       stubSettings.setQuotaProjectId(quotaProjectId);
       return self();
@@ -325,6 +335,10 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
       return stubSettings.getEndpoint();
     }
 
+    public String getUniverseDomain() {
+      return stubSettings.getUniverseDomain();
+    }
+
     /** Gets the QuotaProjectId that was previously set on this Builder. */
     public String getQuotaProjectId() {
       return stubSettings.getQuotaProjectId();
@@ -365,6 +379,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
           .add("internalHeaderProvider", getInternalHeaderProvider())
           .add("clock", getClock())
           .add("endpoint", getEndpoint())
+          .add("universeDomain", getUniverseDomain())
           .add("quotaProjectId", getQuotaProjectId())
           .add("watchdogProvider", getWatchdogProvider())
           .add("watchdogCheckInterval", getWatchdogCheckInterval())

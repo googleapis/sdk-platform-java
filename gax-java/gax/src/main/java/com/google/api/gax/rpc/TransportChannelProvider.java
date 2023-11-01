@@ -142,4 +142,8 @@ public interface TransportChannelProvider {
    * <p>This string can be used for identifying transports for switching logic.
    */
   String getTransportName();
+
+  default String getEndpoint() {
+    return null;
+  }
 }
