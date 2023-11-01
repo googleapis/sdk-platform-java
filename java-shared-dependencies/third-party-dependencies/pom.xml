@@ -34,7 +34,7 @@
     <httpcomponents.httpcore.version>4.4.16</httpcomponents.httpcore.version>
     <httpcomponents.httpclient.version>4.5.14</httpcomponents.httpclient.version>
     <!-- ensure checker-qual version matches what Guava uses -->
-    <checker-qual.version>3.39.0</checker-qual.version>
+    <checker-qual.version>3.40.0</checker-qual.version>
     <perfmark-api.version>0.26.0</perfmark-api.version>
     <j2objc-annotations.version>2.8</j2objc-annotations.version>
   </properties>
