@@ -127,7 +127,7 @@ public class SequenceName implements ResourceName {
     if (o == this) {
       return true;
     }
-    if (o != null || getClass() == o.getClass()) {
+    if (o != null && getClass() == o.getClass()) {
       SequenceName that = ((SequenceName) o);
       return Objects.equals(this.sequence, that.sequence);
     }

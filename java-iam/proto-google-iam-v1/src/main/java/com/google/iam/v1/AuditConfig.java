@@ -71,8 +71,8 @@ package com.google.iam.v1;
  *     }
  *
  * For sampleservice, this policy enables DATA_READ, DATA_WRITE and ADMIN_READ
- * logging. It also exempts jose&#64;example.com from DATA_READ logging, and
- * aliya&#64;example.com from DATA_WRITE logging.
+ * logging. It also exempts `jose&#64;example.com` from DATA_READ logging, and
+ * `aliya&#64;example.com` from DATA_WRITE logging.
  * </pre>
  *
  * Protobuf type {@code google.iam.v1.AuditConfig}
@@ -458,8 +458,8 @@ public final class AuditConfig extends com.google.protobuf.GeneratedMessageV3
    *     }
    *
    * For sampleservice, this policy enables DATA_READ, DATA_WRITE and ADMIN_READ
-   * logging. It also exempts jose&#64;example.com from DATA_READ logging, and
-   * aliya&#64;example.com from DATA_WRITE logging.
+   * logging. It also exempts `jose&#64;example.com` from DATA_READ logging, and
+   * `aliya&#64;example.com` from DATA_WRITE logging.
    * </pre>
    *
    * Protobuf type {@code google.iam.v1.AuditConfig}

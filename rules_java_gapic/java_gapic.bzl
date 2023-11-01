@@ -37,7 +37,7 @@ def _java_gapic_postprocess_srcjar_impl(ctx):
     WORKING_DIR=`pwd`
 
     # Main source files.
-    cd {output_dir_path}/src/main/java
+    cd {output_dir_path}/src/main
     zip -r $WORKING_DIR/{output_srcjar_name}.srcjar ./
 
     # Resource name source files.
@@ -333,6 +333,7 @@ def java_gapic_library(
     # Test deps.
     actual_test_deps = [
         "@com_google_googleapis//google/type:type_java_proto",  # Commonly used.
+        "@com_google_googleapis//google/geo/type:viewport_java_proto",  # Used by Geo.
         "@com_google_api_gax_java//gax:gax_testlib",
         "@com_google_code_gson_gson//jar",
         "@junit_junit//jar",

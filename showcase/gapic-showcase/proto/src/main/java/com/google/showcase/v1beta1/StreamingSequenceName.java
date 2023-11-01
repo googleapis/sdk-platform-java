@@ -127,7 +127,7 @@ public class StreamingSequenceName implements ResourceName {
     if (o == this) {
       return true;
     }
-    if (o != null || getClass() == o.getClass()) {
+    if (o != null && getClass() == o.getClass()) {
       StreamingSequenceName that = ((StreamingSequenceName) o);
       return Objects.equals(this.streamingSequence, that.streamingSequence);
     }

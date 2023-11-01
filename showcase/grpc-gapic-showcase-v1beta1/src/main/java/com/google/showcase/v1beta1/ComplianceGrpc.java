@@ -3,6 +3,11 @@ package com.google.showcase.v1beta1;
 import static io.grpc.MethodDescriptor.generateFullMethodName;
 
 /**
+ * <pre>
+ * This service is used to test that GAPICs implement various REST-related features correctly. This mostly means transcoding proto3 requests to REST format
+ * correctly for various types of HTTP annotations, but it also includes verifying that unknown (numeric) enums received by clients can be round-tripped
+ * correctly.
+ * </pre>
  */
 @javax.annotation.Generated(
     value = "by gRPC proto compiler",
@@ -12,7 +17,7 @@ public final class ComplianceGrpc {
 
   private ComplianceGrpc() {}
 
-  public static final String SERVICE_NAME = "google.showcase.v1beta1.Compliance";
+  public static final java.lang.String SERVICE_NAME = "google.showcase.v1beta1.Compliance";
 
   // Static method descriptors that strictly reflect the proto.
   private static volatile io.grpc.MethodDescriptor<com.google.showcase.v1beta1.RepeatRequest,
@@ -370,10 +375,19 @@ public final class ComplianceGrpc {
   }
 
   /**
+   * <pre>
+   * This service is used to test that GAPICs implement various REST-related features correctly. This mostly means transcoding proto3 requests to REST format
+   * correctly for various types of HTTP annotations, but it also includes verifying that unknown (numeric) enums received by clients can be round-tripped
+   * correctly.
+   * </pre>
    */
   public interface AsyncService {
 
     /**
+     * <pre>
+     * This method echoes the ComplianceData request. This method exercises
+     * sending the entire request object in the REST body.
+     * </pre>
      */
     default void repeatDataBody(com.google.showcase.v1beta1.RepeatRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse> responseObserver) {
@@ -381,6 +395,11 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method echoes the ComplianceData request. This method exercises
+     * sending the a message-type field in the REST body. Per AIP-127, only
+     * top-level, non-repeated fields can be sent this way.
+     * </pre>
      */
     default void repeatDataBodyInfo(com.google.showcase.v1beta1.RepeatRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse> responseObserver) {
@@ -388,6 +407,10 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method echoes the ComplianceData request. This method exercises
+     * sending all request fields as query parameters.
+     * </pre>
      */
     default void repeatDataQuery(com.google.showcase.v1beta1.RepeatRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse> responseObserver) {
@@ -395,6 +418,11 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method echoes the ComplianceData request. This method exercises
+     * sending some parameters as "simple" path variables (i.e., of the form
+     * "/bar/{foo}" rather than "/{foo=bar/&#42;}"), and the rest as query parameters.
+     * </pre>
      */
     default void repeatDataSimplePath(com.google.showcase.v1beta1.RepeatRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse> responseObserver) {
@@ -402,6 +430,9 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * Same as RepeatDataSimplePath, but with a path resource.
+     * </pre>
      */
     default void repeatDataPathResource(com.google.showcase.v1beta1.RepeatRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse> responseObserver) {
@@ -409,6 +440,9 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * Same as RepeatDataSimplePath, but with a trailing resource.
+     * </pre>
      */
     default void repeatDataPathTrailingResource(com.google.showcase.v1beta1.RepeatRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse> responseObserver) {
@@ -416,6 +450,9 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method echoes the ComplianceData request, using the HTTP PUT method.
+     * </pre>
      */
     default void repeatDataBodyPut(com.google.showcase.v1beta1.RepeatRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse> responseObserver) {
@@ -423,6 +460,9 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method echoes the ComplianceData request, using the HTTP PATCH method.
+     * </pre>
      */
     default void repeatDataBodyPatch(com.google.showcase.v1beta1.RepeatRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse> responseObserver) {
@@ -430,6 +470,13 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method requests an enum value from the server. Depending on the contents of EnumRequest, the enum value returned will be a known enum declared in the
+     * .proto file, or a made-up enum value the is unknown to the client. To verify that clients can round-trip unknown enum vaues they receive, use the
+     * response from this RPC as the request to VerifyEnum()
+     * The values of enums sent by the server when a known or unknown value is requested will be the same within a single Showcase server run (this is needed for
+     * VerifyEnum() to work) but are not guaranteed to be the same across separate Showcase server runs.
+     * </pre>
      */
     default void getEnum(com.google.showcase.v1beta1.EnumRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EnumResponse> responseObserver) {
@@ -437,6 +484,13 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method is used to verify that clients can round-trip enum values, which is particularly important for unknown enum values over REST. VerifyEnum()
+     * verifies that its request, which is presumably the response that the client previously got to a GetEnum(), contains the correct data. If so, it responds
+     * with the same EnumResponse; otherwise, the RPC errors.
+     * This works because the values of enums sent by the server when a known or unknown value is requested will be the same within a single Showcase server run,
+     * although they are not guaranteed to be the same across separate Showcase server runs.
+     * </pre>
      */
     default void verifyEnum(com.google.showcase.v1beta1.EnumResponse request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EnumResponse> responseObserver) {
@@ -446,6 +500,11 @@ public final class ComplianceGrpc {
 
   /**
    * Base class for the server implementation of the service Compliance.
+   * <pre>
+   * This service is used to test that GAPICs implement various REST-related features correctly. This mostly means transcoding proto3 requests to REST format
+   * correctly for various types of HTTP annotations, but it also includes verifying that unknown (numeric) enums received by clients can be round-tripped
+   * correctly.
+   * </pre>
    */
   public static abstract class ComplianceImplBase
       implements io.grpc.BindableService, AsyncService {
@@ -457,6 +516,11 @@ public final class ComplianceGrpc {
 
   /**
    * A stub to allow clients to do asynchronous rpc calls to service Compliance.
+   * <pre>
+   * This service is used to test that GAPICs implement various REST-related features correctly. This mostly means transcoding proto3 requests to REST format
+   * correctly for various types of HTTP annotations, but it also includes verifying that unknown (numeric) enums received by clients can be round-tripped
+   * correctly.
+   * </pre>
    */
   public static final class ComplianceStub
       extends io.grpc.stub.AbstractAsyncStub<ComplianceStub> {
@@ -472,6 +536,10 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method echoes the ComplianceData request. This method exercises
+     * sending the entire request object in the REST body.
+     * </pre>
      */
     public void repeatDataBody(com.google.showcase.v1beta1.RepeatRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse> responseObserver) {
@@ -480,6 +548,11 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method echoes the ComplianceData request. This method exercises
+     * sending the a message-type field in the REST body. Per AIP-127, only
+     * top-level, non-repeated fields can be sent this way.
+     * </pre>
      */
     public void repeatDataBodyInfo(com.google.showcase.v1beta1.RepeatRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse> responseObserver) {
@@ -488,6 +561,10 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method echoes the ComplianceData request. This method exercises
+     * sending all request fields as query parameters.
+     * </pre>
      */
     public void repeatDataQuery(com.google.showcase.v1beta1.RepeatRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse> responseObserver) {
@@ -496,6 +573,11 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method echoes the ComplianceData request. This method exercises
+     * sending some parameters as "simple" path variables (i.e., of the form
+     * "/bar/{foo}" rather than "/{foo=bar/&#42;}"), and the rest as query parameters.
+     * </pre>
      */
     public void repeatDataSimplePath(com.google.showcase.v1beta1.RepeatRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse> responseObserver) {
@@ -504,6 +586,9 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * Same as RepeatDataSimplePath, but with a path resource.
+     * </pre>
      */
     public void repeatDataPathResource(com.google.showcase.v1beta1.RepeatRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse> responseObserver) {
@@ -512,6 +597,9 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * Same as RepeatDataSimplePath, but with a trailing resource.
+     * </pre>
      */
     public void repeatDataPathTrailingResource(com.google.showcase.v1beta1.RepeatRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse> responseObserver) {
@@ -520,6 +608,9 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method echoes the ComplianceData request, using the HTTP PUT method.
+     * </pre>
      */
     public void repeatDataBodyPut(com.google.showcase.v1beta1.RepeatRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse> responseObserver) {
@@ -528,6 +619,9 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method echoes the ComplianceData request, using the HTTP PATCH method.
+     * </pre>
      */
     public void repeatDataBodyPatch(com.google.showcase.v1beta1.RepeatRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.RepeatResponse> responseObserver) {
@@ -536,6 +630,13 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method requests an enum value from the server. Depending on the contents of EnumRequest, the enum value returned will be a known enum declared in the
+     * .proto file, or a made-up enum value the is unknown to the client. To verify that clients can round-trip unknown enum vaues they receive, use the
+     * response from this RPC as the request to VerifyEnum()
+     * The values of enums sent by the server when a known or unknown value is requested will be the same within a single Showcase server run (this is needed for
+     * VerifyEnum() to work) but are not guaranteed to be the same across separate Showcase server runs.
+     * </pre>
      */
     public void getEnum(com.google.showcase.v1beta1.EnumRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EnumResponse> responseObserver) {
@@ -544,6 +645,13 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method is used to verify that clients can round-trip enum values, which is particularly important for unknown enum values over REST. VerifyEnum()
+     * verifies that its request, which is presumably the response that the client previously got to a GetEnum(), contains the correct data. If so, it responds
+     * with the same EnumResponse; otherwise, the RPC errors.
+     * This works because the values of enums sent by the server when a known or unknown value is requested will be the same within a single Showcase server run,
+     * although they are not guaranteed to be the same across separate Showcase server runs.
+     * </pre>
      */
     public void verifyEnum(com.google.showcase.v1beta1.EnumResponse request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EnumResponse> responseObserver) {
@@ -554,6 +662,11 @@ public final class ComplianceGrpc {
 
   /**
    * A stub to allow clients to do synchronous rpc calls to service Compliance.
+   * <pre>
+   * This service is used to test that GAPICs implement various REST-related features correctly. This mostly means transcoding proto3 requests to REST format
+   * correctly for various types of HTTP annotations, but it also includes verifying that unknown (numeric) enums received by clients can be round-tripped
+   * correctly.
+   * </pre>
    */
   public static final class ComplianceBlockingStub
       extends io.grpc.stub.AbstractBlockingStub<ComplianceBlockingStub> {
@@ -569,6 +682,10 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method echoes the ComplianceData request. This method exercises
+     * sending the entire request object in the REST body.
+     * </pre>
      */
     public com.google.showcase.v1beta1.RepeatResponse repeatDataBody(com.google.showcase.v1beta1.RepeatRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -576,6 +693,11 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method echoes the ComplianceData request. This method exercises
+     * sending the a message-type field in the REST body. Per AIP-127, only
+     * top-level, non-repeated fields can be sent this way.
+     * </pre>
      */
     public com.google.showcase.v1beta1.RepeatResponse repeatDataBodyInfo(com.google.showcase.v1beta1.RepeatRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -583,6 +705,10 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method echoes the ComplianceData request. This method exercises
+     * sending all request fields as query parameters.
+     * </pre>
      */
     public com.google.showcase.v1beta1.RepeatResponse repeatDataQuery(com.google.showcase.v1beta1.RepeatRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -590,6 +716,11 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method echoes the ComplianceData request. This method exercises
+     * sending some parameters as "simple" path variables (i.e., of the form
+     * "/bar/{foo}" rather than "/{foo=bar/&#42;}"), and the rest as query parameters.
+     * </pre>
      */
     public com.google.showcase.v1beta1.RepeatResponse repeatDataSimplePath(com.google.showcase.v1beta1.RepeatRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -597,6 +728,9 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * Same as RepeatDataSimplePath, but with a path resource.
+     * </pre>
      */
     public com.google.showcase.v1beta1.RepeatResponse repeatDataPathResource(com.google.showcase.v1beta1.RepeatRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -604,6 +738,9 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * Same as RepeatDataSimplePath, but with a trailing resource.
+     * </pre>
      */
     public com.google.showcase.v1beta1.RepeatResponse repeatDataPathTrailingResource(com.google.showcase.v1beta1.RepeatRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -611,6 +748,9 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method echoes the ComplianceData request, using the HTTP PUT method.
+     * </pre>
      */
     public com.google.showcase.v1beta1.RepeatResponse repeatDataBodyPut(com.google.showcase.v1beta1.RepeatRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -618,6 +758,9 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method echoes the ComplianceData request, using the HTTP PATCH method.
+     * </pre>
      */
     public com.google.showcase.v1beta1.RepeatResponse repeatDataBodyPatch(com.google.showcase.v1beta1.RepeatRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -625,6 +768,13 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method requests an enum value from the server. Depending on the contents of EnumRequest, the enum value returned will be a known enum declared in the
+     * .proto file, or a made-up enum value the is unknown to the client. To verify that clients can round-trip unknown enum vaues they receive, use the
+     * response from this RPC as the request to VerifyEnum()
+     * The values of enums sent by the server when a known or unknown value is requested will be the same within a single Showcase server run (this is needed for
+     * VerifyEnum() to work) but are not guaranteed to be the same across separate Showcase server runs.
+     * </pre>
      */
     public com.google.showcase.v1beta1.EnumResponse getEnum(com.google.showcase.v1beta1.EnumRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -632,6 +782,13 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method is used to verify that clients can round-trip enum values, which is particularly important for unknown enum values over REST. VerifyEnum()
+     * verifies that its request, which is presumably the response that the client previously got to a GetEnum(), contains the correct data. If so, it responds
+     * with the same EnumResponse; otherwise, the RPC errors.
+     * This works because the values of enums sent by the server when a known or unknown value is requested will be the same within a single Showcase server run,
+     * although they are not guaranteed to be the same across separate Showcase server runs.
+     * </pre>
      */
     public com.google.showcase.v1beta1.EnumResponse verifyEnum(com.google.showcase.v1beta1.EnumResponse request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -641,6 +798,11 @@ public final class ComplianceGrpc {
 
   /**
    * A stub to allow clients to do ListenableFuture-style rpc calls to service Compliance.
+   * <pre>
+   * This service is used to test that GAPICs implement various REST-related features correctly. This mostly means transcoding proto3 requests to REST format
+   * correctly for various types of HTTP annotations, but it also includes verifying that unknown (numeric) enums received by clients can be round-tripped
+   * correctly.
+   * </pre>
    */
   public static final class ComplianceFutureStub
       extends io.grpc.stub.AbstractFutureStub<ComplianceFutureStub> {
@@ -656,6 +818,10 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method echoes the ComplianceData request. This method exercises
+     * sending the entire request object in the REST body.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.RepeatResponse> repeatDataBody(
         com.google.showcase.v1beta1.RepeatRequest request) {
@@ -664,6 +830,11 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method echoes the ComplianceData request. This method exercises
+     * sending the a message-type field in the REST body. Per AIP-127, only
+     * top-level, non-repeated fields can be sent this way.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.RepeatResponse> repeatDataBodyInfo(
         com.google.showcase.v1beta1.RepeatRequest request) {
@@ -672,6 +843,10 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method echoes the ComplianceData request. This method exercises
+     * sending all request fields as query parameters.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.RepeatResponse> repeatDataQuery(
         com.google.showcase.v1beta1.RepeatRequest request) {
@@ -680,6 +855,11 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method echoes the ComplianceData request. This method exercises
+     * sending some parameters as "simple" path variables (i.e., of the form
+     * "/bar/{foo}" rather than "/{foo=bar/&#42;}"), and the rest as query parameters.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.RepeatResponse> repeatDataSimplePath(
         com.google.showcase.v1beta1.RepeatRequest request) {
@@ -688,6 +868,9 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * Same as RepeatDataSimplePath, but with a path resource.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.RepeatResponse> repeatDataPathResource(
         com.google.showcase.v1beta1.RepeatRequest request) {
@@ -696,6 +879,9 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * Same as RepeatDataSimplePath, but with a trailing resource.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.RepeatResponse> repeatDataPathTrailingResource(
         com.google.showcase.v1beta1.RepeatRequest request) {
@@ -704,6 +890,9 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method echoes the ComplianceData request, using the HTTP PUT method.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.RepeatResponse> repeatDataBodyPut(
         com.google.showcase.v1beta1.RepeatRequest request) {
@@ -712,6 +901,9 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method echoes the ComplianceData request, using the HTTP PATCH method.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.RepeatResponse> repeatDataBodyPatch(
         com.google.showcase.v1beta1.RepeatRequest request) {
@@ -720,6 +912,13 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method requests an enum value from the server. Depending on the contents of EnumRequest, the enum value returned will be a known enum declared in the
+     * .proto file, or a made-up enum value the is unknown to the client. To verify that clients can round-trip unknown enum vaues they receive, use the
+     * response from this RPC as the request to VerifyEnum()
+     * The values of enums sent by the server when a known or unknown value is requested will be the same within a single Showcase server run (this is needed for
+     * VerifyEnum() to work) but are not guaranteed to be the same across separate Showcase server runs.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.EnumResponse> getEnum(
         com.google.showcase.v1beta1.EnumRequest request) {
@@ -728,6 +927,13 @@ public final class ComplianceGrpc {
     }
 
     /**
+     * <pre>
+     * This method is used to verify that clients can round-trip enum values, which is particularly important for unknown enum values over REST. VerifyEnum()
+     * verifies that its request, which is presumably the response that the client previously got to a GetEnum(), contains the correct data. If so, it responds
+     * with the same EnumResponse; otherwise, the RPC errors.
+     * This works because the values of enums sent by the server when a known or unknown value is requested will be the same within a single Showcase server run,
+     * although they are not guaranteed to be the same across separate Showcase server runs.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.EnumResponse> verifyEnum(
         com.google.showcase.v1beta1.EnumResponse request) {
@@ -918,9 +1124,9 @@ public final class ComplianceGrpc {
   private static final class ComplianceMethodDescriptorSupplier
       extends ComplianceBaseDescriptorSupplier
       implements io.grpc.protobuf.ProtoMethodDescriptorSupplier {
-    private final String methodName;
+    private final java.lang.String methodName;
 
-    ComplianceMethodDescriptorSupplier(String methodName) {
+    ComplianceMethodDescriptorSupplier(java.lang.String methodName) {
       this.methodName = methodName;
     }
 

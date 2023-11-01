@@ -12,7 +12,7 @@ public final class SequenceServiceGrpc {
 
   private SequenceServiceGrpc() {}
 
-  public static final String SERVICE_NAME = "google.showcase.v1beta1.SequenceService";
+  public static final java.lang.String SERVICE_NAME = "google.showcase.v1beta1.SequenceService";
 
   // Static method descriptors that strictly reflect the proto.
   private static volatile io.grpc.MethodDescriptor<com.google.showcase.v1beta1.CreateSequenceRequest,
@@ -250,6 +250,9 @@ public final class SequenceServiceGrpc {
   public interface AsyncService {
 
     /**
+     * <pre>
+     * Creates a sequence.
+     * </pre>
      */
     default void createSequence(com.google.showcase.v1beta1.CreateSequenceRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.Sequence> responseObserver) {
@@ -257,6 +260,9 @@ public final class SequenceServiceGrpc {
     }
 
     /**
+     * <pre>
+     * Creates a sequence.
+     * </pre>
      */
     default void createStreamingSequence(com.google.showcase.v1beta1.CreateStreamingSequenceRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.StreamingSequence> responseObserver) {
@@ -264,6 +270,9 @@ public final class SequenceServiceGrpc {
     }
 
     /**
+     * <pre>
+     * Retrieves a sequence.
+     * </pre>
      */
     default void getSequenceReport(com.google.showcase.v1beta1.GetSequenceReportRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.SequenceReport> responseObserver) {
@@ -271,6 +280,9 @@ public final class SequenceServiceGrpc {
     }
 
     /**
+     * <pre>
+     * Retrieves a sequence.
+     * </pre>
      */
     default void getStreamingSequenceReport(com.google.showcase.v1beta1.GetStreamingSequenceReportRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.StreamingSequenceReport> responseObserver) {
@@ -278,6 +290,9 @@ public final class SequenceServiceGrpc {
     }
 
     /**
+     * <pre>
+     * Attempts a sequence.
+     * </pre>
      */
     default void attemptSequence(com.google.showcase.v1beta1.AttemptSequenceRequest request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
@@ -285,6 +300,9 @@ public final class SequenceServiceGrpc {
     }
 
     /**
+     * <pre>
+     * Attempts a streaming sequence.
+     * </pre>
      */
     default void attemptStreamingSequence(com.google.showcase.v1beta1.AttemptStreamingSequenceRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.AttemptStreamingSequenceResponse> responseObserver) {
@@ -320,6 +338,9 @@ public final class SequenceServiceGrpc {
     }
 
     /**
+     * <pre>
+     * Creates a sequence.
+     * </pre>
      */
     public void createSequence(com.google.showcase.v1beta1.CreateSequenceRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.Sequence> responseObserver) {
@@ -328,6 +349,9 @@ public final class SequenceServiceGrpc {
     }
 
     /**
+     * <pre>
+     * Creates a sequence.
+     * </pre>
      */
     public void createStreamingSequence(com.google.showcase.v1beta1.CreateStreamingSequenceRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.StreamingSequence> responseObserver) {
@@ -336,6 +360,9 @@ public final class SequenceServiceGrpc {
     }
 
     /**
+     * <pre>
+     * Retrieves a sequence.
+     * </pre>
      */
     public void getSequenceReport(com.google.showcase.v1beta1.GetSequenceReportRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.SequenceReport> responseObserver) {
@@ -344,6 +371,9 @@ public final class SequenceServiceGrpc {
     }
 
     /**
+     * <pre>
+     * Retrieves a sequence.
+     * </pre>
      */
     public void getStreamingSequenceReport(com.google.showcase.v1beta1.GetStreamingSequenceReportRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.StreamingSequenceReport> responseObserver) {
@@ -352,6 +382,9 @@ public final class SequenceServiceGrpc {
     }
 
     /**
+     * <pre>
+     * Attempts a sequence.
+     * </pre>
      */
     public void attemptSequence(com.google.showcase.v1beta1.AttemptSequenceRequest request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
@@ -360,6 +393,9 @@ public final class SequenceServiceGrpc {
     }
 
     /**
+     * <pre>
+     * Attempts a streaming sequence.
+     * </pre>
      */
     public void attemptStreamingSequence(com.google.showcase.v1beta1.AttemptStreamingSequenceRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.AttemptStreamingSequenceResponse> responseObserver) {
@@ -385,6 +421,9 @@ public final class SequenceServiceGrpc {
     }
 
     /**
+     * <pre>
+     * Creates a sequence.
+     * </pre>
      */
     public com.google.showcase.v1beta1.Sequence createSequence(com.google.showcase.v1beta1.CreateSequenceRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -392,6 +431,9 @@ public final class SequenceServiceGrpc {
     }
 
     /**
+     * <pre>
+     * Creates a sequence.
+     * </pre>
      */
     public com.google.showcase.v1beta1.StreamingSequence createStreamingSequence(com.google.showcase.v1beta1.CreateStreamingSequenceRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -399,6 +441,9 @@ public final class SequenceServiceGrpc {
     }
 
     /**
+     * <pre>
+     * Retrieves a sequence.
+     * </pre>
      */
     public com.google.showcase.v1beta1.SequenceReport getSequenceReport(com.google.showcase.v1beta1.GetSequenceReportRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -406,6 +451,9 @@ public final class SequenceServiceGrpc {
     }
 
     /**
+     * <pre>
+     * Retrieves a sequence.
+     * </pre>
      */
     public com.google.showcase.v1beta1.StreamingSequenceReport getStreamingSequenceReport(com.google.showcase.v1beta1.GetStreamingSequenceReportRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -413,6 +461,9 @@ public final class SequenceServiceGrpc {
     }
 
     /**
+     * <pre>
+     * Attempts a sequence.
+     * </pre>
      */
     public com.google.protobuf.Empty attemptSequence(com.google.showcase.v1beta1.AttemptSequenceRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -420,6 +471,9 @@ public final class SequenceServiceGrpc {
     }
 
     /**
+     * <pre>
+     * Attempts a streaming sequence.
+     * </pre>
      */
     public java.util.Iterator<com.google.showcase.v1beta1.AttemptStreamingSequenceResponse> attemptStreamingSequence(
         com.google.showcase.v1beta1.AttemptStreamingSequenceRequest request) {
@@ -445,6 +499,9 @@ public final class SequenceServiceGrpc {
     }
 
     /**
+     * <pre>
+     * Creates a sequence.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.Sequence> createSequence(
         com.google.showcase.v1beta1.CreateSequenceRequest request) {
@@ -453,6 +510,9 @@ public final class SequenceServiceGrpc {
     }
 
     /**
+     * <pre>
+     * Creates a sequence.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.StreamingSequence> createStreamingSequence(
         com.google.showcase.v1beta1.CreateStreamingSequenceRequest request) {
@@ -461,6 +521,9 @@ public final class SequenceServiceGrpc {
     }
 
     /**
+     * <pre>
+     * Retrieves a sequence.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.SequenceReport> getSequenceReport(
         com.google.showcase.v1beta1.GetSequenceReportRequest request) {
@@ -469,6 +532,9 @@ public final class SequenceServiceGrpc {
     }
 
     /**
+     * <pre>
+     * Retrieves a sequence.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.StreamingSequenceReport> getStreamingSequenceReport(
         com.google.showcase.v1beta1.GetStreamingSequenceReportRequest request) {
@@ -477,6 +543,9 @@ public final class SequenceServiceGrpc {
     }
 
     /**
+     * <pre>
+     * Attempts a sequence.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.protobuf.Empty> attemptSequence(
         com.google.showcase.v1beta1.AttemptSequenceRequest request) {
@@ -619,9 +688,9 @@ public final class SequenceServiceGrpc {
   private static final class SequenceServiceMethodDescriptorSupplier
       extends SequenceServiceBaseDescriptorSupplier
       implements io.grpc.protobuf.ProtoMethodDescriptorSupplier {
-    private final String methodName;
+    private final java.lang.String methodName;
 
-    SequenceServiceMethodDescriptorSupplier(String methodName) {
+    SequenceServiceMethodDescriptorSupplier(java.lang.String methodName) {
       this.methodName = methodName;
     }
 

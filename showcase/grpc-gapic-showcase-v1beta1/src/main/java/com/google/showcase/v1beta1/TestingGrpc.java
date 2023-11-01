@@ -3,6 +3,10 @@ package com.google.showcase.v1beta1;
 import static io.grpc.MethodDescriptor.generateFullMethodName;
 
 /**
+ * <pre>
+ * A service to facilitate running discrete sets of tests
+ * against Showcase.
+ * </pre>
  */
 @javax.annotation.Generated(
     value = "by gRPC proto compiler",
@@ -12,7 +16,7 @@ public final class TestingGrpc {
 
   private TestingGrpc() {}
 
-  public static final String SERVICE_NAME = "google.showcase.v1beta1.Testing";
+  public static final java.lang.String SERVICE_NAME = "google.showcase.v1beta1.Testing";
 
   // Static method descriptors that strictly reflect the proto.
   private static volatile io.grpc.MethodDescriptor<com.google.showcase.v1beta1.CreateSessionRequest,
@@ -308,10 +312,17 @@ public final class TestingGrpc {
   }
 
   /**
+   * <pre>
+   * A service to facilitate running discrete sets of tests
+   * against Showcase.
+   * </pre>
    */
   public interface AsyncService {
 
     /**
+     * <pre>
+     * Creates a new testing session.
+     * </pre>
      */
     default void createSession(com.google.showcase.v1beta1.CreateSessionRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.Session> responseObserver) {
@@ -319,6 +330,9 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * Gets a testing session.
+     * </pre>
      */
     default void getSession(com.google.showcase.v1beta1.GetSessionRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.Session> responseObserver) {
@@ -326,6 +340,9 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * Lists the current test sessions.
+     * </pre>
      */
     default void listSessions(com.google.showcase.v1beta1.ListSessionsRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.ListSessionsResponse> responseObserver) {
@@ -333,6 +350,9 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * Delete a test session.
+     * </pre>
      */
     default void deleteSession(com.google.showcase.v1beta1.DeleteSessionRequest request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
@@ -340,6 +360,11 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * Report on the status of a session.
+     * This generates a report detailing which tests have been completed,
+     * and an overall rollup.
+     * </pre>
      */
     default void reportSession(com.google.showcase.v1beta1.ReportSessionRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.ReportSessionResponse> responseObserver) {
@@ -347,6 +372,9 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * List the tests of a sessesion.
+     * </pre>
      */
     default void listTests(com.google.showcase.v1beta1.ListTestsRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.ListTestsResponse> responseObserver) {
@@ -354,6 +382,12 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * Explicitly decline to implement a test.
+     * This removes the test from subsequent `ListTests` calls, and
+     * attempting to do the test will error.
+     * This method will error if attempting to delete a required test.
+     * </pre>
      */
     default void deleteTest(com.google.showcase.v1beta1.DeleteTestRequest request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
@@ -361,6 +395,11 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * Register a response to a test.
+     * In cases where a test involves registering a final answer at the
+     * end of the test, this method provides the means to do so.
+     * </pre>
      */
     default void verifyTest(com.google.showcase.v1beta1.VerifyTestRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.VerifyTestResponse> responseObserver) {
@@ -370,6 +409,10 @@ public final class TestingGrpc {
 
   /**
    * Base class for the server implementation of the service Testing.
+   * <pre>
+   * A service to facilitate running discrete sets of tests
+   * against Showcase.
+   * </pre>
    */
   public static abstract class TestingImplBase
       implements io.grpc.BindableService, AsyncService {
@@ -381,6 +424,10 @@ public final class TestingGrpc {
 
   /**
    * A stub to allow clients to do asynchronous rpc calls to service Testing.
+   * <pre>
+   * A service to facilitate running discrete sets of tests
+   * against Showcase.
+   * </pre>
    */
   public static final class TestingStub
       extends io.grpc.stub.AbstractAsyncStub<TestingStub> {
@@ -396,6 +443,9 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * Creates a new testing session.
+     * </pre>
      */
     public void createSession(com.google.showcase.v1beta1.CreateSessionRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.Session> responseObserver) {
@@ -404,6 +454,9 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * Gets a testing session.
+     * </pre>
      */
     public void getSession(com.google.showcase.v1beta1.GetSessionRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.Session> responseObserver) {
@@ -412,6 +465,9 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * Lists the current test sessions.
+     * </pre>
      */
     public void listSessions(com.google.showcase.v1beta1.ListSessionsRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.ListSessionsResponse> responseObserver) {
@@ -420,6 +476,9 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * Delete a test session.
+     * </pre>
      */
     public void deleteSession(com.google.showcase.v1beta1.DeleteSessionRequest request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
@@ -428,6 +487,11 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * Report on the status of a session.
+     * This generates a report detailing which tests have been completed,
+     * and an overall rollup.
+     * </pre>
      */
     public void reportSession(com.google.showcase.v1beta1.ReportSessionRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.ReportSessionResponse> responseObserver) {
@@ -436,6 +500,9 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * List the tests of a sessesion.
+     * </pre>
      */
     public void listTests(com.google.showcase.v1beta1.ListTestsRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.ListTestsResponse> responseObserver) {
@@ -444,6 +511,12 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * Explicitly decline to implement a test.
+     * This removes the test from subsequent `ListTests` calls, and
+     * attempting to do the test will error.
+     * This method will error if attempting to delete a required test.
+     * </pre>
      */
     public void deleteTest(com.google.showcase.v1beta1.DeleteTestRequest request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
@@ -452,6 +525,11 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * Register a response to a test.
+     * In cases where a test involves registering a final answer at the
+     * end of the test, this method provides the means to do so.
+     * </pre>
      */
     public void verifyTest(com.google.showcase.v1beta1.VerifyTestRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.VerifyTestResponse> responseObserver) {
@@ -462,6 +540,10 @@ public final class TestingGrpc {
 
   /**
    * A stub to allow clients to do synchronous rpc calls to service Testing.
+   * <pre>
+   * A service to facilitate running discrete sets of tests
+   * against Showcase.
+   * </pre>
    */
   public static final class TestingBlockingStub
       extends io.grpc.stub.AbstractBlockingStub<TestingBlockingStub> {
@@ -477,6 +559,9 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * Creates a new testing session.
+     * </pre>
      */
     public com.google.showcase.v1beta1.Session createSession(com.google.showcase.v1beta1.CreateSessionRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -484,6 +569,9 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * Gets a testing session.
+     * </pre>
      */
     public com.google.showcase.v1beta1.Session getSession(com.google.showcase.v1beta1.GetSessionRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -491,6 +579,9 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * Lists the current test sessions.
+     * </pre>
      */
     public com.google.showcase.v1beta1.ListSessionsResponse listSessions(com.google.showcase.v1beta1.ListSessionsRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -498,6 +589,9 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * Delete a test session.
+     * </pre>
      */
     public com.google.protobuf.Empty deleteSession(com.google.showcase.v1beta1.DeleteSessionRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -505,6 +599,11 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * Report on the status of a session.
+     * This generates a report detailing which tests have been completed,
+     * and an overall rollup.
+     * </pre>
      */
     public com.google.showcase.v1beta1.ReportSessionResponse reportSession(com.google.showcase.v1beta1.ReportSessionRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -512,6 +611,9 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * List the tests of a sessesion.
+     * </pre>
      */
     public com.google.showcase.v1beta1.ListTestsResponse listTests(com.google.showcase.v1beta1.ListTestsRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -519,6 +621,12 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * Explicitly decline to implement a test.
+     * This removes the test from subsequent `ListTests` calls, and
+     * attempting to do the test will error.
+     * This method will error if attempting to delete a required test.
+     * </pre>
      */
     public com.google.protobuf.Empty deleteTest(com.google.showcase.v1beta1.DeleteTestRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -526,6 +634,11 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * Register a response to a test.
+     * In cases where a test involves registering a final answer at the
+     * end of the test, this method provides the means to do so.
+     * </pre>
      */
     public com.google.showcase.v1beta1.VerifyTestResponse verifyTest(com.google.showcase.v1beta1.VerifyTestRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -535,6 +648,10 @@ public final class TestingGrpc {
 
   /**
    * A stub to allow clients to do ListenableFuture-style rpc calls to service Testing.
+   * <pre>
+   * A service to facilitate running discrete sets of tests
+   * against Showcase.
+   * </pre>
    */
   public static final class TestingFutureStub
       extends io.grpc.stub.AbstractFutureStub<TestingFutureStub> {
@@ -550,6 +667,9 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * Creates a new testing session.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.Session> createSession(
         com.google.showcase.v1beta1.CreateSessionRequest request) {
@@ -558,6 +678,9 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * Gets a testing session.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.Session> getSession(
         com.google.showcase.v1beta1.GetSessionRequest request) {
@@ -566,6 +689,9 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * Lists the current test sessions.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.ListSessionsResponse> listSessions(
         com.google.showcase.v1beta1.ListSessionsRequest request) {
@@ -574,6 +700,9 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * Delete a test session.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.protobuf.Empty> deleteSession(
         com.google.showcase.v1beta1.DeleteSessionRequest request) {
@@ -582,6 +711,11 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * Report on the status of a session.
+     * This generates a report detailing which tests have been completed,
+     * and an overall rollup.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.ReportSessionResponse> reportSession(
         com.google.showcase.v1beta1.ReportSessionRequest request) {
@@ -590,6 +724,9 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * List the tests of a sessesion.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.ListTestsResponse> listTests(
         com.google.showcase.v1beta1.ListTestsRequest request) {
@@ -598,6 +735,12 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * Explicitly decline to implement a test.
+     * This removes the test from subsequent `ListTests` calls, and
+     * attempting to do the test will error.
+     * This method will error if attempting to delete a required test.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.protobuf.Empty> deleteTest(
         com.google.showcase.v1beta1.DeleteTestRequest request) {
@@ -606,6 +749,11 @@ public final class TestingGrpc {
     }
 
     /**
+     * <pre>
+     * Register a response to a test.
+     * In cases where a test involves registering a final answer at the
+     * end of the test, this method provides the means to do so.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.VerifyTestResponse> verifyTest(
         com.google.showcase.v1beta1.VerifyTestRequest request) {
@@ -772,9 +920,9 @@ public final class TestingGrpc {
   private static final class TestingMethodDescriptorSupplier
       extends TestingBaseDescriptorSupplier
       implements io.grpc.protobuf.ProtoMethodDescriptorSupplier {
-    private final String methodName;
+    private final java.lang.String methodName;
 
-    TestingMethodDescriptorSupplier(String methodName) {
+    TestingMethodDescriptorSupplier(java.lang.String methodName) {
       this.methodName = methodName;
     }
 

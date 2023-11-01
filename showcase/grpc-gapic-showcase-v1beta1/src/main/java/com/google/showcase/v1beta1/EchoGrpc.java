@@ -3,6 +3,15 @@ package com.google.showcase.v1beta1;
 import static io.grpc.MethodDescriptor.generateFullMethodName;
 
 /**
+ * <pre>
+ * This service is used showcase the four main types of rpcs - unary, server
+ * side streaming, client side streaming, and bidirectional streaming. This
+ * service also exposes methods that explicitly implement server delay, and
+ * paginated calls. Set the 'showcase-trailer' metadata key on any method
+ * to have the values echoed in the response trailers. Set the 
+ * 'x-goog-request-params' metadata key on any method to have the values
+ * echoed in the response headers.
+ * </pre>
  */
 @javax.annotation.Generated(
     value = "by gRPC proto compiler",
@@ -12,7 +21,7 @@ public final class EchoGrpc {
 
   private EchoGrpc() {}
 
-  public static final String SERVICE_NAME = "google.showcase.v1beta1.Echo";
+  public static final java.lang.String SERVICE_NAME = "google.showcase.v1beta1.Echo";
 
   // Static method descriptors that strictly reflect the proto.
   private static volatile io.grpc.MethodDescriptor<com.google.showcase.v1beta1.EchoRequest,
@@ -339,10 +348,22 @@ public final class EchoGrpc {
   }
 
   /**
+   * <pre>
+   * This service is used showcase the four main types of rpcs - unary, server
+   * side streaming, client side streaming, and bidirectional streaming. This
+   * service also exposes methods that explicitly implement server delay, and
+   * paginated calls. Set the 'showcase-trailer' metadata key on any method
+   * to have the values echoed in the response trailers. Set the 
+   * 'x-goog-request-params' metadata key on any method to have the values
+   * echoed in the response headers.
+   * </pre>
    */
   public interface AsyncService {
 
     /**
+     * <pre>
+     * This method simply echoes the request. This method showcases unary RPCs.
+     * </pre>
      */
     default void echo(com.google.showcase.v1beta1.EchoRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EchoResponse> responseObserver) {
@@ -350,6 +371,10 @@ public final class EchoGrpc {
     }
 
     /**
+     * <pre>
+     * This method splits the given content into words and will pass each word back
+     * through the stream. This method showcases server-side streaming RPCs.
+     * </pre>
      */
     default void expand(com.google.showcase.v1beta1.ExpandRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EchoResponse> responseObserver) {
@@ -357,6 +382,11 @@ public final class EchoGrpc {
     }
 
     /**
+     * <pre>
+     * This method will collect the words given to it. When the stream is closed
+     * by the client, this method will return the a concatenation of the strings
+     * passed to it. This method showcases client-side streaming RPCs.
+     * </pre>
      */
     default io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EchoRequest> collect(
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EchoResponse> responseObserver) {
@@ -364,6 +394,11 @@ public final class EchoGrpc {
     }
 
     /**
+     * <pre>
+     * This method, upon receiving a request on the stream, will pass the same
+     * content back on the stream. This method showcases bidirectional
+     * streaming RPCs.
+     * </pre>
      */
     default io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EchoRequest> chat(
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EchoResponse> responseObserver) {
@@ -371,6 +406,10 @@ public final class EchoGrpc {
     }
 
     /**
+     * <pre>
+     * This is similar to the Expand method but instead of returning a stream of
+     * expanded words, this method returns a paged list of expanded words.
+     * </pre>
      */
     default void pagedExpand(com.google.showcase.v1beta1.PagedExpandRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.PagedExpandResponse> responseObserver) {
@@ -378,6 +417,11 @@ public final class EchoGrpc {
     }
 
     /**
+     * <pre>
+     * This is similar to the PagedExpand except that it uses
+     * max_results instead of page_size, as some legacy APIs still
+     * do. New APIs should NOT use this pattern.
+     * </pre>
      */
     default void pagedExpandLegacy(com.google.showcase.v1beta1.PagedExpandLegacyRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.PagedExpandResponse> responseObserver) {
@@ -385,6 +429,13 @@ public final class EchoGrpc {
     }
 
     /**
+     * <pre>
+     * This method returns a map containing lists of words that appear in the input, keyed by their
+     * initial character. The only words returned are the ones included in the current page,
+     * as determined by page_token and page_size, which both refer to the word indices in the
+     * input. This paging result consisting of a map of lists is a pattern used by some legacy
+     * APIs. New APIs should NOT use this pattern.
+     * </pre>
      */
     default void pagedExpandLegacyMapped(com.google.showcase.v1beta1.PagedExpandRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.PagedExpandLegacyMappedResponse> responseObserver) {
@@ -392,6 +443,10 @@ public final class EchoGrpc {
     }
 
     /**
+     * <pre>
+     * This method will wait for the requested amount of time and then return.
+     * This method showcases how a client handles a request timeout.
+     * </pre>
      */
     default void wait(com.google.showcase.v1beta1.WaitRequest request,
         io.grpc.stub.StreamObserver<com.google.longrunning.Operation> responseObserver) {
@@ -399,6 +454,11 @@ public final class EchoGrpc {
     }
 
     /**
+     * <pre>
+     * This method will block (wait) for the requested amount of time
+     * and then return the response or error.
+     * This method showcases how a client handles delays or retries.
+     * </pre>
      */
     default void block(com.google.showcase.v1beta1.BlockRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.BlockResponse> responseObserver) {
@@ -408,6 +468,15 @@ public final class EchoGrpc {
 
   /**
    * Base class for the server implementation of the service Echo.
+   * <pre>
+   * This service is used showcase the four main types of rpcs - unary, server
+   * side streaming, client side streaming, and bidirectional streaming. This
+   * service also exposes methods that explicitly implement server delay, and
+   * paginated calls. Set the 'showcase-trailer' metadata key on any method
+   * to have the values echoed in the response trailers. Set the 
+   * 'x-goog-request-params' metadata key on any method to have the values
+   * echoed in the response headers.
+   * </pre>
    */
   public static abstract class EchoImplBase
       implements io.grpc.BindableService, AsyncService {
@@ -419,6 +488,15 @@ public final class EchoGrpc {
 
   /**
    * A stub to allow clients to do asynchronous rpc calls to service Echo.
+   * <pre>
+   * This service is used showcase the four main types of rpcs - unary, server
+   * side streaming, client side streaming, and bidirectional streaming. This
+   * service also exposes methods that explicitly implement server delay, and
+   * paginated calls. Set the 'showcase-trailer' metadata key on any method
+   * to have the values echoed in the response trailers. Set the 
+   * 'x-goog-request-params' metadata key on any method to have the values
+   * echoed in the response headers.
+   * </pre>
    */
   public static final class EchoStub
       extends io.grpc.stub.AbstractAsyncStub<EchoStub> {
@@ -434,6 +512,9 @@ public final class EchoGrpc {
     }
 
     /**
+     * <pre>
+     * This method simply echoes the request. This method showcases unary RPCs.
+     * </pre>
      */
     public void echo(com.google.showcase.v1beta1.EchoRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EchoResponse> responseObserver) {
@@ -442,6 +523,10 @@ public final class EchoGrpc {
     }
 
     /**
+     * <pre>
+     * This method splits the given content into words and will pass each word back
+     * through the stream. This method showcases server-side streaming RPCs.
+     * </pre>
      */
     public void expand(com.google.showcase.v1beta1.ExpandRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EchoResponse> responseObserver) {
@@ -450,6 +535,11 @@ public final class EchoGrpc {
     }
 
     /**
+     * <pre>
+     * This method will collect the words given to it. When the stream is closed
+     * by the client, this method will return the a concatenation of the strings
+     * passed to it. This method showcases client-side streaming RPCs.
+     * </pre>
      */
     public io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EchoRequest> collect(
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EchoResponse> responseObserver) {
@@ -458,6 +548,11 @@ public final class EchoGrpc {
     }
 
     /**
+     * <pre>
+     * This method, upon receiving a request on the stream, will pass the same
+     * content back on the stream. This method showcases bidirectional
+     * streaming RPCs.
+     * </pre>
      */
     public io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EchoRequest> chat(
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EchoResponse> responseObserver) {
@@ -466,6 +561,10 @@ public final class EchoGrpc {
     }
 
     /**
+     * <pre>
+     * This is similar to the Expand method but instead of returning a stream of
+     * expanded words, this method returns a paged list of expanded words.
+     * </pre>
      */
     public void pagedExpand(com.google.showcase.v1beta1.PagedExpandRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.PagedExpandResponse> responseObserver) {
@@ -474,6 +573,11 @@ public final class EchoGrpc {
     }
 
     /**
+     * <pre>
+     * This is similar to the PagedExpand except that it uses
+     * max_results instead of page_size, as some legacy APIs still
+     * do. New APIs should NOT use this pattern.
+     * </pre>
      */
     public void pagedExpandLegacy(com.google.showcase.v1beta1.PagedExpandLegacyRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.PagedExpandResponse> responseObserver) {
@@ -482,6 +586,13 @@ public final class EchoGrpc {
     }
 
     /**
+     * <pre>
+     * This method returns a map containing lists of words that appear in the input, keyed by their
+     * initial character. The only words returned are the ones included in the current page,
+     * as determined by page_token and page_size, which both refer to the word indices in the
+     * input. This paging result consisting of a map of lists is a pattern used by some legacy
+     * APIs. New APIs should NOT use this pattern.
+     * </pre>
      */
     public void pagedExpandLegacyMapped(com.google.showcase.v1beta1.PagedExpandRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.PagedExpandLegacyMappedResponse> responseObserver) {
@@ -490,6 +601,10 @@ public final class EchoGrpc {
     }
 
     /**
+     * <pre>
+     * This method will wait for the requested amount of time and then return.
+     * This method showcases how a client handles a request timeout.
+     * </pre>
      */
     public void wait(com.google.showcase.v1beta1.WaitRequest request,
         io.grpc.stub.StreamObserver<com.google.longrunning.Operation> responseObserver) {
@@ -498,6 +613,11 @@ public final class EchoGrpc {
     }
 
     /**
+     * <pre>
+     * This method will block (wait) for the requested amount of time
+     * and then return the response or error.
+     * This method showcases how a client handles delays or retries.
+     * </pre>
      */
     public void block(com.google.showcase.v1beta1.BlockRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.BlockResponse> responseObserver) {
@@ -508,6 +628,15 @@ public final class EchoGrpc {
 
   /**
    * A stub to allow clients to do synchronous rpc calls to service Echo.
+   * <pre>
+   * This service is used showcase the four main types of rpcs - unary, server
+   * side streaming, client side streaming, and bidirectional streaming. This
+   * service also exposes methods that explicitly implement server delay, and
+   * paginated calls. Set the 'showcase-trailer' metadata key on any method
+   * to have the values echoed in the response trailers. Set the 
+   * 'x-goog-request-params' metadata key on any method to have the values
+   * echoed in the response headers.
+   * </pre>
    */
   public static final class EchoBlockingStub
       extends io.grpc.stub.AbstractBlockingStub<EchoBlockingStub> {
@@ -523,6 +652,9 @@ public final class EchoGrpc {
     }
 
     /**
+     * <pre>
+     * This method simply echoes the request. This method showcases unary RPCs.
+     * </pre>
      */
     public com.google.showcase.v1beta1.EchoResponse echo(com.google.showcase.v1beta1.EchoRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -530,6 +662,10 @@ public final class EchoGrpc {
     }
 
     /**
+     * <pre>
+     * This method splits the given content into words and will pass each word back
+     * through the stream. This method showcases server-side streaming RPCs.
+     * </pre>
      */
     public java.util.Iterator<com.google.showcase.v1beta1.EchoResponse> expand(
         com.google.showcase.v1beta1.ExpandRequest request) {
@@ -538,6 +674,10 @@ public final class EchoGrpc {
     }
 
     /**
+     * <pre>
+     * This is similar to the Expand method but instead of returning a stream of
+     * expanded words, this method returns a paged list of expanded words.
+     * </pre>
      */
     public com.google.showcase.v1beta1.PagedExpandResponse pagedExpand(com.google.showcase.v1beta1.PagedExpandRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -545,6 +685,11 @@ public final class EchoGrpc {
     }
 
     /**
+     * <pre>
+     * This is similar to the PagedExpand except that it uses
+     * max_results instead of page_size, as some legacy APIs still
+     * do. New APIs should NOT use this pattern.
+     * </pre>
      */
     public com.google.showcase.v1beta1.PagedExpandResponse pagedExpandLegacy(com.google.showcase.v1beta1.PagedExpandLegacyRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -552,6 +697,13 @@ public final class EchoGrpc {
     }
 
     /**
+     * <pre>
+     * This method returns a map containing lists of words that appear in the input, keyed by their
+     * initial character. The only words returned are the ones included in the current page,
+     * as determined by page_token and page_size, which both refer to the word indices in the
+     * input. This paging result consisting of a map of lists is a pattern used by some legacy
+     * APIs. New APIs should NOT use this pattern.
+     * </pre>
      */
     public com.google.showcase.v1beta1.PagedExpandLegacyMappedResponse pagedExpandLegacyMapped(com.google.showcase.v1beta1.PagedExpandRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -559,6 +711,10 @@ public final class EchoGrpc {
     }
 
     /**
+     * <pre>
+     * This method will wait for the requested amount of time and then return.
+     * This method showcases how a client handles a request timeout.
+     * </pre>
      */
     public com.google.longrunning.Operation wait(com.google.showcase.v1beta1.WaitRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -566,6 +722,11 @@ public final class EchoGrpc {
     }
 
     /**
+     * <pre>
+     * This method will block (wait) for the requested amount of time
+     * and then return the response or error.
+     * This method showcases how a client handles delays or retries.
+     * </pre>
      */
     public com.google.showcase.v1beta1.BlockResponse block(com.google.showcase.v1beta1.BlockRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
@@ -575,6 +736,15 @@ public final class EchoGrpc {
 
   /**
    * A stub to allow clients to do ListenableFuture-style rpc calls to service Echo.
+   * <pre>
+   * This service is used showcase the four main types of rpcs - unary, server
+   * side streaming, client side streaming, and bidirectional streaming. This
+   * service also exposes methods that explicitly implement server delay, and
+   * paginated calls. Set the 'showcase-trailer' metadata key on any method
+   * to have the values echoed in the response trailers. Set the 
+   * 'x-goog-request-params' metadata key on any method to have the values
+   * echoed in the response headers.
+   * </pre>
    */
   public static final class EchoFutureStub
       extends io.grpc.stub.AbstractFutureStub<EchoFutureStub> {
@@ -590,6 +760,9 @@ public final class EchoGrpc {
     }
 
     /**
+     * <pre>
+     * This method simply echoes the request. This method showcases unary RPCs.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.EchoResponse> echo(
         com.google.showcase.v1beta1.EchoRequest request) {
@@ -598,6 +771,10 @@ public final class EchoGrpc {
     }
 
     /**
+     * <pre>
+     * This is similar to the Expand method but instead of returning a stream of
+     * expanded words, this method returns a paged list of expanded words.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.PagedExpandResponse> pagedExpand(
         com.google.showcase.v1beta1.PagedExpandRequest request) {
@@ -606,6 +783,11 @@ public final class EchoGrpc {
     }
 
     /**
+     * <pre>
+     * This is similar to the PagedExpand except that it uses
+     * max_results instead of page_size, as some legacy APIs still
+     * do. New APIs should NOT use this pattern.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.PagedExpandResponse> pagedExpandLegacy(
         com.google.showcase.v1beta1.PagedExpandLegacyRequest request) {
@@ -614,6 +796,13 @@ public final class EchoGrpc {
     }
 
     /**
+     * <pre>
+     * This method returns a map containing lists of words that appear in the input, keyed by their
+     * initial character. The only words returned are the ones included in the current page,
+     * as determined by page_token and page_size, which both refer to the word indices in the
+     * input. This paging result consisting of a map of lists is a pattern used by some legacy
+     * APIs. New APIs should NOT use this pattern.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.PagedExpandLegacyMappedResponse> pagedExpandLegacyMapped(
         com.google.showcase.v1beta1.PagedExpandRequest request) {
@@ -622,6 +811,10 @@ public final class EchoGrpc {
     }
 
     /**
+     * <pre>
+     * This method will wait for the requested amount of time and then return.
+     * This method showcases how a client handles a request timeout.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.longrunning.Operation> wait(
         com.google.showcase.v1beta1.WaitRequest request) {
@@ -630,6 +823,11 @@ public final class EchoGrpc {
     }
 
     /**
+     * <pre>
+     * This method will block (wait) for the requested amount of time
+     * and then return the response or error.
+     * This method showcases how a client handles delays or retries.
+     * </pre>
      */
     public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.BlockResponse> block(
         com.google.showcase.v1beta1.BlockRequest request) {
@@ -806,9 +1004,9 @@ public final class EchoGrpc {
   private static final class EchoMethodDescriptorSupplier
       extends EchoBaseDescriptorSupplier
       implements io.grpc.protobuf.ProtoMethodDescriptorSupplier {
-    private final String methodName;
+    private final java.lang.String methodName;
 
-    EchoMethodDescriptorSupplier(String methodName) {
+    EchoMethodDescriptorSupplier(java.lang.String methodName) {
       this.methodName = methodName;
     }
 

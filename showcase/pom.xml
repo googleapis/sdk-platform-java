@@ -13,10 +13,10 @@
   </description>
 
   <parent>
-    <groupId>com.google.api</groupId>
-    <artifactId>gapic-generator-java-bom</artifactId>
-    <version>2.23.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
-    <relativePath>../gapic-generator-java-bom</relativePath>
+    <groupId>com.google.cloud</groupId>
+    <artifactId>google-cloud-shared-config</artifactId>
+    <version>1.6.1</version>
+    <relativePath/>
   </parent>
 
   <properties>
@@ -31,6 +31,13 @@
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>com.google.cloud</groupId>
+        <artifactId>google-cloud-shared-dependencies</artifactId>
+        <version>3.18.1-SNAPSHOT</version><!-- {x-version-update:google-cloud-shared-dependencies:current} -->
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
       <dependency>
         <groupId>com.google.api.grpc</groupId>
         <artifactId>proto-gapic-showcase-v1beta1</artifactId>
@@ -101,7 +108,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
-            <version>3.0.0-M8</version>
+            <version>3.2.1</version>
             <configuration>
               <reportNameSuffix>sponge_log</reportNameSuffix>
               <skipTests>${skipUnitTests}</skipTests>
@@ -114,6 +121,64 @@
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>flatten-maven-plugin</artifactId>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>enable-golden-tests</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>3.1.0</version>
+            <inherited>false</inherited>
+            <executions>
+              <execution>
+                <id>verify-showcase</id>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <phase>test</phase>
+                <configuration>
+                  <executable>bash</executable>
+                  <arguments>
+                    <argument>scripts/verify.sh</argument>
+                  </arguments>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>update</id> <!-- updates the showcase libraries with the latest generator/showcase version -->
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>3.1.0</version>
+            <inherited>false</inherited>
+            <executions>
+              <execution>
+                <id>verify-showcase</id>
+                <goals>
+                  <goal>exec</goal>
+                </goals>
+                <phase>generate-sources</phase>
+                <configuration>
+                  <executable>bash</executable>
+                  <arguments>
+                    <argument>scripts/generate_components.sh</argument>
+                    <argument>true</argument> <!-- replace contents -->
+                    <argument>true</argument> <!-- clean generation folder -->
+                  </arguments>
+                </configuration>
+              </execution>
+            </executions>
           </plugin>
         </plugins>
       </build>
