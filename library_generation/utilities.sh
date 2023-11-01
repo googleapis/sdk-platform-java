@@ -274,6 +274,12 @@ copy_directory_if_exists() {
   fi
 }
 
+
+
+############# Utility functions #############
+# these functions are used in generate_library_integration_test.sh
+# showcase generation and downstream libraries, e.g., google-cloud-java.
+
 # Convenience function to clone only the necessary folders from a git repository
 sparse_clone() {
   repo_url=$1
@@ -290,10 +296,6 @@ sparse_clone() {
   git checkout
   popd
 }
-
-############# Utility functions #############
-# these functions are used in generate_library_integration_test.sh
-# and downstream libraries, e.g., google-cloud-java.
 
 # Obtains a version from a bazel WORKSPACE file
 #
