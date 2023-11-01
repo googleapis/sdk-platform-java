@@ -67,9 +67,11 @@ import org.threeten.bp.Duration;
  * RPC timeout gets converted into a wait timeout {@link
  * com.google.api.gax.rpc.ApiCallContext#withStreamWaitTimeout(Duration)}.
  *
- * <p>In Cloud Client Libraries, Retry and LRO Retry Settings may be configured for each service and
- * RPC. These values are set by the service teams and may be found by looking at the
- * {Service}StubSettings.java file in each library.
+ * <p>In Cloud Client Libraries, Retry and LRO Retry Settings may be configured for each RPC in a
+ * service. These values are chosen by the service teams and may be found by looking at the
+ * {Service}StubSettings.java file in each library. The default values listed below for each
+ * configuration are the default values for the RetrySettings class if there are no RPC specific
+ * configurations from the Service Team.
  */
 @AutoValue
 public abstract class RetrySettings implements Serializable {
@@ -79,9 +81,9 @@ public abstract class RetrySettings implements Serializable {
   /**
    * TotalTimeout has ultimate control over how long the logic should keep trying the remote call
    * until it gives up completely. The higher the total timeout, the more retries and polls can be
-   * attempted. If this value is {@code Duration.ZERO}, then the logic will use the number of
-   * attempts to determine retries. In the event that both maxAttempts and TotalTimeout values are
-   * both 0, the logic will not retry. If this value is non-{@code Duration.ZERO}, and the retry
+   * attempted. If this value is {@code Duration.ZERO}, then the logic will instead use the number
+   * of attempts to determine retries. In the event that both maxAttempts and totalTimeout values
+   * are both 0, the logic will not retry. If this value is non-{@code Duration.ZERO}, and the retry
    * duration has reaches the timeout value, the logic will give up retrying even the number of
    * attempts is lower than the maxAttempts value.
    *
@@ -122,16 +124,17 @@ public abstract class RetrySettings implements Serializable {
   public abstract Duration getMaxRetryDelay();
 
   /**
-   * MaxAttempts defines the maximum number of attempts to perform. If this value is set to 0, the
-   * logic will use the totalTimeout value to determine retries. In the event that both the
-   * maxAttempts and TotalTimeout values are both 0, the logic will not retry. If this value is
-   * greater than 0, and the number of attempts reaches this limit, the logic will give up retrying
-   * even if the total retry time is still lower than TotalTimeout.
+   * MaxAttempts defines the maximum number of retry attempts to perform. If this value is set to 0,
+   * the logic will instead use the totalTimeout value to determine retries. In the event that both
+   * the maxAttempts and totalTimeout values are both 0, the logic will not retry. If this value is
+   * greater than 0, and the number of attempts exceeds this limit, the logic will give up retrying
+   * even if the total retry time is still lower than totalTimeout.
    *
    * <p>If there are no configurations, Retries and LROs have the default max attempt value of
    * {@code 0}. LRO polling does not use this value by default.
    *
-   * <p>The first attempt will be considered attempt #0.
+   * <p>The first RPC invocation will be considered attempt #0. Subsequent calls (retries) will
+   * increment the number of attempts and the number of attempts will not exceed this value.
    */
   public abstract int getMaxAttempts();
 
@@ -203,11 +206,11 @@ public abstract class RetrySettings implements Serializable {
     /**
      * TotalTimeout has ultimate control over how long the logic should keep trying the remote call
      * until it gives up completely. The higher the total timeout, the more retries and polls can be
-     * attempted. If this value is {@code Duration.ZERO}, then the logic will use the number of
-     * attempts to determine retries. In the event that both maxAttempts and TotalTimeout values are
-     * both 0, the logic will not retry. If this value is non-{@code Duration.ZERO}, and the retry
-     * duration has reaches the timeout value, the logic will give up retrying even the number of
-     * attempts is lower than the maxAttempts value.
+     * attempted. If this value is {@code Duration.ZERO}, then the logic will instead use the number
+     * of attempts to determine retries. In the event that both maxAttempts and totalTimeout values
+     * are both 0, the logic will not retry. If this value is non-{@code Duration.ZERO}, and the
+     * retry duration has reaches the timeout value, the logic will give up retrying even the number
+     * of attempts is lower than the maxAttempts value.
      *
      * <p>If there are no configurations, Retries have the default timeout value of {@code
      * Duration.ZERO} and LROs have a default total timeout value of {@code
@@ -246,16 +249,17 @@ public abstract class RetrySettings implements Serializable {
     public abstract Builder setMaxRetryDelay(Duration maxDelay);
 
     /**
-     * MaxAttempts defines the maximum number of attempts to perform. If this value is set to 0, the
-     * logic will use the totalTimeout value to determine retries. In the event that both the
-     * maxAttempts and TotalTimeout values are both 0, the logic will not retry. If this value is
-     * greater than 0, and the number of attempts reaches this limit, the logic will give up
-     * retrying even if the total retry time is still lower than TotalTimeout.
+     * MaxAttempts defines the maximum number of retry attempts to perform. If this value is set to
+     * 0, the logic will instead use the totalTimeout value to determine retries. In the event that
+     * both the maxAttempts and totalTimeout values are both 0, the logic will not retry. If this
+     * value is greater than 0, and the number of attempts exceeds this limit, the logic will give
+     * up retrying even if the total retry time is still lower than totalTimeout.
      *
      * <p>If there are no configurations, Retries and LROs have the default max attempt value of
      * {@code 0}. LRO polling does not use this value by default.
      *
-     * <p>The first attempt will be considered attempt #0.
+     * <p>The first RPC invocation will be considered attempt #0. Subsequent calls (retries) will
+     * increment the number of attempts and the number of attempts will not exceed this value.
      */
     public abstract Builder setMaxAttempts(int maxAttempts);
 
@@ -305,11 +309,11 @@ public abstract class RetrySettings implements Serializable {
     /**
      * TotalTimeout has ultimate control over how long the logic should keep trying the remote call
      * until it gives up completely. The higher the total timeout, the more retries and polls can be
-     * attempted. If this value is {@code Duration.ZERO}, then the logic will use the number of
-     * attempts to determine retries. In the event that both maxAttempts and TotalTimeout values are
-     * both 0, the logic will not retry. If this value is non-{@code Duration.ZERO}, and the retry
-     * duration has reaches the timeout value, the logic will give up retrying even the number of
-     * attempts is lower than the maxAttempts value.
+     * attempted. If this value is {@code Duration.ZERO}, then the logic will instead use the number
+     * of attempts to determine retries. In the event that both maxAttempts and totalTimeout values
+     * are both 0, the logic will not retry. If this value is non-{@code Duration.ZERO}, and the
+     * retry duration has reaches the timeout value, the logic will give up retrying even the number
+     * of attempts is lower than the maxAttempts value.
      *
      * <p>If there are no configurations, Retries have the default timeout value of {@code
      * Duration.ZERO} and LROs have a default total timeout value of {@code
@@ -338,16 +342,17 @@ public abstract class RetrySettings implements Serializable {
     public abstract double getRetryDelayMultiplier();
 
     /**
-     * MaxAttempts defines the maximum number of attempts to perform. If this value is set to 0, the
-     * logic will use the totalTimeout value to determine retries. In the event that both the
-     * maxAttempts and TotalTimeout values are both 0, the logic will not retry. If this value is
-     * greater than 0, and the number of attempts reaches this limit, the logic will give up
-     * retrying even if the total retry time is still lower than TotalTimeout.
+     * MaxAttempts defines the maximum number of retry attempts to perform. If this value is set to
+     * 0, the logic will instead use the totalTimeout value to determine retries. In the event that
+     * both the maxAttempts and totalTimeout values are both 0, the logic will not retry. If this
+     * value is greater than 0, and the number of attempts exceeds this limit, the logic will give
+     * up retrying even if the total retry time is still lower than totalTimeout.
      *
      * <p>If there are no configurations, Retries and LROs have the default max attempt value of
      * {@code 0}. LRO polling does not use this value by default.
      *
-     * <p>The first attempt will be considered attempt #0.
+     * <p>The first RPC invocation will be considered attempt #0. Subsequent calls (retries) will
+     * increment the number of attempts and the number of attempts will not exceed this value.
      */
     public abstract int getMaxAttempts();
 
