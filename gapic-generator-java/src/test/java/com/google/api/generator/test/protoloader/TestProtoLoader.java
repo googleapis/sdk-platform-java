@@ -105,6 +105,34 @@ public class TestProtoLoader {
         .build();
   }
 
+  public GapicContext parseSpanner() {
+    FileDescriptor fileDescriptor = DeprecatedServiceOuterClass.getDescriptor();
+    ServiceDescriptor serviceDescriptor = fileDescriptor.getServices().get(0);
+    assertEquals(serviceDescriptor.getName(), "DeprecatedService");
+
+    Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
+    Map<String, ResourceName> resourceNames = new HashMap<>();
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(
+            fileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
+
+    String jsonFilename = "spanner_grpc_service_config.json";
+    Path jsonPath = Paths.get(testFilesDirectory, jsonFilename);
+    Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
+    assertTrue(configOpt.isPresent());
+    GapicServiceConfig config = configOpt.get();
+
+    return GapicContext.builder()
+        .setMessages(messageTypes)
+        .setResourceNames(resourceNames)
+        .setServices(services)
+        .setServiceConfig(config)
+        .setHelperResourceNames(outputResourceNames)
+        .setTransport(transport)
+        .build();
+  }
+
   public GapicContext parseBookshopService() {
     FileDescriptor fileDescriptor = BookshopProto.getDescriptor();
     ServiceDescriptor serviceDescriptor = fileDescriptor.getServices().get(0);
