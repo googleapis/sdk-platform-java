@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 set -eo pipefail
-set -x
 
 # parse input parameters
 while [[ $# -gt 0 ]]; do
@@ -61,8 +60,16 @@ case $key in
     include_samples="$2"
     shift
     ;;
+  --enable_postprocessing)
+    enable_postprocessing="$2"
+    shift
+    ;;
   --os_architecture)
     os_architecture="$2"
+    shift
+    ;;
+  --versions_file)
+    versions_file="$2"
     shift
     ;;
   *)
@@ -74,6 +81,7 @@ shift # past argument or value
 done
 
 script_dir=$(dirname "$(readlink -f "$0")")
+# source utility functions
 source "${script_dir}"/utilities.sh
 output_folder="$(get_output_folder)"
 
@@ -117,17 +125,20 @@ if [ -z "${include_samples}" ]; then
   include_samples="true"
 fi
 
+if [ -z "$enable_postprocessing" ]; then
+  enable_postprocessing="true"
+fi
+
 if [ -z "${os_architecture}" ]; then
   os_architecture=$(detect_os_architecture)
 fi
-
 
 mkdir -p "${output_folder}/${destination_path}"
 ##################### Section 0 #####################
 # prepare tooling
 #####################################################
 # the order of services entries in gapic_metadata.json is relevant to the
-# order of proto file, sort the proto files with respect to their name to
+# order of proto file, sort the proto files with respect to their bytes to
 # get a fixed order.
 folder_name=$(extract_folder_name "${destination_path}")
 pushd "${output_folder}"
@@ -137,7 +148,7 @@ case "${proto_path}" in
     find_depth="-maxdepth 1"
     ;;
 esac
-proto_files=$(find "${proto_path}" ${find_depth} -type f  -name "*.proto" | sort)
+proto_files=$(find "${proto_path}" ${find_depth} -type f  -name "*.proto" | LC_COLLATE=C sort)
 # include or exclude certain protos in grpc plugin and gapic generator java.
 case "${proto_path}" in
   "google/cloud")
@@ -280,5 +291,41 @@ popd # output_folder
 #####################################################
 pushd "${output_folder}/${destination_path}"
 rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_proto.jar temp-codegen.srcjar
-popd
-set +x
+popd # destination path
+##################### Section 5 #####################
+# post-processing
+#####################################################
+if [ "${enable_postprocessing}" != "true" ];
+then
+  echo "post processing is disabled"
+  exit 0
+fi
+if [ -z "${versions_file}" ];then
+  echo "no versions.txt argument provided. Please provide one in order to enable post-processing"
+  exit 1
+fi
+workspace="${output_folder}/workspace"
+if [ -d "${workspace}" ]; then
+  rm -rdf "${workspace}"
+fi
+
+mkdir -p "${workspace}"
+
+bash -x "${script_dir}/postprocess_library.sh" "${workspace}" \
+  "${script_dir}" \
+  "${destination_path}" \
+  "${proto_path}" \
+  "${versions_file}" \
+  "${output_folder}"
+
+# for post-procesed libraries, remove pre-processed folders
+pushd "${output_folder}/${destination_path}"
+rm -rdf "proto-${folder_name}"
+rm -rdf "grpc-${folder_name}"
+rm -rdf "gapic-${folder_name}"
+if [ "${include_samples}" == "false" ]; then
+  rm -rdf "samples"
+fi
+popd # output_folder
+# move contents of the post-processed library into destination_path
+cp -r ${workspace}/* "${output_folder}/${destination_path}"

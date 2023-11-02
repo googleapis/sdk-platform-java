@@ -66,6 +66,7 @@ bash "${SCRIPT_DIR}/../../library_generation/generate_library.sh" \
   --service_config "${service_config}" \
   --service_yaml "${service_yaml}" \
   --include_samples "${include_samples}" \
+  --enable_postprocessing "false" \
   --transport "${transport}" 
 
 exit_code=$?
