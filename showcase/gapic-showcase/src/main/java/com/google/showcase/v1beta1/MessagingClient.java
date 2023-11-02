@@ -1980,8 +1980,8 @@ public class MessagingClient implements BackgroundResource {
    * }
    * }</pre>
    *
-   * @param name
-   * @param filter
+   * @param name The name of the operation's parent resource.
+   * @param filter The standard list filter.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final ListOperationsPagedResponse listOperations(String name, String filter) {
@@ -2107,7 +2107,7 @@ public class MessagingClient implements BackgroundResource {
    * }
    * }</pre>
    *
-   * @param name
+   * @param name The name of the operation resource.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final Operation getOperation(String name) {
@@ -2176,7 +2176,7 @@ public class MessagingClient implements BackgroundResource {
    * }
    * }</pre>
    *
-   * @param name
+   * @param name The name of the operation resource to be deleted.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void deleteOperation(String name) {
@@ -2247,7 +2247,7 @@ public class MessagingClient implements BackgroundResource {
    * }
    * }</pre>
    *
-   * @param name
+   * @param name The name of the operation resource to be cancelled.
    * @throws com.google.api.gax.rpc.ApiException if the remote call fails
    */
   public final void cancelOperation(String name) {

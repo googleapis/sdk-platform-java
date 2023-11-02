@@ -279,6 +279,7 @@ public class Parser {
                         outputArgResourceNames,
                         transport)
                         .stream())
+            .sorted((s1, s2) -> s2.name().compareTo(s1.name()))
             .collect(Collectors.toList());
     // Holds the methods to be mixed in.
     // Key: proto_package.ServiceName.RpcName.
@@ -307,9 +308,13 @@ public class Parser {
       }
     }
 
+    Function<Service, String> serviceFullNameFn =
+        s -> String.format("%s.%s", s.protoPakkage(), s.name());
+    Set<String> mixinServiceFullNames =
+        mixinServices.stream().map(serviceFullNameFn).collect(Collectors.toSet());
     Set<String> apiDefinedRpcs = new HashSet<>();
     for (Service service : services) {
-      if (mixinServices.contains(service)) {
+      if (mixinServiceFullNames.contains(serviceFullNameFn.apply(service))) {
         continue;
       }
       apiDefinedRpcs.addAll(
@@ -317,8 +322,6 @@ public class Parser {
     }
 
     Set<Service> outputMixinServiceSet = new HashSet<>();
-    Function<Service, String> serviceFullNameFn =
-        s -> String.format("%s.%s", s.protoPakkage(), s.name());
     if (!mixinServices.isEmpty()) {
       for (int i = 0; i < services.size(); i++) {
         Service originalService = services.get(i);
