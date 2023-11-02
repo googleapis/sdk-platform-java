@@ -256,28 +256,30 @@ public class Parser {
     }
 
     // Mixin services that are stated in the service yaml file.
-    List<Service> mixinServices =
+    Set<String> mixinApis =
         serviceYamlProtoOpt
             .map(
-                value ->
-                    value.getApisList().stream()
+                opt ->
+                    opt.getApisList().stream()
                         .map(Api::getName)
                         .filter(MIXIN_ALLOWLIST::containsKey)
-                        .flatMap(
-                            mixinApi ->
-                                parseService(
-                                    MIXIN_ALLOWLIST.get(mixinApi),
-                                    messageTypes,
-                                    resourceNames,
-                                    serviceYamlProtoOpt,
-                                    serviceConfigOpt,
-                                    outputArgResourceNames,
-                                    transport)
-                                    .stream())
-                        .sorted((s1, s2) -> s2.name().compareTo(s1.name()))
-                        .distinct()
-                        .collect(Collectors.toList()))
-            .orElse(Collections.emptyList());
+                        .collect(Collectors.toSet()))
+            .orElse(Collections.emptySet());
+
+    List<Service> mixinServices =
+        mixinApis.stream()
+            .flatMap(
+                mixinApi ->
+                    parseService(
+                        MIXIN_ALLOWLIST.get(mixinApi),
+                        messageTypes,
+                        resourceNames,
+                        serviceYamlProtoOpt,
+                        serviceConfigOpt,
+                        outputArgResourceNames,
+                        transport)
+                        .stream())
+            .collect(Collectors.toList());
     // Holds the methods to be mixed in.
     // Key: proto_package.ServiceName.RpcName.
     // Value: HTTP rules, which clobber those in the proto.
@@ -1054,7 +1056,7 @@ public class Parser {
     }
     // always add Mixin protos.
     MIXIN_ALLOWLIST.forEach(
-        (k, descriptor) -> fileDescriptors.put(descriptor.getFullName(), descriptor));
+        (k, descriptor) -> fileDescriptors.putIfAbsent(descriptor.getFullName(), descriptor));
 
     return fileDescriptors;
   }
