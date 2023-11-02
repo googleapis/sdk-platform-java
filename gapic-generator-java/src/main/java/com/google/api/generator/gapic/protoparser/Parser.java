@@ -73,6 +73,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -279,7 +280,7 @@ public class Parser {
                         outputArgResourceNames,
                         transport)
                         .stream())
-            .sorted((s1, s2) -> s2.name().compareTo(s1.name()))
+            .sorted(Comparator.comparing(Service::name).reversed())
             .collect(Collectors.toList());
     // Holds the methods to be mixed in.
     // Key: proto_package.ServiceName.RpcName.
@@ -387,7 +388,7 @@ public class Parser {
     // Use a list to ensure ordering for deterministic tests.
     outputMixinServices.addAll(
         outputMixinServiceSet.stream()
-            .sorted((s1, s2) -> s2.name().compareTo(s1.name()))
+            .sorted(Comparator.comparing(Service::name).reversed())
             .collect(Collectors.toList()));
     // likely standalone Mixin services if definedServices is empty.
     return !definedServices.isEmpty() ? definedServices : services;
