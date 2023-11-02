@@ -30,8 +30,11 @@
 package com.google.api.gax.rpc;
 
 import com.google.api.core.InternalApi;
+import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.auth.Credentials;
 import com.google.auto.value.AutoValue;
+import com.google.common.annotations.VisibleForTesting;
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.Nullable;
@@ -41,8 +44,10 @@ import javax.annotation.Nullable;
 public abstract class EndpointContext {
   private static final String DEFAULT_UNIVERSE_DOMAIN = "googleapis.com";
   private static final String DEFAULT_PORT = "443";
-  private static final String UNIVERSE_DOMAIN_TEMPLATE = "SERVICE_NAME.UNIVERSE_DOMAIN:PORT";
-  private static final Pattern ENDPOINT_REGEX = Pattern.compile("^[a-zA-Z]+\\.[\\S]+:\\d+$");
+  private static final String UNIVERSE_DOMAIN_TEMPLATE =
+      "https://SERVICE_NAME.UNIVERSE_DOMAIN:PORT";
+  private static final Pattern ENDPOINT_REGEX =
+      Pattern.compile("^(https\\:\\/\\/)?(www.)?[a-zA-Z]+\\.[\\S]+(\\:\\d)?$");
 
   @Nullable
   public abstract String clientSettingsEndpoint();
@@ -58,6 +63,10 @@ public abstract class EndpointContext {
   @Nullable
   public abstract String universeDomain();
 
+  @VisibleForTesting
+  @Nullable
+  public abstract MtlsProvider mtlsProvider();
+
   public abstract Builder toBuilder();
 
   private String resolvedEndpoint;
@@ -70,7 +79,7 @@ public abstract class EndpointContext {
   // By default, the clientSettingsEndpoint value is the default_host endpoint
   // value configured in the service. Users can override this value by the Setter
   // exposed in the Client/Stub Settings or in the TransportChannelProvider.
-  private void determineEndpoint() {
+  private void determineEndpoint() throws IOException {
     if (resolvedEndpoint != null && resolvedUniverseDomain != null) {
       return;
     }
@@ -88,11 +97,50 @@ public abstract class EndpointContext {
       // throw new Exception("Invalid endpoint: " + customEndpoint);
       return;
     }
+
+    MtlsProvider mtlsProvider = mtlsProvider() == null ? new MtlsProvider() : mtlsProvider();
+    boolean isUsingMtlsEndpoint = false;
+    if (switchToMtlsEndpointAllowed() && mtlsProvider != null) {
+      switch (mtlsProvider.getMtlsEndpointUsagePolicy()) {
+        case ALWAYS:
+          customEndpoint = mtlsEndpoint();
+          isUsingMtlsEndpoint = true;
+          break;
+        case NEVER:
+          // CustomEndpoint is already set
+          break;
+        default:
+          if (mtlsProvider.useMtlsClientCertificate() && mtlsProvider.getKeyStore() != null) {
+            customEndpoint = mtlsEndpoint();
+            isUsingMtlsEndpoint = true;
+            break;
+          }
+      }
+    }
+    // mTLS is not supported yet. If mTLS is enabled, use that endpoint.
+    if (isUsingMtlsEndpoint) {
+      resolvedEndpoint = mtlsEndpoint();
+      resolvedUniverseDomain = DEFAULT_UNIVERSE_DOMAIN;
+      return;
+    }
+
+    if (customEndpoint.contains("https://")) {
+      customEndpoint = customEndpoint.substring(8);
+    }
+
     int periodIndex = customEndpoint.indexOf('.');
     int colonIndex = customEndpoint.indexOf(':');
-    String serviceName = customEndpoint.substring(0, periodIndex);
-    String universeDomain = customEndpoint.substring(periodIndex + 1, colonIndex);
-    String port = customEndpoint.substring(colonIndex + 1);
+    String serviceName;
+    String universeDomain;
+    String port = "443";
+    if (colonIndex != -1) {
+      universeDomain = customEndpoint.substring(periodIndex + 1, colonIndex);
+      port = customEndpoint.substring(colonIndex + 1);
+    } else {
+      universeDomain = customEndpoint.substring(periodIndex + 1);
+    }
+    serviceName = customEndpoint.substring(0, periodIndex);
+
     // TODO: Build out logic for resolving endpoint
     resolvedEndpoint = buildEndpoint(serviceName, universeDomain, port);
     resolvedUniverseDomain = universeDomain;
@@ -109,14 +157,14 @@ public abstract class EndpointContext {
         .replace("PORT", port);
   }
 
-  public String resolveEndpoint(Credentials credentials) {
+  public String resolveEndpoint(Credentials credentials) throws IOException {
     if (resolvedEndpoint == null) {
       determineEndpoint();
     }
     return resolvedEndpoint;
   }
 
-  public String resolveUniverseDomain(Credentials credentials) {
+  public String resolveUniverseDomain(Credentials credentials) throws IOException {
     if (resolvedUniverseDomain == null) {
       determineEndpoint();
     }
@@ -134,6 +182,9 @@ public abstract class EndpointContext {
     public abstract Builder setSwitchToMtlsEndpointAllowed(boolean switchToMtlsEndpointAllowed);
 
     public abstract Builder setUniverseDomain(String universeDomain);
+
+    @VisibleForTesting
+    public abstract Builder setMtlsProvider(MtlsProvider mtlsProvider);
 
     public abstract EndpointContext build();
   }

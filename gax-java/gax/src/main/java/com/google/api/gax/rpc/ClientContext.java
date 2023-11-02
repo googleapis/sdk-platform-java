@@ -37,7 +37,6 @@ import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.ExecutorAsBackgroundResource;
 import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.rpc.internal.QuotaProjectIdHidingCredentials;
-import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.api.gax.tracing.BaseApiTracerFactory;
 import com.google.auth.Credentials;
@@ -146,29 +145,6 @@ public abstract class ClientContext {
     return create(settings.getStubSettings());
   }
 
-  /** Returns the endpoint that should be used. See https://google.aip.dev/auth/4114. */
-  static String getEndpoint(
-      String endpoint,
-      String mtlsEndpoint,
-      boolean switchToMtlsEndpointAllowed,
-      MtlsProvider mtlsProvider)
-      throws IOException {
-    if (switchToMtlsEndpointAllowed) {
-      switch (mtlsProvider.getMtlsEndpointUsagePolicy()) {
-        case ALWAYS:
-          return mtlsEndpoint;
-        case NEVER:
-          return endpoint;
-        default:
-          if (mtlsProvider.useMtlsClientCertificate() && mtlsProvider.getKeyStore() != null) {
-            return mtlsEndpoint;
-          }
-          return endpoint;
-      }
-    }
-    return endpoint;
-  }
-
   /**
    * Instantiates the executor, credentials, and transport context based on the given client
    * settings.
@@ -187,8 +163,8 @@ public abstract class ClientContext {
       String audienceString;
       if (!Strings.isNullOrEmpty(settingsGdchApiAudience)) {
         audienceString = settingsGdchApiAudience;
-      } else if (!Strings.isNullOrEmpty(settings.getEndpoint())) {
-        audienceString = settings.getEndpoint();
+      } else if (!Strings.isNullOrEmpty(settings.getUnresolvedEndpoint())) {
+        audienceString = settings.getUnresolvedEndpoint();
       } else {
         throw new IllegalArgumentException("Could not infer GDCH api audience from settings");
       }
@@ -230,12 +206,6 @@ public abstract class ClientContext {
     EndpointContext endpointContext = settings.getEndpointContext();
     String endpoint = endpointContext.resolveEndpoint(credentials);
     String universeDomain = endpointContext.resolveUniverseDomain(credentials);
-    //    String endpoint =
-    //        getEndpoint(
-    //            settings.getEndpoint(),
-    //            settings.getMtlsEndpoint(),
-    //            settings.getSwitchToMtlsEndpointAllowed(),
-    //            new MtlsProvider());
     if (transportChannelProvider.needsEndpoint()) {
       transportChannelProvider = transportChannelProvider.withEndpoint(endpoint);
     }

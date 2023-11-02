@@ -32,6 +32,7 @@ package com.google.api.gax.rpc;
 import com.google.api.core.ApiClock;
 import com.google.api.core.ApiFunction;
 import com.google.api.core.BetaApi;
+import com.google.api.core.InternalApi;
 import com.google.api.core.NanoClock;
 import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.ExecutorProvider;
@@ -141,12 +142,36 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     return clock;
   }
 
+  /**
+   * Resolves the endpoint with the correct Universe Domain
+   *
+   * @return Resolved Endpoint or null if there is any issue resolving it
+   */
   public final String getEndpoint() {
+    try {
+      return endpointContext.resolveEndpoint(null);
+    } catch (IOException e) {
+      return null;
+    }
+  }
+
+  // This is to return the custom user set endpoint for GDC-H
+  @InternalApi
+  final String getUnresolvedEndpoint() {
     return endpoint;
   }
 
+  /**
+   * Resolves the Universe Domain
+   *
+   * @return Resolved Universe Domain or null if there is any issue resolving it
+   */
   public final String getUniverseDomain() {
-    return universeDomain;
+    try {
+      return endpointContext.resolveUniverseDomain(null);
+    } catch (IOException e) {
+      return null;
+    }
   }
 
   public final String getMtlsEndpoint() {

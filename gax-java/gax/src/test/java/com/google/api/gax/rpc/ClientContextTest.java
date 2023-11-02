@@ -633,8 +633,8 @@ public class ClientContextTest {
         .containsEntry("user-agent", "user-supplied-agent internal-agent");
   }
 
-  private static String endpoint = "https://foo.googleapis.com";
-  private static String mtlsEndpoint = "https://foo.mtls.googleapis.com";
+  private static String endpoint = "https://foo.googleapis.com:443";
+  private static String mtlsEndpoint = "https://foo.mtls.googleapis.com:443";
 
   @Test
   public void testAutoUseMtlsEndpoint() throws IOException {
@@ -647,8 +647,14 @@ public class ClientContextTest {
             FakeMtlsProvider.createTestMtlsKeyStore(),
             "",
             false);
-    String endpointSelected =
-        ClientContext.getEndpoint(endpoint, mtlsEndpoint, switchToMtlsEndpointAllowed, provider);
+    EndpointContext endpointContext =
+        EndpointContext.newBuilder()
+            .setClientSettingsEndpoint(endpoint)
+            .setMtlsEndpoint(mtlsEndpoint)
+            .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)
+            .setMtlsProvider(provider)
+            .build();
+    String endpointSelected = endpointContext.resolveEndpoint(null);
     assertEquals(mtlsEndpoint, endpointSelected);
   }
 
@@ -664,8 +670,14 @@ public class ClientContextTest {
             FakeMtlsProvider.createTestMtlsKeyStore(),
             "",
             false);
-    String endpointSelected =
-        ClientContext.getEndpoint(endpoint, mtlsEndpoint, switchToMtlsEndpointAllowed, provider);
+    EndpointContext endpointContext =
+        EndpointContext.newBuilder()
+            .setClientSettingsEndpoint(endpoint)
+            .setMtlsEndpoint(mtlsEndpoint)
+            .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)
+            .setMtlsProvider(provider)
+            .build();
+    String endpointSelected = endpointContext.resolveEndpoint(null);
     assertEquals(endpoint, endpointSelected);
   }
 
@@ -675,8 +687,14 @@ public class ClientContextTest {
     boolean switchToMtlsEndpointAllowed = true;
     MtlsProvider provider =
         new FakeMtlsProvider(true, MtlsEndpointUsagePolicy.AUTO, null, "", false);
-    String endpointSelected =
-        ClientContext.getEndpoint(endpoint, mtlsEndpoint, switchToMtlsEndpointAllowed, provider);
+    EndpointContext endpointContext =
+        EndpointContext.newBuilder()
+            .setClientSettingsEndpoint(endpoint)
+            .setMtlsEndpoint(mtlsEndpoint)
+            .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)
+            .setMtlsProvider(provider)
+            .build();
+    String endpointSelected = endpointContext.resolveEndpoint(null);
     assertEquals(endpoint, endpointSelected);
   }
 
@@ -686,8 +704,14 @@ public class ClientContextTest {
     boolean switchToMtlsEndpointAllowed = true;
     MtlsProvider provider =
         new FakeMtlsProvider(false, MtlsEndpointUsagePolicy.ALWAYS, null, "", false);
-    String endpointSelected =
-        ClientContext.getEndpoint(endpoint, mtlsEndpoint, switchToMtlsEndpointAllowed, provider);
+    EndpointContext endpointContext =
+        EndpointContext.newBuilder()
+            .setClientSettingsEndpoint(endpoint)
+            .setMtlsEndpoint(mtlsEndpoint)
+            .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)
+            .setMtlsProvider(provider)
+            .build();
+    String endpointSelected = endpointContext.resolveEndpoint(null);
     assertEquals(mtlsEndpoint, endpointSelected);
   }
 
@@ -702,8 +726,14 @@ public class ClientContextTest {
             FakeMtlsProvider.createTestMtlsKeyStore(),
             "",
             false);
-    String endpointSelected =
-        ClientContext.getEndpoint(endpoint, mtlsEndpoint, switchToMtlsEndpointAllowed, provider);
+    EndpointContext endpointContext =
+        EndpointContext.newBuilder()
+            .setClientSettingsEndpoint(endpoint)
+            .setMtlsEndpoint(mtlsEndpoint)
+            .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)
+            .setMtlsProvider(provider)
+            .build();
+    String endpointSelected = endpointContext.resolveEndpoint(null);
     assertEquals(endpoint, endpointSelected);
   }
 
@@ -714,7 +744,14 @@ public class ClientContextTest {
       boolean switchToMtlsEndpointAllowed = true;
       MtlsProvider provider =
           new FakeMtlsProvider(true, MtlsEndpointUsagePolicy.AUTO, null, "", true);
-      ClientContext.getEndpoint(endpoint, mtlsEndpoint, switchToMtlsEndpointAllowed, provider);
+      EndpointContext endpointContext =
+          EndpointContext.newBuilder()
+              .setClientSettingsEndpoint(endpoint)
+              .setMtlsEndpoint(mtlsEndpoint)
+              .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)
+              .setMtlsProvider(provider)
+              .build();
+      String endpointSelected = endpointContext.resolveEndpoint(null);
       fail("should throw an exception");
     } catch (IOException e) {
       assertTrue(
