@@ -49,4 +49,8 @@ public class UnmanagedDependencyCheck {
         .map(artifact -> String.format("%s:%s", artifact.getGroupId(), artifact.getArtifactId()))
         .collect(Collectors.toSet());
   }
+
+  private UnmanagedDependencyCheck() {
+
+  }
 }
