@@ -272,7 +272,7 @@ public class Parser {
             .flatMap(
                 mixinApi ->
                     parseService(
-                        MIXIN_ALLOWLIST.get(mixinApi),
+                        fileDescriptors.get(MIXIN_ALLOWLIST.get(mixinApi).getFullName()),
                         messageTypes,
                         resourceNames,
                         serviceYamlProtoOpt,
