@@ -3,6 +3,7 @@ package com.google.cloud;
 import com.google.cloud.tools.opensource.dependencies.Bom;
 import com.google.cloud.tools.opensource.dependencies.MavenRepositoryException;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.eclipse.aether.resolution.ArtifactDescriptorException;
@@ -11,13 +12,14 @@ public class UnmanagedDependencyCheck {
 
   /**
    * Returns dependency coordinates that are not managed by shared dependency BOM.
-   * @param sharedDependencyVersion
-   * @param projectBomPath
-   * @return
+   *
+   * @param sharedDependencyVersion the version of shared dependency BOM
+   * @param projectBomPath the path of current project BOM
+   * @return a list of unmanaged dependencies by the given version of shared dependency BOM
    * @throws ArtifactDescriptorException
    * @throws MavenRepositoryException
    */
-  public static String outputUnmanagedDependencies(
+  public static List<String> getUnmanagedDependencies(
       String sharedDependencyVersion, String projectBomPath)
       throws ArtifactDescriptorException, MavenRepositoryException {
     Set<String> sharedDependencies = getSharedDependencies(sharedDependencyVersion);
@@ -25,7 +27,7 @@ public class UnmanagedDependencyCheck {
 
     return managedDependencies.stream()
         .filter(dependency -> !sharedDependencies.contains(dependency))
-        .collect(Collectors.joining());
+        .collect(Collectors.toList());
   }
 
   private static Set<String> getSharedDependencies(String sharedDependencyVersion)
