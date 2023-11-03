@@ -43,6 +43,10 @@ import java.util.concurrent.CancellationException;
  * algorithm cancels polling.
  */
 public class OperationTimedPollAlgorithm extends ExponentialRetryAlgorithm {
+
+  public static final String LRO_TROUBLESHOOTING_LINK =
+      "https://github.com/googleapis/google-cloud-java#lro-timeouts";
+
   /**
    * Creates the polling algorithm, using the default {@code NanoClock} for time computations.
    *
@@ -79,7 +83,7 @@ public class OperationTimedPollAlgorithm extends ExponentialRetryAlgorithm {
     }
     throw new CancellationException(
         "The task has been cancelled. Please refer to "
-            + "https://github.com/googleapis/google-cloud-java#lro-timeouts for more information");
+            + LRO_TROUBLESHOOTING_LINK + " for more information");
   }
 
   // Note: if the potential time spent is exactly equal to the totalTimeout,
