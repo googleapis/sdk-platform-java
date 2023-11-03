@@ -82,9 +82,6 @@ public abstract class EndpointContext {
     return new AutoValue_EndpointContext.Builder().setSwitchToMtlsEndpointAllowed(false);
   }
 
-  // By default, the clientSettingsEndpoint value is the default_host endpoint
-  // value configured in the service. Users can override this value by the Setter
-  // exposed in the Client/Stub Settings or in the TransportChannelProvider.
   @VisibleForTesting
   void determineEndpoint() throws IOException {
     if (resolvedEndpoint != null && resolvedUniverseDomain != null) {
@@ -93,7 +90,7 @@ public abstract class EndpointContext {
     MtlsProvider mtlsProvider = mtlsProvider() == null ? new MtlsProvider() : mtlsProvider();
     String customEndpoint =
         transportChannelEndpoint() != null ? transportChannelEndpoint() : clientSettingsEndpoint();
-    // This means that there are no user configured endpoints, use the default endpoint
+    // If there are no user configured endpoints, use the default endpoints
     if (customEndpoint == null) {
       if (switchToMtlsEndpointAllowed() && mtlsProvider != null) {
         resolvedEndpoint =
@@ -105,7 +102,8 @@ public abstract class EndpointContext {
       return;
     }
     Matcher matcher = ENDPOINT_REGEX.matcher(customEndpoint);
-    // Check if it matches the ENDPOINT_TEMPLATE format
+    // Check if it matches the ENDPOINT_TEMPLATE format, otherwise use the
+    // custom set endpoint
     if (!matcher.matches()) {
       resolvedEndpoint = customEndpoint;
       resolvedUniverseDomain = GOOGLE_DEFAULT_UNIVERSE;
@@ -126,11 +124,12 @@ public abstract class EndpointContext {
       customEndpoint = customEndpoint.substring(8);
     }
 
+    // Parse the custom endpoint for the service name, universe domain, and the port
     int periodIndex = customEndpoint.indexOf('.');
     int colonIndex = customEndpoint.indexOf(':');
     String serviceName = customEndpoint.substring(0, periodIndex);
     String universeDomain;
-    String port = "443";
+    String port = DEFAULT_PORT;
     if (colonIndex != -1) {
       universeDomain = customEndpoint.substring(periodIndex + 1, colonIndex);
       port = customEndpoint.substring(colonIndex + 1);
