@@ -516,8 +516,8 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
       builder.setTransportChannelProvider(defaultTransportChannelProvider());
       builder.setCredentialsProvider(defaultCredentialsProviderBuilder().build());
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
-      builder.setEndpoint(getDefaultEndpoint());
-      builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
+      builder.setDefaultEndpoint(getDefaultEndpoint());
+      builder.setDefaultMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
 
       return initDefaults(builder);
@@ -529,8 +529,8 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
       builder.setTransportChannelProvider(defaultHttpJsonTransportProviderBuilder().build());
       builder.setCredentialsProvider(defaultCredentialsProviderBuilder().build());
       builder.setInternalHeaderProvider(defaultHttpJsonApiClientHeaderProviderBuilder().build());
-      builder.setEndpoint(getDefaultEndpoint());
-      builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
+      builder.setDefaultEndpoint(getDefaultEndpoint());
+      builder.setDefaultMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
 
       return initDefaults(builder);

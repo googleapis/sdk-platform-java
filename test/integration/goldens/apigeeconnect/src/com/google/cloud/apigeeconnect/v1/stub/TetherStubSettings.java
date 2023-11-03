@@ -223,8 +223,8 @@ public class TetherStubSettings extends StubSettings<TetherStubSettings> {
       builder.setTransportChannelProvider(defaultTransportChannelProvider());
       builder.setCredentialsProvider(defaultCredentialsProviderBuilder().build());
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
-      builder.setEndpoint(getDefaultEndpoint());
-      builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
+      builder.setDefaultEndpoint(getDefaultEndpoint());
+      builder.setDefaultMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
 
       return initDefaults(builder);

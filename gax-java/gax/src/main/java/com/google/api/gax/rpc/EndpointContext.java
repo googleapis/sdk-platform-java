@@ -42,12 +42,18 @@ import javax.annotation.Nullable;
 @InternalApi
 @AutoValue
 public abstract class EndpointContext {
-  private static final String DEFAULT_UNIVERSE_DOMAIN = "googleapis.com";
+  private static final String GOOGLE_DEFAULT_UNIVERSE = "googleapis.com";
   private static final String DEFAULT_PORT = "443";
   private static final String UNIVERSE_DOMAIN_TEMPLATE =
       "https://SERVICE_NAME.UNIVERSE_DOMAIN:PORT";
   private static final Pattern ENDPOINT_REGEX =
       Pattern.compile("^(https\\:\\/\\/)?(www.)?[a-zA-Z]+\\.[\\S]+(\\:\\d)?$");
+
+  @Nullable
+  public abstract String defaultEndpoint();
+
+  @Nullable
+  public abstract String defaultMtlsEndpoint();
 
   @Nullable
   public abstract String clientSettingsEndpoint();
@@ -79,48 +85,40 @@ public abstract class EndpointContext {
   // By default, the clientSettingsEndpoint value is the default_host endpoint
   // value configured in the service. Users can override this value by the Setter
   // exposed in the Client/Stub Settings or in the TransportChannelProvider.
-  private void determineEndpoint() throws IOException {
+  @VisibleForTesting
+  void determineEndpoint() throws IOException {
     if (resolvedEndpoint != null && resolvedUniverseDomain != null) {
       return;
     }
+    MtlsProvider mtlsProvider = mtlsProvider() == null ? new MtlsProvider() : mtlsProvider();
     String customEndpoint =
         transportChannelEndpoint() != null ? transportChannelEndpoint() : clientSettingsEndpoint();
-    // If both endpoint values are null, the client is unable to parse the serviceName
+    // This means that there are no user configured endpoints, use the default endpoint
     if (customEndpoint == null) {
-      // throw new Exception("No endpoint was set for the client");
+      if (switchToMtlsEndpointAllowed() && mtlsProvider != null) {
+        resolvedEndpoint =
+            mtlsEndpointResolver(mtlsProvider, defaultEndpoint(), defaultMtlsEndpoint());
+      } else {
+        resolvedEndpoint = defaultEndpoint();
+      }
+      resolvedUniverseDomain = GOOGLE_DEFAULT_UNIVERSE;
       return;
     }
     Matcher matcher = ENDPOINT_REGEX.matcher(customEndpoint);
-    // Check if it matches the format in the template
+    // Check if it matches the ENDPOINT_TEMPLATE format
     if (!matcher.matches()) {
-      // Throw an exception if user's endpoint is not valid
-      // throw new Exception("Invalid endpoint: " + customEndpoint);
+      resolvedEndpoint = customEndpoint;
+      resolvedUniverseDomain = GOOGLE_DEFAULT_UNIVERSE;
       return;
     }
 
-    MtlsProvider mtlsProvider = mtlsProvider() == null ? new MtlsProvider() : mtlsProvider();
-    boolean isUsingMtlsEndpoint = false;
     if (switchToMtlsEndpointAllowed() && mtlsProvider != null) {
-      switch (mtlsProvider.getMtlsEndpointUsagePolicy()) {
-        case ALWAYS:
-          customEndpoint = mtlsEndpoint();
-          isUsingMtlsEndpoint = true;
-          break;
-        case NEVER:
-          // CustomEndpoint is already set
-          break;
-        default:
-          if (mtlsProvider.useMtlsClientCertificate() && mtlsProvider.getKeyStore() != null) {
-            customEndpoint = mtlsEndpoint();
-            isUsingMtlsEndpoint = true;
-            break;
-          }
-      }
+      customEndpoint = mtlsEndpointResolver(mtlsProvider, customEndpoint, defaultMtlsEndpoint());
     }
-    // mTLS is not supported yet. If mTLS is enabled, use that endpoint.
-    if (isUsingMtlsEndpoint) {
-      resolvedEndpoint = mtlsEndpoint();
-      resolvedUniverseDomain = DEFAULT_UNIVERSE_DOMAIN;
+    // mTLS will always be in the GDU, for now
+    if (customEndpoint.contains("mtls")) {
+      resolvedEndpoint = customEndpoint;
+      resolvedUniverseDomain = GOOGLE_DEFAULT_UNIVERSE;
       return;
     }
 
@@ -130,7 +128,7 @@ public abstract class EndpointContext {
 
     int periodIndex = customEndpoint.indexOf('.');
     int colonIndex = customEndpoint.indexOf(':');
-    String serviceName;
+    String serviceName = customEndpoint.substring(0, periodIndex);
     String universeDomain;
     String port = "443";
     if (colonIndex != -1) {
@@ -139,15 +137,25 @@ public abstract class EndpointContext {
     } else {
       universeDomain = customEndpoint.substring(periodIndex + 1);
     }
-    serviceName = customEndpoint.substring(0, periodIndex);
 
     // TODO: Build out logic for resolving endpoint
     resolvedEndpoint = buildEndpoint(serviceName, universeDomain, port);
     resolvedUniverseDomain = universeDomain;
   }
 
-  private String buildEndpoint(String serviceName) {
-    return buildEndpoint(serviceName, DEFAULT_UNIVERSE_DOMAIN, DEFAULT_PORT);
+  private String mtlsEndpointResolver(
+      MtlsProvider mtlsProvider, String endpoint, String mtlsEndpoint) throws IOException {
+    switch (mtlsProvider.getMtlsEndpointUsagePolicy()) {
+      case ALWAYS:
+        return mtlsEndpoint;
+      case NEVER:
+        return endpoint;
+      default:
+        if (mtlsProvider.useMtlsClientCertificate() && mtlsProvider.getKeyStore() != null) {
+          return mtlsEndpoint;
+        }
+        return endpoint;
+    }
   }
 
   private String buildEndpoint(String serviceName, String universeDomain, String port) {
@@ -173,6 +181,10 @@ public abstract class EndpointContext {
 
   @AutoValue.Builder
   public abstract static class Builder {
+    protected abstract Builder setDefaultEndpoint(String defaultEndpoint);
+
+    protected abstract Builder setDefaultMtlsEndpoint(String defaultMtlsEndpiont);
+
     public abstract Builder setClientSettingsEndpoint(String clientSettingsEndpoint);
 
     public abstract Builder setTransportChannelEndpoint(String transportChannelEndpoint);

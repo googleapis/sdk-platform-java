@@ -649,8 +649,8 @@ public class ClientContextTest {
             false);
     EndpointContext endpointContext =
         EndpointContext.newBuilder()
-            .setClientSettingsEndpoint(endpoint)
-            .setMtlsEndpoint(mtlsEndpoint)
+            .setDefaultEndpoint(endpoint)
+            .setDefaultMtlsEndpoint(mtlsEndpoint)
             .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)
             .setMtlsProvider(provider)
             .build();
@@ -672,8 +672,8 @@ public class ClientContextTest {
             false);
     EndpointContext endpointContext =
         EndpointContext.newBuilder()
-            .setClientSettingsEndpoint(endpoint)
-            .setMtlsEndpoint(mtlsEndpoint)
+            .setDefaultEndpoint(endpoint)
+            .setDefaultMtlsEndpoint(mtlsEndpoint)
             .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)
             .setMtlsProvider(provider)
             .build();
@@ -689,8 +689,8 @@ public class ClientContextTest {
         new FakeMtlsProvider(true, MtlsEndpointUsagePolicy.AUTO, null, "", false);
     EndpointContext endpointContext =
         EndpointContext.newBuilder()
-            .setClientSettingsEndpoint(endpoint)
-            .setMtlsEndpoint(mtlsEndpoint)
+            .setDefaultEndpoint(endpoint)
+            .setDefaultMtlsEndpoint(mtlsEndpoint)
             .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)
             .setMtlsProvider(provider)
             .build();
@@ -706,8 +706,8 @@ public class ClientContextTest {
         new FakeMtlsProvider(false, MtlsEndpointUsagePolicy.ALWAYS, null, "", false);
     EndpointContext endpointContext =
         EndpointContext.newBuilder()
-            .setClientSettingsEndpoint(endpoint)
-            .setMtlsEndpoint(mtlsEndpoint)
+            .setDefaultEndpoint(endpoint)
+            .setDefaultMtlsEndpoint(mtlsEndpoint)
             .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)
             .setMtlsProvider(provider)
             .build();
@@ -728,8 +728,8 @@ public class ClientContextTest {
             false);
     EndpointContext endpointContext =
         EndpointContext.newBuilder()
-            .setClientSettingsEndpoint(endpoint)
-            .setMtlsEndpoint(mtlsEndpoint)
+            .setDefaultEndpoint(endpoint)
+            .setDefaultMtlsEndpoint(mtlsEndpoint)
             .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)
             .setMtlsProvider(provider)
             .build();
@@ -746,8 +746,8 @@ public class ClientContextTest {
           new FakeMtlsProvider(true, MtlsEndpointUsagePolicy.AUTO, null, "", true);
       EndpointContext endpointContext =
           EndpointContext.newBuilder()
-              .setClientSettingsEndpoint(endpoint)
-              .setMtlsEndpoint(mtlsEndpoint)
+              .setDefaultEndpoint(endpoint)
+              .setDefaultMtlsEndpoint(mtlsEndpoint)
               .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)
               .setMtlsProvider(provider)
               .build();
