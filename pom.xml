@@ -23,7 +23,6 @@
     <module>java-core</module>
     <module>gapic-generator-java-bom</module>
     <module>java-shared-dependencies</module>
-    <module>java-shared-dependencies/unmanaged-dependency-check</module>
   </modules>
   <!-- Do not deploy the aggregator POM -->
   <build>
