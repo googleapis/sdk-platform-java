@@ -51,6 +51,6 @@ public class UnmanagedDependencyCheck {
   }
 
   private UnmanagedDependencyCheck() {
-
+    throw new IllegalStateException("Utility class");
   }
 }
