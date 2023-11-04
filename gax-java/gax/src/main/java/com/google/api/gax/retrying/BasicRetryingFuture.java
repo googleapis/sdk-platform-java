@@ -67,6 +67,8 @@ class BasicRetryingFuture<ResponseT> extends AbstractFuture<ResponseT>
   private volatile ApiFuture<ResponseT> latestCompletedAttemptResult;
   private volatile ApiFuture<ResponseT> attemptResult;
 
+  private volatile CancellationException customCancellationException = null;
+
   private static final Logger LOG = Logger.getLogger(BasicRetryingFuture.class.getName());
 
   BasicRetryingFuture(
@@ -205,6 +207,9 @@ class BasicRetryingFuture<ResponseT> extends AbstractFuture<ResponseT>
       } catch (CancellationException e) {
         // A retry algorithm triggered cancellation.
         tracer.attemptFailedRetriesExhausted(e);
+        // The exception caught here is coming from gax code. We save it in order to throw
+        // this exception as the main one, while keeping guava's `Task was cancelled.` as a cause
+        customCancellationException = e;
         super.cancel(false);
       } catch (Exception e) {
         // Should never happen, but still possible in case of buggy retry algorithm implementation.
@@ -261,6 +266,18 @@ class BasicRetryingFuture<ResponseT> extends AbstractFuture<ResponseT>
       // execution. In case if a callback is executed in a separate thread executor (the recommended
       // way) the exception will be thrown in a separate thread and will not be swallowed by this
       // catch block anyways.
+    }
+  }
+
+  public ResponseT get() throws InterruptedException, ExecutionException{
+    try {
+      return super.get();
+    } catch (CancellationException ex) {
+      if (customCancellationException instanceof CancellationException) {
+        customCancellationException.initCause(ex);
+        throw customCancellationException;
+      }
+      throw ex;
     }
   }
 

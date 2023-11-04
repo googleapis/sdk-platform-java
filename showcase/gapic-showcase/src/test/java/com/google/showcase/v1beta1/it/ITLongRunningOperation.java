@@ -15,6 +15,7 @@
  */
 package com.google.showcase.v1beta1.it;
 
+import static com.google.api.gax.longrunning.OperationTimedPollAlgorithm.LRO_TROUBLESHOOTING_LINK;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
@@ -150,7 +151,7 @@ public class ITLongRunningOperation {
           assertThrows(CancellationException.class, operationFuture::get);
       assertThat(cancellationException)
           .hasMessageThat()
-          .contains("https://github.com/googleapis/google-cloud-java#lro-timeouts");
+          .contains(LRO_TROUBLESHOOTING_LINK);
       int attemptCount = operationFuture.getPollingFuture().getAttemptSettings().getAttemptCount();
       assertThat(attemptCount).isGreaterThan(1);
     } finally {
@@ -193,7 +194,7 @@ public class ITLongRunningOperation {
           assertThrows(CancellationException.class, operationFuture::get);
       assertThat(cancellationException)
           .hasMessageThat()
-          .contains("https://github.com/googleapis/google-cloud-java#lro-timeouts");
+          .contains(LRO_TROUBLESHOOTING_LINK);
       int attemptCount = operationFuture.getPollingFuture().getAttemptSettings().getAttemptCount();
       assertThat(attemptCount).isGreaterThan(1);
     } finally {
