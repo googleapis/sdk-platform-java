@@ -594,8 +594,8 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
       builder.setTransportChannelProvider(defaultTransportChannelProvider());
       builder.setCredentialsProvider(defaultCredentialsProviderBuilder().build());
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
-      builder.setDefaultEndpoint(getDefaultEndpoint());
-      builder.setDefaultMtlsEndpoint(getDefaultMtlsEndpoint());
+      builder.setEndpoint(getDefaultEndpoint());
+      builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
 
       return initDefaults(builder);
@@ -607,8 +607,8 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
       builder.setTransportChannelProvider(defaultHttpJsonTransportProviderBuilder().build());
       builder.setCredentialsProvider(defaultCredentialsProviderBuilder().build());
       builder.setInternalHeaderProvider(defaultHttpJsonApiClientHeaderProviderBuilder().build());
-      builder.setDefaultEndpoint(getDefaultEndpoint());
-      builder.setDefaultMtlsEndpoint(getDefaultMtlsEndpoint());
+      builder.setEndpoint(getDefaultEndpoint());
+      builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
 
       return initDefaults(builder);

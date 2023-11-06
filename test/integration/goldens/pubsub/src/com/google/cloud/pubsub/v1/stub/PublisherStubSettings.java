@@ -721,8 +721,8 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
       builder.setTransportChannelProvider(defaultTransportChannelProvider());
       builder.setCredentialsProvider(defaultCredentialsProviderBuilder().build());
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
-      builder.setDefaultEndpoint(getDefaultEndpoint());
-      builder.setDefaultMtlsEndpoint(getDefaultMtlsEndpoint());
+      builder.setEndpoint(getDefaultEndpoint());
+      builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
 
       return initDefaults(builder);
