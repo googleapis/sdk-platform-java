@@ -8,52 +8,43 @@ import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
+import com.google.api.generator.gapic.composer.common.ClassComposer;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
+import com.google.api.generator.gapic.model.GapicContext;
+import com.google.api.generator.gapic.model.Service;
 import com.google.common.collect.ImmutableList;
+
 
 /**
  * Generate an Option class which represents an Option parameter in the GRPC request.
  *
- * public final class Options implements Serializable {
- *    // generate marker interfaces
- *    public interface ReadAndQueryOption extends ReadOption, QueryOption {}
+ * public final class Options implements Serializable { // generate marker interfaces public
+ * interface ReadAndQueryOption extends ReadOption, QueryOption {}
  *
- *    // public methods to initialise and get
- *    public static DataBoostQueryOption dataBoostEnabled(Boolean dataBoostEnabled) {
- *     return new DataBoostQueryOption(dataBoostEnabled);
- *   }
- *
- *    static final class DataBoostQueryOption extends InternalOption implements ReadAndQueryOption {
- *     private final Boolean dataBoostEnabled;
- *
- *     DataBoostQueryOption(Boolean dataBoostEnabled) {
- *       this.dataBoostEnabled = dataBoostEnabled;
- *     }
- *
- *     @Override
- *     void appendToOptions(Options options) {
- *       options.dataBoostEnabled = dataBoostEnabled;
- *     }
- *   }
- *
- *   // member variable
- *   private Boolean dataBoostEnabled;
- *
- *   // has method
- *   boolean hasDataBoostEnabled() {
- *     return dataBoostEnabled != null;
- *   }
- *
- *   // getter method
- *   Boolean dataBoostEnabled() {
- *     return dataBoostEnabled;
- *   }
+ * // public methods to initialise and get public static DataBoostQueryOption
+ * dataBoostEnabled(Boolean dataBoostEnabled) { return new DataBoostQueryOption(dataBoostEnabled);
  * }
  *
+ * static final class DataBoostQueryOption extends InternalOption implements ReadAndQueryOption {
+ * private final Boolean dataBoostEnabled;
+ *
+ * DataBoostQueryOption(Boolean dataBoostEnabled) { this.dataBoostEnabled = dataBoostEnabled; }
+ *
+ * @Override void appendToOptions(Options options) { options.dataBoostEnabled =
+ *     dataBoostEnabled; } }
+ *
+ *     // member variable private Boolean dataBoostEnabled;
+ *
+ *     // has method boolean hasDataBoostEnabled() { return dataBoostEnabled != null; }
+ *
+ *     // getter method Boolean dataBoostEnabled() { return dataBoostEnabled; } }
  */
-public class SpannerOptionsStubClassComposer {
-  public static GapicClass createOptionsClass() {
+
+public class SpannerOptionsStubClassComposer implements ClassComposer {
+
+  @Override
+  public GapicClass generate(GapicContext context, Service serivce) {
     Variable variable = Variable.builder()
         .setName("word")
         .setType(TypeNode.STRING)
@@ -84,7 +75,6 @@ public class SpannerOptionsStubClassComposer {
             .build();
 
     return GapicClass.create(Kind.MAIN, classDef);
-
   }
-
 }
+

@@ -27,8 +27,10 @@ import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.protoparser.BatchingSettingsConfigParser;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.gapic.protoparser.ServiceConfigParser;
+import com.google.api.generator.gapic.protoparser.ServiceYamlParser;
 import com.google.bookshop.v1beta1.BookshopProto;
 import com.google.explicit.dynamic.routing.header.ExplicitDynamicRoutingHeaderTestingOuterClass;
+import com.google.google.testdata.SpannerOuterClass;
 import com.google.logging.v2.LogEntryProto;
 import com.google.logging.v2.LoggingConfigProto;
 import com.google.logging.v2.LoggingMetricsProto;
@@ -106,21 +108,29 @@ public class TestProtoLoader {
   }
 
   public GapicContext parseSpanner() {
-    FileDescriptor fileDescriptor = DeprecatedServiceOuterClass.getDescriptor();
+    FileDescriptor fileDescriptor = SpannerOuterClass.getDescriptor();
     ServiceDescriptor serviceDescriptor = fileDescriptor.getServices().get(0);
-    assertEquals(serviceDescriptor.getName(), "DeprecatedService");
+    assertEquals("Spanner", serviceDescriptor.getName());
 
     Map<String, Message> messageTypes = Parser.parseMessages(fileDescriptor);
     Map<String, ResourceName> resourceNames = new HashMap<>();
     Set<ResourceName> outputResourceNames = new HashSet<>();
+
+    String yamlFilename = "spanner_gapic.yaml";
+    Path path = Paths.get(testFilesDirectory, yamlFilename);
+    Optional<com.google.api.Service> yamlSettings =
+        ServiceYamlParser.parse(path.toString());
+    assertTrue(yamlSettings.isPresent());
+
     List<Service> services =
         Parser.parseService(
-            fileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
+            fileDescriptor, messageTypes, resourceNames, yamlSettings, outputResourceNames);
 
     String jsonFilename = "spanner_grpc_service_config.json";
     Path jsonPath = Paths.get(testFilesDirectory, jsonFilename);
     Optional<GapicServiceConfig> configOpt = ServiceConfigParser.parse(jsonPath.toString());
     assertTrue(configOpt.isPresent());
+
     GapicServiceConfig config = configOpt.get();
 
     return GapicContext.builder()
