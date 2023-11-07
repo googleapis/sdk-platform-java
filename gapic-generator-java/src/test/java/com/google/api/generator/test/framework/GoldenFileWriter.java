@@ -34,9 +34,10 @@ public class GoldenFileWriter {
    * @param codegen the generated code from JUnit test
    */
   public static void saveCodegenToFile(Class<?> clazz, String fileName, String codegen) {
+    /**
     if (System.getProperty("updateUnitGoldens") == null) {
       return;
-    }
+    }*/
 
     String relativeGoldenDir = getTestoutGoldenDir(clazz);
     saveCodeToFile(relativeGoldenDir, fileName, codegen);

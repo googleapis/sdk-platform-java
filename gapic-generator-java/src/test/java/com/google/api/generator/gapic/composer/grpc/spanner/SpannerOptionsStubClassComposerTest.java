@@ -1,6 +1,5 @@
 package com.google.api.generator.gapic.composer.grpc.spanner;
 
-import com.google.api.generator.gapic.composer.grpc.GrpcServiceCallableFactoryClassComposer;
 import com.google.api.generator.gapic.composer.spanner.SpannerOptionsStubClassComposer;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;

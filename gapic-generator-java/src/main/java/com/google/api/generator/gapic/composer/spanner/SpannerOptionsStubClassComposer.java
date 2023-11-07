@@ -1,49 +1,51 @@
 package com.google.api.generator.gapic.composer.spanner;
 
+import com.google.api.core.BetaApi;
+import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
-import com.google.api.generator.engine.ast.MethodInvocationExpr;
-import com.google.api.generator.engine.ast.ReturnExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
+import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.common.ClassComposer;
+import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
-import com.google.common.collect.ImmutableList;
+import com.google.api.pathtemplate.PathTemplate;
+import com.google.api.pathtemplate.ValidationException;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableMap;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import javax.annotation.Generated;
 
 
 /**
- * Generate an Option class which represents an Option parameter in the GRPC request.
+ * Generate an Option class which represents an Option parameter.
  *
- * public final class Options implements Serializable { // generate marker interfaces public
- * interface ReadAndQueryOption extends ReadOption, QueryOption {}
- *
- * // public methods to initialise and get public static DataBoostQueryOption
- * dataBoostEnabled(Boolean dataBoostEnabled) { return new DataBoostQueryOption(dataBoostEnabled);
- * }
- *
- * static final class DataBoostQueryOption extends InternalOption implements ReadAndQueryOption {
- * private final Boolean dataBoostEnabled;
- *
- * DataBoostQueryOption(Boolean dataBoostEnabled) { this.dataBoostEnabled = dataBoostEnabled; }
- *
- * @Override void appendToOptions(Options options) { options.dataBoostEnabled =
- *     dataBoostEnabled; } }
- *
- *     // member variable private Boolean dataBoostEnabled;
- *
- *     // has method boolean hasDataBoostEnabled() { return dataBoostEnabled != null; }
- *
- *     // getter method Boolean dataBoostEnabled() { return dataBoostEnabled; } }
  */
-
 public class SpannerOptionsStubClassComposer implements ClassComposer {
   private static final SpannerOptionsStubClassComposer INSTANCE =
       new SpannerOptionsStubClassComposer();
+  private static final TypeStore FIXED_TYPESTORE = createStaticTypes();
+
+  private static final VaporReference READ_AND_QUERY_OPTION =
+      createVaporReference("com.google.cloud.spanner", "ReadAndQueryOption");
+  private static final VaporReference TRANSACTION_OPTION =
+      createVaporReference("com.google.cloud.spanner", "TransactionOption");
+  private static final VaporReference INTERNAL_OPTION_REF =
+      createVaporReference("com.google.cloud.spanner", "InternalOption");
+  private static final VaporReference OPTIONS =
+      createVaporReference("com.google.cloud.spanner", "Options");
 
   public static SpannerOptionsStubClassComposer instance() {
     return INSTANCE;
@@ -51,36 +53,126 @@ public class SpannerOptionsStubClassComposer implements ClassComposer {
 
   @Override
   public GapicClass generate(GapicContext context, Service serivce) {
-    Variable variable = Variable.builder()
-        .setName("word")
-        .setType(TypeNode.STRING)
-        .build();
+    /**
+     * STEPS that we want to execute
+     *
+     * 1. define a config for option groups, parse the number of options per group
+     * 2. from proto parse the fields which are to be interpreted as options
+     * 3. for each field, define the language regex for creating a new method, class, private-variable, getter
+     * 4. generate inner classes
+     * 5. generate outer class
+     */
 
-    ReturnExpr returnExpr = ReturnExpr.withExpr(MethodInvocationExpr.builder()
-        .setExprReferenceExpr(VariableExpr.withVariable(variable))
-        .setMethodName("length")
-        .setReturnType(TypeNode.INT)
-        .build());
-
-    MethodDefinition methodDefinition = MethodDefinition.builder()
-        .setScope(ScopeNode.PUBLIC)
-        .setIsStatic(true)
-        .setReturnType(TypeNode.INT)
-        .setName("length")
-        //String word
-        .setArguments(
-            ImmutableList.of(VariableExpr.builder().setVariable(variable).setIsDecl(true).build()))
-        .setReturnExpr(returnExpr)
-        .build();
-
-    ClassDefinition classDef =
+    // outer class
+    ClassDefinition outerClassDef =
         ClassDefinition.builder()
             .setPackageString("com.google.cloud.spanner")
+            .setAnnotations(createClassAnnotations())
             .setScope(ScopeNode.PROTECTED)
+            .setNestedClasses(Arrays.asList(getClassForOptionProtoField()))
             .setName("AutoGeneratedOptions")
             .build();
 
-    return GapicClass.create(Kind.MAIN, classDef);
+    return GapicClass.create(Kind.MAIN, outerClassDef);
+  }
+
+  /**
+   * TODO generalise it to work for all proto fields, assuming its an option field
+   *
+   * static final class MaxBatchingDelayMsOption extends InternalOption implements TransactionOption {
+   *   private final Integer maxBatchingDelayMs;
+   *
+   *   MaxBatchingDelayMsOption(Integer maxBatchingDelayMs) {
+   *     this.maxBatchingDelayMs = maxBatchingDelayMs;
+   *   }
+   *
+   *   @Override
+   *   void appendToOptions(Options options) {
+   *     options.maxBatchingDelayMs = maxBatchingDelayMs;
+   *   }
+   * }
+   *
+   * @return
+   */
+  private static ClassDefinition getClassForOptionProtoField() {
+    // [code] private final Boolean dataBoostEnabled;
+    VariableExpr variable = VariableExpr.builder()
+        .setIsDecl(true)
+        .setScope(ScopeNode.PRIVATE)
+        .setIsFinal(true)
+        .setVariable(Variable.builder().setName("maxBatchingDelayMs")
+            .setType(TypeNode.INT).build())
+        .build();
+    List<Statement> statements = Arrays.asList(ExprStatement.withExpr(variable));
+    MethodDefinition constructor =
+        MethodDefinition.builder()
+            .setIsConstructor(true)
+            .setReturnType(TypeNode.VOID)
+            .setArguments(
+                Arrays.asList())
+            .setScope(ScopeNode.PROTECTED)
+            .setBody(
+                Arrays.asList())
+            .build();
+
+    VariableExpr assignmentExpr = VariableExpr.builder()
+        .setIsDecl(true)
+        .setScope(ScopeNode.PRIVATE)
+        .setIsFinal(true)
+        .setVariable(Variable.builder().setName("maxBatchingDelayMs")
+            .setType(TypeNode.INT).build())
+        .build();
+    MethodDefinition appendToOptions =
+        MethodDefinition.builder()
+            .setAnnotations(Arrays.asList(AnnotationNode.OVERRIDE))
+            .setArguments()
+            .setReturnType(TypeNode.VOID)
+            .setName("appendToOptions")
+            .setScope(ScopeNode.PUBLIC)
+            .setBody(Arrays.asList())
+            .build();
+
+    ClassDefinition classDefinition =
+        ClassDefinition.builder()
+            .setImplementsTypes(Arrays.asList(TypeNode.withReference(TRANSACTION_OPTION)))
+            .setExtendsType(TypeNode.withReference(INTERNAL_OPTION_REF))
+            .setScope(ScopeNode.PROTECTED)
+            .setIsStatic(true)
+            .setIsFinal(true)
+            .setName("MaxBatchingDelayMsOption")
+            .setIsNested(true)
+            .setStatements(statements)
+            .build();
+    return classDefinition;
+  }
+
+  private static List<AnnotationNode> createClassAnnotations() {
+    return Arrays.asList(
+        AnnotationNode.builder()
+            .setType(FIXED_TYPESTORE.get("Generated"))
+            .setDescription("by gapic-generator-java")
+            .build());
+  }
+
+  private static TypeStore createStaticTypes() {
+    List<Class<?>> concreteClazzes =
+        Arrays.asList(
+            ArrayList.class,
+            BetaApi.class,
+            Generated.class,
+            ImmutableMap.class,
+            List.class,
+            Map.class,
+            Objects.class,
+            PathTemplate.class,
+            Preconditions.class,
+            com.google.api.resourcenames.ResourceName.class,
+            ValidationException.class);
+    return new TypeStore(concreteClazzes);
+  }
+
+  private static VaporReference createVaporReference(String pkgName, String name) {
+    return VaporReference.builder().setPakkage(pkgName).setName(name).build();
   }
 }
 
