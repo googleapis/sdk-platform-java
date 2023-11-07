@@ -773,12 +773,12 @@ public class ClientContextTest {
 
   @Test
   public void testSwitchToMtlsEndpointAllowed() throws IOException {
-    StubSettings settings = new FakeStubSettings.Builder(endpoint, mtlsEndpoint).build();
+    StubSettings settings = new FakeStubSettings.Builder().setHostServiceName("foo").build();
     assertFalse(settings.getSwitchToMtlsEndpointAllowed());
     assertEquals(endpoint, settings.getEndpoint());
 
     settings =
-        new FakeStubSettings.Builder(endpoint, mtlsEndpoint)
+        new FakeStubSettings.Builder()
             .setEndpoint(endpoint)
             .setSwitchToMtlsEndpointAllowed(true)
             .build();
@@ -787,7 +787,7 @@ public class ClientContextTest {
 
     // Test setEndpoint sets the switchToMtlsEndpointAllowed value to false.
     settings =
-        new FakeStubSettings.Builder(endpoint, mtlsEndpoint)
+        new FakeStubSettings.Builder()
             .setSwitchToMtlsEndpointAllowed(true)
             .setEndpoint(endpoint)
             .build();
@@ -896,7 +896,7 @@ public class ClientContextTest {
     // it should correctly create a client context with gdch creds and null audience
     CredentialsProvider provider = FixedCredentialsProvider.create(creds);
     StubSettings settings =
-        new FakeStubSettings.Builder(endpoint, mtlsEndpoint)
+        new FakeStubSettings.Builder()
             .setGdchApiAudience(null)
             .setEndpoint("test-endpoint")
             .build();
@@ -927,7 +927,7 @@ public class ClientContextTest {
     // it should throw if both apiAudience and GDC-H creds are set but apiAudience is not a valid
     // uri
     StubSettings settings =
-        new FakeStubSettings.Builder(endpoint, mtlsEndpoint)
+        new FakeStubSettings.Builder()
             .setEndpoint("test-endpoint")
             .setGdchApiAudience("valid-uri")
             .build();
@@ -957,7 +957,7 @@ public class ClientContextTest {
     // it should throw if both apiAudience and GDC-H creds are set but apiAudience is not a valid
     // uri
     StubSettings settings =
-        new FakeStubSettings.Builder(endpoint, mtlsEndpoint)
+        new FakeStubSettings.Builder()
             .setGdchApiAudience("$invalid-uri:")
             .setEndpoint("test-endpoint")
             .build();
@@ -985,9 +985,7 @@ public class ClientContextTest {
 
     // it should throw if apiAudience is set but not using GDC-H creds
     StubSettings settings =
-        new FakeStubSettings.Builder(endpoint, mtlsEndpoint)
-            .setGdchApiAudience("audience:test")
-            .build();
+        new FakeStubSettings.Builder().setGdchApiAudience("audience:test").build();
     Credentials creds = Mockito.mock(ComputeEngineCredentials.class);
     CredentialsProvider provider = FixedCredentialsProvider.create(creds);
     ClientSettings.Builder clientSettingsBuilder = new FakeClientSettings.Builder(settings);

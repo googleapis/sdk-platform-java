@@ -57,13 +57,8 @@ public class FakeStubSettings extends StubSettings {
     }
 
     public Builder() {
-      this(null, null);
-    }
-
-    public Builder(String endpoint, String mtlsEndpoint) {
       super((ClientContext) null);
-      setEndpoint(endpoint);
-      setMtlsEndpoint(mtlsEndpoint);
+      setHostServiceName("test");
     }
 
     @Override

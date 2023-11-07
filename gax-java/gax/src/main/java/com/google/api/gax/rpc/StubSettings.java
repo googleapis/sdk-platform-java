@@ -473,6 +473,12 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       return self();
     }
 
+    public B setHostServiceName(String hostServiceName) {
+      this.endpointContext =
+          this.endpointContext.toBuilder().setHostServiceName(hostServiceName).build();
+      return self();
+    }
+
     public B setEndpoint(String endpoint) {
       this.endpoint = endpoint;
       this.switchToMtlsEndpointAllowed = false;
@@ -648,7 +654,6 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
           .add("clock", clock)
           .add("endpoint", endpoint)
           .add("universeDomain", universeDomain)
-          .add("endpointContext", endpointContext)
           .add("mtlsEndpoint", mtlsEndpoint)
           .add("switchToMtlsEndpointAllowed", switchToMtlsEndpointAllowed)
           .add("quotaProjectId", quotaProjectId)

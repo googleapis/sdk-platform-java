@@ -500,6 +500,11 @@ public class Parser {
         .collect(Collectors.toList());
   }
 
+  private static String parseServiceHostName(String defaultHost) {
+    Preconditions.checkState(defaultHost.contains("."));
+    return defaultHost.substring(0, defaultHost.indexOf('.'));
+  }
+
   public static Map<String, Message> parseMessages(
       CodeGeneratorRequest request, Set<ResourceReference> outputResourceReferencesSeen) {
     Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);

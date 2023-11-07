@@ -52,6 +52,13 @@ public abstract class Service {
     return !Strings.isNullOrEmpty(description());
   }
 
+  public String hostServiceName() {
+    if (!Strings.isNullOrEmpty(defaultHost())) {
+      return parseHostServiceName(defaultHost());
+    }
+    return "";
+  }
+
   public String apiShortName() {
     if (!Strings.isNullOrEmpty(defaultHost())) {
       return parseApiShortName(defaultHost());
@@ -182,6 +189,15 @@ public abstract class Service {
       apiVersion = "";
     }
     return apiVersion;
+  }
+
+  // Parse the service name from the default host configured in the protos
+  // or service yaml file. Value is expected to contain `.googleapis.com`
+  private static String parseHostServiceName(String defaultHost) {
+    if (!defaultHost.contains(".googleapis.com")) {
+      return "";
+    }
+    return Iterables.getFirst(Splitter.on(".").split(defaultHost), defaultHost);
   }
 
   // Parse defaultHost for apiShortName for the RegionTag. Need to account for regional default

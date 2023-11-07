@@ -50,6 +50,9 @@ public abstract class EndpointContext {
       Pattern.compile("^(https\\:\\/\\/)?(www.)?[a-zA-Z]+\\.[\\S]+(\\:\\d)?$");
 
   @Nullable
+  public abstract String hostServiceName();
+
+  @Nullable
   public abstract String clientSettingsEndpoint();
 
   @Nullable
@@ -81,49 +84,57 @@ public abstract class EndpointContext {
     if (resolvedEndpoint != null && resolvedUniverseDomain != null) {
       return;
     }
-    String customEndpoint =
-        transportChannelEndpoint() != null ? transportChannelEndpoint() : clientSettingsEndpoint();
-    Preconditions.checkNotNull(customEndpoint, "Client Library cannot have an null endpoint");
     MtlsProvider mtlsProvider = mtlsProvider() == null ? new MtlsProvider() : mtlsProvider();
+    String endpoint =
+        transportChannelEndpoint() != null ? transportChannelEndpoint() : clientSettingsEndpoint();
+    if (endpoint == null) {
+      resolvedEndpoint =
+          mtlsEndpointResolver(
+              mtlsProvider,
+              buildEndpoint(hostServiceName()),
+              mtlsEndpoint(),
+              switchToMtlsEndpointAllowed());
+      resolvedUniverseDomain = GOOGLE_DEFAULT_UNIVERSE;
+      return;
+    }
     // If the Universe Domain is not specified, use the GDU
     if (universeDomain() == null) {
       resolvedEndpoint =
           mtlsEndpointResolver(
-              mtlsProvider, customEndpoint, mtlsEndpoint(), switchToMtlsEndpointAllowed());
+              mtlsProvider, endpoint, mtlsEndpoint(), switchToMtlsEndpointAllowed());
       resolvedUniverseDomain = GOOGLE_DEFAULT_UNIVERSE;
       return;
     }
     // Check if it matches the ENDPOINT_TEMPLATE format
-    Matcher matcher = ENDPOINT_REGEX.matcher(customEndpoint);
-    Preconditions.checkState(matcher.matches(), "Endpoint: " + customEndpoint + " is invalid");
+    Matcher matcher = ENDPOINT_REGEX.matcher(endpoint);
+    Preconditions.checkState(matcher.matches(), "Endpoint: " + endpoint + " is invalid");
 
-    customEndpoint =
-        mtlsEndpointResolver(
-            mtlsProvider, customEndpoint, mtlsEndpoint(), switchToMtlsEndpointAllowed());
+    endpoint =
+        mtlsEndpointResolver(mtlsProvider, endpoint, mtlsEndpoint(), switchToMtlsEndpointAllowed());
     // mTLS is not supported yet. If mTLS is enabled, use that endpoint.
-    if (customEndpoint.contains("mtls")) {
-      resolvedEndpoint = customEndpoint;
+    if (endpoint.contains("mtls")) {
+      resolvedEndpoint = endpoint;
       resolvedUniverseDomain = GOOGLE_DEFAULT_UNIVERSE;
       return;
     }
 
-    if (customEndpoint.contains("https://")) {
-      customEndpoint = customEndpoint.substring(8);
+    if (endpoint.contains("https://")) {
+      endpoint = endpoint.substring(8);
     }
 
     // Parse the custom endpoint for the service name, universe domain, and the port
-    int periodIndex = customEndpoint.indexOf('.');
-    int colonIndex = customEndpoint.indexOf(':');
+    int periodIndex = endpoint.indexOf('.');
+    int colonIndex = endpoint.indexOf(':');
     String serviceName;
     String universeDomain;
     String port = DEFAULT_PORT;
     if (colonIndex != -1) {
-      universeDomain = customEndpoint.substring(periodIndex + 1, colonIndex);
-      port = customEndpoint.substring(colonIndex + 1);
+      universeDomain = endpoint.substring(periodIndex + 1, colonIndex);
+      port = endpoint.substring(colonIndex + 1);
     } else {
-      universeDomain = customEndpoint.substring(periodIndex + 1);
+      universeDomain = endpoint.substring(periodIndex + 1);
     }
-    serviceName = customEndpoint.substring(0, periodIndex);
+    serviceName = endpoint.substring(0, periodIndex);
 
     // TODO: Build out logic for resolving endpoint
     resolvedEndpoint = buildEndpoint(serviceName, universeDomain, port);
@@ -152,9 +163,13 @@ public abstract class EndpointContext {
     return endpoint;
   }
 
-  private String buildEndpoint(String serviceName, String universeDomain, String port) {
+  private String buildEndpoint(String hostServiceName) {
+    return buildEndpoint(hostServiceName, GOOGLE_DEFAULT_UNIVERSE, DEFAULT_PORT);
+  }
+
+  private String buildEndpoint(String hostServiceName, String universeDomain, String port) {
     return ENDPOINT_TEMPLATE
-        .replace("SERVICE_NAME", serviceName)
+        .replace("SERVICE_NAME", hostServiceName)
         .replace("UNIVERSE_DOMAIN", universeDomain)
         .replace("PORT", port);
   }
@@ -175,6 +190,8 @@ public abstract class EndpointContext {
 
   @AutoValue.Builder
   public abstract static class Builder {
+    public abstract Builder setHostServiceName(String hostServiceName);
+
     public abstract Builder setClientSettingsEndpoint(String clientSettingsEndpoint);
 
     public abstract Builder setTransportChannelEndpoint(String transportChannelEndpoint);
