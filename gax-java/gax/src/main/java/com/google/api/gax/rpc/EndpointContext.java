@@ -36,7 +36,6 @@ import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import java.io.IOException;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.Nullable;
 
@@ -87,58 +86,65 @@ public abstract class EndpointContext {
     MtlsProvider mtlsProvider = mtlsProvider() == null ? new MtlsProvider() : mtlsProvider();
     String endpoint =
         transportChannelEndpoint() != null ? transportChannelEndpoint() : clientSettingsEndpoint();
-    if (endpoint == null) {
-      resolvedEndpoint =
-          mtlsEndpointResolver(
-              mtlsProvider,
-              buildEndpoint(hostServiceName()),
-              mtlsEndpoint(),
-              switchToMtlsEndpointAllowed());
-      resolvedUniverseDomain = GOOGLE_DEFAULT_UNIVERSE;
-      return;
-    }
-    // If the Universe Domain is not specified, use the GDU
     if (universeDomain() == null) {
+      if (endpoint == null) {
+        endpoint = buildEndpoint(hostServiceName());
+      }
       resolvedEndpoint =
           mtlsEndpointResolver(
               mtlsProvider, endpoint, mtlsEndpoint(), switchToMtlsEndpointAllowed());
       resolvedUniverseDomain = GOOGLE_DEFAULT_UNIVERSE;
       return;
     }
-    // Check if it matches the ENDPOINT_TEMPLATE format
-    Matcher matcher = ENDPOINT_REGEX.matcher(endpoint);
-    Preconditions.checkState(matcher.matches(), "Endpoint: " + endpoint + " is invalid");
 
-    endpoint =
-        mtlsEndpointResolver(mtlsProvider, endpoint, mtlsEndpoint(), switchToMtlsEndpointAllowed());
-    // mTLS is not supported yet. If mTLS is enabled, use that endpoint.
-    if (endpoint.contains("mtls")) {
-      resolvedEndpoint = endpoint;
+    resolvedEndpoint =
+        mtlsEndpointResolver(
+            mtlsProvider,
+            buildEndpoint(hostServiceName(), universeDomain(), DEFAULT_PORT),
+            mtlsEndpoint(),
+            switchToMtlsEndpointAllowed());
+    if (resolvedEndpoint.contains("mtls")) {
       resolvedUniverseDomain = GOOGLE_DEFAULT_UNIVERSE;
-      return;
-    }
-
-    if (endpoint.contains("https://")) {
-      endpoint = endpoint.substring(8);
-    }
-
-    // Parse the custom endpoint for the service name, universe domain, and the port
-    int periodIndex = endpoint.indexOf('.');
-    int colonIndex = endpoint.indexOf(':');
-    String serviceName;
-    String universeDomain;
-    String port = DEFAULT_PORT;
-    if (colonIndex != -1) {
-      universeDomain = endpoint.substring(periodIndex + 1, colonIndex);
-      port = endpoint.substring(colonIndex + 1);
     } else {
-      universeDomain = endpoint.substring(periodIndex + 1);
+      resolvedUniverseDomain = universeDomain();
     }
-    serviceName = endpoint.substring(0, periodIndex);
 
-    // TODO: Build out logic for resolving endpoint
-    resolvedEndpoint = buildEndpoint(serviceName, universeDomain, port);
-    resolvedUniverseDomain = universeDomain;
+    // TODO: The logic below is probably not needed. Check the updated table later.
+    //    // Check if it matches the ENDPOINT_TEMPLATE format
+    //    Matcher matcher = ENDPOINT_REGEX.matcher(endpoint);
+    //    Preconditions.checkState(matcher.matches(), "Endpoint: " + endpoint + " is invalid");
+    //
+    //    endpoint =
+    //        mtlsEndpointResolver(mtlsProvider, endpoint, mtlsEndpoint(),
+    // switchToMtlsEndpointAllowed());
+    //    // mTLS is not supported yet. If mTLS is enabled, use that endpoint.
+    //    if (endpoint.contains("mtls")) {
+    //      resolvedEndpoint = endpoint;
+    //      resolvedUniverseDomain = GOOGLE_DEFAULT_UNIVERSE;
+    //      return;
+    //    }
+    //
+    //    if (endpoint.contains("https://")) {
+    //      endpoint = endpoint.substring(8);
+    //    }
+    //
+    //    // Parse the custom endpoint for the service name, universe domain, and the port
+    //    int periodIndex = endpoint.indexOf('.');
+    //    int colonIndex = endpoint.indexOf(':');
+    //    String serviceName;
+    //    String universeDomain;
+    //    String port = DEFAULT_PORT;
+    //    if (colonIndex != -1) {
+    //      universeDomain = endpoint.substring(periodIndex + 1, colonIndex);
+    //      port = endpoint.substring(colonIndex + 1);
+    //    } else {
+    //      universeDomain = endpoint.substring(periodIndex + 1);
+    //    }
+    //    serviceName = endpoint.substring(0, periodIndex);
+    //
+    //    // TODO: Build out logic for resolving endpoint
+    //    resolvedEndpoint = buildEndpoint(serviceName, universeDomain, port);
+    //    resolvedUniverseDomain = universeDomain;
   }
 
   private String mtlsEndpointResolver(
@@ -174,18 +180,24 @@ public abstract class EndpointContext {
         .replace("PORT", port);
   }
 
-  public String resolveEndpoint(Credentials credentials) throws IOException {
+  public String resolveEndpoint() throws IOException {
     if (resolvedEndpoint == null) {
       determineEndpoint();
     }
     return resolvedEndpoint;
   }
 
-  public String resolveUniverseDomain(Credentials credentials) throws IOException {
+  public String resolveUniverseDomain() throws IOException {
     if (resolvedUniverseDomain == null) {
       determineEndpoint();
     }
     return resolvedUniverseDomain;
+  }
+
+  public boolean validateUniverseDomain(Credentials credentials) {
+    Preconditions.checkNotNull(resolvedUniverseDomain, "Universe Domain was not resolved");
+    return true;
+    //    return resolvedUniverseDomain.equals(credentials.getUniverseDomain());
   }
 
   @AutoValue.Builder

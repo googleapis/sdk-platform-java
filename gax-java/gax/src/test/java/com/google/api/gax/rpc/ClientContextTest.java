@@ -665,7 +665,7 @@ public class ClientContextTest {
             .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)
             .setMtlsProvider(provider)
             .build();
-    String endpointSelected = endpointContext.resolveEndpoint(null);
+    String endpointSelected = endpointContext.resolveEndpoint();
     assertEquals(mtlsEndpoint, endpointSelected);
   }
 
@@ -688,7 +688,7 @@ public class ClientContextTest {
             .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)
             .setMtlsProvider(provider)
             .build();
-    String endpointSelected = endpointContext.resolveEndpoint(null);
+    String endpointSelected = endpointContext.resolveEndpoint();
     assertEquals(endpoint, endpointSelected);
   }
 
@@ -705,7 +705,7 @@ public class ClientContextTest {
             .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)
             .setMtlsProvider(provider)
             .build();
-    String endpointSelected = endpointContext.resolveEndpoint(null);
+    String endpointSelected = endpointContext.resolveEndpoint();
     assertEquals(endpoint, endpointSelected);
   }
 
@@ -722,7 +722,7 @@ public class ClientContextTest {
             .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)
             .setMtlsProvider(provider)
             .build();
-    String endpointSelected = endpointContext.resolveEndpoint(null);
+    String endpointSelected = endpointContext.resolveEndpoint();
     assertEquals(mtlsEndpoint, endpointSelected);
   }
 
@@ -744,7 +744,7 @@ public class ClientContextTest {
             .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)
             .setMtlsProvider(provider)
             .build();
-    String endpointSelected = endpointContext.resolveEndpoint(null);
+    String endpointSelected = endpointContext.resolveEndpoint();
     assertEquals(endpoint, endpointSelected);
   }
 
@@ -762,7 +762,7 @@ public class ClientContextTest {
               .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)
               .setMtlsProvider(provider)
               .build();
-      String endpointSelected = endpointContext.resolveEndpoint(null);
+      String endpointSelected = endpointContext.resolveEndpoint();
       fail("should throw an exception");
     } catch (IOException e) {
       assertTrue(

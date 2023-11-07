@@ -149,7 +149,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
    */
   public final String getEndpoint() {
     try {
-      return endpointContext.resolveEndpoint(null);
+      return endpointContext.resolveEndpoint();
     } catch (IOException e) {
       return null;
     }
@@ -168,7 +168,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
    */
   public final String getUniverseDomain() {
     try {
-      return endpointContext.resolveUniverseDomain(null);
+      return endpointContext.resolveUniverseDomain();
     } catch (IOException e) {
       return null;
     }
