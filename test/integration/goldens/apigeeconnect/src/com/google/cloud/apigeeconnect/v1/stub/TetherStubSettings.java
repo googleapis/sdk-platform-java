@@ -80,6 +80,7 @@ import javax.annotation.Generated;
  */
 @Generated("by gapic-generator-java")
 public class TetherStubSettings extends StubSettings<TetherStubSettings> {
+  private static final String HOST_SERVICE_NAME = "apigeeconnect";
   /** The default scopes of the service. */
   private static final ImmutableList<String> DEFAULT_SERVICE_SCOPES =
       ImmutableList.<String>builder().add("https://www.googleapis.com/auth/cloud-platform").build();
@@ -226,6 +227,7 @@ public class TetherStubSettings extends StubSettings<TetherStubSettings> {
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
+      builder.setHostServiceName(HOST_SERVICE_NAME);
 
       return initDefaults(builder);
     }

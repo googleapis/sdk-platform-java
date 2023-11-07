@@ -114,6 +114,7 @@ import org.threeten.bp.Duration;
 @BetaApi
 @Generated("by gapic-generator-java")
 public class SequenceServiceStubSettings extends StubSettings<SequenceServiceStubSettings> {
+  private static final String HOST_SERVICE_NAME = "";
   /** The default scopes of the service. */
   private static final ImmutableList<String> DEFAULT_SERVICE_SCOPES =
       ImmutableList.<String>builder().build();
@@ -510,6 +511,7 @@ public class SequenceServiceStubSettings extends StubSettings<SequenceServiceStu
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
+      builder.setHostServiceName(HOST_SERVICE_NAME);
 
       return initDefaults(builder);
     }
@@ -523,6 +525,7 @@ public class SequenceServiceStubSettings extends StubSettings<SequenceServiceStu
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
+      builder.setHostServiceName(HOST_SERVICE_NAME);
 
       return initDefaults(builder);
     }

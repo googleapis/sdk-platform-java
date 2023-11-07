@@ -94,6 +94,7 @@ import org.threeten.bp.Duration;
  */
 @Generated("by gapic-generator-java")
 public class BigtableStubSettings extends StubSettings<BigtableStubSettings> {
+  private static final String HOST_SERVICE_NAME = "bigtable";
   /** The default scopes of the service. */
   private static final ImmutableList<String> DEFAULT_SERVICE_SCOPES =
       ImmutableList.<String>builder()
@@ -382,6 +383,7 @@ public class BigtableStubSettings extends StubSettings<BigtableStubSettings> {
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
+      builder.setHostServiceName(HOST_SERVICE_NAME);
 
       return initDefaults(builder);
     }

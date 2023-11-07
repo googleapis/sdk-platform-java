@@ -91,6 +91,7 @@ import org.threeten.bp.Duration;
  */
 @Generated("by gapic-generator-java")
 public class IamCredentialsStubSettings extends StubSettings<IamCredentialsStubSettings> {
+  private static final String HOST_SERVICE_NAME = "iamcredentials";
   /** The default scopes of the service. */
   private static final ImmutableList<String> DEFAULT_SERVICE_SCOPES =
       ImmutableList.<String>builder().add("https://www.googleapis.com/auth/cloud-platform").build();
@@ -324,6 +325,7 @@ public class IamCredentialsStubSettings extends StubSettings<IamCredentialsStubS
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
+      builder.setHostServiceName(HOST_SERVICE_NAME);
 
       return initDefaults(builder);
     }
@@ -337,6 +339,7 @@ public class IamCredentialsStubSettings extends StubSettings<IamCredentialsStubS
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
+      builder.setHostServiceName(HOST_SERVICE_NAME);
 
       return initDefaults(builder);
     }
