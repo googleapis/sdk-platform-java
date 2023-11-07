@@ -34,6 +34,7 @@ import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.auth.Credentials;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Preconditions;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -42,10 +43,9 @@ import javax.annotation.Nullable;
 @InternalApi
 @AutoValue
 public abstract class EndpointContext {
-  private static final String DEFAULT_UNIVERSE_DOMAIN = "googleapis.com";
+  private static final String GOOGLE_DEFAULT_UNIVERSE = "googleapis.com";
   private static final String DEFAULT_PORT = "443";
-  private static final String UNIVERSE_DOMAIN_TEMPLATE =
-      "https://SERVICE_NAME.UNIVERSE_DOMAIN:PORT";
+  private static final String ENDPOINT_TEMPLATE = "https://SERVICE_NAME.UNIVERSE_DOMAIN:PORT";
   private static final Pattern ENDPOINT_REGEX =
       Pattern.compile("^(https\\:\\/\\/)?(www.)?[a-zA-Z]+\\.[\\S]+(\\:\\d)?$");
 
@@ -83,43 +83,27 @@ public abstract class EndpointContext {
     }
     String customEndpoint =
         transportChannelEndpoint() != null ? transportChannelEndpoint() : clientSettingsEndpoint();
-    // If there are no user configured endpoints, use the default endpoints
-    if (customEndpoint == null) {
-      // throw new Exception("No endpoint was set for the client");
-      return;
-    }
-    Matcher matcher = ENDPOINT_REGEX.matcher(customEndpoint);
-    // Check if it matches the ENDPOINT_TEMPLATE format, otherwise use the
-    // custom set endpoint
-    if (!matcher.matches()) {
-      // Throw an exception if user's endpoint is not valid
-      // throw new Exception("Invalid endpoint: " + customEndpoint);
-      return;
-    }
-
+    Preconditions.checkNotNull(customEndpoint, "Client Library cannot have an null endpoint");
     MtlsProvider mtlsProvider = mtlsProvider() == null ? new MtlsProvider() : mtlsProvider();
-    boolean isUsingMtlsEndpoint = false;
-    if (switchToMtlsEndpointAllowed() && mtlsProvider != null) {
-      switch (mtlsProvider.getMtlsEndpointUsagePolicy()) {
-        case ALWAYS:
-          customEndpoint = mtlsEndpoint();
-          isUsingMtlsEndpoint = true;
-          break;
-        case NEVER:
-          // CustomEndpoint is already set
-          break;
-        default:
-          if (mtlsProvider.useMtlsClientCertificate() && mtlsProvider.getKeyStore() != null) {
-            customEndpoint = mtlsEndpoint();
-            isUsingMtlsEndpoint = true;
-            break;
-          }
-      }
+    // If the Universe Domain is not specified, use the GDU
+    if (universeDomain() == null) {
+      resolvedEndpoint =
+          mtlsEndpointResolver(
+              mtlsProvider, customEndpoint, mtlsEndpoint(), switchToMtlsEndpointAllowed());
+      resolvedUniverseDomain = GOOGLE_DEFAULT_UNIVERSE;
+      return;
     }
+    // Check if it matches the ENDPOINT_TEMPLATE format
+    Matcher matcher = ENDPOINT_REGEX.matcher(customEndpoint);
+    Preconditions.checkState(matcher.matches(), "Endpoint: " + customEndpoint + " is invalid");
+
+    customEndpoint =
+        mtlsEndpointResolver(
+            mtlsProvider, customEndpoint, mtlsEndpoint(), switchToMtlsEndpointAllowed());
     // mTLS is not supported yet. If mTLS is enabled, use that endpoint.
-    if (isUsingMtlsEndpoint) {
-      resolvedEndpoint = mtlsEndpoint();
-      resolvedUniverseDomain = DEFAULT_UNIVERSE_DOMAIN;
+    if (customEndpoint.contains("mtls")) {
+      resolvedEndpoint = customEndpoint;
+      resolvedUniverseDomain = GOOGLE_DEFAULT_UNIVERSE;
       return;
     }
 
@@ -146,8 +130,30 @@ public abstract class EndpointContext {
     resolvedUniverseDomain = universeDomain;
   }
 
+  private String mtlsEndpointResolver(
+      MtlsProvider mtlsProvider,
+      String endpoint,
+      String mtlsEndpoint,
+      boolean switchToMtlsEndpointAllowed)
+      throws IOException {
+    if (switchToMtlsEndpointAllowed && mtlsProvider != null) {
+      switch (mtlsProvider.getMtlsEndpointUsagePolicy()) {
+        case ALWAYS:
+          return mtlsEndpoint;
+        case NEVER:
+          return endpoint;
+        default:
+          if (mtlsProvider.useMtlsClientCertificate() && mtlsProvider.getKeyStore() != null) {
+            return mtlsEndpoint;
+          }
+          return endpoint;
+      }
+    }
+    return endpoint;
+  }
+
   private String buildEndpoint(String serviceName, String universeDomain, String port) {
-    return UNIVERSE_DOMAIN_TEMPLATE
+    return ENDPOINT_TEMPLATE
         .replace("SERVICE_NAME", serviceName)
         .replace("UNIVERSE_DOMAIN", universeDomain)
         .replace("PORT", port);

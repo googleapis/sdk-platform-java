@@ -62,7 +62,11 @@ public class FakeClientSettings extends ClientSettings {
     }
 
     public Builder() {
-      super(new FakeStubSettings.Builder());
+      this(null, null);
+    }
+
+    public Builder(String endpoint, String mtlsEndpoint) {
+      super(new FakeStubSettings.Builder(endpoint, mtlsEndpoint));
     }
 
     @Override

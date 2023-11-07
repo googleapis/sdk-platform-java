@@ -113,6 +113,7 @@ public class GrpcLongRunningTest {
         .setRetrySettings(FAST_RETRY_SETTINGS.toBuilder().setMaxAttempts(1).build());
     OperationsSettings settings =
         OperationsSettings.newBuilder()
+            .setEndpoint("longrunning.googleapis.com")
             .setTransportChannelProvider(operationsChannelProvider)
             .build();
     operationsStub =

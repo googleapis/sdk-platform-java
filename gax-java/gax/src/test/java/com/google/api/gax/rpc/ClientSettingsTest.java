@@ -108,7 +108,8 @@ public class ClientSettingsTest {
 
   @Test
   public void testEmptyBuilder() throws Exception {
-    FakeClientSettings.Builder builder = new FakeClientSettings.Builder();
+    FakeClientSettings.Builder builder =
+        new FakeClientSettings.Builder("test.googleapis..com", "test.mtls.endpoint.com");
     Truth.assertThat(builder.getExecutorProvider()).isNull();
     Truth.assertThat(builder.getBackgroundExecutorProvider())
         .isInstanceOf(InstantiatingExecutorProvider.class);

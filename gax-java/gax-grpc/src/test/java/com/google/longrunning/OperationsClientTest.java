@@ -76,6 +76,7 @@ public class OperationsClientTest {
     channelProvider = serviceHelper.createChannelProvider();
     OperationsSettings settings =
         OperationsSettings.newBuilder()
+            .setEndpoint("longrunning.googleapis.com")
             .setTransportChannelProvider(channelProvider)
             .setCredentialsProvider(NoCredentialsProvider.create())
             .build();
