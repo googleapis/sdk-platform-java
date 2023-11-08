@@ -303,7 +303,7 @@ for proto_src in ${proto_files}; do
     continue
   fi
   mkdir -p "${destination_path}/proto-${folder_name}/src/main/proto"
-  cp -R "${proto_src}" "${destination_path}/proto-${folder_name}/src/main/proto"
+  rsync -R "${proto_src}" "${destination_path}/proto-${folder_name}/src/main/proto"
 done
 popd # output_folder
 ##################### Section 4 #####################
