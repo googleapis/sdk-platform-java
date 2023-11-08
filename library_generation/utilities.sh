@@ -19,7 +19,6 @@ elif [[ -f "${RUNFILES_MANIFEST_FILE:-/dev/null}" ]]; then
             "$RUNFILES_MANIFEST_FILE" | cut -d ' ' -f 2-)"
 else
   echo >&2 "ERROR: cannot find @bazel_tools//tools/bash/runfiles:runfiles.bash"
-  exit 1
 fi
 # --- end runfiles.bash initialization ---
 
