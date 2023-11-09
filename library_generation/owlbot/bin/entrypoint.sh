@@ -59,7 +59,7 @@ if [ "$(ls */.OwlBot.yaml|wc -l)" -gt 1 ];then
     # The content of owl-bot-staging is controlled by Owlbot.yaml files in
     # each module in the monorepo
     echo "Extracting contents from owl-bot-staging"
-    for module in $(ls owl-bot-staging); do
+    for module in owl-bot-staging/* ; do
       if [ ! -d "$module" ]; then
         continue
       fi
