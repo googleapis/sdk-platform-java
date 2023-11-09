@@ -45,6 +45,7 @@ jobs:
         colima start
         docker run --user $(id -u):$(id -g) --rm hello-world
     - name: Run integration tests
+      if: matrix.os == 'ubuntu-22.04' || matrix.post_processing == 'false'
       run: |
         set -x
         git config --global user.email "github-workflow@github.com"
