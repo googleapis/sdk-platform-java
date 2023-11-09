@@ -59,7 +59,7 @@ jobs:
         with:
           java-version: 8
           distribution: temurin
-          cache: maven
+#          cache: maven
       - run: echo "JAVA8_HOME=${JAVA_HOME}" >> $GITHUB_ENV
       - uses: actions/setup-java@v3
         with:
@@ -86,7 +86,7 @@ jobs:
         with:
           java-version: 11
           distribution: temurin
-          cache: maven
+#          cache: maven
       - name: Install all modules using Java 11
         shell: bash
         run: |
