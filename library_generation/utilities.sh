@@ -180,7 +180,6 @@ download_protobuf() {
     "protobuf-${protobuf_version}.zip" \
     "GitHub"
     unzip -o -q "protobuf-${protobuf_version}.zip" -d "protobuf-${protobuf_version}"
-    cp -r "protobuf-${protobuf_version}/include/google" .
     rm "protobuf-${protobuf_version}.zip"
   fi
 
