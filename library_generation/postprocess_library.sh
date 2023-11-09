@@ -88,14 +88,19 @@ docker run --rm \
   --config-file=.OwlBot.yaml
 
 
-echo 'running owl-bot post-processor'
-versions_file_arg=""
-if [ -f "${versions_file}" ];then
-  versions_file_arg="-v ${versions_file}:/versions.txt"
-fi
+
+# install synthtool
+pushd "${scripts_root}/synthtool"
+python3 -m pip install -e .
+python3 -m pip install -r requirements.in
+popd # synthtool
+
+pushd "${scripts_root}/owlbot/src/"
+python3 -m pip install -r requirements.in
+popd # owlbot/src
+
 # run the postprocessor
-docker run --rm \
-  -v "${workspace}:/workspace" \
-  ${versions_file_arg} \
-  --user $(id -u):$(id -g) \
-  "${owlbot_postprocessor_image}"
+echo 'running owl-bot post-processor'
+pushd "${workspace}"
+bash "${scripts_root}/owlbot/bin/entrypoint.sh" "${scripts_root}" "${versions_file}"
+popd # workspace

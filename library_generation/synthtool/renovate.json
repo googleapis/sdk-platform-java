@@ -1,0 +1,24 @@
+{
+  "extends": [
+    "schedule:weekly"
+  ],
+  "includePaths": [
+    "synthtool/gcp/templates/java_library/.kokoro/presubmit/graalvm-native*.cfg",
+    "requirements.in",
+    "requirements.txt"
+  ],
+  "internalChecksFilter": "strict",
+  "stabilityDays": 30,
+  "timezone": "America/Los_Angeles",
+  "enabledManagers": ["regex"],
+  "regexManagers": [
+    {
+      "fileMatch": ["^synthtool/gcp/templates/java_library/.kokoro/presubmit/graalvm-native.*.cfg"],
+      "matchStrings": ["value: \"gcr.io/cloud-devrel-kokoro-resources/graalvm:(?<currentValue>.*?)\"",
+        "value: \"gcr.io/cloud-devrel-kokoro-resources/graalvm17:(?<currentValue>.*?)\""],
+      "depNameTemplate": "ghcr.io/graalvm/graalvm-ce",
+      "datasourceTemplate": "docker"
+
+    }
+  ]
+}
