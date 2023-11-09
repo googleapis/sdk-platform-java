@@ -6,7 +6,7 @@ set -xeo pipefail
 extract_folder_name() {
   local destination_path=$1
   local folder_name=${destination_path##*/}
-  echo "$folder_name"
+  echo "${folder_name}"
 }
 
 remove_empty_files() {
@@ -56,23 +56,30 @@ unzip_src_files() {
 
 # get gapic options from .yaml and .json files from proto_path.
 get_gapic_opts() {
-  local gapic_config
-  local grpc_service_config
-  local api_service_config
-  gapic_config=$(find "${proto_path}" -type f -name "*gapic.yaml")
-  if [ -z "${gapic_config}" ]; then
-    gapic_config=""
-  else
-    gapic_config="gapic-config=${gapic_config},"
-  fi
-  grpc_service_config=$(find "${proto_path}" -type f -name "*service_config.json")
-  api_service_config=$(find "${proto_path}" -maxdepth 1 -type f \( -name "*.yaml" ! -name "*gapic*.yaml" \))
+  local transport=$1
+  local rest_numeric_enums=$2
+  local gapic_yaml=$3
+  local service_config=$4
+  local service_yaml=$5
   if [ "${rest_numeric_enums}" == "true" ]; then
-    rest_numeric_enums="rest-numeric-enums,"
+    rest_numeric_enums="rest-numeric-enums"
   else
     rest_numeric_enums=""
   fi
-  echo "transport=${transport},${rest_numeric_enums}grpc-service-config=${grpc_service_config},${gapic_config}api-service-config=${api_service_config}"
+  # If any of the gapic options is empty (default value), try to search for
+  # it in proto_path.
+  if [[ "${gapic_yaml}" == "" ]]; then
+    gapic_yaml=$(find "${proto_path}" -type f -name "*gapic.yaml")
+  fi
+
+  if [[ "${service_config}" == "" ]]; then
+    service_config=$(find "${proto_path}" -type f -name "*service_config.json")
+  fi
+
+  if [[ "${service_yaml}" == "" ]]; then
+    service_yaml=$(find "${proto_path}" -maxdepth 1 -type f \( -name "*.yaml" ! -name "*gapic*.yaml" \))
+  fi
+  echo "transport=${transport},${rest_numeric_enums},grpc-service-config=${service_config},gapic-config=${gapic_yaml},api-service-config=${service_yaml}"
 }
 
 remove_grpc_version() {
@@ -196,9 +203,7 @@ download_fail() {
   exit 1
 }
 
-# gets the output folder where all sources and dependencies will be located. It
-# relies on utilities_script_dir which points to the same location as
-# `generate_library.sh`
+# gets the output folder where all sources and dependencies will be located.
 get_output_folder() {
   echo "$(pwd)/output"
 }
@@ -219,4 +224,52 @@ detect_os_architecture() {
       ;;
   esac
   echo "${os_architecture}"
+}
+
+# returns the metadata json path if given, or defaults to the one found in
+# $repository_path
+# Arguments
+# 1 - repository_path: path from output_folder to the location of the library
+# containing .repo-metadata. It assumes the existence of google-cloud-java in
+# the output folder
+# 2 - output_folder: root for the generated libraries, used in conjunction with
+get_repo_metadata_json() {
+  local repository_path=$1
+  local output_folder=$2
+  >&2 echo 'Attempting to obtain .repo-metadata.json from repository_path'
+  local default_metadata_json_path="${output_folder}/${repository_path}/.repo-metadata.json"
+  if [ -f "${default_metadata_json_path}" ]; then
+    echo "${default_metadata_json_path}"
+  else
+    >&2 echo 'failed to obtain json from repository_path'
+    exit 1
+  fi
+}
+
+# returns the owlbot image sha contained in google-cloud-java. This is default
+# behavior that may be overriden by a custom value in the future.
+# Arguments
+# 1 - output_folder: root for the generated libraries, used in conjunction with
+# 2 - repository_root: usually "google-cloud-java". The .OwlBot.yaml
+# file is looked into its .github folder
+get_owlbot_sha() {
+  local output_folder=$1
+  local repository_root=$2
+  if [ ! -d "${output_folder}/${repository_root}" ];
+  then
+    >&2 echo 'No repository to infer owlbot_sha was provided. This is necessary for post-processing' >&2
+    exit 1
+  fi
+  >&2 echo "Attempting to obtain owlbot_sha from monorepo folder"
+  owlbot_sha=$(grep 'sha256' "${output_folder}/${repository_root}/.github/.OwlBot.lock.yaml" | cut -d: -f3)
+  echo "${owlbot_sha}"
+}
+
+# copies $1 as a folder as $2 only if $1 exists
+copy_directory_if_exists() {
+  local source_folder=$1
+  local destination_folder=$2
+  if [ -d "${source_folder}" ]; then
+    cp -r "${source_folder}" "${destination_folder}"
+  fi
 }

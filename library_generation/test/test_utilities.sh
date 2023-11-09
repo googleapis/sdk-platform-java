@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -xeo pipefail
+test_utilities_script_dir=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 # Utility functions commonly used in test cases.
 
@@ -42,6 +43,46 @@ __get_config_from_BUILD() {
     result="${if_match}"
   fi
   echo "${result}"
+}
+
+__get_gapic_option_from_BUILD() {
+  local build_file=$1
+  local pattern=$2
+  local gapic_option
+  local file_path
+  gapic_option=$(grep "${pattern}" "${build_file}" |\
+    head -1 |\
+    sed 's/.*\"\([^]]*\)\".*/\1/g' |\
+    sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
+  )
+  if [ -z "${gapic_option}" ] || [[ "${gapic_option}" == *"None"* ]]; then
+    echo ""
+    return
+  fi
+
+  if [[ "${gapic_option}" == ":"* ]] || [[ "${gapic_option}" == "*"* ]]; then
+    # if gapic_option starts with : or *, remove the first character.
+    gapic_option="${gapic_option:1}"
+  elif [[ "${gapic_option}" == "//"* ]]; then
+    # gapic option is a bazel target, use the file path and name directly.
+    # remove the leading "//".
+    gapic_option="${gapic_option:2}"
+    # replace ":" with "/"
+    gapic_option="${gapic_option//://}"
+    echo "${gapic_option}"
+    return
+  fi
+
+  file_path="${build_file%/*}"
+  # Make sure gapic option (*.yaml or *.json) exists in proto_path; otherwise
+  # reset gapic option to empty string.
+  if [ -f "${file_path}/${gapic_option}" ]; then
+    gapic_option="${file_path}/${gapic_option}"
+  else
+    echo "WARNING: file ${file_path}/${gapic_option} does not exist, reset gapic option to empty string." >&2
+    gapic_option=""
+  fi
+  echo "${gapic_option}"
 }
 
 __get_iam_policy_from_BUILD() {
@@ -190,6 +231,27 @@ get_rest_numeric_enums_from_BUILD() {
   echo "${rest_numeric_enums}"
 }
 
+get_gapic_yaml_from_BUILD() {
+  local build_file=$1
+  local gapic_yaml
+  gapic_yaml=$(__get_gapic_option_from_BUILD "${build_file}" "gapic_yaml = ")
+  echo "${gapic_yaml}"
+}
+
+get_service_config_from_BUILD() {
+  local build_file=$1
+  local service_config
+  service_config=$(__get_gapic_option_from_BUILD "${build_file}" "grpc_service_config = ")
+  echo "${service_config}"
+}
+
+get_service_yaml_from_BUILD() {
+  local build_file=$1
+  local service_yaml
+  service_yaml=$(__get_gapic_option_from_BUILD "${build_file}" "service_yaml")
+  echo "${service_yaml}"
+}
+
 get_include_samples_from_BUILD() {
   local build_file=$1
   local include_samples
@@ -235,3 +297,42 @@ sparse_clone() {
   git checkout
   popd
 }
+
+# performs a deep structural comparison between the current pom in a git 
+# folder and the one at HEAD.
+# This function is OS-dependent, so it sources the main utilities script to
+# perform detection
+compare_poms() {
+  target_dir=$1
+  source "${test_utilities_script_dir}/../utilities.sh"
+  os_architecture=$(detect_os_architecture)
+  pushd "${target_dir}" &> /dev/null
+  find . -name 'pom.xml' -exec cp {} {}.new \;
+  find . -name 'pom.xml' -exec git checkout HEAD -- {} \;
+  # compare_poms.py exits with non-zero if diffs are found
+  set -e
+  result=0
+  if [ "${os_architecture}" == "linux-x86_64" ]; then
+    find . -name 'pom.xml' -print0 | xargs -i -0 python "${test_utilities_script_dir}/compare_poms.py" {} {}.new false || result=$?
+  else
+    find . -name 'pom.xml' -print0 | xargs -I{} -0 python "${test_utilities_script_dir}/compare_poms.py" {} {}.new false || result=$?
+  fi
+  popd &> /dev/null # target_dir
+  echo ${result}
+}
+
+# computes the `destination_path` variable by inspecting the contents of the
+# googleapis-gen at $proto_path. 
+compute_destination_path() {
+  local proto_path=$1
+  local output_folder=$2
+  pushd "${output_folder}" &> /dev/null
+  local destination_path=$(find "googleapis-gen/${proto_path}" -maxdepth 1 -name 'google-*-java' \
+    | rev \
+    | cut -d'/' -f1 \
+    | rev
+  )
+  popd &> /dev/null # output_folder
+  echo "${destination_path}"
+}
+

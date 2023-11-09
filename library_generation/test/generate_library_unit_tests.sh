@@ -46,7 +46,7 @@ get_gapic_opts_with_rest_test() {
   local transport="grpc"
   local rest_numeric_enums="true"
   local gapic_opts
-  gapic_opts="$(get_gapic_opts)"
+  gapic_opts="$(get_gapic_opts "${transport}" "${rest_numeric_enums}" "" "" "")"
   assertEquals \
   "transport=grpc,rest-numeric-enums,grpc-service-config=${proto_path}/example_grpc_service_config.json,gapic-config=${proto_path}/example_gapic.yaml,api-service-config=${proto_path}/example.yaml" \
   "${gapic_opts}"
@@ -57,9 +57,20 @@ get_gapic_opts_without_rest_test() {
   local transport="grpc"
   local rest_numeric_enums="false"
   local gapic_opts
-  gapic_opts="$(get_gapic_opts)"
+  gapic_opts="$(get_gapic_opts "${transport}" "${rest_numeric_enums}" "" "" "")"
   assertEquals \
-  "transport=grpc,grpc-service-config=${proto_path}/example_grpc_service_config.json,gapic-config=${proto_path}/example_gapic.yaml,api-service-config=${proto_path}/example.yaml" \
+  "transport=grpc,,grpc-service-config=${proto_path}/example_grpc_service_config.json,gapic-config=${proto_path}/example_gapic.yaml,api-service-config=${proto_path}/example.yaml" \
+  "$gapic_opts"
+}
+
+get_gapic_opts_with_non_default_test() {
+  local proto_path="${script_dir}/resources/gapic_options"
+  local transport="grpc"
+  local rest_numeric_enums="false"
+  local gapic_opts
+  gapic_opts="$(get_gapic_opts "${transport}" "${rest_numeric_enums}" "${proto_path}/example_gapic.yaml" "${proto_path}/example_grpc_service_config.json" "${proto_path}/example.yaml")"
+  assertEquals \
+  "transport=grpc,,grpc-service-config=${proto_path}/example_grpc_service_config.json,gapic-config=${proto_path}/example_gapic.yaml,api-service-config=${proto_path}/example.yaml" \
   "$gapic_opts"
 }
 
@@ -294,6 +305,56 @@ get_version_from_valid_WORKSPACE_test() {
   assertEquals '2.25.1-SNAPSHOT' "${obtained_ggj_version}"
 }
 
+get_repo_metadata_json_valid_repo_succeeds() {
+  local output_folder="${script_dir}/resources"
+  local repository_path="test-monorepo/test-service"
+  local repo_metadata_json=$(get_repo_metadata_json "${repository_path}" "${output_folder}")
+  assertEquals "${output_folder}/${repository_path}/.repo-metadata.json" \
+    "${repo_metadata_json}"
+}
+
+get_repo_metadata_json_invalid_repo_fails() {
+  local output_folder="${script_dir}/resources"
+  local repository_path="test-monorepo/java-nonexistent"
+  $(get_repo_metadata_json "${repository_path}" "${output_folder}") || res=$?
+  assertEquals 1 ${res}
+}
+
+get_owlbot_sha_valid_repo_succeeds() {
+  local output_folder="${script_dir}/resources"
+  local repository_root="test-monorepo"
+  local owlbot_sha=$(get_owlbot_sha "${output_folder}" "${repository_root}")
+  assertEquals 'fb7584f6adb3847ac480ed49a4bfe1463965026b2919a1be270e3174f3ce1191' \
+    "${owlbot_sha}"
+}
+
+get_owlbot_sha_invalid_repo_fails() {
+  local output_folder="${script_dir}/resources"
+  local repository_root="nonexistent-repo"
+  $(get_owlbot_sha "${output_folder}" "${repository_root}") || res=$?
+  assertEquals 1 ${res}
+}
+
+copy_directory_if_exists_valid_folder_succeeds() {
+  local source_folder="${script_dir}/resources"
+  local destination="${script_dir}/test_destination_folder"
+  mkdir -p "${destination}"
+  copy_directory_if_exists "${source_folder}" "${destination}/copied-folder"
+  n_matching_folders=$(ls "${destination}" | grep -e 'copied-folder' | wc -l)
+  rm -rdf "${destination}"
+  assertEquals 1 ${n_matching_folders}
+}
+
+copy_directory_if_exists_invalid_folder_does_not_copy() {
+  local source_folder="${script_dir}/non-existent"
+  local destination="${script_dir}/test_destination_folder"
+  mkdir -p "${destination}"
+  copy_directory_if_exists "${source_folder}" "${destination}/copied-folder"
+  n_matching_folders=$(ls "${destination}" | grep -e 'copied-folder' | wc -l) || res=$?
+  rm -rdf "${destination}"
+  assertEquals 0 ${n_matching_folders}
+}
+
 # Execute tests.
 # One line per test.
 test_list=(
@@ -304,6 +365,7 @@ test_list=(
   get_protobuf_version_failed_with_invalid_generator_version_test
   get_gapic_opts_with_rest_test
   get_gapic_opts_without_rest_test
+  get_gapic_opts_with_non_default_test
   remove_grpc_version_test
   download_generator_success_with_valid_version_test
   download_generator_failed_with_invalid_version_test
@@ -332,6 +394,12 @@ test_list=(
   get_include_samples_from_BUILD_false_test
   get_include_samples_from_BUILD_empty_test
   get_version_from_valid_WORKSPACE_test
+  get_repo_metadata_json_valid_repo_succeeds
+  get_repo_metadata_json_invalid_repo_fails
+  get_owlbot_sha_valid_repo_succeeds
+  get_owlbot_sha_invalid_repo_fails
+  copy_directory_if_exists_valid_folder_succeeds
+  copy_directory_if_exists_invalid_folder_does_not_copy
 )
 
 pushd "${script_dir}"
