@@ -2,6 +2,8 @@ def _process_inputs(
         proto_path,
         destination_path,
         gapic_generator_java_version,
+        protobuf_version = None,
+        grpc_version = None,
         proto_only = "false",
         gapic_additional_protos = None,
         transport = "grpc",
@@ -18,6 +20,12 @@ def _process_inputs(
     args.append(destination_path)
     args.append("--gapic_generator_version")
     args.append(gapic_generator_java_version)
+    if protobuf_version != None:
+        args.append("--protobuf_version")
+        args.append(protobuf_version)
+    if grpc_version != None:
+        args.append("--grpc_version")
+        args.append(grpc_version)
     args.append("--proto_only")
     args.append(proto_only)
     if gapic_additional_protos != None:
@@ -48,6 +56,8 @@ def java_gapic_assembly_shell_pkg(
         proto_path,
         destination_path,
         gapic_generator_java_version,
+        protobuf_version = None,
+        grpc_version = None,
         proto_only = "false",
         gapic_additional_protos = None,
         transport = "grpc",
@@ -76,6 +86,8 @@ def java_gapic_assembly_shell_pkg(
             proto_path = proto_path,
             destination_path = destination_path,
             gapic_generator_java_version = gapic_generator_java_version,
+            protobuf_version = protobuf_version,
+            grpc_version = grpc_version,
             proto_only = proto_only,
             gapic_additional_protos = gapic_additional_protos,
             transport = transport,
