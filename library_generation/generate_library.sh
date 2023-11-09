@@ -72,6 +72,10 @@ case $key in
     versions_file="$2"
     shift
     ;;
+  --googleapis_gen_folder_name)
+    googleapis_gen_folder_name="$2"
+    shift
+    ;;
   *)
     echo "Invalid option: [$1]"
     exit 1
@@ -300,10 +304,13 @@ then
   echo "post processing is disabled"
   exit 0
 fi
-if [ -z "${versions_file}" ];then
-  echo "no versions.txt argument provided. Please provide one in order to enable post-processing"
-  exit 1
-fi
+for necessary_argument in versions_file googleapis_gen_folder_name; do
+  if [ -z "${necessary_argument}" ];then
+    echo "no ${necessary_argument} argument provided. Please provide one in order to enable post-processing"
+    exit 1
+  fi
+done
+
 workspace="${output_folder}/workspace"
 if [ -d "${workspace}" ]; then
   rm -rdf "${workspace}"
@@ -316,7 +323,8 @@ bash -x "${script_dir}/postprocess_library.sh" "${workspace}" \
   "${destination_path}" \
   "${proto_path}" \
   "${versions_file}" \
-  "${output_folder}"
+  "${output_folder}" \
+  "${googleapis_gen_folder_name}"
 
 # for post-procesed libraries, remove pre-processed folders
 pushd "${output_folder}/${destination_path}"

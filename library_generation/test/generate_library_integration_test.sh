@@ -90,6 +90,8 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   pushd "${output_folder}"
   echo "Checking out googleapis-gen repository..."
   sparse_clone "${googleapis_gen_url}" "${proto_path}"
+  googleapis_gen_folder_name=$(basename \
+    $(find "${output_folder}/googleapis-gen/${proto_path}" -maxdepth 1 -name '*-java'))
   destination_path=$(compute_destination_path "${proto_path}" "${output_folder}")
   # parse GAPIC options from proto_path/BUILD.bazel
   proto_build_file_path="${proto_path}/BUILD.bazel"
@@ -146,7 +148,8 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
       --service_yaml "${service_yaml}" \
       --include_samples "${include_samples}" \
       --enable_postprocessing "true" \
-      --versions_file "${output_folder}/google-cloud-java/versions.txt"
+      --versions_file "${output_folder}/google-cloud-java/versions.txt" \
+      --googleapis_gen_folder_name "${googleapis_gen_folder_name}"
   else
     "${library_generation_dir}"/generate_library.sh \
     -p "${proto_path}" \

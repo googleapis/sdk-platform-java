@@ -15,6 +15,8 @@
 # folder structure to run `owlbot-cli copy-code`
 # 5 - versions_file: path to file containing versions to be applied to the poms
 # 6 - output_folder: main workspace of the generation process
+# 7 - googleapis_gen_folder_name: folder name in googleapis-gen/proto_path. This
+# is necessary to work with owlbot CLI's copy-code
 
 workspace=$1
 scripts_root=$2
@@ -22,6 +24,7 @@ destination_path=$3
 proto_path=$4
 versions_file=$5
 output_folder=$6
+googleapis_gen_folder_name=$7
 
 source "${scripts_root}"/utilities.sh
 
@@ -58,16 +61,17 @@ pre_processed_libs_folder="${output_folder}/pre-processed"
 # By default (thanks to generation templates), .OwlBot.yaml `deep-copy` section
 # references a wildcard pattern matching a folder
 # ending with `-java` at the leaf of proto_path. 
-mkdir -p "${pre_processed_libs_folder}/${proto_path}/generated-java"
+mkdir -p "${pre_processed_libs_folder}/${proto_path}/${googleapis_gen_folder_name}"
 folder_name=$(extract_folder_name "${destination_path}")
+ggen_name="${googleapis_gen_folder_name}"
 copy_directory_if_exists "${output_folder}/${destination_path}/proto-${folder_name}" \
-  "${pre_processed_libs_folder}/${proto_path}/generated-java/proto-google-cloud-${folder_name}"
+  "${pre_processed_libs_folder}/${proto_path}/${ggen_name}/proto-${ggen_name}"
 copy_directory_if_exists "${output_folder}/${destination_path}/grpc-${folder_name}" \
-  "${pre_processed_libs_folder}/${proto_path}/generated-java/grpc-google-cloud-${folder_name}"
+  "${pre_processed_libs_folder}/${proto_path}/${ggen_name}/grpc-${ggen_name}"
 copy_directory_if_exists "${output_folder}/${destination_path}/gapic-${folder_name}" \
-  "${pre_processed_libs_folder}/${proto_path}/generated-java/gapic-google-cloud-${folder_name}"
+  "${pre_processed_libs_folder}/${proto_path}/${ggen_name}/gapic-${ggen_name}"
 copy_directory_if_exists "${output_folder}/${destination_path}/samples" \
-  "${pre_processed_libs_folder}/${proto_path}/generated-java/samples"
+  "${pre_processed_libs_folder}/${proto_path}/${ggen_name}/samples"
 pushd "${pre_processed_libs_folder}"
 # create an empty repository so owl-bot-copy can process this as a repo
 # (cannot process non-git-repositories)
