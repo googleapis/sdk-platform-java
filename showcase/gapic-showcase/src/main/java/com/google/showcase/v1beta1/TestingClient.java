@@ -72,41 +72,6 @@ import javax.annotation.Generated;
  *      <th>Description</th>
  *      <th>Method Variants</th>
  *    <tr>
- *      <td>DeleteTest</td>
- *      <td><p>Explicitly decline to implement a test.
- *
- *  This removes the test from subsequent `ListTests` calls, and
- *  attempting to do the test will error.
- *
- *  This method will error if attempting to delete a required test.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>deleteTest(DeleteTestRequest request)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>deleteTestCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>GetIamPolicy</td>
- *      <td><p>Gets the access control policy for a resource.
- *  Returns an empty policy if the resource exists and does not have a policy
- *  set.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>getIamPolicy(GetIamPolicyRequest request)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>getIamPolicyCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
  *      <td>CreateSession</td>
  *      <td><p>Creates a new testing session.</p></td>
  *      <td>
@@ -117,23 +82,6 @@ import javax.annotation.Generated;
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>createSessionCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>SetIamPolicy</td>
- *      <td><p>Sets the access control policy on the specified resource. Replaces any
- *  existing policy.
- *
- *  Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>setIamPolicy(SetIamPolicyRequest request)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>setIamPolicyCallable()
  *      </ul>
  *    </td>
  *    </tr>
@@ -152,6 +100,21 @@ import javax.annotation.Generated;
  *    </td>
  *    </tr>
  *    <tr>
+ *      <td>ListSessions</td>
+ *      <td><p>Lists the current test sessions.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>listSessions(ListSessionsRequest request)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>listSessionsPagedCallable()
+ *      <li>listSessionsCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
  *      <td>DeleteSession</td>
  *      <td><p>Delete a test session.</p></td>
  *      <td>
@@ -162,6 +125,56 @@ import javax.annotation.Generated;
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>deleteSessionCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>ReportSession</td>
+ *      <td><p>Report on the status of a session.
+ *  This generates a report detailing which tests have been completed,
+ *  and an overall rollup.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>reportSession(ReportSessionRequest request)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>reportSessionCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>ListTests</td>
+ *      <td><p>List the tests of a sessesion.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>listTests(ListTestsRequest request)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>listTestsPagedCallable()
+ *      <li>listTestsCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>DeleteTest</td>
+ *      <td><p>Explicitly decline to implement a test.
+ *
+ *  This removes the test from subsequent `ListTests` calls, and
+ *  attempting to do the test will error.
+ *
+ *  This method will error if attempting to delete a required test.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>deleteTest(DeleteTestRequest request)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>deleteTestCallable()
  *      </ul>
  *    </td>
  *    </tr>
@@ -183,6 +196,21 @@ import javax.annotation.Generated;
  *    </td>
  *    </tr>
  *    <tr>
+ *      <td>ListLocations</td>
+ *      <td><p>Lists information about the supported locations for this service.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>listLocations(ListLocationsRequest request)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>listLocationsPagedCallable()
+ *      <li>listLocationsCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
  *      <td>GetLocation</td>
  *      <td><p>Gets information about a location.</p></td>
  *      <td>
@@ -193,6 +221,39 @@ import javax.annotation.Generated;
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>getLocationCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>SetIamPolicy</td>
+ *      <td><p>Sets the access control policy on the specified resource. Replaces any
+ *  existing policy.
+ *
+ *  Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>setIamPolicy(SetIamPolicyRequest request)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>setIamPolicyCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>GetIamPolicy</td>
+ *      <td><p>Gets the access control policy for a resource.
+ *  Returns an empty policy if the resource exists and does not have a policy
+ *  set.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>getIamPolicy(GetIamPolicyRequest request)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>getIamPolicyCallable()
  *      </ul>
  *    </td>
  *    </tr>
@@ -213,67 +274,6 @@ import javax.annotation.Generated;
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>testIamPermissionsCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>ListTests</td>
- *      <td><p>List the tests of a sessesion.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>listTests(ListTestsRequest request)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>listTestsPagedCallable()
- *      <li>listTestsCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>ListLocations</td>
- *      <td><p>Lists information about the supported locations for this service.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>listLocations(ListLocationsRequest request)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>listLocationsPagedCallable()
- *      <li>listLocationsCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>ReportSession</td>
- *      <td><p>Report on the status of a session.
- *  This generates a report detailing which tests have been completed,
- *  and an overall rollup.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>reportSession(ReportSessionRequest request)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>reportSessionCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>ListSessions</td>
- *      <td><p>Lists the current test sessions.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>listSessions(ListSessionsRequest request)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>listSessionsPagedCallable()
- *      <li>listSessionsCallable()
  *      </ul>
  *    </td>
  *    </tr>

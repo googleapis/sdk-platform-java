@@ -71,6 +71,42 @@ import javax.annotation.Generated;
  *      <th>Description</th>
  *      <th>Method Variants</th>
  *    <tr>
+ *      <td>CreateSequence</td>
+ *      <td><p>Creates a sequence.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>createSequence(CreateSequenceRequest request)
+ *      </ul>
+ *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *      <ul>
+ *      <li>createSequence(Sequence sequence)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>createSequenceCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>CreateStreamingSequence</td>
+ *      <td><p>Creates a sequence.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>createStreamingSequence(CreateStreamingSequenceRequest request)
+ *      </ul>
+ *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *      <ul>
+ *      <li>createStreamingSequence(StreamingSequence streamingSequence)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>createStreamingSequenceCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
  *      <td>GetSequenceReport</td>
  *      <td><p>Retrieves a sequence.</p></td>
  *      <td>
@@ -109,16 +145,6 @@ import javax.annotation.Generated;
  *    </td>
  *    </tr>
  *    <tr>
- *      <td>AttemptStreamingSequence</td>
- *      <td><p>Attempts a streaming sequence.</p></td>
- *      <td>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>attemptStreamingSequenceCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
  *      <td>AttemptSequence</td>
  *      <td><p>Attempts a sequence.</p></td>
  *      <td>
@@ -134,6 +160,62 @@ import javax.annotation.Generated;
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>attemptSequenceCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>AttemptStreamingSequence</td>
+ *      <td><p>Attempts a streaming sequence.</p></td>
+ *      <td>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>attemptStreamingSequenceCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>ListLocations</td>
+ *      <td><p>Lists information about the supported locations for this service.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>listLocations(ListLocationsRequest request)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>listLocationsPagedCallable()
+ *      <li>listLocationsCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>GetLocation</td>
+ *      <td><p>Gets information about a location.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>getLocation(GetLocationRequest request)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>getLocationCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>SetIamPolicy</td>
+ *      <td><p>Sets the access control policy on the specified resource. Replaces any
+ *  existing policy.
+ *
+ *  Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>setIamPolicy(SetIamPolicyRequest request)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>setIamPolicyCallable()
  *      </ul>
  *    </td>
  *    </tr>
@@ -154,38 +236,6 @@ import javax.annotation.Generated;
  *    </td>
  *    </tr>
  *    <tr>
- *      <td>CreateStreamingSequence</td>
- *      <td><p>Creates a sequence.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>createStreamingSequence(CreateStreamingSequenceRequest request)
- *      </ul>
- *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *      <ul>
- *      <li>createStreamingSequence(StreamingSequence streamingSequence)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>createStreamingSequenceCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>GetLocation</td>
- *      <td><p>Gets information about a location.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>getLocation(GetLocationRequest request)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>getLocationCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
  *      <td>TestIamPermissions</td>
  *      <td><p>Returns permissions that a caller has on the specified resource.
  *  If the resource does not exist, this will return an empty set of
@@ -202,56 +252,6 @@ import javax.annotation.Generated;
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>testIamPermissionsCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>CreateSequence</td>
- *      <td><p>Creates a sequence.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>createSequence(CreateSequenceRequest request)
- *      </ul>
- *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *      <ul>
- *      <li>createSequence(Sequence sequence)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>createSequenceCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>ListLocations</td>
- *      <td><p>Lists information about the supported locations for this service.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>listLocations(ListLocationsRequest request)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>listLocationsPagedCallable()
- *      <li>listLocationsCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>SetIamPolicy</td>
- *      <td><p>Sets the access control policy on the specified resource. Replaces any
- *  existing policy.
- *
- *  Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>setIamPolicy(SetIamPolicyRequest request)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>setIamPolicyCallable()
  *      </ul>
  *    </td>
  *    </tr>

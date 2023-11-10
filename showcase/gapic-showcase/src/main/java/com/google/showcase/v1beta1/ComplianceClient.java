@@ -85,54 +85,33 @@ import javax.annotation.Generated;
  *      <th>Description</th>
  *      <th>Method Variants</th>
  *    <tr>
- *      <td>GetEnum</td>
- *      <td><p>This method requests an enum value from the server. Depending on the contents of EnumRequest, the enum value returned will be a known enum declared in the
- *  .proto file, or a made-up enum value the is unknown to the client. To verify that clients can round-trip unknown enum vaues they receive, use the
- *  response from this RPC as the request to VerifyEnum()
- *
- *  The values of enums sent by the server when a known or unknown value is requested will be the same within a single Showcase server run (this is needed for
- *  VerifyEnum() to work) but are not guaranteed to be the same across separate Showcase server runs.</p></td>
+ *      <td>RepeatDataBody</td>
+ *      <td><p>This method echoes the ComplianceData request. This method exercises
+ *  sending the entire request object in the REST body.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>getEnum(EnumRequest request)
+ *      <li>repeatDataBody(RepeatRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>getEnumCallable()
+ *      <li>repeatDataBodyCallable()
  *      </ul>
  *    </td>
  *    </tr>
  *    <tr>
- *      <td>RepeatDataPathTrailingResource</td>
- *      <td><p>Same as RepeatDataSimplePath, but with a trailing resource.</p></td>
+ *      <td>RepeatDataBodyInfo</td>
+ *      <td><p>This method echoes the ComplianceData request. This method exercises
+ *  sending the a message-type field in the REST body. Per AIP-127, only
+ *  top-level, non-repeated fields can be sent this way.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>repeatDataPathTrailingResource(RepeatRequest request)
+ *      <li>repeatDataBodyInfo(RepeatRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>repeatDataPathTrailingResourceCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>VerifyEnum</td>
- *      <td><p>This method is used to verify that clients can round-trip enum values, which is particularly important for unknown enum values over REST. VerifyEnum()
- *  verifies that its request, which is presumably the response that the client previously got to a GetEnum(), contains the correct data. If so, it responds
- *  with the same EnumResponse; otherwise, the RPC errors.
- *
- *  This works because the values of enums sent by the server when a known or unknown value is requested will be the same within a single Showcase server run,
- *  although they are not guaranteed to be the same across separate Showcase server runs.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>verifyEnum(EnumResponse request)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>verifyEnumCallable()
+ *      <li>repeatDataBodyInfoCallable()
  *      </ul>
  *    </td>
  *    </tr>
@@ -152,39 +131,6 @@ import javax.annotation.Generated;
  *    </td>
  *    </tr>
  *    <tr>
- *      <td>GetIamPolicy</td>
- *      <td><p>Gets the access control policy for a resource.
- *  Returns an empty policy if the resource exists and does not have a policy
- *  set.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>getIamPolicy(GetIamPolicyRequest request)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>getIamPolicyCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>SetIamPolicy</td>
- *      <td><p>Sets the access control policy on the specified resource. Replaces any
- *  existing policy.
- *
- *  Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>setIamPolicy(SetIamPolicyRequest request)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>setIamPolicyCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
  *      <td>RepeatDataSimplePath</td>
  *      <td><p>This method echoes the ComplianceData request. This method exercises
  *  sending some parameters as "simple" path variables (i.e., of the form
@@ -197,6 +143,34 @@ import javax.annotation.Generated;
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>repeatDataSimplePathCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>RepeatDataPathResource</td>
+ *      <td><p>Same as RepeatDataSimplePath, but with a path resource.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>repeatDataPathResource(RepeatRequest request)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>repeatDataPathResourceCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>RepeatDataPathTrailingResource</td>
+ *      <td><p>Same as RepeatDataSimplePath, but with a trailing resource.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>repeatDataPathTrailingResource(RepeatRequest request)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>repeatDataPathTrailingResourceCallable()
  *      </ul>
  *    </td>
  *    </tr>
@@ -229,6 +203,59 @@ import javax.annotation.Generated;
  *    </td>
  *    </tr>
  *    <tr>
+ *      <td>GetEnum</td>
+ *      <td><p>This method requests an enum value from the server. Depending on the contents of EnumRequest, the enum value returned will be a known enum declared in the
+ *  .proto file, or a made-up enum value the is unknown to the client. To verify that clients can round-trip unknown enum vaues they receive, use the
+ *  response from this RPC as the request to VerifyEnum()
+ *
+ *  The values of enums sent by the server when a known or unknown value is requested will be the same within a single Showcase server run (this is needed for
+ *  VerifyEnum() to work) but are not guaranteed to be the same across separate Showcase server runs.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>getEnum(EnumRequest request)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>getEnumCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>VerifyEnum</td>
+ *      <td><p>This method is used to verify that clients can round-trip enum values, which is particularly important for unknown enum values over REST. VerifyEnum()
+ *  verifies that its request, which is presumably the response that the client previously got to a GetEnum(), contains the correct data. If so, it responds
+ *  with the same EnumResponse; otherwise, the RPC errors.
+ *
+ *  This works because the values of enums sent by the server when a known or unknown value is requested will be the same within a single Showcase server run,
+ *  although they are not guaranteed to be the same across separate Showcase server runs.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>verifyEnum(EnumResponse request)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>verifyEnumCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>ListLocations</td>
+ *      <td><p>Lists information about the supported locations for this service.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>listLocations(ListLocationsRequest request)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>listLocationsPagedCallable()
+ *      <li>listLocationsCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
  *      <td>GetLocation</td>
  *      <td><p>Gets information about a location.</p></td>
  *      <td>
@@ -239,6 +266,39 @@ import javax.annotation.Generated;
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>getLocationCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>SetIamPolicy</td>
+ *      <td><p>Sets the access control policy on the specified resource. Replaces any
+ *  existing policy.
+ *
+ *  Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>setIamPolicy(SetIamPolicyRequest request)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>setIamPolicyCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>GetIamPolicy</td>
+ *      <td><p>Gets the access control policy for a resource.
+ *  Returns an empty policy if the resource exists and does not have a policy
+ *  set.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>getIamPolicy(GetIamPolicyRequest request)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>getIamPolicyCallable()
  *      </ul>
  *    </td>
  *    </tr>
@@ -259,66 +319,6 @@ import javax.annotation.Generated;
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>testIamPermissionsCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>RepeatDataPathResource</td>
- *      <td><p>Same as RepeatDataSimplePath, but with a path resource.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>repeatDataPathResource(RepeatRequest request)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>repeatDataPathResourceCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>ListLocations</td>
- *      <td><p>Lists information about the supported locations for this service.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>listLocations(ListLocationsRequest request)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>listLocationsPagedCallable()
- *      <li>listLocationsCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>RepeatDataBody</td>
- *      <td><p>This method echoes the ComplianceData request. This method exercises
- *  sending the entire request object in the REST body.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>repeatDataBody(RepeatRequest request)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>repeatDataBodyCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>RepeatDataBodyInfo</td>
- *      <td><p>This method echoes the ComplianceData request. This method exercises
- *  sending the a message-type field in the REST body. Per AIP-127, only
- *  top-level, non-repeated fields can be sent this way.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>repeatDataBodyInfo(RepeatRequest request)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>repeatDataBodyInfoCallable()
  *      </ul>
  *    </td>
  *    </tr>
