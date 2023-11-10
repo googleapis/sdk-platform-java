@@ -17,7 +17,7 @@ google/cloud/redis/v1 java-redis false
 google/cloud/redis/v1beta1 java-redis false
 # google/example/library/v1 google-cloud-example-library-v1-java null false
 google/devtools/containeranalysis/v1 java-containeranalysis false
-google/iam/v1 java-iam false
+google/iam/v2 java-iam false
 google/iam/credentials/v1 java-iamcredentials false
 google/logging/v2 java-logging true
 google/pubsub/v1 java-pubsub true
