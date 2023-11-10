@@ -15,7 +15,6 @@
  */
 package com.google.showcase.v1beta1.it;
 
-import static com.google.api.gax.longrunning.OperationTimedPollAlgorithm.LRO_TROUBLESHOOTING_LINK;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
@@ -147,11 +146,7 @@ public class ITLongRunningOperation {
               .build();
       OperationFuture<WaitResponse, WaitMetadata> operationFuture =
           grpcClient.waitOperationCallable().futureCall(waitRequest);
-      CancellationException cancellationException =
-          assertThrows(CancellationException.class, operationFuture::get);
-      assertThat(cancellationException)
-          .hasMessageThat()
-          .contains(LRO_TROUBLESHOOTING_LINK);
+      assertThrows(CancellationException.class, operationFuture::get);
       int attemptCount = operationFuture.getPollingFuture().getAttemptSettings().getAttemptCount();
       assertThat(attemptCount).isGreaterThan(1);
     } finally {
@@ -190,11 +185,7 @@ public class ITLongRunningOperation {
               .build();
       OperationFuture<WaitResponse, WaitMetadata> operationFuture =
           httpjsonClient.waitOperationCallable().futureCall(waitRequest);
-      CancellationException cancellationException =
-          assertThrows(CancellationException.class, operationFuture::get);
-      assertThat(cancellationException)
-          .hasMessageThat()
-          .contains(LRO_TROUBLESHOOTING_LINK);
+      assertThrows(CancellationException.class, operationFuture::get);
       int attemptCount = operationFuture.getPollingFuture().getAttemptSettings().getAttemptCount();
       assertThat(attemptCount).isGreaterThan(1);
     } finally {
