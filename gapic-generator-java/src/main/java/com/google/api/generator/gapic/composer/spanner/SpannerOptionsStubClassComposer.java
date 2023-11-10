@@ -1,13 +1,19 @@
 package com.google.api.generator.gapic.composer.spanner;
 
+import com.google.api.client.util.Lists;
 import com.google.api.core.BetaApi;
 import com.google.api.generator.engine.ast.AnnotationNode;
+import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
+import com.google.api.generator.engine.ast.ConcreteReference;
+import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.ScopeNode;
 import com.google.api.generator.engine.ast.Statement;
+import com.google.api.generator.engine.ast.ThisObjectValue;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.ValueExpr;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
@@ -95,33 +101,42 @@ public class SpannerOptionsStubClassComposer implements ClassComposer {
    * @return
    */
   private static ClassDefinition getClassForOptionProtoField() {
-    // [code] private final Boolean dataBoostEnabled;
-    VariableExpr variable = VariableExpr.builder()
+    // [code] private final Boolean maxBatchingDelayMs;
+    VariableExpr memberVariable = VariableExpr.builder()
         .setIsDecl(true)
         .setScope(ScopeNode.PRIVATE)
         .setIsFinal(true)
         .setVariable(Variable.builder().setName("maxBatchingDelayMs")
             .setType(TypeNode.INT).build())
         .build();
-    List<Statement> statements = Arrays.asList(ExprStatement.withExpr(variable));
+
+    // create the constructor method
+    VaporReference maxBatchingClassRef =
+        createVaporReference("com.google.cloud.spanner", "MaxBatchingDelayMsOption");
+    VariableExpr valueExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setName("maxBatchingDelayMs").setType(TypeNode.INT_OBJECT).build());
+    VariableExpr thisVariableExpr =
+        createVarExprFromRefVarExpr(
+            Variable.builder().setName("maxBatchingDelayMs").setType(TypeNode.INT_OBJECT).build(),
+            valueExpr);
+    AssignmentExpr assignmentExpr =
+        AssignmentExpr.builder().setVariableExpr(thisVariableExpr).setValueExpr(valueExpr).build();
     MethodDefinition constructor =
-        MethodDefinition.builder()
-            .setIsConstructor(true)
-            .setReturnType(TypeNode.VOID)
+        MethodDefinition.constructorBuilder()
             .setArguments(
-                Arrays.asList())
-            .setScope(ScopeNode.PROTECTED)
+                Arrays.asList(VariableExpr.builder()
+                    .setIsDecl(true)
+                    .setVariable(Variable.builder().setName("maxBatchingDelayMs")
+                        .setType(TypeNode.INT).build())
+                    .build()))
+            .setScope(ScopeNode.PUBLIC)
             .setBody(
-                Arrays.asList())
+                Arrays.asList(ExprStatement.withExpr(assignmentExpr)))
+            .setReturnType(TypeNode.withReference(maxBatchingClassRef))
             .build();
 
-    VariableExpr assignmentExpr = VariableExpr.builder()
-        .setIsDecl(true)
-        .setScope(ScopeNode.PRIVATE)
-        .setIsFinal(true)
-        .setVariable(Variable.builder().setName("maxBatchingDelayMs")
-            .setType(TypeNode.INT).build())
-        .build();
+    // create append method
     MethodDefinition appendToOptions =
         MethodDefinition.builder()
             .setAnnotations(Arrays.asList(AnnotationNode.OVERRIDE))
@@ -141,7 +156,8 @@ public class SpannerOptionsStubClassComposer implements ClassComposer {
             .setIsFinal(true)
             .setName("MaxBatchingDelayMsOption")
             .setIsNested(true)
-            .setStatements(statements)
+            .setStatements(Arrays.asList(ExprStatement.withExpr(memberVariable)))
+            .setMethods(Arrays.asList(constructor, appendToOptions))
             .build();
     return classDefinition;
   }
@@ -173,6 +189,14 @@ public class SpannerOptionsStubClassComposer implements ClassComposer {
 
   private static VaporReference createVaporReference(String pkgName, String name) {
     return VaporReference.builder().setPakkage(pkgName).setName(name).build();
+  }
+
+  private static Variable createVarFromConcreteRef(ConcreteReference ref, String name) {
+    return Variable.builder().setName(name).setType(TypeNode.withReference(ref)).build();
+  }
+
+  private static VariableExpr createVarExprFromRefVarExpr(Variable var, Expr varRef) {
+    return VariableExpr.builder().setVariable(var).setExprReferenceExpr(varRef).build();
   }
 }
 
