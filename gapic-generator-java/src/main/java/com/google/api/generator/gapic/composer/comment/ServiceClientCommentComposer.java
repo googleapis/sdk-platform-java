@@ -26,8 +26,8 @@ import com.google.api.generator.gapic.utils.JavaStyle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -134,8 +134,7 @@ public class ServiceClientCommentComposer {
                           return description != null ? description : "";
                         },
                         (existingValue, newValue) -> existingValue,
-                        LinkedHashMap::new
-                        )));
+                        LinkedHashMap::new)));
 
     // Build a list of MethodAndVariants to create the table
     List<MethodAndVariants> methodAndVariantsList = new ArrayList<>();
