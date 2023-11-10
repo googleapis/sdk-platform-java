@@ -29,7 +29,6 @@ import com.google.showcase.v1beta1.WaitMetadata;
 import com.google.showcase.v1beta1.WaitRequest;
 import com.google.showcase.v1beta1.WaitResponse;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
-import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.TimeUnit;
 import org.junit.Test;
