@@ -43,6 +43,7 @@ import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.StreamController;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.api.gax.util.FakeLogHandler;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -718,22 +719,4 @@ public class ChannelPoolTest {
     }
   }
 
-  private static class FakeLogHandler extends Handler {
-    List<LogRecord> records = new ArrayList<>();
-
-    @Override
-    public void publish(LogRecord record) {
-      records.add(record);
-    }
-
-    @Override
-    public void flush() {}
-
-    @Override
-    public void close() throws SecurityException {}
-
-    List<String> getAllMessages() {
-      return records.stream().map(LogRecord::getMessage).collect(Collectors.toList());
-    }
-  }
 }

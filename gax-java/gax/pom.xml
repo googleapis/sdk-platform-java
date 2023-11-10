@@ -76,6 +76,7 @@
                 <include>com/google/api/gax/core/**</include>
                 <include>com/google/api/gax/rpc/testing/**</include>
                 <include>com/google/api/gax/rpc/mtls/**</include>
+                <include>com/google/api/gax/util/**</include>
               </includes>
             </configuration>
           </execution>

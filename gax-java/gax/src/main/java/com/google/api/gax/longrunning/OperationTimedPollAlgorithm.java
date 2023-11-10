@@ -35,7 +35,10 @@ import com.google.api.core.NanoClock;
 import com.google.api.gax.retrying.ExponentialRetryAlgorithm;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.retrying.TimedAttemptSettings;
+import com.google.common.annotations.VisibleForTesting;
 import java.util.concurrent.CancellationException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Operation timed polling algorithm, which uses exponential backoff factor for determining when the
@@ -44,6 +47,8 @@ import java.util.concurrent.CancellationException;
  */
 public class OperationTimedPollAlgorithm extends ExponentialRetryAlgorithm {
 
+  @VisibleForTesting
+  public static Logger LOGGER = Logger.getLogger(OperationTimedPollAlgorithm.class.getName());
   public static final String LRO_TROUBLESHOOTING_LINK =
       "https://github.com/googleapis/google-cloud-java#lro-timeouts";
 
@@ -81,9 +86,11 @@ public class OperationTimedPollAlgorithm extends ExponentialRetryAlgorithm {
     if (super.shouldRetry(nextAttemptSettings)) {
       return true;
     }
-    throw new CancellationException(
-        "The task has been cancelled. Please refer to "
-            + LRO_TROUBLESHOOTING_LINK + " for more information");
+    if (LOGGER.isLoggable(Level.SEVERE)) {
+      LOGGER.log(Level.SEVERE, "The task has been cancelled. Please refer to "
+          + LRO_TROUBLESHOOTING_LINK + " for more information");
+    }
+    throw new CancellationException();
   }
 
   // Note: if the potential time spent is exactly equal to the totalTimeout,

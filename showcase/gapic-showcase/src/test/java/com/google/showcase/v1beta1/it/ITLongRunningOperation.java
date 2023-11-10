@@ -16,16 +16,20 @@
 package com.google.showcase.v1beta1.it;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
 import com.google.api.gax.longrunning.OperationFuture;
+import com.google.api.gax.longrunning.OperationTimedPollAlgorithm;
 import com.google.api.gax.retrying.RetrySettings;
+import com.google.api.gax.util.FakeLogHandler;
 import com.google.protobuf.Timestamp;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.WaitMetadata;
 import com.google.showcase.v1beta1.WaitRequest;
 import com.google.showcase.v1beta1.WaitResponse;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
+import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.TimeUnit;
 import org.junit.Test;
@@ -121,6 +125,8 @@ public class ITLongRunningOperation {
   @Test
   public void testGRPC_LROUnsuccessfulResponse_exceedsTotalTimeout_throwsDeadlineExceededException()
       throws Exception {
+    FakeLogHandler logHandler = new FakeLogHandler();
+    OperationTimedPollAlgorithm.LOGGER.addHandler(logHandler);
     RetrySettings initialUnaryRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRpcTimeout(Duration.ofMillis(5000L))
@@ -149,6 +155,9 @@ public class ITLongRunningOperation {
       assertThrows(CancellationException.class, operationFuture::get);
       int attemptCount = operationFuture.getPollingFuture().getAttemptSettings().getAttemptCount();
       assertThat(attemptCount).isGreaterThan(1);
+      assertEquals(1, logHandler.getAllMessages().size());
+      assertThat(logHandler.getAllMessages().get(0))
+          .contains(OperationTimedPollAlgorithm.LRO_TROUBLESHOOTING_LINK);
     } finally {
       grpcClient.close();
       grpcClient.awaitTermination(
@@ -160,6 +169,8 @@ public class ITLongRunningOperation {
   public void
       testHttpJson_LROUnsuccessfulResponse_exceedsTotalTimeout_throwsDeadlineExceededException()
           throws Exception {
+    FakeLogHandler logHandler = new FakeLogHandler();
+    OperationTimedPollAlgorithm.LOGGER.addHandler(logHandler);
     RetrySettings initialUnaryRetrySettings =
         RetrySettings.newBuilder()
             .setInitialRpcTimeout(Duration.ofMillis(5000L))
@@ -188,6 +199,9 @@ public class ITLongRunningOperation {
       assertThrows(CancellationException.class, operationFuture::get);
       int attemptCount = operationFuture.getPollingFuture().getAttemptSettings().getAttemptCount();
       assertThat(attemptCount).isGreaterThan(1);
+      assertEquals(1, logHandler.getAllMessages().size());
+      assertThat(logHandler.getAllMessages().get(0))
+          .contains(OperationTimedPollAlgorithm.LRO_TROUBLESHOOTING_LINK);
     } finally {
       httpjsonClient.close();
       httpjsonClient.awaitTermination(
