@@ -49,6 +49,7 @@ public class OperationTimedPollAlgorithm extends ExponentialRetryAlgorithm {
 
   @VisibleForTesting
   public static Logger LOGGER = Logger.getLogger(OperationTimedPollAlgorithm.class.getName());
+
   public static final String LRO_TROUBLESHOOTING_LINK =
       "https://github.com/googleapis/google-cloud-java#lro-timeouts";
 
@@ -87,8 +88,11 @@ public class OperationTimedPollAlgorithm extends ExponentialRetryAlgorithm {
       return true;
     }
     if (LOGGER.isLoggable(Level.SEVERE)) {
-      LOGGER.log(Level.SEVERE, "The task has been cancelled. Please refer to "
-          + LRO_TROUBLESHOOTING_LINK + " for more information");
+      LOGGER.log(
+          Level.SEVERE,
+          "The task has been cancelled. Please refer to "
+              + LRO_TROUBLESHOOTING_LINK
+              + " for more information");
     }
     throw new CancellationException();
   }

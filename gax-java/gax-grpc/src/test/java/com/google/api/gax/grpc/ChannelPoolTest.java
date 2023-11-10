@@ -67,9 +67,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
-import java.util.stream.Collectors;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -718,5 +715,4 @@ public class ChannelPoolTest {
       ChannelPool.LOG.removeHandler(logHandler);
     }
   }
-
 }
