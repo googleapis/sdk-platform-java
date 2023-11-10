@@ -19,4 +19,16 @@ public interface AttemptStreamingSequenceRequestOrBuilder extends
    */
   com.google.protobuf.ByteString
       getNameBytes();
+
+  /**
+   * <pre>
+   * used to send the index of the last failed message
+   * in the string "content" of an AttemptStreamingSequenceResponse
+   * needed for stream resumption logic testing
+   * </pre>
+   *
+   * <code>int32 last_fail_index = 2 [(.google.api.field_behavior) = OPTIONAL];</code>
+   * @return The lastFailIndex.
+   */
+  int getLastFailIndex();
 }

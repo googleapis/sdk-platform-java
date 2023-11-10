@@ -76,6 +76,9 @@
             "Echo": {
               "methods": ["echo", "echoCallable"]
             },
+            "EchoErrorDetails": {
+              "methods": ["echoErrorDetails", "echoErrorDetailsCallable"]
+            },
             "Expand": {
               "methods": ["expandCallable"]
             },
