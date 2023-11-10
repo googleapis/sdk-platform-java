@@ -69,7 +69,7 @@ jobs:
         shell: bash
         run: |
           set -x
-          export JAVA_HOME=$JAVA11_HOME
+          export JAVA_HOME=$JAVA_HOME
           export PATH=${JAVA_HOME}/bin:$PATH
           # Maven surefire plugin lets us to specify the JVM when running tests via
           # the "jvm" system property.
