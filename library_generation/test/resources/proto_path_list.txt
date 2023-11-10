@@ -1,6 +1,6 @@
 # This file is used in integration test against `generate_library.sh`.
 # Format:
-# proto_path repository_path is_handwritten
+# proto_path repository_path skip_postprocessing_test
 # google/bigtable/admin/v2 java-bigtable true
 # google/bigtable/v2 java-bigtable true
 google/cloud/apigeeconnect/v1 java-apigee-connect false
@@ -17,6 +17,7 @@ google/cloud/redis/v1 java-redis false
 google/cloud/redis/v1beta1 java-redis false
 # google/example/library/v1 google-cloud-example-library-v1-java null false
 google/devtools/containeranalysis/v1 java-containeranalysis false
+google/iam/v1 java-iam true
 google/iam/v2 java-iam false
 google/iam/credentials/v1 java-iamcredentials false
 google/logging/v2 java-logging true

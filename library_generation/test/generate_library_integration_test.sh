@@ -85,7 +85,7 @@ fi
 grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   proto_path=$(echo "$line" | cut -d " " -f 1)
   repository_path=$(echo "$line" | cut -d " " -f 2)
-  is_handwritten=$(echo "$line" | cut -d " " -f 3)
+  skip_postprocessing=$(echo "$line" | cut -d " " -f 3)
   # parse destination_path
   pushd "${output_folder}"
   echo "Checking out googleapis-gen repository..."
@@ -110,8 +110,8 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
     service_yaml=${service_yaml},
     include_samples=${include_samples}."
   pushd "${output_folder}"
-  if [ "${is_handwritten}" == "true" ]; then
-    echo 'this is a handwritten library'
+  if [ "${skip_postprocessing}" == "true" ]; then
+    echo 'this library is not intended for postprocessing test'
     popd # output folder
     continue
   else
