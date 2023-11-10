@@ -83,6 +83,16 @@ import javax.annotation.Generated;
  *    </td>
  *    </tr>
  *    <tr>
+ *      <td>Expand</td>
+ *      <td><p></p></td>
+ *      <td>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>expandCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
  *      <td>Collect</td>
  *      <td><p></p></td>
  *      <td>
@@ -93,12 +103,22 @@ import javax.annotation.Generated;
  *    </td>
  *    </tr>
  *    <tr>
- *      <td>Expand</td>
+ *      <td>Chat</td>
  *      <td><p></p></td>
  *      <td>
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>expandCallable()
+ *      <li>chatCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>ChatAgain</td>
+ *      <td><p></p></td>
+ *      <td>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>chatAgainCallable()
  *      </ul>
  *    </td>
  *    </tr>
@@ -118,26 +138,21 @@ import javax.annotation.Generated;
  *    </td>
  *    </tr>
  *    <tr>
- *      <td>Chat</td>
- *      <td><p></p></td>
- *      <td>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>chatCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>Block</td>
+ *      <td>SimplePagedExpand</td>
  *      <td><p></p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>block(BlockRequest request)
+ *      <li>simplePagedExpand(PagedExpandRequest request)
+ *      </ul>
+ *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *      <ul>
+ *      <li>simplePagedExpand()
  *      </ul>
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>blockCallable()
+ *      <li>simplePagedExpandPagedCallable()
+ *      <li>simplePagedExpandCallable()
  *      </ul>
  *    </td>
  *    </tr>
@@ -162,31 +177,16 @@ import javax.annotation.Generated;
  *    </td>
  *    </tr>
  *    <tr>
- *      <td>SimplePagedExpand</td>
+ *      <td>Block</td>
  *      <td><p></p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>simplePagedExpand(PagedExpandRequest request)
- *      </ul>
- *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *      <ul>
- *      <li>simplePagedExpand()
+ *      <li>block(BlockRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>simplePagedExpandPagedCallable()
- *      <li>simplePagedExpandCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>ChatAgain</td>
- *      <td><p></p></td>
- *      <td>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>chatAgainCallable()
+ *      <li>blockCallable()
  *      </ul>
  *    </td>
  *    </tr>

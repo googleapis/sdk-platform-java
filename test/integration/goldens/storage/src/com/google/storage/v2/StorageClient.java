@@ -84,57 +84,120 @@ import javax.annotation.Generated;
  *      <th>Description</th>
  *      <th>Method Variants</th>
  *    <tr>
- *      <td>DeleteNotification</td>
- *      <td><p>Permanently deletes a notification subscription.</p></td>
+ *      <td>DeleteBucket</td>
+ *      <td><p>Permanently deletes an empty bucket.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>deleteNotification(DeleteNotificationRequest request)
+ *      <li>deleteBucket(DeleteBucketRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>deleteNotification(NotificationName name)
- *      <li>deleteNotification(String name)
+ *      <li>deleteBucket(BucketName name)
+ *      <li>deleteBucket(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>deleteNotificationCallable()
+ *      <li>deleteBucketCallable()
  *      </ul>
  *    </td>
  *    </tr>
  *    <tr>
- *      <td>DeleteObject</td>
- *      <td><p>Deletes an object and its metadata. Deletions are permanent if versioning
- *  is not enabled for the bucket, or if the `generation` parameter is used.</p></td>
+ *      <td>GetBucket</td>
+ *      <td><p>Returns metadata for the specified bucket.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>deleteObject(DeleteObjectRequest request)
+ *      <li>getBucket(GetBucketRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>deleteObject(String bucket)
- *      <li>deleteObject(String bucket)
+ *      <li>getBucket(BucketName name)
+ *      <li>getBucket(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>deleteObjectCallable()
+ *      <li>getBucketCallable()
  *      </ul>
  *    </td>
  *    </tr>
  *    <tr>
- *      <td>StartResumableWrite</td>
- *      <td><p>Starts a resumable write. How long the write operation remains valid, and
- *  what happens when the write operation becomes invalid, are
- *  service-dependent.</p></td>
+ *      <td>CreateBucket</td>
+ *      <td><p>Creates a new bucket.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>startResumableWrite(StartResumableWriteRequest request)
+ *      <li>createBucket(CreateBucketRequest request)
+ *      </ul>
+ *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *      <ul>
+ *      <li>createBucket(ProjectName parent)
+ *      <li>createBucket(String parent)
  *      </ul>
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>startResumableWriteCallable()
+ *      <li>createBucketCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>ListBuckets</td>
+ *      <td><p>Retrieves a list of buckets for a given project.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>listBuckets(ListBucketsRequest request)
+ *      </ul>
+ *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *      <ul>
+ *      <li>listBuckets(ProjectName parent)
+ *      <li>listBuckets(String parent)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>listBucketsPagedCallable()
+ *      <li>listBucketsCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>LockBucketRetentionPolicy</td>
+ *      <td><p>Locks retention policy on a bucket.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>lockBucketRetentionPolicy(LockBucketRetentionPolicyRequest request)
+ *      </ul>
+ *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *      <ul>
+ *      <li>lockBucketRetentionPolicy(BucketName bucket)
+ *      <li>lockBucketRetentionPolicy(String bucket)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>lockBucketRetentionPolicyCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>GetIamPolicy</td>
+ *      <td><p>Gets the IAM policy for a specified bucket or object.
+ *  The `resource` field in the request should be
+ *  projects/_/buckets/<bucket_name> for a bucket or
+ *  projects/_/buckets/<bucket_name>/objects/<object_name> for an object.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>getIamPolicy(GetIamPolicyRequest request)
+ *      </ul>
+ *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *      <ul>
+ *      <li>getIamPolicy(ResourceName resource)
+ *      <li>getIamPolicy(String resource)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>getIamPolicyCallable()
  *      </ul>
  *    </td>
  *    </tr>
@@ -157,82 +220,6 @@ import javax.annotation.Generated;
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>setIamPolicyCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>ListNotifications</td>
- *      <td><p>Retrieves a list of notification subscriptions for a given bucket.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>listNotifications(ListNotificationsRequest request)
- *      </ul>
- *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *      <ul>
- *      <li>listNotifications(ProjectName parent)
- *      <li>listNotifications(String parent)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>listNotificationsPagedCallable()
- *      <li>listNotificationsCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>UpdateHmacKey</td>
- *      <td><p>Updates a given HMAC key state between ACTIVE and INACTIVE.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>updateHmacKey(UpdateHmacKeyRequest request)
- *      </ul>
- *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *      <ul>
- *      <li>updateHmacKey(HmacKeyMetadata hmacKey)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>updateHmacKeyCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>GetHmacKey</td>
- *      <td><p>Gets an existing HMAC key metadata for the given id.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>getHmacKey(GetHmacKeyRequest request)
- *      </ul>
- *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *      <ul>
- *      <li>getHmacKey(String accessId)
- *      <li>getHmacKey(String accessId)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>getHmacKeyCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>DeleteBucket</td>
- *      <td><p>Permanently deletes an empty bucket.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>deleteBucket(DeleteBucketRequest request)
- *      </ul>
- *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *      <ul>
- *      <li>deleteBucket(BucketName name)
- *      <li>deleteBucket(String name)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>deleteBucketCallable()
  *      </ul>
  *    </td>
  *    </tr>
@@ -260,61 +247,153 @@ import javax.annotation.Generated;
  *    </td>
  *    </tr>
  *    <tr>
- *      <td>ListBuckets</td>
- *      <td><p>Retrieves a list of buckets for a given project.</p></td>
+ *      <td>UpdateBucket</td>
+ *      <td><p>Updates a bucket. Equivalent to JSON API's storage.buckets.patch method.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>listBuckets(ListBucketsRequest request)
+ *      <li>updateBucket(UpdateBucketRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>listBuckets(ProjectName parent)
- *      <li>listBuckets(String parent)
+ *      <li>updateBucket(Bucket bucket)
  *      </ul>
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>listBucketsPagedCallable()
- *      <li>listBucketsCallable()
+ *      <li>updateBucketCallable()
  *      </ul>
  *    </td>
  *    </tr>
  *    <tr>
- *      <td>DeleteHmacKey</td>
- *      <td><p>Deletes a given HMAC key.  Key must be in an INACTIVE state.</p></td>
+ *      <td>DeleteNotification</td>
+ *      <td><p>Permanently deletes a notification subscription.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>deleteHmacKey(DeleteHmacKeyRequest request)
+ *      <li>deleteNotification(DeleteNotificationRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>deleteHmacKey(String accessId)
- *      <li>deleteHmacKey(String accessId)
+ *      <li>deleteNotification(NotificationName name)
+ *      <li>deleteNotification(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>deleteHmacKeyCallable()
+ *      <li>deleteNotificationCallable()
  *      </ul>
  *    </td>
  *    </tr>
  *    <tr>
- *      <td>ListHmacKeys</td>
- *      <td><p>Lists HMAC keys under a given project with the additional filters provided.</p></td>
+ *      <td>GetNotification</td>
+ *      <td><p>View a notification config.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>listHmacKeys(ListHmacKeysRequest request)
+ *      <li>getNotification(GetNotificationRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>listHmacKeys(ProjectName project)
- *      <li>listHmacKeys(String project)
+ *      <li>getNotification(BucketName name)
+ *      <li>getNotification(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>listHmacKeysPagedCallable()
- *      <li>listHmacKeysCallable()
+ *      <li>getNotificationCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>CreateNotification</td>
+ *      <td><p>Creates a notification subscription for a given bucket.
+ *  These notifications, when triggered, publish messages to the specified
+ *  Pub/Sub topics.
+ *  See https://cloud.google.com/storage/docs/pubsub-notifications.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>createNotification(CreateNotificationRequest request)
+ *      </ul>
+ *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *      <ul>
+ *      <li>createNotification(ProjectName parent)
+ *      <li>createNotification(String parent)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>createNotificationCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>ListNotifications</td>
+ *      <td><p>Retrieves a list of notification subscriptions for a given bucket.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>listNotifications(ListNotificationsRequest request)
+ *      </ul>
+ *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *      <ul>
+ *      <li>listNotifications(ProjectName parent)
+ *      <li>listNotifications(String parent)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>listNotificationsPagedCallable()
+ *      <li>listNotificationsCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>ComposeObject</td>
+ *      <td><p>Concatenates a list of existing objects into a new object in the same
+ *  bucket.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>composeObject(ComposeObjectRequest request)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>composeObjectCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>DeleteObject</td>
+ *      <td><p>Deletes an object and its metadata. Deletions are permanent if versioning
+ *  is not enabled for the bucket, or if the `generation` parameter is used.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>deleteObject(DeleteObjectRequest request)
+ *      </ul>
+ *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *      <ul>
+ *      <li>deleteObject(String bucket)
+ *      <li>deleteObject(String bucket)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>deleteObjectCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>CancelResumableWrite</td>
+ *      <td><p>Cancels an in-progress resumable upload.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>cancelResumableWrite(CancelResumableWriteRequest request)
+ *      </ul>
+ *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *      <ul>
+ *      <li>cancelResumableWrite(String uploadId)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>cancelResumableWriteCallable()
  *      </ul>
  *    </td>
  *    </tr>
@@ -338,24 +417,31 @@ import javax.annotation.Generated;
  *    </td>
  *    </tr>
  *    <tr>
- *      <td>CreateNotification</td>
- *      <td><p>Creates a notification subscription for a given bucket.
- *  These notifications, when triggered, publish messages to the specified
- *  Pub/Sub topics.
- *  See https://cloud.google.com/storage/docs/pubsub-notifications.</p></td>
+ *      <td>ReadObject</td>
+ *      <td><p>Reads an object's data.</p></td>
+ *      <td>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>readObjectCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>UpdateObject</td>
+ *      <td><p>Updates an object's metadata.
+ *  Equivalent to JSON API's storage.objects.patch.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>createNotification(CreateNotificationRequest request)
+ *      <li>updateObject(UpdateObjectRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>createNotification(ProjectName parent)
- *      <li>createNotification(String parent)
+ *      <li>updateObject(Object object)
  *      </ul>
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>createNotificationCallable()
+ *      <li>updateObjectCallable()
  *      </ul>
  *    </td>
  *    </tr>
@@ -421,25 +507,6 @@ import javax.annotation.Generated;
  *    </td>
  *    </tr>
  *    <tr>
- *      <td>GetServiceAccount</td>
- *      <td><p>Retrieves the name of a project's Google Cloud Storage service account.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>getServiceAccount(GetServiceAccountRequest request)
- *      </ul>
- *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *      <ul>
- *      <li>getServiceAccount(ProjectName project)
- *      <li>getServiceAccount(String project)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>getServiceAccountCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
  *      <td>ListObjects</td>
  *      <td><p>Retrieves a list of objects matching the criteria.</p></td>
  *      <td>
@@ -460,62 +527,33 @@ import javax.annotation.Generated;
  *    </td>
  *    </tr>
  *    <tr>
- *      <td>GetBucket</td>
- *      <td><p>Returns metadata for the specified bucket.</p></td>
+ *      <td>RewriteObject</td>
+ *      <td><p>Rewrites a source object to a destination object. Optionally overrides
+ *  metadata.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>getBucket(GetBucketRequest request)
- *      </ul>
- *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *      <ul>
- *      <li>getBucket(BucketName name)
- *      <li>getBucket(String name)
+ *      <li>rewriteObject(RewriteObjectRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>getBucketCallable()
+ *      <li>rewriteObjectCallable()
  *      </ul>
  *    </td>
  *    </tr>
  *    <tr>
- *      <td>UpdateObject</td>
- *      <td><p>Updates an object's metadata.
- *  Equivalent to JSON API's storage.objects.patch.</p></td>
+ *      <td>StartResumableWrite</td>
+ *      <td><p>Starts a resumable write. How long the write operation remains valid, and
+ *  what happens when the write operation becomes invalid, are
+ *  service-dependent.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>updateObject(UpdateObjectRequest request)
- *      </ul>
- *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *      <ul>
- *      <li>updateObject(Object object)
+ *      <li>startResumableWrite(StartResumableWriteRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>updateObjectCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>GetIamPolicy</td>
- *      <td><p>Gets the IAM policy for a specified bucket or object.
- *  The `resource` field in the request should be
- *  projects/_/buckets/<bucket_name> for a bucket or
- *  projects/_/buckets/<bucket_name>/objects/<object_name> for an object.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>getIamPolicy(GetIamPolicyRequest request)
- *      </ul>
- *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *      <ul>
- *      <li>getIamPolicy(ResourceName resource)
- *      <li>getIamPolicy(String resource)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>getIamPolicyCallable()
+ *      <li>startResumableWriteCallable()
  *      </ul>
  *    </td>
  *    </tr>
@@ -550,36 +588,21 @@ import javax.annotation.Generated;
  *    </td>
  *    </tr>
  *    <tr>
- *      <td>RewriteObject</td>
- *      <td><p>Rewrites a source object to a destination object. Optionally overrides
- *  metadata.</p></td>
+ *      <td>GetServiceAccount</td>
+ *      <td><p>Retrieves the name of a project's Google Cloud Storage service account.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>rewriteObject(RewriteObjectRequest request)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>rewriteObjectCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>LockBucketRetentionPolicy</td>
- *      <td><p>Locks retention policy on a bucket.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>lockBucketRetentionPolicy(LockBucketRetentionPolicyRequest request)
+ *      <li>getServiceAccount(GetServiceAccountRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>lockBucketRetentionPolicy(BucketName bucket)
- *      <li>lockBucketRetentionPolicy(String bucket)
+ *      <li>getServiceAccount(ProjectName project)
+ *      <li>getServiceAccount(String project)
  *      </ul>
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>lockBucketRetentionPolicyCallable()
+ *      <li>getServiceAccountCallable()
  *      </ul>
  *    </td>
  *    </tr>
@@ -603,101 +626,78 @@ import javax.annotation.Generated;
  *    </td>
  *    </tr>
  *    <tr>
- *      <td>ComposeObject</td>
- *      <td><p>Concatenates a list of existing objects into a new object in the same
- *  bucket.</p></td>
+ *      <td>DeleteHmacKey</td>
+ *      <td><p>Deletes a given HMAC key.  Key must be in an INACTIVE state.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>composeObject(ComposeObjectRequest request)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>composeObjectCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>CancelResumableWrite</td>
- *      <td><p>Cancels an in-progress resumable upload.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>cancelResumableWrite(CancelResumableWriteRequest request)
+ *      <li>deleteHmacKey(DeleteHmacKeyRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>cancelResumableWrite(String uploadId)
+ *      <li>deleteHmacKey(String accessId)
+ *      <li>deleteHmacKey(String accessId)
  *      </ul>
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>cancelResumableWriteCallable()
+ *      <li>deleteHmacKeyCallable()
  *      </ul>
  *    </td>
  *    </tr>
  *    <tr>
- *      <td>UpdateBucket</td>
- *      <td><p>Updates a bucket. Equivalent to JSON API's storage.buckets.patch method.</p></td>
+ *      <td>GetHmacKey</td>
+ *      <td><p>Gets an existing HMAC key metadata for the given id.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>updateBucket(UpdateBucketRequest request)
+ *      <li>getHmacKey(GetHmacKeyRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>updateBucket(Bucket bucket)
+ *      <li>getHmacKey(String accessId)
+ *      <li>getHmacKey(String accessId)
  *      </ul>
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>updateBucketCallable()
+ *      <li>getHmacKeyCallable()
  *      </ul>
  *    </td>
  *    </tr>
  *    <tr>
- *      <td>ReadObject</td>
- *      <td><p>Reads an object's data.</p></td>
- *      <td>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>readObjectCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>CreateBucket</td>
- *      <td><p>Creates a new bucket.</p></td>
+ *      <td>ListHmacKeys</td>
+ *      <td><p>Lists HMAC keys under a given project with the additional filters provided.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>createBucket(CreateBucketRequest request)
+ *      <li>listHmacKeys(ListHmacKeysRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>createBucket(ProjectName parent)
- *      <li>createBucket(String parent)
+ *      <li>listHmacKeys(ProjectName project)
+ *      <li>listHmacKeys(String project)
  *      </ul>
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>createBucketCallable()
+ *      <li>listHmacKeysPagedCallable()
+ *      <li>listHmacKeysCallable()
  *      </ul>
  *    </td>
  *    </tr>
  *    <tr>
- *      <td>GetNotification</td>
- *      <td><p>View a notification config.</p></td>
+ *      <td>UpdateHmacKey</td>
+ *      <td><p>Updates a given HMAC key state between ACTIVE and INACTIVE.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>getNotification(GetNotificationRequest request)
+ *      <li>updateHmacKey(UpdateHmacKeyRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>getNotification(BucketName name)
- *      <li>getNotification(String name)
+ *      <li>updateHmacKey(HmacKeyMetadata hmacKey)
  *      </ul>
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>getNotificationCallable()
+ *      <li>updateHmacKeyCallable()
  *      </ul>
  *    </td>
  *    </tr>

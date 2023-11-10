@@ -69,6 +69,25 @@ import javax.annotation.Generated;
  *      <th>Description</th>
  *      <th>Method Variants</th>
  *    <tr>
+ *      <td>AggregatedList</td>
+ *      <td><p>Retrieves an aggregated list of addresses.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>aggregatedList(AggregatedListAddressesRequest request)
+ *      </ul>
+ *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *      <ul>
+ *      <li>aggregatedList(String project)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>aggregatedListPagedCallable()
+ *      <li>aggregatedListCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
  *      <td>Delete</td>
  *      <td><p>Deletes the specified address resource.</p></td>
  *      <td>
@@ -84,25 +103,6 @@ import javax.annotation.Generated;
  *      <ul>
  *      <li>deleteOperationCallable()
  *      <li>deleteCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>List</td>
- *      <td><p>Retrieves a list of addresses contained within the specified region.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>list(ListAddressesRequest request)
- *      </ul>
- *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *      <ul>
- *      <li>list(String project)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>listPagedCallable()
- *      <li>listCallable()
  *      </ul>
  *    </td>
  *    </tr>
@@ -126,21 +126,21 @@ import javax.annotation.Generated;
  *    </td>
  *    </tr>
  *    <tr>
- *      <td>AggregatedList</td>
- *      <td><p>Retrieves an aggregated list of addresses.</p></td>
+ *      <td>List</td>
+ *      <td><p>Retrieves a list of addresses contained within the specified region.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>aggregatedList(AggregatedListAddressesRequest request)
+ *      <li>list(ListAddressesRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>aggregatedList(String project)
+ *      <li>list(String project)
  *      </ul>
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>aggregatedListPagedCallable()
- *      <li>aggregatedListCallable()
+ *      <li>listPagedCallable()
+ *      <li>listCallable()
  *      </ul>
  *    </td>
  *    </tr>

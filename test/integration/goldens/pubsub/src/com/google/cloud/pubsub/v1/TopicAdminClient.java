@@ -84,43 +84,6 @@ import javax.annotation.Generated;
  *      <th>Description</th>
  *      <th>Method Variants</th>
  *    <tr>
- *      <td>ListTopicSubscriptions</td>
- *      <td><p>Lists the names of the attached subscriptions on this topic.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>listTopicSubscriptions(ListTopicSubscriptionsRequest request)
- *      </ul>
- *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *      <ul>
- *      <li>listTopicSubscriptions(TopicName topic)
- *      <li>listTopicSubscriptions(String topic)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>listTopicSubscriptionsPagedCallable()
- *      <li>listTopicSubscriptionsCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>DetachSubscription</td>
- *      <td><p>Detaches a subscription from this topic. All messages retained in the
- *  subscription are dropped. Subsequent `Pull` and `StreamingPull` requests
- *  will return FAILED_PRECONDITION. If the subscription is a push
- *  subscription, pushes to the endpoint will stop.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>detachSubscription(DetachSubscriptionRequest request)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>detachSubscriptionCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
  *      <td>CreateTopic</td>
  *      <td><p>Creates the given topic with the given name. See the [resource name rules]
  *  (https://cloud.google.com/pubsub/docs/admin#resource_names).</p></td>
@@ -137,6 +100,60 @@ import javax.annotation.Generated;
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>createTopicCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>UpdateTopic</td>
+ *      <td><p>Updates an existing topic. Note that certain properties of a
+ *  topic are not modifiable.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>updateTopic(UpdateTopicRequest request)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>updateTopicCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>Publish</td>
+ *      <td><p>Adds one or more messages to the topic. Returns `NOT_FOUND` if the topic
+ *  does not exist.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>publish(PublishRequest request)
+ *      </ul>
+ *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *      <ul>
+ *      <li>publish(TopicName topic)
+ *      <li>publish(String topic)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>publishCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>GetTopic</td>
+ *      <td><p>Gets the configuration of a topic.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>getTopic(GetTopicRequest request)
+ *      </ul>
+ *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *      <ul>
+ *      <li>getTopic(TopicName topic)
+ *      <li>getTopic(String topic)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>getTopicCallable()
  *      </ul>
  *    </td>
  *    </tr>
@@ -161,94 +178,22 @@ import javax.annotation.Generated;
  *    </td>
  *    </tr>
  *    <tr>
- *      <td>GetTopic</td>
- *      <td><p>Gets the configuration of a topic.</p></td>
+ *      <td>ListTopicSubscriptions</td>
+ *      <td><p>Lists the names of the attached subscriptions on this topic.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>getTopic(GetTopicRequest request)
+ *      <li>listTopicSubscriptions(ListTopicSubscriptionsRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>getTopic(TopicName topic)
- *      <li>getTopic(String topic)
+ *      <li>listTopicSubscriptions(TopicName topic)
+ *      <li>listTopicSubscriptions(String topic)
  *      </ul>
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>getTopicCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>GetIamPolicy</td>
- *      <td><p>Gets the access control policy for a resource. Returns an empty policy
- * if the resource exists and does not have a policy set.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>getIamPolicy(GetIamPolicyRequest request)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>getIamPolicyCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>UpdateTopic</td>
- *      <td><p>Updates an existing topic. Note that certain properties of a
- *  topic are not modifiable.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>updateTopic(UpdateTopicRequest request)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>updateTopicCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>TestIamPermissions</td>
- *      <td><p>Returns permissions that a caller has on the specified resource. If the
- * resource does not exist, this will return an empty set of
- * permissions, not a `NOT_FOUND` error.
- *
- * Note: This operation is designed to be used for building
- * permission-aware UIs and command-line tools, not for authorization
- * checking. This operation may "fail open" without warning.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>testIamPermissions(TestIamPermissionsRequest request)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>testIamPermissionsCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>DeleteTopic</td>
- *      <td><p>Deletes the topic with the given name. Returns `NOT_FOUND` if the topic
- *  does not exist. After a topic is deleted, a new topic may be created with
- *  the same name; this is an entirely new topic with none of the old
- *  configuration or subscriptions. Existing subscriptions to this topic are
- *  not deleted, but their `topic` field is set to `_deleted-topic_`.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>deleteTopic(DeleteTopicRequest request)
- *      </ul>
- *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *      <ul>
- *      <li>deleteTopic(TopicName topic)
- *      <li>deleteTopic(String topic)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>deleteTopicCallable()
+ *      <li>listTopicSubscriptionsPagedCallable()
+ *      <li>listTopicSubscriptionsCallable()
  *      </ul>
  *    </td>
  *    </tr>
@@ -277,6 +222,46 @@ import javax.annotation.Generated;
  *    </td>
  *    </tr>
  *    <tr>
+ *      <td>DeleteTopic</td>
+ *      <td><p>Deletes the topic with the given name. Returns `NOT_FOUND` if the topic
+ *  does not exist. After a topic is deleted, a new topic may be created with
+ *  the same name; this is an entirely new topic with none of the old
+ *  configuration or subscriptions. Existing subscriptions to this topic are
+ *  not deleted, but their `topic` field is set to `_deleted-topic_`.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>deleteTopic(DeleteTopicRequest request)
+ *      </ul>
+ *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *      <ul>
+ *      <li>deleteTopic(TopicName topic)
+ *      <li>deleteTopic(String topic)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>deleteTopicCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>DetachSubscription</td>
+ *      <td><p>Detaches a subscription from this topic. All messages retained in the
+ *  subscription are dropped. Subsequent `Pull` and `StreamingPull` requests
+ *  will return FAILED_PRECONDITION. If the subscription is a push
+ *  subscription, pushes to the endpoint will stop.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>detachSubscription(DetachSubscriptionRequest request)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>detachSubscriptionCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
  *      <td>SetIamPolicy</td>
  *      <td><p>Sets the access control policy on the specified resource. Replaces
  * any existing policy.
@@ -295,22 +280,37 @@ import javax.annotation.Generated;
  *    </td>
  *    </tr>
  *    <tr>
- *      <td>Publish</td>
- *      <td><p>Adds one or more messages to the topic. Returns `NOT_FOUND` if the topic
- *  does not exist.</p></td>
+ *      <td>GetIamPolicy</td>
+ *      <td><p>Gets the access control policy for a resource. Returns an empty policy
+ * if the resource exists and does not have a policy set.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>publish(PublishRequest request)
- *      </ul>
- *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *      <ul>
- *      <li>publish(TopicName topic)
- *      <li>publish(String topic)
+ *      <li>getIamPolicy(GetIamPolicyRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>publishCallable()
+ *      <li>getIamPolicyCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>TestIamPermissions</td>
+ *      <td><p>Returns permissions that a caller has on the specified resource. If the
+ * resource does not exist, this will return an empty set of
+ * permissions, not a `NOT_FOUND` error.
+ *
+ * Note: This operation is designed to be used for building
+ * permission-aware UIs and command-line tools, not for authorization
+ * checking. This operation may "fail open" without warning.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>testIamPermissions(TestIamPermissionsRequest request)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>testIamPermissionsCallable()
  *      </ul>
  *    </td>
  *    </tr>

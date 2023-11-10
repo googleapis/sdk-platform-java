@@ -88,49 +88,6 @@ import javax.annotation.Generated;
  *      <th>Description</th>
  *      <th>Method Variants</th>
  *    <tr>
- *      <td>GetInstance</td>
- *      <td><p>Gets the details of a specific Redis instance.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>getInstance(GetInstanceRequest request)
- *      </ul>
- *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *      <ul>
- *      <li>getInstance(InstanceName name)
- *      <li>getInstance(String name)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>getInstanceCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>ExportInstance</td>
- *      <td><p>Export Redis instance data into a Redis RDB format file in Cloud Storage.
- *
- *  Redis will continue serving during this operation.
- *
- *  The returned operation is automatically deleted after a few hours, so
- *  there is no need to call DeleteOperation.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>exportInstanceAsync(ExportInstanceRequest request)
- *      </ul>
- *      <p>Methods that return long-running operations have "Async" method variants that return `OperationFuture` which is used to track polling of the service.</p>
- *      <ul>
- *      <li>exportInstanceAsync(String name)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>exportInstanceOperationCallable()
- *      <li>exportInstanceCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
  *      <td>ListInstances</td>
  *      <td><p>Lists all Redis instances owned by a project in either the specified
  *  location (region) or all locations.
@@ -159,25 +116,21 @@ import javax.annotation.Generated;
  *    </td>
  *    </tr>
  *    <tr>
- *      <td>UpdateInstance</td>
- *      <td><p>Updates the metadata and configuration of a specific Redis instance.
- *
- *  Completed longrunning.Operation will contain the new instance object
- *  in the response field. The returned operation is automatically deleted
- *  after a few hours, so there is no need to call DeleteOperation.</p></td>
+ *      <td>GetInstance</td>
+ *      <td><p>Gets the details of a specific Redis instance.</p></td>
  *      <td>
  *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>updateInstanceAsync(UpdateInstanceRequest request)
+ *      <li>getInstance(GetInstanceRequest request)
  *      </ul>
- *      <p>Methods that return long-running operations have "Async" method variants that return `OperationFuture` which is used to track polling of the service.</p>
+ *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>updateInstanceAsync(FieldMask updateMask)
+ *      <li>getInstance(InstanceName name)
+ *      <li>getInstance(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>updateInstanceOperationCallable()
- *      <li>updateInstanceCallable()
+ *      <li>getInstanceCallable()
  *      </ul>
  *    </td>
  *    </tr>
@@ -199,27 +152,6 @@ import javax.annotation.Generated;
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>getInstanceAuthStringCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>RescheduleMaintenance</td>
- *      <td><p>Reschedule maintenance for a given instance in a given project and
- *  location.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>rescheduleMaintenanceAsync(RescheduleMaintenanceRequest request)
- *      </ul>
- *      <p>Methods that return long-running operations have "Async" method variants that return `OperationFuture` which is used to track polling of the service.</p>
- *      <ul>
- *      <li>rescheduleMaintenanceAsync(InstanceName name)
- *      <li>rescheduleMaintenanceAsync(String name)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>rescheduleMaintenanceOperationCallable()
- *      <li>rescheduleMaintenanceCallable()
  *      </ul>
  *    </td>
  *    </tr>
@@ -255,6 +187,50 @@ import javax.annotation.Generated;
  *    </td>
  *    </tr>
  *    <tr>
+ *      <td>UpdateInstance</td>
+ *      <td><p>Updates the metadata and configuration of a specific Redis instance.
+ *
+ *  Completed longrunning.Operation will contain the new instance object
+ *  in the response field. The returned operation is automatically deleted
+ *  after a few hours, so there is no need to call DeleteOperation.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>updateInstanceAsync(UpdateInstanceRequest request)
+ *      </ul>
+ *      <p>Methods that return long-running operations have "Async" method variants that return `OperationFuture` which is used to track polling of the service.</p>
+ *      <ul>
+ *      <li>updateInstanceAsync(FieldMask updateMask)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>updateInstanceOperationCallable()
+ *      <li>updateInstanceCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>UpgradeInstance</td>
+ *      <td><p>Upgrades Redis instance to the newer Redis version specified in the
+ *  request.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>upgradeInstanceAsync(UpgradeInstanceRequest request)
+ *      </ul>
+ *      <p>Methods that return long-running operations have "Async" method variants that return `OperationFuture` which is used to track polling of the service.</p>
+ *      <ul>
+ *      <li>upgradeInstanceAsync(InstanceName name)
+ *      <li>upgradeInstanceAsync(String name)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>upgradeInstanceOperationCallable()
+ *      <li>upgradeInstanceCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
  *      <td>ImportInstance</td>
  *      <td><p>Import a Redis RDB snapshot file from Cloud Storage into a Redis instance.
  *
@@ -281,6 +257,30 @@ import javax.annotation.Generated;
  *    </td>
  *    </tr>
  *    <tr>
+ *      <td>ExportInstance</td>
+ *      <td><p>Export Redis instance data into a Redis RDB format file in Cloud Storage.
+ *
+ *  Redis will continue serving during this operation.
+ *
+ *  The returned operation is automatically deleted after a few hours, so
+ *  there is no need to call DeleteOperation.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>exportInstanceAsync(ExportInstanceRequest request)
+ *      </ul>
+ *      <p>Methods that return long-running operations have "Async" method variants that return `OperationFuture` which is used to track polling of the service.</p>
+ *      <ul>
+ *      <li>exportInstanceAsync(String name)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>exportInstanceOperationCallable()
+ *      <li>exportInstanceCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
  *      <td>FailoverInstance</td>
  *      <td><p>Initiates a failover of the primary node to current replica node for a
  *  specific STANDARD tier Cloud Memorystore for Redis instance.</p></td>
@@ -302,27 +302,6 @@ import javax.annotation.Generated;
  *    </td>
  *    </tr>
  *    <tr>
- *      <td>UpgradeInstance</td>
- *      <td><p>Upgrades Redis instance to the newer Redis version specified in the
- *  request.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>upgradeInstanceAsync(UpgradeInstanceRequest request)
- *      </ul>
- *      <p>Methods that return long-running operations have "Async" method variants that return `OperationFuture` which is used to track polling of the service.</p>
- *      <ul>
- *      <li>upgradeInstanceAsync(InstanceName name)
- *      <li>upgradeInstanceAsync(String name)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>upgradeInstanceOperationCallable()
- *      <li>upgradeInstanceCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
  *      <td>DeleteInstance</td>
  *      <td><p>Deletes a specific Redis instance.  Instance stops serving and data is
  *  deleted.</p></td>
@@ -340,6 +319,27 @@ import javax.annotation.Generated;
  *      <ul>
  *      <li>deleteInstanceOperationCallable()
  *      <li>deleteInstanceCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>RescheduleMaintenance</td>
+ *      <td><p>Reschedule maintenance for a given instance in a given project and
+ *  location.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>rescheduleMaintenanceAsync(RescheduleMaintenanceRequest request)
+ *      </ul>
+ *      <p>Methods that return long-running operations have "Async" method variants that return `OperationFuture` which is used to track polling of the service.</p>
+ *      <ul>
+ *      <li>rescheduleMaintenanceAsync(InstanceName name)
+ *      <li>rescheduleMaintenanceAsync(String name)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>rescheduleMaintenanceOperationCallable()
+ *      <li>rescheduleMaintenanceCallable()
  *      </ul>
  *    </td>
  *    </tr>

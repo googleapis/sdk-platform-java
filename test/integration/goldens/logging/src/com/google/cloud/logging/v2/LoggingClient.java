@@ -82,6 +82,28 @@ import javax.annotation.Generated;
  *      <th>Description</th>
  *      <th>Method Variants</th>
  *    <tr>
+ *      <td>DeleteLog</td>
+ *      <td><p>Deletes all the log entries in a log for the _Default Log Bucket. The log
+ *  reappears if it receives new entries. Log entries written shortly before
+ *  the delete operation might not be deleted. Entries received after the
+ *  delete operation with a timestamp before the operation will be deleted.</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>deleteLog(DeleteLogRequest request)
+ *      </ul>
+ *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *      <ul>
+ *      <li>deleteLog(LogName logName)
+ *      <li>deleteLog(String logName)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>deleteLogCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
  *      <td>WriteLogEntries</td>
  *      <td><p>Writes log entries to Logging. This API method is the
  *  only way to send log entries to Logging. This method
@@ -103,6 +125,28 @@ import javax.annotation.Generated;
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>writeLogEntriesCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>ListLogEntries</td>
+ *      <td><p>Lists log entries.  Use this method to retrieve log entries that originated
+ *  from a project/folder/organization/billing account.  For ways to export log
+ *  entries, see [Exporting
+ *  Logs](https://cloud.google.com/logging/docs/export).</p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>listLogEntries(ListLogEntriesRequest request)
+ *      </ul>
+ *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *      <ul>
+ *      <li>listLogEntries(List<String> resourceNames)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>listLogEntriesPagedCallable()
+ *      <li>listLogEntriesCallable()
  *      </ul>
  *    </td>
  *    </tr>
@@ -142,50 +186,6 @@ import javax.annotation.Generated;
  *      <ul>
  *      <li>listLogsPagedCallable()
  *      <li>listLogsCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>DeleteLog</td>
- *      <td><p>Deletes all the log entries in a log for the _Default Log Bucket. The log
- *  reappears if it receives new entries. Log entries written shortly before
- *  the delete operation might not be deleted. Entries received after the
- *  delete operation with a timestamp before the operation will be deleted.</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>deleteLog(DeleteLogRequest request)
- *      </ul>
- *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *      <ul>
- *      <li>deleteLog(LogName logName)
- *      <li>deleteLog(String logName)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>deleteLogCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
- *      <td>ListLogEntries</td>
- *      <td><p>Lists log entries.  Use this method to retrieve log entries that originated
- *  from a project/folder/organization/billing account.  For ways to export log
- *  entries, see [Exporting
- *  Logs](https://cloud.google.com/logging/docs/export).</p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>listLogEntries(ListLogEntriesRequest request)
- *      </ul>
- *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
- *      <ul>
- *      <li>listLogEntries(List<String> resourceNames)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>listLogEntriesPagedCallable()
- *      <li>listLogEntriesCallable()
  *      </ul>
  *    </td>
  *    </tr>

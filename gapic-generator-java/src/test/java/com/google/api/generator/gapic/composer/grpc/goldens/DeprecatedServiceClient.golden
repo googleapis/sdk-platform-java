@@ -36,20 +36,6 @@ import javax.annotation.Generated;
  *      <th>Description</th>
  *      <th>Method Variants</th>
  *    <tr>
- *      <td>SlowFibonacci</td>
- *      <td><p></p></td>
- *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
- *      <ul>
- *      <li>slowFibonacci(FibonacciRequest request)
- *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
- *      <ul>
- *      <li>slowFibonacciCallable()
- *      </ul>
- *    </td>
- *    </tr>
- *    <tr>
  *      <td>FastFibonacci</td>
  *      <td><p></p></td>
  *      <td>
@@ -60,6 +46,20 @@ import javax.annotation.Generated;
  *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>fastFibonacciCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
+ *      <td>SlowFibonacci</td>
+ *      <td><p></p></td>
+ *      <td>
+ *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>slowFibonacci(FibonacciRequest request)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>slowFibonacciCallable()
  *      </ul>
  *    </td>
  *    </tr>
