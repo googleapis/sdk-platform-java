@@ -194,7 +194,7 @@ public abstract class EndpointContext {
     return resolvedUniverseDomain;
   }
 
-  public boolean validateUniverseDomain(Credentials credentials) {
+  public boolean isValidUniverseDomain(Credentials credentials) {
     Preconditions.checkNotNull(resolvedUniverseDomain, "Universe Domain was not resolved");
     return true;
     //    return resolvedUniverseDomain.equals(credentials.getUniverseDomain());

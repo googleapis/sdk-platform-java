@@ -63,6 +63,8 @@ public interface ApiCallContext extends RetryingContext {
   /** Returns a new ApiCallContext with the given channel set. */
   ApiCallContext withTransportChannel(TransportChannel channel);
 
+  ApiCallContext withEndpointContext(EndpointContext endpointContext);
+
   /**
    * Returns a new ApiCallContext with the given timeout set.
    *

@@ -206,9 +206,7 @@ public abstract class ClientContext {
     EndpointContext endpointContext = settings.getEndpointContext();
     String endpoint = endpointContext.resolveEndpoint();
     String universeDomain = endpointContext.resolveUniverseDomain();
-    if (transportChannelProvider.needsEndpoint()) {
-      transportChannelProvider = transportChannelProvider.withEndpoint(endpoint);
-    }
+    transportChannelProvider.withEndpoint(endpoint);
     TransportChannel transportChannel = transportChannelProvider.getTransportChannel();
 
     ApiCallContext defaultCallContext =
@@ -216,6 +214,7 @@ public abstract class ClientContext {
     if (credentials != null) {
       defaultCallContext = defaultCallContext.withCredentials(credentials);
     }
+    defaultCallContext = defaultCallContext.withEndpointContext(endpointContext);
 
     WatchdogProvider watchdogProvider = settings.getStreamWatchdogProvider();
     @Nullable Watchdog watchdog = null;

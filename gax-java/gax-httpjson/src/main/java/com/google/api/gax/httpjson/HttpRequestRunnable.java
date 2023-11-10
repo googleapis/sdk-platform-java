@@ -99,6 +99,7 @@ class HttpRequestRunnable<RequestT, ResponseT> implements Runnable {
 
   @Override
   public void run() {
+    // TODO: Validate the universe_domain here?
     RunnableResult.Builder result = RunnableResult.builder();
     HttpJsonMetadata.Builder trailers = HttpJsonMetadata.newBuilder();
     HttpResponse httpResponse = null;
