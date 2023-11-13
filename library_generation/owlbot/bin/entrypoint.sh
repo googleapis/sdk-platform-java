@@ -21,12 +21,15 @@ versions_file=$2
 function processModule() {
   # templates as well as retrieving files from owl-bot-staging
   echo "Generating templates and retrieving files from owl-bot-staging directory..."
-  ${scripts_root}/owlbot/bin/write_templates.sh
+  if [ -f "owlbot.py" ]
+  then
+    python3 owlbot.py
+  fi
   echo "...done"
 
   # write or restore pom.xml files
   echo "Generating missing pom.xml..."
-  ${scripts_root}/owlbot/bin/write_missing_pom_files.sh "${scripts_root}" "${versions_file}"
+  python3 "${scripts_root}/owlbot/src/fix-poms.py" "${versions_file}" "true"
   echo "...done"
 
   # write or restore clirr-ignored-differences.xml
@@ -36,7 +39,7 @@ function processModule() {
 
   # fix license headers
   echo "Fixing missing license headers..."
-  ${scripts_root}/owlbot/bin/fix_license_headers.sh "${scripts_root}"
+  python3 "${scripts_root}/owlbot/src/fix-license-headers.py"
   echo "...done"
 
   # TODO: re-enable this once we resolve thrashing
