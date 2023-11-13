@@ -46,6 +46,8 @@ import com.google.longrunning.Operation;
 import com.google.longrunning.stub.GrpcOperationsStub;
 import com.google.showcase.v1beta1.BlockRequest;
 import com.google.showcase.v1beta1.BlockResponse;
+import com.google.showcase.v1beta1.EchoErrorDetailsRequest;
+import com.google.showcase.v1beta1.EchoErrorDetailsResponse;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.ExpandRequest;
@@ -79,6 +81,17 @@ public class GrpcEchoStub extends EchoStub {
           .setRequestMarshaller(ProtoUtils.marshaller(EchoRequest.getDefaultInstance()))
           .setResponseMarshaller(ProtoUtils.marshaller(EchoResponse.getDefaultInstance()))
           .build();
+
+  private static final MethodDescriptor<EchoErrorDetailsRequest, EchoErrorDetailsResponse>
+      echoErrorDetailsMethodDescriptor =
+          MethodDescriptor.<EchoErrorDetailsRequest, EchoErrorDetailsResponse>newBuilder()
+              .setType(MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName("google.showcase.v1beta1.Echo/EchoErrorDetails")
+              .setRequestMarshaller(
+                  ProtoUtils.marshaller(EchoErrorDetailsRequest.getDefaultInstance()))
+              .setResponseMarshaller(
+                  ProtoUtils.marshaller(EchoErrorDetailsResponse.getDefaultInstance()))
+              .build();
 
   private static final MethodDescriptor<ExpandRequest, EchoResponse> expandMethodDescriptor =
       MethodDescriptor.<ExpandRequest, EchoResponse>newBuilder()
@@ -198,6 +211,8 @@ public class GrpcEchoStub extends EchoStub {
               .build();
 
   private final UnaryCallable<EchoRequest, EchoResponse> echoCallable;
+  private final UnaryCallable<EchoErrorDetailsRequest, EchoErrorDetailsResponse>
+      echoErrorDetailsCallable;
   private final ServerStreamingCallable<ExpandRequest, EchoResponse> expandCallable;
   private final ClientStreamingCallable<EchoRequest, EchoResponse> collectCallable;
   private final BidiStreamingCallable<EchoRequest, EchoResponse> chatCallable;
@@ -291,6 +306,11 @@ public class GrpcEchoStub extends EchoStub {
                   return builder.build();
                 })
             .build();
+    GrpcCallSettings<EchoErrorDetailsRequest, EchoErrorDetailsResponse>
+        echoErrorDetailsTransportSettings =
+            GrpcCallSettings.<EchoErrorDetailsRequest, EchoErrorDetailsResponse>newBuilder()
+                .setMethodDescriptor(echoErrorDetailsMethodDescriptor)
+                .build();
     GrpcCallSettings<ExpandRequest, EchoResponse> expandTransportSettings =
         GrpcCallSettings.<ExpandRequest, EchoResponse>newBuilder()
             .setMethodDescriptor(expandMethodDescriptor)
@@ -380,6 +400,9 @@ public class GrpcEchoStub extends EchoStub {
     this.echoCallable =
         callableFactory.createUnaryCallable(
             echoTransportSettings, settings.echoSettings(), clientContext);
+    this.echoErrorDetailsCallable =
+        callableFactory.createUnaryCallable(
+            echoErrorDetailsTransportSettings, settings.echoErrorDetailsSettings(), clientContext);
     this.expandCallable =
         callableFactory.createServerStreamingCallable(
             expandTransportSettings, settings.expandSettings(), clientContext);
@@ -451,6 +474,12 @@ public class GrpcEchoStub extends EchoStub {
   @Override
   public UnaryCallable<EchoRequest, EchoResponse> echoCallable() {
     return echoCallable;
+  }
+
+  @Override
+  public UnaryCallable<EchoErrorDetailsRequest, EchoErrorDetailsResponse>
+      echoErrorDetailsCallable() {
+    return echoErrorDetailsCallable;
   }
 
   @Override
