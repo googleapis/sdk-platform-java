@@ -140,6 +140,7 @@ public class TestProtoLoader {
         .setServiceConfig(config)
         .setHelperResourceNames(outputResourceNames)
         .setTransport(transport)
+        .setServiceYamlProto(yamlSettings.get())
         .build();
   }
 

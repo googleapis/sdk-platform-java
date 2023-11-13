@@ -1,0 +1,7 @@
+values:
+- field_name: 'max_batching_delay'
+  mapping_group:
+    TransactionOption
+- field_name: 'request_tag'
+  mapping_group:
+    ReadAndQueryOption

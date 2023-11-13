@@ -40,6 +40,9 @@ message CommitMessage {
   // Options for the new transaction.
   repeated RequestOptions options = 3;
 
+  // new standalone option
+  int32 max_batching_delay = 4;
+
   // This is an inner message description for BarMessage.
   message BarMessage {
     // A third leading comment for field_three.

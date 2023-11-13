@@ -1,5 +1,7 @@
 package com.google.api.generator.gapic.composer.spanner;
 
+import static org.junit.Assert.assertTrue;
+
 import com.google.api.client.util.Lists;
 import com.google.api.core.BetaApi;
 import com.google.api.generator.engine.ast.AnnotationNode;
@@ -23,15 +25,20 @@ import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Service;
+import com.google.api.generator.gapic.protoparser.ServiceYamlParser;
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.api.pathtemplate.ValidationException;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
+import io.grpc.spanner.SpannerOptionsConfig;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import javax.annotation.Generated;
 
 
@@ -59,6 +66,10 @@ public class SpannerOptionsStubClassComposer implements ClassComposer {
 
   @Override
   public GapicClass generate(GapicContext context, Service serivce) {
+
+    // Read the configuration for different options
+    SpannerOptionsConfig.OptionMapperConfigList optionMapperConfigList = parseSpannerOptionsConfig();
+
     /**
      * STEPS that we want to execute
      *
@@ -197,6 +208,14 @@ public class SpannerOptionsStubClassComposer implements ClassComposer {
 
   private static VariableExpr createVarExprFromRefVarExpr(Variable var, Expr varRef) {
     return VariableExpr.builder().setVariable(var).setExprReferenceExpr(varRef).build();
+  }
+
+  private SpannerOptionsConfig.OptionMapperConfigList parseSpannerOptionsConfig() {
+    String yamlFilename = "com/google/api/generator/gapic/composer/spanner/config/spanner_options_mapper.yaml";
+    Path path = Paths.get("src/main/java", yamlFilename);
+    Optional<SpannerOptionsConfig.OptionMapperConfigList> optionsMapperSettings =
+        SpannerOptionsConfigParser.parse(path.toString());
+    return optionsMapperSettings.get();
   }
 }
 

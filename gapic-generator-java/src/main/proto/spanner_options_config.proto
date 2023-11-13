@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option java_package = "io.grpc.spanner";
+option java_outer_classname = "SpannerOptionsConfig";
+
+message OptionMapperConfig {
+  string field_name = 1;
+  string mapping_group = 2;
+}
+
+message OptionMapperConfigList {
+  repeated OptionMapperConfig values = 1;
+}
