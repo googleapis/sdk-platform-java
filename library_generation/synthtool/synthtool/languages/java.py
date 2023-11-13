@@ -20,7 +20,7 @@ import requests
 import yaml
 import synthtool as s
 import synthtool.gcp as gcp
-from synthtool import cache, shell
+from synthtool import shell
 from synthtool.gcp import common, partials, pregenerated, samples, snippets
 from synthtool.log import logger
 from pathlib import Path
@@ -61,26 +61,6 @@ BAD_LICENSE = """/\\*
 """
 DEFAULT_MIN_SUPPORTED_JAVA_VERSION = 8
 
-
-def format_code(
-    path: str, version: str = DEFAULT_FORMAT_VERSION, times: int = 2
-) -> None:
-    """
-    Runs the google-java-format jar against all .java files found within the
-    provided path.
-    """
-    jar_name = f"google-java-format-{version}.jar"
-    jar = cache.get_cache_dir() / jar_name
-    if not jar.exists():
-        _download_formatter(version, jar)
-
-    # Find all .java files in path and run the formatter on them
-    files = list(glob.iglob(os.path.join(path, "**/*.java"), recursive=True))
-
-    # Run the formatter as a jar file
-    logger.info("Running java formatter on {} files".format(len(files)))
-    for _ in range(times):
-        shell.run(["java", "-jar", str(jar), "--replace"] + files)
 
 
 def _download_formatter(version: str, dest: Path) -> None:
@@ -255,177 +235,14 @@ def _common_generation(
         required=True,
     )
 
+    """
     if preserve_gapic:
         format_code(f"gapic-google-{cloud_prefix}{destination_name}-{version}/src")
     else:
         format_code(f"google-{cloud_prefix}{destination_name}/src")
     format_code(f"grpc-google-{cloud_prefix}{destination_name}-{version}/src")
     format_code(f"proto-google-{cloud_prefix}{destination_name}-{version}/src")
-
-
-def gapic_library(
-    service: str,
-    version: str,
-    config_pattern: str = "/google/cloud/{service}/artman_{service}_{version}.yaml",
-    package_pattern: str = "com.google.cloud.{service}.{version}",
-    gapic: gcp.GAPICGenerator = None,
-    destination_name: str = None,
-    diregapic: bool = False,
-    preserve_gapic: bool = False,
-    **kwargs,
-) -> Path:
-    """Generate a Java library using the gapic-generator via artman via Docker.
-
-    Generates code into a temp directory, fixes missing header fields, and
-    copies into the expected locations.
-
-    Args:
-        service (str): Name of the service.
-        version (str): Service API version.
-        config_pattern (str, optional): Path template to artman config YAML
-            file. Defaults to "/google/cloud/{service}/artman_{service}_{version}.yaml"
-        package_pattern (str, optional): Package name template for fixing file
-            headers. Defaults to "com.google.cloud.{service}.{version}".
-        gapic (GAPICGenerator, optional): Generator instance.
-        destination_name (str, optional): Override the service name for the
-            destination of the output code. Defaults to the service name.
-        preserve_gapic (bool, optional): Whether to preserve the gapic directory
-            prefix. Default False.
-        **kwargs: Additional options for gapic.java_library()
-
-    Returns:
-        The path to the temp directory containing the generated client.
     """
-    if gapic is None:
-        gapic = gcp.GAPICGenerator()
-
-    library = gapic.java_library(
-        service=service,
-        version=version,
-        config_path=config_pattern.format(service=service, version=version),
-        artman_output_name="",
-        include_samples=True,
-        diregapic=diregapic,
-        **kwargs,
-    )
-
-    _common_generation(
-        service=service,
-        version=version,
-        library=library,
-        package_pattern=package_pattern,
-        destination_name=destination_name,
-        diregapic=diregapic,
-        preserve_gapic=preserve_gapic,
-    )
-
-    return library
-
-
-def bazel_library(
-    service: str,
-    version: str,
-    package_pattern: str = "com.google.cloud.{service}.{version}",
-    gapic: gcp.GAPICBazel = None,
-    destination_name: str = None,
-    cloud_api: bool = True,
-    diregapic: bool = False,
-    preserve_gapic: bool = False,
-    **kwargs,
-) -> Path:
-    """Generate a Java library using the gapic-generator via bazel.
-
-    Generates code into a temp directory, fixes missing header fields, and
-    copies into the expected locations.
-
-    Args:
-        service (str): Name of the service.
-        version (str): Service API version.
-        package_pattern (str, optional): Package name template for fixing file
-            headers. Defaults to "com.google.cloud.{service}.{version}".
-        gapic (GAPICBazel, optional): Generator instance.
-        destination_name (str, optional): Override the service name for the
-            destination of the output code. Defaults to the service name.
-        preserve_gapic (bool, optional): Whether to preserve the gapic directory
-            prefix. Default False.
-        **kwargs: Additional options for gapic.java_library()
-
-    Returns:
-        The path to the temp directory containing the generated client.
-    """
-    if gapic is None:
-        gapic = gcp.GAPICBazel()
-
-    library = gapic.java_library(
-        service=service, version=version, diregapic=diregapic, **kwargs
-    )
-
-    _common_generation(
-        service=service,
-        version=version,
-        library=library / f"google-cloud-{service}-{version}-java",
-        package_pattern=package_pattern,
-        suffix="-java",
-        destination_name=destination_name,
-        cloud_api=cloud_api,
-        diregapic=diregapic,
-        preserve_gapic=preserve_gapic,
-    )
-
-    return library
-
-
-def pregenerated_library(
-    path: str,
-    service: str,
-    version: str,
-    destination_name: str = None,
-    cloud_api: bool = True,
-) -> Path:
-    """Generate a Java library using the gapic-generator via bazel.
-
-    Generates code into a temp directory, fixes missing header fields, and
-    copies into the expected locations.
-
-    Args:
-        path (str): Path in googleapis-gen to un-versioned generated code.
-        service (str): Name of the service.
-        version (str): Service API version.
-        destination_name (str, optional): Override the service name for the
-            destination of the output code. Defaults to the service name.
-        cloud_api (bool, optional): Whether or not this is a cloud API (for naming)
-
-    Returns:
-        The path to the temp directory containing the generated client.
-    """
-    generator = pregenerated.Pregenerated()
-    library = generator.generate(path)
-
-    cloud_prefix = "cloud-" if cloud_api else ""
-    _common_generation(
-        service=service,
-        version=version,
-        library=library / f"google-{cloud_prefix}{service}-{version}-java",
-        package_pattern="unused",
-        suffix="-java",
-        destination_name=destination_name,
-        cloud_api=cloud_api,
-    )
-
-    return library
-
-
-def _merge_release_please(destination_text: str):
-    config = yaml.safe_load(destination_text)
-    if "handleGHRelease" in config:
-        return destination_text
-
-    config["handleGHRelease"] = True
-
-    if "branches" in config:
-        for branch in config["branches"]:
-            branch["handleGHRelease"] = True
-    return yaml.dump(config)
 
 
 def _merge_common_templates(
