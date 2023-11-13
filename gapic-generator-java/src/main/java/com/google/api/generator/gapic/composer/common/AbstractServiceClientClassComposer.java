@@ -578,6 +578,21 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
         .collect(Collectors.toList());
   }
 
+  private static String getJavaMethod(MethodDefinition m) {
+    if (m.arguments().isEmpty()) {
+      return m.methodIdentifier().name() + "()";
+    }
+
+    Variable firstParam = m.arguments().get(0).variable();
+    String firstParamType =
+        firstParam.type().reference() != null ? firstParam.type().reference().name() + " " : "";
+    return m.methodIdentifier().name()
+        + "("
+        + firstParamType
+        + firstParam.identifier().name()
+        + ")";
+  }
+
   private static List<MethodDefinition> createServiceMethods(
       Service service,
       Map<String, Message> messageTypes,
@@ -588,27 +603,6 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
       List<Sample> samples) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     Function<MethodDefinition, String> javaMethodNameFn = m -> m.methodIdentifier().name();
-    // This generates the list of method variants with arguments for the Client header statements
-    Function<MethodDefinition, String> javaMethodFn =
-        m -> {
-          String s;
-          if (m.arguments().isEmpty()) {
-            s = m.methodIdentifier().name() + "()";
-          } else {
-            String argument =
-                m.arguments().get(0).variable().type().reference() != null
-                    ? m.arguments().get(0).variable().type().reference().name() + " "
-                    : "";
-            s =
-                m.methodIdentifier().name()
-                    + "("
-                    + argument
-                    + m.arguments().get(0).variable().identifier().name()
-                    + ")";
-          }
-          ;
-          return s;
-        };
     for (Method method : service.methods()) {
       if (!grpcRpcToJavaMethodMetadata.containsKey(method.name())) {
         grpcRpcToJavaMethodMetadata.put(method.name(), new ArrayList<>());
@@ -638,7 +632,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
             .get(method.name())
             .addAll(
                 generatedMethods.stream()
-                    .map(m -> javaMethodFn.apply(m))
+                    .map(AbstractServiceClientClassComposer::getJavaMethod)
                     .collect(Collectors.toList()));
         javaMethods.addAll(generatedMethods);
 
@@ -654,7 +648,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
 
         // Collect data for gapic_metadata.json and client header.
         grpcRpcToJavaMethodMetadata.get(method.name()).add(javaMethodNameFn.apply(generatedMethod));
-        methodVariantsForClientHeader.get(method.name()).add(javaMethodFn.apply(generatedMethod));
+        methodVariantsForClientHeader.get(method.name()).add(getJavaMethod(generatedMethod));
         javaMethods.add(generatedMethod);
       }
       if (method.hasLro()) {
@@ -664,7 +658,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
 
         // Collect data for gapic_metadata.json and client header.
         grpcRpcToJavaMethodMetadata.get(method.name()).add(javaMethodNameFn.apply(generatedMethod));
-        methodVariantsForClientHeader.get(method.name()).add(javaMethodFn.apply(generatedMethod));
+        methodVariantsForClientHeader.get(method.name()).add(getJavaMethod(generatedMethod));
         javaMethods.add(generatedMethod);
       }
       if (method.isPaged()) {
@@ -674,7 +668,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
 
         // Collect data for gapic_metadata.json and client header.
         grpcRpcToJavaMethodMetadata.get(method.name()).add(javaMethodNameFn.apply(generatedMethod));
-        methodVariantsForClientHeader.get(method.name()).add(javaMethodFn.apply(generatedMethod));
+        methodVariantsForClientHeader.get(method.name()).add(getJavaMethod(generatedMethod));
         javaMethods.add(generatedMethod);
       }
       MethodDefinition generatedMethod =
@@ -682,7 +676,7 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
 
       // Collect data for the gapic_metadata.json file and client header.
       grpcRpcToJavaMethodMetadata.get(method.name()).add(javaMethodNameFn.apply(generatedMethod));
-      methodVariantsForClientHeader.get(method.name()).add(javaMethodFn.apply(generatedMethod));
+      methodVariantsForClientHeader.get(method.name()).add(getJavaMethod(generatedMethod));
       javaMethods.add(generatedMethod);
     }
     return javaMethods;

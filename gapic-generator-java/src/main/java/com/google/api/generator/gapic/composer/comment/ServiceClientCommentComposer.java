@@ -14,6 +14,8 @@
 
 package com.google.api.generator.gapic.composer.comment;
 
+import static java.util.stream.Collectors.toList;
+
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -26,11 +28,9 @@ import com.google.api.generator.gapic.utils.JavaStyle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class ServiceClientCommentComposer {
   // Tokens.
@@ -122,30 +122,11 @@ public class ServiceClientCommentComposer {
         String.format(
             SERVICE_DESCRIPTION_CLOSE_PATTERN, ClassNames.getServiceClientClassName(service)));
 
-    // Build the map of methods and descriptions
-    Map<String, String> mapOfMethodsAndDescriptions =
-        Collections.unmodifiableMap(
-            service.methods().stream()
-                .collect(
-                    Collectors.toMap(
-                        Method::getName,
-                        method -> {
-                          String description = method.getDescription();
-                          return description != null ? description : "";
-                        },
-                        (existingValue, newValue) -> existingValue,
-                        LinkedHashMap::new)));
-
-    // Build a list of MethodAndVariants to create the table
-    List<MethodAndVariants> methodAndVariantsList = new ArrayList<>();
-    for (Map.Entry<String, String> method : mapOfMethodsAndDescriptions.entrySet()) {
-      MethodAndVariants methodAndVariants =
-          new MethodAndVariants(
-              method.getKey(),
-              method.getValue(),
-              methodVariantsForClientHeader.get(method.getKey()));
-      methodAndVariantsList.add(methodAndVariants);
-    }
+    // Build the map of methods and descriptions to create the table in Client Overviews
+    List<MethodAndVariants> methodAndVariantsList =
+        service.methods().stream()
+            .map((Method method) -> createMethodAndVariants(method, methodVariantsForClientHeader))
+            .collect(toList());
 
     classHeaderJavadocBuilder.addUnescapedComment(createTableOfMethods(methodAndVariantsList));
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_SURFACE_CODA_STRING);
@@ -229,15 +210,23 @@ public class ServiceClientCommentComposer {
     return comments;
   }
 
+  private static MethodAndVariants createMethodAndVariants(
+      Method method, Map<String, List<String>> methodVariantsForClientHeader) {
+    String name = method.name();
+    String description = method.description();
+    if (description == null) description = "";
+    return new MethodAndVariants(name, description, methodVariantsForClientHeader.get(name));
+  }
+
   private static String createTableOfMethods(List<MethodAndVariants> methodAndVariantsList) {
     String FLATTENED_METHODS =
-        "<p>\"Flattened\" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>\n";
+        "<p>\"Flattened\" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>\n";
     String REQUEST_OBJECT_METHODS =
-        "<p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>\n";
+        "<p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>\n";
     String CALLABLE_METHODS =
-        "<p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>\n";
+        "<p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>\n";
     String ASYNC_METHODS =
-        "<p>Methods that return long-running operations have \"Async\" method variants that return `OperationFuture` which is used to track polling of the service.</p>\n";
+        "<p>Methods that return long-running operations have \"Async\" method variants that return `OperationFuture`, which is used to track polling of the service.</p>\n";
 
     StringBuilder tableBuilder = new StringBuilder();
     tableBuilder
@@ -302,39 +291,32 @@ public class ServiceClientCommentComposer {
     return tableBuilder.toString();
   }
 
-  public static class MethodAndVariants {
-    String method;
-    String description;
-    boolean hasFlattenedVariants = false;
-    boolean hasRequestObjectVariants;
-    boolean hasCallableVariants;
-    boolean hasAsyncVariants;
+  private static class MethodAndVariants {
+    private final String method;
+    private final String description;
+    private final boolean hasFlattenedVariants;
+    private final boolean hasRequestObjectVariants;
+    private final boolean hasCallableVariants;
+    private final boolean hasAsyncVariants;
 
-    List<String> flattenedVariants;
-    List<String> requestObjectVariants;
-    List<String> callableVariants;
-    List<String> asyncVariants;
+    private final List<String> flattenedVariants;
+    private final List<String> requestObjectVariants;
+    private final List<String> callableVariants;
+    private final List<String> asyncVariants;
 
-    public MethodAndVariants(String method, String description, List<String> methodVariants) {
+    private MethodAndVariants(String method, String description, List<String> methodVariants) {
       this.method = method;
       this.description = description;
       requestObjectVariants =
-          methodVariants.stream().filter(s -> s.contains("request")).collect(Collectors.toList());
+          methodVariants.stream().filter(s -> s.contains("request")).collect(toList());
       hasRequestObjectVariants = methodVariants.removeAll(requestObjectVariants);
-      // hasRequestObjectVariants = methodVariants.stream().anyMatch(s -> s.contains("request"));
       callableVariants =
-          methodVariants.stream().filter(s -> s.contains("Callable")).collect(Collectors.toList());
+          methodVariants.stream().filter(s -> s.contains("Callable")).collect(toList());
       hasCallableVariants = methodVariants.removeAll(callableVariants);
-      // hasCallableVariants = methodVariants.stream().anyMatch(s -> s.contains("Callable"));
-      asyncVariants =
-          methodVariants.stream().filter(s -> s.contains("Async")).collect(Collectors.toList());
+      asyncVariants = methodVariants.stream().filter(s -> s.contains("Async")).collect(toList());
       hasAsyncVariants = methodVariants.removeAll(asyncVariants);
-      // hasAsyncVariants = methodVariants.stream().anyMatch(s -> s.contains("Async"));
-      // Whatever is remaining should just be flattened variants
       flattenedVariants = methodVariants;
-      if (!flattenedVariants.isEmpty()) {
-        hasFlattenedVariants = true;
-      }
+      hasFlattenedVariants = !flattenedVariants.isEmpty();
     }
   }
 

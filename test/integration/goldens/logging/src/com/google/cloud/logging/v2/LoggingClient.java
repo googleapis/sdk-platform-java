@@ -88,16 +88,16 @@ import javax.annotation.Generated;
  *  the delete operation might not be deleted. Entries received after the
  *  delete operation with a timestamp before the operation will be deleted.</p></td>
  *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
  *      <li>deleteLog(DeleteLogRequest request)
  *      </ul>
- *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
  *      <li>deleteLog(LogName logName)
  *      <li>deleteLog(String logName)
  *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>deleteLogCallable()
  *      </ul>
@@ -113,16 +113,16 @@ import javax.annotation.Generated;
  *  different resources (projects, organizations, billing accounts or
  *  folders)</p></td>
  *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
  *      <li>writeLogEntries(WriteLogEntriesRequest request)
  *      </ul>
- *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
  *      <li>writeLogEntries(LogName logName)
  *      <li>writeLogEntries(String logName)
  *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>writeLogEntriesCallable()
  *      </ul>
@@ -135,15 +135,15 @@ import javax.annotation.Generated;
  *  entries, see [Exporting
  *  Logs](https://cloud.google.com/logging/docs/export).</p></td>
  *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
  *      <li>listLogEntries(ListLogEntriesRequest request)
  *      </ul>
- *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
  *      <li>listLogEntries(List<String> resourceNames)
  *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>listLogEntriesPagedCallable()
  *      <li>listLogEntriesCallable()
@@ -154,11 +154,11 @@ import javax.annotation.Generated;
  *      <td>ListMonitoredResourceDescriptors</td>
  *      <td><p>Lists the descriptors for monitored resource types used by Logging.</p></td>
  *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
  *      <li>listMonitoredResourceDescriptors(ListMonitoredResourceDescriptorsRequest request)
  *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>listMonitoredResourceDescriptorsPagedCallable()
  *      <li>listMonitoredResourceDescriptorsCallable()
@@ -170,11 +170,11 @@ import javax.annotation.Generated;
  *      <td><p>Lists the logs in projects, organizations, folders, or billing accounts.
  *  Only logs that have entries are listed.</p></td>
  *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
  *      <li>listLogs(ListLogsRequest request)
  *      </ul>
- *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
  *      <li>listLogs(BillingAccountName parent)
  *      <li>listLogs(FolderName parent)
@@ -182,7 +182,7 @@ import javax.annotation.Generated;
  *      <li>listLogs(ProjectName parent)
  *      <li>listLogs(String parent)
  *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>listLogsPagedCallable()
  *      <li>listLogsCallable()
@@ -194,7 +194,7 @@ import javax.annotation.Generated;
  *      <td><p>Streaming read of log entries as they are ingested. Until the stream is
  *  terminated, it will continue reading logs.</p></td>
  *      <td>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>tailLogEntriesCallable()
  *      </ul>

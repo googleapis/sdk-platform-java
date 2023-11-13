@@ -76,7 +76,7 @@ import javax.annotation.Generated;
  *  the RPC client.
  *  The listener streams http requests and the dialer streams http responses.</p></td>
  *      <td>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>egressCallable()
  *      </ul>
