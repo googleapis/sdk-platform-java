@@ -47,7 +47,6 @@ import java.util.logging.Logger;
  */
 public class OperationTimedPollAlgorithm extends ExponentialRetryAlgorithm {
 
-  @VisibleForTesting
   public static Logger LOGGER = Logger.getLogger(OperationTimedPollAlgorithm.class.getName());
 
   public static final String LRO_TROUBLESHOOTING_LINK =

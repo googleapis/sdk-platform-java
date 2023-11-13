@@ -31,6 +31,7 @@ import com.google.showcase.v1beta1.WaitResponse;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.TimeUnit;
+import org.junit.Before;
 import org.junit.Test;
 import org.threeten.bp.Duration;
 import org.threeten.bp.Instant;
@@ -41,6 +42,13 @@ import org.threeten.bp.temporal.ChronoUnit;
  * calls are polling correctly. Each test attempts to test the number of attempts done in each call.
  */
 public class ITLongRunningOperation {
+
+  FakeLogHandler logHandler;
+
+  @Before
+  public void setUp() {
+    logHandler = new FakeLogHandler();
+  }
 
   @Test
   public void testGRPC_LROSuccessfulResponse_doesNotExceedTotalTimeout() throws Exception {
@@ -124,7 +132,6 @@ public class ITLongRunningOperation {
   @Test
   public void testGRPC_LROUnsuccessfulResponse_exceedsTotalTimeout_throwsDeadlineExceededException()
       throws Exception {
-    FakeLogHandler logHandler = new FakeLogHandler();
     OperationTimedPollAlgorithm.LOGGER.addHandler(logHandler);
     RetrySettings initialUnaryRetrySettings =
         RetrySettings.newBuilder()
@@ -168,7 +175,6 @@ public class ITLongRunningOperation {
   public void
       testHttpJson_LROUnsuccessfulResponse_exceedsTotalTimeout_throwsDeadlineExceededException()
           throws Exception {
-    FakeLogHandler logHandler = new FakeLogHandler();
     OperationTimedPollAlgorithm.LOGGER.addHandler(logHandler);
     RetrySettings initialUnaryRetrySettings =
         RetrySettings.newBuilder()
