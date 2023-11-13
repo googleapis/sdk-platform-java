@@ -35,6 +35,7 @@ import com.google.api.core.NanoClock;
 import com.google.api.gax.retrying.ExponentialRetryAlgorithm;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.retrying.TimedAttemptSettings;
+import com.google.common.annotations.VisibleForTesting;
 import java.util.concurrent.CancellationException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,9 +47,11 @@ import java.util.logging.Logger;
  */
 public class OperationTimedPollAlgorithm extends ExponentialRetryAlgorithm {
 
-  public static Logger LOGGER = Logger.getLogger(OperationTimedPollAlgorithm.class.getName());
+  @VisibleForTesting
+  static final Logger LOGGER = Logger.getLogger(OperationTimedPollAlgorithm.class.getName());
 
-  public static final String LRO_TROUBLESHOOTING_LINK =
+  @VisibleForTesting
+  static final String LRO_TROUBLESHOOTING_LINK =
       "https://github.com/googleapis/google-cloud-java#lro-timeouts";
 
   /**
