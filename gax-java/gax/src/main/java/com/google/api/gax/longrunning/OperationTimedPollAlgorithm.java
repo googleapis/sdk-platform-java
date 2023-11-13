@@ -87,7 +87,7 @@ public class OperationTimedPollAlgorithm extends ExponentialRetryAlgorithm {
     if (super.shouldRetry(nextAttemptSettings)) {
       return true;
     }
-    if (LOGGER.isLoggable(Level.SEVERE)) {
+    if (LOGGER.isLoggable(Level.WARNING)) {
       LOGGER.log(
           Level.WARNING,
           "The task has been cancelled. Please refer to "
