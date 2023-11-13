@@ -20,7 +20,6 @@ from typing import List, Sequence
 import click
 import pkg_resources
 from synthtool.log import logger
-import synthtool.metadata
 from synthtool import preconfig
 
 try:
@@ -57,13 +56,8 @@ def extra_args() -> List[str]:
 @click.command()
 @click.version_option(message="%(version)s", version=VERSION)
 @click.argument("synthfile", default="synth.py")
-@click.option(
-    "--metadata",
-    default="synth.metadata",
-    help="Path to metadata file that will be read and overwritten.",
-)
 @click.argument("extra_args", nargs=-1)
-def main(synthfile: str, metadata: str, extra_args: Sequence[str]):
+def main(synthfile: str, extra_args: Sequence[str]):
     f"""Synthesizes source code according to the instructions in synthfile arg.
 
     Optional environment variables:
@@ -89,9 +83,6 @@ def main(synthfile: str, metadata: str, extra_args: Sequence[str]):
 
         if spec.loader is None:
             raise ImportError("Could not import synth.py")
-
-        with synthtool.metadata.MetadataTrackerAndWriter(metadata):
-            spec.loader.exec_module(synth_module)  # type: ignore
 
     else:
         logger.exception(f"{synth_file} not found.")

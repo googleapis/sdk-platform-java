@@ -26,10 +26,9 @@ from datetime import date
 from synthtool import shell, _tracked_paths
 from synthtool.gcp import partials
 from synthtool.log import logger
-from synthtool.sources import git, templates
+from synthtool.sources import templates
 
 PathOrStr = templates.PathOrStr
-TEMPLATES_URL: str = git.make_repo_clone_url("googleapis/synthtool")
 DEFAULT_TEMPLATES_PATH = "synthtool/gcp/templates"
 LOCAL_TEMPLATES: Optional[str] = os.environ.get("SYNTHTOOL_TEMPLATES")
 
@@ -42,8 +41,8 @@ class CommonTemplates:
             logger.debug(f"Using local templates at {LOCAL_TEMPLATES}")
             self._template_root = Path(LOCAL_TEMPLATES)
         else:
-            templates_git = git.clone(TEMPLATES_URL)
-            self._template_root = templates_git / DEFAULT_TEMPLATES_PATH
+            logger.debug(f"Using default local templates at {DEFAULT_TEMPLATES_PATH}")
+            self._template_root = Path(DEFAULT_TEMPLATES_PATH)
 
         self._templates = templates.Templates(self._template_root)
         self.excludes = []  # type: List[str]
