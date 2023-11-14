@@ -57,8 +57,8 @@ public class OperationTimedPollAlgorithmTest {
           .setMaxRpcTimeout(Duration.ofMillis(1L))
           .setTotalTimeout(Duration.ofMillis(5L))
           .build();
-  private static TimedAttemptSettings timedAttemptSettings;
-  private static FakeApiClock clock;
+  private TimedAttemptSettings timedAttemptSettings;
+  private FakeApiClock clock;
 
   private FakeLogHandler logHandler;
 
