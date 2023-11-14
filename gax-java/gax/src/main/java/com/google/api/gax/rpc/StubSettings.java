@@ -479,6 +479,21 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       return self();
     }
 
+    public B setDefaultEndpoint(String defaultEndpoint) {
+      this.switchToMtlsEndpointAllowed = false;
+      if (this.endpoint != null && this.mtlsEndpoint == null) {
+        this.mtlsEndpoint = defaultEndpoint.replace("googleapis.com", "mtls.googleapis.com");
+      }
+      this.endpointContext =
+          this.endpointContext
+              .toBuilder()
+              .setDefaultEndpoint(defaultEndpoint)
+              .setMtlsEndpoint(mtlsEndpoint)
+              .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)
+              .build();
+      return self();
+    }
+
     public B setEndpoint(String endpoint) {
       this.endpoint = endpoint;
       this.switchToMtlsEndpointAllowed = false;

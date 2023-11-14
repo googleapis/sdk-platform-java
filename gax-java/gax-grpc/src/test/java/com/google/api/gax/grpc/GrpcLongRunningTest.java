@@ -113,11 +113,14 @@ public class GrpcLongRunningTest {
         .setRetrySettings(FAST_RETRY_SETTINGS.toBuilder().setMaxAttempts(1).build());
     OperationsSettings settings =
         OperationsSettings.newBuilder()
-            .setEndpoint("longrunning.googleapis.com")
             .setTransportChannelProvider(operationsChannelProvider)
             .build();
     operationsStub =
-        GrpcOperationsStub.create(((OperationsStubSettings) settings.getStubSettings()));
+        GrpcOperationsStub.create(
+            ((OperationsStubSettings) settings.getStubSettings())
+                .toBuilder()
+                .setHostServiceName("longrunning")
+                .build());
 
     UnaryCallSettings<Integer, OperationSnapshot> initialCallSettings =
         UnaryCallSettings.<Integer, OperationSnapshot>newUnaryCallSettingsBuilder()

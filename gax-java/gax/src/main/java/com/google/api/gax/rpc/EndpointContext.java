@@ -36,7 +36,6 @@ import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import java.io.IOException;
-import java.util.regex.Pattern;
 import javax.annotation.Nullable;
 
 @InternalApi
@@ -45,11 +44,12 @@ public abstract class EndpointContext {
   private static final String GOOGLE_DEFAULT_UNIVERSE = "googleapis.com";
   private static final String DEFAULT_PORT = "443";
   private static final String ENDPOINT_TEMPLATE = "https://SERVICE_NAME.UNIVERSE_DOMAIN:PORT";
-  private static final Pattern ENDPOINT_REGEX =
-      Pattern.compile("^(https\\:\\/\\/)?(www.)?[a-zA-Z]+\\.[\\S]+(\\:\\d)?$");
 
   @Nullable
   public abstract String hostServiceName();
+
+  @Nullable
+  public abstract String defaultEndpoint();
 
   @Nullable
   public abstract String clientSettingsEndpoint();
@@ -84,67 +84,61 @@ public abstract class EndpointContext {
       return;
     }
     MtlsProvider mtlsProvider = mtlsProvider() == null ? new MtlsProvider() : mtlsProvider();
-    String endpoint =
+    String customEndpoint =
         transportChannelEndpoint() != null ? transportChannelEndpoint() : clientSettingsEndpoint();
-    if (universeDomain() == null) {
-      if (endpoint == null) {
-        endpoint = buildEndpoint(hostServiceName());
+    if (universeDomain() == null && customEndpoint == null) {
+      String defaultEndpoint =
+          defaultEndpoint() == null ? buildEndpoint(hostServiceName()) : defaultEndpoint();
+      resolvedEndpoint =
+          mtlsEndpointResolver(
+              mtlsProvider, defaultEndpoint, mtlsEndpoint(), switchToMtlsEndpointAllowed());
+      resolvedUniverseDomain = GOOGLE_DEFAULT_UNIVERSE;
+    } else if (universeDomain() != null && universeDomain().isEmpty()) {
+      throw new IllegalStateException("Universe Domain cannot be set as an empty string");
+    } else if (universeDomain() != null && !universeDomain().isEmpty() && customEndpoint == null) {
+      resolvedEndpoint =
+          mtlsEndpointResolver(
+              mtlsProvider,
+              buildEndpoint(hostServiceName(), universeDomain(), DEFAULT_PORT),
+              mtlsEndpoint(),
+              switchToMtlsEndpointAllowed());
+      if (resolvedEndpoint.contains("mtls")) {
+        resolvedUniverseDomain = GOOGLE_DEFAULT_UNIVERSE;
+      } else {
+        resolvedUniverseDomain = universeDomain();
+      }
+    } else if (customEndpoint != null && !customEndpoint.isEmpty()) {
+      if (customEndpoint.contains("https://")) {
+        customEndpoint = customEndpoint.substring(8);
+      }
+      if (customEndpoint.contains("localhost")) {
+        resolvedEndpoint = customEndpoint;
+        resolvedUniverseDomain = GOOGLE_DEFAULT_UNIVERSE;
+        return;
+      }
+      // Parse the custom customEndpoint for the universe domain
+      int periodIndex = customEndpoint.indexOf('.');
+      int colonIndex = customEndpoint.indexOf(':');
+      String universeDomain;
+      if (colonIndex != -1) {
+        universeDomain = customEndpoint.substring(periodIndex + 1, colonIndex);
+      } else {
+        universeDomain = customEndpoint.substring(periodIndex + 1);
       }
       resolvedEndpoint =
           mtlsEndpointResolver(
-              mtlsProvider, endpoint, mtlsEndpoint(), switchToMtlsEndpointAllowed());
-      resolvedUniverseDomain = GOOGLE_DEFAULT_UNIVERSE;
-      return;
-    }
-
-    resolvedEndpoint =
-        mtlsEndpointResolver(
-            mtlsProvider,
-            buildEndpoint(hostServiceName(), universeDomain(), DEFAULT_PORT),
-            mtlsEndpoint(),
-            switchToMtlsEndpointAllowed());
-    if (resolvedEndpoint.contains("mtls")) {
-      resolvedUniverseDomain = GOOGLE_DEFAULT_UNIVERSE;
+              mtlsProvider,
+              buildEndpoint(hostServiceName(), universeDomain, DEFAULT_PORT),
+              mtlsEndpoint(),
+              switchToMtlsEndpointAllowed());
+      if (resolvedEndpoint.contains("mtls")) {
+        resolvedUniverseDomain = GOOGLE_DEFAULT_UNIVERSE;
+      } else {
+        resolvedUniverseDomain = universeDomain;
+      }
     } else {
-      resolvedUniverseDomain = universeDomain();
+      throw new IllegalStateException("Unable to resolve the endpoint");
     }
-
-    // TODO: The logic below is probably not needed. Check the updated table later.
-    //    // Check if it matches the ENDPOINT_TEMPLATE format
-    //    Matcher matcher = ENDPOINT_REGEX.matcher(endpoint);
-    //    Preconditions.checkState(matcher.matches(), "Endpoint: " + endpoint + " is invalid");
-    //
-    //    endpoint =
-    //        mtlsEndpointResolver(mtlsProvider, endpoint, mtlsEndpoint(),
-    // switchToMtlsEndpointAllowed());
-    //    // mTLS is not supported yet. If mTLS is enabled, use that endpoint.
-    //    if (endpoint.contains("mtls")) {
-    //      resolvedEndpoint = endpoint;
-    //      resolvedUniverseDomain = GOOGLE_DEFAULT_UNIVERSE;
-    //      return;
-    //    }
-    //
-    //    if (endpoint.contains("https://")) {
-    //      endpoint = endpoint.substring(8);
-    //    }
-    //
-    //    // Parse the custom endpoint for the service name, universe domain, and the port
-    //    int periodIndex = endpoint.indexOf('.');
-    //    int colonIndex = endpoint.indexOf(':');
-    //    String serviceName;
-    //    String universeDomain;
-    //    String port = DEFAULT_PORT;
-    //    if (colonIndex != -1) {
-    //      universeDomain = endpoint.substring(periodIndex + 1, colonIndex);
-    //      port = endpoint.substring(colonIndex + 1);
-    //    } else {
-    //      universeDomain = endpoint.substring(periodIndex + 1);
-    //    }
-    //    serviceName = endpoint.substring(0, periodIndex);
-    //
-    //    // TODO: Build out logic for resolving endpoint
-    //    resolvedEndpoint = buildEndpoint(serviceName, universeDomain, port);
-    //    resolvedUniverseDomain = universeDomain;
   }
 
   private String mtlsEndpointResolver(
@@ -203,6 +197,8 @@ public abstract class EndpointContext {
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setHostServiceName(String hostServiceName);
+
+    public abstract Builder setDefaultEndpoint(String defaultEndpoint);
 
     public abstract Builder setClientSettingsEndpoint(String clientSettingsEndpoint);
 

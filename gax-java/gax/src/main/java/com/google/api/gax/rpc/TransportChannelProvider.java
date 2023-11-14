@@ -146,4 +146,8 @@ public interface TransportChannelProvider {
   default String getEndpoint() {
     return null;
   }
+
+  default boolean needsResolvedEndpoint() {
+    return false;
+  }
 }

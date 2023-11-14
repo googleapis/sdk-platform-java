@@ -435,6 +435,11 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return endpoint;
   }
 
+  @Override
+  public boolean needsResolvedEndpoint() {
+    return true;
+  }
+
   /** The time without read activity before sending a keepalive ping. */
   public Duration getKeepAliveTime() {
     return keepAliveTime;

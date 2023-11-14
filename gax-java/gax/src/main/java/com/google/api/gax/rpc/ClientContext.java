@@ -206,7 +206,9 @@ public abstract class ClientContext {
     EndpointContext endpointContext = settings.getEndpointContext();
     String endpoint = endpointContext.resolveEndpoint();
     String universeDomain = endpointContext.resolveUniverseDomain();
-    transportChannelProvider.withEndpoint(endpoint);
+    if (transportChannelProvider.needsResolvedEndpoint()) {
+      transportChannelProvider = transportChannelProvider.withEndpoint(endpoint);
+    }
     TransportChannel transportChannel = transportChannelProvider.getTransportChannel();
 
     ApiCallContext defaultCallContext =

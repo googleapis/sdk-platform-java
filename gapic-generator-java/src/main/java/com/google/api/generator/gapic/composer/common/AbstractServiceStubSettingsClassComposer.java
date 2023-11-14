@@ -1899,7 +1899,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     bodyExprs.add(
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(builderVarExpr)
-            .setMethodName("setEndpoint")
+            .setMethodName("setDefaultEndpoint")
             .setArguments(
                 MethodInvocationExpr.builder().setMethodName("getDefaultEndpoint").build())
             .build());

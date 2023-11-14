@@ -733,7 +733,7 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
       builder.setTransportChannelProvider(defaultTransportChannelProvider());
       builder.setCredentialsProvider(defaultCredentialsProviderBuilder().build());
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
-      builder.setEndpoint(getDefaultEndpoint());
+      builder.setDefaultEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
       builder.setHostServiceName(HOST_SERVICE_NAME);
@@ -747,7 +747,7 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
       builder.setTransportChannelProvider(defaultHttpJsonTransportProviderBuilder().build());
       builder.setCredentialsProvider(defaultCredentialsProviderBuilder().build());
       builder.setInternalHeaderProvider(defaultHttpJsonApiClientHeaderProviderBuilder().build());
-      builder.setEndpoint(getDefaultEndpoint());
+      builder.setDefaultEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
       builder.setHostServiceName(HOST_SERVICE_NAME);
