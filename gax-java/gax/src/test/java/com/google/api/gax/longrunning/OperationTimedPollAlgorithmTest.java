@@ -57,6 +57,8 @@ public class OperationTimedPollAlgorithmTest {
           .setMaxRpcTimeout(Duration.ofMillis(1L))
           .setTotalTimeout(Duration.ofMillis(5L))
           .build();
+  private static TimedAttemptSettings timedAttemptSettings;
+  private static FakeApiClock clock;
 
   private FakeLogHandler logHandler;
 
@@ -64,6 +66,16 @@ public class OperationTimedPollAlgorithmTest {
   public void setUp() {
     logHandler = new FakeLogHandler();
     OperationTimedPollAlgorithm.LOGGER.addHandler(logHandler);
+    clock = new FakeApiClock(System.nanoTime());
+    timedAttemptSettings =
+        TimedAttemptSettings.newBuilder()
+            .setGlobalSettings(FAST_RETRY_SETTINGS)
+            .setRetryDelay(Duration.ofMillis(1l))
+            .setRpcTimeout(Duration.ofMillis(1l))
+            .setRandomizedRetryDelay(Duration.ofMillis(1l))
+            .setAttemptCount(0)
+            .setFirstAttemptStartTimeNanos(clock.nanoTime())
+            .build();
   }
 
   @After
@@ -75,20 +87,10 @@ public class OperationTimedPollAlgorithmTest {
 
   @Test
   public void testAlgorithmThatShouldRetry_doesNotLogTimeoutHelpMessage() {
-    FakeApiClock clock = new FakeApiClock(System.nanoTime());
     OperationTimedPollAlgorithm algorithm =
         OperationTimedPollAlgorithm.create(FAST_RETRY_SETTINGS, clock);
-    TimedAttemptSettings settings =
-        TimedAttemptSettings.newBuilder()
-            .setGlobalSettings(FAST_RETRY_SETTINGS)
-            .setRetryDelay(Duration.ofMillis(1l))
-            .setRpcTimeout(Duration.ofMillis(1l))
-            .setRandomizedRetryDelay(Duration.ofMillis(1l))
-            .setAttemptCount(0)
-            .setFirstAttemptStartTimeNanos(clock.nanoTime())
-            .build();
     try {
-      algorithm.shouldRetry(settings);
+      algorithm.shouldRetry(timedAttemptSettings);
     } catch (CancellationException ex) {
       fail("Unexpected unsuccessful shouldRetry()");
     }
@@ -100,20 +102,10 @@ public class OperationTimedPollAlgorithmTest {
 
   @Test
   public void testAlgorithmThatShouldNotRetry_logsTimeoutHelpMessage() {
-    FakeApiClock clock = new FakeApiClock(System.nanoTime());
     OperationTimedPollAlgorithm algorithm =
         OperationTimedPollAlgorithm.create(FAST_RETRY_SETTINGS, clock);
-    TimedAttemptSettings settings =
-        TimedAttemptSettings.newBuilder()
-            .setGlobalSettings(FAST_RETRY_SETTINGS)
-            .setRetryDelay(Duration.ofMillis(1l))
-            .setRpcTimeout(Duration.ofMillis(1l))
-            .setRandomizedRetryDelay(Duration.ofMillis(1l))
-            .setAttemptCount(0)
-            .setFirstAttemptStartTimeNanos(clock.nanoTime())
-            .build();
-    clock.incrementNanoTime(1 * 1000 * 1000 * 1000);
-    assertThrows(CancellationException.class, () -> algorithm.shouldRetry(settings));
+    clock.incrementNanoTime(1 * 1000 * 1000 * 1000); // force rpc timeout
+    assertThrows(CancellationException.class, () -> algorithm.shouldRetry(timedAttemptSettings));
     assertTrue(
         logHandler.getAllMessages().stream()
             .anyMatch(
