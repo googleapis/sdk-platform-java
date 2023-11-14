@@ -102,6 +102,25 @@ import javax.annotation.Generated;
  *    </td>
  *    </tr>
  *    <tr>
+ *      <td>EchoErrorDetails</td>
+ *      <td><p>This method returns error details in a repeated "google.protobuf.Any"
+ *  field. This method showcases handling errors thus encoded, particularly
+ *  over REST transport. Note that GAPICs only allow the type
+ *  "google.protobuf.Any" for field paths ending in "error.details", and, at
+ *  run-time, the actual types for these fields must be one of the types in
+ *  google/rpc/error_details.proto.</p></td>
+ *      <td>
+ *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
+ *      <ul>
+ *      <li>echoErrorDetails(EchoErrorDetailsRequest request)
+ *      </ul>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <ul>
+ *      <li>echoErrorDetailsCallable()
+ *      </ul>
+ *    </td>
+ *    </tr>
+ *    <tr>
  *      <td>Expand</td>
  *      <td><p>This method splits the given content into words and will pass each word back
  *  through the stream. This method showcases server-side streaming RPCs.</p></td>
