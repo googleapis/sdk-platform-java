@@ -245,50 +245,27 @@ public class ServiceClientCommentComposer {
           .append("<p>" + method.description + "</p>")
           .append("</td>\n")
           .append("     <td>\n");
-      if (method.hasRequestObjectVariants) {
-        tableBuilder
-            .append("     " + REQUEST_OBJECT_METHODS + "     ")
-            .append("<ul>\n")
-            .append("     <li>")
-            .append(String.join("\n     <li>", method.requestObjectVariants))
-            .append("\n")
-            .append("     </ul>")
-            .append("\n");
-      }
-      if (method.hasFlattenedVariants) {
-        tableBuilder
-            .append("     " + FLATTENED_METHODS + "     ")
-            .append("<ul>\n")
-            .append("     <li>")
-            .append(String.join("\n     <li>", method.flattenedVariants))
-            .append("\n")
-            .append("     </ul>")
-            .append("\n");
-      }
-      if (method.hasAsyncVariants) {
-        tableBuilder
-            .append("     " + ASYNC_METHODS + "     ")
-            .append("<ul>\n")
-            .append("     <li>")
-            .append(String.join("\n     <li>", method.asyncVariants))
-            .append("\n")
-            .append("     </ul>")
-            .append("\n");
-      }
-      if (method.hasCallableVariants) {
-        tableBuilder
-            .append("     " + CALLABLE_METHODS + "     ")
-            .append("<ul>\n")
-            .append("     <li>")
-            .append(String.join("\n     <li>", method.callableVariants))
-            .append("\n")
-            .append("     </ul>")
-            .append("\n");
-      }
+      generateUnorderedListMethodVariants(tableBuilder, REQUEST_OBJECT_METHODS, method.requestObjectVariants);
+      generateUnorderedListMethodVariants(tableBuilder, FLATTENED_METHODS, method.flattenedVariants);
+      generateUnorderedListMethodVariants(tableBuilder, ASYNC_METHODS, method.asyncVariants);
+      generateUnorderedListMethodVariants(tableBuilder, CALLABLE_METHODS, method.callableVariants);
       tableBuilder.append("   </td>\n").append("   </tr>\n");
     }
     tableBuilder.append(" </table>\n");
     return tableBuilder.toString();
+  }
+
+  private static void generateUnorderedListMethodVariants(StringBuilder tableBuilder, String methodType, List<String> methodVariants) {
+    if (!methodVariants.isEmpty()) {
+      tableBuilder
+          .append("     " + methodType + "     ")
+          .append("<ul>\n")
+          .append("     <li>")
+          .append(String.join("\n     <li>", methodVariants))
+          .append("\n")
+          .append("     </ul>")
+          .append("\n");
+    }
   }
 
   private static class MethodAndVariants {
