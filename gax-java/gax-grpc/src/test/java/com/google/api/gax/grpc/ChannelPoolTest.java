@@ -43,6 +43,7 @@ import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.StreamController;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.api.gax.util.FakeLogHandler;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -66,9 +67,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
-import java.util.stream.Collectors;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -715,25 +713,6 @@ public class ChannelPoolTest {
       assertThat(entry.outstandingRpcs.get()).isEqualTo(0);
     } finally {
       ChannelPool.LOG.removeHandler(logHandler);
-    }
-  }
-
-  private static class FakeLogHandler extends Handler {
-    List<LogRecord> records = new ArrayList<>();
-
-    @Override
-    public void publish(LogRecord record) {
-      records.add(record);
-    }
-
-    @Override
-    public void flush() {}
-
-    @Override
-    public void close() throws SecurityException {}
-
-    List<String> getAllMessages() {
-      return records.stream().map(LogRecord::getMessage).collect(Collectors.toList());
     }
   }
 }
