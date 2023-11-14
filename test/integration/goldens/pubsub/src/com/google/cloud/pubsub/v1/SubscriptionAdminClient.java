@@ -120,10 +120,10 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>createSubscription(SubscriptionName name)
- *      <li>createSubscription(SubscriptionName name)
- *      <li>createSubscription(String name)
- *      <li>createSubscription(String name)
+ *      <li>createSubscription(SubscriptionName name, TopicName topic, PushConfig pushConfig, ackDeadlineSeconds)
+ *      <li>createSubscription(SubscriptionName name, String topic, PushConfig pushConfig, ackDeadlineSeconds)
+ *      <li>createSubscription(String name, TopicName topic, PushConfig pushConfig, ackDeadlineSeconds)
+ *      <li>createSubscription(String name, String topic, PushConfig pushConfig, ackDeadlineSeconds)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -222,8 +222,8 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>modifyAckDeadline(SubscriptionName subscription)
- *      <li>modifyAckDeadline(String subscription)
+ *      <li>modifyAckDeadline(SubscriptionName subscription, List<String> ackIds, ackDeadlineSeconds)
+ *      <li>modifyAckDeadline(String subscription, List<String> ackIds, ackDeadlineSeconds)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -247,8 +247,8 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>acknowledge(SubscriptionName subscription)
- *      <li>acknowledge(String subscription)
+ *      <li>acknowledge(SubscriptionName subscription, List<String> ackIds)
+ *      <li>acknowledge(String subscription, List<String> ackIds)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -268,10 +268,10 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>pull(SubscriptionName subscription)
- *      <li>pull(String subscription)
- *      <li>pull(SubscriptionName subscription)
- *      <li>pull(String subscription)
+ *      <li>pull(SubscriptionName subscription, maxMessages)
+ *      <li>pull(String subscription, maxMessages)
+ *      <li>pull(SubscriptionName subscription, returnImmediately, maxMessages)
+ *      <li>pull(String subscription, returnImmediately, maxMessages)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -310,8 +310,8 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>modifyPushConfig(SubscriptionName subscription)
- *      <li>modifyPushConfig(String subscription)
+ *      <li>modifyPushConfig(SubscriptionName subscription, PushConfig pushConfig)
+ *      <li>modifyPushConfig(String subscription, PushConfig pushConfig)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -391,10 +391,10 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>createSnapshot(SnapshotName name)
- *      <li>createSnapshot(SnapshotName name)
- *      <li>createSnapshot(String name)
- *      <li>createSnapshot(String name)
+ *      <li>createSnapshot(SnapshotName name, SubscriptionName subscription)
+ *      <li>createSnapshot(SnapshotName name, String subscription)
+ *      <li>createSnapshot(String name, SubscriptionName subscription)
+ *      <li>createSnapshot(String name, String subscription)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>

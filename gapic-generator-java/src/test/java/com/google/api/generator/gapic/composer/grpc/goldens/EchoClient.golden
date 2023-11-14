@@ -74,7 +74,7 @@ import javax.annotation.Generated;
  *      <li>echo(String content)
  *      <li>echo(String name)
  *      <li>echo(String parent)
- *      <li>echo(String content)
+ *      <li>echo(String content, Severity severity)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>

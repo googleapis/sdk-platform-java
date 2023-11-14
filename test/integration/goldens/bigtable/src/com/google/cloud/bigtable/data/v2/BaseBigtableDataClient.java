@@ -114,10 +114,10 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>mutateRow(TableName tableName)
- *      <li>mutateRow(String tableName)
- *      <li>mutateRow(TableName tableName)
- *      <li>mutateRow(String tableName)
+ *      <li>mutateRow(TableName tableName, ByteString rowKey, List<Mutation> mutations)
+ *      <li>mutateRow(String tableName, ByteString rowKey, List<Mutation> mutations)
+ *      <li>mutateRow(TableName tableName, ByteString rowKey, List<Mutation> mutations, String appProfileId)
+ *      <li>mutateRow(String tableName, ByteString rowKey, List<Mutation> mutations, String appProfileId)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -147,10 +147,10 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>checkAndMutateRow(TableName tableName)
- *      <li>checkAndMutateRow(String tableName)
- *      <li>checkAndMutateRow(TableName tableName)
- *      <li>checkAndMutateRow(String tableName)
+ *      <li>checkAndMutateRow(TableName tableName, ByteString rowKey, RowFilter predicateFilter, List<Mutation> trueMutations, List<Mutation> falseMutations)
+ *      <li>checkAndMutateRow(String tableName, ByteString rowKey, RowFilter predicateFilter, List<Mutation> trueMutations, List<Mutation> falseMutations)
+ *      <li>checkAndMutateRow(TableName tableName, ByteString rowKey, RowFilter predicateFilter, List<Mutation> trueMutations, List<Mutation> falseMutations, String appProfileId)
+ *      <li>checkAndMutateRow(String tableName, ByteString rowKey, RowFilter predicateFilter, List<Mutation> trueMutations, List<Mutation> falseMutations, String appProfileId)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -171,8 +171,8 @@ import javax.annotation.Generated;
  *      <ul>
  *      <li>pingAndWarm(InstanceName name)
  *      <li>pingAndWarm(String name)
- *      <li>pingAndWarm(InstanceName name)
- *      <li>pingAndWarm(String name)
+ *      <li>pingAndWarm(InstanceName name, String appProfileId)
+ *      <li>pingAndWarm(String name, String appProfileId)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -194,10 +194,10 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>readModifyWriteRow(TableName tableName)
- *      <li>readModifyWriteRow(String tableName)
- *      <li>readModifyWriteRow(TableName tableName)
- *      <li>readModifyWriteRow(String tableName)
+ *      <li>readModifyWriteRow(TableName tableName, ByteString rowKey, List<ReadModifyWriteRule> rules)
+ *      <li>readModifyWriteRow(String tableName, ByteString rowKey, List<ReadModifyWriteRule> rules)
+ *      <li>readModifyWriteRow(TableName tableName, ByteString rowKey, List<ReadModifyWriteRule> rules, String appProfileId)
+ *      <li>readModifyWriteRow(String tableName, ByteString rowKey, List<ReadModifyWriteRule> rules, String appProfileId)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>

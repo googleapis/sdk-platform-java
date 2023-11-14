@@ -62,7 +62,7 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>createRoom(String displayName)
+ *      <li>createRoom(String displayName, String description)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -147,12 +147,12 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>createBlurb(ProfileName parent)
- *      <li>createBlurb(ProfileName parent)
- *      <li>createBlurb(RoomName parent)
- *      <li>createBlurb(RoomName parent)
- *      <li>createBlurb(String parent)
- *      <li>createBlurb(String parent)
+ *      <li>createBlurb(ProfileName parent, ByteString image)
+ *      <li>createBlurb(ProfileName parent, String text)
+ *      <li>createBlurb(RoomName parent, ByteString image)
+ *      <li>createBlurb(RoomName parent, String text)
+ *      <li>createBlurb(String parent, ByteString image)
+ *      <li>createBlurb(String parent, String text)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>

@@ -365,11 +365,11 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>createSink(BillingAccountName parent)
- *      <li>createSink(FolderName parent)
- *      <li>createSink(OrganizationName parent)
- *      <li>createSink(ProjectName parent)
- *      <li>createSink(String parent)
+ *      <li>createSink(BillingAccountName parent, LogSink sink)
+ *      <li>createSink(FolderName parent, LogSink sink)
+ *      <li>createSink(OrganizationName parent, LogSink sink)
+ *      <li>createSink(ProjectName parent, LogSink sink)
+ *      <li>createSink(String parent, LogSink sink)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -391,10 +391,10 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>updateSink(LogSinkName sinkName)
- *      <li>updateSink(String sinkName)
- *      <li>updateSink(LogSinkName sinkName)
- *      <li>updateSink(String sinkName)
+ *      <li>updateSink(LogSinkName sinkName, LogSink sink)
+ *      <li>updateSink(String sinkName, LogSink sink)
+ *      <li>updateSink(LogSinkName sinkName, LogSink sink, FieldMask updateMask)
+ *      <li>updateSink(String sinkName, LogSink sink, FieldMask updateMask)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -476,11 +476,11 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>createExclusion(BillingAccountName parent)
- *      <li>createExclusion(FolderName parent)
- *      <li>createExclusion(OrganizationName parent)
- *      <li>createExclusion(ProjectName parent)
- *      <li>createExclusion(String parent)
+ *      <li>createExclusion(BillingAccountName parent, LogExclusion exclusion)
+ *      <li>createExclusion(FolderName parent, LogExclusion exclusion)
+ *      <li>createExclusion(OrganizationName parent, LogExclusion exclusion)
+ *      <li>createExclusion(ProjectName parent, LogExclusion exclusion)
+ *      <li>createExclusion(String parent, LogExclusion exclusion)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -499,8 +499,8 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>updateExclusion(LogExclusionName name)
- *      <li>updateExclusion(String name)
+ *      <li>updateExclusion(LogExclusionName name, LogExclusion exclusion, FieldMask updateMask)
+ *      <li>updateExclusion(String name, LogExclusion exclusion, FieldMask updateMask)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -631,7 +631,7 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>updateSettings(Settings settings)
+ *      <li>updateSettings(Settings settings, FieldMask updateMask)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>

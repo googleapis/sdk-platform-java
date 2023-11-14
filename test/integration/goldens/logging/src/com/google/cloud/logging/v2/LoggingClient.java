@@ -119,8 +119,8 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>writeLogEntries(LogName logName)
- *      <li>writeLogEntries(String logName)
+ *      <li>writeLogEntries(LogName logName, MonitoredResource resource, Map<String, String> labels, List<LogEntry> entries)
+ *      <li>writeLogEntries(String logName, MonitoredResource resource, Map<String, String> labels, List<LogEntry> entries)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -141,7 +141,7 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>listLogEntries(List<String> resourceNames)
+ *      <li>listLogEntries(List<String> resourceNames, String filter, String orderBy)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>

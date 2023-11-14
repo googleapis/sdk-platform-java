@@ -92,7 +92,7 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>createRoom(String displayName)
+ *      <li>createRoom(String displayName, String description)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -179,18 +179,18 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>createBlurb(ProfileName parent)
- *      <li>createBlurb(ProfileName parent)
- *      <li>createBlurb(ProfileName parent)
- *      <li>createBlurb(ProfileName parent)
- *      <li>createBlurb(RoomName parent)
- *      <li>createBlurb(RoomName parent)
- *      <li>createBlurb(RoomName parent)
- *      <li>createBlurb(RoomName parent)
- *      <li>createBlurb(String parent)
- *      <li>createBlurb(String parent)
- *      <li>createBlurb(String parent)
- *      <li>createBlurb(String parent)
+ *      <li>createBlurb(ProfileName parent, UserName user, ByteString image)
+ *      <li>createBlurb(ProfileName parent, UserName user, String text)
+ *      <li>createBlurb(ProfileName parent, String user, ByteString image)
+ *      <li>createBlurb(ProfileName parent, String user, String text)
+ *      <li>createBlurb(RoomName parent, UserName user, ByteString image)
+ *      <li>createBlurb(RoomName parent, UserName user, String text)
+ *      <li>createBlurb(RoomName parent, String user, ByteString image)
+ *      <li>createBlurb(RoomName parent, String user, String text)
+ *      <li>createBlurb(String parent, UserName user, ByteString image)
+ *      <li>createBlurb(String parent, UserName user, String text)
+ *      <li>createBlurb(String parent, String user, ByteString image)
+ *      <li>createBlurb(String parent, String user, String text)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -284,9 +284,9 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>Methods that return long-running operations have "Async" method variants that return `OperationFuture`, which is used to track polling of the service.</p>
  *      <ul>
- *      <li>searchBlurbsAsync(ProfileName parent)
- *      <li>searchBlurbsAsync(RoomName parent)
- *      <li>searchBlurbsAsync(String parent)
+ *      <li>searchBlurbsAsync(ProfileName parent, String query)
+ *      <li>searchBlurbsAsync(RoomName parent, String query)
+ *      <li>searchBlurbsAsync(String parent, String query)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>

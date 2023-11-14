@@ -176,8 +176,8 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>Methods that return long-running operations have "Async" method variants that return `OperationFuture`, which is used to track polling of the service.</p>
  *      <ul>
- *      <li>createInstanceAsync(LocationName parent)
- *      <li>createInstanceAsync(String parent)
+ *      <li>createInstanceAsync(LocationName parent, String instanceId, Instance instance)
+ *      <li>createInstanceAsync(String parent, String instanceId, Instance instance)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -200,7 +200,7 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>Methods that return long-running operations have "Async" method variants that return `OperationFuture`, which is used to track polling of the service.</p>
  *      <ul>
- *      <li>updateInstanceAsync(FieldMask updateMask)
+ *      <li>updateInstanceAsync(FieldMask updateMask, Instance instance)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -220,8 +220,8 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>Methods that return long-running operations have "Async" method variants that return `OperationFuture`, which is used to track polling of the service.</p>
  *      <ul>
- *      <li>upgradeInstanceAsync(InstanceName name)
- *      <li>upgradeInstanceAsync(String name)
+ *      <li>upgradeInstanceAsync(InstanceName name, String redisVersion)
+ *      <li>upgradeInstanceAsync(String name, String redisVersion)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -247,7 +247,7 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>Methods that return long-running operations have "Async" method variants that return `OperationFuture`, which is used to track polling of the service.</p>
  *      <ul>
- *      <li>importInstanceAsync(String name)
+ *      <li>importInstanceAsync(String name, InputConfig inputConfig)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -271,7 +271,7 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>Methods that return long-running operations have "Async" method variants that return `OperationFuture`, which is used to track polling of the service.</p>
  *      <ul>
- *      <li>exportInstanceAsync(String name)
+ *      <li>exportInstanceAsync(String name, OutputConfig outputConfig)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -291,8 +291,8 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>Methods that return long-running operations have "Async" method variants that return `OperationFuture`, which is used to track polling of the service.</p>
  *      <ul>
- *      <li>failoverInstanceAsync(InstanceName name)
- *      <li>failoverInstanceAsync(String name)
+ *      <li>failoverInstanceAsync(InstanceName name, FailoverInstanceRequest.DataProtectionMode dataProtectionMode)
+ *      <li>failoverInstanceAsync(String name, FailoverInstanceRequest.DataProtectionMode dataProtectionMode)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -333,8 +333,8 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>Methods that return long-running operations have "Async" method variants that return `OperationFuture`, which is used to track polling of the service.</p>
  *      <ul>
- *      <li>rescheduleMaintenanceAsync(InstanceName name)
- *      <li>rescheduleMaintenanceAsync(String name)
+ *      <li>rescheduleMaintenanceAsync(InstanceName name, RescheduleMaintenanceRequest.RescheduleType rescheduleType, Timestamp scheduleTime)
+ *      <li>rescheduleMaintenanceAsync(String name, RescheduleMaintenanceRequest.RescheduleType rescheduleType, Timestamp scheduleTime)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>

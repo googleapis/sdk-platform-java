@@ -173,10 +173,10 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>mergeShelves(ShelfName name)
- *      <li>mergeShelves(ShelfName name)
- *      <li>mergeShelves(String name)
- *      <li>mergeShelves(String name)
+ *      <li>mergeShelves(ShelfName name, ShelfName otherShelf)
+ *      <li>mergeShelves(ShelfName name, String otherShelf)
+ *      <li>mergeShelves(String name, ShelfName otherShelf)
+ *      <li>mergeShelves(String name, String otherShelf)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -194,8 +194,8 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>createBook(ShelfName parent)
- *      <li>createBook(String parent)
+ *      <li>createBook(ShelfName parent, Book book)
+ *      <li>createBook(String parent, Book book)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -274,7 +274,7 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>updateBook(Book book)
+ *      <li>updateBook(Book book, FieldMask updateMask)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -293,10 +293,10 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>moveBook(BookName name)
- *      <li>moveBook(BookName name)
- *      <li>moveBook(String name)
- *      <li>moveBook(String name)
+ *      <li>moveBook(BookName name, ShelfName otherShelfName)
+ *      <li>moveBook(BookName name, String otherShelfName)
+ *      <li>moveBook(String name, ShelfName otherShelfName)
+ *      <li>moveBook(String name, String otherShelfName)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>

@@ -131,8 +131,8 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>createBucket(ProjectName parent)
- *      <li>createBucket(String parent)
+ *      <li>createBucket(ProjectName parent, Bucket bucket, String bucketId)
+ *      <li>createBucket(String parent, Bucket bucket, String bucketId)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -214,8 +214,8 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>setIamPolicy(ResourceName resource)
- *      <li>setIamPolicy(String resource)
+ *      <li>setIamPolicy(ResourceName resource, Policy policy)
+ *      <li>setIamPolicy(String resource, Policy policy)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -237,8 +237,8 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>testIamPermissions(ResourceName resource)
- *      <li>testIamPermissions(String resource)
+ *      <li>testIamPermissions(ResourceName resource, List<String> permissions)
+ *      <li>testIamPermissions(String resource, List<String> permissions)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -256,7 +256,7 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>updateBucket(Bucket bucket)
+ *      <li>updateBucket(Bucket bucket, FieldMask updateMask)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -315,8 +315,8 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>createNotification(ProjectName parent)
- *      <li>createNotification(String parent)
+ *      <li>createNotification(ProjectName parent, Notification notification)
+ *      <li>createNotification(String parent, Notification notification)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -370,8 +370,8 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>deleteObject(String bucket)
- *      <li>deleteObject(String bucket)
+ *      <li>deleteObject(String bucket, String object)
+ *      <li>deleteObject(String bucket, String object, generation)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -407,8 +407,8 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>getObject(String bucket)
- *      <li>getObject(String bucket)
+ *      <li>getObject(String bucket, String object)
+ *      <li>getObject(String bucket, String object, generation)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -437,7 +437,7 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>updateObject(Object object)
+ *      <li>updateObject(Object object, FieldMask updateMask)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -616,8 +616,8 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>createHmacKey(ProjectName project)
- *      <li>createHmacKey(String project)
+ *      <li>createHmacKey(ProjectName project, String serviceAccountEmail)
+ *      <li>createHmacKey(String project, String serviceAccountEmail)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -635,8 +635,8 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>deleteHmacKey(String accessId)
- *      <li>deleteHmacKey(String accessId)
+ *      <li>deleteHmacKey(String accessId, ProjectName project)
+ *      <li>deleteHmacKey(String accessId, String project)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -654,8 +654,8 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>getHmacKey(String accessId)
- *      <li>getHmacKey(String accessId)
+ *      <li>getHmacKey(String accessId, ProjectName project)
+ *      <li>getHmacKey(String accessId, String project)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -693,7 +693,7 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>updateHmacKey(HmacKeyMetadata hmacKey)
+ *      <li>updateHmacKey(HmacKeyMetadata hmacKey, FieldMask updateMask)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>

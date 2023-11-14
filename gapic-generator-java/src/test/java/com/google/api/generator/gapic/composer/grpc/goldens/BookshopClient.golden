@@ -46,8 +46,8 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>getBook(booksCount)
- *      <li>getBook(String booksList)
+ *      <li>getBook(booksCount, List<Book> books)
+ *      <li>getBook(String booksList, List<Book> books)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>

@@ -245,7 +245,7 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>searchAllResources(String scope)
+ *      <li>searchAllResources(String scope, String query, List<String> assetTypes)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -267,7 +267,7 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>searchAllIamPolicies(String scope)
+ *      <li>searchAllIamPolicies(String scope, String query)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -369,10 +369,10 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>createSavedQuery(FolderName parent)
- *      <li>createSavedQuery(OrganizationName parent)
- *      <li>createSavedQuery(ProjectName parent)
- *      <li>createSavedQuery(String parent)
+ *      <li>createSavedQuery(FolderName parent, SavedQuery savedQuery, String savedQueryId)
+ *      <li>createSavedQuery(OrganizationName parent, SavedQuery savedQuery, String savedQueryId)
+ *      <li>createSavedQuery(ProjectName parent, SavedQuery savedQuery, String savedQueryId)
+ *      <li>createSavedQuery(String parent, SavedQuery savedQuery, String savedQueryId)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -431,7 +431,7 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>updateSavedQuery(SavedQuery savedQuery)
+ *      <li>updateSavedQuery(SavedQuery savedQuery, FieldMask updateMask)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>

@@ -274,10 +274,6 @@ public class ServiceClientCommentComposer {
   private static class MethodAndVariants {
     private final String method;
     private final String description;
-    private final boolean hasFlattenedVariants;
-    private final boolean hasRequestObjectVariants;
-    private final boolean hasCallableVariants;
-    private final boolean hasAsyncVariants;
 
     private final List<String> flattenedVariants;
     private final List<String> requestObjectVariants;
@@ -289,14 +285,13 @@ public class ServiceClientCommentComposer {
       this.description = description;
       requestObjectVariants =
           methodVariants.stream().filter(s -> s.contains("request")).collect(toList());
-      hasRequestObjectVariants = methodVariants.removeAll(requestObjectVariants);
+      methodVariants.removeAll(requestObjectVariants);
       callableVariants =
           methodVariants.stream().filter(s -> s.contains("Callable")).collect(toList());
-      hasCallableVariants = methodVariants.removeAll(callableVariants);
+      methodVariants.removeAll(callableVariants);
       asyncVariants = methodVariants.stream().filter(s -> s.contains("Async")).collect(toList());
-      hasAsyncVariants = methodVariants.removeAll(asyncVariants);
+      methodVariants.removeAll(asyncVariants);
       flattenedVariants = methodVariants;
-      hasFlattenedVariants = !flattenedVariants.isEmpty();
     }
   }
 

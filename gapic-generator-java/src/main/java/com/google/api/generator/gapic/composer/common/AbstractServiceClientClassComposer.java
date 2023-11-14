@@ -579,18 +579,32 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
   }
 
   private static String getJavaMethod(MethodDefinition m) {
-    if (m.arguments().isEmpty()) {
-      return m.methodIdentifier().name() + "()";
+    StringBuilder methodSignature = new StringBuilder();
+
+    // Method name
+    methodSignature.append(m.methodIdentifier().name()).append("(");
+
+    // Iterate through and add all parameters
+    List<Variable> parameters =
+        m.arguments().stream().map(VariableExpr::variable).collect(Collectors.toList());
+
+    for (int i = 0; i < parameters.size(); i++) {
+      Variable param = parameters.get(i);
+      String paramType =
+          param.type().reference() != null ? param.type().reference().name() + " " : "";
+      String paramName = param.identifier().name();
+
+      methodSignature.append(paramType).append(paramName);
+
+      // Add a comma if there are more parameters
+      if (i < parameters.size() - 1) {
+        methodSignature.append(", ");
+      }
     }
 
-    Variable firstParam = m.arguments().get(0).variable();
-    String firstParamType =
-        firstParam.type().reference() != null ? firstParam.type().reference().name() + " " : "";
-    return m.methodIdentifier().name()
-        + "("
-        + firstParamType
-        + firstParam.identifier().name()
-        + ")";
+    methodSignature.append(")");
+
+    return methodSignature.toString();
   }
 
   private static List<MethodDefinition> createServiceMethods(

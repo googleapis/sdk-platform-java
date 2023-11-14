@@ -118,8 +118,8 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>createLogMetric(ProjectName parent)
- *      <li>createLogMetric(String parent)
+ *      <li>createLogMetric(ProjectName parent, LogMetric metric)
+ *      <li>createLogMetric(String parent, LogMetric metric)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -137,8 +137,8 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>updateLogMetric(LogMetricName metricName)
- *      <li>updateLogMetric(String metricName)
+ *      <li>updateLogMetric(LogMetricName metricName, LogMetric metric)
+ *      <li>updateLogMetric(String metricName, LogMetric metric)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>

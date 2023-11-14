@@ -94,8 +94,8 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>createSchema(ProjectName parent)
- *      <li>createSchema(String parent)
+ *      <li>createSchema(ProjectName parent, Schema schema, String schemaId)
+ *      <li>createSchema(String parent, Schema schema, String schemaId)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -172,8 +172,8 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>commitSchema(SchemaName name)
- *      <li>commitSchema(String name)
+ *      <li>commitSchema(SchemaName name, Schema schema)
+ *      <li>commitSchema(String name, Schema schema)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -191,8 +191,8 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>rollbackSchema(SchemaName name)
- *      <li>rollbackSchema(String name)
+ *      <li>rollbackSchema(SchemaName name, String revisionId)
+ *      <li>rollbackSchema(String name, String revisionId)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -210,8 +210,8 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>deleteSchemaRevision(SchemaName name)
- *      <li>deleteSchemaRevision(String name)
+ *      <li>deleteSchemaRevision(SchemaName name, String revisionId)
+ *      <li>deleteSchemaRevision(String name, String revisionId)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -248,8 +248,8 @@ import javax.annotation.Generated;
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>validateSchema(ProjectName parent)
- *      <li>validateSchema(String parent)
+ *      <li>validateSchema(ProjectName parent, Schema schema)
+ *      <li>validateSchema(String parent, Schema schema)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
