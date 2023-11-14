@@ -78,9 +78,10 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>egressCallable()
+ *           <li>egressCallable()
  *      </ul>
- *    </td>
+ *       </td>
+ *    </tr>
  *    </tr>
  *  </table>
  *

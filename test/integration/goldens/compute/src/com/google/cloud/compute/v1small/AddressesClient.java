@@ -74,18 +74,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>aggregatedList(AggregatedListAddressesRequest request)
+ *           <li>aggregatedList(AggregatedListAddressesRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>aggregatedList(String project)
+ *           <li>aggregatedList(String project)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>aggregatedListPagedCallable()
- *      <li>aggregatedListCallable()
+ *           <li>aggregatedListPagedCallable()
+ *           <li>aggregatedListCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>Delete</td>
@@ -93,18 +93,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>deleteAsync(DeleteAddressRequest request)
+ *           <li>deleteAsync(DeleteAddressRequest request)
  *      </ul>
  *      <p>Methods that return long-running operations have "Async" method variants that return `OperationFuture`, which is used to track polling of the service.</p>
  *      <ul>
- *      <li>deleteAsync(String project, String region, String address)
+ *           <li>deleteAsync(String project, String region, String address)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>deleteOperationCallable()
- *      <li>deleteCallable()
+ *           <li>deleteOperationCallable()
+ *           <li>deleteCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>Insert</td>
@@ -112,18 +112,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>insertAsync(InsertAddressRequest request)
+ *           <li>insertAsync(InsertAddressRequest request)
  *      </ul>
  *      <p>Methods that return long-running operations have "Async" method variants that return `OperationFuture`, which is used to track polling of the service.</p>
  *      <ul>
- *      <li>insertAsync(String project, String region, Address addressResource)
+ *           <li>insertAsync(String project, String region, Address addressResource)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>insertOperationCallable()
- *      <li>insertCallable()
+ *           <li>insertOperationCallable()
+ *           <li>insertCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>List</td>
@@ -131,18 +131,19 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>list(ListAddressesRequest request)
+ *           <li>list(ListAddressesRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>list(String project, String region, String orderBy)
+ *           <li>list(String project, String region, String orderBy)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>listPagedCallable()
- *      <li>listCallable()
+ *           <li>listPagedCallable()
+ *           <li>listCallable()
  *      </ul>
- *    </td>
+ *       </td>
+ *    </tr>
  *    </tr>
  *  </table>
  *

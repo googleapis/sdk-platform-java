@@ -91,13 +91,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>repeatDataBody(RepeatRequest request)
+ *           <li>repeatDataBody(RepeatRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>repeatDataBodyCallable()
+ *           <li>repeatDataBodyCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>RepeatDataBodyInfo</td>
@@ -107,13 +107,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>repeatDataBodyInfo(RepeatRequest request)
+ *           <li>repeatDataBodyInfo(RepeatRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>repeatDataBodyInfoCallable()
+ *           <li>repeatDataBodyInfoCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>RepeatDataQuery</td>
@@ -122,13 +122,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>repeatDataQuery(RepeatRequest request)
+ *           <li>repeatDataQuery(RepeatRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>repeatDataQueryCallable()
+ *           <li>repeatDataQueryCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>RepeatDataSimplePath</td>
@@ -138,13 +138,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>repeatDataSimplePath(RepeatRequest request)
+ *           <li>repeatDataSimplePath(RepeatRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>repeatDataSimplePathCallable()
+ *           <li>repeatDataSimplePathCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>RepeatDataPathResource</td>
@@ -152,13 +152,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>repeatDataPathResource(RepeatRequest request)
+ *           <li>repeatDataPathResource(RepeatRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>repeatDataPathResourceCallable()
+ *           <li>repeatDataPathResourceCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>RepeatDataPathTrailingResource</td>
@@ -166,13 +166,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>repeatDataPathTrailingResource(RepeatRequest request)
+ *           <li>repeatDataPathTrailingResource(RepeatRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>repeatDataPathTrailingResourceCallable()
+ *           <li>repeatDataPathTrailingResourceCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>RepeatDataBodyPut</td>
@@ -180,13 +180,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>repeatDataBodyPut(RepeatRequest request)
+ *           <li>repeatDataBodyPut(RepeatRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>repeatDataBodyPutCallable()
+ *           <li>repeatDataBodyPutCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>RepeatDataBodyPatch</td>
@@ -194,13 +194,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>repeatDataBodyPatch(RepeatRequest request)
+ *           <li>repeatDataBodyPatch(RepeatRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>repeatDataBodyPatchCallable()
+ *           <li>repeatDataBodyPatchCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>GetEnum</td>
@@ -213,13 +213,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>getEnum(EnumRequest request)
+ *           <li>getEnum(EnumRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>getEnumCallable()
+ *           <li>getEnumCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>VerifyEnum</td>
@@ -232,13 +232,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>verifyEnum(EnumResponse request)
+ *           <li>verifyEnum(EnumResponse request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>verifyEnumCallable()
+ *           <li>verifyEnumCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>ListLocations</td>
@@ -246,14 +246,14 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>listLocations(ListLocationsRequest request)
+ *           <li>listLocations(ListLocationsRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>listLocationsPagedCallable()
- *      <li>listLocationsCallable()
+ *           <li>listLocationsPagedCallable()
+ *           <li>listLocationsCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>GetLocation</td>
@@ -261,13 +261,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>getLocation(GetLocationRequest request)
+ *           <li>getLocation(GetLocationRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>getLocationCallable()
+ *           <li>getLocationCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>SetIamPolicy</td>
@@ -278,13 +278,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>setIamPolicy(SetIamPolicyRequest request)
+ *           <li>setIamPolicy(SetIamPolicyRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>setIamPolicyCallable()
+ *           <li>setIamPolicyCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>GetIamPolicy</td>
@@ -294,13 +294,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>getIamPolicy(GetIamPolicyRequest request)
+ *           <li>getIamPolicy(GetIamPolicyRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>getIamPolicyCallable()
+ *           <li>getIamPolicyCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>TestIamPermissions</td>
@@ -314,13 +314,14 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>testIamPermissions(TestIamPermissionsRequest request)
+ *           <li>testIamPermissions(TestIamPermissionsRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>testIamPermissionsCallable()
+ *           <li>testIamPermissionsCallable()
  *      </ul>
- *    </td>
+ *       </td>
+ *    </tr>
  *    </tr>
  *  </table>
  *

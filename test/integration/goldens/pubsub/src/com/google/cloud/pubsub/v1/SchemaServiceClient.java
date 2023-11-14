@@ -90,18 +90,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>createSchema(CreateSchemaRequest request)
+ *           <li>createSchema(CreateSchemaRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>createSchema(ProjectName parent, Schema schema, String schemaId)
- *      <li>createSchema(String parent, Schema schema, String schemaId)
+ *           <li>createSchema(ProjectName parent, Schema schema, String schemaId)
+ *           <li>createSchema(String parent, Schema schema, String schemaId)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>createSchemaCallable()
+ *           <li>createSchemaCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>GetSchema</td>
@@ -109,18 +109,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>getSchema(GetSchemaRequest request)
+ *           <li>getSchema(GetSchemaRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>getSchema(SchemaName name)
- *      <li>getSchema(String name)
+ *           <li>getSchema(SchemaName name)
+ *           <li>getSchema(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>getSchemaCallable()
+ *           <li>getSchemaCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>ListSchemas</td>
@@ -128,19 +128,19 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>listSchemas(ListSchemasRequest request)
+ *           <li>listSchemas(ListSchemasRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>listSchemas(ProjectName parent)
- *      <li>listSchemas(String parent)
+ *           <li>listSchemas(ProjectName parent)
+ *           <li>listSchemas(String parent)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>listSchemasPagedCallable()
- *      <li>listSchemasCallable()
+ *           <li>listSchemasPagedCallable()
+ *           <li>listSchemasCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>ListSchemaRevisions</td>
@@ -148,19 +148,19 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>listSchemaRevisions(ListSchemaRevisionsRequest request)
+ *           <li>listSchemaRevisions(ListSchemaRevisionsRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>listSchemaRevisions(SchemaName name)
- *      <li>listSchemaRevisions(String name)
+ *           <li>listSchemaRevisions(SchemaName name)
+ *           <li>listSchemaRevisions(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>listSchemaRevisionsPagedCallable()
- *      <li>listSchemaRevisionsCallable()
+ *           <li>listSchemaRevisionsPagedCallable()
+ *           <li>listSchemaRevisionsCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>CommitSchema</td>
@@ -168,18 +168,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>commitSchema(CommitSchemaRequest request)
+ *           <li>commitSchema(CommitSchemaRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>commitSchema(SchemaName name, Schema schema)
- *      <li>commitSchema(String name, Schema schema)
+ *           <li>commitSchema(SchemaName name, Schema schema)
+ *           <li>commitSchema(String name, Schema schema)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>commitSchemaCallable()
+ *           <li>commitSchemaCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>RollbackSchema</td>
@@ -187,18 +187,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>rollbackSchema(RollbackSchemaRequest request)
+ *           <li>rollbackSchema(RollbackSchemaRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>rollbackSchema(SchemaName name, String revisionId)
- *      <li>rollbackSchema(String name, String revisionId)
+ *           <li>rollbackSchema(SchemaName name, String revisionId)
+ *           <li>rollbackSchema(String name, String revisionId)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>rollbackSchemaCallable()
+ *           <li>rollbackSchemaCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>DeleteSchemaRevision</td>
@@ -206,18 +206,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>deleteSchemaRevision(DeleteSchemaRevisionRequest request)
+ *           <li>deleteSchemaRevision(DeleteSchemaRevisionRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>deleteSchemaRevision(SchemaName name, String revisionId)
- *      <li>deleteSchemaRevision(String name, String revisionId)
+ *           <li>deleteSchemaRevision(SchemaName name, String revisionId)
+ *           <li>deleteSchemaRevision(String name, String revisionId)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>deleteSchemaRevisionCallable()
+ *           <li>deleteSchemaRevisionCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>DeleteSchema</td>
@@ -225,18 +225,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>deleteSchema(DeleteSchemaRequest request)
+ *           <li>deleteSchema(DeleteSchemaRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>deleteSchema(SchemaName name)
- *      <li>deleteSchema(String name)
+ *           <li>deleteSchema(SchemaName name)
+ *           <li>deleteSchema(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>deleteSchemaCallable()
+ *           <li>deleteSchemaCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>ValidateSchema</td>
@@ -244,18 +244,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>validateSchema(ValidateSchemaRequest request)
+ *           <li>validateSchema(ValidateSchemaRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>validateSchema(ProjectName parent, Schema schema)
- *      <li>validateSchema(String parent, Schema schema)
+ *           <li>validateSchema(ProjectName parent, Schema schema)
+ *           <li>validateSchema(String parent, Schema schema)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>validateSchemaCallable()
+ *           <li>validateSchemaCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>ValidateMessage</td>
@@ -263,13 +263,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>validateMessage(ValidateMessageRequest request)
+ *           <li>validateMessage(ValidateMessageRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>validateMessageCallable()
+ *           <li>validateMessageCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>SetIamPolicy</td>
@@ -281,13 +281,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>setIamPolicy(SetIamPolicyRequest request)
+ *           <li>setIamPolicy(SetIamPolicyRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>setIamPolicyCallable()
+ *           <li>setIamPolicyCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>GetIamPolicy</td>
@@ -296,13 +296,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>getIamPolicy(GetIamPolicyRequest request)
+ *           <li>getIamPolicy(GetIamPolicyRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>getIamPolicyCallable()
+ *           <li>getIamPolicyCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>TestIamPermissions</td>
@@ -316,13 +316,14 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>testIamPermissions(TestIamPermissionsRequest request)
+ *           <li>testIamPermissions(TestIamPermissionsRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>testIamPermissionsCallable()
+ *           <li>testIamPermissionsCallable()
  *      </ul>
- *    </td>
+ *       </td>
+ *    </tr>
  *    </tr>
  *  </table>
  *

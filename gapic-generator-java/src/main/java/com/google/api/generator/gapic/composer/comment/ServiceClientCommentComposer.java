@@ -251,9 +251,9 @@ public class ServiceClientCommentComposer {
           tableBuilder, FLATTENED_METHODS, method.flattenedVariants);
       generateUnorderedListMethodVariants(tableBuilder, ASYNC_METHODS, method.asyncVariants);
       generateUnorderedListMethodVariants(tableBuilder, CALLABLE_METHODS, method.callableVariants);
-      tableBuilder.append("   </td>\n").append("   </tr>\n");
+      tableBuilder.append("      </td>\n").append("   </tr>\n");
     }
-    tableBuilder.append(" </table>\n");
+    tableBuilder.append("   </tr>\n").append(" </table>\n");
     return tableBuilder.toString();
   }
 
@@ -263,8 +263,8 @@ public class ServiceClientCommentComposer {
       tableBuilder
           .append("     " + methodType + "     ")
           .append("<ul>\n")
-          .append("     <li>")
-          .append(String.join("\n     <li>", methodVariants))
+          .append("          <li>")
+          .append(String.join("\n          <li>", methodVariants))
           .append("\n")
           .append("     </ul>")
           .append("\n");
@@ -273,6 +273,8 @@ public class ServiceClientCommentComposer {
 
   private static class MethodAndVariants {
     private final String method;
+    // Description may be empty. It comes from the proto comments above the method. If it is empty,
+    // then nothing will be displayed.
     private final String description;
 
     private final List<String> flattenedVariants;
@@ -285,6 +287,8 @@ public class ServiceClientCommentComposer {
       this.description = description;
       requestObjectVariants =
           methodVariants.stream().filter(s -> s.contains("request")).collect(toList());
+      // Flattened method variants do not have a suffix, so the easiest way to identify them is by
+      // removing all other method variant types.
       methodVariants.removeAll(requestObjectVariants);
       callableVariants =
           methodVariants.stream().filter(s -> s.contains("Callable")).collect(toList());

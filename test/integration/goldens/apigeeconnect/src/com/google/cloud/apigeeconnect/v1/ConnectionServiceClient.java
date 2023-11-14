@@ -69,19 +69,20 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>listConnections(ListConnectionsRequest request)
+ *           <li>listConnections(ListConnectionsRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>listConnections(EndpointName parent)
- *      <li>listConnections(String parent)
+ *           <li>listConnections(EndpointName parent)
+ *           <li>listConnections(String parent)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>listConnectionsPagedCallable()
- *      <li>listConnectionsCallable()
+ *           <li>listConnectionsPagedCallable()
+ *           <li>listConnectionsCallable()
  *      </ul>
- *    </td>
+ *       </td>
+ *    </tr>
  *    </tr>
  *  </table>
  *

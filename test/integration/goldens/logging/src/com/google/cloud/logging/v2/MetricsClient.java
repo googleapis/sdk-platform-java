@@ -75,19 +75,19 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>listLogMetrics(ListLogMetricsRequest request)
+ *           <li>listLogMetrics(ListLogMetricsRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>listLogMetrics(ProjectName parent)
- *      <li>listLogMetrics(String parent)
+ *           <li>listLogMetrics(ProjectName parent)
+ *           <li>listLogMetrics(String parent)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>listLogMetricsPagedCallable()
- *      <li>listLogMetricsCallable()
+ *           <li>listLogMetricsPagedCallable()
+ *           <li>listLogMetricsCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>GetLogMetric</td>
@@ -95,18 +95,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>getLogMetric(GetLogMetricRequest request)
+ *           <li>getLogMetric(GetLogMetricRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>getLogMetric(LogMetricName metricName)
- *      <li>getLogMetric(String metricName)
+ *           <li>getLogMetric(LogMetricName metricName)
+ *           <li>getLogMetric(String metricName)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>getLogMetricCallable()
+ *           <li>getLogMetricCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>CreateLogMetric</td>
@@ -114,18 +114,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>createLogMetric(CreateLogMetricRequest request)
+ *           <li>createLogMetric(CreateLogMetricRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>createLogMetric(ProjectName parent, LogMetric metric)
- *      <li>createLogMetric(String parent, LogMetric metric)
+ *           <li>createLogMetric(ProjectName parent, LogMetric metric)
+ *           <li>createLogMetric(String parent, LogMetric metric)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>createLogMetricCallable()
+ *           <li>createLogMetricCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>UpdateLogMetric</td>
@@ -133,18 +133,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>updateLogMetric(UpdateLogMetricRequest request)
+ *           <li>updateLogMetric(UpdateLogMetricRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>updateLogMetric(LogMetricName metricName, LogMetric metric)
- *      <li>updateLogMetric(String metricName, LogMetric metric)
+ *           <li>updateLogMetric(LogMetricName metricName, LogMetric metric)
+ *           <li>updateLogMetric(String metricName, LogMetric metric)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>updateLogMetricCallable()
+ *           <li>updateLogMetricCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>DeleteLogMetric</td>
@@ -152,18 +152,19 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>deleteLogMetric(DeleteLogMetricRequest request)
+ *           <li>deleteLogMetric(DeleteLogMetricRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>deleteLogMetric(LogMetricName metricName)
- *      <li>deleteLogMetric(String metricName)
+ *           <li>deleteLogMetric(LogMetricName metricName)
+ *           <li>deleteLogMetric(String metricName)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>deleteLogMetricCallable()
+ *           <li>deleteLogMetricCallable()
  *      </ul>
- *    </td>
+ *       </td>
+ *    </tr>
  *    </tr>
  *  </table>
  *

@@ -91,19 +91,19 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>listKeyRings(ListKeyRingsRequest request)
+ *           <li>listKeyRings(ListKeyRingsRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>listKeyRings(LocationName parent)
- *      <li>listKeyRings(String parent)
+ *           <li>listKeyRings(LocationName parent)
+ *           <li>listKeyRings(String parent)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>listKeyRingsPagedCallable()
- *      <li>listKeyRingsCallable()
+ *           <li>listKeyRingsPagedCallable()
+ *           <li>listKeyRingsCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>ListCryptoKeys</td>
@@ -111,19 +111,19 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>listCryptoKeys(ListCryptoKeysRequest request)
+ *           <li>listCryptoKeys(ListCryptoKeysRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>listCryptoKeys(KeyRingName parent)
- *      <li>listCryptoKeys(String parent)
+ *           <li>listCryptoKeys(KeyRingName parent)
+ *           <li>listCryptoKeys(String parent)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>listCryptoKeysPagedCallable()
- *      <li>listCryptoKeysCallable()
+ *           <li>listCryptoKeysPagedCallable()
+ *           <li>listCryptoKeysCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>ListCryptoKeyVersions</td>
@@ -131,19 +131,19 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>listCryptoKeyVersions(ListCryptoKeyVersionsRequest request)
+ *           <li>listCryptoKeyVersions(ListCryptoKeyVersionsRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>listCryptoKeyVersions(CryptoKeyName parent)
- *      <li>listCryptoKeyVersions(String parent)
+ *           <li>listCryptoKeyVersions(CryptoKeyName parent)
+ *           <li>listCryptoKeyVersions(String parent)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>listCryptoKeyVersionsPagedCallable()
- *      <li>listCryptoKeyVersionsCallable()
+ *           <li>listCryptoKeyVersionsPagedCallable()
+ *           <li>listCryptoKeyVersionsCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>ListImportJobs</td>
@@ -151,19 +151,19 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>listImportJobs(ListImportJobsRequest request)
+ *           <li>listImportJobs(ListImportJobsRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>listImportJobs(KeyRingName parent)
- *      <li>listImportJobs(String parent)
+ *           <li>listImportJobs(KeyRingName parent)
+ *           <li>listImportJobs(String parent)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>listImportJobsPagedCallable()
- *      <li>listImportJobsCallable()
+ *           <li>listImportJobsPagedCallable()
+ *           <li>listImportJobsCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>GetKeyRing</td>
@@ -171,18 +171,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>getKeyRing(GetKeyRingRequest request)
+ *           <li>getKeyRing(GetKeyRingRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>getKeyRing(KeyRingName name)
- *      <li>getKeyRing(String name)
+ *           <li>getKeyRing(KeyRingName name)
+ *           <li>getKeyRing(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>getKeyRingCallable()
+ *           <li>getKeyRingCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>GetCryptoKey</td>
@@ -192,18 +192,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>getCryptoKey(GetCryptoKeyRequest request)
+ *           <li>getCryptoKey(GetCryptoKeyRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>getCryptoKey(CryptoKeyName name)
- *      <li>getCryptoKey(String name)
+ *           <li>getCryptoKey(CryptoKeyName name)
+ *           <li>getCryptoKey(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>getCryptoKeyCallable()
+ *           <li>getCryptoKeyCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>GetCryptoKeyVersion</td>
@@ -212,18 +212,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>getCryptoKeyVersion(GetCryptoKeyVersionRequest request)
+ *           <li>getCryptoKeyVersion(GetCryptoKeyVersionRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>getCryptoKeyVersion(CryptoKeyVersionName name)
- *      <li>getCryptoKeyVersion(String name)
+ *           <li>getCryptoKeyVersion(CryptoKeyVersionName name)
+ *           <li>getCryptoKeyVersion(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>getCryptoKeyVersionCallable()
+ *           <li>getCryptoKeyVersionCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>GetPublicKey</td>
@@ -236,18 +236,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>getPublicKey(GetPublicKeyRequest request)
+ *           <li>getPublicKey(GetPublicKeyRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>getPublicKey(CryptoKeyVersionName name)
- *      <li>getPublicKey(String name)
+ *           <li>getPublicKey(CryptoKeyVersionName name)
+ *           <li>getPublicKey(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>getPublicKeyCallable()
+ *           <li>getPublicKeyCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>GetImportJob</td>
@@ -255,18 +255,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>getImportJob(GetImportJobRequest request)
+ *           <li>getImportJob(GetImportJobRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>getImportJob(ImportJobName name)
- *      <li>getImportJob(String name)
+ *           <li>getImportJob(ImportJobName name)
+ *           <li>getImportJob(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>getImportJobCallable()
+ *           <li>getImportJobCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>CreateKeyRing</td>
@@ -275,18 +275,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>createKeyRing(CreateKeyRingRequest request)
+ *           <li>createKeyRing(CreateKeyRingRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>createKeyRing(LocationName parent, String keyRingId, KeyRing keyRing)
- *      <li>createKeyRing(String parent, String keyRingId, KeyRing keyRing)
+ *           <li>createKeyRing(LocationName parent, String keyRingId, KeyRing keyRing)
+ *           <li>createKeyRing(String parent, String keyRingId, KeyRing keyRing)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>createKeyRingCallable()
+ *           <li>createKeyRingCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>CreateCryptoKey</td>
@@ -299,18 +299,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>createCryptoKey(CreateCryptoKeyRequest request)
+ *           <li>createCryptoKey(CreateCryptoKeyRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>createCryptoKey(KeyRingName parent, String cryptoKeyId, CryptoKey cryptoKey)
- *      <li>createCryptoKey(String parent, String cryptoKeyId, CryptoKey cryptoKey)
+ *           <li>createCryptoKey(KeyRingName parent, String cryptoKeyId, CryptoKey cryptoKey)
+ *           <li>createCryptoKey(String parent, String cryptoKeyId, CryptoKey cryptoKey)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>createCryptoKeyCallable()
+ *           <li>createCryptoKeyCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>CreateCryptoKeyVersion</td>
@@ -323,18 +323,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>createCryptoKeyVersion(CreateCryptoKeyVersionRequest request)
+ *           <li>createCryptoKeyVersion(CreateCryptoKeyVersionRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>createCryptoKeyVersion(CryptoKeyName parent, CryptoKeyVersion cryptoKeyVersion)
- *      <li>createCryptoKeyVersion(String parent, CryptoKeyVersion cryptoKeyVersion)
+ *           <li>createCryptoKeyVersion(CryptoKeyName parent, CryptoKeyVersion cryptoKeyVersion)
+ *           <li>createCryptoKeyVersion(String parent, CryptoKeyVersion cryptoKeyVersion)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>createCryptoKeyVersionCallable()
+ *           <li>createCryptoKeyVersionCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>ImportCryptoKeyVersion</td>
@@ -347,13 +347,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>importCryptoKeyVersion(ImportCryptoKeyVersionRequest request)
+ *           <li>importCryptoKeyVersion(ImportCryptoKeyVersionRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>importCryptoKeyVersionCallable()
+ *           <li>importCryptoKeyVersionCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>CreateImportJob</td>
@@ -365,18 +365,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>createImportJob(CreateImportJobRequest request)
+ *           <li>createImportJob(CreateImportJobRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>createImportJob(KeyRingName parent, String importJobId, ImportJob importJob)
- *      <li>createImportJob(String parent, String importJobId, ImportJob importJob)
+ *           <li>createImportJob(KeyRingName parent, String importJobId, ImportJob importJob)
+ *           <li>createImportJob(String parent, String importJobId, ImportJob importJob)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>createImportJobCallable()
+ *           <li>createImportJobCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>UpdateCryptoKey</td>
@@ -384,17 +384,17 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>updateCryptoKey(UpdateCryptoKeyRequest request)
+ *           <li>updateCryptoKey(UpdateCryptoKeyRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>updateCryptoKey(CryptoKey cryptoKey, FieldMask updateMask)
+ *           <li>updateCryptoKey(CryptoKey cryptoKey, FieldMask updateMask)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>updateCryptoKeyCallable()
+ *           <li>updateCryptoKeyCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>UpdateCryptoKeyVersion</td>
@@ -413,17 +413,17 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>updateCryptoKeyVersion(UpdateCryptoKeyVersionRequest request)
+ *           <li>updateCryptoKeyVersion(UpdateCryptoKeyVersionRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>updateCryptoKeyVersion(CryptoKeyVersion cryptoKeyVersion, FieldMask updateMask)
+ *           <li>updateCryptoKeyVersion(CryptoKeyVersion cryptoKeyVersion, FieldMask updateMask)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>updateCryptoKeyVersionCallable()
+ *           <li>updateCryptoKeyVersionCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>Encrypt</td>
@@ -434,18 +434,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>encrypt(EncryptRequest request)
+ *           <li>encrypt(EncryptRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>encrypt(ResourceName name, ByteString plaintext)
- *      <li>encrypt(String name, ByteString plaintext)
+ *           <li>encrypt(ResourceName name, ByteString plaintext)
+ *           <li>encrypt(String name, ByteString plaintext)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>encryptCallable()
+ *           <li>encryptCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>Decrypt</td>
@@ -456,18 +456,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>decrypt(DecryptRequest request)
+ *           <li>decrypt(DecryptRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>decrypt(CryptoKeyName name, ByteString ciphertext)
- *      <li>decrypt(String name, ByteString ciphertext)
+ *           <li>decrypt(CryptoKeyName name, ByteString ciphertext)
+ *           <li>decrypt(String name, ByteString ciphertext)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>decryptCallable()
+ *           <li>decryptCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>AsymmetricSign</td>
@@ -479,18 +479,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>asymmetricSign(AsymmetricSignRequest request)
+ *           <li>asymmetricSign(AsymmetricSignRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>asymmetricSign(CryptoKeyVersionName name, Digest digest)
- *      <li>asymmetricSign(String name, Digest digest)
+ *           <li>asymmetricSign(CryptoKeyVersionName name, Digest digest)
+ *           <li>asymmetricSign(String name, Digest digest)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>asymmetricSignCallable()
+ *           <li>asymmetricSignCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>AsymmetricDecrypt</td>
@@ -502,18 +502,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>asymmetricDecrypt(AsymmetricDecryptRequest request)
+ *           <li>asymmetricDecrypt(AsymmetricDecryptRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>asymmetricDecrypt(CryptoKeyVersionName name, ByteString ciphertext)
- *      <li>asymmetricDecrypt(String name, ByteString ciphertext)
+ *           <li>asymmetricDecrypt(CryptoKeyVersionName name, ByteString ciphertext)
+ *           <li>asymmetricDecrypt(String name, ByteString ciphertext)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>asymmetricDecryptCallable()
+ *           <li>asymmetricDecryptCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>UpdateCryptoKeyPrimaryVersion</td>
@@ -525,18 +525,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>updateCryptoKeyPrimaryVersion(UpdateCryptoKeyPrimaryVersionRequest request)
+ *           <li>updateCryptoKeyPrimaryVersion(UpdateCryptoKeyPrimaryVersionRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>updateCryptoKeyPrimaryVersion(CryptoKeyName name, String cryptoKeyVersionId)
- *      <li>updateCryptoKeyPrimaryVersion(String name, String cryptoKeyVersionId)
+ *           <li>updateCryptoKeyPrimaryVersion(CryptoKeyName name, String cryptoKeyVersionId)
+ *           <li>updateCryptoKeyPrimaryVersion(String name, String cryptoKeyVersionId)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>updateCryptoKeyPrimaryVersionCallable()
+ *           <li>updateCryptoKeyPrimaryVersionCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>DestroyCryptoKeyVersion</td>
@@ -561,18 +561,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>destroyCryptoKeyVersion(DestroyCryptoKeyVersionRequest request)
+ *           <li>destroyCryptoKeyVersion(DestroyCryptoKeyVersionRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>destroyCryptoKeyVersion(CryptoKeyVersionName name)
- *      <li>destroyCryptoKeyVersion(String name)
+ *           <li>destroyCryptoKeyVersion(CryptoKeyVersionName name)
+ *           <li>destroyCryptoKeyVersion(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>destroyCryptoKeyVersionCallable()
+ *           <li>destroyCryptoKeyVersionCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>RestoreCryptoKeyVersion</td>
@@ -588,18 +588,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>restoreCryptoKeyVersion(RestoreCryptoKeyVersionRequest request)
+ *           <li>restoreCryptoKeyVersion(RestoreCryptoKeyVersionRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>restoreCryptoKeyVersion(CryptoKeyVersionName name)
- *      <li>restoreCryptoKeyVersion(String name)
+ *           <li>restoreCryptoKeyVersion(CryptoKeyVersionName name)
+ *           <li>restoreCryptoKeyVersion(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>restoreCryptoKeyVersionCallable()
+ *           <li>restoreCryptoKeyVersionCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>GetIamPolicy</td>
@@ -609,13 +609,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>getIamPolicy(GetIamPolicyRequest request)
+ *           <li>getIamPolicy(GetIamPolicyRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>getIamPolicyCallable()
+ *           <li>getIamPolicyCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>ListLocations</td>
@@ -623,14 +623,14 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>listLocations(ListLocationsRequest request)
+ *           <li>listLocations(ListLocationsRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>listLocationsPagedCallable()
- *      <li>listLocationsCallable()
+ *           <li>listLocationsPagedCallable()
+ *           <li>listLocationsCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>GetLocation</td>
@@ -638,13 +638,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>getLocation(GetLocationRequest request)
+ *           <li>getLocation(GetLocationRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>getLocationCallable()
+ *           <li>getLocationCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>TestIamPermissions</td>
@@ -652,13 +652,14 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>testIamPermissions(TestIamPermissionsRequest request)
+ *           <li>testIamPermissions(TestIamPermissionsRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>testIamPermissionsCallable()
+ *           <li>testIamPermissionsCallable()
  *      </ul>
- *    </td>
+ *       </td>
+ *    </tr>
  *    </tr>
  *  </table>
  *

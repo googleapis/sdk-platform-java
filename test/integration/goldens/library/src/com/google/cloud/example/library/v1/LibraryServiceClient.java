@@ -91,17 +91,17 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>createShelf(CreateShelfRequest request)
+ *           <li>createShelf(CreateShelfRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>createShelf(Shelf shelf)
+ *           <li>createShelf(Shelf shelf)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>createShelfCallable()
+ *           <li>createShelfCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>GetShelf</td>
@@ -109,18 +109,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>getShelf(GetShelfRequest request)
+ *           <li>getShelf(GetShelfRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>getShelf(ShelfName name)
- *      <li>getShelf(String name)
+ *           <li>getShelf(ShelfName name)
+ *           <li>getShelf(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>getShelfCallable()
+ *           <li>getShelfCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>ListShelves</td>
@@ -129,14 +129,14 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>listShelves(ListShelvesRequest request)
+ *           <li>listShelves(ListShelvesRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>listShelvesPagedCallable()
- *      <li>listShelvesCallable()
+ *           <li>listShelvesPagedCallable()
+ *           <li>listShelvesCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>DeleteShelf</td>
@@ -144,18 +144,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>deleteShelf(DeleteShelfRequest request)
+ *           <li>deleteShelf(DeleteShelfRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>deleteShelf(ShelfName name)
- *      <li>deleteShelf(String name)
+ *           <li>deleteShelf(ShelfName name)
+ *           <li>deleteShelf(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>deleteShelfCallable()
+ *           <li>deleteShelfCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>MergeShelves</td>
@@ -169,20 +169,20 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>mergeShelves(MergeShelvesRequest request)
+ *           <li>mergeShelves(MergeShelvesRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>mergeShelves(ShelfName name, ShelfName otherShelf)
- *      <li>mergeShelves(ShelfName name, String otherShelf)
- *      <li>mergeShelves(String name, ShelfName otherShelf)
- *      <li>mergeShelves(String name, String otherShelf)
+ *           <li>mergeShelves(ShelfName name, ShelfName otherShelf)
+ *           <li>mergeShelves(ShelfName name, String otherShelf)
+ *           <li>mergeShelves(String name, ShelfName otherShelf)
+ *           <li>mergeShelves(String name, String otherShelf)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>mergeShelvesCallable()
+ *           <li>mergeShelvesCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>CreateBook</td>
@@ -190,18 +190,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>createBook(CreateBookRequest request)
+ *           <li>createBook(CreateBookRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>createBook(ShelfName parent, Book book)
- *      <li>createBook(String parent, Book book)
+ *           <li>createBook(ShelfName parent, Book book)
+ *           <li>createBook(String parent, Book book)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>createBookCallable()
+ *           <li>createBookCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>GetBook</td>
@@ -209,18 +209,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>getBook(GetBookRequest request)
+ *           <li>getBook(GetBookRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>getBook(BookName name)
- *      <li>getBook(String name)
+ *           <li>getBook(BookName name)
+ *           <li>getBook(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>getBookCallable()
+ *           <li>getBookCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>ListBooks</td>
@@ -230,19 +230,19 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>listBooks(ListBooksRequest request)
+ *           <li>listBooks(ListBooksRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>listBooks(ShelfName parent)
- *      <li>listBooks(String parent)
+ *           <li>listBooks(ShelfName parent)
+ *           <li>listBooks(String parent)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>listBooksPagedCallable()
- *      <li>listBooksCallable()
+ *           <li>listBooksPagedCallable()
+ *           <li>listBooksCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>DeleteBook</td>
@@ -250,18 +250,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>deleteBook(DeleteBookRequest request)
+ *           <li>deleteBook(DeleteBookRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>deleteBook(BookName name)
- *      <li>deleteBook(String name)
+ *           <li>deleteBook(BookName name)
+ *           <li>deleteBook(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>deleteBookCallable()
+ *           <li>deleteBookCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>UpdateBook</td>
@@ -270,17 +270,17 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>updateBook(UpdateBookRequest request)
+ *           <li>updateBook(UpdateBookRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>updateBook(Book book, FieldMask updateMask)
+ *           <li>updateBook(Book book, FieldMask updateMask)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>updateBookCallable()
+ *           <li>updateBookCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>MoveBook</td>
@@ -289,20 +289,21 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>moveBook(MoveBookRequest request)
+ *           <li>moveBook(MoveBookRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>moveBook(BookName name, ShelfName otherShelfName)
- *      <li>moveBook(BookName name, String otherShelfName)
- *      <li>moveBook(String name, ShelfName otherShelfName)
- *      <li>moveBook(String name, String otherShelfName)
+ *           <li>moveBook(BookName name, ShelfName otherShelfName)
+ *           <li>moveBook(BookName name, String otherShelfName)
+ *           <li>moveBook(String name, ShelfName otherShelfName)
+ *           <li>moveBook(String name, String otherShelfName)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>moveBookCallable()
+ *           <li>moveBookCallable()
  *      </ul>
- *    </td>
+ *       </td>
+ *    </tr>
  *    </tr>
  *  </table>
  *

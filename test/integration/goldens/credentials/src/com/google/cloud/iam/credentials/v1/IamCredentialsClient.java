@@ -71,18 +71,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>generateAccessToken(GenerateAccessTokenRequest request)
+ *           <li>generateAccessToken(GenerateAccessTokenRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>generateAccessToken(ServiceAccountName name, List<String> delegates, List<String> scope, Duration lifetime)
- *      <li>generateAccessToken(String name, List<String> delegates, List<String> scope, Duration lifetime)
+ *           <li>generateAccessToken(ServiceAccountName name, List<String> delegates, List<String> scope, Duration lifetime)
+ *           <li>generateAccessToken(String name, List<String> delegates, List<String> scope, Duration lifetime)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>generateAccessTokenCallable()
+ *           <li>generateAccessTokenCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>GenerateIdToken</td>
@@ -90,18 +90,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>generateIdToken(GenerateIdTokenRequest request)
+ *           <li>generateIdToken(GenerateIdTokenRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>generateIdToken(ServiceAccountName name, List<String> delegates, String audience, includeEmail)
- *      <li>generateIdToken(String name, List<String> delegates, String audience, includeEmail)
+ *           <li>generateIdToken(ServiceAccountName name, List<String> delegates, String audience, boolean includeEmail)
+ *           <li>generateIdToken(String name, List<String> delegates, String audience, boolean includeEmail)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>generateIdTokenCallable()
+ *           <li>generateIdTokenCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>SignBlob</td>
@@ -109,18 +109,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>signBlob(SignBlobRequest request)
+ *           <li>signBlob(SignBlobRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>signBlob(ServiceAccountName name, List<String> delegates, ByteString payload)
- *      <li>signBlob(String name, List<String> delegates, ByteString payload)
+ *           <li>signBlob(ServiceAccountName name, List<String> delegates, ByteString payload)
+ *           <li>signBlob(String name, List<String> delegates, ByteString payload)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>signBlobCallable()
+ *           <li>signBlobCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>SignJwt</td>
@@ -128,18 +128,19 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>signJwt(SignJwtRequest request)
+ *           <li>signJwt(SignJwtRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>signJwt(ServiceAccountName name, List<String> delegates, String payload)
- *      <li>signJwt(String name, List<String> delegates, String payload)
+ *           <li>signJwt(ServiceAccountName name, List<String> delegates, String payload)
+ *           <li>signJwt(String name, List<String> delegates, String payload)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>signJwtCallable()
+ *           <li>signJwtCallable()
  *      </ul>
- *    </td>
+ *       </td>
+ *    </tr>
  *    </tr>
  *  </table>
  *

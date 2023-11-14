@@ -101,19 +101,19 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>listInstances(ListInstancesRequest request)
+ *           <li>listInstances(ListInstancesRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>listInstances(LocationName parent)
- *      <li>listInstances(String parent)
+ *           <li>listInstances(LocationName parent)
+ *           <li>listInstances(String parent)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>listInstancesPagedCallable()
- *      <li>listInstancesCallable()
+ *           <li>listInstancesPagedCallable()
+ *           <li>listInstancesCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>GetInstance</td>
@@ -121,18 +121,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>getInstance(GetInstanceRequest request)
+ *           <li>getInstance(GetInstanceRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>getInstance(InstanceName name)
- *      <li>getInstance(String name)
+ *           <li>getInstance(InstanceName name)
+ *           <li>getInstance(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>getInstanceCallable()
+ *           <li>getInstanceCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>GetInstanceAuthString</td>
@@ -142,18 +142,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>getInstanceAuthString(GetInstanceAuthStringRequest request)
+ *           <li>getInstanceAuthString(GetInstanceAuthStringRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>getInstanceAuthString(InstanceName name)
- *      <li>getInstanceAuthString(String name)
+ *           <li>getInstanceAuthString(InstanceName name)
+ *           <li>getInstanceAuthString(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>getInstanceAuthStringCallable()
+ *           <li>getInstanceAuthStringCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>CreateInstance</td>
@@ -172,19 +172,19 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>createInstanceAsync(CreateInstanceRequest request)
+ *           <li>createInstanceAsync(CreateInstanceRequest request)
  *      </ul>
  *      <p>Methods that return long-running operations have "Async" method variants that return `OperationFuture`, which is used to track polling of the service.</p>
  *      <ul>
- *      <li>createInstanceAsync(LocationName parent, String instanceId, Instance instance)
- *      <li>createInstanceAsync(String parent, String instanceId, Instance instance)
+ *           <li>createInstanceAsync(LocationName parent, String instanceId, Instance instance)
+ *           <li>createInstanceAsync(String parent, String instanceId, Instance instance)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>createInstanceOperationCallable()
- *      <li>createInstanceCallable()
+ *           <li>createInstanceOperationCallable()
+ *           <li>createInstanceCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>UpdateInstance</td>
@@ -196,18 +196,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>updateInstanceAsync(UpdateInstanceRequest request)
+ *           <li>updateInstanceAsync(UpdateInstanceRequest request)
  *      </ul>
  *      <p>Methods that return long-running operations have "Async" method variants that return `OperationFuture`, which is used to track polling of the service.</p>
  *      <ul>
- *      <li>updateInstanceAsync(FieldMask updateMask, Instance instance)
+ *           <li>updateInstanceAsync(FieldMask updateMask, Instance instance)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>updateInstanceOperationCallable()
- *      <li>updateInstanceCallable()
+ *           <li>updateInstanceOperationCallable()
+ *           <li>updateInstanceCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>UpgradeInstance</td>
@@ -216,19 +216,19 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>upgradeInstanceAsync(UpgradeInstanceRequest request)
+ *           <li>upgradeInstanceAsync(UpgradeInstanceRequest request)
  *      </ul>
  *      <p>Methods that return long-running operations have "Async" method variants that return `OperationFuture`, which is used to track polling of the service.</p>
  *      <ul>
- *      <li>upgradeInstanceAsync(InstanceName name, String redisVersion)
- *      <li>upgradeInstanceAsync(String name, String redisVersion)
+ *           <li>upgradeInstanceAsync(InstanceName name, String redisVersion)
+ *           <li>upgradeInstanceAsync(String name, String redisVersion)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>upgradeInstanceOperationCallable()
- *      <li>upgradeInstanceCallable()
+ *           <li>upgradeInstanceOperationCallable()
+ *           <li>upgradeInstanceCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>ImportInstance</td>
@@ -243,18 +243,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>importInstanceAsync(ImportInstanceRequest request)
+ *           <li>importInstanceAsync(ImportInstanceRequest request)
  *      </ul>
  *      <p>Methods that return long-running operations have "Async" method variants that return `OperationFuture`, which is used to track polling of the service.</p>
  *      <ul>
- *      <li>importInstanceAsync(String name, InputConfig inputConfig)
+ *           <li>importInstanceAsync(String name, InputConfig inputConfig)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>importInstanceOperationCallable()
- *      <li>importInstanceCallable()
+ *           <li>importInstanceOperationCallable()
+ *           <li>importInstanceCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>ExportInstance</td>
@@ -267,18 +267,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>exportInstanceAsync(ExportInstanceRequest request)
+ *           <li>exportInstanceAsync(ExportInstanceRequest request)
  *      </ul>
  *      <p>Methods that return long-running operations have "Async" method variants that return `OperationFuture`, which is used to track polling of the service.</p>
  *      <ul>
- *      <li>exportInstanceAsync(String name, OutputConfig outputConfig)
+ *           <li>exportInstanceAsync(String name, OutputConfig outputConfig)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>exportInstanceOperationCallable()
- *      <li>exportInstanceCallable()
+ *           <li>exportInstanceOperationCallable()
+ *           <li>exportInstanceCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>FailoverInstance</td>
@@ -287,19 +287,19 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>failoverInstanceAsync(FailoverInstanceRequest request)
+ *           <li>failoverInstanceAsync(FailoverInstanceRequest request)
  *      </ul>
  *      <p>Methods that return long-running operations have "Async" method variants that return `OperationFuture`, which is used to track polling of the service.</p>
  *      <ul>
- *      <li>failoverInstanceAsync(InstanceName name, FailoverInstanceRequest.DataProtectionMode dataProtectionMode)
- *      <li>failoverInstanceAsync(String name, FailoverInstanceRequest.DataProtectionMode dataProtectionMode)
+ *           <li>failoverInstanceAsync(InstanceName name, FailoverInstanceRequest.DataProtectionMode dataProtectionMode)
+ *           <li>failoverInstanceAsync(String name, FailoverInstanceRequest.DataProtectionMode dataProtectionMode)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>failoverInstanceOperationCallable()
- *      <li>failoverInstanceCallable()
+ *           <li>failoverInstanceOperationCallable()
+ *           <li>failoverInstanceCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>DeleteInstance</td>
@@ -308,19 +308,19 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>deleteInstanceAsync(DeleteInstanceRequest request)
+ *           <li>deleteInstanceAsync(DeleteInstanceRequest request)
  *      </ul>
  *      <p>Methods that return long-running operations have "Async" method variants that return `OperationFuture`, which is used to track polling of the service.</p>
  *      <ul>
- *      <li>deleteInstanceAsync(InstanceName name)
- *      <li>deleteInstanceAsync(String name)
+ *           <li>deleteInstanceAsync(InstanceName name)
+ *           <li>deleteInstanceAsync(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>deleteInstanceOperationCallable()
- *      <li>deleteInstanceCallable()
+ *           <li>deleteInstanceOperationCallable()
+ *           <li>deleteInstanceCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>RescheduleMaintenance</td>
@@ -329,19 +329,20 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>rescheduleMaintenanceAsync(RescheduleMaintenanceRequest request)
+ *           <li>rescheduleMaintenanceAsync(RescheduleMaintenanceRequest request)
  *      </ul>
  *      <p>Methods that return long-running operations have "Async" method variants that return `OperationFuture`, which is used to track polling of the service.</p>
  *      <ul>
- *      <li>rescheduleMaintenanceAsync(InstanceName name, RescheduleMaintenanceRequest.RescheduleType rescheduleType, Timestamp scheduleTime)
- *      <li>rescheduleMaintenanceAsync(String name, RescheduleMaintenanceRequest.RescheduleType rescheduleType, Timestamp scheduleTime)
+ *           <li>rescheduleMaintenanceAsync(InstanceName name, RescheduleMaintenanceRequest.RescheduleType rescheduleType, Timestamp scheduleTime)
+ *           <li>rescheduleMaintenanceAsync(String name, RescheduleMaintenanceRequest.RescheduleType rescheduleType, Timestamp scheduleTime)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>rescheduleMaintenanceOperationCallable()
- *      <li>rescheduleMaintenanceCallable()
+ *           <li>rescheduleMaintenanceOperationCallable()
+ *           <li>rescheduleMaintenanceCallable()
  *      </ul>
- *    </td>
+ *       </td>
+ *    </tr>
  *    </tr>
  *  </table>
  *

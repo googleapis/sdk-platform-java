@@ -588,10 +588,14 @@ public abstract class AbstractServiceClientClassComposer implements ClassCompose
     List<Variable> parameters =
         m.arguments().stream().map(VariableExpr::variable).collect(Collectors.toList());
 
+    // If reference is empty, that means the parameter is a non-Object type. Therefore, use the
+    // typeKind directly.
     for (int i = 0; i < parameters.size(); i++) {
       Variable param = parameters.get(i);
       String paramType =
-          param.type().reference() != null ? param.type().reference().name() + " " : "";
+          param.type().reference() != null
+              ? param.type().reference().name() + " "
+              : param.type().typeKind().name().toLowerCase() + " ";
       String paramName = param.identifier().name();
 
       methodSignature.append(paramType).append(paramName);

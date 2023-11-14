@@ -90,18 +90,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>deleteLog(DeleteLogRequest request)
+ *           <li>deleteLog(DeleteLogRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>deleteLog(LogName logName)
- *      <li>deleteLog(String logName)
+ *           <li>deleteLog(LogName logName)
+ *           <li>deleteLog(String logName)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>deleteLogCallable()
+ *           <li>deleteLogCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>WriteLogEntries</td>
@@ -115,18 +115,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>writeLogEntries(WriteLogEntriesRequest request)
+ *           <li>writeLogEntries(WriteLogEntriesRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>writeLogEntries(LogName logName, MonitoredResource resource, Map<String, String> labels, List<LogEntry> entries)
- *      <li>writeLogEntries(String logName, MonitoredResource resource, Map<String, String> labels, List<LogEntry> entries)
+ *           <li>writeLogEntries(LogName logName, MonitoredResource resource, Map<String, String> labels, List<LogEntry> entries)
+ *           <li>writeLogEntries(String logName, MonitoredResource resource, Map<String, String> labels, List<LogEntry> entries)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>writeLogEntriesCallable()
+ *           <li>writeLogEntriesCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>ListLogEntries</td>
@@ -137,18 +137,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>listLogEntries(ListLogEntriesRequest request)
+ *           <li>listLogEntries(ListLogEntriesRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>listLogEntries(List<String> resourceNames, String filter, String orderBy)
+ *           <li>listLogEntries(List<String> resourceNames, String filter, String orderBy)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>listLogEntriesPagedCallable()
- *      <li>listLogEntriesCallable()
+ *           <li>listLogEntriesPagedCallable()
+ *           <li>listLogEntriesCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>ListMonitoredResourceDescriptors</td>
@@ -156,14 +156,14 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>listMonitoredResourceDescriptors(ListMonitoredResourceDescriptorsRequest request)
+ *           <li>listMonitoredResourceDescriptors(ListMonitoredResourceDescriptorsRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>listMonitoredResourceDescriptorsPagedCallable()
- *      <li>listMonitoredResourceDescriptorsCallable()
+ *           <li>listMonitoredResourceDescriptorsPagedCallable()
+ *           <li>listMonitoredResourceDescriptorsCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>ListLogs</td>
@@ -172,22 +172,22 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>listLogs(ListLogsRequest request)
+ *           <li>listLogs(ListLogsRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>listLogs(BillingAccountName parent)
- *      <li>listLogs(FolderName parent)
- *      <li>listLogs(OrganizationName parent)
- *      <li>listLogs(ProjectName parent)
- *      <li>listLogs(String parent)
+ *           <li>listLogs(BillingAccountName parent)
+ *           <li>listLogs(FolderName parent)
+ *           <li>listLogs(OrganizationName parent)
+ *           <li>listLogs(ProjectName parent)
+ *           <li>listLogs(String parent)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>listLogsPagedCallable()
- *      <li>listLogsCallable()
+ *           <li>listLogsPagedCallable()
+ *           <li>listLogsCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>TailLogEntries</td>
@@ -196,9 +196,10 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>tailLogEntriesCallable()
+ *           <li>tailLogEntriesCallable()
  *      </ul>
- *    </td>
+ *       </td>
+ *    </tr>
  *    </tr>
  *  </table>
  *

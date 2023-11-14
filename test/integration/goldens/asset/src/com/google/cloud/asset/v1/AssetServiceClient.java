@@ -89,14 +89,14 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>exportAssetsAsync(ExportAssetsRequest request)
+ *           <li>exportAssetsAsync(ExportAssetsRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>exportAssetsOperationCallable()
- *      <li>exportAssetsCallable()
+ *           <li>exportAssetsOperationCallable()
+ *           <li>exportAssetsCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>ListAssets</td>
@@ -105,19 +105,19 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>listAssets(ListAssetsRequest request)
+ *           <li>listAssets(ListAssetsRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>listAssets(ResourceName parent)
- *      <li>listAssets(String parent)
+ *           <li>listAssets(ResourceName parent)
+ *           <li>listAssets(String parent)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>listAssetsPagedCallable()
- *      <li>listAssetsCallable()
+ *           <li>listAssetsPagedCallable()
+ *           <li>listAssetsCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>BatchGetAssetsHistory</td>
@@ -131,13 +131,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>batchGetAssetsHistory(BatchGetAssetsHistoryRequest request)
+ *           <li>batchGetAssetsHistory(BatchGetAssetsHistoryRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>batchGetAssetsHistoryCallable()
+ *           <li>batchGetAssetsHistoryCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>CreateFeed</td>
@@ -146,17 +146,17 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>createFeed(CreateFeedRequest request)
+ *           <li>createFeed(CreateFeedRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>createFeed(String parent)
+ *           <li>createFeed(String parent)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>createFeedCallable()
+ *           <li>createFeedCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>GetFeed</td>
@@ -164,18 +164,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>getFeed(GetFeedRequest request)
+ *           <li>getFeed(GetFeedRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>getFeed(FeedName name)
- *      <li>getFeed(String name)
+ *           <li>getFeed(FeedName name)
+ *           <li>getFeed(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>getFeedCallable()
+ *           <li>getFeedCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>ListFeeds</td>
@@ -183,17 +183,17 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>listFeeds(ListFeedsRequest request)
+ *           <li>listFeeds(ListFeedsRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>listFeeds(String parent)
+ *           <li>listFeeds(String parent)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>listFeedsCallable()
+ *           <li>listFeedsCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>UpdateFeed</td>
@@ -201,17 +201,17 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>updateFeed(UpdateFeedRequest request)
+ *           <li>updateFeed(UpdateFeedRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>updateFeed(Feed feed)
+ *           <li>updateFeed(Feed feed)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>updateFeedCallable()
+ *           <li>updateFeedCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>DeleteFeed</td>
@@ -219,18 +219,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>deleteFeed(DeleteFeedRequest request)
+ *           <li>deleteFeed(DeleteFeedRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>deleteFeed(FeedName name)
- *      <li>deleteFeed(String name)
+ *           <li>deleteFeed(FeedName name)
+ *           <li>deleteFeed(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>deleteFeedCallable()
+ *           <li>deleteFeedCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>SearchAllResources</td>
@@ -241,18 +241,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>searchAllResources(SearchAllResourcesRequest request)
+ *           <li>searchAllResources(SearchAllResourcesRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>searchAllResources(String scope, String query, List<String> assetTypes)
+ *           <li>searchAllResources(String scope, String query, List<String> assetTypes)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>searchAllResourcesPagedCallable()
- *      <li>searchAllResourcesCallable()
+ *           <li>searchAllResourcesPagedCallable()
+ *           <li>searchAllResourcesCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>SearchAllIamPolicies</td>
@@ -263,18 +263,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>searchAllIamPolicies(SearchAllIamPoliciesRequest request)
+ *           <li>searchAllIamPolicies(SearchAllIamPoliciesRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>searchAllIamPolicies(String scope, String query)
+ *           <li>searchAllIamPolicies(String scope, String query)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>searchAllIamPoliciesPagedCallable()
- *      <li>searchAllIamPoliciesCallable()
+ *           <li>searchAllIamPoliciesPagedCallable()
+ *           <li>searchAllIamPoliciesCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>AnalyzeIamPolicy</td>
@@ -283,13 +283,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>analyzeIamPolicy(AnalyzeIamPolicyRequest request)
+ *           <li>analyzeIamPolicy(AnalyzeIamPolicyRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>analyzeIamPolicyCallable()
+ *           <li>analyzeIamPolicyCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>AnalyzeIamPolicyLongrunning</td>
@@ -305,14 +305,14 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>analyzeIamPolicyLongrunningAsync(AnalyzeIamPolicyLongrunningRequest request)
+ *           <li>analyzeIamPolicyLongrunningAsync(AnalyzeIamPolicyLongrunningRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>analyzeIamPolicyLongrunningOperationCallable()
- *      <li>analyzeIamPolicyLongrunningCallable()
+ *           <li>analyzeIamPolicyLongrunningOperationCallable()
+ *           <li>analyzeIamPolicyLongrunningCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>AnalyzeMove</td>
@@ -324,13 +324,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>analyzeMove(AnalyzeMoveRequest request)
+ *           <li>analyzeMove(AnalyzeMoveRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>analyzeMoveCallable()
+ *           <li>analyzeMoveCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>QueryAssets</td>
@@ -351,13 +351,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>queryAssets(QueryAssetsRequest request)
+ *           <li>queryAssets(QueryAssetsRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>queryAssetsCallable()
+ *           <li>queryAssetsCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>CreateSavedQuery</td>
@@ -365,20 +365,20 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>createSavedQuery(CreateSavedQueryRequest request)
+ *           <li>createSavedQuery(CreateSavedQueryRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>createSavedQuery(FolderName parent, SavedQuery savedQuery, String savedQueryId)
- *      <li>createSavedQuery(OrganizationName parent, SavedQuery savedQuery, String savedQueryId)
- *      <li>createSavedQuery(ProjectName parent, SavedQuery savedQuery, String savedQueryId)
- *      <li>createSavedQuery(String parent, SavedQuery savedQuery, String savedQueryId)
+ *           <li>createSavedQuery(FolderName parent, SavedQuery savedQuery, String savedQueryId)
+ *           <li>createSavedQuery(OrganizationName parent, SavedQuery savedQuery, String savedQueryId)
+ *           <li>createSavedQuery(ProjectName parent, SavedQuery savedQuery, String savedQueryId)
+ *           <li>createSavedQuery(String parent, SavedQuery savedQuery, String savedQueryId)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>createSavedQueryCallable()
+ *           <li>createSavedQueryCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>GetSavedQuery</td>
@@ -386,18 +386,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>getSavedQuery(GetSavedQueryRequest request)
+ *           <li>getSavedQuery(GetSavedQueryRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>getSavedQuery(SavedQueryName name)
- *      <li>getSavedQuery(String name)
+ *           <li>getSavedQuery(SavedQueryName name)
+ *           <li>getSavedQuery(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>getSavedQueryCallable()
+ *           <li>getSavedQueryCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>ListSavedQueries</td>
@@ -405,21 +405,21 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>listSavedQueries(ListSavedQueriesRequest request)
+ *           <li>listSavedQueries(ListSavedQueriesRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>listSavedQueries(FolderName parent)
- *      <li>listSavedQueries(OrganizationName parent)
- *      <li>listSavedQueries(ProjectName parent)
- *      <li>listSavedQueries(String parent)
+ *           <li>listSavedQueries(FolderName parent)
+ *           <li>listSavedQueries(OrganizationName parent)
+ *           <li>listSavedQueries(ProjectName parent)
+ *           <li>listSavedQueries(String parent)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>listSavedQueriesPagedCallable()
- *      <li>listSavedQueriesCallable()
+ *           <li>listSavedQueriesPagedCallable()
+ *           <li>listSavedQueriesCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>UpdateSavedQuery</td>
@@ -427,17 +427,17 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>updateSavedQuery(UpdateSavedQueryRequest request)
+ *           <li>updateSavedQuery(UpdateSavedQueryRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>updateSavedQuery(SavedQuery savedQuery, FieldMask updateMask)
+ *           <li>updateSavedQuery(SavedQuery savedQuery, FieldMask updateMask)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>updateSavedQueryCallable()
+ *           <li>updateSavedQueryCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>DeleteSavedQuery</td>
@@ -445,18 +445,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>deleteSavedQuery(DeleteSavedQueryRequest request)
+ *           <li>deleteSavedQuery(DeleteSavedQueryRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>deleteSavedQuery(SavedQueryName name)
- *      <li>deleteSavedQuery(String name)
+ *           <li>deleteSavedQuery(SavedQueryName name)
+ *           <li>deleteSavedQuery(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>deleteSavedQueryCallable()
+ *           <li>deleteSavedQueryCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>BatchGetEffectiveIamPolicies</td>
@@ -464,13 +464,14 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>batchGetEffectiveIamPolicies(BatchGetEffectiveIamPoliciesRequest request)
+ *           <li>batchGetEffectiveIamPolicies(BatchGetEffectiveIamPoliciesRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>batchGetEffectiveIamPoliciesCallable()
+ *           <li>batchGetEffectiveIamPoliciesCallable()
  *      </ul>
- *    </td>
+ *       </td>
+ *    </tr>
  *    </tr>
  *  </table>
  *

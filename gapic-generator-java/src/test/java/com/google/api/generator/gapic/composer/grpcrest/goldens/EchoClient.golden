@@ -58,24 +58,24 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>echo(EchoRequest request)
+ *           <li>echo(EchoRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>echo()
- *      <li>echo(ResourceName parent)
- *      <li>echo(Status error)
- *      <li>echo(FoobarName name)
- *      <li>echo(String content)
- *      <li>echo(String name)
- *      <li>echo(String parent)
- *      <li>echo(String content, Severity severity)
+ *           <li>echo()
+ *           <li>echo(ResourceName parent)
+ *           <li>echo(Status error)
+ *           <li>echo(FoobarName name)
+ *           <li>echo(String content)
+ *           <li>echo(String name)
+ *           <li>echo(String parent)
+ *           <li>echo(String content, Severity severity)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>echoCallable()
+ *           <li>echoCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>Expand</td>
@@ -83,9 +83,9 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>expandCallable()
+ *           <li>expandCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>PagedExpand</td>
@@ -93,14 +93,14 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>pagedExpand(PagedExpandRequest request)
+ *           <li>pagedExpand(PagedExpandRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>pagedExpandPagedCallable()
- *      <li>pagedExpandCallable()
+ *           <li>pagedExpandPagedCallable()
+ *           <li>pagedExpandCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>SimplePagedExpand</td>
@@ -108,18 +108,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>simplePagedExpand(PagedExpandRequest request)
+ *           <li>simplePagedExpand(PagedExpandRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>simplePagedExpand()
+ *           <li>simplePagedExpand()
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>simplePagedExpandPagedCallable()
- *      <li>simplePagedExpandCallable()
+ *           <li>simplePagedExpandPagedCallable()
+ *           <li>simplePagedExpandCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>Wait</td>
@@ -127,19 +127,19 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>waitAsync(WaitRequest request)
+ *           <li>waitAsync(WaitRequest request)
  *      </ul>
  *      <p>Methods that return long-running operations have "Async" method variants that return `OperationFuture`, which is used to track polling of the service.</p>
  *      <ul>
- *      <li>waitAsync(Duration ttl)
- *      <li>waitAsync(Timestamp endTime)
+ *           <li>waitAsync(Duration ttl)
+ *           <li>waitAsync(Timestamp endTime)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>waitOperationCallable()
- *      <li>waitCallable()
+ *           <li>waitOperationCallable()
+ *           <li>waitCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>Block</td>
@@ -147,13 +147,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>block(BlockRequest request)
+ *           <li>block(BlockRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>blockCallable()
+ *           <li>blockCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>CollideName</td>
@@ -161,13 +161,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>collideName(EchoRequest request)
+ *           <li>collideName(EchoRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>collideNameCallable()
+ *           <li>collideNameCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>NestedBinding</td>
@@ -175,13 +175,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>nestedBinding(EchoRequest request)
+ *           <li>nestedBinding(EchoRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>nestedBindingCallable()
+ *           <li>nestedBindingCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>Chat</td>
@@ -189,9 +189,9 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>chatCallable()
+ *           <li>chatCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>NoBinding</td>
@@ -199,13 +199,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>noBinding(EchoRequest request)
+ *           <li>noBinding(EchoRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>noBindingCallable()
+ *           <li>noBindingCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>UpdateCase</td>
@@ -213,17 +213,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>updateCase(UpdateCaseRequest request)
+ *           <li>updateCase(UpdateCaseRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>updateCase(Case case_, FieldMask updateMask)
+ *           <li>updateCase(Case case_, FieldMask updateMask)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>updateCaseCallable()
+ *           <li>updateCaseCallable()
  *      </ul>
- *    </td>
+ *       </td>
+ *    </tr>
  *    </tr>
  *  </table>
  *

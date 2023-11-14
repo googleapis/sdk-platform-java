@@ -90,18 +90,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>createTopic(Topic request)
+ *           <li>createTopic(Topic request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>createTopic(TopicName name)
- *      <li>createTopic(String name)
+ *           <li>createTopic(TopicName name)
+ *           <li>createTopic(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>createTopicCallable()
+ *           <li>createTopicCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>UpdateTopic</td>
@@ -110,13 +110,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>updateTopic(UpdateTopicRequest request)
+ *           <li>updateTopic(UpdateTopicRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>updateTopicCallable()
+ *           <li>updateTopicCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>Publish</td>
@@ -125,18 +125,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>publish(PublishRequest request)
+ *           <li>publish(PublishRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>publish(TopicName topic, List<PubsubMessage> messages)
- *      <li>publish(String topic, List<PubsubMessage> messages)
+ *           <li>publish(TopicName topic, List<PubsubMessage> messages)
+ *           <li>publish(String topic, List<PubsubMessage> messages)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>publishCallable()
+ *           <li>publishCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>GetTopic</td>
@@ -144,18 +144,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>getTopic(GetTopicRequest request)
+ *           <li>getTopic(GetTopicRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>getTopic(TopicName topic)
- *      <li>getTopic(String topic)
+ *           <li>getTopic(TopicName topic)
+ *           <li>getTopic(String topic)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>getTopicCallable()
+ *           <li>getTopicCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>ListTopics</td>
@@ -163,19 +163,19 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>listTopics(ListTopicsRequest request)
+ *           <li>listTopics(ListTopicsRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>listTopics(ProjectName project)
- *      <li>listTopics(String project)
+ *           <li>listTopics(ProjectName project)
+ *           <li>listTopics(String project)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>listTopicsPagedCallable()
- *      <li>listTopicsCallable()
+ *           <li>listTopicsPagedCallable()
+ *           <li>listTopicsCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>ListTopicSubscriptions</td>
@@ -183,19 +183,19 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>listTopicSubscriptions(ListTopicSubscriptionsRequest request)
+ *           <li>listTopicSubscriptions(ListTopicSubscriptionsRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>listTopicSubscriptions(TopicName topic)
- *      <li>listTopicSubscriptions(String topic)
+ *           <li>listTopicSubscriptions(TopicName topic)
+ *           <li>listTopicSubscriptions(String topic)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>listTopicSubscriptionsPagedCallable()
- *      <li>listTopicSubscriptionsCallable()
+ *           <li>listTopicSubscriptionsPagedCallable()
+ *           <li>listTopicSubscriptionsCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>ListTopicSnapshots</td>
@@ -207,19 +207,19 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>listTopicSnapshots(ListTopicSnapshotsRequest request)
+ *           <li>listTopicSnapshots(ListTopicSnapshotsRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>listTopicSnapshots(TopicName topic)
- *      <li>listTopicSnapshots(String topic)
+ *           <li>listTopicSnapshots(TopicName topic)
+ *           <li>listTopicSnapshots(String topic)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>listTopicSnapshotsPagedCallable()
- *      <li>listTopicSnapshotsCallable()
+ *           <li>listTopicSnapshotsPagedCallable()
+ *           <li>listTopicSnapshotsCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>DeleteTopic</td>
@@ -231,18 +231,18 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>deleteTopic(DeleteTopicRequest request)
+ *           <li>deleteTopic(DeleteTopicRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *      <li>deleteTopic(TopicName topic)
- *      <li>deleteTopic(String topic)
+ *           <li>deleteTopic(TopicName topic)
+ *           <li>deleteTopic(String topic)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>deleteTopicCallable()
+ *           <li>deleteTopicCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>DetachSubscription</td>
@@ -253,13 +253,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>detachSubscription(DetachSubscriptionRequest request)
+ *           <li>detachSubscription(DetachSubscriptionRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>detachSubscriptionCallable()
+ *           <li>detachSubscriptionCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>SetIamPolicy</td>
@@ -271,13 +271,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>setIamPolicy(SetIamPolicyRequest request)
+ *           <li>setIamPolicy(SetIamPolicyRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>setIamPolicyCallable()
+ *           <li>setIamPolicyCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>GetIamPolicy</td>
@@ -286,13 +286,13 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>getIamPolicy(GetIamPolicyRequest request)
+ *           <li>getIamPolicy(GetIamPolicyRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>getIamPolicyCallable()
+ *           <li>getIamPolicyCallable()
  *      </ul>
- *    </td>
+ *       </td>
  *    </tr>
  *    <tr>
  *      <td>TestIamPermissions</td>
@@ -306,13 +306,14 @@ import javax.annotation.Generated;
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *      <li>testIamPermissions(TestIamPermissionsRequest request)
+ *           <li>testIamPermissions(TestIamPermissionsRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *      <li>testIamPermissionsCallable()
+ *           <li>testIamPermissionsCallable()
  *      </ul>
- *    </td>
+ *       </td>
+ *    </tr>
  *    </tr>
  *  </table>
  *
