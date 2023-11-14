@@ -489,6 +489,73 @@ public class EchoClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
+   * This method returns error details in a repeated "google.protobuf.Any" field. This method
+   * showcases handling errors thus encoded, particularly over REST transport. Note that GAPICs only
+   * allow the type "google.protobuf.Any" for field paths ending in "error.details", and, at
+   * run-time, the actual types for these fields must be one of the types in
+   * google/rpc/error_details.proto.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   EchoErrorDetailsRequest request =
+   *       EchoErrorDetailsRequest.newBuilder()
+   *           .setSingleDetailText("singleDetailText1774380934")
+   *           .addAllMultiDetailText(new ArrayList<String>())
+   *           .build();
+   *   EchoErrorDetailsResponse response = echoClient.echoErrorDetails(request);
+   * }
+   * }</pre>
+   *
+   * @param request The request object containing all of the parameters for the API call.
+   * @throws com.google.api.gax.rpc.ApiException if the remote call fails
+   */
+  public final EchoErrorDetailsResponse echoErrorDetails(EchoErrorDetailsRequest request) {
+    return echoErrorDetailsCallable().call(request);
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
+   * This method returns error details in a repeated "google.protobuf.Any" field. This method
+   * showcases handling errors thus encoded, particularly over REST transport. Note that GAPICs only
+   * allow the type "google.protobuf.Any" for field paths ending in "error.details", and, at
+   * run-time, the actual types for these fields must be one of the types in
+   * google/rpc/error_details.proto.
+   *
+   * <p>Sample code:
+   *
+   * <pre>{@code
+   * // This snippet has been automatically generated and should be regarded as a code template only.
+   * // It will require modifications to work:
+   * // - It may require correct/in-range values for request initialization.
+   * // - It may require specifying regional endpoints when creating the service client as shown in
+   * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
+   * try (EchoClient echoClient = EchoClient.create()) {
+   *   EchoErrorDetailsRequest request =
+   *       EchoErrorDetailsRequest.newBuilder()
+   *           .setSingleDetailText("singleDetailText1774380934")
+   *           .addAllMultiDetailText(new ArrayList<String>())
+   *           .build();
+   *   ApiFuture<EchoErrorDetailsResponse> future =
+   *       echoClient.echoErrorDetailsCallable().futureCall(request);
+   *   // Do something.
+   *   EchoErrorDetailsResponse response = future.get();
+   * }
+   * }</pre>
+   */
+  public final UnaryCallable<EchoErrorDetailsRequest, EchoErrorDetailsResponse>
+      echoErrorDetailsCallable() {
+    return stub.echoErrorDetailsCallable();
+  }
+
+  // AUTO-GENERATED DOCUMENTATION AND METHOD.
+  /**
    * This method splits the given content into words and will pass each word back through the
    * stream. This method showcases server-side streaming RPCs.
    *

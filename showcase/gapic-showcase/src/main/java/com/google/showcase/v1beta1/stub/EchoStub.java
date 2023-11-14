@@ -40,6 +40,8 @@ import com.google.longrunning.Operation;
 import com.google.longrunning.stub.OperationsStub;
 import com.google.showcase.v1beta1.BlockRequest;
 import com.google.showcase.v1beta1.BlockResponse;
+import com.google.showcase.v1beta1.EchoErrorDetailsRequest;
+import com.google.showcase.v1beta1.EchoErrorDetailsResponse;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.ExpandRequest;
@@ -72,6 +74,11 @@ public abstract class EchoStub implements BackgroundResource {
 
   public UnaryCallable<EchoRequest, EchoResponse> echoCallable() {
     throw new UnsupportedOperationException("Not implemented: echoCallable()");
+  }
+
+  public UnaryCallable<EchoErrorDetailsRequest, EchoErrorDetailsResponse>
+      echoErrorDetailsCallable() {
+    throw new UnsupportedOperationException("Not implemented: echoErrorDetailsCallable()");
   }
 
   public ServerStreamingCallable<ExpandRequest, EchoResponse> expandCallable() {
