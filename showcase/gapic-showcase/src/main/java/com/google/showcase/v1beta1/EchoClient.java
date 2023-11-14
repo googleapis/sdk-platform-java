@@ -91,11 +91,11 @@ import javax.annotation.Generated;
  *      <td>Echo</td>
  *      <td><p>This method simply echoes the request. This method showcases unary RPCs.</p></td>
  *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
  *      <li>echo(EchoRequest request)
  *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>echoCallable()
  *      </ul>
@@ -106,7 +106,7 @@ import javax.annotation.Generated;
  *      <td><p>This method splits the given content into words and will pass each word back
  *  through the stream. This method showcases server-side streaming RPCs.</p></td>
  *      <td>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>expandCallable()
  *      </ul>
@@ -118,7 +118,7 @@ import javax.annotation.Generated;
  *  by the client, this method will return the a concatenation of the strings
  *  passed to it. This method showcases client-side streaming RPCs.</p></td>
  *      <td>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>collectCallable()
  *      </ul>
@@ -130,7 +130,7 @@ import javax.annotation.Generated;
  *  content back on the stream. This method showcases bidirectional
  *  streaming RPCs.</p></td>
  *      <td>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>chatCallable()
  *      </ul>
@@ -141,11 +141,11 @@ import javax.annotation.Generated;
  *      <td><p>This is similar to the Expand method but instead of returning a stream of
  *  expanded words, this method returns a paged list of expanded words.</p></td>
  *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
  *      <li>pagedExpand(PagedExpandRequest request)
  *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>pagedExpandPagedCallable()
  *      <li>pagedExpandCallable()
@@ -158,11 +158,11 @@ import javax.annotation.Generated;
  *  max_results instead of page_size, as some legacy APIs still
  *  do. New APIs should NOT use this pattern.</p></td>
  *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
  *      <li>pagedExpandLegacy(PagedExpandLegacyRequest request)
  *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>pagedExpandLegacyCallable()
  *      </ul>
@@ -176,11 +176,11 @@ import javax.annotation.Generated;
  *  input. This paging result consisting of a map of lists is a pattern used by some legacy
  *  APIs. New APIs should NOT use this pattern.</p></td>
  *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
  *      <li>pagedExpandLegacyMapped(PagedExpandRequest request)
  *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>pagedExpandLegacyMappedPagedCallable()
  *      <li>pagedExpandLegacyMappedCallable()
@@ -192,11 +192,11 @@ import javax.annotation.Generated;
  *      <td><p>This method will wait for the requested amount of time and then return.
  *  This method showcases how a client handles a request timeout.</p></td>
  *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
  *      <li>waitAsync(WaitRequest request)
  *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>waitOperationCallable()
  *      <li>waitCallable()
@@ -209,11 +209,11 @@ import javax.annotation.Generated;
  *  and then return the response or error.
  *  This method showcases how a client handles delays or retries.</p></td>
  *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
  *      <li>block(BlockRequest request)
  *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>blockCallable()
  *      </ul>
@@ -223,11 +223,11 @@ import javax.annotation.Generated;
  *      <td>ListLocations</td>
  *      <td><p>Lists information about the supported locations for this service.</p></td>
  *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
  *      <li>listLocations(ListLocationsRequest request)
  *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>listLocationsPagedCallable()
  *      <li>listLocationsCallable()
@@ -238,11 +238,11 @@ import javax.annotation.Generated;
  *      <td>GetLocation</td>
  *      <td><p>Gets information about a location.</p></td>
  *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
  *      <li>getLocation(GetLocationRequest request)
  *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>getLocationCallable()
  *      </ul>
@@ -255,11 +255,11 @@ import javax.annotation.Generated;
  *
  *  Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.</p></td>
  *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
  *      <li>setIamPolicy(SetIamPolicyRequest request)
  *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>setIamPolicyCallable()
  *      </ul>
@@ -271,11 +271,11 @@ import javax.annotation.Generated;
  *  Returns an empty policy if the resource exists and does not have a policy
  *  set.</p></td>
  *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
  *      <li>getIamPolicy(GetIamPolicyRequest request)
  *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>getIamPolicyCallable()
  *      </ul>
@@ -291,11 +291,11 @@ import javax.annotation.Generated;
  *  UIs and command-line tools, not for authorization checking. This operation
  *  may "fail open" without warning.</p></td>
  *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
  *      <li>testIamPermissions(TestIamPermissionsRequest request)
  *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>testIamPermissionsCallable()
  *      </ul>

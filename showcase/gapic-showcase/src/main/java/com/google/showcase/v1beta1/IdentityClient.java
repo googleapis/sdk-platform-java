@@ -75,16 +75,16 @@ import javax.annotation.Generated;
  *      <td>CreateUser</td>
  *      <td><p>Creates a user.</p></td>
  *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
  *      <li>createUser(CreateUserRequest request)
  *      </ul>
- *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
  *      <li>createUser(String displayName)
  *      <li>createUser(String displayName)
  *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>createUserCallable()
  *      </ul>
@@ -94,16 +94,16 @@ import javax.annotation.Generated;
  *      <td>GetUser</td>
  *      <td><p>Retrieves the User with the given uri.</p></td>
  *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
  *      <li>getUser(GetUserRequest request)
  *      </ul>
- *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
  *      <li>getUser(UserName name)
  *      <li>getUser(String name)
  *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>getUserCallable()
  *      </ul>
@@ -113,11 +113,11 @@ import javax.annotation.Generated;
  *      <td>UpdateUser</td>
  *      <td><p>Updates a user.</p></td>
  *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
  *      <li>updateUser(UpdateUserRequest request)
  *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>updateUserCallable()
  *      </ul>
@@ -127,16 +127,16 @@ import javax.annotation.Generated;
  *      <td>DeleteUser</td>
  *      <td><p>Deletes a user, their profile, and all of their authored messages.</p></td>
  *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
  *      <li>deleteUser(DeleteUserRequest request)
  *      </ul>
- *      <p>"Flattened" method variants have the fields of the request type converted into function parameters to enable multiple ways to call the same method.</p>
+ *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
  *      <li>deleteUser(UserName name)
  *      <li>deleteUser(String name)
  *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>deleteUserCallable()
  *      </ul>
@@ -146,11 +146,11 @@ import javax.annotation.Generated;
  *      <td>ListUsers</td>
  *      <td><p>Lists all users.</p></td>
  *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
  *      <li>listUsers(ListUsersRequest request)
  *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>listUsersPagedCallable()
  *      <li>listUsersCallable()
@@ -161,11 +161,11 @@ import javax.annotation.Generated;
  *      <td>ListLocations</td>
  *      <td><p>Lists information about the supported locations for this service.</p></td>
  *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
  *      <li>listLocations(ListLocationsRequest request)
  *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>listLocationsPagedCallable()
  *      <li>listLocationsCallable()
@@ -176,11 +176,11 @@ import javax.annotation.Generated;
  *      <td>GetLocation</td>
  *      <td><p>Gets information about a location.</p></td>
  *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
  *      <li>getLocation(GetLocationRequest request)
  *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>getLocationCallable()
  *      </ul>
@@ -193,11 +193,11 @@ import javax.annotation.Generated;
  *
  *  Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.</p></td>
  *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
  *      <li>setIamPolicy(SetIamPolicyRequest request)
  *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>setIamPolicyCallable()
  *      </ul>
@@ -209,11 +209,11 @@ import javax.annotation.Generated;
  *  Returns an empty policy if the resource exists and does not have a policy
  *  set.</p></td>
  *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
  *      <li>getIamPolicy(GetIamPolicyRequest request)
  *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>getIamPolicyCallable()
  *      </ul>
@@ -229,11 +229,11 @@ import javax.annotation.Generated;
  *  UIs and command-line tools, not for authorization checking. This operation
  *  may "fail open" without warning.</p></td>
  *      <td>
- *      <p>Request object method variants only takes one parameter, a request object, which must be constructed before the call.</p>
+ *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
  *      <li>testIamPermissions(TestIamPermissionsRequest request)
  *      </ul>
- *      <p>Callable method variants take no parameters and returns an immutable API callable object, which can be used to initiate calls to the service.</p>
+ *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
  *      <li>testIamPermissionsCallable()
  *      </ul>

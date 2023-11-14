@@ -245,8 +245,10 @@ public class ServiceClientCommentComposer {
           .append("<p>" + method.description + "</p>")
           .append("</td>\n")
           .append("     <td>\n");
-      generateUnorderedListMethodVariants(tableBuilder, REQUEST_OBJECT_METHODS, method.requestObjectVariants);
-      generateUnorderedListMethodVariants(tableBuilder, FLATTENED_METHODS, method.flattenedVariants);
+      generateUnorderedListMethodVariants(
+          tableBuilder, REQUEST_OBJECT_METHODS, method.requestObjectVariants);
+      generateUnorderedListMethodVariants(
+          tableBuilder, FLATTENED_METHODS, method.flattenedVariants);
       generateUnorderedListMethodVariants(tableBuilder, ASYNC_METHODS, method.asyncVariants);
       generateUnorderedListMethodVariants(tableBuilder, CALLABLE_METHODS, method.callableVariants);
       tableBuilder.append("   </td>\n").append("   </tr>\n");
@@ -255,7 +257,8 @@ public class ServiceClientCommentComposer {
     return tableBuilder.toString();
   }
 
-  private static void generateUnorderedListMethodVariants(StringBuilder tableBuilder, String methodType, List<String> methodVariants) {
+  private static void generateUnorderedListMethodVariants(
+      StringBuilder tableBuilder, String methodType, List<String> methodVariants) {
     if (!methodVariants.isEmpty()) {
       tableBuilder
           .append("     " + methodType + "     ")
