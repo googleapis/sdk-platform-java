@@ -615,4 +615,8 @@ public final class GrpcCallContext implements ApiCallContext {
     }
     return metadata;
   }
+
+  EndpointContext getEndpointContext() {
+    return endpointContext;
+  }
 }

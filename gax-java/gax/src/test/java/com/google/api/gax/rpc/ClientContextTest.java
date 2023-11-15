@@ -660,7 +660,7 @@ public class ClientContextTest {
             false);
     EndpointContext endpointContext =
         EndpointContext.newBuilder()
-            .setDefaultEndpoint(endpoint)
+            .setClientSettingsEndpoint(endpoint)
             .setMtlsEndpoint(mtlsEndpoint)
             .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)
             .setMtlsProvider(provider)
@@ -683,7 +683,7 @@ public class ClientContextTest {
             false);
     EndpointContext endpointContext =
         EndpointContext.newBuilder()
-            .setDefaultEndpoint(endpoint)
+            .setHostServiceName("foo")
             .setMtlsEndpoint(mtlsEndpoint)
             .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)
             .setMtlsProvider(provider)
@@ -700,7 +700,7 @@ public class ClientContextTest {
         new FakeMtlsProvider(true, MtlsEndpointUsagePolicy.AUTO, null, "", false);
     EndpointContext endpointContext =
         EndpointContext.newBuilder()
-            .setDefaultEndpoint(endpoint)
+            .setHostServiceName("foo")
             .setMtlsEndpoint(mtlsEndpoint)
             .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)
             .setMtlsProvider(provider)
@@ -717,7 +717,7 @@ public class ClientContextTest {
         new FakeMtlsProvider(false, MtlsEndpointUsagePolicy.ALWAYS, null, "", false);
     EndpointContext endpointContext =
         EndpointContext.newBuilder()
-            .setDefaultEndpoint(endpoint)
+            .setHostServiceName("foo")
             .setMtlsEndpoint(mtlsEndpoint)
             .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)
             .setMtlsProvider(provider)
@@ -739,7 +739,7 @@ public class ClientContextTest {
             false);
     EndpointContext endpointContext =
         EndpointContext.newBuilder()
-            .setDefaultEndpoint(endpoint)
+            .setHostServiceName("foo")
             .setMtlsEndpoint(mtlsEndpoint)
             .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)
             .setMtlsProvider(provider)
@@ -757,7 +757,7 @@ public class ClientContextTest {
           new FakeMtlsProvider(true, MtlsEndpointUsagePolicy.AUTO, null, "", true);
       EndpointContext endpointContext =
           EndpointContext.newBuilder()
-              .setDefaultEndpoint(endpoint)
+              .setHostServiceName("foo")
               .setMtlsEndpoint(mtlsEndpoint)
               .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed)
               .setMtlsProvider(provider)

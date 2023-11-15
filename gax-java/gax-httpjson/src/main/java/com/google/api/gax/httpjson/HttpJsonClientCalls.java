@@ -32,6 +32,8 @@ package com.google.api.gax.httpjson;
 import com.google.api.core.AbstractApiFuture;
 import com.google.api.core.ApiFuture;
 import com.google.api.gax.rpc.ApiCallContext;
+import com.google.api.gax.rpc.EndpointContext;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.threeten.bp.Duration;
@@ -70,6 +72,20 @@ class HttpJsonClientCalls {
                 .build();
       }
       httpJsonContext = httpJsonContext.withCallOptions(callOptions);
+    }
+
+    try {
+      EndpointContext endpointContext = httpJsonContext.getEndpointContext();
+      if (!endpointContext.isValidUniverseDomain(
+          httpJsonContext.getCallOptions().getCredentials())) {
+        throw new RuntimeException(
+            String.format(
+                EndpointContext.INVALID_UNIVERSE_DOMAIN_ERROR_MESSAGE,
+                endpointContext.resolveUniverseDomain(),
+                "test.com"));
+      }
+    } catch (IOException e) {
+      throw new RuntimeException(e);
     }
 
     // TODO: add headers interceptor logic

@@ -565,4 +565,8 @@ public final class HttpJsonCallContext implements ApiCallContext {
         retryableCodes,
         endpointContext);
   }
+
+  EndpointContext getEndpointContext() {
+    return endpointContext;
+  }
 }

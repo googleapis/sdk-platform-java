@@ -58,7 +58,6 @@ public class FakeStubSettings extends StubSettings {
 
     public Builder() {
       super((ClientContext) null);
-      setHostServiceName("test");
     }
 
     @Override

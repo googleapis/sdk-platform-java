@@ -34,22 +34,19 @@ import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.auth.Credentials;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Preconditions;
 import java.io.IOException;
 import javax.annotation.Nullable;
 
 @InternalApi
 @AutoValue
 public abstract class EndpointContext {
+  public static final String INVALID_UNIVERSE_DOMAIN_ERROR_MESSAGE =
+      "The configured universe domain (%s) does not match the universe domain found in the credentials (%s). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.";
   private static final String GOOGLE_DEFAULT_UNIVERSE = "googleapis.com";
   private static final String DEFAULT_PORT = "443";
   private static final String ENDPOINT_TEMPLATE = "https://SERVICE_NAME.UNIVERSE_DOMAIN:PORT";
 
-  @Nullable
   public abstract String hostServiceName();
-
-  @Nullable
-  public abstract String defaultEndpoint();
 
   @Nullable
   public abstract String clientSettingsEndpoint();
@@ -75,7 +72,9 @@ public abstract class EndpointContext {
   private String resolvedUniverseDomain;
 
   public static Builder newBuilder() {
-    return new AutoValue_EndpointContext.Builder().setSwitchToMtlsEndpointAllowed(false);
+    return new AutoValue_EndpointContext.Builder()
+        .setHostServiceName("")
+        .setSwitchToMtlsEndpointAllowed(false);
   }
 
   @VisibleForTesting
@@ -87,8 +86,7 @@ public abstract class EndpointContext {
     String customEndpoint =
         transportChannelEndpoint() != null ? transportChannelEndpoint() : clientSettingsEndpoint();
     if (universeDomain() == null && customEndpoint == null) {
-      String defaultEndpoint =
-          defaultEndpoint() == null ? buildEndpoint(hostServiceName()) : defaultEndpoint();
+      String defaultEndpoint = buildEndpoint(hostServiceName());
       resolvedEndpoint =
           mtlsEndpointResolver(
               mtlsProvider, defaultEndpoint, mtlsEndpoint(), switchToMtlsEndpointAllowed());
@@ -102,8 +100,9 @@ public abstract class EndpointContext {
               buildEndpoint(hostServiceName(), universeDomain(), DEFAULT_PORT),
               mtlsEndpoint(),
               switchToMtlsEndpointAllowed());
-      if (resolvedEndpoint.contains("mtls")) {
-        resolvedUniverseDomain = GOOGLE_DEFAULT_UNIVERSE;
+      if (resolvedEndpoint.contains("mtls") && !universeDomain().equals(GOOGLE_DEFAULT_UNIVERSE)) {
+        throw new RuntimeException(
+            "mTLS is not supported in any universe other than googleapis.com");
       } else {
         resolvedUniverseDomain = universeDomain();
       }
@@ -131,8 +130,9 @@ public abstract class EndpointContext {
               buildEndpoint(hostServiceName(), universeDomain, DEFAULT_PORT),
               mtlsEndpoint(),
               switchToMtlsEndpointAllowed());
-      if (resolvedEndpoint.contains("mtls")) {
-        resolvedUniverseDomain = GOOGLE_DEFAULT_UNIVERSE;
+      if (resolvedEndpoint.contains("mtls") && !universeDomain.equals(GOOGLE_DEFAULT_UNIVERSE)) {
+        throw new RuntimeException(
+            "mTLS is not supported in any universe other than googleapis.com");
       } else {
         resolvedUniverseDomain = universeDomain;
       }
@@ -188,8 +188,10 @@ public abstract class EndpointContext {
     return resolvedUniverseDomain;
   }
 
-  public boolean isValidUniverseDomain(Credentials credentials) {
-    Preconditions.checkNotNull(resolvedUniverseDomain, "Universe Domain was not resolved");
+  public boolean isValidUniverseDomain(Credentials credentials) throws IOException {
+    if (resolvedUniverseDomain == null) {
+      determineEndpoint();
+    }
     return true;
     //    return resolvedUniverseDomain.equals(credentials.getUniverseDomain());
   }
@@ -197,8 +199,6 @@ public abstract class EndpointContext {
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setHostServiceName(String hostServiceName);
-
-    public abstract Builder setDefaultEndpoint(String defaultEndpoint);
 
     public abstract Builder setClientSettingsEndpoint(String clientSettingsEndpoint);
 

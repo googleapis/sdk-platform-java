@@ -34,6 +34,7 @@ import com.google.api.core.AbstractApiFuture;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.BetaApi;
 import com.google.api.gax.rpc.ApiCallContext;
+import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.tracing.ApiTracer.Scope;
 import io.grpc.CallOptions;
 import io.grpc.Channel;
@@ -45,6 +46,7 @@ import io.grpc.Metadata;
 import io.grpc.MethodDescriptor;
 import io.grpc.Status;
 import io.grpc.stub.MetadataUtils;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -93,6 +95,19 @@ class GrpcClientCalls {
       ClientInterceptor interceptor =
           MetadataUtils.newAttachHeadersInterceptor(grpcContext.getMetadata());
       channel = ClientInterceptors.intercept(channel, interceptor);
+    }
+
+    try {
+      EndpointContext endpointContext = grpcContext.getEndpointContext();
+      if (!endpointContext.isValidUniverseDomain(null)) {
+        throw new RuntimeException(
+            String.format(
+                EndpointContext.INVALID_UNIVERSE_DOMAIN_ERROR_MESSAGE,
+                grpcContext.getEndpointContext().resolveUniverseDomain(),
+                "test.com"));
+      }
+    } catch (IOException e) {
+      throw new RuntimeException(e);
     }
 
     try (Scope ignored = grpcContext.getTracer().inScope()) {
