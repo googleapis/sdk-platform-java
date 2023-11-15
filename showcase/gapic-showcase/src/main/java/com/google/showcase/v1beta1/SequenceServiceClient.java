@@ -699,6 +699,7 @@ public class SequenceServiceClient implements BackgroundResource {
    *   AttemptStreamingSequenceRequest request =
    *       AttemptStreamingSequenceRequest.newBuilder()
    *           .setName(StreamingSequenceName.of("[STREAMING_SEQUENCE]").toString())
+   *           .setLastFailIndex(2006482362)
    *           .build();
    *   ServerStream<AttemptStreamingSequenceResponse> stream =
    *       sequenceServiceClient.attemptStreamingSequenceCallable().call(request);
