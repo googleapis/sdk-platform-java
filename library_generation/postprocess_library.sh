@@ -75,17 +75,15 @@ git init
 git commit --allow-empty -m 'empty commit'
 popd # pre_processed_libs_folder
 
-docker run --rm \
-  --user $(id -u):$(id -g) \
-  -v "${workspace}:/repo" \
-  -v "${pre_processed_libs_folder}:/pre-processed-libraries" \
-  -w /repo \
-  --env HOME=/tmp \
-  gcr.io/cloud-devrel-public-resources/owlbot-cli:latest \
-  copy-code \
+pushd "${scripts_root}/owlbot-cli"
+npm install
+npm run compile
+node build/src/bin/owl-bot.js copy-code \
   --source-repo-commit-hash=none \
-  --source-repo=/pre-processed-libraries \
-  --config-file=.OwlBot.yaml
+  --source-repo=$(realpath --relative-to=. "${pre_processed_libs_folder}") \
+  --dest=$(realpath --relative-to=. "${workspace}") \
+  --config-file=".OwlBot.yaml"
+popd
 
 
 
