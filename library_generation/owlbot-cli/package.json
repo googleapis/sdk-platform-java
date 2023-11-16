@@ -1,0 +1,94 @@
+{
+  "name": "owl-bot",
+  "version": "1.0.0",
+  "description": "keep pull requests up-to-date with generated code",
+  "bin": "./build/src/bin/owl-bot.js",
+  "main": "build/src/app.js",
+  "files": [
+    "build/src"
+  ],
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "scripts": {
+    "start-backend": "node ./build/src/server-backend.js",
+    "start-frontend": "node ./build/src/server-frontend.js",
+    "start:local": "probot run ./build/src/run-probot-locally.js",
+    "clean": "gts clean",
+    "compile": "tsc -p .",
+    "fix": "gts fix",
+    "lint": "gts check",
+    "mocha": "npm run compile && c8 mocha build/test",
+    "test": "c8 mocha build/test && node ./build/src/bin/owl-bot.js --help",
+    "system-test": "c8 mocha build/system-test",
+    "pretest": "npm run compile",
+    "presystem-test": "npm run compile",
+    "precompile": "gts clean"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/googleapis/repo-automation-bots.git"
+  },
+  "keywords": [
+    "owl",
+    "bot",
+    "automation"
+  ],
+  "author": "Google LLC.",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/googleapis/repo-automation-bots/issues"
+  },
+  "homepage": "https://github.com/googleapis/repo-automation-bots#readme",
+  "devDependencies": {
+    "@types/adm-zip": "^0.5.0",
+    "@types/follow-redirects": "^1.14.1",
+    "@types/fs-extra": "^11.0.0",
+    "@types/glob": "^8.0.0",
+    "@types/js-yaml": "^4.0.5",
+    "@types/jsonwebtoken": "^9.0.0",
+    "@types/minimatch": "^5.1.2",
+    "@types/mocha": "^10.0.0",
+    "@types/node": "^18.7.18",
+    "@types/rimraf": "^3.0.2",
+    "@types/sinon": "^10.0.13",
+    "@types/tmp": "^0.2.3",
+    "@types/yargs": "^17.0.12",
+    "c8": "^7.12.0",
+    "gts": "^3.1.1",
+    "lru-cache": "^7.14.0",
+    "mocha": "^10.0.0",
+    "nock": "^13.2.9",
+    "rimraf": "^3.0.2",
+    "sinon": "^15.0.0",
+    "ts-node": "^10.9.1",
+    "typescript": "~4.8.3",
+    "uuid": "^9.0.0"
+  },
+  "dependencies": {
+    "@google-automations/datastore-lock": "^4.0.1",
+    "@google-automations/label-utils": "^3.0.0",
+    "@google-cloud/cloudbuild": "^3.1.1",
+    "@octokit/rest": "^19.0.4",
+    "@octokit/types": "^8.0.0",
+    "@octokit/webhooks-types": "^6.3.6",
+    "adm-zip": "^0.5.9",
+    "ajv": "^8.11.0",
+    "code-suggester": "^4.1.0",
+    "firebase-admin": "^11.0.1",
+    "follow-redirects": "^1.15.2",
+    "fs-extra": "^11.0.0",
+    "gaxios": "^5.0.1",
+    "gcf-utils": "^14.2.0",
+    "glob": "^8.0.3",
+    "js-yaml": "^4.1.0",
+    "jsonwebtoken": "^9.0.0",
+    "minimatch": "^5.1.0",
+    "probot": "^12.2.8",
+    "tmp": "^0.2.1",
+    "yargs": "^17.5.1"
+  },
+  "optionalDependencies": {
+    "fsevents": "*"
+  }
+}

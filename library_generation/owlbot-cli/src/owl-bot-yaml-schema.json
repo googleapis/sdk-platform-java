@@ -1,0 +1,65 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": ".OwlBot.yaml Settings Config",
+  "description": "Schema for defining the .OwlBot.yaml config",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "api-name": {
+      "type":"string",
+      "description": "Gets inserted into pull request titles.  Useful for mono-repos."
+    },
+    "begin-after-commit-hash": {
+      "type": "string",
+      "description": "Start creating pull requests after this googleapis-gen commit hash."
+    },
+    "docker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["image"],
+      "properties": {
+        "image": {
+          "description": "Name of the docker image to run to post-process this repo, with tag.",
+          "type": "string"
+        }
+      }
+    },
+    "squash": {
+      "type": "boolean",
+      "description": "Owl bot will squash copy-code commits and the first post-processor commit into a single commit.  Defaults to false."
+    },
+    "deep-copy-regex": {
+      "description": "Directories and files to copy from googleapis-gen",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["source", "dest"],
+        "properties": {
+          "source": {
+            "description": "Source directory, as a regular expression to copy from googleapis-gen.",
+            "type": "string"
+          },
+          "dest": {
+            "description": "Destination directory to copy files too.  Will usually refer to groups in the source regex with $1 syntax.",
+            "type": "string"
+          }
+        }
+      }
+    },
+    "deep-remove-regex": {
+      "description": "Directories files to remove from the local repo before copying in new code.",
+      "type": "array",
+      "items": {
+        "type": "string" 
+      }
+    },
+    "deep-preserve-regex": {
+      "description": "Directories files in the local repo to leave untouched during copy and remove.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
