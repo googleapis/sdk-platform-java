@@ -52,7 +52,7 @@ import org.threeten.bp.Duration;
 import org.threeten.bp.Instant;
 
 /**
- * HttpJsonCallContext encapsulates context data used to make an http-json call.
+ * HttpJsonCallContext encapsulates context data used to make a http-json call.
  *
  * <p>HttpJsonCallContext is immutable in the sense that none of its methods modifies the
  * HttpJsonCallContext itself or the underlying data. Methods of the form {@code withX} return

@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<configuration monitorInterval="30">
+  <appenders>
+    <Console name='Console' target='SYSTEM_OUT'>
+      <PatternLayout pattern='%d{HH:mm:ss.SSS} %p [%t] %c{1.}.%M %m%n' />
+    </Console>
+  </appenders>
+  <loggers>
+    <root level='trace'>
+      <appender-ref ref='Console' />
+    </root>
+  </loggers>
+</configuration>

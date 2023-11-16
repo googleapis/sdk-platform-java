@@ -58,6 +58,8 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -69,6 +71,8 @@ import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
 public class HttpJsonDirectServerStreamingCallableTest {
+
+  private static final Logger logger = LogManager.getLogger();
   private static final ApiMethodDescriptor<Color, Money> METHOD_SERVER_STREAMING_RECOGNIZE =
       ApiMethodDescriptor.<Color, Money>newBuilder()
           .setFullMethodName("google.cloud.v1.Fake/ServerStreamingRecognize")
@@ -200,7 +204,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
 
     Truth.assertThat(moneyObserver.controller).isNotNull();
     // wait for the task to complete, otherwise it may interfere with other tests, since they share
-    // the same MockService and unfinished request in this tes may start readind messages designated
+    // the same MockService and unfinished request in this test may start reading messages designated
     // for other tests.
     Truth.assertThat(latch.await(2, TimeUnit.SECONDS)).isTrue();
   }
@@ -211,8 +215,8 @@ public class HttpJsonDirectServerStreamingCallableTest {
     CountDownLatch latch = new CountDownLatch(3);
     MoneyObserver moneyObserver = new MoneyObserver(true, latch);
 
+    logger.debug("call start");
     streamingCallable.call(DEFAULT_REQUEST, moneyObserver);
-
     Truth.assertThat(latch.await(10, TimeUnit.SECONDS)).isTrue();
     Truth.assertThat(latch.getCount()).isEqualTo(0);
     Truth.assertThat(moneyObserver.error).isNull();
@@ -376,18 +380,22 @@ public class HttpJsonDirectServerStreamingCallableTest {
     @Override
     protected void onResponseImpl(Money value) {
       response = value;
+      logger.debug("count down");
       latch.countDown();
     }
 
     @Override
     protected void onErrorImpl(Throwable t) {
       error = t;
+      logger.debug(error.getStackTrace());
+      logger.debug(String.format("error, %s", error.getMessage()));
       latch.countDown();
     }
 
     @Override
     protected void onCompleteImpl() {
       completed = true;
+      logger.debug("completed");
       latch.countDown();
     }
   }

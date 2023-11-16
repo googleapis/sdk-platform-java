@@ -86,7 +86,7 @@ public abstract class ServerStreamingCallable<RequestT, ResponseT> {
   }
 
   /**
-   * Conduct a iteration server streaming call.
+   * Conduct an iteration server streaming call.
    *
    * <p>This returns a live stream that must either be fully consumed or cancelled. Example usage:
    *
@@ -214,7 +214,7 @@ public abstract class ServerStreamingCallable<RequestT, ResponseT> {
       // the call directly to the next callable's first() implementation.
       // The default implementation of first() instantiates a new FirstElementCallable which
       // calls this instance's call method, bypassing the next callable's first implementation.
-      // Instead we will bypass the anonymous implementation of call() and invoke the next
+      // Instead, we will bypass the anonymous implementation of call() and invoke the next
       // link's first() implementation.
       @Override
       public UnaryCallable<RequestT, ResponseT> first() {

@@ -66,7 +66,7 @@ public interface ResponseObserver<V> {
    * <p>Can be called many times but is never called after {@link #onError(Throwable)} or {@link
    * #onComplete()} are called.
    *
-   * <p>Clients may may receive 0 or more onResponse callbacks.
+   * <p>Clients may receive 0 or more onResponse callbacks.
    *
    * <p>If an exception is thrown by an implementation the caller will terminate the stream by
    * calling {@link #onError(Throwable)} with the caught exception as the cause.
