@@ -74,7 +74,7 @@ public abstract class TypeNode implements AstNode, Comparable<TypeNode> {
       withReference(
           VaporReference.builder().setName("Value").setPakkage("com.google.protobuf").build());
 
-  private static final Map<TypeNode, TypeNode> BOXED_TYPE_MAP = createBoxedTypeMap();
+  public static final Map<TypeNode, TypeNode> BOXED_TYPE_MAP = createBoxedTypeMap();
 
   public static final TypeNode VOID = builder().setTypeKind(TypeKind.VOID).build();
 

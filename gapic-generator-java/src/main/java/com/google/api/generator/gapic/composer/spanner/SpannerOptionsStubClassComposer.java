@@ -4,7 +4,6 @@ import com.google.api.core.BetaApi;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
-import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Expr;
 import com.google.api.generator.engine.ast.ExprStatement;
 import com.google.api.generator.engine.ast.MethodDefinition;
@@ -75,7 +74,7 @@ public class SpannerOptionsStubClassComposer implements ClassComposer {
   }
 
   @Override
-  public GapicClass generate(GapicContext context, Service serivce) {
+  public GapicClass generate(GapicContext context, Service service) {
 
     // Read the configuration for mapper
     SpannerOptionsConfig.OptionMapperConfigList optionMapperConfigList = parseSpannerOptionsConfig();
@@ -101,12 +100,27 @@ public class SpannerOptionsStubClassComposer implements ClassComposer {
       String nameInLoweCamelCase = JavaStyle.toLowerCamelCase(field.getKey().name());
       String nameInUpperCamelCase = JavaStyle.toUpperCamelCase(field.getKey().name());
       Variable variable = Variable.builder().setName(nameInLoweCamelCase)
-          .setType(field.getKey().type()).build();
+          .setType(getBoxedTypeWithFallBack(field.getKey().type())).build();
       VariableExpr variableExpr = VariableExpr.builder()
+          .setScope(ScopeNode.LOCAL)
+          .setVariable(variable)
+          .build();
+      // generate member variable
+      // Integer maxBatchingDelayMs;
+      VariableExpr memberVariableDeclExpr = VariableExpr.builder()
+          .setIsDecl(true)
+          .setScope(ScopeNode.PRIVATE)
+          .setVariable(variable)
+          .build();
+
+      // generate method argument
+      // Integer maxBatchingDelayMs;
+      VariableExpr argumentVariableDeclExpr = VariableExpr.builder()
           .setIsDecl(true)
           .setScope(ScopeNode.LOCAL)
           .setVariable(variable)
           .build();
+
       VaporReference classRef =
           createVaporReference("com.google.cloud.spanner", nameInUpperCamelCase);
       NewObjectExpr returnExpr = NewObjectExpr.builder()
@@ -115,26 +129,18 @@ public class SpannerOptionsStubClassComposer implements ClassComposer {
           .build();
       MethodDefinition setterMethod =
           MethodDefinition.builder()
-              .setReturnType(getOptionsGroupTypeNode(field.getValue()))
+              .setReturnType(TypeNode.withReference(classRef)) // TODO add the parent type
               .setName(JavaStyle.toLowerCamelCase(field.getKey().name()))
-              .setArguments(variableExpr)
+              .setArguments(argumentVariableDeclExpr)
               .setIsStatic(true)
               .setScope(ScopeNode.PUBLIC)
               .setReturnExpr(returnExpr)
               .build();
       setterMethods.add(setterMethod);
 
-      // generate member variable
-      // Integer maxBatchingDelayMs;
-      Variable memberVariable = Variable.builder().setName(nameInLoweCamelCase)
-          .setType(field.getKey().type()).build();
-      VariableExpr memberVariableExpr = VariableExpr.builder()
-          .setIsDecl(true)
-          .setScope(ScopeNode.PRIVATE)
-          .setVariable(memberVariable)
-          .build();
+      VariableExpr memberVariableExpr = VariableExpr.withVariable(variable);
 
-      memberVariables.add(ExprStatement.withExpr(memberVariableExpr));
+      memberVariables.add(ExprStatement.withExpr(memberVariableDeclExpr));
 
       // generate has method
       /**
@@ -143,7 +149,7 @@ public class SpannerOptionsStubClassComposer implements ClassComposer {
        *   }
        */
       Expr nullExpr = ValueExpr.createNullExpr();
-      Expr isNullCheckExpr = RelationalOperationExpr.equalToWithExprs(memberVariableExpr, nullExpr);
+      Expr isNullCheckExpr = RelationalOperationExpr.notEqualToWithExprs(memberVariableExpr, nullExpr);
       MethodDefinition hasMethod =
           MethodDefinition.builder()
               .setReturnType(TypeNode.BOOLEAN)
@@ -160,14 +166,14 @@ public class SpannerOptionsStubClassComposer implements ClassComposer {
        */
       MethodDefinition getterMethod =
           MethodDefinition.builder()
-              .setReturnType(getOptionsGroupTypeNode(field.getValue()))
+              .setReturnType(getBoxedTypeWithFallBack(memberVariableExpr.type()))
               .setName(nameInLoweCamelCase)
               .setScope(ScopeNode.PROTECTED)
               .setReturnExpr(ReturnExpr.withExpr(memberVariableExpr))
               .build();
       getterMethods.add(getterMethod);
 
-      optionInnerClasses.add(getClassForOptionProtoField(field));
+      optionInnerClasses.add(getClassForOptionProtoField(field, classRef));
     }
 
     allMethods.addAll(setterMethods);
@@ -181,12 +187,17 @@ public class SpannerOptionsStubClassComposer implements ClassComposer {
             .setAnnotations(createClassAnnotations())
             .setScope(ScopeNode.PROTECTED)
             .setNestedClasses(optionInnerClasses)
-            .setMethods(allMethods)
             .setStatements(memberVariables)
             .setName("AutoGeneratedOptions")
+            .setMethods(allMethods)
             .build();
 
     return GapicClass.create(Kind.MAIN, outerClassDef);
+  }
+
+  private static TypeNode getBoxedTypeWithFallBack(TypeNode type) {
+    return type.isPrimitiveType() ?
+        TypeNode.BOXED_TYPE_MAP.get(type) : type;
   }
 
   private Map<Field, String> getApplicableProtoFields(GapicContext context, OptionMapperConfigList optionMapperConfigList) {
@@ -197,6 +208,7 @@ public class SpannerOptionsStubClassComposer implements ClassComposer {
     Map<String, Field> allFields = new HashMap<>();
     Set<String> intersectedFields = new HashSet<>();
     for(Map.Entry<String, Message> entry: messages.entrySet()) {
+      // TODO : test this bit of code
       Message message = entry.getValue();
       Map<String, Field> fields = message.fieldMap();
       allFields.putAll(fields);
@@ -225,12 +237,12 @@ public class SpannerOptionsStubClassComposer implements ClassComposer {
    * @return
    */
   private static ClassDefinition getClassForOptionProtoField(
-      final Map.Entry<Field, String> field) {
+      final Map.Entry<Field, String> field, final VaporReference classRef) {
     String nameInLoweCamelCase = JavaStyle.toLowerCamelCase(field.getKey().name());
     String nameInUpperCamelCase = JavaStyle.toUpperCamelCase(field.getKey().name());
 
     Variable variable = Variable.builder().setName(nameInLoweCamelCase)
-        .setType(field.getKey().type()).build();
+        .setType(getBoxedTypeWithFallBack(field.getKey().type())).build();
     VariableExpr variableExpr = VariableExpr.builder()
         .setIsDecl(true)
         .setScope(ScopeNode.PRIVATE)
@@ -239,8 +251,6 @@ public class SpannerOptionsStubClassComposer implements ClassComposer {
         .build();
 
     // create the constructor method
-    VaporReference classRef =
-        createVaporReference("com.google.cloud.spanner", nameInUpperCamelCase);
     VariableExpr thisVariableExpr = createVarExprFromRefThisExpr(variable, classRef);
     AssignmentExpr thisAssignExpr = createAssignmentExpr(thisVariableExpr,
         VariableExpr.withVariable(variable));
@@ -250,7 +260,7 @@ public class SpannerOptionsStubClassComposer implements ClassComposer {
                 Arrays.asList(VariableExpr.builder()
                     .setIsDecl(true)
                     .setVariable(Variable.builder().setName(nameInLoweCamelCase)
-                        .setType(TypeNode.INT).build())
+                        .setType(getBoxedTypeWithFallBack(field.getKey().type())).build())
                     .build()))
             .setScope(ScopeNode.PUBLIC)
             .setBody(
@@ -321,14 +331,6 @@ public class SpannerOptionsStubClassComposer implements ClassComposer {
 
   private static VaporReference createVaporReference(String pkgName, String name) {
     return VaporReference.builder().setPakkage(pkgName).setName(name).build();
-  }
-
-  private static Variable createVarFromConcreteRef(ConcreteReference ref, String name) {
-    return Variable.builder().setName(name).setType(TypeNode.withReference(ref)).build();
-  }
-
-  private static VariableExpr createVarExprFromRefVarExpr(Variable var, Expr varRef) {
-    return VariableExpr.builder().setVariable(var).setExprReferenceExpr(varRef).build();
   }
 
   private static VariableExpr createVarExprFromRefThisExpr(Variable var, VaporReference ref) {
