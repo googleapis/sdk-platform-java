@@ -41,46 +41,12 @@ get_protobuf_version_failed_with_invalid_generator_version_test() {
   assertEquals 1 $((res))
 }
 
-search_additional_protos_common_resources_test() {
-  local proto_path="${script_dir}/resources/search_additional_proto/common_resources"
-  local addition_protos
-  addition_protos=$(search_additional_protos)
-  assertEquals "google/cloud/common_resources.proto" "${addition_protos}"
-}
-
-search_additional_protos_iam_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos/iam"
-  local addition_protos
-  addition_protos=$(search_additional_protos)
-  assertEquals \
-  "google/cloud/common_resources.proto google/iam/v1/iam_policy.proto" \
-  "${addition_protos}"
-}
-
-search_additional_protos_location_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos/location"
-  local addition_protos
-  addition_protos=$(search_additional_protos)
-  assertEquals \
-  "google/cloud/common_resources.proto google/cloud/location/locations.proto" \
-  "${addition_protos}"
-}
-
-search_additional_protos_iam_location_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos/iam_location"
-  local addition_protos
-  addition_protos=$(search_additional_protos)
-  assertEquals \
-  "google/cloud/common_resources.proto google/iam/v1/iam_policy.proto google/cloud/location/locations.proto" \
-  "${addition_protos}"
-}
-
 get_gapic_opts_with_rest_test() {
   local proto_path="${script_dir}/resources/gapic_options"
   local transport="grpc"
   local rest_numeric_enums="true"
   local gapic_opts
-  gapic_opts="$(get_gapic_opts)"
+  gapic_opts="$(get_gapic_opts "${transport}" "${rest_numeric_enums}" "" "" "")"
   assertEquals \
   "transport=grpc,rest-numeric-enums,grpc-service-config=${proto_path}/example_grpc_service_config.json,gapic-config=${proto_path}/example_gapic.yaml,api-service-config=${proto_path}/example.yaml" \
   "${gapic_opts}"
@@ -91,9 +57,20 @@ get_gapic_opts_without_rest_test() {
   local transport="grpc"
   local rest_numeric_enums="false"
   local gapic_opts
-  gapic_opts="$(get_gapic_opts)"
+  gapic_opts="$(get_gapic_opts "${transport}" "${rest_numeric_enums}" "" "" "")"
   assertEquals \
-  "transport=grpc,grpc-service-config=${proto_path}/example_grpc_service_config.json,gapic-config=${proto_path}/example_gapic.yaml,api-service-config=${proto_path}/example.yaml" \
+  "transport=grpc,,grpc-service-config=${proto_path}/example_grpc_service_config.json,gapic-config=${proto_path}/example_gapic.yaml,api-service-config=${proto_path}/example.yaml" \
+  "$gapic_opts"
+}
+
+get_gapic_opts_with_non_default_test() {
+  local proto_path="${script_dir}/resources/gapic_options"
+  local transport="grpc"
+  local rest_numeric_enums="false"
+  local gapic_opts
+  gapic_opts="$(get_gapic_opts "${transport}" "${rest_numeric_enums}" "${proto_path}/example_gapic.yaml" "${proto_path}/example_grpc_service_config.json" "${proto_path}/example.yaml")"
+  assertEquals \
+  "transport=grpc,,grpc-service-config=${proto_path}/example_grpc_service_config.json,gapic-config=${proto_path}/example_gapic.yaml,api-service-config=${proto_path}/example.yaml" \
   "$gapic_opts"
 }
 
@@ -112,9 +89,11 @@ remove_grpc_version_test() {
 }
 
 download_generator_success_with_valid_version_test() {
-  download_generator "2.24.0"
-  assertFileOrDirectoryExists "gapic-generator-java-2.24.0.jar"
-  rm "gapic-generator-java-2.24.0.jar"
+  local version="2.24.0"
+  local artifact="gapic-generator-java-${version}.jar"
+  download_generator_artifact "${version}" "${artifact}"
+  assertFileOrDirectoryExists "${artifact}"
+  rm "${artifact}"
 }
 
 download_generator_failed_with_invalid_version_test() {
@@ -125,7 +104,9 @@ download_generator_failed_with_invalid_version_test() {
   # the other tests can continue executing in the current
   # shell.
   local res=0
-  $(download_generator "1.99.0") || res=$?
+  local version="1.99.0"
+  local artifact="gapic-generator-java-${version}.jar"
+  $(download_generator_artifact "${version}" "${artifact}") || res=$?
   assertEquals 1 $((res))
 }
 
@@ -227,6 +208,34 @@ generate_library_failed_with_invalid_grpc_version() {
   cleanup "${destination}"
 }
 
+get_gapic_additional_protos_from_BUILD_common_resources_test() {
+  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_common_resources.bazel"
+  local addition_protos
+  addition_protos=$(get_gapic_additional_protos_from_BUILD "${proto_path}")
+  assertEquals "google/cloud/common_resources.proto" "${addition_protos}"
+}
+
+get_gapic_additional_protos_from_BUILD_iam_policy_test() {
+  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_iam_policy.bazel"
+  local addition_protos
+  addition_protos=$(get_gapic_additional_protos_from_BUILD "${proto_path}")
+  assertEquals "google/cloud/common_resources.proto google/iam/v1/iam_policy.proto" "${addition_protos}"
+}
+
+get_gapic_additional_protos_from_BUILD_locations_test() {
+  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_locations.bazel"
+  local addition_protos
+  addition_protos=$(get_gapic_additional_protos_from_BUILD "${proto_path}")
+  assertEquals "google/cloud/common_resources.proto google/cloud/location/locations.proto" "${addition_protos}"
+}
+
+get_gapic_additional_protos_from_BUILD_iam_locations_test() {
+  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_iam_locations.bazel"
+  local addition_protos
+  addition_protos=$(get_gapic_additional_protos_from_BUILD "${proto_path}")
+  assertEquals "google/cloud/common_resources.proto google/iam/v1/iam_policy.proto google/cloud/location/locations.proto" "${addition_protos}"
+}
+
 get_transport_from_BUILD_grpc_rest_test() {
   local build_file="${script_dir}/resources/misc/BUILD_grpc_rest.bazel"
   local transport
@@ -296,16 +305,54 @@ get_version_from_valid_WORKSPACE_test() {
   assertEquals '2.25.1-SNAPSHOT' "${obtained_ggj_version}"
 }
 
-get_generator_version_from_valid_versions_txt_test() {
-  versions_file="${script_dir}/resources/misc/testversions.txt"
-  obtained_ggj_version=$(get_version_from_versions_txt "${versions_file}" "gapic-generator-java")
-  assertEquals '2.25.1-SNAPSHOT' "${obtained_ggj_version}"
+get_repo_metadata_json_valid_repo_succeeds() {
+  local output_folder="${script_dir}/resources"
+  local repository_path="test-monorepo/test-service"
+  local repo_metadata_json=$(get_repo_metadata_json "${repository_path}" "${output_folder}")
+  assertEquals "${output_folder}/${repository_path}/.repo-metadata.json" \
+    "${repo_metadata_json}"
 }
 
-get_gax_version_from_valid_versions_txt_test() {
-  versions_file="${script_dir}/resources/misc/testversions.txt"
-  obtained_gax_version=$(get_version_from_versions_txt "${versions_file}" "gax")
-  assertEquals '2.33.1-SNAPSHOT' "${obtained_gax_version}"
+get_repo_metadata_json_invalid_repo_fails() {
+  local output_folder="${script_dir}/resources"
+  local repository_path="test-monorepo/java-nonexistent"
+  $(get_repo_metadata_json "${repository_path}" "${output_folder}") || res=$?
+  assertEquals 1 ${res}
+}
+
+get_owlbot_sha_valid_repo_succeeds() {
+  local output_folder="${script_dir}/resources"
+  local repository_root="test-monorepo"
+  local owlbot_sha=$(get_owlbot_sha "${output_folder}" "${repository_root}")
+  assertEquals 'fb7584f6adb3847ac480ed49a4bfe1463965026b2919a1be270e3174f3ce1191' \
+    "${owlbot_sha}"
+}
+
+get_owlbot_sha_invalid_repo_fails() {
+  local output_folder="${script_dir}/resources"
+  local repository_root="nonexistent-repo"
+  $(get_owlbot_sha "${output_folder}" "${repository_root}") || res=$?
+  assertEquals 1 ${res}
+}
+
+copy_directory_if_exists_valid_folder_succeeds() {
+  local source_folder="${script_dir}/resources"
+  local destination="${script_dir}/test_destination_folder"
+  mkdir -p "${destination}"
+  copy_directory_if_exists "${source_folder}" "${destination}/copied-folder"
+  n_matching_folders=$(ls "${destination}" | grep -e 'copied-folder' | wc -l)
+  rm -rdf "${destination}"
+  assertEquals 1 ${n_matching_folders}
+}
+
+copy_directory_if_exists_invalid_folder_does_not_copy() {
+  local source_folder="${script_dir}/non-existent"
+  local destination="${script_dir}/test_destination_folder"
+  mkdir -p "${destination}"
+  copy_directory_if_exists "${source_folder}" "${destination}/copied-folder"
+  n_matching_folders=$(ls "${destination}" | grep -e 'copied-folder' | wc -l) || res=$?
+  rm -rdf "${destination}"
+  assertEquals 0 ${n_matching_folders}
 }
 
 # Execute tests.
@@ -316,12 +363,9 @@ test_list=(
   get_grpc_version_failed_with_invalid_generator_version_test
   get_protobuf_version_succeed_with_valid_generator_version_test
   get_protobuf_version_failed_with_invalid_generator_version_test
-  search_additional_protos_common_resources_test
-  search_additional_protos_iam_test
-  search_additional_protos_location_test
-  search_additional_protos_iam_location_test
   get_gapic_opts_with_rest_test
   get_gapic_opts_without_rest_test
+  get_gapic_opts_with_non_default_test
   remove_grpc_version_test
   download_generator_success_with_valid_version_test
   download_generator_failed_with_invalid_version_test
@@ -336,6 +380,10 @@ test_list=(
   generate_library_failed_with_invalid_generator_version
   generate_library_failed_with_invalid_protobuf_version
   generate_library_failed_with_invalid_grpc_version
+  get_gapic_additional_protos_from_BUILD_common_resources_test
+  get_gapic_additional_protos_from_BUILD_iam_policy_test
+  get_gapic_additional_protos_from_BUILD_locations_test
+  get_gapic_additional_protos_from_BUILD_iam_locations_test
   get_transport_from_BUILD_grpc_rest_test
   get_transport_from_BUILD_grpc_test
   get_transport_from_BUILD_rest_test
@@ -346,8 +394,12 @@ test_list=(
   get_include_samples_from_BUILD_false_test
   get_include_samples_from_BUILD_empty_test
   get_version_from_valid_WORKSPACE_test
-  get_generator_version_from_valid_versions_txt_test
-  get_gax_version_from_valid_versions_txt_test
+  get_repo_metadata_json_valid_repo_succeeds
+  get_repo_metadata_json_invalid_repo_fails
+  get_owlbot_sha_valid_repo_succeeds
+  get_owlbot_sha_invalid_repo_fails
+  copy_directory_if_exists_valid_folder_succeeds
+  copy_directory_if_exists_invalid_folder_does_not_copy
 )
 
 pushd "${script_dir}"

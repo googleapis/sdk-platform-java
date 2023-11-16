@@ -7,11 +7,19 @@ set -ex
 
 readonly SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 lib_gen_scripts_dir="${SCRIPT_DIR}/../../library_generation/"
-source "${lib_gen_scripts_dir}/utilities.sh"
+source "${lib_gen_scripts_dir}/test/test_utilities.sh"
 readonly perform_cleanup=$1
 
 cd "${SCRIPT_DIR}"
 mkdir -p "${SCRIPT_DIR}/output"
+
+# takes a versions.txt file and returns its version
+get_version_from_versions_txt() {
+  versions=$1
+  key=$2
+  version=$(grep "$key:" "${versions}" | cut -d: -f3) # 3rd field is snapshot
+  echo "${version}"
+}
 
 # clone gapic-showcase
 if [ ! -d schema ]; then
@@ -37,10 +45,13 @@ if [ ! -d google ];then
   rm -rdf googleapis
 fi
 
-
 ggj_version=$(get_version_from_versions_txt ../../versions.txt "gapic-generator-java")
+gapic_additional_protos="google/iam/v1/iam_policy.proto google/cloud/location/locations.proto"
 rest_numeric_enums="false"
 transport="grpc+rest"
+gapic_yaml=""
+service_config="schema/google/showcase/v1beta1/showcase_grpc_service_config.json"
+service_yaml="schema/google/showcase/v1beta1/showcase_v1beta1.yaml"
 include_samples="false"
 rm -rdf output/showcase-output
 mkdir output/showcase-output
@@ -49,8 +60,13 @@ bash "${SCRIPT_DIR}/../../library_generation/generate_library.sh" \
   --proto_path "schema/google/showcase/v1beta1" \
   --destination_path "showcase-output" \
   --gapic_generator_version "${ggj_version}" \
+  --gapic_additional_protos "${gapic_additional_protos}" \
   --rest_numeric_enums "${rest_numeric_enums}" \
+  --gapic_yaml "${gapic_yaml}" \
+  --service_config "${service_config}" \
+  --service_yaml "${service_yaml}" \
   --include_samples "${include_samples}" \
+  --enable_postprocessing "false" \
   --transport "${transport}" 
 
 exit_code=$?

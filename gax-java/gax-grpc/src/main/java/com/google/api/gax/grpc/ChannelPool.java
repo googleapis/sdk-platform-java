@@ -68,7 +68,7 @@ import org.threeten.bp.Duration;
  * <p>Package-private for internal use.
  */
 class ChannelPool extends ManagedChannel {
-  private static final Logger LOG = Logger.getLogger(ChannelPool.class.getName());
+  @VisibleForTesting static final Logger LOG = Logger.getLogger(ChannelPool.class.getName());
   private static final Duration REFRESH_PERIOD = Duration.ofMinutes(50);
 
   private final ChannelPoolSettings settings;
@@ -152,6 +152,8 @@ class ChannelPool extends ManagedChannel {
   /** {@inheritDoc} */
   @Override
   public ManagedChannel shutdown() {
+    LOG.fine("Initiating graceful shutdown due to explicit request");
+
     List<Entry> localEntries = entries.get();
     for (Entry entry : localEntries) {
       entry.channel.shutdown();
@@ -191,6 +193,8 @@ class ChannelPool extends ManagedChannel {
   /** {@inheritDoc} */
   @Override
   public ManagedChannel shutdownNow() {
+    LOG.fine("Initiating immediate shutdown due to explicit request");
+
     List<Entry> localEntries = entries.get();
     for (Entry entry : localEntries) {
       entry.channel.shutdownNow();
@@ -356,6 +360,7 @@ class ChannelPool extends ManagedChannel {
     // - then thread2 will shut down channel that thread1 will put back into circulation (after it
     //   replaces the list)
     synchronized (entryWriteLock) {
+      LOG.fine("Refreshing all channels");
       ArrayList<Entry> newEntries = new ArrayList<>(entries.get());
 
       for (int i = 0; i < newEntries.size(); i++) {
@@ -416,9 +421,25 @@ class ChannelPool extends ManagedChannel {
   }
 
   /** Bundles a gRPC {@link ManagedChannel} with some usage accounting. */
-  private static class Entry {
+  static class Entry {
     private final ManagedChannel channel;
-    private final AtomicInteger outstandingRpcs = new AtomicInteger(0);
+
+    /**
+     * The primary purpose of keeping a count for outstanding RPCs is to track when a channel is
+     * safe to close. In grpc, initialization & starting of rpcs is split between 2 methods:
+     * Channel#newCall() and ClientCall#start. gRPC already has a mechanism to safely close channels
+     * that have rpcs that have been started. However, it does not protect calls that have been
+     * created but not started. In the sequence: Channel#newCall() Channel#shutdown()
+     * ClientCall#Start(), gRpc will error out the call telling the caller that the channel is
+     * shutdown.
+     *
+     * <p>Hence, the increment of outstanding RPCs has to happen when the ClientCall is initialized,
+     * as part of Channel#newCall(), not after the ClientCall is started. The decrement of
+     * outstanding RPCs has to happen when the ClientCall is closed or the ClientCall failed to
+     * start.
+     */
+    @VisibleForTesting final AtomicInteger outstandingRpcs = new AtomicInteger(0);
+
     private final AtomicInteger maxOutstanding = new AtomicInteger();
 
     // Flag that the channel should be closed once all of the outstanding RPC complete.
@@ -465,7 +486,7 @@ class ChannelPool extends ManagedChannel {
     private void release() {
       int newCount = outstandingRpcs.decrementAndGet();
       if (newCount < 0) {
-        throw new IllegalStateException("Bug: reference count is negative!: " + newCount);
+        LOG.log(Level.WARNING, "Bug! Reference count is negative (" + newCount + ")!");
       }
 
       // Must check outstandingRpcs after shutdownRequested (in reverse order of retain()) to ensure
@@ -521,6 +542,8 @@ class ChannelPool extends ManagedChannel {
   static class ReleasingClientCall<ReqT, RespT> extends SimpleForwardingClientCall<ReqT, RespT> {
     @Nullable private CancellationException cancellationException;
     final Entry entry;
+    private final AtomicBoolean wasClosed = new AtomicBoolean();
+    private final AtomicBoolean wasReleased = new AtomicBoolean();
 
     public ReleasingClientCall(ClientCall<ReqT, RespT> delegate, Entry entry) {
       super(delegate);
@@ -537,17 +560,35 @@ class ChannelPool extends ManagedChannel {
             new SimpleForwardingClientCallListener<RespT>(responseListener) {
               @Override
               public void onClose(Status status, Metadata trailers) {
+                if (!wasClosed.compareAndSet(false, true)) {
+                  LOG.log(
+                      Level.WARNING,
+                      "Call is being closed more than once. Please make sure that onClose() is not being manually called.");
+                  return;
+                }
                 try {
                   super.onClose(status, trailers);
                 } finally {
-                  entry.release();
+                  if (wasReleased.compareAndSet(false, true)) {
+                    entry.release();
+                  } else {
+                    LOG.log(
+                        Level.WARNING,
+                        "Entry was released before the call is closed. This may be due to an exception on start of the call.");
+                  }
                 }
               }
             },
             headers);
       } catch (Exception e) {
         // In case start failed, make sure to release
-        entry.release();
+        if (wasReleased.compareAndSet(false, true)) {
+          entry.release();
+        } else {
+          LOG.log(
+              Level.WARNING,
+              "The entry is already released. This indicates that onClose() has already been called previously");
+        }
         throw e;
       }
     }

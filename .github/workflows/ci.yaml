@@ -54,7 +54,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
-      # Java 8 tests uses JDK 11 to compile and JDK 8 to run tests.
+      # Java 8 tests uses JDK 17 to compile and JDK 8 to run tests.
       - uses: actions/setup-java@v3
         with:
           java-version: 8
@@ -69,7 +69,7 @@ jobs:
         shell: bash
         run: |
           set -x
-          export JAVA_HOME=$JAVA11_HOME
+          export JAVA_HOME=$JAVA_HOME
           export PATH=${JAVA_HOME}/bin:$PATH
           # Maven surefire plugin lets us to specify the JVM when running tests via
           # the "jvm" system property.
@@ -273,42 +273,7 @@ jobs:
       run: |
         mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
     - name: Validate gapic-generator-java-bom
-      uses: googleapis/java-cloud-bom/tests/validate-bom@v26.13.0
+      uses: googleapis/java-cloud-bom/tests/validate-bom@ab98a491b510503e8ff461c42ecd3cc4e67a44cb
       with:
         bom-path: gapic-generator-java-bom/pom.xml
 
-  downstream-compatibility:
-    runs-on: ubuntu-22.04
-    strategy:
-      fail-fast: false
-      matrix:
-        repo:
-          - google-cloud-java
-          - java-bigtable
-          - java-bigquery
-          - java-bigquerystorage
-          - java-datastore
-          - java-firestore
-          - java-logging
-          - java-logging-logback
-          - java-pubsub
-          - java-pubsublite
-          - java-spanner-jdbc
-          - java-spanner
-          - java-storage
-          - java-storage-nio
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
-        with:
-          java-version: 17
-          distribution: temurin
-      - run: mvn -version
-      - name: Install xmllint
-        run: |
-          sudo apt-get update
-          sudo apt-get -y install libxml2-utils
-      - name: Test helper scripts
-        run: ./.kokoro/presubmit/common_test.sh
-      - name: Perform downstream compatibility testing
-        run: REPOS_UNDER_TEST="${{ matrix.repo }}" ./.kokoro/presubmit/downstream-compatibility.sh

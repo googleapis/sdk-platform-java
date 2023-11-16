@@ -44,6 +44,7 @@ public class ServiceClientClassComposer extends AbstractServiceClientClassCompos
 
   @Override
   protected List<CommentStatement> createClassHeaderComments(
+      Map<String, List<String>> grpcRpcsToJavaMethodNames,
       Service service,
       TypeStore typeStore,
       Map<String, ResourceName> resourceNames,
@@ -51,7 +52,7 @@ public class ServiceClientClassComposer extends AbstractServiceClientClassCompos
       List<Sample> samples) {
     if (!service.hasAnyEnabledMethodsForTransport(Transport.REST)) {
       return super.createClassHeaderComments(
-          service, typeStore, resourceNames, messageTypes, samples);
+          grpcRpcsToJavaMethodNames, service, typeStore, resourceNames, messageTypes, samples);
     }
     TypeNode clientType = typeStore.get(ClassNames.getServiceClientClassName(service));
     TypeNode settingsType = typeStore.get(ClassNames.getServiceSettingsClassName(service));
@@ -72,6 +73,7 @@ public class ServiceClientClassComposer extends AbstractServiceClientClassCompos
             classMethodSampleCode, credentialsSampleCode, endpointSampleCode, transportSampleCode));
 
     return ServiceClientCommentComposer.createClassHeaderComments(
+        grpcRpcsToJavaMethodNames,
         service,
         SampleCodeWriter.writeInlineSample(classMethodSampleCode.body()),
         SampleCodeWriter.writeInlineSample(credentialsSampleCode.body()),

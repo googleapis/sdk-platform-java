@@ -8,7 +8,7 @@ import static io.grpc.MethodDescriptor.generateFullMethodName;
  * side streaming, client side streaming, and bidirectional streaming. This
  * service also exposes methods that explicitly implement server delay, and
  * paginated calls. Set the 'showcase-trailer' metadata key on any method
- * to have the values echoed in the response trailers. Set the 
+ * to have the values echoed in the response trailers. Set the
  * 'x-goog-request-params' metadata key on any method to have the values
  * echoed in the response headers.
  * </pre>
@@ -21,7 +21,7 @@ public final class EchoGrpc {
 
   private EchoGrpc() {}
 
-  public static final String SERVICE_NAME = "google.showcase.v1beta1.Echo";
+  public static final java.lang.String SERVICE_NAME = "google.showcase.v1beta1.Echo";
 
   // Static method descriptors that strictly reflect the proto.
   private static volatile io.grpc.MethodDescriptor<com.google.showcase.v1beta1.EchoRequest,
@@ -53,6 +53,37 @@ public final class EchoGrpc {
       }
     }
     return getEchoMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor<com.google.showcase.v1beta1.EchoErrorDetailsRequest,
+      com.google.showcase.v1beta1.EchoErrorDetailsResponse> getEchoErrorDetailsMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "EchoErrorDetails",
+      requestType = com.google.showcase.v1beta1.EchoErrorDetailsRequest.class,
+      responseType = com.google.showcase.v1beta1.EchoErrorDetailsResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.google.showcase.v1beta1.EchoErrorDetailsRequest,
+      com.google.showcase.v1beta1.EchoErrorDetailsResponse> getEchoErrorDetailsMethod() {
+    io.grpc.MethodDescriptor<com.google.showcase.v1beta1.EchoErrorDetailsRequest, com.google.showcase.v1beta1.EchoErrorDetailsResponse> getEchoErrorDetailsMethod;
+    if ((getEchoErrorDetailsMethod = EchoGrpc.getEchoErrorDetailsMethod) == null) {
+      synchronized (EchoGrpc.class) {
+        if ((getEchoErrorDetailsMethod = EchoGrpc.getEchoErrorDetailsMethod) == null) {
+          EchoGrpc.getEchoErrorDetailsMethod = getEchoErrorDetailsMethod =
+              io.grpc.MethodDescriptor.<com.google.showcase.v1beta1.EchoErrorDetailsRequest, com.google.showcase.v1beta1.EchoErrorDetailsResponse>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "EchoErrorDetails"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.google.showcase.v1beta1.EchoErrorDetailsRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.google.showcase.v1beta1.EchoErrorDetailsResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new EchoMethodDescriptorSupplier("EchoErrorDetails"))
+              .build();
+        }
+      }
+    }
+    return getEchoErrorDetailsMethod;
   }
 
   private static volatile io.grpc.MethodDescriptor<com.google.showcase.v1beta1.ExpandRequest,
@@ -353,7 +384,7 @@ public final class EchoGrpc {
    * side streaming, client side streaming, and bidirectional streaming. This
    * service also exposes methods that explicitly implement server delay, and
    * paginated calls. Set the 'showcase-trailer' metadata key on any method
-   * to have the values echoed in the response trailers. Set the 
+   * to have the values echoed in the response trailers. Set the
    * 'x-goog-request-params' metadata key on any method to have the values
    * echoed in the response headers.
    * </pre>
@@ -368,6 +399,21 @@ public final class EchoGrpc {
     default void echo(com.google.showcase.v1beta1.EchoRequest request,
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EchoResponse> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getEchoMethod(), responseObserver);
+    }
+
+    /**
+     * <pre>
+     * This method returns error details in a repeated "google.protobuf.Any"
+     * field. This method showcases handling errors thus encoded, particularly
+     * over REST transport. Note that GAPICs only allow the type
+     * "google.protobuf.Any" for field paths ending in "error.details", and, at
+     * run-time, the actual types for these fields must be one of the types in
+     * google/rpc/error_details.proto.
+     * </pre>
+     */
+    default void echoErrorDetails(com.google.showcase.v1beta1.EchoErrorDetailsRequest request,
+        io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EchoErrorDetailsResponse> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getEchoErrorDetailsMethod(), responseObserver);
     }
 
     /**
@@ -473,7 +519,7 @@ public final class EchoGrpc {
    * side streaming, client side streaming, and bidirectional streaming. This
    * service also exposes methods that explicitly implement server delay, and
    * paginated calls. Set the 'showcase-trailer' metadata key on any method
-   * to have the values echoed in the response trailers. Set the 
+   * to have the values echoed in the response trailers. Set the
    * 'x-goog-request-params' metadata key on any method to have the values
    * echoed in the response headers.
    * </pre>
@@ -493,7 +539,7 @@ public final class EchoGrpc {
    * side streaming, client side streaming, and bidirectional streaming. This
    * service also exposes methods that explicitly implement server delay, and
    * paginated calls. Set the 'showcase-trailer' metadata key on any method
-   * to have the values echoed in the response trailers. Set the 
+   * to have the values echoed in the response trailers. Set the
    * 'x-goog-request-params' metadata key on any method to have the values
    * echoed in the response headers.
    * </pre>
@@ -520,6 +566,22 @@ public final class EchoGrpc {
         io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EchoResponse> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getEchoMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     * <pre>
+     * This method returns error details in a repeated "google.protobuf.Any"
+     * field. This method showcases handling errors thus encoded, particularly
+     * over REST transport. Note that GAPICs only allow the type
+     * "google.protobuf.Any" for field paths ending in "error.details", and, at
+     * run-time, the actual types for these fields must be one of the types in
+     * google/rpc/error_details.proto.
+     * </pre>
+     */
+    public void echoErrorDetails(com.google.showcase.v1beta1.EchoErrorDetailsRequest request,
+        io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EchoErrorDetailsResponse> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getEchoErrorDetailsMethod(), getCallOptions()), request, responseObserver);
     }
 
     /**
@@ -633,7 +695,7 @@ public final class EchoGrpc {
    * side streaming, client side streaming, and bidirectional streaming. This
    * service also exposes methods that explicitly implement server delay, and
    * paginated calls. Set the 'showcase-trailer' metadata key on any method
-   * to have the values echoed in the response trailers. Set the 
+   * to have the values echoed in the response trailers. Set the
    * 'x-goog-request-params' metadata key on any method to have the values
    * echoed in the response headers.
    * </pre>
@@ -659,6 +721,21 @@ public final class EchoGrpc {
     public com.google.showcase.v1beta1.EchoResponse echo(com.google.showcase.v1beta1.EchoRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getEchoMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * This method returns error details in a repeated "google.protobuf.Any"
+     * field. This method showcases handling errors thus encoded, particularly
+     * over REST transport. Note that GAPICs only allow the type
+     * "google.protobuf.Any" for field paths ending in "error.details", and, at
+     * run-time, the actual types for these fields must be one of the types in
+     * google/rpc/error_details.proto.
+     * </pre>
+     */
+    public com.google.showcase.v1beta1.EchoErrorDetailsResponse echoErrorDetails(com.google.showcase.v1beta1.EchoErrorDetailsRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getEchoErrorDetailsMethod(), getCallOptions(), request);
     }
 
     /**
@@ -741,7 +818,7 @@ public final class EchoGrpc {
    * side streaming, client side streaming, and bidirectional streaming. This
    * service also exposes methods that explicitly implement server delay, and
    * paginated calls. Set the 'showcase-trailer' metadata key on any method
-   * to have the values echoed in the response trailers. Set the 
+   * to have the values echoed in the response trailers. Set the
    * 'x-goog-request-params' metadata key on any method to have the values
    * echoed in the response headers.
    * </pre>
@@ -768,6 +845,22 @@ public final class EchoGrpc {
         com.google.showcase.v1beta1.EchoRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getEchoMethod(), getCallOptions()), request);
+    }
+
+    /**
+     * <pre>
+     * This method returns error details in a repeated "google.protobuf.Any"
+     * field. This method showcases handling errors thus encoded, particularly
+     * over REST transport. Note that GAPICs only allow the type
+     * "google.protobuf.Any" for field paths ending in "error.details", and, at
+     * run-time, the actual types for these fields must be one of the types in
+     * google/rpc/error_details.proto.
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.google.showcase.v1beta1.EchoErrorDetailsResponse> echoErrorDetails(
+        com.google.showcase.v1beta1.EchoErrorDetailsRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getEchoErrorDetailsMethod(), getCallOptions()), request);
     }
 
     /**
@@ -837,14 +930,15 @@ public final class EchoGrpc {
   }
 
   private static final int METHODID_ECHO = 0;
-  private static final int METHODID_EXPAND = 1;
-  private static final int METHODID_PAGED_EXPAND = 2;
-  private static final int METHODID_PAGED_EXPAND_LEGACY = 3;
-  private static final int METHODID_PAGED_EXPAND_LEGACY_MAPPED = 4;
-  private static final int METHODID_WAIT = 5;
-  private static final int METHODID_BLOCK = 6;
-  private static final int METHODID_COLLECT = 7;
-  private static final int METHODID_CHAT = 8;
+  private static final int METHODID_ECHO_ERROR_DETAILS = 1;
+  private static final int METHODID_EXPAND = 2;
+  private static final int METHODID_PAGED_EXPAND = 3;
+  private static final int METHODID_PAGED_EXPAND_LEGACY = 4;
+  private static final int METHODID_PAGED_EXPAND_LEGACY_MAPPED = 5;
+  private static final int METHODID_WAIT = 6;
+  private static final int METHODID_BLOCK = 7;
+  private static final int METHODID_COLLECT = 8;
+  private static final int METHODID_CHAT = 9;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -866,6 +960,10 @@ public final class EchoGrpc {
         case METHODID_ECHO:
           serviceImpl.echo((com.google.showcase.v1beta1.EchoRequest) request,
               (io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EchoResponse>) responseObserver);
+          break;
+        case METHODID_ECHO_ERROR_DETAILS:
+          serviceImpl.echoErrorDetails((com.google.showcase.v1beta1.EchoErrorDetailsRequest) request,
+              (io.grpc.stub.StreamObserver<com.google.showcase.v1beta1.EchoErrorDetailsResponse>) responseObserver);
           break;
         case METHODID_EXPAND:
           serviceImpl.expand((com.google.showcase.v1beta1.ExpandRequest) request,
@@ -922,6 +1020,13 @@ public final class EchoGrpc {
               com.google.showcase.v1beta1.EchoRequest,
               com.google.showcase.v1beta1.EchoResponse>(
                 service, METHODID_ECHO)))
+        .addMethod(
+          getEchoErrorDetailsMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              com.google.showcase.v1beta1.EchoErrorDetailsRequest,
+              com.google.showcase.v1beta1.EchoErrorDetailsResponse>(
+                service, METHODID_ECHO_ERROR_DETAILS)))
         .addMethod(
           getExpandMethod(),
           io.grpc.stub.ServerCalls.asyncServerStreamingCall(
@@ -1004,9 +1109,9 @@ public final class EchoGrpc {
   private static final class EchoMethodDescriptorSupplier
       extends EchoBaseDescriptorSupplier
       implements io.grpc.protobuf.ProtoMethodDescriptorSupplier {
-    private final String methodName;
+    private final java.lang.String methodName;
 
-    EchoMethodDescriptorSupplier(String methodName) {
+    EchoMethodDescriptorSupplier(java.lang.String methodName) {
       this.methodName = methodName;
     }
 
@@ -1027,6 +1132,7 @@ public final class EchoGrpc {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new EchoFileDescriptorSupplier())
               .addMethod(getEchoMethod())
+              .addMethod(getEchoErrorDetailsMethod())
               .addMethod(getExpandMethod())
               .addMethod(getCollectMethod())
               .addMethod(getChatMethod())
