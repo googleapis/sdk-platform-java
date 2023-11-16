@@ -54,7 +54,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
-      # Java 8 tests uses JDK 11 to compile and JDK 8 to run tests.
+      # Java 8 tests uses JDK 17 to compile and JDK 8 to run tests.
       - uses: actions/setup-java@v3
         with:
           java-version: 8
@@ -69,7 +69,7 @@ jobs:
         shell: bash
         run: |
           set -x
-          export JAVA_HOME=$JAVA11_HOME
+          export JAVA_HOME=$JAVA_HOME
           export PATH=${JAVA_HOME}/bin:$PATH
           # Maven surefire plugin lets us to specify the JVM when running tests via
           # the "jvm" system property.
