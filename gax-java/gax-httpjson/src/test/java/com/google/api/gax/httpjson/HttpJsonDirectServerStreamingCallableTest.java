@@ -204,8 +204,8 @@ public class HttpJsonDirectServerStreamingCallableTest {
 
     Truth.assertThat(moneyObserver.controller).isNotNull();
     // wait for the task to complete, otherwise it may interfere with other tests, since they share
-    // the same MockService and unfinished request in this test may start reading messages designated
-    // for other tests.
+    // the same MockService and unfinished request in this test may start reading messages
+    // designated for other tests.
     Truth.assertThat(latch.await(2, TimeUnit.SECONDS)).isTrue();
   }
 
@@ -387,8 +387,11 @@ public class HttpJsonDirectServerStreamingCallableTest {
     @Override
     protected void onErrorImpl(Throwable t) {
       error = t;
-      logger.debug(error.getStackTrace());
       logger.debug(String.format("error, %s", error.getMessage()));
+      for (StackTraceElement ele : error.getStackTrace()) {
+        logger.debug(ele);
+      }
+
       latch.countDown();
     }
 
