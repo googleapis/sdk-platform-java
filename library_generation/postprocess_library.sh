@@ -87,13 +87,20 @@ docker run --rm \
   --source-repo=/pre-processed-libraries \
   --config-file=.OwlBot.yaml
 
-
-
-# install synthtool
-pushd "${scripts_root}/synthtool"
-python3 -m pip install -e .
-python3 -m pip install -r requirements.in
+# we first clone and manually build the synthtool image as part of the POC, but
+# we will pull the image from an artifact registry in the future.
+echo 'creating synthtool synthtool image'
+pushd "${output_folder}"
+git clone https://github.com/googleapis/synthtool.git
+pushd "synthtool"
+git checkout synthtool-only-image
+docker build . --iidfile synthtool-image-id
+synthtool_image_id=$(cat synthtool-image-id)
 popd # synthtool
+popd # output_folder
+
+# now we use the image to call owlbot.py
+echo 'processing owlbot.py'
 
 pushd "${scripts_root}/owlbot/src/"
 python3 -m pip install -r requirements.in
@@ -102,5 +109,5 @@ popd # owlbot/src
 # run the postprocessor
 echo 'running owl-bot post-processor'
 pushd "${workspace}"
-bash "${scripts_root}/owlbot/bin/entrypoint.sh" "${scripts_root}" "${versions_file}"
+bash "${scripts_root}/owlbot/bin/entrypoint.sh" "${scripts_root}" "${versions_file}" "${synthtool_image_id}"
 popd # workspace

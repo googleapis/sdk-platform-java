@@ -16,6 +16,26 @@
 set -ex
 scripts_root=$1
 versions_file=$2
+synthtool_image_id=$3
+workspace=$(pwd)
+
+function runWithSynthtool() {
+  python_script=$1
+
+  if [ -z "${python_script}" ]; then
+    docker run --rm \
+      -v "${workspace}:/workspace" \
+      "${synthtool_image_id}"
+  else
+    docker run --rm \
+      --entrypoint python3 \
+      -v "${python_script}:/target/script.py" \
+      -v "${workspace}:/workspace" \
+      "${synthtool_image_id}" \
+      /target/script.py
+  fi
+
+}
 
 # Runs template and etc in current working directory
 function processModule() {
@@ -23,7 +43,8 @@ function processModule() {
   echo "Generating templates and retrieving files from owl-bot-staging directory..."
   if [ -f "owlbot.py" ]
   then
-    python3 owlbot.py
+    # defaults to run owlbot.py
+    runWithSynthtool
   fi
   echo "...done"
 
@@ -39,7 +60,7 @@ function processModule() {
 
   # fix license headers
   echo "Fixing missing license headers..."
-  python3 "${scripts_root}/owlbot/src/fix-license-headers.py"
+  runWithSynthtool "${scripts_root}/owlbot/src/fix-license-headers.py"
   echo "...done"
 
   # TODO: re-enable this once we resolve thrashing
