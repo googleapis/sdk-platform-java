@@ -20,20 +20,15 @@ synthtool_image_id=$3
 workspace=$(pwd)
 
 function runWithSynthtool() {
-  python_script=$1
+  python_script="${1:-"${workspace}/owlbot.py"}"
 
-  if [ -z "${python_script}" ]; then
-    docker run --rm \
-      -v "${workspace}:/workspace" \
-      "${synthtool_image_id}"
-  else
-    docker run --rm \
-      --entrypoint python3 \
-      -v "${python_script}:/target/script.py" \
-      -v "${workspace}:/workspace" \
-      "${synthtool_image_id}" \
-      /target/script.py
-  fi
+  docker run --rm \
+    --entrypoint python3 \
+    --user $(id -u):$(id -g) \
+    -v "${python_script}:/target/script.py" \
+    -v "${workspace}:/workspace" \
+    "${synthtool_image_id}" \
+    /target/script.py
 
 }
 
