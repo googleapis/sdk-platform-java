@@ -53,7 +53,6 @@ import javax.annotation.Generated;
 
 /**
  * Generate an Option class which represents an Option parameter.
- *
  */
 public class SpannerOptionsStubClassComposer implements ClassComposer {
   private static final SpannerOptionsStubClassComposer INSTANCE =
@@ -68,6 +67,7 @@ public class SpannerOptionsStubClassComposer implements ClassComposer {
       createVaporReference("com.google.cloud.spanner", "InternalOption");
   private static final VaporReference OPTIONS =
       createVaporReference("com.google.cloud.spanner", "Options");
+  private static final Variable OPTIONS_VAR = createVarFromVaporRef(OPTIONS, "options");
 
   public static SpannerOptionsStubClassComposer instance() {
     return INSTANCE;
@@ -173,13 +173,14 @@ public class SpannerOptionsStubClassComposer implements ClassComposer {
               .build();
       getterMethods.add(getterMethod);
 
-      optionInnerClasses.add(getClassForOptionProtoField(field, classRef));
+      optionInnerClasses.add(getInnerClassForOptionProtoField(field, classRef));
     }
 
     allMethods.addAll(setterMethods);
     allMethods.addAll(hasMethods);
     allMethods.addAll(getterMethods);
 
+    // TODO handle the equals and hashcode methods
     // generate outer main class
     ClassDefinition outerClassDef =
         ClassDefinition.builder()
@@ -236,7 +237,7 @@ public class SpannerOptionsStubClassComposer implements ClassComposer {
    *
    * @return
    */
-  private static ClassDefinition getClassForOptionProtoField(
+  private static ClassDefinition getInnerClassForOptionProtoField(
       final Map.Entry<Field, String> field, final VaporReference classRef) {
     String nameInLoweCamelCase = JavaStyle.toLowerCamelCase(field.getKey().name());
     String nameInUpperCamelCase = JavaStyle.toUpperCamelCase(field.getKey().name());
@@ -254,6 +255,7 @@ public class SpannerOptionsStubClassComposer implements ClassComposer {
     VariableExpr thisVariableExpr = createVarExprFromRefThisExpr(variable, classRef);
     AssignmentExpr thisAssignExpr = createAssignmentExpr(thisVariableExpr,
         VariableExpr.withVariable(variable));
+    // TODO : explore what's a clean strategy to pass datatypes instead of getBoxedTypeWithFallBack
     MethodDefinition constructor =
         MethodDefinition.constructorBuilder()
             .setArguments(
@@ -269,14 +271,23 @@ public class SpannerOptionsStubClassComposer implements ClassComposer {
             .build();
 
     // create append method
+    // options.maxBatchingDelayMs = maxBatchingDelayMs;
+    VariableExpr optionNameFromOptionsClass = fieldFromShelfObjectExpr(OPTIONS_VAR, variable);
+    AssignmentExpr optionsAssignExpr = createAssignmentExpr(optionNameFromOptionsClass,
+        VariableExpr.withVariable(variable));
+
     MethodDefinition appendToOptions =
         MethodDefinition.builder()
             .setAnnotations(Arrays.asList(AnnotationNode.OVERRIDE))
-            .setArguments()
+            .setArguments(VariableExpr.builder()
+                .setIsDecl(true)
+                .setVariable(OPTIONS_VAR)
+                .build())
             .setReturnType(TypeNode.VOID)
             .setName("appendToOptions")
             .setScope(ScopeNode.PUBLIC)
-            .setBody(Arrays.asList())
+            .setBody(
+                Arrays.asList(ExprStatement.withExpr(optionsAssignExpr)))
             .build();
 
     ClassDefinition classDefinition =
@@ -329,6 +340,16 @@ public class SpannerOptionsStubClassComposer implements ClassComposer {
     return new TypeStore(concreteClazzes);
   }
 
+  private static VariableExpr fieldFromShelfObjectExpr(Variable variable, Variable parentField) {
+    return createVarExprFromRefVarExpr(parentField, VariableExpr.withVariable(variable));
+  }
+
+  private static VariableExpr createVarExprFromRefVarExpr(Variable var, Expr varRef) {
+    return VariableExpr.builder().setVariable(var).setExprReferenceExpr(varRef).build();
+  }
+  private static Variable createVarFromVaporRef(VaporReference ref, String name) {
+    return Variable.builder().setName(name).setType(TypeNode.withReference(ref)).build();
+  }
   private static VaporReference createVaporReference(String pkgName, String name) {
     return VaporReference.builder().setPakkage(pkgName).setName(name).build();
   }
