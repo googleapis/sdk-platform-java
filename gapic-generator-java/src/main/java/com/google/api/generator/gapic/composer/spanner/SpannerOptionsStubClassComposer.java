@@ -272,7 +272,7 @@ public class SpannerOptionsStubClassComposer implements ClassComposer {
 
     // create append method
     // options.maxBatchingDelayMs = maxBatchingDelayMs;
-    VariableExpr optionNameFromOptionsClass = fieldFromShelfObjectExpr(OPTIONS_VAR, variable);
+    VariableExpr optionNameFromOptionsClass = fieldFromParentObjectExpr(OPTIONS_VAR, variable);
     AssignmentExpr optionsAssignExpr = createAssignmentExpr(optionNameFromOptionsClass,
         VariableExpr.withVariable(variable));
 
@@ -340,7 +340,7 @@ public class SpannerOptionsStubClassComposer implements ClassComposer {
     return new TypeStore(concreteClazzes);
   }
 
-  private static VariableExpr fieldFromShelfObjectExpr(Variable variable, Variable parentField) {
+  private static VariableExpr fieldFromParentObjectExpr(Variable variable, Variable parentField) {
     return createVarExprFromRefVarExpr(parentField, VariableExpr.withVariable(variable));
   }
 
