@@ -387,7 +387,12 @@ public class HttpJsonDirectServerStreamingCallableTest {
     @Override
     protected void onErrorImpl(Throwable t) {
       error = t;
-      logger.debug(String.format("error, %s", error.getMessage()));
+      logger.debug(String.format("error message: %s", error.getMessage()));
+      logger.debug(String.format("error cause: %s", error.getCause()));
+      logger.debug(
+          String.format(
+              "error class: %s.%s",
+              error.getClass().getPackage(), error.getClass().getSimpleName()));
       for (StackTraceElement ele : error.getStackTrace()) {
         logger.debug(ele);
       }
