@@ -60,9 +60,9 @@ public class SpannerOptionsStubClassComposer implements ClassComposer {
   private static final TypeStore FIXED_TYPESTORE = createStaticTypes();
 
   private static final VaporReference READ_AND_QUERY_OPTION =
-      createVaporReference("com.google.cloud.spanner", "ReadAndQueryOption");
+      createVaporReference("com.google.cloud.spanner", "ReadAndQueryOption", "Options");
   private static final VaporReference TRANSACTION_OPTION =
-      createVaporReference("com.google.cloud.spanner", "TransactionOption");
+      createVaporReference("com.google.cloud.spanner", "TransactionOption", "Options");
   private static final VaporReference INTERNAL_OPTION_REF =
       createVaporReference("com.google.cloud.spanner", "InternalOption");
   private static final VaporReference OPTIONS =
@@ -222,7 +222,7 @@ public class SpannerOptionsStubClassComposer implements ClassComposer {
 
   /**
    *
-   * static final class MaxBatchingDelayMsOption extends InternalOption implements TransactionOption {
+   * static final class MaxBatchingDelayMsOption extends InternalOption implements Options.TransactionOption {
    *   private final Integer maxBatchingDelayMs;
    *
    *   MaxBatchingDelayMsOption(Integer maxBatchingDelayMs) {
@@ -310,8 +310,10 @@ public class SpannerOptionsStubClassComposer implements ClassComposer {
     switch (value) {
       case "TransactionOption" :
         return TypeNode.withReference(TRANSACTION_OPTION);
+      case "ReadAndQueryOption" :
+        return TypeNode.withReference(READ_AND_QUERY_OPTION);
       default:
-        return TypeNode.withReference(OPTIONS);
+        throw new RuntimeException(String.format("Invalid value => %s provided.", value));
     }
   }
 
@@ -350,8 +352,11 @@ public class SpannerOptionsStubClassComposer implements ClassComposer {
   private static Variable createVarFromVaporRef(VaporReference ref, String name) {
     return Variable.builder().setName(name).setType(TypeNode.withReference(ref)).build();
   }
-  private static VaporReference createVaporReference(String pkgName, String name) {
-    return VaporReference.builder().setPakkage(pkgName).setName(name).build();
+  private static VaporReference createVaporReference(String pkgName,
+      String name, String... enclosingClassNames) {
+    return VaporReference.builder().setPakkage(pkgName)
+        .setName(name)
+        .setEnclosingClassNames(enclosingClassNames).build();
   }
 
   private static VariableExpr createVarExprFromRefThisExpr(Variable var, VaporReference ref) {
