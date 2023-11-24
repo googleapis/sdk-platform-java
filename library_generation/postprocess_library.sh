@@ -75,7 +75,7 @@ git init
 git commit --allow-empty -m 'empty commit'
 popd # pre_processed_libs_folder
 
-owlbot_cli_image_sha=$(cat "${scripts_root}/configuration/owlbot-cli-sha")
+owlbot_cli_image_sha=$(cat "${scripts_root}/configuration/owlbot-cli-sha" | grep "sha256")
 
 docker run --rm \
   --user $(id -u):$(id -g) \
