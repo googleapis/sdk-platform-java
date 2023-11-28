@@ -1,9 +1,0 @@
-gcp-docuploader
-gcp-releasetool>=1.10.5 # required for compatibility with cryptography>=39.x
-typing-extensions
-click<8.1.0
-jinja2
-keyring
-secretstorage
-cryptography>=39.0.1
-certifi>=2022.12.07
