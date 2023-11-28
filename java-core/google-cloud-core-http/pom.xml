@@ -70,6 +70,10 @@
       <groupId>com.google.api</groupId>
       <artifactId>api-common</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.google.errorprone</groupId>
+      <artifactId>error_prone_annotations</artifactId>
+    </dependency>
 
     <!-- Test dependencies -->
     <dependency>
