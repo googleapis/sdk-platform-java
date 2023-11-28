@@ -69,6 +69,7 @@
               <outputDirectory>src/test/resources</outputDirectory>
               <!-- Set this to always download the latest version and overwrite the existing file -->
               <overwrite>true</overwrite>
+              <!-- Don't use the local maven download plugin cache -->
               <skipCache>true</skipCache>
             </configuration>
           </execution>
