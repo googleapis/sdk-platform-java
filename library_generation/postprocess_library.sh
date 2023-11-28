@@ -75,13 +75,15 @@ git init
 git commit --allow-empty -m 'empty commit'
 popd # pre_processed_libs_folder
 
+owlbot_cli_image_sha=$(cat "${scripts_root}/configuration/owlbot-cli-sha" | grep "sha256")
+
 docker run --rm \
   --user $(id -u):$(id -g) \
   -v "${workspace}:/repo" \
   -v "${pre_processed_libs_folder}:/pre-processed-libraries" \
   -w /repo \
   --env HOME=/tmp \
-  gcr.io/cloud-devrel-public-resources/owlbot-cli:latest \
+  gcr.io/cloud-devrel-public-resources/owlbot-cli@"${owlbot_cli_image_sha}" \
   copy-code \
   --source-repo-commit-hash=none \
   --source-repo=/pre-processed-libraries \
