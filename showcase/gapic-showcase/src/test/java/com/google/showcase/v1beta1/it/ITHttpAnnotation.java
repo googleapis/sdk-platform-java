@@ -29,6 +29,7 @@ import com.google.showcase.v1beta1.ComplianceSuite;
 import com.google.showcase.v1beta1.RepeatRequest;
 import com.google.showcase.v1beta1.RepeatResponse;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.security.GeneralSecurityException;
@@ -72,7 +73,22 @@ public class ITHttpAnnotation {
   @BeforeClass
   public static void createClients() throws IOException, GeneralSecurityException {
     ComplianceSuite.Builder builder = ComplianceSuite.newBuilder();
+    try (BufferedReader bufferedReader =
+        new BufferedReader(
+            new InputStreamReader(
+                Objects.requireNonNull(
+                    ITHttpAnnotation.class
+                        .getClassLoader()
+                        .getResourceAsStream("compliance_suite.json"))))) {
+      StringBuilder stringBuilder = new StringBuilder();
+      String line;
+      while ((line = bufferedReader.readLine()) != null) {
+        stringBuilder.append(line).append("\n");
+      }
+      System.out.println(stringBuilder.toString());
+    }
     JsonFormat.parser()
+//        .ignoringUnknownFields()
         .merge(
             new InputStreamReader(
                 Objects.requireNonNull(
