@@ -15,7 +15,7 @@
   <parent>
     <groupId>com.google.cloud</groupId>
     <artifactId>google-cloud-shared-config</artifactId>
-    <version>1.6.0</version>
+    <version>1.6.1</version>
     <relativePath/>
   </parent>
 
@@ -34,7 +34,7 @@
       <dependency>
         <groupId>com.google.cloud</groupId>
         <artifactId>google-cloud-shared-dependencies</artifactId>
-        <version>3.18.1-SNAPSHOT</version><!-- {x-version-update:google-cloud-shared-dependencies:current} -->
+        <version>3.19.1-SNAPSHOT</version><!-- {x-version-update:google-cloud-shared-dependencies:current} -->
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -108,7 +108,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-surefire-plugin</artifactId>
-            <version>3.1.2</version>
+            <version>3.2.2</version>
             <configuration>
               <reportNameSuffix>sponge_log</reportNameSuffix>
               <skipTests>${skipUnitTests}</skipTests>
@@ -132,7 +132,7 @@
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
-            <version>3.1.0</version>
+            <version>3.1.1</version>
             <inherited>false</inherited>
             <executions>
               <execution>
@@ -160,7 +160,7 @@
           <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>exec-maven-plugin</artifactId>
-            <version>3.1.0</version>
+            <version>3.1.1</version>
             <inherited>false</inherited>
             <executions>
               <execution>

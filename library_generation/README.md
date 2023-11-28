@@ -21,6 +21,13 @@ In order to generate a GAPIC library, you need to pull `google/` from [googleapi
 and put it into `output` since protos in `google/` are likely referenced by 
 protos from which the library are generated.
 
+In order to generate a post-processed GAPIC library, you need to pull the
+original repository (i.e. google-cloud-java) and pass the monorepo as
+`destination_path` (e.g. `google-cloud-java/java-asset`). 
+This repository will be the source of truth for pre-existing
+pom.xml files, owlbot.py and .OwlBot.yaml files. See the option belows for
+custom postprocessed generations (e.g. custom `versions.txt` file).
+
 ## Parameters to run `generate_library.sh`
 
 You need to run the script with the following parameters.
@@ -40,7 +47,7 @@ Use `-d` or `--destination_path` to specify the value.
    
 Note that you do not need to create `$destination_path` beforehand.
 
-The directory structure of the generated library is
+The directory structure of the generated library _withtout_ postprocessing is
 ```
 $destination_path
   |_gapic-*
@@ -65,7 +72,35 @@ $destination_path
 ```
 You can't build the library as-is since it does not have `pom.xml` or `build.gradle`.
 To use the library, copy the generated files to the corresponding directory
-of a library repository, e.g., `google-cloud-java`.
+of a library repository, e.g., `google-cloud-java` or use the
+`enable_postprocessing` flag on top of a pre-existing generated library to
+produce the necessary pom files.
+
+For `asset/v1` the directory structure of the generated library _with_ postprocessing is
+```
+
+├── google-cloud-asset
+│   └── src
+│       ├── main
+│       │   ├── java
+│       │   └── resources
+│       └── test
+│           └── java
+├── google-cloud-asset-bom
+├── grpc-google-cloud-asset-v*
+│   └── src
+│       └── main
+│           └── java
+├── proto-google-cloud-asset-v*
+│   └── src
+│       └── main
+│           ├── java
+│           └── proto
+└── samples
+    └── snippets
+        └── generated
+
+```
 
 ### gapic_generator_version
 You can find the released version of gapic-generator-java in [maven central](https://repo1.maven.org/maven2/com/google/api/gapic-generator-java/).
@@ -150,8 +185,18 @@ Use `--include_samples` to specify the value.
 Choose the protoc binary type from https://github.com/protocolbuffers/protobuf/releases.
 Default is "linux-x86_64".
 
-## An example to generate a client library
-```
+### enable_postprocessing (optional)
+Whether to enable the post-processing steps (usage of owlbot) in the generation
+of this library
+Default is "true".
+
+### versions_file (optional)
+It must point to a versions.txt file containing the versions the post-processed
+poms will have. It is required when `enable_postprocessing` is `"true"`
+
+
+## An example to generate a non post-processed client library
+```bash
 library_generation/generate_library.sh \
 -p google/cloud/confidentialcomputing/v1 \
 -d google-cloud-confidentialcomputing-v1-java \
@@ -161,5 +206,22 @@ library_generation/generate_library.sh \
 --gapic_additional_protos "google/cloud/common_resources.proto google/cloud/location/locations.proto" \
 --transport grpc+rest \
 --rest_numeric_enums true \
+--enable_postprocessing false \
+--include_samples true
+```
+
+## An example to generate a library with postprocessing
+```bash
+library_generation/generate_library.sh \
+-p google/cloud/confidentialcomputing/v1 \
+-d google-cloud-confidentialcomputing-v1-java \
+--gapic_generator_version 2.24.0 \
+--protobuf_version 23.2 \
+--grpc_version 1.55.1 \
+--gapic_additional_protos "google/cloud/common_resources.proto google/cloud/location/locations.proto" \
+--transport grpc+rest \
+--rest_numeric_enums true \
+--enable_postprocessing true \
+--versions_file "path/to/versions.txt" \
 --include_samples true
 ```

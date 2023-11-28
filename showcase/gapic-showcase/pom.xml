@@ -19,7 +19,7 @@
   </parent>
 
   <properties>
-    <gapic-showcase.version>0.28.2</gapic-showcase.version>
+    <gapic-showcase.version>0.29.0</gapic-showcase.version>
   </properties>
 
   <build>
@@ -54,7 +54,7 @@
       <plugin>
         <groupId>com.googlecode.maven-download-plugin</groupId>
         <artifactId>download-maven-plugin</artifactId>
-        <version>1.6.8</version>
+        <version>1.7.1</version>
         <executions>
           <execution>
             <id>download-compliance-suite</id>
@@ -69,6 +69,8 @@
               <outputDirectory>src/test/resources</outputDirectory>
               <!-- Set this to always download the latest version and overwrite the existing file -->
               <overwrite>true</overwrite>
+              <!-- Don't use the local maven download plugin cache -->
+              <skipCache>true</skipCache>
             </configuration>
           </execution>
         </executions>
