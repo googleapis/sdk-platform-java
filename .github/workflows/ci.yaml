@@ -248,7 +248,7 @@ jobs:
       - name: Download common resources proto
         run: |
           cd gapic-generator-java
-          mvn clean download:wget@generate-resources-proto
+          mvn clean download:wget@download-metadata-proto
           cd target/generated-sources/proto
           echo "***********PRINTING CONTENTS OF GAPIC METADATA PROTO********"
           cat gapic_metadata.proto
