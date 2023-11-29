@@ -243,10 +243,9 @@ jobs:
           distribution: temurin
           # Temporarily disable cache to force download plugin to use 1.6.8
 #          cache: maven
-      - name: Download dependencies
+      - name: Install sdk-platform-java
         working-directory: gapic-generator-java
-        run: |
-          mvn dependency:go-offline
+        run: mvn clean install -T 1C
       - name: Download metadata proto
         working-directory: gapic-generator-java
         run: |
