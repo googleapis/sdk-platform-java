@@ -16,12 +16,17 @@
       uses: stCarolas/setup-maven@v4.5
       with:
         maven-version: 3.8.2
+    - name: Get version of java-shared-dependencies
+      shell: bash
+      run: |
+        echo "shared_dependencies_version=$(mvn help:evaluate -Dexpression=project.version -DforceStdout -q)" >> "$GITHUB_ENV"
+      working-directory: java-shared-dependencies
     - name: Install check
       shell: bash
       run: mvn clean install
       working-directory: java-shared-dependencies/unmanaged-dependency-check
     - name: Run unmanaged dependency check
       shell: bash
-      run: mvn exec:java -Dexec.args="3.18.0 ${{ inputs.bom-path}}"
+      run: mvn exec:java -Dexec.args="${{env.shared_dependencies_version}} ${{ inputs.bom-path}}"
       working-directory: java-shared-dependencies/unmanaged-dependency-check
         
