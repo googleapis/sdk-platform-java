@@ -282,6 +282,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Unmanaged dependency check
-      uses: java-shared-dependencies/unmanaged-dependency-check
+      uses: ./java-shared-dependencies/unmanaged-dependency-check
       with:
         bom-path: gapic-generator-java-bom/pom.xml
