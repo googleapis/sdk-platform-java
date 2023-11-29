@@ -242,12 +242,13 @@ jobs:
           java-version: 17
           distribution: temurin
           cache: maven
-      - name: Install sdk-platform-java
+      - name: Compile gapic-generator-java
+        working-directory: gapic-generator-java
         run: |
-          mvn clean install -B -ntp -T 1C -DskipTests
-      - name: Download common resources proto
+          mvn clean compile -T 1C -B -ntp -DskipTests -Denforcer.skip -Dclirr.skip -Dprotoc.skip -Ddownload.plugin.skip
+      - name: Download metadata proto
+        working-directory: gapic-generator-java
         run: |
-          cd gapic-generator-java
           mvn clean download:wget@download-metadata-proto
           cd target/generated-sources/proto
           echo "***********PRINTING CONTENTS OF GAPIC METADATA PROTO********"
@@ -256,7 +257,8 @@ jobs:
           grep -n "[^\x00-\x7F]" gapic_metadata.proto
       - name: Compile proto file
         run: |
-          mvn protobuf:compile
+          mvn protobuf:compile@compile-downloaded-protos
+          ls generated-sources/protobuf/java/com/google/gapic/metadata
 #      - name: Install sdk-platform-java and showcase to local maven repository
 #        run: |
 #          mvn install -B -ntp -T 1C -DskipTests
