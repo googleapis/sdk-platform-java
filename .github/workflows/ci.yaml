@@ -235,8 +235,9 @@ jobs:
     steps:
       - name: Checkout @ target branch
         uses: actions/checkout@v3
-        with:
-          ref: ${{ github.base_ref }}
+        # Temporarily use PR branch
+#        with:
+#          ref: ${{ github.base_ref }}
       - uses: actions/setup-java@v3
         with:
           java-version: 17
