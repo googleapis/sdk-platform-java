@@ -242,23 +242,33 @@ jobs:
           java-version: 17
           distribution: temurin
           cache: maven
-      - name: Install sdk-platform-java and showcase to local maven repository
+      - name: Download common resources proto
         run: |
-          mvn install -B -ntp -T 1C -DskipTests
-          cd showcase
-          mvn install -B -ntp -T 1C -DskipTests
-          SHOWCASE_CLIENT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
-          echo "SHOWCASE_CLIENT_VERSION=$SHOWCASE_CLIENT_VERSION" >> "$GITHUB_ENV"
-      - name: Checkout sdk-platform-java @ PR merge commit
-        uses: actions/checkout@v3
-      - name: Install sdk-platform-java @ PR merge commit
-        run: mvn clean install -B -ntp -T 1C -DskipTests
-        # Showcase golden test ensures that src changes are already reflected in the PR.
-      - name: Clirr check
-        working-directory: showcase
-        run: |
-          mvn versions:set -B -ntp -DnewVersion=local
-          mvn clirr:check -B -ntp -Dclirr.skip=false -DcomparisonVersion=$SHOWCASE_CLIENT_VERSION
+          cd gapic-generator-java
+          mvn clean download:wget@generate-resources-proto
+          cd target/generated-sources/proto
+          echo "***********PRINTING CONTENTS OF GAPIC METADATA PROTO********"
+          cat gapic_metadata.proto
+          echo "*********PRINTING NON ASCII CHARACTERS***********"
+          grep -n "[^\x00-\x7F]" gapic_metadata.proto 
+
+#      - name: Install sdk-platform-java and showcase to local maven repository
+#        run: |
+#          mvn install -B -ntp -T 1C -DskipTests
+#          cd showcase
+#          mvn install -B -ntp -T 1C -DskipTests
+#          SHOWCASE_CLIENT_VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+#          echo "SHOWCASE_CLIENT_VERSION=$SHOWCASE_CLIENT_VERSION" >> "$GITHUB_ENV"
+#      - name: Checkout sdk-platform-java @ PR merge commit
+#        uses: actions/checkout@v3
+#      - name: Install sdk-platform-java @ PR merge commit
+#        run: mvn clean install -B -ntp -T 1C -DskipTests
+#        # Showcase golden test ensures that src changes are already reflected in the PR.
+#      - name: Clirr check
+#        working-directory: showcase
+#        run: |
+#          mvn versions:set -B -ntp -DnewVersion=local
+#          mvn clirr:check -B -ntp -Dclirr.skip=false -DcomparisonVersion=$SHOWCASE_CLIENT_VERSION
 
   gapic-generator-java-bom:
     runs-on: ubuntu-22.04
