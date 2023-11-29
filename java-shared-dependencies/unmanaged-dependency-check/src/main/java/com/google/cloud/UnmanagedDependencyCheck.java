@@ -1,5 +1,7 @@
 package com.google.cloud;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 import com.google.cloud.tools.opensource.dependencies.Bom;
 import com.google.cloud.tools.opensource.dependencies.MavenRepositoryException;
 import java.nio.file.Paths;
@@ -9,6 +11,12 @@ import java.util.stream.Collectors;
 import org.eclipse.aether.resolution.ArtifactDescriptorException;
 
 public class UnmanagedDependencyCheck {
+
+  public static void main(String[] args)
+      throws MavenRepositoryException, ArtifactDescriptorException {
+    checkArgument(args.length == 2, "The length of the inputs should be 2");
+    System.out.println(getUnmanagedDependencies(args[0], args[1]));
+  }
 
   /**
    * Returns dependency coordinates that are not managed by shared dependency BOM.
