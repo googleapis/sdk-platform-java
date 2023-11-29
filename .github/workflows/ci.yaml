@@ -277,11 +277,11 @@ jobs:
       with:
         bom-path: gapic-generator-java-bom/pom.xml
 
-  bom_unmanaged_dependency_check:
+  unmanaged_dependency_check:
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
     - name: Unmanaged dependency check
       uses: ./java-shared-dependencies/unmanaged-dependency-check
       with:
-        bom-path: gapic-generator-java-bom/pom.xml
+        bom-path: ../../gapic-generator-java-bom/pom.xml

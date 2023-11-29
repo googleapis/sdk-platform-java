@@ -18,10 +18,10 @@
         maven-version: 3.8.2
     - name: Install check
       shell: bash
-      run: |
-        mvn clean install
+      run: mvn clean install
+      working-directory: java-shared-dependencies/unmanaged-dependency-check
     - name: Run unmanaged dependency check
       shell: bash
-      run: |
-        mvn exec:java -Dexec.args="3.18.0 ${{ inputs.bom-path}}"
+      run: mvn exec:java -Dexec.args="3.18.0 ${{ inputs.bom-path}}"
+      working-directory: java-shared-dependencies/unmanaged-dependency-check
         
