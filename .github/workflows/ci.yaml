@@ -252,7 +252,7 @@ jobs:
       - name: Checkout sdk-platform-java @ PR merge commit
         uses: actions/checkout@v3
       - name: Install sdk-platform-java @ PR merge commit
-        run: mvn install -B -ntp -T 1C -DskipTests
+        run: mvn clean install -B -ntp -T 1C -DskipTests
         # Showcase golden test ensures that src changes are already reflected in the PR.
       - name: Clirr check
         working-directory: showcase
