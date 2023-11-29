@@ -241,7 +241,8 @@ jobs:
         with:
           java-version: 17
           distribution: temurin
-          cache: maven
+          # Temporarily disable cache to force download plugin to use 1.6.8
+#          cache: maven
       - name: Download dependencies
         working-directory: gapic-generator-java
         run: |
@@ -256,6 +257,7 @@ jobs:
           echo "*********PRINTING NON ASCII CHARACTERS***********"
           grep -n "[^\x00-\x7F]" gapic_metadata.proto
       - name: Compile proto file
+        working-directory: gapic-generator-java
         run: |
           mvn protobuf:compile@compile-downloaded-protos
           ls generated-sources/protobuf/java/com/google/gapic/metadata
