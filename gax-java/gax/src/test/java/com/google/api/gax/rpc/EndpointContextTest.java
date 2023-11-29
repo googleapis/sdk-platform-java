@@ -41,9 +41,8 @@ import org.junit.runners.JUnit4;
 
 @RunWith(JUnit4.class)
 public class EndpointContextTest {
-
-  public static final String DEFAULT_ENDPOINT = "test.googleapis.com";
-  public static final String DEFAULT_MTLS_ENDPOINT = "test.mtls.googleapis.com";
+  private static final String DEFAULT_ENDPOINT = "test.googleapis.com";
+  private static final String DEFAULT_MTLS_ENDPOINT = "test.mtls.googleapis.com";
   private static final EndpointContext DEFAULT_ENDPOINT_CONTEXT =
       EndpointContext.newBuilder()
           .setClientSettingsEndpoint(DEFAULT_ENDPOINT)
