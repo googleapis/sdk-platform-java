@@ -242,6 +242,9 @@ jobs:
           java-version: 17
           distribution: temurin
           cache: maven
+      - name: Install sdk-platform-java
+        run: |
+          mvn clean install -B -ntp -T 1C -DskipTests
       - name: Download common resources proto
         run: |
           cd gapic-generator-java
