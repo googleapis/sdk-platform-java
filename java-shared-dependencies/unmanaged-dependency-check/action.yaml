@@ -1,0 +1,27 @@
+  name: "Unmanaged dependency check"
+  description: "Validation for "
+  inputs:
+    bom-path:
+      description: "The relative path from the repository root to the pom.xml file"
+      required: true
+  runs:
+    using: "composite"
+    steps:
+    - uses: actions/setup-java@v3
+      with:
+        distribution: temurin
+        java-version: 11
+        cache: maven
+    - name: Set up Maven
+      uses: stCarolas/setup-maven@v4.5
+      with:
+        maven-version: 3.8.2
+    - name: Install check
+      shell: bash
+      run: |
+        mvn clean install
+    - name: Run unmanaged dependency check
+      shell: bash
+      run: |
+        mvn exec:java -Dexec.args="3.18.0 ${{ inputs.bom-path}}"
+        
