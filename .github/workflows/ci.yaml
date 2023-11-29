@@ -242,10 +242,9 @@ jobs:
           java-version: 17
           distribution: temurin
           cache: maven
-      - name: Compile gapic-generator-java
-        working-directory: gapic-generator-java
+      - name: Install sdk-platform-java
         run: |
-          mvn clean compile -T 1C -B -ntp -DskipTests -Denforcer.skip -Dclirr.skip -Dprotoc.skip -Ddownload.plugin.skip
+          mvn clean install -T 1C -B -ntp -DskipTests -Denforcer.skip -Dclirr.skip -Dprotoc.skip -Ddownload.plugin.skip
       - name: Download metadata proto
         working-directory: gapic-generator-java
         run: |
