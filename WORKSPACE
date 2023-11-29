@@ -7,8 +7,8 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 # which in its turn, prioritizes actual generated clients runtime dependencies
 # over the generator dependencies.
 local_repository(
-    name = "com_google_api_gax_java",
-    path = "gax-java",
+   name = "com_google_api_gax_java",
+   path = "gax-java",
 )
 
 load("@com_google_api_gax_java//:repository_rules.bzl", "com_google_api_gax_java_properties")
