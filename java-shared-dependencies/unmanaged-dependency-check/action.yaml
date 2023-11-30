@@ -27,6 +27,11 @@
       working-directory: java-shared-dependencies/unmanaged-dependency-check
     - name: Run unmanaged dependency check
       shell: bash
-      run: mvn exec:java -Dexec.args="${{env.shared_dependencies_version}} ${{ inputs.bom-path}}"
+      run: |
+        unmanaged_dependencies=$(mvn exec:java -Dexec.args="${{env.shared_dependencies_version}} ${{ inputs.bom-path}}")
+        if [[ "${unmanaged_dependencies}" != "[]" ]]; then
+          echo "${unmanaged_dependencies}"
+          exit 1
+        fi
       working-directory: java-shared-dependencies/unmanaged-dependency-check
         
