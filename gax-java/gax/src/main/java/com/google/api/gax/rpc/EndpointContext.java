@@ -33,7 +33,6 @@ import com.google.api.core.InternalApi;
 import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Strings;
 import java.io.IOException;
 import javax.annotation.Nullable;
 
@@ -67,23 +66,19 @@ public abstract class EndpointContext {
     MtlsProvider mtlsProvider = mtlsProvider() == null ? new MtlsProvider() : mtlsProvider();
     String customEndpoint =
         transportChannelEndpoint() != null ? transportChannelEndpoint() : clientSettingsEndpoint();
-    if (Strings.isNullOrEmpty(customEndpoint)) {
-      throw new IllegalStateException("Endpoint cannot be null or empty");
-    } else {
-      resolvedEndpoint =
-          mtlsEndpointResolver(
-              mtlsProvider, customEndpoint, mtlsEndpoint(), switchToMtlsEndpointAllowed());
-    }
+    resolvedEndpoint =
+        mtlsEndpointResolver(
+            customEndpoint, mtlsEndpoint(), switchToMtlsEndpointAllowed(), mtlsProvider);
   }
 
   // This takes in parameters because determineEndpoint()'s logic will be updated
   // to pass custom values in
   @VisibleForTesting
   String mtlsEndpointResolver(
-      MtlsProvider mtlsProvider,
       String endpoint,
       String mtlsEndpoint,
-      boolean switchToMtlsEndpointAllowed)
+      boolean switchToMtlsEndpointAllowed,
+      MtlsProvider mtlsProvider)
       throws IOException {
     if (switchToMtlsEndpointAllowed && mtlsProvider != null) {
       switch (mtlsProvider.getMtlsEndpointUsagePolicy()) {

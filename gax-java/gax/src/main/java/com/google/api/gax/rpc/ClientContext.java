@@ -37,7 +37,6 @@ import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.ExecutorAsBackgroundResource;
 import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.rpc.internal.QuotaProjectIdHidingCredentials;
-import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.api.gax.tracing.BaseApiTracerFactory;
 import com.google.auth.Credentials;
@@ -141,29 +140,6 @@ public abstract class ClientContext {
    */
   public static ClientContext create(ClientSettings settings) throws IOException {
     return create(settings.getStubSettings());
-  }
-
-  /** Returns the endpoint that should be used. See https://google.aip.dev/auth/4114. */
-  static String getEndpoint(
-      String endpoint,
-      String mtlsEndpoint,
-      boolean switchToMtlsEndpointAllowed,
-      MtlsProvider mtlsProvider)
-      throws IOException {
-    if (switchToMtlsEndpointAllowed) {
-      switch (mtlsProvider.getMtlsEndpointUsagePolicy()) {
-        case ALWAYS:
-          return mtlsEndpoint;
-        case NEVER:
-          return endpoint;
-        default:
-          if (mtlsProvider.useMtlsClientCertificate() && mtlsProvider.getKeyStore() != null) {
-            return mtlsEndpoint;
-          }
-          return endpoint;
-      }
-    }
-    return endpoint;
   }
 
   /**

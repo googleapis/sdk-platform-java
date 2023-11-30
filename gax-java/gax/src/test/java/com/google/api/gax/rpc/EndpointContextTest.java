@@ -29,8 +29,6 @@
  */
 package com.google.api.gax.rpc;
 
-import static org.junit.Assert.assertThrows;
-
 import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.api.gax.rpc.testing.FakeMtlsProvider;
 import com.google.common.truth.Truth;
@@ -60,7 +58,7 @@ public class EndpointContextTest {
             false);
     Truth.assertThat(
             DEFAULT_ENDPOINT_CONTEXT.mtlsEndpointResolver(
-                mtlsProvider, DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, false))
+                DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, false, mtlsProvider))
         .isEqualTo(DEFAULT_ENDPOINT);
   }
 
@@ -75,7 +73,7 @@ public class EndpointContextTest {
             false);
     Truth.assertThat(
             DEFAULT_ENDPOINT_CONTEXT.mtlsEndpointResolver(
-                mtlsProvider, DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, true))
+                DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, true, mtlsProvider))
         .isEqualTo(DEFAULT_MTLS_ENDPOINT);
   }
 
@@ -90,7 +88,7 @@ public class EndpointContextTest {
             false);
     Truth.assertThat(
             DEFAULT_ENDPOINT_CONTEXT.mtlsEndpointResolver(
-                mtlsProvider, DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, true))
+                DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, true, mtlsProvider))
         .isEqualTo(DEFAULT_ENDPOINT);
   }
 
@@ -106,7 +104,7 @@ public class EndpointContextTest {
             false);
     Truth.assertThat(
             DEFAULT_ENDPOINT_CONTEXT.mtlsEndpointResolver(
-                mtlsProvider, DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, true))
+                DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, true, mtlsProvider))
         .isEqualTo(DEFAULT_MTLS_ENDPOINT);
   }
 
@@ -118,18 +116,7 @@ public class EndpointContextTest {
         new FakeMtlsProvider(false, MtlsProvider.MtlsEndpointUsagePolicy.AUTO, null, "", false);
     Truth.assertThat(
             DEFAULT_ENDPOINT_CONTEXT.mtlsEndpointResolver(
-                mtlsProvider, DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, true))
+                DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, true, mtlsProvider))
         .isEqualTo(DEFAULT_ENDPOINT);
-  }
-
-  @Test
-  public void determineEndpoint_nullCustomEndpoints_throwsIllegalStateException() {
-    EndpointContext endpointContext =
-        DEFAULT_ENDPOINT_CONTEXT
-            .toBuilder()
-            .setClientSettingsEndpoint(null)
-            .setTransportChannelEndpoint(null)
-            .build();
-    assertThrows(IllegalStateException.class, endpointContext::determineEndpoint);
   }
 }
