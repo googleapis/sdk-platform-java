@@ -28,7 +28,7 @@
     - name: Run unmanaged dependency check
       shell: bash
       run: |
-        unmanaged_dependencies=$(mvn exec:java -Dexec.args="${{env.shared_dependencies_version}} ${{ inputs.bom-path}}" -q)
+        unmanaged_dependencies=$(mvn exec:java -Dexec.args="${{ env.shared_dependencies_version }} ${{ inputs.bom-path }}" -q)
         echo "${unmanaged_dependencies}"
         if [[ "${unmanaged_dependencies}" != "[]" ]]; then
           echo "${unmanaged_dependencies}"
