@@ -115,8 +115,10 @@ public class GrpcLongRunningTest {
         OperationsSettings.newBuilder()
             .setTransportChannelProvider(operationsChannelProvider)
             .build();
-    operationsStub =
-        GrpcOperationsStub.create(((OperationsStubSettings) settings.getStubSettings()));
+    OperationsStubSettings stubSettings = (OperationsStubSettings) settings.getStubSettings();
+    // This is needed as gRPC's OperationsClient is old and doesn't provide a default endpoint
+    stubSettings = stubSettings.toBuilder().setEndpoint("longrunning.googleapis.com").build();
+    operationsStub = GrpcOperationsStub.create(stubSettings);
 
     UnaryCallSettings<Integer, OperationSnapshot> initialCallSettings =
         UnaryCallSettings.<Integer, OperationSnapshot>newUnaryCallSettingsBuilder()

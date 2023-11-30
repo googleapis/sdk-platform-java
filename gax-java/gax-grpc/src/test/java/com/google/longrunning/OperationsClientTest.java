@@ -36,6 +36,7 @@ import com.google.api.gax.grpc.testing.MockServiceHelper;
 import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.common.collect.Lists;
 import com.google.longrunning.OperationsClient.ListOperationsPagedResponse;
+import com.google.longrunning.stub.OperationsStubSettings;
 import com.google.protobuf.AbstractMessage;
 import com.google.protobuf.Duration;
 import com.google.protobuf.Empty;
@@ -79,7 +80,10 @@ public class OperationsClientTest {
             .setTransportChannelProvider(channelProvider)
             .setCredentialsProvider(NoCredentialsProvider.create())
             .build();
-    client = OperationsClient.create(settings);
+    OperationsStubSettings stubSettings = (OperationsStubSettings) settings.getStubSettings();
+    // This is needed as gRPC's OperationsClient is old and doesn't provide a default endpoint
+    stubSettings = stubSettings.toBuilder().setEndpoint("longrunning.googleapis.com").build();
+    client = OperationsClient.create(stubSettings.createStub());
   }
 
   @After

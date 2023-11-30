@@ -77,6 +77,8 @@ import org.threeten.bp.Duration;
 @RunWith(JUnit4.class)
 public class ClientContextTest {
 
+  private static final String DEFAULT_ENDPOINT = "test.googleapis.com";
+
   private static class InterceptingExecutor extends ScheduledThreadPoolExecutor {
     boolean shutdownCalled = false;
 
@@ -268,6 +270,7 @@ public class ClientContextTest {
     builder.setWatchdogProvider(FixedWatchdogProvider.create(watchdog));
     builder.setWatchdogCheckInterval(watchdogCheckInterval);
     builder.setClock(clock);
+    builder.setEndpoint(DEFAULT_ENDPOINT);
 
     HeaderProvider headerProvider = Mockito.mock(HeaderProvider.class);
     Mockito.when(headerProvider.getHeaders()).thenReturn(ImmutableMap.of("k1", "v1"));
@@ -350,6 +353,7 @@ public class ClientContextTest {
     Mockito.when(internalHeaderProvider.getHeaders()).thenReturn(ImmutableMap.of("k2", "v2"));
     builder.setHeaderProvider(headerProvider);
     builder.setInternalHeaderProvider(internalHeaderProvider);
+    builder.setEndpoint(DEFAULT_ENDPOINT);
 
     ClientContext context = ClientContext.create(builder.build());
     List<BackgroundResource> resources = context.getBackgroundResources();
@@ -379,6 +383,7 @@ public class ClientContextTest {
     builder.setHeaderProvider(headerProvider);
     builder.setInternalHeaderProvider(internalHeaderProvider);
     builder.setQuotaProjectId(QUOTA_PROJECT_ID_FROM_SETTINGS);
+    builder.setEndpoint(DEFAULT_ENDPOINT);
 
     ClientContext context = ClientContext.create(builder.build());
     List<BackgroundResource> resources = context.getBackgroundResources();
@@ -428,6 +433,7 @@ public class ClientContextTest {
     builder.setHeaderProvider(headerProvider);
     builder.setInternalHeaderProvider(internalHeaderProvider);
     builder.setQuotaProjectId(QUOTA_PROJECT_ID_FROM_SETTINGS);
+    builder.setEndpoint(DEFAULT_ENDPOINT);
 
     ClientContext context = ClientContext.create(builder.build());
     List<BackgroundResource> resources = context.getBackgroundResources();
@@ -460,6 +466,7 @@ public class ClientContextTest {
         FixedCredentialsProvider.create(Mockito.mock(Credentials.class)));
     builder.setHeaderProvider(headerProvider);
     builder.setInternalHeaderProvider(internalHeaderProvider);
+    builder.setEndpoint(DEFAULT_ENDPOINT);
 
     ClientContext context = ClientContext.create(builder.build());
     List<BackgroundResource> resources = context.getBackgroundResources();
@@ -503,6 +510,7 @@ public class ClientContextTest {
     builder.setHeaderProvider(headerProviderWithQuota);
     builder.setInternalHeaderProvider(internalHeaderProvider);
     builder.setQuotaProjectId(QUOTA_PROJECT_ID_FROM_CREDENTIALS_VALUE);
+    builder.setEndpoint(DEFAULT_ENDPOINT);
 
     ClientContext clientContext = ClientContext.create(builder.build());
     assertThat(clientContext.getCredentials().getRequestMetadata().size())
@@ -537,6 +545,7 @@ public class ClientContextTest {
         });
     builder.setHeaderProvider(headerProviderWithQuota);
     builder.setInternalHeaderProvider(internalHeaderProvider);
+    builder.setEndpoint(DEFAULT_ENDPOINT);
 
     ClientContext clientContext = ClientContext.create(builder.build());
     assertThat(clientContext.getCredentials().getRequestMetadata(null)).isEqualTo(metaData);
@@ -557,7 +566,8 @@ public class ClientContextTest {
     settingsBuilder
         .setTransportChannelProvider(transportProvider)
         .setCredentialsProvider(NoCredentialsProvider.create())
-        .setQuotaProjectId(QUOTA_PROJECT_ID);
+        .setQuotaProjectId(QUOTA_PROJECT_ID)
+        .setEndpoint(DEFAULT_ENDPOINT);
 
     assertThat(ClientContext.create(settingsBuilder.build()).getCredentials()).isNull();
   }
@@ -577,6 +587,7 @@ public class ClientContextTest {
                 FixedCredentialsProvider.create(Mockito.mock(GoogleCredentials.class)));
 
     builder.setInternalHeaderProvider(FixedHeaderProvider.create("user-agent", "internal-agent"));
+    builder.setEndpoint(DEFAULT_ENDPOINT);
 
     ClientContext clientContext = ClientContext.create(builder.build());
     FakeTransportChannel transportChannel =
@@ -600,6 +611,7 @@ public class ClientContextTest {
                 FixedCredentialsProvider.create(Mockito.mock(GoogleCredentials.class)));
 
     builder.setHeaderProvider(FixedHeaderProvider.create("user-agent", "user-supplied-agent"));
+    builder.setEndpoint(DEFAULT_ENDPOINT);
 
     ClientContext clientContext = ClientContext.create(builder.build());
     FakeTransportChannel transportChannel =
@@ -624,6 +636,7 @@ public class ClientContextTest {
 
     builder.setHeaderProvider(FixedHeaderProvider.create("user-agent", "user-supplied-agent"));
     builder.setInternalHeaderProvider(FixedHeaderProvider.create("user-agent", "internal-agent"));
+    builder.setEndpoint(DEFAULT_ENDPOINT);
 
     ClientContext clientContext = ClientContext.create(builder.build());
     FakeTransportChannel transportChannel =
@@ -758,6 +771,7 @@ public class ClientContextTest {
             .setTransportChannelProvider(transportChannelProvider)
             .setCredentialsProvider(
                 FixedCredentialsProvider.create(Mockito.mock(GoogleCredentials.class)));
+    builder.setEndpoint(DEFAULT_ENDPOINT);
 
     // By default, if executor is not set, channel provider should not have an executor set
     ClientContext context = ClientContext.create(builder.build());
