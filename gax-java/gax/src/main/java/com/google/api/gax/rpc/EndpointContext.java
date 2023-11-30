@@ -63,14 +63,11 @@ public abstract class EndpointContext {
 
   @VisibleForTesting
   void determineEndpoint() throws IOException {
-    if (resolvedEndpoint != null) {
-      return;
-    }
     MtlsProvider mtlsProvider = mtlsProvider() == null ? new MtlsProvider() : mtlsProvider();
     String customEndpoint =
         transportChannelEndpoint() != null ? transportChannelEndpoint() : clientSettingsEndpoint();
-    if (customEndpoint == null) {
-      throw new IllegalStateException("Endpoint cannot be null");
+    if (customEndpoint == null || customEndpoint.isEmpty()) {
+      throw new IllegalStateException("Endpoint cannot be null or empty");
     } else {
       resolvedEndpoint =
           mtlsEndpointResolver(
@@ -104,10 +101,14 @@ public abstract class EndpointContext {
   }
 
   public String resolveEndpoint() throws IOException {
-    if (resolvedEndpoint == null) {
+    if (isEndpointUnresolved()) {
       determineEndpoint();
     }
     return resolvedEndpoint;
+  }
+
+  private boolean isEndpointUnresolved() {
+    return resolvedEndpoint == null;
   }
 
   @AutoValue.Builder
