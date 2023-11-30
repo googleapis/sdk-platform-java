@@ -65,8 +65,7 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void mtlsEndpointResolver_switchToMtlsAllowedIsTrue_mtlsUsageAlways()
-      throws IOException {
+  public void mtlsEndpointResolver_switchToMtlsAllowedIsTrue_mtlsUsageAlways() throws IOException {
     MtlsProvider mtlsProvider =
         new FakeMtlsProvider(
             true,
@@ -81,8 +80,7 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void mtlsEndpointResolver_switchToMtlsAllowedIsTrue_mtlsUsageNever()
-      throws IOException {
+  public void mtlsEndpointResolver_switchToMtlsAllowedIsTrue_mtlsUsageNever() throws IOException {
     MtlsProvider mtlsProvider =
         new FakeMtlsProvider(
             true,
@@ -97,9 +95,8 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void
-      mtlsEndpointResolver_switchToMtlsAllowedIsTrue_useCertificateIsTrue_hasMtlsKeystore()
-          throws IOException {
+  public void mtlsEndpointResolver_switchToMtlsAllowedIsTrue_useCertificateIsTrue_hasMtlsKeystore()
+      throws IOException {
     MtlsProvider mtlsProvider =
         new FakeMtlsProvider(
             true,
