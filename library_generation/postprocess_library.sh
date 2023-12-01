@@ -87,15 +87,12 @@ docker run --rm \
   --source-repo=/pre-processed-libraries \
   --config-file=.OwlBot.yaml
 
-# we first clone and manually build the synthtool image as part of the POC, but
-# we will pull the image from an artifact registry in the future.
-echo 'creating synthtool synthtool image'
+# we clone the synthtool library and manually build it
 pushd "${output_folder}"
 git clone https://github.com/googleapis/synthtool.git
 pushd "synthtool"
-git checkout synthtool-only-image
-docker build . --iidfile synthtool-image-id
-synthtool_image_id=$(cat synthtool-image-id)
+python3 -m pip install -e .
+python3 -m pip install -r requirements.in
 popd # synthtool
 popd # output_folder
 

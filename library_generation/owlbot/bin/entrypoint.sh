@@ -19,19 +19,6 @@ versions_file=$2
 synthtool_image_id=$3
 workspace=$(pwd)
 
-function runWithSynthtool() {
-  python_script="${1:-"${workspace}/owlbot.py"}"
-
-  docker run --rm \
-    --entrypoint python3 \
-    --user $(id -u):$(id -g) \
-    -v "${python_script}:/target/script.py" \
-    -v "${workspace}:/workspace" \
-    "${synthtool_image_id}" \
-    /target/script.py
-
-}
-
 # Runs template and etc in current working directory
 function processModule() {
   # templates as well as retrieving files from owl-bot-staging
@@ -39,7 +26,7 @@ function processModule() {
   if [ -f "owlbot.py" ]
   then
     # defaults to run owlbot.py
-    runWithSynthtool
+    python3 owlbot.py
   fi
   echo "...done"
 
@@ -55,7 +42,7 @@ function processModule() {
 
   # fix license headers
   echo "Fixing missing license headers..."
-  runWithSynthtool "${scripts_root}/owlbot/src/fix-license-headers.py"
+  python3 "${scripts_root}/owlbot/src/fix-license-headers.py"
   echo "...done"
 
   # TODO: re-enable this once we resolve thrashing
