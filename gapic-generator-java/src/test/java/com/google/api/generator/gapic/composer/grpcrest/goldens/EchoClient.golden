@@ -54,7 +54,7 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>Echo</td>
- *      <td><p></p></td>
+ *      <td><p> </td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -79,7 +79,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>Expand</td>
- *      <td><p></p></td>
+ *      <td><p> </td>
  *      <td>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -89,7 +89,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>PagedExpand</td>
- *      <td><p></p></td>
+ *      <td><p> </td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -104,7 +104,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>SimplePagedExpand</td>
- *      <td><p></p></td>
+ *      <td><p> </td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -123,7 +123,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>Wait</td>
- *      <td><p></p></td>
+ *      <td><p> </td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -143,7 +143,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>Block</td>
- *      <td><p></p></td>
+ *      <td><p> </td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -157,7 +157,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>CollideName</td>
- *      <td><p></p></td>
+ *      <td><p> </td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -171,7 +171,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>NestedBinding</td>
- *      <td><p></p></td>
+ *      <td><p> </td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -185,7 +185,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>Chat</td>
- *      <td><p></p></td>
+ *      <td><p> </td>
  *      <td>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -195,7 +195,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>NoBinding</td>
- *      <td><p></p></td>
+ *      <td><p> </td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -209,7 +209,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>UpdateCase</td>
- *      <td><p></p></td>
+ *      <td><p> </td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>

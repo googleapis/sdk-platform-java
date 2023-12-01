@@ -71,7 +71,7 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>ListLogMetrics</td>
- *      <td><p>Lists logs-based metrics.</p></td>
+ *      <td><p> Lists logs-based metrics.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -91,7 +91,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetLogMetric</td>
- *      <td><p>Gets a logs-based metric.</p></td>
+ *      <td><p> Gets a logs-based metric.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -110,7 +110,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>CreateLogMetric</td>
- *      <td><p>Creates a logs-based metric.</p></td>
+ *      <td><p> Creates a logs-based metric.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -129,7 +129,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>UpdateLogMetric</td>
- *      <td><p>Creates or updates a logs-based metric.</p></td>
+ *      <td><p> Creates or updates a logs-based metric.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -148,7 +148,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>DeleteLogMetric</td>
- *      <td><p>Deletes a logs-based metric.</p></td>
+ *      <td><p> Deletes a logs-based metric.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>

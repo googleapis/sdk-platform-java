@@ -64,8 +64,7 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>ListConnections</td>
- *      <td><p>Lists connections that are currently active for the given Apigee Connect
- *  endpoint.</p></td>
+ *      <td><p> Lists connections that are currently active for the given Apigee Connect endpoint.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
