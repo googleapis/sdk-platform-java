@@ -28,4 +28,14 @@ public class UnmanagedDependencyCheckTest {
     assertThat(unManagedDependencies)
         .containsAtLeastElementsIn(ImmutableList.of("org.springframework.boot:spring-boot"));
   }
+
+  @Test
+  public void getUnmanagedDependencyFromNestedPomTest()
+      throws MavenRepositoryException, ArtifactDescriptorException {
+    List<String> unManagedDependencies =
+        UnmanagedDependencyCheck.getUnmanagedDependencies(
+            "3.18.0", "src/test/resources/transitive-dependency-pom.xml");
+    assertThat(unManagedDependencies)
+        .containsAtLeastElementsIn(ImmutableList.of("com.h2database:h2"));
+  }
 }
