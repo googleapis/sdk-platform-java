@@ -36,9 +36,7 @@ import com.google.common.annotations.VisibleForTesting;
 import java.io.IOException;
 import javax.annotation.Nullable;
 
-/**
- * Contains the fields required to resolve the endpoint
- */
+/** Contains the fields required to resolve the endpoint */
 @InternalApi
 @AutoValue
 public abstract class EndpointContext {
