@@ -36,6 +36,9 @@ import com.google.common.annotations.VisibleForTesting;
 import java.io.IOException;
 import javax.annotation.Nullable;
 
+/**
+ * Contains the fields required to resolve the endpoint
+ */
 @InternalApi
 @AutoValue
 public abstract class EndpointContext {
@@ -72,7 +75,8 @@ public abstract class EndpointContext {
   }
 
   // This takes in parameters because determineEndpoint()'s logic will be updated
-  // to pass custom values in
+  // to pass custom values in.
+  // Follows https://google.aip.dev/auth/4114 for resolving the endpoint
   @VisibleForTesting
   String mtlsEndpointResolver(
       String endpoint,

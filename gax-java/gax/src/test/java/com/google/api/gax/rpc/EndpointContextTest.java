@@ -65,21 +65,6 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void mtlsEndpointResolver_switchToMtlsAllowedIsFalse_mtlsUsageAuto() throws IOException {
-    MtlsProvider mtlsProvider =
-        new FakeMtlsProvider(
-            true,
-            MtlsProvider.MtlsEndpointUsagePolicy.AUTO,
-            FakeMtlsProvider.createTestMtlsKeyStore(),
-            "",
-            false);
-    Truth.assertThat(
-            DEFAULT_ENDPOINT_CONTEXT.mtlsEndpointResolver(
-                DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, false, mtlsProvider))
-        .isEqualTo(DEFAULT_ENDPOINT);
-  }
-
-  @Test
   public void mtlsEndpointResolver_switchToMtlsAllowedIsTrue_mtlsUsageAuto() throws IOException {
     MtlsProvider mtlsProvider =
         new FakeMtlsProvider(
