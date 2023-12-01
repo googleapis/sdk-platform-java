@@ -29,8 +29,20 @@
               <goal>java</goal>
             </goals>
           </execution>
+          <execution>
+            <id>install-test-poms</id>
+            <phase>test</phase>
+            <goals>
+              <goal>exec</goal>
+            </goals>
+          </execution>
         </executions>
         <configuration>
+          <executable>bash</executable>
+          <arguments>
+            <argument>local-install.sh</argument>
+          </arguments>
+          <workingDirectory>src/test/resources</workingDirectory>
           <mainClass>com.google.cloud.UnmanagedDependencyCheck</mainClass>
         </configuration>
       </plugin>
