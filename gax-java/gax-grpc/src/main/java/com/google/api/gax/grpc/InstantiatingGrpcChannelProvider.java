@@ -300,6 +300,10 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   private boolean isNonDefaultServiceAccountAllowed() {
+    // DirectPath non-default SA requires a credential.
+    if (needsCredentials()) {
+      return false;
+    }
     if (allowNonDefaultServiceAccount != null && allowNonDefaultServiceAccount) {
       return true;
     }
