@@ -54,7 +54,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
-      # Java 8 tests uses JDK 11 to compile and JDK 8 to run tests.
+      # Java 8 tests uses JDK 17 to compile and JDK 8 to run tests.
       - uses: actions/setup-java@v3
         with:
           java-version: 8
@@ -69,7 +69,7 @@ jobs:
         shell: bash
         run: |
           set -x
-          export JAVA_HOME=$JAVA11_HOME
+          export JAVA_HOME=$JAVA_HOME
           export PATH=${JAVA_HOME}/bin:$PATH
           # Maven surefire plugin lets us to specify the JVM when running tests via
           # the "jvm" system property.
@@ -152,15 +152,6 @@ jobs:
         #  package jar so that gapic-generator-java module can use
         #  testlib modules of gax
         run: mvn package clirr:check -DskipTests
-
-  requirements-kokoro:
-    runs-on: ubuntu-latest
-    container: gcr.io/cloud-devrel-public-resources/java11
-    steps:
-      - uses: actions/checkout@v3
-      - run: python3 --version
-      - run: python3 -m pip install --require-hashes -r .kokoro/requirements.txt
-      - run: python3 -m releasetool publish-reporter-script > /dev/null
 
   showcase:
     runs-on: ubuntu-22.04
@@ -282,7 +273,7 @@ jobs:
       run: |
         mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
     - name: Validate gapic-generator-java-bom
-      uses: googleapis/java-cloud-bom/tests/validate-bom@41d86dba28c2e724126568b4414ceae6a48e2a49
+      uses: googleapis/java-cloud-bom/tests/validate-bom@ab98a491b510503e8ff461c42ecd3cc4e67a44cb
       with:
         bom-path: gapic-generator-java-bom/pom.xml
 
