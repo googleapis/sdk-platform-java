@@ -28,23 +28,26 @@
             <goals>
               <goal>java</goal>
             </goals>
+            <configuration>
+              <mainClass>com.google.cloud.UnmanagedDependencyCheck</mainClass>
+            </configuration>
           </execution>
           <execution>
+            <!-- run the shell script to install test poms so the tests can be executed -->
             <id>install-test-poms</id>
-            <phase>test</phase>
+            <phase>test-compile</phase>
             <goals>
               <goal>exec</goal>
             </goals>
+            <configuration>
+              <executable>bash</executable>
+              <arguments>
+                <argument>local-install.sh</argument>
+              </arguments>
+              <workingDirectory>src/test/resources</workingDirectory>
+            </configuration>
           </execution>
         </executions>
-        <configuration>
-          <executable>bash</executable>
-          <arguments>
-            <argument>local-install.sh</argument>
-          </arguments>
-          <workingDirectory>src/test/resources</workingDirectory>
-          <mainClass>com.google.cloud.UnmanagedDependencyCheck</mainClass>
-        </configuration>
       </plugin>
     </plugins>
   </build>
