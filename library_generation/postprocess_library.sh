@@ -89,11 +89,13 @@ docker run --rm \
 
 # we clone the synthtool library and manually build it
 pushd "${output_folder}"
-git clone https://github.com/googleapis/synthtool.git
-pushd "synthtool"
-python3 -m pip install -e .
-python3 -m pip install -r requirements.in
-popd # synthtool
+if [ ! -d "synthtool" ]; then
+  git clone https://github.com/googleapis/synthtool.git
+  pushd "synthtool" 
+  python3 -m pip install -e .
+  python3 -m pip install -r requirements.in
+  popd # synthtool
+fi
 popd # output_folder
 
 # now we use the image to call owlbot.py
