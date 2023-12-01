@@ -86,8 +86,7 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>RepeatDataBody</td>
- *      <td><p>This method echoes the ComplianceData request. This method exercises
- *  sending the entire request object in the REST body.</p></td>
+ *      <td><p> This method echoes the ComplianceData request. This method exercises sending the entire request object in the REST body.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -101,9 +100,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>RepeatDataBodyInfo</td>
- *      <td><p>This method echoes the ComplianceData request. This method exercises
- *  sending the a message-type field in the REST body. Per AIP-127, only
- *  top-level, non-repeated fields can be sent this way.</p></td>
+ *      <td><p> This method echoes the ComplianceData request. This method exercises sending the a message-type field in the REST body. Per AIP-127, only top-level, non-repeated fields can be sent this way.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -117,8 +114,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>RepeatDataQuery</td>
- *      <td><p>This method echoes the ComplianceData request. This method exercises
- *  sending all request fields as query parameters.</p></td>
+ *      <td><p> This method echoes the ComplianceData request. This method exercises sending all request fields as query parameters.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -132,9 +128,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>RepeatDataSimplePath</td>
- *      <td><p>This method echoes the ComplianceData request. This method exercises
- *  sending some parameters as "simple" path variables (i.e., of the form
- *  "/bar/{foo}" rather than "/{foo=bar/*}"), and the rest as query parameters.</p></td>
+ *      <td><p> This method echoes the ComplianceData request. This method exercises sending some parameters as "simple" path variables (i.e., of the form "/bar/{foo}" rather than "/{foo=bar/&#42;}"), and the rest as query parameters.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -148,7 +142,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>RepeatDataPathResource</td>
- *      <td><p>Same as RepeatDataSimplePath, but with a path resource.</p></td>
+ *      <td><p> Same as RepeatDataSimplePath, but with a path resource.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -162,7 +156,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>RepeatDataPathTrailingResource</td>
- *      <td><p>Same as RepeatDataSimplePath, but with a trailing resource.</p></td>
+ *      <td><p> Same as RepeatDataSimplePath, but with a trailing resource.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -176,7 +170,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>RepeatDataBodyPut</td>
- *      <td><p>This method echoes the ComplianceData request, using the HTTP PUT method.</p></td>
+ *      <td><p> This method echoes the ComplianceData request, using the HTTP PUT method.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -190,7 +184,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>RepeatDataBodyPatch</td>
- *      <td><p>This method echoes the ComplianceData request, using the HTTP PATCH method.</p></td>
+ *      <td><p> This method echoes the ComplianceData request, using the HTTP PATCH method.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -204,12 +198,8 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetEnum</td>
- *      <td><p>This method requests an enum value from the server. Depending on the contents of EnumRequest, the enum value returned will be a known enum declared in the
- *  .proto file, or a made-up enum value the is unknown to the client. To verify that clients can round-trip unknown enum vaues they receive, use the
- *  response from this RPC as the request to VerifyEnum()
- *
- *  The values of enums sent by the server when a known or unknown value is requested will be the same within a single Showcase server run (this is needed for
- *  VerifyEnum() to work) but are not guaranteed to be the same across separate Showcase server runs.</p></td>
+ *      <td><p> This method requests an enum value from the server. Depending on the contents of EnumRequest, the enum value returned will be a known enum declared in the .proto file, or a made-up enum value the is unknown to the client. To verify that clients can round-trip unknown enum vaues they receive, use the response from this RPC as the request to VerifyEnum()
+ * <p>  The values of enums sent by the server when a known or unknown value is requested will be the same within a single Showcase server run (this is needed for VerifyEnum() to work) but are not guaranteed to be the same across separate Showcase server runs.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -223,12 +213,8 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>VerifyEnum</td>
- *      <td><p>This method is used to verify that clients can round-trip enum values, which is particularly important for unknown enum values over REST. VerifyEnum()
- *  verifies that its request, which is presumably the response that the client previously got to a GetEnum(), contains the correct data. If so, it responds
- *  with the same EnumResponse; otherwise, the RPC errors.
- *
- *  This works because the values of enums sent by the server when a known or unknown value is requested will be the same within a single Showcase server run,
- *  although they are not guaranteed to be the same across separate Showcase server runs.</p></td>
+ *      <td><p> This method is used to verify that clients can round-trip enum values, which is particularly important for unknown enum values over REST. VerifyEnum() verifies that its request, which is presumably the response that the client previously got to a GetEnum(), contains the correct data. If so, it responds with the same EnumResponse; otherwise, the RPC errors.
+ * <p>  This works because the values of enums sent by the server when a known or unknown value is requested will be the same within a single Showcase server run, although they are not guaranteed to be the same across separate Showcase server runs.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -242,7 +228,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ListLocations</td>
- *      <td><p>Lists information about the supported locations for this service.</p></td>
+ *      <td><p> Lists information about the supported locations for this service.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -257,7 +243,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetLocation</td>
- *      <td><p>Gets information about a location.</p></td>
+ *      <td><p> Gets information about a location.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -271,10 +257,8 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>SetIamPolicy</td>
- *      <td><p>Sets the access control policy on the specified resource. Replaces any
- *  existing policy.
- *
- *  Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.</p></td>
+ *      <td><p> Sets the access control policy on the specified resource. Replaces any existing policy.
+ * <p>  Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -288,9 +272,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetIamPolicy</td>
- *      <td><p>Gets the access control policy for a resource.
- *  Returns an empty policy if the resource exists and does not have a policy
- *  set.</p></td>
+ *      <td><p> Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -304,13 +286,8 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>TestIamPermissions</td>
- *      <td><p>Returns permissions that a caller has on the specified resource.
- *  If the resource does not exist, this will return an empty set of
- *  permissions, not a `NOT_FOUND` error.
- *
- *  Note: This operation is designed to be used for building permission-aware
- *  UIs and command-line tools, not for authorization checking. This operation
- *  may "fail open" without warning.</p></td>
+ *      <td><p> Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error.
+ * <p>  Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may "fail open" without warning.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
