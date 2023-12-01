@@ -30,6 +30,10 @@ repo_metadata_json_path=$(get_repo_metadata_json "${destination_path}" "${output
 cp "${repo_metadata_json_path}" "${workspace}"/.repo-metadata.json
 owlbot_sha=$(get_owlbot_sha "${output_folder}" "${repository_root}")
 
+# ensure pyenv scripts are available
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 # create python virtualenv
 python_version=$(cat "${scripts_root}/configuration/python-version")
 if [ $(pyenv versions | grep "${python_version}" | wc -l) -eq 0 ]; then
@@ -38,9 +42,6 @@ fi
 if [ $(pyenv virtualenvs | grep "${python_version}" | grep "postprocessing" | wc -l) -eq 0 ];then
   pyenv virtualenv "${python_version}" "postprocessing"
 fi
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
 pyenv activate "postprocessing"
 
 # call owl-bot-copy
