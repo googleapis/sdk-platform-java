@@ -28,9 +28,6 @@
             <goals>
               <goal>java</goal>
             </goals>
-            <configuration>
-              <mainClass>com.google.cloud.UnmanagedDependencyCheck</mainClass>
-            </configuration>
           </execution>
           <execution>
             <!-- run the shell script to install test poms so the tests can be executed -->
@@ -48,6 +45,9 @@
             </configuration>
           </execution>
         </executions>
+        <configuration>
+          <mainClass>com.google.cloud.UnmanagedDependencyCheck</mainClass>
+        </configuration>
       </plugin>
     </plugins>
   </build>

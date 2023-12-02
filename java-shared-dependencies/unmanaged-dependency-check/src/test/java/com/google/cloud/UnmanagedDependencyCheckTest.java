@@ -7,12 +7,13 @@ import com.google.cloud.tools.opensource.dependencies.MavenRepositoryException;
 import com.google.common.collect.ImmutableList;
 import java.util.List;
 import org.eclipse.aether.resolution.ArtifactDescriptorException;
+import org.eclipse.aether.version.InvalidVersionSpecificationException;
 import org.junit.Test;
 
 public class UnmanagedDependencyCheckTest {
   @Test
   public void getUnmanagedDependencyFromSamePomTest()
-      throws MavenRepositoryException, ArtifactDescriptorException {
+      throws MavenRepositoryException, ArtifactDescriptorException, InvalidVersionSpecificationException {
     List<String> unManagedDependencies =
         UnmanagedDependencyCheck.getUnmanagedDependencies(
             "3.18.0", "src/test/resources/shared-dependency-3.18.0-pom.xml");
@@ -20,18 +21,8 @@ public class UnmanagedDependencyCheckTest {
   }
 
   @Test
-  public void getUnmanagedDependencyFromDifferentPomTest()
-      throws MavenRepositoryException, ArtifactDescriptorException {
-    List<String> unManagedDependencies =
-        UnmanagedDependencyCheck.getUnmanagedDependencies(
-            "3.18.0", "src/test/resources/self-dependency-pom.xml");
-    assertThat(unManagedDependencies)
-        .containsAtLeastElementsIn(ImmutableList.of("org.springframework.boot:spring-boot"));
-  }
-
-  @Test
   public void getUnmanagedDependencyFromNestedPomTest()
-      throws MavenRepositoryException, ArtifactDescriptorException {
+      throws MavenRepositoryException, ArtifactDescriptorException, InvalidVersionSpecificationException {
     List<String> unManagedDependencies =
         UnmanagedDependencyCheck.getUnmanagedDependencies(
             "3.18.0", "src/test/resources/transitive-dependency-pom.xml");

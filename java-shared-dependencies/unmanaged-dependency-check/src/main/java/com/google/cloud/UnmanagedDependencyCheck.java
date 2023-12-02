@@ -2,18 +2,22 @@ package com.google.cloud;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
+import com.google.cloud.tools.opensource.classpath.ClassPathBuilder;
+import com.google.cloud.tools.opensource.classpath.DependencyMediation;
 import com.google.cloud.tools.opensource.dependencies.Bom;
 import com.google.cloud.tools.opensource.dependencies.MavenRepositoryException;
 import java.nio.file.Paths;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.eclipse.aether.resolution.ArtifactDescriptorException;
+import org.eclipse.aether.version.InvalidVersionSpecificationException;
 
 public class UnmanagedDependencyCheck {
 
   public static void main(String[] args)
-      throws MavenRepositoryException, ArtifactDescriptorException {
+      throws MavenRepositoryException, ArtifactDescriptorException, InvalidVersionSpecificationException {
     checkArgument(args.length == 2, "The length of the inputs should be 2");
     System.out.println(getUnmanagedDependencies(args[0], args[1]));
   }
@@ -29,7 +33,7 @@ public class UnmanagedDependencyCheck {
    */
   public static List<String> getUnmanagedDependencies(
       String sharedDependencyVersion, String projectBomPath)
-      throws ArtifactDescriptorException, MavenRepositoryException {
+      throws ArtifactDescriptorException, MavenRepositoryException, InvalidVersionSpecificationException {
     Set<String> sharedDependencies = getSharedDependencies(sharedDependencyVersion);
     Set<String> managedDependencies = getManagedDependencies(projectBomPath);
 
@@ -39,7 +43,7 @@ public class UnmanagedDependencyCheck {
   }
 
   private static Set<String> getSharedDependencies(String sharedDependencyVersion)
-      throws ArtifactDescriptorException {
+      throws ArtifactDescriptorException, InvalidVersionSpecificationException {
     return getManagedDependenciesFromBom(
         Bom.readBom(
             String.format(
@@ -47,15 +51,25 @@ public class UnmanagedDependencyCheck {
   }
 
   private static Set<String> getManagedDependencies(String projectBomPath)
-      throws MavenRepositoryException {
+      throws MavenRepositoryException, InvalidVersionSpecificationException {
     return getManagedDependenciesFromBom(Bom.readBom(Paths.get(projectBomPath)));
   }
 
-  private static Set<String> getManagedDependenciesFromBom(Bom bom) {
-    return bom.getManagedDependencies().stream()
-        .filter(artifact -> !artifact.getClassifier().equals("tests"))
-        .map(artifact -> String.format("%s:%s", artifact.getGroupId(), artifact.getArtifactId()))
-        .collect(Collectors.toSet());
+  private static Set<String> getManagedDependenciesFromBom(Bom bom)
+      throws InvalidVersionSpecificationException {
+    Set<String> res = new HashSet<>();
+    new ClassPathBuilder()
+        .resolve(bom.getManagedDependencies(), true, DependencyMediation.MAVEN)
+        .getClassPath()
+        .forEach(
+          classPath -> {
+            String coordinate = classPath.toString();
+            // ignore the version.
+            int index = coordinate.lastIndexOf(":");
+            res.add(coordinate.substring(0, index));
+          });
+
+    return res;
   }
 
   private UnmanagedDependencyCheck() {
