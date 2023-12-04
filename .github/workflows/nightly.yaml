@@ -24,7 +24,11 @@ jobs:
           cache: maven
       - run: mvn -version
       - name: Unit Tests
-        run: mvn install --errors --batch-mode --no-transfer-progress -Dcheckstyle.skip -T 1C
+        run: |
+          # The logging option is to investigate a flaky test in 
+          # https://github.com/googleapis/sdk-platform-java/issues/1931
+          mvn install --errors --batch-mode --no-transfer-progress -Dcheckstyle.skip -T 1C \
+              -Djava.util.logging.SimpleFormatter.format="%1$tY %1$tl:%1$tM:%1$tS.%1$tL %2$s %4$s: %5$s%6$s%n"
       - name: Create issue if previous step fails
         if: ${{ failure() }}
         env:
@@ -59,7 +63,11 @@ jobs:
       - run: mvn -version
       - name: Test with Java 8
         # Direct goal invocation ("surefire:test") prevents recompiling tests
-        run: mvn surefire:test --errors --batch-mode --no-transfer-progress -T 1C
+        run: |
+          # The logging option is to investigate a flaky test in 
+          # https://github.com/googleapis/sdk-platform-java/issues/1931
+          mvn surefire:test --errors --batch-mode --no-transfer-progress -T 1C \
+              -Djava.util.logging.SimpleFormatter.format="%1$tY %1$tl:%1$tM:%1$tS.%1$tL %2$s %4$s: %5$s%6$s%n"
       - name: Create issue if previous step fails
         if: ${{ failure() }}
         env:

@@ -85,6 +85,8 @@ import org.threeten.bp.Duration;
 @RunWith(JUnit4.class)
 public class BatcherImplTest {
 
+  private static final Logger logger = Logger.getLogger(BatcherImplTest.class.getName());
+
   private static final ScheduledExecutorService EXECUTOR =
       Executors.newSingleThreadScheduledExecutor();
 
@@ -889,15 +891,20 @@ public class BatcherImplTest {
           () -> {
             try {
               Thread.sleep(throttledTime);
+              logger.info("Calling flowController.release");
               flowController.release(1, 1);
+              logger.info("Called flowController.release");
             } catch (InterruptedException e) {
             }
           });
 
       try {
+        logger.info("Calling future.get(10 ms)");
         future.get(10, TimeUnit.MILLISECONDS);
+        logger.info("future.get(10 ms) unexpectedly returned.");
         assertWithMessage("adding elements to batcher should be blocked by FlowControlled").fail();
       } catch (TimeoutException e) {
+        logger.info("future.get(10 ms) timed out expectedly.");
         // expected
       }
 
