@@ -51,61 +51,73 @@ public class EndpointContextTest {
 
   @Test
   public void mtlsEndpointResolver_switchToMtlsAllowedIsFalse() throws IOException {
+    boolean useClientCertificate = true;
+    boolean throwExceptionForGetKeyStore = false;
     MtlsProvider mtlsProvider =
         new FakeMtlsProvider(
-            true,
+            useClientCertificate,
             MtlsProvider.MtlsEndpointUsagePolicy.AUTO,
             FakeMtlsProvider.createTestMtlsKeyStore(),
             "",
-            false);
+            throwExceptionForGetKeyStore);
+    boolean switchToMtlsEndpointAllowed = false;
     Truth.assertThat(
             DEFAULT_ENDPOINT_CONTEXT.mtlsEndpointResolver(
-                DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, false, mtlsProvider))
+                DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, switchToMtlsEndpointAllowed, mtlsProvider))
         .isEqualTo(DEFAULT_ENDPOINT);
   }
 
   @Test
   public void mtlsEndpointResolver_switchToMtlsAllowedIsTrue_mtlsUsageAuto() throws IOException {
+    boolean useClientCertificate = true;
+    boolean throwExceptionForGetKeyStore = false;
     MtlsProvider mtlsProvider =
         new FakeMtlsProvider(
-            true,
+            useClientCertificate,
             MtlsProvider.MtlsEndpointUsagePolicy.AUTO,
             FakeMtlsProvider.createTestMtlsKeyStore(),
             "",
-            false);
+            throwExceptionForGetKeyStore);
+    boolean switchToMtlsEndpointAllowed = true;
     Truth.assertThat(
             DEFAULT_ENDPOINT_CONTEXT.mtlsEndpointResolver(
-                DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, true, mtlsProvider))
+                DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, switchToMtlsEndpointAllowed, mtlsProvider))
         .isEqualTo(DEFAULT_MTLS_ENDPOINT);
   }
 
   @Test
   public void mtlsEndpointResolver_switchToMtlsAllowedIsTrue_mtlsUsageAlways() throws IOException {
+    boolean useClientCertificate = true;
+    boolean throwExceptionForGetKeyStore = false;
     MtlsProvider mtlsProvider =
         new FakeMtlsProvider(
-            true,
+            useClientCertificate,
             MtlsProvider.MtlsEndpointUsagePolicy.ALWAYS,
             FakeMtlsProvider.createTestMtlsKeyStore(),
             "",
-            false);
+            throwExceptionForGetKeyStore);
+    boolean switchToMtlsEndpointAllowed = true;
     Truth.assertThat(
             DEFAULT_ENDPOINT_CONTEXT.mtlsEndpointResolver(
-                DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, true, mtlsProvider))
+                DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, switchToMtlsEndpointAllowed, mtlsProvider))
         .isEqualTo(DEFAULT_MTLS_ENDPOINT);
   }
 
   @Test
   public void mtlsEndpointResolver_switchToMtlsAllowedIsTrue_mtlsUsageNever() throws IOException {
+    boolean useClientCertificate = true;
+    boolean throwExceptionForGetKeyStore = false;
     MtlsProvider mtlsProvider =
         new FakeMtlsProvider(
-            true,
+            useClientCertificate,
             MtlsProvider.MtlsEndpointUsagePolicy.NEVER,
             FakeMtlsProvider.createTestMtlsKeyStore(),
             "",
-            false);
+            throwExceptionForGetKeyStore);
+    boolean switchToMtlsEndpointAllowed = true;
     Truth.assertThat(
             DEFAULT_ENDPOINT_CONTEXT.mtlsEndpointResolver(
-                DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, true, mtlsProvider))
+                DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, switchToMtlsEndpointAllowed, mtlsProvider))
         .isEqualTo(DEFAULT_ENDPOINT);
   }
 
@@ -113,22 +125,41 @@ public class EndpointContextTest {
   public void
       mtlsEndpointResolver_switchToMtlsAllowedIsTrue_useCertificateIsFalse_nullMtlsKeystore()
           throws IOException {
+    boolean useClientCertificate = false;
+    boolean throwExceptionForGetKeyStore = false;
     MtlsProvider mtlsProvider =
-        new FakeMtlsProvider(false, MtlsProvider.MtlsEndpointUsagePolicy.AUTO, null, "", false);
+        new FakeMtlsProvider(
+            useClientCertificate,
+            MtlsProvider.MtlsEndpointUsagePolicy.AUTO,
+            null,
+            "",
+            throwExceptionForGetKeyStore);
+    boolean switchToMtlsEndpointAllowed = true;
     Truth.assertThat(
             DEFAULT_ENDPOINT_CONTEXT.mtlsEndpointResolver(
-                DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, true, mtlsProvider))
+                DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, switchToMtlsEndpointAllowed, mtlsProvider))
         .isEqualTo(DEFAULT_ENDPOINT);
   }
 
   @Test
   public void mtlsEndpointResolver_getKeyStore_throwsIOException() {
+    boolean useClientCertificate = true;
+    boolean throwExceptionForGetKeyStore = true;
     MtlsProvider mtlsProvider =
-        new FakeMtlsProvider(true, MtlsProvider.MtlsEndpointUsagePolicy.AUTO, null, "", true);
+        new FakeMtlsProvider(
+            useClientCertificate,
+            MtlsProvider.MtlsEndpointUsagePolicy.AUTO,
+            null,
+            "",
+            throwExceptionForGetKeyStore);
+    boolean switchToMtlsEndpointAllowed = true;
     assertThrows(
         IOException.class,
         () ->
             DEFAULT_ENDPOINT_CONTEXT.mtlsEndpointResolver(
-                DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, true, mtlsProvider));
+                DEFAULT_ENDPOINT,
+                DEFAULT_MTLS_ENDPOINT,
+                switchToMtlsEndpointAllowed,
+                mtlsProvider));
   }
 }
