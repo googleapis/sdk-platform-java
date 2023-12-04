@@ -86,7 +86,6 @@ public final class Structs {
   }
 
   /** Returns an unmodifiable map view of the {@link Struct} parameter. */
-  @InternalApi
   public static Map<String, Object> asMap(Struct struct) {
     return new StructMap(checkNotNull(struct));
   }
@@ -97,7 +96,6 @@ public final class Structs {
    * <p>Notice that all numbers (int, long, float and double) are serialized as double values. Enums
    * are serialized as strings.
    */
-  @InternalApi
   public static Struct newStruct(Map<String, ?> map) {
     Map<String, Value> valueMap = Maps.transformValues(checkNotNull(map), Structs::objectToValue);
     return Struct.newBuilder().putAllFields(valueMap).build();
