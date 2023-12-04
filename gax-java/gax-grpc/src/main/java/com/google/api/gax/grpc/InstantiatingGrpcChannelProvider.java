@@ -299,7 +299,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     }
   }
 
-  private boolean isCredentialDirectPathCompatible() {
+  @VisibleForTesting
+  boolean isCredentialDirectPathCompatible() {
     // DirectPath requires a credential.
     if (needsCredentials()) {
       return false;
