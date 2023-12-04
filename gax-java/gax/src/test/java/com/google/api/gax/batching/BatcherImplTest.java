@@ -904,8 +904,8 @@ public class BatcherImplTest {
         logger.info("future.get(10 ms) unexpectedly returned.");
         assertWithMessage("adding elements to batcher should be blocked by FlowControlled").fail();
       } catch (TimeoutException e) {
-        logger.info("future.get(10 ms) timed out expectedly.");
         // expected
+        logger.info("future.get(10 ms) timed out expectedly.");
       }
 
       try {
