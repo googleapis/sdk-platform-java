@@ -76,9 +76,12 @@ jobs:
           export PATH=${JAVA_HOME}/bin:$PATH
           # Maven surefire plugin lets us to specify the JVM when running tests via
           # the "jvm" system property.
+          # The logging option is to investigate a flaky test in 
+          # https://github.com/googleapis/sdk-platform-java/issues/1931
           mvn verify --batch-mode --no-transfer-progress -Dcheckstyle.skip \
               -Dfmt.skip \
-              -Djvm="${JAVA8_HOME}/bin/java"
+              -Djvm="${JAVA8_HOME}/bin/java" \
+              -Djava.util.logging.SimpleFormatter.format="%1$tY %1$tl:%1$tM:%1$tS.%1$tL %2$s %4$s: %5$s%6$s%n"
 
   build-java8-gapic-generator-java:
     name: "build(8) for gapic-generator-java"
