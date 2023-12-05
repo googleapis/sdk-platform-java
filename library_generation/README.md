@@ -1,4 +1,4 @@
-# Generate GAPIC Client Library without post-processing
+# Generate GAPIC Client Library with and without post-processing
 
 The script, `generate_library.sh`, allows you to generate a GAPIC client library from proto files.
 
@@ -27,6 +27,12 @@ original repository (i.e. google-cloud-java) and pass the monorepo as
 This repository will be the source of truth for pre-existing
 pom.xml files, owlbot.py and .OwlBot.yaml files. See the option belows for
 custom postprocessed generations (e.g. custom `versions.txt` file).
+
+Post-processing makes use of python scripts. The script will automatically use
+`pyenv` to use the specified version in
+`library_generation/configuration/python-version`. Pyenv is then a requirement
+in the environment.
+
 
 ## Parameters to run `generate_library.sh`
 
