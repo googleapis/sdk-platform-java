@@ -22,8 +22,6 @@ update the goldens using source files. Run the command below to overwrite the go
 in `redis` folder.
 
 ```sh
-# Likely you need to reinstall gapic-generator-java 
-# before updating Goldens.
 # In repository's root directory
 mvn clean install -DskipTests
 bazelisk run //test/integration:update_redis

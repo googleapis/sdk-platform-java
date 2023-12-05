@@ -79,8 +79,6 @@ Note:
 Open a new terminal window in the root project directory.
 
 ```shell
-# Likely you need to reinstall gapic-generator-java 
-# before updating the showcase.
 # In repository's root directory
 mvn clean install -DskipTests
 cd showcase
