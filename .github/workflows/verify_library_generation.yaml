@@ -27,6 +27,7 @@ jobs:
       with:
         python-version: '3.11'
     - name: install pyenv
+      shell: bash
       run: |
         set -ex
         curl https://pyenv.run | bash
@@ -46,6 +47,7 @@ jobs:
         set +ex
     - name: install docker (ubuntu)
       if: matrix.os == 'ubuntu-22.04'
+      shell: bash
       run: |
         set -x
         # install docker
@@ -56,6 +58,7 @@ jobs:
         sudo systemctl start docker
     - name: install docker (macos)
       if: matrix.os == 'macos-12'
+      shell: bash
       run: |
         brew update --preinstall
         brew install docker docker-compose qemu 
@@ -64,6 +67,7 @@ jobs:
         docker run --user $(id -u):$(id -g) --rm hello-world
     - name: Run integration tests
       if: matrix.os == 'ubuntu-22.04' || matrix.post_processing == 'false'
+      shell: bash
       run: |
         set -x
         git config --global user.email "github-workflow@github.com"
