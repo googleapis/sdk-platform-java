@@ -1,5 +1,5 @@
 #!/bin/bash
-# Copyright 2021 Google LLC
+# Copyright 2023 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,10 +13,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# This is the entrypoint script for java owlbot. This is not intended to be
+# called directly but rather be called from postproces_library.sh
+# For reference, the positional arguments are
+# 1: scripts_root: location of postprocess_library.sh
+# 2: versions_file: points to a versions.txt containing versions to be applied
+# both to README and pom.xml files
+
+# The scripts assumes the CWD is the folder where postprocessing is going to be
+# applied
+
 set -ex
 scripts_root=$1
 versions_file=$2
-synthtool_image_id=$3
 workspace=$(pwd)
 
 # Runs template and etc in current working directory
