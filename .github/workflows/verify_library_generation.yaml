@@ -40,10 +40,10 @@ jobs:
         echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.profile
         echo 'eval "$(pyenv init -)"' >> ~/.profile
         # setup environment
-        echo "PYENV_ROOT=$HOME/data" >> $GITHUB_ENV
-        echo "PATH=$PYENV_ROOT/bin:$PATH" >> $GITHUB_ENV
         export PYENV_ROOT="$HOME/.pyenv"
         export PATH="$PYENV_ROOT/bin:$PATH"
+        echo "PYENV_ROOT=${PYENV_ROOT}" >> $GITHUB_ENV
+        echo "PATH=${PATH}" >> $GITHUB_ENV
         # init pyenv
         eval "$(pyenv init --path)"
         eval "$(pyenv init -)"
