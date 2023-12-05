@@ -27,7 +27,12 @@ jobs:
       with:
         python-version: '3.11'
     - name: install pyenv
-      run: curl https://pyenv.run | bash
+      run: |
+        curl https://pyenv.run | bash
+        export PATH="$HOME/.pyenv/bin:$PATH"
+        eval "$(pyenv init --path)"
+        eval "$(pyenv init -)"
+        eval "$(pyenv virtualenv-init -)"
     - name: install docker (ubuntu)
       if: matrix.os == 'ubuntu-22.04'
       run: |
