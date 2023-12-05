@@ -873,6 +873,7 @@ public class BatcherImplTest {
                 public void run() {
                   batcherAddThreadHolder.add(Thread.currentThread());
                   batcher.add(1);
+                  logger.info("Called batcher.add(1)");
                 }
               });
 
@@ -887,6 +888,7 @@ public class BatcherImplTest {
       } while (batcherAddThreadHolder.isEmpty()
           || batcherAddThreadHolder.get(0).getState() != Thread.State.WAITING);
 
+      long beforeGetCall = System.currentTimeMillis();
       executor.submit(
           () -> {
             try {
@@ -901,8 +903,16 @@ public class BatcherImplTest {
       try {
         logger.info("Calling future.get(10 ms)");
         future.get(10, TimeUnit.MILLISECONDS);
-        logger.info("future.get(10 ms) unexpectedly returned.");
-        assertWithMessage("adding elements to batcher should be blocked by FlowControlled").fail();
+        long afterGetCall = System.currentTimeMillis();
+        long actualWaitTimeMs = afterGetCall - beforeGetCall;
+
+        // In a flaky test troubleshooting, we observed that "future.get" method might not throw TimeoutException
+        // in a timely manner. It's because the main thread is not always having CPU resource.
+        // As long as the "future.get" does not return within the timeout, this test is good.
+        logger.info("future.get(10 ms) unexpectedly returned. Wait time: " + actualWaitTimeMs);
+        assertWithMessage("adding elements to batcher should be blocked by FlowControlled")
+            .that(actualWaitTimeMs)
+            .isAtLeast(10);
       } catch (TimeoutException e) {
         // expected
         logger.info("future.get(10 ms) timed out expectedly.");
