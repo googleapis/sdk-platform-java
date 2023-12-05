@@ -28,13 +28,15 @@ jobs:
         python-version: '3.11'
     - name: install pyenv
       run: |
+        set -e
         curl https://pyenv.run | bash
-        echo 'export PYENV_ROOT="$HOME/.pyenv"' > ~/.bashrc
-        echo '[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"' > ~/.bashrc
-        echo 'eval "$(pyenv init -)"' > ~/.bashrc
-        echo 'eval "$(pyenv virtualenv-init -)"' > ~/.bashrc
+        echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.profile
+        echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.profile
+        echo 'eval "$(pyenv init -)"' >> ~/.profile
+        exec "${SHELL}"
         eval "$(pyenv init --path)"
         eval "$(pyenv init -)"
+        set +e
     - name: install docker (ubuntu)
       if: matrix.os == 'ubuntu-22.04'
       run: |
