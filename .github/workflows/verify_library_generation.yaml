@@ -39,9 +39,12 @@ jobs:
         echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.profile
         echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.profile
         echo 'eval "$(pyenv init -)"' >> ~/.profile
-        # confirm pyenv is available
+        # setup environment
+        echo "PYENV_ROOT=$HOME/data" >> $GITHUB_ENV
+        echo "PATH=$PYENV_ROOT/bin:$PATH" >> $GITHUB_ENV
         export PYENV_ROOT="$HOME/.pyenv"
         export PATH="$PYENV_ROOT/bin:$PATH"
+        # init pyenv
         eval "$(pyenv init --path)"
         eval "$(pyenv init -)"
         set +ex
@@ -74,6 +77,9 @@ jobs:
         library_generation/test/generate_library_integration_test.sh \
         --googleapis_gen_url https://cloud-java-bot:${{ secrets.CLOUD_JAVA_BOT_GITHUB_TOKEN }}@github.com/googleapis/googleapis-gen.git \
         --enable_postprocessing "${{ matrix.post_processing }}"
+      env:
+        PYENV_ROOT: "$HOME/.pyenv"
+        PATH: "$PYENV_ROOT/bin:$PATH"
   unit_tests:
     strategy:
       matrix:
