@@ -907,9 +907,9 @@ public class BatcherImplTest {
         long actualWaitTimeMs = afterGetCall - beforeGetCall;
 
         // In a flaky test troubleshooting, we observed that "future.get" method might not throw
-        // TimeoutException
-        // in a timely manner. It's because the main thread is not always having CPU resource.
-        // As long as the "future.get" does not return within the timeout, this test is good.
+        // TimeoutException in a timely manner. It's because the main thread is not always having
+        // CPU resource. As long as the "future.get" does not return within the timeout, this test
+        // is good.
         logger.info("future.get(10 ms) unexpectedly returned. Wait time: " + actualWaitTimeMs);
         assertWithMessage("adding elements to batcher should be blocked by FlowControlled")
             .that(actualWaitTimeMs)
