@@ -31,14 +31,6 @@ jobs:
       run: |
         set -ex
         curl https://pyenv.run | bash
-        # add configuration to bashrc
-        echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
-        echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
-        echo 'eval "$(pyenv init -)"' >> ~/.bashrc
-        # add configuration to profile
-        echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.profile
-        echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.profile
-        echo 'eval "$(pyenv init -)"' >> ~/.profile
         # setup environment
         export PYENV_ROOT="$HOME/.pyenv"
         export PATH="$PYENV_ROOT/bin:$PATH"
