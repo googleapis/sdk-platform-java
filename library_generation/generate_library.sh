@@ -312,7 +312,6 @@ fi
 mkdir -p "${workspace}"
 
 bash -x "${script_dir}/postprocess_library.sh" "${workspace}" \
-  "${script_dir}" \
   "${destination_path}" \
   "${proto_path}" \
   "${versions_file}" \

@@ -16,13 +16,13 @@
 # folder structure to run `owlbot-cli copy-code`
 # 5 - versions_file: path to file containing versions to be applied to the poms
 # 6 - output_folder: main workspace of the generation process
+scripts_root=$(dirname "$(readlink -f "$0")")
 
 workspace=$1
-scripts_root=$2
-preprocessed_sources_path=$3
-proto_path=$4
-versions_file=$5
-output_folder=$6
+preprocessed_sources_path=$2
+proto_path=$3
+versions_file=$4
+output_folder=$5
 
 source "${scripts_root}"/utilities.sh
 
