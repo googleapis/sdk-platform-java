@@ -11,6 +11,7 @@ extract_folder_name() {
 
 remove_empty_files() {
   local category=$1
+  local destination_path=$2
   local file_num
   find "${destination_path}/${category}-${folder_name}/src/main/java" -type f -size 0 | while read -r f; do rm -f "${f}"; done
   # remove the directory if the directory has no files.
@@ -28,6 +29,7 @@ remove_empty_files() {
 mv_src_files() {
   local category=$1 # one of gapic, proto, samples
   local type=$2 # one of main, test
+  local destination_path=$3
   if [ "${category}" == "samples" ]; then
     src_suffix="samples/snippets/generated/src/main/java/com"
     folder_suffix="samples/snippets/generated"
@@ -48,6 +50,7 @@ mv_src_files() {
 # unzip jar file
 unzip_src_files() {
   local category=$1
+  local destination_path=$2
   local jar_file=java_${category}.jar
   mkdir -p "${destination_path}/${category}-${folder_name}/src/main/java"
   unzip -q -o "${destination_path}/${jar_file}" -d "${destination_path}/${category}-${folder_name}/src/main/java"
@@ -83,6 +86,7 @@ get_gapic_opts() {
 }
 
 remove_grpc_version() {
+  local destination_path=$1
   find "${destination_path}" -type f -name "*Grpc.java" -exec \
   sed -i.bak 's/value = \"by gRPC proto compiler.*/value = \"by gRPC proto compiler\",/g' {}  \; -exec rm {}.bak \;
 }
@@ -272,4 +276,17 @@ copy_directory_if_exists() {
   if [ -d "${source_folder}" ]; then
     cp -r "${source_folder}" "${destination_folder}"
   fi
+}
+
+# computes proto_path from a given folder of preprocessed sources
+# It will inspect the proto library to compute the path
+get_proto_path_from_preprocessed_sources() {
+  local sources=$1
+  pushd "${sources}" > /dev/null
+  local proto_library=$(find . -maxdepth 1 -type d -name 'proto-*')
+  popd > /dev/null # sources
+  pushd "${proto_library}/src/main/proto" > /dev/null
+  local result=$(find . -type f -name '*.proto' | head -n 1 | xargs dirname | sed 's/\.\///')
+  popd > /dev/null # proto_library
+  echo "${result}"
 }

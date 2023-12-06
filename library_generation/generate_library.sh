@@ -133,7 +133,9 @@ if [ -z "${os_architecture}" ]; then
   os_architecture=$(detect_os_architecture)
 fi
 
+temp_destination_path="${output_folder}/temp_preprocessed"
 mkdir -p "${output_folder}/${destination_path}"
+mkdir -p "${temp_destination_path}"
 ##################### Section 0 #####################
 # prepare tooling
 #####################################################
@@ -185,14 +187,14 @@ download_tools "${gapic_generator_version}" "${protobuf_version}" "${grpc_versio
 if [[ ! "${transport}" == "rest" ]]; then
   # do not need to generate grpc-* if the transport is `rest`.
   "${protoc_path}"/protoc "--plugin=protoc-gen-rpc-plugin=protoc-gen-grpc-java-${grpc_version}-${os_architecture}.exe" \
-  "--rpc-plugin_out=:${destination_path}/java_grpc.jar" \
+  "--rpc-plugin_out=:${temp_destination_path}/java_grpc.jar" \
   ${proto_files} # Do not quote because this variable should not be treated as one long string.
   # unzip java_grpc.jar to grpc-*/src/main/java
-  unzip_src_files "grpc"
+  unzip_src_files "grpc" "${temp_destination_path}"
   # remove empty files in grpc-*/src/main/java
-  remove_empty_files "grpc"
+  remove_empty_files "grpc" "${temp_destination_path}"
   # remove grpc version in *ServiceGrpc.java file so the content is identical with bazel build.
-  remove_grpc_version
+  remove_grpc_version "${temp_destination_path}"
 fi
 ###################### Section 2 #####################
 ## generate gapic-*/, part of proto-*/, samples/
@@ -200,15 +202,15 @@ fi
 if [[ "${proto_only}" == "false" ]]; then
   "$protoc_path"/protoc --experimental_allow_proto3_optional \
   "--plugin=protoc-gen-java_gapic=${script_dir}/gapic-generator-java-wrapper" \
-  "--java_gapic_out=metadata:${destination_path}/java_gapic_srcjar_raw.srcjar.zip" \
+  "--java_gapic_out=metadata:${temp_destination_path}/java_gapic_srcjar_raw.srcjar.zip" \
   "--java_gapic_opt=$(get_gapic_opts "${transport}" "${rest_numeric_enums}" "${gapic_yaml}" "${service_config}" "${service_yaml}")" \
   ${proto_files} ${gapic_additional_protos}
 
-  unzip -o -q "${destination_path}/java_gapic_srcjar_raw.srcjar.zip" -d "${destination_path}"
+  unzip -o -q "${temp_destination_path}/java_gapic_srcjar_raw.srcjar.zip" -d "${temp_destination_path}"
   # Sync'\''d to the output file name in Writer.java.
-  unzip -o -q "${destination_path}/temp-codegen.srcjar" -d "${destination_path}/java_gapic_srcjar"
+  unzip -o -q "${temp_destination_path}/temp-codegen.srcjar" -d "${temp_destination_path}/java_gapic_srcjar"
   # Resource name source files.
-  proto_dir=${destination_path}/java_gapic_srcjar/proto/src/main/java
+  proto_dir=${temp_destination_path}/java_gapic_srcjar/proto/src/main/java
   if [ ! -d "${proto_dir}" ]; then
     # Some APIs don't have resource name helpers, like BigQuery v2.
     # Create an empty file so we can finish building. Gating the resource name rule definition
@@ -218,14 +220,14 @@ if [[ "${proto_only}" == "false" ]]; then
     touch "${proto_dir}"/PlaceholderFile.java
   fi
   # move java_gapic_srcjar/src/main to gapic-*/src.
-  mv_src_files "gapic" "main"
+  mv_src_files "gapic" "main" "${temp_destination_path}"
   # remove empty files in gapic-*/src/main/java
-  remove_empty_files "gapic"
+  remove_empty_files "gapic" "${temp_destination_path}"
   # move java_gapic_srcjar/src/test to gapic-*/src
-  mv_src_files "gapic" "test"
+  mv_src_files "gapic" "test" "${temp_destination_path}"
   if [ "${include_samples}" == "true" ]; then
     # move java_gapic_srcjar/samples/snippets to samples/snippets
-    mv_src_files "samples" "main"
+    mv_src_files "samples" "main" "${temp_destination_path}"
   fi
 fi
 ##################### Section 3 #####################
@@ -247,16 +249,16 @@ case "${proto_path}" in
     proto_files="${proto_files//${removed_proto}/}"
     ;;
 esac
-"$protoc_path"/protoc "--java_out=${destination_path}/java_proto.jar" ${proto_files}
+"$protoc_path"/protoc "--java_out=${temp_destination_path}/java_proto.jar" ${proto_files}
 if [[ "${proto_only}" == "false" ]]; then
   # move java_gapic_srcjar/proto/src/main/java (generated resource name helper class)
   # to proto-*/src/main
-  mv_src_files "proto" "main"
+  mv_src_files "proto" "main" "${temp_destination_path}"
 fi
 # unzip java_proto.jar to proto-*/src/main/java
-unzip_src_files "proto"
+unzip_src_files "proto" "${temp_destination_path}"
 # remove empty files in proto-*/src/main/java
-remove_empty_files "proto"
+remove_empty_files "proto" "${temp_destination_path}"
 case "${proto_path}" in
   "google/cloud/aiplatform/v1beta1"*)
     prefix="google/cloud/aiplatform/v1beta1/schema"
@@ -282,14 +284,14 @@ for proto_src in ${proto_files}; do
   if [[ "${proto_src}" == "google/cloud/common/operation_metadata.proto" ]]; then
     continue
   fi
-  mkdir -p "${destination_path}/proto-${folder_name}/src/main/proto"
-  rsync -R "${proto_src}" "${destination_path}/proto-${folder_name}/src/main/proto"
+  mkdir -p "${temp_destination_path}/proto-${folder_name}/src/main/proto"
+  rsync -R "${proto_src}" "${temp_destination_path}/proto-${folder_name}/src/main/proto"
 done
 popd # output_folder
 ##################### Section 4 #####################
 # rm tar files
 #####################################################
-pushd "${output_folder}/${destination_path}"
+pushd "${temp_destination_path}"
 rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_proto.jar temp-codegen.srcjar
 popd # destination path
 ##################### Section 5 #####################
@@ -298,6 +300,8 @@ popd # destination path
 if [ "${enable_postprocessing}" != "true" ];
 then
   echo "post processing is disabled"
+  cp -r ${temp_destination_path}/* "${output_folder}/${destination_path}"
+  rm -rdf "${temp_destination_path}"
   exit 0
 fi
 if [ -z "${versions_file}" ];then
@@ -312,8 +316,7 @@ fi
 mkdir -p "${workspace}"
 
 bash -x "${script_dir}/postprocess_library.sh" "${workspace}" \
-  "${destination_path}" \
-  "${proto_path}" \
+  "${temp_destination_path}" \
   "${versions_file}" \
   "${output_folder}"
 
