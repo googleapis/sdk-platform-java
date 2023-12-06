@@ -206,7 +206,7 @@ public abstract class ClientContext {
             .setMtlsEndpoint(settings.getMtlsEndpoint())
             .setSwitchToMtlsEndpointAllowed(settings.getSwitchToMtlsEndpointAllowed())
             .build();
-    String endpoint = endpointContext.resolveEndpoint();
+    String endpoint = endpointContext.getResolvedEndpoint();
     if (transportChannelProvider.needsEndpoint()) {
       transportChannelProvider = transportChannelProvider.withEndpoint(endpoint);
     }

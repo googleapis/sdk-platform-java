@@ -44,9 +44,6 @@ public abstract class EndpointContext {
   public abstract String clientSettingsEndpoint();
 
   @Nullable
-  public abstract String transportChannelEndpoint();
-
-  @Nullable
   public abstract String mtlsEndpoint();
 
   public abstract boolean switchToMtlsEndpointAllowed();
@@ -65,11 +62,9 @@ public abstract class EndpointContext {
   @VisibleForTesting
   void determineEndpoint() throws IOException {
     MtlsProvider mtlsProvider = mtlsProvider() == null ? new MtlsProvider() : mtlsProvider();
-    String customEndpoint =
-        transportChannelEndpoint() != null ? transportChannelEndpoint() : clientSettingsEndpoint();
     resolvedEndpoint =
         mtlsEndpointResolver(
-            customEndpoint, mtlsEndpoint(), switchToMtlsEndpointAllowed(), mtlsProvider);
+            clientSettingsEndpoint(), mtlsEndpoint(), switchToMtlsEndpointAllowed(), mtlsProvider);
   }
 
   // This takes in parameters because determineEndpoint()'s logic will be updated
@@ -98,22 +93,13 @@ public abstract class EndpointContext {
     return endpoint;
   }
 
-  public String resolveEndpoint() throws IOException {
-    if (isEndpointUnresolved()) {
-      determineEndpoint();
-    }
+  public String getResolvedEndpoint() {
     return resolvedEndpoint;
-  }
-
-  private boolean isEndpointUnresolved() {
-    return resolvedEndpoint == null;
   }
 
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setClientSettingsEndpoint(String clientSettingsEndpoint);
-
-    public abstract Builder setTransportChannelEndpoint(String transportChannelEndpoint);
 
     public abstract Builder setMtlsEndpoint(String mtlsEndpoint);
 
@@ -121,6 +107,16 @@ public abstract class EndpointContext {
 
     public abstract Builder setMtlsProvider(MtlsProvider mtlsProvider);
 
-    public abstract EndpointContext build();
+    abstract EndpointContext autoBuild();
+
+    public EndpointContext build() {
+      try {
+        EndpointContext endpointContext = autoBuild();
+        endpointContext.determineEndpoint();
+        return endpointContext;
+      } catch (IOException e) {
+        throw new RuntimeException("Unable to determine the endpoint: " + e.getMessage());
+      }
+    }
   }
 }
