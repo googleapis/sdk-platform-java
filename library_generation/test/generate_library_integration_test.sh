@@ -173,11 +173,6 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   echo "Generate library finished."
   echo "Compare generation result..."
   if [ $enable_postprocessing == "true" ]; then
-    if [ $(find "${output_folder}/workspace" -name '*.java' | wc -l) -eq 0 ];
-    then
-      echo 'no java files found in workspace. This probably means that owlbot copy failed'
-      exit 1
-    fi
     echo "Checking out repository..."
     pushd "${target_folder}"
     source_diff_result=0

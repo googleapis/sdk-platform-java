@@ -9,27 +9,31 @@
 # Arguments
 # 1 - workspace: the location of the grpc,proto and gapic libraries to be
 # processed
-# 2 - scripts_root: location of the generation scripts
-# 3 - preprocessed_sources_path: used to transfer the raw grpc, proto and gapic
+# 2 - preprocessed_sources_path: used to transfer the raw grpc, proto and gapic
 # libraries into the workspace via copy-code
-# 4 - proto_path: googleapis path of the library. This is used to prepare the
-# folder structure to run `owlbot-cli copy-code`
-# 5 - versions_file: path to file containing versions to be applied to the poms
-# 6 - output_folder: main workspace of the generation process
+# 3 - versions_file: path to file containing versions to be applied to the poms
+# 4 - output_folder: main workspace of the generation process
 scripts_root=$(dirname "$(readlink -f "$0")")
 
 workspace=$1
 preprocessed_sources_path=$2
-proto_path=$3
-versions_file=$4
-output_folder=$5
+versions_file=$3
+output_folder=$4
 
 source "${scripts_root}"/utilities.sh
 
-repository_root=$(echo "${preprocessed_sources_path}" | cut -d/ -f1)
-repo_metadata_json_path=$(get_repo_metadata_json "${preprocessed_sources_path}" "${output_folder}")
-cp "${repo_metadata_json_path}" "${workspace}"/.repo-metadata.json
-owlbot_sha=$(get_owlbot_sha "${output_folder}" "${repository_root}")
+for owlbot_file in ".repo-metadata.json" "owlbot.py" ".OwlBot.yaml"
+do
+  if [[ $(find "${workspace}" -name '.repo-metadata.json' | wc -l) -eq 0 ]]; then
+    echo "necessary file for postprocessing '${owlbot_file}' was not found in workspace"
+    echo "please provide a workspace that is owlbot compatible"
+    exit 1
+  fi
+done
+
+repository_root=$(dirname "${workspace}")
+owlbot_sha=$(get_owlbot_sha "${repository_root}")
+proto_path=$(get_proto_path_from_preprocessed_sources "${output_folder}/${preprocessed_sources_path}")
 
 # ensure pyenv scripts are available
 eval "$(pyenv init --path)"
@@ -50,20 +54,6 @@ owlbot_staging_folder="${workspace}/owl-bot-staging"
 mkdir -p "${owlbot_staging_folder}"
 owlbot_postprocessor_image="gcr.io/cloud-devrel-public-resources/owlbot-java@sha256:${owlbot_sha}"
 
-
-
-# copy existing pom, owlbot and version files if the source of truth repo is present
-# pre-processed folders are ommited
-if [[ -d "${output_folder}/${preprocessed_sources_path}" ]]; then
-  rsync -avm \
-    --include='*/' \
-    --include='*.xml' \
-    --include='owlbot.py' \
-    --include='.OwlBot.yaml' \
-    --exclude='*' \
-    "${output_folder}/${preprocessed_sources_path}/" \
-    "${workspace}"
-fi
 
 echo 'Running owl-bot-copy'
 pre_processed_libs_folder="${output_folder}/pre-processed"
@@ -105,7 +95,7 @@ docker run --rm \
 pushd "${output_folder}"
 if [ ! -d "synthtool" ]; then
   git clone https://github.com/googleapis/synthtool.git
-  pushd "synthtool" 
+  pushd "synthtool"
   python3 -m pip install -e .
   python3 -m pip install -r requirements.in
   popd # synthtool

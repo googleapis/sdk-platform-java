@@ -230,26 +230,6 @@ detect_os_architecture() {
   echo "${os_architecture}"
 }
 
-# returns the metadata json path if given, or defaults to the one found in
-# $repository_path
-# Arguments
-# 1 - repository_path: path from output_folder to the location of the library
-# containing .repo-metadata. It assumes the existence of google-cloud-java in
-# the output folder
-# 2 - output_folder: root for the generated libraries, used in conjunction with
-get_repo_metadata_json() {
-  local repository_path=$1
-  local output_folder=$2
-  >&2 echo 'Attempting to obtain .repo-metadata.json from repository_path'
-  local default_metadata_json_path="${output_folder}/${repository_path}/.repo-metadata.json"
-  if [ -f "${default_metadata_json_path}" ]; then
-    echo "${default_metadata_json_path}"
-  else
-    >&2 echo 'failed to obtain json from repository_path'
-    exit 1
-  fi
-}
-
 # returns the owlbot image sha contained in google-cloud-java. This is default
 # behavior that may be overriden by a custom value in the future.
 # Arguments
@@ -257,15 +237,14 @@ get_repo_metadata_json() {
 # 2 - repository_root: usually "google-cloud-java". The .OwlBot.yaml
 # file is looked into its .github folder
 get_owlbot_sha() {
-  local output_folder=$1
-  local repository_root=$2
-  if [ ! -d "${output_folder}/${repository_root}" ];
+  local repository_root=$1
+  if [ ! -d "${repository_root}" ];
   then
     >&2 echo 'No repository to infer owlbot_sha was provided. This is necessary for post-processing' >&2
     exit 1
   fi
   >&2 echo "Attempting to obtain owlbot_sha from monorepo folder"
-  owlbot_sha=$(grep 'sha256' "${output_folder}/${repository_root}/.github/.OwlBot.lock.yaml" | cut -d: -f3)
+  owlbot_sha=$(grep 'sha256' "${repository_root}/.github/.OwlBot.lock.yaml" | cut -d: -f3)
   echo "${owlbot_sha}"
 }
 

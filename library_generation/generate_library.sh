@@ -315,19 +315,14 @@ fi
 
 mkdir -p "${workspace}"
 
+# if destination_path is not empty, it will be used as a starting workspace for
+# postprocessing
+if [[ $(find "${output_folder}/${destination_path}" -mindepth 1 -maxdepth 1 -type d,f | wc -l) -gt 0 ]];then
+  workspace="${output_folder}/${destination_path}"
+fi
+
 bash -x "${script_dir}/postprocess_library.sh" "${workspace}" \
   "${temp_destination_path}" \
   "${versions_file}" \
   "${output_folder}"
 
-# for post-procesed libraries, remove pre-processed folders
-pushd "${output_folder}/${destination_path}"
-rm -rdf "proto-${folder_name}"
-rm -rdf "grpc-${folder_name}"
-rm -rdf "gapic-${folder_name}"
-if [ "${include_samples}" == "false" ]; then
-  rm -rdf "samples"
-fi
-popd # output_folder
-# move contents of the post-processed library into destination_path
-cp -r ${workspace}/* "${output_folder}/${destination_path}"
