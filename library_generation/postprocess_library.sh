@@ -10,7 +10,8 @@
 # 1 - workspace: the location of the grpc,proto and gapic libraries to be
 # processed
 # 2 - scripts_root: location of the generation scripts
-# 3 - destination_path: used to transfer the raw grpc, proto and gapic libraries
+# 3 - preprocessed_sources_path: used to transfer the raw grpc, proto and gapic
+# libraries into the workspace via copy-code
 # 4 - proto_path: googleapis path of the library. This is used to prepare the
 # folder structure to run `owlbot-cli copy-code`
 # 5 - versions_file: path to file containing versions to be applied to the poms
@@ -18,15 +19,15 @@
 
 workspace=$1
 scripts_root=$2
-destination_path=$3
+preprocessed_sources_path=$3
 proto_path=$4
 versions_file=$5
 output_folder=$6
 
 source "${scripts_root}"/utilities.sh
 
-repository_root=$(echo "${destination_path}" | cut -d/ -f1)
-repo_metadata_json_path=$(get_repo_metadata_json "${destination_path}" "${output_folder}")
+repository_root=$(echo "${preprocessed_sources_path}" | cut -d/ -f1)
+repo_metadata_json_path=$(get_repo_metadata_json "${preprocessed_sources_path}" "${output_folder}")
 cp "${repo_metadata_json_path}" "${workspace}"/.repo-metadata.json
 owlbot_sha=$(get_owlbot_sha "${output_folder}" "${repository_root}")
 
@@ -53,14 +54,14 @@ owlbot_postprocessor_image="gcr.io/cloud-devrel-public-resources/owlbot-java@sha
 
 # copy existing pom, owlbot and version files if the source of truth repo is present
 # pre-processed folders are ommited
-if [[ -d "${output_folder}/${destination_path}" ]]; then
+if [[ -d "${output_folder}/${preprocessed_sources_path}" ]]; then
   rsync -avm \
     --include='*/' \
     --include='*.xml' \
     --include='owlbot.py' \
     --include='.OwlBot.yaml' \
     --exclude='*' \
-    "${output_folder}/${destination_path}/" \
+    "${output_folder}/${preprocessed_sources_path}/" \
     "${workspace}"
 fi
 
@@ -70,14 +71,14 @@ pre_processed_libs_folder="${output_folder}/pre-processed"
 # references a wildcard pattern matching a folder
 # ending with `-java` at the leaf of proto_path. 
 mkdir -p "${pre_processed_libs_folder}/${proto_path}/generated-java"
-folder_name=$(extract_folder_name "${destination_path}")
-copy_directory_if_exists "${output_folder}/${destination_path}/proto-${folder_name}" \
+folder_name=$(extract_folder_name "${preprocessed_sources_path}")
+copy_directory_if_exists "${output_folder}/${preprocessed_sources_path}/proto-${folder_name}" \
   "${pre_processed_libs_folder}/${proto_path}/generated-java/proto-google-cloud-${folder_name}"
-copy_directory_if_exists "${output_folder}/${destination_path}/grpc-${folder_name}" \
+copy_directory_if_exists "${output_folder}/${preprocessed_sources_path}/grpc-${folder_name}" \
   "${pre_processed_libs_folder}/${proto_path}/generated-java/grpc-google-cloud-${folder_name}"
-copy_directory_if_exists "${output_folder}/${destination_path}/gapic-${folder_name}" \
+copy_directory_if_exists "${output_folder}/${preprocessed_sources_path}/gapic-${folder_name}" \
   "${pre_processed_libs_folder}/${proto_path}/generated-java/gapic-google-cloud-${folder_name}"
-copy_directory_if_exists "${output_folder}/${destination_path}/samples" \
+copy_directory_if_exists "${output_folder}/${preprocessed_sources_path}/samples" \
   "${pre_processed_libs_folder}/${proto_path}/generated-java/samples"
 pushd "${pre_processed_libs_folder}"
 # create an empty repository so owl-bot-copy can process this as a repo
