@@ -40,6 +40,9 @@ import javax.annotation.Nullable;
 @InternalApi
 @AutoValue
 public abstract class EndpointContext {
+  /**
+   * ClientSettingsEndpoint is the endpoint value set via the ClientSettings/StubSettings classes.
+   */
   @Nullable
   public abstract String clientSettingsEndpoint();
 
@@ -93,12 +96,19 @@ public abstract class EndpointContext {
     return endpoint;
   }
 
+  /**
+   * The resolved endpoint is the computed endpoint after accounting for the custom endpoints and
+   * mTLS configurations.
+   */
   public String getResolvedEndpoint() {
     return resolvedEndpoint;
   }
 
   @AutoValue.Builder
   public abstract static class Builder {
+    /**
+     * ClientSettingsEndpoint is the endpoint value set via the ClientSettings/StubSettings classes.
+     */
     public abstract Builder setClientSettingsEndpoint(String clientSettingsEndpoint);
 
     public abstract Builder setMtlsEndpoint(String mtlsEndpoint);
@@ -109,14 +119,10 @@ public abstract class EndpointContext {
 
     abstract EndpointContext autoBuild();
 
-    public EndpointContext build() {
-      try {
-        EndpointContext endpointContext = autoBuild();
-        endpointContext.determineEndpoint();
-        return endpointContext;
-      } catch (IOException e) {
-        throw new RuntimeException("Unable to determine the endpoint: " + e.getMessage());
-      }
+    public EndpointContext build() throws IOException {
+      EndpointContext endpointContext = autoBuild();
+      endpointContext.determineEndpoint();
+      return endpointContext;
     }
   }
 }

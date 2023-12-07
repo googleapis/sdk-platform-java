@@ -35,6 +35,7 @@ import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.api.gax.rpc.testing.FakeMtlsProvider;
 import com.google.common.truth.Truth;
 import java.io.IOException;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -43,11 +44,16 @@ import org.junit.runners.JUnit4;
 public class EndpointContextTest {
   private static final String DEFAULT_ENDPOINT = "test.googleapis.com";
   private static final String DEFAULT_MTLS_ENDPOINT = "test.mtls.googleapis.com";
-  private static final EndpointContext DEFAULT_ENDPOINT_CONTEXT =
-      EndpointContext.newBuilder()
-          .setClientSettingsEndpoint(DEFAULT_ENDPOINT)
-          .setMtlsEndpoint(DEFAULT_MTLS_ENDPOINT)
-          .build();
+  private static EndpointContext defaultEndpointContext;
+
+  @BeforeClass
+  public static void setUp() throws IOException {
+    defaultEndpointContext =
+        EndpointContext.newBuilder()
+            .setClientSettingsEndpoint(DEFAULT_ENDPOINT)
+            .setMtlsEndpoint(DEFAULT_MTLS_ENDPOINT)
+            .build();
+  }
 
   @Test
   public void mtlsEndpointResolver_switchToMtlsAllowedIsFalse() throws IOException {
@@ -62,7 +68,7 @@ public class EndpointContextTest {
             throwExceptionForGetKeyStore);
     boolean switchToMtlsEndpointAllowed = false;
     Truth.assertThat(
-            DEFAULT_ENDPOINT_CONTEXT.mtlsEndpointResolver(
+            defaultEndpointContext.mtlsEndpointResolver(
                 DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, switchToMtlsEndpointAllowed, mtlsProvider))
         .isEqualTo(DEFAULT_ENDPOINT);
   }
@@ -80,7 +86,7 @@ public class EndpointContextTest {
             throwExceptionForGetKeyStore);
     boolean switchToMtlsEndpointAllowed = true;
     Truth.assertThat(
-            DEFAULT_ENDPOINT_CONTEXT.mtlsEndpointResolver(
+            defaultEndpointContext.mtlsEndpointResolver(
                 DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, switchToMtlsEndpointAllowed, mtlsProvider))
         .isEqualTo(DEFAULT_MTLS_ENDPOINT);
   }
@@ -98,7 +104,7 @@ public class EndpointContextTest {
             throwExceptionForGetKeyStore);
     boolean switchToMtlsEndpointAllowed = true;
     Truth.assertThat(
-            DEFAULT_ENDPOINT_CONTEXT.mtlsEndpointResolver(
+            defaultEndpointContext.mtlsEndpointResolver(
                 DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, switchToMtlsEndpointAllowed, mtlsProvider))
         .isEqualTo(DEFAULT_MTLS_ENDPOINT);
   }
@@ -116,7 +122,7 @@ public class EndpointContextTest {
             throwExceptionForGetKeyStore);
     boolean switchToMtlsEndpointAllowed = true;
     Truth.assertThat(
-            DEFAULT_ENDPOINT_CONTEXT.mtlsEndpointResolver(
+            defaultEndpointContext.mtlsEndpointResolver(
                 DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, switchToMtlsEndpointAllowed, mtlsProvider))
         .isEqualTo(DEFAULT_ENDPOINT);
   }
@@ -136,7 +142,7 @@ public class EndpointContextTest {
             throwExceptionForGetKeyStore);
     boolean switchToMtlsEndpointAllowed = true;
     Truth.assertThat(
-            DEFAULT_ENDPOINT_CONTEXT.mtlsEndpointResolver(
+            defaultEndpointContext.mtlsEndpointResolver(
                 DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, switchToMtlsEndpointAllowed, mtlsProvider))
         .isEqualTo(DEFAULT_ENDPOINT);
   }
@@ -156,7 +162,7 @@ public class EndpointContextTest {
     assertThrows(
         IOException.class,
         () ->
-            DEFAULT_ENDPOINT_CONTEXT.mtlsEndpointResolver(
+            defaultEndpointContext.mtlsEndpointResolver(
                 DEFAULT_ENDPOINT,
                 DEFAULT_MTLS_ENDPOINT,
                 switchToMtlsEndpointAllowed,
