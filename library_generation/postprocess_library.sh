@@ -94,11 +94,13 @@ mkdir -p /tmp/synthtool
 pushd /tmp/synthtool
 if [ ! -d "synthtool" ]; then
   git clone https://github.com/googleapis/synthtool.git
-  pushd "synthtool"
-  python3 -m pip install -e .
-  python3 -m pip install -r requirements.in
-  popd # synthtool
 fi
+pushd "synthtool"
+synthtool_commitish=$(cat "${scripts_root}/configuration/synthtool-commitish")
+git reset --hard "${synthtool_commitish}"
+python3 -m pip install -e .
+python3 -m pip install -r requirements.in
+popd # synthtool
 popd # temp dir
 
 # now we use the image to call owlbot.py
