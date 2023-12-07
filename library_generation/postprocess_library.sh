@@ -77,6 +77,7 @@ popd # pre_processed_libs_folder
 
 owlbot_cli_image_sha=$(cat "${scripts_root}/configuration/owlbot-cli-sha" | grep "sha256")
 
+
 docker run --rm \
   --user $(id -u):$(id -g) \
   -v "${workspace}:/repo" \
@@ -88,6 +89,16 @@ docker run --rm \
   --source-repo-commit-hash=none \
   --source-repo=/pre-processed-libraries \
   --config-file=.OwlBot.yaml
+
+# if the workspace is a library of google-cloud-java, we have to "unpack" the
+# owl-bot-staging folder so it's properly processed by java owlbot
+if [[ $(basename $(dirname "${workspace}")) == "google-cloud-java" ]]; then
+  pushd "${workspace}"
+  mv owl-bot-staging/* temp
+  rm -rd owl-bot-staging/
+  mv temp owl-bot-staging
+  popd # workspace
+fi
 
 # we clone the synthtool library and manually build it
 mkdir -p /tmp/synthtool
