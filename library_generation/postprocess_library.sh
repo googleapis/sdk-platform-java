@@ -12,6 +12,7 @@
 # 2 - preprocessed_sources_path: used to transfer the raw grpc, proto and gapic
 # libraries into the workspace via copy-code
 # 3 - versions_file: path to file containing versions to be applied to the poms
+set -xeo pipefail
 scripts_root=$(dirname "$(readlink -f "$0")")
 
 workspace=$1
@@ -59,14 +60,13 @@ pre_processed_libs_folder=$(mktemp -d)
 # references a wildcard pattern matching a folder
 # ending with `-java` at the leaf of proto_path. 
 mkdir -p "${pre_processed_libs_folder}/${proto_path}/generated-java"
-folder_name=$(extract_folder_name "${preprocessed_sources_path}")
-copy_directory_if_exists "${preprocessed_sources_path}/proto-${folder_name}" \
-  "${pre_processed_libs_folder}/${proto_path}/generated-java/proto-google-cloud-${folder_name}"
-copy_directory_if_exists "${preprocessed_sources_path}/grpc-${folder_name}" \
-  "${pre_processed_libs_folder}/${proto_path}/generated-java/grpc-google-cloud-${folder_name}"
-copy_directory_if_exists "${preprocessed_sources_path}/gapic-${folder_name}" \
-  "${pre_processed_libs_folder}/${proto_path}/generated-java/gapic-google-cloud-${folder_name}"
-copy_directory_if_exists "${preprocessed_sources_path}/samples" \
+copy_directory_if_exists "${preprocessed_sources_path}" "proto" \
+  "${pre_processed_libs_folder}/${proto_path}/generated-java/proto-google-cloud-library"
+copy_directory_if_exists "${preprocessed_sources_path}" "grpc" \
+  "${pre_processed_libs_folder}/${proto_path}/generated-java/grpc-google-cloud-library"
+copy_directory_if_exists "${preprocessed_sources_path}" "gapic" \
+  "${pre_processed_libs_folder}/${proto_path}/generated-java/gapic-google-cloud-library"
+copy_directory_if_exists "${preprocessed_sources_path}" "samples" \
   "${pre_processed_libs_folder}/${proto_path}/generated-java/samples"
 pushd "${pre_processed_libs_folder}"
 # create an empty repository so owl-bot-copy can process this as a repo

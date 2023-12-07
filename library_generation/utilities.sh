@@ -250,22 +250,26 @@ get_owlbot_sha() {
 
 # copies $1 as a folder as $2 only if $1 exists
 copy_directory_if_exists() {
-  local source_folder=$1
-  local destination_folder=$2
-  if [ -d "${source_folder}" ]; then
-    cp -r "${source_folder}" "${destination_folder}"
+  local base_folder=$1
+  local folder_prefix=$2
+  local destination_folder=$3
+  pushd "${base_folder}"
+  if [[ $(find . -maxdepth 1 -type d -name "${folder_prefix}*" | wc -l ) -gt 0  ]]; then
+    cp -r ${base_folder}/${folder_prefix}* "${destination_folder}"
   fi
+  popd # base_folder
 }
 
 # computes proto_path from a given folder of preprocessed sources
 # It will inspect the proto library to compute the path
 get_proto_path_from_preprocessed_sources() {
+  set -e
   local sources=$1
   pushd "${sources}" > /dev/null
-  local proto_library=$(find . -maxdepth 1 -type d -name 'proto-*')
-  popd > /dev/null # sources
-  pushd "${proto_library}/src/main/proto" > /dev/null
+  local proto_library=$(find . -maxdepth 1 -type d -name 'proto-*' | sed 's/\.\///')
+  pushd "$(pwd)/${proto_library}/src/main/proto" > /dev/null
   local result=$(find . -type f -name '*.proto' | head -n 1 | xargs dirname | sed 's/\.\///')
   popd > /dev/null # proto_library
+  popd > /dev/null # sources
   echo "${result}"
 }
