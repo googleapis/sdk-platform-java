@@ -5,20 +5,18 @@
 
 
 # Runs the owlbot post-processor docker image. The resulting post-processed
-# library gets stored in `${output_folder}/workspace`
+# library gets stored in the $workspace argument
 # Arguments
 # 1 - workspace: the location of the grpc,proto and gapic libraries to be
 # processed
 # 2 - preprocessed_sources_path: used to transfer the raw grpc, proto and gapic
 # libraries into the workspace via copy-code
 # 3 - versions_file: path to file containing versions to be applied to the poms
-# 4 - output_folder: main workspace of the generation process
 scripts_root=$(dirname "$(readlink -f "$0")")
 
 workspace=$1
 preprocessed_sources_path=$2
 versions_file=$3
-output_folder=$4
 
 source "${scripts_root}"/utilities.sh
 
@@ -33,7 +31,7 @@ done
 
 repository_root=$(dirname "${workspace}")
 owlbot_sha=$(get_owlbot_sha "${repository_root}")
-proto_path=$(get_proto_path_from_preprocessed_sources "${output_folder}/${preprocessed_sources_path}")
+proto_path=$(get_proto_path_from_preprocessed_sources "${preprocessed_sources_path}")
 
 # ensure pyenv scripts are available
 eval "$(pyenv init --path)"
@@ -56,19 +54,19 @@ owlbot_postprocessor_image="gcr.io/cloud-devrel-public-resources/owlbot-java@sha
 
 
 echo 'Running owl-bot-copy'
-pre_processed_libs_folder="${output_folder}/pre-processed"
+pre_processed_libs_folder=$(mktemp -d)
 # By default (thanks to generation templates), .OwlBot.yaml `deep-copy` section
 # references a wildcard pattern matching a folder
 # ending with `-java` at the leaf of proto_path. 
 mkdir -p "${pre_processed_libs_folder}/${proto_path}/generated-java"
 folder_name=$(extract_folder_name "${preprocessed_sources_path}")
-copy_directory_if_exists "${output_folder}/${preprocessed_sources_path}/proto-${folder_name}" \
+copy_directory_if_exists "${preprocessed_sources_path}/proto-${folder_name}" \
   "${pre_processed_libs_folder}/${proto_path}/generated-java/proto-google-cloud-${folder_name}"
-copy_directory_if_exists "${output_folder}/${preprocessed_sources_path}/grpc-${folder_name}" \
+copy_directory_if_exists "${preprocessed_sources_path}/grpc-${folder_name}" \
   "${pre_processed_libs_folder}/${proto_path}/generated-java/grpc-google-cloud-${folder_name}"
-copy_directory_if_exists "${output_folder}/${preprocessed_sources_path}/gapic-${folder_name}" \
+copy_directory_if_exists "${preprocessed_sources_path}/gapic-${folder_name}" \
   "${pre_processed_libs_folder}/${proto_path}/generated-java/gapic-google-cloud-${folder_name}"
-copy_directory_if_exists "${output_folder}/${preprocessed_sources_path}/samples" \
+copy_directory_if_exists "${preprocessed_sources_path}/samples" \
   "${pre_processed_libs_folder}/${proto_path}/generated-java/samples"
 pushd "${pre_processed_libs_folder}"
 # create an empty repository so owl-bot-copy can process this as a repo
@@ -92,7 +90,7 @@ docker run --rm \
   --config-file=.OwlBot.yaml
 
 # we clone the synthtool library and manually build it
-pushd "${output_folder}"
+pushd $(mktemp -d)
 if [ ! -d "synthtool" ]; then
   git clone https://github.com/googleapis/synthtool.git
   pushd "synthtool"
@@ -100,7 +98,7 @@ if [ ! -d "synthtool" ]; then
   python3 -m pip install -r requirements.in
   popd # synthtool
 fi
-popd # output_folder
+popd # temp dir
 
 # now we use the image to call owlbot.py
 echo 'processing owlbot.py'

@@ -323,6 +323,5 @@ fi
 
 bash -x "${script_dir}/postprocess_library.sh" "${workspace}" \
   "${temp_destination_path}" \
-  "${versions_file}" \
-  "${output_folder}"
+  "${versions_file}"
 
