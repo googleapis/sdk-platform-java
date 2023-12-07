@@ -90,7 +90,8 @@ docker run --rm \
   --config-file=.OwlBot.yaml
 
 # we clone the synthtool library and manually build it
-pushd $(mktemp -d)
+mkdir -p /tmp/synthtool
+pushd /tmp/synthtool
 if [ ! -d "synthtool" ]; then
   git clone https://github.com/googleapis/synthtool.git
   pushd "synthtool"
