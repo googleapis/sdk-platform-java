@@ -37,7 +37,7 @@ import com.google.common.base.Strings;
 import java.io.IOException;
 import javax.annotation.Nullable;
 
-/** Contains the fields required to resolve the endpoint */
+/** Contains the fields required to resolve the endpoint and Universe Domain */
 @InternalApi
 @AutoValue
 public abstract class EndpointContext {
@@ -132,6 +132,10 @@ public abstract class EndpointContext {
     return resolvedEndpoint;
   }
 
+  /**
+   * The resolved Universe Domain is the computed Universe Domain after accounting for the custom
+   * Universe Domain
+   */
   public String getResolvedUniverseDomain() {
     return resolvedUniverseDomain;
   }
