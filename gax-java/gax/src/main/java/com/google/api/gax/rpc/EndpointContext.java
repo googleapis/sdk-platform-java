@@ -46,6 +46,13 @@ public abstract class EndpointContext {
   @Nullable
   public abstract String clientSettingsEndpoint();
 
+  /**
+   * TransportChannelProviderEndpoint is the endpoint value set via the TransportChannelProvider
+   * class.
+   */
+  @Nullable
+  public abstract String transportChannelProviderEndpoint();
+
   @Nullable
   public abstract String mtlsEndpoint();
 
@@ -65,9 +72,13 @@ public abstract class EndpointContext {
   @VisibleForTesting
   void determineEndpoint() throws IOException {
     MtlsProvider mtlsProvider = mtlsProvider() == null ? new MtlsProvider() : mtlsProvider();
+    String customEndpoint =
+        transportChannelProviderEndpoint() == null
+            ? clientSettingsEndpoint()
+            : transportChannelProviderEndpoint();
     resolvedEndpoint =
         mtlsEndpointResolver(
-            clientSettingsEndpoint(), mtlsEndpoint(), switchToMtlsEndpointAllowed(), mtlsProvider);
+            customEndpoint, mtlsEndpoint(), switchToMtlsEndpointAllowed(), mtlsProvider);
   }
 
   // This takes in parameters because determineEndpoint()'s logic will be updated
@@ -110,6 +121,12 @@ public abstract class EndpointContext {
      * ClientSettingsEndpoint is the endpoint value set via the ClientSettings/StubSettings classes.
      */
     public abstract Builder setClientSettingsEndpoint(String clientSettingsEndpoint);
+
+    /**
+     * TransportChannelProviderEndpoint is the endpoint value set via the TransportChannelProvider
+     * class.
+     */
+    public abstract Builder setTransportChannelProviderEndpoint(String transportChannelEndpoint);
 
     public abstract Builder setMtlsEndpoint(String mtlsEndpoint);
 

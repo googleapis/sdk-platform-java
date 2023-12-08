@@ -19,4 +19,10 @@
     <method>*setWaitTimeout*</method>
     <to>com.google.api.gax.rpc.ServerStreamingCallSettings$Builder</to>
   </difference>
+  <!-- Add a default Endpoint Getter -->
+  <difference>
+    <differenceType>7012</differenceType>
+    <className>com/google/api/gax/rpc/TransportChannelProvider</className>
+    <method>* getEndpoint()</method>
+  </difference>
 </differences>
