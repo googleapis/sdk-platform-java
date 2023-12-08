@@ -73,6 +73,7 @@ import org.threeten.bp.Duration;
 @RunWith(JUnit4.class)
 public class ClientContextTest {
   private static final String DEFAULT_ENDPOINT = "test.googleapis.com";
+  private static final String DEFAULT_UNIVERSE_DOMAIN = "googleapis.com";
 
   private static class InterceptingExecutor extends ScheduledThreadPoolExecutor {
     boolean shutdownCalled = false;
@@ -934,6 +935,7 @@ public class ClientContextTest {
     ClientSettings clientSettings = clientSettingsBuilder.build();
     ClientContext clientContext = ClientContext.create(clientSettings);
     assertThat(clientContext.getEndpoint()).isEqualTo(DEFAULT_ENDPOINT);
+    assertThat(clientContext.getUniverseDomain()).isEqualTo(DEFAULT_UNIVERSE_DOMAIN);
   }
 
   @Test
@@ -955,6 +957,7 @@ public class ClientContextTest {
     ClientContext clientContext = ClientContext.create(clientSettings);
     // ClientContext.getEndpoint() currently always refers to the ClientSettingsEndpoint value
     assertThat(clientContext.getEndpoint()).isEqualTo(null);
+    assertThat(clientContext.getUniverseDomain()).isEqualTo(DEFAULT_UNIVERSE_DOMAIN);
   }
 
   @Test
@@ -980,5 +983,26 @@ public class ClientContextTest {
     ClientContext clientContext = ClientContext.create(clientSettings);
     // ClientContext.getEndpoint() currently always refers to the ClientSettingsEndpoint value
     assertThat(clientContext.getEndpoint()).isEqualTo(clientSettingsEndpoint);
+    assertThat(clientContext.getUniverseDomain()).isEqualTo(DEFAULT_UNIVERSE_DOMAIN);
+  }
+
+  @Test
+  public void testCreateClientContext_SetUniverseDomain() throws IOException {
+    TransportChannelProvider transportChannelProvider =
+        new FakeTransportProvider(
+            FakeTransportChannel.create(new FakeChannel()), null, true, null, null, null);
+    StubSettings settings =
+        new FakeStubSettings.Builder()
+            .setEndpoint(null)
+            .setUniverseDomain(DEFAULT_UNIVERSE_DOMAIN)
+            .build();
+    ClientSettings.Builder clientSettingsBuilder = new FakeClientSettings.Builder(settings);
+    clientSettingsBuilder.setTransportChannelProvider(transportChannelProvider);
+    clientSettingsBuilder.setCredentialsProvider(
+        FixedCredentialsProvider.create(Mockito.mock(Credentials.class)));
+    ClientSettings clientSettings = clientSettingsBuilder.build();
+    ClientContext clientContext = ClientContext.create(clientSettings);
+    assertThat(clientContext.getEndpoint()).isEqualTo(null);
+    assertThat(clientContext.getUniverseDomain()).isEqualTo(DEFAULT_UNIVERSE_DOMAIN);
   }
 }

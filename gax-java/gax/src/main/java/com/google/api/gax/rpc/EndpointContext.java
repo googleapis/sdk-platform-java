@@ -33,6 +33,7 @@ import com.google.api.core.InternalApi;
 import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Strings;
 import java.io.IOException;
 import javax.annotation.Nullable;
 
@@ -40,6 +41,11 @@ import javax.annotation.Nullable;
 @InternalApi
 @AutoValue
 public abstract class EndpointContext {
+  private static final String DEFAULT_UNIVERSE_DOMAIN = "googleapis.com";
+
+  @Nullable
+  public abstract String universeDomain();
+
   /**
    * ServiceName is host URI for Google Cloud Services. It follows the format of
    * `{ServiceName}.googleapis.com`. For example, speech.googleapis.com would have a ServiceName of
@@ -72,6 +78,7 @@ public abstract class EndpointContext {
   public abstract Builder toBuilder();
 
   private String resolvedEndpoint;
+  private String resolvedUniverseDomain;
 
   public static Builder newBuilder() {
     return new AutoValue_EndpointContext.Builder().setSwitchToMtlsEndpointAllowed(false);
@@ -87,6 +94,8 @@ public abstract class EndpointContext {
     resolvedEndpoint =
         mtlsEndpointResolver(
             customEndpoint, mtlsEndpoint(), switchToMtlsEndpointAllowed(), mtlsProvider);
+    resolvedUniverseDomain =
+        Strings.isNullOrEmpty(universeDomain()) ? DEFAULT_UNIVERSE_DOMAIN : universeDomain();
   }
 
   // This takes in parameters because determineEndpoint()'s logic will be updated
@@ -123,8 +132,14 @@ public abstract class EndpointContext {
     return resolvedEndpoint;
   }
 
+  public String getResolvedUniverseDomain() {
+    return resolvedUniverseDomain;
+  }
+
   @AutoValue.Builder
   public abstract static class Builder {
+    public abstract Builder setUniverseDomain(String universeDomain);
+
     /**
      * ServiceName is host URI for Google Cloud Services. It follows the format of
      * `{ServiceName}.googleapis.com`. For example, speech.googleapis.com would have a ServiceName

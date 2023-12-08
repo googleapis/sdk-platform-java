@@ -105,6 +105,9 @@ public abstract class ClientContext {
   abstract String getServiceName();
 
   @Nullable
+  public abstract String getUniverseDomain();
+
+  @Nullable
   public abstract String getEndpoint();
 
   @Nullable
@@ -207,6 +210,7 @@ public abstract class ClientContext {
     EndpointContext endpointContext =
         EndpointContext.newBuilder()
             .setServiceName(settings.getServiceName())
+            .setUniverseDomain(settings.getUniverseDomain())
             .setClientSettingsEndpoint(settings.getEndpoint())
             .setTransportChannelProviderEndpoint(
                 settings.getTransportChannelProvider().getEndpoint())
@@ -214,7 +218,8 @@ public abstract class ClientContext {
             .setSwitchToMtlsEndpointAllowed(settings.getSwitchToMtlsEndpointAllowed())
             .build();
     String endpoint = endpointContext.getResolvedEndpoint();
-    if (transportChannelProvider.needsEndpoint()) {
+    String universeDomain = endpointContext.getResolvedUniverseDomain();
+    if (transportChannelProvider.needsResolvedEndpoint()) {
       transportChannelProvider = transportChannelProvider.withEndpoint(endpoint);
     }
     TransportChannel transportChannel = transportChannelProvider.getTransportChannel();
@@ -264,6 +269,7 @@ public abstract class ClientContext {
         .setClock(clock)
         .setDefaultCallContext(defaultCallContext)
         .setServiceName(settings.getServiceName())
+        .setUniverseDomain(universeDomain)
         .setEndpoint(settings.getEndpoint())
         .setQuotaProjectId(settings.getQuotaProjectId())
         .setStreamWatchdog(watchdog)
@@ -331,6 +337,8 @@ public abstract class ClientContext {
 
     // Package-Private scope for internal use only. Shared between StubSettings and ClientContext
     abstract Builder setServiceName(String serviceName);
+
+    public abstract Builder setUniverseDomain(String universeDomain);
 
     public abstract Builder setEndpoint(String endpoint);
 

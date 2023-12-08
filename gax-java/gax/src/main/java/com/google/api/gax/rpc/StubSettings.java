@@ -81,6 +81,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   @Nonnull private final ApiTracerFactory tracerFactory;
   // Track if deprecated setExecutorProvider is called
   private boolean deprecatedExecutorProviderSet;
+  private final String universeDomain;
 
   /**
    * Indicate when creating transport whether it is allowed to use mTLS endpoint instead of the
@@ -108,6 +109,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     this.tracerFactory = builder.tracerFactory;
     this.deprecatedExecutorProviderSet = builder.deprecatedExecutorProviderSet;
     this.gdchApiAudience = builder.gdchApiAudience;
+    this.universeDomain = builder.universeDomain;
   }
 
   /** @deprecated Please use {@link #getBackgroundExecutorProvider()}. */
@@ -145,6 +147,10 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   @InternalApi
   public String getServiceName() {
     return "";
+  }
+
+  public final String getUniverseDomain() {
+    return universeDomain;
   }
 
   public final String getEndpoint() {
@@ -230,6 +236,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     @Nonnull private Duration streamWatchdogCheckInterval;
     @Nonnull private ApiTracerFactory tracerFactory;
     private boolean deprecatedExecutorProviderSet;
+    private String universeDomain;
 
     /**
      * Indicate when creating transport whether it is allowed to use mTLS endpoint instead of the
@@ -257,6 +264,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       this.tracerFactory = settings.tracerFactory;
       this.deprecatedExecutorProviderSet = settings.deprecatedExecutorProviderSet;
       this.gdchApiAudience = settings.gdchApiAudience;
+      this.universeDomain = settings.universeDomain;
     }
 
     /** Get Quota Project ID from Client Context * */
@@ -293,6 +301,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.tracerFactory = BaseApiTracerFactory.getInstance();
         this.deprecatedExecutorProviderSet = false;
         this.gdchApiAudience = null;
+        this.universeDomain = null;
       } else {
         ExecutorProvider fixedExecutorProvider =
             FixedExecutorProvider.create(clientContext.getExecutor());
@@ -316,6 +325,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.tracerFactory = clientContext.getTracerFactory();
         this.quotaProjectId = getQuotaProjectIdFromClientContext(clientContext);
         this.gdchApiAudience = clientContext.getGdchApiAudience();
+        this.universeDomain = clientContext.getUniverseDomain();
       }
     }
 
@@ -425,6 +435,11 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
      */
     public B setClock(ApiClock clock) {
       this.clock = clock;
+      return self();
+    }
+
+    public B setUniverseDomain(String universeDomain) {
+      this.universeDomain = universeDomain;
       return self();
     }
 
