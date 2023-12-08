@@ -92,8 +92,8 @@ public interface TransportChannelProvider {
 
   /**
    * TransportChannelProvider allows setting a custom endpoint which may not be the resolved
-   * endpoint. Resolving the endpoint is always required for gRPC and HttpJson Transports and is not
-   * dependent if the user set a custom endpoint.
+   * endpoint. Resolving the endpoint is _always_ required for gRPC and HttpJson Transports.
+   * Unlike {@link #needsEndpoint()}, it is not dependent if the user set a custom endpoint.
    */
   default boolean needsResolvedEndpoint() {
     return false;
