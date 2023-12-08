@@ -953,12 +953,8 @@ public class ClientContextTest {
         FixedCredentialsProvider.create(Mockito.mock(Credentials.class)));
     ClientSettings clientSettings = clientSettingsBuilder.build();
     ClientContext clientContext = ClientContext.create(clientSettings);
-<<<<<<< HEAD
     // ClientContext.getEndpoint() currently always refers to the ClientSettingsEndpoint value
     assertThat(clientContext.getEndpoint()).isEqualTo(null);
-=======
-    assertThat(clientContext.getEndpoint()).isEqualTo(DEFAULT_ENDPOINT);
->>>>>>> fedfd0091 (chore: Add Endpoint tests for ClientContext)
   }
 
   @Test
@@ -982,11 +978,7 @@ public class ClientContextTest {
         FixedCredentialsProvider.create(Mockito.mock(Credentials.class)));
     ClientSettings clientSettings = clientSettingsBuilder.build();
     ClientContext clientContext = ClientContext.create(clientSettings);
-<<<<<<< HEAD
     // ClientContext.getEndpoint() currently always refers to the ClientSettingsEndpoint value
     assertThat(clientContext.getEndpoint()).isEqualTo(clientSettingsEndpoint);
-=======
-    assertThat(clientContext.getEndpoint()).isEqualTo(transportChannelProviderEndpoint);
->>>>>>> fedfd0091 (chore: Add Endpoint tests for ClientContext)
   }
 }
