@@ -36,7 +36,6 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -47,11 +46,8 @@ import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.api.gax.core.FixedExecutorProvider;
 import com.google.api.gax.core.NoCredentialsProvider;
-import com.google.api.gax.rpc.mtls.MtlsProvider;
-import com.google.api.gax.rpc.mtls.MtlsProvider.MtlsEndpointUsagePolicy;
 import com.google.api.gax.rpc.testing.FakeChannel;
 import com.google.api.gax.rpc.testing.FakeClientSettings;
-import com.google.api.gax.rpc.testing.FakeMtlsProvider;
 import com.google.api.gax.rpc.testing.FakeStubSettings;
 import com.google.api.gax.rpc.testing.FakeTransportChannel;
 import com.google.auth.Credentials;
@@ -635,93 +631,6 @@ public class ClientContextTest {
 
   private static String endpoint = "https://foo.googleapis.com";
   private static String mtlsEndpoint = "https://foo.mtls.googleapis.com";
-
-  @Test
-  public void testAutoUseMtlsEndpoint() throws IOException {
-    // Test the case client certificate exists and mTLS endpoint is selected.
-    boolean switchToMtlsEndpointAllowed = true;
-    MtlsProvider provider =
-        new FakeMtlsProvider(
-            true,
-            MtlsEndpointUsagePolicy.AUTO,
-            FakeMtlsProvider.createTestMtlsKeyStore(),
-            "",
-            false);
-    String endpointSelected =
-        ClientContext.getEndpoint(endpoint, mtlsEndpoint, switchToMtlsEndpointAllowed, provider);
-    assertEquals(mtlsEndpoint, endpointSelected);
-  }
-
-  @Test
-  public void testEndpointNotOverridable() throws IOException {
-    // Test the case that switching to mTLS endpoint is not allowed so the original endpoint is
-    // selected.
-    boolean switchToMtlsEndpointAllowed = false;
-    MtlsProvider provider =
-        new FakeMtlsProvider(
-            true,
-            MtlsEndpointUsagePolicy.AUTO,
-            FakeMtlsProvider.createTestMtlsKeyStore(),
-            "",
-            false);
-    String endpointSelected =
-        ClientContext.getEndpoint(endpoint, mtlsEndpoint, switchToMtlsEndpointAllowed, provider);
-    assertEquals(endpoint, endpointSelected);
-  }
-
-  @Test
-  public void testNoClientCertificate() throws IOException {
-    // Test the case that client certificates doesn't exists so the original endpoint is selected.
-    boolean switchToMtlsEndpointAllowed = true;
-    MtlsProvider provider =
-        new FakeMtlsProvider(true, MtlsEndpointUsagePolicy.AUTO, null, "", false);
-    String endpointSelected =
-        ClientContext.getEndpoint(endpoint, mtlsEndpoint, switchToMtlsEndpointAllowed, provider);
-    assertEquals(endpoint, endpointSelected);
-  }
-
-  @Test
-  public void testAlwaysUseMtlsEndpoint() throws IOException {
-    // Test the case that mTLS endpoint is always used.
-    boolean switchToMtlsEndpointAllowed = true;
-    MtlsProvider provider =
-        new FakeMtlsProvider(false, MtlsEndpointUsagePolicy.ALWAYS, null, "", false);
-    String endpointSelected =
-        ClientContext.getEndpoint(endpoint, mtlsEndpoint, switchToMtlsEndpointAllowed, provider);
-    assertEquals(mtlsEndpoint, endpointSelected);
-  }
-
-  @Test
-  public void testNeverUseMtlsEndpoint() throws IOException {
-    // Test the case that mTLS endpoint is never used.
-    boolean switchToMtlsEndpointAllowed = true;
-    MtlsProvider provider =
-        new FakeMtlsProvider(
-            true,
-            MtlsEndpointUsagePolicy.NEVER,
-            FakeMtlsProvider.createTestMtlsKeyStore(),
-            "",
-            false);
-    String endpointSelected =
-        ClientContext.getEndpoint(endpoint, mtlsEndpoint, switchToMtlsEndpointAllowed, provider);
-    assertEquals(endpoint, endpointSelected);
-  }
-
-  @Test
-  public void testGetKeyStoreThrows() throws IOException {
-    // Test the case that getKeyStore throws exceptions.
-    try {
-      boolean switchToMtlsEndpointAllowed = true;
-      MtlsProvider provider =
-          new FakeMtlsProvider(true, MtlsEndpointUsagePolicy.AUTO, null, "", true);
-      ClientContext.getEndpoint(endpoint, mtlsEndpoint, switchToMtlsEndpointAllowed, provider);
-      fail("should throw an exception");
-    } catch (IOException e) {
-      assertTrue(
-          "expected getKeyStore to throw an exception",
-          e.getMessage().contains("getKeyStore throws exception"));
-    }
-  }
 
   @Test
   public void testSwitchToMtlsEndpointAllowed() throws IOException {
