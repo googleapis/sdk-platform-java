@@ -33,10 +33,11 @@ import com.google.api.core.InternalApi;
 import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Strings;
 import java.io.IOException;
 import javax.annotation.Nullable;
 
-/** Contains the fields required to resolve the endpoint */
+/** Contains the fields required to resolve the endpoint and Universe Domain */
 @InternalApi
 @AutoValue
 public abstract class EndpointContext {
@@ -51,6 +52,7 @@ public abstract class EndpointContext {
   @Nullable
   public abstract String clientSettingsEndpoint();
 
+  /** TransportChannelEndpoint is the endpoint value set via the TransportChannelProvider class. */
   @Nullable
   public abstract String transportChannelEndpoint();
 
@@ -117,6 +119,10 @@ public abstract class EndpointContext {
     return resolvedEndpoint;
   }
 
+  /**
+   * The resolved Universe Domain is the computed Universe Domain after accounting for the custom
+   * Universe Domain
+   */
   public String getResolvedUniverseDomain() {
     return resolvedUniverseDomain;
   }
@@ -130,6 +136,9 @@ public abstract class EndpointContext {
      */
     public abstract Builder setClientSettingsEndpoint(String clientSettingsEndpoint);
 
+    /**
+     * TransportChannelEndpoint is the endpoint value set via the TransportChannelProvider class.
+     */
     public abstract Builder setTransportChannelEndpoint(String transportChannelEndpoint);
 
     public abstract Builder setMtlsEndpoint(String mtlsEndpoint);
