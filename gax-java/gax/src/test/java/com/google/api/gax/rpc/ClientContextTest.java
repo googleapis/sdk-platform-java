@@ -183,6 +183,11 @@ public class ClientContextTest {
     }
 
     @Override
+    public boolean needsResolvedEndpoint() {
+      return true;
+    }
+
+    @Override
     public TransportChannelProvider withEndpoint(String endpoint) {
       return new FakeTransportProvider(
           this.transport,

@@ -189,6 +189,11 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return endpoint == null;
   }
 
+  @Override
+  public boolean needsResolvedEndpoint() {
+    return true;
+  }
+
   /**
    * Specify the endpoint the channel should connect to.
    *

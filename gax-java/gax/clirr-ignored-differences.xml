@@ -25,4 +25,9 @@
     <className>com/google/api/gax/rpc/TransportChannelProvider</className>
     <method>* getEndpoint()</method>
   </difference>
+  <difference>
+    <differenceType>7012</differenceType>
+    <className>com/google/api/gax/rpc/TransportChannelProvider</className>
+    <method>* needsResolvedEndpoint()</method>
+  </difference>
 </differences>
