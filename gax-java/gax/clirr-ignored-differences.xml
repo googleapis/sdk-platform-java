@@ -19,4 +19,21 @@
     <method>*setWaitTimeout*</method>
     <to>com.google.api.gax.rpc.ServerStreamingCallSettings$Builder</to>
   </difference>
+  <!-- Add a default Endpoint Getter -->
+  <difference>
+    <differenceType>7012</differenceType>
+    <className>com/google/api/gax/rpc/TransportChannelProvider</className>
+    <method>* getEndpoint()</method>
+  </difference>
+  <!-- Add Universe Domain to ClientContext -->
+  <difference>
+    <differenceType>7013</differenceType>
+    <className>com/google/api/gax/rpc/ClientContext*</className>
+    <method>* *UniverseDomain*(*)</method>
+  </difference>
+  <difference>
+    <differenceType>7012</differenceType>
+    <className>com/google/api/gax/rpc/TransportChannelProvider</className>
+    <method>* needsResolvedEndpoint()</method>
+  </difference>
 </differences>

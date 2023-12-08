@@ -40,11 +40,19 @@ import javax.annotation.Nullable;
 @InternalApi
 @AutoValue
 public abstract class EndpointContext {
+  private static final String DEFAULT_UNIVERSE_DOMAIN = "googleapis.com";
+
+  @Nullable
+  public abstract String universeDomain();
+
   /**
    * ClientSettingsEndpoint is the endpoint value set via the ClientSettings/StubSettings classes.
    */
   @Nullable
   public abstract String clientSettingsEndpoint();
+
+  @Nullable
+  public abstract String transportChannelEndpoint();
 
   @Nullable
   public abstract String mtlsEndpoint();
@@ -57,6 +65,7 @@ public abstract class EndpointContext {
   public abstract Builder toBuilder();
 
   private String resolvedEndpoint;
+  private String resolvedUniverseDomain;
 
   public static Builder newBuilder() {
     return new AutoValue_EndpointContext.Builder().setSwitchToMtlsEndpointAllowed(false);
@@ -65,9 +74,13 @@ public abstract class EndpointContext {
   @VisibleForTesting
   void determineEndpoint() throws IOException {
     MtlsProvider mtlsProvider = mtlsProvider() == null ? new MtlsProvider() : mtlsProvider();
+    String customEndpoint =
+        transportChannelEndpoint() == null ? clientSettingsEndpoint() : transportChannelEndpoint();
     resolvedEndpoint =
         mtlsEndpointResolver(
-            clientSettingsEndpoint(), mtlsEndpoint(), switchToMtlsEndpointAllowed(), mtlsProvider);
+            customEndpoint, mtlsEndpoint(), switchToMtlsEndpointAllowed(), mtlsProvider);
+    resolvedUniverseDomain =
+        Strings.isNullOrEmpty(universeDomain()) ? DEFAULT_UNIVERSE_DOMAIN : universeDomain();
   }
 
   // This takes in parameters because determineEndpoint()'s logic will be updated
@@ -104,12 +117,20 @@ public abstract class EndpointContext {
     return resolvedEndpoint;
   }
 
+  public String getResolvedUniverseDomain() {
+    return resolvedUniverseDomain;
+  }
+
   @AutoValue.Builder
   public abstract static class Builder {
+    public abstract Builder setUniverseDomain(String universeDomain);
+
     /**
      * ClientSettingsEndpoint is the endpoint value set via the ClientSettings/StubSettings classes.
      */
     public abstract Builder setClientSettingsEndpoint(String clientSettingsEndpoint);
+
+    public abstract Builder setTransportChannelEndpoint(String transportChannelEndpoint);
 
     public abstract Builder setMtlsEndpoint(String mtlsEndpoint);
 

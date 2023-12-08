@@ -101,6 +101,9 @@ public abstract class ClientContext {
   public abstract Duration getStreamWatchdogCheckInterval();
 
   @Nullable
+  public abstract String getUniverseDomain();
+
+  @Nullable
   public abstract String getEndpoint();
 
   @Nullable
@@ -202,12 +205,15 @@ public abstract class ClientContext {
     }
     EndpointContext endpointContext =
         EndpointContext.newBuilder()
+            .setUniverseDomain(settings.getUniverseDomain())
             .setClientSettingsEndpoint(settings.getEndpoint())
             .setMtlsEndpoint(settings.getMtlsEndpoint())
+            .setTransportChannelEndpoint(settings.getTransportChannelProvider().getEndpoint())
             .setSwitchToMtlsEndpointAllowed(settings.getSwitchToMtlsEndpointAllowed())
             .build();
     String endpoint = endpointContext.getResolvedEndpoint();
-    if (transportChannelProvider.needsEndpoint()) {
+    String universeDomain = endpointContext.getResolvedUniverseDomain();
+    if (transportChannelProvider.needsResolvedEndpoint()) {
       transportChannelProvider = transportChannelProvider.withEndpoint(endpoint);
     }
     TransportChannel transportChannel = transportChannelProvider.getTransportChannel();
@@ -256,7 +262,8 @@ public abstract class ClientContext {
         .setInternalHeaders(ImmutableMap.copyOf(settings.getInternalHeaderProvider().getHeaders()))
         .setClock(clock)
         .setDefaultCallContext(defaultCallContext)
-        .setEndpoint(settings.getEndpoint())
+        .setUniverseDomain(universeDomain)
+        .setEndpoint(endpoint)
         .setQuotaProjectId(settings.getQuotaProjectId())
         .setStreamWatchdog(watchdog)
         .setStreamWatchdogCheckInterval(settings.getStreamWatchdogCheckInterval())
@@ -320,6 +327,8 @@ public abstract class ClientContext {
     public abstract Builder setClock(ApiClock clock);
 
     public abstract Builder setDefaultCallContext(ApiCallContext defaultCallContext);
+
+    public abstract Builder setUniverseDomain(String universeDomain);
 
     public abstract Builder setEndpoint(String endpoint);
 

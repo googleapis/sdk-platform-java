@@ -120,6 +120,11 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
   }
 
   @Override
+  public boolean needsResolvedEndpoint() {
+    return true;
+  }
+
+  @Override
   public TransportChannelProvider withEndpoint(String endpoint) {
     return toBuilder().setEndpoint(endpoint).build();
   }
@@ -207,6 +212,7 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
   }
 
   /** The endpoint to be used for the channel. */
+  @Override
   public String getEndpoint() {
     return endpoint;
   }
