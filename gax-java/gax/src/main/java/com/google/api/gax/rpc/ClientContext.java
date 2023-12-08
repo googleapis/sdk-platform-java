@@ -207,8 +207,8 @@ public abstract class ClientContext {
         EndpointContext.newBuilder()
             .setUniverseDomain(settings.getUniverseDomain())
             .setClientSettingsEndpoint(settings.getEndpoint())
-            .setMtlsEndpoint(settings.getMtlsEndpoint())
             .setTransportChannelEndpoint(settings.getTransportChannelProvider().getEndpoint())
+            .setMtlsEndpoint(settings.getMtlsEndpoint())
             .setSwitchToMtlsEndpointAllowed(settings.getSwitchToMtlsEndpointAllowed())
             .build();
     String endpoint = endpointContext.getResolvedEndpoint();
