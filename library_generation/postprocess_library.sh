@@ -5,17 +5,17 @@
 
 
 # Runs the owlbot post-processor docker image. The resulting post-processed
-# library gets stored in the $workspace argument
+# library gets stored in the $postprocessing_target argument
 # Arguments
-# 1 - workspace: the location of the grpc,proto and gapic libraries to be
+# 1 - postprocessing_target: the location of the grpc,proto and gapic libraries to be
 # processed
 # 2 - preprocessed_sources_path: used to transfer the raw grpc, proto and gapic
-# libraries into the workspace via copy-code
+# libraries into the postprocessing_target via copy-code
 # 3 - versions_file: path to file containing versions to be applied to the poms
 set -xeo pipefail
 scripts_root=$(dirname "$(readlink -f "$0")")
 
-workspace=$1
+postprocessing_target=$1
 preprocessed_sources_path=$2
 versions_file=$3
 
@@ -23,14 +23,14 @@ source "${scripts_root}"/utilities.sh
 
 for owlbot_file in ".repo-metadata.json" "owlbot.py" ".OwlBot.yaml"
 do
-  if [[ $(find "${workspace}" -name '.repo-metadata.json' | wc -l) -eq 0 ]]; then
-    echo "necessary file for postprocessing '${owlbot_file}' was not found in workspace"
-    echo "please provide a workspace that is owlbot compatible"
+  if [[ $(find "${postprocessing_target}" -name '.repo-metadata.json' | wc -l) -eq 0 ]]; then
+    echo "necessary file for postprocessing '${owlbot_file}' was not found in postprocessing_target"
+    echo "please provide a postprocessing_target that is owlbot compatible"
     exit 1
   fi
 done
 
-repository_root=$(dirname "${workspace}")
+repository_root=$(dirname "${postprocessing_target}")
 owlbot_sha=$(get_owlbot_sha "${repository_root}")
 proto_path=$(get_proto_path_from_preprocessed_sources "${preprocessed_sources_path}")
 
@@ -49,7 +49,7 @@ fi
 pyenv activate "postprocessing"
 
 # call owl-bot-copy
-owlbot_staging_folder="${workspace}/owl-bot-staging"
+owlbot_staging_folder="${postprocessing_target}/owl-bot-staging"
 mkdir -p "${owlbot_staging_folder}"
 owlbot_postprocessor_image="gcr.io/cloud-devrel-public-resources/owlbot-java@sha256:${owlbot_sha}"
 
@@ -80,7 +80,7 @@ owlbot_cli_image_sha=$(cat "${scripts_root}/configuration/owlbot-cli-sha" | grep
 
 docker run --rm \
   --user $(id -u):$(id -g) \
-  -v "${workspace}:/repo" \
+  -v "${postprocessing_target}:/repo" \
   -v "${pre_processed_libs_folder}:/pre-processed-libraries" \
   -w /repo \
   --env HOME=/tmp \
@@ -90,14 +90,14 @@ docker run --rm \
   --source-repo=/pre-processed-libraries \
   --config-file=.OwlBot.yaml
 
-# if the workspace is a library of google-cloud-java, we have to "unpack" the
+# if the postprocessing_target is a library of google-cloud-java, we have to "unpack" the
 # owl-bot-staging folder so it's properly processed by java owlbot
-if [[ $(basename $(dirname "${workspace}")) == "google-cloud-java" ]]; then
-  pushd "${workspace}"
+if [[ $(basename $(dirname "${postprocessing_target}")) == "google-cloud-java" ]]; then
+  pushd "${postprocessing_target}"
   mv owl-bot-staging/* temp
   rm -rd owl-bot-staging/
   mv temp owl-bot-staging
-  popd # workspace
+  popd # postprocessing_target
 fi
 
 # we clone the synthtool library and manually build it
@@ -123,6 +123,6 @@ popd # owlbot/src
 
 # run the postprocessor
 echo 'running owl-bot post-processor'
-pushd "${workspace}"
+pushd "${postprocessing_target}"
 bash "${scripts_root}/owlbot/bin/entrypoint.sh" "${scripts_root}" "${versions_file}" "${synthtool_image_id}"
-popd # workspace
+popd # postprocessing_target
