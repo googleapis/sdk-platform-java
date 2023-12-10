@@ -33,7 +33,6 @@ do
   fi
 done
 
-repository_root=$(dirname "${postprocessing_target}")
 proto_path=$(get_proto_path_from_preprocessed_sources "${preprocessed_sources_path}")
 
 # ensure pyenv scripts are available
