@@ -7,8 +7,11 @@
 # Runs the owlbot post-processor docker image. The resulting post-processed
 # library gets stored in the $postprocessing_target argument
 # Arguments
-# 1 - postprocessing_target: the location of the grpc,proto and gapic libraries to be
-# processed
+# 1 - postprocessing_target: path where the postprocessor will run. This folder
+# has the following requirements
+#   -  a .repo-metadata.json file must be present
+#   -  an owlbot.py file must be present
+#   -  an .OwlBot.yaml file must be present
 # 2 - preprocessed_sources_path: used to transfer the raw grpc, proto and gapic
 # libraries into the postprocessing_target via copy-code
 # 3 - versions_file: path to file containing versions to be applied to the poms
@@ -31,7 +34,6 @@ do
 done
 
 repository_root=$(dirname "${postprocessing_target}")
-owlbot_sha=$(get_owlbot_sha "${repository_root}")
 proto_path=$(get_proto_path_from_preprocessed_sources "${preprocessed_sources_path}")
 
 # ensure pyenv scripts are available
@@ -51,7 +53,6 @@ pyenv activate "postprocessing"
 # call owl-bot-copy
 owlbot_staging_folder="${postprocessing_target}/owl-bot-staging"
 mkdir -p "${owlbot_staging_folder}"
-owlbot_postprocessor_image="gcr.io/cloud-devrel-public-resources/owlbot-java@sha256:${owlbot_sha}"
 
 
 echo 'Running owl-bot-copy'

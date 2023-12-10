@@ -230,23 +230,6 @@ detect_os_architecture() {
   echo "${os_architecture}"
 }
 
-# returns the owlbot image sha contained in google-cloud-java. This is default
-# behavior that may be overriden by a custom value in the future.
-# Arguments
-# 1 - output_folder: root for the generated libraries, used in conjunction with
-# 2 - repository_root: usually "google-cloud-java". The .OwlBot.yaml
-# file is looked into its .github folder
-get_owlbot_sha() {
-  local repository_root=$1
-  if [ ! -d "${repository_root}" ];
-  then
-    >&2 echo 'No repository to infer owlbot_sha was provided. This is necessary for post-processing' >&2
-    exit 1
-  fi
-  >&2 echo "Attempting to obtain owlbot_sha from monorepo folder"
-  owlbot_sha=$(grep 'sha256' "${repository_root}/.github/.OwlBot.lock.yaml" | cut -d: -f3)
-  echo "${owlbot_sha}"
-}
 
 # copies $1 as a folder as $2 only if $1 exists
 copy_directory_if_exists() {
