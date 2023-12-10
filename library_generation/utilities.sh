@@ -243,13 +243,22 @@ copy_directory_if_exists() {
   popd # base_folder
 }
 
-# computes proto_path from a given folder of preprocessed sources
+# computes proto_path from a given folder of GAPIC sources
 # It will inspect the proto library to compute the path
 get_proto_path_from_preprocessed_sources() {
   set -e
   local sources=$1
   pushd "${sources}" > /dev/null
   local proto_library=$(find . -maxdepth 1 -type d -name 'proto-*' | sed 's/\.\///')
+  local found_libraries=$(echo "${proto_library}" | wc -l)
+  if [ -z ${proto_library} ]; then
+    echo "no proto libraries found in the supplied sources path"
+    exit 1
+  elif [ ${found_libraries} -gt 1 ]; then
+    echo "more than one proto library found in the supplied sources path"
+    echo "cannot decide for a service version"
+    exit 1
+  fi
   pushd "$(pwd)/${proto_library}/src/main/proto" > /dev/null
   local result=$(find . -type f -name '*.proto' | head -n 1 | xargs dirname | sed 's/\.\///')
   popd > /dev/null # proto_library
