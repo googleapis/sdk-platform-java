@@ -26,7 +26,6 @@
 set -ex
 scripts_root=$1
 versions_file=$2
-workspace=$(pwd)
 
 # Runs template and etc in current working directory
 function processModule() {
