@@ -38,7 +38,7 @@ eval "$(pyenv init --path)"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
-# create and python virtualenv
+# create and activate the python virtualenv
 python_version=$(cat "${scripts_root}/configuration/python-version")
 if [ $(pyenv versions | grep "${python_version}" | wc -l) -eq 0 ]; then
   pyenv install "${python_version}"
