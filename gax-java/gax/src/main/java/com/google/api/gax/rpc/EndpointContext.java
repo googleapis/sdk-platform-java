@@ -40,6 +40,12 @@ import javax.annotation.Nullable;
 @InternalApi
 @AutoValue
 public abstract class EndpointContext {
+  /**
+   * HostServiceName is HostName for Google Cloud Services. It follows the format of
+   * `{HostServiceName}.googleapis.com`. For example, speech.googleapis.com would have a
+   * HostServiceName of speech and cloudasset.googleapis.com would have a HostServiceName of
+   * cloudasset.
+   */
   @Nullable
   public abstract String hostServiceName();
 
@@ -120,6 +126,12 @@ public abstract class EndpointContext {
 
   @AutoValue.Builder
   public abstract static class Builder {
+    /**
+     * HostServiceName is HostName for Google Cloud Services. It follows the format of
+     * `{HostServiceName}.googleapis.com`. For example, speech.googleapis.com would have a
+     * HostServiceName of speech and cloudasset.googleapis.com would have a HostServiceName of
+     * cloudasset.
+     */
     public abstract Builder setHostServiceName(String hostServiceName);
 
     /**

@@ -139,6 +139,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     return clock;
   }
 
+  // This is meant to be used internally by the ClientContext to resolve the endpoint
   EndpointContext getEndpointContext() throws IOException {
     return endpointContextBuilder.build();
   }
