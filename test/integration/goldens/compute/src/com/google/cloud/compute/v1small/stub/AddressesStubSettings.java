@@ -103,6 +103,7 @@ import org.threeten.bp.Duration;
  */
 @Generated("by gapic-generator-java")
 public class AddressesStubSettings extends StubSettings<AddressesStubSettings> {
+  private static final String HOST_SERVICE_NAME = "compute";
   /** The default scopes of the service. */
   private static final ImmutableList<String> DEFAULT_SERVICE_SCOPES =
       ImmutableList.<String>builder()
@@ -462,6 +463,7 @@ public class AddressesStubSettings extends StubSettings<AddressesStubSettings> {
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
+      builder.setHostServiceName(HOST_SERVICE_NAME);
 
       return initDefaults(builder);
     }

@@ -96,6 +96,7 @@ import org.threeten.bp.Duration;
  */
 @Generated("by gapic-generator-java")
 public class MetricsServiceV2StubSettings extends StubSettings<MetricsServiceV2StubSettings> {
+  private static final String HOST_SERVICE_NAME = "logging";
   /** The default scopes of the service. */
   private static final ImmutableList<String> DEFAULT_SERVICE_SCOPES =
       ImmutableList.<String>builder()
@@ -384,6 +385,7 @@ public class MetricsServiceV2StubSettings extends StubSettings<MetricsServiceV2S
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
+      builder.setHostServiceName(HOST_SERVICE_NAME);
 
       return initDefaults(builder);
     }
