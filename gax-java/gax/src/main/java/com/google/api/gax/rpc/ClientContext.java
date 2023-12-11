@@ -101,6 +101,9 @@ public abstract class ClientContext {
   public abstract Duration getStreamWatchdogCheckInterval();
 
   @Nullable
+  public abstract String getHostServiceName();
+
+  @Nullable
   public abstract String getEndpoint();
 
   @Nullable
@@ -200,7 +203,15 @@ public abstract class ClientContext {
     if (transportChannelProvider.needsCredentials() && credentials != null) {
       transportChannelProvider = transportChannelProvider.withCredentials(credentials);
     }
-    EndpointContext endpointContext = settings.getEndpointContext();
+    EndpointContext endpointContext =
+        EndpointContext.newBuilder()
+            .setHostServiceName(settings.getHostServiceName())
+            .setClientSettingsEndpoint(settings.getEndpoint())
+            .setTransportChannelProviderEndpoint(
+                settings.getTransportChannelProvider().getEndpoint())
+            .setMtlsEndpoint(settings.getMtlsEndpoint())
+            .setSwitchToMtlsEndpointAllowed(settings.getSwitchToMtlsEndpointAllowed())
+            .build();
     String endpoint = endpointContext.getResolvedEndpoint();
     if (transportChannelProvider.needsEndpoint()) {
       transportChannelProvider = transportChannelProvider.withEndpoint(endpoint);
@@ -315,6 +326,8 @@ public abstract class ClientContext {
     public abstract Builder setClock(ApiClock clock);
 
     public abstract Builder setDefaultCallContext(ApiCallContext defaultCallContext);
+
+    public abstract Builder getHostServiceName(String hostServiceName);
 
     public abstract Builder setEndpoint(String endpoint);
 
