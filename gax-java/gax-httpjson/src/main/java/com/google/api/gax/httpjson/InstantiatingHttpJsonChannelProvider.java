@@ -207,6 +207,7 @@ public final class InstantiatingHttpJsonChannelProvider implements TransportChan
   }
 
   /** The endpoint to be used for the channel. */
+  @Override
   public String getEndpoint() {
     return endpoint;
   }

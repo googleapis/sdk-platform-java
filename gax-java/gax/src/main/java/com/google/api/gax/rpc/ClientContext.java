@@ -203,6 +203,8 @@ public abstract class ClientContext {
     EndpointContext endpointContext =
         EndpointContext.newBuilder()
             .setClientSettingsEndpoint(settings.getEndpoint())
+            .setTransportChannelProviderEndpoint(
+                settings.getTransportChannelProvider().getEndpoint())
             .setMtlsEndpoint(settings.getMtlsEndpoint())
             .setSwitchToMtlsEndpointAllowed(settings.getSwitchToMtlsEndpointAllowed())
             .build();
