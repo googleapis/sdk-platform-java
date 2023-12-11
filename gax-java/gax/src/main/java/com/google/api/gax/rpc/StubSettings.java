@@ -32,6 +32,7 @@ package com.google.api.gax.rpc;
 import com.google.api.core.ApiClock;
 import com.google.api.core.ApiFunction;
 import com.google.api.core.BetaApi;
+import com.google.api.core.InternalApi;
 import com.google.api.core.NanoClock;
 import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.ExecutorProvider;
@@ -430,6 +431,9 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       return self();
     }
 
+    // This meant to be used internally by GAPIC clients to configure an endpoint.
+    // Users should avoid settings this as it could change their endpoint.
+    @InternalApi
     public B setHostServiceName(String hostServiceName) {
       this.endpointContextBuilder.setHostServiceName(hostServiceName);
       return self();
