@@ -140,7 +140,8 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     return clock;
   }
 
-  public final String getHostServiceName() {
+  // Package-Private scope for internal use only. Shared between StubSettings and ClientContext
+  final String getHostServiceName() {
     return hostServiceName;
   }
 
