@@ -79,6 +79,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   @Nonnull private final ApiTracerFactory tracerFactory;
   // Track if deprecated setExecutorProvider is called
   private boolean deprecatedExecutorProviderSet;
+  @Nonnull private EndpointContext.Builder endpointContextBuilder;
 
   /**
    * Indicate when creating transport whether it is allowed to use mTLS endpoint instead of the
@@ -105,6 +106,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     this.tracerFactory = builder.tracerFactory;
     this.deprecatedExecutorProviderSet = builder.deprecatedExecutorProviderSet;
     this.gdchApiAudience = builder.gdchApiAudience;
+    this.endpointContextBuilder = builder.endpointContextBuilder;
   }
 
   /** @deprecated Please use {@link #getBackgroundExecutorProvider()}. */
@@ -135,6 +137,10 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
 
   public final ApiClock getClock() {
     return clock;
+  }
+
+  EndpointContext getEndpointContext() throws IOException {
+    return endpointContextBuilder.build();
   }
 
   public final String getEndpoint() {
@@ -219,6 +225,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     @Nonnull private Duration streamWatchdogCheckInterval;
     @Nonnull private ApiTracerFactory tracerFactory;
     private boolean deprecatedExecutorProviderSet;
+    @Nonnull private EndpointContext.Builder endpointContextBuilder;
 
     /**
      * Indicate when creating transport whether it is allowed to use mTLS endpoint instead of the
@@ -245,6 +252,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       this.tracerFactory = settings.tracerFactory;
       this.deprecatedExecutorProviderSet = settings.deprecatedExecutorProviderSet;
       this.gdchApiAudience = settings.gdchApiAudience;
+      this.endpointContextBuilder = settings.endpointContextBuilder;
     }
 
     /** Get Quota Project ID from Client Context * */
@@ -280,6 +288,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.tracerFactory = BaseApiTracerFactory.getInstance();
         this.deprecatedExecutorProviderSet = false;
         this.gdchApiAudience = null;
+        this.endpointContextBuilder = EndpointContext.newBuilder();
       } else {
         ExecutorProvider fixedExecutorProvider =
             FixedExecutorProvider.create(clientContext.getExecutor());
@@ -302,6 +311,12 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.tracerFactory = clientContext.getTracerFactory();
         this.quotaProjectId = getQuotaProjectIdFromClientContext(clientContext);
         this.gdchApiAudience = clientContext.getGdchApiAudience();
+        this.endpointContextBuilder =
+            EndpointContext.newBuilder()
+                .setClientSettingsEndpoint(clientContext.getEndpoint())
+                .setTransportChannelProviderEndpoint(transportChannelProvider.getEndpoint())
+                .setMtlsEndpoint(mtlsEndpoint)
+                .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed);
       }
     }
 
@@ -414,22 +429,33 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       return self();
     }
 
+    public B setHostServiceName(String hostServiceName) {
+      this.endpointContextBuilder.setHostServiceName(hostServiceName);
+      return self();
+    }
+
     public B setEndpoint(String endpoint) {
       this.endpoint = endpoint;
       this.switchToMtlsEndpointAllowed = false;
       if (this.endpoint != null && this.mtlsEndpoint == null) {
         this.mtlsEndpoint = this.endpoint.replace("googleapis.com", "mtls.googleapis.com");
       }
+      this.endpointContextBuilder
+          .setClientSettingsEndpoint(endpoint)
+          .setMtlsEndpoint(mtlsEndpoint)
+          .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed);
       return self();
     }
 
     protected B setSwitchToMtlsEndpointAllowed(boolean switchToMtlsEndpointAllowed) {
       this.switchToMtlsEndpointAllowed = switchToMtlsEndpointAllowed;
+      this.endpointContextBuilder.setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed);
       return self();
     }
 
     public B setMtlsEndpoint(String mtlsEndpoint) {
       this.mtlsEndpoint = mtlsEndpoint;
+      this.endpointContextBuilder.setMtlsEndpoint(mtlsEndpoint);
       return self();
     }
 

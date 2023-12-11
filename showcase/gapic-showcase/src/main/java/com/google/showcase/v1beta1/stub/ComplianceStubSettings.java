@@ -103,6 +103,7 @@ import javax.annotation.Generated;
 @BetaApi
 @Generated("by gapic-generator-java")
 public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings> {
+  private static final String HOST_SERVICE_NAME = "";
   /** The default scopes of the service. */
   private static final ImmutableList<String> DEFAULT_SERVICE_SCOPES =
       ImmutableList.<String>builder().build();
@@ -519,6 +520,7 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
+      builder.setHostServiceName(HOST_SERVICE_NAME);
 
       return initDefaults(builder);
     }
@@ -532,6 +534,7 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
+      builder.setHostServiceName(HOST_SERVICE_NAME);
 
       return initDefaults(builder);
     }

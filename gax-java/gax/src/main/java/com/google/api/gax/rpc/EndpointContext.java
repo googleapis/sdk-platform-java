@@ -40,6 +40,9 @@ import javax.annotation.Nullable;
 @InternalApi
 @AutoValue
 public abstract class EndpointContext {
+  @Nullable
+  public abstract String hostServiceName();
+
   /**
    * ClientSettingsEndpoint is the endpoint value set via the ClientSettings/StubSettings classes.
    */
@@ -117,6 +120,8 @@ public abstract class EndpointContext {
 
   @AutoValue.Builder
   public abstract static class Builder {
+    public abstract Builder setHostServiceName(String hostServiceName);
+
     /**
      * ClientSettingsEndpoint is the endpoint value set via the ClientSettings/StubSettings classes.
      */
