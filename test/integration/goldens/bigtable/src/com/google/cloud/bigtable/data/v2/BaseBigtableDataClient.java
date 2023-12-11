@@ -78,11 +78,7 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>ReadRows</td>
- *      <td><p>Streams back the contents of all requested rows in key order, optionally
- *  applying the same Reader filter to each. Depending on their size,
- *  rows and cells may be broken up across multiple responses, but
- *  atomicity of each row will still be preserved. See the
- *  ReadRowsResponse documentation for details.</p></td>
+ *      <td><p> Streams back the contents of all requested rows in key order, optionally applying the same Reader filter to each. Depending on their size, rows and cells may be broken up across multiple responses, but atomicity of each row will still be preserved. See the ReadRowsResponse documentation for details.</td>
  *      <td>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -92,10 +88,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>SampleRowKeys</td>
- *      <td><p>Returns a sample of row keys in the table. The returned row keys will
- *  delimit contiguous sections of the table of approximately equal size,
- *  which can be used to break up the data for distributed tasks like
- *  mapreduces.</p></td>
+ *      <td><p> Returns a sample of row keys in the table. The returned row keys will delimit contiguous sections of the table of approximately equal size, which can be used to break up the data for distributed tasks like mapreduces.</td>
  *      <td>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -105,8 +98,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>MutateRow</td>
- *      <td><p>Mutates a row atomically. Cells already present in the row are left
- *  unchanged unless explicitly changed by `mutation`.</p></td>
+ *      <td><p> Mutates a row atomically. Cells already present in the row are left unchanged unless explicitly changed by `mutation`.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -127,9 +119,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>MutateRows</td>
- *      <td><p>Mutates multiple rows in a batch. Each individual row is mutated
- *  atomically as in MutateRow, but the entire batch is not executed
- *  atomically.</p></td>
+ *      <td><p> Mutates multiple rows in a batch. Each individual row is mutated atomically as in MutateRow, but the entire batch is not executed atomically.</td>
  *      <td>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -139,7 +129,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>CheckAndMutateRow</td>
- *      <td><p>Mutates a row atomically based on the output of a predicate Reader filter.</p></td>
+ *      <td><p> Mutates a row atomically based on the output of a predicate Reader filter.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -160,8 +150,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>PingAndWarm</td>
- *      <td><p>Warm up associated instance metadata for this connection.
- *  This call is not required but may be useful for connection keep-alive.</p></td>
+ *      <td><p> Warm up associated instance metadata for this connection. This call is not required but may be useful for connection keep-alive.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -182,11 +171,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ReadModifyWriteRow</td>
- *      <td><p>Modifies a row atomically on the server. The method reads the latest
- *  existing timestamp and value from the specified columns and writes a new
- *  entry based on pre-defined read/modify/write rules. The new value for the
- *  timestamp is the greater of the existing timestamp or the current server
- *  time. The method returns the new contents of all modified cells.</p></td>
+ *      <td><p> Modifies a row atomically on the server. The method reads the latest existing timestamp and value from the specified columns and writes a new entry based on pre-defined read/modify/write rules. The new value for the timestamp is the greater of the existing timestamp or the current server time. The method returns the new contents of all modified cells.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>

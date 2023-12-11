@@ -67,7 +67,7 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>GenerateAccessToken</td>
- *      <td><p>Generates an OAuth 2.0 access token for a service account.</p></td>
+ *      <td><p> Generates an OAuth 2.0 access token for a service account.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -86,7 +86,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GenerateIdToken</td>
- *      <td><p>Generates an OpenID Connect ID token for a service account.</p></td>
+ *      <td><p> Generates an OpenID Connect ID token for a service account.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -105,7 +105,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>SignBlob</td>
- *      <td><p>Signs a blob using a service account's system-managed private key.</p></td>
+ *      <td><p> Signs a blob using a service account's system-managed private key.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -124,7 +124,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>SignJwt</td>
- *      <td><p>Signs a JWT using a service account's system-managed private key.</p></td>
+ *      <td><p> Signs a JWT using a service account's system-managed private key.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>

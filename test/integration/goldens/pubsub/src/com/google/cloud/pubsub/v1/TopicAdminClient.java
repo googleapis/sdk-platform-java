@@ -85,8 +85,7 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>CreateTopic</td>
- *      <td><p>Creates the given topic with the given name. See the [resource name rules]
- *  (https://cloud.google.com/pubsub/docs/admin#resource_names).</p></td>
+ *      <td><p> Creates the given topic with the given name. See the [resource name rules] (https://cloud.google.com/pubsub/docs/admin#resource_names).</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -105,8 +104,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>UpdateTopic</td>
- *      <td><p>Updates an existing topic. Note that certain properties of a
- *  topic are not modifiable.</p></td>
+ *      <td><p> Updates an existing topic. Note that certain properties of a topic are not modifiable.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -120,8 +118,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>Publish</td>
- *      <td><p>Adds one or more messages to the topic. Returns `NOT_FOUND` if the topic
- *  does not exist.</p></td>
+ *      <td><p> Adds one or more messages to the topic. Returns `NOT_FOUND` if the topic does not exist.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -140,7 +137,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetTopic</td>
- *      <td><p>Gets the configuration of a topic.</p></td>
+ *      <td><p> Gets the configuration of a topic.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -159,7 +156,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ListTopics</td>
- *      <td><p>Lists matching topics.</p></td>
+ *      <td><p> Lists matching topics.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -179,7 +176,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ListTopicSubscriptions</td>
- *      <td><p>Lists the names of the attached subscriptions on this topic.</p></td>
+ *      <td><p> Lists the names of the attached subscriptions on this topic.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -199,11 +196,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ListTopicSnapshots</td>
- *      <td><p>Lists the names of the snapshots on this topic. Snapshots are used in
- *  [Seek](https://cloud.google.com/pubsub/docs/replay-overview) operations,
- *  which allow you to manage message acknowledgments in bulk. That is, you can
- *  set the acknowledgment state of messages in an existing subscription to the
- *  state captured by a snapshot.</p></td>
+ *      <td><p> Lists the names of the snapshots on this topic. Snapshots are used in [Seek](https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -223,11 +216,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>DeleteTopic</td>
- *      <td><p>Deletes the topic with the given name. Returns `NOT_FOUND` if the topic
- *  does not exist. After a topic is deleted, a new topic may be created with
- *  the same name; this is an entirely new topic with none of the old
- *  configuration or subscriptions. Existing subscriptions to this topic are
- *  not deleted, but their `topic` field is set to `_deleted-topic_`.</p></td>
+ *      <td><p> Deletes the topic with the given name. Returns `NOT_FOUND` if the topic does not exist. After a topic is deleted, a new topic may be created with the same name; this is an entirely new topic with none of the old configuration or subscriptions. Existing subscriptions to this topic are not deleted, but their `topic` field is set to `_deleted-topic_`.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -246,10 +235,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>DetachSubscription</td>
- *      <td><p>Detaches a subscription from this topic. All messages retained in the
- *  subscription are dropped. Subsequent `Pull` and `StreamingPull` requests
- *  will return FAILED_PRECONDITION. If the subscription is a push
- *  subscription, pushes to the endpoint will stop.</p></td>
+ *      <td><p> Detaches a subscription from this topic. All messages retained in the subscription are dropped. Subsequent `Pull` and `StreamingPull` requests will return FAILED_PRECONDITION. If the subscription is a push subscription, pushes to the endpoint will stop.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -263,11 +249,8 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>SetIamPolicy</td>
- *      <td><p>Sets the access control policy on the specified resource. Replaces
- * any existing policy.
- *
- * Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED`
- * errors.</p></td>
+ *      <td><p> Sets the access control policy on the specified resource. Replacesany existing policy.
+ * <p> Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED`errors.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -281,8 +264,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetIamPolicy</td>
- *      <td><p>Gets the access control policy for a resource. Returns an empty policy
- * if the resource exists and does not have a policy set.</p></td>
+ *      <td><p> Gets the access control policy for a resource. Returns an empty policyif the resource exists and does not have a policy set.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -296,13 +278,8 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>TestIamPermissions</td>
- *      <td><p>Returns permissions that a caller has on the specified resource. If the
- * resource does not exist, this will return an empty set of
- * permissions, not a `NOT_FOUND` error.
- *
- * Note: This operation is designed to be used for building
- * permission-aware UIs and command-line tools, not for authorization
- * checking. This operation may "fail open" without warning.</p></td>
+ *      <td><p> Returns permissions that a caller has on the specified resource. If theresource does not exist, this will return an empty set ofpermissions, not a `NOT_FOUND` error.
+ * <p> Note: This operation is designed to be used for buildingpermission-aware UIs and command-line tools, not for authorizationchecking. This operation may "fail open" without warning.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>

@@ -73,7 +73,7 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>CreateSession</td>
- *      <td><p>Creates a new testing session.</p></td>
+ *      <td><p> Creates a new testing session.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -87,7 +87,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetSession</td>
- *      <td><p>Gets a testing session.</p></td>
+ *      <td><p> Gets a testing session.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -101,7 +101,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ListSessions</td>
- *      <td><p>Lists the current test sessions.</p></td>
+ *      <td><p> Lists the current test sessions.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -116,7 +116,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>DeleteSession</td>
- *      <td><p>Delete a test session.</p></td>
+ *      <td><p> Delete a test session.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -130,9 +130,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ReportSession</td>
- *      <td><p>Report on the status of a session.
- *  This generates a report detailing which tests have been completed,
- *  and an overall rollup.</p></td>
+ *      <td><p> Report on the status of a session. This generates a report detailing which tests have been completed, and an overall rollup.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -146,7 +144,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ListTests</td>
- *      <td><p>List the tests of a sessesion.</p></td>
+ *      <td><p> List the tests of a sessesion.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -161,12 +159,9 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>DeleteTest</td>
- *      <td><p>Explicitly decline to implement a test.
- *
- *  This removes the test from subsequent `ListTests` calls, and
- *  attempting to do the test will error.
- *
- *  This method will error if attempting to delete a required test.</p></td>
+ *      <td><p> Explicitly decline to implement a test.
+ * <p>  This removes the test from subsequent `ListTests` calls, and attempting to do the test will error.
+ * <p>  This method will error if attempting to delete a required test.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -180,10 +175,8 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>VerifyTest</td>
- *      <td><p>Register a response to a test.
- *
- *  In cases where a test involves registering a final answer at the
- *  end of the test, this method provides the means to do so.</p></td>
+ *      <td><p> Register a response to a test.
+ * <p>  In cases where a test involves registering a final answer at the end of the test, this method provides the means to do so.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -197,7 +190,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ListLocations</td>
- *      <td><p>Lists information about the supported locations for this service.</p></td>
+ *      <td><p> Lists information about the supported locations for this service.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -212,7 +205,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetLocation</td>
- *      <td><p>Gets information about a location.</p></td>
+ *      <td><p> Gets information about a location.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -226,10 +219,8 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>SetIamPolicy</td>
- *      <td><p>Sets the access control policy on the specified resource. Replaces any
- *  existing policy.
- *
- *  Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.</p></td>
+ *      <td><p> Sets the access control policy on the specified resource. Replaces any existing policy.
+ * <p>  Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -243,9 +234,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetIamPolicy</td>
- *      <td><p>Gets the access control policy for a resource.
- *  Returns an empty policy if the resource exists and does not have a policy
- *  set.</p></td>
+ *      <td><p> Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -259,13 +248,8 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>TestIamPermissions</td>
- *      <td><p>Returns permissions that a caller has on the specified resource.
- *  If the resource does not exist, this will return an empty set of
- *  permissions, not a `NOT_FOUND` error.
- *
- *  Note: This operation is designed to be used for building permission-aware
- *  UIs and command-line tools, not for authorization checking. This operation
- *  may "fail open" without warning.</p></td>
+ *      <td><p> Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error.
+ * <p>  Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may "fail open" without warning.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>

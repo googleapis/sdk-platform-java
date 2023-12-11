@@ -38,7 +38,7 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>NestedMessageMethod</td>
- *      <td><p></p></td>
+ *      <td><p> </td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>

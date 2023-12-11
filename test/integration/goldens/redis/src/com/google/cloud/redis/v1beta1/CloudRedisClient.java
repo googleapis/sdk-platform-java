@@ -89,15 +89,12 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>ListInstances</td>
- *      <td><p>Lists all Redis instances owned by a project in either the specified
- *  location (region) or all locations.
- *
- *  The location should have the following format:
- *
- *  * `projects/{project_id}/locations/{location_id}`
- *
- *  If `location_id` is specified as `-` (wildcard), then all regions
- *  available to the project are queried, and the results are aggregated.</p></td>
+ *      <td><p> Lists all Redis instances owned by a project in either the specified location (region) or all locations.
+ * <p>  The location should have the following format:
+ * <ul>
+ * <li>  `projects/{project_id}/locations/{location_id}`
+ * </ul>
+ * <p>  If `location_id` is specified as `-` (wildcard), then all regions available to the project are queried, and the results are aggregated.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -117,7 +114,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetInstance</td>
- *      <td><p>Gets the details of a specific Redis instance.</p></td>
+ *      <td><p> Gets the details of a specific Redis instance.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -136,9 +133,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetInstanceAuthString</td>
- *      <td><p>Gets the AUTH string for a Redis instance. If AUTH is not enabled for the
- *  instance the response will be empty. This information is not included in
- *  the details returned to GetInstance.</p></td>
+ *      <td><p> Gets the AUTH string for a Redis instance. If AUTH is not enabled for the instance the response will be empty. This information is not included in the details returned to GetInstance.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -157,18 +152,10 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>CreateInstance</td>
- *      <td><p>Creates a Redis instance based on the specified tier and memory size.
- *
- *  By default, the instance is accessible from the project's
- *  [default network](https://cloud.google.com/vpc/docs/vpc).
- *
- *  The creation is executed asynchronously and callers may check the returned
- *  operation to track its progress. Once the operation is completed the Redis
- *  instance will be fully functional. The completed longrunning.Operation will
- *  contain the new instance object in the response field.
- *
- *  The returned operation is automatically deleted after a few hours, so there
- *  is no need to call DeleteOperation.</p></td>
+ *      <td><p> Creates a Redis instance based on the specified tier and memory size.
+ * <p>  By default, the instance is accessible from the project's [default network](https://cloud.google.com/vpc/docs/vpc).
+ * <p>  The creation is executed asynchronously and callers may check the returned operation to track its progress. Once the operation is completed the Redis instance will be fully functional. The completed longrunning.Operation will contain the new instance object in the response field.
+ * <p>  The returned operation is automatically deleted after a few hours, so there is no need to call DeleteOperation.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -188,11 +175,8 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>UpdateInstance</td>
- *      <td><p>Updates the metadata and configuration of a specific Redis instance.
- *
- *  Completed longrunning.Operation will contain the new instance object
- *  in the response field. The returned operation is automatically deleted
- *  after a few hours, so there is no need to call DeleteOperation.</p></td>
+ *      <td><p> Updates the metadata and configuration of a specific Redis instance.
+ * <p>  Completed longrunning.Operation will contain the new instance object in the response field. The returned operation is automatically deleted after a few hours, so there is no need to call DeleteOperation.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -211,8 +195,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>UpgradeInstance</td>
- *      <td><p>Upgrades Redis instance to the newer Redis version specified in the
- *  request.</p></td>
+ *      <td><p> Upgrades Redis instance to the newer Redis version specified in the request.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -232,14 +215,9 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ImportInstance</td>
- *      <td><p>Import a Redis RDB snapshot file from Cloud Storage into a Redis instance.
- *
- *  Redis may stop serving during this operation. Instance state will be
- *  IMPORTING for entire operation. When complete, the instance will contain
- *  only data from the imported file.
- *
- *  The returned operation is automatically deleted after a few hours, so
- *  there is no need to call DeleteOperation.</p></td>
+ *      <td><p> Import a Redis RDB snapshot file from Cloud Storage into a Redis instance.
+ * <p>  Redis may stop serving during this operation. Instance state will be IMPORTING for entire operation. When complete, the instance will contain only data from the imported file.
+ * <p>  The returned operation is automatically deleted after a few hours, so there is no need to call DeleteOperation.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -258,12 +236,9 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ExportInstance</td>
- *      <td><p>Export Redis instance data into a Redis RDB format file in Cloud Storage.
- *
- *  Redis will continue serving during this operation.
- *
- *  The returned operation is automatically deleted after a few hours, so
- *  there is no need to call DeleteOperation.</p></td>
+ *      <td><p> Export Redis instance data into a Redis RDB format file in Cloud Storage.
+ * <p>  Redis will continue serving during this operation.
+ * <p>  The returned operation is automatically deleted after a few hours, so there is no need to call DeleteOperation.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -282,8 +257,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>FailoverInstance</td>
- *      <td><p>Initiates a failover of the primary node to current replica node for a
- *  specific STANDARD tier Cloud Memorystore for Redis instance.</p></td>
+ *      <td><p> Initiates a failover of the primary node to current replica node for a specific STANDARD tier Cloud Memorystore for Redis instance.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -303,8 +277,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>DeleteInstance</td>
- *      <td><p>Deletes a specific Redis instance.  Instance stops serving and data is
- *  deleted.</p></td>
+ *      <td><p> Deletes a specific Redis instance.  Instance stops serving and data is deleted.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -324,8 +297,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>RescheduleMaintenance</td>
- *      <td><p>Reschedule maintenance for a given instance in a given project and
- *  location.</p></td>
+ *      <td><p> Reschedule maintenance for a given instance in a given project and location.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
