@@ -444,7 +444,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       this.endpointContextBuilder
           .setClientSettingsEndpoint(endpoint)
           .setMtlsEndpoint(mtlsEndpoint)
-          .setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed);
+          .setSwitchToMtlsEndpointAllowed(false);
       return self();
     }
 
