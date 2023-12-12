@@ -219,7 +219,7 @@ public abstract class ClientContext {
             .build();
     String endpoint = endpointContext.getResolvedEndpoint();
     String universeDomain = endpointContext.getResolvedUniverseDomain();
-    if (transportChannelProvider.needsResolvedEndpoint()) {
+    if (transportChannelProvider.needsEndpoint()) {
       transportChannelProvider = transportChannelProvider.withEndpoint(endpoint);
     }
     TransportChannel transportChannel = transportChannelProvider.getTransportChannel();
