@@ -28,7 +28,7 @@ jobs:
           mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
       - name: Integration Tests
         run: |
-          bazelisk --batch test //test/integration/...
+          bazelisk --batch --test_verbose_timeout_warnings test //test/integration/...
       - name: Gradle Build Generated Storage Client Library
         run: |
           echo "Building Storage lib from generated source..."
