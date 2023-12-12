@@ -30,3 +30,4 @@ steps:
     waitFor: [ "graalvm-a-build" ]
     env:
       - 'MODULES_UNDER_TEST=java-kms,java-os-login'
+      - 'GOOGLE_CLOUD_PROJECT=cloud-java-ci-test'
