@@ -102,17 +102,8 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>CreateSubscription</td>
- *      <td><p>Creates a subscription to a given topic. See the [resource name rules]
- *  (https://cloud.google.com/pubsub/docs/admin#resource_names).
- *  If the subscription already exists, returns `ALREADY_EXISTS`.
- *  If the corresponding topic doesn't exist, returns `NOT_FOUND`.
- *
- *  If the name is not provided in the request, the server will assign a random
- *  name for this subscription on the same project as the topic, conforming
- *  to the [resource name format]
- *  (https://cloud.google.com/pubsub/docs/admin#resource_names). The generated
- *  name is populated in the returned Subscription object. Note that for REST
- *  API requests, you must specify a name in the request.</p></td>
+ *      <td><p> Creates a subscription to a given topic. See the [resource name rules] (https://cloud.google.com/pubsub/docs/admin#resource_names). If the subscription already exists, returns `ALREADY_EXISTS`. If the corresponding topic doesn't exist, returns `NOT_FOUND`.
+ * <p>  If the name is not provided in the request, the server will assign a random name for this subscription on the same project as the topic, conforming to the [resource name format] (https://cloud.google.com/pubsub/docs/admin#resource_names). The generated name is populated in the returned Subscription object. Note that for REST API requests, you must specify a name in the request.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -133,7 +124,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetSubscription</td>
- *      <td><p>Gets the configuration details of a subscription.</p></td>
+ *      <td><p> Gets the configuration details of a subscription.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -152,8 +143,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>UpdateSubscription</td>
- *      <td><p>Updates an existing subscription. Note that certain properties of a
- *  subscription, such as its topic, are not modifiable.</p></td>
+ *      <td><p> Updates an existing subscription. Note that certain properties of a subscription, such as its topic, are not modifiable.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -167,7 +157,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ListSubscriptions</td>
- *      <td><p>Lists matching subscriptions.</p></td>
+ *      <td><p> Lists matching subscriptions.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -187,11 +177,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>DeleteSubscription</td>
- *      <td><p>Deletes an existing subscription. All messages retained in the subscription
- *  are immediately dropped. Calls to `Pull` after deletion will return
- *  `NOT_FOUND`. After a subscription is deleted, a new one may be created with
- *  the same name, but the new one has no association with the old
- *  subscription or its topic unless the same topic is specified.</p></td>
+ *      <td><p> Deletes an existing subscription. All messages retained in the subscription are immediately dropped. Calls to `Pull` after deletion will return `NOT_FOUND`. After a subscription is deleted, a new one may be created with the same name, but the new one has no association with the old subscription or its topic unless the same topic is specified.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -210,11 +196,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ModifyAckDeadline</td>
- *      <td><p>Modifies the ack deadline for a specific message. This method is useful
- *  to indicate that more time is needed to process a message by the
- *  subscriber, or to make the message available for redelivery if the
- *  processing was interrupted. Note that this does not modify the
- *  subscription-level `ackDeadlineSeconds` used for subsequent messages.</p></td>
+ *      <td><p> Modifies the ack deadline for a specific message. This method is useful to indicate that more time is needed to process a message by the subscriber, or to make the message available for redelivery if the processing was interrupted. Note that this does not modify the subscription-level `ackDeadlineSeconds` used for subsequent messages.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -233,13 +215,8 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>Acknowledge</td>
- *      <td><p>Acknowledges the messages associated with the `ack_ids` in the
- *  `AcknowledgeRequest`. The Pub/Sub system can remove the relevant messages
- *  from the subscription.
- *
- *  Acknowledging a message whose ack deadline has expired may succeed,
- *  but such a message may be redelivered later. Acknowledging a message more
- *  than once will not result in an error.</p></td>
+ *      <td><p> Acknowledges the messages associated with the `ack_ids` in the `AcknowledgeRequest`. The Pub/Sub system can remove the relevant messages from the subscription.
+ * <p>  Acknowledging a message whose ack deadline has expired may succeed, but such a message may be redelivered later. Acknowledging a message more than once will not result in an error.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -258,9 +235,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>Pull</td>
- *      <td><p>Pulls messages from the server. The server may return `UNAVAILABLE` if
- *  there are too many concurrent pull requests pending for the given
- *  subscription.</p></td>
+ *      <td><p> Pulls messages from the server. The server may return `UNAVAILABLE` if there are too many concurrent pull requests pending for the given subscription.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -281,13 +256,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>StreamingPull</td>
- *      <td><p>Establishes a stream with the server, which sends messages down to the
- *  client. The client streams acknowledgements and ack deadline modifications
- *  back to the server. The server will close the stream and return the status
- *  on any error. The server may close the stream with status `UNAVAILABLE` to
- *  reassign server-side resources, in which case, the client should
- *  re-establish the stream. Flow control can be achieved by configuring the
- *  underlying RPC channel.</p></td>
+ *      <td><p> Establishes a stream with the server, which sends messages down to the client. The client streams acknowledgements and ack deadline modifications back to the server. The server will close the stream and return the status on any error. The server may close the stream with status `UNAVAILABLE` to reassign server-side resources, in which case, the client should re-establish the stream. Flow control can be achieved by configuring the underlying RPC channel.</td>
  *      <td>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -297,12 +266,8 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ModifyPushConfig</td>
- *      <td><p>Modifies the `PushConfig` for a specified subscription.
- *
- *  This may be used to change a push subscription to a pull one (signified by
- *  an empty `PushConfig`) or vice versa, or change the endpoint URL and other
- *  attributes of a push subscription. Messages will accumulate for delivery
- *  continuously through the call regardless of changes to the `PushConfig`.</p></td>
+ *      <td><p> Modifies the `PushConfig` for a specified subscription.
+ * <p>  This may be used to change a push subscription to a pull one (signified by an empty `PushConfig`) or vice versa, or change the endpoint URL and other attributes of a push subscription. Messages will accumulate for delivery continuously through the call regardless of changes to the `PushConfig`.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -321,11 +286,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetSnapshot</td>
- *      <td><p>Gets the configuration details of a snapshot. Snapshots are used in
- *  <a href="https://cloud.google.com/pubsub/docs/replay-overview">Seek</a>
- *  operations, which allow you to manage message acknowledgments in bulk. That
- *  is, you can set the acknowledgment state of messages in an existing
- *  subscription to the state captured by a snapshot.</p></td>
+ *      <td><p> Gets the configuration details of a snapshot. Snapshots are used in &lt;a href="https://cloud.google.com/pubsub/docs/replay-overview"&gt;Seek&lt;/a&gt; operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -344,11 +305,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ListSnapshots</td>
- *      <td><p>Lists the existing snapshots. Snapshots are used in [Seek](
- *  https://cloud.google.com/pubsub/docs/replay-overview) operations, which
- *  allow you to manage message acknowledgments in bulk. That is, you can set
- *  the acknowledgment state of messages in an existing subscription to the
- *  state captured by a snapshot.</p></td>
+ *      <td><p> Lists the existing snapshots. Snapshots are used in [Seek]( https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -368,22 +325,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>CreateSnapshot</td>
- *      <td><p>Creates a snapshot from the requested subscription. Snapshots are used in
- *  [Seek](https://cloud.google.com/pubsub/docs/replay-overview) operations,
- *  which allow you to manage message acknowledgments in bulk. That is, you can
- *  set the acknowledgment state of messages in an existing subscription to the
- *  state captured by a snapshot.
- *  If the snapshot already exists, returns `ALREADY_EXISTS`.
- *  If the requested subscription doesn't exist, returns `NOT_FOUND`.
- *  If the backlog in the subscription is too old -- and the resulting snapshot
- *  would expire in less than 1 hour -- then `FAILED_PRECONDITION` is returned.
- *  See also the `Snapshot.expire_time` field. If the name is not provided in
- *  the request, the server will assign a random
- *  name for this snapshot on the same project as the subscription, conforming
- *  to the [resource name format]
- *  (https://cloud.google.com/pubsub/docs/admin#resource_names). The
- *  generated name is populated in the returned Snapshot object. Note that for
- *  REST API requests, you must specify a name in the request.</p></td>
+ *      <td><p> Creates a snapshot from the requested subscription. Snapshots are used in [Seek](https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot. If the snapshot already exists, returns `ALREADY_EXISTS`. If the requested subscription doesn't exist, returns `NOT_FOUND`. If the backlog in the subscription is too old -- and the resulting snapshot would expire in less than 1 hour -- then `FAILED_PRECONDITION` is returned. See also the `Snapshot.expire_time` field. If the name is not provided in the request, the server will assign a random name for this snapshot on the same project as the subscription, conforming to the [resource name format] (https://cloud.google.com/pubsub/docs/admin#resource_names). The generated name is populated in the returned Snapshot object. Note that for REST API requests, you must specify a name in the request.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -404,12 +346,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>UpdateSnapshot</td>
- *      <td><p>Updates an existing snapshot. Snapshots are used in
- *  <a href="https://cloud.google.com/pubsub/docs/replay-overview">Seek</a>
- *  operations, which allow
- *  you to manage message acknowledgments in bulk. That is, you can set the
- *  acknowledgment state of messages in an existing subscription to the state
- *  captured by a snapshot.</p></td>
+ *      <td><p> Updates an existing snapshot. Snapshots are used in &lt;a href="https://cloud.google.com/pubsub/docs/replay-overview"&gt;Seek&lt;/a&gt; operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -423,15 +360,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>DeleteSnapshot</td>
- *      <td><p>Removes an existing snapshot. Snapshots are used in [Seek]
- *  (https://cloud.google.com/pubsub/docs/replay-overview) operations, which
- *  allow you to manage message acknowledgments in bulk. That is, you can set
- *  the acknowledgment state of messages in an existing subscription to the
- *  state captured by a snapshot.
- *  When the snapshot is deleted, all messages retained in the snapshot
- *  are immediately dropped. After a snapshot is deleted, a new one may be
- *  created with the same name, but the new one has no association with the old
- *  snapshot or its subscription, unless the same subscription is specified.</p></td>
+ *      <td><p> Removes an existing snapshot. Snapshots are used in [Seek] (https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot. When the snapshot is deleted, all messages retained in the snapshot are immediately dropped. After a snapshot is deleted, a new one may be created with the same name, but the new one has no association with the old snapshot or its subscription, unless the same subscription is specified.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -450,13 +379,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>Seek</td>
- *      <td><p>Seeks an existing subscription to a point in time or to a given snapshot,
- *  whichever is provided in the request. Snapshots are used in [Seek]
- *  (https://cloud.google.com/pubsub/docs/replay-overview) operations, which
- *  allow you to manage message acknowledgments in bulk. That is, you can set
- *  the acknowledgment state of messages in an existing subscription to the
- *  state captured by a snapshot. Note that both the subscription and the
- *  snapshot must be on the same topic.</p></td>
+ *      <td><p> Seeks an existing subscription to a point in time or to a given snapshot, whichever is provided in the request. Snapshots are used in [Seek] (https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot. Note that both the subscription and the snapshot must be on the same topic.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -470,11 +393,8 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>SetIamPolicy</td>
- *      <td><p>Sets the access control policy on the specified resource. Replaces
- * any existing policy.
- *
- * Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED`
- * errors.</p></td>
+ *      <td><p> Sets the access control policy on the specified resource. Replacesany existing policy.
+ * <p> Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED`errors.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -488,8 +408,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetIamPolicy</td>
- *      <td><p>Gets the access control policy for a resource. Returns an empty policy
- * if the resource exists and does not have a policy set.</p></td>
+ *      <td><p> Gets the access control policy for a resource. Returns an empty policyif the resource exists and does not have a policy set.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -503,13 +422,8 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>TestIamPermissions</td>
- *      <td><p>Returns permissions that a caller has on the specified resource. If the
- * resource does not exist, this will return an empty set of
- * permissions, not a `NOT_FOUND` error.
- *
- * Note: This operation is designed to be used for building
- * permission-aware UIs and command-line tools, not for authorization
- * checking. This operation may "fail open" without warning.</p></td>
+ *      <td><p> Returns permissions that a caller has on the specified resource. If theresource does not exist, this will return an empty set ofpermissions, not a `NOT_FOUND` error.
+ * <p> Note: This operation is designed to be used for buildingpermission-aware UIs and command-line tools, not for authorizationchecking. This operation may "fail open" without warning.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
