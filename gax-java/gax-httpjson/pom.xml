@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>gax-httpjson</artifactId>
-  <version>2.32.1-SNAPSHOT</version> <!-- {x-version-update:gax:current} -->
+  <version>2.38.1-SNAPSHOT</version> <!-- {x-version-update:gax:current} -->
   <packaging>jar</packaging>
   <name>GAX (Google Api eXtensions) for Java (HTTP JSON)</name>
   <description>Google Api eXtensions for Java (HTTP JSON)</description>
@@ -11,7 +11,7 @@
   <parent>
     <groupId>com.google.api</groupId>
     <artifactId>gax-parent</artifactId>
-    <version>2.32.1-SNAPSHOT</version><!-- {x-version-update:gax:current} -->
+    <version>2.38.1-SNAPSHOT</version><!-- {x-version-update:gax:current} -->
   </parent>
 
   <properties>
@@ -67,12 +67,6 @@
     <dependency>
       <groupId>com.google.protobuf</groupId>
       <artifactId>protobuf-java-util</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>com.google.j2objc</groupId>
-          <artifactId>j2objc-annotations</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
     <dependency>
       <groupId>com.google.code.findbugs</groupId>

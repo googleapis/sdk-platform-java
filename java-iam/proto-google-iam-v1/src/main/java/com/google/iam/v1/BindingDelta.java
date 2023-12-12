@@ -320,7 +320,7 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * A single identity requesting access for a Cloud Platform resource.
+   * A single identity requesting access for a Google Cloud resource.
    * Follows the same format of Binding.members.
    * Required
    * </pre>
@@ -345,7 +345,7 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
    *
    *
    * <pre>
-   * A single identity requesting access for a Cloud Platform resource.
+   * A single identity requesting access for a Google Cloud resource.
    * Follows the same format of Binding.members.
    * Required
    * </pre>
@@ -1042,7 +1042,7 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * A single identity requesting access for a Cloud Platform resource.
+     * A single identity requesting access for a Google Cloud resource.
      * Follows the same format of Binding.members.
      * Required
      * </pre>
@@ -1066,7 +1066,7 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * A single identity requesting access for a Cloud Platform resource.
+     * A single identity requesting access for a Google Cloud resource.
      * Follows the same format of Binding.members.
      * Required
      * </pre>
@@ -1090,7 +1090,7 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * A single identity requesting access for a Cloud Platform resource.
+     * A single identity requesting access for a Google Cloud resource.
      * Follows the same format of Binding.members.
      * Required
      * </pre>
@@ -1113,7 +1113,7 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * A single identity requesting access for a Cloud Platform resource.
+     * A single identity requesting access for a Google Cloud resource.
      * Follows the same format of Binding.members.
      * Required
      * </pre>
@@ -1132,7 +1132,7 @@ public final class BindingDelta extends com.google.protobuf.GeneratedMessageV3
      *
      *
      * <pre>
-     * A single identity requesting access for a Cloud Platform resource.
+     * A single identity requesting access for a Google Cloud resource.
      * Follows the same format of Binding.members.
      * Required
      * </pre>

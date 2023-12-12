@@ -15,7 +15,7 @@ public final class IdentityGrpc {
 
   private IdentityGrpc() {}
 
-  public static final String SERVICE_NAME = "google.showcase.v1beta1.Identity";
+  public static final java.lang.String SERVICE_NAME = "google.showcase.v1beta1.Identity";
 
   // Static method descriptors that strictly reflect the proto.
   private static volatile io.grpc.MethodDescriptor<com.google.showcase.v1beta1.CreateUserRequest,
@@ -631,9 +631,9 @@ public final class IdentityGrpc {
   private static final class IdentityMethodDescriptorSupplier
       extends IdentityBaseDescriptorSupplier
       implements io.grpc.protobuf.ProtoMethodDescriptorSupplier {
-    private final String methodName;
+    private final java.lang.String methodName;
 
-    IdentityMethodDescriptorSupplier(String methodName) {
+    IdentityMethodDescriptorSupplier(java.lang.String methodName) {
       this.methodName = methodName;
     }
 

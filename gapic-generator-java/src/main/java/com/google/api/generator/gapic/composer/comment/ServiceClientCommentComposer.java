@@ -14,6 +14,8 @@
 
 package com.google.api.generator.gapic.composer.comment;
 
+import static java.util.stream.Collectors.toList;
+
 import com.google.api.generator.engine.ast.CommentStatement;
 import com.google.api.generator.engine.ast.JavaDocComment;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -27,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public class ServiceClientCommentComposer {
@@ -39,9 +42,6 @@ public class ServiceClientCommentComposer {
   private static final String SERVICE_DESCRIPTION_INTRO_STRING =
       "This class provides the ability to make remote calls to the backing service through method "
           + "calls that map to API methods. Sample code to get started:";
-  private static final String SERVICE_DESCRIPTION_SURFACE_SUMMARY_STRING =
-      "The surface of this class includes several types of Java methods for each of the API's "
-          + "methods:";
   private static final String SERVICE_DESCRIPTION_SURFACE_CODA_STRING =
       "See the individual methods for example code.";
   private static final String SERVICE_DESCRIPTION_RESOURCE_NAMES_FORMATTING_STRING =
@@ -60,18 +60,6 @@ public class ServiceClientCommentComposer {
       "Please refer to the GitHub repository's samples for more quickstart code snippets.";
 
   private static final String METHOD_DESCRIPTION_SAMPLE_CODE_SUMMARY_STRING = "Sample code:";
-
-  private static final List<String> SERVICE_DESCRIPTION_SURFACE_DESCRIPTION =
-      Arrays.asList(
-          "A \"flattened\" method. With this type of method, the fields of the request type have"
-              + " been converted into function parameters. It may be the case that not all fields"
-              + " are available as parameters, and not every API method will have a flattened"
-              + " method entry point.",
-          "A \"request object\" method. This type of method only takes one parameter, a request"
-              + " object, which must be constructed before the call. Not every API method will"
-              + " have a request object method.",
-          "A \"callable\" method. This type of method takes no parameters and returns an immutable "
-              + "API callable object, which can be used to initiate calls to the service.");
 
   // Patterns.
   private static final String CREATE_METHOD_STUB_ARG_PATTERN =
@@ -109,6 +97,7 @@ public class ServiceClientCommentComposer {
               + " operation returned by another API method call.");
 
   public static List<CommentStatement> createClassHeaderComments(
+      Map<String, List<String>> methodVariantsForClientHeader,
       Service service,
       String classMethodSampleCode,
       String credentialsSampleCode,
@@ -132,8 +121,14 @@ public class ServiceClientCommentComposer {
     classHeaderJavadocBuilder.addParagraph(
         String.format(
             SERVICE_DESCRIPTION_CLOSE_PATTERN, ClassNames.getServiceClientClassName(service)));
-    classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_SURFACE_SUMMARY_STRING);
-    classHeaderJavadocBuilder.addOrderedList(SERVICE_DESCRIPTION_SURFACE_DESCRIPTION);
+
+    // Build the map of methods and descriptions to create the table in Client Overviews
+    List<MethodAndVariants> methodAndVariantsList =
+        service.methods().stream()
+            .map((Method method) -> createMethodAndVariants(method, methodVariantsForClientHeader))
+            .collect(toList());
+
+    classHeaderJavadocBuilder.addUnescapedComment(createTableOfMethods(methodAndVariantsList));
     classHeaderJavadocBuilder.addParagraph(SERVICE_DESCRIPTION_SURFACE_CODA_STRING);
 
     // Formatting resource names.
@@ -213,6 +208,95 @@ public class ServiceClientCommentComposer {
     }
 
     return comments;
+  }
+
+  private static MethodAndVariants createMethodAndVariants(
+      Method method, Map<String, List<String>> methodVariantsForClientHeader) {
+    String name = method.name();
+    String description = method.description();
+    if (description == null) description = "";
+    return new MethodAndVariants(name, description, methodVariantsForClientHeader.get(name));
+  }
+
+  private static String createTableOfMethods(List<MethodAndVariants> methodAndVariantsList) {
+    String FLATTENED_METHODS =
+        "<p>\"Flattened\" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>\n";
+    String REQUEST_OBJECT_METHODS =
+        "<p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>\n";
+    String CALLABLE_METHODS =
+        "<p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>\n";
+    String ASYNC_METHODS =
+        "<p>Methods that return long-running operations have \"Async\" method variants that return `OperationFuture`, which is used to track polling of the service.</p>\n";
+
+    StringBuilder tableBuilder = new StringBuilder();
+    tableBuilder
+        .append("<table>\n")
+        .append("   <tr>\n")
+        .append("     <th>Method</th>\n")
+        .append("     <th>Description</th>\n")
+        .append("     <th>Method Variants</th>\n");
+    for (MethodAndVariants method : methodAndVariantsList) {
+      tableBuilder
+          .append("   <tr>\n")
+          .append("     <td>")
+          .append(method.method)
+          .append("</td>\n")
+          .append("     <td>")
+          .append(CommentFormatter.formatAsJavaDocComment(method.description, null))
+          .append("</td>\n")
+          .append("     <td>\n");
+      generateUnorderedListMethodVariants(
+          tableBuilder, REQUEST_OBJECT_METHODS, method.requestObjectVariants);
+      generateUnorderedListMethodVariants(
+          tableBuilder, FLATTENED_METHODS, method.flattenedVariants);
+      generateUnorderedListMethodVariants(tableBuilder, ASYNC_METHODS, method.asyncVariants);
+      generateUnorderedListMethodVariants(tableBuilder, CALLABLE_METHODS, method.callableVariants);
+      tableBuilder.append("      </td>\n").append("   </tr>\n");
+    }
+    tableBuilder.append("   </tr>\n").append(" </table>\n");
+    return tableBuilder.toString();
+  }
+
+  private static void generateUnorderedListMethodVariants(
+      StringBuilder tableBuilder, String methodType, List<String> methodVariants) {
+    if (!methodVariants.isEmpty()) {
+      tableBuilder
+          .append("     " + methodType + "     ")
+          .append("<ul>\n")
+          .append("          <li>")
+          .append(String.join("\n          <li>", methodVariants))
+          .append("\n")
+          .append("     </ul>")
+          .append("\n");
+    }
+  }
+
+  private static class MethodAndVariants {
+    private final String method;
+    // Description may be empty. It comes from the proto comments above the method. If it is empty,
+    // then nothing will be displayed.
+    private final String description;
+
+    private final List<String> flattenedVariants;
+    private final List<String> requestObjectVariants;
+    private final List<String> callableVariants;
+    private final List<String> asyncVariants;
+
+    private MethodAndVariants(String method, String description, List<String> methodVariants) {
+      this.method = method;
+      this.description = description;
+      requestObjectVariants =
+          methodVariants.stream().filter(s -> s.contains("request")).collect(toList());
+      // Flattened method variants do not have a suffix, so the easiest way to identify them is by
+      // removing all other method variant types.
+      methodVariants.removeAll(requestObjectVariants);
+      callableVariants =
+          methodVariants.stream().filter(s -> s.contains("Callable")).collect(toList());
+      methodVariants.removeAll(callableVariants);
+      asyncVariants = methodVariants.stream().filter(s -> s.contains("Async")).collect(toList());
+      methodVariants.removeAll(asyncVariants);
+      flattenedVariants = methodVariants;
+    }
   }
 
   public static List<CommentStatement> createRpcMethodHeaderComment(

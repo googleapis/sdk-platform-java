@@ -145,4 +145,13 @@ public interface TransportChannelProvider {
   String getTransportName();
 
   default void setClientMetricsTracer(ClientMetricsTracer clientMetricsTracer) {};
+
+  /**
+   * User set custom endpoint for the Transport Channel Provider
+   *
+   * <p>This is the unresolved endpoint used by GAPICs
+   */
+  default String getEndpoint() {
+    return null;
+  }
 }

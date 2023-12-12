@@ -29,17 +29,21 @@
  */
 package com.google.api.gax.grpc;
 
+import static com.google.api.gax.grpc.testing.FakeServiceGrpc.METHOD_RECOGNIZE;
 import static com.google.api.gax.grpc.testing.FakeServiceGrpc.METHOD_SERVER_STREAMING_RECOGNIZE;
 import static com.google.common.truth.Truth.assertThat;
 
+import com.google.api.core.ApiFuture;
 import com.google.api.gax.grpc.testing.FakeChannelFactory;
 import com.google.api.gax.grpc.testing.FakeMethodDescriptor;
-import com.google.api.gax.grpc.testing.FakeServiceGrpc;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.ResponseObserver;
 import com.google.api.gax.rpc.ServerStreamingCallSettings;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.StreamController;
+import com.google.api.gax.rpc.UnaryCallSettings;
+import com.google.api.gax.rpc.UnaryCallable;
+import com.google.api.gax.util.FakeLogHandler;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -117,7 +121,7 @@ public class ChannelPoolTest {
 
   private void verifyTargetChannel(
       ChannelPool pool, List<ManagedChannel> channels, ManagedChannel targetChannel) {
-    MethodDescriptor<Color, Money> methodDescriptor = FakeServiceGrpc.METHOD_RECOGNIZE;
+    MethodDescriptor<Color, Money> methodDescriptor = METHOD_RECOGNIZE;
     CallOptions callOptions = CallOptions.DEFAULT;
     @SuppressWarnings("unchecked")
     ClientCall<Color, Money> expectedClientCall = Mockito.mock(ClientCall.class);
@@ -143,7 +147,7 @@ public class ChannelPoolTest {
     final ManagedChannel[] channels = new ManagedChannel[numChannels];
     final AtomicInteger[] counts = new AtomicInteger[numChannels];
 
-    final MethodDescriptor<Color, Money> methodDescriptor = FakeServiceGrpc.METHOD_RECOGNIZE;
+    final MethodDescriptor<Color, Money> methodDescriptor = METHOD_RECOGNIZE;
     final CallOptions callOptions = CallOptions.DEFAULT;
     @SuppressWarnings("unchecked")
     final ClientCall<Color, Money> clientCall = Mockito.mock(ClientCall.class);
@@ -472,8 +476,7 @@ public class ChannelPoolTest {
     // Start the minimum number of
     for (int i = 0; i < 2; i++) {
       ClientCalls.futureUnaryCall(
-          pool.newCall(FakeServiceGrpc.METHOD_RECOGNIZE, CallOptions.DEFAULT),
-          Color.getDefaultInstance());
+          pool.newCall(METHOD_RECOGNIZE, CallOptions.DEFAULT), Color.getDefaultInstance());
     }
     pool.resize();
     assertThat(pool.entries.get()).hasSize(2);
@@ -481,14 +484,13 @@ public class ChannelPoolTest {
     // Add enough RPCs to be just at the brink of expansion
     for (int i = startedCalls.size(); i < 4; i++) {
       ClientCalls.futureUnaryCall(
-          pool.newCall(FakeServiceGrpc.METHOD_RECOGNIZE, CallOptions.DEFAULT),
-          Color.getDefaultInstance());
+          pool.newCall(METHOD_RECOGNIZE, CallOptions.DEFAULT), Color.getDefaultInstance());
     }
     pool.resize();
     assertThat(pool.entries.get()).hasSize(2);
 
     // Add another RPC to push expansion
-    pool.newCall(FakeServiceGrpc.METHOD_RECOGNIZE, CallOptions.DEFAULT);
+    pool.newCall(METHOD_RECOGNIZE, CallOptions.DEFAULT);
     pool.resize();
     assertThat(pool.entries.get()).hasSize(4); // += ChannelPool::MAX_RESIZE_DELTA
     assertThat(startedCalls).hasSize(5);
@@ -593,8 +595,7 @@ public class ChannelPoolTest {
     // Start 2 RPCs
     for (int i = 0; i < 2; i++) {
       ClientCalls.futureUnaryCall(
-          pool.newCall(FakeServiceGrpc.METHOD_RECOGNIZE, CallOptions.DEFAULT),
-          Color.getDefaultInstance());
+          pool.newCall(METHOD_RECOGNIZE, CallOptions.DEFAULT), Color.getDefaultInstance());
     }
     // Complete the first one
     @SuppressWarnings("unchecked")
@@ -662,5 +663,56 @@ public class ChannelPoolTest {
                     }));
     assertThat(e.getCause()).isInstanceOf(CancellationException.class);
     assertThat(e.getMessage()).isEqualTo("Call is already cancelled");
+  }
+
+  @Test
+  public void testDoubleRelease() throws Exception {
+    FakeLogHandler logHandler = new FakeLogHandler();
+    ChannelPool.LOG.addHandler(logHandler);
+
+    try {
+      // Create a fake channel pool thats backed by mock channels that simply record invocations
+      ClientCall mockClientCall = Mockito.mock(ClientCall.class);
+      ManagedChannel fakeChannel = Mockito.mock(ManagedChannel.class);
+      Mockito.when(fakeChannel.newCall(Mockito.any(), Mockito.any())).thenReturn(mockClientCall);
+      ChannelPoolSettings channelPoolSettings = ChannelPoolSettings.staticallySized(1);
+      ChannelFactory factory = new FakeChannelFactory(ImmutableList.of(fakeChannel));
+
+      pool = ChannelPool.create(channelPoolSettings, factory);
+
+      // Construct a fake callable to use the channel pool
+      ClientContext context =
+          ClientContext.newBuilder()
+              .setTransportChannel(GrpcTransportChannel.create(pool))
+              .setDefaultCallContext(GrpcCallContext.of(pool, CallOptions.DEFAULT))
+              .build();
+
+      UnaryCallSettings<Color, Money> settings =
+          UnaryCallSettings.<Color, Money>newUnaryCallSettingsBuilder().build();
+      UnaryCallable<Color, Money> callable =
+          GrpcCallableFactory.createUnaryCallable(
+              GrpcCallSettings.create(METHOD_RECOGNIZE), settings, context);
+
+      // Start the RPC
+      ApiFuture<Money> rpcFuture =
+          callable.futureCall(Color.getDefaultInstance(), context.getDefaultCallContext());
+
+      // Get the server side listener and intentionally close it twice
+      ArgumentCaptor<ClientCall.Listener<?>> clientCallListenerCaptor =
+          ArgumentCaptor.forClass(ClientCall.Listener.class);
+      Mockito.verify(mockClientCall).start(clientCallListenerCaptor.capture(), Mockito.any());
+      clientCallListenerCaptor.getValue().onClose(Status.INTERNAL, new Metadata());
+      clientCallListenerCaptor.getValue().onClose(Status.UNKNOWN, new Metadata());
+
+      // Ensure that the channel pool properly logged the double call and kept the refCount correct
+      assertThat(logHandler.getAllMessages())
+          .contains(
+              "Call is being closed more than once. Please make sure that onClose() is not being manually called.");
+      assertThat(pool.entries.get()).hasSize(1);
+      ChannelPool.Entry entry = pool.entries.get().get(0);
+      assertThat(entry.outstandingRpcs.get()).isEqualTo(0);
+    } finally {
+      ChannelPool.LOG.removeHandler(logHandler);
+    }
   }
 }
