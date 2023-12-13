@@ -70,7 +70,7 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>AggregatedList</td>
- *      <td><p>Retrieves an aggregated list of addresses.</p></td>
+ *      <td><p> Retrieves an aggregated list of addresses.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -89,7 +89,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>Delete</td>
- *      <td><p>Deletes the specified address resource.</p></td>
+ *      <td><p> Deletes the specified address resource.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -108,7 +108,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>Insert</td>
- *      <td><p>Creates an address resource in the specified project by using the data included in the request.</p></td>
+ *      <td><p> Creates an address resource in the specified project by using the data included in the request.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -127,7 +127,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>List</td>
- *      <td><p>Retrieves a list of addresses contained within the specified region.</p></td>
+ *      <td><p> Retrieves a list of addresses contained within the specified region.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>

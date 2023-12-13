@@ -86,7 +86,7 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>CreateSchema</td>
- *      <td><p>Creates a schema.</p></td>
+ *      <td><p> Creates a schema.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -105,7 +105,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetSchema</td>
- *      <td><p>Gets a schema.</p></td>
+ *      <td><p> Gets a schema.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -124,7 +124,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ListSchemas</td>
- *      <td><p>Lists schemas in a project.</p></td>
+ *      <td><p> Lists schemas in a project.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -144,7 +144,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ListSchemaRevisions</td>
- *      <td><p>Lists all schema revisions for the named schema.</p></td>
+ *      <td><p> Lists all schema revisions for the named schema.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -164,7 +164,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>CommitSchema</td>
- *      <td><p>Commits a new schema revision to an existing schema.</p></td>
+ *      <td><p> Commits a new schema revision to an existing schema.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -183,7 +183,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>RollbackSchema</td>
- *      <td><p>Creates a new schema revision that is a copy of the provided revision_id.</p></td>
+ *      <td><p> Creates a new schema revision that is a copy of the provided revision_id.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -202,7 +202,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>DeleteSchemaRevision</td>
- *      <td><p>Deletes a specific schema revision.</p></td>
+ *      <td><p> Deletes a specific schema revision.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -221,7 +221,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>DeleteSchema</td>
- *      <td><p>Deletes a schema.</p></td>
+ *      <td><p> Deletes a schema.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -240,7 +240,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ValidateSchema</td>
- *      <td><p>Validates a schema.</p></td>
+ *      <td><p> Validates a schema.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -259,7 +259,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ValidateMessage</td>
- *      <td><p>Validates a message against a schema.</p></td>
+ *      <td><p> Validates a message against a schema.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -273,11 +273,8 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>SetIamPolicy</td>
- *      <td><p>Sets the access control policy on the specified resource. Replaces
- * any existing policy.
- *
- * Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED`
- * errors.</p></td>
+ *      <td><p> Sets the access control policy on the specified resource. Replacesany existing policy.
+ * <p> Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED`errors.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -291,8 +288,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetIamPolicy</td>
- *      <td><p>Gets the access control policy for a resource. Returns an empty policy
- * if the resource exists and does not have a policy set.</p></td>
+ *      <td><p> Gets the access control policy for a resource. Returns an empty policyif the resource exists and does not have a policy set.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -306,13 +302,8 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>TestIamPermissions</td>
- *      <td><p>Returns permissions that a caller has on the specified resource. If the
- * resource does not exist, this will return an empty set of
- * permissions, not a `NOT_FOUND` error.
- *
- * Note: This operation is designed to be used for building
- * permission-aware UIs and command-line tools, not for authorization
- * checking. This operation may "fail open" without warning.</p></td>
+ *      <td><p> Returns permissions that a caller has on the specified resource. If theresource does not exist, this will return an empty set ofpermissions, not a `NOT_FOUND` error.
+ * <p> Note: This operation is designed to be used for buildingpermission-aware UIs and command-line tools, not for authorizationchecking. This operation may "fail open" without warning.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>

@@ -83,10 +83,7 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>DeleteLog</td>
- *      <td><p>Deletes all the log entries in a log for the _Default Log Bucket. The log
- *  reappears if it receives new entries. Log entries written shortly before
- *  the delete operation might not be deleted. Entries received after the
- *  delete operation with a timestamp before the operation will be deleted.</p></td>
+ *      <td><p> Deletes all the log entries in a log for the _Default Log Bucket. The log reappears if it receives new entries. Log entries written shortly before the delete operation might not be deleted. Entries received after the delete operation with a timestamp before the operation will be deleted.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -105,13 +102,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>WriteLogEntries</td>
- *      <td><p>Writes log entries to Logging. This API method is the
- *  only way to send log entries to Logging. This method
- *  is used, directly or indirectly, by the Logging agent
- *  (fluentd) and all logging libraries configured to use Logging.
- *  A single request may contain log entries for a maximum of 1000
- *  different resources (projects, organizations, billing accounts or
- *  folders)</p></td>
+ *      <td><p> Writes log entries to Logging. This API method is the only way to send log entries to Logging. This method is used, directly or indirectly, by the Logging agent (fluentd) and all logging libraries configured to use Logging. A single request may contain log entries for a maximum of 1000 different resources (projects, organizations, billing accounts or folders)</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -130,10 +121,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ListLogEntries</td>
- *      <td><p>Lists log entries.  Use this method to retrieve log entries that originated
- *  from a project/folder/organization/billing account.  For ways to export log
- *  entries, see [Exporting
- *  Logs](https://cloud.google.com/logging/docs/export).</p></td>
+ *      <td><p> Lists log entries.  Use this method to retrieve log entries that originated from a project/folder/organization/billing account.  For ways to export log entries, see [Exporting Logs](https://cloud.google.com/logging/docs/export).</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -152,7 +140,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ListMonitoredResourceDescriptors</td>
- *      <td><p>Lists the descriptors for monitored resource types used by Logging.</p></td>
+ *      <td><p> Lists the descriptors for monitored resource types used by Logging.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -167,8 +155,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ListLogs</td>
- *      <td><p>Lists the logs in projects, organizations, folders, or billing accounts.
- *  Only logs that have entries are listed.</p></td>
+ *      <td><p> Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have entries are listed.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -191,8 +178,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>TailLogEntries</td>
- *      <td><p>Streaming read of log entries as they are ingested. Until the stream is
- *  terminated, it will continue reading logs.</p></td>
+ *      <td><p> Streaming read of log entries as they are ingested. Until the stream is terminated, it will continue reading logs.</td>
  *      <td>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>

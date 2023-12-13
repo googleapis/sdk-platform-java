@@ -73,7 +73,7 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>CreateUser</td>
- *      <td><p>Creates a user.</p></td>
+ *      <td><p> Creates a user.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -92,7 +92,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetUser</td>
- *      <td><p>Retrieves the User with the given uri.</p></td>
+ *      <td><p> Retrieves the User with the given uri.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -111,7 +111,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>UpdateUser</td>
- *      <td><p>Updates a user.</p></td>
+ *      <td><p> Updates a user.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -125,7 +125,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>DeleteUser</td>
- *      <td><p>Deletes a user, their profile, and all of their authored messages.</p></td>
+ *      <td><p> Deletes a user, their profile, and all of their authored messages.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -144,7 +144,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ListUsers</td>
- *      <td><p>Lists all users.</p></td>
+ *      <td><p> Lists all users.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -159,7 +159,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ListLocations</td>
- *      <td><p>Lists information about the supported locations for this service.</p></td>
+ *      <td><p> Lists information about the supported locations for this service.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -174,7 +174,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetLocation</td>
- *      <td><p>Gets information about a location.</p></td>
+ *      <td><p> Gets information about a location.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -188,10 +188,8 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>SetIamPolicy</td>
- *      <td><p>Sets the access control policy on the specified resource. Replaces any
- *  existing policy.
- *
- *  Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.</p></td>
+ *      <td><p> Sets the access control policy on the specified resource. Replaces any existing policy.
+ * <p>  Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -205,9 +203,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetIamPolicy</td>
- *      <td><p>Gets the access control policy for a resource.
- *  Returns an empty policy if the resource exists and does not have a policy
- *  set.</p></td>
+ *      <td><p> Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -221,13 +217,8 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>TestIamPermissions</td>
- *      <td><p>Returns permissions that a caller has on the specified resource.
- *  If the resource does not exist, this will return an empty set of
- *  permissions, not a `NOT_FOUND` error.
- *
- *  Note: This operation is designed to be used for building permission-aware
- *  UIs and command-line tools, not for authorization checking. This operation
- *  may "fail open" without warning.</p></td>
+ *      <td><p> Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error.
+ * <p>  Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may "fail open" without warning.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
