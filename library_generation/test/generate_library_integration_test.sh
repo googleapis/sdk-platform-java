@@ -82,6 +82,11 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   proto_path=$(echo "$line" | cut -d " " -f 1)
   repository_path=$(echo "$line" | cut -d " " -f 2)
   skip_postprocessing=$(echo "$line" | cut -d " " -f 3)
+  is_monorepo="false"
+  if [[ "${repository_path}" == google-cloud-java/* ]]; then
+    echo 'this is a monorepo library'
+    is_monorepo="true"
+  fi
   # parse destination_path
   pushd "${output_folder}"
   echo "Checking out googleapis-gen repository..."
@@ -106,20 +111,15 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
     service_yaml=${service_yaml},
     include_samples=${include_samples}."
   pushd "${output_folder}"
-  if [ "${skip_postprocessing}" == "true" ]; then
-    echo 'this library is not intended for postprocessing test'
-    popd # output folder
-    continue
+  if [[ "${is_monorepo}" == "true" ]]; then
+    library=$(echo "${repository_path}" | cut -d'/' -f2)
+    sparse_clone "https://github.com/googleapis/google-cloud-java.git" "${library} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"
   else
-    echo 'this is a monorepo library'
-    sparse_clone "https://github.com/googleapis/google-cloud-java.git" "${repository_path} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"
-
-    # compute path from output_folder to source of truth library location
-    # (e.g. google-cloud-java/java-compute)
-    repository_path="google-cloud-java/${repository_path}"
-    target_folder="${output_folder}/${repository_path}"
-    popd # output_folder
+    git clone "https://github.com/googleapis/${repository_path}.git"
   fi
+
+  target_folder="${output_folder}/${repository_path}"
+  popd # output_folder
   # generate GAPIC client library
   echo "Generating library from ${proto_path}, to ${destination_path}..."
   generation_start=$(date "+%s")

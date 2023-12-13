@@ -75,6 +75,13 @@ popd # pre_processed_libs_folder
 
 owlbot_cli_image_sha=$(cat "${scripts_root}/configuration/owlbot-cli-sha" | grep "sha256")
 
+# we determine the location of the .OwlBot.yaml file by checking if the target
+# folder is a monorepo folder or not
+if [[ "${postprocessing_target}" == *google-cloud-java* ]]; then
+  owlbot_yaml_relative_path=".OwlBot.yaml"
+else
+  owlbot_yaml_relative_path=".github/.OwlBot.yaml"
+fi
 
 docker run --rm \
   --user $(id -u):$(id -g) \
@@ -86,17 +93,15 @@ docker run --rm \
   copy-code \
   --source-repo-commit-hash=none \
   --source-repo=/pre-processed-libraries \
-  --config-file=.OwlBot.yaml
+  --config-file="${owlbot_yaml_relative_path}"
 
-# if the postprocessing_target is a library of google-cloud-java, we have to "unpack" the
+# we have to "unpack" the
 # owl-bot-staging folder so it's properly processed by java owlbot
-if [[ $(basename $(dirname "${postprocessing_target}")) == "google-cloud-java" ]]; then
-  pushd "${postprocessing_target}"
-  mv owl-bot-staging/* temp
-  rm -rd owl-bot-staging/
-  mv temp owl-bot-staging
-  popd # postprocessing_target
-fi
+pushd "${postprocessing_target}"
+mv owl-bot-staging/* temp
+rm -rd owl-bot-staging/
+mv temp owl-bot-staging
+popd # postprocessing_target
 
 # we clone the synthtool library and manually build it
 mkdir -p /tmp/synthtool
