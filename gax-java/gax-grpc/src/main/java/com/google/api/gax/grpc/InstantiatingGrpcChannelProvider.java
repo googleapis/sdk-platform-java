@@ -301,11 +301,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
   @VisibleForTesting
   boolean isCredentialDirectPathCompatible() {
-    // DirectPath requires a credential.
-    if (needsCredentials()) {
-      return false;
-    }
     if (allowNonDefaultServiceAccount != null && allowNonDefaultServiceAccount) {
+      // If non-default service account is allowed, a null call credential is OK.
       return true;
     }
     return credentials instanceof ComputeEngineCredentials;
@@ -362,9 +359,15 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     // Check DirectPath traffic.
     boolean useDirectPathXds = false;
     if (isDirectPathEnabled() && isCredentialDirectPathCompatible() && isOnComputeEngine()) {
-      CallCredentials callCreds = MoreCallCredentials.from(credentials);
-      ChannelCredentials channelCreds =
-          GoogleDefaultChannelCredentials.newBuilder().callCredentials(callCreds).build();
+      ChannelCredentials channelCreds;
+      if (credentials == null) {
+        // GoogleDefaultChannelCredentials will use application default call credential.
+        channelCreds = GoogleDefaultChannelCredentials.newBuilder().build();
+      } else {
+        CallCredentials callCreds = MoreCallCredentials.from(credentials);
+        channelCreds =
+            GoogleDefaultChannelCredentials.newBuilder().callCredentials(callCreds).build();
+      }
       useDirectPathXds = isDirectPathXdsEnabled();
       if (useDirectPathXds) {
         // google-c2p: CloudToProd(C2P) Directpath. This scheme is defined in
