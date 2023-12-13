@@ -36,10 +36,6 @@ case $key in
     enable_postprocessing="$2"
     shift
     ;;
-  -s|--owlbot_sha)
-    owlbot_sha="$2"
-    shift
-    ;;
   -g|--googleapis_gen_url)
     googleapis_gen_url="$2"
     shift
