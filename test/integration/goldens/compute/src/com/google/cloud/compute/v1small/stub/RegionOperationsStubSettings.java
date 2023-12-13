@@ -82,7 +82,6 @@ import org.threeten.bp.Duration;
  */
 @Generated("by gapic-generator-java")
 public class RegionOperationsStubSettings extends StubSettings<RegionOperationsStubSettings> {
-  private static final String HOST_SERVICE_NAME = "compute";
   /** The default scopes of the service. */
   private static final ImmutableList<String> DEFAULT_SERVICE_SCOPES =
       ImmutableList.<String>builder()
@@ -113,6 +112,12 @@ public class RegionOperationsStubSettings extends StubSettings<RegionOperationsS
     throw new UnsupportedOperationException(
         String.format(
             "Transport not supported: %s", getTransportChannelProvider().getTransportName()));
+  }
+
+  /** Returns the default service name. */
+  @Override
+  public String getServiceName() {
+    return "compute";
   }
 
   /** Returns a builder for the default ExecutorProvider for this service. */
@@ -266,7 +271,6 @@ public class RegionOperationsStubSettings extends StubSettings<RegionOperationsS
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setHostServiceName(HOST_SERVICE_NAME);
 
       return initDefaults(builder);
     }

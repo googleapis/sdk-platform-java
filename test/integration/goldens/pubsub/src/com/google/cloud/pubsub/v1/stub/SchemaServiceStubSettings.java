@@ -109,7 +109,6 @@ import javax.annotation.Generated;
  */
 @Generated("by gapic-generator-java")
 public class SchemaServiceStubSettings extends StubSettings<SchemaServiceStubSettings> {
-  private static final String HOST_SERVICE_NAME = "pubsub";
   /** The default scopes of the service. */
   private static final ImmutableList<String> DEFAULT_SERVICE_SCOPES =
       ImmutableList.<String>builder()
@@ -332,6 +331,12 @@ public class SchemaServiceStubSettings extends StubSettings<SchemaServiceStubSet
             "Transport not supported: %s", getTransportChannelProvider().getTransportName()));
   }
 
+  /** Returns the default service name. */
+  @Override
+  public String getServiceName() {
+    return "pubsub";
+  }
+
   /** Returns a builder for the default ExecutorProvider for this service. */
   public static InstantiatingExecutorProvider.Builder defaultExecutorProviderBuilder() {
     return InstantiatingExecutorProvider.newBuilder();
@@ -540,7 +545,6 @@ public class SchemaServiceStubSettings extends StubSettings<SchemaServiceStubSet
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setHostServiceName(HOST_SERVICE_NAME);
 
       return initDefaults(builder);
     }

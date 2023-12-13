@@ -53,7 +53,7 @@ public abstract class Service {
   }
 
   public String hostServiceName() {
-    // Default Host is guaranteed to exist and be non-null and non-empty
+    // Host Service Name is guaranteed to exist and be non-null and non-empty
     // Parser will fail if the default host is not supplied
     return parseHostServiceName(defaultHost());
   }

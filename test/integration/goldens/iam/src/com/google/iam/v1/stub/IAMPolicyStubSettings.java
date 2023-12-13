@@ -83,7 +83,6 @@ import org.threeten.bp.Duration;
  */
 @Generated("by gapic-generator-java")
 public class IAMPolicyStubSettings extends StubSettings<IAMPolicyStubSettings> {
-  private static final String HOST_SERVICE_NAME = "iam-meta-api";
   /** The default scopes of the service. */
   private static final ImmutableList<String> DEFAULT_SERVICE_SCOPES =
       ImmutableList.<String>builder().build();
@@ -118,6 +117,12 @@ public class IAMPolicyStubSettings extends StubSettings<IAMPolicyStubSettings> {
     throw new UnsupportedOperationException(
         String.format(
             "Transport not supported: %s", getTransportChannelProvider().getTransportName()));
+  }
+
+  /** Returns the default service name. */
+  @Override
+  public String getServiceName() {
+    return "iam-meta-api";
   }
 
   /** Returns a builder for the default ExecutorProvider for this service. */
@@ -264,7 +269,6 @@ public class IAMPolicyStubSettings extends StubSettings<IAMPolicyStubSettings> {
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setHostServiceName(HOST_SERVICE_NAME);
 
       return initDefaults(builder);
     }

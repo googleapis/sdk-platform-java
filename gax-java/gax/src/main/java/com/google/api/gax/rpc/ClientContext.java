@@ -102,7 +102,7 @@ public abstract class ClientContext {
 
   // Package-Private scope for internal use only. Shared between StubSettings and ClientContext
   @Nullable
-  abstract String getHostServiceName();
+  abstract String getServiceName();
 
   @Nullable
   public abstract String getEndpoint();
@@ -206,7 +206,7 @@ public abstract class ClientContext {
     }
     EndpointContext endpointContext =
         EndpointContext.newBuilder()
-            .setHostServiceName(settings.getHostServiceName())
+            .setServiceName(settings.getServiceName())
             .setClientSettingsEndpoint(settings.getEndpoint())
             .setTransportChannelProviderEndpoint(
                 settings.getTransportChannelProvider().getEndpoint())
@@ -263,7 +263,7 @@ public abstract class ClientContext {
         .setInternalHeaders(ImmutableMap.copyOf(settings.getInternalHeaderProvider().getHeaders()))
         .setClock(clock)
         .setDefaultCallContext(defaultCallContext)
-        .setHostServiceName(settings.getHostServiceName())
+        .setServiceName(settings.getServiceName())
         .setEndpoint(settings.getEndpoint())
         .setQuotaProjectId(settings.getQuotaProjectId())
         .setStreamWatchdog(watchdog)
@@ -330,7 +330,7 @@ public abstract class ClientContext {
     public abstract Builder setDefaultCallContext(ApiCallContext defaultCallContext);
 
     // Package-Private scope for internal use only. Shared between StubSettings and ClientContext
-    abstract Builder setHostServiceName(String hostServiceName);
+    abstract Builder setServiceName(String serviceName);
 
     public abstract Builder setEndpoint(String endpoint);
 

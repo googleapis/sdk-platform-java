@@ -112,7 +112,6 @@ import org.threeten.bp.Duration;
 @BetaApi
 @Generated("by gapic-generator-java")
 public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings> {
-  private static final String HOST_SERVICE_NAME = "redis";
   /** The default scopes of the service. */
   private static final ImmutableList<String> DEFAULT_SERVICE_SCOPES =
       ImmutableList.<String>builder().add("https://www.googleapis.com/auth/cloud-platform").build();
@@ -322,6 +321,12 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
     throw new UnsupportedOperationException(
         String.format(
             "Transport not supported: %s", getTransportChannelProvider().getTransportName()));
+  }
+
+  /** Returns the default service name. */
+  @Override
+  public String getServiceName() {
+    return "redis";
   }
 
   /** Returns a builder for the default ExecutorProvider for this service. */
@@ -598,7 +603,6 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setHostServiceName(HOST_SERVICE_NAME);
 
       return initDefaults(builder);
     }
@@ -612,7 +616,6 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setHostServiceName(HOST_SERVICE_NAME);
 
       return initDefaults(builder);
     }

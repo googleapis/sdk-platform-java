@@ -71,7 +71,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   private final HeaderProvider internalHeaderProvider;
   private final TransportChannelProvider transportChannelProvider;
   private final ApiClock clock;
-  private final String hostServiceName;
+  private final String serviceName;
   private final String endpoint;
   private final String mtlsEndpoint;
   private final String quotaProjectId;
@@ -98,7 +98,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     this.headerProvider = builder.headerProvider;
     this.internalHeaderProvider = builder.internalHeaderProvider;
     this.clock = builder.clock;
-    this.hostServiceName = builder.hostServiceName;
+    this.serviceName = builder.serviceName;
     this.endpoint = builder.endpoint;
     this.mtlsEndpoint = builder.mtlsEndpoint;
     this.switchToMtlsEndpointAllowed = builder.switchToMtlsEndpointAllowed;
@@ -140,9 +140,11 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     return clock;
   }
 
-  // Package-Private scope for internal use only. Shared between StubSettings and ClientContext
-  final String getHostServiceName() {
-    return hostServiceName;
+  // Intended for Internal Use and Overriden by generated ServiceStubSettings classes.
+  // Meant to be shared between StubSettings and ClientContext.
+  @InternalApi
+  public String getServiceName() {
+    return "";
   }
 
   public final String getEndpoint() {
@@ -219,7 +221,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     private HeaderProvider internalHeaderProvider;
     private TransportChannelProvider transportChannelProvider;
     private ApiClock clock;
-    private String hostServiceName;
+    private String serviceName;
     private String endpoint;
     private String mtlsEndpoint;
     private String quotaProjectId;
@@ -245,7 +247,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       this.headerProvider = settings.headerProvider;
       this.internalHeaderProvider = settings.internalHeaderProvider;
       this.clock = settings.clock;
-      this.hostServiceName = settings.hostServiceName;
+      this.serviceName = settings.serviceName;
       this.endpoint = settings.endpoint;
       this.mtlsEndpoint = settings.mtlsEndpoint;
       this.switchToMtlsEndpointAllowed = settings.switchToMtlsEndpointAllowed;
@@ -282,7 +284,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.headerProvider = new NoHeaderProvider();
         this.internalHeaderProvider = new NoHeaderProvider();
         this.clock = NanoClock.getDefaultClock();
-        this.hostServiceName = null;
+        this.serviceName = null;
         this.endpoint = null;
         this.mtlsEndpoint = null;
         this.quotaProjectId = null;
@@ -303,7 +305,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.internalHeaderProvider =
             FixedHeaderProvider.create(clientContext.getInternalHeaders());
         this.clock = clientContext.getClock();
-        this.hostServiceName = clientContext.getHostServiceName();
+        this.serviceName = clientContext.getServiceName();
         this.endpoint = clientContext.getEndpoint();
         if (this.endpoint != null) {
           this.mtlsEndpoint = this.endpoint.replace("googleapis.com", "mtls.googleapis.com");
@@ -423,14 +425,6 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
      */
     public B setClock(ApiClock clock) {
       this.clock = clock;
-      return self();
-    }
-
-    // This meant to be used internally by GAPIC clients to configure an endpoint.
-    // Users should avoid settings this as it could change their endpoint.
-    @InternalApi
-    public B setHostServiceName(String hostServiceName) {
-      this.hostServiceName = hostServiceName;
       return self();
     }
 

@@ -155,8 +155,6 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
   protected static final VariableExpr DEFAULT_SERVICE_SCOPES_VAR_EXPR =
       createDefaultServiceScopesVarExpr();
 
-  private static final VariableExpr HOST_SERVICE_NAME_VAR_EXPR = createHostServiceNameVarExpr();
-
   protected AbstractServiceStubSettingsClassComposer(TransportContext transportContext) {
     this.transportContext = transportContext;
   }
@@ -493,23 +491,6 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
       TypeStore typeStore) {
     Function<Expr, Statement> exprToStatementFn = e -> ExprStatement.withExpr(e);
     List<Statement> statements = new ArrayList<>();
-
-    VariableExpr hostServiceNameVarExpr =
-        HOST_SERVICE_NAME_VAR_EXPR
-            .toBuilder()
-            .setIsDecl(true)
-            .setScope(ScopeNode.PRIVATE)
-            .setIsStatic(true)
-            .setIsFinal(true)
-            .build();
-
-    statements.add(
-        exprToStatementFn.apply(
-            AssignmentExpr.builder()
-                .setVariableExpr(hostServiceNameVarExpr)
-                .setValueExpr(
-                    ValueExpr.withValue(StringObjectValue.withValue(service.hostServiceName())))
-                .build()));
 
     // Assign DEFAULT_SERVICE_SCOPES.
     statements.add(SettingsCommentComposer.DEFAULT_SCOPES_COMMENT);
@@ -1157,8 +1138,22 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
       Service service, TypeStore typeStore) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
 
+    // Create the getServiceName method.
+    TypeNode returnType = TypeNode.STRING;
+    javaMethods.add(
+        MethodDefinition.builder()
+            .setHeaderCommentStatements(SettingsCommentComposer.DEFAULT_SERVICE_NAME_METHOD_COMMENT)
+            .setIsOverride(true)
+            .setScope(ScopeNode.PUBLIC)
+            .setIsStatic(false)
+            .setReturnType(returnType)
+            .setName("getServiceName")
+            .setReturnExpr(
+                ValueExpr.withValue(StringObjectValue.withValue(service.hostServiceName())))
+            .build());
+
     // Create the defaultExecutorProviderBuilder method.
-    TypeNode returnType =
+    returnType =
         TypeNode.withReference(
             ConcreteReference.withClazz(InstantiatingExecutorProvider.Builder.class));
     javaMethods.add(
@@ -1918,12 +1913,6 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                 ValueExpr.withValue(
                     PrimitiveValue.builder().setType(TypeNode.BOOLEAN).setValue("true").build()))
             .build());
-    bodyExprs.add(
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(builderVarExpr)
-            .setMethodName("setHostServiceName")
-            .setArguments(HOST_SERVICE_NAME_VAR_EXPR)
-            .build());
     bodyStatements.addAll(
         bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));
     bodyStatements.add(EMPTY_LINE_STATEMENT);
@@ -2213,11 +2202,6 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .setType(varType)
             .setName(NESTED_RETRY_PARAM_DEFINITIONS_VAR_NAME)
             .build());
-  }
-
-  private static VariableExpr createHostServiceNameVarExpr() {
-    return VariableExpr.withVariable(
-        Variable.builder().setName("HOST_SERVICE_NAME").setType(TypeNode.STRING).build());
   }
 
   private static String getPagedResponseTypeName(String methodName) {

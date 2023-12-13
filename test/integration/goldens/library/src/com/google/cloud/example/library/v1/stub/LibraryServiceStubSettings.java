@@ -109,7 +109,6 @@ import org.threeten.bp.Duration;
  */
 @Generated("by gapic-generator-java")
 public class LibraryServiceStubSettings extends StubSettings<LibraryServiceStubSettings> {
-  private static final String HOST_SERVICE_NAME = "library-example";
   /** The default scopes of the service. */
   private static final ImmutableList<String> DEFAULT_SERVICE_SCOPES =
       ImmutableList.<String>builder().build();
@@ -305,6 +304,12 @@ public class LibraryServiceStubSettings extends StubSettings<LibraryServiceStubS
     throw new UnsupportedOperationException(
         String.format(
             "Transport not supported: %s", getTransportChannelProvider().getTransportName()));
+  }
+
+  /** Returns the default service name. */
+  @Override
+  public String getServiceName() {
+    return "library-example";
   }
 
   /** Returns a builder for the default ExecutorProvider for this service. */
@@ -548,7 +553,6 @@ public class LibraryServiceStubSettings extends StubSettings<LibraryServiceStubS
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setHostServiceName(HOST_SERVICE_NAME);
 
       return initDefaults(builder);
     }
@@ -562,7 +566,6 @@ public class LibraryServiceStubSettings extends StubSettings<LibraryServiceStubS
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setHostServiceName(HOST_SERVICE_NAME);
 
       return initDefaults(builder);
     }

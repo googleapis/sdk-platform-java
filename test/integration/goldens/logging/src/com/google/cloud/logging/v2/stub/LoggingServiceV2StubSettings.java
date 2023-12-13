@@ -114,7 +114,6 @@ import org.threeten.bp.Duration;
  */
 @Generated("by gapic-generator-java")
 public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2StubSettings> {
-  private static final String HOST_SERVICE_NAME = "logging";
   /** The default scopes of the service. */
   private static final ImmutableList<String> DEFAULT_SERVICE_SCOPES =
       ImmutableList.<String>builder()
@@ -439,6 +438,12 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
             "Transport not supported: %s", getTransportChannelProvider().getTransportName()));
   }
 
+  /** Returns the default service name. */
+  @Override
+  public String getServiceName() {
+    return "logging";
+  }
+
   /** Returns a builder for the default ExecutorProvider for this service. */
   public static InstantiatingExecutorProvider.Builder defaultExecutorProviderBuilder() {
     return InstantiatingExecutorProvider.newBuilder();
@@ -640,7 +645,6 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
       builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setHostServiceName(HOST_SERVICE_NAME);
 
       return initDefaults(builder);
     }
