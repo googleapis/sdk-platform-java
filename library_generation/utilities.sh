@@ -236,6 +236,9 @@ copy_directory_if_exists() {
   local base_folder=$1
   local folder_prefix=$2
   local destination_folder=$3
+  if [ ! -d "${base_folder}" ]; then
+    return
+  fi
   pushd "${base_folder}"
   if [[ $(find . -maxdepth 1 -type d -name "${folder_prefix}*" | wc -l ) -gt 0  ]]; then
     cp -r ${base_folder}/${folder_prefix}* "${destination_folder}"
