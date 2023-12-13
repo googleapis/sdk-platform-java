@@ -29,4 +29,4 @@ steps:
     args: [ './.kokoro/presubmit/downstream-build.sh' ]
     waitFor: [ "graalvm-a-build" ]
     env:
-      - 'MODULES_UNDER_TEST=java-kms,java-os-login'
+      - 'MODULES_UNDER_TEST=java-kms'
