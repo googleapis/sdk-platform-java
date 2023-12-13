@@ -51,15 +51,6 @@ jobs:
 
         # launch docker
         sudo systemctl start docker
-    - name: install docker (macos)
-      if: matrix.os == 'macos-12'
-      shell: bash
-      run: |
-        brew update --preinstall
-        brew install docker docker-compose qemu 
-        brew upgrade qemu
-        colima start
-        docker run --user $(id -u):$(id -g) --rm hello-world
     - name: Run integration tests
       if: matrix.os == 'ubuntu-22.04' || matrix.post_processing == 'false'
       shell: bash
