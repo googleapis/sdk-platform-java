@@ -24,7 +24,7 @@ source "${scripts_root}"/utilities.sh
 
 for owlbot_file in ".repo-metadata.json" "owlbot.py" ".OwlBot.yaml"
 do
-  if [[ $(find "${postprocessing_target}" -name '.repo-metadata.json' | wc -l) -eq 0 ]]; then
+  if [[ $(find "${postprocessing_target}" -name "${owlbot_file}" | wc -l) -eq 0 ]]; then
     echo "necessary file for postprocessing '${owlbot_file}' was not found in postprocessing_target"
     echo "please provide a postprocessing_target folder that is java owlbot compatible"
     exit 1
