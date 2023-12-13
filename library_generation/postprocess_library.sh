@@ -67,7 +67,7 @@ copy_directory_if_exists "${preprocessed_sources_path}" "gapic" \
 copy_directory_if_exists "${preprocessed_sources_path}" "samples" \
   "${pre_processed_libs_folder}/${proto_path}/generated-java/samples"
 pushd "${pre_processed_libs_folder}"
-# create an empty repository so owl-bot-copy can process this as a repo
+# create an empty commit so owl-bot-copy can process this as a repo
 # (it cannot process non-git-repositories)
 git init
 git commit --allow-empty -m 'empty commit'
