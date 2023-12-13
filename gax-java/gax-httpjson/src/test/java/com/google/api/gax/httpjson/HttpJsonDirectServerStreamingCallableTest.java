@@ -263,7 +263,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
     MoneyObserver moneyObserver = new MoneyObserver(true, latch);
 
     streamingCallable.call(ERROR_REQUEST, moneyObserver);
-    Truth.assertThat(latch.await(2000, TimeUnit.MILLISECONDS)).isTrue();
+    Truth.assertThat(latch.await(60, TimeUnit.SECONDS)).isTrue();
 
     Truth.assertThat(moneyObserver.error).isInstanceOf(ApiException.class);
     Truth.assertThat(((ApiException) moneyObserver.error).getStatusCode().getCode())

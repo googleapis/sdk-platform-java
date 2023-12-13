@@ -87,7 +87,7 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>ListKeyRings</td>
- *      <td><p>Lists [KeyRings][google.cloud.kms.v1.KeyRing].</p></td>
+ *      <td><p> Lists [KeyRings][google.cloud.kms.v1.KeyRing].</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -107,7 +107,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ListCryptoKeys</td>
- *      <td><p>Lists [CryptoKeys][google.cloud.kms.v1.CryptoKey].</p></td>
+ *      <td><p> Lists [CryptoKeys][google.cloud.kms.v1.CryptoKey].</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -127,7 +127,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ListCryptoKeyVersions</td>
- *      <td><p>Lists [CryptoKeyVersions][google.cloud.kms.v1.CryptoKeyVersion].</p></td>
+ *      <td><p> Lists [CryptoKeyVersions][google.cloud.kms.v1.CryptoKeyVersion].</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -147,7 +147,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ListImportJobs</td>
- *      <td><p>Lists [ImportJobs][google.cloud.kms.v1.ImportJob].</p></td>
+ *      <td><p> Lists [ImportJobs][google.cloud.kms.v1.ImportJob].</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -167,7 +167,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetKeyRing</td>
- *      <td><p>Returns metadata for a given [KeyRing][google.cloud.kms.v1.KeyRing].</p></td>
+ *      <td><p> Returns metadata for a given [KeyRing][google.cloud.kms.v1.KeyRing].</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -186,9 +186,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetCryptoKey</td>
- *      <td><p>Returns metadata for a given [CryptoKey][google.cloud.kms.v1.CryptoKey], as
- *  well as its [primary][google.cloud.kms.v1.CryptoKey.primary]
- *  [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion].</p></td>
+ *      <td><p> Returns metadata for a given [CryptoKey][google.cloud.kms.v1.CryptoKey], as well as its [primary][google.cloud.kms.v1.CryptoKey.primary] [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion].</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -207,8 +205,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetCryptoKeyVersion</td>
- *      <td><p>Returns metadata for a given
- *  [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion].</p></td>
+ *      <td><p> Returns metadata for a given [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion].</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -227,12 +224,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetPublicKey</td>
- *      <td><p>Returns the public key for the given
- *  [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion]. The
- *  [CryptoKey.purpose][google.cloud.kms.v1.CryptoKey.purpose] must be
- *  [ASYMMETRIC_SIGN][google.cloud.kms.v1.CryptoKey.CryptoKeyPurpose.ASYMMETRIC_SIGN]
- *  or
- *  [ASYMMETRIC_DECRYPT][google.cloud.kms.v1.CryptoKey.CryptoKeyPurpose.ASYMMETRIC_DECRYPT].</p></td>
+ *      <td><p> Returns the public key for the given [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion]. The [CryptoKey.purpose][google.cloud.kms.v1.CryptoKey.purpose] must be [ASYMMETRIC_SIGN][google.cloud.kms.v1.CryptoKey.CryptoKeyPurpose.ASYMMETRIC_SIGN] or [ASYMMETRIC_DECRYPT][google.cloud.kms.v1.CryptoKey.CryptoKeyPurpose.ASYMMETRIC_DECRYPT].</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -251,7 +243,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetImportJob</td>
- *      <td><p>Returns metadata for a given [ImportJob][google.cloud.kms.v1.ImportJob].</p></td>
+ *      <td><p> Returns metadata for a given [ImportJob][google.cloud.kms.v1.ImportJob].</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -270,8 +262,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>CreateKeyRing</td>
- *      <td><p>Create a new [KeyRing][google.cloud.kms.v1.KeyRing] in a given Project and
- *  Location.</p></td>
+ *      <td><p> Create a new [KeyRing][google.cloud.kms.v1.KeyRing] in a given Project and Location.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -290,12 +281,8 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>CreateCryptoKey</td>
- *      <td><p>Create a new [CryptoKey][google.cloud.kms.v1.CryptoKey] within a
- *  [KeyRing][google.cloud.kms.v1.KeyRing].
- *
- *  [CryptoKey.purpose][google.cloud.kms.v1.CryptoKey.purpose] and
- *  [CryptoKey.version_template.algorithm][google.cloud.kms.v1.CryptoKeyVersionTemplate.algorithm]
- *  are required.</p></td>
+ *      <td><p> Create a new [CryptoKey][google.cloud.kms.v1.CryptoKey] within a [KeyRing][google.cloud.kms.v1.KeyRing].
+ * <p>  [CryptoKey.purpose][google.cloud.kms.v1.CryptoKey.purpose] and [CryptoKey.version_template.algorithm][google.cloud.kms.v1.CryptoKeyVersionTemplate.algorithm] are required.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -314,12 +301,8 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>CreateCryptoKeyVersion</td>
- *      <td><p>Create a new [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] in a
- *  [CryptoKey][google.cloud.kms.v1.CryptoKey].
- *
- *  The server will assign the next sequential id. If unset,
- *  [state][google.cloud.kms.v1.CryptoKeyVersion.state] will be set to
- *  [ENABLED][google.cloud.kms.v1.CryptoKeyVersion.CryptoKeyVersionState.ENABLED].</p></td>
+ *      <td><p> Create a new [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] in a [CryptoKey][google.cloud.kms.v1.CryptoKey].
+ * <p>  The server will assign the next sequential id. If unset, [state][google.cloud.kms.v1.CryptoKeyVersion.state] will be set to [ENABLED][google.cloud.kms.v1.CryptoKeyVersion.CryptoKeyVersionState.ENABLED].</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -338,12 +321,8 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ImportCryptoKeyVersion</td>
- *      <td><p>Imports a new [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] into
- *  an existing [CryptoKey][google.cloud.kms.v1.CryptoKey] using the wrapped
- *  key material provided in the request.
- *
- *  The version ID will be assigned the next sequential id within the
- *  [CryptoKey][google.cloud.kms.v1.CryptoKey].</p></td>
+ *      <td><p> Imports a new [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] into an existing [CryptoKey][google.cloud.kms.v1.CryptoKey] using the wrapped key material provided in the request.
+ * <p>  The version ID will be assigned the next sequential id within the [CryptoKey][google.cloud.kms.v1.CryptoKey].</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -357,11 +336,8 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>CreateImportJob</td>
- *      <td><p>Create a new [ImportJob][google.cloud.kms.v1.ImportJob] within a
- *  [KeyRing][google.cloud.kms.v1.KeyRing].
- *
- *  [ImportJob.import_method][google.cloud.kms.v1.ImportJob.import_method] is
- *  required.</p></td>
+ *      <td><p> Create a new [ImportJob][google.cloud.kms.v1.ImportJob] within a [KeyRing][google.cloud.kms.v1.KeyRing].
+ * <p>  [ImportJob.import_method][google.cloud.kms.v1.ImportJob.import_method] is required.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -380,7 +356,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>UpdateCryptoKey</td>
- *      <td><p>Update a [CryptoKey][google.cloud.kms.v1.CryptoKey].</p></td>
+ *      <td><p> Update a [CryptoKey][google.cloud.kms.v1.CryptoKey].</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -398,18 +374,8 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>UpdateCryptoKeyVersion</td>
- *      <td><p>Update a [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion]'s
- *  metadata.
- *
- *  [state][google.cloud.kms.v1.CryptoKeyVersion.state] may be changed between
- *  [ENABLED][google.cloud.kms.v1.CryptoKeyVersion.CryptoKeyVersionState.ENABLED]
- *  and
- *  [DISABLED][google.cloud.kms.v1.CryptoKeyVersion.CryptoKeyVersionState.DISABLED]
- *  using this method. See
- *  [DestroyCryptoKeyVersion][google.cloud.kms.v1.KeyManagementService.DestroyCryptoKeyVersion]
- *  and
- *  [RestoreCryptoKeyVersion][google.cloud.kms.v1.KeyManagementService.RestoreCryptoKeyVersion]
- *  to move between other states.</p></td>
+ *      <td><p> Update a [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion]'s metadata.
+ * <p>  [state][google.cloud.kms.v1.CryptoKeyVersion.state] may be changed between [ENABLED][google.cloud.kms.v1.CryptoKeyVersion.CryptoKeyVersionState.ENABLED] and [DISABLED][google.cloud.kms.v1.CryptoKeyVersion.CryptoKeyVersionState.DISABLED] using this method. See [DestroyCryptoKeyVersion][google.cloud.kms.v1.KeyManagementService.DestroyCryptoKeyVersion] and [RestoreCryptoKeyVersion][google.cloud.kms.v1.KeyManagementService.RestoreCryptoKeyVersion] to move between other states.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -427,10 +393,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>Encrypt</td>
- *      <td><p>Encrypts data, so that it can only be recovered by a call to
- *  [Decrypt][google.cloud.kms.v1.KeyManagementService.Decrypt]. The
- *  [CryptoKey.purpose][google.cloud.kms.v1.CryptoKey.purpose] must be
- *  [ENCRYPT_DECRYPT][google.cloud.kms.v1.CryptoKey.CryptoKeyPurpose.ENCRYPT_DECRYPT].</p></td>
+ *      <td><p> Encrypts data, so that it can only be recovered by a call to [Decrypt][google.cloud.kms.v1.KeyManagementService.Decrypt]. The [CryptoKey.purpose][google.cloud.kms.v1.CryptoKey.purpose] must be [ENCRYPT_DECRYPT][google.cloud.kms.v1.CryptoKey.CryptoKeyPurpose.ENCRYPT_DECRYPT].</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -449,10 +412,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>Decrypt</td>
- *      <td><p>Decrypts data that was protected by
- *  [Encrypt][google.cloud.kms.v1.KeyManagementService.Encrypt]. The
- *  [CryptoKey.purpose][google.cloud.kms.v1.CryptoKey.purpose] must be
- *  [ENCRYPT_DECRYPT][google.cloud.kms.v1.CryptoKey.CryptoKeyPurpose.ENCRYPT_DECRYPT].</p></td>
+ *      <td><p> Decrypts data that was protected by [Encrypt][google.cloud.kms.v1.KeyManagementService.Encrypt]. The [CryptoKey.purpose][google.cloud.kms.v1.CryptoKey.purpose] must be [ENCRYPT_DECRYPT][google.cloud.kms.v1.CryptoKey.CryptoKeyPurpose.ENCRYPT_DECRYPT].</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -471,11 +431,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>AsymmetricSign</td>
- *      <td><p>Signs data using a [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion]
- *  with [CryptoKey.purpose][google.cloud.kms.v1.CryptoKey.purpose]
- *  ASYMMETRIC_SIGN, producing a signature that can be verified with the public
- *  key retrieved from
- *  [GetPublicKey][google.cloud.kms.v1.KeyManagementService.GetPublicKey].</p></td>
+ *      <td><p> Signs data using a [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] with [CryptoKey.purpose][google.cloud.kms.v1.CryptoKey.purpose] ASYMMETRIC_SIGN, producing a signature that can be verified with the public key retrieved from [GetPublicKey][google.cloud.kms.v1.KeyManagementService.GetPublicKey].</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -494,11 +450,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>AsymmetricDecrypt</td>
- *      <td><p>Decrypts data that was encrypted with a public key retrieved from
- *  [GetPublicKey][google.cloud.kms.v1.KeyManagementService.GetPublicKey]
- *  corresponding to a [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion]
- *  with [CryptoKey.purpose][google.cloud.kms.v1.CryptoKey.purpose]
- *  ASYMMETRIC_DECRYPT.</p></td>
+ *      <td><p> Decrypts data that was encrypted with a public key retrieved from [GetPublicKey][google.cloud.kms.v1.KeyManagementService.GetPublicKey] corresponding to a [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] with [CryptoKey.purpose][google.cloud.kms.v1.CryptoKey.purpose] ASYMMETRIC_DECRYPT.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -517,11 +469,8 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>UpdateCryptoKeyPrimaryVersion</td>
- *      <td><p>Update the version of a [CryptoKey][google.cloud.kms.v1.CryptoKey] that
- *  will be used in
- *  [Encrypt][google.cloud.kms.v1.KeyManagementService.Encrypt].
- *
- *  Returns an error if called on an asymmetric key.</p></td>
+ *      <td><p> Update the version of a [CryptoKey][google.cloud.kms.v1.CryptoKey] that will be used in [Encrypt][google.cloud.kms.v1.KeyManagementService.Encrypt].
+ * <p>  Returns an error if called on an asymmetric key.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -540,24 +489,9 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>DestroyCryptoKeyVersion</td>
- *      <td><p>Schedule a [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] for
- *  destruction.
- *
- *  Upon calling this method,
- *  [CryptoKeyVersion.state][google.cloud.kms.v1.CryptoKeyVersion.state] will
- *  be set to
- *  [DESTROY_SCHEDULED][google.cloud.kms.v1.CryptoKeyVersion.CryptoKeyVersionState.DESTROY_SCHEDULED]
- *  and [destroy_time][google.cloud.kms.v1.CryptoKeyVersion.destroy_time] will
- *  be set to a time 24 hours in the future, at which point the
- *  [state][google.cloud.kms.v1.CryptoKeyVersion.state] will be changed to
- *  [DESTROYED][google.cloud.kms.v1.CryptoKeyVersion.CryptoKeyVersionState.DESTROYED],
- *  and the key material will be irrevocably destroyed.
- *
- *  Before the
- *  [destroy_time][google.cloud.kms.v1.CryptoKeyVersion.destroy_time] is
- *  reached,
- *  [RestoreCryptoKeyVersion][google.cloud.kms.v1.KeyManagementService.RestoreCryptoKeyVersion]
- *  may be called to reverse the process.</p></td>
+ *      <td><p> Schedule a [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] for destruction.
+ * <p>  Upon calling this method, [CryptoKeyVersion.state][google.cloud.kms.v1.CryptoKeyVersion.state] will be set to [DESTROY_SCHEDULED][google.cloud.kms.v1.CryptoKeyVersion.CryptoKeyVersionState.DESTROY_SCHEDULED] and [destroy_time][google.cloud.kms.v1.CryptoKeyVersion.destroy_time] will be set to a time 24 hours in the future, at which point the [state][google.cloud.kms.v1.CryptoKeyVersion.state] will be changed to [DESTROYED][google.cloud.kms.v1.CryptoKeyVersion.CryptoKeyVersionState.DESTROYED], and the key material will be irrevocably destroyed.
+ * <p>  Before the [destroy_time][google.cloud.kms.v1.CryptoKeyVersion.destroy_time] is reached, [RestoreCryptoKeyVersion][google.cloud.kms.v1.KeyManagementService.RestoreCryptoKeyVersion] may be called to reverse the process.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -576,15 +510,8 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>RestoreCryptoKeyVersion</td>
- *      <td><p>Restore a [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] in the
- *  [DESTROY_SCHEDULED][google.cloud.kms.v1.CryptoKeyVersion.CryptoKeyVersionState.DESTROY_SCHEDULED]
- *  state.
- *
- *  Upon restoration of the CryptoKeyVersion,
- *  [state][google.cloud.kms.v1.CryptoKeyVersion.state] will be set to
- *  [DISABLED][google.cloud.kms.v1.CryptoKeyVersion.CryptoKeyVersionState.DISABLED],
- *  and [destroy_time][google.cloud.kms.v1.CryptoKeyVersion.destroy_time] will
- *  be cleared.</p></td>
+ *      <td><p> Restore a [CryptoKeyVersion][google.cloud.kms.v1.CryptoKeyVersion] in the [DESTROY_SCHEDULED][google.cloud.kms.v1.CryptoKeyVersion.CryptoKeyVersionState.DESTROY_SCHEDULED] state.
+ * <p>  Upon restoration of the CryptoKeyVersion, [state][google.cloud.kms.v1.CryptoKeyVersion.state] will be set to [DISABLED][google.cloud.kms.v1.CryptoKeyVersion.CryptoKeyVersionState.DISABLED], and [destroy_time][google.cloud.kms.v1.CryptoKeyVersion.destroy_time] will be cleared.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -603,9 +530,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetIamPolicy</td>
- *      <td><p>Gets the access control policy for a resource. ADDED ONLY FOR MIXIN TESTS.
- *  Returns an empty policy if the resource exists and does not have a policy
- *  set.</p></td>
+ *      <td><p> Gets the access control policy for a resource. ADDED ONLY FOR MIXIN TESTS. Returns an empty policy if the resource exists and does not have a policy set.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -619,7 +544,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ListLocations</td>
- *      <td><p>Lists information about the supported locations for this service.</p></td>
+ *      <td><p> Lists information about the supported locations for this service.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -634,7 +559,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetLocation</td>
- *      <td><p>Gets information about a location.</p></td>
+ *      <td><p> Gets information about a location.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -648,7 +573,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>TestIamPermissions</td>
- *      <td><p>This is a different comment for TestIamPermissions in the yaml file that should clobber the documentation in iam_policy.proto.</p></td>
+ *      <td><p> This is a different comment for TestIamPermissions in the yaml file that should clobber the documentation in iam_policy.proto.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>

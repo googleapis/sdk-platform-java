@@ -17,9 +17,10 @@ update to a compatible client version in `./WORKSPACE`.
 
 ```shell
 # Install the showcase server version defined in gapic-showcase/pom.xml
-showcase/ $ go install github.com/googleapis/gapic-showcase/cmd/gapic-showcase@v"$(cd gapic-showcase;mvn help:evaluate -Dexpression=gapic-showcase.version -q -DforceStdout)"
-showcase/ $ PATH=$PATH:`go env GOPATH`/bin
-showcase/ $ gapic-showcase --help
+cd showcase
+go install github.com/googleapis/gapic-showcase/cmd/gapic-showcase@v"$(cd gapic-showcase;mvn help:evaluate -Dexpression=gapic-showcase.version -q -DforceStdout)"
+PATH=$PATH:`go env GOPATH`/bin
+gapic-showcase --help
 > Root command of gapic-showcase
 > 
 > Usage:
@@ -49,7 +50,7 @@ Run the showcase server to allow requests to be sent to it. This opens port `:74
 receive requests.
 
 ```shell
-$ gapic-showcase run
+gapic-showcase run
 > 2022/11/21 16:22:15 Showcase listening on port: :7469
 > 2022/11/21 16:22:15 Starting endpoint 0: gRPC endpoint
 > 2022/11/21 16:22:15 Starting endpoint 1: HTTP/REST endpoint
@@ -65,8 +66,8 @@ $ gapic-showcase run
 Open a new terminal window in the root project directory.
 
 ```shell
-$ cd showcase
-$ mvn verify -P enable-integration-tests -P enable-golden-tests
+cd showcase
+mvn verify -P enable-integration-tests -P enable-golden-tests
 ```
 
 Note:
@@ -78,6 +79,8 @@ Note:
 Open a new terminal window in the root project directory.
 
 ```shell
-$ cd showcase
-$ mvn compile -P update
+# In repository's root directory
+mvn clean install -DskipTests
+cd showcase
+mvn compile -P update
 ```

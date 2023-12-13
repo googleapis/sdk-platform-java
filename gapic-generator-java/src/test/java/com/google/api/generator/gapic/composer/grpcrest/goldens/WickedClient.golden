@@ -39,7 +39,7 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>CraftEvilPlan</td>
- *      <td><p></p></td>
+ *      <td><p> </td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -53,7 +53,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>BrainstormEvilPlans</td>
- *      <td><p></p></td>
+ *      <td><p> </td>
  *      <td>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -63,7 +63,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>PersuadeEvilPlan</td>
- *      <td><p></p></td>
+ *      <td><p> </td>
  *      <td>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
