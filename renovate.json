@@ -64,7 +64,7 @@
         "^.cloudbuild/**"
       ],
       "matchStrings": [
-        "_JAVA_SHARED_CONFIG: \"(?<currentValue>.+?)\""
+        "_JAVA_SHARED_CONFIG_VERSION: \"(?<currentValue>.+?)\""
       ],
       "depNameTemplate": "com.google.cloud:google-cloud-shared-config",
       "datasourceTemplate": "maven"
