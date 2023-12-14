@@ -3,14 +3,26 @@
 # service version. It is achieved by calling `generate_library.sh` without
 # postprocessing for all service versions and then calling
 # postprocess_library.sh at the end, once all libraries are ready
+#
+# Arguments
+# --proto_path_list: comma separated list of proto paths to be combined
+# --versions_file: list of versions to be applied to the pom.xml and readmes
+#
+# Note: googleapis repo is found in https://github.com/googleapis/googleapis
+#
+# Prerequisites
+# - Needs an `output` folder at the location of the calling shell
+# - the `output` folder needs to have the following dirs/files. If any of them
+#   is not found, then googleapis will be downloaded and "unpacked"
+#   - A "google" folder found in the googleapis repository
+#   - A "grafeas" folder found in the googleapis repository
+#   - A "WORKSPACE" file belonging to googleapis
 
 set -xeo pipefail
 
-# defaults
-enable_postprocessing="true"
 
 script_dir=$(dirname "$(readlink -f "$0")")
-library_generation_dir="${script_dir}"/..
+library_generation_dir="${script_dir}"
 source "${script_dir}/utilities.sh"
 output_folder="$(pwd)/output"
 
@@ -21,8 +33,16 @@ case $key in
     proto_path_list="$2"
     shift
     ;;
+  -r|--repository_path)
+    repository_path="$2"
+    shift
+    ;;
   -v|--versions_file)
     versions_file="$2"
+    shift
+    ;;
+  -p|--final_postprocessing)
+    final_postprocessing="$2"
     shift
     ;;
   *)
@@ -35,36 +55,19 @@ done
 
 mkdir -p "${output_folder}"
 pushd "${output_folder}"
-if [ ! -d "googleapis" ]; then
-  echo "necessary directory 'googleapis' not found in ${output_folder}"
-  echo "this folder is needed to obtain configuration from WORKSPACE"
-  exit 1
+if [[ ! -f "WORKSPACE" ]] || [[ ! -d "google" ]] || [[ ! -d "grafeas" ]]; then
+  echo "necessary files/folders from googleapis not found in ${output_folder}"
+  echo "will now manually download googleapis"
+  download_googleapis_files_and_folders "${output_folder}"
 fi
-for folder in google grafeas; do
-  if [ ! -d "${folder}" ]; then
-    echo "necessary directory 'google' not found in ${output_folder}"
-    echo "this folder belongs to the googleapis repository. It contains necessary proto files"
-    echo "for library generation"
-    exit 1
-  fi
-done
-pushd googleapis
 gapic_generator_version=$(get_version_from_WORKSPACE "_gapic_generator_java_version" WORKSPACE "=")
-echo "The version of gapic-generator-java is ${gapic_generator_version}."
 protobuf_version=$(get_version_from_WORKSPACE "protobuf-" WORKSPACE "-")
-echo "The version of protobuf is ${protobuf_version}"
-popd # googleapis
+owlbot_cli_source_folder=$(mktemp -d)
 popd # output_folder
-
-grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
+IFS=, # Set IFS to comma
+for proto_path in $variable; do
   proto_path=$(echo "$line" | cut -d " " -f 1)
-  repository_path=$(echo "$line" | cut -d " " -f 2)
-  skip_postprocessing=$(echo "$line" | cut -d " " -f 3)
   is_monorepo="false"
-  if [[ "${repository_path}" == google-cloud-java/* ]]; then
-    echo 'this is a monorepo library'
-    is_monorepo="true"
-  fi
   # parse destination_path
   pushd "${output_folder}"
   destination_path=$(compute_destination_path "${proto_path}" "${output_folder}")
@@ -83,52 +86,53 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   service_config=$(get_service_config_from_BUILD "${proto_build_file_path}")
   service_yaml=$(get_service_yaml_from_BUILD "${proto_build_file_path}")
   include_samples=$(get_include_samples_from_BUILD "${proto_build_file_path}")
-  popd # output_folder
-  echo "GAPIC options are
-    transport=${transport},
-    rest_numeric_enums=${rest_numeric_enums},
-    gapic_yaml=${gapic_yaml},
-    service_config=${service_config},
-    service_yaml=${service_yaml},
-    include_samples=${include_samples}."
-  pushd "${output_folder}"
-  if [[ "${is_monorepo}" == "true" ]]; then
-    library=$(echo "${repository_path}" | cut -d'/' -f2)
-    sparse_clone "https://github.com/googleapis/google-cloud-java.git" "${library} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"
-  else
-    git clone "https://github.com/googleapis/${repository_path}.git"
-  fi
+  destination_path=$(mktemp -d)
 
-  target_folder="${output_folder}/${repository_path}"
   popd # output_folder
   # generate GAPIC client library
   echo "Generating library from ${proto_path}, to ${destination_path}..."
-  generation_start=$(date "+%s")
-  if [ "${enable_postprocessing}" == "true" ]; then
-    "${library_generation_dir}"/generate_library.sh \
-      -p "${proto_path}" \
-      -d "${repository_path}" \
-      --gapic_generator_version "${gapic_generator_version}" \
-      --protobuf_version "${protobuf_version}" \
-      --proto_only "${proto_only}" \
-      --gapic_additional_protos "${gapic_additional_protos}" \
-      --transport "${transport}" \
-      --rest_numeric_enums "${rest_numeric_enums}" \
-      --gapic_yaml "${gapic_yaml}" \
-      --service_config "${service_config}" \
-      --service_yaml "${service_yaml}" \
-      --include_samples "${include_samples}" \
-      --enable_postprocessing "${enable_postprocessing}" \
-      --versions_file "${output_folder}/google-cloud-java/versions.txt"
-  fi
-  generation_end=$(date "+%s")
-  # some generations are less than 1 second (0 produces exit code 1 in `expr`)
-  generation_duration_seconds=$(expr "${generation_end}" - "${generation_start}" || true)
-  echo "Generation time for ${repository_path} was ${generation_duration_seconds} seconds."
+  "${library_generation_dir}"/generate_library.sh \
+    -p "${proto_path}" \
+    -d "${destination_path}" \
+    --gapic_generator_version "${gapic_generator_version}" \
+    --protobuf_version "${protobuf_version}" \
+    --proto_only "${proto_only}" \
+    --gapic_additional_protos "${gapic_additional_protos}" \
+    --transport "${transport}" \
+    --rest_numeric_enums "${rest_numeric_enums}" \
+    --gapic_yaml "${gapic_yaml}" \
+    --service_config "${service_config}" \
+    --service_yaml "${service_yaml}" \
+    --include_samples "${include_samples}" \
+    --enable_postprocessing "false" \
+    --versions_file "${output_folder}/google-cloud-java/versions.txt"
   pushd "${output_folder}"
   echo "${proto_path} ${generation_duration_seconds}" >> generation_times
 
   echo "Generate library finished."
 
+  build_owlbot_cli_source_folder "${owlbot_cli_source_folder}" "${destination_path}"
+
+
   popd # output_folder
 done
+
+pushd "${output_folder}"
+if [[ "${repository_path}" == google-cloud-java/* ]]; then
+  echo 'this is a monorepo library'
+  library=$(echo "${repository_path}" | cut -d'/' -f2)
+  sparse_clone "https://github.com/googleapis/google-cloud-java.git" "${library} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"
+  versions_file="${versions_file:-"${output_folder}/google-cloud-java/versions.txt"}"
+else
+  echo 'this is a HW library'
+  git clone "https://github.com/googleapis/${repository_path}.git"
+  versions_file="${versions_file:-"${output_folder}/${repository_path}/versions.txt"}"
+fi
+
+"${library_generation_dir}"/postprocess_library.sh \
+  "${output_folder}/${repository_path}" \
+  "" \
+  "${versions_file}" \
+  "${owlbot_cli_source_folder}"
+
+popd # output_folder

@@ -268,3 +268,159 @@ get_proto_path_from_preprocessed_sources() {
   popd > /dev/null # sources
   echo "${result}"
 }
+
+get_proto_only_from_BUILD() {
+  local build_file=$1
+  local proto_only
+  proto_only=$(__get_config_from_BUILD \
+    "${build_file}" \
+    "java_gapic_library(" \
+    "java_gapic_library" \
+    "true" \
+    "false"
+  )
+  echo "${proto_only}"
+}
+
+# Apart from proto files in proto_path, additional protos are needed in order
+# to generate GAPIC client libraries.
+# In most cases, these protos should be within google/ directory, which is
+# pulled from googleapis as a prerequisite.
+# Get additional protos in BUILD.bazel.
+get_gapic_additional_protos_from_BUILD() {
+  local build_file=$1
+  local gapic_additional_protos="google/cloud/common_resources.proto"
+  if [[ $(__get_iam_policy_from_BUILD "${build_file}") == "true" ]]; then
+    gapic_additional_protos="${gapic_additional_protos} google/iam/v1/iam_policy.proto"
+  fi
+  if [[ $(__get_locations_from_BUILD "${build_file}") == "true" ]]; then
+    gapic_additional_protos="${gapic_additional_protos} google/cloud/location/locations.proto"
+  fi
+  echo "${gapic_additional_protos}"
+}
+
+get_transport_from_BUILD() {
+  local build_file=$1
+  local transport
+  transport=$(__get_config_from_BUILD \
+    "${build_file}" \
+    "java_gapic_library(" \
+    "grpc+rest" \
+    "grpc" \
+    "grpc+rest"
+  )
+  # search again because the transport maybe `rest`.
+  transport=$(__get_config_from_BUILD \
+    "${build_file}" \
+    "java_gapic_library(" \
+    "transport = \"rest\"" \
+    "${transport}" \
+    "rest"
+  )
+  echo "${transport}"
+}
+
+get_rest_numeric_enums_from_BUILD() {
+  local build_file=$1
+  local rest_numeric_enums
+  rest_numeric_enums=$(__get_config_from_BUILD \
+    "${build_file}" \
+    "java_gapic_library(" \
+    "rest_numeric_enums = True" \
+    "false" \
+    "true"
+  )
+  echo "${rest_numeric_enums}"
+}
+
+get_gapic_yaml_from_BUILD() {
+  local build_file=$1
+  local gapic_yaml
+  gapic_yaml=$(__get_gapic_option_from_BUILD "${build_file}" "gapic_yaml = ")
+  echo "${gapic_yaml}"
+}
+
+get_service_config_from_BUILD() {
+  local build_file=$1
+  local service_config
+  service_config=$(__get_gapic_option_from_BUILD "${build_file}" "grpc_service_config = ")
+  echo "${service_config}"
+}
+
+get_service_yaml_from_BUILD() {
+  local build_file=$1
+  local service_yaml
+  service_yaml=$(__get_gapic_option_from_BUILD "${build_file}" "service_yaml")
+  echo "${service_yaml}"
+}
+
+get_include_samples_from_BUILD() {
+  local build_file=$1
+  local include_samples
+  include_samples=$(__get_config_from_BUILD \
+    "${build_file}" \
+    "java_gapic_assembly_gradle_pkg(" \
+    "include_samples = True" \
+    "false" \
+    "true"
+  )
+  echo "${include_samples}"
+}
+
+# Obtains a version from a bazel WORKSPACE file
+#
+# versions look like "_ggj_version="1.2.3"
+# It will return 1.2.3 for such example
+get_version_from_WORKSPACE() {
+  version_key_word=$1
+  workspace=$2
+  version=$(\
+    grep "${version_key_word}" "${workspace}" |\
+    head -n 1 |\
+    sed 's/\(.*\) = "\(.*\)"\(.*\)/\2/' |\
+    sed 's/[a-zA-Z-]*//'
+  )
+  echo "${version}"
+}
+
+download_googleapis_files_and_folders() {
+  local output_folder=$1
+  # checkout the master branch of googleapis/google (proto files) and WORKSPACE
+  echo "Checking out googlapis repository..."
+  # sparse_clone will remove folder contents first, so we have to checkout googleapis
+  # only once.
+  sparse_clone https://github.com/googleapis/googleapis.git "google grafeas WORKSPACE"
+  pushd googleapis
+  cp -r google "${output_folder}"
+  cp -r grafeas "${output_folder}"
+  cp -r WORKSPACE "${output_folder}"
+}
+
+build_owlbot_cli_source_folder() {
+  local pre_processed_libs_folder=$1
+  local preprocessed_sources_path=$2
+  proto_path=$(get_proto_path_from_preprocessed_sources "${preprocessed_sources_path}")
+  owlbot_staging_folder="${postprocessing_target}/owl-bot-staging"
+  mkdir -p "${owlbot_staging_folder}"
+  echo 'Running owl-bot-copy'
+
+  # By default (thanks to generation templates), .OwlBot.yaml `deep-copy` section
+  # references a wildcard pattern matching a folder
+  # ending with `-java` at the leaf of proto_path. We then use a generated-java
+  # folder that will be picked up by copy-code
+  mkdir -p "${pre_processed_libs_folder}/${proto_path}/generated-java"
+  copy_directory_if_exists "${preprocessed_sources_path}" "proto" \
+    "${pre_processed_libs_folder}/${proto_path}/generated-java/proto-google-cloud-library"
+  copy_directory_if_exists "${preprocessed_sources_path}" "grpc" \
+    "${pre_processed_libs_folder}/${proto_path}/generated-java/grpc-google-cloud-library"
+  copy_directory_if_exists "${preprocessed_sources_path}" "gapic" \
+    "${pre_processed_libs_folder}/${proto_path}/generated-java/gapic-google-cloud-library"
+  copy_directory_if_exists "${preprocessed_sources_path}" "samples" \
+    "${pre_processed_libs_folder}/${proto_path}/generated-java/samples"
+  pushd "${pre_processed_libs_folder}"
+  # create an empty commit so owl-bot-copy can process this as a repo
+  # (it cannot process non-git-repositories)
+  git init
+  git commit --allow-empty -m 'empty commit'
+  popd # pre_processed_libs_folder
+}

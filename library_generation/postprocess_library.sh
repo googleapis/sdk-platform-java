@@ -13,12 +13,16 @@
 # 2 - preprocessed_sources_path: used to transfer the raw grpc, proto and gapic
 # libraries into the postprocessing_target via copy-code
 # 3 - versions_file: path to file containing versions to be applied to the poms
+# 4 - owlbot_cli_source_folder: alternative folder with a structure exactly like
+# googleapis-gen. It will be used instead of preprocessed_sources_path if
+# provided
 set -xeo pipefail
 scripts_root=$(dirname "$(readlink -f "$0")")
 
 postprocessing_target=$1
 preprocessed_sources_path=$2
 versions_file=$3
+owlbot_cli_source_folder=$4
 
 source "${scripts_root}"/utilities.sh
 
@@ -31,7 +35,6 @@ do
   fi
 done
 
-proto_path=$(get_proto_path_from_preprocessed_sources "${preprocessed_sources_path}")
 
 # ensure pyenv scripts are available
 eval "$(pyenv init --path)"
@@ -48,30 +51,10 @@ if [ $(pyenv virtualenvs | grep "${python_version}" | grep "postprocessing" | wc
 fi
 pyenv activate "postprocessing"
 
-# call owl-bot-copy
-owlbot_staging_folder="${postprocessing_target}/owl-bot-staging"
-mkdir -p "${owlbot_staging_folder}"
-echo 'Running owl-bot-copy'
-pre_processed_libs_folder=$(mktemp -d)
-# By default (thanks to generation templates), .OwlBot.yaml `deep-copy` section
-# references a wildcard pattern matching a folder
-# ending with `-java` at the leaf of proto_path. We then use a generated-java
-# folder that will be picked up by copy-code
-mkdir -p "${pre_processed_libs_folder}/${proto_path}/generated-java"
-copy_directory_if_exists "${preprocessed_sources_path}" "proto" \
-  "${pre_processed_libs_folder}/${proto_path}/generated-java/proto-google-cloud-library"
-copy_directory_if_exists "${preprocessed_sources_path}" "grpc" \
-  "${pre_processed_libs_folder}/${proto_path}/generated-java/grpc-google-cloud-library"
-copy_directory_if_exists "${preprocessed_sources_path}" "gapic" \
-  "${pre_processed_libs_folder}/${proto_path}/generated-java/gapic-google-cloud-library"
-copy_directory_if_exists "${preprocessed_sources_path}" "samples" \
-  "${pre_processed_libs_folder}/${proto_path}/generated-java/samples"
-pushd "${pre_processed_libs_folder}"
-# create an empty commit so owl-bot-copy can process this as a repo
-# (it cannot process non-git-repositories)
-git init
-git commit --allow-empty -m 'empty commit'
-popd # pre_processed_libs_folder
+if [[ -z "${owlbot_cli_source_folder}" ]]; then
+  owlbot_cli_source_folder=$(mktemp -d)
+  build_owlbot_cli_source_folder "${owlbot_cli_source_folder}" "${preprocessed_sources_path}"
+fi
 
 owlbot_cli_image_sha=$(cat "${scripts_root}/configuration/owlbot-cli-sha" | grep "sha256")
 
@@ -86,7 +69,7 @@ fi
 docker run --rm \
   --user $(id -u):$(id -g) \
   -v "${postprocessing_target}:/repo" \
-  -v "${pre_processed_libs_folder}:/pre-processed-libraries" \
+  -v "${owlbot_cli_source_folder}:/pre-processed-libraries" \
   -w /repo \
   --env HOME=/tmp \
   gcr.io/cloud-devrel-public-resources/owlbot-cli@"${owlbot_cli_image_sha}" \

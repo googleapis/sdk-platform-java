@@ -54,14 +54,6 @@ done
 
 mkdir -p "${output_folder}"
 pushd "${output_folder}"
-# checkout the master branch of googleapis/google (proto files) and WORKSPACE
-echo "Checking out googlapis repository..."
-# sparse_clone will remove folder contents first, so we have to checkout googleapis
-# only once.
-sparse_clone https://github.com/googleapis/googleapis.git "google grafeas WORKSPACE"
-pushd googleapis
-cp -r google "${output_folder}"
-cp -r grafeas "${output_folder}"
 # parse version of gapic-generator-java, protobuf and grpc from WORKSPACE
 gapic_generator_version=$(get_version_from_WORKSPACE "_gapic_generator_java_version" WORKSPACE "=")
 echo "The version of gapic-generator-java is ${gapic_generator_version}."
@@ -82,85 +74,23 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   proto_path=$(echo "$line" | cut -d " " -f 1)
   repository_path=$(echo "$line" | cut -d " " -f 2)
   skip_postprocessing=$(echo "$line" | cut -d " " -f 3)
-  is_monorepo="false"
-  if [[ "${repository_path}" == google-cloud-java/* ]]; then
-    echo 'this is a monorepo library'
-    is_monorepo="true"
-  fi
-  # parse destination_path
-  pushd "${output_folder}"
-  echo "Checking out googleapis-gen repository..."
-  sparse_clone "${googleapis_gen_url}" "${proto_path}"
   destination_path=$(compute_destination_path "${proto_path}" "${output_folder}")
-  # parse GAPIC options from proto_path/BUILD.bazel
-  proto_build_file_path="${proto_path}/BUILD.bazel"
-  proto_only=$(get_proto_only_from_BUILD "${proto_build_file_path}")
-  gapic_additional_protos=$(get_gapic_additional_protos_from_BUILD "${proto_build_file_path}")
-  transport=$(get_transport_from_BUILD "${proto_build_file_path}")
-  rest_numeric_enums=$(get_rest_numeric_enums_from_BUILD "${proto_build_file_path}")
-  gapic_yaml=$(get_gapic_yaml_from_BUILD "${proto_build_file_path}")
-  service_config=$(get_service_config_from_BUILD "${proto_build_file_path}")
-  service_yaml=$(get_service_yaml_from_BUILD "${proto_build_file_path}")
-  include_samples=$(get_include_samples_from_BUILD "${proto_build_file_path}")
-  popd # output_folder
-  echo "GAPIC options are
-    transport=${transport},
-    rest_numeric_enums=${rest_numeric_enums},
-    gapic_yaml=${gapic_yaml},
-    service_config=${service_config},
-    service_yaml=${service_yaml},
-    include_samples=${include_samples}."
-  pushd "${output_folder}"
-  if [[ "${is_monorepo}" == "true" ]]; then
-    library=$(echo "${repository_path}" | cut -d'/' -f2)
-    sparse_clone "https://github.com/googleapis/google-cloud-java.git" "${library} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"
-  else
-    git clone "https://github.com/googleapis/${repository_path}.git"
+
+  if [[ "${enable_postprocessing}" == "true" ]] && [[ "${skip_postprocessing}" == "true" ]]; then
+    echo 'this library is not intended for postprocessing test'
+    popd # output folder
+    continue
   fi
 
-  target_folder="${output_folder}/${repository_path}"
-  popd # output_folder
-  # generate GAPIC client library
   echo "Generating library from ${proto_path}, to ${destination_path}..."
   generation_start=$(date "+%s")
-  if [ "${enable_postprocessing}" == "true" ]; then
-    if [[ "${repository_path}" == "null" ]]; then
-      # we need a repository to compare the generated results with. Skip this
-      # library
-      continue
-    fi
-    "${library_generation_dir}"/generate_library.sh \
-      -p "${proto_path}" \
-      -d "${repository_path}" \
-      --gapic_generator_version "${gapic_generator_version}" \
-      --protobuf_version "${protobuf_version}" \
-      --proto_only "${proto_only}" \
-      --gapic_additional_protos "${gapic_additional_protos}" \
-      --transport "${transport}" \
-      --rest_numeric_enums "${rest_numeric_enums}" \
-      --gapic_yaml "${gapic_yaml}" \
-      --service_config "${service_config}" \
-      --service_yaml "${service_yaml}" \
-      --include_samples "${include_samples}" \
-      --enable_postprocessing "true" \
-      --versions_file "${output_folder}/google-cloud-java/versions.txt"
-  else
-    "${library_generation_dir}"/generate_library.sh \
-    -p "${proto_path}" \
-    -d "${destination_path}" \
-    --gapic_generator_version "${gapic_generator_version}" \
-    --protobuf_version "${protobuf_version}" \
-    --proto_only "${proto_only}" \
-    --gapic_additional_protos "${gapic_additional_protos}" \
-    --transport "${transport}" \
-    --rest_numeric_enums "${rest_numeric_enums}" \
-    --gapic_yaml "${gapic_yaml}" \
-    --service_config "${service_config}" \
-    --service_yaml "${service_yaml}" \
-    --include_samples "${include_samples}" \
-      --enable_postprocessing "false"
-  fi
+  "${library_generation_dir}"/generate_composed_library.sh \
+    --proto_path_list="${proto_path}" \
+    --repository_path="${repository_path}" \
+    --versions_file="${versions_file}" \
+    --final_postprocessing=${enable_postprocessing}
   generation_end=$(date "+%s")
+
   # some generations are less than 1 second (0 produces exit code 1 in `expr`)
   generation_duration_seconds=$(expr "${generation_end}" - "${generation_start}" || true)
   echo "Generation time for ${repository_path} was ${generation_duration_seconds} seconds."
@@ -171,6 +101,7 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   echo "Compare generation result..."
   if [ $enable_postprocessing == "true" ]; then
     echo "Checking out repository..."
+    target_folder="${output_folder}/${repository_path}"
     pushd "${target_folder}"
     source_diff_result=0
     git diff \
