@@ -424,3 +424,20 @@ build_owlbot_cli_source_folder() {
   git commit --allow-empty -m 'empty commit'
   popd # pre_processed_libs_folder
 }
+
+# Convenience function to clone only the necessary folders from a git repository
+sparse_clone() {
+  repo_url=$1
+  paths=$2
+  commitish=$3
+  clone_dir=$(basename "${repo_url%.*}")
+  rm -rf "${clone_dir}"
+  git clone -n --depth=1 --no-single-branch --filter=tree:0 "${repo_url}"
+  pushd "${clone_dir}"
+  if [ -n "${commitish}" ]; then
+    git checkout "${commitish}"
+  fi
+  git sparse-checkout set --no-cone ${paths}
+  git checkout
+  popd
+}

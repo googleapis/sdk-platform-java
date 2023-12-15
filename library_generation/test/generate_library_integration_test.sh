@@ -54,6 +54,7 @@ done
 
 mkdir -p "${output_folder}"
 pushd "${output_folder}"
+download_googleapis_files_and_folders "${output_folder}"
 # parse version of gapic-generator-java, protobuf and grpc from WORKSPACE
 gapic_generator_version=$(get_version_from_WORKSPACE "_gapic_generator_java_version" WORKSPACE "=")
 echo "The version of gapic-generator-java is ${gapic_generator_version}."
@@ -85,10 +86,10 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   echo "Generating library from ${proto_path}, to ${destination_path}..."
   generation_start=$(date "+%s")
   "${library_generation_dir}"/generate_composed_library.sh \
-    --proto_path_list="${proto_path}" \
-    --repository_path="${repository_path}" \
-    --versions_file="${versions_file}" \
-    --final_postprocessing=${enable_postprocessing}
+    --proto_path_list "${proto_path}" \
+    --repository_path "${repository_path}" \
+    --versions_file "${versions_file}" \
+    --final_postprocessing ${enable_postprocessing}
   generation_end=$(date "+%s")
 
   # some generations are less than 1 second (0 produces exit code 1 in `expr`)
@@ -138,7 +139,7 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
     if [ ${source_diff_result} == 0 ] ; then
       echo "SUCCESS: Comparison finished, no difference is found."
     else
-      echo "FAILURE: Differences found in proto path: ${proto_path}." 
+      echo "FAILURE: Differences found in proto path: ${proto_path}."
       exit "${source_diff_result}"
     fi
   fi
