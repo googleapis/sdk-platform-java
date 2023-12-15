@@ -61,7 +61,7 @@ function processModule() {
 
   # ensure formatting on all .java files in the repository
   echo "Reformatting source..."
-  ${scripts_root}/owlbot/bin/format_source.sh "${scripts_root}"
+  mvn fmt:format
   echo "...done"
 }
 
