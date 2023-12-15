@@ -46,6 +46,7 @@ import com.google.auth.oauth2.QuotaProjectIdProvider;
 import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.spi.ServiceRpcFactory;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
@@ -81,10 +82,12 @@ public abstract class ServiceOptions<
     implements Serializable {
 
   public static final String CREDENTIAL_ENV_NAME = "GOOGLE_APPLICATION_CREDENTIALS";
+  public static final String GOOGLE_DEFAULT_UNIVERSE = "googleapis.com";
 
   private static final String DEFAULT_HOST = "https://www.googleapis.com";
   private static final String LEGACY_PROJECT_ENV_NAME = "GCLOUD_PROJECT";
   private static final String PROJECT_ENV_NAME = "GOOGLE_CLOUD_PROJECT";
+  private static final String ENDPOINT_TEMPLATE = "SERVICE_NAME.UNIVERSE_DOMAIN:443";
 
   private static final RetrySettings DEFAULT_RETRY_SETTINGS =
       getDefaultRetrySettingsBuilder().build();
@@ -95,6 +98,7 @@ public abstract class ServiceOptions<
   protected final String clientLibToken;
 
   private final String projectId;
+  private final String universeDomain;
   private final String host;
   private final RetrySettings retrySettings;
   private final String serviceRpcFactoryClassName;
@@ -125,6 +129,7 @@ public abstract class ServiceOptions<
     private final ImmutableSet<String> allowedClientLibTokens =
         ImmutableSet.of(ServiceOptions.getGoogApiClientLibName());
     private String projectId;
+    private String universeDomain;
     private String host;
     protected Credentials credentials;
     private RetrySettings retrySettings;
@@ -142,6 +147,7 @@ public abstract class ServiceOptions<
     @InternalApi("This class should only be extended within google-cloud-java")
     protected Builder(ServiceOptions<ServiceT, OptionsT> options) {
       projectId = options.projectId;
+      universeDomain = options.universeDomain;
       host = options.host;
       credentials = options.credentials;
       retrySettings = options.retrySettings;
@@ -196,6 +202,16 @@ public abstract class ServiceOptions<
      */
     public B setHost(String host) {
       this.host = host;
+      return self();
+    }
+
+    /**
+     * Sets the Universe Domain.
+     *
+     * @return the builder
+     */
+    public B setUniverseDomain(String universeDomain) {
+      this.universeDomain = universeDomain;
       return self();
     }
 
@@ -306,6 +322,7 @@ public abstract class ServiceOptions<
           "A project ID is required for this service but could not be determined from the builder "
               + "or the environment.  Please set a project ID using the builder.");
     }
+    universeDomain = builder.universeDomain;
     host = firstNonNull(builder.host, getDefaultHost());
     credentials = builder.credentials != null ? builder.credentials : defaultCredentials();
     retrySettings = firstNonNull(builder.retrySettings, getDefaultRetrySettings());
@@ -582,6 +599,11 @@ public abstract class ServiceOptions<
     return projectId;
   }
 
+  /** Returns the Universe Domain */
+  public String getUniverseDomain() {
+    return universeDomain;
+  }
+
   /** Returns the service host. */
   public String getHost() {
     return host;
@@ -766,5 +788,31 @@ public abstract class ServiceOptions<
   /** Returns the quotaProjectId that specifies the project used for quota and billing purposes. */
   public String getQuotaProjectId() {
     return quotaProjectId;
+  }
+
+  public String getResolvedEndpoint(String serviceName) {
+    if (universeDomain == null) {
+      return formatTemplate(serviceName, GOOGLE_DEFAULT_UNIVERSE);
+    } else if (Strings.isNullOrEmpty(universeDomain)) {
+      throw new RuntimeException("Universe Domain cannot be empty");
+    } else {
+      if (host == null) {
+        return formatTemplate(serviceName, getUniverseDomain());
+      }
+      return host;
+    }
+  }
+
+  @InternalApi
+  public String getResolvedApiaryEndpoint(String serviceName) {
+    String resolvedUniverseDomain =
+        getUniverseDomain() != null ? getUniverseDomain() : GOOGLE_DEFAULT_UNIVERSE;
+    return formatTemplate(serviceName, resolvedUniverseDomain);
+  }
+
+  private String formatTemplate(String serviceName, String universeDomain) {
+    return ENDPOINT_TEMPLATE
+        .replace("SERVICE_NAME", serviceName)
+        .replace("UNIVERSE_DOMAIN", universeDomain);
   }
 }
