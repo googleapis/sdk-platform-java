@@ -204,7 +204,7 @@ download_fail() {
 
 # gets the output folder where all sources and dependencies will be located.
 get_output_folder() {
-  echo "$(pwd)/output"
+  pwd
 }
 
 detect_os_architecture() {

@@ -148,7 +148,7 @@ case "${proto_path}" in
     find_depth="-maxdepth 1"
     ;;
 esac
-proto_files=$(find "${proto_path}" ${find_depth} -type f  -name "*.proto" | LC_COLLATE=C sort)
+proto_files=$(find "${proto_path}" ${find_depth} -name "*.proto" | LC_COLLATE=C sort)
 # include or exclude certain protos in grpc plugin and gapic generator java.
 case "${proto_path}" in
   "google/cloud")
@@ -293,6 +293,7 @@ popd # output_folder
 pushd "${output_folder}/${destination_path}"
 rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_proto.jar temp-codegen.srcjar
 popd # destination path
+tar -zchpf "${destination_path}-alt.tar.gz" "${destination_path}"/*
 ##################### Section 5 #####################
 # post-processing
 #####################################################

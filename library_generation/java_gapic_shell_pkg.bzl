@@ -1,5 +1,3 @@
-load("@rules_proto//proto:defs.bzl", "ProtoInfo")
-
 def _process_arguments(
         proto_path,
         destination_path,
@@ -59,8 +57,9 @@ def _java_gapic_assembly_pkg_impl(ctx):
         destination_path = ctx.attr.destination_path,
         gapic_generator_java_version = ctx.attr.gapic_generator_version,
     )
+
     ctx.actions.run(
-        inputs = ctx.files.proto,
+        inputs = ctx.files.protos,
         outputs = [ctx.outputs.pkg],
         arguments = args,
         progress_message = "Generating from %s" % ctx.attr.proto_path,
@@ -69,8 +68,7 @@ def _java_gapic_assembly_pkg_impl(ctx):
 
 java_gapic_assembly_pkg = rule(
     attrs = {
-        "proto": attr.label(
-            default = Label("@com_google_googleapis//:protos"),
+        "protos": attr.label_list(
             allow_files = True,
         ),
         "proto_path": attr.string(mandatory = True),
