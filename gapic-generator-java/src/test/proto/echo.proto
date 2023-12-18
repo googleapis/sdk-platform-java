@@ -17,6 +17,7 @@ syntax = "proto3";
 import "google/api/annotations.proto";
 import "google/api/client.proto";
 import "google/api/field_behavior.proto";
+import "google/api/field_info.proto";
 import "google/api/resource.proto";
 import "google/longrunning/operations.proto";
 import "google/protobuf/duration.proto";
@@ -179,6 +180,12 @@ message EchoRequest {
     (google.api.field_behavior) = REQUIRED
   ];
 
+  // TODO: @alicejli to remove this one auto-population of request-id is added officially to gapic-showcase. This is for testing purposes only.
+  // Based on go/client-populate-request-id-design; subject to change
+  string request_id = 7 [
+    (google.api.field_info).format = UUID4
+  ];
+
   oneof response {
     // The content to be echoed by the server.
     string content = 1;
@@ -217,6 +224,12 @@ message ExpandRequest {
   google.rpc.Status error = 2;
 
   string info = 3;
+
+  // TODO: @alicejli to remove this one auto-population of request-id is added officially to gapic-showcase. This is for testing purposes only.
+  // Based on go/client-populate-request-id-design; subject to change
+  string request_id = 4 [
+    (google.api.field_info).format = IPV6
+  ];
 }
 
 // The request for the PagedExpand method.

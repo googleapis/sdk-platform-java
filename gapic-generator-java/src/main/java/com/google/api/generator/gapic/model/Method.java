@@ -69,6 +69,16 @@ public abstract class Method {
   // [["content", "error"], ["content", "error", "info"]].
   public abstract ImmutableList<List<MethodArgument>> methodSignatures();
 
+  @Nullable
+  public abstract List<String> autoPopulatedFields();
+
+  /**
+   * If a service's service_config.yaml file contains method_settings.auto_populated_fields for this method, and the method is a Unary-type, then this is true
+   */
+  public boolean hasAutoPopulatedFields(){
+    return autoPopulatedFields() != null && autoPopulatedFields().size() > 0 && stream().equals(Stream.NONE);
+  }
+
   public abstract boolean operationPollingMethod();
 
   public boolean hasLro() {
@@ -169,6 +179,8 @@ public abstract class Method {
     public abstract Builder setIsDeprecated(boolean isDeprecated);
 
     public abstract Builder setOperationPollingMethod(boolean operationPollingMethod);
+
+    public abstract Builder setAutoPopulatedFields(List<String> autoPopulatedFields);
 
     public abstract Builder setRoutingHeaderRule(RoutingHeaderRule routingHeaderRule);
 

@@ -14,6 +14,7 @@
 
 package com.google.api.generator.gapic.model;
 
+import com.google.api.FieldInfo.Format;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
 import java.util.Objects;
@@ -32,6 +33,13 @@ public abstract class Field {
 
   public abstract TypeNode type();
 
+  // If the field contains a google.api.field_info.format value of UUID4 and is not marked as REQUIRED, then it is eligible to be auto-populated if the customer does not set it.
+  // The field needs to be cross-referenced against Method.autoPopulatedFields() to make the final determination if it *should* be auto-populated.
+  // See go/client-populate-request-id-design for more details.
+  public abstract boolean isEligibleToBeAutoPopulated();
+
+  @Nullable
+  public abstract Format fieldInfoFormat();
   public abstract boolean isMessage();
 
   public abstract boolean isEnum();
@@ -72,6 +80,7 @@ public abstract class Field {
     return name().equals(other.name())
         && originalName().equals(other.originalName())
         && type().equals(other.type())
+        && isEligibleToBeAutoPopulated() == other.isEligibleToBeAutoPopulated()
         && isMessage() == other.isMessage()
         && isEnum() == other.isEnum()
         && isRepeated() == other.isRepeated()
@@ -101,6 +110,7 @@ public abstract class Field {
 
   public static Builder builder() {
     return new AutoValue_Field.Builder()
+        .setIsEligibleToBeAutoPopulated(false)
         .setIsMessage(false)
         .setIsEnum(false)
         .setIsRepeated(false)
@@ -116,6 +126,10 @@ public abstract class Field {
     public abstract Builder setOriginalName(String originalName);
 
     public abstract Builder setType(TypeNode type);
+
+    public abstract Builder setIsEligibleToBeAutoPopulated(boolean isEligibleToBeAutoPopulated);
+
+    public abstract Builder setFieldInfoFormat(Format fieldInfoFormat);
 
     public abstract Builder setIsMessage(boolean isMessage);
 

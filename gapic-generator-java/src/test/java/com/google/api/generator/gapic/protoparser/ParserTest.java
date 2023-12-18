@@ -20,6 +20,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
+import com.google.api.FieldInfo.Format;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -39,6 +40,8 @@ import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import com.google.showcase.v1beta1.TestingOuterClass;
 import com.google.testgapic.v1beta1.LockerProto;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -55,10 +58,18 @@ public class ParserTest {
   private ServiceDescriptor echoService;
   private FileDescriptor echoFileDescriptor;
 
+  private static final String YAML_DIRECTORY = "src/test/resources/";
+
+  private Optional<com.google.api.Service> serviceYamlProtoOpt;
+
   @Before
   public void setUp() {
     echoFileDescriptor = EchoOuterClass.getDescriptor();
     echoService = echoFileDescriptor.getServices().get(0);
+    String yamlFilename = "echo_v1beta1.yaml";
+    Path yamlPath = Paths.get(YAML_DIRECTORY, yamlFilename);
+    serviceYamlProtoOpt =
+        ServiceYamlParser.parse(yamlPath.toString());
     assertEquals("Echo", echoService.getName());
   }
 
@@ -121,6 +132,7 @@ public class ParserTest {
             messageTypes,
             resourceNames,
             Optional.empty(),
+            serviceYamlProtoOpt,
             outputResourceNames,
             Transport.GRPC);
 
@@ -130,6 +142,8 @@ public class ParserTest {
     Method echoMethod = methods.get(0);
     assertEquals(echoMethod.name(), "Echo");
     assertEquals(echoMethod.stream(), Method.Stream.NONE);
+    assertEquals(true, echoMethod.hasAutoPopulatedFields());
+    assertEquals(Arrays.asList("request_id"), echoMethod.autoPopulatedFields());
 
     // Detailed method signature parsing tests are in a separate unit test.
     List<List<MethodArgument>> methodSignatures = echoMethod.methodSignatures();
@@ -157,14 +171,17 @@ public class ParserTest {
         TypeNode.withReference(createStatusReference()),
         ImmutableList.of(),
         expandMethod.methodSignatures().get(0).get(1));
+    assertEquals(false, expandMethod.hasAutoPopulatedFields());
 
     Method collectMethod = methods.get(2);
     assertEquals("Collect", collectMethod.name());
     assertEquals(Method.Stream.CLIENT, collectMethod.stream());
+    assertEquals(false, collectMethod.hasAutoPopulatedFields());
 
     Method chatMethod = methods.get(3);
     assertEquals("Chat", chatMethod.name());
     assertEquals(Method.Stream.BIDI, chatMethod.stream());
+    assertEquals(false, chatMethod.hasAutoPopulatedFields());
   }
 
   @Test
@@ -178,6 +195,7 @@ public class ParserTest {
             ECHO_PACKAGE,
             messageTypes,
             resourceNames,
+            Optional.empty(),
             Optional.empty(),
             outputResourceNames,
             Transport.GRPC);
@@ -416,6 +434,26 @@ public class ParserTest {
                     Arrays.asList(TypeNode.INT_OBJECT.reference(), TypeNode.STRING.reference()))
                 .build()),
         field.type());
+  }
+
+  @Test
+  public void parseFields_autoPopulated() {
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    Message message = messageTypes.get("com.google.showcase.v1beta1.EchoRequest");
+    Field field = message.fieldMap().get("request_id");
+    assertEquals(true, field.isEligibleToBeAutoPopulated());
+    assertEquals(Format.UUID4, field.fieldInfoFormat());
+    field = message.fieldMap().get("name");
+    assertEquals(false, field.isEligibleToBeAutoPopulated());
+    assertEquals(null, field.fieldInfoFormat());
+    field = message.fieldMap().get("severity");
+    assertEquals(false, field.isEligibleToBeAutoPopulated());
+    assertEquals(null, field.fieldInfoFormat());
+
+    message = messageTypes.get("com.google.showcase.v1beta1.ExpandRequest");
+    field = message.fieldMap().get("request_id");
+    assertEquals(false, field.isEligibleToBeAutoPopulated());
+    assertEquals(Format.IPV6, field.fieldInfoFormat());
   }
 
   @Test

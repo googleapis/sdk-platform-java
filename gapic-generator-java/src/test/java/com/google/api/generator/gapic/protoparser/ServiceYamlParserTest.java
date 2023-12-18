@@ -17,6 +17,8 @@ package com.google.api.generator.gapic.protoparser;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import com.google.api.MethodSettings;
+import com.google.api.Publishing;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Optional;
@@ -36,5 +38,23 @@ public class ServiceYamlParserTest {
 
     com.google.api.Service serviceYamlProto = serviceYamlProtoOpt.get();
     assertEquals("logging.googleapis.com", serviceYamlProto.getName());
+  }
+
+  @Test
+  public void parseServiceYaml_autoPopulatedFields() {
+    String yamlFilename = "echo_v1beta1.yaml";
+    Path yamlPath = Paths.get(YAML_DIRECTORY, yamlFilename);
+    Optional<com.google.api.Service> serviceYamlProtoOpt =
+        ServiceYamlParser.parse(yamlPath.toString());
+    assertTrue(serviceYamlProtoOpt.isPresent());
+
+    com.google.api.Service serviceYamlProto = serviceYamlProtoOpt.get();
+    assertEquals("showcase.googleapis.com", serviceYamlProto.getName());
+
+    Publishing publishingSettings = serviceYamlProto.getPublishing();
+    java.util.List<MethodSettings> methodSettings = publishingSettings.getMethodSettingsList();
+    MethodSettings methodSetting = methodSettings.get(0);
+    assertEquals("google.showcase.v1beta1.Echo.Echo", methodSetting.getSelector());
+    assertEquals("request_id", methodSetting.getAutoPopulatedFieldsList().get(0));
   }
 }
