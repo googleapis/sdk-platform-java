@@ -68,8 +68,7 @@ public class ParserTest {
     echoService = echoFileDescriptor.getServices().get(0);
     String yamlFilename = "echo_v1beta1.yaml";
     Path yamlPath = Paths.get(YAML_DIRECTORY, yamlFilename);
-    serviceYamlProtoOpt =
-        ServiceYamlParser.parse(yamlPath.toString());
+    serviceYamlProtoOpt = ServiceYamlParser.parse(yamlPath.toString());
     assertEquals("Echo", echoService.getName());
   }
 
