@@ -123,6 +123,7 @@ jobs:
           pushd /tmp/java-compute/google-cloud-compute-small-v1-java
           ./gradlew clean build publishToMavenLocal sourcesJar allJars
           popd
+  
   lint:
     runs-on: ubuntu-22.04
     steps:
