@@ -370,15 +370,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .setReturnType(returnType)
             .build();
 
-    AnnotationNode annotation =
-        AnnotationNode.builder()
-            .setType(FIXED_TYPESTORE.get("BetaApi"))
-            .setDescription(
-                "The surface for customizing headers is not stable yet and may change in the"
-                    + " future.")
-            .build();
     return MethodDefinition.builder()
-        .setAnnotations(Arrays.asList(annotation))
         .setScope(ScopeNode.PUBLIC)
         .setIsStatic(true)
         .setReturnType(returnType)

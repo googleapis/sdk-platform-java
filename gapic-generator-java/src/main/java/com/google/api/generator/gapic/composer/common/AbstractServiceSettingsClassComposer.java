@@ -430,14 +430,6 @@ public abstract class AbstractServiceSettingsClassComposer implements ClassCompo
                 "defaultApiClientHeaderProviderBuilder",
                 TypeNode.withReference(
                     ConcreteReference.withClazz(ApiClientHeaderProvider.Builder.class)))
-            .setAnnotations(
-                Arrays.asList(
-                    AnnotationNode.builder()
-                        .setType(FIXED_TYPESTORE.get("BetaApi"))
-                        .setDescription(
-                            "The surface for customizing headers is not stable yet and may"
-                                + " change in the future.")
-                        .build()))
             .build());
     return javaMethods;
   }
