@@ -123,6 +123,39 @@ public abstract class EndpointContext {
     return resolvedEndpoint;
   }
 
+  public EndpointContext merge(EndpointContext input) {
+    if (input == null) {
+      return this;
+    }
+    Builder builder = this.toBuilder();
+    String serviceName = input.serviceName();
+    if (serviceName != null) {
+      builder.setServiceName(serviceName);
+    }
+    String clientSettingsEndpoint = input.clientSettingsEndpoint();
+    if (clientSettingsEndpoint != null) {
+      builder.setClientSettingsEndpoint(clientSettingsEndpoint);
+    }
+    String transportChannelProviderEndpoint = input.transportChannelProviderEndpoint();
+    if (transportChannelProviderEndpoint != null) {
+      builder.setTransportChannelProviderEndpoint(transportChannelProviderEndpoint);
+    }
+    String mtlsEndpoint = input.mtlsEndpoint();
+    if (mtlsEndpoint != null) {
+      builder.setMtlsEndpoint(mtlsEndpoint);
+    }
+    builder.setSwitchToMtlsEndpointAllowed(input.switchToMtlsEndpointAllowed());
+    MtlsProvider mtlsProvider = input.mtlsProvider();
+    if (mtlsEndpoint != null) {
+      builder.setMtlsProvider(mtlsProvider);
+    }
+    try {
+      return builder.build();
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
+  }
+
   @AutoValue.Builder
   public abstract static class Builder {
     /**

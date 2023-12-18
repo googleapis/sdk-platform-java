@@ -32,6 +32,7 @@ package com.google.api.gax.grpc;
 import com.google.api.core.BetaApi;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.ApiCallContext;
+import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.TransportChannel;
 import com.google.api.gax.rpc.internal.ApiCallContextOptions;
@@ -78,6 +79,7 @@ public final class GrpcCallContext implements ApiCallContext {
   @Nullable private final ImmutableSet<StatusCode.Code> retryableCodes;
   private final ImmutableMap<String, List<String>> extraHeaders;
   private final ApiCallContextOptions options;
+  private final EndpointContext endpointContext;
 
   /** Returns an empty instance with a null channel and default {@link CallOptions}. */
   public static GrpcCallContext createDefault() {
@@ -90,6 +92,7 @@ public final class GrpcCallContext implements ApiCallContext {
         null,
         ImmutableMap.<String, List<String>>of(),
         ApiCallContextOptions.getDefaultOptions(),
+        null,
         null,
         null);
   }
@@ -106,6 +109,7 @@ public final class GrpcCallContext implements ApiCallContext {
         ImmutableMap.<String, List<String>>of(),
         ApiCallContextOptions.getDefaultOptions(),
         null,
+        null,
         null);
   }
 
@@ -119,7 +123,8 @@ public final class GrpcCallContext implements ApiCallContext {
       ImmutableMap<String, List<String>> extraHeaders,
       ApiCallContextOptions options,
       @Nullable RetrySettings retrySettings,
-      @Nullable Set<StatusCode.Code> retryableCodes) {
+      @Nullable Set<StatusCode.Code> retryableCodes,
+      EndpointContext endpointContext) {
     this.channel = channel;
     this.callOptions = Preconditions.checkNotNull(callOptions);
     this.timeout = timeout;
@@ -130,6 +135,7 @@ public final class GrpcCallContext implements ApiCallContext {
     this.options = Preconditions.checkNotNull(options);
     this.retrySettings = retrySettings;
     this.retryableCodes = retryableCodes == null ? null : ImmutableSet.copyOf(retryableCodes);
+    this.endpointContext = endpointContext;
   }
 
   /**
@@ -158,7 +164,18 @@ public final class GrpcCallContext implements ApiCallContext {
   public GrpcCallContext withCredentials(Credentials newCredentials) {
     Preconditions.checkNotNull(newCredentials);
     CallCredentials callCredentials = MoreCallCredentials.from(newCredentials);
-    return withCallOptions(callOptions.withCallCredentials(callCredentials));
+    return new GrpcCallContext(
+        channel,
+        callOptions.withCallCredentials(callCredentials),
+        timeout,
+        streamWaitTimeout,
+        streamIdleTimeout,
+        channelAffinity,
+        extraHeaders,
+        options,
+        retrySettings,
+        retryableCodes,
+        endpointContext);
   }
 
   @Override
@@ -170,6 +187,23 @@ public final class GrpcCallContext implements ApiCallContext {
     }
     GrpcTransportChannel transportChannel = (GrpcTransportChannel) inputChannel;
     return withChannel(transportChannel.getChannel());
+  }
+
+  @Override
+  public GrpcCallContext withEndpointContext(EndpointContext endpointContext) {
+    Preconditions.checkNotNull(endpointContext);
+    return new GrpcCallContext(
+        channel,
+        callOptions,
+        timeout,
+        streamWaitTimeout,
+        streamIdleTimeout,
+        channelAffinity,
+        extraHeaders,
+        options,
+        retrySettings,
+        retryableCodes,
+        endpointContext);
   }
 
   @Override
@@ -194,7 +228,8 @@ public final class GrpcCallContext implements ApiCallContext {
         extraHeaders,
         options,
         retrySettings,
-        retryableCodes);
+        retryableCodes,
+        endpointContext);
   }
 
   @Nullable
@@ -220,7 +255,8 @@ public final class GrpcCallContext implements ApiCallContext {
         extraHeaders,
         options,
         retrySettings,
-        retryableCodes);
+        retryableCodes,
+        endpointContext);
   }
 
   @Override
@@ -240,7 +276,8 @@ public final class GrpcCallContext implements ApiCallContext {
         extraHeaders,
         options,
         retrySettings,
-        retryableCodes);
+        retryableCodes,
+        endpointContext);
   }
 
   @BetaApi("The surface for channel affinity is not stable yet and may change in the future.")
@@ -255,7 +292,8 @@ public final class GrpcCallContext implements ApiCallContext {
         extraHeaders,
         options,
         retrySettings,
-        retryableCodes);
+        retryableCodes,
+        endpointContext);
   }
 
   @BetaApi("The surface for extra headers is not stable yet and may change in the future.")
@@ -274,7 +312,8 @@ public final class GrpcCallContext implements ApiCallContext {
         newExtraHeaders,
         options,
         retrySettings,
-        retryableCodes);
+        retryableCodes,
+        endpointContext);
   }
 
   @Override
@@ -294,7 +333,8 @@ public final class GrpcCallContext implements ApiCallContext {
         extraHeaders,
         options,
         retrySettings,
-        retryableCodes);
+        retryableCodes,
+        endpointContext);
   }
 
   @Override
@@ -314,7 +354,8 @@ public final class GrpcCallContext implements ApiCallContext {
         extraHeaders,
         options,
         retrySettings,
-        retryableCodes);
+        retryableCodes,
+        endpointContext);
   }
 
   @Override
@@ -394,6 +435,13 @@ public final class GrpcCallContext implements ApiCallContext {
       newCallOptions = newCallOptions.withOption(TRACER_KEY, newTracer);
     }
 
+    EndpointContext newEndpointContext = null;
+    if (endpointContext != null) {
+      newEndpointContext = endpointContext.merge(grpcCallContext.endpointContext);
+    } else {
+      newEndpointContext = grpcCallContext.endpointContext;
+    }
+
     return new GrpcCallContext(
         newChannel,
         newCallOptions,
@@ -404,7 +452,8 @@ public final class GrpcCallContext implements ApiCallContext {
         newExtraHeaders,
         newOptions,
         newRetrySettings,
-        newRetryableCodes);
+        newRetryableCodes,
+        newEndpointContext);
   }
 
   /** The {@link Channel} set on this context. */
@@ -464,7 +513,8 @@ public final class GrpcCallContext implements ApiCallContext {
         extraHeaders,
         options,
         retrySettings,
-        retryableCodes);
+        retryableCodes,
+        endpointContext);
   }
 
   /** Returns a new instance with the call options set to the given call options. */
@@ -479,7 +529,8 @@ public final class GrpcCallContext implements ApiCallContext {
         extraHeaders,
         options,
         retrySettings,
-        retryableCodes);
+        retryableCodes,
+        endpointContext);
   }
 
   public GrpcCallContext withRequestParamsDynamicHeaderOption(String requestParams) {
@@ -521,7 +572,8 @@ public final class GrpcCallContext implements ApiCallContext {
         extraHeaders,
         newOptions,
         retrySettings,
-        retryableCodes);
+        retryableCodes,
+        endpointContext);
   }
 
   /** {@inheritDoc} */
@@ -542,7 +594,8 @@ public final class GrpcCallContext implements ApiCallContext {
         extraHeaders,
         options,
         retrySettings,
-        retryableCodes);
+        retryableCodes,
+        endpointContext);
   }
 
   @Override
@@ -564,7 +617,8 @@ public final class GrpcCallContext implements ApiCallContext {
         && Objects.equals(extraHeaders, that.extraHeaders)
         && Objects.equals(options, that.options)
         && Objects.equals(retrySettings, that.retrySettings)
-        && Objects.equals(retryableCodes, that.retryableCodes);
+        && Objects.equals(retryableCodes, that.retryableCodes)
+        && Objects.equals(endpointContext, that.endpointContext);
   }
 
   Metadata getMetadata() {
@@ -576,5 +630,10 @@ public final class GrpcCallContext implements ApiCallContext {
       }
     }
     return metadata;
+  }
+
+  @Override
+  public EndpointContext getEndpointContext() {
+    return endpointContext;
   }
 }
