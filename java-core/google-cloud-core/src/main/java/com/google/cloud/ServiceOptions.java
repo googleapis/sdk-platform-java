@@ -815,4 +815,14 @@ public abstract class ServiceOptions<
         .replace("SERVICE_NAME", serviceName)
         .replace("UNIVERSE_DOMAIN", universeDomain);
   }
+
+  public boolean isValidUniverseDomain() throws IOException {
+    Credentials credentials = getCredentials();
+    String universeDomain = getUniverseDomain();
+    if (universeDomain == null) {
+      universeDomain = ServiceOptions.GOOGLE_DEFAULT_UNIVERSE;
+    }
+    return true;
+    //    return credentials.getUniverseDomain() != universeDomain;
+  }
 }

@@ -17,10 +17,8 @@
 package com.google.cloud;
 
 import com.google.api.core.InternalApi;
-import com.google.auth.Credentials;
 import com.google.auth.Retryable;
 import com.google.cloud.ExceptionHandler.Interceptor;
-import java.io.IOException;
 
 /**
  * Base class for service objects.
@@ -69,15 +67,5 @@ public abstract class BaseService<OptionsT extends ServiceOptions<?, OptionsT>>
   @Override
   public OptionsT getOptions() {
     return options;
-  }
-
-  public boolean isValidUniverseDomain() throws IOException {
-    Credentials credentials = getOptions().getCredentials();
-    String universeDomain = getOptions().getUniverseDomain();
-    if (universeDomain == null) {
-      universeDomain = ServiceOptions.GOOGLE_DEFAULT_UNIVERSE;
-    }
-    return true;
-    //    return credentials.getUniverseDomain() != universeDomain;
   }
 }
