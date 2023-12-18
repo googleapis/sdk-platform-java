@@ -197,7 +197,6 @@ public class TestingSettings extends ClientSettings<TestingSettings> {
     return TestingStubSettings.defaultTransportChannelProvider();
   }
 
-  @BetaApi("The surface for customizing headers is not stable yet and may change in the future.")
   public static ApiClientHeaderProvider.Builder defaultApiClientHeaderProviderBuilder() {
     return TestingStubSettings.defaultApiClientHeaderProviderBuilder();
   }

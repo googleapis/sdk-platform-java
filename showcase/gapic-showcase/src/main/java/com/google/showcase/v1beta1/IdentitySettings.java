@@ -180,7 +180,6 @@ public class IdentitySettings extends ClientSettings<IdentitySettings> {
     return IdentityStubSettings.defaultTransportChannelProvider();
   }
 
-  @BetaApi("The surface for customizing headers is not stable yet and may change in the future.")
   public static ApiClientHeaderProvider.Builder defaultApiClientHeaderProviderBuilder() {
     return IdentityStubSettings.defaultApiClientHeaderProviderBuilder();
   }
