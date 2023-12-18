@@ -989,16 +989,13 @@ public class ClientContextTest {
   @Test
   public void testCreateClientContext_doNotSetUniverseDomain() throws IOException {
     TransportChannelProvider transportChannelProvider =
-            new FakeTransportProvider(
-                    FakeTransportChannel.create(new FakeChannel()), null, true, null, null, null);
-    StubSettings settings =
-            new FakeStubSettings.Builder()
-                    .setEndpoint(null)
-                    .build();
+        new FakeTransportProvider(
+            FakeTransportChannel.create(new FakeChannel()), null, true, null, null, null);
+    StubSettings settings = new FakeStubSettings.Builder().setEndpoint(null).build();
     ClientSettings.Builder clientSettingsBuilder = new FakeClientSettings.Builder(settings);
     clientSettingsBuilder.setTransportChannelProvider(transportChannelProvider);
     clientSettingsBuilder.setCredentialsProvider(
-            FixedCredentialsProvider.create(Mockito.mock(Credentials.class)));
+        FixedCredentialsProvider.create(Mockito.mock(Credentials.class)));
     ClientSettings clientSettings = clientSettingsBuilder.build();
     ClientContext clientContext = ClientContext.create(clientSettings);
     assertThat(clientContext.getUniverseDomain()).isEqualTo(DEFAULT_UNIVERSE_DOMAIN);
@@ -1011,10 +1008,7 @@ public class ClientContextTest {
             FakeTransportChannel.create(new FakeChannel()), null, true, null, null, null);
     String universeDomain = "testdomain.com";
     StubSettings settings =
-        new FakeStubSettings.Builder()
-            .setEndpoint(null)
-            .setUniverseDomain(universeDomain)
-            .build();
+        new FakeStubSettings.Builder().setEndpoint(null).setUniverseDomain(universeDomain).build();
     ClientSettings.Builder clientSettingsBuilder = new FakeClientSettings.Builder(settings);
     clientSettingsBuilder.setTransportChannelProvider(transportChannelProvider);
     clientSettingsBuilder.setCredentialsProvider(
