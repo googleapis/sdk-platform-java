@@ -73,10 +73,13 @@ public abstract class Method {
   public abstract List<String> autoPopulatedFields();
 
   /**
-   * If a service's service_config.yaml file contains method_settings.auto_populated_fields for this method, and the method is a Unary-type, then this is true
+   * If a service's service_config.yaml file contains method_settings.auto_populated_fields for this
+   * method, and the method is a Unary-type, then this is true
    */
-  public boolean hasAutoPopulatedFields(){
-    return autoPopulatedFields() != null && autoPopulatedFields().size() > 0 && stream().equals(Stream.NONE);
+  public boolean hasAutoPopulatedFields() {
+    return autoPopulatedFields() != null
+        && autoPopulatedFields().size() > 0
+        && stream().equals(Stream.NONE);
   }
 
   public abstract boolean operationPollingMethod();

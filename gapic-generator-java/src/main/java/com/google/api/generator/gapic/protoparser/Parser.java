@@ -695,18 +695,21 @@ public class Parser {
     List<Method> methods = new ArrayList<>();
 
     // Parse the serviceYaml for autopopulated methods and fields once and put into a map
-    ImmutableMap.Builder<String, List<String> >autoPopulatedMethodsWithFieldsBuilder = ImmutableMap.builder();
+    ImmutableMap.Builder<String, List<String>> autoPopulatedMethodsWithFieldsBuilder =
+        ImmutableMap.builder();
     if (serviceYamlProtoOpt.isPresent()) {
       if (serviceYamlProtoOpt.get().getPublishing().getMethodSettingsList().size() > 0) {
-        for (MethodSettings methodSettings : serviceYamlProtoOpt.get().getPublishing()
-            .getMethodSettingsList()) {
-          if(methodSettings.getAutoPopulatedFieldsCount() > 0){
-            autoPopulatedMethodsWithFieldsBuilder.put(methodSettings.getSelector(), methodSettings.getAutoPopulatedFieldsList());
+        for (MethodSettings methodSettings :
+            serviceYamlProtoOpt.get().getPublishing().getMethodSettingsList()) {
+          if (methodSettings.getAutoPopulatedFieldsCount() > 0) {
+            autoPopulatedMethodsWithFieldsBuilder.put(
+                methodSettings.getSelector(), methodSettings.getAutoPopulatedFieldsList());
           }
         }
       }
     }
-    ImmutableMap<String, List<String>> autoPopulatedMethodsWithFields = autoPopulatedMethodsWithFieldsBuilder.build();
+    ImmutableMap<String, List<String>> autoPopulatedMethodsWithFields =
+        autoPopulatedMethodsWithFieldsBuilder.build();
 
     for (MethodDescriptor protoMethod : serviceDescriptor.getMethods()) {
       // Parse the method.
@@ -1031,16 +1034,18 @@ public class Parser {
       }
     }
 
-    // If field is annotated with fieldInfo.format = UUID4 and fieldBehavior != REQUIRED, then autopopulate the field
-    // TODO: Autopopulation requires fieldInfo.formatValue = UUID4; when more types are supported, this logic will need to be updated
+    // If field is annotated with fieldInfo.format = UUID4 and fieldBehavior != REQUIRED, then
+    // autopopulate the field
+    // TODO: Autopopulation requires fieldInfo.formatValue = UUID4; when more types are supported,
+    // this logic will need to be updated
     if (fieldOptions.hasExtension(FieldInfoProto.fieldInfo)) {
       fieldInfoFormat = fieldOptions.getExtension(FieldInfoProto.fieldInfo).getFormat();
       if (fieldOptions.getExtension(FieldInfoProto.fieldInfo).getFormatValue() == 1) {
         isEligibleToBeAutoPopulated = true;
       }
     }
-    if (fieldOptions.getExtensionCount(FieldBehaviorProto.fieldBehavior) > 0){
-      if(fieldOptions.getExtension(FieldBehaviorProto.fieldBehavior).contains(2));
+    if (fieldOptions.getExtensionCount(FieldBehaviorProto.fieldBehavior) > 0) {
+      if (fieldOptions.getExtension(FieldBehaviorProto.fieldBehavior).contains(2)) ;
       isEligibleToBeAutoPopulated = false;
     }
 
