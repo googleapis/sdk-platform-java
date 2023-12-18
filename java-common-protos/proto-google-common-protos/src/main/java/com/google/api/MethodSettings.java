@@ -39,6 +39,7 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
 
   private MethodSettings() {
     selector_ = "";
+    autoPopulatedFields_ = com.google.protobuf.LazyStringArrayList.emptyList();
   }
 
   @java.lang.Override
@@ -1718,6 +1719,110 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
         : longRunning_;
   }
 
+  public static final int AUTO_POPULATED_FIELDS_FIELD_NUMBER = 3;
+
+  @SuppressWarnings("serial")
+  private com.google.protobuf.LazyStringArrayList autoPopulatedFields_ =
+      com.google.protobuf.LazyStringArrayList.emptyList();
+  /**
+   *
+   *
+   * <pre>
+   * List of top-level fields of the request message, that should be
+   * automatically populated by the client libraries based on their
+   * (google.api.field_info).format. Currently supported format: UUID4.
+   *
+   * Example of a YAML configuration:
+   *
+   *  publishing:
+   *    method_settings:
+   *      - selector: google.example.v1.ExampleService.CreateExample
+   *        auto_populated_fields:
+   *        - request_id
+   * </pre>
+   *
+   * <code>repeated string auto_populated_fields = 3;</code>
+   *
+   * @return A list containing the autoPopulatedFields.
+   */
+  public com.google.protobuf.ProtocolStringList getAutoPopulatedFieldsList() {
+    return autoPopulatedFields_;
+  }
+  /**
+   *
+   *
+   * <pre>
+   * List of top-level fields of the request message, that should be
+   * automatically populated by the client libraries based on their
+   * (google.api.field_info).format. Currently supported format: UUID4.
+   *
+   * Example of a YAML configuration:
+   *
+   *  publishing:
+   *    method_settings:
+   *      - selector: google.example.v1.ExampleService.CreateExample
+   *        auto_populated_fields:
+   *        - request_id
+   * </pre>
+   *
+   * <code>repeated string auto_populated_fields = 3;</code>
+   *
+   * @return The count of autoPopulatedFields.
+   */
+  public int getAutoPopulatedFieldsCount() {
+    return autoPopulatedFields_.size();
+  }
+  /**
+   *
+   *
+   * <pre>
+   * List of top-level fields of the request message, that should be
+   * automatically populated by the client libraries based on their
+   * (google.api.field_info).format. Currently supported format: UUID4.
+   *
+   * Example of a YAML configuration:
+   *
+   *  publishing:
+   *    method_settings:
+   *      - selector: google.example.v1.ExampleService.CreateExample
+   *        auto_populated_fields:
+   *        - request_id
+   * </pre>
+   *
+   * <code>repeated string auto_populated_fields = 3;</code>
+   *
+   * @param index The index of the element to return.
+   * @return The autoPopulatedFields at the given index.
+   */
+  public java.lang.String getAutoPopulatedFields(int index) {
+    return autoPopulatedFields_.get(index);
+  }
+  /**
+   *
+   *
+   * <pre>
+   * List of top-level fields of the request message, that should be
+   * automatically populated by the client libraries based on their
+   * (google.api.field_info).format. Currently supported format: UUID4.
+   *
+   * Example of a YAML configuration:
+   *
+   *  publishing:
+   *    method_settings:
+   *      - selector: google.example.v1.ExampleService.CreateExample
+   *        auto_populated_fields:
+   *        - request_id
+   * </pre>
+   *
+   * <code>repeated string auto_populated_fields = 3;</code>
+   *
+   * @param index The index of the value to return.
+   * @return The bytes of the autoPopulatedFields at the given index.
+   */
+  public com.google.protobuf.ByteString getAutoPopulatedFieldsBytes(int index) {
+    return autoPopulatedFields_.getByteString(index);
+  }
+
   private byte memoizedIsInitialized = -1;
 
   @java.lang.Override
@@ -1738,6 +1843,9 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
     if (longRunning_ != null) {
       output.writeMessage(2, getLongRunning());
     }
+    for (int i = 0; i < autoPopulatedFields_.size(); i++) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, autoPopulatedFields_.getRaw(i));
+    }
     getUnknownFields().writeTo(output);
   }
 
@@ -1752,6 +1860,14 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
     }
     if (longRunning_ != null) {
       size += com.google.protobuf.CodedOutputStream.computeMessageSize(2, getLongRunning());
+    }
+    {
+      int dataSize = 0;
+      for (int i = 0; i < autoPopulatedFields_.size(); i++) {
+        dataSize += computeStringSizeNoTag(autoPopulatedFields_.getRaw(i));
+      }
+      size += dataSize;
+      size += 1 * getAutoPopulatedFieldsList().size();
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -1773,6 +1889,7 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
     if (hasLongRunning()) {
       if (!getLongRunning().equals(other.getLongRunning())) return false;
     }
+    if (!getAutoPopulatedFieldsList().equals(other.getAutoPopulatedFieldsList())) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
     return true;
   }
@@ -1789,6 +1906,10 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
     if (hasLongRunning()) {
       hash = (37 * hash) + LONG_RUNNING_FIELD_NUMBER;
       hash = (53 * hash) + getLongRunning().hashCode();
+    }
+    if (getAutoPopulatedFieldsCount() > 0) {
+      hash = (37 * hash) + AUTO_POPULATED_FIELDS_FIELD_NUMBER;
+      hash = (53 * hash) + getAutoPopulatedFieldsList().hashCode();
     }
     hash = (29 * hash) + getUnknownFields().hashCode();
     memoizedHashCode = hash;
@@ -1931,6 +2052,7 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
         longRunningBuilder_.dispose();
         longRunningBuilder_ = null;
       }
+      autoPopulatedFields_ = com.google.protobuf.LazyStringArrayList.emptyList();
       return this;
     }
 
@@ -1971,6 +2093,10 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       if (((from_bitField0_ & 0x00000002) != 0)) {
         result.longRunning_ =
             longRunningBuilder_ == null ? longRunning_ : longRunningBuilder_.build();
+      }
+      if (((from_bitField0_ & 0x00000004) != 0)) {
+        autoPopulatedFields_.makeImmutable();
+        result.autoPopulatedFields_ = autoPopulatedFields_;
       }
     }
 
@@ -2027,6 +2153,16 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
       if (other.hasLongRunning()) {
         mergeLongRunning(other.getLongRunning());
       }
+      if (!other.autoPopulatedFields_.isEmpty()) {
+        if (autoPopulatedFields_.isEmpty()) {
+          autoPopulatedFields_ = other.autoPopulatedFields_;
+          bitField0_ |= 0x00000004;
+        } else {
+          ensureAutoPopulatedFieldsIsMutable();
+          autoPopulatedFields_.addAll(other.autoPopulatedFields_);
+        }
+        onChanged();
+      }
       this.mergeUnknownFields(other.getUnknownFields());
       onChanged();
       return this;
@@ -2065,6 +2201,13 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
                 bitField0_ |= 0x00000002;
                 break;
               } // case 18
+            case 26:
+              {
+                java.lang.String s = input.readStringRequireUtf8();
+                ensureAutoPopulatedFieldsIsMutable();
+                autoPopulatedFields_.add(s);
+                break;
+              } // case 26
             default:
               {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
@@ -2521,6 +2664,270 @@ public final class MethodSettings extends com.google.protobuf.GeneratedMessageV3
         longRunning_ = null;
       }
       return longRunningBuilder_;
+    }
+
+    private com.google.protobuf.LazyStringArrayList autoPopulatedFields_ =
+        com.google.protobuf.LazyStringArrayList.emptyList();
+
+    private void ensureAutoPopulatedFieldsIsMutable() {
+      if (!autoPopulatedFields_.isModifiable()) {
+        autoPopulatedFields_ = new com.google.protobuf.LazyStringArrayList(autoPopulatedFields_);
+      }
+      bitField0_ |= 0x00000004;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * List of top-level fields of the request message, that should be
+     * automatically populated by the client libraries based on their
+     * (google.api.field_info).format. Currently supported format: UUID4.
+     *
+     * Example of a YAML configuration:
+     *
+     *  publishing:
+     *    method_settings:
+     *      - selector: google.example.v1.ExampleService.CreateExample
+     *        auto_populated_fields:
+     *        - request_id
+     * </pre>
+     *
+     * <code>repeated string auto_populated_fields = 3;</code>
+     *
+     * @return A list containing the autoPopulatedFields.
+     */
+    public com.google.protobuf.ProtocolStringList getAutoPopulatedFieldsList() {
+      autoPopulatedFields_.makeImmutable();
+      return autoPopulatedFields_;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * List of top-level fields of the request message, that should be
+     * automatically populated by the client libraries based on their
+     * (google.api.field_info).format. Currently supported format: UUID4.
+     *
+     * Example of a YAML configuration:
+     *
+     *  publishing:
+     *    method_settings:
+     *      - selector: google.example.v1.ExampleService.CreateExample
+     *        auto_populated_fields:
+     *        - request_id
+     * </pre>
+     *
+     * <code>repeated string auto_populated_fields = 3;</code>
+     *
+     * @return The count of autoPopulatedFields.
+     */
+    public int getAutoPopulatedFieldsCount() {
+      return autoPopulatedFields_.size();
+    }
+    /**
+     *
+     *
+     * <pre>
+     * List of top-level fields of the request message, that should be
+     * automatically populated by the client libraries based on their
+     * (google.api.field_info).format. Currently supported format: UUID4.
+     *
+     * Example of a YAML configuration:
+     *
+     *  publishing:
+     *    method_settings:
+     *      - selector: google.example.v1.ExampleService.CreateExample
+     *        auto_populated_fields:
+     *        - request_id
+     * </pre>
+     *
+     * <code>repeated string auto_populated_fields = 3;</code>
+     *
+     * @param index The index of the element to return.
+     * @return The autoPopulatedFields at the given index.
+     */
+    public java.lang.String getAutoPopulatedFields(int index) {
+      return autoPopulatedFields_.get(index);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * List of top-level fields of the request message, that should be
+     * automatically populated by the client libraries based on their
+     * (google.api.field_info).format. Currently supported format: UUID4.
+     *
+     * Example of a YAML configuration:
+     *
+     *  publishing:
+     *    method_settings:
+     *      - selector: google.example.v1.ExampleService.CreateExample
+     *        auto_populated_fields:
+     *        - request_id
+     * </pre>
+     *
+     * <code>repeated string auto_populated_fields = 3;</code>
+     *
+     * @param index The index of the value to return.
+     * @return The bytes of the autoPopulatedFields at the given index.
+     */
+    public com.google.protobuf.ByteString getAutoPopulatedFieldsBytes(int index) {
+      return autoPopulatedFields_.getByteString(index);
+    }
+    /**
+     *
+     *
+     * <pre>
+     * List of top-level fields of the request message, that should be
+     * automatically populated by the client libraries based on their
+     * (google.api.field_info).format. Currently supported format: UUID4.
+     *
+     * Example of a YAML configuration:
+     *
+     *  publishing:
+     *    method_settings:
+     *      - selector: google.example.v1.ExampleService.CreateExample
+     *        auto_populated_fields:
+     *        - request_id
+     * </pre>
+     *
+     * <code>repeated string auto_populated_fields = 3;</code>
+     *
+     * @param index The index to set the value at.
+     * @param value The autoPopulatedFields to set.
+     * @return This builder for chaining.
+     */
+    public Builder setAutoPopulatedFields(int index, java.lang.String value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      ensureAutoPopulatedFieldsIsMutable();
+      autoPopulatedFields_.set(index, value);
+      bitField0_ |= 0x00000004;
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * List of top-level fields of the request message, that should be
+     * automatically populated by the client libraries based on their
+     * (google.api.field_info).format. Currently supported format: UUID4.
+     *
+     * Example of a YAML configuration:
+     *
+     *  publishing:
+     *    method_settings:
+     *      - selector: google.example.v1.ExampleService.CreateExample
+     *        auto_populated_fields:
+     *        - request_id
+     * </pre>
+     *
+     * <code>repeated string auto_populated_fields = 3;</code>
+     *
+     * @param value The autoPopulatedFields to add.
+     * @return This builder for chaining.
+     */
+    public Builder addAutoPopulatedFields(java.lang.String value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      ensureAutoPopulatedFieldsIsMutable();
+      autoPopulatedFields_.add(value);
+      bitField0_ |= 0x00000004;
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * List of top-level fields of the request message, that should be
+     * automatically populated by the client libraries based on their
+     * (google.api.field_info).format. Currently supported format: UUID4.
+     *
+     * Example of a YAML configuration:
+     *
+     *  publishing:
+     *    method_settings:
+     *      - selector: google.example.v1.ExampleService.CreateExample
+     *        auto_populated_fields:
+     *        - request_id
+     * </pre>
+     *
+     * <code>repeated string auto_populated_fields = 3;</code>
+     *
+     * @param values The autoPopulatedFields to add.
+     * @return This builder for chaining.
+     */
+    public Builder addAllAutoPopulatedFields(java.lang.Iterable<java.lang.String> values) {
+      ensureAutoPopulatedFieldsIsMutable();
+      com.google.protobuf.AbstractMessageLite.Builder.addAll(values, autoPopulatedFields_);
+      bitField0_ |= 0x00000004;
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * List of top-level fields of the request message, that should be
+     * automatically populated by the client libraries based on their
+     * (google.api.field_info).format. Currently supported format: UUID4.
+     *
+     * Example of a YAML configuration:
+     *
+     *  publishing:
+     *    method_settings:
+     *      - selector: google.example.v1.ExampleService.CreateExample
+     *        auto_populated_fields:
+     *        - request_id
+     * </pre>
+     *
+     * <code>repeated string auto_populated_fields = 3;</code>
+     *
+     * @return This builder for chaining.
+     */
+    public Builder clearAutoPopulatedFields() {
+      autoPopulatedFields_ = com.google.protobuf.LazyStringArrayList.emptyList();
+      bitField0_ = (bitField0_ & ~0x00000004);
+      ;
+      onChanged();
+      return this;
+    }
+    /**
+     *
+     *
+     * <pre>
+     * List of top-level fields of the request message, that should be
+     * automatically populated by the client libraries based on their
+     * (google.api.field_info).format. Currently supported format: UUID4.
+     *
+     * Example of a YAML configuration:
+     *
+     *  publishing:
+     *    method_settings:
+     *      - selector: google.example.v1.ExampleService.CreateExample
+     *        auto_populated_fields:
+     *        - request_id
+     * </pre>
+     *
+     * <code>repeated string auto_populated_fields = 3;</code>
+     *
+     * @param value The bytes of the autoPopulatedFields to add.
+     * @return This builder for chaining.
+     */
+    public Builder addAutoPopulatedFieldsBytes(com.google.protobuf.ByteString value) {
+      if (value == null) {
+        throw new NullPointerException();
+      }
+      checkByteStringIsUtf8(value);
+      ensureAutoPopulatedFieldsIsMutable();
+      autoPopulatedFields_.add(value);
+      bitField0_ |= 0x00000004;
+      onChanged();
+      return this;
     }
 
     @java.lang.Override

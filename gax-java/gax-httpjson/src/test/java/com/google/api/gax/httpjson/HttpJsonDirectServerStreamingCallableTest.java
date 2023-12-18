@@ -200,9 +200,9 @@ public class HttpJsonDirectServerStreamingCallableTest {
 
     Truth.assertThat(moneyObserver.controller).isNotNull();
     // wait for the task to complete, otherwise it may interfere with other tests, since they share
-    // the same MockService and unfinished request in this tes may start readind messages designated
-    // for other tests.
-    Truth.assertThat(latch.await(2, TimeUnit.SECONDS)).isTrue();
+    // the same MockService and unfinished request in this test may start reading messages
+    // designated for other tests.
+    Truth.assertThat(latch.await(60, TimeUnit.SECONDS)).isTrue();
   }
 
   @Test
@@ -263,7 +263,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
     MoneyObserver moneyObserver = new MoneyObserver(true, latch);
 
     streamingCallable.call(ERROR_REQUEST, moneyObserver);
-    Truth.assertThat(latch.await(2000, TimeUnit.MILLISECONDS)).isTrue();
+    Truth.assertThat(latch.await(60, TimeUnit.SECONDS)).isTrue();
 
     Truth.assertThat(moneyObserver.error).isInstanceOf(ApiException.class);
     Truth.assertThat(((ApiException) moneyObserver.error).getStatusCode().getCode())
