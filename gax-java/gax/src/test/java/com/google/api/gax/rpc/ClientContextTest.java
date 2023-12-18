@@ -987,14 +987,33 @@ public class ClientContextTest {
   }
 
   @Test
-  public void testCreateClientContext_SetUniverseDomain() throws IOException {
+  public void testCreateClientContext_doNotSetUniverseDomain() throws IOException {
+    TransportChannelProvider transportChannelProvider =
+            new FakeTransportProvider(
+                    FakeTransportChannel.create(new FakeChannel()), null, true, null, null, null);
+    StubSettings settings =
+            new FakeStubSettings.Builder()
+                    .setEndpoint(null)
+                    .build();
+    ClientSettings.Builder clientSettingsBuilder = new FakeClientSettings.Builder(settings);
+    clientSettingsBuilder.setTransportChannelProvider(transportChannelProvider);
+    clientSettingsBuilder.setCredentialsProvider(
+            FixedCredentialsProvider.create(Mockito.mock(Credentials.class)));
+    ClientSettings clientSettings = clientSettingsBuilder.build();
+    ClientContext clientContext = ClientContext.create(clientSettings);
+    assertThat(clientContext.getUniverseDomain()).isEqualTo(DEFAULT_UNIVERSE_DOMAIN);
+  }
+
+  @Test
+  public void testCreateClientContext_setUniverseDomain() throws IOException {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
             FakeTransportChannel.create(new FakeChannel()), null, true, null, null, null);
+    String universeDomain = "testdomain.com";
     StubSettings settings =
         new FakeStubSettings.Builder()
             .setEndpoint(null)
-            .setUniverseDomain(DEFAULT_UNIVERSE_DOMAIN)
+            .setUniverseDomain(universeDomain)
             .build();
     ClientSettings.Builder clientSettingsBuilder = new FakeClientSettings.Builder(settings);
     clientSettingsBuilder.setTransportChannelProvider(transportChannelProvider);
@@ -1002,7 +1021,6 @@ public class ClientContextTest {
         FixedCredentialsProvider.create(Mockito.mock(Credentials.class)));
     ClientSettings clientSettings = clientSettingsBuilder.build();
     ClientContext clientContext = ClientContext.create(clientSettings);
-    assertThat(clientContext.getEndpoint()).isEqualTo(null);
-    assertThat(clientContext.getUniverseDomain()).isEqualTo(DEFAULT_UNIVERSE_DOMAIN);
+    assertThat(clientContext.getUniverseDomain()).isEqualTo(universeDomain);
   }
 }

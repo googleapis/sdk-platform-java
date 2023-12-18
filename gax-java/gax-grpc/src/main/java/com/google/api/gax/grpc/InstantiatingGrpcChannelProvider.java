@@ -199,7 +199,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
    */
   @Override
   public TransportChannelProvider withEndpoint(String endpoint) {
-    // validateEndpoint is for gRPC to ensure format of host:port
     validateEndpoint(endpoint);
     return toBuilder().setEndpoint(endpoint).build();
   }
@@ -789,10 +788,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return ImmutableMap.<String, Object>of("loadBalancingConfig", ImmutableList.of(grpcLbPolicy));
   }
 
-  /**
-   * gRPC-Java's ManagedChannel expects a format of host:port. This is different from HttpJson's
-   * ManagedChannel which allows the endpoint to contain the scheme prefix.
-   */
   private static void validateEndpoint(String endpoint) {
     int colon = endpoint.lastIndexOf(':');
     if (colon < 0) {
