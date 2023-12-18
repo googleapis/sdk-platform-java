@@ -57,6 +57,17 @@
         "value: \"gcr.io/cloud-devrel-kokoro-resources/graalvm17:(?<currentValue>.*?)\""],
       "depNameTemplate": "ghcr.io/graalvm/graalvm-ce",
       "datasourceTemplate": "docker"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "^.cloudbuild/**"
+      ],
+      "matchStrings": [
+        "_JAVA_SHARED_CONFIG_VERSION: \"(?<currentValue>.+?)\""
+      ],
+      "depNameTemplate": "com.google.cloud:google-cloud-shared-config",
+      "datasourceTemplate": "maven"
     }
   ],
   "packageRules": [

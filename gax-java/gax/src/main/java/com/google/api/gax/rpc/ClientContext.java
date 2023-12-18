@@ -101,6 +101,10 @@ public abstract class ClientContext {
   @Nonnull
   public abstract Duration getStreamWatchdogCheckInterval();
 
+  // Package-Private scope for internal use only. Shared between StubSettings and ClientContext
+  @Nullable
+  abstract String getServiceName();
+
   @Nullable
   public abstract String getEndpoint();
 
@@ -203,6 +207,7 @@ public abstract class ClientContext {
     }
     EndpointContext endpointContext =
         EndpointContext.newBuilder()
+            .setServiceName(settings.getServiceName())
             .setClientSettingsEndpoint(settings.getEndpoint())
             .setTransportChannelProviderEndpoint(
                 settings.getTransportChannelProvider().getEndpoint())
@@ -262,6 +267,7 @@ public abstract class ClientContext {
         .setInternalHeaders(ImmutableMap.copyOf(settings.getInternalHeaderProvider().getHeaders()))
         .setClock(clock)
         .setDefaultCallContext(defaultCallContext)
+        .setServiceName(settings.getServiceName())
         .setEndpoint(settings.getEndpoint())
         .setQuotaProjectId(settings.getQuotaProjectId())
         .setStreamWatchdog(watchdog)
@@ -326,6 +332,9 @@ public abstract class ClientContext {
     public abstract Builder setClock(ApiClock clock);
 
     public abstract Builder setDefaultCallContext(ApiCallContext defaultCallContext);
+
+    // Package-Private scope for internal use only. Shared between StubSettings and ClientContext
+    abstract Builder setServiceName(String serviceName);
 
     public abstract Builder setEndpoint(String endpoint);
 

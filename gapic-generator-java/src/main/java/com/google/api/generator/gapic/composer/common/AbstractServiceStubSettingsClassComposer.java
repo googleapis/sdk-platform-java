@@ -97,6 +97,7 @@ import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -1137,9 +1138,27 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
   private List<MethodDefinition> createDefaultHelperAndGetterMethods(
       Service service, TypeStore typeStore) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
+    TypeNode returnType;
+
+    // Create the getServiceName method.
+    if (!Strings.isNullOrEmpty(service.hostServiceName())) {
+      returnType = TypeNode.STRING;
+      javaMethods.add(
+          MethodDefinition.builder()
+              .setHeaderCommentStatements(
+                  SettingsCommentComposer.DEFAULT_SERVICE_NAME_METHOD_COMMENT)
+              .setIsOverride(true)
+              .setScope(ScopeNode.PUBLIC)
+              .setIsStatic(false)
+              .setReturnType(returnType)
+              .setName("getServiceName")
+              .setReturnExpr(
+                  ValueExpr.withValue(StringObjectValue.withValue(service.hostServiceName())))
+              .build());
+    }
 
     // Create the defaultExecutorProviderBuilder method.
-    TypeNode returnType =
+    returnType =
         TypeNode.withReference(
             ConcreteReference.withClazz(InstantiatingExecutorProvider.Builder.class));
     javaMethods.add(
