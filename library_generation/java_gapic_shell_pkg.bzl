@@ -59,6 +59,7 @@ def _java_gapic_assembly_pkg_impl(ctx):
     )
 
     ctx.actions.run(
+        use_default_shell_env = True,
         inputs = ctx.files.protos,
         outputs = [ctx.outputs.pkg],
         arguments = args,

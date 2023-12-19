@@ -299,15 +299,15 @@ popd # output_folder
 pushd "${temp_destination_path}"
 rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_proto.jar temp-codegen.srcjar
 popd # destination path
-tar -zchpf "${destination_path}-alt.tar.gz" "${destination_path}"/*
 ##################### Section 5 #####################
 # post-processing
 #####################################################
-if [ "${enable_postprocessing}" != "true" ];
-then
+if [ "${enable_postprocessing}" != "true" ]; then
   echo "post processing is disabled"
-  cp -r "${temp_destination_path}/*" "${output_folder}/${destination_path}"
+  cp -R "${temp_destination_path}/" "${output_folder}/${destination_path}"
   rm -rdf "${temp_destination_path}"
+  tar -zchpf "${destination_path}-alt.tar.gz" "${destination_path}"/*
+  mv "${destination_path}-alt.tar.gz" "${GENDIR}/${proto_path}"
   exit 0
 fi
 if [ -z "${versions_file}" ];then
@@ -323,7 +323,7 @@ mkdir -p "${workspace}"
 
 # if destination_path is not empty, it will be used as a starting workspace for
 # postprocessing
-if [[ $(find "${output_folder}/${destination_path}" -mindepth 1 -maxdepth 1 -type d,f | wc -l) -gt 0 ]];then
+if [[ $(find "${output_folder}/${destination_path}" -mindepth 1 -maxdepth 1 -type d,f | wc -l) -gt 0 ]]; then
   workspace="${output_folder}/${destination_path}"
 fi
 
