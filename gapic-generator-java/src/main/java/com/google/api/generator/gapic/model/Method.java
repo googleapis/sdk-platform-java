@@ -17,6 +17,7 @@ package com.google.api.generator.gapic.model;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nullable;
 
@@ -69,7 +70,6 @@ public abstract class Method {
   // [["content", "error"], ["content", "error", "info"]].
   public abstract ImmutableList<List<MethodArgument>> methodSignatures();
 
-  @Nullable
   public abstract List<String> autoPopulatedFields();
 
   /**
@@ -77,9 +77,7 @@ public abstract class Method {
    * method, and the method is a Unary-type, then this is true
    */
   public boolean hasAutoPopulatedFields() {
-    return autoPopulatedFields() != null
-        && autoPopulatedFields().size() > 0
-        && stream().equals(Stream.NONE);
+    return autoPopulatedFields().size() > 0 && stream() == Stream.NONE;
   }
 
   public abstract boolean operationPollingMethod();
@@ -136,6 +134,7 @@ public abstract class Method {
   public static Builder builder() {
     return new AutoValue_Method.Builder()
         .setStream(Stream.NONE)
+        .setAutoPopulatedFields(new ArrayList<>())
         .setMethodSignatures(ImmutableList.of())
         .setIsBatching(false)
         .setIsDeprecated(false)

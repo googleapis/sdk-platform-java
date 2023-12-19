@@ -16,6 +16,7 @@ package com.google.api.generator.gapic.protoparser;
 
 import com.google.api.ClientProto;
 import com.google.api.DocumentationRule;
+import com.google.api.FieldBehavior;
 import com.google.api.FieldBehaviorProto;
 import com.google.api.FieldInfo.Format;
 import com.google.api.FieldInfoProto;
@@ -695,21 +696,8 @@ public class Parser {
     List<Method> methods = new ArrayList<>();
 
     // Parse the serviceYaml for autopopulated methods and fields once and put into a map
-    ImmutableMap.Builder<String, List<String>> autoPopulatedMethodsWithFieldsBuilder =
-        ImmutableMap.builder();
-    if (serviceYamlProtoOpt.isPresent()) {
-      if (serviceYamlProtoOpt.get().getPublishing().getMethodSettingsList().size() > 0) {
-        for (MethodSettings methodSettings :
-            serviceYamlProtoOpt.get().getPublishing().getMethodSettingsList()) {
-          if (methodSettings.getAutoPopulatedFieldsCount() > 0) {
-            autoPopulatedMethodsWithFieldsBuilder.put(
-                methodSettings.getSelector(), methodSettings.getAutoPopulatedFieldsList());
-          }
-        }
-      }
-    }
     ImmutableMap<String, List<String>> autoPopulatedMethodsWithFields =
-        autoPopulatedMethodsWithFieldsBuilder.build();
+        parseAutoPopulatedMethodsAndFields(serviceYamlProtoOpt);
 
     for (MethodDescriptor protoMethod : serviceDescriptor.getMethods()) {
       // Parse the method.
@@ -724,8 +712,8 @@ public class Parser {
         }
       }
 
-      // Parse the serviceYaml for autopopulated fields
-      List<String> autoPopulatedFields = null;
+      // Associate the autopopulated fields with the correct method
+      List<String> autoPopulatedFields = new ArrayList<>();
       if (autoPopulatedMethodsWithFields.containsKey(protoMethod.getFullName())) {
         autoPopulatedFields = autoPopulatedMethodsWithFields.get(protoMethod.getFullName());
       }
@@ -1002,7 +990,7 @@ public class Parser {
     FieldOptions fieldOptions = fieldDescriptor.getOptions();
     MessageOptions messageOptions = messageDescriptor.getOptions();
     ResourceReference resourceReference = null;
-    boolean isEligibleToBeAutoPopulated = false;
+    boolean isRequired = false;
     Format fieldInfoFormat = null;
     if (fieldOptions.hasExtension(ResourceProto.resourceReference)) {
       com.google.api.ResourceReference protoResourceReference =
@@ -1034,19 +1022,14 @@ public class Parser {
       }
     }
 
-    // If field is annotated with fieldInfo.format = UUID4 and fieldBehavior != REQUIRED, then
-    // autopopulate the field
-    // TODO: Autopopulation requires fieldInfo.formatValue = UUID4; when more types are supported,
-    // this logic will need to be updated
     if (fieldOptions.hasExtension(FieldInfoProto.fieldInfo)) {
       fieldInfoFormat = fieldOptions.getExtension(FieldInfoProto.fieldInfo).getFormat();
-      if (fieldOptions.getExtension(FieldInfoProto.fieldInfo).getFormatValue() == 1) {
-        isEligibleToBeAutoPopulated = true;
-      }
     }
     if (fieldOptions.getExtensionCount(FieldBehaviorProto.fieldBehavior) > 0) {
-      if (fieldOptions.getExtension(FieldBehaviorProto.fieldBehavior).contains(2)) ;
-      isEligibleToBeAutoPopulated = false;
+      if (fieldOptions
+          .getExtension(FieldBehaviorProto.fieldBehavior)
+          .contains(FieldBehavior.REQUIRED)) ;
+      isRequired = true;
     }
 
     Field.Builder fieldBuilder = Field.builder();
@@ -1079,7 +1062,7 @@ public class Parser {
             fieldDescriptor.getContainingOneof() != null
                 && fieldDescriptor.getContainingOneof().isSynthetic())
         .setIsRepeated(fieldDescriptor.isRepeated())
-        .setIsEligibleToBeAutoPopulated(isEligibleToBeAutoPopulated)
+        .setIsRequired(isRequired)
         .setFieldInfoFormat(fieldInfoFormat)
         .setIsMap(fieldDescriptor.isMapField())
         .setResourceReference(resourceReference)
@@ -1174,5 +1157,29 @@ public class Parser {
             .mapToObj(i -> components[i])
             .collect(Collectors.toList());
     return String.join(".", nestedTypeComponents);
+  }
+
+  /**
+   * Converts a serviceYaml file to a map of methods and autopopulated fields
+   *
+   * @param
+   */
+  @VisibleForTesting
+  static ImmutableMap<String, List<String>> parseAutoPopulatedMethodsAndFields(
+      Optional<com.google.api.Service> serviceYamlProtoOpt) {
+    ImmutableMap.Builder<String, List<String>> autoPopulatedMethodsWithFieldsBuilder =
+        ImmutableMap.builder();
+    if (serviceYamlProtoOpt.isPresent()
+        && serviceYamlProtoOpt.get().hasPublishing()
+        && serviceYamlProtoOpt.get().getPublishing().getMethodSettingsList().size() > 0) {
+      for (MethodSettings methodSettings :
+          serviceYamlProtoOpt.get().getPublishing().getMethodSettingsList()) {
+        if (methodSettings.getAutoPopulatedFieldsCount() > 0) {
+          autoPopulatedMethodsWithFieldsBuilder.put(
+              methodSettings.getSelector(), methodSettings.getAutoPopulatedFieldsList());
+        }
+      }
+    }
+    return autoPopulatedMethodsWithFieldsBuilder.build();
   }
 }

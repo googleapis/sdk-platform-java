@@ -21,6 +21,7 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 import com.google.api.FieldInfo.Format;
+import com.google.api.Service;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -34,6 +35,7 @@ import com.google.api.generator.gapic.model.ResourceReference;
 import com.google.api.generator.gapic.model.Transport;
 import com.google.bookshop.v1beta1.BookshopProto;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
@@ -440,19 +442,41 @@ public class ParserTest {
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Message message = messageTypes.get("com.google.showcase.v1beta1.EchoRequest");
     Field field = message.fieldMap().get("request_id");
-    assertEquals(true, field.isEligibleToBeAutoPopulated());
+    assertEquals(false, field.isRequired());
     assertEquals(Format.UUID4, field.fieldInfoFormat());
     field = message.fieldMap().get("name");
-    assertEquals(false, field.isEligibleToBeAutoPopulated());
+    assertEquals(true, field.isRequired());
     assertEquals(null, field.fieldInfoFormat());
     field = message.fieldMap().get("severity");
-    assertEquals(false, field.isEligibleToBeAutoPopulated());
+    assertEquals(false, field.isRequired());
     assertEquals(null, field.fieldInfoFormat());
 
     message = messageTypes.get("com.google.showcase.v1beta1.ExpandRequest");
     field = message.fieldMap().get("request_id");
-    assertEquals(false, field.isEligibleToBeAutoPopulated());
+    assertEquals(false, field.isRequired());
     assertEquals(Format.IPV6, field.fieldInfoFormat());
+  }
+
+  @Test
+  public void parseAutoPopulatedMethodsAndFields_exists() {
+    ImmutableMap<String, List<String>> autoPopulatedMethodsWithFields =
+        Parser.parseAutoPopulatedMethodsAndFields(serviceYamlProtoOpt);
+    assertEquals(
+        true, autoPopulatedMethodsWithFields.containsKey("google.showcase.v1beta1.Echo.Echo"));
+    assertEquals(
+        Arrays.asList("request_id"),
+        autoPopulatedMethodsWithFields.get("google.showcase.v1beta1.Echo.Echo"));
+  }
+
+  @Test
+  public void parseAutoPopulatedMethodsAndFields_doesNotExist() {
+    String yamlFilename = "logging.yaml";
+    Path yamlPath = Paths.get(YAML_DIRECTORY, yamlFilename);
+    Optional<Service> serviceYamlProtoOpt_Null = ServiceYamlParser.parse(yamlPath.toString());
+
+    ImmutableMap<String, List<String>> autoPopulatedMethodsWithFields =
+        Parser.parseAutoPopulatedMethodsAndFields(serviceYamlProtoOpt_Null);
+    assertEquals(true, autoPopulatedMethodsWithFields.isEmpty());
   }
 
   @Test

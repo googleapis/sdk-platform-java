@@ -33,12 +33,8 @@ public abstract class Field {
 
   public abstract TypeNode type();
 
-  // If the field contains a google.api.field_info.format value of UUID4 and is not marked as
-  // REQUIRED, then it is eligible to be auto-populated if the customer does not set it.
-  // The field needs to be cross-referenced against Method.autoPopulatedFields() to make the final
-  // determination if it *should* be auto-populated.
-  // See go/client-populate-request-id-design for more details.
-  public abstract boolean isEligibleToBeAutoPopulated();
+  // If the field is annotated with google.api.field_behavior = REQUIRED, then this is true.
+  public abstract boolean isRequired();
 
   @Nullable
   public abstract Format fieldInfoFormat();
@@ -83,7 +79,8 @@ public abstract class Field {
     return name().equals(other.name())
         && originalName().equals(other.originalName())
         && type().equals(other.type())
-        && isEligibleToBeAutoPopulated() == other.isEligibleToBeAutoPopulated()
+        && isRequired() == other.isRequired()
+        && fieldInfoFormat() == other.fieldInfoFormat()
         && isMessage() == other.isMessage()
         && isEnum() == other.isEnum()
         && isRepeated() == other.isRepeated()
@@ -113,7 +110,7 @@ public abstract class Field {
 
   public static Builder builder() {
     return new AutoValue_Field.Builder()
-        .setIsEligibleToBeAutoPopulated(false)
+        .setIsRequired(false)
         .setIsMessage(false)
         .setIsEnum(false)
         .setIsRepeated(false)
@@ -130,7 +127,7 @@ public abstract class Field {
 
     public abstract Builder setType(TypeNode type);
 
-    public abstract Builder setIsEligibleToBeAutoPopulated(boolean isEligibleToBeAutoPopulated);
+    public abstract Builder setIsRequired(boolean isRequired);
 
     public abstract Builder setFieldInfoFormat(Format fieldInfoFormat);
 

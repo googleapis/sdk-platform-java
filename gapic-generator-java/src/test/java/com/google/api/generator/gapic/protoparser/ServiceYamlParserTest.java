@@ -21,6 +21,7 @@ import com.google.api.MethodSettings;
 import com.google.api.Publishing;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Optional;
 import org.junit.Test;
 
@@ -52,7 +53,7 @@ public class ServiceYamlParserTest {
     assertEquals("showcase.googleapis.com", serviceYamlProto.getName());
 
     Publishing publishingSettings = serviceYamlProto.getPublishing();
-    java.util.List<MethodSettings> methodSettings = publishingSettings.getMethodSettingsList();
+    List<MethodSettings> methodSettings = publishingSettings.getMethodSettingsList();
     MethodSettings methodSetting = methodSettings.get(0);
     assertEquals("google.showcase.v1beta1.Echo.Echo", methodSetting.getSelector());
     assertEquals("request_id", methodSetting.getAutoPopulatedFieldsList().get(0));
