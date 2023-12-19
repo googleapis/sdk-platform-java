@@ -288,6 +288,9 @@ jobs:
         java-version: 11
         distribution: temurin
     - run: mvn -version
+    - name: Unit Tests
+      run: |
+        mvn test --batch-mode --no-transfer-progress
     - name: Install Maven modules
       run: |
         mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
