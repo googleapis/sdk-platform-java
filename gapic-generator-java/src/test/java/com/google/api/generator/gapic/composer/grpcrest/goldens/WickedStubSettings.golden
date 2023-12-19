@@ -136,7 +136,6 @@ public class WickedStubSettings extends StubSettings<WickedStubSettings> {
     return defaultGrpcTransportProviderBuilder().build();
   }
 
-  @BetaApi("The surface for customizing headers is not stable yet and may change in the future.")
   public static ApiClientHeaderProvider.Builder defaultGrpcApiClientHeaderProviderBuilder() {
     return ApiClientHeaderProvider.newBuilder()
         .setGeneratedLibToken("gapic", GaxProperties.getLibraryVersion(WickedStubSettings.class))
