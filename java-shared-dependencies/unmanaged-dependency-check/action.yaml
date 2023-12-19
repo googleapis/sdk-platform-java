@@ -18,12 +18,13 @@
         maven-version: 3.8.2
     - name: Install check
       shell: bash
-      run: mvn clean install -DskipTests
+      run: mvn clean install --batch-mode --no-transfer-progress -DskipTests
       working-directory: java-shared-dependencies/unmanaged-dependency-check
     - name: Run unmanaged dependency check
       shell: bash
       run: |
         unmanaged_dependencies=$(mvn exec:java -Dexec.args="3.20.0 ${{ inputs.bom-path }}" -q)
+        echo "${unmanaged_dependencies}"
         if [[ "${unmanaged_dependencies}" != "[]" ]]; then
           echo "Unmanaged dependencies, ${unmanaged_dependencies}, found in ${{ inputs.bom-path }}."
           echo "Please follow go/add-dependency-to-cloud-sdk-java to add a third-party dependency."
