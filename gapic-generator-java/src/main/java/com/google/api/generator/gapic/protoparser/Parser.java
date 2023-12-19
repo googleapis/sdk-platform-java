@@ -1160,8 +1160,8 @@ public class Parser {
   }
 
   /**
-   * Converts a serviceYaml file to a map of methods and autopopulated fields
-   * TODO: Confirm whether or not wildcards need to be supported. If so, update this logic.
+   * Converts a serviceYaml file to a map of methods and autopopulated fields TODO: Confirm whether
+   * or not wildcards need to be supported. If so, update this logic.
    */
   @VisibleForTesting
   static ImmutableMap<String, List<String>> parseAutoPopulatedMethodsAndFields(
