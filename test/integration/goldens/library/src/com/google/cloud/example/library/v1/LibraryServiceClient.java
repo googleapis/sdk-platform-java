@@ -87,7 +87,7 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>CreateShelf</td>
- *      <td><p>Creates a shelf, and returns the new Shelf.</p></td>
+ *      <td><p> Creates a shelf, and returns the new Shelf.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -105,7 +105,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetShelf</td>
- *      <td><p>Gets a shelf. Returns NOT_FOUND if the shelf does not exist.</p></td>
+ *      <td><p> Gets a shelf. Returns NOT_FOUND if the shelf does not exist.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -124,8 +124,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ListShelves</td>
- *      <td><p>Lists shelves. The order is unspecified but deterministic. Newly created
- *  shelves will not necessarily be added to the end of this list.</p></td>
+ *      <td><p> Lists shelves. The order is unspecified but deterministic. Newly created shelves will not necessarily be added to the end of this list.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -140,7 +139,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>DeleteShelf</td>
- *      <td><p>Deletes a shelf. Returns NOT_FOUND if the shelf does not exist.</p></td>
+ *      <td><p> Deletes a shelf. Returns NOT_FOUND if the shelf does not exist.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -159,13 +158,8 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>MergeShelves</td>
- *      <td><p>Merges two shelves by adding all books from the shelf named
- *  `other_shelf_name` to shelf `name`, and deletes
- *  `other_shelf_name`. Returns the updated shelf.
- *  The book ids of the moved books may not be the same as the original books.
- *
- *  Returns NOT_FOUND if either shelf does not exist.
- *  This call is a no-op if the specified shelves are the same.</p></td>
+ *      <td><p> Merges two shelves by adding all books from the shelf named `other_shelf_name` to shelf `name`, and deletes `other_shelf_name`. Returns the updated shelf. The book ids of the moved books may not be the same as the original books.
+ * <p>  Returns NOT_FOUND if either shelf does not exist. This call is a no-op if the specified shelves are the same.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -186,7 +180,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>CreateBook</td>
- *      <td><p>Creates a book, and returns the new Book.</p></td>
+ *      <td><p> Creates a book, and returns the new Book.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -205,7 +199,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetBook</td>
- *      <td><p>Gets a book. Returns NOT_FOUND if the book does not exist.</p></td>
+ *      <td><p> Gets a book. Returns NOT_FOUND if the book does not exist.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -224,9 +218,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ListBooks</td>
- *      <td><p>Lists books in a shelf. The order is unspecified but deterministic. Newly
- *  created books will not necessarily be added to the end of this list.
- *  Returns NOT_FOUND if the shelf does not exist.</p></td>
+ *      <td><p> Lists books in a shelf. The order is unspecified but deterministic. Newly created books will not necessarily be added to the end of this list. Returns NOT_FOUND if the shelf does not exist.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -246,7 +238,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>DeleteBook</td>
- *      <td><p>Deletes a book. Returns NOT_FOUND if the book does not exist.</p></td>
+ *      <td><p> Deletes a book. Returns NOT_FOUND if the book does not exist.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -265,8 +257,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>UpdateBook</td>
- *      <td><p>Updates a book. Returns INVALID_ARGUMENT if the name of the book
- *  is non-empty and does not equal the existing name.</p></td>
+ *      <td><p> Updates a book. Returns INVALID_ARGUMENT if the name of the book is non-empty and does not equal the existing name.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -284,8 +275,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>MoveBook</td>
- *      <td><p>Moves a book to another shelf, and returns the new book. The book
- *  id of the new book may not be the same as the original book.</p></td>
+ *      <td><p> Moves a book to another shelf, and returns the new book. The book id of the new book may not be the same as the original book.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>

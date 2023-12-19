@@ -5,13 +5,13 @@
 # google/bigtable/v2 java-bigtable true
 google/cloud/apigeeconnect/v1 java-apigee-connect false
 google/cloud/asset/v1p5beta1 java-asset false
-google/cloud/asset/v1p2beta1 java-asset false
+# google/cloud/asset/v1p2beta1 java-asset false
 google/cloud/asset/v1p1beta1 java-asset false
 google/cloud/asset/v1p7beta1 java-asset false
 google/cloud/asset/v1 java-asset false
 # google/cloud/dialogflow/v2beta1 java-dialogflow false
 # google/cloud/dialogflow/v2 java-dialogflow false
-google/cloud/compute/v1 java-compute false
+# google/cloud/compute/v1 java-compute false
 google/cloud/kms/v1 java-kms false
 google/cloud/redis/v1 java-redis false
 google/cloud/redis/v1beta1 java-redis false

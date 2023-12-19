@@ -37,7 +37,6 @@ import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.ExecutorAsBackgroundResource;
 import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.rpc.internal.QuotaProjectIdHidingCredentials;
-import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.api.gax.tracing.BaseApiTracerFactory;
 import com.google.auth.Credentials;
@@ -101,6 +100,10 @@ public abstract class ClientContext {
   @Nonnull
   public abstract Duration getStreamWatchdogCheckInterval();
 
+  // Package-Private scope for internal use only. Shared between StubSettings and ClientContext
+  @Nullable
+  abstract String getServiceName();
+
   @Nullable
   public abstract String getEndpoint();
 
@@ -141,29 +144,6 @@ public abstract class ClientContext {
    */
   public static ClientContext create(ClientSettings settings) throws IOException {
     return create(settings.getStubSettings());
-  }
-
-  /** Returns the endpoint that should be used. See https://google.aip.dev/auth/4114. */
-  static String getEndpoint(
-      String endpoint,
-      String mtlsEndpoint,
-      boolean switchToMtlsEndpointAllowed,
-      MtlsProvider mtlsProvider)
-      throws IOException {
-    if (switchToMtlsEndpointAllowed) {
-      switch (mtlsProvider.getMtlsEndpointUsagePolicy()) {
-        case ALWAYS:
-          return mtlsEndpoint;
-        case NEVER:
-          return endpoint;
-        default:
-          if (mtlsProvider.useMtlsClientCertificate() && mtlsProvider.getKeyStore() != null) {
-            return mtlsEndpoint;
-          }
-          return endpoint;
-      }
-    }
-    return endpoint;
   }
 
   /**
@@ -224,12 +204,16 @@ public abstract class ClientContext {
     if (transportChannelProvider.needsCredentials() && credentials != null) {
       transportChannelProvider = transportChannelProvider.withCredentials(credentials);
     }
-    String endpoint =
-        getEndpoint(
-            settings.getEndpoint(),
-            settings.getMtlsEndpoint(),
-            settings.getSwitchToMtlsEndpointAllowed(),
-            new MtlsProvider());
+    EndpointContext endpointContext =
+        EndpointContext.newBuilder()
+            .setServiceName(settings.getServiceName())
+            .setClientSettingsEndpoint(settings.getEndpoint())
+            .setTransportChannelProviderEndpoint(
+                settings.getTransportChannelProvider().getEndpoint())
+            .setMtlsEndpoint(settings.getMtlsEndpoint())
+            .setSwitchToMtlsEndpointAllowed(settings.getSwitchToMtlsEndpointAllowed())
+            .build();
+    String endpoint = endpointContext.getResolvedEndpoint();
     if (transportChannelProvider.needsEndpoint()) {
       transportChannelProvider = transportChannelProvider.withEndpoint(endpoint);
     }
@@ -279,6 +263,7 @@ public abstract class ClientContext {
         .setInternalHeaders(ImmutableMap.copyOf(settings.getInternalHeaderProvider().getHeaders()))
         .setClock(clock)
         .setDefaultCallContext(defaultCallContext)
+        .setServiceName(settings.getServiceName())
         .setEndpoint(settings.getEndpoint())
         .setQuotaProjectId(settings.getQuotaProjectId())
         .setStreamWatchdog(watchdog)
@@ -343,6 +328,9 @@ public abstract class ClientContext {
     public abstract Builder setClock(ApiClock clock);
 
     public abstract Builder setDefaultCallContext(ApiCallContext defaultCallContext);
+
+    // Package-Private scope for internal use only. Shared between StubSettings and ClientContext
+    abstract Builder setServiceName(String serviceName);
 
     public abstract Builder setEndpoint(String endpoint);
 
