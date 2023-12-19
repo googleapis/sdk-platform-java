@@ -36,10 +36,6 @@ case $key in
     enable_postprocessing="$2"
     shift
     ;;
-  -s|--owlbot_sha)
-    owlbot_sha="$2"
-    shift
-    ;;
   -g|--googleapis_gen_url)
     googleapis_gen_url="$2"
     shift
@@ -117,6 +113,7 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   else
     echo 'this is a monorepo library'
     sparse_clone "https://github.com/googleapis/google-cloud-java.git" "${repository_path} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"
+
     # compute path from output_folder to source of truth library location
     # (e.g. google-cloud-java/java-compute)
     repository_path="google-cloud-java/${repository_path}"
@@ -173,11 +170,6 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   echo "Generate library finished."
   echo "Compare generation result..."
   if [ $enable_postprocessing == "true" ]; then
-    if [ $(find "${output_folder}/workspace" -name '*.java' | wc -l) -eq 0 ];
-    then
-      echo 'no java files found in workspace. This probably means that owlbot copy failed'
-      exit 1
-    fi
     echo "Checking out repository..."
     pushd "${target_folder}"
     source_diff_result=0
@@ -199,7 +191,7 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
       rm -rdf google-cloud-java
     elif [ ${source_diff_result} != 0 ]; then
       echo "FAILURE: Differences found in proto path: ${proto_path}."
-      exit "${SOURCE_DIFF_RESULT}"
+      exit "${source_diff_result}"
     elif [ ${pom_diff_result} != 0 ]; then
       echo "FAILURE: Differences found in generated poms"
       exit "${pom_diff_result}"

@@ -77,7 +77,7 @@ get_gapic_opts_with_non_default_test() {
 remove_grpc_version_test() {
   local destination_path="${script_dir}/resources/gapic_options"
   cp "${destination_path}/QueryServiceGrpc_copy.java" "${destination_path}/QueryServiceGrpc.java"
-  remove_grpc_version
+  remove_grpc_version "${destination_path}"
   local res=0
   if ! grep -q 'value = "by gRPC proto compiler",' "${destination_path}/QueryServiceGrpc.java"; then
     echo "Error: grpc version is not removed."
@@ -305,41 +305,11 @@ get_version_from_valid_WORKSPACE_test() {
   assertEquals '2.25.1-SNAPSHOT' "${obtained_ggj_version}"
 }
 
-get_repo_metadata_json_valid_repo_succeeds() {
-  local output_folder="${script_dir}/resources"
-  local repository_path="test-monorepo/test-service"
-  local repo_metadata_json=$(get_repo_metadata_json "${repository_path}" "${output_folder}")
-  assertEquals "${output_folder}/${repository_path}/.repo-metadata.json" \
-    "${repo_metadata_json}"
-}
-
-get_repo_metadata_json_invalid_repo_fails() {
-  local output_folder="${script_dir}/resources"
-  local repository_path="test-monorepo/java-nonexistent"
-  $(get_repo_metadata_json "${repository_path}" "${output_folder}") || res=$?
-  assertEquals 1 ${res}
-}
-
-get_owlbot_sha_valid_repo_succeeds() {
-  local output_folder="${script_dir}/resources"
-  local repository_root="test-monorepo"
-  local owlbot_sha=$(get_owlbot_sha "${output_folder}" "${repository_root}")
-  assertEquals 'fb7584f6adb3847ac480ed49a4bfe1463965026b2919a1be270e3174f3ce1191' \
-    "${owlbot_sha}"
-}
-
-get_owlbot_sha_invalid_repo_fails() {
-  local output_folder="${script_dir}/resources"
-  local repository_root="nonexistent-repo"
-  $(get_owlbot_sha "${output_folder}" "${repository_root}") || res=$?
-  assertEquals 1 ${res}
-}
-
 copy_directory_if_exists_valid_folder_succeeds() {
   local source_folder="${script_dir}/resources"
   local destination="${script_dir}/test_destination_folder"
   mkdir -p "${destination}"
-  copy_directory_if_exists "${source_folder}" "${destination}/copied-folder"
+  copy_directory_if_exists "${source_folder}" "gapic" "${destination}/copied-folder"
   n_matching_folders=$(ls "${destination}" | grep -e 'copied-folder' | wc -l)
   rm -rdf "${destination}"
   assertEquals 1 ${n_matching_folders}
@@ -349,10 +319,32 @@ copy_directory_if_exists_invalid_folder_does_not_copy() {
   local source_folder="${script_dir}/non-existent"
   local destination="${script_dir}/test_destination_folder"
   mkdir -p "${destination}"
-  copy_directory_if_exists "${source_folder}" "${destination}/copied-folder"
+  copy_directory_if_exists "${source_folder}" "gapic" "${destination}/copied-folder"
   n_matching_folders=$(ls "${destination}" | grep -e 'copied-folder' | wc -l) || res=$?
   rm -rdf "${destination}"
   assertEquals 0 ${n_matching_folders}
+}
+
+get_proto_path_from_preprocessed_sources_valid_library_succeeds() {
+  local sources="${script_dir}/resources/proto_path_library"
+  local proto_path=$(get_proto_path_from_preprocessed_sources "${sources}")
+  assertEquals "google/cloud/test/v1" ${proto_path}
+}
+
+get_proto_path_from_preprocessed_sources_empty_library_fails() {
+  local sources=$(mktemp -d)
+  (
+    get_proto_path_from_preprocessed_sources "${sources}"
+  ) || res=$?
+  assertEquals 1 ${res}
+}
+
+get_proto_path_from_preprocessed_sources_multiple_proto_dirs_fails() {
+  local sources="${script_dir}/resources/proto_path_library_multiple_protos"
+  (
+    get_proto_path_from_preprocessed_sources "${sources}"
+  ) || res=$?
+  assertEquals 1 ${res}
 }
 
 # Execute tests.
@@ -394,12 +386,11 @@ test_list=(
   get_include_samples_from_BUILD_false_test
   get_include_samples_from_BUILD_empty_test
   get_version_from_valid_WORKSPACE_test
-  get_repo_metadata_json_valid_repo_succeeds
-  get_repo_metadata_json_invalid_repo_fails
-  get_owlbot_sha_valid_repo_succeeds
-  get_owlbot_sha_invalid_repo_fails
   copy_directory_if_exists_valid_folder_succeeds
   copy_directory_if_exists_invalid_folder_does_not_copy
+  get_proto_path_from_preprocessed_sources_valid_library_succeeds
+  get_proto_path_from_preprocessed_sources_empty_library_fails
+  get_proto_path_from_preprocessed_sources_multiple_proto_dirs_fails
 )
 
 pushd "${script_dir}"

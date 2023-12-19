@@ -11,6 +11,7 @@ extract_folder_name() {
 
 remove_empty_files() {
   local category=$1
+  local destination_path=$2
   local file_num
   find "${destination_path}/${category}-${folder_name}/src/main/java" -type f -size 0 | while read -r f; do rm -f "${f}"; done
   # remove the directory if the directory has no files.
@@ -28,6 +29,7 @@ remove_empty_files() {
 mv_src_files() {
   local category=$1 # one of gapic, proto, samples
   local type=$2 # one of main, test
+  local destination_path=$3
   if [ "${category}" == "samples" ]; then
     src_suffix="samples/snippets/generated/src/main/java/com"
     folder_suffix="samples/snippets/generated"
@@ -48,6 +50,7 @@ mv_src_files() {
 # unzip jar file
 unzip_src_files() {
   local category=$1
+  local destination_path=$2
   local jar_file=java_${category}.jar
   mkdir -p "${destination_path}/${category}-${folder_name}/src/main/java"
   unzip -q -o "${destination_path}/${jar_file}" -d "${destination_path}/${category}-${folder_name}/src/main/java"
@@ -83,6 +86,7 @@ get_gapic_opts() {
 }
 
 remove_grpc_version() {
+  local destination_path=$1
   find "${destination_path}" -type f -name "*Grpc.java" -exec \
   sed -i.bak 's/value = \"by gRPC proto compiler.*/value = \"by gRPC proto compiler\",/g' {}  \; -exec rm {}.bak \;
 }
@@ -225,50 +229,41 @@ detect_os_architecture() {
   echo "${os_architecture}"
 }
 
-# returns the metadata json path if given, or defaults to the one found in
-# $repository_path
-# Arguments
-# 1 - repository_path: path from output_folder to the location of the library
-# containing .repo-metadata. It assumes the existence of google-cloud-java in
-# the output folder
-# 2 - output_folder: root for the generated libraries, used in conjunction with
-get_repo_metadata_json() {
-  local repository_path=$1
-  local output_folder=$2
-  >&2 echo 'Attempting to obtain .repo-metadata.json from repository_path'
-  local default_metadata_json_path="${output_folder}/${repository_path}/.repo-metadata.json"
-  if [ -f "${default_metadata_json_path}" ]; then
-    echo "${default_metadata_json_path}"
-  else
-    >&2 echo 'failed to obtain json from repository_path'
-    exit 1
-  fi
-}
-
-# returns the owlbot image sha contained in google-cloud-java. This is default
-# behavior that may be overriden by a custom value in the future.
-# Arguments
-# 1 - output_folder: root for the generated libraries, used in conjunction with
-# 2 - repository_root: usually "google-cloud-java". The .OwlBot.yaml
-# file is looked into its .github folder
-get_owlbot_sha() {
-  local output_folder=$1
-  local repository_root=$2
-  if [ ! -d "${output_folder}/${repository_root}" ];
-  then
-    >&2 echo 'No repository to infer owlbot_sha was provided. This is necessary for post-processing' >&2
-    exit 1
-  fi
-  >&2 echo "Attempting to obtain owlbot_sha from monorepo folder"
-  owlbot_sha=$(grep 'sha256' "${output_folder}/${repository_root}/.github/.OwlBot.lock.yaml" | cut -d: -f3)
-  echo "${owlbot_sha}"
-}
 
 # copies $1 as a folder as $2 only if $1 exists
 copy_directory_if_exists() {
-  local source_folder=$1
-  local destination_folder=$2
-  if [ -d "${source_folder}" ]; then
-    cp -r "${source_folder}" "${destination_folder}"
+  local base_folder=$1
+  local folder_prefix=$2
+  local destination_folder=$3
+  if [ ! -d "${base_folder}" ]; then
+    return
   fi
+  pushd "${base_folder}"
+  if [[ $(find . -maxdepth 1 -type d -name "${folder_prefix}*" | wc -l ) -gt 0  ]]; then
+    cp -r ${base_folder}/${folder_prefix}* "${destination_folder}"
+  fi
+  popd # base_folder
+}
+
+# computes proto_path from a given folder of GAPIC sources
+# It will inspect the proto library to compute the path
+get_proto_path_from_preprocessed_sources() {
+  set -e
+  local sources=$1
+  pushd "${sources}" > /dev/null
+  local proto_library=$(find . -maxdepth 1 -type d -name 'proto-*' | sed 's/\.\///')
+  local found_libraries=$(echo "${proto_library}" | wc -l)
+  if [ -z ${proto_library} ]; then
+    echo "no proto libraries found in the supplied sources path"
+    exit 1
+  elif [ ${found_libraries} -gt 1 ]; then
+    echo "more than one proto library found in the supplied sources path"
+    echo "cannot decide for a service version"
+    exit 1
+  fi
+  pushd "$(pwd)/${proto_library}/src/main/proto" > /dev/null
+  local result=$(find . -type f -name '*.proto' | head -n 1 | xargs dirname | sed 's/\.\///')
+  popd > /dev/null # proto_library
+  popd > /dev/null # sources
+  echo "${result}"
 }
