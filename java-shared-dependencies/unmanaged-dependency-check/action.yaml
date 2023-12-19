@@ -1,5 +1,5 @@
   name: "Unmanaged dependency check"
-  description: "Validation for "
+  description: "Checks whether there's a dependency that is not managed by java shared dependencies."
   inputs:
     bom-path:
       description: "The relative path from the repository root to the pom.xml file"
