@@ -14,8 +14,16 @@ import java.util.stream.Collectors;
 import org.eclipse.aether.resolution.ArtifactDescriptorException;
 import org.eclipse.aether.version.InvalidVersionSpecificationException;
 
+/**
+ * A utility class to check unmanaged dependencies in BOM.
+ */
 public class UnmanagedDependencyCheck {
 
+  /**
+   * @param args An array with two elements.<p>
+   * The first string is the version of Java shared dependencies. <p>
+   * The second string is the path of a pom.xml contains BOM.
+   */
   public static void main(String[] args)
       throws MavenRepositoryException, ArtifactDescriptorException, InvalidVersionSpecificationException {
     checkArgument(args.length == 2, "The length of the inputs should be 2");
@@ -28,8 +36,11 @@ public class UnmanagedDependencyCheck {
    * @param sharedDependencyVersion the version of shared dependency BOM
    * @param projectBomPath the path of current project BOM
    * @return a list of unmanaged dependencies by the given version of shared dependency BOM
-   * @throws ArtifactDescriptorException
-   * @throws MavenRepositoryException
+   * @throws ArtifactDescriptorException thrown if the artifact descriptor is unreachable
+   * @throws MavenRepositoryException thrown if the artifacts in Bom can't be reached in remote or
+   * local Maven repository
+   * @throws InvalidVersionSpecificationException thrown if the shared dependency version can't be
+   * parsed
    */
   public static List<String> getUnmanagedDependencies(
       String sharedDependencyVersion, String projectBomPath)
