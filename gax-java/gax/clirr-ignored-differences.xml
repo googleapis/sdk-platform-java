@@ -25,9 +25,15 @@
     <className>com/google/api/gax/rpc/TransportChannelProvider</className>
     <method>* getEndpoint()</method>
   </difference>
+  <!-- Add Endpoint Context to ApiCallContext -->
   <difference>
     <differenceType>7012</differenceType>
     <className>com/google/api/gax/rpc/ApiCallContext</className>
     <method>* withEndpointContext(*)</method>
   </difference>
+  <difference>
+    <differenceType>7012</differenceType>
+    <className>com/google/api/gax/rpc/ApiCallContext</className>
+    <method>* getEndpointContext()</method>
+  </difference>getEndpointContext()
 </differences>
