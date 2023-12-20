@@ -56,6 +56,8 @@ def _java_gapic_assembly_pkg_impl(ctx):
         proto_path = ctx.attr.proto_path,
         destination_path = ctx.attr.destination_path,
         gapic_generator_java_version = ctx.attr.gapic_generator_version,
+        transport = ctx.attr.transport,
+        include_samples = ctx.attr.include_samples,
     )
 
     ctx.actions.run(
@@ -76,6 +78,8 @@ java_gapic_assembly_pkg = rule(
         "destination_path": attr.string(mandatory = True),
         "gapic_generator_version": attr.string(mandatory = True),
         "protobuf_version": attr.string(mandatory = False, default = ""),
+        "transport": attr.string(mandatory = False, default = "grpc"),
+        "include_samples": attr.string(mandatory = False, default = "true"),
         "_generation_tool": attr.label(
             default = Label("@gapic_generator_java//library_generation:generate_library"),
             executable = True,
