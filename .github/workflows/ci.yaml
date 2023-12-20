@@ -292,10 +292,6 @@ jobs:
       run: |
         mvn test --batch-mode --no-transfer-progress
       working-directory: java-shared-dependencies/unmanaged-dependency-check
-    - name: Install unmanaged-dependency-check
-      run: |
-        mvn install --batch-mode --no-transfer-progress -DskipTests
-      working-directory: java-shared-dependencies/unmanaged-dependency-check
     - name: Unmanaged dependency check
       uses: ./java-shared-dependencies/unmanaged-dependency-check
       with:
