@@ -50,20 +50,11 @@ public abstract class EndpointContext {
    * `{ServiceName}.googleapis.com`. For example, speech.googleapis.com would have a ServiceName of
    * speech and cloudasset.googleapis.com would have a ServiceName of cloudasset.
    */
-  // TODO: Remove @Nullable after first release 2024 (Builder will default to "").
   @Nullable
   public abstract String serviceName();
 
   @Nullable
   public abstract String universeDomain();
-
-  /**
-   * ServiceName is host URI for Google Cloud Services. It follows the format of
-   * `{ServiceName}.googleapis.com`. For example, speech.googleapis.com would have a ServiceName of
-   * speech and cloudasset.googleapis.com would have a ServiceName of cloudasset.
-   */
-  @Nullable
-  public abstract String serviceName();
 
   /**
    * ClientSettingsEndpoint is the endpoint value set via the ClientSettings/StubSettings classes.
@@ -206,13 +197,6 @@ public abstract class EndpointContext {
     public abstract Builder setServiceName(String serviceName);
 
     public abstract Builder setUniverseDomain(String universeDomain);
-
-    /**
-     * ServiceName is host URI for Google Cloud Services. It follows the format of
-     * `{ServiceName}.googleapis.com`. For example, speech.googleapis.com would have a ServiceName
-     * of speech and cloudasset.googleapis.com would have a ServiceName of cloudasset.
-     */
-    public abstract Builder setServiceName(String serviceName);
 
     /**
      * ClientSettingsEndpoint is the endpoint value set via the ClientSettings/StubSettings classes.
