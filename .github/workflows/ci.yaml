@@ -298,4 +298,4 @@ jobs:
     - name: Unmanaged dependency check
       uses: ./java-shared-dependencies/unmanaged-dependency-check
       with:
-        bom-path: ../../gapic-generator-java-bom/pom.xml
+        bom-path: gapic-generator-java-bom/pom.xml
