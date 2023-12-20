@@ -25,8 +25,8 @@
     - name: Run unmanaged dependency check
       shell: bash
       run: |
-        cd ${{ github.action_path }}
         bom_absolute_path=$(realpath "${{ inputs.bom-path }}")
+        cd ${{ github.action_path }}
         echo "Running Unmanaged Dependency Check against ${bom_absolute_path}"
         unmanaged_dependencies=$(mvn exec:java -Dexec.args="3.20.0 ${bom_absolute_path}" -q)
         if [[ "${unmanaged_dependencies}" != "[]" ]]; then
