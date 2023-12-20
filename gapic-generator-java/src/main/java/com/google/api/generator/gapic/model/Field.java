@@ -33,7 +33,9 @@ public abstract class Field {
 
   public abstract TypeNode type();
 
-  // If the field is annotated with google.api.field_behavior = REQUIRED, then this is true.
+  // If the field is annotated with google.api.field_behavior = REQUIRED, then this is true. This is
+  // currently only used to check if a field should be auto-populated. If it is true, then it should
+  // *not* be autopopulated.
   public abstract boolean isRequired();
 
   @Nullable
