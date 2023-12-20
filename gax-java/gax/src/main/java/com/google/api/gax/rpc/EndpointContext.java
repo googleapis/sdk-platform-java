@@ -33,13 +33,30 @@ import com.google.api.core.InternalApi;
 import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Strings;
 import java.io.IOException;
 import javax.annotation.Nullable;
 
-/** Contains the fields required to resolve the endpoint */
+/** Contains the fields required to resolve the endpoint and Universe Domain */
 @InternalApi
 @AutoValue
 public abstract class EndpointContext {
+  // Default to port 443 for HTTPS. Using HTTP requires explicitly setting the endpoint
+  private static final String ENDPOINT_TEMPLATE = "SERVICE_NAME.UNIVERSE_DOMAIN:443";
+  static final String GOOGLE_DEFAULT_UNIVERSE = "googleapis.com";
+
+  /**
+   * ServiceName is host URI for Google Cloud Services. It follows the format of
+   * `{ServiceName}.googleapis.com`. For example, speech.googleapis.com would have a ServiceName of
+   * speech and cloudasset.googleapis.com would have a ServiceName of cloudasset.
+   */
+  // TODO: Remove @Nullable after first release 2024 (Builder will default to "").
+  @Nullable
+  public abstract String serviceName();
+
+  @Nullable
+  public abstract String universeDomain();
+
   /**
    * ServiceName is host URI for Google Cloud Services. It follows the format of
    * `{ServiceName}.googleapis.com`. For example, speech.googleapis.com would have a ServiceName of
@@ -69,28 +86,76 @@ public abstract class EndpointContext {
   @Nullable
   public abstract MtlsProvider mtlsProvider();
 
+  public abstract boolean usingGDCH();
+
   public abstract Builder toBuilder();
 
   private String resolvedEndpoint;
+  private String resolvedUniverseDomain;
 
   public static Builder newBuilder() {
-    return new AutoValue_EndpointContext.Builder().setSwitchToMtlsEndpointAllowed(false);
+    return new AutoValue_EndpointContext.Builder()
+        .setSwitchToMtlsEndpointAllowed(false)
+        .setUsingGDCH(false);
   }
 
+  /** Determines the fully resolved endpoint and universe domain values */
   @VisibleForTesting
   void determineEndpoint() throws IOException {
     MtlsProvider mtlsProvider = mtlsProvider() == null ? new MtlsProvider() : mtlsProvider();
+    // TransportChannelProvider's endpoint will override the ClientSettings' endpoint
     String customEndpoint =
         transportChannelProviderEndpoint() == null
             ? clientSettingsEndpoint()
             : transportChannelProviderEndpoint();
-    resolvedEndpoint =
-        mtlsEndpointResolver(
-            customEndpoint, mtlsEndpoint(), switchToMtlsEndpointAllowed(), mtlsProvider);
+
+    // GDC-H has a separate flow
+    if (usingGDCH()) {
+      determineGDCHEndpoint(customEndpoint);
+      return;
+    }
+    // Check for "" (empty string)
+    if (universeDomain() != null && universeDomain().isEmpty()) {
+      throw new IllegalArgumentException("The universe domain value cannot be empty.");
+    }
+    // Universe Domain defaults to the GDU if it's not provided by the user.
+    resolvedUniverseDomain = universeDomain() != null ? universeDomain() : GOOGLE_DEFAULT_UNIVERSE;
+
+    if (Strings.isNullOrEmpty(customEndpoint)) {
+      customEndpoint = buildEndpointTemplate(serviceName(), resolvedUniverseDomain);
+      resolvedEndpoint =
+          mtlsEndpointResolver(
+              customEndpoint, mtlsEndpoint(), switchToMtlsEndpointAllowed(), mtlsProvider);
+      // Check if mTLS is configured with non-GDU
+      if (resolvedEndpoint.equals(mtlsEndpoint())
+          && !resolvedUniverseDomain.equals(GOOGLE_DEFAULT_UNIVERSE)) {
+        throw new IllegalArgumentException(
+            "mTLS is not supported in any universe other than googleapis.com");
+      }
+    } else {
+      resolvedEndpoint = customEndpoint;
+    }
   }
 
-  // This takes in parameters because determineEndpoint()'s logic will be updated
-  // to pass custom values in.
+  // GDC-H has no concept of Universe Domain. Do not set the resolvedUniverseDomain value
+  private void determineGDCHEndpoint(String customEndpoint) {
+    if (universeDomain() != null) {
+      throw new IllegalArgumentException(
+          "Universe domain configuration is incompatible with GDC-H");
+    } else if (customEndpoint == null) {
+      resolvedEndpoint = buildEndpointTemplate(serviceName(), GOOGLE_DEFAULT_UNIVERSE);
+    } else {
+      resolvedEndpoint = customEndpoint;
+    }
+  }
+
+  // Construct the endpoint with the template
+  private String buildEndpointTemplate(String serviceName, String resolvedUniverseDomain) {
+    return ENDPOINT_TEMPLATE
+        .replace("SERVICE_NAME", serviceName)
+        .replace("UNIVERSE_DOMAIN", resolvedUniverseDomain);
+  }
+
   // Follows https://google.aip.dev/auth/4114 for resolving the endpoint
   @VisibleForTesting
   String mtlsEndpointResolver(
@@ -123,8 +188,25 @@ public abstract class EndpointContext {
     return resolvedEndpoint;
   }
 
+  /**
+   * The resolved Universe Domain is the computed Universe Domain after accounting for the custom
+   * Universe Domain
+   */
+  public String getResolvedUniverseDomain() {
+    return resolvedUniverseDomain;
+  }
+
   @AutoValue.Builder
   public abstract static class Builder {
+    /**
+     * ServiceName is host URI for Google Cloud Services. It follows the format of
+     * `{ServiceName}.googleapis.com`. For example, speech.googleapis.com would have a ServiceName
+     * of speech and cloudasset.googleapis.com would have a ServiceName of cloudasset.
+     */
+    public abstract Builder setServiceName(String serviceName);
+
+    public abstract Builder setUniverseDomain(String universeDomain);
+
     /**
      * ServiceName is host URI for Google Cloud Services. It follows the format of
      * `{ServiceName}.googleapis.com`. For example, speech.googleapis.com would have a ServiceName
@@ -148,6 +230,8 @@ public abstract class EndpointContext {
     public abstract Builder setSwitchToMtlsEndpointAllowed(boolean switchToMtlsEndpointAllowed);
 
     public abstract Builder setMtlsProvider(MtlsProvider mtlsProvider);
+
+    public abstract Builder setUsingGDCH(boolean usingGDCH);
 
     abstract EndpointContext autoBuild();
 

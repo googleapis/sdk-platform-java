@@ -73,6 +73,7 @@ import org.threeten.bp.Duration;
 @RunWith(JUnit4.class)
 public class ClientContextTest {
   private static final String DEFAULT_ENDPOINT = "test.googleapis.com";
+  private static final String DEFAULT_UNIVERSE_DOMAIN = "googleapis.com";
 
   private static class InterceptingExecutor extends ScheduledThreadPoolExecutor {
     boolean shutdownCalled = false;
@@ -180,6 +181,11 @@ public class ClientContextTest {
     @Override
     public String getEndpoint() {
       return endpoint;
+    }
+
+    @Override
+    public boolean needsResolvedEndpoint() {
+      return true;
     }
 
     @Override
@@ -788,14 +794,44 @@ public class ClientContextTest {
         FakeTransportChannel.create(new FakeChannel()), null, true, null, null, DEFAULT_ENDPOINT);
   }
 
+  // EndpointContext will construct a valid endpoint if nothing is provided
   @Test
-  public void testCreateClientContext_withGdchCredentialNoAudienceNoEndpoint_throws()
-      throws IOException {
-    TransportChannelProvider transportChannelProvider = getFakeTransportChannelProvider();
+  public void testCreateClientContext_withGdchCredentialNoAudienceNoEndpoint() throws IOException {
+    TransportChannelProvider transportChannelProvider =
+        new FakeTransportProvider(
+            FakeTransportChannel.create(new FakeChannel()), null, true, null, null, null);
     Credentials creds = getMockGdchCredentials();
 
     CredentialsProvider provider = FixedCredentialsProvider.create(creds);
     StubSettings settings = new FakeStubSettings.Builder().setGdchApiAudience(null).build();
+    FakeClientSettings.Builder clientSettingsBuilder = new FakeClientSettings.Builder(settings);
+    clientSettingsBuilder.setCredentialsProvider(provider);
+    clientSettingsBuilder.setTransportChannelProvider(transportChannelProvider);
+
+    ClientContext context = ClientContext.create(clientSettingsBuilder.build());
+
+    Credentials fromContext = context.getCredentials();
+    Credentials fromProvider = provider.getCredentials();
+    assertNotNull(fromProvider);
+    assertNotNull(fromContext);
+    assertThat(fromContext).isInstanceOf(GdchCredentials.class);
+    assertThat(fromProvider).isInstanceOf(GdchCredentials.class);
+    assertNotSame(fromContext, fromProvider);
+    verify((GdchCredentials) fromProvider, times(1))
+        .createWithGdchAudience(URI.create("test.googleapis.com:443"));
+  }
+
+  @Test
+  public void testCreateClientContext_withGdchCredentialNoAudienceEmptyEndpoint_throws()
+      throws IOException {
+    TransportChannelProvider transportChannelProvider =
+        new FakeTransportProvider(
+            FakeTransportChannel.create(new FakeChannel()), null, true, null, null, null);
+    Credentials creds = getMockGdchCredentials();
+
+    CredentialsProvider provider = FixedCredentialsProvider.create(creds);
+    StubSettings settings =
+        new FakeStubSettings.Builder().setGdchApiAudience(null).setEndpoint("").build();
     FakeClientSettings.Builder clientSettingsBuilder = new FakeClientSettings.Builder(settings);
     clientSettingsBuilder.setCredentialsProvider(provider);
     clientSettingsBuilder.setTransportChannelProvider(transportChannelProvider);
@@ -811,7 +847,9 @@ public class ClientContextTest {
   @Test
   public void testCreateClientContext_withGdchCredentialWithoutAudienceWithEndpoint_correct()
       throws IOException {
-    TransportChannelProvider transportChannelProvider = getFakeTransportChannelProvider();
+    TransportChannelProvider transportChannelProvider =
+        new FakeTransportProvider(
+            FakeTransportChannel.create(new FakeChannel()), null, true, null, null, null);
     Credentials creds = getMockGdchCredentials();
 
     // it should correctly create a client context with gdch creds and null audience
@@ -934,6 +972,7 @@ public class ClientContextTest {
     ClientSettings clientSettings = clientSettingsBuilder.build();
     ClientContext clientContext = ClientContext.create(clientSettings);
     assertThat(clientContext.getEndpoint()).isEqualTo(DEFAULT_ENDPOINT);
+    assertThat(clientContext.getUniverseDomain()).isEqualTo(DEFAULT_UNIVERSE_DOMAIN);
   }
 
   @Test
@@ -955,6 +994,7 @@ public class ClientContextTest {
     ClientContext clientContext = ClientContext.create(clientSettings);
     // ClientContext.getEndpoint() currently always refers to the ClientSettingsEndpoint value
     assertThat(clientContext.getEndpoint()).isEqualTo(null);
+    assertThat(clientContext.getUniverseDomain()).isEqualTo(DEFAULT_UNIVERSE_DOMAIN);
   }
 
   @Test
@@ -980,5 +1020,38 @@ public class ClientContextTest {
     ClientContext clientContext = ClientContext.create(clientSettings);
     // ClientContext.getEndpoint() currently always refers to the ClientSettingsEndpoint value
     assertThat(clientContext.getEndpoint()).isEqualTo(clientSettingsEndpoint);
+    assertThat(clientContext.getUniverseDomain()).isEqualTo(DEFAULT_UNIVERSE_DOMAIN);
+  }
+
+  @Test
+  public void testCreateClientContext_doNotSetUniverseDomain() throws IOException {
+    TransportChannelProvider transportChannelProvider =
+        new FakeTransportProvider(
+            FakeTransportChannel.create(new FakeChannel()), null, true, null, null, null);
+    StubSettings settings = new FakeStubSettings.Builder().setEndpoint(null).build();
+    ClientSettings.Builder clientSettingsBuilder = new FakeClientSettings.Builder(settings);
+    clientSettingsBuilder.setTransportChannelProvider(transportChannelProvider);
+    clientSettingsBuilder.setCredentialsProvider(
+        FixedCredentialsProvider.create(Mockito.mock(Credentials.class)));
+    ClientSettings clientSettings = clientSettingsBuilder.build();
+    ClientContext clientContext = ClientContext.create(clientSettings);
+    assertThat(clientContext.getUniverseDomain()).isEqualTo(DEFAULT_UNIVERSE_DOMAIN);
+  }
+
+  @Test
+  public void testCreateClientContext_setUniverseDomain() throws IOException {
+    TransportChannelProvider transportChannelProvider =
+        new FakeTransportProvider(
+            FakeTransportChannel.create(new FakeChannel()), null, true, null, null, null);
+    String universeDomain = "testdomain.com";
+    StubSettings settings =
+        new FakeStubSettings.Builder().setEndpoint(null).setUniverseDomain(universeDomain).build();
+    ClientSettings.Builder clientSettingsBuilder = new FakeClientSettings.Builder(settings);
+    clientSettingsBuilder.setTransportChannelProvider(transportChannelProvider);
+    clientSettingsBuilder.setCredentialsProvider(
+        FixedCredentialsProvider.create(Mockito.mock(Credentials.class)));
+    ClientSettings clientSettings = clientSettingsBuilder.build();
+    ClientContext clientContext = ClientContext.create(clientSettings);
+    assertThat(clientContext.getUniverseDomain()).isEqualTo(universeDomain);
   }
 }
