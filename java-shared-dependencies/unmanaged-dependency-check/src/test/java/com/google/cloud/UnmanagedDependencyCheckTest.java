@@ -28,5 +28,8 @@ public class UnmanagedDependencyCheckTest {
             "3.18.0", "src/test/resources/transitive-dependency-pom.xml");
     assertThat(unManagedDependencies)
         .containsAtLeastElementsIn(ImmutableList.of("com.h2database:h2"));
+    // test dependency should be ignored.
+    assertThat(unManagedDependencies)
+        .doesNotContain(ImmutableList.of("com.mysql:mysql-connector-j"));
   }
 }
