@@ -23,10 +23,12 @@
     - name: Run unmanaged dependency check
       shell: bash
       run: |
-        cd java-shared-dependencies/unmanaged-dependency-check
+        pwd
         unmanaged_dependencies=$(mvn exec:java -Dexec.args="3.20.0 ${{ inputs.bom-path }}" -q)
         if [[ "${unmanaged_dependencies}" != "[]" ]]; then
           echo "Unmanaged dependencies, ${unmanaged_dependencies}, found in ${{ inputs.bom-path }}."
           echo "Please follow go/add-dependency-to-cloud-sdk-java to add a third-party dependency."
           exit 1
-        fi        
+        fi
+      working-directory: java-shared-dependencies/unmanaged-dependency-check
+
