@@ -23,7 +23,6 @@
     - name: Run unmanaged dependency check
       shell: bash
       run: |
-        mvn exec:java -Dexec.args="3.20.0 ${{ inputs.bom-path }}"
         unmanaged_dependencies=$(mvn exec:java -Dexec.args="3.20.0 ${{ inputs.bom-path }}" -q)
         if [[ "${unmanaged_dependencies}" != "[]" ]]; then
           echo "Unmanaged dependencies, ${unmanaged_dependencies}, found in ${{ inputs.bom-path }}."
