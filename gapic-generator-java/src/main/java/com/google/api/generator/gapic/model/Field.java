@@ -100,6 +100,8 @@ public abstract class Field {
         + 19 * type().hashCode()
         + (isMessage() ? 1 : 0) * 23
         + (isEnum() ? 1 : 0) * 29
+        + (isRequired() ? 1 : 0) * 31
+        + 31 * fieldInfoFormat().hashCode()
         + (isRepeated() ? 1 : 0) * 31
         + (isMap() ? 1 : 0) * 37
         + (isContainedInOneof() ? 1 : 0) * 41

@@ -21,6 +21,8 @@ import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
 import com.google.api.FieldInfo.Format;
+import com.google.api.MethodSettings;
+import com.google.api.Publishing;
 import com.google.api.Service;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Reference;
@@ -35,7 +37,6 @@ import com.google.api.generator.gapic.model.ResourceReference;
 import com.google.api.generator.gapic.model.Transport;
 import com.google.bookshop.v1beta1.BookshopProto;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
@@ -459,7 +460,7 @@ public class ParserTest {
 
   @Test
   public void parseAutoPopulatedMethodsAndFields_exists() {
-    ImmutableMap<String, List<String>> autoPopulatedMethodsWithFields =
+    Map<String, List<String>> autoPopulatedMethodsWithFields =
         Parser.parseAutoPopulatedMethodsAndFields(serviceYamlProtoOpt);
     assertEquals(
         true, autoPopulatedMethodsWithFields.containsKey("google.showcase.v1beta1.Echo.Echo"));
@@ -474,9 +475,81 @@ public class ParserTest {
     Path yamlPath = Paths.get(YAML_DIRECTORY, yamlFilename);
     Optional<Service> serviceYamlProtoOpt_Null = ServiceYamlParser.parse(yamlPath.toString());
 
-    ImmutableMap<String, List<String>> autoPopulatedMethodsWithFields =
+    Map<String, List<String>> autoPopulatedMethodsWithFields =
         Parser.parseAutoPopulatedMethodsAndFields(serviceYamlProtoOpt_Null);
     assertEquals(true, autoPopulatedMethodsWithFields.isEmpty());
+  }
+
+  @Test
+  public void parseAutoPopulatedMethodsAndFields_returnsEmptyMapIfServiceYamlIsNull() {
+    assertEquals(true, Parser.parseAutoPopulatedMethodsAndFields(Optional.empty()).isEmpty());
+  }
+
+  @Test
+  public void parseAutoPopulatedMethodsAndFields_returnsMapOfMethodsAndAutoPopulatedFields() {
+    MethodSettings testMethodSettings =
+        MethodSettings.newBuilder()
+            .setSelector("test_method")
+            .addAutoPopulatedFields("test_field")
+            .addAutoPopulatedFields("test_field_2")
+            .build();
+    MethodSettings testMethodSettings2 =
+        MethodSettings.newBuilder()
+            .setSelector("test_method_2")
+            .addAutoPopulatedFields("test_field_3")
+            .build();
+    MethodSettings testMethodSettings3 =
+        MethodSettings.newBuilder().setSelector("test_method_3").build();
+    Publishing testPublishing =
+        Publishing.newBuilder()
+            .addMethodSettings(testMethodSettings)
+            .addMethodSettings(testMethodSettings2)
+            .addMethodSettings(testMethodSettings3)
+            .build();
+    Optional<Service> testService =
+        Optional.of(Service.newBuilder().setPublishing(testPublishing).build());
+    assertEquals(
+        Arrays.asList("test_field", "test_field_2"),
+        Parser.parseAutoPopulatedMethodsAndFields(testService).get("test_method"));
+    assertEquals(
+        Arrays.asList("test_field_3"),
+        Parser.parseAutoPopulatedMethodsAndFields(testService).get("test_method_2"));
+    assertEquals(
+        Arrays.asList(),
+        Parser.parseAutoPopulatedMethodsAndFields(testService).get("test_method_3"));
+    assertEquals(
+        false, Parser.parseAutoPopulatedMethodsAndFields(testService).containsKey("test_method_4"));
+  }
+
+  @Test
+  public void hasMethodSettings_shouldReturnFalseIfServiceYamlDoesNotExist() {
+    assertEquals(false, Parser.hasMethodSettings(Optional.empty()));
+  }
+
+  @Test
+  public void hasMethodSettings_shouldReturnFalseIfServiceYamlDoesNotHavePublishing() {
+    assertEquals(false, Parser.hasMethodSettings(Optional.of(Service.newBuilder().build())));
+  }
+
+  @Test
+  public void hasMethodSettings_shouldReturnFalseIfServiceYamlHasEmptyMethodSettings() {
+    assertEquals(
+        false,
+        Parser.hasMethodSettings(
+            Optional.of(
+                Service.newBuilder().setPublishing(Publishing.newBuilder().build()).build())));
+  }
+
+  @Test
+  public void hasMethodSettings_shouldReturnTrueIfServiceYamlHasNonEmptyMethodSettings() {
+    MethodSettings testMethodSettings =
+        MethodSettings.newBuilder().setSelector("test_method").build();
+    Publishing testPublishing =
+        Publishing.newBuilder().addMethodSettings(testMethodSettings).build();
+    assertEquals(
+        true,
+        Parser.hasMethodSettings(
+            Optional.of(Service.newBuilder().setPublishing(testPublishing).build())));
   }
 
   @Test

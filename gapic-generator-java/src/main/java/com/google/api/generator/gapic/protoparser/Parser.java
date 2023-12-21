@@ -696,7 +696,7 @@ public class Parser {
     List<Method> methods = new ArrayList<>();
 
     // Parse the serviceYaml for autopopulated methods and fields once and put into a map
-    ImmutableMap<String, List<String>> autoPopulatedMethodsWithFields =
+    Map<String, List<String>> autoPopulatedMethodsWithFields =
         parseAutoPopulatedMethodsAndFields(serviceYamlProtoOpt);
 
     for (MethodDescriptor protoMethod : serviceDescriptor.getMethods()) {
@@ -1160,25 +1160,25 @@ public class Parser {
   }
 
   /**
-   * Converts a serviceYaml file to a map of methods and autopopulated fields TODO: Confirm whether
-   * or not wildcards need to be supported. If so, update this logic.
+   * Converts a serviceYaml file to a map of methods and autopopulated fields. Note: this does NOT
+   * currently support wildcards in MethodSettings.selectors.
    */
   @VisibleForTesting
-  static ImmutableMap<String, List<String>> parseAutoPopulatedMethodsAndFields(
+  static Map<String, List<String>> parseAutoPopulatedMethodsAndFields(
       Optional<com.google.api.Service> serviceYamlProtoOpt) {
-    ImmutableMap.Builder<String, List<String>> autoPopulatedMethodsWithFieldsBuilder =
-        ImmutableMap.builder();
-    if (serviceYamlProtoOpt.isPresent()
-        && serviceYamlProtoOpt.get().hasPublishing()
-        && serviceYamlProtoOpt.get().getPublishing().getMethodSettingsList().size() > 0) {
-      for (MethodSettings methodSettings :
-          serviceYamlProtoOpt.get().getPublishing().getMethodSettingsList()) {
-        if (methodSettings.getAutoPopulatedFieldsCount() > 0) {
-          autoPopulatedMethodsWithFieldsBuilder.put(
-              methodSettings.getSelector(), methodSettings.getAutoPopulatedFieldsList());
-        }
-      }
+    if (!hasMethodSettings(serviceYamlProtoOpt)) {
+      return ImmutableMap.<String, List<String>>builder().build();
     }
-    return autoPopulatedMethodsWithFieldsBuilder.build();
+    return serviceYamlProtoOpt.get().getPublishing().getMethodSettingsList().stream()
+        .collect(
+            Collectors.toMap(
+                MethodSettings::getSelector, MethodSettings::getAutoPopulatedFieldsList));
+  }
+
+  @VisibleForTesting
+  static boolean hasMethodSettings(Optional<com.google.api.Service> serviceYamlProtoOpt) {
+    return serviceYamlProtoOpt.isPresent()
+        && serviceYamlProtoOpt.get().hasPublishing()
+        && !serviceYamlProtoOpt.get().getPublishing().getMethodSettingsList().isEmpty();
   }
 }
