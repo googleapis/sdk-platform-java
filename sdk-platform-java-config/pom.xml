@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.google.cloud</groupId>
+    <artifactId>sdk-platform-java-config</artifactId>
+    <packaging>pom</packaging>
+    <version>3.20.1-SNAPSHOT</version><!-- {x-version-update:google-cloud-shared-dependencies:current} -->
+    <name>SDK Platform For Java Configurations</name>
+    <description>
+        Shared build configuration for Google Cloud Java libraries.
+    </description>
+
+    <parent>
+        <groupId>com.google.cloud</groupId>
+        <artifactId>google-cloud-shared-config</artifactId>
+        <version>1.7.1</version>
+    </parent>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <site.installationModule>${project.artifactId}</site.installationModule>
+        <checkstyle.skip>true</checkstyle.skip>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.google.cloud</groupId>
+                <artifactId>google-cloud-shared-dependencies</artifactId>
+                <version>3.20.1-SNAPSHOT</version><!-- {x-version-update:google-cloud-shared-dependencies:current} -->
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>
