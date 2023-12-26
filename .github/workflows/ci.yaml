@@ -50,6 +50,7 @@ jobs:
           popd
   build-java-21:
     name: "build(21) except self-service clients"
+    # Support for Java 21 is available for all use cases except self-service clients.
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
