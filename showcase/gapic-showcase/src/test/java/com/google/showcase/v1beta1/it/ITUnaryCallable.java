@@ -19,15 +19,32 @@ package com.google.showcase.v1beta1.it;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
+import com.google.api.gax.core.ExecutorProvider;
+import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.grpc.GrpcStatusCode;
+import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.CancelledException;
+import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.StatusCode;
+import com.google.api.gax.rpc.UnaryCallSettings;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSet;
+import com.google.protobuf.Duration;
 import com.google.rpc.Status;
+import com.google.showcase.v1beta1.BlockRequest;
+import com.google.showcase.v1beta1.BlockResponse;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
+import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
+
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+
+import com.google.showcase.v1beta1.stub.EchoStubSettings;
+import io.grpc.ManagedChannelBuilder;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -35,6 +52,8 @@ import org.junit.Test;
 public class ITUnaryCallable {
 
   private static EchoClient grpcClient;
+
+  private static EchoClient grpcVTClient;
 
   private static EchoClient httpjsonClient;
 
@@ -44,6 +63,46 @@ public class ITUnaryCallable {
     grpcClient = TestClientInitializer.createGrpcEchoClient();
     // Create Http JSON Echo Client
     httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
+  }
+
+  public void createVTClient() throws Exception {
+    // Set background executor provider. InstantiatingExecutorProvider only has settings for thread pool count.
+    RetrySettings defaultNoRetrySettings =
+            RetrySettings.newBuilder()
+                    .setInitialRpcTimeout(org.threeten.bp.Duration.ofSeconds(7))
+                    .setRpcTimeoutMultiplier(1.0)
+                    .setMaxRpcTimeout(org.threeten.bp.Duration.ofSeconds(7))
+                    .setTotalTimeout(org.threeten.bp.Duration.ofSeconds(7))
+                    // Explicitly set retries as disabled (maxAttempts == 1)
+                    .setMaxAttempts(1)
+                    .build();
+
+    EchoStubSettings.Builder grpcEchoSettingsBuilder = EchoStubSettings.newBuilder();
+    grpcEchoSettingsBuilder
+            .blockSettings()
+            .setRetrySettings(defaultNoRetrySettings)
+            .setRetryableCodes(ImmutableSet.of());
+
+    EchoSettings grpcEchoSettings = EchoSettings.create(grpcEchoSettingsBuilder.build());
+    grpcEchoSettings =
+            grpcEchoSettings
+                    .toBuilder()
+                    .setCredentialsProvider(NoCredentialsProvider.create())
+                    .setTransportChannelProvider(
+                            EchoSettings.defaultGrpcTransportProviderBuilder()
+                                    .setExecutor(Executors.newVirtualThreadPerTaskExecutor())
+                                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                                    .setInterceptorProvider(() -> ImmutableList.of()).build())
+                    .build();
+//     EchoSettings grpcEchoSettings =
+//            EchoSettings.newBuilder()
+//                    .setCredentialsProvider(NoCredentialsProvider.create())
+//                    .setTransportChannelProvider(
+//                            EchoSettings.defaultGrpcTransportProviderBuilder()
+//                                    .setExecutor(Executors.newVirtualThreadPerTaskExecutor())
+//                                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+//                                    .setInterceptorProvider(() -> ImmutableList.of()).build()).build();
+    grpcVTClient = EchoClient.create(grpcEchoSettings);
   }
 
   @AfterClass
@@ -60,6 +119,20 @@ public class ITUnaryCallable {
   public void testGrpc_receiveContent() {
     assertThat(echoGrpc("grpc-echo?")).isEqualTo("grpc-echo?");
     assertThat(echoGrpc("grpc-echo!")).isEqualTo("grpc-echo!");
+  }
+
+//  @Test
+//  public void testVTGrpc_receiveContent() throws Exception {
+//    createVTClient();
+//    assertThat(echoGrpcVirtualThread("grpc-echo?")).isEqualTo("grpc-echo?");
+//    assertThat(echoGrpcVirtualThread("grpc-echo!")).isEqualTo("grpc-echo!");
+//  }
+
+  @Test
+  public void testVTGrpc_receiveContent_delayedResponse() throws Exception {
+    createVTClient();
+    assertThat(echoGrpcVirtualThread_delayedResponse("grpc-echo?")).isEqualTo("grpc-echo?");
+    assertThat(echoGrpcVirtualThread_delayedResponse("grpc-echo!")).isEqualTo("grpc-echo!");
   }
 
   @Test
@@ -93,6 +166,12 @@ public class ITUnaryCallable {
     EchoResponse response = grpcClient.echo(EchoRequest.newBuilder().setContent(value).build());
     return response.getContent();
   }
+
+  private String echoGrpcVirtualThread_delayedResponse(String value) {
+    BlockResponse response = grpcVTClient.block(BlockRequest.newBuilder().setResponseDelay(Duration.newBuilder().setSeconds(6).build()).setSuccess(BlockResponse.newBuilder().setContent(value)).build());
+    return response.getContent();
+  }
+
 
   private String echoHttpJson(String value) {
     EchoResponse response = httpjsonClient.echo(EchoRequest.newBuilder().setContent(value).build());
