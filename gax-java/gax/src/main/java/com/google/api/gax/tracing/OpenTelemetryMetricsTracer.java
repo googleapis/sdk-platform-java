@@ -59,6 +59,7 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
   private final SpanName spanName;
 
   protected DoubleHistogram attemptLatencyRecorder;
+  protected LongCounter attemptCountRecorder;
 
   protected DoubleHistogram operationLatencyRecorder;
   protected LongHistogram retryCountRecorder;
@@ -127,6 +128,12 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
             .setDescription("Count of Operations")
             .setUnit("1")
             .build();
+    this.attemptCountRecorder =
+        meter
+            .counterBuilder("attempt_count")
+            .setDescription("Count of Attempts")
+            .setUnit("1")
+            .build();
     this.attributes = Attributes.of(stringKey("method_name"), spanName.toString());
   }
 
@@ -181,6 +188,7 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
     Attributes newAttributes =
         attributes.toBuilder().put(STATUS_ATTRIBUTE, StatusCode.Code.OK.toString()).build();
     attemptLatencyRecorder.record(attemptTimer.elapsed(TimeUnit.MILLISECONDS), newAttributes);
+    attemptCountRecorder.add(1, newAttributes);
   }
 
   @Override
