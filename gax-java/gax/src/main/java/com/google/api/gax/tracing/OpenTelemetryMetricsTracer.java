@@ -159,17 +159,42 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
     operationLatencyLabels.forEach((key, value) -> attributesBuilder.put(stringKey(key), value));
     Attributes allAttributes = attributesBuilder.build();
     operationLatencyRecorder.record(operationTimer.elapsed(TimeUnit.MILLISECONDS), allAttributes);
+    // increment operation-count by 1
     operationCountRecorder.add(1, allAttributes);
   }
 
   @Override
-  public void operationCancelled() {}
+  public void operationCancelled() {
+    // we should capture the attributes in cancelled operations as well, to be consistent with
+    // opencensus implementation
+    AttributesBuilder attributesBuilder = Attributes.builder();
+    attributesBuilder.putAll(attributes);
+    attributesBuilder.put(STATUS_ATTRIBUTE, StatusCode.Code.CANCELLED.toString());
+
+    operationLatencyLabels.forEach((key, value) -> attributesBuilder.put(stringKey(key), value));
+    Attributes allAttributes = attributesBuilder.build();
+    operationLatencyRecorder.record(operationTimer.elapsed(TimeUnit.MILLISECONDS), allAttributes);
+
+    // increment operation-count by 1
+    operationCountRecorder.add(1, allAttributes);
+  }
 
   @Override
   public void operationFailed(Throwable error) {
-    Attributes newAttributes =
-        attributes.toBuilder().put(STATUS_ATTRIBUTE, extractStatus(error)).build();
-    operationLatencyRecorder.record(operationTimer.elapsed(TimeUnit.MILLISECONDS), newAttributes);
+
+    // we should capture the attributes in failed operations, to be consistent with opencensus
+    // implementation
+    AttributesBuilder attributesBuilder = Attributes.builder();
+    attributesBuilder.putAll(attributes);
+    attributesBuilder.put(STATUS_ATTRIBUTE, extractStatus(error));
+
+    // imo, entries in the operationLatencyLabels map should be added to the builder.
+    operationLatencyLabels.forEach((key, value) -> attributesBuilder.put(stringKey(key), value));
+    Attributes allAttributes = attributesBuilder.build();
+    operationLatencyRecorder.record(operationTimer.elapsed(TimeUnit.MILLISECONDS), allAttributes);
+
+    // increment operation-count by 1
+    operationCountRecorder.add(1, allAttributes);
   }
 
   @Override
@@ -192,13 +217,19 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
   }
 
   @Override
-  public void attemptCancelled() {}
+  public void attemptCancelled() {
+    Attributes newAttributes =
+        attributes.toBuilder().put(STATUS_ATTRIBUTE, StatusCode.Code.CANCELLED.toString()).build();
+    attemptLatencyRecorder.record(attemptTimer.elapsed(TimeUnit.MILLISECONDS), newAttributes);
+    attemptCountRecorder.add(1, newAttributes);
+  }
 
   @Override
   public void attemptFailed(Throwable error, Duration delay) {
     Attributes newAttributes =
         attributes.toBuilder().put(STATUS_ATTRIBUTE, extractStatus(error)).build();
     attemptLatencyRecorder.record(attemptTimer.elapsed(TimeUnit.MILLISECONDS), newAttributes);
+    attemptCountRecorder.add(1, newAttributes);
   }
 
   @Override
