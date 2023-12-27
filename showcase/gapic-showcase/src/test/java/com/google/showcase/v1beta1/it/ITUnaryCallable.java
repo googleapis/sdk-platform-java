@@ -67,6 +67,7 @@ public class ITUnaryCallable {
 
   public void createVTClient() throws Exception {
     // Set background executor provider. InstantiatingExecutorProvider only has settings for thread pool count.
+    // Set response timeout to 7 seconds.
     RetrySettings defaultNoRetrySettings =
             RetrySettings.newBuilder()
                     .setInitialRpcTimeout(org.threeten.bp.Duration.ofSeconds(7))
@@ -94,14 +95,6 @@ public class ITUnaryCallable {
                                     .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
                                     .setInterceptorProvider(() -> ImmutableList.of()).build())
                     .build();
-//     EchoSettings grpcEchoSettings =
-//            EchoSettings.newBuilder()
-//                    .setCredentialsProvider(NoCredentialsProvider.create())
-//                    .setTransportChannelProvider(
-//                            EchoSettings.defaultGrpcTransportProviderBuilder()
-//                                    .setExecutor(Executors.newVirtualThreadPerTaskExecutor())
-//                                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
-//                                    .setInterceptorProvider(() -> ImmutableList.of()).build()).build();
     grpcVTClient = EchoClient.create(grpcEchoSettings);
   }
 
@@ -120,13 +113,6 @@ public class ITUnaryCallable {
     assertThat(echoGrpc("grpc-echo?")).isEqualTo("grpc-echo?");
     assertThat(echoGrpc("grpc-echo!")).isEqualTo("grpc-echo!");
   }
-
-//  @Test
-//  public void testVTGrpc_receiveContent() throws Exception {
-//    createVTClient();
-//    assertThat(echoGrpcVirtualThread("grpc-echo?")).isEqualTo("grpc-echo?");
-//    assertThat(echoGrpcVirtualThread("grpc-echo!")).isEqualTo("grpc-echo!");
-//  }
 
   @Test
   public void testVTGrpc_receiveContent_delayedResponse() throws Exception {
@@ -168,6 +154,7 @@ public class ITUnaryCallable {
   }
 
   private String echoGrpcVirtualThread_delayedResponse(String value) {
+    // Set response delay to 6 seconds.
     BlockResponse response = grpcVTClient.block(BlockRequest.newBuilder().setResponseDelay(Duration.newBuilder().setSeconds(6).build()).setSuccess(BlockResponse.newBuilder().setContent(value)).build());
     return response.getContent();
   }
