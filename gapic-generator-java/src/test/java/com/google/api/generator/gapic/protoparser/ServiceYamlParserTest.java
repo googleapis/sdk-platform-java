@@ -41,6 +41,8 @@ public class ServiceYamlParserTest {
     assertEquals("logging.googleapis.com", serviceYamlProto.getName());
   }
 
+  // TODO: Add more scenarios (e.g. null MethodSettings, null PublishingSettings, incorrect
+  // FieldNames, etc.)
   @Test
   public void parseServiceYaml_autoPopulatedFields() {
     String yamlFilename = "echo_v1beta1.yaml";
