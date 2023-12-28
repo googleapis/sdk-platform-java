@@ -177,15 +177,17 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void determineEndpoint_noUniverseDomain_usesClientSettingsEndpoint() throws IOException {
-    EndpointContext endpointContext = defaultEndpointContextBuilder.build();
+  public void endpointContextBuild_noUniverseDomain_usesClientSettingsEndpoint()
+      throws IOException {
+    EndpointContext endpointContext =
+        defaultEndpointContextBuilder.setClientSettingsEndpoint(DEFAULT_ENDPOINT).build();
     Truth.assertThat(endpointContext.getResolvedEndpoint()).isEqualTo(DEFAULT_ENDPOINT);
     Truth.assertThat(endpointContext.getResolvedUniverseDomain())
         .isEqualTo(EndpointContext.GOOGLE_DEFAULT_UNIVERSE);
   }
 
   @Test
-  public void determineEndpoint_noUniverseDomain_usesTransportChannelProviderEndpoint()
+  public void endpointContextBuild_noUniverseDomain_usesTransportChannelProviderEndpoint()
       throws IOException {
     String transportChannelProviderEndpoint = "random.endpoint.com:443";
     EndpointContext endpointContext =
@@ -200,7 +202,7 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void determineEndpoint_noUniverseDomain_overrideUsesTransportChannelProviderEndpoint()
+  public void endpointContextBuild_noUniverseDomain_overrideUsesTransportChannelProviderEndpoint()
       throws IOException {
     String transportChannelProviderEndpoint = "random.endpoint.com";
     EndpointContext endpointContext =
@@ -215,7 +217,7 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void determineEndpoint_emptyUniverseDomain_throwsIllegalArgumentException() {
+  public void endpointContextBuild_emptyStringUniverseDomain_throwsIllegalArgumentException() {
     EndpointContext.Builder endpointContextBuilder =
         defaultEndpointContextBuilder.setUniverseDomain("");
     IllegalArgumentException exception =
@@ -225,7 +227,7 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void determineEndpoint_GDUUniverseDomain() throws IOException {
+  public void endpointContextBuild_GDUUniverseDomain() throws IOException {
     EndpointContext endpointContext = defaultEndpointContextBuilder.build();
     Truth.assertThat(endpointContext.getResolvedEndpoint()).isEqualTo(DEFAULT_ENDPOINT);
     Truth.assertThat(endpointContext.getResolvedUniverseDomain())
@@ -233,7 +235,7 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void determineEndpoint_nonGDUUniverseDomain() throws IOException {
+  public void endpointContextBuild_nonGDUUniverseDomain() throws IOException {
     String universeDomain = "random.com";
     EndpointContext endpointContext =
         defaultEndpointContextBuilder.setUniverseDomain(universeDomain).build();
@@ -242,7 +244,7 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void determineEndpoint_noUniverseDomain_noEndpoints() throws IOException {
+  public void endpointContextBuild_noUniverseDomain_noEndpoints() throws IOException {
     String expectedEndpoint = "random.googleapis.com:443";
     EndpointContext endpointContext =
         defaultEndpointContextBuilder
@@ -256,7 +258,7 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void determineEndpoint_mtlsConfigured_GDU() throws IOException {
+  public void endpointContextBuild_mtlsConfigured_GDU() throws IOException {
     MtlsProvider mtlsProvider =
         new FakeMtlsProvider(
             true,
@@ -277,7 +279,7 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void determineEndpoint_mtlsConfigured_nonGDU_throwsIllegalArgumentException()
+  public void endpointContextBuild_mtlsConfigured_nonGDU_throwsIllegalArgumentException()
       throws IOException {
     MtlsProvider mtlsProvider =
         new FakeMtlsProvider(
@@ -300,7 +302,7 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void determineEndpoint_gdchFlow_setUniverseDomain() throws IOException {
+  public void endpointContextBuild_gdchFlow_setUniverseDomain() throws IOException {
     EndpointContext.Builder endpointContextBuilder =
         defaultEndpointContextBuilder.setUsingGDCH(true);
     IllegalArgumentException exception =
@@ -310,7 +312,7 @@ public class EndpointContextTest {
   }
 
   @Test
-  public void determineEndpoint_gdchFlow_noUniverseDomain_noCustomEndpoint() throws IOException {
+  public void endpointContextBuild_gdchFlow_noUniverseDomain_noCustomEndpoint() throws IOException {
     EndpointContext endpointContext =
         defaultEndpointContextBuilder
             .setUniverseDomain(null)
@@ -318,11 +320,12 @@ public class EndpointContextTest {
             .setClientSettingsEndpoint(null)
             .build();
     Truth.assertThat(endpointContext.getResolvedEndpoint()).isEqualTo(DEFAULT_ENDPOINT);
-    Truth.assertThat(endpointContext.getResolvedUniverseDomain()).isNull();
+    Truth.assertThat(endpointContext.getResolvedUniverseDomain())
+        .isEqualTo(EndpointContext.GOOGLE_DEFAULT_UNIVERSE);
   }
 
   @Test
-  public void determineEndpoint_gdchFlow_noUniverseDomain_customEndpoint() throws IOException {
+  public void endpointContextBuild_gdchFlow_noUniverseDomain_customEndpoint() throws IOException {
     String clientSettingsEndpoint = "random.endpoint.com:443";
     EndpointContext endpointContext =
         defaultEndpointContextBuilder
@@ -331,6 +334,7 @@ public class EndpointContextTest {
             .setClientSettingsEndpoint(clientSettingsEndpoint)
             .build();
     Truth.assertThat(endpointContext.getResolvedEndpoint()).isEqualTo(clientSettingsEndpoint);
-    Truth.assertThat(endpointContext.getResolvedUniverseDomain()).isNull();
+    Truth.assertThat(endpointContext.getResolvedUniverseDomain())
+        .isEqualTo(EndpointContext.GOOGLE_DEFAULT_UNIVERSE);
   }
 }

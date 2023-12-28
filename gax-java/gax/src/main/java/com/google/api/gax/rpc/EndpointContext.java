@@ -41,8 +41,6 @@ import javax.annotation.Nullable;
 @InternalApi
 @AutoValue
 public abstract class EndpointContext {
-  // Default to port 443 for HTTPS. Using HTTP requires explicitly setting the endpoint
-  private static final String ENDPOINT_TEMPLATE = "SERVICE_NAME.UNIVERSE_DOMAIN:443";
   static final String GOOGLE_DEFAULT_UNIVERSE = "googleapis.com";
 
   /**
@@ -82,7 +80,8 @@ public abstract class EndpointContext {
   public abstract Builder toBuilder();
 
   private String resolvedEndpoint;
-  private String resolvedUniverseDomain;
+  // Default to the GDU
+  private String resolvedUniverseDomain = GOOGLE_DEFAULT_UNIVERSE;
 
   public static Builder newBuilder() {
     return new AutoValue_EndpointContext.Builder()
@@ -90,9 +89,19 @@ public abstract class EndpointContext {
         .setUsingGDCH(false);
   }
 
+  private void determineUniverseDomain() {
+    // Check for "" (empty string)
+    if (universeDomain() != null && universeDomain().isEmpty()) {
+      throw new IllegalArgumentException("The universe domain value cannot be empty.");
+    }
+    // Override with user set universe domain if provided
+    if (universeDomain() != null) {
+      resolvedUniverseDomain = universeDomain();
+    }
+  }
+
   /** Determines the fully resolved endpoint and universe domain values */
-  @VisibleForTesting
-  void determineEndpoint() throws IOException {
+  private void determineEndpoint() throws IOException {
     MtlsProvider mtlsProvider = mtlsProvider() == null ? new MtlsProvider() : mtlsProvider();
     // TransportChannelProvider's endpoint will override the ClientSettings' endpoint
     String customEndpoint =
@@ -102,49 +111,44 @@ public abstract class EndpointContext {
 
     // GDC-H has a separate flow
     if (usingGDCH()) {
-      determineGDCHEndpoint(customEndpoint);
+      resolvedEndpoint = determineGDCHEndpoint(customEndpoint);
       return;
     }
-    // Check for "" (empty string)
-    if (universeDomain() != null && universeDomain().isEmpty()) {
-      throw new IllegalArgumentException("The universe domain value cannot be empty.");
-    }
-    // Universe Domain defaults to the GDU if it's not provided by the user.
-    resolvedUniverseDomain = universeDomain() != null ? universeDomain() : GOOGLE_DEFAULT_UNIVERSE;
 
+    // If user does not provide a custom endpoint, build one with the universe domain
     if (Strings.isNullOrEmpty(customEndpoint)) {
       customEndpoint = buildEndpointTemplate(serviceName(), resolvedUniverseDomain);
-      resolvedEndpoint =
-          mtlsEndpointResolver(
-              customEndpoint, mtlsEndpoint(), switchToMtlsEndpointAllowed(), mtlsProvider);
-      // Check if mTLS is configured with non-GDU
-      if (resolvedEndpoint.equals(mtlsEndpoint())
-          && !resolvedUniverseDomain.equals(GOOGLE_DEFAULT_UNIVERSE)) {
-        throw new IllegalArgumentException(
-            "mTLS is not supported in any universe other than googleapis.com");
-      }
-    } else {
-      resolvedEndpoint = customEndpoint;
     }
+
+    String endpoint =
+        mtlsEndpointResolver(
+            customEndpoint, mtlsEndpoint(), switchToMtlsEndpointAllowed(), mtlsProvider);
+
+    // Check if mTLS is configured with non-GDU
+    if (endpoint.equals(mtlsEndpoint())
+        && !resolvedUniverseDomain.equals(GOOGLE_DEFAULT_UNIVERSE)) {
+      throw new IllegalArgumentException(
+          "mTLS is not supported in any universe other than googleapis.com");
+    }
+
+    resolvedEndpoint = endpoint;
   }
 
   // GDC-H has no concept of Universe Domain. Do not set the resolvedUniverseDomain value
-  private void determineGDCHEndpoint(String customEndpoint) {
+  private String determineGDCHEndpoint(String customEndpoint) {
     if (universeDomain() != null) {
       throw new IllegalArgumentException(
           "Universe domain configuration is incompatible with GDC-H");
     } else if (customEndpoint == null) {
-      resolvedEndpoint = buildEndpointTemplate(serviceName(), GOOGLE_DEFAULT_UNIVERSE);
+      return buildEndpointTemplate(serviceName(), GOOGLE_DEFAULT_UNIVERSE);
     } else {
-      resolvedEndpoint = customEndpoint;
+      return customEndpoint;
     }
   }
 
-  // Construct the endpoint with the template
+  // Default to port 443 for HTTPS. Using HTTP requires explicitly setting the endpoint
   private String buildEndpointTemplate(String serviceName, String resolvedUniverseDomain) {
-    return ENDPOINT_TEMPLATE
-        .replace("SERVICE_NAME", serviceName)
-        .replace("UNIVERSE_DOMAIN", resolvedUniverseDomain);
+    return serviceName + "." + resolvedUniverseDomain + ":443";
   }
 
   // Follows https://google.aip.dev/auth/4114 for resolving the endpoint
@@ -221,6 +225,7 @@ public abstract class EndpointContext {
 
     public EndpointContext build() throws IOException {
       EndpointContext endpointContext = autoBuild();
+      endpointContext.determineUniverseDomain();
       endpointContext.determineEndpoint();
       return endpointContext;
     }
