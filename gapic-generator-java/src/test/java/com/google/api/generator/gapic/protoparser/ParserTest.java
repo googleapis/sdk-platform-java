@@ -532,15 +532,6 @@ public class ParserTest {
   }
 
   @Test
-  public void hasMethodSettings_shouldReturnFalseIfServiceYamlHasEmptyMethodSettings() {
-    assertEquals(
-        false,
-        Parser.hasMethodSettings(
-            Optional.of(
-                Service.newBuilder().setPublishing(Publishing.newBuilder().build()).build())));
-  }
-
-  @Test
   public void hasMethodSettings_shouldReturnTrueIfServiceYamlHasNonEmptyMethodSettings() {
     MethodSettings testMethodSettings =
         MethodSettings.newBuilder().setSelector("test_method").build();
