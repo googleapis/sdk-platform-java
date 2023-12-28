@@ -1,4 +1,4 @@
-# Generate GAPIC Client Library without post-processing
+# Generate GAPIC Client Library with and without post-processing
 
 The script, `generate_library.sh`, allows you to generate a GAPIC client library from proto files.
 
@@ -27,6 +27,12 @@ original repository (i.e. google-cloud-java) and pass the monorepo as
 This repository will be the source of truth for pre-existing
 pom.xml files, owlbot.py and .OwlBot.yaml files. See the option belows for
 custom postprocessed generations (e.g. custom `versions.txt` file).
+
+Post-processing makes use of python scripts. The script will automatically use
+`pyenv` to use the specified version in
+`library_generation/configuration/python-version`. Pyenv is then a requirement
+in the environment.
+
 
 ## Parameters to run `generate_library.sh`
 
@@ -225,3 +231,26 @@ library_generation/generate_library.sh \
 --versions_file "path/to/versions.txt" \
 --include_samples true
 ```
+
+# Owlbot Java Postprocessor
+
+We have transferred the
+[implementation](https://github.com/googleapis/synthtool/tree/59fe44fde9866a26e7ee4e4450fd79f67f8cf599/docker/owlbot/java)
+of Java Owlbot Postprocessor into `sdk-platform-java/library_generation`. The
+implementation in synthtool is still valid and used by other services, so we
+have two versions during a transition period.
+
+## Reflecting changes in synthtool/docker/owlbot/java into this repository
+The transfer was not a verbatim copy, it rather had modifications:
+ * `format-source.sh` was replaced by a call to `mvn fmt:format`
+ * `entrypoint.sh` was modified to have input arguments and slightly modified
+   the way the helper scripts are called
+ * Other helper scripts were modified to have input arguments.
+ * `fix-poms.py` modified the way the monorepo is detected
+
+All these modifications imply that whenever we want to reflect a change from the
+original owlbot in synthtool we may be better off modifying the affected source
+files one by one. The mapping is from
+[`synthtool/docker/owlbot/java`](https://github.com/googleapis/synthtool/tree/59fe44fde9866a26e7ee4e4450fd79f67f8cf599/docker/owlbot/java)
+to
+[`sdk-platform-java/library_generation/owlbot`](https://github.com/googleapis/sdk-platform-java/tree/move-java-owlbot/library_generation/owlbot)

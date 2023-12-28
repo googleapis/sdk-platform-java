@@ -41,6 +41,14 @@ import javax.annotation.Nullable;
 @AutoValue
 public abstract class EndpointContext {
   /**
+   * ServiceName is host URI for Google Cloud Services. It follows the format of
+   * `{ServiceName}.googleapis.com`. For example, speech.googleapis.com would have a ServiceName of
+   * speech and cloudasset.googleapis.com would have a ServiceName of cloudasset.
+   */
+  @Nullable
+  public abstract String serviceName();
+
+  /**
    * ClientSettingsEndpoint is the endpoint value set via the ClientSettings/StubSettings classes.
    */
   @Nullable
@@ -117,6 +125,13 @@ public abstract class EndpointContext {
 
   @AutoValue.Builder
   public abstract static class Builder {
+    /**
+     * ServiceName is host URI for Google Cloud Services. It follows the format of
+     * `{ServiceName}.googleapis.com`. For example, speech.googleapis.com would have a ServiceName
+     * of speech and cloudasset.googleapis.com would have a ServiceName of cloudasset.
+     */
+    public abstract Builder setServiceName(String serviceName);
+
     /**
      * ClientSettingsEndpoint is the endpoint value set via the ClientSettings/StubSettings classes.
      */

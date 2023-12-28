@@ -1,0 +1,11 @@
+attrs
+click
+jinja2
+lxml
+typing
+markupsafe
+colorlog
+protobuf
+watchdog
+requests
+pyyaml
