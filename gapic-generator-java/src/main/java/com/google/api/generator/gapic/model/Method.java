@@ -77,7 +77,7 @@ public abstract class Method {
    * method, and the method is a Unary-type, then this is true
    */
   public boolean hasAutoPopulatedFields() {
-    return autoPopulatedFields().size() > 0 && stream() == Stream.NONE;
+    return !autoPopulatedFields().isEmpty() && stream() == Stream.NONE;
   }
 
   public abstract boolean operationPollingMethod();

@@ -224,7 +224,6 @@ message ExpandRequest {
 
   string info = 3;
 
-  // TODO: @alicejli to remove this one auto-population of request-id is added officially to gapic-showcase. This is for testing purposes only.
   // This field is added based on go/client-populate-request-id-design; subject to change
   string request_id = 4 [
     (google.api.field_info).format = IPV6
