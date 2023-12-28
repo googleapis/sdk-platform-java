@@ -68,9 +68,8 @@ public class EndpointContextTest {
             "",
             throwExceptionForGetKeyStore);
     boolean switchToMtlsEndpointAllowed = false;
-    EndpointContext endpointContext = defaultEndpointContextBuilder.build();
     Truth.assertThat(
-            endpointContext.mtlsEndpointResolver(
+            defaultEndpointContextBuilder.mtlsEndpointResolver(
                 DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, switchToMtlsEndpointAllowed, mtlsProvider))
         .isEqualTo(DEFAULT_ENDPOINT);
   }
@@ -87,9 +86,8 @@ public class EndpointContextTest {
             "",
             throwExceptionForGetKeyStore);
     boolean switchToMtlsEndpointAllowed = true;
-    EndpointContext endpointContext = defaultEndpointContextBuilder.build();
     Truth.assertThat(
-            endpointContext.mtlsEndpointResolver(
+            defaultEndpointContextBuilder.mtlsEndpointResolver(
                 DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, switchToMtlsEndpointAllowed, mtlsProvider))
         .isEqualTo(DEFAULT_MTLS_ENDPOINT);
   }
@@ -106,9 +104,8 @@ public class EndpointContextTest {
             "",
             throwExceptionForGetKeyStore);
     boolean switchToMtlsEndpointAllowed = true;
-    EndpointContext endpointContext = defaultEndpointContextBuilder.build();
     Truth.assertThat(
-            endpointContext.mtlsEndpointResolver(
+            defaultEndpointContextBuilder.mtlsEndpointResolver(
                 DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, switchToMtlsEndpointAllowed, mtlsProvider))
         .isEqualTo(DEFAULT_MTLS_ENDPOINT);
   }
@@ -125,9 +122,8 @@ public class EndpointContextTest {
             "",
             throwExceptionForGetKeyStore);
     boolean switchToMtlsEndpointAllowed = true;
-    EndpointContext endpointContext = defaultEndpointContextBuilder.build();
     Truth.assertThat(
-            endpointContext.mtlsEndpointResolver(
+            defaultEndpointContextBuilder.mtlsEndpointResolver(
                 DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, switchToMtlsEndpointAllowed, mtlsProvider))
         .isEqualTo(DEFAULT_ENDPOINT);
   }
@@ -146,9 +142,8 @@ public class EndpointContextTest {
             "",
             throwExceptionForGetKeyStore);
     boolean switchToMtlsEndpointAllowed = true;
-    EndpointContext endpointContext = defaultEndpointContextBuilder.build();
     Truth.assertThat(
-            endpointContext.mtlsEndpointResolver(
+            defaultEndpointContextBuilder.mtlsEndpointResolver(
                 DEFAULT_ENDPOINT, DEFAULT_MTLS_ENDPOINT, switchToMtlsEndpointAllowed, mtlsProvider))
         .isEqualTo(DEFAULT_ENDPOINT);
   }
@@ -165,11 +160,10 @@ public class EndpointContextTest {
             "",
             throwExceptionForGetKeyStore);
     boolean switchToMtlsEndpointAllowed = true;
-    EndpointContext endpointContext = defaultEndpointContextBuilder.build();
     assertThrows(
         IOException.class,
         () ->
-            endpointContext.mtlsEndpointResolver(
+            defaultEndpointContextBuilder.mtlsEndpointResolver(
                 DEFAULT_ENDPOINT,
                 DEFAULT_MTLS_ENDPOINT,
                 switchToMtlsEndpointAllowed,
@@ -181,8 +175,8 @@ public class EndpointContextTest {
       throws IOException {
     EndpointContext endpointContext =
         defaultEndpointContextBuilder.setClientSettingsEndpoint(DEFAULT_ENDPOINT).build();
-    Truth.assertThat(endpointContext.getResolvedEndpoint()).isEqualTo(DEFAULT_ENDPOINT);
-    Truth.assertThat(endpointContext.getResolvedUniverseDomain())
+    Truth.assertThat(endpointContext.resolvedEndpoint()).isEqualTo(DEFAULT_ENDPOINT);
+    Truth.assertThat(endpointContext.resolvedUniverseDomain())
         .isEqualTo(EndpointContext.GOOGLE_DEFAULT_UNIVERSE);
   }
 
@@ -195,9 +189,9 @@ public class EndpointContextTest {
             .setClientSettingsEndpoint(null)
             .setTransportChannelProviderEndpoint(transportChannelProviderEndpoint)
             .build();
-    Truth.assertThat(endpointContext.getResolvedEndpoint())
+    Truth.assertThat(endpointContext.resolvedEndpoint())
         .isEqualTo(transportChannelProviderEndpoint);
-    Truth.assertThat(endpointContext.getResolvedUniverseDomain())
+    Truth.assertThat(endpointContext.resolvedUniverseDomain())
         .isEqualTo(EndpointContext.GOOGLE_DEFAULT_UNIVERSE);
   }
 
@@ -210,9 +204,9 @@ public class EndpointContextTest {
             .setClientSettingsEndpoint(DEFAULT_ENDPOINT)
             .setTransportChannelProviderEndpoint(transportChannelProviderEndpoint)
             .build();
-    Truth.assertThat(endpointContext.getResolvedEndpoint())
+    Truth.assertThat(endpointContext.resolvedEndpoint())
         .isEqualTo(transportChannelProviderEndpoint);
-    Truth.assertThat(endpointContext.getResolvedUniverseDomain())
+    Truth.assertThat(endpointContext.resolvedUniverseDomain())
         .isEqualTo(EndpointContext.GOOGLE_DEFAULT_UNIVERSE);
   }
 
@@ -229,8 +223,8 @@ public class EndpointContextTest {
   @Test
   public void endpointContextBuild_GDUUniverseDomain() throws IOException {
     EndpointContext endpointContext = defaultEndpointContextBuilder.build();
-    Truth.assertThat(endpointContext.getResolvedEndpoint()).isEqualTo(DEFAULT_ENDPOINT);
-    Truth.assertThat(endpointContext.getResolvedUniverseDomain())
+    Truth.assertThat(endpointContext.resolvedEndpoint()).isEqualTo(DEFAULT_ENDPOINT);
+    Truth.assertThat(endpointContext.resolvedUniverseDomain())
         .isEqualTo(EndpointContext.GOOGLE_DEFAULT_UNIVERSE);
   }
 
@@ -239,8 +233,8 @@ public class EndpointContextTest {
     String universeDomain = "random.com";
     EndpointContext endpointContext =
         defaultEndpointContextBuilder.setUniverseDomain(universeDomain).build();
-    Truth.assertThat(endpointContext.getResolvedEndpoint()).isEqualTo(DEFAULT_ENDPOINT);
-    Truth.assertThat(endpointContext.getResolvedUniverseDomain()).isEqualTo(universeDomain);
+    Truth.assertThat(endpointContext.resolvedEndpoint()).isEqualTo(DEFAULT_ENDPOINT);
+    Truth.assertThat(endpointContext.resolvedUniverseDomain()).isEqualTo(universeDomain);
   }
 
   @Test
@@ -252,8 +246,8 @@ public class EndpointContextTest {
             .setClientSettingsEndpoint(null)
             .setTransportChannelProviderEndpoint(null)
             .build();
-    Truth.assertThat(endpointContext.getResolvedEndpoint()).isEqualTo(expectedEndpoint);
-    Truth.assertThat(endpointContext.getResolvedUniverseDomain())
+    Truth.assertThat(endpointContext.resolvedEndpoint()).isEqualTo(expectedEndpoint);
+    Truth.assertThat(endpointContext.resolvedUniverseDomain())
         .isEqualTo(EndpointContext.GOOGLE_DEFAULT_UNIVERSE);
   }
 
@@ -273,8 +267,8 @@ public class EndpointContextTest {
             .setSwitchToMtlsEndpointAllowed(true)
             .setMtlsProvider(mtlsProvider)
             .build();
-    Truth.assertThat(endpointContext.getResolvedEndpoint()).isEqualTo(DEFAULT_MTLS_ENDPOINT);
-    Truth.assertThat(endpointContext.getResolvedUniverseDomain())
+    Truth.assertThat(endpointContext.resolvedEndpoint()).isEqualTo(DEFAULT_MTLS_ENDPOINT);
+    Truth.assertThat(endpointContext.resolvedUniverseDomain())
         .isEqualTo(EndpointContext.GOOGLE_DEFAULT_UNIVERSE);
   }
 
@@ -319,8 +313,8 @@ public class EndpointContextTest {
             .setUsingGDCH(true)
             .setClientSettingsEndpoint(null)
             .build();
-    Truth.assertThat(endpointContext.getResolvedEndpoint()).isEqualTo(DEFAULT_ENDPOINT);
-    Truth.assertThat(endpointContext.getResolvedUniverseDomain()).isNull();
+    Truth.assertThat(endpointContext.resolvedEndpoint()).isEqualTo(DEFAULT_ENDPOINT);
+    Truth.assertThat(endpointContext.resolvedUniverseDomain()).isNull();
   }
 
   @Test
@@ -332,7 +326,7 @@ public class EndpointContextTest {
             .setUsingGDCH(true)
             .setClientSettingsEndpoint(clientSettingsEndpoint)
             .build();
-    Truth.assertThat(endpointContext.getResolvedEndpoint()).isEqualTo(clientSettingsEndpoint);
-    Truth.assertThat(endpointContext.getResolvedUniverseDomain()).isNull();
+    Truth.assertThat(endpointContext.resolvedEndpoint()).isEqualTo(clientSettingsEndpoint);
+    Truth.assertThat(endpointContext.resolvedUniverseDomain()).isNull();
   }
 }

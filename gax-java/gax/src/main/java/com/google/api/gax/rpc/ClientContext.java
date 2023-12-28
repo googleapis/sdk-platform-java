@@ -172,8 +172,8 @@ public abstract class ClientContext {
             .setSwitchToMtlsEndpointAllowed(settings.getSwitchToMtlsEndpointAllowed())
             .setUsingGDCH(usingGDCH)
             .build();
-    String endpoint = endpointContext.getResolvedEndpoint();
-    String universeDomain = endpointContext.getResolvedUniverseDomain();
+    String endpoint = endpointContext.resolvedEndpoint();
+    String universeDomain = endpointContext.resolvedUniverseDomain();
 
     String settingsGdchApiAudience = settings.getGdchApiAudience();
     if (usingGDCH) {
