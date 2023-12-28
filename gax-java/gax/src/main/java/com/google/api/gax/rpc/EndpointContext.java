@@ -81,7 +81,7 @@ public abstract class EndpointContext {
 
   private String resolvedEndpoint;
   // Default to the GDU
-  private String resolvedUniverseDomain = GOOGLE_DEFAULT_UNIVERSE;
+  private String resolvedUniverseDomain;
 
   public static Builder newBuilder() {
     return new AutoValue_EndpointContext.Builder()
@@ -90,14 +90,16 @@ public abstract class EndpointContext {
   }
 
   private void determineUniverseDomain() {
+    // Do not set the universe domain for GDC-H
+    if (usingGDCH()) {
+      return;
+    }
     // Check for "" (empty string)
     if (universeDomain() != null && universeDomain().isEmpty()) {
       throw new IllegalArgumentException("The universe domain value cannot be empty.");
     }
     // Override with user set universe domain if provided
-    if (universeDomain() != null) {
-      resolvedUniverseDomain = universeDomain();
-    }
+    resolvedUniverseDomain = universeDomain() != null ? universeDomain() : GOOGLE_DEFAULT_UNIVERSE;
   }
 
   /** Determines the fully resolved endpoint and universe domain values */

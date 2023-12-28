@@ -320,8 +320,7 @@ public class EndpointContextTest {
             .setClientSettingsEndpoint(null)
             .build();
     Truth.assertThat(endpointContext.getResolvedEndpoint()).isEqualTo(DEFAULT_ENDPOINT);
-    Truth.assertThat(endpointContext.getResolvedUniverseDomain())
-        .isEqualTo(EndpointContext.GOOGLE_DEFAULT_UNIVERSE);
+    Truth.assertThat(endpointContext.getResolvedUniverseDomain()).isNull();
   }
 
   @Test
@@ -334,7 +333,6 @@ public class EndpointContextTest {
             .setClientSettingsEndpoint(clientSettingsEndpoint)
             .build();
     Truth.assertThat(endpointContext.getResolvedEndpoint()).isEqualTo(clientSettingsEndpoint);
-    Truth.assertThat(endpointContext.getResolvedUniverseDomain())
-        .isEqualTo(EndpointContext.GOOGLE_DEFAULT_UNIVERSE);
+    Truth.assertThat(endpointContext.getResolvedUniverseDomain()).isNull();
   }
 }
