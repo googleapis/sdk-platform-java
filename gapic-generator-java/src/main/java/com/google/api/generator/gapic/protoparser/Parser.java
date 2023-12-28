@@ -1177,7 +1177,6 @@ public class Parser {
 
   @VisibleForTesting
   static boolean hasMethodSettings(Optional<com.google.api.Service> serviceYamlProtoOpt) {
-    return serviceYamlProtoOpt.isPresent()
-        && serviceYamlProtoOpt.get().hasPublishing();
+    return serviceYamlProtoOpt.isPresent() && serviceYamlProtoOpt.get().hasPublishing();
   }
 }
