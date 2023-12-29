@@ -959,7 +959,11 @@ public class ClientContextTest {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
             FakeTransportChannel.create(new FakeChannel()), null, true, null, null, null);
-    StubSettings settings = new FakeStubSettings.Builder().setEndpoint(DEFAULT_ENDPOINT).build();
+    StubSettings settings =
+        new FakeStubSettings.Builder()
+            .setEndpoint(DEFAULT_ENDPOINT)
+            .setUniverseDomain(DEFAULT_UNIVERSE_DOMAIN)
+            .build();
     ClientSettings.Builder clientSettingsBuilder = new FakeClientSettings.Builder(settings);
     clientSettingsBuilder.setTransportChannelProvider(transportChannelProvider);
     clientSettingsBuilder.setCredentialsProvider(
@@ -980,7 +984,11 @@ public class ClientContextTest {
             null,
             null,
             DEFAULT_ENDPOINT);
-    StubSettings settings = new FakeStubSettings.Builder().setEndpoint(null).build();
+    StubSettings settings =
+        new FakeStubSettings.Builder()
+            .setEndpoint(null)
+            .setUniverseDomain(DEFAULT_UNIVERSE_DOMAIN)
+            .build();
     ClientSettings.Builder clientSettingsBuilder = new FakeClientSettings.Builder(settings);
     clientSettingsBuilder.setTransportChannelProvider(transportChannelProvider);
     clientSettingsBuilder.setCredentialsProvider(
@@ -1006,7 +1014,10 @@ public class ClientContextTest {
             null,
             transportChannelProviderEndpoint);
     StubSettings settings =
-        new FakeStubSettings.Builder().setEndpoint(clientSettingsEndpoint).build();
+        new FakeStubSettings.Builder()
+            .setEndpoint(clientSettingsEndpoint)
+            .setUniverseDomain(DEFAULT_UNIVERSE_DOMAIN)
+            .build();
     ClientSettings.Builder clientSettingsBuilder = new FakeClientSettings.Builder(settings);
     clientSettingsBuilder.setTransportChannelProvider(transportChannelProvider);
     clientSettingsBuilder.setCredentialsProvider(
@@ -1023,7 +1034,11 @@ public class ClientContextTest {
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
             FakeTransportChannel.create(new FakeChannel()), null, true, null, null, null);
-    StubSettings settings = new FakeStubSettings.Builder().setEndpoint(null).build();
+    StubSettings settings =
+        new FakeStubSettings.Builder()
+            .setEndpoint(null)
+            .setUniverseDomain(DEFAULT_UNIVERSE_DOMAIN)
+            .build();
     ClientSettings.Builder clientSettingsBuilder = new FakeClientSettings.Builder(settings);
     clientSettingsBuilder.setTransportChannelProvider(transportChannelProvider);
     clientSettingsBuilder.setCredentialsProvider(

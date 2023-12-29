@@ -173,7 +173,6 @@ public abstract class ClientContext {
             .setUsingGDCH(usingGDCH)
             .build();
     String endpoint = endpointContext.resolvedEndpoint();
-    String universeDomain = endpointContext.resolvedUniverseDomain();
 
     String settingsGdchApiAudience = settings.getGdchApiAudience();
     if (usingGDCH) {
@@ -271,7 +270,7 @@ public abstract class ClientContext {
         .setClock(clock)
         .setDefaultCallContext(defaultCallContext)
         .setServiceName(settings.getServiceName())
-        .setUniverseDomain(universeDomain)
+        .setUniverseDomain(settings.getUniverseDomain())
         .setEndpoint(settings.getEndpoint())
         .setQuotaProjectId(settings.getQuotaProjectId())
         .setStreamWatchdog(watchdog)

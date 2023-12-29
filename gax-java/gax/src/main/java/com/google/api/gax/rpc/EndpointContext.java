@@ -77,8 +77,7 @@ public abstract class EndpointContext {
 
   public abstract boolean usingGDCH();
 
-  @Nullable
-  public abstract String resolvedUniverseDomain();
+  abstract String resolvedUniverseDomain();
 
   public abstract String resolvedEndpoint();
 
@@ -145,9 +144,13 @@ public abstract class EndpointContext {
     abstract EndpointContext autoBuild();
 
     private String determineUniverseDomain() {
-      // Do not set the universe domain for GDC-H
       if (usingGDCH()) {
-        return null;
+        // GDC-H has no concept of Universe Domain. User should not set a custom value
+        if (universeDomain() != null) {
+          throw new IllegalArgumentException(
+              "Universe domain configuration is incompatible with GDC-H");
+        }
+        return GOOGLE_DEFAULT_UNIVERSE;
       }
       // Check for "" (empty string)
       if (universeDomain() != null && universeDomain().isEmpty()) {
@@ -168,7 +171,10 @@ public abstract class EndpointContext {
 
       // GDC-H has a separate flow
       if (usingGDCH()) {
-        return determineGDCHEndpoint(customEndpoint);
+        if (customEndpoint == null) {
+          return buildEndpointTemplate(serviceName(), resolvedUniverseDomain());
+        }
+        return customEndpoint;
       }
 
       // If user does not provide a custom endpoint, build one with the universe domain
@@ -188,18 +194,6 @@ public abstract class EndpointContext {
       }
 
       return endpoint;
-    }
-
-    // GDC-H has no concept of Universe Domain. Do not set the resolvedUniverseDomain value
-    private String determineGDCHEndpoint(String customEndpoint) {
-      if (universeDomain() != null) {
-        throw new IllegalArgumentException(
-            "Universe domain configuration is incompatible with GDC-H");
-      } else if (customEndpoint == null) {
-        return buildEndpointTemplate(serviceName(), GOOGLE_DEFAULT_UNIVERSE);
-      } else {
-        return customEndpoint;
-      }
     }
 
     // Default to port 443 for HTTPS. Using HTTP requires explicitly setting the endpoint
