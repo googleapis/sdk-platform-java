@@ -36,3 +36,10 @@ jobs:
           git tag $TAG_NAME
           git push origin $TAG_NAME
         done
+      # Generate a tag for unmanaged dependencies check.
+      # Use fixed tag so that checks in handwritten libraries do not need to
+      # update the version.
+        FIXED_CHECK_TAG="unmanaged-dependencies-check-latest"
+        git tag ${FIXED_CHECK_TAG}
+        git push origin ${FIXED_CHECK_TAG}
+
