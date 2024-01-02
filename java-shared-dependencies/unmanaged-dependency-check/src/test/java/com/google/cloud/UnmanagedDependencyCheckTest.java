@@ -21,6 +21,15 @@ public class UnmanagedDependencyCheckTest {
   }
 
   @Test
+  public void getUnmanagedDependencyFromHWBomTest()
+      throws MavenRepositoryException, ArtifactDescriptorException, InvalidVersionSpecificationException {
+    List<String> unManagedDependencies =
+        UnmanagedDependencyCheck.getUnmanagedDependencies(
+            "3.18.0", "src/test/resources/bigtable-pom.xml");
+    assertTrue(unManagedDependencies.isEmpty());
+  }
+
+  @Test
   public void getUnmanagedDependencyFromNestedPomTest()
       throws MavenRepositoryException, ArtifactDescriptorException, InvalidVersionSpecificationException {
     List<String> unManagedDependencies =

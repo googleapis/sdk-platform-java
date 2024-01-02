@@ -18,11 +18,13 @@ import org.eclipse.aether.version.InvalidVersionSpecificationException;
  * A utility class to check unmanaged dependencies in BOM.
  */
 public class UnmanagedDependencyCheck {
+  // regex of handwritten artifacts
+  private final static String handwrittenArtifact = "(com.google.cloud:google-cloud-.*)|(com.google.api.grpc:(grpc|proto)-google-cloud-.*)";
+
 
   /**
-   * @param args An array with two elements.<p>
-   * The first string is the version of Java shared dependencies. <p>
-   * The second string is the path of a pom.xml contains BOM.
+   * @param args An array with two elements.<p> The first string is the version of Java shared
+   * dependencies. <p> The second string is the path of a pom.xml contains BOM.
    */
   public static void main(String[] args)
       throws MavenRepositoryException, ArtifactDescriptorException, InvalidVersionSpecificationException {
@@ -50,6 +52,8 @@ public class UnmanagedDependencyCheck {
 
     return managedDependencies.stream()
         .filter(dependency -> !sharedDependencies.contains(dependency))
+        // handwritten artifacts, e.g., com.google.cloud:google-cloud-bigtable, should be excluded.
+        .filter(dependency -> !dependency.matches(handwrittenArtifact))
         .collect(Collectors.toList());
   }
 
@@ -73,12 +77,12 @@ public class UnmanagedDependencyCheck {
         .resolve(bom.getManagedDependencies(), true, DependencyMediation.MAVEN)
         .getClassPath()
         .forEach(
-          classPath -> {
-            String coordinate = classPath.toString();
-            // ignore the version.
-            int index = coordinate.lastIndexOf(":");
-            res.add(coordinate.substring(0, index));
-          });
+            classPath -> {
+              String coordinate = classPath.toString();
+              // ignore the version.
+              int index = coordinate.lastIndexOf(":");
+              res.add(coordinate.substring(0, index));
+            });
 
     return res;
   }
