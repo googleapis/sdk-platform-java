@@ -16,7 +16,6 @@
 
 package com.google.cloud;
 
-
 import com.google.api.core.InternalApi;
 import com.google.cloud.ExceptionHandler.Interceptor;
 
