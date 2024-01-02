@@ -14,6 +14,8 @@ import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.RequestParamsBuilder;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.pathtemplate.PathTemplate;
+import com.google.explicit.dynamic.routing.header.RepeatRequest;
+import com.google.explicit.dynamic.routing.header.RepeatResponse;
 import com.google.explicit.dynamic.routing.header.Request;
 import com.google.explicit.dynamic.routing.header.RequestWithNestedField;
 import com.google.protobuf.Empty;
@@ -140,9 +142,89 @@ public class HttpJsonExplicitDynamicRoutingHeaderTestingStub
                       .build())
               .build();
 
+  private static final ApiMethodDescriptor<RepeatRequest, RepeatResponse>
+      repeatDataPathEnumMethodDescriptor =
+          ApiMethodDescriptor.<RepeatRequest, RepeatResponse>newBuilder()
+              .setFullMethodName(
+                  "google.explicit.dynamic.routing.header.ExplicitDynamicRoutingHeaderTesting/RepeatDataPathEnum")
+              .setHttpMethod("POST")
+              .setType(ApiMethodDescriptor.MethodType.UNARY)
+              .setRequestFormatter(
+                  ProtoMessageRequestFormatter.<RepeatRequest>newBuilder()
+                      .setPath(
+                          "/v1beta1/repeat/kingdom/{info.fKingdom}:pathenum",
+                          request -> {
+                            Map<String, String> fields = new HashMap<>();
+                            ProtoRestSerializer<RepeatRequest> serializer =
+                                ProtoRestSerializer.create();
+                            serializer.putPathParam(
+                                fields, "info.fKingdom", request.getInfo().getFKingdomValue());
+                            return fields;
+                          })
+                      .setQueryParamsExtractor(
+                          request -> {
+                            Map<String, List<String>> fields = new HashMap<>();
+                            ProtoRestSerializer<RepeatRequest> serializer =
+                                ProtoRestSerializer.create();
+                            return fields;
+                          })
+                      .setRequestBodyExtractor(
+                          request ->
+                              ProtoRestSerializer.create()
+                                  .toBody("*", request.toBuilder().build(), false))
+                      .build())
+              .setResponseParser(
+                  ProtoMessageResponseParser.<RepeatResponse>newBuilder()
+                      .setDefaultInstance(RepeatResponse.getDefaultInstance())
+                      .setDefaultTypeRegistry(typeRegistry)
+                      .build())
+              .build();
+
+  private static final ApiMethodDescriptor<RepeatRequest, RepeatResponse>
+      repeatDataPathEnumOptionalMethodDescriptor =
+          ApiMethodDescriptor.<RepeatRequest, RepeatResponse>newBuilder()
+              .setFullMethodName(
+                  "google.explicit.dynamic.routing.header.ExplicitDynamicRoutingHeaderTesting/RepeatDataPathEnumOptional")
+              .setHttpMethod("POST")
+              .setType(ApiMethodDescriptor.MethodType.UNARY)
+              .setRequestFormatter(
+                  ProtoMessageRequestFormatter.<RepeatRequest>newBuilder()
+                      .setPath(
+                          "/v1beta1/repeat/kingdom/{info.pKingdom}:pathenumoptional",
+                          request -> {
+                            Map<String, String> fields = new HashMap<>();
+                            ProtoRestSerializer<RepeatRequest> serializer =
+                                ProtoRestSerializer.create();
+                            if (request.getInfo().hasPKingdom()) {
+                              serializer.putPathParam(
+                                  fields, "info.pKingdom", request.getInfo().getPKingdomValue());
+                            }
+                            return fields;
+                          })
+                      .setQueryParamsExtractor(
+                          request -> {
+                            Map<String, List<String>> fields = new HashMap<>();
+                            ProtoRestSerializer<RepeatRequest> serializer =
+                                ProtoRestSerializer.create();
+                            return fields;
+                          })
+                      .setRequestBodyExtractor(
+                          request ->
+                              ProtoRestSerializer.create()
+                                  .toBody("*", request.toBuilder().build(), false))
+                      .build())
+              .setResponseParser(
+                  ProtoMessageResponseParser.<RepeatResponse>newBuilder()
+                      .setDefaultInstance(RepeatResponse.getDefaultInstance())
+                      .setDefaultTypeRegistry(typeRegistry)
+                      .build())
+              .build();
+
   private final UnaryCallable<Request, Empty> backwardsCompatible1TestCallable;
   private final UnaryCallable<Request, Empty> backwardsCompatible2TestCallable;
   private final UnaryCallable<Request, Empty> backwardsCompatible3TestCallable;
+  private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataPathEnumCallable;
+  private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataPathEnumOptionalCallable;
 
   private final BackgroundResource backgroundResources;
   private final HttpJsonStubCallableFactory callableFactory;
@@ -223,6 +305,30 @@ public class HttpJsonExplicitDynamicRoutingHeaderTestingStub
                   return builder.build();
                 })
             .build();
+    HttpJsonCallSettings<RepeatRequest, RepeatResponse> repeatDataPathEnumTransportSettings =
+        HttpJsonCallSettings.<RepeatRequest, RepeatResponse>newBuilder()
+            .setMethodDescriptor(repeatDataPathEnumMethodDescriptor)
+            .setTypeRegistry(typeRegistry)
+            .setParamsExtractor(
+                request -> {
+                  RequestParamsBuilder builder = RequestParamsBuilder.create();
+                  builder.add("info.f_kingdom", String.valueOf(request.getInfo().getFKingdom()));
+                  return builder.build();
+                })
+            .build();
+    HttpJsonCallSettings<RepeatRequest, RepeatResponse>
+        repeatDataPathEnumOptionalTransportSettings =
+            HttpJsonCallSettings.<RepeatRequest, RepeatResponse>newBuilder()
+                .setMethodDescriptor(repeatDataPathEnumOptionalMethodDescriptor)
+                .setTypeRegistry(typeRegistry)
+                .setParamsExtractor(
+                    request -> {
+                      RequestParamsBuilder builder = RequestParamsBuilder.create();
+                      builder.add(
+                          "info.p_kingdom", String.valueOf(request.getInfo().getPKingdom()));
+                      return builder.build();
+                    })
+                .build();
 
     this.backwardsCompatible1TestCallable =
         callableFactory.createUnaryCallable(
@@ -239,6 +345,16 @@ public class HttpJsonExplicitDynamicRoutingHeaderTestingStub
             backwardsCompatible3TestTransportSettings,
             settings.backwardsCompatible3TestSettings(),
             clientContext);
+    this.repeatDataPathEnumCallable =
+        callableFactory.createUnaryCallable(
+            repeatDataPathEnumTransportSettings,
+            settings.repeatDataPathEnumSettings(),
+            clientContext);
+    this.repeatDataPathEnumOptionalCallable =
+        callableFactory.createUnaryCallable(
+            repeatDataPathEnumOptionalTransportSettings,
+            settings.repeatDataPathEnumOptionalSettings(),
+            clientContext);
 
     this.backgroundResources =
         new BackgroundResourceAggregation(clientContext.getBackgroundResources());
@@ -250,6 +366,8 @@ public class HttpJsonExplicitDynamicRoutingHeaderTestingStub
     methodDescriptors.add(backwardsCompatible1TestMethodDescriptor);
     methodDescriptors.add(backwardsCompatible2TestMethodDescriptor);
     methodDescriptors.add(backwardsCompatible3TestMethodDescriptor);
+    methodDescriptors.add(repeatDataPathEnumMethodDescriptor);
+    methodDescriptors.add(repeatDataPathEnumOptionalMethodDescriptor);
     return methodDescriptors;
   }
 
@@ -266,6 +384,16 @@ public class HttpJsonExplicitDynamicRoutingHeaderTestingStub
   @Override
   public UnaryCallable<Request, Empty> backwardsCompatible3TestCallable() {
     return backwardsCompatible3TestCallable;
+  }
+
+  @Override
+  public UnaryCallable<RepeatRequest, RepeatResponse> repeatDataPathEnumCallable() {
+    return repeatDataPathEnumCallable;
+  }
+
+  @Override
+  public UnaryCallable<RepeatRequest, RepeatResponse> repeatDataPathEnumOptionalCallable() {
+    return repeatDataPathEnumOptionalCallable;
   }
 
   @Override
