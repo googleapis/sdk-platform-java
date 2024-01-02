@@ -441,3 +441,7 @@ sparse_clone() {
   git checkout
   popd
 }
+
+python_util() {
+  python3 utilities.py $@
+}

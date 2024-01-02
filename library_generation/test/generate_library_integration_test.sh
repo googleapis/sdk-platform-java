@@ -54,7 +54,11 @@ done
 
 mkdir -p "${output_folder}"
 pushd "${output_folder}"
-download_googleapis_files_and_folders "${output_folder}"
+if [[ ! -f "WORKSPACE" ]] || [[ ! -d "google" ]] || [[ ! -d "grafeas" ]]; then
+  echo "necessary files/folders from googleapis not found in ${output_folder}"
+  echo "will now manually download googleapis"
+  download_googleapis_files_and_folders "${output_folder}"
+fi
 # parse version of gapic-generator-java, protobuf and grpc from WORKSPACE
 gapic_generator_version=$(get_version_from_WORKSPACE "_gapic_generator_java_version" WORKSPACE "=")
 echo "The version of gapic-generator-java is ${gapic_generator_version}."
@@ -72,16 +76,29 @@ if [ -z "${versions_file}" ]; then
 fi
 
 grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
-  proto_path=$(echo "$line" | cut -d " " -f 1)
-  repository_path=$(echo "$line" | cut -d " " -f 2)
-  skip_postprocessing=$(echo "$line" | cut -d " " -f 3)
-  destination_path=$(compute_destination_path "${proto_path}" "${output_folder}")
-
-  if [[ "${enable_postprocessing}" == "true" ]] && [[ "${skip_postprocessing}" == "true" ]]; then
-    echo 'this library is not intended for postprocessing test'
-    popd # output folder
-    continue
-  fi
+  proto_paths=$(echo "$line" | cut -d " " -f 1)
+  echo "${proto_paths}" | while IFS=, read -r proto_path; do
+    arguments="proto_path=${proto_path}"
+    # parse destination_path
+    pushd "${output_folder}"
+    destination_path=$(compute_destination_path "${proto_path}" "${output_folder}")
+    # parse GAPIC options from proto_path/BUILD.bazel
+    proto_build_file_path="${proto_path}/BUILD.bazel"
+    if [ ! -f "${proto_build_file_path}" ]; then
+      echo "provided googleapis 'google' folder does not contain a BUILD.bazel file expected"
+      echo "to be in ${proto_path}"
+      exit 1
+    fi
+    arguments="${arguments},proto_only=$(get_proto_only_from_BUILD "${proto_build_file_path}")"
+    arguments="${arguments},gapic_additional_protos=$(get_gapic_additional_protos_from_BUILD "${proto_build_file_path}")"
+    arguments="${arguments},transport=$(get_transport_from_BUILD "${proto_build_file_path}")"
+    arguments="${arguments},rest_numeric_enums=$(get_rest_numeric_enums_from_BUILD "${proto_build_file_path}")"
+    arguments="${arguments},gapic_yaml=$(get_gapic_yaml_from_BUILD "${proto_build_file_path}")"
+    arguments="${arguments},service_config=$(get_service_config_from_BUILD "${proto_build_file_path}")"
+    arguments="${arguments},service_yaml=$(get_service_yaml_from_BUILD "${proto_build_file_path}")"
+    arguments="${arguments},include_samples=$(get_include_samples_from_BUILD "${proto_build_file_path}")"
+    arguments="${arguments},,,"
+  done
 
   echo "Generating library from ${proto_path}, to ${destination_path}..."
   generation_start=$(date "+%s")
