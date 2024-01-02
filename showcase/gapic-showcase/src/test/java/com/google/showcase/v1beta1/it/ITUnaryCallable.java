@@ -20,6 +20,7 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
 import com.google.api.gax.core.ExecutorProvider;
+import com.google.api.gax.core.FixedExecutorProvider;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.grpc.GrpcStatusCode;
 import com.google.api.gax.retrying.RetrySettings;
@@ -39,8 +40,15 @@ import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import com.google.showcase.v1beta1.stub.EchoStubSettings;
@@ -52,20 +60,59 @@ import org.junit.Test;
 public class ITUnaryCallable {
 
   private static EchoClient grpcClient;
+  private static EchoClient grpcClientMultithreaded;
 
   private static EchoClient grpcVTClient;
 
+
   private static EchoClient httpjsonClient;
+
+  private static final ScheduledExecutorService EXECUTOR = new ScheduledThreadPoolExecutor(100);
 
   @BeforeClass
   public static void createClients() throws Exception {
     // Create gRPC Echo Client
     grpcClient = TestClientInitializer.createGrpcEchoClient();
+
     // Create Http JSON Echo Client
     httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
+
+
   }
 
-  public void createVTClient() throws Exception {
+  public void createClientForConcurrency() throws Exception {
+    // Set background executor provider. InstantiatingExecutorProvider only has settings for thread pool count.
+    // Set response timeout to 20 seconds.
+    RetrySettings defaultNoRetrySettings =
+            RetrySettings.newBuilder()
+                    .setInitialRpcTimeout(org.threeten.bp.Duration.ofSeconds(200))
+                    .setRpcTimeoutMultiplier(1.0)
+                    .setMaxRpcTimeout(org.threeten.bp.Duration.ofSeconds(200))
+                    .setTotalTimeout(org.threeten.bp.Duration.ofSeconds(200))
+                    // Explicitly set retries as disabled (maxAttempts == 1)
+                    .setMaxAttempts(1)
+                    .build();
+    EchoStubSettings.Builder grpcEchoSettingsBuilder = EchoStubSettings.newBuilder();
+    grpcEchoSettingsBuilder
+            .blockSettings()
+            .setRetrySettings(defaultNoRetrySettings)
+            .setRetryableCodes(ImmutableSet.of());
+    EchoSettings grpcEchoSettings = EchoSettings.create(grpcEchoSettingsBuilder.build());
+    grpcEchoSettings =
+            grpcEchoSettings
+                    .toBuilder()
+                    .setCredentialsProvider(NoCredentialsProvider.create())
+                    .setTransportChannelProvider(
+                            EchoSettings.defaultGrpcTransportProviderBuilder()
+                                    .setExecutor(EXECUTOR)
+                                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                                    .setInterceptorProvider(() -> ImmutableList.of()).build())
+                    .build();
+    grpcClientMultithreaded = EchoClient.create(grpcEchoSettings);
+  }
+
+
+    public void createVTClient() throws Exception {
     // Set background executor provider. InstantiatingExecutorProvider only has settings for thread pool count.
     // Set response timeout to 7 seconds.
     RetrySettings defaultNoRetrySettings =
@@ -77,13 +124,11 @@ public class ITUnaryCallable {
                     // Explicitly set retries as disabled (maxAttempts == 1)
                     .setMaxAttempts(1)
                     .build();
-
     EchoStubSettings.Builder grpcEchoSettingsBuilder = EchoStubSettings.newBuilder();
     grpcEchoSettingsBuilder
             .blockSettings()
             .setRetrySettings(defaultNoRetrySettings)
             .setRetryableCodes(ImmutableSet.of());
-
     EchoSettings grpcEchoSettings = EchoSettings.create(grpcEchoSettingsBuilder.build());
     grpcEchoSettings =
             grpcEchoSettings
@@ -96,6 +141,8 @@ public class ITUnaryCallable {
                                     .setInterceptorProvider(() -> ImmutableList.of()).build())
                     .build();
     grpcVTClient = EchoClient.create(grpcEchoSettings);
+
+
   }
 
   @AfterClass
@@ -112,6 +159,31 @@ public class ITUnaryCallable {
   public void testGrpc_receiveContent() {
     assertThat(echoGrpc("grpc-echo?")).isEqualTo("grpc-echo?");
     assertThat(echoGrpc("grpc-echo!")).isEqualTo("grpc-echo!");
+  }
+
+  @Test
+  public void testGrpcMultiThreaded_receiveContent() throws Exception {
+    createClientForConcurrency();
+    List<Future<BlockResponse>> results = new ArrayList<>();
+    // 100 concurrent echo calls.
+    for (int i = 0; i < 100; i++) {
+      String value = "echo response - " + i;
+      Callable<BlockResponse> echoTask =
+          () ->
+              grpcClientMultithreaded.block(
+                  BlockRequest.newBuilder()
+                      .setResponseDelay(Duration.newBuilder().setSeconds(2).build())
+                      .setSuccess(BlockResponse.newBuilder().setContent(value + " thread name: " + Thread.currentThread().getName()))
+                      .build());
+      results.add(EXECUTOR.submit(echoTask));
+    }
+
+    // Receive response
+    for (Future<BlockResponse> result : results) {
+      BlockResponse response = result.get(); // Blocks until the task completes
+      System.out.println(response.getContent());
+    }
+    EXECUTOR.shutdown();
   }
 
   @Test
