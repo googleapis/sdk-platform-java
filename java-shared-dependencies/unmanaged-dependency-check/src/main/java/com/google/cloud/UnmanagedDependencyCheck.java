@@ -11,7 +11,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.eclipse.aether.resolution.ArtifactDescriptorException;
 import org.eclipse.aether.version.InvalidVersionSpecificationException;
 
 /**
@@ -27,7 +26,7 @@ public class UnmanagedDependencyCheck {
    * dependencies. <p> The second string is the path of a pom.xml contains BOM.
    */
   public static void main(String[] args)
-      throws MavenRepositoryException, ArtifactDescriptorException, InvalidVersionSpecificationException {
+      throws MavenRepositoryException, InvalidVersionSpecificationException {
     checkArgument(args.length == 2, "The length of the inputs should be 2");
     System.out.println(getUnmanagedDependencies(args[0], args[1]));
   }
@@ -35,19 +34,18 @@ public class UnmanagedDependencyCheck {
   /**
    * Returns dependency coordinates that are not managed by shared dependency BOM.
    *
-   * @param sharedDependencyVersion the version of shared dependency BOM
+   * @param sharedDependenciesBomPath the path of shared dependency BOM
    * @param projectBomPath the path of current project BOM
    * @return a list of unmanaged dependencies by the given version of shared dependency BOM
-   * @throws ArtifactDescriptorException thrown if the artifact descriptor is unreachable
    * @throws MavenRepositoryException thrown if the artifacts in Bom can't be reached in remote or
    * local Maven repository
    * @throws InvalidVersionSpecificationException thrown if the shared dependency version can't be
    * parsed
    */
   public static List<String> getUnmanagedDependencies(
-      String sharedDependencyVersion, String projectBomPath)
-      throws ArtifactDescriptorException, MavenRepositoryException, InvalidVersionSpecificationException {
-    Set<String> sharedDependencies = getSharedDependencies(sharedDependencyVersion);
+      String sharedDependenciesBomPath, String projectBomPath)
+      throws MavenRepositoryException, InvalidVersionSpecificationException {
+    Set<String> sharedDependencies = getManagedDependencies(sharedDependenciesBomPath);
     Set<String> managedDependencies = getManagedDependencies(projectBomPath);
 
     return managedDependencies.stream()
@@ -55,14 +53,6 @@ public class UnmanagedDependencyCheck {
         // handwritten artifacts, e.g., com.google.cloud:google-cloud-bigtable, should be excluded.
         .filter(dependency -> !dependency.matches(handwrittenArtifact))
         .collect(Collectors.toList());
-  }
-
-  private static Set<String> getSharedDependencies(String sharedDependencyVersion)
-      throws ArtifactDescriptorException, InvalidVersionSpecificationException {
-    return getManagedDependenciesFromBom(
-        Bom.readBom(
-            String.format(
-                "com.google.cloud:google-cloud-shared-dependencies:%s", sharedDependencyVersion)));
   }
 
   private static Set<String> getManagedDependencies(String projectBomPath)
