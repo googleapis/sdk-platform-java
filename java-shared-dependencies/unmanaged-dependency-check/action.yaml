@@ -20,6 +20,7 @@
       shell: bash
       run: |
         version=$(git tag -l 'google-cloud-shared-dependencies/v*' --sort=-v:refname | head -1) 
+        echo "${version}"
         echo "short_version=${version#*v}" >> $GITHUB_ENV
     - name: Install check
       shell: bash
