@@ -59,7 +59,7 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>Echo</td>
- *      <td><p></p></td>
+ *      <td><p> </td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -84,7 +84,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>Expand</td>
- *      <td><p></p></td>
+ *      <td><p> </td>
  *      <td>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -94,7 +94,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>Collect</td>
- *      <td><p></p></td>
+ *      <td><p> </td>
  *      <td>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -104,7 +104,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>Chat</td>
- *      <td><p></p></td>
+ *      <td><p> </td>
  *      <td>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -114,7 +114,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ChatAgain</td>
- *      <td><p></p></td>
+ *      <td><p> </td>
  *      <td>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
@@ -124,7 +124,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>PagedExpand</td>
- *      <td><p></p></td>
+ *      <td><p> </td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -139,7 +139,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>SimplePagedExpand</td>
- *      <td><p></p></td>
+ *      <td><p> </td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -158,7 +158,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>Wait</td>
- *      <td><p></p></td>
+ *      <td><p> </td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -178,7 +178,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>Block</td>
- *      <td><p></p></td>
+ *      <td><p> </td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -192,7 +192,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>CollideName</td>
- *      <td><p></p></td>
+ *      <td><p> </td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -516,6 +516,7 @@ public class EchoClient implements BackgroundResource {
    *       EchoRequest.newBuilder()
    *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
    *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setRequestId("requestId693933066")
    *           .setSeverity(Severity.forNumber(0))
    *           .setFoobar(Foobar.newBuilder().build())
    *           .build();
@@ -545,6 +546,7 @@ public class EchoClient implements BackgroundResource {
    *       EchoRequest.newBuilder()
    *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
    *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setRequestId("requestId693933066")
    *           .setSeverity(Severity.forNumber(0))
    *           .setFoobar(Foobar.newBuilder().build())
    *           .build();
@@ -570,7 +572,11 @@ public class EchoClient implements BackgroundResource {
    * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (EchoClient echoClient = EchoClient.create()) {
    *   ExpandRequest request =
-   *       ExpandRequest.newBuilder().setContent("content951530617").setInfo("info3237038").build();
+   *       ExpandRequest.newBuilder()
+   *           .setContent("content951530617")
+   *           .setInfo("info3237038")
+   *           .setRequestId("requestId693933066")
+   *           .build();
    *   ServerStream<EchoResponse> stream = echoClient.expandCallable().call(request);
    *   for (EchoResponse response : stream) {
    *     // Do something when a response is received.
@@ -616,6 +622,7 @@ public class EchoClient implements BackgroundResource {
    *       EchoRequest.newBuilder()
    *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
    *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setRequestId("requestId693933066")
    *           .setSeverity(Severity.forNumber(0))
    *           .setFoobar(Foobar.newBuilder().build())
    *           .build();
@@ -643,6 +650,7 @@ public class EchoClient implements BackgroundResource {
    *       EchoRequest.newBuilder()
    *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
    *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setRequestId("requestId693933066")
    *           .setSeverity(Severity.forNumber(0))
    *           .setFoobar(Foobar.newBuilder().build())
    *           .build();
@@ -673,6 +681,7 @@ public class EchoClient implements BackgroundResource {
    *       EchoRequest.newBuilder()
    *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
    *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setRequestId("requestId693933066")
    *           .setSeverity(Severity.forNumber(0))
    *           .setFoobar(Foobar.newBuilder().build())
    *           .build();
@@ -1081,6 +1090,7 @@ public class EchoClient implements BackgroundResource {
    *       EchoRequest.newBuilder()
    *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
    *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setRequestId("requestId693933066")
    *           .setSeverity(Severity.forNumber(0))
    *           .setFoobar(Foobar.newBuilder().build())
    *           .build();
@@ -1110,6 +1120,7 @@ public class EchoClient implements BackgroundResource {
    *       EchoRequest.newBuilder()
    *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
    *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
+   *           .setRequestId("requestId693933066")
    *           .setSeverity(Severity.forNumber(0))
    *           .setFoobar(Foobar.newBuilder().build())
    *           .build();

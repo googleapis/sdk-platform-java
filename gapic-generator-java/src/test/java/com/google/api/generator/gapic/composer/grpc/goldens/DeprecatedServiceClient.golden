@@ -37,7 +37,7 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>FastFibonacci</td>
- *      <td><p></p></td>
+ *      <td><p> </td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -51,7 +51,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>SlowFibonacci</td>
- *      <td><p></p></td>
+ *      <td><p> </td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>

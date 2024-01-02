@@ -242,7 +242,7 @@ public class ServiceClientCommentComposer {
           .append(method.method)
           .append("</td>\n")
           .append("     <td>")
-          .append("<p>" + method.description + "</p>")
+          .append(CommentFormatter.formatAsJavaDocComment(method.description, null))
           .append("</td>\n")
           .append("     <td>\n");
       generateUnorderedListMethodVariants(

@@ -14,6 +14,7 @@
 
 package com.google.api.generator.gapic.model;
 
+import com.google.api.FieldInfo.Format;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
 import java.util.Objects;
@@ -31,6 +32,15 @@ public abstract class Field {
   public abstract String originalName();
 
   public abstract TypeNode type();
+
+  // If the field is annotated with google.api.field_behavior = REQUIRED, then this is true. This is
+  // currently only used to check if a field should be auto-populated. If it is true, then the field
+  // should
+  // *not* be autopopulated.
+  public abstract boolean isRequired();
+
+  @Nullable
+  public abstract Format fieldInfoFormat();
 
   public abstract boolean isMessage();
 
@@ -72,6 +82,8 @@ public abstract class Field {
     return name().equals(other.name())
         && originalName().equals(other.originalName())
         && type().equals(other.type())
+        && isRequired() == other.isRequired()
+        && fieldInfoFormat() == other.fieldInfoFormat()
         && isMessage() == other.isMessage()
         && isEnum() == other.isEnum()
         && isRepeated() == other.isRepeated()
@@ -89,6 +101,8 @@ public abstract class Field {
         + 19 * type().hashCode()
         + (isMessage() ? 1 : 0) * 23
         + (isEnum() ? 1 : 0) * 29
+        + (isRequired() ? 1 : 0) * 31
+        + (fieldInfoFormat() == null ? 0 : fieldInfoFormat().hashCode())
         + (isRepeated() ? 1 : 0) * 31
         + (isMap() ? 1 : 0) * 37
         + (isContainedInOneof() ? 1 : 0) * 41
@@ -101,6 +115,7 @@ public abstract class Field {
 
   public static Builder builder() {
     return new AutoValue_Field.Builder()
+        .setIsRequired(false)
         .setIsMessage(false)
         .setIsEnum(false)
         .setIsRepeated(false)
@@ -116,6 +131,10 @@ public abstract class Field {
     public abstract Builder setOriginalName(String originalName);
 
     public abstract Builder setType(TypeNode type);
+
+    public abstract Builder setIsRequired(boolean isRequired);
+
+    public abstract Builder setFieldInfoFormat(Format fieldInfoFormat);
 
     public abstract Builder setIsMessage(boolean isMessage);
 

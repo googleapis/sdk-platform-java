@@ -121,7 +121,7 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>ListBuckets</td>
- *      <td><p>Lists log buckets.</p></td>
+ *      <td><p> Lists log buckets.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -144,7 +144,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetBucket</td>
- *      <td><p>Gets a log bucket.</p></td>
+ *      <td><p> Gets a log bucket.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -158,8 +158,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>CreateBucket</td>
- *      <td><p>Creates a log bucket that can be used to store log entries. After a bucket
- *  has been created, the bucket's location cannot be changed.</p></td>
+ *      <td><p> Creates a log bucket that can be used to store log entries. After a bucket has been created, the bucket's location cannot be changed.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -173,16 +172,10 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>UpdateBucket</td>
- *      <td><p>Updates a log bucket. This method replaces the following fields in the
- *  existing bucket with values from the new bucket: `retention_period`
- *
- *  If the retention period is decreased and the bucket is locked,
- *  `FAILED_PRECONDITION` will be returned.
- *
- *  If the bucket has a `lifecycle_state` of `DELETE_REQUESTED`, then
- *  `FAILED_PRECONDITION` will be returned.
- *
- *  After a bucket has been created, the bucket's location cannot be changed.</p></td>
+ *      <td><p> Updates a log bucket. This method replaces the following fields in the existing bucket with values from the new bucket: `retention_period`
+ * <p>  If the retention period is decreased and the bucket is locked, `FAILED_PRECONDITION` will be returned.
+ * <p>  If the bucket has a `lifecycle_state` of `DELETE_REQUESTED`, then `FAILED_PRECONDITION` will be returned.
+ * <p>  After a bucket has been created, the bucket's location cannot be changed.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -196,11 +189,8 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>DeleteBucket</td>
- *      <td><p>Deletes a log bucket.
- *
- *  Changes the bucket's `lifecycle_state` to the `DELETE_REQUESTED` state.
- *  After 7 days, the bucket will be purged and all log entries in the bucket
- *  will be permanently deleted.</p></td>
+ *      <td><p> Deletes a log bucket.
+ * <p>  Changes the bucket's `lifecycle_state` to the `DELETE_REQUESTED` state. After 7 days, the bucket will be purged and all log entries in the bucket will be permanently deleted.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -214,8 +204,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>UndeleteBucket</td>
- *      <td><p>Undeletes a log bucket. A bucket that has been deleted can be undeleted
- *  within the grace period of 7 days.</p></td>
+ *      <td><p> Undeletes a log bucket. A bucket that has been deleted can be undeleted within the grace period of 7 days.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -229,7 +218,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ListViews</td>
- *      <td><p>Lists views on a log bucket.</p></td>
+ *      <td><p> Lists views on a log bucket.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -248,7 +237,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetView</td>
- *      <td><p>Gets a view on a log bucket..</p></td>
+ *      <td><p> Gets a view on a log bucket..</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -262,8 +251,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>CreateView</td>
- *      <td><p>Creates a view over log entries in a log bucket. A bucket may contain a
- *  maximum of 30 views.</p></td>
+ *      <td><p> Creates a view over log entries in a log bucket. A bucket may contain a maximum of 30 views.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -277,11 +265,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>UpdateView</td>
- *      <td><p>Updates a view on a log bucket. This method replaces the following fields
- *  in the existing view with values from the new view: `filter`.
- *  If an `UNAVAILABLE` error is returned, this indicates that system is not in
- *  a state where it can update the view. If this occurs, please try again in a
- *  few minutes.</p></td>
+ *      <td><p> Updates a view on a log bucket. This method replaces the following fields in the existing view with values from the new view: `filter`. If an `UNAVAILABLE` error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -295,10 +279,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>DeleteView</td>
- *      <td><p>Deletes a view on a log bucket.
- *  If an `UNAVAILABLE` error is returned, this indicates that system is not in
- *  a state where it can delete the view. If this occurs, please try again in a
- *  few minutes.</p></td>
+ *      <td><p> Deletes a view on a log bucket. If an `UNAVAILABLE` error is returned, this indicates that system is not in a state where it can delete the view. If this occurs, please try again in a few minutes.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -312,7 +293,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ListSinks</td>
- *      <td><p>Lists sinks.</p></td>
+ *      <td><p> Lists sinks.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -335,7 +316,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetSink</td>
- *      <td><p>Gets a sink.</p></td>
+ *      <td><p> Gets a sink.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -354,10 +335,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>CreateSink</td>
- *      <td><p>Creates a sink that exports specified log entries to a destination. The
- *  export of newly-ingested log entries begins immediately, unless the sink's
- *  `writer_identity` is not permitted to write to the destination. A sink can
- *  export log entries only from the resource owning the sink.</p></td>
+ *      <td><p> Creates a sink that exports specified log entries to a destination. The export of newly-ingested log entries begins immediately, unless the sink's `writer_identity` is not permitted to write to the destination. A sink can export log entries only from the resource owning the sink.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -379,11 +357,8 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>UpdateSink</td>
- *      <td><p>Updates a sink. This method replaces the following fields in the existing
- *  sink with values from the new sink: `destination`, and `filter`.
- *
- *  The updated sink might also have a new `writer_identity`; see the
- *  `unique_writer_identity` field.</p></td>
+ *      <td><p> Updates a sink. This method replaces the following fields in the existing sink with values from the new sink: `destination`, and `filter`.
+ * <p>  The updated sink might also have a new `writer_identity`; see the `unique_writer_identity` field.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -404,8 +379,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>DeleteSink</td>
- *      <td><p>Deletes a sink. If the sink has a unique `writer_identity`, then that
- *  service account is also deleted.</p></td>
+ *      <td><p> Deletes a sink. If the sink has a unique `writer_identity`, then that service account is also deleted.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -424,7 +398,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>ListExclusions</td>
- *      <td><p>Lists all the exclusions on the _Default sink in a parent resource.</p></td>
+ *      <td><p> Lists all the exclusions on the _Default sink in a parent resource.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -447,7 +421,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetExclusion</td>
- *      <td><p>Gets the description of an exclusion in the _Default sink.</p></td>
+ *      <td><p> Gets the description of an exclusion in the _Default sink.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -466,9 +440,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>CreateExclusion</td>
- *      <td><p>Creates a new exclusion in the _Default sink in a specified parent
- *  resource. Only log entries belonging to that resource can be excluded. You
- *  can have up to 10 exclusions in a resource.</p></td>
+ *      <td><p> Creates a new exclusion in the _Default sink in a specified parent resource. Only log entries belonging to that resource can be excluded. You can have up to 10 exclusions in a resource.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -490,8 +462,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>UpdateExclusion</td>
- *      <td><p>Changes one or more properties of an existing exclusion in the _Default
- *  sink.</p></td>
+ *      <td><p> Changes one or more properties of an existing exclusion in the _Default sink.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -510,7 +481,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>DeleteExclusion</td>
- *      <td><p>Deletes an exclusion in the _Default sink.</p></td>
+ *      <td><p> Deletes an exclusion in the _Default sink.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -529,16 +500,9 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetCmekSettings</td>
- *      <td><p>Gets the Logging CMEK settings for the given resource.
- *
- *  Note: CMEK for the Log Router can be configured for Google Cloud projects,
- *  folders, organizations and billing accounts. Once configured for an
- *  organization, it applies to all projects and folders in the Google Cloud
- *  organization.
- *
- *  See [Enabling CMEK for Log
- *  Router](https://cloud.google.com/logging/docs/routing/managed-encryption)
- *  for more information.</p></td>
+ *      <td><p> Gets the Logging CMEK settings for the given resource.
+ * <p>  Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.
+ * <p>  See [Enabling CMEK for Log Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -552,21 +516,10 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>UpdateCmekSettings</td>
- *      <td><p>Updates the Log Router CMEK settings for the given resource.
- *
- *  Note: CMEK for the Log Router can currently only be configured for Google
- *  Cloud organizations. Once configured, it applies to all projects and
- *  folders in the Google Cloud organization.
- *
- *  [UpdateCmekSettings][google.logging.v2.ConfigServiceV2.UpdateCmekSettings]
- *  will fail if 1) `kms_key_name` is invalid, or 2) the associated service
- *  account does not have the required
- *  `roles/cloudkms.cryptoKeyEncrypterDecrypter` role assigned for the key, or
- *  3) access to the key is disabled.
- *
- *  See [Enabling CMEK for Log
- *  Router](https://cloud.google.com/logging/docs/routing/managed-encryption)
- *  for more information.</p></td>
+ *      <td><p> Updates the Log Router CMEK settings for the given resource.
+ * <p>  Note: CMEK for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.
+ * <p>  [UpdateCmekSettings][google.logging.v2.ConfigServiceV2.UpdateCmekSettings] will fail if 1) `kms_key_name` is invalid, or 2) the associated service account does not have the required `roles/cloudkms.cryptoKeyEncrypterDecrypter` role assigned for the key, or 3) access to the key is disabled.
+ * <p>  See [Enabling CMEK for Log Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -580,16 +533,9 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>GetSettings</td>
- *      <td><p>Gets the Log Router settings for the given resource.
- *
- *  Note: Settings for the Log Router can be get for Google Cloud projects,
- *  folders, organizations and billing accounts. Currently it can only be
- *  configured for organizations. Once configured for an organization, it
- *  applies to all projects and folders in the Google Cloud organization.
- *
- *  See [Enabling CMEK for Log
- *  Router](https://cloud.google.com/logging/docs/routing/managed-encryption)
- *  for more information.</p></td>
+ *      <td><p> Gets the Log Router settings for the given resource.
+ * <p>  Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.
+ * <p>  See [Enabling CMEK for Log Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -608,22 +554,10 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>UpdateSettings</td>
- *      <td><p>Updates the Log Router settings for the given resource.
- *
- *  Note: Settings for the Log Router can currently only be configured for
- *  Google Cloud organizations. Once configured, it applies to all projects and
- *  folders in the Google Cloud organization.
- *
- *  [UpdateSettings][google.logging.v2.ConfigServiceV2.UpdateSettings]
- *  will fail if 1) `kms_key_name` is invalid, or 2) the associated service
- *  account does not have the required
- *  `roles/cloudkms.cryptoKeyEncrypterDecrypter` role assigned for the key, or
- *  3) access to the key is disabled. 4) `location_id` is not supported by
- *  Logging. 5) `location_id` violate OrgPolicy.
- *
- *  See [Enabling CMEK for Log
- *  Router](https://cloud.google.com/logging/docs/routing/managed-encryption)
- *  for more information.</p></td>
+ *      <td><p> Updates the Log Router settings for the given resource.
+ * <p>  Note: Settings for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.
+ * <p>  [UpdateSettings][google.logging.v2.ConfigServiceV2.UpdateSettings] will fail if 1) `kms_key_name` is invalid, or 2) the associated service account does not have the required `roles/cloudkms.cryptoKeyEncrypterDecrypter` role assigned for the key, or 3) access to the key is disabled. 4) `location_id` is not supported by Logging. 5) `location_id` violate OrgPolicy.
+ * <p>  See [Enabling CMEK for Log Router](https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -641,7 +575,7 @@ import javax.annotation.Generated;
  *    </tr>
  *    <tr>
  *      <td>CopyLogEntries</td>
- *      <td><p>Copies a set of log entries from a log bucket to a Cloud Storage bucket.</p></td>
+ *      <td><p> Copies a set of log entries from a log bucket to a Cloud Storage bucket.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>

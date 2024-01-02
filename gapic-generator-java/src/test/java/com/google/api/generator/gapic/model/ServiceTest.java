@@ -177,4 +177,17 @@ public class ServiceTest {
     Service testService = testServiceBuilder.build();
     testService.hasAnyEnabledMethodsForTransport(Transport.GRPC_REST);
   }
+
+  @Test
+  public void hostServiceName_googleApisDefaultHost() {
+    Service service = testServiceBuilder.setDefaultHost("test.googleapis.com").build();
+    assertThat(service.hostServiceName()).isEqualTo("test");
+  }
+
+  @Test
+  public void hostServiceName_nonGoogleApisDefaultHost() {
+    // Default Host is localhost:7469
+    Service service = testServiceBuilder.build();
+    assertThat(service.hostServiceName()).isEqualTo("");
+  }
 }

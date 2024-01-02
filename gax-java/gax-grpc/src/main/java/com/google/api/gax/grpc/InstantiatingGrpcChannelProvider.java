@@ -430,6 +430,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   /** The endpoint to be used for the channel. */
+  @Override
   public String getEndpoint() {
     return endpoint;
   }
