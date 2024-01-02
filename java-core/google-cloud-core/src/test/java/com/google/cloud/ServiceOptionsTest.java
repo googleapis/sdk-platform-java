@@ -495,7 +495,8 @@ public class ServiceOptionsTest {
             .setHost(null)
             .setProjectId("project-id")
             .build();
-    // `https://www.googleapis.com` is the DEFAULT_HOST value. It is set as the host if host is null
+    // `https://www.googleapis.com` is the DEFAULT_HOST value for ServiceOptions. The ServiceOptions
+    // builder will set as it as the host if host is null
     assertThat(options.getResolvedEndpoint("service")).isEqualTo("https://www.googleapis.com");
   }
 

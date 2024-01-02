@@ -798,12 +798,12 @@ public abstract class ServiceOptions<
   /** Returns the resolved endpoint for the Service to connect to Google Cloud */
   public String getResolvedEndpoint(String serviceName) {
     if (universeDomain == null) {
-      return formatTemplate(serviceName, GOOGLE_DEFAULT_UNIVERSE);
+      return formatEndpoint(serviceName, GOOGLE_DEFAULT_UNIVERSE);
     } else if (Strings.isNullOrEmpty(universeDomain)) {
       throw new IllegalArgumentException("Universe Domain cannot be empty");
     } else {
       if (host == null) {
-        return formatTemplate(serviceName, getUniverseDomain());
+        return formatEndpoint(serviceName, getUniverseDomain());
       }
       return host;
     }
@@ -814,7 +814,7 @@ public abstract class ServiceOptions<
   public String getResolvedApiaryEndpoint(String serviceName) {
     String resolvedUniverseDomain =
         getUniverseDomain() != null ? getUniverseDomain() : GOOGLE_DEFAULT_UNIVERSE;
-    return formatTemplate(serviceName, resolvedUniverseDomain);
+    return formatEndpoint(serviceName, resolvedUniverseDomain);
   }
 
   /** Validates that Credentials' Universe Domain and user configured Universe Domain matches. */
@@ -827,7 +827,7 @@ public abstract class ServiceOptions<
     //    return credentials.getUniverseDomain() != resolvedUniverseDomain;
   }
 
-  private String formatTemplate(String serviceName, String universeDomain) {
+  private String formatEndpoint(String serviceName, String universeDomain) {
     return serviceName + "." + universeDomain + ":443";
   }
 }
