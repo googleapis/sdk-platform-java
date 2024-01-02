@@ -544,6 +544,11 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       return clock;
     }
 
+    /** Gets the custom Universe Domain that was previously set on this Builder */
+    public String getUniverseDomain() {
+      return universeDomain;
+    }
+
     public String getEndpoint() {
       return endpoint;
     }

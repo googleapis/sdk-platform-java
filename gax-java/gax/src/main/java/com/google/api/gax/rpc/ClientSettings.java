@@ -93,6 +93,10 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     return stubSettings.getClock();
   }
 
+  public final String getUniverseDomain() {
+    return stubSettings.getUniverseDomain();
+  }
+
   public final String getEndpoint() {
     return stubSettings.getEndpoint();
   }
@@ -125,6 +129,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
         .add("headerProvider", getHeaderProvider())
         .add("internalHeaderProvider", getInternalHeaderProvider())
         .add("clock", getClock())
+        .add("universeDomain", getUniverseDomain())
         .add("endpoint", getEndpoint())
         .add("quotaProjectId", getQuotaProjectId())
         .add("watchdogProvider", getWatchdogProvider())
@@ -241,6 +246,12 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
       return self();
     }
 
+    /** Sets the Universe Domain to configure the resolved endpoint */
+    public B setUniverseDomain(String universeDomain) {
+      stubSettings.setUniverseDomain(universeDomain);
+      return self();
+    }
+
     public B setEndpoint(String endpoint) {
       stubSettings.setEndpoint(endpoint);
       return self();
@@ -321,6 +332,11 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
       return stubSettings.getClock();
     }
 
+    /** Gets the Universe Domain that was previously set on this Builder */
+    public String getUniverseDomain() {
+      return stubSettings.getUniverseDomain();
+    }
+
     public String getEndpoint() {
       return stubSettings.getEndpoint();
     }
@@ -364,6 +380,7 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
           .add("headerProvider", getHeaderProvider())
           .add("internalHeaderProvider", getInternalHeaderProvider())
           .add("clock", getClock())
+          .add("universeDomain", getUniverseDomain())
           .add("endpoint", getEndpoint())
           .add("quotaProjectId", getQuotaProjectId())
           .add("watchdogProvider", getWatchdogProvider())
