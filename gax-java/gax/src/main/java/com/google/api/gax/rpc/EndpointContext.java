@@ -51,6 +51,12 @@ public abstract class EndpointContext {
   @Nullable
   public abstract String serviceName();
 
+  /**
+   * Universe Domain is the domain for Google Cloud Services. It follows the format of
+   * `{ServiceName}.{UniverseDomain}`. For example, speech.googleapis.com would have a Universe
+   * Domain value of `googleapis.com` and cloudasset.test.com would have a Universe Domain of
+   * `test.com`. If this value is not set, this will default to `googleapis.com`.
+   */
   @Nullable
   public abstract String universeDomain();
 
@@ -98,6 +104,12 @@ public abstract class EndpointContext {
      */
     public abstract Builder setServiceName(String serviceName);
 
+    /**
+     * Universe Domain is the domain for Google Cloud Services. It follows the format of
+     * `{ServiceName}.{UniverseDomain}`. For example, speech.googleapis.com would have a Universe
+     * Domain value of `googleapis.com` and cloudasset.test.com would have a Universe Domain of
+     * `test.com`. If this value is not set, this will default to `googleapis.com`.
+     */
     public abstract Builder setUniverseDomain(String universeDomain);
 
     /**
