@@ -69,14 +69,4 @@ public abstract class BaseService<OptionsT extends ServiceOptions<?, OptionsT>>
   public OptionsT getOptions() {
     return options;
   }
-
-  /** Validates that Credentials' Universe Domain and user configured Universe Domain matches. */
-  public boolean isValidUniverseDomain() throws IOException {
-    Credentials credentials = options.getCredentials();
-    String universeDomain = options.getUniverseDomain();
-    String resolvedUniverseDomain =
-        universeDomain != null ? universeDomain : GOOGLE_DEFAULT_UNIVERSE;
-    return true;
-    //    return credentials.getUniverseDomain() != resolvedUniverseDomain;
-  }
 }

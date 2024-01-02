@@ -800,7 +800,7 @@ public abstract class ServiceOptions<
     if (universeDomain == null) {
       return formatTemplate(serviceName, GOOGLE_DEFAULT_UNIVERSE);
     } else if (Strings.isNullOrEmpty(universeDomain)) {
-      throw new RuntimeException("Universe Domain cannot be empty");
+      throw new IllegalArgumentException("Universe Domain cannot be empty");
     } else {
       if (host == null) {
         return formatTemplate(serviceName, getUniverseDomain());
@@ -815,6 +815,16 @@ public abstract class ServiceOptions<
     String resolvedUniverseDomain =
         getUniverseDomain() != null ? getUniverseDomain() : GOOGLE_DEFAULT_UNIVERSE;
     return formatTemplate(serviceName, resolvedUniverseDomain);
+  }
+
+  /** Validates that Credentials' Universe Domain and user configured Universe Domain matches. */
+  public boolean isValidUniverseDomain() throws IOException {
+    Credentials credentials = getCredentials();
+    String universeDomain = getUniverseDomain();
+    String resolvedUniverseDomain =
+            universeDomain != null ? universeDomain : GOOGLE_DEFAULT_UNIVERSE;
+    return true;
+    //    return credentials.getUniverseDomain() != resolvedUniverseDomain;
   }
 
   private String formatTemplate(String serviceName, String universeDomain) {
