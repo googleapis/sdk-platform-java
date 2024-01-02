@@ -822,7 +822,7 @@ public abstract class ServiceOptions<
     Credentials credentials = getCredentials();
     String universeDomain = getUniverseDomain();
     String resolvedUniverseDomain =
-            universeDomain != null ? universeDomain : GOOGLE_DEFAULT_UNIVERSE;
+        universeDomain != null ? universeDomain : GOOGLE_DEFAULT_UNIVERSE;
     return true;
     //    return credentials.getUniverseDomain() != resolvedUniverseDomain;
   }

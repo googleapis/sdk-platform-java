@@ -481,38 +481,50 @@ public class ServiceOptionsTest {
   @Test
   public void testGetResolvedEndpoint_emptyUniverseDomain() {
     TestServiceOptions options = TestServiceOptions.newBuilder().setUniverseDomain("").build();
-    IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> options.getResolvedEndpoint("service"));
+    IllegalArgumentException exception =
+        assertThrows(IllegalArgumentException.class, () -> options.getResolvedEndpoint("service"));
     assertThat(exception.getMessage()).isEqualTo("Universe Domain cannot be empty");
   }
 
   @Test
   public void testGetResolvedEndpoint_customUniverseDomain_noHost() {
-    TestServiceOptions options = TestServiceOptions.newBuilder().setUniverseDomain("test.com").setHost(null).build();
+    TestServiceOptions options =
+        TestServiceOptions.newBuilder().setUniverseDomain("test.com").setHost(null).build();
     // `https://www.googleapis.com` is the DEFAULT_HOST value. It is set as the host if host is null
     assertThat(options.getResolvedEndpoint("service")).isEqualTo("https://www.googleapis.com");
   }
 
   @Test
   public void testGetResolvedEndpoint_customUniverseDomain_customHost() {
-    TestServiceOptions options = TestServiceOptions.newBuilder().setUniverseDomain("test.com").setHost("service.random.com:443").build();
+    TestServiceOptions options =
+        TestServiceOptions.newBuilder()
+            .setUniverseDomain("test.com")
+            .setHost("service.random.com:443")
+            .build();
     assertThat(options.getResolvedEndpoint("service")).isEqualTo("service.random.com:443");
   }
 
   @Test
   public void testGetResolvedApiaryEndpoint_noUniverseDomain() {
     TestServiceOptions options = TestServiceOptions.newBuilder().build();
-    assertThat(options.getResolvedApiaryEndpoint("service")).isEqualTo("service.googleapis.com:443");
+    assertThat(options.getResolvedApiaryEndpoint("service"))
+        .isEqualTo("service.googleapis.com:443");
   }
 
   @Test
   public void testGetResolvedApiaryEndpoint_customUniverseDomain_noHost() {
-    TestServiceOptions options = TestServiceOptions.newBuilder().setUniverseDomain("test.com").setHost(null).build();
+    TestServiceOptions options =
+        TestServiceOptions.newBuilder().setUniverseDomain("test.com").setHost(null).build();
     assertThat(options.getResolvedApiaryEndpoint("service")).isEqualTo("service.test.com:443");
   }
 
   @Test
   public void testGetResolvedApiaryEndpoint_customUniverseDomain_customHost() {
-    TestServiceOptions options = TestServiceOptions.newBuilder().setUniverseDomain("test.com").setHost("service.random.com:443").build();
+    TestServiceOptions options =
+        TestServiceOptions.newBuilder()
+            .setUniverseDomain("test.com")
+            .setHost("service.random.com:443")
+            .build();
     assertThat(options.getResolvedEndpoint("service")).isEqualTo("service.random.com:443");
   }
 

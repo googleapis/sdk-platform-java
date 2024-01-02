@@ -16,12 +16,9 @@
 
 package com.google.cloud;
 
-import static com.google.cloud.ServiceOptions.GOOGLE_DEFAULT_UNIVERSE;
 
 import com.google.api.core.InternalApi;
-import com.google.auth.Credentials;
 import com.google.cloud.ExceptionHandler.Interceptor;
-import java.io.IOException;
 
 /**
  * Base class for service objects.
