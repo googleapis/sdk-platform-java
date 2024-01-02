@@ -66,7 +66,7 @@ import org.threeten.bp.Duration;
  */
 @BetaApi("Reference ApiCallContext instead - this class is likely to experience breaking changes")
 public final class GrpcCallContext implements ApiCallContext {
-  static final CallOptions.Key<ApiTracer> TRACER_KEY = CallOptions.Key.create("gax.tracer");
+  public static final CallOptions.Key<ApiTracer> TRACER_KEY = CallOptions.Key.create("gax.tracer");
 
   private final Channel channel;
   private final CallOptions callOptions;

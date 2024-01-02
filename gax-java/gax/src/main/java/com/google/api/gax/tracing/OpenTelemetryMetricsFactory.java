@@ -30,6 +30,7 @@
 package com.google.api.gax.tracing;
 
 import com.google.api.core.InternalApi;
+import com.google.api.gax.core.GaxProperties;
 import io.opencensus.trace.Tracer;
 import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.api.metrics.Meter;
@@ -51,12 +52,16 @@ public class OpenTelemetryMetricsFactory implements ApiTracerFactory {
   public OpenTelemetryMetricsFactory(
       OpenTelemetry openTelemetry, String libraryName, String libraryVersion) {
     meter =
-        openTelemetry.meterBuilder(libraryName).setInstrumentationVersion(libraryVersion).build();
+        openTelemetry
+            .meterBuilder("gax")
+            .setInstrumentationVersion(GaxProperties.getGaxVersion())
+            .build();
+    metricsRecorder = new MetricsRecorder(meter);
   }
 
   @Override
   public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
-    return new OpenTelemetryMetricsTracer(meter, spanName);
+    return new OpenTelemetryMetricsTracer(meter, spanName, metricsRecorder);
   }
 
   @Override
