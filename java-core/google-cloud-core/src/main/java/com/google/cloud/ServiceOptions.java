@@ -87,7 +87,6 @@ public abstract class ServiceOptions<
   private static final String DEFAULT_HOST = "https://www.googleapis.com";
   private static final String LEGACY_PROJECT_ENV_NAME = "GCLOUD_PROJECT";
   private static final String PROJECT_ENV_NAME = "GOOGLE_CLOUD_PROJECT";
-  private static final String ENDPOINT_TEMPLATE = "SERVICE_NAME.UNIVERSE_DOMAIN:443";
 
   private static final RetrySettings DEFAULT_RETRY_SETTINGS =
       getDefaultRetrySettingsBuilder().build();
@@ -206,9 +205,10 @@ public abstract class ServiceOptions<
     }
 
     /**
-     * Sets the Universe Domain.
-     *
-     * @return the builder
+     * Universe Domain is the domain for Google Cloud Services. It follows the format of
+     * `{ServiceName}.{UniverseDomain}`. For example, speech.googleapis.com would have a Universe
+     * Domain value of `googleapis.com` and cloudasset.test.com would have a Universe Domain of
+     * `test.com`. If this value is not set, this will default to `googleapis.com`.
      */
     public B setUniverseDomain(String universeDomain) {
       this.universeDomain = universeDomain;
@@ -599,7 +599,12 @@ public abstract class ServiceOptions<
     return projectId;
   }
 
-  /** Returns the Universe Domain */
+  /**
+   * Universe Domain is the domain for Google Cloud Services. It follows the format of
+   * `{ServiceName}.{UniverseDomain}`. For example, speech.googleapis.com would have a Universe
+   * Domain value of `googleapis.com` and cloudasset.test.com would have a Universe Domain of
+   * `test.com`. If this value is not set, this will default to `googleapis.com`.
+   */
   public String getUniverseDomain() {
     return universeDomain;
   }
@@ -790,6 +795,7 @@ public abstract class ServiceOptions<
     return quotaProjectId;
   }
 
+  /** Returns the resolved endpoint for the Service to connect to Google Cloud */
   public String getResolvedEndpoint(String serviceName) {
     if (universeDomain == null) {
       return formatTemplate(serviceName, GOOGLE_DEFAULT_UNIVERSE);
@@ -803,6 +809,7 @@ public abstract class ServiceOptions<
     }
   }
 
+  // Temporarily used for Apiary Wrapped Libraries. To be removed in the future.
   @InternalApi
   public String getResolvedApiaryEndpoint(String serviceName) {
     String resolvedUniverseDomain =
@@ -811,18 +818,6 @@ public abstract class ServiceOptions<
   }
 
   private String formatTemplate(String serviceName, String universeDomain) {
-    return ENDPOINT_TEMPLATE
-        .replace("SERVICE_NAME", serviceName)
-        .replace("UNIVERSE_DOMAIN", universeDomain);
-  }
-
-  public boolean isValidUniverseDomain() throws IOException {
-    Credentials credentials = getCredentials();
-    String universeDomain = getUniverseDomain();
-    if (universeDomain == null) {
-      universeDomain = ServiceOptions.GOOGLE_DEFAULT_UNIVERSE;
-    }
-    return true;
-    //    return credentials.getUniverseDomain() != universeDomain;
+    return serviceName + "." + universeDomain + ":443";
   }
 }

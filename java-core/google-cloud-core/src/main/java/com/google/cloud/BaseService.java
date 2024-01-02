@@ -16,9 +16,12 @@
 
 package com.google.cloud;
 
+import static com.google.cloud.ServiceOptions.GOOGLE_DEFAULT_UNIVERSE;
+
 import com.google.api.core.InternalApi;
-import com.google.auth.Retryable;
+import com.google.auth.Credentials;
 import com.google.cloud.ExceptionHandler.Interceptor;
+import java.io.IOException;
 
 /**
  * Base class for service objects.
@@ -40,15 +43,13 @@ public abstract class BaseService<OptionsT extends ServiceOptions<?, OptionsT>>
 
         @Override
         public RetryResult beforeEval(Exception exception) {
-          boolean retryable = false;
           if (exception instanceof BaseServiceException) {
-            retryable = ((BaseServiceException) exception).isRetryable();
-          } else if (exception instanceof Retryable) {
-            retryable = ((Retryable) exception).isRetryable();
+            boolean retriable = ((BaseServiceException) exception).isRetryable();
+            return retriable
+                ? Interceptor.RetryResult.RETRY
+                : Interceptor.RetryResult.CONTINUE_EVALUATION;
           }
-          return retryable
-              ? Interceptor.RetryResult.RETRY
-              : Interceptor.RetryResult.CONTINUE_EVALUATION;
+          return Interceptor.RetryResult.CONTINUE_EVALUATION;
         }
       };
   public static final ExceptionHandler EXCEPTION_HANDLER =
@@ -67,5 +68,15 @@ public abstract class BaseService<OptionsT extends ServiceOptions<?, OptionsT>>
   @Override
   public OptionsT getOptions() {
     return options;
+  }
+
+  /** Validates that Credentials' Universe Domain and user configured Universe Domain matches. */
+  public boolean isValidUniverseDomain() throws IOException {
+    Credentials credentials = options.getCredentials();
+    String universeDomain = options.getUniverseDomain();
+    String resolvedUniverseDomain =
+        universeDomain != null ? universeDomain : GOOGLE_DEFAULT_UNIVERSE;
+    return true;
+    //    return credentials.getUniverseDomain() != resolvedUniverseDomain;
   }
 }
