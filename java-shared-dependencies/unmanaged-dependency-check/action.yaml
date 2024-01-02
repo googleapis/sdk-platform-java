@@ -20,7 +20,7 @@
       shell: bash
       run: |
         version=$(git tag -l 'google-cloud-shared-dependencies/v*' --sort=-v:refname | head -1) 
-        echo "version=${version#*v}" >> $GITHUB_ENV
+        echo "short_version=${version#*v}" >> $GITHUB_ENV
     - name: Install check
       shell: bash
       run: |
@@ -32,9 +32,9 @@
       run: |
         bom_absolute_path=$(realpath "${{ inputs.bom-path }}")
         cd ${{ github.action_path }}
-        echo "The version of Java shared dependencies is ${{ env.version }}"
-        echo "Running Unmanaged Dependency Check against ${ bom_absolute_path }"
-        unmanaged_dependencies=$(mvn exec:java -Dexec.args="${{ env.version }} ${ bom_absolute_path }" -q)
+        echo "The version of Java shared dependencies is ${{ env.short_version }}"
+        echo "Running Unmanaged Dependency Check against ${bom_absolute_path}"
+        unmanaged_dependencies=$(mvn exec:java -Dexec.args="${{ env.short_version }} ${bom_absolute_path}" -q)
         if [[ "${unmanaged_dependencies}" != "[]" ]]; then
           echo "Unmanaged dependencies, ${unmanaged_dependencies}, found in ${{ inputs.bom-path }}."
           echo "Please follow go/add-dependency-to-cloud-sdk-java to add a third-party dependency."
