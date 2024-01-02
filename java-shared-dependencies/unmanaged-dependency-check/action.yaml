@@ -16,6 +16,12 @@
       uses: stCarolas/setup-maven@v4.5
       with:
         maven-version: 3.8.2
+    - name: Install latest Java shared dependencies
+      shell: bash
+      run: |
+        cd ${{ github.action_path }}/..
+        echo "Install Java shared dependencies"
+        mvn clean install -V --batch-mode --no-transfer-progress -DskipTests
     - name: Install check
       shell: bash
       run: |
