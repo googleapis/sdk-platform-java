@@ -23,8 +23,8 @@ public class UnmanagedDependencyCheck {
 
 
   /**
-   * @param args An array with two elements.<p> The first string is the version of Java shared
-   * dependencies. <p> The second string is the path of a pom.xml contains BOM.
+   * @param args An array with two elements.<p> The first string is the path of Java shared
+   * dependencies BOM. <p> The second string is the path of a pom.xml contains BOM.
    */
   public static void main(String[] args)
       throws MavenRepositoryException, InvalidVersionSpecificationException {
