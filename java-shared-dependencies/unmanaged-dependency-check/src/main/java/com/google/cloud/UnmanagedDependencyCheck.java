@@ -16,7 +16,7 @@ import org.eclipse.aether.version.InvalidVersionSpecificationException;
 /**
  * A utility class to check unmanaged dependencies in BOM.
  */
-public class UnmanagedDependencyCheck {
+class UnmanagedDependencyCheck {
   // regex of handwritten artifacts
   private final static String handwrittenArtifact = "(com.google.cloud:google-cloud-.*)|(com.google.api.grpc:(grpc|proto)-google-cloud-.*)";
 
