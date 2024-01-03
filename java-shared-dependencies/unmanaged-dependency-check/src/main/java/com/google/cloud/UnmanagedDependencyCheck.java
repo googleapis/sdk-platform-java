@@ -21,17 +21,6 @@ public class UnmanagedDependencyCheck {
   // regex of handwritten artifacts
   private final static String downstreamArtifact = "(com.google.cloud:google-cloud-.*)|(com.google.api.grpc:(grpc|proto)-google-cloud-.*)";
 
-
-  /**
-   * @param args An array with two elements.<p> The first string is the version of Java shared
-   * dependencies. <p> The second string is the path of a pom.xml contains BOM.
-   */
-  public static void main(String[] args)
-      throws MavenRepositoryException, InvalidVersionSpecificationException {
-    checkArgument(args.length == 2, "The length of the inputs should be 2");
-    System.out.println(getUnmanagedDependencies(args[0], args[1]));
-  }
-
   /**
    * Returns dependency coordinates that are not managed by shared dependency BOM.
    *
