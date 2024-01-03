@@ -76,13 +76,14 @@ if [ -z "${versions_file}" ]; then
 fi
 
 grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
+  pushd "${output_folder}"
   proto_paths_raw=$(echo "$line" | cut -d " " -f 1)
   repository_path=$(echo "$line" | cut -d " " -f 2)
   IFS=, read -ra proto_paths <<< "${proto_paths_raw}"
   for proto_path in "${proto_paths[@]}"; do
+    sparse_clone "${googleapis_gen_url}" "${proto_path}"
     queries="proto_path=${proto_path}"
     # parse destination_path
-    pushd "${output_folder}"
     destination_path=$(compute_destination_path "${proto_path}" "${output_folder}")
     # parse GAPIC options from proto_path/BUILD.bazel
     proto_build_file_path="${proto_path}/BUILD.bazel"

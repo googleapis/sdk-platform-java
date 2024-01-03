@@ -76,10 +76,9 @@ for query in $generation_queries; do
   proto_path=$(python_util get_argument_value_from_query "${query}" "proto_path")
   destination_path=$(python_util get_argument_value_from_query "${query}" "destination_path")
 
-  popd # output_folder
   # generate GAPIC client library
   echo "Generating library from ${proto_path}, to ${destination_path}..."
-  echo "${arguments}" | xargs "${library_generation_dir}"/generate_library.sh --
+  eval "${library_generation_dir}/generate_library.sh ${arguments}"
   pushd "${output_folder}"
 
   echo "Generate library finished."
