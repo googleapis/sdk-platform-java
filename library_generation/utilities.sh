@@ -402,8 +402,9 @@ download_googleapis_files_and_folders() {
 }
 
 build_owlbot_cli_source_folder() {
-  local pre_processed_libs_folder=$1
-  local preprocessed_sources_path=$2
+  local postprocessing_target=$1
+  local pre_processed_libs_folder=$2
+  local preprocessed_sources_path=$3
   proto_path=$(get_proto_path_from_preprocessed_sources "${preprocessed_sources_path}")
   owlbot_staging_folder="${postprocessing_target}/owl-bot-staging"
   mkdir -p "${owlbot_staging_folder}"
@@ -447,6 +448,6 @@ sparse_clone() {
   popd
 }
 
-python_util() {
+py_util() {
   python3 "${script_dir}/utilities.py" $@
 }

@@ -23,13 +23,27 @@ def get_generate_library_arguments(query: str):
     key = _get_raw_argument_component(raw_argument_kv, 0)
     value = _get_raw_argument_component(raw_argument_kv, 1)
     result += f'--{key} {value} '
-  return result
+  return result[:-1]
 
+"""
+Obtains the value of a single argument in an argument query string.
+An argument query string is a comma-separated list of key-value pairs,
+for example "key1=val1,key2=val2".
+It returns the value for "argument"
+"""
 def get_argument_value_from_query(query: str, argument :str):
   found_argument = list(filter(lambda x: argument in x, query.split(',')))
   if len(found_argument) == 0:
     raise ValueError(f'query string does not contain the argument {argument}')
   return _get_raw_argument_component(found_argument[0], 1)
+
+"""
+Given the input parameter "arguments" (example "--arg1 val1 -arg2 val2"),
+this function adds another argument "--arg_key arg_value" to the end
+of the argument string
+"""
+def add_argument(arguments: str, arg_key: str, arg_val: str):
+  return f'{arguments} --{arg_key} {arg_val}'
 
 def _get_raw_argument_component(raw_argument: str, index: int):
   result = raw_argument.split('=')[index]

@@ -53,7 +53,7 @@ pyenv activate "postprocessing"
 
 if [[ -z "${owlbot_cli_source_folder}" ]]; then
   owlbot_cli_source_folder=$(mktemp -d)
-  build_owlbot_cli_source_folder "${owlbot_cli_source_folder}" "${preprocessed_sources_path}"
+  build_owlbot_cli_source_folder "${postprocessing_target}" "${owlbot_cli_source_folder}" "${preprocessed_sources_path}"
 fi
 
 owlbot_cli_image_sha=$(cat "${scripts_root}/configuration/owlbot-cli-sha" | grep "sha256")

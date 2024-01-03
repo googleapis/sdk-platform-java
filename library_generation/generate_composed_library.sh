@@ -29,7 +29,8 @@ set -xeo pipefail
 script_dir=$(dirname "$(readlink -f "$0")")
 library_generation_dir="${script_dir}"
 source "${script_dir}/utilities.sh"
-output_folder="$(pwd)/output"
+output_folder=$(get_output_folder)
+mkdir -p "${output_folder}"
 
 while [[ $# -gt 0 ]]; do
 key="$1"
@@ -55,6 +56,7 @@ shift
 shift # past argument or value
 done
 
+pushd "${output_folder}"
 if [[ "${repository_path}" == google-cloud-java/* ]]; then
   echo 'this is a monorepo library'
   library=$(echo "${repository_path}" | cut -d'/' -f2)
@@ -66,24 +68,27 @@ else
   versions_file="${versions_file:-"${output_folder}/${repository_path}/versions.txt"}"
 fi
 
-mkdir -p "${output_folder}"
-pushd "${output_folder}"
 owlbot_cli_source_folder=$(mktemp -d)
 popd # output_folder
 IFS="|"
 for query in $generation_queries; do
-  arguments=$(python_util get_generate_library_arguments "${query}")
-  proto_path=$(python_util get_argument_value_from_query "${query}" "proto_path")
-  destination_path=$(python_util get_argument_value_from_query "${query}" "destination_path")
+  pushd "${output_folder}"
+  arguments=$(py_util get_generate_library_arguments "${query}")
+  arguments=$(py_util add_argument "${arguments}" "versions_file" "${versions_file}")
+  # we postprocess only once after all versions were processed
+  arguments=$(py_util add_argument "${arguments}" "enable_postprocessing" "false")
+  proto_path=$(py_util get_argument_value_from_query "${query}" "proto_path")
+  destination_path=$(py_util get_argument_value_from_query "${query}" "destination_path")
 
   # generate GAPIC client library
   echo "Generating library from ${proto_path}, to ${destination_path}..."
-  eval "${library_generation_dir}/generate_library.sh ${arguments}"
-  pushd "${output_folder}"
+  echo "${arguments}" | xargs -d' ' "${library_generation_dir}/generate_library.sh"
+  # bash -c "${library_generation_dir}/generate_library.sh ${arguments}"
+  # eval "${library_generation_dir}/generate_library.sh" ${arguments}
 
   echo "Generate library finished."
 
-  build_owlbot_cli_source_folder "${owlbot_cli_source_folder}" "${destination_path}"
+  build_owlbot_cli_source_folder "${output_folder}/${repository_path}" "${owlbot_cli_source_folder}" "${output_folder}/${destination_path}"
 
 
   popd # output_folder
