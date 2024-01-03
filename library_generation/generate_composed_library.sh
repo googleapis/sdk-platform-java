@@ -70,11 +70,11 @@ mkdir -p "${output_folder}"
 pushd "${output_folder}"
 owlbot_cli_source_folder=$(mktemp -d)
 popd # output_folder
-IFS=,,,
+IFS="|"
 for query in $generation_queries; do
   arguments=$(python_util get_generate_library_arguments "${query}")
-  proto_path=$(python_util get_argument_value_from_query "proto_path")
-  destination_path=$(python_util get_argument_value_from_query "destination_path")
+  proto_path=$(python_util get_argument_value_from_query "${query}" "proto_path")
+  destination_path=$(python_util get_argument_value_from_query "${query}" "destination_path")
 
   popd # output_folder
   # generate GAPIC client library

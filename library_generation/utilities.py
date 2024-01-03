@@ -25,7 +25,7 @@ def get_generate_library_arguments(query: str):
     result += f'--{key} {value} '
   return result
 
-def get_argument_value_from_query(query, argument):
+def get_argument_value_from_query(query: str, argument :str):
   found_argument = list(filter(lambda x: argument in x, query.split(',')))
   if len(found_argument) == 0:
     raise ValueError(f'query string does not contain the argument {argument}')
@@ -42,9 +42,9 @@ def main(argv: Sequence[str]) -> None:
     raise ValueError('Usage: python generate_composed_library_args.py function_name arg1...argN')
 
   function_name = argv[1]
-  arguments = argv[1:]
+  arguments = argv[2:]
   function = getattr(sys.modules[__name__], function_name)
-  function(*arguments)
+  print(function(*arguments))
 
 
 if __name__ == "__main__":

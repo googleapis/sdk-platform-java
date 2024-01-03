@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -xeo pipefail
+script_dir=$(dirname "$(readlink -f "$0")")
 
 # Utility functions used in `generate_library.sh` and showcase generation.
 extract_folder_name() {
@@ -443,5 +444,5 @@ sparse_clone() {
 }
 
 python_util() {
-  python3 utilities.py $@
+  python3 "${script_dir}/utilities.py" $@
 }

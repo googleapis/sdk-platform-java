@@ -76,7 +76,9 @@ if [ -z "${versions_file}" ]; then
 fi
 
 grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
-  IFS=, read -ra proto_paths <<< $(echo "$line" | cut -d " " -f 1)
+  proto_paths_raw=$(echo "$line" | cut -d " " -f 1)
+  repository_path=$(echo "$line" | cut -d " " -f 2)
+  IFS=, read -ra proto_paths <<< "${proto_paths_raw}"
   for proto_path in "${proto_paths[@]}"; do
     queries="proto_path=${proto_path}"
     # parse destination_path
@@ -89,6 +91,7 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
       echo "to be in ${proto_path}"
       exit 1
     fi
+    queries="${queries},destination_path=${destination_path}"
     queries="${queries},proto_only=$(get_proto_only_from_BUILD "${proto_build_file_path}")"
     queries="${queries},gapic_additional_protos=$(get_gapic_additional_protos_from_BUILD "${proto_build_file_path}")"
     queries="${queries},transport=$(get_transport_from_BUILD "${proto_build_file_path}")"
@@ -97,7 +100,7 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
     queries="${queries},service_config=$(get_service_config_from_BUILD "${proto_build_file_path}")"
     queries="${queries},service_yaml=$(get_service_yaml_from_BUILD "${proto_build_file_path}")"
     queries="${queries},include_samples=$(get_include_samples_from_BUILD "${proto_build_file_path}")"
-    queries="${queries},,,"
+    queries="${queries}|"
   done
 
   echo "Generating library from ${proto_path}, to ${destination_path}..."
