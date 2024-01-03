@@ -266,14 +266,16 @@ def generate(
     user = subprocess.check_output(["id", "-u"], encoding="utf8").strip()
     group = subprocess.check_output(["id", "-g"], encoding="utf8").strip()
 
-    library_generation_dir = Path(f"{sys.path[0]}/../../library_generation")\
-        .resolve()
-
     # run generate_library.sh
     print("Cloning googleapis...")
-    Repo.clone_from(
-        "https://github.com/googleapis/googleapis.git",
-        to_path=f"{workdir}/../googleapis"
+    output_dir = Path(f"{sys.path[0]}/../../output").resolve()
+    __clone_googleapis(output_dir)
+    repo_root_dir = Path(f"{sys.path[0]}/../../").resolve()
+    subprocess.check_call([
+        "library_generation/generate_library.sh",
+        f"-p {proto_path}",
+        "-d java-alloydb"],
+        cwd=f""
     )
 
     print(f"Prepared new library in {workdir}")
@@ -282,6 +284,33 @@ def generate(
           f"  $ git add .\n"
           f"  $ git commit -m 'feat: [{api_shortname}] new module for {api_shortname}'\n"
           f"  $ gh pr create --title 'feat: [{api_shortname}] new module for {api_shortname}'")
+
+
+def __clone_googleapis(output_dir: Path) -> None:
+    Repo.clone_from(
+        "https://github.com/googleapis/googleapis.git",
+        to_path=f"{output_dir}/googleapis"
+    )
+    subprocess.check_call([
+        "mv",
+        f"{output_dir}/googleapis/google",
+        f"{output_dir}"]
+    )
+    subprocess.check_call([
+        "mv",
+        f"{output_dir}/googleapis/grafeas",
+        f"{output_dir}"]
+    )
+    subprocess.check_call([
+        "mv",
+        f"{output_dir}/googleapis/WORKSPACE",
+        f"{output_dir}"]
+    )
+    subprocess.check_call([
+        "rm",
+        "-rf",
+        f"{output_dir}/googleapis"]
+    )
 
 
 if __name__ == "__main__":
