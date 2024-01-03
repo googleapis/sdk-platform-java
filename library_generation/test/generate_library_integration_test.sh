@@ -80,9 +80,11 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   proto_paths_raw=$(echo "$line" | cut -d " " -f 1)
   repository_path=$(echo "$line" | cut -d " " -f 2)
   IFS=, read -ra proto_paths <<< "${proto_paths_raw}"
-  for proto_path in "${proto_paths[@]}"; do
+  echo "proto_paths=${proto_paths[@]}"
+  queries=""
+  for proto_path in ${proto_paths[@]}; do
     sparse_clone "${googleapis_gen_url}" "${proto_path}"
-    queries="proto_path=${proto_path}"
+    queries="${queries}proto_path=${proto_path}"
     queries="${queries},gapic_generator_version=${gapic_generator_version}"
     queries="${queries},protobuf_version=${protobuf_version}"
     # parse destination_path
