@@ -805,7 +805,7 @@ public abstract class ServiceOptions<
       throw new IllegalArgumentException("Universe Domain cannot be empty");
     } else {
       if (host != null) {
-        return normalizeEndpoint(host);
+        return normalizeEndpoint();
       }
       return formatEndpoint(serviceName, getUniverseDomain());
     }
@@ -815,8 +815,9 @@ public abstract class ServiceOptions<
     return serviceName + "." + universeDomain + ":443";
   }
 
-  // Best effort endpoint normalization to ensure it results in {host}:{port} format
-  private String normalizeEndpoint(String host) {
+  // Best effort endpoint normalization to ensure it results in {domain}:{port} format
+  // for gRPC-Java. `host` is expected to be in format of http(s)://{domain}
+  String normalizeEndpoint() {
     URI uri = URI.create(host);
     String scheme = uri.getScheme();
     int port = uri.getPort();
@@ -826,14 +827,9 @@ public abstract class ServiceOptions<
       return String.format("%s:%s", uri.getHost(), port > 0 ? port : 80);
     } else if (scheme.equals("https")) {
       return String.format("%s:%s", uri.getHost(), port > 0 ? port : 443);
+    } else {
+      throw new RuntimeException("Invalid host: " + host + ". Expecting http(s)://{domain}");
     }
-    // If scheme does not match above, then host does not have a valid scheme. The
-    // host param value is probably in format {host}:{port}.
-    if (host.contains(":")) {
-      return host;
-    }
-    // If the scheme and port are not provided, default to 443
-    return host + ":443";
   }
 
   /**
@@ -845,7 +841,7 @@ public abstract class ServiceOptions<
   public String getResolvedApiaryHost(String serviceName) {
     String resolvedUniverseDomain =
         getUniverseDomain() != null ? getUniverseDomain() : Credentials.GOOGLE_DEFAULT_UNIVERSE;
-    return "https://" + serviceName + "." + resolvedUniverseDomain + "/";
+    return "https://www." + serviceName + "." + resolvedUniverseDomain + "/";
   }
 
   /** Validates that Credentials' Universe Domain matches the user configured Universe Domain. */

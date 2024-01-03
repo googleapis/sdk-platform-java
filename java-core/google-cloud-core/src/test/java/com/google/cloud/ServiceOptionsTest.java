@@ -549,7 +549,7 @@ public class ServiceOptionsTest {
   public void testGetResolvedApiaryHost_noUniverseDomain() {
     TestServiceOptions options = TestServiceOptions.newBuilder().setProjectId("project-id").build();
     assertThat(options.getResolvedApiaryHost("service"))
-        .isEqualTo("https://service.googleapis.com/");
+        .isEqualTo("https://www.service.googleapis.com/");
   }
 
   @Test
@@ -560,7 +560,7 @@ public class ServiceOptionsTest {
             .setHost(null)
             .setProjectId("project-id")
             .build();
-    assertThat(options.getResolvedApiaryHost("service")).isEqualTo("https://service.test.com/");
+    assertThat(options.getResolvedApiaryHost("service")).isEqualTo("https://www.service.test.com/");
   }
 
   @Test
@@ -571,12 +571,12 @@ public class ServiceOptionsTest {
             .setHost("https://service.random.com")
             .setProjectId("project-id")
             .build();
-    assertThat(options.getResolvedApiaryHost("service")).isEqualTo("https://service.test.com/");
+    assertThat(options.getResolvedApiaryHost("service")).isEqualTo("https://www.service.test.com/");
   }
 
   // No User Configuration = GDU, Default Credentials = GDU
   @Test
-  public void testisValidUniverseDomain_noUserUniverseDomainConfig_defaultCredentials()
+  public void testIsValidUniverseDomain_noUserUniverseDomainConfig_defaultCredentials()
       throws IOException {
     TestServiceOptions options =
         TestServiceOptions.newBuilder()
@@ -590,7 +590,7 @@ public class ServiceOptionsTest {
   // No User Configuration = GDU, non Default Credentials = random.com
   // non-GDU Credentials could be any domain, the tests use random.com
   @Test
-  public void testisValidUniverseDomain_noUserUniverseDomainConfig_nonGDUCredentials()
+  public void testIsValidUniverseDomain_noUserUniverseDomainConfig_nonGDUCredentials()
       throws IOException {
     TestServiceOptions options =
         TestServiceOptions.newBuilder()
@@ -604,7 +604,7 @@ public class ServiceOptionsTest {
   // User Configuration = random.com, Default Credentials = GDU
   // User Credentials could be set to any domain, the tests use random.com
   @Test
-  public void testisValidUniverseDomain_userUniverseDomainConfig_defaultCredentials()
+  public void testIsValidUniverseDomain_userUniverseDomainConfig_defaultCredentials()
       throws IOException {
     TestServiceOptions options =
         TestServiceOptions.newBuilder()
@@ -620,7 +620,7 @@ public class ServiceOptionsTest {
   // User Credentials and non GDU Credentials could be set to any domain,
   // the tests use random.com
   @Test
-  public void testisValidUniverseDomain_userUniverseDomainConfig_nonGDUCredentials()
+  public void testIsValidUniverseDomain_userUniverseDomainConfig_nonGDUCredentials()
       throws IOException {
     TestServiceOptions options =
         TestServiceOptions.newBuilder()
@@ -630,6 +630,57 @@ public class ServiceOptionsTest {
             .setCredentials(credentialsNotInGDU)
             .build();
     assertThat(options.isValidUniverseDomain()).isTrue();
+  }
+
+  @Test
+  public void testNormalizeEndpoint_httpEndpoint() {
+    TestServiceOptions options =
+        TestServiceOptions.newBuilder()
+            .setHost("http://test.com")
+            .setProjectId("project-id")
+            .build();
+    assertThat(options.normalizeEndpoint()).isEqualTo("test.com:80");
+  }
+
+  // gRPC-Java is fine to build a channel with `www.`
+  @Test
+  public void testNormalizeEndpoint_httpEndpoint_hasWWW() {
+    TestServiceOptions options =
+        TestServiceOptions.newBuilder()
+            .setHost("http://www.test.com")
+            .setProjectId("project-id")
+            .build();
+    assertThat(options.normalizeEndpoint()).isEqualTo("www.test.com:80");
+  }
+
+  @Test
+  public void testNormalizeEndpoint_httpsEndpoint() {
+    TestServiceOptions options =
+        TestServiceOptions.newBuilder()
+            .setHost("https://test.com")
+            .setProjectId("project-id")
+            .build();
+    assertThat(options.normalizeEndpoint()).isEqualTo("test.com:443");
+  }
+
+  // gRPC-Java is fine to build a channel with `www.`
+  @Test
+  public void testNormalizeEndpoint_httpsEndpoint_hasWWW() {
+    TestServiceOptions options =
+        TestServiceOptions.newBuilder()
+            .setHost("https://www.test.com")
+            .setProjectId("project-id")
+            .build();
+    assertThat(options.normalizeEndpoint()).isEqualTo("www.test.com:443");
+  }
+
+  @Test
+  public void testNormalizeEndpoint_invalidHost() {
+    TestServiceOptions options =
+        TestServiceOptions.newBuilder().setHost("test.com:443").setProjectId("project-id").build();
+    RuntimeException exception = assertThrows(RuntimeException.class, options::normalizeEndpoint);
+    assertThat(exception.getMessage())
+        .isEqualTo("Invalid host: test.com:443. Expecting http(s)://{domain}");
   }
 
   private HttpResponse createHttpResponseWithHeader(final Multimap<String, String> headers)
