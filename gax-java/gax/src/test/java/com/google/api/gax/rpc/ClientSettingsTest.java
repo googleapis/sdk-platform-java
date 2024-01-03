@@ -150,7 +150,6 @@ public class ClientSettingsTest {
     Truth.assertThat(settingsString).contains("watchdogProvider");
     Truth.assertThat(settingsString).contains("watchdogCheckInterval");
     Truth.assertThat(settingsString).contains(("quotaProjectId"));
-    Truth.assertThat(settingsString).contains("universeDomain");
   }
 
   @Test
@@ -166,7 +165,6 @@ public class ClientSettingsTest {
     WatchdogProvider watchdogProvider = Mockito.mock(WatchdogProvider.class);
     Duration watchdogCheckInterval = Duration.ofSeconds(13);
     String quotaProjectId = "test_quota_project_id";
-    String universeDomain = "test.com";
 
     builder.setExecutorProvider(executorProvider);
     builder.setTransportChannelProvider(transportProvider);
@@ -177,7 +175,6 @@ public class ClientSettingsTest {
     builder.setWatchdogProvider(watchdogProvider);
     builder.setWatchdogCheckInterval(watchdogCheckInterval);
     builder.setQuotaProjectId(quotaProjectId);
-    builder.setUniverseDomain(universeDomain);
 
     // For backward compatibility, backgroundExecutorProvider is set to executorProvider
     Truth.assertThat(builder.getExecutorProvider()).isSameInstanceAs(executorProvider);
@@ -216,7 +213,6 @@ public class ClientSettingsTest {
             Duration.ZERO,
             Mockito.mock(ScheduledExecutorService.class));
     Duration watchdogCheckInterval = Duration.ofSeconds(12);
-    String universeDomain = "test.com";
 
     ClientContext clientContext =
         ClientContext.newBuilder()
@@ -229,7 +225,6 @@ public class ClientSettingsTest {
             .setStreamWatchdog(watchdog)
             .setStreamWatchdogCheckInterval(watchdogCheckInterval)
             .setQuotaProjectId(QUOTA_PROJECT_ID_FROM_CONTEXT)
-            .setUniverseDomain(universeDomain)
             .build();
 
     FakeClientSettings.Builder builder = new FakeClientSettings.Builder(clientContext);
@@ -264,7 +259,6 @@ public class ClientSettingsTest {
     WatchdogProvider watchdogProvider = Mockito.mock(WatchdogProvider.class);
     Duration watchdogCheckInterval = Duration.ofSeconds(14);
     String quotaProjectId = "test_builder_from_settings_quotaProjectId";
-    String universeDomain = "test.com";
 
     builder.setExecutorProvider(executorProvider);
     builder.setTransportChannelProvider(transportProvider);
@@ -275,7 +269,6 @@ public class ClientSettingsTest {
     builder.setWatchdogProvider(watchdogProvider);
     builder.setWatchdogCheckInterval(watchdogCheckInterval);
     builder.setQuotaProjectId(quotaProjectId);
-    builder.setUniverseDomain(universeDomain);
 
     FakeClientSettings settings = builder.build();
     FakeClientSettings.Builder newBuilder = new FakeClientSettings.Builder(settings);
