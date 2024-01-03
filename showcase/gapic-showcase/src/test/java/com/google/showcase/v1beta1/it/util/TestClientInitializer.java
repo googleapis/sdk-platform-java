@@ -35,6 +35,7 @@ import io.grpc.ClientInterceptor;
 import io.grpc.ManagedChannelBuilder;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.Executors;
 
 public class TestClientInitializer {
 

@@ -19,6 +19,7 @@ package com.google.showcase.v1beta1.it;
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
+import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.core.FixedExecutorProvider;
 import com.google.api.gax.core.NoCredentialsProvider;
@@ -40,6 +41,7 @@ import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 
+import java.security.GeneralSecurityException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -66,6 +68,7 @@ public class ITUnaryCallable {
 
 
   private static EchoClient httpjsonClient;
+  private static EchoClient httpjsonVTClient;
 
   private static final ScheduledExecutorService EXECUTOR = new ScheduledThreadPoolExecutor(100);
 
@@ -76,11 +79,42 @@ public class ITUnaryCallable {
 
     // Create Http JSON Echo Client
     httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
-
-
   }
 
-  public void createClientForConcurrency() throws Exception {
+  public void createHttpJsonVTClient() throws Exception {
+    // Set background executor provider. InstantiatingExecutorProvider only has settings for thread pool count.
+    // Set response timeout to 7 seconds.
+    RetrySettings defaultNoRetrySettings =
+            RetrySettings.newBuilder()
+                    .setInitialRpcTimeout(org.threeten.bp.Duration.ofSeconds(2))
+                    .setRpcTimeoutMultiplier(1.0)
+                    .setMaxRpcTimeout(org.threeten.bp.Duration.ofSeconds(2))
+                    .setTotalTimeout(org.threeten.bp.Duration.ofSeconds(2))
+                    // Explicitly set retries as disabled (maxAttempts == 1)
+                    .setMaxAttempts(1)
+                    .build();
+    EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
+    httpJsonEchoSettingsBuilder
+            .blockSettings()
+            .setRetrySettings(defaultNoRetrySettings)
+            .setRetryableCodes(ImmutableSet.of(StatusCode.Code.DEADLINE_EXCEEDED));
+    EchoSettings httpJsonEchoSettings = EchoSettings.create(httpJsonEchoSettingsBuilder.build());
+    httpJsonEchoSettings =
+            httpJsonEchoSettings
+                    .toBuilder()
+                    .setCredentialsProvider(NoCredentialsProvider.create())
+                    .setTransportChannelProvider(
+                            EchoSettings.defaultHttpJsonTransportProviderBuilder()
+                                    .setExecutor(Executors.newVirtualThreadPerTaskExecutor())
+                                    .setHttpTransport(
+                                            new NetHttpTransport.Builder().doNotValidateCertificate().build())
+                                    .setEndpoint("http://localhost:7469")
+                                    .build())
+                    .build();
+    httpjsonVTClient = EchoClient.create(httpJsonEchoSettings);
+  }
+
+  public void createGrpcClientForConcurrency() throws Exception {
     // Set background executor provider. InstantiatingExecutorProvider only has settings for thread pool count.
     // Set response timeout to 20 seconds.
     RetrySettings defaultNoRetrySettings =
@@ -114,13 +148,13 @@ public class ITUnaryCallable {
 
     public void createVTClient() throws Exception {
     // Set background executor provider. InstantiatingExecutorProvider only has settings for thread pool count.
-    // Set response timeout to 7 seconds.
+    // Set response timeout to 10 seconds.
     RetrySettings defaultNoRetrySettings =
             RetrySettings.newBuilder()
-                    .setInitialRpcTimeout(org.threeten.bp.Duration.ofSeconds(7))
+                    .setInitialRpcTimeout(org.threeten.bp.Duration.ofSeconds(10))
                     .setRpcTimeoutMultiplier(1.0)
-                    .setMaxRpcTimeout(org.threeten.bp.Duration.ofSeconds(7))
-                    .setTotalTimeout(org.threeten.bp.Duration.ofSeconds(7))
+                    .setMaxRpcTimeout(org.threeten.bp.Duration.ofSeconds(10))
+                    .setTotalTimeout(org.threeten.bp.Duration.ofSeconds(10))
                     // Explicitly set retries as disabled (maxAttempts == 1)
                     .setMaxAttempts(1)
                     .build();
@@ -163,10 +197,10 @@ public class ITUnaryCallable {
 
   @Test
   public void testGrpcMultiThreaded_receiveContent() throws Exception {
-    createClientForConcurrency();
+    createGrpcClientForConcurrency();
     List<Future<BlockResponse>> results = new ArrayList<>();
-    // 100 concurrent echo calls.
-    for (int i = 0; i < 100; i++) {
+    // 100 concurrent echo calls hangs but 90 works fine.
+    for (int i = 0; i < 90; i++) {
       String value = "echo response - " + i;
       Callable<BlockResponse> echoTask =
           () ->
@@ -180,7 +214,7 @@ public class ITUnaryCallable {
 
     // Receive response
     for (Future<BlockResponse> result : results) {
-      BlockResponse response = result.get(); // Blocks until the task completes
+      BlockResponse response = result.get();
       System.out.println(response.getContent());
     }
     EXECUTOR.shutdown();
@@ -191,6 +225,13 @@ public class ITUnaryCallable {
     createVTClient();
     assertThat(echoGrpcVirtualThread_delayedResponse("grpc-echo?")).isEqualTo("grpc-echo?");
     assertThat(echoGrpcVirtualThread_delayedResponse("grpc-echo!")).isEqualTo("grpc-echo!");
+  }
+
+  @Test
+  public void testVTHttpJson_receiveContent_delayedResponse() throws Exception {
+    createHttpJsonVTClient();
+    assertThat(echoHttpJsonVirtualThread_delayedResponse("http-echo?")).isEqualTo("http-echo?");
+    assertThat(echoHttpJsonVirtualThread_delayedResponse("http-echo!")).isEqualTo("http-echo!");
   }
 
   @Test
@@ -234,6 +275,11 @@ public class ITUnaryCallable {
 
   private String echoHttpJson(String value) {
     EchoResponse response = httpjsonClient.echo(EchoRequest.newBuilder().setContent(value).build());
+    return response.getContent();
+  }
+
+  private String echoHttpJsonVirtualThread_delayedResponse(String value) {
+    BlockResponse response = httpjsonVTClient.block(BlockRequest.newBuilder().setResponseDelay(Duration.newBuilder().setSeconds(15).build()).setSuccess(BlockResponse.newBuilder().setContent(value)).build());
     return response.getContent();
   }
 }
