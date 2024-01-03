@@ -299,3 +299,25 @@ jobs:
       with:
         bom-path: gapic-generator-java-bom/pom.xml
 
+  unmanaged_dependency_check:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+    - uses: actions/setup-java@v3
+      with:
+        java-version: 11
+        distribution: temurin
+    - run: mvn -version
+    - name: Unit Tests
+      run: |
+        mvn test --batch-mode --no-transfer-progress
+      working-directory: java-shared-dependencies/unmanaged-dependency-check
+    - name: Install Maven modules
+      run: |
+        mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+    - name: Unmanaged dependency check
+      uses: ./java-shared-dependencies/unmanaged-dependency-check
+      with:
+        bom-path: gapic-generator-java-bom/pom.xml
