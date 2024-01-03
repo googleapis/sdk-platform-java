@@ -332,11 +332,6 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
       return stubSettings.getClock();
     }
 
-    /** Gets the Universe Domain that was previously set on this Builder */
-    public String getUniverseDomain() {
-      return stubSettings.getUniverseDomain();
-    }
-
     public String getEndpoint() {
       return stubSettings.getEndpoint();
     }
@@ -380,7 +375,6 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
           .add("headerProvider", getHeaderProvider())
           .add("internalHeaderProvider", getInternalHeaderProvider())
           .add("clock", getClock())
-          .add("universeDomain", getUniverseDomain())
           .add("endpoint", getEndpoint())
           .add("quotaProjectId", getQuotaProjectId())
           .add("watchdogProvider", getWatchdogProvider())

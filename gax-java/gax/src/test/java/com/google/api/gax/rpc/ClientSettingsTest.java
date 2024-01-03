@@ -121,7 +121,6 @@ public class ClientSettingsTest {
         .isInstanceOf(InstantiatingWatchdogProvider.class);
     Truth.assertThat(builder.getWatchdogCheckInterval()).isGreaterThan(Duration.ZERO);
     Truth.assertThat(builder.getQuotaProjectId()).isNull();
-    Truth.assertThat(builder.getUniverseDomain()).isNull();
 
     FakeClientSettings settings = builder.build();
     Truth.assertThat(settings.getExecutorProvider())
@@ -140,7 +139,6 @@ public class ClientSettingsTest {
         .isInstanceOf(InstantiatingWatchdogProvider.class);
     Truth.assertThat(settings.getWatchdogCheckInterval()).isGreaterThan(Duration.ZERO);
     Truth.assertThat((settings.getQuotaProjectId())).isSameInstanceAs(builder.getQuotaProjectId());
-    Truth.assertThat(settings.getUniverseDomain()).isSameInstanceAs(builder.getUniverseDomain());
 
     String settingsString = settings.toString();
     Truth.assertThat(settingsString).contains("executorProvider");
@@ -192,7 +190,6 @@ public class ClientSettingsTest {
     Truth.assertThat(builder.getWatchdogProvider()).isSameInstanceAs(watchdogProvider);
     Truth.assertThat(builder.getWatchdogCheckInterval()).isSameInstanceAs(watchdogCheckInterval);
     Truth.assertThat(builder.getQuotaProjectId()).isEqualTo(quotaProjectId);
-    Truth.assertThat(builder.getUniverseDomain()).isSameInstanceAs(universeDomain);
 
     String builderString = builder.toString();
     Truth.assertThat(builderString).contains("executorProvider");
@@ -205,7 +202,6 @@ public class ClientSettingsTest {
     Truth.assertThat(builderString).contains("watchdogProvider");
     Truth.assertThat(builderString).contains("watchdogCheckInterval");
     Truth.assertThat(builderString).contains("quotaProjectId");
-    Truth.assertThat(builderString).contains("universeDomain");
   }
 
   @Test
@@ -253,7 +249,6 @@ public class ClientSettingsTest {
     Truth.assertThat(builder.getWatchdogProvider().getWatchdog()).isSameInstanceAs(watchdog);
     Truth.assertThat(builder.getWatchdogCheckInterval()).isEqualTo(watchdogCheckInterval);
     Truth.assertThat(builder.getQuotaProjectId()).isEqualTo(QUOTA_PROJECT_ID_FROM_CONTEXT);
-    Truth.assertThat(builder.getUniverseDomain()).isEqualTo(universeDomain);
   }
 
   @Test
@@ -296,7 +291,6 @@ public class ClientSettingsTest {
     Truth.assertThat(newBuilder.getWatchdogProvider()).isSameInstanceAs(watchdogProvider);
     Truth.assertThat(newBuilder.getWatchdogCheckInterval()).isEqualTo(watchdogCheckInterval);
     Truth.assertThat(newBuilder.getQuotaProjectId()).isEqualTo(quotaProjectId);
-    Truth.assertThat(newBuilder.getUniverseDomain()).isEqualTo(universeDomain);
   }
 
   @Test
