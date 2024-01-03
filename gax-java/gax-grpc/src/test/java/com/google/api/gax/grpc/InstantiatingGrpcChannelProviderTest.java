@@ -290,6 +290,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(true)
             .setAttemptDirectPathXds()
+            .setEndpoint("test.googleapis.com:443")
             .build();
 
     assertThat(provider.isDirectPathXdsEnabled()).isTrue();
@@ -528,6 +529,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPathXds()
             .setAttemptDirectPath(true)
+            .setEndpoint("test.googleapis.com:443")
             .build();
     assertThat(logHandler.getAllMessages())
         .contains(
@@ -545,12 +547,29 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
             .setAttemptDirectPathXds()
             .setAttemptDirectPath(true)
             .setAllowNonDefaultServiceAccount(true)
+            .setEndpoint("test.googleapis.com:443")
             .build();
     if (!InstantiatingGrpcChannelProvider.isOnComputeEngine()) {
       assertThat(logHandler.getAllMessages())
           .contains(
               "DirectPath is misconfigured. DirectPath is only available in a GCE environment.");
     }
+    InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
+  }
+
+  @Test
+  public void testLogDirectPathMisconfigNotInGDU() {
+    FakeLogHandler logHandler = new FakeLogHandler();
+    InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setAttemptDirectPathXds()
+            .setAttemptDirectPath(true)
+            .setAllowNonDefaultServiceAccount(true)
+            .setEndpoint("test.random.endpoint.com:443")
+            .build();
+    assertThat(logHandler.getAllMessages())
+        .contains("DirectPath will only work in the the googleapis.com Universe Domain");
     InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
   }
 

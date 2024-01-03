@@ -295,6 +295,10 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
               Level.WARNING,
               "DirectPath is misconfigured. DirectPath is only available in a GCE environment.");
         }
+        if (!canUseDirectPathWithUniverseDomain()) {
+          LOG.log(
+              Level.WARNING, "DirectPath will only work in the the googleapis.com Universe Domain");
+        }
       }
     }
   }
@@ -323,6 +327,10 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       }
     }
     return false;
+  }
+
+  private boolean canUseDirectPathWithUniverseDomain() {
+    return endpoint.contains("googleapis.com");
   }
 
   @VisibleForTesting
@@ -356,7 +364,10 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
     // Check DirectPath traffic.
     boolean useDirectPathXds = false;
-    if (isDirectPathEnabled() && isNonDefaultServiceAccountAllowed() && isOnComputeEngine()) {
+    if (isDirectPathEnabled()
+        && isNonDefaultServiceAccountAllowed()
+        && isOnComputeEngine()
+        && canUseDirectPathWithUniverseDomain()) {
       CallCredentials callCreds = MoreCallCredentials.from(credentials);
       ChannelCredentials channelCreds =
           GoogleDefaultChannelCredentials.newBuilder().callCredentials(callCreds).build();
