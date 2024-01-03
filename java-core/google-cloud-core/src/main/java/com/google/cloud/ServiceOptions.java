@@ -82,8 +82,6 @@ public abstract class ServiceOptions<
     implements Serializable {
 
   public static final String CREDENTIAL_ENV_NAME = "GOOGLE_APPLICATION_CREDENTIALS";
-  public static final String GOOGLE_DEFAULT_UNIVERSE = "googleapis.com";
-
   private static final String DEFAULT_HOST = "https://www.googleapis.com";
   private static final String LEGACY_PROJECT_ENV_NAME = "GCLOUD_PROJECT";
   private static final String PROJECT_ENV_NAME = "GOOGLE_CLOUD_PROJECT";
@@ -802,7 +800,7 @@ public abstract class ServiceOptions<
    */
   public String getResolvedEndpoint(String serviceName) {
     if (universeDomain == null) {
-      return formatEndpoint(serviceName, GOOGLE_DEFAULT_UNIVERSE);
+      return formatEndpoint(serviceName, Credentials.GOOGLE_DEFAULT_UNIVERSE);
     } else if (universeDomain.isEmpty()) {
       throw new IllegalArgumentException("Universe Domain cannot be empty");
     } else {
@@ -817,6 +815,7 @@ public abstract class ServiceOptions<
     return serviceName + "." + universeDomain + ":443";
   }
 
+  // Best effort endpoint normalization to ensure it results in {host}:{port} format
   private String normalizeEndpoint(String host) {
     URI uri = URI.create(host);
     String scheme = uri.getScheme();
@@ -839,23 +838,20 @@ public abstract class ServiceOptions<
 
   /**
    * Temporarily used for BigQuery and Storage Apiary Wrapped Libraries. To be removed in the
-   * future. Returns the host to be used for the rootUrl and output is in format of:
+   * future. Returns the host to be used for the rootUrl and output is in the format of:
    * "https://serviceName.universeDomain/"
    */
   @InternalApi
   public String getResolvedApiaryHost(String serviceName) {
     String resolvedUniverseDomain =
-        getUniverseDomain() != null ? getUniverseDomain() : GOOGLE_DEFAULT_UNIVERSE;
+        getUniverseDomain() != null ? getUniverseDomain() : Credentials.GOOGLE_DEFAULT_UNIVERSE;
     return "https://" + serviceName + "." + resolvedUniverseDomain + "/";
   }
 
-  /** Validates that Credentials' Universe Domain and user configured Universe Domain matches. */
+  /** Validates that Credentials' Universe Domain matches the user configured Universe Domain. */
   public boolean isValidUniverseDomain() throws IOException {
-    Credentials credentials = getCredentials();
-    String universeDomain = getUniverseDomain();
     String resolvedUniverseDomain =
-        universeDomain != null ? universeDomain : GOOGLE_DEFAULT_UNIVERSE;
-    return true;
-    //    return credentials.getUniverseDomain() != resolvedUniverseDomain;
+        getUniverseDomain() != null ? getUniverseDomain() : Credentials.GOOGLE_DEFAULT_UNIVERSE;
+    return resolvedUniverseDomain.equals(getCredentials().getUniverseDomain());
   }
 }
