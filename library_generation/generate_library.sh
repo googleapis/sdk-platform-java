@@ -85,6 +85,11 @@ script_dir=$(dirname "$(readlink -f "$0")")
 source "${script_dir}"/utilities.sh
 output_folder="$(get_output_folder)"
 
+if [ -z "${gapic_generator_version}" ]; then
+  echo 'missing required argument --gapic_generator_version'
+  exit 1
+fi
+
 if [ -z "${protobuf_version}" ]; then
   protobuf_version=$(get_protobuf_version "${gapic_generator_version}")
 fi
