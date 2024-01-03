@@ -17,7 +17,6 @@
     </parent>
 
     <properties>
-        <checkstyle.skip>true</checkstyle.skip>
         <google-cloud-shared-dependencies.version>3.20.1-SNAPSHOT</google-cloud-shared-dependencies.version> <!-- {x-version-update:google-cloud-shared-dependencies:current} -->
     </properties>
 </project>
