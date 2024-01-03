@@ -76,9 +76,9 @@ if [ -z "${versions_file}" ]; then
 fi
 
 grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
-  proto_paths=$(echo "$line" | cut -d " " -f 1)
-  echo "${proto_paths}" | while IFS=, read -r proto_path; do
-    arguments="proto_path=${proto_path}"
+  IFS=, read -ra proto_paths <<< $(echo "$line" | cut -d " " -f 1)
+  for proto_path in "${proto_paths[@]}"; do
+    queries="proto_path=${proto_path}"
     # parse destination_path
     pushd "${output_folder}"
     destination_path=$(compute_destination_path "${proto_path}" "${output_folder}")
@@ -89,24 +89,24 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
       echo "to be in ${proto_path}"
       exit 1
     fi
-    arguments="${arguments},proto_only=$(get_proto_only_from_BUILD "${proto_build_file_path}")"
-    arguments="${arguments},gapic_additional_protos=$(get_gapic_additional_protos_from_BUILD "${proto_build_file_path}")"
-    arguments="${arguments},transport=$(get_transport_from_BUILD "${proto_build_file_path}")"
-    arguments="${arguments},rest_numeric_enums=$(get_rest_numeric_enums_from_BUILD "${proto_build_file_path}")"
-    arguments="${arguments},gapic_yaml=$(get_gapic_yaml_from_BUILD "${proto_build_file_path}")"
-    arguments="${arguments},service_config=$(get_service_config_from_BUILD "${proto_build_file_path}")"
-    arguments="${arguments},service_yaml=$(get_service_yaml_from_BUILD "${proto_build_file_path}")"
-    arguments="${arguments},include_samples=$(get_include_samples_from_BUILD "${proto_build_file_path}")"
-    arguments="${arguments},,,"
+    queries="${queries},proto_only=$(get_proto_only_from_BUILD "${proto_build_file_path}")"
+    queries="${queries},gapic_additional_protos=$(get_gapic_additional_protos_from_BUILD "${proto_build_file_path}")"
+    queries="${queries},transport=$(get_transport_from_BUILD "${proto_build_file_path}")"
+    queries="${queries},rest_numeric_enums=$(get_rest_numeric_enums_from_BUILD "${proto_build_file_path}")"
+    queries="${queries},gapic_yaml=$(get_gapic_yaml_from_BUILD "${proto_build_file_path}")"
+    queries="${queries},service_config=$(get_service_config_from_BUILD "${proto_build_file_path}")"
+    queries="${queries},service_yaml=$(get_service_yaml_from_BUILD "${proto_build_file_path}")"
+    queries="${queries},include_samples=$(get_include_samples_from_BUILD "${proto_build_file_path}")"
+    queries="${queries},,,"
   done
 
   echo "Generating library from ${proto_path}, to ${destination_path}..."
   generation_start=$(date "+%s")
   "${library_generation_dir}"/generate_composed_library.sh \
-    --proto_path_list "${proto_path}" \
+    --generation_queries "${queries}" \
     --repository_path "${repository_path}" \
     --versions_file "${versions_file}" \
-    --final_postprocessing ${enable_postprocessing}
+    --enable_postprocessing ${enable_postprocessing}
   generation_end=$(date "+%s")
 
   # some generations are less than 1 second (0 produces exit code 1 in `expr`)

@@ -43,8 +43,8 @@ case $key in
   -v|--versions_file)
     versions_file="$2"
     ;;
-  -p|--final_postprocessing)
-    final_postprocessing="$2"
+  -p|--enable_postprocessing)
+    enable_postprocessing="$2"
     ;;
   *)
     echo "Invalid option: [$1]"
@@ -92,10 +92,12 @@ done
 
 pushd "${output_folder}"
 
-"${library_generation_dir}"/postprocess_library.sh \
-  "${output_folder}/${repository_path}" \
-  "" \
-  "${versions_file}" \
-  "${owlbot_cli_source_folder}"
+if [[ "${enable_postprocessing}" == "true" ]]; then
+  "${library_generation_dir}"/postprocess_library.sh \
+    "${output_folder}/${repository_path}" \
+    "" \
+    "${versions_file}" \
+    "${owlbot_cli_source_folder}"
+fi
 
 popd # output_folder
