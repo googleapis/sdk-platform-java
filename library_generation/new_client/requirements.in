@@ -5,3 +5,4 @@ click
 jinja2
 lxml
 typing
+GitPython

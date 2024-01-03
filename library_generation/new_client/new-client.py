@@ -21,6 +21,7 @@ import sys
 
 import click
 import templates
+from git import Repo
 
 
 @click.group(invoke_without_command=False)
@@ -144,14 +145,6 @@ def main(ctx):
          "maintained or generated"
 )
 @click.option(
-    "--googleapis-gen-url",
-    type=str,
-    default="https://github.com/googleapis/googleapis-gen.git",
-    show_default=True,
-    help="The URL of the repository that has generated Java code from proto "
-         "service definition"
-)
-@click.option(
     "--rest-docs",
     type=str,
     help="If it exists, link to the REST Documentation for a service"
@@ -178,7 +171,6 @@ def generate(
     group_id,
     owlbot_image,
     library_type,
-    googleapis_gen_url,
     rest_docs,
     rpc_docs,
 ):
@@ -227,7 +219,7 @@ def generate(
     if rpc_docs:
         repo_metadata["rpc_documentation"] = rpc_docs
     # Initialize workdir
-    workdir = Path(f"{sys.path[0]}/../../java-{output_name}").resolve()
+    workdir = Path(f"{sys.path[0]}/../../output/java-{output_name}").resolve()
     if os.path.isdir(workdir):
         sys.exit(
             "Couldn't create the module because "
@@ -263,128 +255,25 @@ def generate(
     )
 
     # get the sha256 digets for the owlbot image
-    subprocess.check_call(["docker", "pull", "-q", owlbot_image])
-    owlbot_image_digest = (
-        subprocess.check_output(
-            ["docker", "inspect", "--format='{{index .RepoDigests 0}}", owlbot_image,],
-            encoding="utf-8",
-        ).strip().split("@")[-1]
-    )
+    # subprocess.check_call(["docker", "pull", "-q", owlbot_image])
+    # owlbot_image_digest = (
+    #     subprocess.check_output(
+    #         ["docker", "inspect", "--format='{{index .RepoDigests 0}}", owlbot_image],
+    #         encoding="utf-8",
+    #     ).strip().split("@")[-1]
+    # )
 
     user = subprocess.check_output(["id", "-u"], encoding="utf8").strip()
     group = subprocess.check_output(["id", "-g"], encoding="utf8").strip()
 
-    # run owlbot copy
-    print("Cloning googleapis-gen...")
-    subprocess.check_call(["git", "clone", "-q", googleapis_gen_url, "./gen/googleapis-gen"], cwd=workdir)
-    subprocess.check_call(["docker", "pull", "gcr.io/cloud-devrel-public-resources/owlbot-cli:latest"])
-    copy_code_parameters = [
-        "docker",
-        "run",
-        "--rm",
-        "--user",
-        f"{user}:{group}",
-        "-v",
-        f"{workdir}:/repo",
-        "-v",
-        ""f"{workdir}""/gen/googleapis-gen:/googleapis-gen",
-        "-w",
-        "/repo",
-        "--env", "HOME=/tmp",
-        "gcr.io/cloud-devrel-public-resources/owlbot-cli:latest",
-        "copy-code",
-        "--source-repo=/googleapis-gen",
-        f"--config-file={owlbot_yaml_location_from_module}"
-    ]
-    print("Running copy-code: " + str(copy_code_parameters))
-    print("  in directory: " + str(workdir))
-    subprocess.check_call(
-        copy_code_parameters,
-        cwd=workdir,
-    )
+    library_generation_dir = Path(f"{sys.path[0]}/../../library_generation")\
+        .resolve()
 
-    print("Removing googleapis-gen...")
-    subprocess.check_call(["rm", "-fr", "gen"], cwd=workdir)
-
-    # Bringing owl-bot-staging from the new module's directory to the root
-    # directory so that owlbot-java can process them.
-    subprocess.check_call(
-        [
-            "mv",
-            "owl-bot-staging",
-            "../"
-        ],
-        cwd=workdir,
-    )
-    monorepo_root=(workdir / '..').resolve()
-    print("monorepo_root=",monorepo_root)
-    print("Running the post-processor...")
-    subprocess.check_call(
-        [
-            "docker",
-            "run",
-            "--rm",
-            "-v",
-            f"{monorepo_root}:/workspace",
-            "--user",
-            f"{user}:{group}",
-            owlbot_image,
-        ],
-        cwd=monorepo_root,
-    )
-
-    # Remove irrelevant files from templates
-    subprocess.check_call(
-        ["bash", "generation/update_owlbot_postprocessor_config.sh"],
-        cwd=monorepo_root
-    )
-    subprocess.check_call(
-        ["bash", "generation/delete_non_generated_samples.sh"],
-        cwd=monorepo_root
-    )
-
-    print("Regenerating the BOM")
-    subprocess.check_call(
-        [
-            "bash", "generation/generate_gapic_bom.sh",
-        ],
-        cwd=monorepo_root,
-    )
-
-    print("Regenerating root pom.xml")
-
-    # This script takes care of updating the root pom.xml
-    os.system(f"cd {monorepo_root} && generation/generate_root_pom.sh")
-
-    print("Consolidating configurations")
-    subprocess.check_call(
-        [
-            "bash", "generation/consolidate_config.sh"
-        ],
-        cwd=monorepo_root,
-    )
-    print("Setting parent poms")
-    subprocess.check_call(
-        [
-            "bash", "generation/set_parent_pom.sh"
-        ],
-        cwd=monorepo_root,
-    )
-
-    print("Applying the versions")
-    subprocess.check_call(
-        [
-            "bash", "generation/apply_current_versions.sh"
-        ],
-        cwd=monorepo_root,
-    )
-
-    print("Adding annotations in readme")
-    subprocess.check_call(
-        [
-            "bash", "generation/readme_update.sh"
-        ],
-        cwd=monorepo_root,
+    # run generate_library.sh
+    print("Cloning googleapis...")
+    Repo.clone_from(
+        "https://github.com/googleapis/googleapis.git",
+        to_path=f"{workdir}/../googleapis"
     )
 
     print(f"Prepared new library in {workdir}")
