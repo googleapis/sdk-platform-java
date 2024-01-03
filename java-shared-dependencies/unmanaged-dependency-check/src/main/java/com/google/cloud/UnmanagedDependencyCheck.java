@@ -4,6 +4,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 import com.google.cloud.tools.opensource.classpath.ClassPathBuilder;
 import com.google.cloud.tools.opensource.classpath.DependencyMediation;
+import com.google.cloud.tools.opensource.dependencies.Artifacts;
 import com.google.cloud.tools.opensource.dependencies.Bom;
 import com.google.cloud.tools.opensource.dependencies.MavenRepositoryException;
 import java.nio.file.Paths;
@@ -11,6 +12,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.eclipse.aether.artifact.Artifact;
 import org.eclipse.aether.version.InvalidVersionSpecificationException;
 
 /**
@@ -68,10 +70,8 @@ public class UnmanagedDependencyCheck {
         .getClassPath()
         .forEach(
             classPath -> {
-              String coordinate = classPath.toString();
-              // ignore the version.
-              int index = coordinate.lastIndexOf(":");
-              res.add(coordinate.substring(0, index));
+              Artifact artifact = classPath.getArtifact();
+              res.add(String.format("%s:%s", artifact.getGroupId(), artifact.getArtifactId()));
             });
 
     return res;
