@@ -512,32 +512,32 @@ public class ServiceOptionsTest {
   }
 
   @Test
-  public void testGetResolvedApiaryEndpoint_noUniverseDomain() {
+  public void testGetResolvedApiaryHost_noUniverseDomain() {
     TestServiceOptions options = TestServiceOptions.newBuilder().setProjectId("project-id").build();
-    assertThat(options.getResolvedApiaryEndpoint("service"))
-        .isEqualTo("service.googleapis.com:443");
+    assertThat(options.getResolvedApiaryHost("service"))
+        .isEqualTo("https://service.googleapis.com/");
   }
 
   @Test
-  public void testGetResolvedApiaryEndpoint_customUniverseDomain_noHost() {
+  public void testGetResolvedApiaryHost_customUniverseDomain_noHost() {
     TestServiceOptions options =
         TestServiceOptions.newBuilder()
             .setUniverseDomain("test.com")
             .setHost(null)
             .setProjectId("project-id")
             .build();
-    assertThat(options.getResolvedApiaryEndpoint("service")).isEqualTo("service.test.com:443");
+    assertThat(options.getResolvedApiaryHost("service")).isEqualTo("https://service.test.com/");
   }
 
   @Test
-  public void testGetResolvedApiaryEndpoint_customUniverseDomain_customHost() {
+  public void testGetResolvedApiaryHost_customUniverseDomain_customHost() {
     TestServiceOptions options =
         TestServiceOptions.newBuilder()
             .setUniverseDomain("test.com")
             .setHost("https://service.random.com")
             .setProjectId("project-id")
             .build();
-    assertThat(options.getResolvedEndpoint("service")).isEqualTo("service.random.com:443");
+    assertThat(options.getResolvedApiaryHost("service")).isEqualTo("https://service.test.com/");
   }
 
   private HttpResponse createHttpResponseWithHeader(final Multimap<String, String> headers)

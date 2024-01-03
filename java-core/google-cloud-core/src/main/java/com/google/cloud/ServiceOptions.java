@@ -813,29 +813,40 @@ public abstract class ServiceOptions<
     }
   }
 
-  /** Host parameter is expected in the format of {scheme}:{host} */
+  private String formatEndpoint(String serviceName, String universeDomain) {
+    return serviceName + "." + universeDomain + ":443";
+  }
+
   private String normalizeEndpoint(String host) {
     URI uri = URI.create(host);
     String scheme = uri.getScheme();
     int port = uri.getPort();
 
-    // http:// defaults to 80, https:// or no scheme default to 443
-    if ("http".equals(scheme)) {
-      port = port > 0 ? port : 80;
-    } else if ("https".equals(scheme)) {
-      port = port > 0 ? port : 443;
-    } else {
-      port = 443;
+    // If no port is provided, http:// defaults to 80 and https:// defaults to 443
+    if (scheme.equals("http")) {
+      return String.format("%s:%s", uri.getHost(), port > 0 ? port : 80);
+    } else if (scheme.equals("https")) {
+      return String.format("%s:%s", uri.getHost(), port > 0 ? port : 443);
     }
-    return String.format("%s:%s", uri.getHost(), port);
+    // If scheme does not match above, then host does not have a valid scheme. The
+    // host param value is probably in format {host}:{port}.
+    if (host.contains(":")) {
+      return host;
+    }
+    // If the scheme and port are not provided, default to 443
+    return host + ":443";
   }
 
-  // Temporarily used for Apiary Wrapped Libraries. To be removed in the future.
+  /**
+   * Temporarily used for BigQuery and Storage Apiary Wrapped Libraries. To be removed in the
+   * future. Returns the host to be used for the rootUrl and output is in format of:
+   * "https://serviceName.universeDomain/"
+   */
   @InternalApi
-  public String getResolvedApiaryEndpoint(String serviceName) {
+  public String getResolvedApiaryHost(String serviceName) {
     String resolvedUniverseDomain =
         getUniverseDomain() != null ? getUniverseDomain() : GOOGLE_DEFAULT_UNIVERSE;
-    return formatEndpoint(serviceName, resolvedUniverseDomain);
+    return "https://" + serviceName + "." + resolvedUniverseDomain + "/";
   }
 
   /** Validates that Credentials' Universe Domain and user configured Universe Domain matches. */
@@ -846,9 +857,5 @@ public abstract class ServiceOptions<
         universeDomain != null ? universeDomain : GOOGLE_DEFAULT_UNIVERSE;
     return true;
     //    return credentials.getUniverseDomain() != resolvedUniverseDomain;
-  }
-
-  private String formatEndpoint(String serviceName, String universeDomain) {
-    return serviceName + "." + universeDomain + ":443";
   }
 }
