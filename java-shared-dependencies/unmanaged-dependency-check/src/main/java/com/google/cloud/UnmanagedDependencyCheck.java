@@ -4,7 +4,6 @@ import static com.google.common.base.Preconditions.checkArgument;
 
 import com.google.cloud.tools.opensource.classpath.ClassPathBuilder;
 import com.google.cloud.tools.opensource.classpath.DependencyMediation;
-import com.google.cloud.tools.opensource.dependencies.Artifacts;
 import com.google.cloud.tools.opensource.dependencies.Bom;
 import com.google.cloud.tools.opensource.dependencies.MavenRepositoryException;
 import java.nio.file.Paths;
@@ -20,7 +19,7 @@ import org.eclipse.aether.version.InvalidVersionSpecificationException;
  */
 public class UnmanagedDependencyCheck {
   // regex of handwritten artifacts
-  private final static String handwrittenArtifact = "(com.google.cloud:google-cloud-.*)|(com.google.api.grpc:(grpc|proto)-google-cloud-.*)";
+  private final static String downstreamArtifact = "(com.google.cloud:google-cloud-.*)|(com.google.api.grpc:(grpc|proto)-google-cloud-.*)";
 
 
   /**
@@ -53,7 +52,7 @@ public class UnmanagedDependencyCheck {
     return managedDependencies.stream()
         .filter(dependency -> !sharedDependencies.contains(dependency))
         // handwritten artifacts, e.g., com.google.cloud:google-cloud-bigtable, should be excluded.
-        .filter(dependency -> !dependency.matches(handwrittenArtifact))
+        .filter(dependency -> !dependency.matches(downstreamArtifact))
         .collect(Collectors.toList());
   }
 
