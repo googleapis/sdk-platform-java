@@ -497,7 +497,7 @@ public class ServiceOptionsTest {
             .build();
     // `https://www.googleapis.com` is the DEFAULT_HOST value for ServiceOptions. The ServiceOptions
     // builder will set as it as the host if host is null
-    assertThat(options.getResolvedEndpoint("service")).isEqualTo("https://www.googleapis.com");
+    assertThat(options.getResolvedEndpoint("service")).isEqualTo("www.googleapis.com:443");
   }
 
   @Test
@@ -505,7 +505,7 @@ public class ServiceOptionsTest {
     TestServiceOptions options =
         TestServiceOptions.newBuilder()
             .setUniverseDomain("test.com")
-            .setHost("service.random.com:443")
+            .setHost("https://service.random.com")
             .setProjectId("project-id")
             .build();
     assertThat(options.getResolvedEndpoint("service")).isEqualTo("service.random.com:443");
@@ -534,7 +534,7 @@ public class ServiceOptionsTest {
     TestServiceOptions options =
         TestServiceOptions.newBuilder()
             .setUniverseDomain("test.com")
-            .setHost("service.random.com:443")
+            .setHost("https://service.random.com")
             .setProjectId("project-id")
             .build();
     assertThat(options.getResolvedEndpoint("service")).isEqualTo("service.random.com:443");

@@ -46,7 +46,6 @@ import com.google.auth.oauth2.QuotaProjectIdProvider;
 import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.spi.ServiceRpcFactory;
 import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
@@ -60,6 +59,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
+import java.net.URI;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
@@ -795,18 +795,39 @@ public abstract class ServiceOptions<
     return quotaProjectId;
   }
 
-  /** Returns the resolved endpoint for the Service to connect to Google Cloud */
+  /**
+   * Returns the resolved endpoint for the Service to connect to Google Cloud
+   *
+   * <p>The resolved endpoint is always in `host:port` format
+   */
   public String getResolvedEndpoint(String serviceName) {
     if (universeDomain == null) {
       return formatEndpoint(serviceName, GOOGLE_DEFAULT_UNIVERSE);
-    } else if (Strings.isNullOrEmpty(universeDomain)) {
+    } else if (universeDomain.isEmpty()) {
       throw new IllegalArgumentException("Universe Domain cannot be empty");
     } else {
-      if (host == null) {
-        return formatEndpoint(serviceName, getUniverseDomain());
+      if (host != null) {
+        return normalizeEndpoint(host);
       }
-      return host;
+      return formatEndpoint(serviceName, getUniverseDomain());
     }
+  }
+
+  /** Host parameter is expected in the format of {scheme}:{host} */
+  private String normalizeEndpoint(String host) {
+    URI uri = URI.create(host);
+    String scheme = uri.getScheme();
+    int port = uri.getPort();
+
+    // http:// defaults to 80, https:// or no scheme default to 443
+    if ("http".equals(scheme)) {
+      port = port > 0 ? port : 80;
+    } else if ("https".equals(scheme)) {
+      port = port > 0 ? port : 443;
+    } else {
+      port = 443;
+    }
+    return String.format("%s:%s", uri.getHost(), port);
   }
 
   // Temporarily used for Apiary Wrapped Libraries. To be removed in the future.
