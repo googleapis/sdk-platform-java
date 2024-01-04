@@ -59,7 +59,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
-import java.net.URI;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
@@ -798,38 +797,20 @@ public abstract class ServiceOptions<
    *
    * <p>The resolved endpoint is always in `host:port` format
    */
-  public String getResolvedEndpoint(String serviceName) {
-    if (universeDomain == null) {
-      return formatEndpoint(serviceName, Credentials.GOOGLE_DEFAULT_UNIVERSE);
-    } else if (universeDomain.isEmpty()) {
+  @InternalApi
+  public String getResolvedHost(String serviceName) {
+    if (universeDomain != null && universeDomain.isEmpty()) {
       throw new IllegalArgumentException("Universe Domain cannot be empty");
-    } else {
-      if (host != null) {
-        return normalizeEndpoint();
-      }
-      return formatEndpoint(serviceName, getUniverseDomain());
     }
-  }
-
-  private String formatEndpoint(String serviceName, String universeDomain) {
-    return serviceName + "." + universeDomain + ":443";
-  }
-
-  // Best effort endpoint normalization to ensure it results in {domain}:{port} format
-  // for gRPC-Java. `host` is expected to be in format of http(s)://{domain}
-  String normalizeEndpoint() {
-    URI uri = URI.create(host);
-    String scheme = uri.getScheme();
-    int port = uri.getPort();
-
-    // If no port is provided, http:// defaults to 80 and https:// defaults to 443
-    if (scheme.equals("http")) {
-      return String.format("%s:%s", uri.getHost(), port > 0 ? port : 80);
-    } else if (scheme.equals("https")) {
-      return String.format("%s:%s", uri.getHost(), port > 0 ? port : 443);
-    } else {
-      throw new RuntimeException("Invalid host: " + host + ". Expecting http(s)://{domain}");
+    String resolvedUniverseDomain =
+        universeDomain != null ? universeDomain : Credentials.GOOGLE_DEFAULT_UNIVERSE;
+    // The host value set to DEFAULT_HOST if the user didn't configure a host. If the
+    // user set a host the library uses that value, otherwise, construct the host for the user.
+    // The DEFAULT_HOST value is not a valid host for handwritten libraries.
+    if (!host.equals(DEFAULT_HOST)) {
+      return host;
     }
+    return "https://www." + serviceName + "." + resolvedUniverseDomain + "/";
   }
 
   /**
@@ -844,7 +825,11 @@ public abstract class ServiceOptions<
     return "https://www." + serviceName + "." + resolvedUniverseDomain + "/";
   }
 
-  /** Validates that Credentials' Universe Domain matches the user configured Universe Domain. */
+  /**
+   * Validates that Credentials' Universe Domain matches the user configured Universe Domain.
+   * Currently, this is intended for BigQuery and Storage Apiary Wrapped Libraries
+   */
+  @InternalApi
   public boolean isValidUniverseDomain() throws IOException {
     String resolvedUniverseDomain =
         getUniverseDomain() != null ? getUniverseDomain() : Credentials.GOOGLE_DEFAULT_UNIVERSE;

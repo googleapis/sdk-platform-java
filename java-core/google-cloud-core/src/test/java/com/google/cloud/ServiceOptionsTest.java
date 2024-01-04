@@ -509,7 +509,7 @@ public class ServiceOptionsTest {
   @Test
   public void testGetResolvedEndpoint_noUniverseDomain() {
     TestServiceOptions options = TestServiceOptions.newBuilder().setProjectId("project-id").build();
-    assertThat(options.getResolvedEndpoint("service")).isEqualTo("service.googleapis.com:443");
+    assertThat(options.getResolvedHost("service")).isEqualTo("https://www.service.googleapis.com/");
   }
 
   @Test
@@ -517,21 +517,18 @@ public class ServiceOptionsTest {
     TestServiceOptions options =
         TestServiceOptions.newBuilder().setUniverseDomain("").setProjectId("project-id").build();
     IllegalArgumentException exception =
-        assertThrows(IllegalArgumentException.class, () -> options.getResolvedEndpoint("service"));
+        assertThrows(IllegalArgumentException.class, () -> options.getResolvedHost("service"));
     assertThat(exception.getMessage()).isEqualTo("Universe Domain cannot be empty");
   }
 
   @Test
-  public void testGetResolvedEndpoint_customUniverseDomain_noHost() {
+  public void testGetResolvedEndpoint_customUniverseDomain() {
     TestServiceOptions options =
         TestServiceOptions.newBuilder()
             .setUniverseDomain("test.com")
-            .setHost(null)
             .setProjectId("project-id")
             .build();
-    // `https://www.googleapis.com` is the DEFAULT_HOST value for ServiceOptions. The ServiceOptions
-    // builder will set as it as the host if host is null
-    assertThat(options.getResolvedEndpoint("service")).isEqualTo("www.googleapis.com:443");
+    assertThat(options.getResolvedHost("service")).isEqualTo("https://www.service.test.com/");
   }
 
   @Test
@@ -539,10 +536,10 @@ public class ServiceOptionsTest {
     TestServiceOptions options =
         TestServiceOptions.newBuilder()
             .setUniverseDomain("test.com")
-            .setHost("https://service.random.com")
+            .setHost("https://www.service.random.com/")
             .setProjectId("project-id")
             .build();
-    assertThat(options.getResolvedEndpoint("service")).isEqualTo("service.random.com:443");
+    assertThat(options.getResolvedHost("service")).isEqualTo("https://www.service.random.com/");
   }
 
   @Test
@@ -630,57 +627,6 @@ public class ServiceOptionsTest {
             .setCredentials(credentialsNotInGDU)
             .build();
     assertThat(options.isValidUniverseDomain()).isTrue();
-  }
-
-  @Test
-  public void testNormalizeEndpoint_httpEndpoint() {
-    TestServiceOptions options =
-        TestServiceOptions.newBuilder()
-            .setHost("http://test.com")
-            .setProjectId("project-id")
-            .build();
-    assertThat(options.normalizeEndpoint()).isEqualTo("test.com:80");
-  }
-
-  // gRPC-Java is fine to build a channel with `www.`
-  @Test
-  public void testNormalizeEndpoint_httpEndpoint_hasWWW() {
-    TestServiceOptions options =
-        TestServiceOptions.newBuilder()
-            .setHost("http://www.test.com")
-            .setProjectId("project-id")
-            .build();
-    assertThat(options.normalizeEndpoint()).isEqualTo("www.test.com:80");
-  }
-
-  @Test
-  public void testNormalizeEndpoint_httpsEndpoint() {
-    TestServiceOptions options =
-        TestServiceOptions.newBuilder()
-            .setHost("https://test.com")
-            .setProjectId("project-id")
-            .build();
-    assertThat(options.normalizeEndpoint()).isEqualTo("test.com:443");
-  }
-
-  // gRPC-Java is fine to build a channel with `www.`
-  @Test
-  public void testNormalizeEndpoint_httpsEndpoint_hasWWW() {
-    TestServiceOptions options =
-        TestServiceOptions.newBuilder()
-            .setHost("https://www.test.com")
-            .setProjectId("project-id")
-            .build();
-    assertThat(options.normalizeEndpoint()).isEqualTo("www.test.com:443");
-  }
-
-  @Test
-  public void testNormalizeEndpoint_invalidHost() {
-    TestServiceOptions options =
-        TestServiceOptions.newBuilder().setHost("test.com:443").setProjectId("project-id").build();
-    RuntimeException exception = assertThrows(RuntimeException.class, options::normalizeEndpoint);
-    assertThat(exception.getMessage())
-        .isEqualTo("Invalid host: test.com:443. Expecting http(s)://{domain}");
   }
 
   private HttpResponse createHttpResponseWithHeader(final Multimap<String, String> headers)
