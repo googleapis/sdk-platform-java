@@ -510,7 +510,7 @@ public class ServiceOptionsTest {
   @Test
   public void testGetResolvedEndpoint_noUniverseDomain() {
     TestServiceOptions options = TestServiceOptions.newBuilder().setProjectId("project-id").build();
-    assertThat(options.getResolvedHost("service")).isEqualTo("https://www.service.googleapis.com");
+    assertThat(options.getResolvedHost("service")).isEqualTo("https://service.googleapis.com");
   }
 
   @Test
@@ -529,7 +529,7 @@ public class ServiceOptionsTest {
             .setUniverseDomain("test.com")
             .setProjectId("project-id")
             .build();
-    assertThat(options.getResolvedHost("service")).isEqualTo("https://www.service.test.com");
+    assertThat(options.getResolvedHost("service")).isEqualTo("https://service.test.com");
   }
 
   @Test
@@ -537,17 +537,17 @@ public class ServiceOptionsTest {
     TestServiceOptions options =
         TestServiceOptions.newBuilder()
             .setUniverseDomain("test.com")
-            .setHost("https://www.service.random.com/")
+            .setHost("https://service.random.com/")
             .setProjectId("project-id")
             .build();
-    assertThat(options.getResolvedHost("service")).isEqualTo("https://www.service.random.com/");
+    assertThat(options.getResolvedHost("service")).isEqualTo("https://service.random.com/");
   }
 
   @Test
   public void testGetResolvedApiaryHost_noUniverseDomain() {
     TestServiceOptions options = TestServiceOptions.newBuilder().setProjectId("project-id").build();
     assertThat(options.getResolvedApiaryHost("service"))
-        .isEqualTo("https://www.service.googleapis.com/");
+        .isEqualTo("https://service.googleapis.com/");
   }
 
   @Test
@@ -558,7 +558,7 @@ public class ServiceOptionsTest {
             .setHost(null)
             .setProjectId("project-id")
             .build();
-    assertThat(options.getResolvedApiaryHost("service")).isEqualTo("https://www.service.test.com/");
+    assertThat(options.getResolvedApiaryHost("service")).isEqualTo("https://service.test.com/");
   }
 
   @Test
@@ -569,7 +569,7 @@ public class ServiceOptionsTest {
             .setHost("https://service.random.com")
             .setProjectId("project-id")
             .build();
-    assertThat(options.getResolvedApiaryHost("service")).isEqualTo("https://www.service.test.com/");
+    assertThat(options.getResolvedApiaryHost("service")).isEqualTo("https://service.test.com/");
   }
 
   // No User Configuration = GDU, Default Credentials = GDU
