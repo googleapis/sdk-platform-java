@@ -848,8 +848,8 @@ public abstract class ServiceOptions<
    * Validates that Credentials' Universe Domain matches the resolved Universe Domain. Currently,
    * this is only intended for BigQuery and Storage Apiary Wrapped Libraries.
    *
-   * <p>This validation call should be made prior to Apiary RPCs invocations. If the checks find
-   * that there is an invalid universe domain, the call should not be made.
+   * <p>This validation call should be made prior to any RPC invocation. This call is used to gate
+   * the RPC invocation if there is no valid universe domain.
    */
   @InternalApi
   public boolean hasValidUniverseDomain() throws IOException {
