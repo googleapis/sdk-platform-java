@@ -18,13 +18,10 @@ import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.gapic.metadata.GapicMetadata;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
-import java.util.stream.Collectors;
+
 import javax.annotation.Nullable;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @AutoValue
 public abstract class GapicContext {

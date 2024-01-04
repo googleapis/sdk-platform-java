@@ -174,7 +174,7 @@ public class GrpcLoggingServiceV2Stub extends LoggingServiceV2Stub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add("log_name", String.valueOf(request.getLogName()));
+                  builder.add("log_name", Integer.valueOf(request.getLogName()));
                   return builder.build();
                 })
             .build();
@@ -202,7 +202,7 @@ public class GrpcLoggingServiceV2Stub extends LoggingServiceV2Stub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add("parent", String.valueOf(request.getParent()));
+                  builder.add("parent", Integer.valueOf(request.getParent()));
                   return builder.build();
                 })
             .build();

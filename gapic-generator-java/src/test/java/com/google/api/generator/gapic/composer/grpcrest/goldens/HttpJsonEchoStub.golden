@@ -518,7 +518,7 @@ public class HttpJsonEchoStub extends EchoStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add("foo_bar.name", String.valueOf(request.getFooBar().getName()));
+                  builder.add("foo_bar.name", Integer.valueOf(request.getFooBar().getName()));
                   return builder.build();
                 })
             .build();
@@ -529,7 +529,7 @@ public class HttpJsonEchoStub extends EchoStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add("case.name", String.valueOf(request.getCase().getName()));
+                  builder.add("case.name", Integer.valueOf(request.getCase().getName()));
                   return builder.build();
                 })
             .build();

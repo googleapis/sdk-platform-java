@@ -423,11 +423,11 @@ public class HttpJsonComplianceStub extends ComplianceStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add("info.f_bool", String.valueOf(request.getInfo().getFBool()));
-                  builder.add("info.f_double", String.valueOf(request.getInfo().getFDouble()));
-                  builder.add("info.f_int32", String.valueOf(request.getInfo().getFInt32()));
-                  builder.add("info.f_kingdom", String.valueOf(request.getInfo().getFKingdom()));
-                  builder.add("info.f_string", String.valueOf(request.getInfo().getFString()));
+                  builder.add("info.f_bool", Integer.valueOf(request.getInfo().getFBool()));
+                  builder.add("info.f_double", Integer.valueOf(request.getInfo().getFDouble()));
+                  builder.add("info.f_int32", Integer.valueOf(request.getInfo().getFInt32()));
+                  builder.add("info.f_kingdom", Integer.valueOf(request.getInfo().getFKingdom()));
+                  builder.add("info.f_string", Integer.valueOf(request.getInfo().getFString()));
                   return builder.build();
                 })
             .build();
@@ -438,11 +438,11 @@ public class HttpJsonComplianceStub extends ComplianceStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add("info.f_bool", String.valueOf(request.getInfo().getFBool()));
+                  builder.add("info.f_bool", Integer.valueOf(request.getInfo().getFBool()));
                   builder.add(
                       "info.f_child.f_string",
-                      String.valueOf(request.getInfo().getFChild().getFString()));
-                  builder.add("info.f_string", String.valueOf(request.getInfo().getFString()));
+                      Integer.valueOf(request.getInfo().getFChild().getFString()));
+                  builder.add("info.f_string", Integer.valueOf(request.getInfo().getFString()));
                   return builder.build();
                 })
             .build();
@@ -456,8 +456,8 @@ public class HttpJsonComplianceStub extends ComplianceStub {
                       RequestParamsBuilder builder = RequestParamsBuilder.create();
                       builder.add(
                           "info.f_child.f_string",
-                          String.valueOf(request.getInfo().getFChild().getFString()));
-                      builder.add("info.f_string", String.valueOf(request.getInfo().getFString()));
+                          Integer.valueOf(request.getInfo().getFChild().getFString()));
+                      builder.add("info.f_string", Integer.valueOf(request.getInfo().getFString()));
                       return builder.build();
                     })
                 .build();

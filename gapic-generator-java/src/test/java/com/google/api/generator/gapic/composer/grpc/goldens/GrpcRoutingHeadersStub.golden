@@ -431,7 +431,7 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add("table_name", String.valueOf(request.getTableName()));
+                  builder.add("table_name", Integer.valueOf(request.getTableName()));
                   return builder.build();
                 })
             .build();
@@ -457,7 +457,7 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add("info.f_kingdom", String.valueOf(request.getInfo().getFKingdom()));
+                  builder.add("info.f_kingdom", Integer.valueOf(request.getInfo().getFKingdom()));
                   return builder.build();
                 })
             .build();
@@ -467,7 +467,7 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add("info.p_kingdom", String.valueOf(request.getInfo().getPKingdom()));
+                  builder.add("info.p_kingdom", Integer.valueOf(request.getInfo().getPKingdom()));
                   return builder.build();
                 })
             .build();

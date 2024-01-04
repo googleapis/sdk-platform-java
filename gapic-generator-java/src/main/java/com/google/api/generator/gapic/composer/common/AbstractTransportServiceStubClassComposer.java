@@ -1303,7 +1303,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
           createRequestFieldGetterExpr(requestVarExpr, httpBindingFieldBinding.name());
       Expr valueOfExpr =
           MethodInvocationExpr.builder()
-              .setStaticReferenceType(TypeNode.STRING)
+              .setStaticReferenceType(TypeNode.INT_OBJECT)
               .setMethodName("valueOf")
               .setArguments(requestBuilderExpr)
               .build();
