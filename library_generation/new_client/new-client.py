@@ -22,6 +22,7 @@ import sys
 import click
 import templates
 from git import Repo
+from client_inputs import parse
 
 
 @click.group(invoke_without_command=False)
@@ -98,13 +99,6 @@ def main(ctx):
          "needed or not."
 )
 @click.option(
-    "--destination-name",
-    type=str,
-    default=None,
-    help="The directory name of the new library. By default it's "
-         "java-<api_shortname>"
-)
-@click.option(
     "--proto-path",
     required=True,
     type=str,
@@ -128,13 +122,6 @@ def main(ctx):
     default="com.google.cloud",
     show_default=True,
     help="The group ID of the artifact when distribution name is not set"
-)
-@click.option(
-    "--owlbot-image",
-    type=str,
-    default="gcr.io/cloud-devrel-public-resources/owlbot-java",
-    show_default=True,
-    help="The owlbot container image used in OwlBot.yaml"
 )
 @click.option(
     "--library-type",
@@ -165,20 +152,19 @@ def generate(
     requires_billing,
     transport,
     language,
-    destination_name,
     proto_path,
     cloud_api,
     group_id,
-    owlbot_image,
     library_type,
     rest_docs,
     rpc_docs,
 ):
     cloud_prefix = "cloud-" if cloud_api else ""
 
-    output_name = destination_name if destination_name else api_shortname
+    destination_path = f"{language}-{api_shortname}"
+
     if distribution_name is None:
-        distribution_name = f"{group_id}:google-{cloud_prefix}{output_name}"
+        distribution_name = f"{group_id}:google-{cloud_prefix}{api_shortname}"
 
     distribution_name_short = re.split(r"[:\/]", distribution_name)[-1]
 
@@ -204,8 +190,8 @@ def generate(
         "release_level": release_level,
         "transport": transport,
         "language": language,
-        "repo": f"googleapis/{language}-{output_name}",
-        "repo_short": f"{language}-{output_name}",
+        "repo": f"googleapis/{language}-{api_shortname}",
+        "repo_short": f"{language}-{api_shortname}",
         "distribution_name": distribution_name,
         "api_id": api_id,
         "library_type": library_type,
@@ -219,7 +205,7 @@ def generate(
     if rpc_docs:
         repo_metadata["rpc_documentation"] = rpc_docs
     # Initialize workdir
-    workdir = Path(f"{sys.path[0]}/../../output/java-{output_name}").resolve()
+    workdir = Path(f"{sys.path[0]}/../../output/java-{api_shortname}").resolve()
     if os.path.isdir(workdir):
         sys.exit(
             "Couldn't create the module because "
@@ -250,37 +236,52 @@ def generate(
         output_name=str(workdir / owlbot_yaml_location_from_module),
         artifact_name=distribution_name_short,
         proto_path=proto_path,
-        module_name=f"java-{output_name}",
+        module_name=f"java-{api_shortname}",
         api_shortname=api_shortname
     )
 
-    # get the sha256 digets for the owlbot image
-    # subprocess.check_call(["docker", "pull", "-q", owlbot_image])
-    # owlbot_image_digest = (
-    #     subprocess.check_output(
-    #         ["docker", "inspect", "--format='{{index .RepoDigests 0}}", owlbot_image],
-    #         encoding="utf-8",
-    #     ).strip().split("@")[-1]
-    # )
-
-    user = subprocess.check_output(["id", "-u"], encoding="utf8").strip()
-    group = subprocess.check_output(["id", "-g"], encoding="utf8").strip()
-
-    # run generate_library.sh
     print("Cloning googleapis...")
     output_dir = Path(f"{sys.path[0]}/../../output").resolve()
     __clone_googleapis(output_dir)
+    print(f"Generating from {proto_path}...")
+    # parse BUILD.bazel in proto_path
+    client_input = parse(
+        Path(f"{sys.path[0]}/../../output/{proto_path}").resolve()
+    )
     repo_root_dir = Path(f"{sys.path[0]}/../../").resolve()
+    # run generate_library.sh
     subprocess.check_call([
         "library_generation/generate_library.sh",
-        f"-p {proto_path}",
-        "-d java-alloydb"],
-        cwd=f""
+        "-p",
+        proto_path,
+        "-d",
+        destination_path,
+        "--gapic_generator_version",
+        "2.30.0",
+        "--proto_only",
+        client_input.proto_only,
+        "--gapic_additional_protos",
+        client_input.additional_protos,
+        "--transport",
+        client_input.transport,
+        "--rest_numeric_enums",
+        client_input.rest_numeric_enum,
+        "--gapic_yaml",
+        client_input.gapic_yaml,
+        "--service_config",
+        client_input.service_config,
+        "--service_yaml",
+        client_input.service_yaml,
+        "--include_samples",
+        client_input.include_samples,
+        "--versions_file",
+        "output/versions.txt"],
+        cwd=repo_root_dir
     )
 
     print(f"Prepared new library in {workdir}")
     print(f"Please create a pull request:\n"
-          f"  $ git checkout -b new_module_java-{output_name}\n"
+          f"  $ git checkout -b new_module_java-{api_shortname}\n"
           f"  $ git add .\n"
           f"  $ git commit -m 'feat: [{api_shortname}] new module for {api_shortname}'\n"
           f"  $ gh pr create --title 'feat: [{api_shortname}] new module for {api_shortname}'")
@@ -299,11 +300,6 @@ def __clone_googleapis(output_dir: Path) -> None:
     subprocess.check_call([
         "mv",
         f"{output_dir}/googleapis/grafeas",
-        f"{output_dir}"]
-    )
-    subprocess.check_call([
-        "mv",
-        f"{output_dir}/googleapis/WORKSPACE",
         f"{output_dir}"]
     )
     subprocess.check_call([
