@@ -607,7 +607,7 @@ public abstract class ServiceOptions<
    * Universe Domain value of `googleapis.com` and cloudasset.test.com would have a Universe Domain
    * of `test.com`.
    *
-   * @return The universe domain value set in the Builder's setter. Does not return the resolved
+   * @return The universe domain value set in the Builder's setter. This is not the resolved
    *     Universe Domain
    */
   public String getUniverseDomain() {
@@ -815,7 +815,8 @@ public abstract class ServiceOptions<
         universeDomain != null ? universeDomain : Credentials.GOOGLE_DEFAULT_UNIVERSE;
     // The host value set to DEFAULT_HOST if the user didn't configure a host. If the
     // user set a host the library uses that value, otherwise, construct the host for the user.
-    // The DEFAULT_HOST value is not a valid host for handwritten libraries.
+    // The DEFAULT_HOST value is not a valid host for handwritten libraries and should be
+    // overriden to include the serviceName.
     if (!host.equals(DEFAULT_HOST)) {
       return host;
     }
@@ -824,8 +825,10 @@ public abstract class ServiceOptions<
 
   /**
    * Temporarily used for BigQuery and Storage Apiary Wrapped Libraries. To be removed in the
-   * future. Returns the host to be used for the rootUrl and output is in the format of:
-   * "https://www.serviceName.universeDomain/"
+   * future. Returns the host to be used as the rootUrl.
+   *
+   * <p>The resolved host will be in `https://www.{serviceName}.{resolvedUniverseDomain}/` format.
+   * The resolvedUniverseDomain will be set to `googleapis.com` if universeDomain is null.
    */
   @InternalApi
   public String getResolvedApiaryHost(String serviceName) {
@@ -836,7 +839,7 @@ public abstract class ServiceOptions<
 
   /**
    * Validates that Credentials' Universe Domain matches the resolved Universe Domain. Currently,
-   * this is intended for BigQuery and Storage Apiary Wrapped Libraries
+   * this is only intended for BigQuery and Storage Apiary Wrapped Libraries
    */
   @InternalApi
   public boolean hasValidUniverseDomain() throws IOException {
