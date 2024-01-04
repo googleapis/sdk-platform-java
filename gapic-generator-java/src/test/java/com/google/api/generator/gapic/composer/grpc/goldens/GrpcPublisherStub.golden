@@ -191,7 +191,7 @@ public class GrpcPublisherStub extends PublisherStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add("name", Integer.valueOf(request.getName()));
+                  builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
             .build();
@@ -201,7 +201,7 @@ public class GrpcPublisherStub extends PublisherStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add("topic.name", Integer.valueOf(request.getTopic().getName()));
+                  builder.add("topic.name", String.valueOf(request.getTopic().getName()));
                   return builder.build();
                 })
             .build();
@@ -211,7 +211,7 @@ public class GrpcPublisherStub extends PublisherStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add("topic", Integer.valueOf(request.getTopic()));
+                  builder.add("topic", String.valueOf(request.getTopic()));
                   return builder.build();
                 })
             .build();
@@ -221,7 +221,7 @@ public class GrpcPublisherStub extends PublisherStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add("topic", Integer.valueOf(request.getTopic()));
+                  builder.add("topic", String.valueOf(request.getTopic()));
                   return builder.build();
                 })
             .build();
@@ -231,7 +231,7 @@ public class GrpcPublisherStub extends PublisherStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add("project", Integer.valueOf(request.getProject()));
+                  builder.add("project", String.valueOf(request.getProject()));
                   return builder.build();
                 })
             .build();
@@ -243,7 +243,7 @@ public class GrpcPublisherStub extends PublisherStub {
                 .setParamsExtractor(
                     request -> {
                       RequestParamsBuilder builder = RequestParamsBuilder.create();
-                      builder.add("topic", Integer.valueOf(request.getTopic()));
+                      builder.add("topic", String.valueOf(request.getTopic()));
                       return builder.build();
                     })
                 .build();
@@ -254,7 +254,7 @@ public class GrpcPublisherStub extends PublisherStub {
                 .setParamsExtractor(
                     request -> {
                       RequestParamsBuilder builder = RequestParamsBuilder.create();
-                      builder.add("topic", Integer.valueOf(request.getTopic()));
+                      builder.add("topic", String.valueOf(request.getTopic()));
                       return builder.build();
                     })
                 .build();
@@ -264,7 +264,7 @@ public class GrpcPublisherStub extends PublisherStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add("topic", Integer.valueOf(request.getTopic()));
+                  builder.add("topic", String.valueOf(request.getTopic()));
                   return builder.build();
                 })
             .build();
@@ -275,7 +275,7 @@ public class GrpcPublisherStub extends PublisherStub {
                 .setParamsExtractor(
                     request -> {
                       RequestParamsBuilder builder = RequestParamsBuilder.create();
-                      builder.add("subscription", Integer.valueOf(request.getSubscription()));
+                      builder.add("subscription", String.valueOf(request.getSubscription()));
                       return builder.build();
                     })
                 .build();

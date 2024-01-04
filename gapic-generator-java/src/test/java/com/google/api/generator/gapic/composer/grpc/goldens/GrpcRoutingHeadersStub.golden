@@ -431,7 +431,7 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add("table_name", Integer.valueOf(request.getTableName()));
+                  builder.add("table_name", String.valueOf(request.getTableName()));
                   return builder.build();
                 })
             .build();

@@ -193,7 +193,7 @@ public class GrpcTestingStub extends TestingStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add("name", Integer.valueOf(request.getName()));
+                  builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
             .build();
@@ -207,7 +207,7 @@ public class GrpcTestingStub extends TestingStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add("name", Integer.valueOf(request.getName()));
+                  builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
             .build();
@@ -217,7 +217,7 @@ public class GrpcTestingStub extends TestingStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add("name", Integer.valueOf(request.getName()));
+                  builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
             .build();
@@ -241,7 +241,7 @@ public class GrpcTestingStub extends TestingStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add("parent", Integer.valueOf(request.getParent()));
+                  builder.add("parent", String.valueOf(request.getParent()));
                   return builder.build();
                 })
             .build();
@@ -251,7 +251,7 @@ public class GrpcTestingStub extends TestingStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add("name", Integer.valueOf(request.getName()));
+                  builder.add("name", String.valueOf(request.getName()));
                   return builder.build();
                 })
             .build();
@@ -261,11 +261,11 @@ public class GrpcTestingStub extends TestingStub {
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add("answer", Integer.valueOf(request.getAnswer()));
-                  builder.add("foo", Integer.valueOf(request.getFoo()));
-                  builder.add("name", Integer.valueOf(request.getName()));
+                  builder.add("answer", String.valueOf(request.getAnswer()));
+                  builder.add("foo", String.valueOf(request.getFoo()));
+                  builder.add("name", String.valueOf(request.getName()));
                   builder.add(
-                      "test_to_verify.name", Integer.valueOf(request.getTestToVerify().getName()));
+                      "test_to_verify.name", String.valueOf(request.getTestToVerify().getName()));
                   builder.add("type", Integer.valueOf(request.getType()));
                   return builder.build();
                 })

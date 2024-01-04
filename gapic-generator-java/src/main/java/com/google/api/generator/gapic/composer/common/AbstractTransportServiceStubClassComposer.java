@@ -1300,25 +1300,42 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     for (HttpBindings.HttpBinding httpBindingFieldBinding :
         method.httpBindings().pathParameters()) {
       MethodInvocationExpr requestBuilderExpr =
-          createRequestFieldGetterExpr(requestVarExpr, httpBindingFieldBinding.name());
-      Expr valueOfExpr =
-          MethodInvocationExpr.builder()
-              .setStaticReferenceType(TypeNode.INT_OBJECT)
-              .setMethodName("valueOf")
-              .setArguments(requestBuilderExpr)
-              .build();
+              createRequestFieldGetterExpr(requestVarExpr, httpBindingFieldBinding.name());
 
-      Expr paramsAddExpr =
-          MethodInvocationExpr.builder()
-              .setExprReferenceExpr(routingHeadersBuilderVarNonDeclExpr)
-              .setMethodName("add")
-              .setArguments(
-                  ValueExpr.withValue(StringObjectValue.withValue(httpBindingFieldBinding.name())),
-                  valueOfExpr)
-              .build();
-      bodyStatements.add(ExprStatement.withExpr(paramsAddExpr));
+      if (httpBindingFieldBinding.isEnum()) {
+        Expr valueOfExpr =
+                MethodInvocationExpr.builder()
+                        .setStaticReferenceType(TypeNode.INT_OBJECT)
+                        .setMethodName("valueOf")
+                        .setArguments(requestBuilderExpr)
+                        .build();
+        Expr paramsAddExpr =
+                MethodInvocationExpr.builder()
+                        .setExprReferenceExpr(routingHeadersBuilderVarNonDeclExpr)
+                        .setMethodName("add")
+                        .setArguments(
+                                ValueExpr.withValue(StringObjectValue.withValue(httpBindingFieldBinding.name())),
+                                valueOfExpr)
+                        .build();
+        bodyStatements.add(ExprStatement.withExpr(paramsAddExpr));
+      } else {
+        Expr valueOfExpr =
+                MethodInvocationExpr.builder()
+                        .setStaticReferenceType(TypeNode.STRING)
+                        .setMethodName("valueOf")
+                        .setArguments(requestBuilderExpr)
+                        .build();
+        Expr paramsAddExpr =
+                MethodInvocationExpr.builder()
+                        .setExprReferenceExpr(routingHeadersBuilderVarNonDeclExpr)
+                        .setMethodName("add")
+                        .setArguments(
+                                ValueExpr.withValue(StringObjectValue.withValue(httpBindingFieldBinding.name())),
+                                valueOfExpr)
+                        .build();
+        bodyStatements.add(ExprStatement.withExpr(paramsAddExpr));
+      }
     }
-
     returnExprBuilder
         .setExprReferenceExpr(routingHeadersBuilderVarNonDeclExpr)
         .setMethodName("build");
