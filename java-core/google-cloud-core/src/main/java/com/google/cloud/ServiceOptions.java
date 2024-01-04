@@ -202,13 +202,18 @@ public abstract class ServiceOptions<
     }
 
     /**
-     * Universe Domain is the domain for Google Cloud Services. It follows the format of
-     * `{ServiceName}.{UniverseDomain}`. For example, speech.googleapis.com would have a Universe
-     * Domain value of `googleapis.com` and cloudasset.test.com would have a Universe Domain of
-     * `test.com`. If this value is not set, this will default to `googleapis.com`.
+     * Universe Domain is the domain for Google Cloud Services. A Google Cloud endpoint follows the
+     * format of `{ServiceName}.{UniverseDomain}`. For example, speech.googleapis.com would have a
+     * Universe Domain value of `googleapis.com` and cloudasset.test.com would have a Universe
+     * Domain of `test.com`.
+     *
+     * <p>If this value is not set, the resolved UniverseDomain will default to `googleapis.com`.
+     *
+     * @throws NullPointerException if {@code universeDomain} is {@code null}. The resolved
+     *     universeDomain will be `googleapis.com` if this value is not set.
      */
     public B setUniverseDomain(String universeDomain) {
-      this.universeDomain = universeDomain;
+      this.universeDomain = checkNotNull(universeDomain);
       return self();
     }
 
@@ -597,10 +602,13 @@ public abstract class ServiceOptions<
   }
 
   /**
-   * Universe Domain is the domain for Google Cloud Services. It follows the format of
-   * `{ServiceName}.{UniverseDomain}`. For example, speech.googleapis.com would have a Universe
-   * Domain value of `googleapis.com` and cloudasset.test.com would have a Universe Domain of
-   * `test.com`. If this value is not set, this will default to `googleapis.com`.
+   * Universe Domain is the domain for Google Cloud Services. A Google Cloud endpoint follows the
+   * format of `{ServiceName}.{UniverseDomain}`. For example, speech.googleapis.com would have a
+   * Universe Domain value of `googleapis.com` and cloudasset.test.com would have a Universe Domain
+   * of `test.com`.
+   *
+   * @return The universe domain value set in the Builder's setter. Does not return the resolved
+   *     Universe Domain
    */
   public String getUniverseDomain() {
     return universeDomain;
@@ -793,9 +801,10 @@ public abstract class ServiceOptions<
   }
 
   /**
-   * Returns the resolved endpoint for the Service to connect to Google Cloud
+   * Returns the resolved host for the Service to connect to Google Cloud
    *
-   * <p>The resolved endpoint is always in `host:port` format
+   * <p>The resolved host will be in `https://www.{serviceName}.{resolvedUniverseDomain}/` format.
+   * The resolvedUniverseDomain will be set to `googleapis.com` if universeDomain is null.
    */
   @InternalApi
   public String getResolvedHost(String serviceName) {
@@ -816,23 +825,23 @@ public abstract class ServiceOptions<
   /**
    * Temporarily used for BigQuery and Storage Apiary Wrapped Libraries. To be removed in the
    * future. Returns the host to be used for the rootUrl and output is in the format of:
-   * "https://serviceName.universeDomain/"
+   * "https://www.serviceName.universeDomain/"
    */
   @InternalApi
   public String getResolvedApiaryHost(String serviceName) {
     String resolvedUniverseDomain =
-        getUniverseDomain() != null ? getUniverseDomain() : Credentials.GOOGLE_DEFAULT_UNIVERSE;
+        universeDomain != null ? universeDomain : Credentials.GOOGLE_DEFAULT_UNIVERSE;
     return "https://www." + serviceName + "." + resolvedUniverseDomain + "/";
   }
 
   /**
-   * Validates that Credentials' Universe Domain matches the user configured Universe Domain.
-   * Currently, this is intended for BigQuery and Storage Apiary Wrapped Libraries
+   * Validates that Credentials' Universe Domain matches the resolved Universe Domain. Currently,
+   * this is intended for BigQuery and Storage Apiary Wrapped Libraries
    */
   @InternalApi
-  public boolean isValidUniverseDomain() throws IOException {
+  public boolean hasValidUniverseDomain() throws IOException {
     String resolvedUniverseDomain =
-        getUniverseDomain() != null ? getUniverseDomain() : Credentials.GOOGLE_DEFAULT_UNIVERSE;
+        universeDomain != null ? universeDomain : Credentials.GOOGLE_DEFAULT_UNIVERSE;
     return resolvedUniverseDomain.equals(getCredentials().getUniverseDomain());
   }
 }

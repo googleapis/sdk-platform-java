@@ -581,7 +581,7 @@ public class ServiceOptionsTest {
             .setHost("https://test.random.com")
             .setCredentials(credentials)
             .build();
-    assertThat(options.isValidUniverseDomain()).isTrue();
+    assertThat(options.hasValidUniverseDomain()).isTrue();
   }
 
   // No User Configuration = GDU, non Default Credentials = random.com
@@ -595,7 +595,7 @@ public class ServiceOptionsTest {
             .setHost("https://test.random.com")
             .setCredentials(credentialsNotInGDU)
             .build();
-    assertThat(options.isValidUniverseDomain()).isFalse();
+    assertThat(options.hasValidUniverseDomain()).isFalse();
   }
 
   // User Configuration = random.com, Default Credentials = GDU
@@ -610,7 +610,7 @@ public class ServiceOptionsTest {
             .setUniverseDomain("random.com")
             .setCredentials(credentials)
             .build();
-    assertThat(options.isValidUniverseDomain()).isFalse();
+    assertThat(options.hasValidUniverseDomain()).isFalse();
   }
 
   // User Configuration = random.com, non Default Credentials = random.com
@@ -626,7 +626,7 @@ public class ServiceOptionsTest {
             .setUniverseDomain("random.com")
             .setCredentials(credentialsNotInGDU)
             .build();
-    assertThat(options.isValidUniverseDomain()).isTrue();
+    assertThat(options.hasValidUniverseDomain()).isTrue();
   }
 
   private HttpResponse createHttpResponseWithHeader(final Multimap<String, String> headers)
