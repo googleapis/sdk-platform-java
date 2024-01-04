@@ -510,7 +510,7 @@ public class ServiceOptionsTest {
   @Test
   public void testGetResolvedEndpoint_noUniverseDomain() {
     TestServiceOptions options = TestServiceOptions.newBuilder().setProjectId("project-id").build();
-    assertThat(options.getResolvedHost("service")).isEqualTo("https://www.service.googleapis.com/");
+    assertThat(options.getResolvedHost("service")).isEqualTo("https://www.service.googleapis.com");
   }
 
   @Test
@@ -529,7 +529,7 @@ public class ServiceOptionsTest {
             .setUniverseDomain("test.com")
             .setProjectId("project-id")
             .build();
-    assertThat(options.getResolvedHost("service")).isEqualTo("https://www.service.test.com/");
+    assertThat(options.getResolvedHost("service")).isEqualTo("https://www.service.test.com");
   }
 
   @Test
