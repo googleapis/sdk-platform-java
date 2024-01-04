@@ -825,7 +825,7 @@ public abstract class ServiceOptions<
 
   /**
    * Temporarily used for BigQuery and Storage Apiary Wrapped Libraries. To be removed in the future
-   * when Apiary clients can resolve the endpoints. Returns the host to be used as the {@see <a
+   * when Apiary clients can resolve their endpoints. Returns the host to be used as the {@see <a
    * href="https://github.com/googleapis/google-api-java-client/blob/76765d5f9689be9d266a7d62fa6ffb4cabf701f5/google-api-client/src/main/java/com/google/api/client/googleapis/services/AbstractGoogleClient.java#L49">rootUrl</a>}
    *
    * <p>The resolved host will be in `https://www.{serviceName}.{resolvedUniverseDomain}/` format.
@@ -842,7 +842,7 @@ public abstract class ServiceOptions<
    * Validates that Credentials' Universe Domain matches the resolved Universe Domain. Currently,
    * this is only intended for BigQuery and Storage Apiary Wrapped Libraries.
    *
-   * <p>This validation call should be made prior to Apiary RPCs invocations. If the checks finds
+   * <p>This validation call should be made prior to Apiary RPCs invocations. If the checks find
    * that there is an invalid universe domain, the call should not be made.
    */
   @InternalApi

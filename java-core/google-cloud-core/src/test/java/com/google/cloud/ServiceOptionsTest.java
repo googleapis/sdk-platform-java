@@ -148,6 +148,7 @@ public class ServiceOptionsTest {
           + "  \"universe_domain\": \"googleapis.com\"\n"
           + "}";
 
+  // Key added by copying the keys above and adding in the universe domain field
   private static final String JSON_KEY_NON_GDU =
       "{\n"
           + "  \"private_key_id\": \"somekeyid\",\n"
