@@ -803,7 +803,7 @@ public abstract class ServiceOptions<
   /**
    * Returns the resolved host for the Service to connect to Google Cloud
    *
-   * <p>The resolved host will be in `https://www.{serviceName}.{resolvedUniverseDomain}/` format.
+   * <p>The resolved host will be in `https://www.{serviceName}.{resolvedUniverseDomain}` format.
    * The resolvedUniverseDomain will be set to `googleapis.com` if universeDomain is null. The
    * format is similar to the DEFAULT_HOST value in java-core.
    *
@@ -824,7 +824,7 @@ public abstract class ServiceOptions<
     if (!DEFAULT_HOST.equals(host)) {
       return host;
     }
-    return "https://www." + serviceName + "." + resolvedUniverseDomain + "/";
+    return "https://www." + serviceName + "." + resolvedUniverseDomain;
   }
 
   /**
