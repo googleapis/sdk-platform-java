@@ -1,5 +1,35 @@
 # Changelog
 
+## [2.31.0](https://github.com/googleapis/sdk-platform-java/compare/v2.30.0...v2.31.0) (2024-01-04)
+
+
+### Features
+
+* [common-protos,common-protos] add auto_populated_fields to google.api.MethodSettings ([#2273](https://github.com/googleapis/sdk-platform-java/issues/2273)) ([d9be11c](https://github.com/googleapis/sdk-platform-java/commit/d9be11c7a127452c5e5ef871854a4a65c68b1b34))
+* add auto_populated_fields to google.api.MethodSettings ([d9be11c](https://github.com/googleapis/sdk-platform-java/commit/d9be11c7a127452c5e5ef871854a4a65c68b1b34))
+* add parsing of autopopulated fields from serviceyaml ([#2312](https://github.com/googleapis/sdk-platform-java/issues/2312)) ([4f535a7](https://github.com/googleapis/sdk-platform-java/commit/4f535a7829f98fe79053e62e22deaf91a97ab917))
+* Add Universe Domain to ClientSettings ([#2331](https://github.com/googleapis/sdk-platform-java/issues/2331)) ([1bddac5](https://github.com/googleapis/sdk-platform-java/commit/1bddac5f91b5b7742c6082da2ae0c6667523aaa4))
+* Add Universe Domain to Java-Core ([#2329](https://github.com/googleapis/sdk-platform-java/issues/2329)) ([586ac9f](https://github.com/googleapis/sdk-platform-java/commit/586ac9f668e0ae647e3ef233458d2c754959f6e5))
+* Full Endpoint Resolution from EndpointContext ([#2313](https://github.com/googleapis/sdk-platform-java/issues/2313)) ([f499ced](https://github.com/googleapis/sdk-platform-java/commit/f499ced28a562cbb3ea49f14a4fa16eb6a8173cc))
+* move Java Owlbot into this repository for postprocessing ([#2282](https://github.com/googleapis/sdk-platform-java/issues/2282)) ([f8969d2](https://github.com/googleapis/sdk-platform-java/commit/f8969d2b5b50b338967802436bac8d21c3656e07))
+* new artifact for sdk-platform-java configs.  ([#2315](https://github.com/googleapis/sdk-platform-java/issues/2315)) ([99e5195](https://github.com/googleapis/sdk-platform-java/commit/99e51953f319c97b225a0209b093367fa440f9d3))
+* Parse Host Service Name ([#2300](https://github.com/googleapis/sdk-platform-java/issues/2300)) ([8822f3b](https://github.com/googleapis/sdk-platform-java/commit/8822f3b514bdddf028c12db7a773e80fa4f4f3a1))
+* Structs mapper utility ([#2278](https://github.com/googleapis/sdk-platform-java/issues/2278)) ([da6607b](https://github.com/googleapis/sdk-platform-java/commit/da6607b17130ab045640618d505fda915ddb8e49))
+* unmanaged dependency check ([#2223](https://github.com/googleapis/sdk-platform-java/issues/2223)) ([3439691](https://github.com/googleapis/sdk-platform-java/commit/34396919b6c58f85af26650a7d3d429d9b4e9008))
+
+
+### Bug Fixes
+
+* format proto comments in Client Overview ([#2280](https://github.com/googleapis/sdk-platform-java/issues/2280)) ([4029fbd](https://github.com/googleapis/sdk-platform-java/commit/4029fbdd9ab060ef55382b1890f323f85fe3ceef))
+* re-enable checkstyle in sdk-platform-java-config ([#2335](https://github.com/googleapis/sdk-platform-java/issues/2335)) ([285bdb1](https://github.com/googleapis/sdk-platform-java/commit/285bdb101194740a7a9618565679b7be01c70f43))
+
+
+### Dependencies
+
+* update google api dependencies ([#2277](https://github.com/googleapis/sdk-platform-java/issues/2277)) ([4bc45bd](https://github.com/googleapis/sdk-platform-java/commit/4bc45bd3c525714acc3866ce47943f91d860f8d2))
+* update googleapis/java-cloud-bom digest to 3fe0c17 ([#2286](https://github.com/googleapis/sdk-platform-java/issues/2286)) ([c7de93e](https://github.com/googleapis/sdk-platform-java/commit/c7de93e6a6e08b663041e98eaab9cb5449d51b9f))
+* update grpc dependencies to v1.60.0 ([#2288](https://github.com/googleapis/sdk-platform-java/issues/2288)) ([c8bf058](https://github.com/googleapis/sdk-platform-java/commit/c8bf05813cb8968447572df5622cf497510bca34))
+
 ## [2.30.0](https://github.com/googleapis/sdk-platform-java/compare/v2.29.0...v2.30.0) (2023-11-29)
 
 
