@@ -243,17 +243,24 @@ def generate(
     print("Cloning googleapis...")
     output_dir = Path(f"{sys.path[0]}/../../output").resolve()
     __clone_googleapis(output_dir)
-    print(f"Generating from {proto_path}...")
+    # Find a versioned directory within proto_path
+    # We only need to generate one version of the library as OwlBot
+    # will copy other versions from googleapis-gen.
+    version = __find_version(
+        Path(f"{sys.path[0]}/../../output/{proto_path}").resolve()
+    )
+    versioned_proto_path = f"{proto_path}/{version}"
+    print(f"Generating from {versioned_proto_path}...")
     # parse BUILD.bazel in proto_path
     client_input = parse(
-        Path(f"{sys.path[0]}/../../output/{proto_path}").resolve()
+        Path(f"{sys.path[0]}/../../output/{versioned_proto_path}").resolve()
     )
     repo_root_dir = Path(f"{sys.path[0]}/../../").resolve()
     # run generate_library.sh
     subprocess.check_call([
         "library_generation/generate_library.sh",
         "-p",
-        proto_path,
+        versioned_proto_path,
         "-d",
         destination_path,
         "--gapic_generator_version",
@@ -307,6 +314,13 @@ def __clone_googleapis(output_dir: Path) -> None:
         "-rf",
         f"{output_dir}/googleapis"]
     )
+
+
+def __find_version(proto_path: Path) -> str:
+    for child in proto_path.iterdir():
+        if child.is_dir() and re.search(r"v[1-9]", child.name) is not None:
+            return child.name
+    return ""
 
 
 if __name__ == "__main__":
