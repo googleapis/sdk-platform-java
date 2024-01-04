@@ -518,7 +518,7 @@ public class ServiceOptionsTest {
         TestServiceOptions.newBuilder().setUniverseDomain("").setProjectId("project-id").build();
     IllegalArgumentException exception =
         assertThrows(IllegalArgumentException.class, () -> options.getResolvedHost("service"));
-    assertThat(exception.getMessage()).isEqualTo("Universe Domain cannot be empty");
+    assertThat(exception.getMessage()).isEqualTo("The universe domain cannot be empty");
   }
 
   @Test

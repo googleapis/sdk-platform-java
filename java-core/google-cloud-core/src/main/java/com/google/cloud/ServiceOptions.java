@@ -809,7 +809,7 @@ public abstract class ServiceOptions<
   @InternalApi
   public String getResolvedHost(String serviceName) {
     if (universeDomain != null && universeDomain.isEmpty()) {
-      throw new IllegalArgumentException("Universe Domain cannot be empty");
+      throw new IllegalArgumentException("The universe domain cannot be empty");
     }
     String resolvedUniverseDomain =
         universeDomain != null ? universeDomain : Credentials.GOOGLE_DEFAULT_UNIVERSE;
@@ -817,15 +817,16 @@ public abstract class ServiceOptions<
     // user set a host the library uses that value, otherwise, construct the host for the user.
     // The DEFAULT_HOST value is not a valid host for handwritten libraries and should be
     // overriden to include the serviceName.
-    if (!host.equals(DEFAULT_HOST)) {
+    if (!DEFAULT_HOST.equals(host)) {
       return host;
     }
     return "https://www." + serviceName + "." + resolvedUniverseDomain + "/";
   }
 
   /**
-   * Temporarily used for BigQuery and Storage Apiary Wrapped Libraries. To be removed in the
-   * future. Returns the host to be used as the rootUrl.
+   * Temporarily used for BigQuery and Storage Apiary Wrapped Libraries. To be removed in the future
+   * when Apiary clients can resolve the endpoints. Returns the host to be used as the {@see <a
+   * href="https://github.com/googleapis/google-api-java-client/blob/76765d5f9689be9d266a7d62fa6ffb4cabf701f5/google-api-client/src/main/java/com/google/api/client/googleapis/services/AbstractGoogleClient.java#L49">rootUrl</a>}
    *
    * <p>The resolved host will be in `https://www.{serviceName}.{resolvedUniverseDomain}/` format.
    * The resolvedUniverseDomain will be set to `googleapis.com` if universeDomain is null.
@@ -839,7 +840,10 @@ public abstract class ServiceOptions<
 
   /**
    * Validates that Credentials' Universe Domain matches the resolved Universe Domain. Currently,
-   * this is only intended for BigQuery and Storage Apiary Wrapped Libraries
+   * this is only intended for BigQuery and Storage Apiary Wrapped Libraries.
+   *
+   * <p>This validation call should be made prior to Apiary RPCs invocations. If the checks finds
+   * that there is an invalid universe domain, the call should not be made.
    */
   @InternalApi
   public boolean hasValidUniverseDomain() throws IOException {
