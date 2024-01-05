@@ -78,13 +78,6 @@ docker run --rm \
   --source-repo=/pre-processed-libraries \
   --config-file="${owlbot_yaml_relative_path}"
 
-# we have to "unpack" the
-# owl-bot-staging folder so it's properly processed by java owlbot
-# pushd "${postprocessing_target}"
-# mv owl-bot-staging/* temp
-# rm -rd owl-bot-staging/
-# mv temp owl-bot-staging
-# popd # postprocessing_target
 
 # we clone the synthtool library and manually build it
 mkdir -p /tmp/synthtool

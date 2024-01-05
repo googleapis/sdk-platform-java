@@ -132,4 +132,95 @@ public interface MethodSettingsOrBuilder
    * <code>.google.api.MethodSettings.LongRunning long_running = 2;</code>
    */
   com.google.api.MethodSettings.LongRunningOrBuilder getLongRunningOrBuilder();
+
+  /**
+   *
+   *
+   * <pre>
+   * List of top-level fields of the request message, that should be
+   * automatically populated by the client libraries based on their
+   * (google.api.field_info).format. Currently supported format: UUID4.
+   *
+   * Example of a YAML configuration:
+   *
+   *  publishing:
+   *    method_settings:
+   *      - selector: google.example.v1.ExampleService.CreateExample
+   *        auto_populated_fields:
+   *        - request_id
+   * </pre>
+   *
+   * <code>repeated string auto_populated_fields = 3;</code>
+   *
+   * @return A list containing the autoPopulatedFields.
+   */
+  java.util.List<java.lang.String> getAutoPopulatedFieldsList();
+  /**
+   *
+   *
+   * <pre>
+   * List of top-level fields of the request message, that should be
+   * automatically populated by the client libraries based on their
+   * (google.api.field_info).format. Currently supported format: UUID4.
+   *
+   * Example of a YAML configuration:
+   *
+   *  publishing:
+   *    method_settings:
+   *      - selector: google.example.v1.ExampleService.CreateExample
+   *        auto_populated_fields:
+   *        - request_id
+   * </pre>
+   *
+   * <code>repeated string auto_populated_fields = 3;</code>
+   *
+   * @return The count of autoPopulatedFields.
+   */
+  int getAutoPopulatedFieldsCount();
+  /**
+   *
+   *
+   * <pre>
+   * List of top-level fields of the request message, that should be
+   * automatically populated by the client libraries based on their
+   * (google.api.field_info).format. Currently supported format: UUID4.
+   *
+   * Example of a YAML configuration:
+   *
+   *  publishing:
+   *    method_settings:
+   *      - selector: google.example.v1.ExampleService.CreateExample
+   *        auto_populated_fields:
+   *        - request_id
+   * </pre>
+   *
+   * <code>repeated string auto_populated_fields = 3;</code>
+   *
+   * @param index The index of the element to return.
+   * @return The autoPopulatedFields at the given index.
+   */
+  java.lang.String getAutoPopulatedFields(int index);
+  /**
+   *
+   *
+   * <pre>
+   * List of top-level fields of the request message, that should be
+   * automatically populated by the client libraries based on their
+   * (google.api.field_info).format. Currently supported format: UUID4.
+   *
+   * Example of a YAML configuration:
+   *
+   *  publishing:
+   *    method_settings:
+   *      - selector: google.example.v1.ExampleService.CreateExample
+   *        auto_populated_fields:
+   *        - request_id
+   * </pre>
+   *
+   * <code>repeated string auto_populated_fields = 3;</code>
+   *
+   * @param index The index of the value to return.
+   * @return The bytes of the autoPopulatedFields at the given index.
+   */
+  com.google.protobuf.ByteString getAutoPopulatedFieldsBytes(int index);
 }

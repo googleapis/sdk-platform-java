@@ -52,6 +52,12 @@ public abstract class Service {
     return !Strings.isNullOrEmpty(description());
   }
 
+  public String hostServiceName() {
+    // Host Service Name is guaranteed to exist and be non-null and non-empty
+    // Parser will fail if the default host is not supplied
+    return parseHostServiceName(defaultHost());
+  }
+
   public String apiShortName() {
     if (!Strings.isNullOrEmpty(defaultHost())) {
       return parseApiShortName(defaultHost());
@@ -182,6 +188,17 @@ public abstract class Service {
       apiVersion = "";
     }
     return apiVersion;
+  }
+
+  // Parse the service name from the default host configured in the protos
+  // or service yaml file. For Google Cloud Services, the default host value
+  // is expected to contain `.googleapis.com`. Exceptions may exist (i.e. localhost),
+  // in which case we will return an empty string.
+  private static String parseHostServiceName(String defaultHost) {
+    if (defaultHost.contains(".googleapis.com")) {
+      return Iterables.getFirst(Splitter.on(".").split(defaultHost), defaultHost);
+    }
+    return "";
   }
 
   // Parse defaultHost for apiShortName for the RegionTag. Need to account for regional default

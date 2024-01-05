@@ -27,7 +27,6 @@ set -ex
 scripts_root=$1
 versions_file=$2
 
-
 # Runs template and etc in current working directory
 function processModule() {
   # templates as well as retrieving files from owl-bot-staging
