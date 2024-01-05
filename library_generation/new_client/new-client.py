@@ -306,11 +306,14 @@ def generate(
         cwd=repo_root_dir,
     )
 
-    # print("Regenerating root pom.xml")
-    #
-    # # This script takes care of updating the root pom.xml
-    # os.system(f"cd {monorepo_root} && generation/generate_root_pom.sh")
-    #
+    print("Regenerating root pom.xml")
+
+    # This script takes care of updating the root pom.xml
+    os.system(
+        f"cd {repo_root_dir} && \
+        library_generation/new_client/generate_root_pom.sh {output_dir}"
+    )
+
     # print("Consolidating configurations")
     # subprocess.check_call(
     #     [
