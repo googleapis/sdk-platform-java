@@ -30,7 +30,7 @@ for owlbot_file in ".repo-metadata.json" "owlbot.py" ".OwlBot.yaml"
 do
   if [[ $(find "${postprocessing_target}" -name "${owlbot_file}" | wc -l) -eq 0 ]]; then
     echo "necessary file for postprocessing '${owlbot_file}' was not found in postprocessing_target"
-    echo "please provide a postprocessing_target folder that is java owlbot compatible"
+    echo "please provide a postprocessing_target folder that is compatible with the OwlBot Java postprocessor"
     exit 1
   fi
 done

@@ -40,10 +40,6 @@ case $key in
     googleapis_gen_url="$2"
     shift
     ;;
-  -v|--versions_file)
-    versions_file="$2"
-    shift
-    ;;
   *)
     echo "Invalid option: [$1]"
     exit 1
@@ -69,16 +65,16 @@ popd # output_folder
 if [ -f "${output_folder}/generation_times" ];then
   rm "${output_folder}/generation_times"
 fi
-if [ -z "${versions_file}" ]; then
-  # google-cloud-java will be downloaded before each call of
-  # `generate_library.sh`
-  versions_file="${output_folder}/google-cloud-java/versions.txt"
-fi
 
 grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   pushd "${output_folder}"
   proto_paths_raw=$(echo "$line" | cut -d " " -f 1)
   repository_path=$(echo "$line" | cut -d " " -f 2)
+  if [ "${repository_path}" == "google-cloud-java/*" ]; then
+    versions_file="${output_folder}/google-cloud-java/versions.txt"
+  else
+    versions_file="${output_folder}/${repository_path}/versions.txt"
+  fi
   IFS=, read -ra proto_paths <<< "${proto_paths_raw}"
   echo "proto_paths=${proto_paths[@]}"
   queries=""
@@ -137,6 +133,7 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
       -- \
       ':!*pom.xml' \
       ':!*README.md' \
+      ':!*gapic_metadata.json' \
       ':!*package-info.java' \
       || source_diff_result=$?
 

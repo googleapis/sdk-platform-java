@@ -22,7 +22,7 @@ def get_generate_library_arguments(query: str):
   for raw_argument_kv in raw_arguments_kv:
     key = _get_raw_argument_component(raw_argument_kv, 0)
     value = _get_raw_argument_component(raw_argument_kv, 1)
-    result += f'--{key} {value} '
+    result += f'--{key} "{value}" '
   return result[:-1]
 
 """
@@ -47,8 +47,6 @@ def add_argument(arguments: str, arg_key: str, arg_val: str):
 
 def _get_raw_argument_component(raw_argument: str, index: int):
   result = raw_argument.split('=')[index]
-  if ' ' in result:
-    raise ValueError(f'argument key or value contains a space: {result}')
   return result
 
 def main(argv: Sequence[str]) -> None:

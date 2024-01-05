@@ -82,7 +82,8 @@ for query in $generation_queries; do
 
   # generate GAPIC client library
   echo "Generating library from ${proto_path}, to ${destination_path}..."
-  echo "${arguments}" | xargs -d' ' "${library_generation_dir}/generate_library.sh"
+  echo "${arguments}" | xargs "${library_generation_dir}/generate_library.sh"
+  #echo "${arguments}" | xargs -d' ' "${library_generation_dir}/generate_library.sh"
   # bash -c "${library_generation_dir}/generate_library.sh ${arguments}"
   # eval "${library_generation_dir}/generate_library.sh" ${arguments}
 

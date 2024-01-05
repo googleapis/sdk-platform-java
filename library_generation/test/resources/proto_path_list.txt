@@ -2,23 +2,16 @@
 # Format:
 # proto_path repository_path skip_postprocessing_test
 google/bigtable/admin/v2,google/bigtable/v2 java-bigtable
-# google/cloud/apigeeconnect/v1 java-apigee-connect
-# google/cloud/asset/v1p5beta1 java-asset
-# google/cloud/asset/v1p2beta1 java-asset
-# google/cloud/asset/v1p1beta1 java-asset
-# google/cloud/asset/v1p7beta1 java-asset
-# google/cloud/asset/v1 java-asset
-# # google/cloud/dialogflow/v2beta1 java-dialogflow
-# # google/cloud/dialogflow/v2 java-dialogflow
-# # google/cloud/compute/v1 java-compute
-# google/cloud/kms/v1 java-kms
-# google/cloud/redis/v1 java-redis
-# google/cloud/redis/v1beta1 java-redis
-# # google/example/library/v1 google-cloud-example-library-v1-java null
-# google/devtools/containeranalysis/v1 java-containeranalysis
-# google/iam/v1 java-iam
-# google/iam/v2 java-iam
-# google/iam/credentials/v1 java-iamcredentials
-# google/logging/v2 java-logging
-# google/pubsub/v1 java-pubsub
-# google/storage/v2 java-storage
+google/cloud/apigeeconnect/v1 google-cloud-java/java-apigee-connect
+google/cloud/asset/v1p5beta1,google/cloud/asset/v1p2beta1,google/cloud/asset/v1p1beta1,google/cloud/asset/v1p7beta1,google/cloud/asset/v1 google-cloud-java/java-asset
+google/cloud/dialogflow/v2beta1,google/cloud/dialogflow/v2 google-cloud-java/java-dialogflow
+google/cloud/compute/v1 google-cloud-java/java-compute
+google/cloud/kms/v1 google-cloud-java/java-kms
+google/cloud/redis/v1,google/cloud/redis/v1beta1 google-cloud-java/java-redis
+google/devtools/containeranalysis/v1 google-cloud-java/java-containeranalysis
+google/iam/v1,google/iam/v2 google-cloud-java/java-iam
+google/iam/credentials/v1 google-cloud-java/java-iamcredentials
+google/logging/v2 java-logging
+google/pubsub/v1 java-pubsub
+google/storage/v2 java-storage
+# # google/example/library/v1 google-cloud-example-library-v1-java
