@@ -40,7 +40,7 @@ jobs:
         eval "$(pyenv init --path)"
         eval "$(pyenv init -)"
         set +ex
-    - name: install docker (ubuntu)
+    - name: install utils (macos)
       if: matrix.os == 'macos-12'
       shell: bash
       run: |
@@ -75,6 +75,12 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v3
+    - name: install utils (macos)
+      if: matrix.os == 'macos-12'
+      shell: bash
+      run: |
+        brew update --preinstall
+        brew install coreutils
     - name: Run unit tests
       run: |
         set -x
