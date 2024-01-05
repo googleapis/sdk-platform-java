@@ -86,7 +86,9 @@ for query in $generation_queries; do
   echo "${arguments}" | xargs "${library_generation_dir}/generate_library.sh"
   echo "Generate library finished."
 
-  build_owlbot_cli_source_folder "${output_folder}/${repository_path}" "${owlbot_cli_source_folder}" "${output_folder}/${destination_path}"
+  if [[ "${enable_postprocessing}" == "true" ]]; then
+    build_owlbot_cli_source_folder "${output_folder}/${repository_path}" "${owlbot_cli_source_folder}" "${output_folder}/${destination_path}"
+  fi
 
   popd # output_folder
 done

@@ -408,7 +408,6 @@ build_owlbot_cli_source_folder() {
   proto_path=$(get_proto_path_from_preprocessed_sources "${preprocessed_sources_path}")
   owlbot_staging_folder="${postprocessing_target}/owl-bot-staging"
   mkdir -p "${owlbot_staging_folder}"
-  echo 'Running owl-bot-copy'
 
   # By default (thanks to generation templates), .OwlBot.yaml `deep-copy` section
   # references a wildcard pattern matching a folder

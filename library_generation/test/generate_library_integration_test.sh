@@ -77,9 +77,9 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   fi
   IFS=, read -ra proto_paths <<< "${proto_paths_raw}"
   echo "proto_paths=${proto_paths[@]}"
+  sparse_clone "${googleapis_gen_url}" "$(printf "%s " "${proto_paths[@]}")"
   queries=""
   for proto_path in ${proto_paths[@]}; do
-    sparse_clone "${googleapis_gen_url}" "${proto_path}"
     queries="${queries}proto_path=${proto_path}"
     queries="${queries},gapic_generator_version=${gapic_generator_version}"
     queries="${queries},protobuf_version=${protobuf_version}"
@@ -151,19 +151,22 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
       exit "${pom_diff_result}"
     fi
   elif [ "${enable_postprocessing}" == "false" ]; then
-    # include gapic_metadata.json and package-info.java after
-    # resolving https://github.com/googleapis/sdk-platform-java/issues/1986
-    source_diff_result=0
-    diff --strip-trailing-cr -r "googleapis-gen/${proto_path}/${destination_path}" "${output_folder}/${destination_path}" \
-      -x "*gradle*" \
-      -x "gapic_metadata.json" \
-      -x "package-info.java" || source_diff_result=$?
-    if [ ${source_diff_result} == 0 ] ; then
-      echo "SUCCESS: Comparison finished, no difference is found."
-    else
-      echo "FAILURE: Differences found in proto path: ${proto_path}."
-      exit "${source_diff_result}"
-    fi
+    for proto_path in ${proto_paths[@]}; do
+      destination_path=$(compute_destination_path "${proto_path}" "${output_folder}")
+      # include gapic_metadata.json and package-info.java after
+      # resolving https://github.com/googleapis/sdk-platform-java/issues/1986
+      source_diff_result=0
+      diff --strip-trailing-cr -r "googleapis-gen/${proto_path}/${destination_path}" "${output_folder}/${destination_path}" \
+        -x "*gradle*" \
+        -x "gapic_metadata.json" \
+        -x "package-info.java" || source_diff_result=$?
+      if [ ${source_diff_result} == 0 ] ; then
+        echo "SUCCESS: Comparison finished, no difference is found."
+      else
+        echo "FAILURE: Differences found in proto path: ${proto_path}."
+        exit "${source_diff_result}"
+      fi
+    done
   fi
 
   popd # output_folder
