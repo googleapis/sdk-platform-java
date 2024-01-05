@@ -21,7 +21,7 @@ jobs:
     - name: Fetch all tags
       run: git fetch --tags
     - name: Create additional tags
-      bash: shell
+      shell: bash
       run: |
         ARTIFACT_IDS=('google-cloud-shared-dependencies' 'api-common' 'gax')
         for ARTIFACT_ID in "${ARTIFACT_IDS[@]}"; do
