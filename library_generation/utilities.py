@@ -43,7 +43,7 @@ this function adds another argument "--arg_key arg_value" to the end
 of the argument string
 """
 def add_argument(arguments: str, arg_key: str, arg_val: str):
-  return f'{arguments} --{arg_key} {arg_val}'
+  return f'{arguments} --{arg_key} "{arg_val}"'
 
 def _get_raw_argument_component(raw_argument: str, index: int):
   result = raw_argument.split('=')[index]
@@ -55,8 +55,14 @@ def main(argv: Sequence[str]) -> None:
 
   function_name = argv[1]
   arguments = argv[2:]
-  function = getattr(sys.modules[__name__], function_name)
-  print(function(*arguments))
+  try:
+    function = getattr(sys.modules[__name__], function_name)
+    print(function(*arguments))
+  except AttributeError:
+    print(f'function name "{function_name}" not found in utilities.py')
+    sys.exit(1)
+
+
 
 
 if __name__ == "__main__":
