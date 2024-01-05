@@ -76,10 +76,10 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
     versions_file="${output_folder}/${repository_path}/versions.txt"
   fi
   IFS=, read -ra proto_paths <<< "${proto_paths_raw}"
-  echo "proto_paths=${proto_paths[@]}"
+  echo "proto_paths=" "${proto_paths[@]}"
   sparse_clone "${googleapis_gen_url}" "$(printf "%s " "${proto_paths[@]}")"
   queries=""
-  for proto_path in ${proto_paths[@]}; do
+  for proto_path in "${proto_paths[@]}"; do
     queries="${queries}proto_path=${proto_path}"
     queries="${queries},gapic_generator_version=${gapic_generator_version}"
     queries="${queries},protobuf_version=${protobuf_version}"
@@ -151,7 +151,7 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
       exit "${pom_diff_result}"
     fi
   elif [ "${enable_postprocessing}" == "false" ]; then
-    for proto_path in ${proto_paths[@]}; do
+    for proto_path in "${proto_paths[@]}"; do
       destination_path=$(compute_destination_path "${proto_path}" "${output_folder}")
       # include gapic_metadata.json and package-info.java after
       # resolving https://github.com/googleapis/sdk-platform-java/issues/1986
