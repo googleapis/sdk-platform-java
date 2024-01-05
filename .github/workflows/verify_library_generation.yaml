@@ -41,6 +41,12 @@ jobs:
         eval "$(pyenv init -)"
         set +ex
     - name: install docker (ubuntu)
+      if: matrix.os == 'macos-12'
+      shell: bash
+      run: |
+        brew update --preinstall
+        brew install coreutils
+    - name: install docker (ubuntu)
       if: matrix.os == 'ubuntu-22.04'
       shell: bash
       run: |
