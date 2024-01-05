@@ -13,13 +13,11 @@ destination-path: google-cloud-java
 #Optional. This is a relative path to destination-path above. We will create a new versions.txt file if it is not specified
 versions_path: versions.txt
 #Required.
-apis:
-    #Required. The folder name of the module. This is the destination-name in new-client.py.
-  - name: java-asset
+products:
+    #Required. Can be used for populating the folder name java-{api_shortName}. This is also the destination-name in new-client.py.
+  - api_shortname: asset
     #Optional. The default value is the title of service yaml
     name-pretty: Cloud Asset
-    #Required.
-    api_shortname: asset
     #Required.
     library_type: GAPIC_AUTO
     #Optional. The default value is com.google.cloud
@@ -46,8 +44,7 @@ apis:
       - proto_path: google/cloud/asset/v1p2beta1
       - proto_path: google/cloud/asset/v1p5beta1
       - proto_path: google/cloud/asset/v1p7beta1
-  - name: java-speech
-    api_shortname: speech
+  - api_shortname: speech
     library_type: GAPIC_AUTO
     services:
       - proto_path: google/cloud/asset/v1
