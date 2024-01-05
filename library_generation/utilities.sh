@@ -291,19 +291,19 @@ build_owlbot_cli_source_folder() {
   # folder that will be picked up by copy-code
   mkdir -p "${target_folder}/${proto_path}/generated-java"
   copy_directory_if_exists "${preprocessed_sources_path}" "proto" \
-    "${pre_processed_libs_folder}/${proto_path}/generated-java/proto-google-cloud-library"
+    "${target_folder}/${proto_path}/generated-java/proto-google-cloud-library"
   copy_directory_if_exists "${preprocessed_sources_path}" "grpc" \
-    "${pre_processed_libs_folder}/${proto_path}/generated-java/grpc-google-cloud-library"
+    "${target_folder}/${proto_path}/generated-java/grpc-google-cloud-library"
   copy_directory_if_exists "${preprocessed_sources_path}" "gapic" \
-    "${pre_processed_libs_folder}/${proto_path}/generated-java/gapic-google-cloud-library"
+    "${target_folder}/${proto_path}/generated-java/gapic-google-cloud-library"
   copy_directory_if_exists "${preprocessed_sources_path}" "samples" \
-    "${pre_processed_libs_folder}/${proto_path}/generated-java/samples"
-  pushd "${pre_processed_libs_folder}"
+    "${target_folder}/${proto_path}/generated-java/samples"
+  pushd "${target_folder}"
   # create an empty commit so owl-bot-copy can process this as a repo
   # (it cannot process non-git-repositories)
   git init
   git commit --allow-empty -m 'empty commit'
-  popd # pre_processed_libs_folder
+  popd # target_folder
 }
 
 # Convenience function to clone only the necessary folders from a git repository
