@@ -286,6 +286,62 @@ def generate(
         cwd=repo_root_dir
     )
 
+    # Remove irrelevant files from templates
+    subprocess.check_call(
+        ["bash",
+         "library_generation/new_client/update_owlbot_postprocessor_config.sh"],
+        cwd=repo_root_dir
+    )
+    subprocess.check_call(
+        ["bash",
+         "library_generation/new_client/delete_non_generated_samples.sh"],
+        cwd=repo_root_dir
+    )
+
+    # print("Regenerating the BOM")
+    # subprocess.check_call(
+    #     [
+    #         "bash", "generation/generate_gapic_bom.sh",
+    #     ],
+    #     cwd=repo_root_dir,
+    # )
+    #
+    # print("Regenerating root pom.xml")
+    #
+    # # This script takes care of updating the root pom.xml
+    # os.system(f"cd {monorepo_root} && generation/generate_root_pom.sh")
+    #
+    # print("Consolidating configurations")
+    # subprocess.check_call(
+    #     [
+    #         "bash", "generation/consolidate_config.sh"
+    #     ],
+    #     cwd=repo_root_dir,
+    # )
+    # print("Setting parent poms")
+    # subprocess.check_call(
+    #     [
+    #         "bash", "generation/set_parent_pom.sh"
+    #     ],
+    #     cwd=repo_root_dir,
+    # )
+    #
+    # print("Applying the versions")
+    # subprocess.check_call(
+    #     [
+    #         "bash", "generation/apply_current_versions.sh"
+    #     ],
+    #     cwd=repo_root_dir,
+    # )
+    #
+    # print("Adding annotations in readme")
+    # subprocess.check_call(
+    #     [
+    #         "bash", "generation/readme_update.sh"
+    #     ],
+    #     cwd=repo_root_dir,
+    # )
+
     print(f"Prepared new library in {workdir}")
     print(f"Please create a pull request:\n"
           f"  $ git checkout -b new_module_java-{api_shortname}\n"
