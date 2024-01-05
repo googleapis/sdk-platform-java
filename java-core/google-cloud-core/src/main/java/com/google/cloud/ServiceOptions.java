@@ -82,7 +82,6 @@ public abstract class ServiceOptions<
     implements Serializable {
 
   public static final String CREDENTIAL_ENV_NAME = "GOOGLE_APPLICATION_CREDENTIALS";
-
   private static final String DEFAULT_HOST = "https://www.googleapis.com";
   private static final String LEGACY_PROJECT_ENV_NAME = "GCLOUD_PROJECT";
   private static final String PROJECT_ENV_NAME = "GOOGLE_CLOUD_PROJECT";
@@ -96,6 +95,7 @@ public abstract class ServiceOptions<
   protected final String clientLibToken;
 
   private final String projectId;
+  private final String universeDomain;
   private final String host;
   private final RetrySettings retrySettings;
   private final String serviceRpcFactoryClassName;
@@ -128,6 +128,7 @@ public abstract class ServiceOptions<
     private final ImmutableSet<String> allowedClientLibTokens =
         ImmutableSet.of(ServiceOptions.getGoogApiClientLibName());
     private String projectId;
+    private String universeDomain;
     private String host;
     protected Credentials credentials;
     private RetrySettings retrySettings;
@@ -147,6 +148,7 @@ public abstract class ServiceOptions<
     @InternalApi("This class should only be extended within google-cloud-java")
     protected Builder(ServiceOptions<ServiceT, OptionsT> options) {
       projectId = options.projectId;
+      universeDomain = options.universeDomain;
       host = options.host;
       credentials = options.credentials;
       retrySettings = options.retrySettings;
@@ -202,6 +204,22 @@ public abstract class ServiceOptions<
      */
     public B setHost(String host) {
       this.host = host;
+      return self();
+    }
+
+    /**
+     * Universe Domain is the domain for Google Cloud Services. A Google Cloud endpoint follows the
+     * format of `{ServiceName}.{UniverseDomain}`. For example, speech.googleapis.com would have a
+     * Universe Domain value of `googleapis.com` and cloudasset.test.com would have a Universe
+     * Domain of `test.com`.
+     *
+     * <p>If this value is not set, the resolved UniverseDomain will default to `googleapis.com`.
+     *
+     * @throws NullPointerException if {@code universeDomain} is {@code null}. The resolved
+     *     universeDomain will be `googleapis.com` if this value is not set.
+     */
+    public B setUniverseDomain(String universeDomain) {
+      this.universeDomain = checkNotNull(universeDomain);
       return self();
     }
 
@@ -317,6 +335,7 @@ public abstract class ServiceOptions<
           "A project ID is required for this service but could not be determined from the builder "
               + "or the environment.  Please set a project ID using the builder.");
     }
+    universeDomain = builder.universeDomain;
     host = firstNonNull(builder.host, getDefaultHost());
     credentials = builder.credentials != null ? builder.credentials : defaultCredentials();
     retrySettings = firstNonNull(builder.retrySettings, getDefaultRetrySettings());
@@ -594,6 +613,19 @@ public abstract class ServiceOptions<
     return projectId;
   }
 
+  /**
+   * Universe Domain is the domain for Google Cloud Services. A Google Cloud endpoint follows the
+   * format of `{ServiceName}.{UniverseDomain}`. For example, speech.googleapis.com would have a
+   * Universe Domain value of `googleapis.com` and cloudasset.test.com would have a Universe Domain
+   * of `test.com`.
+   *
+   * @return The universe domain value set in the Builder's setter. This is not the resolved
+   *     Universe Domain
+   */
+  public String getUniverseDomain() {
+    return universeDomain;
+  }
+
   /** Returns the service host. */
   public String getHost() {
     return host;
@@ -782,5 +814,63 @@ public abstract class ServiceOptions<
   /** Returns the quotaProjectId that specifies the project used for quota and billing purposes. */
   public String getQuotaProjectId() {
     return quotaProjectId;
+  }
+
+  /**
+   * Returns the resolved host for the Service to connect to Google Cloud
+   *
+   * <p>The resolved host will be in `https://{serviceName}.{resolvedUniverseDomain}` format. The
+   * resolvedUniverseDomain will be set to `googleapis.com` if universeDomain is null. The format is
+   * similar to the DEFAULT_HOST value in java-core.
+   *
+   * @see <a
+   *     href="https://github.com/googleapis/sdk-platform-java/blob/097964f24fa1989bc74b4807a253f0be4e9dd1ea/java-core/google-cloud-core/src/main/java/com/google/cloud/ServiceOptions.java#L85">DEFAULT_HOST</a>
+   */
+  @InternalApi
+  public String getResolvedHost(String serviceName) {
+    if (universeDomain != null && universeDomain.isEmpty()) {
+      throw new IllegalArgumentException("The universe domain cannot be empty");
+    }
+    String resolvedUniverseDomain =
+        universeDomain != null ? universeDomain : Credentials.GOOGLE_DEFAULT_UNIVERSE;
+    // The host value set to DEFAULT_HOST if the user didn't configure a host. If the
+    // user set a host the library uses that value, otherwise, construct the host for the user.
+    // The DEFAULT_HOST value is not a valid host for handwritten libraries and should be
+    // overriden to include the serviceName.
+    if (!DEFAULT_HOST.equals(host)) {
+      return host;
+    }
+    return "https://" + serviceName + "." + resolvedUniverseDomain;
+  }
+
+  /**
+   * Temporarily used for BigQuery and Storage Apiary Wrapped Libraries. To be removed in the future
+   * when Apiary clients can resolve their endpoints. Returns the host to be used as the rootUrl.
+   *
+   * <p>The resolved host will be in `https://{serviceName}.{resolvedUniverseDomain}/` format. The
+   * resolvedUniverseDomain will be set to `googleapis.com` if universeDomain is null.
+   *
+   * @see <a
+   *     href="https://github.com/googleapis/google-api-java-client/blob/76765d5f9689be9d266a7d62fa6ffb4cabf701f5/google-api-client/src/main/java/com/google/api/client/googleapis/services/AbstractGoogleClient.java#L49">rootUrl</a>
+   */
+  @InternalApi
+  public String getResolvedApiaryHost(String serviceName) {
+    String resolvedUniverseDomain =
+        universeDomain != null ? universeDomain : Credentials.GOOGLE_DEFAULT_UNIVERSE;
+    return "https://" + serviceName + "." + resolvedUniverseDomain + "/";
+  }
+
+  /**
+   * Validates that Credentials' Universe Domain matches the resolved Universe Domain. Currently,
+   * this is only intended for BigQuery and Storage Apiary Wrapped Libraries.
+   *
+   * <p>This validation call should be made prior to any RPC invocation. This call is used to gate
+   * the RPC invocation if there is no valid universe domain.
+   */
+  @InternalApi
+  public boolean hasValidUniverseDomain() throws IOException {
+    String resolvedUniverseDomain =
+        universeDomain != null ? universeDomain : Credentials.GOOGLE_DEFAULT_UNIVERSE;
+    return resolvedUniverseDomain.equals(getCredentials().getUniverseDomain());
   }
 }

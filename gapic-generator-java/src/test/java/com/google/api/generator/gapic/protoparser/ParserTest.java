@@ -20,6 +20,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
+import com.google.api.FieldInfo.Format;
+import com.google.api.MethodSettings;
+import com.google.api.Publishing;
+import com.google.api.Service;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -39,6 +43,8 @@ import com.google.protobuf.Descriptors.ServiceDescriptor;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import com.google.showcase.v1beta1.TestingOuterClass;
 import com.google.testgapic.v1beta1.LockerProto;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -55,10 +61,17 @@ public class ParserTest {
   private ServiceDescriptor echoService;
   private FileDescriptor echoFileDescriptor;
 
+  private static final String YAML_DIRECTORY = "src/test/resources/";
+
+  private Optional<com.google.api.Service> serviceYamlProtoOpt;
+
   @Before
   public void setUp() {
     echoFileDescriptor = EchoOuterClass.getDescriptor();
     echoService = echoFileDescriptor.getServices().get(0);
+    String yamlFilename = "echo_v1beta1.yaml";
+    Path yamlPath = Paths.get(YAML_DIRECTORY, yamlFilename);
+    serviceYamlProtoOpt = ServiceYamlParser.parse(yamlPath.toString());
     assertEquals("Echo", echoService.getName());
   }
 
@@ -121,6 +134,7 @@ public class ParserTest {
             messageTypes,
             resourceNames,
             Optional.empty(),
+            serviceYamlProtoOpt,
             outputResourceNames,
             Transport.GRPC);
 
@@ -130,6 +144,8 @@ public class ParserTest {
     Method echoMethod = methods.get(0);
     assertEquals(echoMethod.name(), "Echo");
     assertEquals(echoMethod.stream(), Method.Stream.NONE);
+    assertEquals(true, echoMethod.hasAutoPopulatedFields());
+    assertEquals(Arrays.asList("request_id"), echoMethod.autoPopulatedFields());
 
     // Detailed method signature parsing tests are in a separate unit test.
     List<List<MethodArgument>> methodSignatures = echoMethod.methodSignatures();
@@ -157,14 +173,17 @@ public class ParserTest {
         TypeNode.withReference(createStatusReference()),
         ImmutableList.of(),
         expandMethod.methodSignatures().get(0).get(1));
+    assertEquals(false, expandMethod.hasAutoPopulatedFields());
 
     Method collectMethod = methods.get(2);
     assertEquals("Collect", collectMethod.name());
     assertEquals(Method.Stream.CLIENT, collectMethod.stream());
+    assertEquals(false, collectMethod.hasAutoPopulatedFields());
 
     Method chatMethod = methods.get(3);
     assertEquals("Chat", chatMethod.name());
     assertEquals(Method.Stream.BIDI, chatMethod.stream());
+    assertEquals(false, chatMethod.hasAutoPopulatedFields());
   }
 
   @Test
@@ -178,6 +197,7 @@ public class ParserTest {
             ECHO_PACKAGE,
             messageTypes,
             resourceNames,
+            Optional.empty(),
             Optional.empty(),
             outputResourceNames,
             Transport.GRPC);
@@ -416,6 +436,111 @@ public class ParserTest {
                     Arrays.asList(TypeNode.INT_OBJECT.reference(), TypeNode.STRING.reference()))
                 .build()),
         field.type());
+  }
+
+  @Test
+  public void parseFields_autoPopulated() {
+    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
+    Message message = messageTypes.get("com.google.showcase.v1beta1.EchoRequest");
+    Field field = message.fieldMap().get("request_id");
+    assertEquals(false, field.isRequired());
+    assertEquals(Format.UUID4, field.fieldInfoFormat());
+    field = message.fieldMap().get("name");
+    assertEquals(true, field.isRequired());
+    assertEquals(null, field.fieldInfoFormat());
+    field = message.fieldMap().get("severity");
+    assertEquals(false, field.isRequired());
+    assertEquals(null, field.fieldInfoFormat());
+
+    message = messageTypes.get("com.google.showcase.v1beta1.ExpandRequest");
+    field = message.fieldMap().get("request_id");
+    assertEquals(false, field.isRequired());
+    assertEquals(Format.IPV6, field.fieldInfoFormat());
+  }
+
+  @Test
+  public void parseAutoPopulatedMethodsAndFields_exists() {
+    Map<String, List<String>> autoPopulatedMethodsWithFields =
+        Parser.parseAutoPopulatedMethodsAndFields(serviceYamlProtoOpt);
+    assertEquals(
+        true, autoPopulatedMethodsWithFields.containsKey("google.showcase.v1beta1.Echo.Echo"));
+    assertEquals(
+        Arrays.asList("request_id"),
+        autoPopulatedMethodsWithFields.get("google.showcase.v1beta1.Echo.Echo"));
+  }
+
+  @Test
+  public void parseAutoPopulatedMethodsAndFields_doesNotExist() {
+    String yamlFilename = "logging.yaml";
+    Path yamlPath = Paths.get(YAML_DIRECTORY, yamlFilename);
+    Optional<Service> serviceYamlProtoOpt_Null = ServiceYamlParser.parse(yamlPath.toString());
+
+    Map<String, List<String>> autoPopulatedMethodsWithFields =
+        Parser.parseAutoPopulatedMethodsAndFields(serviceYamlProtoOpt_Null);
+    assertEquals(true, autoPopulatedMethodsWithFields.isEmpty());
+  }
+
+  @Test
+  public void parseAutoPopulatedMethodsAndFields_returnsEmptyMapIfServiceYamlIsNull() {
+    assertEquals(true, Parser.parseAutoPopulatedMethodsAndFields(Optional.empty()).isEmpty());
+  }
+
+  @Test
+  public void parseAutoPopulatedMethodsAndFields_returnsMapOfMethodsAndAutoPopulatedFields() {
+    MethodSettings testMethodSettings =
+        MethodSettings.newBuilder()
+            .setSelector("test_method")
+            .addAutoPopulatedFields("test_field")
+            .addAutoPopulatedFields("test_field_2")
+            .build();
+    MethodSettings testMethodSettings2 =
+        MethodSettings.newBuilder()
+            .setSelector("test_method_2")
+            .addAutoPopulatedFields("test_field_3")
+            .build();
+    MethodSettings testMethodSettings3 =
+        MethodSettings.newBuilder().setSelector("test_method_3").build();
+    Publishing testPublishing =
+        Publishing.newBuilder()
+            .addMethodSettings(testMethodSettings)
+            .addMethodSettings(testMethodSettings2)
+            .addMethodSettings(testMethodSettings3)
+            .build();
+    Optional<Service> testService =
+        Optional.of(Service.newBuilder().setPublishing(testPublishing).build());
+    assertEquals(
+        Arrays.asList("test_field", "test_field_2"),
+        Parser.parseAutoPopulatedMethodsAndFields(testService).get("test_method"));
+    assertEquals(
+        Arrays.asList("test_field_3"),
+        Parser.parseAutoPopulatedMethodsAndFields(testService).get("test_method_2"));
+    assertEquals(
+        Arrays.asList(),
+        Parser.parseAutoPopulatedMethodsAndFields(testService).get("test_method_3"));
+    assertEquals(
+        false, Parser.parseAutoPopulatedMethodsAndFields(testService).containsKey("test_method_4"));
+  }
+
+  @Test
+  public void hasMethodSettings_shouldReturnFalseIfServiceYamlDoesNotExist() {
+    assertEquals(false, Parser.hasMethodSettings(Optional.empty()));
+  }
+
+  @Test
+  public void hasMethodSettings_shouldReturnFalseIfServiceYamlDoesNotHavePublishing() {
+    assertEquals(false, Parser.hasMethodSettings(Optional.of(Service.newBuilder().build())));
+  }
+
+  @Test
+  public void hasMethodSettings_shouldReturnTrueIfServiceYamlHasNonEmptyMethodSettings() {
+    MethodSettings testMethodSettings =
+        MethodSettings.newBuilder().setSelector("test_method").build();
+    Publishing testPublishing =
+        Publishing.newBuilder().addMethodSettings(testMethodSettings).build();
+    assertEquals(
+        true,
+        Parser.hasMethodSettings(
+            Optional.of(Service.newBuilder().setPublishing(testPublishing).build())));
   }
 
   @Test

@@ -3,4 +3,4 @@ bumpMinorPreMajor: true
 handleGHRelease: true
 primaryBranch: main
 manifest: true
-extraFiles: ["WORKSPACE"]
+extraFiles: ["WORKSPACE", ".cloudbuild/cloudbuild.yaml", ".cloudbuild/cloudbuild-test-a.yaml", ".cloudbuild/cloudbuild-test-b.yaml" ]

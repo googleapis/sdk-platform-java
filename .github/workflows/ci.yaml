@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        java: [ 11, 17 ]
+        java: [ 11, 17]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
@@ -48,7 +48,29 @@ jobs:
           pushd /tmp/java-compute/google-cloud-compute-small-v1-java
           ./gradlew clean build publishToMavenLocal sourcesJar allJars
           popd
-
+  build-java-21:
+    name: "build(21) except self-service clients"
+    # Support for Java 21 is available for all use cases except self-service clients.
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          java-version: 21
+          distribution: temurin
+          cache: maven
+      - run: java -version
+      - name: Unit Tests
+        run: |
+          mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
+              -Dfmt.skip -DenableTestCoverage
+      - run: bazelisk version
+      - name: Install Maven modules
+        run: |
+          mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+      - name: Integration Tests
+        run: |
+          bazelisk --batch test //test/integration/...
   build-java8-except-gapic-generator-java:
     name: "build(8) except for gapic-generator-java"
     runs-on: ubuntu-22.04
@@ -273,7 +295,29 @@ jobs:
       run: |
         mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
     - name: Validate gapic-generator-java-bom
-      uses: googleapis/java-cloud-bom/tests/validate-bom@ab98a491b510503e8ff461c42ecd3cc4e67a44cb
+      uses: googleapis/java-cloud-bom/tests/validate-bom@3fe0c17c383e4ff9df01254210760084afc91263
       with:
         bom-path: gapic-generator-java-bom/pom.xml
 
+  unmanaged_dependency_check:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+    - uses: actions/setup-java@v3
+      with:
+        java-version: 11
+        distribution: temurin
+    - run: mvn -version
+    - name: Unit Tests
+      run: |
+        mvn test --batch-mode --no-transfer-progress
+      working-directory: java-shared-dependencies/unmanaged-dependency-check
+    - name: Install Maven modules
+      run: |
+        mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+    - name: Unmanaged dependency check
+      uses: ./java-shared-dependencies/unmanaged-dependency-check
+      with:
+        bom-path: gapic-generator-java-bom/pom.xml
