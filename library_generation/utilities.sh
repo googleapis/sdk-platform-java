@@ -323,6 +323,8 @@ sparse_clone() {
   popd
 }
 
+# calls a function in utilities.py. THe first argument is the function name, the
+# rest of the arguments are the positional arguments to such function
 py_util() {
   python3 "${utilities_script_dir}/utilities.py" "$@"
 }
