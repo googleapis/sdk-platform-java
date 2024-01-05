@@ -5,8 +5,8 @@
 # postprocess_library.sh at the end, once all libraries are ready
 #
 # Arguments
-# --generation_queries: a single string of key-value groups separated by three
-# commas (,,,). They key-value groups are in the form of `key=value` and will
+# --generation_queries: a single string of key-value groups separated by a
+# pipe |. They key-value groups are in the form of `key=value` and will
 # be converted to an argument to generate_library.sh (`--key value`).
 #   example: "key1=value1 key2=value2,,,key1=value3 key2=value4"
 #   In this case, generate_library.sh will be called once with value1 and value2
@@ -17,8 +17,7 @@
 #
 # Prerequisites
 # - Needs an `output` folder at the location of the calling shell
-# - the `output` folder needs to have the following dirs/files. If any of them
-#   is not found, then googleapis will be downloaded and "unpacked"
+# - the `output` folder needs to have the following dirs/files. 
 #   - A "google" folder found in the googleapis repository
 #   - A "grafeas" folder found in the googleapis repository
 #   - A "WORKSPACE" file belonging to googleapis
@@ -56,6 +55,7 @@ shift
 shift # past argument or value
 done
 
+
 pushd "${output_folder}"
 if [[ "${repository_path}" == google-cloud-java/* ]]; then
   echo 'this is a monorepo library'
@@ -70,6 +70,7 @@ fi
 
 owlbot_cli_source_folder=$(mktemp -d)
 popd # output_folder
+
 IFS="|"
 for query in $generation_queries; do
   pushd "${output_folder}"
