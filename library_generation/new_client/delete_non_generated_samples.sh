@@ -13,4 +13,4 @@ while IFS= read -r -d '' samples_dir; do
     rm -rf samples
   fi
   popd
-done < <(find . -maxdepth 2 -mindepth 2 -type d -name 'samples')
+done < <(find . -maxdepth 2 -mindepth 3 -type d -name 'samples')
