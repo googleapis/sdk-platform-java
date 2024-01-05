@@ -62,6 +62,21 @@ public class TestClientInitializer {
     return createHttpJsonEchoClient(ImmutableList.of());
   }
 
+  public static EchoClient createHttpJsonEchoClientOtel()
+      throws Exception {
+    EchoSettings httpJsonEchoSettingsOtel =
+        EchoSettings.newHttpJsonBuilderOtel()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultHttpJsonTransportProviderBuilder()
+                    .setHttpTransport(
+                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
+                    .setEndpoint("http://localhost:7469")
+                    .build())
+            .build();
+    return EchoClient.create(httpJsonEchoSettingsOtel);
+  }
+
   public static EchoClient createHttpJsonEchoClient(List<HttpJsonClientInterceptor> interceptorList)
       throws Exception {
     EchoSettings httpJsonEchoSettings =

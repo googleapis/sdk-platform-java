@@ -51,10 +51,14 @@ import com.google.api.gax.rpc.StubSettings;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.api.gax.tracing.OpenTelemetryMetricsFactory;
 import com.google.cloud.location.GetLocationRequest;
 import com.google.cloud.location.ListLocationsRequest;
 import com.google.cloud.location.ListLocationsResponse;
 import com.google.cloud.location.Location;
+import com.google.cloud.opentelemetry.metric.GoogleCloudMetricExporter;
+import com.google.cloud.opentelemetry.metric.MetricConfiguration;
+import com.google.cloud.opentelemetry.metric.MetricDescriptorStrategy;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -78,6 +82,13 @@ import com.google.showcase.v1beta1.PagedExpandResponseList;
 import com.google.showcase.v1beta1.WaitMetadata;
 import com.google.showcase.v1beta1.WaitRequest;
 import com.google.showcase.v1beta1.WaitResponse;
+import io.opentelemetry.api.OpenTelemetry;
+import io.opentelemetry.exporter.prometheus.PrometheusHttpServer;
+import io.opentelemetry.sdk.OpenTelemetrySdk;
+import io.opentelemetry.sdk.metrics.SdkMeterProvider;
+import io.opentelemetry.sdk.metrics.export.MetricExporter;
+import io.opentelemetry.sdk.metrics.export.PeriodicMetricReader;
+import io.opentelemetry.sdk.resources.Resource;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
@@ -151,6 +162,36 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
   private final UnaryCallSettings<GetIamPolicyRequest, Policy> getIamPolicySettings;
   private final UnaryCallSettings<TestIamPermissionsRequest, TestIamPermissionsResponse>
       testIamPermissionsSettings;
+
+  private static OpenTelemetryMetricsFactory createOpenTelemetryTracerFactory() {
+    return new OpenTelemetryMetricsFactory(openTelemetry(), "showcase-client", "1.1.0");
+  }
+
+  public static OpenTelemetry openTelemetry() {
+    Resource resource = Resource.builder().build();
+
+    MetricExporter metricExporter = GoogleCloudMetricExporter.createWithConfiguration(
+        MetricConfiguration.builder()
+            // Configure the cloud project id.  Note: this is autodiscovered by default.
+            .setProjectId("spanner-demo-326919")
+            .setPrefix("custom.googleapis.com")
+            // Configure a strategy for how/when to configure metric descriptors.
+            .setDescriptorStrategy(MetricDescriptorStrategy.SEND_ONCE)
+            .build());
+    PrometheusHttpServer prometheusReader = PrometheusHttpServer.builder().setPort(9090).build();
+    PeriodicMetricReader metricReader = PeriodicMetricReader.builder(metricExporter).setInterval(
+        java.time.Duration.ofSeconds(10)).build();
+
+    SdkMeterProvider sdkMeterProvider = SdkMeterProvider.builder()
+        .registerMetricReader(prometheusReader)
+        .registerMetricReader(metricReader)
+        .setResource(resource)
+        .build();
+
+    return OpenTelemetrySdk.builder()
+        .setMeterProvider(sdkMeterProvider)
+        .build();
+  }
 
   private static final PagedListDescriptor<PagedExpandRequest, PagedExpandResponse, EchoResponse>
       PAGED_EXPAND_PAGE_STR_DESC =
@@ -497,6 +538,10 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
     return Builder.createHttpJsonDefault();
   }
 
+  public static Builder newHttpJsonBuilderOtel() {
+    return Builder.createHttpJsonDefaultOtel();
+  }
+
   /** Returns a new builder for this class. */
   public static Builder newBuilder(ClientContext clientContext) {
     return new Builder(clientContext);
@@ -698,6 +743,21 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
 
       return initDefaults(builder);
     }
+
+    private static Builder createHttpJsonDefaultOtel() {
+      Builder builder = new Builder(((ClientContext) null));
+
+      builder.setTransportChannelProvider(defaultHttpJsonTransportProviderBuilder().build());
+      builder.setCredentialsProvider(defaultCredentialsProviderBuilder().build());
+      builder.setInternalHeaderProvider(defaultHttpJsonApiClientHeaderProviderBuilder().build());
+      builder.setEndpoint(getDefaultEndpoint());
+      builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
+      builder.setSwitchToMtlsEndpointAllowed(true);
+      builder.setTracerFactory(createOpenTelemetryTracerFactory());
+      return initDefaults(builder);
+    }
+
+
 
     private static Builder initDefaults(Builder builder) {
       builder
