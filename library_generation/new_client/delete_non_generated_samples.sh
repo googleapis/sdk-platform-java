@@ -2,6 +2,9 @@
 
 set -e
 
+GENERATION_DIR=$1;
+
+pushd "${GENERATION_DIR}"
 while IFS= read -r -d '' samples_dir; do
   pushd "${samples_dir}/.."
   if [[ -d "samples/snippets/generated" ]]; then
@@ -14,3 +17,4 @@ while IFS= read -r -d '' samples_dir; do
   fi
   popd
 done < <(find . -maxdepth 2 -mindepth 3 -type d -name 'samples')
+popd # GENERATION_DIR

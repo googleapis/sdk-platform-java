@@ -288,13 +288,18 @@ def generate(
 
     # Remove irrelevant files from templates
     subprocess.check_call(
-        ["bash",
-         "library_generation/new_client/update_owlbot_postprocessor_config.sh"],
+        [
+            "library_generation/new_client/\
+            update_owlbot_postprocessor_config.sh",
+            f"{output_dir}"
+         ],
         cwd=repo_root_dir
     )
     subprocess.check_call(
-        ["bash",
-         "library_generation/new_client/delete_non_generated_samples.sh"],
+        [
+            "library_generation/new_client/delete_non_generated_samples.sh",
+            f"{output_dir}"
+        ],
         cwd=repo_root_dir
     )
 
