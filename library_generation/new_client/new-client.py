@@ -298,16 +298,17 @@ def generate(
         cwd=repo_root_dir
     )
 
-    print("Regenerating the BOM")
-    subprocess.check_call(
-        [
-            "bash", "library_generation/new_client/generate_gapic_bom.sh",
-        ],
-        cwd=repo_root_dir,
-    )
+    if Path(f"{repo_root_dir}/gapic-libraries-bom/pom.xml").is_file():
+        print("Regenerating the BOM")
+        subprocess.check_call(
+            [
+                "library_generation/new_client/generate_gapic_bom.sh",
+                f"{output_dir}"
+            ],
+            cwd=repo_root_dir,
+        )
 
     print("Regenerating root pom.xml")
-
     # This script takes care of updating the root pom.xml
     os.system(
         f"cd {repo_root_dir} && \

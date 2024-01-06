@@ -1,10 +1,11 @@
 #!/bin/bash
 
-set -e
+set -xe
 
 # Generate BOM of the artifacts in this repository
-
+GENERATION_DIR=$1
 bom_lines=""
+pushd "${GENERATION_DIR}"
 # For modules that produce BOMs
 for bom_directory in $(find . -maxdepth 3 -name 'google-*-bom' | sort --dictionary-order); do
   if [[ "${bom_directory}" = *gapic-libraries-bom ]] ||  [[ "${bom_directory}" = *google-cloud-core* ]]; then
@@ -53,10 +54,10 @@ for module in $(find . -mindepth 2 -maxdepth 2 -name pom.xml |sort --dictionary-
       ${version_line}\n\
       </dependency>\n"
 done
+popd # GENERATION_DIR
 
 mkdir -p gapic-libraries-bom
 
-GENERATION_DIR=$(dirname -- "$0");
 perl -0pe 's/<dependencies>.*<\/dependencies>/<dependencies>\nBOM_ARTIFACT_LIST\n    <\/dependencies>/s' "${GENERATION_DIR}/../gapic-libraries-bom/pom.xml" > "${GENERATION_DIR}/bom.pom.xml"
 awk -v "dependencyManagements=$bom_lines" '{gsub(/BOM_ARTIFACT_LIST/,dependencyManagements)}1' \
     "${GENERATION_DIR}/bom.pom.xml" > gapic-libraries-bom/pom.xml
