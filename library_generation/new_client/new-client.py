@@ -286,18 +286,18 @@ def generate(
         cwd=repo_root_dir
     )
 
+    script_dir = "library_generation/new_client"
     # Remove irrelevant files from templates
     subprocess.check_call(
         [
-            "library_generation/new_client/\
-            update_owlbot_postprocessor_config.sh",
+            f"{script_dir}/update_owlbot_postprocessor_config.sh",
             f"{output_dir}"
          ],
         cwd=repo_root_dir
     )
     subprocess.check_call(
         [
-            "library_generation/new_client/delete_non_generated_samples.sh",
+            f"{script_dir}/delete_non_generated_samples.sh",
             f"{output_dir}"
         ],
         cwd=repo_root_dir
@@ -307,7 +307,7 @@ def generate(
         print("Regenerating the BOM")
         subprocess.check_call(
             [
-                "library_generation/new_client/generate_gapic_bom.sh",
+                f"{script_dir}/generate_gapic_bom.sh",
                 f"{output_dir}"
             ],
             cwd=repo_root_dir,
@@ -317,13 +317,13 @@ def generate(
     # This script takes care of updating the root pom.xml
     os.system(
         f"cd {repo_root_dir} && \
-        library_generation/new_client/generate_root_pom.sh {output_dir}"
+        {script_dir}/generate_root_pom.sh {output_dir}"
     )
 
     print("Consolidating configurations")
     subprocess.check_call(
         [
-            "library_generation/new_client/consolidate_config.sh",
+            f"{script_dir}/consolidate_config.sh",
             f"{output_dir}"
         ],
         cwd=repo_root_dir,
