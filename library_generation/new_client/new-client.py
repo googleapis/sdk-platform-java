@@ -315,13 +315,14 @@ def generate(
         library_generation/new_client/generate_root_pom.sh {output_dir}"
     )
 
-    # print("Consolidating configurations")
-    # subprocess.check_call(
-    #     [
-    #         "bash", "generation/consolidate_config.sh"
-    #     ],
-    #     cwd=repo_root_dir,
-    # )
+    print("Consolidating configurations")
+    subprocess.check_call(
+        [
+            "library_generation/new_client/consolidate_config.sh",
+            f"{output_dir}"
+        ],
+        cwd=repo_root_dir,
+    )
     # print("Setting parent poms")
     # subprocess.check_call(
     #     [
