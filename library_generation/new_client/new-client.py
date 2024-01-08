@@ -352,13 +352,14 @@ def generate(
         cwd=repo_root_dir,
     )
 
-    # print("Adding annotations in readme")
-    # subprocess.check_call(
-    #     [
-    #         "bash", "generation/readme_update.sh"
-    #     ],
-    #     cwd=repo_root_dir,
-    # )
+    print("Adding annotations in readme")
+    subprocess.check_call(
+        [
+            f"{script_dir}generation/readme_update.sh",
+            f"{output_dir}",
+        ],
+        cwd=repo_root_dir,
+    )
 
     print(f"Prepared new library in {workdir}")
     print(f"Please create a pull request:\n"
