@@ -13,7 +13,7 @@
 #     generate_library.sh --proto_path google/cloud/asset/v1 --destination_path google-cloud-asset-v1-java
 #     and once with
 #     generate_library.sh --proto_path google/cloud/asset/v1p2bet5 --destination_path google-cloud-asset-v1p2beta5-java
-# --versions_file: list of versions to be applied to the pom.xml and readmes
+# --versions_file: a file of newline-separated version strings in the form "module:released-version:current-version". The versions will be applied to the pom.xml files and readmes
 #
 # Prerequisites
 # - Needs an `output` folder at the location of the calling shell
