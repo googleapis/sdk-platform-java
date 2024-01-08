@@ -56,12 +56,7 @@ if [[ ! -f "WORKSPACE" ]] || [[ ! -d "google" ]] || [[ ! -d "grafeas" ]]; then
   download_googleapis_files_and_folders "${output_folder}"
 fi
 # parse version of gapic-generator-java, protobuf and grpc from WORKSPACE
-
-# temporarily override version until googleapis-gen gets updated with the latest
-# generator changes
-
-# gapic_generator_version=$(get_version_from_WORKSPACE "_gapic_generator_java_version" WORKSPACE "=")
-gapic_generator_version="2.29.0"
+gapic_generator_version=$(get_version_from_WORKSPACE "_gapic_generator_java_version" WORKSPACE "=")
 echo "The version of gapic-generator-java is ${gapic_generator_version}."
 protobuf_version=$(get_version_from_WORKSPACE "protobuf-" WORKSPACE "-")
 echo "The version of protobuf is ${protobuf_version}"
