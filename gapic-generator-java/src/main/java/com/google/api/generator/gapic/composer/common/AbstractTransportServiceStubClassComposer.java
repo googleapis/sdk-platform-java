@@ -1300,42 +1300,25 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     for (HttpBindings.HttpBinding httpBindingFieldBinding :
         method.httpBindings().pathParameters()) {
       MethodInvocationExpr requestBuilderExpr =
-              createRequestFieldGetterExpr(requestVarExpr, httpBindingFieldBinding.name());
+          createRequestFieldGetterExpr(requestVarExpr, httpBindingFieldBinding.name(),httpBindingFieldBinding.field().isEnum());
+      Expr valueOfExpr =
+          MethodInvocationExpr.builder()
+              .setStaticReferenceType(TypeNode.STRING)
+              .setMethodName("valueOf")
+              .setArguments(requestBuilderExpr)
+              .build();
 
-      if (httpBindingFieldBinding.isEnum()) {
-        Expr valueOfExpr =
-                MethodInvocationExpr.builder()
-                        .setStaticReferenceType(TypeNode.INT_OBJECT)
-                        .setMethodName("valueOf")
-                        .setArguments(requestBuilderExpr)
-                        .build();
-        Expr paramsAddExpr =
-                MethodInvocationExpr.builder()
-                        .setExprReferenceExpr(routingHeadersBuilderVarNonDeclExpr)
-                        .setMethodName("add")
-                        .setArguments(
-                                ValueExpr.withValue(StringObjectValue.withValue(httpBindingFieldBinding.name())),
-                                valueOfExpr)
-                        .build();
-        bodyStatements.add(ExprStatement.withExpr(paramsAddExpr));
-      } else {
-        Expr valueOfExpr =
-                MethodInvocationExpr.builder()
-                        .setStaticReferenceType(TypeNode.STRING)
-                        .setMethodName("valueOf")
-                        .setArguments(requestBuilderExpr)
-                        .build();
-        Expr paramsAddExpr =
-                MethodInvocationExpr.builder()
-                        .setExprReferenceExpr(routingHeadersBuilderVarNonDeclExpr)
-                        .setMethodName("add")
-                        .setArguments(
-                                ValueExpr.withValue(StringObjectValue.withValue(httpBindingFieldBinding.name())),
-                                valueOfExpr)
-                        .build();
-        bodyStatements.add(ExprStatement.withExpr(paramsAddExpr));
-      }
+      Expr paramsAddExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(routingHeadersBuilderVarNonDeclExpr)
+              .setMethodName("add")
+              .setArguments(
+                  ValueExpr.withValue(StringObjectValue.withValue(httpBindingFieldBinding.name())),
+                  valueOfExpr)
+              .build();
+      bodyStatements.add(ExprStatement.withExpr(paramsAddExpr));
     }
+
     returnExprBuilder
         .setExprReferenceExpr(routingHeadersBuilderVarNonDeclExpr)
         .setMethodName("build");
@@ -1378,7 +1361,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     for (int i = 0; i < routingHeaderParams.size(); i++) {
       RoutingHeaderRule.RoutingHeaderParam routingHeaderParam = routingHeaderParams.get(i);
       MethodInvocationExpr requestFieldGetterExpr =
-          createRequestFieldGetterExpr(requestVarExpr, routingHeaderParam.fieldName());
+          createRequestFieldGetterExpr(requestVarExpr, routingHeaderParam.fieldName(),false);
       Expr routingHeaderKeyExpr =
           ValueExpr.withValue(StringObjectValue.withValue(routingHeaderParam.key()));
       String pathTemplateName =
@@ -1479,7 +1462,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
   }
 
   private MethodInvocationExpr createRequestFieldGetterExpr(
-      VariableExpr requestVarExpr, String fieldName) {
+      VariableExpr requestVarExpr, String fieldName, Boolean isFieldEnum) {
     MethodInvocationExpr.Builder requestFieldGetterExprBuilder =
         MethodInvocationExpr.builder().setExprReferenceExpr(requestVarExpr);
     List<String> descendantFields = Splitter.on(".").splitToList(fieldName);
@@ -1488,7 +1471,10 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     for (int i = 0; i < descendantFields.size(); i++) {
       String currFieldName = descendantFields.get(i);
       String bindingFieldMethodName =
-          String.format("get%s", JavaStyle.toUpperCamelCase(currFieldName));
+              String.format("get%s", JavaStyle.toUpperCamelCase(currFieldName));
+      if (i==descendantFields.size()-1 && isFieldEnum) {
+        bindingFieldMethodName = bindingFieldMethodName+"Value";
+      }
       requestFieldGetterExprBuilder =
           requestFieldGetterExprBuilder.setMethodName(bindingFieldMethodName);
       if (i < descendantFields.size() - 1) {
