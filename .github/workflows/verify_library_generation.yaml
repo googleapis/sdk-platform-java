@@ -45,6 +45,7 @@ jobs:
       shell: bash
       run: |
         brew update --preinstall
+        # we need the `realpath` command to be available
         brew install coreutils
     - name: install docker (ubuntu)
       if: matrix.os == 'ubuntu-22.04'
