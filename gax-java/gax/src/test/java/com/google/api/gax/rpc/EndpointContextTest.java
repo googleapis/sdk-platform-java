@@ -31,6 +31,7 @@ package com.google.api.gax.rpc;
 
 import static org.junit.Assert.assertThrows;
 
+import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.api.gax.rpc.testing.FakeMtlsProvider;
 import com.google.auth.Credentials;
@@ -40,6 +41,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.mockito.Mockito;
 
 @RunWith(JUnit4.class)
 public class EndpointContextTest {
@@ -331,5 +333,100 @@ public class EndpointContextTest {
     Truth.assertThat(endpointContext.resolvedEndpoint()).isEqualTo(clientSettingsEndpoint);
     Truth.assertThat(endpointContext.resolvedUniverseDomain())
         .isEqualTo(Credentials.GOOGLE_DEFAULT_UNIVERSE);
+  }
+
+  @Test
+  public void hasValidUniverseDomain_gdchFlow_anyCredentials() throws IOException {
+    Credentials noCredentials = NoCredentialsProvider.create().getCredentials();
+    Credentials validCredentials = Mockito.mock(Credentials.class);
+    EndpointContext endpointContext =
+        defaultEndpointContextBuilder.setUniverseDomain(null).setUsingGDCH(true).build();
+    Truth.assertThat(endpointContext.hasValidUniverseDomain(noCredentials)).isTrue();
+    Truth.assertThat(endpointContext.hasValidUniverseDomain(validCredentials)).isTrue();
+  }
+
+  @Test
+  public void hasValidUniverseDomain_noCredentials_inGDU() throws IOException {
+    Credentials noCredentials = NoCredentialsProvider.create().getCredentials();
+    EndpointContext endpointContext = defaultEndpointContextBuilder.build();
+    Truth.assertThat(endpointContext.hasValidUniverseDomain(noCredentials)).isTrue();
+  }
+
+  @Test
+  public void hasValidUniverseDomain_noCredentials_nonGDU() throws IOException {
+    Credentials noCredentials = NoCredentialsProvider.create().getCredentials();
+    EndpointContext endpointContext =
+        defaultEndpointContextBuilder.setUniverseDomain("test.com").build();
+    Truth.assertThat(endpointContext.hasValidUniverseDomain(noCredentials)).isFalse();
+  }
+
+  @Test
+  public void hasValidUniverseDomain_credentialsInGDU_configInGDU() throws IOException {
+    Credentials credentials = Mockito.mock(Credentials.class);
+    Mockito.when(credentials.getUniverseDomain()).thenReturn(Credentials.GOOGLE_DEFAULT_UNIVERSE);
+    EndpointContext endpointContext = defaultEndpointContextBuilder.build();
+    Truth.assertThat(endpointContext.hasValidUniverseDomain(credentials)).isTrue();
+  }
+
+  // Non-GDU Universe Domain could be any domain, but this test refers uses `test.com`
+  @Test
+  public void hasValidUniverseDomain_credentialsNonGDU_configInGDU() throws IOException {
+    Credentials credentials = Mockito.mock(Credentials.class);
+    Mockito.when(credentials.getUniverseDomain()).thenReturn("test.com");
+    EndpointContext endpointContext = defaultEndpointContextBuilder.build();
+    Truth.assertThat(endpointContext.hasValidUniverseDomain(credentials)).isFalse();
+  }
+
+  // Non-GDU Universe Domain could be any domain, but this test refers uses `test.com`
+  @Test
+  public void hasValidUniverseDomain_credentialsNonGDU_configNonGDU() throws IOException {
+    Credentials credentials = Mockito.mock(Credentials.class);
+    Mockito.when(credentials.getUniverseDomain()).thenReturn("test.com");
+    EndpointContext endpointContext =
+        defaultEndpointContextBuilder.setUniverseDomain("test.com").build();
+    Truth.assertThat(endpointContext.hasValidUniverseDomain(credentials)).isTrue();
+  }
+
+  // Non-GDU Universe Domain could be any domain, but this test refers uses `test.com`
+  @Test
+  public void hasValidUniverseDomain_credentialsInGDU_configNonGDU() throws IOException {
+    Credentials credentials = Mockito.mock(Credentials.class);
+    Mockito.when(credentials.getUniverseDomain()).thenReturn(Credentials.GOOGLE_DEFAULT_UNIVERSE);
+    EndpointContext endpointContext =
+        defaultEndpointContextBuilder.setUniverseDomain("test.com").build();
+    Truth.assertThat(endpointContext.hasValidUniverseDomain(credentials)).isFalse();
+  }
+
+  @Test
+  public void merge_nullInput() throws IOException {
+    EndpointContext endpointContext = defaultEndpointContextBuilder.build();
+    Truth.assertThat(endpointContext.merge(null)).isSameInstanceAs(endpointContext);
+  }
+
+  @Test
+  public void merge_customEndpointContextInput() throws IOException {
+    EndpointContext originalEndpointContext =
+        EndpointContext.newBuilder()
+            .setServiceName("serviceName1")
+            .setUniverseDomain("universeDomain1")
+            .setClientSettingsEndpoint("clientSettingsEndpoint1")
+            .setTransportChannelProviderEndpoint("transportChannelProviderEndpoint1")
+            .setMtlsEndpoint("mtlsEndpoint1")
+            .setSwitchToMtlsEndpointAllowed(false)
+            .setUsingGDCH(false)
+            .build();
+    EndpointContext newEndpointContext =
+        EndpointContext.newBuilder()
+            .setServiceName("serviceName2")
+            .setUniverseDomain("universeDomain2")
+            .setClientSettingsEndpoint("clientSettingsEndpoint2")
+            .setTransportChannelProviderEndpoint("transportChannelProviderEndpoint2")
+            .setMtlsEndpoint("mtlsEndpoint2")
+            .setSwitchToMtlsEndpointAllowed(true)
+            // Cannot set GDC-H as true as GDC-H is incompatible with Universe Domain
+            .setUsingGDCH(false)
+            .build();
+    Truth.assertThat(originalEndpointContext.merge(newEndpointContext))
+        .isEqualTo(newEndpointContext);
   }
 }

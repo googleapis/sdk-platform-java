@@ -42,6 +42,8 @@ import javax.annotation.Nullable;
 @InternalApi
 @AutoValue
 public abstract class EndpointContext {
+  public static final String INVALID_UNIVERSE_DOMAIN_ERROR_TEMPLATE =
+      "The configured universe domain (%s) does not match the universe domain found in the credentials (%s). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.";
 
   /**
    * ServiceName is host URI for Google Cloud Services. It follows the format of
@@ -83,7 +85,7 @@ public abstract class EndpointContext {
 
   public abstract boolean usingGDCH();
 
-  abstract String resolvedUniverseDomain();
+  public abstract String resolvedUniverseDomain();
 
   public abstract String resolvedEndpoint();
 
@@ -93,6 +95,56 @@ public abstract class EndpointContext {
     return new AutoValue_EndpointContext.Builder()
         .setSwitchToMtlsEndpointAllowed(false)
         .setUsingGDCH(false);
+  }
+
+  /** Check that the User configured universe domain matches the Credentials' universe domain */
+  public boolean hasValidUniverseDomain(Credentials credentials) throws IOException {
+    if (usingGDCH()) {
+      // GDC-H has no universe domain, always return true.
+      return true;
+    } else if (credentials == null) {
+      // If passed with NoCredentialsProvider, match with GDU
+      return resolvedUniverseDomain().equals(Credentials.GOOGLE_DEFAULT_UNIVERSE);
+    }
+    return resolvedUniverseDomain().equals(credentials.getUniverseDomain());
+  }
+
+  public EndpointContext merge(EndpointContext input) {
+    if (input == null) {
+      return this;
+    }
+    Builder builder = this.toBuilder();
+    String serviceName = input.serviceName();
+    if (serviceName != null) {
+      builder.setServiceName(serviceName);
+    }
+    String universeDomain = input.universeDomain();
+    if (universeDomain != null) {
+      builder.setUniverseDomain(universeDomain);
+    }
+    String clientSettingsEndpoint = input.clientSettingsEndpoint();
+    if (clientSettingsEndpoint != null) {
+      builder.setClientSettingsEndpoint(clientSettingsEndpoint);
+    }
+    String transportChannelProviderEndpoint = input.transportChannelProviderEndpoint();
+    if (transportChannelProviderEndpoint != null) {
+      builder.setTransportChannelProviderEndpoint(transportChannelProviderEndpoint);
+    }
+    String mtlsEndpoint = input.mtlsEndpoint();
+    if (mtlsEndpoint != null) {
+      builder.setMtlsEndpoint(mtlsEndpoint);
+    }
+    builder.setSwitchToMtlsEndpointAllowed(input.switchToMtlsEndpointAllowed());
+    MtlsProvider mtlsProvider = input.mtlsProvider();
+    if (mtlsEndpoint != null) {
+      builder.setMtlsProvider(mtlsProvider);
+    }
+    builder.setUsingGDCH(input.usingGDCH());
+    try {
+      return builder.build();
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   @AutoValue.Builder

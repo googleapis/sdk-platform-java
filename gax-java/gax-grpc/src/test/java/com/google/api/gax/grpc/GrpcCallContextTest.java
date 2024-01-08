@@ -35,6 +35,7 @@ import static org.junit.Assert.assertNull;
 
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.ApiCallContext;
+import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.testing.FakeCallContext;
 import com.google.api.gax.rpc.testing.FakeChannel;
@@ -46,6 +47,7 @@ import com.google.common.truth.Truth;
 import io.grpc.CallOptions;
 import io.grpc.ManagedChannel;
 import io.grpc.Metadata.Key;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -373,7 +375,16 @@ public class GrpcCallContextTest {
   }
 
   @Test
-  public void testMergeOptions() {
+  public void testEndpointContext() throws IOException {
+    EndpointContext endpointContext = EndpointContext.newBuilder().setServiceName("test").build();
+    GrpcCallContext emptyContext = GrpcCallContext.createDefault();
+    assertNull(emptyContext.getEndpointContext());
+    GrpcCallContext context = emptyContext.withEndpointContext(endpointContext);
+    assertEquals(context.getEndpointContext(), endpointContext);
+  }
+
+  @Test
+  public void testMergeOptions() throws IOException {
     GrpcCallContext emptyCallContext = GrpcCallContext.createDefault();
     ApiCallContext.Key<String> contextKey1 = ApiCallContext.Key.create("testKey1");
     ApiCallContext.Key<String> contextKey2 = ApiCallContext.Key.create("testKey2");
@@ -391,9 +402,13 @@ public class GrpcCallContextTest {
             .withOption(contextKey1, testContextOverwrite)
             .withOption(contextKey3, testContext3);
     ApiCallContext mergedContext = context1.merge(context2);
+    EndpointContext endpointContext = EndpointContext.newBuilder().setServiceName("test").build();
+    ApiCallContext context3 = emptyCallContext.withEndpointContext(endpointContext);
+    mergedContext = mergedContext.merge(context3);
     assertEquals(testContextOverwrite, mergedContext.getOption(contextKey1));
     assertEquals(testContext2, mergedContext.getOption(contextKey2));
     assertEquals(testContext3, mergedContext.getOption(contextKey3));
+    assertEquals(mergedContext.getEndpointContext(), endpointContext);
   }
 
   private static Map<String, List<String>> createTestExtraHeaders(String... keyValues) {

@@ -285,14 +285,6 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testDirectPathDisallowNullCredentials() throws IOException {
-    InstantiatingGrpcChannelProvider provider =
-        InstantiatingGrpcChannelProvider.newBuilder().build();
-
-    assertThat(provider.isCredentialDirectPathCompatible()).isFalse();
-  }
-
-  @Test
   public void testDirectPathXdsEnabled() throws IOException {
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()

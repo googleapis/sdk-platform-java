@@ -34,6 +34,7 @@ import static com.google.common.truth.Truth.assertThat;
 import com.google.api.gax.httpjson.ForwardingHttpJsonClientCall.SimpleForwardingHttpJsonClientCall;
 import com.google.api.gax.httpjson.ForwardingHttpJsonClientCallListener.SimpleForwardingHttpJsonClientCallListener;
 import com.google.api.gax.httpjson.testing.MockHttpService;
+import com.google.api.gax.rpc.EndpointContext;
 import com.google.protobuf.Field;
 import com.google.protobuf.Field.Cardinality;
 import java.io.IOException;
@@ -51,6 +52,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.mockito.Mockito;
 import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
@@ -178,14 +180,18 @@ public class HttpJsonClientInterceptorTest {
   }
 
   @Test
-  public void testCustomInterceptor() throws ExecutionException, InterruptedException {
+  public void testCustomInterceptor() throws ExecutionException, InterruptedException, IOException {
     HttpJsonDirectCallable<Field, Field> callable =
         new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
+
+    EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
+    Mockito.when(endpointContext.hasValidUniverseDomain(Mockito.any())).thenReturn(true);
 
     HttpJsonCallContext callContext =
         HttpJsonCallContext.createDefault()
             .withChannel(channel)
-            .withTimeout(Duration.ofSeconds(30));
+            .withTimeout(Duration.ofSeconds(30))
+            .withEndpointContext(endpointContext);
 
     Field request;
     Field expectedResponse;

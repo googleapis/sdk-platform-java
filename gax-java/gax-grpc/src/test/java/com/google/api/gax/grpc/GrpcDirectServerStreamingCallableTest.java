@@ -36,6 +36,7 @@ import com.google.api.gax.grpc.testing.FakeServiceImpl;
 import com.google.api.gax.grpc.testing.InProcessServer;
 import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.ResponseObserver;
 import com.google.api.gax.rpc.ServerStream;
 import com.google.api.gax.rpc.ServerStreamingCallSettings;
@@ -63,6 +64,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.mockito.Mockito;
 
 @RunWith(JUnit4.class)
 public class GrpcDirectServerStreamingCallableTest {
@@ -85,11 +87,16 @@ public class GrpcDirectServerStreamingCallableTest {
     inprocessServer = new InProcessServer<>(serviceImpl, serverName);
     inprocessServer.start();
 
+    EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
+    Mockito.when(endpointContext.hasValidUniverseDomain(Mockito.any())).thenReturn(true);
+
     channel = InProcessChannelBuilder.forName(serverName).directExecutor().usePlaintext().build();
     clientContext =
         ClientContext.newBuilder()
             .setTransportChannel(GrpcTransportChannel.create(channel))
-            .setDefaultCallContext(GrpcCallContext.of(channel, CallOptions.DEFAULT))
+            .setDefaultCallContext(
+                GrpcCallContext.of(channel, CallOptions.DEFAULT)
+                    .withEndpointContext(endpointContext))
             .build();
     streamingCallSettings = ServerStreamingCallSettings.<Color, Money>newBuilder().build();
     streamingCallable =

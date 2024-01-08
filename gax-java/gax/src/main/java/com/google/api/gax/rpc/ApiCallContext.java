@@ -63,6 +63,12 @@ public interface ApiCallContext extends RetryingContext {
   /** Returns a new ApiCallContext with the given channel set. */
   ApiCallContext withTransportChannel(TransportChannel channel);
 
+  /** Returns a new ApiCallContext with the given Endpoint Context. */
+  ApiCallContext withEndpointContext(EndpointContext endpointContext);
+
+  /** Returns the configured EndpointContext */
+  EndpointContext getEndpointContext();
+
   /**
    * Returns a new ApiCallContext with the given timeout set.
    *
@@ -266,4 +272,10 @@ public interface ApiCallContext extends RetryingContext {
       return new Key<>(name);
     }
   }
+
+  /**
+   * Validate the Universe Domain to ensure that the user configured Universe Domain and the
+   * Credentials' Universe Domain match
+   */
+  void validateUniverseDomain();
 }

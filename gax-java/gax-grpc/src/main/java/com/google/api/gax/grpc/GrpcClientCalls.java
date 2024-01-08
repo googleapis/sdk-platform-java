@@ -95,6 +95,10 @@ class GrpcClientCalls {
       channel = ClientInterceptors.intercept(channel, interceptor);
     }
 
+    // Validate the Universe Domain prior to the call. An exception will be raised if
+    // there are any issues
+    grpcContext.validateUniverseDomain();
+
     try (Scope ignored = grpcContext.getTracer().inScope()) {
       return channel.newCall(descriptor, callOptions);
     }

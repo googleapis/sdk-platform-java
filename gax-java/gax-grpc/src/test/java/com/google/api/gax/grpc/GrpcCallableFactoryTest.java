@@ -36,6 +36,7 @@ import com.google.api.gax.grpc.testing.FakeServiceImpl;
 import com.google.api.gax.grpc.testing.InProcessServer;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.api.gax.rpc.ServerStreamingCallSettings;
 import com.google.api.gax.rpc.ServerStreamingCallable;
@@ -74,10 +75,14 @@ public class GrpcCallableFactoryTest {
     inprocessServer.start();
 
     channel = InProcessChannelBuilder.forName(serverName).directExecutor().usePlaintext().build();
+    EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
+    Mockito.when(endpointContext.hasValidUniverseDomain(Mockito.any())).thenReturn(true);
     clientContext =
         ClientContext.newBuilder()
             .setTransportChannel(GrpcTransportChannel.create(channel))
-            .setDefaultCallContext(GrpcCallContext.of(channel, CallOptions.DEFAULT))
+            .setDefaultCallContext(
+                GrpcCallContext.of(channel, CallOptions.DEFAULT)
+                    .withEndpointContext(endpointContext))
             .build();
   }
 

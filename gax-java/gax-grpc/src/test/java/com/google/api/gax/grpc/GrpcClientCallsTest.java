@@ -30,10 +30,16 @@
 package com.google.api.gax.grpc;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertThrows;
 import static org.mockito.Mockito.verify;
 
 import com.google.api.gax.grpc.testing.FakeChannelFactory;
 import com.google.api.gax.grpc.testing.FakeServiceGrpc;
+import com.google.api.gax.rpc.EndpointContext;
+import com.google.api.gax.rpc.PermissionDeniedException;
+import com.google.api.gax.rpc.UnavailableException;
+import com.google.auth.Credentials;
+import com.google.auth.Retryable;
 import com.google.common.collect.ImmutableList;
 import com.google.common.truth.Truth;
 import com.google.type.Color;
@@ -51,12 +57,50 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
 import org.threeten.bp.Duration;
 
 public class GrpcClientCallsTest {
+
+  // Auth Library's GoogleAuthException is package-private. Copy basic functionality for tests
+  private static class GoogleAuthException extends IOException implements Retryable {
+
+    private final boolean isRetryable;
+
+    private GoogleAuthException(boolean isRetryable) {
+      this.isRetryable = isRetryable;
+    }
+
+    @Override
+    public boolean isRetryable() {
+      return isRetryable;
+    }
+
+    @Override
+    public int getRetryCount() {
+      return 0;
+    }
+  }
+
+  private GrpcCallContext defaultCallContext;
+  private EndpointContext endpointContext;
+  private Credentials credentials;
+  private Channel mockChannel;
+
+  @Before
+  public void setUp() throws IOException {
+    credentials = Mockito.mock(Credentials.class);
+    endpointContext = Mockito.mock(EndpointContext.class);
+    mockChannel = Mockito.mock(Channel.class);
+
+    defaultCallContext = GrpcCallContext.createDefault().withEndpointContext(endpointContext);
+
+    Mockito.when(endpointContext.hasValidUniverseDomain(Mockito.any())).thenReturn(true);
+  }
+
   @Test
   public void testAffinity() throws IOException {
     MethodDescriptor<Color, Money> descriptor = FakeServiceGrpc.METHOD_RECOGNIZE;
@@ -78,7 +122,7 @@ public class GrpcClientCallsTest {
         ChannelPool.create(
             ChannelPoolSettings.staticallySized(2),
             new FakeChannelFactory(Arrays.asList(channel0, channel1)));
-    GrpcCallContext context = GrpcCallContext.createDefault().withChannel(pool);
+    GrpcCallContext context = defaultCallContext.withChannel(pool);
 
     ClientCall<Color, Money> gotCallA =
         GrpcClientCalls.newCall(descriptor, context.withChannelAffinity(0));
@@ -92,7 +136,7 @@ public class GrpcClientCallsTest {
   }
 
   @Test
-  public void testExtraHeaders() {
+  public void testExtraHeaders() throws IOException {
     Metadata emptyHeaders = new Metadata();
     final Map<String, List<String>> extraHeaders = new HashMap<>();
     extraHeaders.put(
@@ -128,12 +172,12 @@ public class GrpcClientCallsTest {
         .thenReturn(mockClientCall);
 
     GrpcCallContext context =
-        GrpcCallContext.createDefault().withChannel(mockChannel).withExtraHeaders(extraHeaders);
+        defaultCallContext.withChannel(mockChannel).withExtraHeaders(extraHeaders);
     GrpcClientCalls.newCall(descriptor, context).start(mockListener, emptyHeaders);
   }
 
   @Test
-  public void testTimeoutToDeadlineConversion() {
+  public void testTimeoutToDeadlineConversion() throws IOException {
     MethodDescriptor<Color, Money> descriptor = FakeServiceGrpc.METHOD_RECOGNIZE;
 
     @SuppressWarnings("unchecked")
@@ -152,8 +196,7 @@ public class GrpcClientCallsTest {
     Duration timeout = Duration.ofSeconds(10);
     Deadline minExpectedDeadline = Deadline.after(timeout.getSeconds(), TimeUnit.SECONDS);
 
-    GrpcCallContext context =
-        GrpcCallContext.createDefault().withChannel(mockChannel).withTimeout(timeout);
+    GrpcCallContext context = defaultCallContext.withChannel(mockChannel).withTimeout(timeout);
 
     GrpcClientCalls.newCall(descriptor, context).start(mockListener, new Metadata());
 
@@ -164,7 +207,7 @@ public class GrpcClientCallsTest {
   }
 
   @Test
-  public void testTimeoutAfterDeadline() {
+  public void testTimeoutAfterDeadline() throws IOException {
     MethodDescriptor<Color, Money> descriptor = FakeServiceGrpc.METHOD_RECOGNIZE;
 
     @SuppressWarnings("unchecked")
@@ -185,7 +228,7 @@ public class GrpcClientCallsTest {
     Duration timeout = Duration.ofSeconds(10);
 
     GrpcCallContext context =
-        GrpcCallContext.createDefault()
+        defaultCallContext
             .withChannel(mockChannel)
             .withCallOptions(CallOptions.DEFAULT.withDeadline(priorDeadline))
             .withTimeout(timeout);
@@ -197,7 +240,7 @@ public class GrpcClientCallsTest {
   }
 
   @Test
-  public void testTimeoutBeforeDeadline() {
+  public void testTimeoutBeforeDeadline() throws IOException {
     MethodDescriptor<Color, Money> descriptor = FakeServiceGrpc.METHOD_RECOGNIZE;
 
     @SuppressWarnings("unchecked")
@@ -219,7 +262,7 @@ public class GrpcClientCallsTest {
     Deadline minExpectedDeadline = Deadline.after(timeout.getSeconds(), TimeUnit.SECONDS);
 
     GrpcCallContext context =
-        GrpcCallContext.createDefault()
+        defaultCallContext
             .withChannel(mockChannel)
             .withCallOptions(CallOptions.DEFAULT.withDeadline(subsequentDeadline))
             .withTimeout(timeout);
@@ -231,5 +274,64 @@ public class GrpcClientCallsTest {
 
     Truth.assertThat(capturedCallOptions.getValue().getDeadline()).isAtLeast(minExpectedDeadline);
     Truth.assertThat(capturedCallOptions.getValue().getDeadline()).isAtMost(maxExpectedDeadline);
+  }
+
+  @Test
+  public void testValidUniverseDomain() throws IOException {
+    Mockito.when(endpointContext.hasValidUniverseDomain(credentials)).thenReturn(true);
+    GrpcCallContext context =
+        GrpcCallContext.createDefault()
+            .withChannel(mockChannel)
+            .withCredentials(credentials)
+            .withEndpointContext(endpointContext);
+
+    CallOptions callOptions = context.getCallOptions();
+
+    MethodDescriptor<Color, Money> descriptor = FakeServiceGrpc.METHOD_RECOGNIZE;
+    GrpcClientCalls.newCall(descriptor, context);
+    Mockito.verify(mockChannel, Mockito.times(1)).newCall(descriptor, callOptions);
+  }
+
+  // This test is when the universe domain does not match
+  @Test
+  public void testInvalidUniverseDomain() throws IOException {
+    Mockito.when(endpointContext.hasValidUniverseDomain(credentials)).thenReturn(false);
+    GrpcCallContext context =
+        GrpcCallContext.createDefault()
+            .withChannel(mockChannel)
+            .withCredentials(credentials)
+            .withEndpointContext(endpointContext);
+
+    CallOptions callOptions = context.getCallOptions();
+
+    MethodDescriptor<Color, Money> descriptor = FakeServiceGrpc.METHOD_RECOGNIZE;
+    PermissionDeniedException exception =
+        assertThrows(
+            PermissionDeniedException.class, () -> GrpcClientCalls.newCall(descriptor, context));
+    assertThat(exception.getStatusCode().getCode())
+        .isEqualTo(GrpcStatusCode.Code.PERMISSION_DENIED);
+    Mockito.verify(mockChannel, Mockito.never()).newCall(descriptor, callOptions);
+  }
+
+  // This test is when the MDS is unable to return a valid universe domain
+  @Test
+  public void testUniverseDomainNotReady_shouldRetry() throws IOException {
+    Mockito.when(endpointContext.hasValidUniverseDomain(credentials))
+        .thenThrow(new GoogleAuthException(true));
+    GrpcCallContext context =
+        GrpcCallContext.createDefault()
+            .withChannel(mockChannel)
+            .withCredentials(credentials)
+            .withEndpointContext(endpointContext);
+
+    CallOptions callOptions = context.getCallOptions();
+
+    MethodDescriptor<Color, Money> descriptor = FakeServiceGrpc.METHOD_RECOGNIZE;
+    UnavailableException exception =
+        assertThrows(
+            UnavailableException.class, () -> GrpcClientCalls.newCall(descriptor, context));
+    assertThat(exception.getStatusCode().getCode()).isEqualTo(GrpcStatusCode.Code.UNAVAILABLE);
+    Truth.assertThat(exception.isRetryable()).isTrue();
+    Mockito.verify(mockChannel, Mockito.never()).newCall(descriptor, callOptions);
   }
 }

@@ -42,6 +42,7 @@ import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.longrunning.OperationTimedPollAlgorithm;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.OperationCallSettings;
 import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.TransportChannel;
@@ -68,6 +69,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.mockito.Mockito;
 import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
@@ -133,18 +135,23 @@ public class GrpcLongRunningTest {
             .setPollingAlgorithm(pollingAlgorithm)
             .build();
 
+    EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
+    Mockito.when(endpointContext.hasValidUniverseDomain(Mockito.any())).thenReturn(true);
+
     initialContext =
         ClientContext.newBuilder()
             .setTransportChannel(
                 GrpcTransportChannel.newBuilder().setManagedChannel(channel).build())
             .setExecutor(executor)
-            .setDefaultCallContext(GrpcCallContext.of(channel, CallOptions.DEFAULT))
+            .setDefaultCallContext(
+                GrpcCallContext.of(channel, CallOptions.DEFAULT)
+                    .withEndpointContext(endpointContext))
             .setClock(clock)
             .build();
   }
 
   @Test
-  public void testCall() {
+  public void testCall() throws IOException {
     Color resp = getColor(1.0f);
     Money meta = getMoney("UAH");
     Operation resultOperation = getOperation("testCall", resp, meta, true);
@@ -154,7 +161,11 @@ public class GrpcLongRunningTest {
         GrpcCallableFactory.createOperationCallable(
             createGrpcSettings(), callSettings, initialContext, operationsStub);
 
-    Color response = callable.call(2, GrpcCallContext.createDefault());
+    EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
+    Mockito.when(endpointContext.hasValidUniverseDomain(Mockito.any())).thenReturn(true);
+
+    Color response =
+        callable.call(2, GrpcCallContext.createDefault().withEndpointContext(endpointContext));
     assertThat(response).isEqualTo(resp);
     assertThat(executor.getIterationsCount()).isEqualTo(0);
   }
