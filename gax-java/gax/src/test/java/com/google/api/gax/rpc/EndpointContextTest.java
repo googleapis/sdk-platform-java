@@ -33,6 +33,7 @@ import static org.junit.Assert.assertThrows;
 
 import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.api.gax.rpc.testing.FakeMtlsProvider;
+import com.google.auth.Credentials;
 import com.google.common.truth.Truth;
 import java.io.IOException;
 import org.junit.Before;
@@ -51,7 +52,7 @@ public class EndpointContextTest {
     defaultEndpointContextBuilder =
         EndpointContext.newBuilder()
             .setServiceName("test")
-            .setUniverseDomain(EndpointContext.GOOGLE_DEFAULT_UNIVERSE)
+            .setUniverseDomain(Credentials.GOOGLE_DEFAULT_UNIVERSE)
             .setClientSettingsEndpoint(DEFAULT_ENDPOINT)
             .setMtlsEndpoint(DEFAULT_MTLS_ENDPOINT);
   }
@@ -177,7 +178,7 @@ public class EndpointContextTest {
         defaultEndpointContextBuilder.setClientSettingsEndpoint(DEFAULT_ENDPOINT).build();
     Truth.assertThat(endpointContext.resolvedEndpoint()).isEqualTo(DEFAULT_ENDPOINT);
     Truth.assertThat(endpointContext.resolvedUniverseDomain())
-        .isEqualTo(EndpointContext.GOOGLE_DEFAULT_UNIVERSE);
+        .isEqualTo(Credentials.GOOGLE_DEFAULT_UNIVERSE);
   }
 
   @Test
@@ -192,7 +193,7 @@ public class EndpointContextTest {
     Truth.assertThat(endpointContext.resolvedEndpoint())
         .isEqualTo(transportChannelProviderEndpoint);
     Truth.assertThat(endpointContext.resolvedUniverseDomain())
-        .isEqualTo(EndpointContext.GOOGLE_DEFAULT_UNIVERSE);
+        .isEqualTo(Credentials.GOOGLE_DEFAULT_UNIVERSE);
   }
 
   @Test
@@ -207,7 +208,7 @@ public class EndpointContextTest {
     Truth.assertThat(endpointContext.resolvedEndpoint())
         .isEqualTo(transportChannelProviderEndpoint);
     Truth.assertThat(endpointContext.resolvedUniverseDomain())
-        .isEqualTo(EndpointContext.GOOGLE_DEFAULT_UNIVERSE);
+        .isEqualTo(Credentials.GOOGLE_DEFAULT_UNIVERSE);
   }
 
   @Test
@@ -225,7 +226,7 @@ public class EndpointContextTest {
     EndpointContext endpointContext = defaultEndpointContextBuilder.build();
     Truth.assertThat(endpointContext.resolvedEndpoint()).isEqualTo(DEFAULT_ENDPOINT);
     Truth.assertThat(endpointContext.resolvedUniverseDomain())
-        .isEqualTo(EndpointContext.GOOGLE_DEFAULT_UNIVERSE);
+        .isEqualTo(Credentials.GOOGLE_DEFAULT_UNIVERSE);
   }
 
   @Test
@@ -248,7 +249,7 @@ public class EndpointContextTest {
             .build();
     Truth.assertThat(endpointContext.resolvedEndpoint()).isEqualTo(expectedEndpoint);
     Truth.assertThat(endpointContext.resolvedUniverseDomain())
-        .isEqualTo(EndpointContext.GOOGLE_DEFAULT_UNIVERSE);
+        .isEqualTo(Credentials.GOOGLE_DEFAULT_UNIVERSE);
   }
 
   @Test
@@ -269,7 +270,7 @@ public class EndpointContextTest {
             .build();
     Truth.assertThat(endpointContext.resolvedEndpoint()).isEqualTo(DEFAULT_MTLS_ENDPOINT);
     Truth.assertThat(endpointContext.resolvedUniverseDomain())
-        .isEqualTo(EndpointContext.GOOGLE_DEFAULT_UNIVERSE);
+        .isEqualTo(Credentials.GOOGLE_DEFAULT_UNIVERSE);
   }
 
   @Test
@@ -315,7 +316,7 @@ public class EndpointContextTest {
             .build();
     Truth.assertThat(endpointContext.resolvedEndpoint()).isEqualTo(DEFAULT_ENDPOINT);
     Truth.assertThat(endpointContext.resolvedUniverseDomain())
-        .isEqualTo(EndpointContext.GOOGLE_DEFAULT_UNIVERSE);
+        .isEqualTo(Credentials.GOOGLE_DEFAULT_UNIVERSE);
   }
 
   @Test
@@ -329,6 +330,6 @@ public class EndpointContextTest {
             .build();
     Truth.assertThat(endpointContext.resolvedEndpoint()).isEqualTo(clientSettingsEndpoint);
     Truth.assertThat(endpointContext.resolvedUniverseDomain())
-        .isEqualTo(EndpointContext.GOOGLE_DEFAULT_UNIVERSE);
+        .isEqualTo(Credentials.GOOGLE_DEFAULT_UNIVERSE);
   }
 }
