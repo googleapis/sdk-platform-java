@@ -14,7 +14,7 @@ set -e
 VERSIONS_PATH=$1
 
 SED_OPTIONS=""
-for versions_file in $(find . -mindepth 0 -maxdepth 2 -name "${VERSIONS_PATH}" \
+for versions_file in $(find . -mindepth 2 -maxdepth 2 -name "$(basename "${VERSIONS_PATH}")" \
     |sort --dictionary-order); do
   for KV in $(cut -f1,3 -d: $versions_file |grep -v "#"); do
     K=${KV%:*}; V=${KV#*:}
