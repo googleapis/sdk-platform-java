@@ -70,7 +70,7 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   pushd "${output_folder}"
   proto_paths_raw=$(echo "$line" | cut -d " " -f 1)
   repository_path=$(echo "$line" | cut -d " " -f 2)
-  if [ "${repository_path}" == "google-cloud-java/*" ]; then
+  if [[ "${repository_path}" == google-cloud-java/* ]]; then
     versions_file="${output_folder}/google-cloud-java/versions.txt"
   else
     versions_file="${output_folder}/${repository_path}/versions.txt"
