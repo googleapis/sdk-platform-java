@@ -275,7 +275,8 @@ public interface ApiCallContext extends RetryingContext {
 
   /**
    * Validate the Universe Domain to ensure that the user configured Universe Domain and the
-   * Credentials' Universe Domain match
+   * Credentials' Universe Domain match. An exception will be raised if there are any issues when
+   * trying to validate (i.e. unable to access the universe domain).
    */
   void validateUniverseDomain();
 }

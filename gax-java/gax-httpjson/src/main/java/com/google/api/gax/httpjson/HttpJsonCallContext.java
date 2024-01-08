@@ -30,6 +30,7 @@
 package com.google.api.gax.httpjson;
 
 import com.google.api.core.BetaApi;
+import com.google.api.core.InternalApi;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.ApiExceptionFactory;
@@ -411,6 +412,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
     return options.getOption(key);
   }
 
+  /** {@inheritDoc} */
   @Override
   public void validateUniverseDomain() {
     EndpointContext endpointContext = getEndpointContext();
@@ -593,6 +595,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
         endpointContext);
   }
 
+  @InternalApi
   @Override
   public EndpointContext getEndpointContext() {
     return endpointContext;
