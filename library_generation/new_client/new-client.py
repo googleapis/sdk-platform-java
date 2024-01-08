@@ -328,14 +328,19 @@ def generate(
         ],
         cwd=repo_root_dir,
     )
-    # print("Setting parent poms")
-    # subprocess.check_call(
-    #     [
-    #         "bash", "generation/set_parent_pom.sh"
-    #     ],
-    #     cwd=repo_root_dir,
-    # )
-    #
+    parent_pom = Path(f"{repo_root_dir}/google-cloud-jar-parent/pom.xml")\
+        .resolve()
+    if parent_pom.is_file():
+        print("Setting parent poms")
+        subprocess.check_call(
+            [
+                f"{script_dir}/set_parent_pom.sh",
+                f"{output_dir}",
+                f"{parent_pom}"
+            ],
+            cwd=repo_root_dir,
+        )
+
     # print("Applying the versions")
     # subprocess.check_call(
     #     [
