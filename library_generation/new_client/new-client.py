@@ -141,6 +141,12 @@ def main(ctx):
     type=str,
     help="If it exists, link to the RPC Documentation for a service"
 )
+@click.option(
+    "--versions-file",
+    type=str,
+    default="output/versions.txt",
+    help="A text file contains versions of modules"
+)
 def generate(
     api_shortname,
     name_pretty,
@@ -284,7 +290,7 @@ def generate(
         "--include_samples",
         client_input.include_samples,
         "--versions_file",
-        versions],
+        f"{versions}"],
         cwd=repo_root_dir
     )
 
