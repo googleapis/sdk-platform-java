@@ -3,7 +3,7 @@
 # proto_path repository_path skip_postprocessing_test
 google/bigtable/admin/v2,google/bigtable/v2 java-bigtable
 google/cloud/apigeeconnect/v1 google-cloud-java/java-apigee-connect
-google/cloud/asset/v1p5beta1,google/cloud/asset/v1p2beta1,google/cloud/asset/v1p1beta1,google/cloud/asset/v1p7beta1,google/cloud/asset/v1 google-cloud-java/java-asset
+# google/cloud/asset/v1p5beta1,google/cloud/asset/v1p2beta1,google/cloud/asset/v1p1beta1,google/cloud/asset/v1p7beta1,google/cloud/asset/v1 google-cloud-java/java-asset
 google/cloud/dialogflow/v2beta1,google/cloud/dialogflow/v2 google-cloud-java/java-dialogflow
 google/cloud/compute/v1 google-cloud-java/java-compute
 google/cloud/kms/v1 google-cloud-java/java-kms
