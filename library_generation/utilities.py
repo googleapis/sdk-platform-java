@@ -16,7 +16,7 @@ example: "--key1 value1 --key2 value2"
 
 it ensures that both keys and values don't contain spaces
 """
-def get_generate_library_arguments(query: str):
+def get_generate_library_arguments(query: str) -> str:
   result = ''
   raw_arguments_kv = [kv.strip() for kv in query.split(',')]
   for raw_argument_kv in raw_arguments_kv:
@@ -31,7 +31,7 @@ An argument query string is a comma-separated list of key-value pairs,
 for example "key1=val1,key2=val2".
 It returns the value for "argument"
 """
-def get_argument_value_from_query(query: str, argument :str):
+def get_argument_value_from_query(query: str, argument :str) -> str:
   found_argument = list(filter(lambda x: argument in x, query.split(',')))
   if len(found_argument) == 0:
     raise ValueError(f'query string does not contain the argument {argument}')
@@ -42,10 +42,10 @@ Given the input parameter "arguments" (example "--arg1 val1 -arg2 val2"),
 this function adds another argument "--arg_key arg_value" to the end
 of the argument string
 """
-def add_argument(arguments: str, arg_key: str, arg_val: str):
+def add_argument(arguments: str, arg_key: str, arg_val: str) -> str:
   return f'{arguments} --{arg_key} "{arg_val}"'
 
-def _get_raw_argument_component(raw_argument: str, index: int):
+def _get_raw_argument_component(raw_argument: str, index: int) -> str:
   result = raw_argument.split('=')[index]
   return result
 
