@@ -8,19 +8,20 @@
 # --generation_queries: a single string of key-value groups separated by a
 # pipe |. They key-value groups are in the form of `key=value` and will
 # be converted to an argument to generate_library.sh (`--key value`).
-#   example: "key1=value1 key2=value2,,,key1=value3 key2=value4"
-#   In this case, generate_library.sh will be called once with value1 and value2
-#   and once with value3 and value4.
+#   example: "proto_path=google/cloud/asset/v1,destination_path=google-cloud-asset-v1-java,(...)|proto_path=google/cloud/asset/v1p2beta5,destination_path=google-cloud-asset-v1-java,(...)"
+#   In this case, generate_library.sh will be called once with
+#     generate_library.sh --proto_path google/cloud/asset/v1 --destination_path google-cloud-asset-v1-java
+#     and once with
+#     generate_library.sh --proto_path google/cloud/asset/v1p2bet5 --destination_path google-cloud-asset-v1p2beta5-java
 # --versions_file: list of versions to be applied to the pom.xml and readmes
-#
-# Note: googleapis repo is found in https://github.com/googleapis/googleapis
 #
 # Prerequisites
 # - Needs an `output` folder at the location of the calling shell
-# - the `output` folder needs to have the following dirs/files. 
+# - the `output` folder needs to have the following dirs/files.
 #   - A "google" folder found in the googleapis repository
 #   - A "grafeas" folder found in the googleapis repository
 #   - A "WORKSPACE" file belonging to googleapis
+# Note: googleapis repo is found in https://github.com/googleapis/googleapis.
 
 set -xeo pipefail
 
