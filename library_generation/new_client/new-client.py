@@ -361,7 +361,7 @@ def generate(
     print("Adding annotations in readme")
     subprocess.check_call(
         [
-            f"{script_dir}generation/readme_update.sh",
+            f"{script_dir}/readme_update.sh",
             f"{output_dir}",
         ],
         cwd=repo_root_dir,
