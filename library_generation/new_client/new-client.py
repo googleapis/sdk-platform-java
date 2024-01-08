@@ -158,6 +158,7 @@ def generate(
     library_type,
     rest_docs,
     rpc_docs,
+    versions_file,
 ):
     cloud_prefix = "cloud-" if cloud_api else ""
 
@@ -256,6 +257,7 @@ def generate(
         Path(f"{sys.path[0]}/../../output/{versioned_proto_path}").resolve()
     )
     repo_root_dir = Path(f"{sys.path[0]}/../../").resolve()
+    versions = Path(f"{versions_file}").resolve()
     # run generate_library.sh
     subprocess.check_call([
         "library_generation/generate_library.sh",
@@ -282,7 +284,7 @@ def generate(
         "--include_samples",
         client_input.include_samples,
         "--versions_file",
-        "output/versions.txt"],
+        versions],
         cwd=repo_root_dir
     )
 
@@ -341,14 +343,15 @@ def generate(
             cwd=repo_root_dir,
         )
 
-    # print("Applying the versions")
-    # subprocess.check_call(
-    #     [
-    #         "bash", "generation/apply_current_versions.sh"
-    #     ],
-    #     cwd=repo_root_dir,
-    # )
-    #
+    print("Applying the versions")
+    subprocess.check_call(
+        [
+            "generation/apply_current_versions.sh",
+            f"{versions}"
+        ],
+        cwd=repo_root_dir,
+    )
+
     # print("Adding annotations in readme")
     # subprocess.check_call(
     #     [
