@@ -32,8 +32,11 @@ package com.google.api.gax.tracing;
 
 import static io.opentelemetry.api.common.AttributeKey.stringKey;
 
+import com.google.api.client.http.HttpResponseException;
 import com.google.api.gax.rpc.ApiException;
+import com.google.api.gax.rpc.CancelledException;
 import com.google.api.gax.rpc.StatusCode;
+import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.common.base.Stopwatch;
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.common.AttributesBuilder;
@@ -267,13 +270,13 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
     final String statusString;
 
     if (error == null) {
-      return StatusCode.Code.OK.toString();
-    } else if (error instanceof CancellationException) {
-      statusString = StatusCode.Code.CANCELLED.toString();
+      return Code.OK.toString();
+    } else if (error instanceof CancelledException || ((error instanceof HttpResponseException) && ((HttpResponseException) error).getStatusCode()==499)) {
+      statusString = "hello-how-are-you";
     } else if (error instanceof ApiException) {
       statusString = ((ApiException) error).getStatusCode().getCode().toString();
     } else {
-      statusString = StatusCode.Code.UNKNOWN.toString();
+      statusString = Code.UNKNOWN.toString();
     }
 
     return statusString;
