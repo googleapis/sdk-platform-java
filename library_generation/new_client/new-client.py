@@ -352,7 +352,7 @@ def generate(
     print("Applying the versions")
     subprocess.check_call(
         [
-            "generation/apply_current_versions.sh",
+            f"{script_dir}/apply_current_versions.sh",
             f"{versions}"
         ],
         cwd=repo_root_dir,
