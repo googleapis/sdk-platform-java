@@ -31,6 +31,7 @@ package com.google.api.gax.rpc;
 
 import com.google.api.core.InternalApi;
 import com.google.api.gax.rpc.mtls.MtlsProvider;
+import com.google.auth.Credentials;
 import com.google.auto.value.AutoValue;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Strings;
@@ -41,7 +42,6 @@ import javax.annotation.Nullable;
 @InternalApi
 @AutoValue
 public abstract class EndpointContext {
-  static final String GOOGLE_DEFAULT_UNIVERSE = "googleapis.com";
 
   /**
    * ServiceName is host URI for Google Cloud Services. It follows the format of
@@ -162,14 +162,14 @@ public abstract class EndpointContext {
           throw new IllegalArgumentException(
               "Universe domain configuration is incompatible with GDC-H");
         }
-        return GOOGLE_DEFAULT_UNIVERSE;
+        return Credentials.GOOGLE_DEFAULT_UNIVERSE;
       }
       // Check for "" (empty string)
       if (universeDomain() != null && universeDomain().isEmpty()) {
         throw new IllegalArgumentException("The universe domain value cannot be empty.");
       }
       // Override with user set universe domain if provided
-      return universeDomain() != null ? universeDomain() : GOOGLE_DEFAULT_UNIVERSE;
+      return universeDomain() != null ? universeDomain() : Credentials.GOOGLE_DEFAULT_UNIVERSE;
     }
 
     /** Determines the fully resolved endpoint and universe domain values */
@@ -200,7 +200,7 @@ public abstract class EndpointContext {
 
       // Check if mTLS is configured with non-GDU
       if (endpoint.equals(mtlsEndpoint())
-          && !resolvedUniverseDomain().equals(GOOGLE_DEFAULT_UNIVERSE)) {
+          && !resolvedUniverseDomain().equals(Credentials.GOOGLE_DEFAULT_UNIVERSE)) {
         throw new IllegalArgumentException(
             "mTLS is not supported in any universe other than googleapis.com");
       }
