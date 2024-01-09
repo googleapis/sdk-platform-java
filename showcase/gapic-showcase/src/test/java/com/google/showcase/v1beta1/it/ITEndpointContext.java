@@ -1,5 +1,6 @@
 package com.google.showcase.v1beta1.it;
 
+import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.common.truth.Truth;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoSettings;
@@ -23,7 +24,11 @@ public class ITEndpointContext {
   public void endpointResolution_default() throws InterruptedException, IOException {
     EchoClient echoClient = null;
     try {
-      echoClient = EchoClient.create();
+      // The default usage is EchoClient.create(), but for showcase tests run in CI, the
+      // client must be supplied with Credentials.
+      EchoSettings echoSettings =
+          EchoSettings.newBuilder().setCredentialsProvider(NoCredentialsProvider.create()).build();
+      echoClient = EchoClient.create(echoSettings);
       Truth.assertThat(echoClient.getSettings().getEndpoint()).isEqualTo(SHOWCASE_DEFAULT_ENDPOINT);
     } finally {
       if (echoClient != null) {
@@ -40,7 +45,11 @@ public class ITEndpointContext {
     String customEndpoint = "test.com:123";
     EchoClient echoClient = null;
     try {
-      EchoSettings echoSettings = EchoSettings.newBuilder().setEndpoint(customEndpoint).build();
+      EchoSettings echoSettings =
+          EchoSettings.newBuilder()
+              .setCredentialsProvider(NoCredentialsProvider.create())
+              .setEndpoint(customEndpoint)
+              .build();
       echoClient = EchoClient.create(echoSettings);
       Truth.assertThat(echoClient.getSettings().getEndpoint()).isEqualTo(customEndpoint);
     } finally {
