@@ -72,6 +72,7 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
   protected Attributes attributes;
 
   Map<String, String> operationLatencyLabels = new HashMap<>();
+  private Map<String, String> additionalAttributes = new HashMap<>();
 
   protected MetricsRecorder metricsRecorder;
 
@@ -184,7 +185,8 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
   public void attemptSucceeded(Object response) {
     Attributes newAttributes =
         attributes.toBuilder().put(STATUS_ATTRIBUTE, StatusCode.Code.OK.toString()).build();
-    metricsRecorder.recordAttemptLatency(attemptTimer.elapsed(TimeUnit.MILLISECONDS));
+    metricsRecorder.recordAttemptLatency(
+        attemptTimer.elapsed(TimeUnit.MILLISECONDS), additionalAttributes);
   }
 
   @Override
@@ -242,5 +244,9 @@ public class OpenTelemetryMetricsTracer implements ApiTracer {
     }
 
     return statusString;
+  }
+
+  public void addAdditionalAttributes(String key, String value) {
+    additionalAttributes.put(key, value);
   }
 }

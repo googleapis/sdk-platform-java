@@ -2,10 +2,12 @@ package com.google.api.gax.tracing;
 
 import com.google.common.base.Stopwatch;
 import io.opentelemetry.api.common.Attributes;
+import io.opentelemetry.api.common.AttributesBuilder;
 import io.opentelemetry.api.metrics.DoubleHistogram;
 import io.opentelemetry.api.metrics.LongCounter;
 import io.opentelemetry.api.metrics.LongHistogram;
 import io.opentelemetry.api.metrics.Meter;
+import java.util.Map;
 
 public class MetricsRecorder {
   public static final String STATUS_ATTRIBUTE = "status";
@@ -83,7 +85,9 @@ public class MetricsRecorder {
             .build();
   }
 
-  public void recordAttemptLatency(double attemptLatency) {
-    attemptLatencyRecorder.record(attemptLatency);
+  public void recordAttemptLatency(double attemptLatency, Map<String, String> attributes) {
+    AttributesBuilder attributesBuilder = Attributes.builder();
+    attributes.forEach(attributesBuilder::put);
+    attemptLatencyRecorder.record(attemptLatency, attributesBuilder.build());
   }
 }
