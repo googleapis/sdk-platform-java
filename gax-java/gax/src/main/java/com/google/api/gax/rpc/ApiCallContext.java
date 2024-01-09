@@ -278,15 +278,14 @@ public interface ApiCallContext extends RetryingContext {
    * Credentials' Universe Domain match. An exception will be raised if there are any issues when
    * trying to validate (i.e. unable to access the universe domain).
    *
-   * <p>For both transports, a PermissionDenied exception will be thrown if the universe domain is
-   * invalid
-   *
-   * <p>For gRPC, if the client library is unable to retrieve the Universe Domain, the client
-   * library will attempt to retry with the defined retry bounds. If the retry bounds have been
-   * exceeded, the client library will return an Unavailable exception back.
-   *
-   * <p>For HttpJson, if the client library is unable to retrieve the Universe Domain, the client
-   * library will fail and return an exception.
+   * @throws PermissionDeniedException For both transports. Thrown if the universe domain that the
+   *     user configured does not match the Credential's universe domain.
+   * @throws UnavailableException For gRPC only. If client library is unable to retrieve the
+   *     universe domain from the Credentials, the client library will attempt to retry with the
+   *     RPC's defined retry bounds. If the retry bounds have been exceeded and the library is still
+   *     unable to retrieve the universe domain, the exception will be thrown back to the user.
+   * @throws RuntimeException For both transports. Any non Auth related exception will be thrown
+   *     back to the user.
    */
   void validateUniverseDomain();
 }
