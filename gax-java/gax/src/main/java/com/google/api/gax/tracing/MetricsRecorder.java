@@ -1,6 +1,5 @@
 package com.google.api.gax.tracing;
 
-import com.google.common.base.Stopwatch;
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.common.AttributesBuilder;
 import io.opentelemetry.api.metrics.DoubleHistogram;
@@ -10,12 +9,7 @@ import io.opentelemetry.api.metrics.Meter;
 import java.util.Map;
 
 public class MetricsRecorder {
-  public static final String STATUS_ATTRIBUTE = "status";
   protected Meter meter;
-
-  private Stopwatch attemptTimer;
-
-  private final Stopwatch operationTimer = Stopwatch.createStarted();
 
   protected DoubleHistogram attemptLatencyRecorder;
 
@@ -27,6 +21,8 @@ public class MetricsRecorder {
   protected DoubleHistogram channelReadinessDelayRecorder;
   protected DoubleHistogram callSendDelayRecorder;
   protected LongCounter operationCountRecorder;
+
+  protected LongCounter attemptCountRecorder;
 
   protected Attributes attributes;
 
@@ -83,11 +79,33 @@ public class MetricsRecorder {
             .setDescription("Count of Operations")
             .setUnit("1")
             .build();
+    this.attemptCountRecorder =
+        meter
+            .counterBuilder("attempt_count")
+            .setDescription("Count of Attempts")
+            .setUnit("1")
+            .build();
   }
 
   public void recordAttemptLatency(double attemptLatency, Map<String, String> attributes) {
+    attemptLatencyRecorder.record(attemptLatency, toOtelAttributes(attributes));
+  }
+
+  public void recordAttemptCount(long count, Map<String, String> attributes) {
+    attemptCountRecorder.add(count, toOtelAttributes(attributes));
+  }
+
+  public void recordOperationLatency(double operationLatency, Map<String, String> attributes) {
+    operationLatencyRecorder.record(operationLatency, toOtelAttributes(attributes));
+  }
+
+  public void recordOperationCount(long count, Map<String, String> attributes) {
+    operationCountRecorder.add(count, toOtelAttributes(attributes));
+  }
+
+  private Attributes toOtelAttributes(Map<String, String> attributes) {
     AttributesBuilder attributesBuilder = Attributes.builder();
     attributes.forEach(attributesBuilder::put);
-    attemptLatencyRecorder.record(attemptLatency, attributesBuilder.build());
+    return attributesBuilder.build();
   }
 }
