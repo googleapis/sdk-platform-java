@@ -31,6 +31,7 @@ java_gapic_assembly_gradle_pkg\(
 (.*?)
 \)
 """
+resource_pattern = r"//google/cloud:common_resources_proto"
 location_pattern = r"//google/cloud/location:location_proto"
 iam_pattern = r"//google/iam/v1:iam_policy_proto"
 transport_pattern = r"transport = \"(.*?)\""
@@ -63,7 +64,10 @@ class ClientInput:
         self.include_samples = include_samples
 
 
-def parse(build_path: Path) -> ClientInput:
+def parse(
+    build_path: Path,
+    versioned_path: str,
+) -> ClientInput:
     with open(f"{build_path}/BUILD.bazel") as build:
         content = build.read()
 
@@ -83,9 +87,9 @@ def parse(build_path: Path) -> ClientInput:
 
     transport = __parse_transport(gapic_target[0])
     rest_numeric_enum = __parse_rest_numeric_enums(gapic_target[0])
-    gapic_yaml = __parse_gapic_yaml(gapic_target[0])
-    service_config = __parse_service_config(gapic_target[0])
-    service_yaml = __parse_service_yaml(gapic_target[0])
+    gapic_yaml = __parse_gapic_yaml(gapic_target[0], versioned_path)
+    service_config = __parse_service_config(gapic_target[0], versioned_path)
+    service_yaml = __parse_service_yaml(gapic_target[0], versioned_path)
 
     return ClientInput(
       proto_only="false",
@@ -100,7 +104,9 @@ def parse(build_path: Path) -> ClientInput:
 
 
 def __parse_additional_protos(proto_library_target: str) -> str:
-    res = ["google/cloud/common_resources.proto"]
+    res = [" "]
+    if len(re.findall(resource_pattern, proto_library_target)) != 0:
+        res.append("google/cloud/common_resources.proto")
     if len(re.findall(location_pattern, proto_library_target)) != 0:
         res.append("google/cloud/location/locations.proto")
     if len(re.findall(iam_pattern, proto_library_target)) != 0:
@@ -118,19 +124,21 @@ def __parse_rest_numeric_enums(gapic_target: str) -> str:
     return "true" if len(rest_numeric_enums) != 0 else "false"
 
 
-def __parse_gapic_yaml(gapic_target: str) -> str:
+def __parse_gapic_yaml(gapic_target: str, versioned_path: str) -> str:
     gapic_yaml = re.findall(gapic_yaml_pattern, gapic_target)
-    return gapic_yaml[0] if len(gapic_yaml) != 0 else ""
+    return f"{versioned_path}/{gapic_yaml[0]}" if len(gapic_yaml) != 0 else ""
 
 
-def __parse_service_config(gapic_target: str) -> str:
+def __parse_service_config(gapic_target: str, versioned_path: str) -> str:
     service_config = re.findall(service_config_pattern, gapic_target)
-    return service_config[0] if len(service_config) != 0 else ""
+    return f"{versioned_path}/{service_config[0]}" if len(service_config) != 0 \
+        else ""
 
 
-def __parse_service_yaml(gapic_target: str) -> str:
+def __parse_service_yaml(gapic_target: str, versioned_path: str) -> str:
     service_yaml = re.findall(service_yaml_pattern, gapic_target)
-    return service_yaml[0] if len(service_yaml) != 0 else ""
+    return f"{versioned_path}/{service_yaml[0]}" if len(service_yaml) != 0 \
+        else ""
 
 
 def __parse_include_samples(assembly_target: str) -> str:

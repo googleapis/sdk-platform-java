@@ -6,12 +6,10 @@
 
 set -e
 
-GENERATION_DIR=$1;
-
 function runRegexOnPoms {
   perl_command=$1
   search=$2
-  for pomFile in $(find . -maxdepth 2 -name pom.xml |sort --dictionary-order); do
+  for pomFile in $(find . -mindepth 2 -maxdepth 3 -name pom.xml |sort --dictionary-order); do
     if [[ $pomFile =~ .*google-cloud-jar-parent.* ]] || \
        [[ $pomFile =~ .*google-cloud-pom-parent.* ]] || \
        [[ $pomFile =~ .*java-shared-dependencies.* ]]; then
@@ -65,7 +63,6 @@ function setGrafeasCheckstyleHeaderConfig {
   runRegexOnPoms "$perl_command" ">Grafeas Client<"
 }
 
-pushd "${GENERATION_DIR}"
 setGrafeasCheckstyleHeaderConfig
 removeManagedDependency 'google-cloud-shared-dependencies'
 removeManagedDependency 'junit'
@@ -106,4 +103,3 @@ annotateArtifactVersion 'dependency' 'proto-google-cloud-orgpolicy-v1'
 annotateArtifactVersion 'dependency' 'proto-google-identity-accesscontextmanager-v1'
 annotateArtifactVersion 'dependency' 'proto-google-cloud-os-config-v1'
 annotateArtifactVersion 'dependency' 'google-cloud-resourcemanager'
-popd # GENERATION_DIR

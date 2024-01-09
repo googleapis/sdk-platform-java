@@ -23,6 +23,7 @@ import click
 import templates
 from git import Repo
 from client_inputs import parse
+import shutil
 
 
 @click.group(invoke_without_command=False)
@@ -260,7 +261,9 @@ def generate(
     print(f"Generating from {versioned_proto_path}...")
     # parse BUILD.bazel in proto_path
     client_input = parse(
-        Path(f"{sys.path[0]}/../../output/{versioned_proto_path}").resolve()
+        build_path=Path(f"{sys.path[0]}/../../output/{versioned_proto_path}")
+        .resolve(),
+        versioned_path=versioned_proto_path,
     )
     repo_root_dir = Path(f"{sys.path[0]}/../../").resolve()
     versions = Path(f"{versions_file}").resolve()
@@ -272,7 +275,9 @@ def generate(
         "-d",
         destination_path,
         "--gapic_generator_version",
-        "2.30.0",
+        "2.31.0",
+        "--protobuf_version",
+        "23.2",
         "--proto_only",
         client_input.proto_only,
         "--gapic_additional_protos",
@@ -295,18 +300,25 @@ def generate(
     )
 
     script_dir = "library_generation/new_client"
+    # Move generated module to repo root.
+    __move_modules(
+        source=output_dir,
+        dest=repo_root_dir,
+        name_prefix="java-"
+    )
+
     # Remove irrelevant files from templates
     subprocess.check_call(
         [
-            f"{script_dir}/update_owlbot_postprocessor_config.sh",
-            f"{output_dir}"
+            "bash",
+            f"{script_dir}/update_owlbot_postprocessor_config.sh"
          ],
         cwd=repo_root_dir
     )
     subprocess.check_call(
         [
-            f"{script_dir}/delete_non_generated_samples.sh",
-            f"{output_dir}"
+            "bash",
+            f"{script_dir}/delete_non_generated_samples.sh"
         ],
         cwd=repo_root_dir
     )
@@ -322,10 +334,12 @@ def generate(
         )
 
     print("Regenerating root pom.xml")
-    # This script takes care of updating the root pom.xml
-    os.system(
-        f"cd {repo_root_dir} && \
-        {script_dir}/generate_root_pom.sh {output_dir}"
+    subprocess.check_call(
+        [
+            f"{script_dir}/generate_root_pom.sh",
+            f"{output_dir}"
+        ],
+        cwd=repo_root_dir,
     )
 
     print("Consolidating configurations")
@@ -342,9 +356,8 @@ def generate(
         print("Setting parent poms")
         subprocess.check_call(
             [
+                "bash",
                 f"{script_dir}/set_parent_pom.sh",
-                f"{output_dir}",
-                f"{parent_pom}"
             ],
             cwd=repo_root_dir,
         )
@@ -352,8 +365,8 @@ def generate(
     print("Applying the versions")
     subprocess.check_call(
         [
+            "bash",
             f"{script_dir}/apply_current_versions.sh",
-            f"{versions}"
         ],
         cwd=repo_root_dir,
     )
@@ -361,8 +374,8 @@ def generate(
     print("Adding annotations in readme")
     subprocess.check_call(
         [
+            "bash",
             f"{script_dir}/readme_update.sh",
-            f"{output_dir}",
         ],
         cwd=repo_root_dir,
     )
@@ -402,6 +415,16 @@ def __find_version(proto_path: Path) -> str:
         if child.is_dir() and re.search(r"v[1-9]", child.name) is not None:
             return child.name
     return ""
+
+
+def __move_modules(
+    source: Path,
+    dest: Path,
+    name_prefix: str
+) -> None:
+    for folder in source.iterdir():
+        if folder.is_dir() and folder.name.startswith(name_prefix):
+            shutil.move(folder, dest)
 
 
 if __name__ == "__main__":

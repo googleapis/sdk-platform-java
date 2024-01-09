@@ -6,10 +6,7 @@
 
 set -e
 
-GENERATION_DIR=$1;
-
-pushd "${GENERATION_DIR}"
-for dir in $(find . -maxdepth 2 -name owlbot.py | sort | xargs dirname ); do
+for dir in $(find . -mindepth 2 -maxdepth 2 -name owlbot.py | sort | xargs dirname ); do
   pushd "$dir"
   # form a perl command to replace java.common_templates() invocation
   perl_command='s/java\.common_templates\(.*\)/java.common_templates(monorepo=True, excludes=['
@@ -30,4 +27,3 @@ for dir in $(find . -maxdepth 2 -name owlbot.py | sort | xargs dirname ); do
   perl -i -0pe "$perl_command" 'owlbot.py'
   popd
 done
-popd # GENERATION_DIR

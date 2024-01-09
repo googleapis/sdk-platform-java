@@ -2,9 +2,6 @@
 
 set -ef
 
-GENERATION_DIR=$1
-PARENT_POM_PATH=$2
-
 # For each library module in current working directory, this script
 # sets the parent to the root pom.xml
 
@@ -24,9 +21,8 @@ function replaceParent {
   perl -i -0pe "$perl_command" pom.xml
 }
 
-pushd "${GENERATION_DIR}"
 # Then, apply the values as the parent pom of each module
-for module in $(find . -maxdepth 2 -name pom.xml | sort --dictionary-order | xargs dirname); do
+for module in $(find . -mindepth 2 -maxdepth 2 -name pom.xml | sort --dictionary-order | xargs dirname); do
   # example value of module is "./java-accessapproval"
   if [[ "${module}" = *gapic-libraries-bom ]] || \
       [[ "${module}" = *google-cloud-jar-parent ]] || \
@@ -37,7 +33,7 @@ for module in $(find . -maxdepth 2 -name pom.xml | sort --dictionary-order | xar
   echo "Processing module $module"
   pushd "${module}"
 
-  replaceParent "${PARENT_POM_PATH}"
+  replaceParent ../google-cloud-jar-parent/pom.xml
 
   # update the bom projects as well by removing parent
   if ls -1 | grep 'bom'; then
@@ -48,4 +44,3 @@ for module in $(find . -maxdepth 2 -name pom.xml | sort --dictionary-order | xar
 
   popd
 done
-popd # GENERATION_DIR

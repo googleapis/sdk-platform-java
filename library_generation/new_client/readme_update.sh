@@ -1,19 +1,16 @@
 #!/bin/bash
 # This script should run as a part of new-library generation process.
 # This script introduces release-please annotations if they don't exist in the readme file
-set -e
 
-GENERATION_DIR=$1
+for module in $(find . -mindepth 2 -maxdepth 2 -name pom.xml | sort | xargs dirname); do
 
-pushd "${GENERATION_DIR}"
-for module in $(find . -maxdepth 2 -name pom.xml | sort | xargs dirname); do
   if [[ "${module}" = *java-core ]] || [[ "${module}" = *java-shared-dependencies ]]; then
     continue
   fi
 
   readme_file="${module}/README.md"
 
-  if [ -e "${readme_file}" ] && ! [[ $(grep "x-version-update-start" ${readme_file}) ]]; then
+  if [ -e ${readme_file} ] && ! [[ $(grep "x-version-update-start" ${readme_file}) ]]; then
 
     artifactId_line=$(grep --max-count=1 'artifactId' "${readme_file}")
 
@@ -36,5 +33,5 @@ for module in $(find . -maxdepth 2 -name pom.xml | sort | xargs dirname); do
     printf '%s\n' H ${end_line}i "<!-- {x-version-update-end} -->" . w | ed -s ${readme_file}
 
   fi
+
 done
-popd # GENERATION_DIR
