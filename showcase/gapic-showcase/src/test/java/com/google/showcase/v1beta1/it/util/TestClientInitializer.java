@@ -54,6 +54,7 @@ public class TestClientInitializer {
                     .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
                     .setInterceptorProvider(() -> interceptorList)
                     .build())
+            .setEndpoint("localhost:7469")
             .build();
     return EchoClient.create(grpcEchoSettings);
   }
@@ -94,6 +95,7 @@ public class TestClientInitializer {
                 EchoSettings.defaultGrpcTransportProviderBuilder()
                     .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
                     .build())
+            .setEndpoint("localhost:7469")
             .build();
     return EchoClient.create(grpcEchoSettings);
   }
@@ -140,6 +142,7 @@ public class TestClientInitializer {
                 EchoSettings.defaultGrpcTransportProviderBuilder()
                     .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
                     .build())
+            .setEndpoint("localhost:7469")
             .build();
     return EchoClient.create(grpcEchoSettings);
   }
@@ -178,6 +181,7 @@ public class TestClientInitializer {
                 IdentitySettings.defaultGrpcTransportProviderBuilder()
                     .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
                     .build())
+            .setEndpoint("localhost:7469")
             .build();
     return IdentityClient.create(grpcIdentitySettings);
   }
