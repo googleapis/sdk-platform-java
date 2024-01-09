@@ -101,7 +101,7 @@ public final class GrpcCallContext implements ApiCallContext {
         ApiCallContextOptions.getDefaultOptions(),
         null,
         null,
-        null);
+        EndpointContext.getDefault());
   }
 
   /** Returns an instance with the given channel and {@link CallOptions}. */
@@ -118,7 +118,7 @@ public final class GrpcCallContext implements ApiCallContext {
         ApiCallContextOptions.getDefaultOptions(),
         null,
         null,
-        null);
+        EndpointContext.getDefault());
   }
 
   private GrpcCallContext(

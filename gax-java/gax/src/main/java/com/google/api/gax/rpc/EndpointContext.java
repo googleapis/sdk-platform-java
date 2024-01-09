@@ -45,6 +45,20 @@ public abstract class EndpointContext {
   public static final String INVALID_UNIVERSE_DOMAIN_ERROR_TEMPLATE =
       "The configured universe domain (%s) does not match the universe domain found in the credentials (%s). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.";
 
+  private static EndpointContext DEFAULT_INSTANCE;
+
+  // Provide an empty EndpointContext for the ApiCallContext to merge against
+  public static EndpointContext getDefault() {
+    if (DEFAULT_INSTANCE == null) {
+      try {
+        DEFAULT_INSTANCE = newBuilder().setServiceName("").build();
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+    }
+    return DEFAULT_INSTANCE;
+  }
+
   /**
    * ServiceName is host URI for Google Cloud Services. It follows the format of
    * `{ServiceName}.googleapis.com`. For example, speech.googleapis.com would have a ServiceName of

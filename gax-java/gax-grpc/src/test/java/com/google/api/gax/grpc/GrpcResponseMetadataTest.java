@@ -137,6 +137,7 @@ public class GrpcResponseMetadataTest {
 
     EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
     Mockito.when(endpointContext.hasValidUniverseDomain(Mockito.any())).thenReturn(true);
+    Mockito.when(endpointContext.merge(Mockito.any())).thenReturn(endpointContext);
 
     clientContext =
         ClientContext.newBuilder()

@@ -377,9 +377,7 @@ public class GrpcCallContextTest {
   @Test
   public void testEndpointContext() throws IOException {
     EndpointContext endpointContext = EndpointContext.newBuilder().setServiceName("test").build();
-    GrpcCallContext emptyContext = GrpcCallContext.createDefault();
-    assertNull(emptyContext.getEndpointContext());
-    GrpcCallContext context = emptyContext.withEndpointContext(endpointContext);
+    GrpcCallContext context = GrpcCallContext.createDefault().withEndpointContext(endpointContext);
     assertEquals(context.getEndpointContext(), endpointContext);
   }
 

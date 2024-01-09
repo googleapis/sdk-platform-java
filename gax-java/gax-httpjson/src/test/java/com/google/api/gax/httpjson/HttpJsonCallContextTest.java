@@ -253,9 +253,8 @@ public class HttpJsonCallContextTest {
   @Test
   public void testEndpointContext() throws IOException {
     EndpointContext endpointContext = EndpointContext.newBuilder().setServiceName("test").build();
-    HttpJsonCallContext emptyContext = HttpJsonCallContext.createDefault();
-    assertNull(emptyContext.getEndpointContext());
-    HttpJsonCallContext context = emptyContext.withEndpointContext(endpointContext);
+    HttpJsonCallContext context =
+        HttpJsonCallContext.createDefault().withEndpointContext(endpointContext);
     assertEquals(context.getEndpointContext(), endpointContext);
   }
 

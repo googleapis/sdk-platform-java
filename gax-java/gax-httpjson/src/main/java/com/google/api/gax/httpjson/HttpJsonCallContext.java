@@ -89,7 +89,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
         null,
         null,
         null,
-        null);
+        EndpointContext.getDefault());
   }
 
   public static HttpJsonCallContext of(HttpJsonChannel channel, HttpJsonCallOptions options) {
@@ -104,7 +104,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
         null,
         null,
         null,
-        null);
+        EndpointContext.getDefault());
   }
 
   private HttpJsonCallContext(
