@@ -1,5 +1,5 @@
 /*
- * Copyright 2018 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -29,30 +29,43 @@
  */
 package com.google.api.gax.tracing;
 
-import com.google.api.core.ApiFutureCallback;
-import com.google.common.base.Preconditions;
-import java.util.concurrent.CancellationException;
-import javax.annotation.Nonnull;
+import com.google.api.core.InternalApi;
+import com.google.api.gax.core.GaxProperties;
+import io.opencensus.trace.Tracer;
+import io.opentelemetry.api.OpenTelemetry;
+import io.opentelemetry.api.metrics.Meter;
 
-/** An {@link ApiFutureCallback} to mark a started operation trace as finished. */
-class TraceFinisher<T> implements ApiFutureCallback<T> {
-  private final ApiTracer tracer;
+/**
+ * A {@link ApiTracerFactory} to build instances of {@link OpencensusTracer}.
+ *
+ * <p>This class wraps the {@link Tracer} provided by Opencensus in {@code Tracing.getTracer()}. It
+ * will be used to create new spans and wrap them in {@link OpencensusTracer} defined in gax.
+ *
+ * <p>This class is thread safe.
+ */
+@InternalApi("For google-cloud-java client use only")
+public class OpenTelemetryMetricsFactory implements ApiTracerFactory {
+  protected Meter meter;
 
-  TraceFinisher(@Nonnull ApiTracer tracer) {
-    this.tracer = Preconditions.checkNotNull(tracer, "tracer can't be null");
+  protected MetricsRecorder metricsRecorder;
+
+  public OpenTelemetryMetricsFactory(
+      OpenTelemetry openTelemetry, String libraryName, String libraryVersion) {
+    meter =
+        openTelemetry
+            .meterBuilder("gax")
+            .setInstrumentationVersion(GaxProperties.getGaxVersion())
+            .build();
+    metricsRecorder = new MetricsRecorder(meter);
   }
 
   @Override
-  public void onFailure(Throwable throwable) {
-    if (throwable instanceof CancellationException) {
-      tracer.operationCancelled();
-    } else {
-      tracer.operationFailed(throwable);
-    }
+  public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
+    return new MetricsTracer(spanName, metricsRecorder);
   }
 
   @Override
-  public void onSuccess(T responseT) {
-    tracer.operationSucceeded(responseT);
+  public ClientMetricsTracer newClientMetricsTracer() {
+    return new OpenTelemetryClientMetricsTracer(meter);
   }
 }

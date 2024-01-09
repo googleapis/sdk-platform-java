@@ -30,13 +30,20 @@
 package com.google.api.gax.grpc;
 
 import com.google.api.core.ApiFuture;
+import com.google.api.core.ApiFutureCallback;
+import com.google.api.core.ApiFutures;
 import com.google.api.core.ListenableFutureToApiFuture;
 import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.api.gax.tracing.ApiTracer;
 import com.google.common.base.Preconditions;
+import com.google.common.util.concurrent.MoreExecutors;
 import io.grpc.ClientCall;
+import io.grpc.Metadata;
 import io.grpc.MethodDescriptor;
 import io.grpc.stub.ClientCalls;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * {@code GrpcDirectCallable} creates gRPC calls.
@@ -56,18 +63,71 @@ class GrpcDirectCallable<RequestT, ResponseT> extends UnaryCallable<RequestT, Re
   public ApiFuture<ResponseT> futureCall(RequestT request, ApiCallContext inputContext) {
     Preconditions.checkNotNull(request);
     Preconditions.checkNotNull(inputContext);
-
-    ClientCall<RequestT, ResponseT> clientCall = GrpcClientCalls.newCall(descriptor, inputContext);
-
+    final GrpcResponseMetadata responseMetadata = new GrpcResponseMetadata();
+    GrpcCallContext grpcCallContext = responseMetadata.addHandlers(inputContext);
+    ClientCall<RequestT, ResponseT> clientCall =
+        GrpcClientCalls.newCall(descriptor, grpcCallContext);
+    GfeUnaryCallback<ResponseT> callback =
+        new GfeUnaryCallback<ResponseT>(inputContext.getTracer(), responseMetadata);
+    ApiFuture<ResponseT> future;
     if (awaitTrailers) {
-      return new ListenableFutureToApiFuture<>(ClientCalls.futureUnaryCall(clientCall, request));
+      future = new ListenableFutureToApiFuture<>(ClientCalls.futureUnaryCall(clientCall, request));
     } else {
-      return GrpcClientCalls.eagerFutureUnaryCall(clientCall, request);
+      future = GrpcClientCalls.eagerFutureUnaryCall(clientCall, request);
     }
+    ApiFutures.addCallback(future, callback, MoreExecutors.directExecutor());
+    return future;
   }
 
   @Override
   public String toString() {
     return String.format("direct(%s)", descriptor);
+  }
+
+  private static final Metadata.Key<String> SERVER_TIMING_HEADER_KEY =
+      Metadata.Key.of("server-timing", Metadata.ASCII_STRING_MARSHALLER);
+
+  private static final Pattern SERVER_TIMING_HEADER_PATTERN = Pattern.compile(".*dur=(?<dur>\\d+)");
+
+  static class GfeUnaryCallback<ResponseT> implements ApiFutureCallback<ResponseT> {
+
+    private final ApiTracer tracer;
+    private final GrpcResponseMetadata responseMetadata;
+
+    GfeUnaryCallback(ApiTracer tracer, GrpcResponseMetadata responseMetadata) {
+      this.tracer = tracer;
+      this.responseMetadata = responseMetadata;
+    }
+
+    @Override
+    public void onFailure(Throwable throwable) {
+      //      Util.recordMetricsFromMetadata(responseMetadata, tracer, throwable);
+    }
+
+    @Override
+    public void onSuccess(ResponseT response) {
+      Metadata metadata = responseMetadata.getMetadata();
+      if (metadata == null) {
+        return;
+      }
+      String allKeys = metadata.keys().stream().reduce((a, b) -> a + ", " + b).get();
+      //      System.out.println(
+      //          "************************ metadata size: "
+      //              + metadata.keys().size()
+      //              + ", all keys: "
+      //              + allKeys);
+      if (metadata.get(SERVER_TIMING_HEADER_KEY) == null) {
+        return;
+      }
+
+      String durMetadata = metadata.get(SERVER_TIMING_HEADER_KEY);
+      Matcher matcher = SERVER_TIMING_HEADER_PATTERN.matcher(durMetadata);
+      // this should always be true
+      if (matcher.find()) {
+        long latency = Long.valueOf(matcher.group("dur"));
+        tracer.recordGfeMetadata(latency);
+      }
+      //      System.out.println("GFE metadata: " + metadata.get(SERVER_TIMING_HEADER_KEY));
+    }
   }
 }

@@ -106,7 +106,7 @@ class TracedResponseObserver<ResponseT> implements ResponseObserver<ResponseT> {
 
   @Override
   public void onComplete() {
-    tracer.operationSucceeded();
+    tracer.operationSucceeded(null);
     innerObserver.onComplete();
   }
 }
