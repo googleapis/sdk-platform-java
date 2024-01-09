@@ -5,24 +5,7 @@
   "group-pull-request-title-pattern": "chore(${branch}): release ${version}",
   "packages": {
     ".": {
-      "extra-files": [
-        "WORKSPACE",
-        {
-          "type": "yaml",
-          "path": ".cloudbuild/cloudbuild.yaml",
-          "jsonpath": "$.substitutions._SHARED_DEPENDENCIES_VERSION"
-        },
-        {
-          "type": "yaml",
-          "path": ".cloudbuild/cloudbuild-test-a.yaml",
-          "jsonpath": "$.substitutions._SHARED_DEPENDENCIES_VERSION"
-        },
-        {
-          "type": "yaml",
-          "path": ".cloudbuild/cloudbuild-test-b.yaml",
-          "jsonpath": "$.substitutions._SHARED_DEPENDENCIES_VERSION"
-        }
-      ]
+      "extra-files": ["WORKSPACE", ".cloudbuild/cloudbuild.yaml", ".cloudbuild/cloudbuild-test-a.yaml", ".cloudbuild/cloudbuild-test-b.yaml"]
     }
   }
 }
