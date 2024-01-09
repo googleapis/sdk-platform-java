@@ -612,8 +612,8 @@ public final class GrpcCallContext implements ApiCallContext {
   @Override
   public void validateUniverseDomain() {
     EndpointContext endpointContext = getEndpointContext();
+    Credentials credentials = getCredentials();
     try {
-      Credentials credentials = getCredentials();
       if (!endpointContext.hasValidUniverseDomain(credentials)) {
         throw ApiExceptionFactory.createException(
             new Throwable(
@@ -627,11 +627,12 @@ public final class GrpcCallContext implements ApiCallContext {
     } catch (IOException e) {
       // Check if it is an Auth Exception
       if (e instanceof Retryable) {
+        Retryable retryable = (Retryable) e;
         // Keep the behavior the same as gRPC-Java. Mark as Auth Exceptions as Unavailable
         throw ApiExceptionFactory.createException(
             new Throwable("Unable to retrieve the Universe Domain from the Credentials."),
             GrpcStatusCode.of(Status.Code.UNAVAILABLE),
-            ((Retryable) e).isRetryable());
+            retryable.isRetryable());
       }
       // Return the exception back to the user
       throw new RuntimeException(e);

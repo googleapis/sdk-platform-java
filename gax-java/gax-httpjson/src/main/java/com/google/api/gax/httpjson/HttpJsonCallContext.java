@@ -416,8 +416,8 @@ public final class HttpJsonCallContext implements ApiCallContext {
   @Override
   public void validateUniverseDomain() {
     EndpointContext endpointContext = getEndpointContext();
+    Credentials credentials = getCallOptions().getCredentials();
     try {
-      Credentials credentials = getCallOptions().getCredentials();
       if (!endpointContext.hasValidUniverseDomain(credentials)) {
         throw ApiExceptionFactory.createException(
             new Throwable(
