@@ -21,7 +21,6 @@
 # contains the necessary folders and files, specifically:
 #   - A "google" folder found in the googleapis repository
 #   - A "grafeas" folder found in the googleapis repository
-#   - A "WORKSPACE" file belonging to googleapis
 # Note: googleapis repo is found in https://github.com/googleapis/googleapis.
 
 set -xeo pipefail
