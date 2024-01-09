@@ -5,8 +5,9 @@
 # postprocess_library.sh at the end, once all libraries are ready.
 #
 # Arguments
-# --generation_queries: a single string of key-value groups separated by a
-# pipe |. They key-value groups are in the form of `key=value` and will
+# --generation_queries: a single string of comma-separated key-value groups separated by a
+# pipe | (i.e. the groups are spearated by pipe, while a group's key-values are
+# separated by comma). They key-value groups are in the form of `key=value` and will
 # be converted to an argument to generate_library.sh (`--key value`).
 #   example: "proto_path=google/cloud/asset/v1,destination_path=google-cloud-asset-v1-java,(...)|proto_path=google/cloud/asset/v1p2beta5,destination_path=google-cloud-asset-v1-java,(...)"
 #   In this case, generate_library.sh will be called once with
