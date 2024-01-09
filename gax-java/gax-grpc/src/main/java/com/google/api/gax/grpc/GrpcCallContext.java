@@ -459,10 +459,7 @@ public final class GrpcCallContext implements ApiCallContext {
       newCallOptions = newCallOptions.withOption(TRACER_KEY, newTracer);
     }
 
-    EndpointContext newEndpointContext = grpcCallContext.endpointContext;
-    if (newEndpointContext == null) {
-      newEndpointContext = this.endpointContext;
-    }
+    EndpointContext newEndpointContext = endpointContext.merge(grpcCallContext.endpointContext);
 
     return new GrpcCallContext(
         newChannel,

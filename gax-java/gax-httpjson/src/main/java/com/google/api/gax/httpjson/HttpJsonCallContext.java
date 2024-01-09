@@ -210,12 +210,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
       newRetryableCodes = this.retryableCodes;
     }
 
-    EndpointContext newEndpointContext;
-    if (endpointContext != null) {
-      newEndpointContext = endpointContext.merge(httpJsonCallContext.endpointContext);
-    } else {
-      newEndpointContext = httpJsonCallContext.endpointContext;
-    }
+    EndpointContext newEndpointContext = endpointContext.merge(httpJsonCallContext.endpointContext);
 
     return new HttpJsonCallContext(
         newChannel,
