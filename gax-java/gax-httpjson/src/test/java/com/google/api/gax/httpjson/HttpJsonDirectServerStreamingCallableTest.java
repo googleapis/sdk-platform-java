@@ -206,8 +206,8 @@ public class HttpJsonDirectServerStreamingCallableTest {
 
     Truth.assertThat(moneyObserver.controller).isNotNull();
     // wait for the task to complete, otherwise it may interfere with other tests, since they share
-    // the same MockService and unfinished request in this tes may start readind messages designated
-    // for other tests.
+    // the same MockService and unfinished request in this test may start reading messages
+    // designated for other tests.
     Truth.assertThat(latch.await(2, TimeUnit.SECONDS)).isTrue();
   }
 
