@@ -569,6 +569,10 @@ public class DefaultValueComposerTest {
             + "FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())"
             + ".setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())"
             + ".setRequestId(\"requestId693933066\")"
+            + ".setSecondRequestId(\"secondRequestId344404470\")"
+            + ".setThirdRequestId(true)"
+            + ".setFourthRequestId(\"fourthRequestId-2116417776\")"
+            + ".setFifthRequestId(\"fifthRequestId959024147\")"
             + ".setSeverity(Severity.forNumber(0))"
             + ".setFoobar(Foobar.newBuilder().build()).build()",
         writerVisitor.write());

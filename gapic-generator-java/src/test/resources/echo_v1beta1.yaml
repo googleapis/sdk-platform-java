@@ -101,3 +101,7 @@ publishing:
     - selector: google.showcase.v1beta1.Echo.Echo
       auto_populated_fields:
       - request_id
+      - second_request_id
+      - third_request_id
+      - fourth_request_id
+      - non_existent_field

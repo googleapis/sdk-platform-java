@@ -30,6 +30,7 @@ import com.google.showcase.v1beta1.WaitResponse;
 import io.grpc.MethodDescriptor;
 import io.grpc.protobuf.ProtoUtils;
 import java.io.IOException;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Generated;
 
@@ -183,6 +184,22 @@ public class GrpcEchoStub extends EchoStub {
     GrpcCallSettings<EchoRequest, EchoResponse> echoTransportSettings =
         GrpcCallSettings.<EchoRequest, EchoResponse>newBuilder()
             .setMethodDescriptor(echoMethodDescriptor)
+            .setRequestMutator(
+                request -> {
+                  if (request.getRequestId() == null || request.getRequestId().isEmpty()) {
+                    request =
+                        request.toBuilder().setRequestId(UUID.randomUUID().toString()).build();
+                  }
+                  if (request.getSecondRequestId() == null
+                      || request.getSecondRequestId().isEmpty()) {
+                    request =
+                        request
+                            .toBuilder()
+                            .setSecondRequestId(UUID.randomUUID().toString())
+                            .build();
+                  }
+                  return request;
+                })
             .build();
     GrpcCallSettings<ExpandRequest, EchoResponse> expandTransportSettings =
         GrpcCallSettings.<ExpandRequest, EchoResponse>newBuilder()

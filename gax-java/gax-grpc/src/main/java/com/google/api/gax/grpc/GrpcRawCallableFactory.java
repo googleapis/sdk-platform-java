@@ -52,7 +52,9 @@ public class GrpcRawCallableFactory {
       GrpcCallSettings<RequestT, ResponseT> grpcCallSettings, Set<StatusCode.Code> retryableCodes) {
     UnaryCallable<RequestT, ResponseT> callable =
         new GrpcDirectCallable<>(
-            grpcCallSettings.getMethodDescriptor(), grpcCallSettings.shouldAwaitTrailers());
+            grpcCallSettings.getMethodDescriptor(),
+            grpcCallSettings.shouldAwaitTrailers(),
+            grpcCallSettings);
 
     if (grpcCallSettings.getParamsExtractor() != null) {
       callable =

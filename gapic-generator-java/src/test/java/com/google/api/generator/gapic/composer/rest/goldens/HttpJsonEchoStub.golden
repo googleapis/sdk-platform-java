@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Generated;
 
@@ -408,6 +409,22 @@ public class HttpJsonEchoStub extends EchoStub {
         HttpJsonCallSettings.<EchoRequest, EchoResponse>newBuilder()
             .setMethodDescriptor(echoMethodDescriptor)
             .setTypeRegistry(typeRegistry)
+            .setRequestMutator(
+                request -> {
+                  if (request.getRequestId() == null || request.getRequestId().isEmpty()) {
+                    request =
+                        request.toBuilder().setRequestId(UUID.randomUUID().toString()).build();
+                  }
+                  if (request.getSecondRequestId() == null
+                      || request.getSecondRequestId().isEmpty()) {
+                    request =
+                        request
+                            .toBuilder()
+                            .setSecondRequestId(UUID.randomUUID().toString())
+                            .build();
+                  }
+                  return request;
+                })
             .build();
     HttpJsonCallSettings<ExpandRequest, EchoResponse> expandTransportSettings =
         HttpJsonCallSettings.<ExpandRequest, EchoResponse>newBuilder()

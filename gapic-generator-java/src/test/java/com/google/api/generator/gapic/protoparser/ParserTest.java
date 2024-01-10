@@ -145,7 +145,14 @@ public class ParserTest {
     assertEquals(echoMethod.name(), "Echo");
     assertEquals(echoMethod.stream(), Method.Stream.NONE);
     assertEquals(true, echoMethod.hasAutoPopulatedFields());
-    assertEquals(Arrays.asList("request_id"), echoMethod.autoPopulatedFields());
+    assertEquals(
+        Arrays.asList(
+            "request_id",
+            "second_request_id",
+            "third_request_id",
+            "fourth_request_id",
+            "non_existent_field"),
+        echoMethod.autoPopulatedFields());
 
     // Detailed method signature parsing tests are in a separate unit test.
     List<List<MethodArgument>> methodSignatures = echoMethod.methodSignatures();
@@ -465,7 +472,12 @@ public class ParserTest {
     assertEquals(
         true, autoPopulatedMethodsWithFields.containsKey("google.showcase.v1beta1.Echo.Echo"));
     assertEquals(
-        Arrays.asList("request_id"),
+        Arrays.asList(
+            "request_id",
+            "second_request_id",
+            "third_request_id",
+            "fourth_request_id",
+            "non_existent_field"),
         autoPopulatedMethodsWithFields.get("google.showcase.v1beta1.Echo.Echo"));
   }
 

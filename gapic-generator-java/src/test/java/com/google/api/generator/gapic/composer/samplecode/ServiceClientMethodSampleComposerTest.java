@@ -336,6 +336,10 @@ public class ServiceClientMethodSampleComposerTest {
             "          .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\","
                 + " \"[FOOBAR]\").toString())\n",
             "          .setRequestId(\"requestId693933066\")\n",
+            "          .setSecondRequestId(\"secondRequestId344404470\")\n",
+            "          .setThirdRequestId(true)\n",
+            "          .setFourthRequestId(\"fourthRequestId-2116417776\")\n",
+            "          .setFifthRequestId(\"fifthRequestId959024147\")\n",
             "          .setSeverity(Severity.forNumber(0))\n",
             "          .setFoobar(Foobar.newBuilder().build())\n",
             "          .build();\n",
@@ -399,6 +403,10 @@ public class ServiceClientMethodSampleComposerTest {
             "          .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\","
                 + " \"[FOOBAR]\").toString())\n",
             "          .setRequestId(\"requestId693933066\")\n",
+            "          .setSecondRequestId(\"secondRequestId344404470\")\n",
+            "          .setThirdRequestId(true)\n",
+            "          .setFourthRequestId(\"fourthRequestId-2116417776\")\n",
+            "          .setFifthRequestId(\"fifthRequestId959024147\")\n",
             "          .setSeverity(Severity.forNumber(0))\n",
             "          .setFoobar(Foobar.newBuilder().build())\n",
             "          .build();\n",

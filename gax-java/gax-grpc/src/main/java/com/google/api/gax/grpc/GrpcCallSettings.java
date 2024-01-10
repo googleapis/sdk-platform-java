@@ -32,16 +32,19 @@ package com.google.api.gax.grpc;
 import com.google.api.core.BetaApi;
 import com.google.api.gax.rpc.RequestParamsExtractor;
 import io.grpc.MethodDescriptor;
+import java.util.function.Function;
 
 /** Grpc-specific settings for creating callables. */
 public class GrpcCallSettings<RequestT, ResponseT> {
   private final MethodDescriptor<RequestT, ResponseT> methodDescriptor;
   private final RequestParamsExtractor<RequestT> paramsExtractor;
+  private final Function<RequestT, RequestT> requestMutator;
   private final boolean alwaysAwaitTrailers;
 
   private GrpcCallSettings(Builder<RequestT, ResponseT> builder) {
     this.methodDescriptor = builder.methodDescriptor;
     this.paramsExtractor = builder.paramsExtractor;
+    this.requestMutator = builder.requestMutator;
     this.alwaysAwaitTrailers = builder.shouldAwaitTrailers;
   }
 
@@ -51,6 +54,10 @@ public class GrpcCallSettings<RequestT, ResponseT> {
 
   public RequestParamsExtractor<RequestT> getParamsExtractor() {
     return paramsExtractor;
+  }
+
+  public Function<RequestT, RequestT> getRequestMutator() {
+    return requestMutator;
   }
 
   @BetaApi
@@ -76,6 +83,8 @@ public class GrpcCallSettings<RequestT, ResponseT> {
   public static class Builder<RequestT, ResponseT> {
     private MethodDescriptor<RequestT, ResponseT> methodDescriptor;
     private RequestParamsExtractor<RequestT> paramsExtractor;
+
+    private Function<RequestT, RequestT> requestMutator;
     private boolean shouldAwaitTrailers;
 
     private Builder() {}
@@ -83,6 +92,7 @@ public class GrpcCallSettings<RequestT, ResponseT> {
     private Builder(GrpcCallSettings<RequestT, ResponseT> settings) {
       this.methodDescriptor = settings.methodDescriptor;
       this.paramsExtractor = settings.paramsExtractor;
+      this.requestMutator = settings.requestMutator;
       this.shouldAwaitTrailers = settings.alwaysAwaitTrailers;
     }
 
@@ -95,6 +105,12 @@ public class GrpcCallSettings<RequestT, ResponseT> {
     public Builder<RequestT, ResponseT> setParamsExtractor(
         RequestParamsExtractor<RequestT> paramsExtractor) {
       this.paramsExtractor = paramsExtractor;
+      return this;
+    }
+
+    public Builder<RequestT, ResponseT> setRequestMutator(
+        Function<RequestT, RequestT> requestMutator) {
+      this.requestMutator = requestMutator;
       return this;
     }
 
