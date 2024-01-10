@@ -28,6 +28,9 @@ Note: googleapis repo is found in https://github.com/googleapis/googleapis.
 import click
 import utilities as util
 import os
+import subprocess
+
+script_dir = os.path.dirname(os.path.realpath(__file__))
 
 @click.group(invoke_without_command=False)
 @click.pass_context
@@ -81,47 +84,56 @@ def main(ctx):
     whether a final postprocessing run should be done on the pre-processed generated libraries
     """
 )
-def generate_composed_library(
+def generate(
     generation_queries,
     repository_path,
     versions_file,
     enable_postprocessing
 ):
   output_folder = util.sh_util('get_output_folder')
+  print(f'output_folder: {output_folder}')
   os.makedirs(output_folder, exist_ok=True)
 
   if 'google-cloud-java' in repository_path:
     print('this is a monorepo library')
     library = repository_path.split('/')[-1]
-    util.sh_util('sparse_clone "https://github.com/googleapis/google-cloud-java.git" "{library} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"', cwd=output_folder)
+    clone_out = util.sh_util('sparse_clone "https://github.com/googleapis/google-cloud-java.git" "{library} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"', cwd=output_folder)
+    print(clone_out)
     if versions_file is None:
       versions_file = f'{output_folder}/google-cloud-java/versions.txt'
   else:
     print('this is a HW library')
-    util.sh_util('git clone "https://github.com/googleapis/{repository_path}.git"', cwd=output_folder)
+    clone_out = util.sh_util(f'git clone "https://github.com/googleapis/{repository_path}.git"', cwd=output_folder)
+    print(clone_out)
     if versions_file is None:
       versions_file = f'{output_folder}/{repository_path}/versions.txt'
 
   owlbot_cli_source_folder = util.sh_util('mktemp -d')
   for query in generation_queries.split('|'):
+    print(f'query: {query}')
     arguments = util.get_generate_library_arguments(query)
-    arguments = util.add_argument(arguments, 'versions_file', versions_file)
     proto_path = util.get_argument_value_from_query(query, 'proto_path')
     destination_path = util.get_argument_value_from_query(query, 'destination_path')
 
-    print(f'Generating library from {proto_path}, to {destination_path}...')
-    util.sh_util(f'echo "{arguments}" | xargs "{script_dir}/generate_library.sh"'
+    print(f'Generating library from {proto_path} to {destination_path}...')
+    with subprocess.Popen([f'{script_dir}/generate_library.sh', *arguments.split(' ')],
+      stdout=subprocess.PIPE, stderr=subprocess.STDOUT) as generation_process:
+      for line in generation_process.stdout:
+        print(line.decode(), end='', flush=True)
     print('Generate library finished')
 
     if enable_postprocessing:
       util.sh_util(f'build_owlbot_cli_source_folder "{output_folder}/{destination_path}"'
-                   + ' "{owlbot_cli_source_folder}" "{output_folder}/{destination_path}"',
+                   + f' "{owlbot_cli_source_folder}" "{output_folder}/{destination_path}"',
                    cwd=output_folder)
 
   if enable_postprocessing:
     # call postprocess library
-    util.sh_util(f'{script_dir}/postprocess_library.sh "{output_folder}/{repository_path}" '
-                 + '"" "{versions_file}" "{owlbot_cli_source_folder}"')
+    with subprocess.Popen([f'{script_dir}/postprocess_library.sh', f'{output_folder}/{repository_path}',
+      '', versions_file, owlbot_cli_source_folder],
+      stdout=subprocess.PIPE, stderr=subprocess.STDOUT) as postprocessing_process:
+      for line in postprocessing_process.stdout:
+        print(line.decode(), end='', flush=True)
 
 if __name__ == "__main__":
   main()

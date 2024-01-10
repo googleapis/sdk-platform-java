@@ -105,9 +105,12 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
     queries="${queries}|"
   done
 
+  # remove last pipe character from queries
+  queries=$(echo "${queries}" | sed 's/|$//')
+
   echo "Generating library from ${proto_path}, to ${destination_path}..."
   generation_start=$(date "+%s")
-  python3 "${library_generation_dir}"/generate_composed_library.py \
+  python3 "${library_generation_dir}"/generate_composed_library.py generate \
     --generation_queries "${queries}" \
     --repository_path "${repository_path}" \
     --versions_file "${versions_file}" \

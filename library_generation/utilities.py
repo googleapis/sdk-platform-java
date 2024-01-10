@@ -2,6 +2,7 @@
 from collections.abc import Sequence
 import sys
 import subprocess
+import os
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 
@@ -23,7 +24,7 @@ def get_generate_library_arguments(query: str) -> str:
   for raw_argument_kv in raw_arguments_kv:
     key = _get_raw_argument_component(raw_argument_kv, 0)
     value = _get_raw_argument_component(raw_argument_kv, 1)
-    result += f'--{key} "{value}" '
+    result += f'--{key} {value} '
   return result[:-1]
 
 """
@@ -44,11 +45,29 @@ this function adds another argument "--arg_key arg_value" to the end
 of the argument string
 """
 def add_argument(arguments: str, arg_key: str, arg_val: str) -> str:
-  return f'{arguments} --{arg_key} "{arg_val}"'
+  return f'{arguments} --{arg_key} {arg_val}'
 
-def sh_util(statement: str) -> str:
-  output = subprocess.run('bash', '-c', f'source {script_dir}/utilities.sh && {statement}')
-  return output.stdout
+def sh_util(statement: str, **kwargs) -> str:
+  if 'stdout' not in kwargs:
+    kwargs['stdout'] = subprocess.PIPE
+  if 'stderr' not in kwargs:
+    kwargs['stderr'] = subprocess.PIPE
+  output = ''
+  with subprocess.Popen(
+      ['bash', '-c', f'source {script_dir}/utilities.sh && {statement}'],
+      **kwargs,
+  ) as proc:
+    print('command stderr:')
+    for line in proc.stderr:
+      print(line.decode(), end='', flush=True)
+    print('command stdout:')
+    for line in proc.stdout:
+      print(line.decode(), end='', flush=True)
+      output += line.decode()
+  # captured stdout may contain a newline at the end, we remove it
+  if len(output) > 0 and output[-1] == '\n':
+    output = output[:-1]
+  return output
 
 def _get_raw_argument_component(raw_argument: str, index: int) -> str:
   result = raw_argument.split('=')[index]
