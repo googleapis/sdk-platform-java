@@ -1,8 +1,9 @@
 
 from collections.abc import Sequence
 import sys
+import subprocess
 
-
+script_dir = os.path.dirname(os.path.realpath(__file__))
 
 """
 Helper function for generate_composed_library.py
@@ -44,6 +45,10 @@ of the argument string
 """
 def add_argument(arguments: str, arg_key: str, arg_val: str) -> str:
   return f'{arguments} --{arg_key} "{arg_val}"'
+
+def sh_util(statement: str) -> str:
+  output = subprocess.run('bash', '-c', f'source {script_dir}/utilities.sh && {statement}')
+  return output.stdout
 
 def _get_raw_argument_component(raw_argument: str, index: int) -> str:
   result = raw_argument.split('=')[index]
