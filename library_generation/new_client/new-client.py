@@ -148,6 +148,12 @@ def main(ctx):
     default="output/versions.txt",
     help="A text file contains versions of modules"
 )
+@click.option(
+    "--split-repo",
+    type=bool,
+    default=False,
+    help="Whether generating a library into a split repository"
+)
 def generate(
     api_shortname,
     name_pretty,
@@ -166,6 +172,7 @@ def generate(
     rest_docs,
     rpc_docs,
     versions_file,
+    split_repo,
 ):
     cloud_prefix = "cloud-" if cloud_api else ""
 
@@ -189,6 +196,10 @@ def generate(
     if api_shortname == "":
         sys.exit("api_shortname is empty")
 
+    repo = "googleapis/google-cloud-java"
+    if split_repo:
+        repo = f"{language}-{api_shortname}"
+
     repo_metadata = {
         "api_shortname": api_shortname,
         "name_pretty": name_pretty,
@@ -198,7 +209,7 @@ def generate(
         "release_level": release_level,
         "transport": transport,
         "language": language,
-        "repo": f"googleapis/{language}-{api_shortname}",
+        "repo": f"{repo}",
         "repo_short": f"{language}-{api_shortname}",
         "distribution_name": distribution_name,
         "api_id": api_id,
@@ -299,7 +310,6 @@ def generate(
         cwd=repo_root_dir
     )
 
-    script_dir = "library_generation/new_client"
     # Move generated module to repo root.
     __move_modules(
         source=output_dir,
@@ -307,7 +317,9 @@ def generate(
         name_prefix="java-"
     )
 
-    # Remove irrelevant files from templates
+    # Repo level post process
+    script_dir = "library_generation/repo-level-postprocess"
+    print("Remove irrelevant files from templates")
     subprocess.check_call(
         [
             "bash",
@@ -315,6 +327,8 @@ def generate(
          ],
         cwd=repo_root_dir
     )
+
+    print("Deleting non generated samples")
     subprocess.check_call(
         [
             "bash",
@@ -322,16 +336,6 @@ def generate(
         ],
         cwd=repo_root_dir
     )
-
-    if Path(f"{repo_root_dir}/gapic-libraries-bom/pom.xml").is_file():
-        print("Regenerating the BOM")
-        subprocess.check_call(
-            [
-                f"{script_dir}/generate_gapic_bom.sh",
-                f"{output_dir}"
-            ],
-            cwd=repo_root_dir,
-        )
 
     print("Regenerating root pom.xml")
     subprocess.check_call(
@@ -350,9 +354,17 @@ def generate(
         ],
         cwd=repo_root_dir,
     )
-    parent_pom = Path(f"{repo_root_dir}/google-cloud-jar-parent/pom.xml")\
-        .resolve()
-    if parent_pom.is_file():
+
+    if not split_repo:
+        print("Regenerating the GAPIC BOM")
+        subprocess.check_call(
+            [
+                f"{script_dir}/generate_gapic_bom.sh",
+                f"{output_dir}"
+            ],
+            cwd=repo_root_dir,
+        )
+
         print("Setting parent poms")
         subprocess.check_call(
             [

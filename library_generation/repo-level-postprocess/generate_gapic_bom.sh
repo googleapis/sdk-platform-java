@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -xe
+set -e
 
 # Generate BOM of the artifacts in this repository
 GENERATION_DIR=$1
