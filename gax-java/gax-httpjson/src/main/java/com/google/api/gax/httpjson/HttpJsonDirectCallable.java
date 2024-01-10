@@ -44,14 +44,27 @@ class HttpJsonDirectCallable<RequestT, ResponseT> extends UnaryCallable<RequestT
   private final ApiMethodDescriptor<RequestT, ResponseT> descriptor;
   private final TypeRegistry typeRegistry;
 
+  private HttpJsonCallSettings httpJsonCallSettings;
+
   HttpJsonDirectCallable(ApiMethodDescriptor<RequestT, ResponseT> descriptor) {
-    this(descriptor, null);
+    this(descriptor, null, null);
   }
 
   HttpJsonDirectCallable(
-      ApiMethodDescriptor<RequestT, ResponseT> descriptor, TypeRegistry typeRegistry) {
+      ApiMethodDescriptor<RequestT, ResponseT> descriptor,
+      TypeRegistry typeRegistry,
+      HttpJsonCallSettings httpJsonCallSettings) {
     this.descriptor = descriptor;
     this.typeRegistry = typeRegistry;
+    this.httpJsonCallSettings = httpJsonCallSettings;
+  }
+
+  public HttpJsonDirectCallable(
+      ApiMethodDescriptor<RequestT, ResponseT> descriptor,
+      HttpJsonCallSettings httpJsonCallSettings) {
+    this.descriptor = descriptor;
+    this.httpJsonCallSettings = httpJsonCallSettings;
+    this.typeRegistry = null;
   }
 
   @Override
@@ -63,9 +76,15 @@ class HttpJsonDirectCallable<RequestT, ResponseT> extends UnaryCallable<RequestT
         context.withCallOptions(
             context.getCallOptions().toBuilder().setTypeRegistry(typeRegistry).build());
 
+    RequestT newRequest = request;
+
+    if (httpJsonCallSettings != null && httpJsonCallSettings.getRequestMutator() != null) {
+      newRequest = (RequestT) httpJsonCallSettings.getRequestMutator().apply(request);
+    }
+
     HttpJsonClientCall<RequestT, ResponseT> clientCall =
         HttpJsonClientCalls.newCall(descriptor, context);
-    return HttpJsonClientCalls.futureUnaryCall(clientCall, request, context);
+    return HttpJsonClientCalls.futureUnaryCall(clientCall, newRequest, context);
   }
 
   @Override

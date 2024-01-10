@@ -31,16 +31,20 @@ package com.google.api.gax.httpjson;
 
 import com.google.api.gax.rpc.RequestParamsExtractor;
 import com.google.protobuf.TypeRegistry;
+import java.util.function.Function;
 
 /** HTTP-specific settings for creating callables. */
 public class HttpJsonCallSettings<RequestT, ResponseT> {
   private final ApiMethodDescriptor<RequestT, ResponseT> methodDescriptor;
   private final RequestParamsExtractor<RequestT> paramsExtractor;
+
+  private final Function<RequestT, RequestT> requestMutator;
   private final TypeRegistry typeRegistry;
 
   private HttpJsonCallSettings(Builder<RequestT, ResponseT> builder) {
     this.methodDescriptor = builder.methodDescriptor;
     this.paramsExtractor = builder.paramsExtractor;
+    this.requestMutator = builder.requestMutator;
     this.typeRegistry = builder.typeRegistry;
   }
 
@@ -50,6 +54,10 @@ public class HttpJsonCallSettings<RequestT, ResponseT> {
 
   public RequestParamsExtractor<RequestT> getParamsExtractor() {
     return paramsExtractor;
+  }
+
+  public Function<RequestT, RequestT> getRequestMutator() {
+    return requestMutator;
   }
 
   public TypeRegistry getTypeRegistry() {
@@ -72,6 +80,8 @@ public class HttpJsonCallSettings<RequestT, ResponseT> {
   }
 
   public static class Builder<RequestT, ResponseT> {
+
+    public Function<RequestT, RequestT> requestMutator;
     private ApiMethodDescriptor<RequestT, ResponseT> methodDescriptor;
     private RequestParamsExtractor<RequestT> paramsExtractor;
     private TypeRegistry typeRegistry;
@@ -91,6 +101,12 @@ public class HttpJsonCallSettings<RequestT, ResponseT> {
     public Builder<RequestT, ResponseT> setParamsExtractor(
         RequestParamsExtractor<RequestT> paramsExtractor) {
       this.paramsExtractor = paramsExtractor;
+      return this;
+    }
+
+    public Builder<RequestT, ResponseT> setRequestMutator(
+        Function<RequestT, RequestT> requestMutator) {
+      this.requestMutator = requestMutator;
       return this;
     }
 

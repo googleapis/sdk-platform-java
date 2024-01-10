@@ -62,7 +62,9 @@ public class HttpJsonCallableFactory {
       HttpJsonCallSettings<RequestT, ResponseT> httpJsonCallSettings) {
     UnaryCallable<RequestT, ResponseT> callable =
         new HttpJsonDirectCallable<>(
-            httpJsonCallSettings.getMethodDescriptor(), httpJsonCallSettings.getTypeRegistry());
+            httpJsonCallSettings.getMethodDescriptor(),
+            httpJsonCallSettings.getTypeRegistry(),
+            httpJsonCallSettings);
 
     if (httpJsonCallSettings.getParamsExtractor() != null) {
       callable =
