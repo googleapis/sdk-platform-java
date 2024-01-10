@@ -20,6 +20,7 @@ import subprocess
 import sys
 
 import click
+
 import templates
 from git import Repo
 from client_inputs import parse
@@ -141,6 +142,13 @@ def main(ctx):
          "maintained or generated"
 )
 @click.option(
+    "--googleapis-url",
+    type=str,
+    default="https://github.com/googleapis/googleapis.git",
+    show_default=True,
+    help="The URL of the repository that has proto service definition"
+)
+@click.option(
     "--rest-docs",
     type=str,
     help="If it exists, link to the REST Documentation for a service"
@@ -178,6 +186,7 @@ def generate(
     cloud_api,
     group_id,
     library_type,
+    googleapis_url,
     rest_docs,
     rpc_docs,
     versions_file,
@@ -268,9 +277,12 @@ def generate(
         api_shortname=api_shortname
     )
 
-    print("Cloning googleapis...")
+    print(f"Pulling proto from {googleapis_url}")
     output_dir = Path(f"{sys.path[0]}/../../output").resolve()
-    __clone_googleapis(output_dir)
+    __sparse_clone(
+        remote_url=googleapis_url,
+        dest=output_dir,
+    )
     # Find a versioned directory within proto_path
     # We only need to generate one version of the library as OwlBot
     # will copy other versions from googleapis-gen.
@@ -278,7 +290,7 @@ def generate(
         Path(f"{sys.path[0]}/../../output/{proto_path}").resolve()
     )
     versioned_proto_path = f"{proto_path}/{version}"
-    print(f"Generating from {versioned_proto_path}...")
+    print(f"Generating from {versioned_proto_path}")
     # parse BUILD.bazel in proto_path
     client_input = parse(
         build_path=Path(f"{sys.path[0]}/../../output/{versioned_proto_path}")
@@ -419,26 +431,20 @@ def generate(
           f"  $ gh pr create --title 'feat: [{api_shortname}] new module for {api_shortname}'")
 
 
-def __clone_googleapis(output_dir: Path) -> None:
-    Repo.clone_from(
-        "https://github.com/googleapis/googleapis.git",
-        to_path=f"{output_dir}/googleapis"
+def __sparse_clone(
+    remote_url: str,
+    dest: Path,
+    commit_hash: str = "master",
+):
+    local_repo = Repo.init(dest)
+    origin = local_repo.create_remote(
+        name="origin",
+        url=remote_url
     )
-    subprocess.check_call([
-        "mv",
-        f"{output_dir}/googleapis/google",
-        f"{output_dir}"]
-    )
-    subprocess.check_call([
-        "mv",
-        f"{output_dir}/googleapis/grafeas",
-        f"{output_dir}"]
-    )
-    subprocess.check_call([
-        "rm",
-        "-rf",
-        f"{output_dir}/googleapis"]
-    )
+
+    origin.fetch()
+    git = local_repo.git()
+    git.checkout(f"origin/{commit_hash}", "--", "google", "grafeas")
 
 
 def __find_version(proto_path: Path) -> str:
