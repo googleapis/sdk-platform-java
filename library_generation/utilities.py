@@ -7,7 +7,7 @@ import os
 script_dir = os.path.dirname(os.path.realpath(__file__))
 
 """
-Helper function for generate_composed_library.py
+Helper function for generate_composed_library.sh
 
 It takes a single "query" argument
 "query" is a string of key=value entries separated by a comma
