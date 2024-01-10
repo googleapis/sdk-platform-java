@@ -56,7 +56,8 @@ if [[ ! -f "WORKSPACE" ]] || [[ ! -d "google" ]] || [[ ! -d "grafeas" ]]; then
   download_googleapis_files_and_folders "${output_folder}"
 fi
 # parse version of gapic-generator-java, protobuf and grpc from WORKSPACE
-gapic_generator_version=$(get_version_from_WORKSPACE "_gapic_generator_java_version" WORKSPACE "=")
+# gapic_generator_version=$(get_version_from_WORKSPACE "_gapic_generator_java_version" WORKSPACE "=")
+gapic_generator_version="2.29.0"
 echo "The version of gapic-generator-java is ${gapic_generator_version}."
 protobuf_version=$(get_version_from_WORKSPACE "protobuf-" WORKSPACE "-")
 echo "The version of protobuf is ${protobuf_version}"
@@ -106,7 +107,7 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
 
   echo "Generating library from ${proto_path}, to ${destination_path}..."
   generation_start=$(date "+%s")
-  "${library_generation_dir}"/generate_composed_library.sh \
+  python3 "${library_generation_dir}"/generate_composed_library.py \
     --generation_queries "${queries}" \
     --repository_path "${repository_path}" \
     --versions_file "${versions_file}" \
