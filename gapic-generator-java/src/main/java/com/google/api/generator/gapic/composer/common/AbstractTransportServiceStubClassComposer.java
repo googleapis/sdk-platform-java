@@ -72,6 +72,7 @@ import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.api.pathtemplate.PathTemplate;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
@@ -1268,8 +1269,8 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
         .build();
   }
 
-  // request = request.toBuilder().setRequestId(UUID.randomUUID().toString()).build();
-  private List<Statement> createRequestMutatorBody(
+  @VisibleForTesting
+  private static List<Statement> createRequestMutatorBody(
       Method method, ImmutableMap<String, Message> messageTypes) {
     List<Statement> bodyStatements = new ArrayList<>();
 
@@ -1303,7 +1304,8 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     return bodyStatements;
   }
 
-  private Statement createAutoPopulatedRequestStatement(
+  @VisibleForTesting
+  static Statement createAutoPopulatedRequestStatement(
       Method method, VariableExpr requestVarExpr, String fieldName) {
     MethodInvocationExpr getAutoPopulatedFieldInvocationExpr =
         MethodInvocationExpr.builder()
@@ -1338,7 +1340,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
             .setReturnType(method.inputType())
             .build();
 
-    // Currently, autopopulation is only for UUID.
+    // Note: Currently, autopopulation is only for UUID.
     VariableExpr UUIDVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
