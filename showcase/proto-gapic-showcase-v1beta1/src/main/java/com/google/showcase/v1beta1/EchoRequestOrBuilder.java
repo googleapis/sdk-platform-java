@@ -123,5 +123,25 @@ public interface EchoRequestOrBuilder extends
   com.google.protobuf.ByteString
       getOtherHeaderBytes();
 
+  /**
+   * <pre>
+   * Based on go/client-populate-request-id-design; subject to change
+   * </pre>
+   *
+   * <code>string request_id = 7 [(.google.api.field_info) = { ... }</code>
+   * @return The requestId.
+   */
+  java.lang.String getRequestId();
+  /**
+   * <pre>
+   * Based on go/client-populate-request-id-design; subject to change
+   * </pre>
+   *
+   * <code>string request_id = 7 [(.google.api.field_info) = { ... }</code>
+   * @return The bytes for requestId.
+   */
+  com.google.protobuf.ByteString
+      getRequestIdBytes();
+
   com.google.showcase.v1beta1.EchoRequest.ResponseCase getResponseCase();
 }

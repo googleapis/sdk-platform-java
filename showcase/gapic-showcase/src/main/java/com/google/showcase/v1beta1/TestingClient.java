@@ -46,6 +46,8 @@ import javax.annotation.Generated;
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
 /**
  * Service Description: A service to facilitate running discrete sets of tests against Showcase.
+ * Adding this comment with special characters for comment formatting tests: 1.
+ * (abra-&gt;kadabra-&gt;alakazam) 2) [Nonsense][]: `pokemon/&#42;/psychic/&#42;`
  *
  * <p>This class provides the ability to make remote calls to the backing service through method
  * calls that map to API methods. Sample code to get started:
@@ -73,7 +75,7 @@ import javax.annotation.Generated;
  *      <th>Method Variants</th>
  *    <tr>
  *      <td>CreateSession</td>
- *      <td><p> Creates a new testing session.</td>
+ *      <td><p> Creates a new testing session. Adding this comment with special characters for comment formatting tests: 1. (abra-&gt;kadabra-&gt;alakazam) 2) [Nonsense][]: `pokemon/&#42;/psychic/&#42;`</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
@@ -366,7 +368,9 @@ public class TestingClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Creates a new testing session.
+   * Creates a new testing session. Adding this comment with special characters for comment
+   * formatting tests: 1. (abra-&gt;kadabra-&gt;alakazam) 2) [Nonsense][]:
+   * `pokemon/&#42;/psychic/&#42;`
    *
    * <p>Sample code:
    *
@@ -392,7 +396,9 @@ public class TestingClient implements BackgroundResource {
 
   // AUTO-GENERATED DOCUMENTATION AND METHOD.
   /**
-   * Creates a new testing session.
+   * Creates a new testing session. Adding this comment with special characters for comment
+   * formatting tests: 1. (abra-&gt;kadabra-&gt;alakazam) 2) [Nonsense][]:
+   * `pokemon/&#42;/psychic/&#42;`
    *
    * <p>Sample code:
    *
