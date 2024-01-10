@@ -97,7 +97,7 @@ def generate(
   if 'google-cloud-java' in repository_path:
     print('this is a monorepo library')
     library = repository_path.split('/')[-1]
-    clone_out = util.sh_util('sparse_clone "https://github.com/googleapis/google-cloud-java.git" "{library} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"', cwd=output_folder)
+    clone_out = util.sh_util(f'sparse_clone "https://github.com/googleapis/google-cloud-java.git" "{library} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"', cwd=output_folder)
     print(clone_out)
     if versions_file is None:
       versions_file = f'{output_folder}/google-cloud-java/versions.txt'
@@ -116,7 +116,7 @@ def generate(
     destination_path = util.get_argument_value_from_query(query, 'destination_path')
 
     print(f'Generating library from {proto_path} to {destination_path}...')
-    with subprocess.Popen([f'{script_dir}/generate_library.sh', *arguments.split(' ')],
+    with subprocess.Popen([f'{script_dir}/generate_library.sh', *arguments],
       stdout=subprocess.PIPE, stderr=subprocess.STDOUT) as generation_process:
       for line in generation_process.stdout:
         print(line.decode(), end='', flush=True)

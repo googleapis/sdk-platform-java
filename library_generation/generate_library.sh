@@ -291,3 +291,7 @@ popd # output_folder
 pushd "${temp_destination_path}"
 rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_proto.jar temp-codegen.srcjar
 popd # destination path
+
+cp -r ${temp_destination_path}/* "${output_folder}/${destination_path}"
+rm -rdf "${temp_destination_path}"
+exit 0
