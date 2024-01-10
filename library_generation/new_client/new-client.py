@@ -64,6 +64,14 @@ def main(ctx):
     help="Description that appears in README.md"
 )
 @click.option(
+    "--generator-version",
+    required=True,
+    type=str,
+    prompt="A released version of gapic-generator-java",
+    help="A released version of gapic-generator-java that can be found in "
+         "Maven Central"
+)
+@click.option(
     "--release-level",
     type=click.Choice(["stable", "preview"]),
     default="preview",
@@ -159,6 +167,7 @@ def generate(
     name_pretty,
     product_docs,
     api_description,
+    generator_version,
     release_level,
     distribution_name,
     api_id,
@@ -286,7 +295,7 @@ def generate(
         "-d",
         destination_path,
         "--gapic_generator_version",
-        "2.31.0",
+        generator_version,
         "--protobuf_version",
         "23.2",
         "--proto_only",
@@ -390,6 +399,16 @@ def generate(
             f"{script_dir}/readme_update.sh",
         ],
         cwd=repo_root_dir,
+    )
+
+    print("Deleting temp files")
+    subprocess.check_call(
+        [
+            "rm",
+            "-rf",
+            f"{output_dir}"
+        ],
+        cwd=repo_root_dir
     )
 
     print(f"Prepared new library in {workdir}")
