@@ -22,6 +22,7 @@ import os
 import re
 from typing import List, Mapping
 from poms import module, templates
+from pathlib import Path
 
 
 def load_versions(filename: str, default_group_id: str) -> Mapping[str, module.Module]:
@@ -500,10 +501,7 @@ def main(versions_file, monorepo):
             name=name,
         )
 
-    # For monorepo, we use the versions.txt at the root. The "./" is needed
-    # for the templates.render(), which tries to create a directory.
-    versions_txt_file = "../versions.txt" if monorepo else "./versions.txt"
-    print(f"updating modules in {versions_txt_file}")
+    print(f"updating modules in {versions_file}")
     existing_modules.pop(parent_artifact_id)
 
     # add extra modules to versions.txt
@@ -516,7 +514,7 @@ def main(versions_file, monorepo):
                 release_version=main_module.release_version,
             )
     templates.render(
-        template_name="versions.txt.j2", output_name=versions_txt_file, modules=existing_modules.values(),
+        template_name="versions.txt.j2", output_name=versions_file, modules=existing_modules.values(),
     )
 
 
@@ -524,5 +522,5 @@ if __name__ == "__main__":
     versions_file = sys.argv[1]
     monorepo = sys.argv[2]
     if monorepo == 'true':
-      monorepo = True
+        monorepo = True
     main(versions_file, monorepo)

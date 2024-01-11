@@ -317,7 +317,7 @@ def generate(
         "--include_samples",
         client_input.include_samples,
         "--versions_file",
-        f"{output_dir}/versions.txt"],
+        f"{repo_root_dir}/versions.txt"],
         cwd=repo_root_dir
     )
 
