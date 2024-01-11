@@ -102,7 +102,7 @@ def generate(
     if versions_file is None:
       versions_file = f'{output_folder}/google-cloud-java/versions.txt'
   else:
-    print('this is a HW library')
+    print('this is a handwritten library')
     clone_out = util.sh_util(f'git clone "https://github.com/googleapis/{repository_path}.git"', cwd=output_folder)
     print(clone_out)
     if versions_file is None:
