@@ -45,7 +45,7 @@ public abstract class EndpointContext {
   public static final String INVALID_UNIVERSE_DOMAIN_ERROR_TEMPLATE =
       "The configured universe domain (%s) does not match the universe domain found in the credentials (%s). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.";
   public static final String UNABLE_TO_RETRIEVE_CREDENTIALS_ERROR_MESSAGE =
-      "Unable to retrieve the Universe Domain from the Credentials. The RPC call will not be made.";
+      "Unable to retrieve the Universe Domain from the Credentials. The client library will not invoke the RPC.";
 
   /**
    * ServiceName is host URI for Google Cloud Services. It follows the format of
