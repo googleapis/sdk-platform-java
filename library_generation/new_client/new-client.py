@@ -18,9 +18,7 @@ from pathlib import Path
 import re
 import subprocess
 import sys
-
 import click
-
 import templates
 from git import Repo
 from client_inputs import parse
@@ -159,12 +157,6 @@ def main(ctx):
     help="If it exists, link to the RPC Documentation for a service"
 )
 @click.option(
-    "--versions-file",
-    type=str,
-    default="output/versions.txt",
-    help="A text file contains versions of modules"
-)
-@click.option(
     "--split-repo",
     type=bool,
     default=False,
@@ -189,7 +181,6 @@ def generate(
     googleapis_url,
     rest_docs,
     rpc_docs,
-    versions_file,
     split_repo,
 ):
     cloud_prefix = "cloud-" if cloud_api else ""
@@ -298,7 +289,6 @@ def generate(
         versioned_path=versioned_proto_path,
     )
     repo_root_dir = Path(f"{sys.path[0]}/../../").resolve()
-    versions = Path(f"{versions_file}").resolve()
     # run generate_library.sh
     subprocess.check_call([
         "library_generation/generate_library.sh",
@@ -327,7 +317,7 @@ def generate(
         "--include_samples",
         client_input.include_samples,
         "--versions_file",
-        f"{versions}"],
+        f"{output_dir}/versions.txt"],
         cwd=repo_root_dir
     )
 

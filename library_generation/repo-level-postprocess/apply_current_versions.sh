@@ -22,5 +22,5 @@ for versions_file in $(find . -mindepth 0 -maxdepth 2 -name versions.txt \
 done
 
 echo "Running sed command. It may take few minutes."
-find . -maxdepth 3 -name pom.xml |sort --dictionary-order |xargs sed -i.bak $SED_OPTIONS
-find . -maxdepth 3 -name pom.xml.bak |xargs rm
+find . -maxdepth 3 -name pom.xml | sort --dictionary-order | xargs sed -i.bak $SED_OPTIONS
+find . -maxdepth 3 -name pom.xml.bak | xargs rm
