@@ -36,7 +36,7 @@ import static org.mockito.Mockito.verify;
 import com.google.api.gax.grpc.testing.FakeChannelFactory;
 import com.google.api.gax.grpc.testing.FakeServiceGrpc;
 import com.google.api.gax.rpc.EndpointContext;
-import com.google.api.gax.rpc.PermissionDeniedException;
+import com.google.api.gax.rpc.UnauthenticatedException;
 import com.google.api.gax.rpc.UnavailableException;
 import com.google.auth.Credentials;
 import com.google.auth.Retryable;
@@ -51,6 +51,7 @@ import io.grpc.Deadline;
 import io.grpc.ManagedChannel;
 import io.grpc.Metadata;
 import io.grpc.MethodDescriptor;
+import io.grpc.Status;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -97,8 +98,9 @@ public class GrpcClientCallsTest {
     mockChannel = Mockito.mock(Channel.class);
 
     defaultCallContext = GrpcCallContext.createDefault().withEndpointContext(endpointContext);
-
-    Mockito.when(endpointContext.hasValidUniverseDomain(Mockito.any())).thenReturn(true);
+    Mockito.doNothing()
+        .when(endpointContext)
+        .validateUniverseDomain(Mockito.any(Credentials.class), Mockito.any(GrpcStatusCode.class));
   }
 
   @Test
@@ -278,7 +280,6 @@ public class GrpcClientCallsTest {
 
   @Test
   public void testValidUniverseDomain() throws IOException {
-    Mockito.when(endpointContext.hasValidUniverseDomain(credentials)).thenReturn(true);
     GrpcCallContext context =
         GrpcCallContext.createDefault()
             .withChannel(mockChannel)
@@ -295,7 +296,11 @@ public class GrpcClientCallsTest {
   // This test is when the universe domain does not match
   @Test
   public void testInvalidUniverseDomain() throws IOException {
-    Mockito.when(endpointContext.hasValidUniverseDomain(credentials)).thenReturn(false);
+    Mockito.doThrow(
+            new UnauthenticatedException(
+                null, GrpcStatusCode.of(Status.Code.UNAUTHENTICATED), false))
+        .when(endpointContext)
+        .validateUniverseDomain(Mockito.any(Credentials.class), Mockito.any(GrpcStatusCode.class));
     GrpcCallContext context =
         GrpcCallContext.createDefault()
             .withChannel(mockChannel)
@@ -305,19 +310,19 @@ public class GrpcClientCallsTest {
     CallOptions callOptions = context.getCallOptions();
 
     MethodDescriptor<Color, Money> descriptor = FakeServiceGrpc.METHOD_RECOGNIZE;
-    PermissionDeniedException exception =
+    UnauthenticatedException exception =
         assertThrows(
-            PermissionDeniedException.class, () -> GrpcClientCalls.newCall(descriptor, context));
-    assertThat(exception.getStatusCode().getCode())
-        .isEqualTo(GrpcStatusCode.Code.PERMISSION_DENIED);
+            UnauthenticatedException.class, () -> GrpcClientCalls.newCall(descriptor, context));
+    assertThat(exception.getStatusCode().getCode()).isEqualTo(GrpcStatusCode.Code.UNAUTHENTICATED);
     Mockito.verify(mockChannel, Mockito.never()).newCall(descriptor, callOptions);
   }
 
   // This test is when the MDS is unable to return a valid universe domain
   @Test
   public void testUniverseDomainNotReady_shouldRetry() throws IOException {
-    Mockito.when(endpointContext.hasValidUniverseDomain(credentials))
-        .thenThrow(new GoogleAuthException(true));
+    Mockito.doThrow(new GoogleAuthException(true))
+        .when(endpointContext)
+        .validateUniverseDomain(Mockito.any(Credentials.class), Mockito.any(GrpcStatusCode.class));
     GrpcCallContext context =
         GrpcCallContext.createDefault()
             .withChannel(mockChannel)

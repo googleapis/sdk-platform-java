@@ -44,20 +44,8 @@ import javax.annotation.Nullable;
 public abstract class EndpointContext {
   public static final String INVALID_UNIVERSE_DOMAIN_ERROR_TEMPLATE =
       "The configured universe domain (%s) does not match the universe domain found in the credentials (%s). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.";
-
-  private static EndpointContext DEFAULT_INSTANCE;
-
-  // Provide an empty EndpointContext for the ApiCallContext to merge against
-  public static EndpointContext getDefault() {
-    if (DEFAULT_INSTANCE == null) {
-      try {
-        DEFAULT_INSTANCE = newBuilder().setServiceName("").build();
-      } catch (IOException e) {
-        throw new RuntimeException(e);
-      }
-    }
-    return DEFAULT_INSTANCE;
-  }
+  public static final String UNABLE_TO_RETRIEVE_CREDENTIALS_ERROR_MESSAGE =
+      "Unable to retrieve the Universe Domain from the Credentials. The RPC call will not be made.";
 
   /**
    * ServiceName is host URI for Google Cloud Services. It follows the format of
@@ -111,53 +99,39 @@ public abstract class EndpointContext {
         .setUsingGDCH(false);
   }
 
-  /** Check that the User configured universe domain matches the Credentials' universe domain */
-  public boolean hasValidUniverseDomain(Credentials credentials) throws IOException {
+  /**
+   * Check that the User configured universe domain matches the Credentials' universe domain. The
+   * status code parameter is passed in to this method as it's a limitation of Gax's modules. The
+   * transport-neutral module does have access the transport-specific modules (which contain the
+   * implementation of the StatusCode). This method is scoped to be internal and should be not be
+   * accessed by users.
+   *
+   * @param credentials Auth Library Credentials
+   * @param invalidUniverseDomainStatusCode Transport-specific Status Code to be returned if the
+   *     Universe Domain is invalid. For both transports, this is defined to be Unauthorized.
+   * @throws IOException Implementation of Auth's Retryable interface which tells the client library
+   *     whether the RPC should be retried or not.
+   */
+  public void validateUniverseDomain(
+      Credentials credentials, StatusCode invalidUniverseDomainStatusCode) throws IOException {
     if (usingGDCH()) {
-      // GDC-H has no universe domain, always return true.
-      return true;
-    } else if (credentials == null) {
-      // If passed with NoCredentialsProvider, match with GDU
-      return resolvedUniverseDomain().equals(Credentials.GOOGLE_DEFAULT_UNIVERSE);
+      // GDC-H has no universe domain, return
+      return;
     }
-    return resolvedUniverseDomain().equals(credentials.getUniverseDomain());
-  }
-
-  public EndpointContext merge(EndpointContext input) {
-    if (input == null) {
-      return this;
+    String credentialsUniverseDomain = Credentials.GOOGLE_DEFAULT_UNIVERSE;
+    // If credentials is not NoCredentialsProvider, use the Universe Domain inside Credentials
+    if (credentials != null) {
+      credentialsUniverseDomain = credentials.getUniverseDomain();
     }
-    Builder builder = this.toBuilder();
-    String serviceName = input.serviceName();
-    if (serviceName != null) {
-      builder.setServiceName(serviceName);
-    }
-    String universeDomain = input.universeDomain();
-    if (universeDomain != null) {
-      builder.setUniverseDomain(universeDomain);
-    }
-    String clientSettingsEndpoint = input.clientSettingsEndpoint();
-    if (clientSettingsEndpoint != null) {
-      builder.setClientSettingsEndpoint(clientSettingsEndpoint);
-    }
-    String transportChannelProviderEndpoint = input.transportChannelProviderEndpoint();
-    if (transportChannelProviderEndpoint != null) {
-      builder.setTransportChannelProviderEndpoint(transportChannelProviderEndpoint);
-    }
-    String mtlsEndpoint = input.mtlsEndpoint();
-    if (mtlsEndpoint != null) {
-      builder.setMtlsEndpoint(mtlsEndpoint);
-    }
-    builder.setSwitchToMtlsEndpointAllowed(input.switchToMtlsEndpointAllowed());
-    MtlsProvider mtlsProvider = input.mtlsProvider();
-    if (mtlsEndpoint != null) {
-      builder.setMtlsProvider(mtlsProvider);
-    }
-    builder.setUsingGDCH(input.usingGDCH());
-    try {
-      return builder.build();
-    } catch (IOException e) {
-      throw new RuntimeException(e);
+    if (!resolvedUniverseDomain().equals(credentialsUniverseDomain)) {
+      throw ApiExceptionFactory.createException(
+          new Throwable(
+              String.format(
+                  EndpointContext.INVALID_UNIVERSE_DOMAIN_ERROR_TEMPLATE,
+                  resolvedUniverseDomain(),
+                  credentialsUniverseDomain)),
+          invalidUniverseDomainStatusCode,
+          false);
     }
   }
 

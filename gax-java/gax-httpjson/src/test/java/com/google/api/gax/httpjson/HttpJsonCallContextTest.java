@@ -277,12 +277,8 @@ public class HttpJsonCallContextTest {
             .withOption(contextKey1, testContextOverwrite)
             .withOption(contextKey3, testContext3);
     ApiCallContext mergedContext = context1.merge(context2);
-    EndpointContext endpointContext = EndpointContext.newBuilder().setServiceName("test").build();
-    ApiCallContext context3 = emptyCallContext.withEndpointContext(endpointContext);
-    mergedContext = mergedContext.merge(context3);
     assertEquals(testContextOverwrite, mergedContext.getOption(contextKey1));
     assertEquals(testContext2, mergedContext.getOption(contextKey2));
     assertEquals(testContext3, mergedContext.getOption(contextKey3));
-    assertEquals(mergedContext.getEndpointContext(), endpointContext);
   }
 }

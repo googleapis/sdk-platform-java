@@ -33,7 +33,8 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertThrows;
 
 import com.google.api.gax.rpc.EndpointContext;
-import com.google.api.gax.rpc.PermissionDeniedException;
+import com.google.api.gax.rpc.StatusCode;
+import com.google.api.gax.rpc.UnauthenticatedException;
 import com.google.auth.Credentials;
 import com.google.auth.Retryable;
 import java.io.IOException;
@@ -86,8 +87,11 @@ public class HttpJsonClientCallsTest {
             .withEndpointContext(endpointContext)
             .withChannel(mockChannel);
 
-    Mockito.when(endpointContext.hasValidUniverseDomain(credentials)).thenReturn(true);
     Mockito.when(callOptions.getCredentials()).thenReturn(credentials);
+    Mockito.doNothing()
+        .when(endpointContext)
+        .validateUniverseDomain(
+            Mockito.any(Credentials.class), Mockito.any(HttpJsonStatusCode.class));
   }
 
   @Test
@@ -99,22 +103,29 @@ public class HttpJsonClientCallsTest {
   // This test is when the universe domain does not match
   @Test
   public void testInvalidUniverseDomain() throws IOException {
-    Mockito.when(endpointContext.hasValidUniverseDomain(credentials)).thenReturn(false);
+    Mockito.doThrow(
+            new UnauthenticatedException(
+                null, HttpJsonStatusCode.of(StatusCode.Code.UNAUTHENTICATED), false))
+        .when(endpointContext)
+        .validateUniverseDomain(
+            Mockito.any(Credentials.class), Mockito.any(HttpJsonStatusCode.class));
 
-    PermissionDeniedException exception =
+    UnauthenticatedException exception =
         assertThrows(
-            PermissionDeniedException.class,
+            UnauthenticatedException.class,
             () -> HttpJsonClientCalls.newCall(descriptor, callContext));
     assertThat(exception.getStatusCode().getCode())
-        .isEqualTo(HttpJsonStatusCode.Code.PERMISSION_DENIED);
+        .isEqualTo(HttpJsonStatusCode.Code.UNAUTHENTICATED);
     Mockito.verify(mockChannel, Mockito.never()).newCall(descriptor, callOptions);
   }
 
   // This test is when the MDS is unable to return a valid universe domain
   @Test
   public void testUniverseDomainNotReady_shouldRetry() throws IOException {
-    Mockito.when(endpointContext.hasValidUniverseDomain(credentials))
-        .thenThrow(new GoogleAuthException(true));
+    Mockito.doThrow(new GoogleAuthException(true))
+        .when(endpointContext)
+        .validateUniverseDomain(
+            Mockito.any(Credentials.class), Mockito.any(HttpJsonStatusCode.class));
     HttpJsonCallContext context =
         HttpJsonCallContext.createDefault()
             .withChannel(mockChannel)
@@ -123,8 +134,12 @@ public class HttpJsonClientCallsTest {
 
     HttpJsonCallOptions callOptions = context.getCallOptions();
 
-    assertThrows(
-        RuntimeException.class, () -> HttpJsonClientCalls.newCall(descriptor, callContext));
+    UnauthenticatedException exception =
+        assertThrows(
+            UnauthenticatedException.class,
+            () -> HttpJsonClientCalls.newCall(descriptor, callContext));
+    assertThat(exception.getStatusCode().getCode())
+        .isEqualTo(HttpJsonStatusCode.Code.UNAUTHENTICATED);
     Mockito.verify(mockChannel, Mockito.never()).newCall(descriptor, callOptions);
   }
 }

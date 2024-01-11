@@ -44,6 +44,7 @@ import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.gax.rpc.testing.FakeStatusCode;
+import com.google.auth.Credentials;
 import com.google.common.collect.ImmutableSet;
 import io.grpc.CallOptions;
 import io.grpc.ClientCall;
@@ -90,7 +91,9 @@ public class TimeoutTest {
   @BeforeClass
   public static void setUp() throws IOException {
     EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
-    Mockito.when(endpointContext.hasValidUniverseDomain(Mockito.any())).thenReturn(true);
+    Mockito.doNothing()
+        .when(endpointContext)
+        .validateUniverseDomain(Mockito.any(Credentials.class), Mockito.any(GrpcStatusCode.class));
     defaultCallContext = GrpcCallContext.createDefault().withEndpointContext(endpointContext);
   }
 

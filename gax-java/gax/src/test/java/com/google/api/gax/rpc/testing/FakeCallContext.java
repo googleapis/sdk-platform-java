@@ -178,11 +178,6 @@ public class FakeCallContext implements ApiCallContext {
 
     ApiCallContextOptions newOptions = options.merge(fakeCallContext.options);
 
-    EndpointContext newEndpointContext = null;
-    if (endpointContext != null) {
-      newEndpointContext = endpointContext.merge(fakeCallContext.endpointContext);
-    }
-
     return new FakeCallContext(
         newCallCredentials,
         newChannel,
@@ -194,7 +189,7 @@ public class FakeCallContext implements ApiCallContext {
         newTracer,
         newRetrySettings,
         newRetryableCodes,
-        newEndpointContext);
+        endpointContext);
   }
 
   public RetrySettings getRetrySettings() {
@@ -424,11 +419,6 @@ public class FakeCallContext implements ApiCallContext {
   public <T> T getOption(Key<T> key) {
     Preconditions.checkNotNull(key);
     return options.getOption(key);
-  }
-
-  @Override
-  public void validateUniverseDomain() {
-    // no-op
   }
 
   /** {@inheritDoc} */

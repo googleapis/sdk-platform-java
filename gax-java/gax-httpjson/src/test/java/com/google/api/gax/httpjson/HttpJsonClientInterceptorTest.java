@@ -35,6 +35,7 @@ import com.google.api.gax.httpjson.ForwardingHttpJsonClientCall.SimpleForwarding
 import com.google.api.gax.httpjson.ForwardingHttpJsonClientCallListener.SimpleForwardingHttpJsonClientCallListener;
 import com.google.api.gax.httpjson.testing.MockHttpService;
 import com.google.api.gax.rpc.EndpointContext;
+import com.google.auth.Credentials;
 import com.google.protobuf.Field;
 import com.google.protobuf.Field.Cardinality;
 import java.io.IOException;
@@ -185,7 +186,10 @@ public class HttpJsonClientInterceptorTest {
         new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
 
     EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
-    Mockito.when(endpointContext.hasValidUniverseDomain(Mockito.any())).thenReturn(true);
+    Mockito.doNothing()
+        .when(endpointContext)
+        .validateUniverseDomain(
+            Mockito.any(Credentials.class), Mockito.any(HttpJsonStatusCode.class));
 
     HttpJsonCallContext callContext =
         HttpJsonCallContext.createDefault()

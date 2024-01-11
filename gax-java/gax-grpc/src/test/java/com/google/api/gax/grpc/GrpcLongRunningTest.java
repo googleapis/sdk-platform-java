@@ -48,6 +48,7 @@ import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.TransportChannel;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.api.gax.rpc.UnaryCallSettings;
+import com.google.auth.Credentials;
 import com.google.longrunning.Operation;
 import com.google.longrunning.OperationsSettings;
 import com.google.longrunning.stub.GrpcOperationsStub;
@@ -136,8 +137,9 @@ public class GrpcLongRunningTest {
             .build();
 
     EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
-    Mockito.when(endpointContext.hasValidUniverseDomain(Mockito.any())).thenReturn(true);
-    Mockito.when(endpointContext.merge(Mockito.any())).thenReturn(endpointContext);
+    Mockito.doNothing()
+        .when(endpointContext)
+        .validateUniverseDomain(Mockito.any(Credentials.class), Mockito.any(GrpcStatusCode.class));
 
     initialContext =
         ClientContext.newBuilder()
@@ -163,7 +165,9 @@ public class GrpcLongRunningTest {
             createGrpcSettings(), callSettings, initialContext, operationsStub);
 
     EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
-    Mockito.when(endpointContext.hasValidUniverseDomain(Mockito.any())).thenReturn(true);
+    Mockito.doNothing()
+        .when(endpointContext)
+        .validateUniverseDomain(Mockito.any(Credentials.class), Mockito.any(GrpcStatusCode.class));
 
     Color response =
         callable.call(2, GrpcCallContext.createDefault().withEndpointContext(endpointContext));

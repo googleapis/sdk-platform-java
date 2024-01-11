@@ -37,6 +37,8 @@ import com.google.api.gax.rpc.ApiExceptionFactory;
 import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.TransportChannel;
+import com.google.api.gax.rpc.UnauthenticatedException;
+import com.google.api.gax.rpc.UnavailableException;
 import com.google.api.gax.rpc.internal.ApiCallContextOptions;
 import com.google.api.gax.rpc.internal.Headers;
 import com.google.api.gax.tracing.ApiTracer;
@@ -72,6 +74,9 @@ import org.threeten.bp.Duration;
  */
 @BetaApi("Reference ApiCallContext instead - this class is likely to experience breaking changes")
 public final class GrpcCallContext implements ApiCallContext {
+  private static final GrpcStatusCode UNAUTHENTICATED_STATUS_CODE =
+      GrpcStatusCode.of(Status.Code.UNAUTHENTICATED);
+
   static final CallOptions.Key<ApiTracer> TRACER_KEY = CallOptions.Key.create("gax.tracer");
 
   private final Channel channel;
@@ -101,7 +106,7 @@ public final class GrpcCallContext implements ApiCallContext {
         ApiCallContextOptions.getDefaultOptions(),
         null,
         null,
-        EndpointContext.getDefault());
+        null);
   }
 
   /** Returns an instance with the given channel and {@link CallOptions}. */
@@ -118,7 +123,7 @@ public final class GrpcCallContext implements ApiCallContext {
         ApiCallContextOptions.getDefaultOptions(),
         null,
         null,
-        EndpointContext.getDefault());
+        null);
   }
 
   private GrpcCallContext(
@@ -459,8 +464,10 @@ public final class GrpcCallContext implements ApiCallContext {
       newCallOptions = newCallOptions.withOption(TRACER_KEY, newTracer);
     }
 
-    EndpointContext newEndpointContext = endpointContext.merge(grpcCallContext.endpointContext);
-
+    // The EndpointContext is not updated as there should be no reason for a user
+    // to update this. EndpointContext is an internal class used by the client library
+    // to resolve the endpoint. It is created once the library is initialized and
+    // should not be updated.
     return new GrpcCallContext(
         newChannel,
         newCredentials,
@@ -473,7 +480,7 @@ public final class GrpcCallContext implements ApiCallContext {
         newOptions,
         newRetrySettings,
         newRetryableCodes,
-        newEndpointContext);
+        endpointContext);
   }
 
   /** The {@link Channel} set on this context. */
@@ -605,34 +612,42 @@ public final class GrpcCallContext implements ApiCallContext {
     return options.getOption(key);
   }
 
-  /** {@inheritDoc} */
-  @Override
+  /**
+   * Validate the Universe Domain to ensure that the user configured Universe Domain and the
+   * Credentials' Universe Domain match. An exception will be raised if there are any issues when
+   * trying to validate (i.e. unable to access the universe domain).
+   *
+   * @throws UnauthenticatedException Thrown if the universe domain that the user configured does
+   *     not match the Credential's universe domain.
+   * @throws UnavailableException If client library is unable to retrieve the universe domain from
+   *     the Credentials and the RPC is configured to retry Unavailable exceptions, the client
+   *     library will attempt to retry with the RPC's defined retry bounds. If the retry bounds have
+   *     been exceeded and the library is still unable to retrieve the universe domain, the
+   *     exception will be thrown back to the user.
+   */
+  @InternalApi
   public void validateUniverseDomain() {
     EndpointContext endpointContext = getEndpointContext();
-    Credentials credentials = getCredentials();
     try {
-      if (!endpointContext.hasValidUniverseDomain(credentials)) {
-        throw ApiExceptionFactory.createException(
-            new Throwable(
-                String.format(
-                    EndpointContext.INVALID_UNIVERSE_DOMAIN_ERROR_TEMPLATE,
-                    endpointContext.resolvedUniverseDomain(),
-                    credentials.getUniverseDomain())),
-            GrpcStatusCode.of(Status.Code.PERMISSION_DENIED),
-            false);
-      }
+      endpointContext.validateUniverseDomain(getCredentials(), UNAUTHENTICATED_STATUS_CODE);
     } catch (IOException e) {
-      // Check if it is an Auth Exception
+      // Check if it is an Auth Exception (All instances of IOException from endpointContext's
+      // `validateUniverseDomain()` call should be an Auth Exception).
       if (e instanceof Retryable) {
         Retryable retryable = (Retryable) e;
         // Keep the behavior the same as gRPC-Java. Mark as Auth Exceptions as Unavailable
         throw ApiExceptionFactory.createException(
-            new Throwable("Unable to retrieve the Universe Domain from the Credentials."),
+            "Unable to retrieve the Universe Domain from the Credentials. Retrying the attempt.",
+            e,
             GrpcStatusCode.of(Status.Code.UNAVAILABLE),
             retryable.isRetryable());
       }
-      // Return the exception back to the user
-      throw new RuntimeException(e);
+      // This exception below should never be raised as all IOExceptions should be caught above.
+      throw ApiExceptionFactory.createException(
+          EndpointContext.UNABLE_TO_RETRIEVE_CREDENTIALS_ERROR_MESSAGE,
+          e,
+          UNAUTHENTICATED_STATUS_CODE,
+          false);
     }
   }
 

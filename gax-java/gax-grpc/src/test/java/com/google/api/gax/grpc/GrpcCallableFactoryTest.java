@@ -43,6 +43,7 @@ import com.google.api.gax.rpc.ServerStreamingCallSettings;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.tracing.SpanName;
+import com.google.auth.Credentials;
 import com.google.common.collect.ImmutableList;
 import com.google.common.truth.Truth;
 import com.google.type.Color;
@@ -77,8 +78,9 @@ public class GrpcCallableFactoryTest {
 
     channel = InProcessChannelBuilder.forName(serverName).directExecutor().usePlaintext().build();
     EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
-    Mockito.when(endpointContext.hasValidUniverseDomain(Mockito.any())).thenReturn(true);
-    Mockito.when(endpointContext.merge(Mockito.any())).thenReturn(endpointContext);
+    Mockito.doNothing()
+        .when(endpointContext)
+        .validateUniverseDomain(Mockito.any(Credentials.class), Mockito.any(GrpcStatusCode.class));
     clientContext =
         ClientContext.newBuilder()
             .setTransportChannel(GrpcTransportChannel.create(channel))

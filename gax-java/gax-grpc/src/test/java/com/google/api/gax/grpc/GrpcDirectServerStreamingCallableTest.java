@@ -45,6 +45,7 @@ import com.google.api.gax.rpc.StateCheckingResponseObserver;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.StreamController;
 import com.google.api.gax.rpc.testing.FakeCallContext;
+import com.google.auth.Credentials;
 import com.google.common.collect.Lists;
 import com.google.common.truth.Truth;
 import com.google.type.Color;
@@ -88,7 +89,9 @@ public class GrpcDirectServerStreamingCallableTest {
     inprocessServer.start();
 
     EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
-    Mockito.when(endpointContext.hasValidUniverseDomain(Mockito.any())).thenReturn(true);
+    Mockito.doNothing()
+        .when(endpointContext)
+        .validateUniverseDomain(Mockito.any(Credentials.class), Mockito.any(GrpcStatusCode.class));
 
     channel = InProcessChannelBuilder.forName(serverName).directExecutor().usePlaintext().build();
     clientContext =

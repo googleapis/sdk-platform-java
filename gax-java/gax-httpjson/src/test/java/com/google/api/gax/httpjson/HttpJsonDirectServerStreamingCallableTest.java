@@ -45,6 +45,7 @@ import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.rpc.StreamController;
 import com.google.api.gax.rpc.testing.FakeCallContext;
+import com.google.auth.Credentials;
 import com.google.common.collect.Lists;
 import com.google.common.truth.Truth;
 import com.google.protobuf.Field;
@@ -138,7 +139,10 @@ public class HttpJsonDirectServerStreamingCallableTest {
                 .build(),
             new HttpJsonHeaderInterceptor(Collections.singletonMap("header-key", "headerValue")));
     EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
-    Mockito.when(endpointContext.hasValidUniverseDomain(Mockito.any())).thenReturn(true);
+    Mockito.doNothing()
+        .when(endpointContext)
+        .validateUniverseDomain(
+            Mockito.any(Credentials.class), Mockito.any(HttpJsonStatusCode.class));
     clientContext =
         ClientContext.newBuilder()
             .setTransportChannel(HttpJsonTransportChannel.create(channel))

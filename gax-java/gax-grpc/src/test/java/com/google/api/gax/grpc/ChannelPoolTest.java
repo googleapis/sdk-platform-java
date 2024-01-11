@@ -45,6 +45,7 @@ import com.google.api.gax.rpc.StreamController;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.gax.util.FakeLogHandler;
+import com.google.auth.Credentials;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -631,7 +632,9 @@ public class ChannelPoolTest {
     pool = ChannelPool.create(channelPoolSettings, factory);
 
     EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
-    Mockito.when(endpointContext.hasValidUniverseDomain(Mockito.any())).thenReturn(true);
+    Mockito.doNothing()
+        .when(endpointContext)
+        .validateUniverseDomain(Mockito.any(Credentials.class), Mockito.any(GrpcStatusCode.class));
 
     ClientContext context =
         ClientContext.newBuilder()
@@ -687,8 +690,10 @@ public class ChannelPoolTest {
       pool = ChannelPool.create(channelPoolSettings, factory);
 
       EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
-      Mockito.when(endpointContext.hasValidUniverseDomain(Mockito.any())).thenReturn(true);
-      Mockito.when(endpointContext.merge(Mockito.any())).thenReturn(endpointContext);
+      Mockito.doNothing()
+          .when(endpointContext)
+          .validateUniverseDomain(
+              Mockito.any(Credentials.class), Mockito.any(GrpcStatusCode.class));
 
       // Construct a fake callable to use the channel pool
       ClientContext context =

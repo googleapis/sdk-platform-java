@@ -38,6 +38,7 @@ import com.google.api.gax.rpc.ApiExceptionFactory;
 import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.rpc.testing.FakeStatusCode;
+import com.google.auth.Credentials;
 import com.google.protobuf.Field;
 import com.google.protobuf.Field.Cardinality;
 import java.io.IOException;
@@ -121,7 +122,10 @@ public class HttpJsonDirectCallableTest {
               return t;
             });
     EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
-    Mockito.when(endpointContext.hasValidUniverseDomain(Mockito.any())).thenReturn(true);
+    Mockito.doNothing()
+        .when(endpointContext)
+        .validateUniverseDomain(
+            Mockito.any(Credentials.class), Mockito.any(HttpJsonStatusCode.class));
     defaultCallContext =
         HttpJsonCallContext.createDefault()
             .withChannel(channel)

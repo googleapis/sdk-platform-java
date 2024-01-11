@@ -36,6 +36,7 @@ import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.auth.Credentials;
 import com.google.type.Color;
 import com.google.type.Money;
 import io.grpc.CallOptions;
@@ -136,8 +137,9 @@ public class GrpcResponseMetadataTest {
             .build();
 
     EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
-    Mockito.when(endpointContext.hasValidUniverseDomain(Mockito.any())).thenReturn(true);
-    Mockito.when(endpointContext.merge(Mockito.any())).thenReturn(endpointContext);
+    Mockito.doNothing()
+        .when(endpointContext)
+        .validateUniverseDomain(Mockito.any(Credentials.class), Mockito.any(GrpcStatusCode.class));
 
     clientContext =
         ClientContext.newBuilder()

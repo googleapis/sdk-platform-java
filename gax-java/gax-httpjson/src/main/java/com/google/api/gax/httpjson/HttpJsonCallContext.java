@@ -37,6 +37,7 @@ import com.google.api.gax.rpc.ApiExceptionFactory;
 import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.TransportChannel;
+import com.google.api.gax.rpc.UnauthenticatedException;
 import com.google.api.gax.rpc.internal.ApiCallContextOptions;
 import com.google.api.gax.rpc.internal.Headers;
 import com.google.api.gax.tracing.ApiTracer;
@@ -64,6 +65,8 @@ import org.threeten.bp.Instant;
  * arguments solely depends on the arguments themselves.
  */
 public final class HttpJsonCallContext implements ApiCallContext {
+  private static final HttpJsonStatusCode UNAUTHENTICATED_STATUS_CODE =
+      HttpJsonStatusCode.of(StatusCode.Code.UNAUTHENTICATED);
   private final HttpJsonChannel channel;
   private final HttpJsonCallOptions callOptions;
   @Nullable private final Duration timeout;
@@ -89,7 +92,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
         null,
         null,
         null,
-        EndpointContext.getDefault());
+        null);
   }
 
   public static HttpJsonCallContext of(HttpJsonChannel channel, HttpJsonCallOptions options) {
@@ -104,7 +107,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
         null,
         null,
         null,
-        EndpointContext.getDefault());
+        null);
   }
 
   private HttpJsonCallContext(
@@ -210,8 +213,10 @@ public final class HttpJsonCallContext implements ApiCallContext {
       newRetryableCodes = this.retryableCodes;
     }
 
-    EndpointContext newEndpointContext = endpointContext.merge(httpJsonCallContext.endpointContext);
-
+    // The EndpointContext is not updated as there should be no reason for a user
+    // to update this. EndpointContext is an internal class used by the client library
+    // to resolve the endpoint. It is created once the library is initialized and
+    // should not be updated.
     return new HttpJsonCallContext(
         newChannel,
         newCallOptions,
@@ -223,7 +228,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
         newTracer,
         newRetrySettings,
         newRetryableCodes,
-        newEndpointContext);
+        endpointContext);
   }
 
   @Override
@@ -407,25 +412,29 @@ public final class HttpJsonCallContext implements ApiCallContext {
     return options.getOption(key);
   }
 
-  /** {@inheritDoc} */
-  @Override
+  /**
+   * Validate the Universe Domain to ensure that the user configured Universe Domain and the
+   * Credentials' Universe Domain match. An exception will be raised if there are any issues when
+   * trying to validate (i.e. unable to access the universe domain).
+   *
+   * @throws UnauthenticatedException Thrown if the universe domain that the user configured does
+   *     not match the Credential's universe domain or if the client library is unable to retrieve
+   *     the Universe Domain from the Credentials.
+   */
+  @InternalApi
   public void validateUniverseDomain() {
     EndpointContext endpointContext = getEndpointContext();
-    Credentials credentials = getCallOptions().getCredentials();
     try {
-      if (!endpointContext.hasValidUniverseDomain(credentials)) {
-        throw ApiExceptionFactory.createException(
-            new Throwable(
-                String.format(
-                    EndpointContext.INVALID_UNIVERSE_DOMAIN_ERROR_TEMPLATE,
-                    endpointContext.resolvedUniverseDomain(),
-                    credentials.getUniverseDomain())),
-            HttpJsonStatusCode.of(StatusCode.Code.PERMISSION_DENIED),
-            false);
-      }
+      endpointContext.validateUniverseDomain(
+          getCallOptions().getCredentials(), UNAUTHENTICATED_STATUS_CODE);
     } catch (IOException e) {
-      // Return the exception back to the user
-      throw new RuntimeException(e);
+      // All instances of IOException from endpointContext's `validateUniverseDomain()`
+      // call should be an Auth Exception
+      throw ApiExceptionFactory.createException(
+          EndpointContext.UNABLE_TO_RETRIEVE_CREDENTIALS_ERROR_MESSAGE,
+          e,
+          UNAUTHENTICATED_STATUS_CODE,
+          false);
     }
   }
 
