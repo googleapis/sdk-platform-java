@@ -43,6 +43,10 @@ include_samples_pattern = r"include_samples = True"
 
 
 class ClientInput:
+    """
+    A data class containing inputs to invoke generate_library.sh to generate
+    a GAPIC library.
+    """
     def __init__(
         self,
         proto_only="true",
@@ -68,6 +72,13 @@ def parse(
     build_path: Path,
     versioned_path: str,
 ) -> ClientInput:
+    """
+    Utility function to parse inputs of generate_library.sh from BUILD.bazel.
+    :param build_path: the file path of BUILD.bazel
+    :param versioned_path: a versioned path in googleapis repository, e.g.,
+    google/cloud/asset/v1.
+    :return: an ClientInput object.
+    """
     with open(f"{build_path}/BUILD.bazel") as build:
         content = build.read()
 
