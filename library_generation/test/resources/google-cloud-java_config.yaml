@@ -1,5 +1,9 @@
 #Required.
 gapic_generator_version: 2.30.0
+#Optional.
+grpc_version: 1.59.1
+#Optional.
+protobuf_version: 3.25.1
 #Required.
 googleapis-commitish: 4512234113a18c1fda1fb0d0ceac8f4b4efe9801
 #Required.
@@ -13,7 +17,7 @@ destination-path: google-cloud-java
 #Optional. This is a relative path to destination-path above. We will create a new versions.txt file if it is not specified
 versions_path: versions.txt
 #Required.
-products:
+libraries:
     #Required. Can be used for populating the folder name java-{api_shortName}. This is also the destination-name in new-client.py.
   - api_shortname: asset
     #Optional. The default value is the title of service yaml
@@ -24,7 +28,7 @@ products:
     group_id: com.google.cloud
     #Optional. The default value is google.cloud.{api_shortname}
     artifact_id: google.cloud.asset
-    #Optiona. The default value is true.
+    #Optional. The default value is true.
     requires-billing: true
     #Optional. The default value is documentation.summary from service yaml
     api_description:
@@ -37,7 +41,7 @@ products:
     #Optional.
     rpc_documentation:
     #Required.
-    services:
+    GAPICs:
         #Required. This is a relative path to googleapis/googleapis. We'll parse all the parameters needed by generate_library.sh from BUILD.bazel in this folder.
       - proto_path: google/cloud/asset/v1
       - proto_path: google/cloud/asset/v1p1beta1
@@ -48,5 +52,3 @@ products:
     library_type: GAPIC_AUTO
     services:
       - proto_path: google/cloud/asset/v1
-        proto_only: false
-
