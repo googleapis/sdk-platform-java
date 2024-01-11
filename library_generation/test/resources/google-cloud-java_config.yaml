@@ -14,8 +14,6 @@ synthtool-commitish: 59fe44fde9866a26e7ee4e4450fd79f67f8cf599
 python-version: 3.11.2
 #Optional. The root folder name of generated client libraries. If empty, modules will be created under current folder, useful for single module
 destination-path: google-cloud-java
-#Optional. This is a relative path to destination-path above. We will create a new versions.txt file if it is not specified
-versions_path: versions.txt
 #Required.
 libraries:
     #Required. Can be used for populating the folder name java-{api_shortName}. This is also the destination-name in new-client.py.
