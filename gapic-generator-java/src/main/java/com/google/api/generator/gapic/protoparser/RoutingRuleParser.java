@@ -18,7 +18,6 @@ import com.google.api.RoutingParameter;
 import com.google.api.RoutingProto;
 import com.google.api.RoutingRule;
 import com.google.api.generator.engine.ast.TypeNode;
-import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.RoutingHeaderRule;
 import com.google.api.generator.gapic.model.RoutingHeaderRule.RoutingHeaderParam;
@@ -58,14 +57,9 @@ public class RoutingRuleParser {
                 pathTemplate));
         key = namedSegments.iterator().next();
       }
-      Message nestedMessage = inputMessage;
-      Field field = nestedMessage.fieldMap().get(fieldName);
-
-      RoutingHeaderParam.Builder routingHeaderParamBuilder = RoutingHeaderParam.builder().setFieldName(fieldName);
-      routingHeaderParamBuilder.setPattern(pathTemplate);
-      routingHeaderParamBuilder.setKey(key);
-      routingHeaderParamBuilder.setField(field);
-      routingHeaderRuleBuilder.addParam(routingHeaderParamBuilder.build());
+      RoutingHeaderParam routingHeaderParam =
+          RoutingHeaderParam.create(fieldName, key, pathTemplate);
+      routingHeaderRuleBuilder.addParam(routingHeaderParam);
     }
     return routingHeaderRuleBuilder.build();
   }
