@@ -152,13 +152,13 @@ public class HttpJsonExplicitDynamicRoutingHeaderTestingStub
               .setRequestFormatter(
                   ProtoMessageRequestFormatter.<EnumRequest>newBuilder()
                       .setPath(
-                          "/v1beta1/{info.fKingdom}",
+                          "/v1beta1/{info.enumTest}",
                           request -> {
                             Map<String, String> fields = new HashMap<>();
                             ProtoRestSerializer<EnumRequest> serializer =
                                 ProtoRestSerializer.create();
                             serializer.putPathParam(
-                                fields, "info.fKingdom", request.getInfo().getFKingdomValue());
+                                fields, "info.enumTest", request.getInfo().getEnumTestValue());
                             return fields;
                           })
                       .setQueryParamsExtractor(
@@ -273,7 +273,7 @@ public class HttpJsonExplicitDynamicRoutingHeaderTestingStub
                     request -> {
                       RequestParamsBuilder builder = RequestParamsBuilder.create();
                       builder.add(
-                          "info.f_kingdom", String.valueOf(request.getInfo().getFKingdomValue()));
+                          "info.enum_test", String.valueOf(request.getInfo().getEnumTestValue()));
                       return builder.build();
                     })
                 .build();

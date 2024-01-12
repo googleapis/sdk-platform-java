@@ -447,7 +447,7 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
                   builder.add(
-                      "info.f_kingdom", String.valueOf(request.getInfo().getFKingdomValue()));
+                      "info.enum_test", String.valueOf(request.getInfo().getEnumTestValue()));
                   return builder.build();
                 })
             .build();
