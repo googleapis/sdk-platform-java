@@ -1303,7 +1303,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
           createRequestFieldGetterExpr(
               requestVarExpr,
               httpBindingFieldBinding.name(),
-              httpBindingFieldBinding.field().isEnum());
+                  httpBindingFieldBinding.field() != null && httpBindingFieldBinding.field().isEnum());
       Expr valueOfExpr =
           MethodInvocationExpr.builder()
               .setStaticReferenceType(TypeNode.STRING)
