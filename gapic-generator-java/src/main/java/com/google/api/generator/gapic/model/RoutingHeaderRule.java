@@ -42,42 +42,12 @@ public abstract class RoutingHeaderRule {
 
     public abstract String pattern();
 
-    // An object that contains all info of the leaf level field
-    @Nullable
-    public abstract Field field();
-
     public static RoutingHeaderParam create(String field, String key, String pattern) {
       return new AutoValue_RoutingHeaderRule_RoutingHeaderParam(field, key, pattern);
     }
 
     public List<String> getDescendantFieldNames() {
       return Splitter.on(".").splitToList(fieldName());
-    }
-
-    public boolean isEnum() {
-      return field() != null && field().isEnum();
-    }
-
-    public static RoutingHeaderParam.Builder builder() {
-      return new AutoValue_RoutingHeaderRule_RoutingHeaderParam.Builder();
-    }
-
-    @AutoValue.Builder
-    public abstract static class Builder {
-
-      public abstract RoutingHeaderParam.Builder setFieldName(String fieldName);
-
-      public abstract RoutingHeaderParam.Builder setField(Field field);
-
-      public abstract RoutingHeaderParam.Builder setKey(String key);
-
-      public abstract RoutingHeaderParam.Builder setPattern(String Pattern);
-
-      abstract RoutingHeaderParam autoBuild();
-
-      public RoutingHeaderParam build() {
-        return autoBuild();
-      }
     }
   }
 
