@@ -35,10 +35,13 @@ import com.google.api.client.http.HttpResponseException;
 import com.google.api.gax.httpjson.testing.MockHttpService;
 import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.ApiExceptionFactory;
+import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.rpc.testing.FakeStatusCode;
+import com.google.auth.Credentials;
 import com.google.protobuf.Field;
 import com.google.protobuf.Field.Cardinality;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -53,6 +56,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.mockito.Mockito;
 import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
@@ -94,7 +98,9 @@ public class HttpJsonDirectCallableTest {
   private static final MockHttpService MOCK_SERVICE =
       new MockHttpService(Collections.singletonList(FAKE_METHOD_DESCRIPTOR), "google.com:443");
 
-  private final ManagedHttpJsonChannel channel =
+  private static ExecutorService executorService;
+
+  private static final ManagedHttpJsonChannel channel =
       new ManagedHttpJsonInterceptorChannel(
           ManagedHttpJsonChannel.newBuilder()
               .setEndpoint("google.com:443")
@@ -103,10 +109,10 @@ public class HttpJsonDirectCallableTest {
               .build(),
           new HttpJsonHeaderInterceptor(Collections.singletonMap("header-key", "headerValue")));
 
-  private static ExecutorService executorService;
+  private static HttpJsonCallContext defaultCallContext;
 
   @BeforeClass
-  public static void initialize() {
+  public static void initialize() throws IOException {
     executorService =
         Executors.newFixedThreadPool(
             2,
@@ -115,6 +121,16 @@ public class HttpJsonDirectCallableTest {
               t.setDaemon(true);
               return t;
             });
+    EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
+    Mockito.doNothing()
+        .when(endpointContext)
+        .validateUniverseDomain(
+            Mockito.any(Credentials.class), Mockito.any(HttpJsonStatusCode.class));
+    defaultCallContext =
+        HttpJsonCallContext.createDefault()
+            .withChannel(channel)
+            .withTimeout(Duration.ofSeconds(30))
+            .withEndpointContext(endpointContext);
   }
 
   @AfterClass
@@ -132,18 +148,13 @@ public class HttpJsonDirectCallableTest {
     HttpJsonDirectCallable<Field, Field> callable =
         new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
 
-    HttpJsonCallContext callContext =
-        HttpJsonCallContext.createDefault()
-            .withChannel(channel)
-            .withTimeout(Duration.ofSeconds(30));
-
     Field request;
     Field expectedResponse;
     request = expectedResponse = createTestMessage(2);
 
     MOCK_SERVICE.addResponse(expectedResponse);
 
-    Field actualResponse = callable.futureCall(request, callContext).get();
+    Field actualResponse = callable.futureCall(request, defaultCallContext).get();
 
     assertThat(actualResponse).isEqualTo(expectedResponse);
     assertThat(MOCK_SERVICE.getRequestPaths().size()).isEqualTo(1);
@@ -167,11 +178,6 @@ public class HttpJsonDirectCallableTest {
     HttpJsonDirectCallable<Field, Field> callable =
         new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
 
-    HttpJsonCallContext callContext =
-        HttpJsonCallContext.createDefault()
-            .withChannel(channel)
-            .withTimeout(Duration.ofSeconds(30));
-
     Field request = createTestMessage(2);
     Field expectedResponse = createTestMessage(2);
     Field otherResponse = createTestMessage(10);
@@ -179,7 +185,7 @@ public class HttpJsonDirectCallableTest {
     MOCK_SERVICE.addResponse(otherResponse);
     MOCK_SERVICE.addResponse(otherResponse);
 
-    Field actualResponse = callable.futureCall(request, callContext).get();
+    Field actualResponse = callable.futureCall(request, defaultCallContext).get();
     assertThat(actualResponse).isEqualTo(expectedResponse);
     assertThat(MOCK_SERVICE.getRequestPaths().size()).isEqualTo(1);
     String headerValue = MOCK_SERVICE.getRequestHeaders().get("header-key").iterator().next();
@@ -202,11 +208,6 @@ public class HttpJsonDirectCallableTest {
     HttpJsonDirectCallable<Field, Field> callable =
         new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
 
-    HttpJsonCallContext callContext =
-        HttpJsonCallContext.createDefault()
-            .withChannel(channel)
-            .withTimeout(Duration.ofSeconds(30));
-
     Field request = createTestMessage(2);
     Field expectedResponse = createTestMessage(2);
     Field randomResponse1 = createTestMessage(10);
@@ -215,7 +216,7 @@ public class HttpJsonDirectCallableTest {
     MOCK_SERVICE.addResponse(expectedResponse);
     MOCK_SERVICE.addResponse(randomResponse2);
 
-    Field actualResponse = callable.futureCall(request, callContext).get();
+    Field actualResponse = callable.futureCall(request, defaultCallContext).get();
     // Gax returns the first response for Unary Call
     assertThat(actualResponse).isEqualTo(randomResponse1);
     assertThat(actualResponse).isNotEqualTo(expectedResponse);
@@ -234,18 +235,13 @@ public class HttpJsonDirectCallableTest {
     HttpJsonDirectCallable<Field, Field> callable =
         new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
 
-    HttpJsonCallContext callContext =
-        HttpJsonCallContext.createDefault()
-            .withChannel(channel)
-            .withTimeout(Duration.ofSeconds(30));
-
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(Code.NOT_FOUND), false);
     MOCK_SERVICE.addException(exception);
 
     try {
-      callable.futureCall(createTestMessage(2), callContext).get();
+      callable.futureCall(createTestMessage(2), defaultCallContext).get();
       Assert.fail("No exception raised");
     } catch (ExecutionException e) {
       HttpResponseException respExp = (HttpResponseException) e.getCause();
@@ -266,15 +262,10 @@ public class HttpJsonDirectCallableTest {
     HttpJsonDirectCallable<Field, Field> callable =
         new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
 
-    HttpJsonCallContext callContext =
-        HttpJsonCallContext.createDefault()
-            .withChannel(channel)
-            .withTimeout(Duration.ofSeconds(30));
-
     MOCK_SERVICE.addNullResponse();
 
     try {
-      callable.futureCall(createTestMessage(2), callContext).get();
+      callable.futureCall(createTestMessage(2), defaultCallContext).get();
       Assert.fail("No exception raised");
     } catch (ExecutionException e) {
       HttpJsonStatusRuntimeException respExp = (HttpJsonStatusRuntimeException) e.getCause();
@@ -295,14 +286,10 @@ public class HttpJsonDirectCallableTest {
     HttpJsonDirectCallable<Field, Field> callable =
         new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
 
-    HttpJsonCallContext callContext =
-        HttpJsonCallContext.createDefault()
-            .withChannel(channel)
-            .withTimeout(Duration.ofSeconds(30));
     MOCK_SERVICE.addNullResponse(400);
 
     try {
-      callable.futureCall(createTestMessage(2), callContext).get();
+      callable.futureCall(createTestMessage(2), defaultCallContext).get();
       Assert.fail("No exception raised");
     } catch (ExecutionException e) {
       HttpResponseException respExp = (HttpResponseException) e.getCause();
@@ -321,18 +308,13 @@ public class HttpJsonDirectCallableTest {
     HttpJsonDirectCallable<Field, Field> callable =
         new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
 
-    HttpJsonCallContext callContext =
-        HttpJsonCallContext.createDefault()
-            .withChannel(channel)
-            .withTimeout(Duration.ofSeconds(30));
-
     ApiException exception =
         ApiExceptionFactory.createException(
             new Exception(), FakeStatusCode.of(Code.INTERNAL), false);
     MOCK_SERVICE.addException(500, exception);
 
     try {
-      callable.futureCall(createTestMessage(2), callContext).get();
+      callable.futureCall(createTestMessage(2), defaultCallContext).get();
       Assert.fail("No exception raised");
     } catch (ExecutionException e) {
       HttpResponseException respExp = (HttpResponseException) e.getCause();
@@ -353,8 +335,7 @@ public class HttpJsonDirectCallableTest {
     HttpJsonDirectCallable<Field, Field> callable =
         new HttpJsonDirectCallable<>(FAKE_METHOD_DESCRIPTOR);
 
-    HttpJsonCallContext callContext =
-        HttpJsonCallContext.createDefault().withChannel(channel).withTimeout(Duration.ofSeconds(3));
+    HttpJsonCallContext callContext = defaultCallContext.withTimeout(Duration.ofSeconds(3));
 
     Field response = createTestMessage(10);
     MOCK_SERVICE.addResponse(response, java.time.Duration.ofSeconds(5));
