@@ -264,7 +264,7 @@ public class TestProtoLoader {
         ExplicitDynamicRoutingHeaderTestingOuterClass.getDescriptor();
     ServiceDescriptor testingService = testingFileDescriptor.getServices().get(0);
     assertEquals(testingService.getName(), "ExplicitDynamicRoutingHeaderTesting");
-    System.out.println("dynamic routing test is being run.............");
+
     Map<String, Message> messageTypes = Parser.parseMessages(testingFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(testingFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
