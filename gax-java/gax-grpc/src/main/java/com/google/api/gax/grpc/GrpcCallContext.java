@@ -465,9 +465,7 @@ public final class GrpcCallContext implements ApiCallContext {
     }
 
     // The EndpointContext is not updated as there should be no reason for a user
-    // to update this. EndpointContext is an internal class used by the client library
-    // to resolve the endpoint. It is created once the library is initialized and
-    // should not be updated.
+    // to update this.
     return new GrpcCallContext(
         newChannel,
         newCredentials,

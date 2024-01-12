@@ -38,7 +38,12 @@ import com.google.common.base.Strings;
 import java.io.IOException;
 import javax.annotation.Nullable;
 
-/** Contains the fields required to resolve the endpoint and Universe Domain */
+/**
+ * EndpointContext is an internal class used by the client library to resolve the endpoint. It is
+ * created once the library is initialized should not be updated manually.
+ *
+ * <p>Contains the fields required to resolve the endpoint and Universe Domain
+ */
 @InternalApi
 @AutoValue
 public abstract class EndpointContext {
