@@ -1300,7 +1300,10 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     for (HttpBindings.HttpBinding httpBindingFieldBinding :
         method.httpBindings().pathParameters()) {
       MethodInvocationExpr requestBuilderExpr =
-          createRequestFieldGetterExpr(requestVarExpr, httpBindingFieldBinding.name(),httpBindingFieldBinding.field().isEnum());
+          createRequestFieldGetterExpr(
+              requestVarExpr,
+              httpBindingFieldBinding.name(),
+              httpBindingFieldBinding.field().isEnum());
       Expr valueOfExpr =
           MethodInvocationExpr.builder()
               .setStaticReferenceType(TypeNode.STRING)
@@ -1361,7 +1364,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     for (int i = 0; i < routingHeaderParams.size(); i++) {
       RoutingHeaderRule.RoutingHeaderParam routingHeaderParam = routingHeaderParams.get(i);
       MethodInvocationExpr requestFieldGetterExpr =
-          createRequestFieldGetterExpr(requestVarExpr, routingHeaderParam.fieldName(),false);
+          createRequestFieldGetterExpr(requestVarExpr, routingHeaderParam.fieldName(), false);
       Expr routingHeaderKeyExpr =
           ValueExpr.withValue(StringObjectValue.withValue(routingHeaderParam.key()));
       String pathTemplateName =
@@ -1471,9 +1474,9 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     for (int i = 0; i < descendantFields.size(); i++) {
       String currFieldName = descendantFields.get(i);
       String bindingFieldMethodName =
-              String.format("get%s", JavaStyle.toUpperCamelCase(currFieldName));
-      if (i == descendantFields.size()-1 && isFieldEnum) {
-        bindingFieldMethodName = bindingFieldMethodName+"Value";
+          String.format("get%s", JavaStyle.toUpperCamelCase(currFieldName));
+      if (i == descendantFields.size() - 1 && isFieldEnum) {
+        bindingFieldMethodName = bindingFieldMethodName + "Value";
       }
       requestFieldGetterExprBuilder =
           requestFieldGetterExprBuilder.setMethodName(bindingFieldMethodName);
