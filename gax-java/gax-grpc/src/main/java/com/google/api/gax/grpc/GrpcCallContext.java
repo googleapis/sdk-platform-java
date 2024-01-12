@@ -627,9 +627,8 @@ public final class GrpcCallContext implements ApiCallContext {
    */
   @InternalApi
   public void validateUniverseDomain() {
-    EndpointContext endpointContext = getEndpointContext();
     try {
-      endpointContext.validateUniverseDomain(getCredentials(), UNAUTHENTICATED_STATUS_CODE);
+      endpointContext.validateUniverseDomain(credentials, UNAUTHENTICATED_STATUS_CODE);
     } catch (IOException e) {
       // Check if it is an Auth Exception (All instances of IOException from endpointContext's
       // `validateUniverseDomain()` call should be an Auth Exception).
@@ -701,19 +700,5 @@ public final class GrpcCallContext implements ApiCallContext {
       }
     }
     return metadata;
-  }
-
-  @InternalApi
-  public EndpointContext getEndpointContext() {
-    return endpointContext;
-  }
-
-  // gRPC-Java uses CallCredentials (not Google Auth Library's Credentials). gRPC-Java doesn't
-  // expose a way to access the original Credentials from CallCredentials. For gRPC, the client
-  // library stores both the CallCredentials and Credentials object. This is so the client library
-  // can access any additional fields from the Credentials' class (i.e. Universe Domain).
-  @InternalApi
-  Credentials getCredentials() {
-    return credentials;
   }
 }

@@ -66,9 +66,6 @@ public interface ApiCallContext extends RetryingContext {
   /** Returns a new ApiCallContext with the given Endpoint Context. */
   ApiCallContext withEndpointContext(EndpointContext endpointContext);
 
-  /** Returns the configured EndpointContext */
-  EndpointContext getEndpointContext();
-
   /**
    * Returns a new ApiCallContext with the given timeout set.
    *

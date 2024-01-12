@@ -36,7 +36,6 @@ import static org.junit.Assert.assertTrue;
 
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.ApiCallContext;
-import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.testing.FakeCallContext;
 import com.google.api.gax.rpc.testing.FakeChannel;
@@ -45,7 +44,6 @@ import com.google.api.gax.tracing.ApiTracer;
 import com.google.auth.Credentials;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.truth.Truth;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -251,15 +249,7 @@ public class HttpJsonCallContextTest {
   }
 
   @Test
-  public void testEndpointContext() throws IOException {
-    EndpointContext endpointContext = EndpointContext.newBuilder().setServiceName("test").build();
-    HttpJsonCallContext context =
-        HttpJsonCallContext.createDefault().withEndpointContext(endpointContext);
-    assertEquals(context.getEndpointContext(), endpointContext);
-  }
-
-  @Test
-  public void testMergeOptions() throws IOException {
+  public void testMergeOptions() {
     ApiCallContext emptyCallContext = HttpJsonCallContext.createDefault();
     ApiCallContext.Key<String> contextKey1 = ApiCallContext.Key.create("testKey1");
     ApiCallContext.Key<String> contextKey2 = ApiCallContext.Key.create("testKey2");

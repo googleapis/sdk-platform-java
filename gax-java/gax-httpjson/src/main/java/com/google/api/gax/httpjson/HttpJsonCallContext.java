@@ -423,7 +423,6 @@ public final class HttpJsonCallContext implements ApiCallContext {
    */
   @InternalApi
   public void validateUniverseDomain() {
-    EndpointContext endpointContext = getEndpointContext();
     try {
       endpointContext.validateUniverseDomain(
           getCallOptions().getCredentials(), UNAUTHENTICATED_STATUS_CODE);
@@ -597,11 +596,5 @@ public final class HttpJsonCallContext implements ApiCallContext {
         retrySettings,
         retryableCodes,
         endpointContext);
-  }
-
-  @InternalApi
-  @Override
-  public EndpointContext getEndpointContext() {
-    return endpointContext;
   }
 }

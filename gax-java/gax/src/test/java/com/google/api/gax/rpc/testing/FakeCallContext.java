@@ -455,9 +455,4 @@ public class FakeCallContext implements ApiCallContext {
         .withTransportChannel(clientContext.getTransportChannel())
         .withCredentials(clientContext.getCredentials());
   }
-
-  @Override
-  public EndpointContext getEndpointContext() {
-    return endpointContext;
-  }
 }

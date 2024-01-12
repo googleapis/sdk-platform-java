@@ -35,7 +35,6 @@ import static org.junit.Assert.assertNull;
 
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.ApiCallContext;
-import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.testing.FakeCallContext;
 import com.google.api.gax.rpc.testing.FakeChannel;
@@ -372,13 +371,6 @@ public class GrpcCallContextTest {
     assertEquals(testContext2, context.getOption(contextKey2));
     GrpcCallContext newContext = context.withOption(contextKey1, testContextOverwrite);
     assertEquals(testContextOverwrite, newContext.getOption(contextKey1));
-  }
-
-  @Test
-  public void testEndpointContext() throws IOException {
-    EndpointContext endpointContext = EndpointContext.newBuilder().setServiceName("test").build();
-    GrpcCallContext context = GrpcCallContext.createDefault().withEndpointContext(endpointContext);
-    assertEquals(context.getEndpointContext(), endpointContext);
   }
 
   @Test

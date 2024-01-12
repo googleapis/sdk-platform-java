@@ -40,11 +40,6 @@
   <difference>
     <differenceType>7012</differenceType>
     <className>com/google/api/gax/rpc/ApiCallContext</className>
-    <method>* getEndpointContext()</method>
-  </difference>
-  <difference>
-    <differenceType>7012</differenceType>
-    <className>com/google/api/gax/rpc/ApiCallContext</className>
     <method>* validateUniverseDomain()</method>
   </difference>
 </differences>
