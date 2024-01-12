@@ -637,7 +637,7 @@ public final class GrpcCallContext implements ApiCallContext {
         Retryable retryable = (Retryable) e;
         // Keep the behavior the same as gRPC-Java. Mark as Auth Exceptions as Unavailable
         throw ApiExceptionFactory.createException(
-            "Unable to retrieve the Universe Domain from the Credentials. Retrying the attempt.",
+            EndpointContext.UNABLE_TO_RETRIEVE_CREDENTIALS_ERROR_MESSAGE,
             e,
             GrpcStatusCode.of(Status.Code.UNAVAILABLE),
             retryable.isRetryable());

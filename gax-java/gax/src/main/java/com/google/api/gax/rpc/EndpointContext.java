@@ -42,10 +42,10 @@ import javax.annotation.Nullable;
 @InternalApi
 @AutoValue
 public abstract class EndpointContext {
-  public static final String INVALID_UNIVERSE_DOMAIN_ERROR_TEMPLATE =
+  private static final String INVALID_UNIVERSE_DOMAIN_ERROR_TEMPLATE =
       "The configured universe domain (%s) does not match the universe domain found in the credentials (%s). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.";
   public static final String UNABLE_TO_RETRIEVE_CREDENTIALS_ERROR_MESSAGE =
-      "Unable to retrieve the Universe Domain from the Credentials. The client library will not invoke the RPC.";
+      "Unable to retrieve the Universe Domain from the Credentials.";
 
   /**
    * ServiceName is host URI for Google Cloud Services. It follows the format of
@@ -87,7 +87,7 @@ public abstract class EndpointContext {
 
   public abstract boolean usingGDCH();
 
-  public abstract String resolvedUniverseDomain();
+  abstract String resolvedUniverseDomain();
 
   public abstract String resolvedEndpoint();
 
