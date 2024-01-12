@@ -153,7 +153,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     return universeDomain;
   }
 
-  public final String getEndpoint() {
+  public String getEndpoint() {
     return endpoint;
   }
 

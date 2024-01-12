@@ -282,7 +282,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
                 + " attemptDirectPathXds option.");
       } else {
         // Case 2: credential is not correctly set
-        if (!isNonDefaultServiceAccountAllowed()) {
+        if (!isCredentialDirectPathCompatible()) {
           LOG.log(
               Level.WARNING,
               "DirectPath is misconfigured. Please make sure the credential is an instance of "
@@ -303,7 +303,12 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     }
   }
 
-  private boolean isNonDefaultServiceAccountAllowed() {
+  @VisibleForTesting
+  boolean isCredentialDirectPathCompatible() {
+    // DirectPath requires a call credential during gRPC channel construction.
+    if (needsCredentials()) {
+      return false;
+    }
     if (allowNonDefaultServiceAccount != null && allowNonDefaultServiceAccount) {
       return true;
     }
@@ -365,7 +370,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     // Check DirectPath traffic.
     boolean useDirectPathXds = false;
     if (isDirectPathEnabled()
-        && isNonDefaultServiceAccountAllowed()
+        && isCredentialDirectPathCompatible()
         && isOnComputeEngine()
         && canUseDirectPathWithUniverseDomain()) {
       CallCredentials callCreds = MoreCallCredentials.from(credentials);
