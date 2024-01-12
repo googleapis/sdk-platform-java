@@ -5,21 +5,21 @@ grpc_version: 1.59.1
 #Optional.
 protobuf_version: 3.25.1
 #Required.
-googleapis-commitish: 4512234113a18c1fda1fb0d0ceac8f4b4efe9801
+googleapis_commitish: 4512234113a18c1fda1fb0d0ceac8f4b4efe9801
 #Required.
-owlbot-cli-image: sha256:623647ee79ac605858d09e60c1382a716c125fb776f69301b72de1cd35d49409
+owlbot_cli_image: sha256:623647ee79ac605858d09e60c1382a716c125fb776f69301b72de1cd35d49409
 #Required.
-synthtool-commitish: 59fe44fde9866a26e7ee4e4450fd79f67f8cf599
+synthtool_commitish: 59fe44fde9866a26e7ee4e4450fd79f67f8cf599
 #Required.
-python-version: 3.11.2
+python_version: 3.11.2
 #Optional. The root folder name of generated client libraries. If empty, modules will be created under current folder, useful for single module
-destination-path: google-cloud-java
+destination_path: google-cloud-java
 #Required.
 libraries:
     #Required. Can be used for populating the folder name java-{api_shortName}. This is also the destination-name in new-client.py.
   - api_shortname: asset
     #Optional. The default value is the title of service yaml
-    name-pretty: Cloud Asset
+    name_pretty: Cloud Asset
     #Required.
     library_type: GAPIC_AUTO
     #Optional. The default value is com.google.cloud
@@ -27,7 +27,7 @@ libraries:
     #Optional. The default value is google.cloud.{api_shortname}
     artifact_id: google.cloud.asset
     #Optional. The default value is true.
-    requires-billing: true
+    requires_billing: true
     #Optional. The default value is documentation.summary from service yaml
     api_description:
     #Optional.
