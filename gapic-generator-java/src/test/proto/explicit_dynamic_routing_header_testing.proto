@@ -271,7 +271,7 @@ service ExplicitDynamicRoutingHeaderTesting {
   // entire request object in the REST body.
   rpc ImplicitRoutingHeaderWithEnumTest(EnumRequest) returns (EnumResponse) {
     option (google.api.http) = {
-      post: "/v1beta1/{info.f_kingdom}"
+      post: "/v1beta1/{info.enum_value}"
       body: "*"
     };
   }
@@ -294,7 +294,7 @@ message EnumMessage {
     ENUM_VALUE_4 = 3;
   }
   // scalar types
-  EnumValues f_kingdom = 22;
+  EnumValues enum_value = 22;
 }
 
 // Example message:
