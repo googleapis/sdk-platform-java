@@ -85,7 +85,6 @@ service ExplicitDynamicRoutingHeaderTesting {
     };
   }
 
-
   // Example 4
   //
   // Extracting a single routing header key-value pair by matching a
@@ -267,56 +266,35 @@ service ExplicitDynamicRoutingHeaderTesting {
     };
   }
 
-  // This method echoes the ComplianceData request. This method exercises
+  // This method echoes the request. This method exercises
   // including a non-proto3-optional enum field in the URL path while sending the
   // entire request object in the REST body.
-  rpc RepeatDataPathEnum(RepeatRequest) returns (RepeatResponse) {
+  rpc ImplicitRoutingHeaderWithEnumTest(EnumRequest) returns (EnumResponse) {
     option (google.api.http) = {
-      post: "/v1beta1/repeat/kingdom/{info.f_kingdom}:pathenum"
-      body: "*"
-    };
-  }
-
-  // This method echoes the ComplianceData request. This method exercises
-  // including a proto3-optional enum field in the URL path while sending the
-  // entire request object in the REST body. Note that when the optional enum is
-  // unset for such an RPC, the GAPICs should error INSTEAD of issuing a
-  // request.
-  //
-  // TODO: Capture in generator tests against Showcase the early generator error
-  // when the optional enum is unset. This is beyond the reach of the current
-  // Compliance Suite implementation.
-  rpc RepeatDataPathEnumOptional(RepeatRequest) returns (RepeatResponse) {
-    option (google.api.http) = {
-      post: "/v1beta1/repeat/kingdom/{info.p_kingdom}:pathenumoptional"
+      post: "/v1beta1/{info.f_kingdom}"
       body: "*"
     };
   }
 }
 
-message RepeatRequest {
+message EnumRequest {
   string name = 1;
-  ComplianceData info = 2;
+  EnumMessage info = 2;
 }
 
-message RepeatResponse {
-  RepeatRequest request = 1;
+message EnumResponse {
+  EnumRequest request = 1;
 }
 
-message ComplianceData {
-  enum LifeKingdom {
-    LIFE_KINGDOM_UNSPECIFIED = 0;
-    ARCHAEBACTERIA = 1;
-    EUBACTERIA = 2;
-    PROTISTA = 3;
-    FUNGI = 4;
-    PLANTAE = 5;
-    ANIMALIA = 6;
+message EnumMessage {
+  enum EnumValues {
+    ENUM_VALUE_1 = 0;
+    ENUM_VALUE_2 = 1;
+    ENUM_VALUE_3 = 2;
+    ENUM_VALUE_4 = 3;
   }
   // scalar types
-  LifeKingdom f_kingdom = 22;
-  //optional fields
-  optional LifeKingdom p_kingdom = 23;
+  EnumValues f_kingdom = 22;
 }
 
 // Example message:
@@ -351,3 +329,4 @@ message NestedField {
 message AnotherNestedField {
   string name = 1;
 }
+
