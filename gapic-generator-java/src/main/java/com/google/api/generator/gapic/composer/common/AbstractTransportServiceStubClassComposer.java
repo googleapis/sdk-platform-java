@@ -1472,7 +1472,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
       String currFieldName = descendantFields.get(i);
       String bindingFieldMethodName =
               String.format("get%s", JavaStyle.toUpperCamelCase(currFieldName));
-      if (i==descendantFields.size()-1 && isFieldEnum) {
+      if (i == descendantFields.size()-1 && isFieldEnum) {
         bindingFieldMethodName = bindingFieldMethodName+"Value";
       }
       requestFieldGetterExprBuilder =

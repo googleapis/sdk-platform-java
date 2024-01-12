@@ -8,8 +8,8 @@ import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.RequestParamsBuilder;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.pathtemplate.PathTemplate;
-import com.google.explicit.dynamic.routing.header.RepeatRequest;
-import com.google.explicit.dynamic.routing.header.RepeatResponse;
+import com.google.explicit.dynamic.routing.header.EnumRequest;
+import com.google.explicit.dynamic.routing.header.EnumResponse;
 import com.google.explicit.dynamic.routing.header.Request;
 import com.google.explicit.dynamic.routing.header.RequestWithNestedField;
 import com.google.longrunning.stub.GrpcOperationsStub;
@@ -158,24 +158,14 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
               .setResponseMarshaller(ProtoUtils.marshaller(Empty.getDefaultInstance()))
               .build();
 
-  private static final MethodDescriptor<RepeatRequest, RepeatResponse>
-      repeatDataPathEnumMethodDescriptor =
-          MethodDescriptor.<RepeatRequest, RepeatResponse>newBuilder()
+  private static final MethodDescriptor<EnumRequest, EnumResponse>
+      implicitRoutingHeaderWithEnumTestMethodDescriptor =
+          MethodDescriptor.<EnumRequest, EnumResponse>newBuilder()
               .setType(MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(
-                  "google.explicit.dynamic.routing.header.ExplicitDynamicRoutingHeaderTesting/RepeatDataPathEnum")
-              .setRequestMarshaller(ProtoUtils.marshaller(RepeatRequest.getDefaultInstance()))
-              .setResponseMarshaller(ProtoUtils.marshaller(RepeatResponse.getDefaultInstance()))
-              .build();
-
-  private static final MethodDescriptor<RepeatRequest, RepeatResponse>
-      repeatDataPathEnumOptionalMethodDescriptor =
-          MethodDescriptor.<RepeatRequest, RepeatResponse>newBuilder()
-              .setType(MethodDescriptor.MethodType.UNARY)
-              .setFullMethodName(
-                  "google.explicit.dynamic.routing.header.ExplicitDynamicRoutingHeaderTesting/RepeatDataPathEnumOptional")
-              .setRequestMarshaller(ProtoUtils.marshaller(RepeatRequest.getDefaultInstance()))
-              .setResponseMarshaller(ProtoUtils.marshaller(RepeatResponse.getDefaultInstance()))
+                  "google.explicit.dynamic.routing.header.ExplicitDynamicRoutingHeaderTesting/ImplicitRoutingHeaderWithEnumTest")
+              .setRequestMarshaller(ProtoUtils.marshaller(EnumRequest.getDefaultInstance()))
+              .setResponseMarshaller(ProtoUtils.marshaller(EnumResponse.getDefaultInstance()))
               .build();
 
   private final UnaryCallable<Request, Empty> example1TestCallable;
@@ -192,8 +182,7 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
   private final UnaryCallable<Request, Empty> backwardsCompatible2TestCallable;
   private final UnaryCallable<Request, Empty> backwardsCompatible3TestCallable;
   private final UnaryCallable<RequestWithNestedField, Empty> nestedFieldTestCallable;
-  private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataPathEnumCallable;
-  private final UnaryCallable<RepeatRequest, RepeatResponse> repeatDataPathEnumOptionalCallable;
+  private final UnaryCallable<EnumRequest, EnumResponse> implicitRoutingHeaderWithEnumTestCallable;
 
   private final BackgroundResource backgroundResources;
   private final GrpcOperationsStub operationsStub;
@@ -451,23 +440,14 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
                   return builder.build();
                 })
             .build();
-    GrpcCallSettings<RepeatRequest, RepeatResponse> repeatDataPathEnumTransportSettings =
-        GrpcCallSettings.<RepeatRequest, RepeatResponse>newBuilder()
-            .setMethodDescriptor(repeatDataPathEnumMethodDescriptor)
+    GrpcCallSettings<EnumRequest, EnumResponse> implicitRoutingHeaderWithEnumTestTransportSettings =
+        GrpcCallSettings.<EnumRequest, EnumResponse>newBuilder()
+            .setMethodDescriptor(implicitRoutingHeaderWithEnumTestMethodDescriptor)
             .setParamsExtractor(
                 request -> {
                   RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add("info.f_kingdom", Integer.valueOf(request.getInfo().getFKingdom()));
-                  return builder.build();
-                })
-            .build();
-    GrpcCallSettings<RepeatRequest, RepeatResponse> repeatDataPathEnumOptionalTransportSettings =
-        GrpcCallSettings.<RepeatRequest, RepeatResponse>newBuilder()
-            .setMethodDescriptor(repeatDataPathEnumOptionalMethodDescriptor)
-            .setParamsExtractor(
-                request -> {
-                  RequestParamsBuilder builder = RequestParamsBuilder.create();
-                  builder.add("info.p_kingdom", Integer.valueOf(request.getInfo().getPKingdom()));
+                  builder.add(
+                      "info.f_kingdom", String.valueOf(request.getInfo().getFKingdomValue()));
                   return builder.build();
                 })
             .build();
@@ -520,15 +500,10 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
     this.nestedFieldTestCallable =
         callableFactory.createUnaryCallable(
             nestedFieldTestTransportSettings, settings.nestedFieldTestSettings(), clientContext);
-    this.repeatDataPathEnumCallable =
+    this.implicitRoutingHeaderWithEnumTestCallable =
         callableFactory.createUnaryCallable(
-            repeatDataPathEnumTransportSettings,
-            settings.repeatDataPathEnumSettings(),
-            clientContext);
-    this.repeatDataPathEnumOptionalCallable =
-        callableFactory.createUnaryCallable(
-            repeatDataPathEnumOptionalTransportSettings,
-            settings.repeatDataPathEnumOptionalSettings(),
+            implicitRoutingHeaderWithEnumTestTransportSettings,
+            settings.implicitRoutingHeaderWithEnumTestSettings(),
             clientContext);
 
     this.backgroundResources =
@@ -610,13 +585,8 @@ public class GrpcExplicitDynamicRoutingHeaderTestingStub
   }
 
   @Override
-  public UnaryCallable<RepeatRequest, RepeatResponse> repeatDataPathEnumCallable() {
-    return repeatDataPathEnumCallable;
-  }
-
-  @Override
-  public UnaryCallable<RepeatRequest, RepeatResponse> repeatDataPathEnumOptionalCallable() {
-    return repeatDataPathEnumOptionalCallable;
+  public UnaryCallable<EnumRequest, EnumResponse> implicitRoutingHeaderWithEnumTestCallable() {
+    return implicitRoutingHeaderWithEnumTestCallable;
   }
 
   @Override
