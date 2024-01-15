@@ -55,66 +55,22 @@ if [[ ! -f "WORKSPACE" ]] || [[ ! -d "google" ]] || [[ ! -d "grafeas" ]]; then
   echo "will now manually download googleapis"
   download_googleapis_files_and_folders "${output_folder}"
 fi
-# parse version of gapic-generator-java, protobuf and grpc from WORKSPACE
-# gapic_generator_version=$(get_version_from_WORKSPACE "_gapic_generator_java_version" WORKSPACE "=")
-gapic_generator_version="2.29.0"
-echo "The version of gapic-generator-java is ${gapic_generator_version}."
-protobuf_version=$(get_version_from_WORKSPACE "protobuf-" WORKSPACE "-")
-echo "The version of protobuf is ${protobuf_version}"
 popd # googleapis
 popd # output_folder
 if [ -f "${output_folder}/generation_times" ];then
   rm "${output_folder}/generation_times"
 fi
 
+configuration_yaml="${script_dir}/resources/integration/google-cloud-java/generation_config.yaml"
+
 grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
   pushd "${output_folder}"
-  proto_paths_raw=$(echo "$line" | cut -d " " -f 1)
-  repository_path=$(echo "$line" | cut -d " " -f 2)
-  if [[ "${repository_path}" == google-cloud-java/* ]]; then
-    versions_file="${output_folder}/google-cloud-java/versions.txt"
-  else
-    versions_file="${output_folder}/${repository_path}/versions.txt"
-  fi
-  IFS=, read -ra proto_paths <<< "${proto_paths_raw}"
-  echo "proto_paths=" "${proto_paths[@]}"
-  sparse_clone "${googleapis_gen_url}" "$(printf "%s " "${proto_paths[@]}")"
-  queries=""
-  for proto_path in "${proto_paths[@]}"; do
-    queries="${queries}proto_path=${proto_path}"
-    queries="${queries},gapic_generator_version=${gapic_generator_version}"
-    queries="${queries},protobuf_version=${protobuf_version}"
-    # parse destination_path
-    destination_path=$(compute_destination_path "${proto_path}" "${output_folder}")
-    # parse GAPIC options from proto_path/BUILD.bazel
-    proto_build_file_path="${proto_path}/BUILD.bazel"
-    if [ ! -f "${proto_build_file_path}" ]; then
-      echo "provided googleapis 'google' folder does not contain a BUILD.bazel file expected"
-      echo "to be in ${proto_path}"
-      exit 1
-    fi
-    queries="${queries},destination_path=${destination_path}"
-    queries="${queries},proto_only=$(get_proto_only_from_BUILD "${proto_build_file_path}")"
-    queries="${queries},gapic_additional_protos=$(get_gapic_additional_protos_from_BUILD "${proto_build_file_path}")"
-    queries="${queries},transport=$(get_transport_from_BUILD "${proto_build_file_path}")"
-    queries="${queries},rest_numeric_enums=$(get_rest_numeric_enums_from_BUILD "${proto_build_file_path}")"
-    queries="${queries},gapic_yaml=$(get_gapic_yaml_from_BUILD "${proto_build_file_path}")"
-    queries="${queries},service_config=$(get_service_config_from_BUILD "${proto_build_file_path}")"
-    queries="${queries},service_yaml=$(get_service_yaml_from_BUILD "${proto_build_file_path}")"
-    queries="${queries},include_samples=$(get_include_samples_from_BUILD "${proto_build_file_path}")"
-    queries="${queries}|"
-  done
-
-  # remove last pipe character from queries
-  queries=$(echo "${queries}" | sed 's/|$//')
 
   echo "Generating library from ${proto_path}, to ${destination_path}..."
   generation_start=$(date "+%s")
-  python3 "${library_generation_dir}"/generate_composed_library.py generate \
-    --generation_queries "${queries}" \
-    --repository_path "${repository_path}" \
-    --versions_file "${versions_file}" \
-    --enable_postprocessing ${enable_postprocessing}
+  python3 "${library_generation_dir}"/main.py generate-from-yaml \
+    --generation-config-yaml "${configuration_yaml}" \
+    --enable-postprocessing ${enable_postprocessing}
   generation_end=$(date "+%s")
 
   # some generations are less than 1 second (0 produces exit code 1 in `expr`)
