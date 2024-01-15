@@ -57,9 +57,7 @@ public class ServiceSettingsClassComposer extends AbstractServiceSettingsClassCo
               typeStore,
               "newHttpJsonBuilder",
               "createHttpJsonDefault",
-              ImmutableList.<AnnotationNode>builder()
-                  .addAll(annotations)
-                  .build()));
+              ImmutableList.<AnnotationNode>builder().addAll(annotations).build()));
     }
     return methods;
   }
@@ -92,9 +90,7 @@ public class ServiceSettingsClassComposer extends AbstractServiceSettingsClassCo
               typeStore,
               "newHttpJsonBuilder",
               "createHttpJsonDefault",
-              ImmutableList.<AnnotationNode>builder()
-                  .addAll(annotations)
-                  .build(),
+              ImmutableList.<AnnotationNode>builder().addAll(annotations).build(),
               new SettingsCommentComposer(transportNames.next())
                   .getNewTransportBuilderMethodComment()));
     }
