@@ -3,8 +3,7 @@ parses a config yaml and generates libraries via generate_composed_library.py
 """
 
 import click
-import yaml
-import json
+from generate_composed_library import generate_composed_library
 from typing import Dict
 from model.GenerationConfig import GenerationConfig
 from model.Library import Library
@@ -41,6 +40,8 @@ def generate_from_yaml(
     repository_location
 ):
   config = GenerationConfig.from_yaml(generation_config_yaml)
+  for library in config.libraries:
+
 
 
 

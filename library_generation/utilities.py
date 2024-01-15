@@ -40,12 +40,14 @@ def get_argument_value_from_query(query: str, argument :str) -> str:
   return _get_raw_argument_component(found_argument[0], 1)
 
 """
-Given the input parameter "arguments" (example "--arg1 val1 -arg2 val2"),
-this function adds another argument "--arg_key arg_value" to the end
-of the argument string
+Generates a list of two elements [argument, value], or returns
+an empty array if arg_val is None
 """
-def add_argument(arguments: list[str], arg_key: str, arg_val: str) -> str:
-  return arguments + [f'--{arg_key}', f'{arg_val}']
+def create_argument(arg_key: str, arg_container: object) -> str:
+  arg_val = getattr(arg_container, arg_key, None)
+  if arg_val is not None:
+    return arguments + [f'--{arg_key}', f'{arg_val}']
+  return []
 
 def sh_util(statement: str, **kwargs) -> str:
   if 'stdout' not in kwargs:

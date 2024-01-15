@@ -32,62 +32,13 @@ import subprocess
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 
-@click.group(invoke_without_command=False)
-@click.pass_context
-@click.version_option(message="%(version)s")
 def main(ctx):
     pass
 
-@main.command()
-@click.option(
-    "--generation_queries",
-    required=True,
-    type=str,
-    help="""
-      a single string of comma-separated key-value groups separated by a
-      pipe | (i.e. the groups are spearated by pipe, while a group's key-values are
-      separated by comma). They key-value groups are in the form of `key=value` and will
-      be converted to an argument to generate_library.sh (`--key value`).
-
-      example: "proto_path=google/cloud/asset/v1,destination_path=google-cloud-asset-v1-java,(...)|proto_path=google/cloud/asset/v1p2beta5,destination_path=google-cloud-asset-v1-java,(...)"
-      In this case, generate_library.sh will be called once with
-        generate_library.sh --proto_path google/cloud/asset/v1 --destination_path google-cloud-asset-v1-java
-        and once with
-        generate_library.sh --proto_path google/cloud/asset/v1p2bet5 --destination_path google-cloud-asset-v1p2beta5-java
-    """
-)
-@click.option(
-    "--repository_path",
-    required=True,
-    type=str,
-    help="""
-    A relative path from the output folder (found in cwd when calling this script) that points
-    to the location of the original library. The original library is generally downloaded from
-    github (example, google-cloud-java/java-asset). Postprocessing will be run on such folder,
-    once the pre-processed libraries have been generated
-    """
-)
-@click.option(
-    "--versions_file",
-    required=False,
-    type=str,
-    help="""
-    a file of newline-separated version strings in the form "module:released-version:current-version". 
-    The versions will be applied to the pom.xml files and readmes
-    """
-)
-@click.option(
-    "--enable_postprocessing",
-    required=True,
-    type=str,
-    help="""
-    whether a final postprocessing run should be done on the pre-processed generated libraries
-    """
-)
-def generate(
-    generation_queries,
+def generate_composed_library(
+    config,
+    api_shortname,
     repository_path,
-    versions_file,
     enable_postprocessing
 ):
   output_folder = util.sh_util('get_output_folder')
@@ -108,12 +59,27 @@ def generate(
     if versions_file is None:
       versions_file = f'{output_folder}/{repository_path}/versions.txt'
 
+  base_arguments = []
+  base_arguments += create_argument('gapic_generator_version', config)
+  base_arguments += create_argument('grpc_version', config)
+  base_arguments += create_argument('protobuf_version', config)
+  base_arguments += create_argument('googleapis_commitish', config)
+  base_arguments += create_argument('owlbot_cli_image', config)
+  base_arguments += create_argument('python_version', config)
+
+  destination_path = f'java-{api_shortname}'
+  if config.destination_path is not None:
+    destination_path = config.destination_path + '/' + destination_path
+  base_arguments += ['--destination_path', destination_path]
+
+  # we use the whole config yaml but filter it to work with a single library
+  target_library = next(library for library in config.libraries if library.api_shortname == api_shortname)
+
   owlbot_cli_source_folder = util.sh_util('mktemp -d')
-  for query in generation_queries.split('|'):
+  for gapic in target_library.GAPICs:
     print(f'query: {query}')
-    arguments = util.get_generate_library_arguments(query)
-    proto_path = util.get_argument_value_from_query(query, 'proto_path')
-    destination_path = util.get_argument_value_from_query(query, 'destination_path')
+    effective_arguments = list(base_arguments)
+    effective_arguments += create_argument('proto_path', gapic)
 
     print(f'Generating library from {proto_path} to {destination_path}...')
     with subprocess.Popen([f'{script_dir}/generate_library.sh', *arguments],
