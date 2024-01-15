@@ -17,7 +17,7 @@ be converted to an argument to generate_library.sh (`--key value`).
 --versions_file: a file of newline-separated version strings in the form "module:released-version:current-version". The versions will be applied to the pom.xml files and readmes
 
 Prerequisites
-- Needs an `output` folder at the location of the calling shell. This folder
+- Needs a folder named `output` in current working directory. This folder
 is automatically detected by `generate_library.sh` and this script ensures it
 contains the necessary folders and files, specifically:
   - A "google" folder found in the googleapis repository
