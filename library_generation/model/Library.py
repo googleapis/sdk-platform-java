@@ -21,7 +21,7 @@ class Library:
       client_documentation: Optional[str],
       rest_documentation: Optional[str],
       rpc_documentation: Optional[str],
-      gapics: List[GAPIC],
+      GAPICs: List[GAPIC],
       group_id: Optional[str] = 'com.google.cloud',
       requires_billing: Optional[bool] = True,
   ):
@@ -36,4 +36,4 @@ class Library:
       self.client_documentation = client_documentation
       self.rest_documentation = rest_documentation
       self.rpc_documentation = rpc_documentation
-      self.gapics = gapics
+      self.GAPICs = GAPICs

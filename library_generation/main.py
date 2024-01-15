@@ -19,7 +19,7 @@ def main(ctx):
 
 @main.command()
 @click.option(
-    "--generation_config_yaml",
+    "--generation-config-yaml",
     required=True,
     type=str,
     help="""
@@ -27,7 +27,16 @@ def main(ctx):
     """
 )
 @click.option(
-    "--repository_location",
+    "--repository-location",
+    required=False,
+    type=str,
+    help="""
+    Path to repository where generated files will be merged into, via owlbot copy-code.
+    Specifying this option enables postprocessing
+    """
+)
+@click.option(
+    "--enable-postprocessing",
     required=False,
     type=str,
     help="""
@@ -37,10 +46,16 @@ def main(ctx):
 )
 def generate_from_yaml(
     generation_config_yaml,
-    repository_location
+    repository_location,
+    enable_postprocessing
 ):
   config = GenerationConfig.from_yaml(generation_config_yaml)
   for library in config.libraries:
+    generate_composed_library(
+        config, library.api_shortname, repository_location, enable_postprocessing
+    )
+    pass
+  pass
 
 
 

@@ -45,41 +45,42 @@ def generate_composed_library(
   print(f'output_folder: {output_folder}')
   os.makedirs(output_folder, exist_ok=True)
 
-  if 'google-cloud-java' in repository_path:
-    print('this is a monorepo library')
-    library = repository_path.split('/')[-1]
-    clone_out = util.sh_util(f'sparse_clone "https://github.com/googleapis/google-cloud-java.git" "{library} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"', cwd=output_folder)
-    print(clone_out)
-    if versions_file is None:
-      versions_file = f'{output_folder}/google-cloud-java/versions.txt'
-  else:
-    print('this is a HW library')
-    clone_out = util.sh_util(f'git clone "https://github.com/googleapis/{repository_path}.git"', cwd=output_folder)
-    print(clone_out)
-    if versions_file is None:
-      versions_file = f'{output_folder}/{repository_path}/versions.txt'
 
   base_arguments = []
-  base_arguments += create_argument('gapic_generator_version', config)
-  base_arguments += create_argument('grpc_version', config)
-  base_arguments += create_argument('protobuf_version', config)
-  base_arguments += create_argument('googleapis_commitish', config)
-  base_arguments += create_argument('owlbot_cli_image', config)
-  base_arguments += create_argument('python_version', config)
+  base_arguments += util.create_argument('gapic_generator_version', config)
+  base_arguments += util.create_argument('grpc_version', config)
+  base_arguments += util.create_argument('protobuf_version', config)
+  base_arguments += util.create_argument('googleapis_commitish', config)
+  base_arguments += util.create_argument('owlbot_cli_image', config)
+  base_arguments += util.create_argument('python_version', config)
 
   destination_path = f'java-{api_shortname}'
   if config.destination_path is not None:
     destination_path = config.destination_path + '/' + destination_path
   base_arguments += ['--destination_path', destination_path]
+  versions_file = ''
+  if 'google-cloud-java' in destination_path:
+    print('this is a monorepo library')
+    library = destination_path.split('/')[-1]
+    clone_out = util.sh_util(f'sparse_clone "https://github.com/googleapis/google-cloud-java.git" "{library} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"', cwd=output_folder)
+    print(clone_out)
+    versions_file = f'{output_folder}/google-cloud-java/versions.txt'
+  else:
+    print('this is a HW library')
+    clone_out = util.sh_util(f'git clone "https://github.com/googleapis/{destination_path}.git"', cwd=output_folder)
+    print(clone_out)
+    versions_file = f'{output_folder}/{destination_path}/versions.txt'
 
   # we use the whole config yaml but filter it to work with a single library
   target_library = next(library for library in config.libraries if library.api_shortname == api_shortname)
+  if target_library is None:
+    raise ValueError(f'{api_shortname} not found in configuration yaml')
 
   owlbot_cli_source_folder = util.sh_util('mktemp -d')
   for gapic in target_library.GAPICs:
     print(f'query: {query}')
     effective_arguments = list(base_arguments)
-    effective_arguments += create_argument('proto_path', gapic)
+    effective_arguments += util.create_argument('proto_path', gapic)
 
     print(f'Generating library from {proto_path} to {destination_path}...')
     with subprocess.Popen([f'{script_dir}/generate_library.sh', *arguments],
@@ -95,7 +96,7 @@ def generate_composed_library(
 
   if enable_postprocessing:
     # call postprocess library
-    with subprocess.Popen([f'{script_dir}/postprocess_library.sh', f'{output_folder}/{repository_path}',
+    with subprocess.Popen([f'{script_dir}/postprocess_library.sh', f'{output_folder}/{destination_path}',
       '', versions_file, owlbot_cli_source_folder],
       stdout=subprocess.PIPE, stderr=subprocess.STDOUT) as postprocessing_process:
       for line in postprocessing_process.stdout:

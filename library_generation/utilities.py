@@ -46,7 +46,7 @@ an empty array if arg_val is None
 def create_argument(arg_key: str, arg_container: object) -> str:
   arg_val = getattr(arg_container, arg_key, None)
   if arg_val is not None:
-    return arguments + [f'--{arg_key}', f'{arg_val}']
+    return [f'--{arg_key}', f'{arg_val}']
   return []
 
 def sh_util(statement: str, **kwargs) -> str:

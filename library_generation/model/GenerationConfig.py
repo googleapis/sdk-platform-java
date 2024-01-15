@@ -77,6 +77,8 @@ class GenerationConfig:
       parsed_libraries
     )
 
+    return parsed_config
+
 def _required(config: Dict, key: str):
   if key not in config:
     raise ValueError(f'required key {key} not found in yaml')
