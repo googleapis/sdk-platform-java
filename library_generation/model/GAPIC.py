@@ -6,4 +6,4 @@ class GAPIC:
       self,
       proto_path: str,
   ):
-    self.proto_path
+    self.proto_path = proto_path

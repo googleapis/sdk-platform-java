@@ -2,6 +2,8 @@
 Class that represents a library in a generation_config.yaml file
 """
 from typing import Dict, List, Optional
+from enum import Enum
+from . import GAPIC
 
 class _LibraryType(Enum):
   GAPIC_AUTO = 1
@@ -13,15 +15,15 @@ class Library:
       api_shortname: str,
       name_pretty: Optional[str],
       library_type: _LibraryType,
-      group_id: Optional[str] = 'com.google.cloud'
       artifact_id: Optional[str],
-      requires_billing = Optional[bool] = True,
       api_description: Optional[str],
       product_documentation: Optional[str],
       client_documentation: Optional[str],
       rest_documentation: Optional[str],
       rpc_documentation: Optional[str],
-      gapics: List[GAPIC]
+      gapics: List[GAPIC],
+      group_id: Optional[str] = 'com.google.cloud',
+      requires_billing: Optional[bool] = True,
   ):
       self.api_shortname = api_shortname
       self.name_pretty = name_pretty

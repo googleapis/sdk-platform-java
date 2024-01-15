@@ -48,5 +48,5 @@ libraries:
       - proto_path: google/cloud/asset/v1p7beta1
   - api_shortname: speech
     library_type: GAPIC_AUTO
-    services:
+    GAPICs:
       - proto_path: google/cloud/asset/v1
