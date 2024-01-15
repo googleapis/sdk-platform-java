@@ -203,7 +203,6 @@ public class LibraryServiceSettings extends ClientSettings<LibraryServiceSetting
   }
 
   /** Returns a new REST builder for this class. */
-  @BetaApi
   public static Builder newHttpJsonBuilder() {
     return Builder.createHttpJsonDefault();
   }
@@ -245,7 +244,6 @@ public class LibraryServiceSettings extends ClientSettings<LibraryServiceSetting
       return new Builder(LibraryServiceStubSettings.newBuilder());
     }
 
-    @BetaApi
     private static Builder createHttpJsonDefault() {
       return new Builder(LibraryServiceStubSettings.newHttpJsonBuilder());
     }

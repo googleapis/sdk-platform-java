@@ -148,7 +148,6 @@ public class IamCredentialsSettings extends ClientSettings<IamCredentialsSetting
   }
 
   /** Returns a new REST builder for this class. */
-  @BetaApi
   public static Builder newHttpJsonBuilder() {
     return Builder.createHttpJsonDefault();
   }
@@ -190,7 +189,6 @@ public class IamCredentialsSettings extends ClientSettings<IamCredentialsSetting
       return new Builder(IamCredentialsStubSettings.newBuilder());
     }
 
-    @BetaApi
     private static Builder createHttpJsonDefault() {
       return new Builder(IamCredentialsStubSettings.newHttpJsonBuilder());
     }
