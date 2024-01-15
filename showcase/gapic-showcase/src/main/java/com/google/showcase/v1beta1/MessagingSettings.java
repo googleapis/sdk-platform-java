@@ -249,7 +249,6 @@ public class MessagingSettings extends ClientSettings<MessagingSettings> {
   }
 
   /** Returns a new REST builder for this class. */
-  @BetaApi
   public static Builder newHttpJsonBuilder() {
     return Builder.createHttpJsonDefault();
   }
@@ -291,7 +290,6 @@ public class MessagingSettings extends ClientSettings<MessagingSettings> {
       return new Builder(MessagingStubSettings.newBuilder());
     }
 
-    @BetaApi
     private static Builder createHttpJsonDefault() {
       return new Builder(MessagingStubSettings.newHttpJsonBuilder());
     }

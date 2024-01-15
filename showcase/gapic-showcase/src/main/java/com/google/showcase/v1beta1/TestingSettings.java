@@ -208,7 +208,6 @@ public class TestingSettings extends ClientSettings<TestingSettings> {
   }
 
   /** Returns a new REST builder for this class. */
-  @BetaApi
   public static Builder newHttpJsonBuilder() {
     return Builder.createHttpJsonDefault();
   }
@@ -250,7 +249,6 @@ public class TestingSettings extends ClientSettings<TestingSettings> {
       return new Builder(TestingStubSettings.newBuilder());
     }
 
-    @BetaApi
     private static Builder createHttpJsonDefault() {
       return new Builder(TestingStubSettings.newHttpJsonBuilder());
     }
