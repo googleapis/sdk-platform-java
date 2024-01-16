@@ -1270,7 +1270,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
   }
 
   @VisibleForTesting
-  private static List<Statement> createRequestMutatorBody(
+  static List<Statement> createRequestMutatorBody(
       Method method, ImmutableMap<String, Message> messageTypes) {
     List<Statement> bodyStatements = new ArrayList<>();
 
@@ -1291,7 +1291,8 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
         Field matchedField = matchingField.get();
         Format fieldInfoFormat = matchedField.fieldInfoFormat();
         // Check that the field is of String type
-        if (fieldInfoFormat.equals(Format.UUID4)
+        if (fieldInfoFormat != null
+            && fieldInfoFormat.equals(Format.UUID4)
             && !matchedField.isRequired()
             && matchedField.type().reference() != null
             && matchedField.type().reference().fullName() == "java.lang.String") {

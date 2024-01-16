@@ -49,15 +49,18 @@ class GrpcDirectCallable<RequestT, ResponseT> extends UnaryCallable<RequestT, Re
   private final MethodDescriptor<RequestT, ResponseT> descriptor;
   private final boolean awaitTrailers;
 
-  private GrpcCallSettings grpcCallSettings;
+  private final GrpcCallSettings<RequestT, ResponseT> grpcCallSettings;
 
-  GrpcDirectCallable(
-      MethodDescriptor<RequestT, ResponseT> descriptor,
-      boolean awaitTrailers,
-      GrpcCallSettings grpcCallSettings) {
+  GrpcDirectCallable(MethodDescriptor<RequestT, ResponseT> descriptor, boolean awaitTrailers) {
     this.descriptor = Preconditions.checkNotNull(descriptor);
     this.awaitTrailers = awaitTrailers;
-    this.grpcCallSettings = grpcCallSettings;
+    this.grpcCallSettings = null;
+  }
+
+  GrpcDirectCallable(GrpcCallSettings<RequestT, ResponseT> grpcCallSettings) {
+    this.descriptor = Preconditions.checkNotNull(grpcCallSettings.getMethodDescriptor());
+    this.awaitTrailers = Preconditions.checkNotNull(grpcCallSettings.shouldAwaitTrailers());
+    this.grpcCallSettings = Preconditions.checkNotNull(grpcCallSettings);
   }
 
   @Override
@@ -68,8 +71,8 @@ class GrpcDirectCallable<RequestT, ResponseT> extends UnaryCallable<RequestT, Re
     ClientCall<RequestT, ResponseT> clientCall = GrpcClientCalls.newCall(descriptor, inputContext);
 
     RequestT modifiedRequest = request;
-    if (grpcCallSettings.getRequestMutator() != null) {
-      modifiedRequest = (RequestT) grpcCallSettings.getRequestMutator().apply(request);
+    if (grpcCallSettings != null && grpcCallSettings.getRequestMutator() != null) {
+      modifiedRequest = grpcCallSettings.getRequestMutator().apply(request);
     }
 
     if (awaitTrailers) {
