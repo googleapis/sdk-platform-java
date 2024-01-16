@@ -47,6 +47,8 @@ public class MetricsTracer implements ApiTracer {
 
   private final Stopwatch operationTimer = Stopwatch.createStarted();
 
+  // Here we are defining a new map in which we will keep on adding attributes
+  // Question, is there where spanner/any-library additional attributes will get added as well ?
   private final Map<String, String> attributes = new HashMap<>();
 
   protected MetricsRecorder metricsRecorder;
@@ -67,6 +69,7 @@ public class MetricsTracer implements ApiTracer {
 
   @Override
   public void operationSucceeded(Object response) {
+    // adding a new-attribute to the attributesMap
     attributes.put(STATUS_ATTRIBUTE, StatusCode.Code.OK.toString());
     metricsRecorder.recordOperationLatency(operationTimer.elapsed(TimeUnit.MILLISECONDS),
         attributes);
@@ -135,6 +138,7 @@ public class MetricsTracer implements ApiTracer {
     return statusString;
   }
 
+  // where will this function get called?
   public void addAdditionalAttributes(String key, String value) {
     attributes.put(key, value);
   }

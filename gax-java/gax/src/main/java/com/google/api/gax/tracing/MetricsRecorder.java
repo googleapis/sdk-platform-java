@@ -24,6 +24,7 @@ public class MetricsRecorder {
 
   protected LongCounter attemptCountRecorder;
 
+  // is this unnecessary now ?
   protected Attributes attributes;
 
   public MetricsRecorder(Meter meter) {
@@ -87,6 +88,8 @@ public class MetricsRecorder {
             .build();
   }
 
+  //In each of the record function, we are passing a hashmap of Attributes
+  //nit - rename attributes to attributesMap
   public void recordAttemptLatency(double attemptLatency, Map<String, String> attributes) {
     attemptLatencyRecorder.record(attemptLatency, toOtelAttributes(attributes));
   }
@@ -103,6 +106,8 @@ public class MetricsRecorder {
     operationCountRecorder.add(count, toOtelAttributes(attributes));
   }
 
+
+  // this function is to convert hashmap to Attributes
   private Attributes toOtelAttributes(Map<String, String> attributes) {
     AttributesBuilder attributesBuilder = Attributes.builder();
     attributes.forEach(attributesBuilder::put);
