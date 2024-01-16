@@ -120,13 +120,14 @@ public class ITDynamicRoutingHeaders {
   }
 
   private HttpJsonCapturingClientInterceptor httpJsonInterceptor;
+  private HttpJsonCapturingClientInterceptor httpJsonComplianceInterceptor;
   private GrpcCapturingClientInterceptor grpcInterceptor;
   private GrpcCapturingClientInterceptor grpcComplianceInterceptor;
+
   private EchoClient grpcClient;
   private EchoClient httpJsonClient;
   private ComplianceClient grpcComplianceClient;
-
-
+  private ComplianceClient httpJsonComplianceClient;
   @Before
   public void createClients() throws Exception {
     // Create gRPC Interceptor and Client
@@ -136,6 +137,10 @@ public class ITDynamicRoutingHeaders {
     // Create gRPC ComplianceClient and Interceptor
     grpcComplianceInterceptor = new GrpcCapturingClientInterceptor();
     grpcComplianceClient = TestClientInitializer.createGrpcComplianceClient(ImmutableList.of(grpcComplianceInterceptor));
+
+    // Create HttpJson ComplianceClient and Interceptor
+    httpJsonComplianceInterceptor = new HttpJsonCapturingClientInterceptor();
+    httpJsonComplianceClient = TestClientInitializer.createHttpJsonComplianceClient(ImmutableList.of(httpJsonComplianceInterceptor));
 
     // Create HttpJson Interceptor and Client
     httpJsonInterceptor = new HttpJsonCapturingClientInterceptor();
@@ -191,7 +196,6 @@ public class ITDynamicRoutingHeaders {
 
   @Test
   public void testGrpc_implicitHeadersEnum() {
-
     RepeatRequest request =
         RepeatRequest.newBuilder().setInfo(ComplianceData.newBuilder().setFKingdomValue(5)).build();
     RepeatResponse actualResponse = grpcComplianceClient.repeatDataSimplePath(request);
@@ -205,6 +209,24 @@ public class ITDynamicRoutingHeaders {
         ImmutableList.of(
             "info.f_bool=false", "info.f_double=0.0", "info.f_int32=0", "info.f_kingdom=5");
     assertThat(requestHeaders).containsExactlyElementsIn(expectedHeaders);
+  }
+
+
+  @Test
+  public void testHttpJson_implicitHeadersEnum() {
+    RepeatRequest request =
+            RepeatRequest.newBuilder().setInfo(ComplianceData.newBuilder().setFKingdomValue(3)).build();
+    RepeatResponse actualResponse = httpJsonComplianceClient.repeatDataSimplePath(request);
+    String headerValue = httpJsonComplianceInterceptor.requestParam;
+    assertThat(headerValue).isNotNull();
+//    List<String> requestHeaders =
+//            Arrays.stream(headerValue.split(SPLIT_TOKEN)).collect(Collectors.toList());
+//    // fields beside "info.f_kingdom" are default values (false, 0.0, 0) since we are not setting them
+//    // in the request message.
+//    List<String> expectedHeaders =
+//            ImmutableList.of(
+//                    "info.f_bool=false", "info.f_double=0.0", "info.f_int32=0", "info.f_kingdom=5");
+//    assertThat(requestHeaders).containsExactlyElementsIn(expectedHeaders);
   }
 
   @Test

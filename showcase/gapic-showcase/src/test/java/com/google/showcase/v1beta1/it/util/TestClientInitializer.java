@@ -213,5 +213,20 @@ public class TestClientInitializer {
     return ComplianceClient.create(grpcComplianceSettings);
   }
 
+  public static ComplianceClient createHttpJsonComplianceClient(List<HttpJsonClientInterceptor> interceptorList)
+          throws Exception {
+    ComplianceSettings httpJsonComplianceSettings =
+            ComplianceSettings.newHttpJsonBuilder()
+                    .setCredentialsProvider(NoCredentialsProvider.create())
+                    .setTransportChannelProvider(
+                            EchoSettings.defaultHttpJsonTransportProviderBuilder()
+                                    .setHttpTransport(
+                                            new NetHttpTransport.Builder().doNotValidateCertificate().build())
+                                    .setEndpoint("http://localhost:7469")
+                                    .setInterceptorProvider(() -> interceptorList)
+                                    .build())
+                    .build();
+    return ComplianceClient.create(httpJsonComplianceSettings);
+  }
 
 }
