@@ -126,20 +126,6 @@ public class ITDynamicRoutingHeaders {
   private EchoClient httpJsonClient;
   private ComplianceClient grpcComplianceClient;
 
-  // Create grpcComplianceClient with Interceptor
-  public static ComplianceClient createGrpcComplianceClient(List<ClientInterceptor> interceptorList)
-      throws Exception {
-    ComplianceSettings grpcComplianceSettings =
-        ComplianceSettings.newBuilder()
-            .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTransportChannelProvider(
-                ComplianceSettings.defaultGrpcTransportProviderBuilder()
-                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
-                    .setInterceptorProvider(() -> interceptorList)
-                    .build())
-            .build();
-    return ComplianceClient.create(grpcComplianceSettings);
-  }
 
   @Before
   public void createClients() throws Exception {
@@ -149,7 +135,7 @@ public class ITDynamicRoutingHeaders {
 
     // Create gRPC ComplianceClient and Interceptor
     grpcComplianceInterceptor = new GrpcCapturingClientInterceptor();
-    grpcComplianceClient = createGrpcComplianceClient(ImmutableList.of(grpcComplianceInterceptor));
+    grpcComplianceClient = TestClientInitializer.createGrpcComplianceClient(ImmutableList.of(grpcComplianceInterceptor));
 
     // Create HttpJson Interceptor and Client
     httpJsonInterceptor = new HttpJsonCapturingClientInterceptor();
@@ -213,6 +199,8 @@ public class ITDynamicRoutingHeaders {
     assertThat(headerValue).isNotNull();
     List<String> requestHeaders =
         Arrays.stream(headerValue.split(SPLIT_TOKEN)).collect(Collectors.toList());
+    // fields beside "info.f_kingdom" are default values (false, 0.0, 0) since we are not setting them
+    // in the request message.
     List<String> expectedHeaders =
         ImmutableList.of(
             "info.f_bool=false", "info.f_double=0.0", "info.f_int32=0", "info.f_kingdom=5");

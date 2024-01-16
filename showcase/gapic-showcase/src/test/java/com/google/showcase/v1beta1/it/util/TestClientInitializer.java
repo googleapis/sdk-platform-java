@@ -25,6 +25,8 @@ import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.common.collect.ImmutableList;
+import com.google.showcase.v1beta1.ComplianceClient;
+import com.google.showcase.v1beta1.ComplianceSettings;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.IdentityClient;
@@ -195,4 +197,21 @@ public class TestClientInitializer {
             .build();
     return IdentityClient.create(httpjsonIdentitySettings);
   }
+
+  // Create grpcComplianceClient with Interceptor
+  public static ComplianceClient createGrpcComplianceClient(List<ClientInterceptor> interceptorList)
+          throws Exception {
+    ComplianceSettings grpcComplianceSettings =
+            ComplianceSettings.newBuilder()
+                    .setCredentialsProvider(NoCredentialsProvider.create())
+                    .setTransportChannelProvider(
+                            ComplianceSettings.defaultGrpcTransportProviderBuilder()
+                                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                                    .setInterceptorProvider(() -> interceptorList)
+                                    .build())
+                    .build();
+    return ComplianceClient.create(grpcComplianceSettings);
+  }
+
+
 }
