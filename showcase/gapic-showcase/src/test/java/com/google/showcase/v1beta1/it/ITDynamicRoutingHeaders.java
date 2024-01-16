@@ -18,6 +18,7 @@ package com.google.showcase.v1beta1.it;
 import static com.google.api.gax.rpc.internal.Headers.DYNAMIC_ROUTING_HEADER_KEY;
 import static com.google.common.truth.Truth.assertThat;
 
+import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.httpjson.ApiMethodDescriptor;
 import com.google.api.gax.httpjson.ForwardingHttpJsonClientCall;
 import com.google.api.gax.httpjson.ForwardingHttpJsonClientCallListener;
@@ -27,16 +28,10 @@ import com.google.api.gax.httpjson.HttpJsonClientCall;
 import com.google.api.gax.httpjson.HttpJsonClientInterceptor;
 import com.google.api.gax.httpjson.HttpJsonMetadata;
 import com.google.common.collect.ImmutableList;
-import com.google.showcase.v1beta1.EchoClient;
-import com.google.showcase.v1beta1.EchoRequest;
+import com.google.showcase.v1beta1.*;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
-import io.grpc.CallOptions;
-import io.grpc.Channel;
-import io.grpc.ClientCall;
-import io.grpc.ClientInterceptor;
-import io.grpc.ForwardingClientCall;
-import io.grpc.Metadata;
-import io.grpc.MethodDescriptor;
+import io.grpc.*;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -114,15 +109,36 @@ public class ITDynamicRoutingHeaders {
 
   private HttpJsonCapturingClientInterceptor httpJsonInterceptor;
   private GrpcCapturingClientInterceptor grpcInterceptor;
-
+  private GrpcCapturingClientInterceptor grpcComplianceInterceptor;
   private EchoClient grpcClient;
   private EchoClient httpJsonClient;
+  private ComplianceClient grpcComplianceClient;
+
+  // Create grpcComplianceClient with Interceptor
+  public static ComplianceClient createGrpcComplianceClient(List<ClientInterceptor> interceptorList)
+          throws Exception {
+    ComplianceSettings grpcComplianceSettings =
+            ComplianceSettings.newBuilder()
+                    .setCredentialsProvider(NoCredentialsProvider.create())
+                    .setTransportChannelProvider(
+                            ComplianceSettings.defaultGrpcTransportProviderBuilder()
+                                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                                    .setInterceptorProvider(() -> interceptorList)
+                                    .build())
+                    .build();
+    return ComplianceClient.create(grpcComplianceSettings);
+  }
+
 
   @Before
   public void createClients() throws Exception {
     // Create gRPC Interceptor and Client
     grpcInterceptor = new GrpcCapturingClientInterceptor();
     grpcClient = TestClientInitializer.createGrpcEchoClient(ImmutableList.of(grpcInterceptor));
+
+    // Create gRPC ComplianceClient and Interceptor
+    grpcComplianceInterceptor = new GrpcCapturingClientInterceptor();
+    grpcComplianceClient = createGrpcComplianceClient(ImmutableList.of(grpcComplianceInterceptor));
 
     // Create HttpJson Interceptor and Client
     httpJsonInterceptor = new HttpJsonCapturingClientInterceptor();
@@ -134,6 +150,7 @@ public class ITDynamicRoutingHeaders {
   public void destroyClient() {
     grpcClient.close();
     httpJsonClient.close();
+    grpcComplianceClient.close();
   }
 
   @Test
@@ -172,6 +189,21 @@ public class ITDynamicRoutingHeaders {
     List<String> requestHeaders =
         Arrays.stream(headerValue.split(SPLIT_TOKEN)).collect(Collectors.toList());
     List<String> expectedHeaders = ImmutableList.of("header=potato", "routing_id=potato");
+    assertThat(requestHeaders).containsExactlyElementsIn(expectedHeaders);
+  }
+
+  @Test
+  public void testGrpc_implicitHeadersEnum() {
+
+    RepeatRequest request =
+            RepeatRequest.newBuilder()
+                    .setInfo(ComplianceData.newBuilder().setFKingdomValue(5))
+                    .build();
+    RepeatResponse actualResponse = grpcComplianceClient.repeatDataSimplePath(request);
+    String headerValue = grpcComplianceInterceptor.metadata.get(REQUEST_PARAMS_HEADER_KEY);
+    assertThat(headerValue).isNotNull();
+    List<String> requestHeaders = Arrays.stream(headerValue.split(SPLIT_TOKEN)).collect(Collectors.toList());
+    List<String> expectedHeaders = ImmutableList.of("info.f_bool=false" , "info.f_double=0.0" , "info.f_int32=0" , "info.f_kingdom=5");
     assertThat(requestHeaders).containsExactlyElementsIn(expectedHeaders);
   }
 
