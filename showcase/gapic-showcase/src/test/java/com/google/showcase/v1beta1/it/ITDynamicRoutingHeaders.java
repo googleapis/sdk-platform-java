@@ -28,13 +28,28 @@ import com.google.api.gax.httpjson.HttpJsonClientCall;
 import com.google.api.gax.httpjson.HttpJsonClientInterceptor;
 import com.google.api.gax.httpjson.HttpJsonMetadata;
 import com.google.common.collect.ImmutableList;
-import com.google.showcase.v1beta1.*;
+import com.google.showcase.v1beta1.ComplianceClient;
+import com.google.showcase.v1beta1.ComplianceData;
+import com.google.showcase.v1beta1.ComplianceSettings;
+import com.google.showcase.v1beta1.EchoClient;
+import com.google.showcase.v1beta1.EchoRequest;
+import com.google.showcase.v1beta1.RepeatRequest;
+import com.google.showcase.v1beta1.RepeatResponse;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
-import io.grpc.*;
+
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import io.grpc.CallOptions;
+import io.grpc.Channel;
+import io.grpc.ClientCall;
+import io.grpc.ClientInterceptor;
+import io.grpc.ForwardingClientCall;
+import io.grpc.ManagedChannelBuilder;
+import io.grpc.Metadata;
+import io.grpc.MethodDescriptor;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -51,7 +66,7 @@ public class ITDynamicRoutingHeaders {
 
     @Override
     public <RequestT, ResponseT> ClientCall<RequestT, ResponseT> interceptCall(
-        MethodDescriptor<RequestT, ResponseT> method, final CallOptions callOptions, Channel next) {
+            MethodDescriptor<RequestT, ResponseT> method, final CallOptions callOptions, Channel next) {
       ClientCall<RequestT, ResponseT> call = next.newCall(method, callOptions);
       return new ForwardingClientCall.SimpleForwardingClientCall<RequestT, ResponseT>(call) {
         @Override
