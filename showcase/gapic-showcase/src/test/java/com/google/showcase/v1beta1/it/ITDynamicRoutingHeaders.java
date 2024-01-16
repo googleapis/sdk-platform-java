@@ -36,12 +36,6 @@ import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.RepeatRequest;
 import com.google.showcase.v1beta1.RepeatResponse;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
-
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import io.grpc.CallOptions;
 import io.grpc.Channel;
 import io.grpc.ClientCall;
@@ -50,6 +44,9 @@ import io.grpc.ForwardingClientCall;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.Metadata;
 import io.grpc.MethodDescriptor;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -66,7 +63,7 @@ public class ITDynamicRoutingHeaders {
 
     @Override
     public <RequestT, ResponseT> ClientCall<RequestT, ResponseT> interceptCall(
-            MethodDescriptor<RequestT, ResponseT> method, final CallOptions callOptions, Channel next) {
+        MethodDescriptor<RequestT, ResponseT> method, final CallOptions callOptions, Channel next) {
       ClientCall<RequestT, ResponseT> call = next.newCall(method, callOptions);
       return new ForwardingClientCall.SimpleForwardingClientCall<RequestT, ResponseT>(call) {
         @Override
@@ -131,19 +128,18 @@ public class ITDynamicRoutingHeaders {
 
   // Create grpcComplianceClient with Interceptor
   public static ComplianceClient createGrpcComplianceClient(List<ClientInterceptor> interceptorList)
-          throws Exception {
+      throws Exception {
     ComplianceSettings grpcComplianceSettings =
-            ComplianceSettings.newBuilder()
-                    .setCredentialsProvider(NoCredentialsProvider.create())
-                    .setTransportChannelProvider(
-                            ComplianceSettings.defaultGrpcTransportProviderBuilder()
-                                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
-                                    .setInterceptorProvider(() -> interceptorList)
-                                    .build())
-                    .build();
+        ComplianceSettings.newBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                ComplianceSettings.defaultGrpcTransportProviderBuilder()
+                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .setInterceptorProvider(() -> interceptorList)
+                    .build())
+            .build();
     return ComplianceClient.create(grpcComplianceSettings);
   }
-
 
   @Before
   public void createClients() throws Exception {
@@ -211,14 +207,15 @@ public class ITDynamicRoutingHeaders {
   public void testGrpc_implicitHeadersEnum() {
 
     RepeatRequest request =
-            RepeatRequest.newBuilder()
-                    .setInfo(ComplianceData.newBuilder().setFKingdomValue(5))
-                    .build();
+        RepeatRequest.newBuilder().setInfo(ComplianceData.newBuilder().setFKingdomValue(5)).build();
     RepeatResponse actualResponse = grpcComplianceClient.repeatDataSimplePath(request);
     String headerValue = grpcComplianceInterceptor.metadata.get(REQUEST_PARAMS_HEADER_KEY);
     assertThat(headerValue).isNotNull();
-    List<String> requestHeaders = Arrays.stream(headerValue.split(SPLIT_TOKEN)).collect(Collectors.toList());
-    List<String> expectedHeaders = ImmutableList.of("info.f_bool=false" , "info.f_double=0.0" , "info.f_int32=0" , "info.f_kingdom=5");
+    List<String> requestHeaders =
+        Arrays.stream(headerValue.split(SPLIT_TOKEN)).collect(Collectors.toList());
+    List<String> expectedHeaders =
+        ImmutableList.of(
+            "info.f_bool=false", "info.f_double=0.0", "info.f_int32=0", "info.f_kingdom=5");
     assertThat(requestHeaders).containsExactlyElementsIn(expectedHeaders);
   }
 
