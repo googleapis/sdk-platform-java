@@ -133,6 +133,8 @@ public class ITDynamicRoutingHeaders {
     grpcClient = TestClientInitializer.createGrpcEchoClient(ImmutableList.of(grpcInterceptor));
 
     // Create gRPC ComplianceClient and Interceptor
+    // Creating a compliance client because echo client doesn't have an implicit enum routing test
+    // case
     grpcComplianceInterceptor = new GrpcCapturingClientInterceptor();
     grpcComplianceClient =
         TestClientInitializer.createGrpcComplianceClient(
@@ -206,8 +208,7 @@ public class ITDynamicRoutingHeaders {
     List<String> requestHeaders =
         Arrays.stream(headerValue.split(SPLIT_TOKEN)).collect(Collectors.toList());
     // fields beside "info.f_kingdom" are default values (false, 0.0, 0) since we are not setting
-    // them
-    // in the request message.
+    // them in the request message.
     List<String> expectedHeaders =
         ImmutableList.of(
             "info.f_bool=false", "info.f_double=0.0", "info.f_int32=0", "info.f_kingdom=5");
