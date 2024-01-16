@@ -75,6 +75,7 @@
  *           .setSeverity(Severity.forNumber(0))
  *           .setHeader("header-1221270899")
  *           .setOtherHeader("otherHeader-2026585667")
+ *           .setRequestId("requestId693933066")
  *           .build();
  *   EchoResponse response = echoClient.echo(request);
  * }
@@ -140,6 +141,8 @@
  * <p>======================= TestingClient =======================
  *
  * <p>Service Description: A service to facilitate running discrete sets of tests against Showcase.
+ * Adding this comment with special characters for comment formatting tests: 1.
+ * (abra-&gt;kadabra-&gt;alakazam) 2) [Nonsense][]: `pokemon/&#42;/psychic/&#42;`
  *
  * <p>Sample for TestingClient:
  *
