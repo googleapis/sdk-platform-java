@@ -4,7 +4,6 @@ import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.common.AttributesBuilder;
 import io.opentelemetry.api.metrics.DoubleHistogram;
 import io.opentelemetry.api.metrics.LongCounter;
-import io.opentelemetry.api.metrics.LongHistogram;
 import io.opentelemetry.api.metrics.Meter;
 import java.util.Map;
 
@@ -14,12 +13,7 @@ public class MetricsRecorder {
   protected DoubleHistogram attemptLatencyRecorder;
 
   protected DoubleHistogram operationLatencyRecorder;
-  protected LongHistogram retryCountRecorder;
-  protected LongHistogram gfeLatencyRecorder;
 
-  protected DoubleHistogram targetResolutionDelayRecorder;
-  protected DoubleHistogram channelReadinessDelayRecorder;
-  protected DoubleHistogram callSendDelayRecorder;
   protected LongCounter operationCountRecorder;
 
   protected LongCounter attemptCountRecorder;
@@ -40,38 +34,6 @@ public class MetricsRecorder {
             .setDescription(
                 "Total time until final operation success or failure, including retries and backoff.")
             .setUnit("ms")
-            .build();
-    this.retryCountRecorder =
-        meter
-            .histogramBuilder("retry_count")
-            .setDescription("Number of additional attempts per operation after initial attempt")
-            .setUnit("1")
-            .ofLongs()
-            .build();
-    this.gfeLatencyRecorder =
-        meter
-            .histogramBuilder("gfe_latency")
-            .setDescription("GFE latency")
-            .setUnit("1")
-            .ofLongs()
-            .build();
-    this.targetResolutionDelayRecorder =
-        meter
-            .histogramBuilder("target_resolution_delay")
-            .setDescription("Delay caused by name resolution")
-            .setUnit("ns")
-            .build();
-    this.channelReadinessDelayRecorder =
-        meter
-            .histogramBuilder("channel_readiness_delay")
-            .setDescription("Delay caused by establishing connection")
-            .setUnit("ns")
-            .build();
-    this.callSendDelayRecorder =
-        meter
-            .histogramBuilder("call_send_delay")
-            .setDescription("Call send delay. (after the connection is ready)")
-            .setUnit("ns")
             .build();
     this.operationCountRecorder =
         meter

@@ -51,8 +51,7 @@ public class MetricsTracer implements ApiTracer {
 
   protected MetricsRecorder metricsRecorder;
 
-  public MetricsTracer(
-      SpanName spanName, MetricsRecorder metricsRecorder) {
+  public MetricsTracer(SpanName spanName, MetricsRecorder metricsRecorder) {
     this.attributes.put("method_name", spanName.toString());
     this.metricsRecorder = metricsRecorder;
   }
@@ -68,8 +67,8 @@ public class MetricsTracer implements ApiTracer {
   @Override
   public void operationSucceeded(Object response) {
     attributes.put(STATUS_ATTRIBUTE, StatusCode.Code.OK.toString());
-    metricsRecorder.recordOperationLatency(operationTimer.elapsed(TimeUnit.MILLISECONDS),
-        attributes);
+    metricsRecorder.recordOperationLatency(
+        operationTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
     metricsRecorder.recordOperationCount(1, attributes);
   }
 
@@ -79,8 +78,8 @@ public class MetricsTracer implements ApiTracer {
   @Override
   public void operationFailed(Throwable error) {
     attributes.put(STATUS_ATTRIBUTE, extractStatus(error));
-    metricsRecorder.recordOperationLatency(operationTimer.elapsed(TimeUnit.MILLISECONDS),
-        attributes);
+    metricsRecorder.recordOperationLatency(
+        operationTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
     metricsRecorder.recordOperationCount(1, attributes);
   }
 
@@ -98,8 +97,7 @@ public class MetricsTracer implements ApiTracer {
   @Override
   public void attemptSucceeded(Object response) {
     attributes.put(STATUS_ATTRIBUTE, StatusCode.Code.OK.toString());
-    metricsRecorder.recordAttemptLatency(
-        attemptTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
+    metricsRecorder.recordAttemptLatency(attemptTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
     metricsRecorder.recordAttemptCount(1, attributes);
   }
 

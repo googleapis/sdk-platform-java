@@ -165,12 +165,6 @@ public interface ApiTracer {
    */
   default void batchRequestSent(long elementCount, long requestSize) {};
 
-  default void grpcTargetResolutionDelay(long elapsed) {};
-
-  default void grpcChannelReadinessDelay(long elapsed) {};
-
-  default void grpcCallSendDelay(long elapsed) {};
-
   default void recordGfeMetadata(long latency) {};
 
   default void addAdditionalAttributes(String key, String value) {};

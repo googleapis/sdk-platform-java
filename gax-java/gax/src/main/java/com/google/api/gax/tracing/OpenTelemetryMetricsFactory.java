@@ -63,9 +63,4 @@ public class OpenTelemetryMetricsFactory implements ApiTracerFactory {
   public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
     return new MetricsTracer(spanName, metricsRecorder);
   }
-
-  @Override
-  public ClientMetricsTracer newClientMetricsTracer() {
-    return new OpenTelemetryClientMetricsTracer(meter);
-  }
 }

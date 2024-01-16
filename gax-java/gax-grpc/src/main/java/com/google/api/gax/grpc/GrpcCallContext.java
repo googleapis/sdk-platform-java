@@ -504,10 +504,7 @@ public final class GrpcCallContext implements ApiCallContext {
   @Override
   public GrpcCallContext withTracer(@Nonnull ApiTracer tracer) {
     Preconditions.checkNotNull(tracer);
-    return withCallOptions(
-        callOptions
-            .withOption(TRACER_KEY, tracer)
-            .withStreamTracerFactory(new GrpcStreamTracer.Factory(tracer)));
+    return withCallOptions(callOptions.withOption(TRACER_KEY, tracer));
   }
 
   /** {@inheritDoc} */

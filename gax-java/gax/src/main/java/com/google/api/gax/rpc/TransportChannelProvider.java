@@ -31,7 +31,6 @@ package com.google.api.gax.rpc;
 
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalExtensionOnly;
-import com.google.api.gax.tracing.ClientMetricsTracer;
 import com.google.auth.Credentials;
 import java.io.IOException;
 import java.util.Map;
@@ -143,8 +142,6 @@ public interface TransportChannelProvider {
    * <p>This string can be used for identifying transports for switching logic.
    */
   String getTransportName();
-
-  default void setClientMetricsTracer(ClientMetricsTracer clientMetricsTracer) {};
 
   /**
    * User set custom endpoint for the Transport Channel Provider

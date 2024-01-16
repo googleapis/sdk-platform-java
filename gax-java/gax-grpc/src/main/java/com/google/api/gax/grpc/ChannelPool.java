@@ -30,7 +30,6 @@
 package com.google.api.gax.grpc;
 
 import com.google.api.core.InternalApi;
-import com.google.api.gax.tracing.ClientMetricsTracer;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
@@ -81,25 +80,9 @@ class ChannelPool extends ManagedChannel {
   private final AtomicInteger indexTicker = new AtomicInteger();
   private final String authority;
 
-  private ClientMetricsTracer clientMetricsTracer;
-
   static ChannelPool create(ChannelPoolSettings settings, ChannelFactory channelFactory)
       throws IOException {
     return new ChannelPool(settings, channelFactory, Executors.newSingleThreadScheduledExecutor());
-  }
-
-  static ChannelPool create(
-      ChannelPoolSettings settings,
-      ChannelFactory channelFactory,
-      ClientMetricsTracer clientMetricsTracer)
-      throws IOException {
-    ChannelPool channelPool =
-        new ChannelPool(settings, channelFactory, Executors.newSingleThreadScheduledExecutor());
-    channelPool.clientMetricsTracer = clientMetricsTracer;
-    if (channelPool.clientMetricsTracer != null) {
-      channelPool.clientMetricsTracer.recordCurrentChannelSize(settings.getInitialChannelCount());
-    }
-    return channelPool;
   }
 
   /**
@@ -319,7 +302,6 @@ class ChannelPool extends ManagedChannel {
 
       shrink(dampenedTarget);
     }
-    clientMetricsTracer.recordCurrentChannelSize(entries.get().size());
   }
 
   /** Not threadsafe, must be called under the entryWriteLock monitor */
