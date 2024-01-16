@@ -200,33 +200,32 @@ public class TestClientInitializer {
 
   // Create grpcComplianceClient with Interceptor
   public static ComplianceClient createGrpcComplianceClient(List<ClientInterceptor> interceptorList)
-          throws Exception {
+      throws Exception {
     ComplianceSettings grpcComplianceSettings =
-            ComplianceSettings.newBuilder()
-                    .setCredentialsProvider(NoCredentialsProvider.create())
-                    .setTransportChannelProvider(
-                            ComplianceSettings.defaultGrpcTransportProviderBuilder()
-                                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
-                                    .setInterceptorProvider(() -> interceptorList)
-                                    .build())
-                    .build();
+        ComplianceSettings.newBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                ComplianceSettings.defaultGrpcTransportProviderBuilder()
+                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .setInterceptorProvider(() -> interceptorList)
+                    .build())
+            .build();
     return ComplianceClient.create(grpcComplianceSettings);
   }
 
-  public static ComplianceClient createHttpJsonComplianceClient(List<HttpJsonClientInterceptor> interceptorList)
-          throws Exception {
+  public static ComplianceClient createHttpJsonComplianceClient(
+      List<HttpJsonClientInterceptor> interceptorList) throws Exception {
     ComplianceSettings httpJsonComplianceSettings =
-            ComplianceSettings.newHttpJsonBuilder()
-                    .setCredentialsProvider(NoCredentialsProvider.create())
-                    .setTransportChannelProvider(
-                            EchoSettings.defaultHttpJsonTransportProviderBuilder()
-                                    .setHttpTransport(
-                                            new NetHttpTransport.Builder().doNotValidateCertificate().build())
-                                    .setEndpoint("http://localhost:7469")
-                                    .setInterceptorProvider(() -> interceptorList)
-                                    .build())
-                    .build();
+        ComplianceSettings.newHttpJsonBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultHttpJsonTransportProviderBuilder()
+                    .setHttpTransport(
+                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
+                    .setEndpoint("http://localhost:7469")
+                    .setInterceptorProvider(() -> interceptorList)
+                    .build())
+            .build();
     return ComplianceClient.create(httpJsonComplianceSettings);
   }
-
 }
