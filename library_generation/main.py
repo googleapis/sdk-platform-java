@@ -51,8 +51,9 @@ def generate_from_yaml(
 ):
   config = GenerationConfig.from_yaml(generation_config_yaml)
   for library in config.libraries:
+    print(f'generating library {library.api_shortname}')
     generate_composed_library(
-        config, library.api_shortname, repository_location, enable_postprocessing
+        config, library, repository_location, enable_postprocessing
     )
     pass
   pass

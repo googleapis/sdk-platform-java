@@ -28,7 +28,6 @@ class Library:
       self.api_shortname = api_shortname
       self.name_pretty = name_pretty
       self.library_type = library_type
-      self.group_id = group_id
       self.artifact_id = artifact_id
       self.requires_billing  = requires_billing
       self.api_description = api_description
@@ -36,4 +35,5 @@ class Library:
       self.client_documentation = client_documentation
       self.rest_documentation = rest_documentation
       self.rpc_documentation = rpc_documentation
+      self.group_id = group_id
       self.GAPICs = GAPICs

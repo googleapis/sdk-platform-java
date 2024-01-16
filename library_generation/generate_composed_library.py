@@ -29,6 +29,7 @@ import click
 import utilities as util
 import os
 import subprocess
+import json
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 
@@ -37,12 +38,13 @@ def main(ctx):
 
 def generate_composed_library(
     config,
-    api_shortname,
+    library,
     repository_path,
     enable_postprocessing
 ):
   output_folder = util.sh_util('get_output_folder')
   print(f'output_folder: {output_folder}')
+  print('library: ', library)
   os.makedirs(output_folder, exist_ok=True)
 
 
@@ -50,19 +52,16 @@ def generate_composed_library(
   base_arguments += util.create_argument('gapic_generator_version', config)
   base_arguments += util.create_argument('grpc_version', config)
   base_arguments += util.create_argument('protobuf_version', config)
-  base_arguments += util.create_argument('googleapis_commitish', config)
-  base_arguments += util.create_argument('owlbot_cli_image', config)
-  base_arguments += util.create_argument('python_version', config)
 
-  destination_path = f'java-{api_shortname}'
+  destination_path = f'java-{library.api_shortname}'
   if config.destination_path is not None:
     destination_path = config.destination_path + '/' + destination_path
   base_arguments += ['--destination_path', destination_path]
   versions_file = ''
   if 'google-cloud-java' in destination_path:
     print('this is a monorepo library')
-    library = destination_path.split('/')[-1]
-    clone_out = util.sh_util(f'sparse_clone "https://github.com/googleapis/google-cloud-java.git" "{library} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"', cwd=output_folder)
+    library_folder = destination_path.split('/')[-1]
+    clone_out = util.sh_util(f'sparse_clone "https://github.com/googleapis/google-cloud-java.git" "{library_folder} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"', cwd=output_folder)
     print(clone_out)
     versions_file = f'{output_folder}/google-cloud-java/versions.txt'
   else:
@@ -71,19 +70,35 @@ def generate_composed_library(
     print(clone_out)
     versions_file = f'{output_folder}/{destination_path}/versions.txt'
 
-  # we use the whole config yaml but filter it to work with a single library
-  target_library = next(library for library in config.libraries if library.api_shortname == api_shortname)
-  if target_library is None:
-    raise ValueError(f'{api_shortname} not found in configuration yaml')
-
   owlbot_cli_source_folder = util.sh_util('mktemp -d')
-  for gapic in target_library.GAPICs:
-    print(f'query: {query}')
+  for gapic in library.GAPICs:
     effective_arguments = list(base_arguments)
     effective_arguments += util.create_argument('proto_path', gapic)
 
-    print(f'Generating library from {proto_path} to {destination_path}...')
-    with subprocess.Popen([f'{script_dir}/generate_library.sh', *arguments],
+    build_file = f'{gapic.proto_path}/BUILD.bazel'
+    print(f'build_file: {build_file}')
+    proto_only = util.sh_util(f'get_proto_only_from_BUILD {build_file}')
+    gapic_additional_protos=util.sh_util(f'get_gapic_additional_protos_from_BUILD {build_file}')
+    transport = util.sh_util(f'get_transport_from_BUILD {build_file}')
+    rest_numeric_enums = util.sh_util(f'get_rest_numeric_enums_from_BUILD {build_file}')
+    gapic_yaml = util.sh_util(f'get_gapic_yaml_from_BUILD {build_file}')
+    service_config = util.sh_util(f'get_service_config_from_BUILD {build_file}')
+    service_yaml = util.sh_util(f'get_service_yaml_from_BUILD {build_file}')
+    include_samples = util.sh_util(f'get_include_samples_from_BUILD {build_file}')
+    effective_arguments += [
+        '--proto_only', proto_only,
+        '--gapic_additional_protos', gapic_additional_protos,
+        '--transport', transport,
+        '--rest_numeric_enums', rest_numeric_enums,
+        '--gapic_yaml', gapic_yaml,
+        '--service_config', service_config,
+        '--service_yaml', service_yaml,
+        '--include_samples', include_samples,
+    ]
+    print('arguments: ')
+    print(effective_arguments)
+    print(f'Generating library from {gapic.proto_path} to {destination_path}...')
+    with subprocess.Popen(['bash', '-x', f'{script_dir}/generate_library.sh', *effective_arguments],
       stdout=subprocess.PIPE, stderr=subprocess.STDOUT) as generation_process:
       for line in generation_process.stdout:
         print(line.decode(), end='', flush=True)

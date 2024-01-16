@@ -53,15 +53,15 @@ class GenerationConfig:
         _required(library, 'api_shortname'),
         _optional(library, 'name_pretty', None),
         _required(library, 'library_type'),
-        _optional(library, 'group_id', 'com.google.cloud'),
         _optional(library, 'artifact_id', None),
-        _optional(library, 'requires_billing', None),
         _optional(library, 'api_description', None),
         _optional(library, 'product_documentation', None),
         _optional(library, 'client_documentation', None),
         _optional(library, 'rest_documentation', None),
         _optional(library, 'rpc_documentation', None),
         parsed_gapics,
+        _optional(library, 'group_id', 'com.google.cloud'),
+        _optional(library, 'requires_billing', None),
       )
       parsed_libraries.append(new_library)
 
