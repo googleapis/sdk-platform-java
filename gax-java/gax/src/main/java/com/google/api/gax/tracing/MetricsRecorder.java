@@ -24,7 +24,7 @@ public class MetricsRecorder {
 
   protected LongCounter attemptCountRecorder;
 
-  // is this unnecessary now ?
+  // we are not using this anymore, safe to remove it?   
   protected Attributes attributes;
 
   public MetricsRecorder(Meter meter) {
