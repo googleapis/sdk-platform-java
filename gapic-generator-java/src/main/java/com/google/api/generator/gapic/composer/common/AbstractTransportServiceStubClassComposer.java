@@ -1252,7 +1252,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     return transportOpeationsStubType;
   }
 
-  protected LambdaExpr createRequestMutator(
+  protected static LambdaExpr createRequestMutator(
       Method method, ImmutableMap<String, Message> messageTypes) {
     VariableExpr requestVarExpr =
         VariableExpr.withVariable(

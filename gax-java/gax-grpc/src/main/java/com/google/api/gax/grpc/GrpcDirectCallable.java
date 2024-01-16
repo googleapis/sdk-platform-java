@@ -59,7 +59,7 @@ class GrpcDirectCallable<RequestT, ResponseT> extends UnaryCallable<RequestT, Re
 
   GrpcDirectCallable(GrpcCallSettings<RequestT, ResponseT> grpcCallSettings) {
     this.descriptor = Preconditions.checkNotNull(grpcCallSettings.getMethodDescriptor());
-    this.awaitTrailers = Preconditions.checkNotNull(grpcCallSettings.shouldAwaitTrailers());
+    this.awaitTrailers = grpcCallSettings.shouldAwaitTrailers();
     this.grpcCallSettings = Preconditions.checkNotNull(grpcCallSettings);
   }
 

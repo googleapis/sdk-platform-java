@@ -32,13 +32,21 @@ package com.google.api.generator.gapic.composer.common;
 
 import static org.junit.Assert.assertEquals;
 
+import com.google.api.FieldInfo.Format;
+import com.google.api.generator.engine.ast.LambdaExpr;
 import com.google.api.generator.engine.ast.Statement;
 import com.google.api.generator.engine.ast.TypeNode;
+import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.engine.ast.Variable;
 import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
+import com.google.api.generator.gapic.model.Field;
+import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.test.utils.LineFormatter;
+import com.google.common.collect.ImmutableMap;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -73,6 +81,265 @@ public class AbstractTransportServiceStubClassComposerTest {
             "if (request.getSampleField() == null || request.getSampleField().isEmpty()) {\n",
             "request = request.toBuilder().setSampleField(UUID.randomUUID().toString()).build();\n",
             "}\n");
+    assertEquals(expected, writerVisitor.write());
+  }
+
+  @Test
+  public void createRequestMutatorBody_TestField() {
+    String ECHO_PACKAGE = "com.google.showcase.v1beta1";
+    List<String> autoPopulatedFieldList = new ArrayList<>();
+    autoPopulatedFieldList.add("TestField");
+
+    Method METHOD =
+        Method.builder()
+            .setName("TestMethod")
+            .setInputType(
+                TypeNode.withReference(
+                    VaporReference.builder()
+                        .setName("SampleRequest")
+                        .setPakkage(ECHO_PACKAGE)
+                        .build()))
+            .setOutputType(TypeNode.STRING)
+            .setAutoPopulatedFields(autoPopulatedFieldList)
+            .build();
+
+    Field FIELD =
+        Field.builder()
+            .setName("TestField")
+            .setFieldInfoFormat(Format.UUID4)
+            .setType(TypeNode.STRING)
+            .build();
+    List<Field> fieldList = new ArrayList<>();
+    fieldList.add(FIELD);
+
+    Message MESSAGE =
+        Message.builder()
+            .setFullProtoName("com.google.showcase.v1beta1.SampleRequest")
+            .setName("SampleRequest")
+            .setType(TypeNode.STRING)
+            .setFields(fieldList)
+            .build();
+
+    ImmutableMap<String, Message> messageTypes =
+        ImmutableMap.of("com.google.showcase.v1beta1.SampleRequest", MESSAGE);
+
+    List<Statement> listOfAutoPopulatedStatements =
+        AbstractTransportServiceStubClassComposer.createRequestMutatorBody(METHOD, messageTypes);
+
+    for (Statement statement : listOfAutoPopulatedStatements) {
+      statement.accept(writerVisitor);
+    }
+
+    String expected =
+        LineFormatter.lines(
+            "if (request.getTestField() == null || request.getTestField().isEmpty()) {\n",
+            "request = request.toBuilder().setTestField(UUID.randomUUID().toString()).build();\n",
+            "}\n");
+    assertEquals(expected, writerVisitor.write());
+  }
+
+  @Test
+  public void createRequestMutatorBody_TestFieldNotString_shouldReturnNull() {
+    String ECHO_PACKAGE = "com.google.showcase.v1beta1";
+    List<String> autoPopulatedFieldList = new ArrayList<>();
+    autoPopulatedFieldList.add("TestField");
+
+    Method METHOD =
+        Method.builder()
+            .setName("TestMethod")
+            .setInputType(
+                TypeNode.withReference(
+                    VaporReference.builder()
+                        .setName("SampleRequest")
+                        .setPakkage(ECHO_PACKAGE)
+                        .build()))
+            .setOutputType(TypeNode.STRING)
+            .setAutoPopulatedFields(autoPopulatedFieldList)
+            .build();
+
+    Field FIELD =
+        Field.builder()
+            .setName("TestField")
+            .setFieldInfoFormat(Format.UUID4)
+            .setType(TypeNode.BOOLEAN)
+            .build();
+    List<Field> fieldList = new ArrayList<>();
+    fieldList.add(FIELD);
+
+    Message MESSAGE =
+        Message.builder()
+            .setFullProtoName("com.google.showcase.v1beta1.SampleRequest")
+            .setName("SampleRequest")
+            .setType(TypeNode.STRING)
+            .setFields(fieldList)
+            .build();
+
+    ImmutableMap<String, Message> messageTypes =
+        ImmutableMap.of("com.google.showcase.v1beta1.SampleRequest", MESSAGE);
+
+    List<Statement> listOfAutoPopulatedStatements =
+        AbstractTransportServiceStubClassComposer.createRequestMutatorBody(METHOD, messageTypes);
+
+    for (Statement statement : listOfAutoPopulatedStatements) {
+      statement.accept(writerVisitor);
+    }
+
+    String expected = LineFormatter.lines("");
+    assertEquals(expected, writerVisitor.write());
+  }
+
+  @Test
+  public void createRequestMutatorBody_TestFieldFormatNotUUID_shouldReturnNull() {
+    String ECHO_PACKAGE = "com.google.showcase.v1beta1";
+    List<String> autoPopulatedFieldList = new ArrayList<>();
+    autoPopulatedFieldList.add("TestField");
+
+    Method METHOD =
+        Method.builder()
+            .setName("TestMethod")
+            .setInputType(
+                TypeNode.withReference(
+                    VaporReference.builder()
+                        .setName("SampleRequest")
+                        .setPakkage(ECHO_PACKAGE)
+                        .build()))
+            .setOutputType(TypeNode.STRING)
+            .setAutoPopulatedFields(autoPopulatedFieldList)
+            .build();
+
+    Field FIELD =
+        Field.builder()
+            .setName("TestField")
+            .setFieldInfoFormat(Format.IPV4_OR_IPV6)
+            .setType(TypeNode.STRING)
+            .build();
+    List<Field> fieldList = new ArrayList<>();
+    fieldList.add(FIELD);
+
+    Message MESSAGE =
+        Message.builder()
+            .setFullProtoName("com.google.showcase.v1beta1.SampleRequest")
+            .setName("SampleRequest")
+            .setType(TypeNode.STRING)
+            .setFields(fieldList)
+            .build();
+
+    ImmutableMap<String, Message> messageTypes =
+        ImmutableMap.of("com.google.showcase.v1beta1.SampleRequest", MESSAGE);
+
+    List<Statement> listOfAutoPopulatedStatements =
+        AbstractTransportServiceStubClassComposer.createRequestMutatorBody(METHOD, messageTypes);
+
+    for (Statement statement : listOfAutoPopulatedStatements) {
+      statement.accept(writerVisitor);
+    }
+
+    String expected = LineFormatter.lines("");
+    assertEquals(expected, writerVisitor.write());
+  }
+
+  @Test
+  public void createRequestMutatorBody_TestFieldIncorrectName_shouldReturnNull() {
+    String ECHO_PACKAGE = "com.google.showcase.v1beta1";
+    List<String> autoPopulatedFieldList = new ArrayList<>();
+    autoPopulatedFieldList.add("TestField");
+
+    Method METHOD =
+        Method.builder()
+            .setName("TestMethod")
+            .setInputType(
+                TypeNode.withReference(
+                    VaporReference.builder()
+                        .setName("SampleRequest")
+                        .setPakkage(ECHO_PACKAGE)
+                        .build()))
+            .setOutputType(TypeNode.STRING)
+            .setAutoPopulatedFields(autoPopulatedFieldList)
+            .build();
+
+    Field FIELD =
+        Field.builder()
+            .setName("TestIncorrectField")
+            .setFieldInfoFormat(Format.UUID4)
+            .setType(TypeNode.STRING)
+            .build();
+    List<Field> fieldList = new ArrayList<>();
+    fieldList.add(FIELD);
+
+    Message MESSAGE =
+        Message.builder()
+            .setFullProtoName("com.google.showcase.v1beta1.SampleRequest")
+            .setName("SampleRequest")
+            .setType(TypeNode.STRING)
+            .setFields(fieldList)
+            .build();
+
+    ImmutableMap<String, Message> messageTypes =
+        ImmutableMap.of("com.google.showcase.v1beta1.SampleRequest", MESSAGE);
+
+    List<Statement> listOfAutoPopulatedStatements =
+        AbstractTransportServiceStubClassComposer.createRequestMutatorBody(METHOD, messageTypes);
+
+    for (Statement statement : listOfAutoPopulatedStatements) {
+      statement.accept(writerVisitor);
+    }
+
+    String expected = LineFormatter.lines("");
+    assertEquals(expected, writerVisitor.write());
+  }
+
+  @Test
+  public void createRequestMutator_TestField() {
+    String ECHO_PACKAGE = "com.google.showcase.v1beta1";
+    List<String> autoPopulatedFieldList = new ArrayList<>();
+    autoPopulatedFieldList.add("TestField");
+
+    Method METHOD =
+        Method.builder()
+            .setName("TestMethod")
+            .setInputType(
+                TypeNode.withReference(
+                    VaporReference.builder()
+                        .setName("SampleRequest")
+                        .setPakkage(ECHO_PACKAGE)
+                        .build()))
+            .setOutputType(TypeNode.STRING)
+            .setAutoPopulatedFields(autoPopulatedFieldList)
+            .build();
+
+    Field FIELD =
+        Field.builder()
+            .setName("TestField")
+            .setFieldInfoFormat(Format.UUID4)
+            .setType(TypeNode.STRING)
+            .build();
+    List<Field> fieldList = new ArrayList<>();
+    fieldList.add(FIELD);
+
+    Message MESSAGE =
+        Message.builder()
+            .setFullProtoName("com.google.showcase.v1beta1.SampleRequest")
+            .setName("SampleRequest")
+            .setType(TypeNode.STRING)
+            .setFields(fieldList)
+            .build();
+
+    ImmutableMap<String, Message> messageTypes =
+        ImmutableMap.of("com.google.showcase.v1beta1.SampleRequest", MESSAGE);
+
+    LambdaExpr requestMutator =
+        AbstractTransportServiceStubClassComposer.createRequestMutator(METHOD, messageTypes);
+
+    requestMutator.accept(writerVisitor);
+
+    String expected =
+        LineFormatter.lines(
+            "request -> {\n",
+            "if (request.getTestField() == null || request.getTestField().isEmpty()) {\n",
+            "request = request.toBuilder().setTestField(UUID.randomUUID().toString()).build();\n",
+            "}\n",
+            "return request;\n",
+            "}");
     assertEquals(expected, writerVisitor.write());
   }
 }
