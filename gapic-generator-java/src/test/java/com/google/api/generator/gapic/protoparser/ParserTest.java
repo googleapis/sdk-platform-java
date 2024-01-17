@@ -458,6 +458,21 @@ public class ParserTest {
     field = message.fieldMap().get("severity");
     assertEquals(false, field.isRequired());
     assertEquals(null, field.fieldInfoFormat());
+    field = message.fieldMap().get("second_request_id");
+    assertEquals(false, field.isRequired());
+    assertEquals(Format.UUID4, field.fieldInfoFormat());
+    field = message.fieldMap().get("third_request_id");
+    assertEquals(false, field.isRequired());
+    assertEquals(Format.UUID4, field.fieldInfoFormat());
+    field = message.fieldMap().get("fourth_request_id");
+    assertEquals(false, field.isRequired());
+    assertEquals(Format.IPV4_OR_IPV6, field.fieldInfoFormat());
+    field = message.fieldMap().get("fifth_request_id");
+    assertEquals(false, field.isRequired());
+    assertEquals(Format.UUID4, field.fieldInfoFormat());
+    field = message.fieldMap().get("sixth_request_id");
+    assertEquals(true, field.isRequired());
+    assertEquals(Format.UUID4, field.fieldInfoFormat());
 
     message = messageTypes.get("com.google.showcase.v1beta1.ExpandRequest");
     field = message.fieldMap().get("request_id");

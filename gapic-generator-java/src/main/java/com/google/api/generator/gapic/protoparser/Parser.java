@@ -1028,8 +1028,9 @@ public class Parser {
     if (fieldOptions.getExtensionCount(FieldBehaviorProto.fieldBehavior) > 0) {
       if (fieldOptions
           .getExtension(FieldBehaviorProto.fieldBehavior)
-          .contains(FieldBehavior.REQUIRED)) ;
-      isRequired = true;
+          .contains(FieldBehavior.REQUIRED)) {
+        isRequired = true;
+      }
     }
 
     Field.Builder fieldBuilder = Field.builder();

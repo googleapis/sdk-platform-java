@@ -62,6 +62,7 @@ import io.grpc.MethodDescriptor;
 import io.grpc.protobuf.ProtoUtils;
 import java.io.IOException;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Generated;
 
@@ -304,6 +305,14 @@ public class GrpcEchoStub extends EchoStub {
                   builder.add(request.getOtherHeader(), "baz", ECHO_6_PATH_TEMPLATE);
                   builder.add(request.getOtherHeader(), "qux", ECHO_7_PATH_TEMPLATE);
                   return builder.build();
+                })
+            .setRequestMutator(
+                request -> {
+                  if (request.getRequestId() == null || request.getRequestId().isEmpty()) {
+                    request =
+                        request.toBuilder().setRequestId(UUID.randomUUID().toString()).build();
+                  }
+                  return request;
                 })
             .build();
     GrpcCallSettings<EchoErrorDetailsRequest, EchoErrorDetailsResponse>

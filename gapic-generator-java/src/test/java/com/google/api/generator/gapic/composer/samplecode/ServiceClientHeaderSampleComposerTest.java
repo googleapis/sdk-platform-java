@@ -228,6 +228,7 @@ public class ServiceClientHeaderSampleComposerTest {
             "          .setThirdRequestId(true)\n",
             "          .setFourthRequestId(\"fourthRequestId-2116417776\")\n",
             "          .setFifthRequestId(\"fifthRequestId959024147\")\n",
+            "          .setSixthRequestId(\"sixthRequestId1005218260\")\n",
             "          .setSeverity(Severity.forNumber(0))\n",
             "          .setFoobar(Foobar.newBuilder().build())\n",
             "          .build();\n",

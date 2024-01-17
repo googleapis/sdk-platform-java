@@ -573,6 +573,7 @@ public class DefaultValueComposerTest {
             + ".setThirdRequestId(true)"
             + ".setFourthRequestId(\"fourthRequestId-2116417776\")"
             + ".setFifthRequestId(\"fifthRequestId959024147\")"
+            + ".setSixthRequestId(\"sixthRequestId1005218260\")"
             + ".setSeverity(Severity.forNumber(0))"
             + ".setFoobar(Foobar.newBuilder().build()).build()",
         writerVisitor.write());

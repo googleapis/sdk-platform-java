@@ -187,6 +187,7 @@ message EchoRequest {
 
   // This field is added to test that autopopulation works for multiple fields
   string second_request_id = 8 [
+    (google.api.field_behavior) = OPTIONAL,
     (google.api.field_info).format = UUID4
   ];
 
@@ -203,6 +204,12 @@ message EchoRequest {
   // This field is added to test that autopopulation should not populate this field since it is not designated in the service_yaml
   string fifth_request_id = 11 [
     (google.api.field_info).format = UUID4
+  ];
+
+  // This field is added to test that autopopulation should not populate this field since it marked as Required
+  string sixth_request_id = 12 [
+    (google.api.field_info).format = UUID4,
+    (google.api.field_behavior) = REQUIRED
   ];
 
 
