@@ -29,6 +29,20 @@ public class UnmanagedDependencyCheckTest {
   }
 
   @Test
+  public void getUnmanagedDependencyWithCustomizedArtifactTest()
+      throws MavenRepositoryException, InvalidVersionSpecificationException {
+    List<String> unManagedDependencies =
+        UnmanagedDependencyCheck.getUnmanagedDependencies(
+            "src/test/resources/shared-dependency-3.18.0-pom.xml", "src/test/resources/firestore-pom.xml");
+    assertTrue(unManagedDependencies.isEmpty());
+
+    unManagedDependencies =
+        UnmanagedDependencyCheck.getUnmanagedDependencies(
+            "src/test/resources/shared-dependency-3.18.0-pom.xml", "src/test/resources/datastore-pom.xml");
+    assertTrue(unManagedDependencies.isEmpty());
+  }
+
+  @Test
   public void getUnmanagedDependencyFromNestedPomTest()
       throws MavenRepositoryException, InvalidVersionSpecificationException {
     List<String> unManagedDependencies =

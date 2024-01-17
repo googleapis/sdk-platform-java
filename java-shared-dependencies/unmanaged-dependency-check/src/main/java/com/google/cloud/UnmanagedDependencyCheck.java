@@ -19,8 +19,11 @@ import org.eclipse.aether.version.InvalidVersionSpecificationException;
  */
 public class UnmanagedDependencyCheck {
   // regex of handwritten artifacts
-  private final static String downstreamArtifact = "(com.google.cloud:google-.*)|(com.google.api.grpc:(grpc|proto)-google-.*)";
-
+  private final static String downstreamArtifact =
+      "(com.google.cloud:google-.*)|"
+          + "(com.google.api.grpc:(grpc|proto)-google-.*)|"
+          + "(com.google.cloud:proto-google-cloud-firestore-bundle-.*)|"
+          + "(com.google.cloud.datastore:datastore-.*-proto-client)";
 
   /**
    * @param args An array with two elements.<p> The first string is the path of Java shared
