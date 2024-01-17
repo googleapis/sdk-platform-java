@@ -92,7 +92,7 @@ public class ITClientShutdown {
             .setMaxAttempts(1)
             .build();
     EchoClient grpcClient =
-        TestClientInitializer.createHttpJsonEchoClientCustomBlockSettings(
+        TestClientInitializer.createGrpcEchoClientCustomBlockSettings(
             defaultRetrySettings, ImmutableSet.of(StatusCode.Code.DEADLINE_EXCEEDED));
 
     BlockRequest blockRequest =
