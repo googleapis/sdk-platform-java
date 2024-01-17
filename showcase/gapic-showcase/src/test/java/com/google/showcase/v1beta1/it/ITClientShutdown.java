@@ -104,11 +104,14 @@ public class ITClientShutdown {
     long start = System.currentTimeMillis();
     BlockResponse response = grpcClient.block(blockRequest);
     Truth.assertThat(response.getContent()).isEqualTo("gRPCBlockContent_2sDelay");
+
+    // Intentionally do not run grpcClient.awaitTermination(...) as this test will
+    // check that everything is properly terminated after close() is called.
     grpcClient.close();
-    // Loop until the client has terminated successfully
-    // Future enhancement: Use awaitility instead of busy waiting
-    while (!grpcClient.isTerminated()) ;
+
+    busyWaitUntilClientTermination(grpcClient);
     long end = System.currentTimeMillis();
+
     Truth.assertThat(grpcClient.isShutdown()).isTrue();
     Truth.assertThat(grpcClient.isTerminated()).isTrue();
 
@@ -150,13 +153,14 @@ public class ITClientShutdown {
     long start = System.currentTimeMillis();
     BlockResponse response = httpjsonClient.block(blockRequest);
     Truth.assertThat(response.getContent()).isEqualTo("httpjsonBlockContent_2sDelay");
+
+    // Intentionally do not run grpcClient.awaitTermination(...) as this test will
+    // check that everything is properly terminated after close() is called.
     httpjsonClient.close();
-    // Loop until the client has terminated successfully
-    // Future enhancement: Use awaitility instead of busy waiting
-    while (!httpjsonClient.isTerminated()) {
-      Thread.sleep(1000L);
-    }
+
+    busyWaitUntilClientTermination(httpjsonClient);
     long end = System.currentTimeMillis();
+
     Truth.assertThat(httpjsonClient.isShutdown()).isTrue();
     Truth.assertThat(httpjsonClient.isTerminated()).isTrue();
 
@@ -166,5 +170,15 @@ public class ITClientShutdown {
     // buffer time).
     long terminationTime = end - start;
     Truth.assertThat(terminationTime).isLessThan(5000L);
+  }
+
+  // Loop until the client has terminated successfully. For tests that use this,
+  // try to ensure there is a timeout associated, otherwise this may run forever.
+  // Future enhancement: Use awaitility instead of busy waiting
+  private static void busyWaitUntilClientTermination(EchoClient client)
+      throws InterruptedException {
+    while (!client.isTerminated()) {
+      Thread.sleep(1000L);
+    }
   }
 }
