@@ -1300,7 +1300,10 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     for (HttpBindings.HttpBinding httpBindingFieldBinding :
         method.httpBindings().pathParameters()) {
       MethodInvocationExpr requestBuilderExpr =
-          createRequestFieldGetterExpr(requestVarExpr, httpBindingFieldBinding.name());
+          createRequestFieldGetterExpr(
+              requestVarExpr,
+              httpBindingFieldBinding.name(),
+              httpBindingFieldBinding.field() != null && httpBindingFieldBinding.field().isEnum());
       Expr valueOfExpr =
           MethodInvocationExpr.builder()
               .setStaticReferenceType(TypeNode.STRING)
@@ -1360,8 +1363,10 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
             .build();
     for (int i = 0; i < routingHeaderParams.size(); i++) {
       RoutingHeaderRule.RoutingHeaderParam routingHeaderParam = routingHeaderParams.get(i);
+      // Explicit routing headers are implemented as strings currently, hence sending "false"
+      // in isFieldEnum() for it.
       MethodInvocationExpr requestFieldGetterExpr =
-          createRequestFieldGetterExpr(requestVarExpr, routingHeaderParam.fieldName());
+          createRequestFieldGetterExpr(requestVarExpr, routingHeaderParam.fieldName(), false);
       Expr routingHeaderKeyExpr =
           ValueExpr.withValue(StringObjectValue.withValue(routingHeaderParam.key()));
       String pathTemplateName =
@@ -1462,7 +1467,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
   }
 
   private MethodInvocationExpr createRequestFieldGetterExpr(
-      VariableExpr requestVarExpr, String fieldName) {
+      VariableExpr requestVarExpr, String fieldName, boolean isFieldEnum) {
     MethodInvocationExpr.Builder requestFieldGetterExprBuilder =
         MethodInvocationExpr.builder().setExprReferenceExpr(requestVarExpr);
     List<String> descendantFields = Splitter.on(".").splitToList(fieldName);
@@ -1472,6 +1477,18 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
       String currFieldName = descendantFields.get(i);
       String bindingFieldMethodName =
           String.format("get%s", JavaStyle.toUpperCamelCase(currFieldName));
+
+      // Only at the last descendant field, if enum, we want to extract the value.
+      // For example, consider the chain request.getFoo().getBar().
+      // If you added "Value" to both fields (getFooValue().getBarValue()),
+      // it would not work correctly, as getFooValue() may return an int or some other type,
+      // and calling getBarValue() on it wouldn't make sense
+      // By adding "Value" only at the last descendant field,
+      // you ensure that the modification aligns with the expected method
+      // chaining behavior and correctly retrieves the underlying value of the enum field."
+      if (i == descendantFields.size() - 1 && isFieldEnum) {
+        bindingFieldMethodName = bindingFieldMethodName + "Value";
+      }
       requestFieldGetterExprBuilder =
           requestFieldGetterExprBuilder.setMethodName(bindingFieldMethodName);
       if (i < descendantFields.size() - 1) {

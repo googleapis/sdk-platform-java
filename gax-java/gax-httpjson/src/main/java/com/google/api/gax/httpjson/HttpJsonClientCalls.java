@@ -72,6 +72,10 @@ class HttpJsonClientCalls {
       httpJsonContext = httpJsonContext.withCallOptions(callOptions);
     }
 
+    // Validate the Universe Domain prior to the call. Only allow the call to go through
+    // if the Universe Domain is valid.
+    httpJsonContext.validateUniverseDomain();
+
     // TODO: add headers interceptor logic
     return httpJsonContext.getChannel().newCall(methodDescriptor, httpJsonContext.getCallOptions());
   }

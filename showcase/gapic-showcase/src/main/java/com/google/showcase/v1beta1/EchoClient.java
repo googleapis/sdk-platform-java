@@ -74,6 +74,7 @@ import javax.annotation.Generated;
  *           .setSeverity(Severity.forNumber(0))
  *           .setHeader("header-1221270899")
  *           .setOtherHeader("otherHeader-2026585667")
+ *           .setRequestId("requestId693933066")
  *           .build();
  *   EchoResponse response = echoClient.echo(request);
  * }
@@ -437,6 +438,7 @@ public class EchoClient implements BackgroundResource {
    *           .setSeverity(Severity.forNumber(0))
    *           .setHeader("header-1221270899")
    *           .setOtherHeader("otherHeader-2026585667")
+   *           .setRequestId("requestId693933066")
    *           .build();
    *   EchoResponse response = echoClient.echo(request);
    * }
@@ -467,6 +469,7 @@ public class EchoClient implements BackgroundResource {
    *           .setSeverity(Severity.forNumber(0))
    *           .setHeader("header-1221270899")
    *           .setOtherHeader("otherHeader-2026585667")
+   *           .setRequestId("requestId693933066")
    *           .build();
    *   ApiFuture<EchoResponse> future = echoClient.echoCallable().futureCall(request);
    *   // Do something.
@@ -615,6 +618,7 @@ public class EchoClient implements BackgroundResource {
    *           .setSeverity(Severity.forNumber(0))
    *           .setHeader("header-1221270899")
    *           .setOtherHeader("otherHeader-2026585667")
+   *           .setRequestId("requestId693933066")
    *           .build();
    *   requestObserver.onNext(request);
    * }
@@ -644,6 +648,7 @@ public class EchoClient implements BackgroundResource {
    *           .setSeverity(Severity.forNumber(0))
    *           .setHeader("header-1221270899")
    *           .setOtherHeader("otherHeader-2026585667")
+   *           .setRequestId("requestId693933066")
    *           .build();
    *   bidiStream.send(request);
    *   for (EchoResponse response : bidiStream) {
