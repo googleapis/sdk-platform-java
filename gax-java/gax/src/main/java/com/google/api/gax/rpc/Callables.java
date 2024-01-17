@@ -53,6 +53,16 @@ public class Callables {
 
   public static <RequestT, ResponseT> UnaryCallable<RequestT, ResponseT> retrying(
       UnaryCallable<RequestT, ResponseT> innerCallable,
+      RetryAlgorithm<ResponseT> retryAlgorithm,
+      ClientContext clientContext) {
+    ScheduledRetryingExecutor<ResponseT> retryingExecutor =
+        new ScheduledRetryingExecutor<>(retryAlgorithm, clientContext.getExecutor());
+    return new RetryingCallable<>(
+        clientContext.getDefaultCallContext(), innerCallable, retryingExecutor);
+  }
+
+  public static <RequestT, ResponseT> UnaryCallable<RequestT, ResponseT> retrying(
+      UnaryCallable<RequestT, ResponseT> innerCallable,
       UnaryCallSettings<?, ?> callSettings,
       ClientContext clientContext) {
 
@@ -69,12 +79,21 @@ public class Callables {
 
     RetryAlgorithm<ResponseT> retryAlgorithm =
         new RetryAlgorithm<>(
-            new ApiResultRetryAlgorithm<ResponseT>(),
+            new ApiResultRetryAlgorithm<>(),
             new ExponentialRetryAlgorithm(settings.getRetrySettings(), clientContext.getClock()));
-    ScheduledRetryingExecutor<ResponseT> retryingExecutor =
+
+    return retrying(innerCallable, retryAlgorithm, clientContext);
+  }
+
+  public static <RequestT, ResponseT> ServerStreamingCallable<RequestT, ResponseT> retrying(
+      ServerStreamingCallable<RequestT, ResponseT> innerCallable,
+      ServerStreamingCallSettings<RequestT, ResponseT> callSettings,
+      StreamingRetryAlgorithm<Void> retryAlgorithm,
+      ClientContext clientContext) {
+    ScheduledRetryingExecutor<Void> retryingExecutor =
         new ScheduledRetryingExecutor<>(retryAlgorithm, clientContext.getExecutor());
-    return new RetryingCallable<>(
-        clientContext.getDefaultCallContext(), innerCallable, retryingExecutor);
+    return new RetryingServerStreamingCallable<>(
+        innerCallable, retryingExecutor, callSettings.getResumptionStrategy());
   }
 
   public static <RequestT, ResponseT> ServerStreamingCallable<RequestT, ResponseT> retrying(
@@ -94,14 +113,10 @@ public class Callables {
 
     StreamingRetryAlgorithm<Void> retryAlgorithm =
         new StreamingRetryAlgorithm<>(
-            new ApiResultRetryAlgorithm<Void>(),
+            new ApiResultRetryAlgorithm<>(),
             new ExponentialRetryAlgorithm(settings.getRetrySettings(), clientContext.getClock()));
 
-    ScheduledRetryingExecutor<Void> retryingExecutor =
-        new ScheduledRetryingExecutor<>(retryAlgorithm, clientContext.getExecutor());
-
-    return new RetryingServerStreamingCallable<>(
-        innerCallable, retryingExecutor, settings.getResumptionStrategy());
+    return retrying(innerCallable, callSettings, retryAlgorithm, clientContext);
   }
 
   public static <RequestT, ResponseT> ServerStreamingCallable<RequestT, ResponseT> watched(

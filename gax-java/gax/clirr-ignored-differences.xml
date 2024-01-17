@@ -42,4 +42,3 @@
     <className>com/google/api/gax/rpc/ApiCallContext</className>
     <method>* validateUniverseDomain()</method>
   </difference>
-</differences>
