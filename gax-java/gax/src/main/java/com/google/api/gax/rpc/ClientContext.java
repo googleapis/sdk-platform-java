@@ -230,6 +230,7 @@ public abstract class ClientContext {
     if (credentials != null) {
       defaultCallContext = defaultCallContext.withCredentials(credentials);
     }
+    defaultCallContext = defaultCallContext.withEndpointContext(endpointContext);
 
     WatchdogProvider watchdogProvider = settings.getStreamWatchdogProvider();
     @Nullable Watchdog watchdog = null;
