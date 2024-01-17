@@ -44,13 +44,27 @@ def main(ctx):
     Specifying this option enables postprocessing
     """
 )
+@click.option(
+    "--target-library-api-shortname",
+    required=False,
+    type=str,
+    help="""
+    If specified, only the `library` with api_shortname = target-library-api-shortname will
+    be generated. If not specified, all libraries in the configuration yaml will be generated
+    """
+)
 def generate_from_yaml(
     generation_config_yaml,
     repository_location,
-    enable_postprocessing
+    enable_postprocessing,
+    target_library_api_shortname
 ):
   config = GenerationConfig.from_yaml(generation_config_yaml)
-  for library in config.libraries:
+  target_libraries = config.libraries
+  if target_library_api_shortname is not None:
+    target_libraries = [library for library in config.libraries
+                              if library.api_shortname == target_library_api_shortname]
+  for library in target_libraries:
     print(f'generating library {library.api_shortname}')
     generate_composed_library(
         config, library, repository_location, enable_postprocessing

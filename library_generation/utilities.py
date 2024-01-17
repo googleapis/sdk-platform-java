@@ -1,8 +1,9 @@
 
-from collections.abc import Sequence
 import sys
 import subprocess
 import os
+from collections.abc import Sequence
+from model.GenerationConfig import GenerationConfig
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 
@@ -48,6 +49,17 @@ def create_argument(arg_key: str, arg_container: object) -> str:
   if arg_val is not None:
     return [f'--{arg_key}', f'{arg_val}']
   return []
+
+"""
+For a given configuration yaml path, it returns a space-separated list of
+the api_shortnames contained in such configuration_yaml
+"""
+def get_configuration_yaml_library_api_shortnames(generation_config_yaml):
+  config = GenerationConfig.from_yaml(generation_config_yaml)
+  result = ''
+  for library in config.libraries:
+    result += f'{library.api_shortname} '
+  return result[:-1]
 
 def sh_util(statement: str, **kwargs) -> str:
   if 'stdout' not in kwargs:

@@ -2,7 +2,6 @@
 Class that represents the root of a generation_config.yaml
 """
 import yaml
-import json
 from typing import List, Optional, Dict
 from .Library import Library
 from .GAPIC import GAPIC
@@ -35,7 +34,6 @@ class GenerationConfig:
   def from_yaml(path_to_yaml):
     file_stream = open(path_to_yaml, 'r')
     config = yaml.load(file_stream, yaml.Loader)
-    print(json.dumps(config, indent=2))
 
     libraries = _required(config, 'libraries')
 

@@ -62,28 +62,30 @@ if [ -f "${output_folder}/generation_times" ];then
 fi
 
 configuration_yaml="${script_dir}/resources/integration/google-cloud-java/generation_config.yaml"
+library_api_shortnames=$(py_util "get_configuration_yaml_library_api_shortnames" "${configuration_yaml}")
 
-grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
+for api_shortname in ${library_api_shortnames}; do
   pushd "${output_folder}"
 
-  echo "Generating library from ${proto_path}, to ${destination_path}..."
+  echo "Generating library ${api_shortname}..."
   generation_start=$(date "+%s")
   python3 "${library_generation_dir}"/main.py generate-from-yaml \
     --generation-config-yaml "${configuration_yaml}" \
-    --enable-postprocessing ${enable_postprocessing}
+    --enable-postprocessing "${enable_postprocessing}" \
+    --target-library-api-shortname "${api_shortname}"
   generation_end=$(date "+%s")
 
   # some generations are less than 1 second (0 produces exit code 1 in `expr`)
   generation_duration_seconds=$(expr "${generation_end}" - "${generation_start}" || true)
-  echo "Generation time for ${repository_path} was ${generation_duration_seconds} seconds."
+  echo "Generation time for ${api_shortname} was ${generation_duration_seconds} seconds."
   pushd "${output_folder}"
   echo "${proto_path} ${generation_duration_seconds}" >> generation_times
 
   echo "Generate library finished."
   echo "Compare generation result..."
-  if [ $enable_postprocessing == "true" ]; then
+  if [ ${enable_postprocessing} == "true" ]; then
     echo "Checking out repository..."
-    target_folder="${output_folder}/${repository_path}"
+    target_folder="${output_folder}/google-cloud-java/java-${api_shortname}"
     pushd "${target_folder}"
     source_diff_result=0
     git diff \
@@ -104,10 +106,10 @@ grep -v '^ *#' < "${proto_path_list}" | while IFS= read -r line; do
       # Delete google-cloud-java to allow a sparse clone of the next library
       rm -rdf google-cloud-java
     elif [ ${source_diff_result} != 0 ]; then
-      echo "FAILURE: Differences found in proto path: ${proto_path}."
+      echo "FAILURE: Differences found in proto path: java-${api_shortname}."
       exit "${source_diff_result}"
     elif [ ${pom_diff_result} != 0 ]; then
-      echo "FAILURE: Differences found in generated poms"
+      echo "FAILURE: Differences found in generated java-${api_shortname}'s poms"
       exit "${pom_diff_result}"
     fi
   elif [ "${enable_postprocessing}" == "false" ]; then
