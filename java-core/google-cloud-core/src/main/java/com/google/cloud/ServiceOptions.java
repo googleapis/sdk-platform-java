@@ -40,6 +40,7 @@ import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.NoHeaderProvider;
+import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.auth.oauth2.QuotaProjectIdProvider;
@@ -109,6 +110,7 @@ public abstract class ServiceOptions<
   private transient ServiceFactory<ServiceT, OptionsT> serviceFactory;
   private transient ServiceT service;
   private transient ServiceRpc rpc;
+  private final ApiTracerFactory apiTracerFactory;
 
   /**
    * Builder for {@code ServiceOptions}.
@@ -136,6 +138,7 @@ public abstract class ServiceOptions<
     private HeaderProvider headerProvider;
     private String clientLibToken = ServiceOptions.getGoogApiClientLibName();
     private String quotaProjectId;
+    private ApiTracerFactory apiTracerFactory;
 
     @InternalApi("This class should only be extended within google-cloud-java")
     protected Builder() {}
@@ -153,6 +156,7 @@ public abstract class ServiceOptions<
       transportOptions = options.transportOptions;
       clientLibToken = options.clientLibToken;
       quotaProjectId = options.quotaProjectId;
+      apiTracerFactory = options.apiTracerFactory;
     }
 
     protected abstract ServiceOptions<ServiceT, OptionsT> build();
@@ -306,6 +310,11 @@ public abstract class ServiceOptions<
       return self();
     }
 
+    public B setApiTracerFactory(ApiTracerFactory apiTracerFactory) {
+      this.apiTracerFactory = apiTracerFactory;
+      return self();
+    }
+
     protected Set<String> getAllowedClientLibTokens() {
       return allowedClientLibTokens;
     }
@@ -347,6 +356,7 @@ public abstract class ServiceOptions<
         builder.quotaProjectId != null
             ? builder.quotaProjectId
             : getValueFromCredentialsFile(getCredentialsPath(), "quota_project_id");
+    apiTracerFactory = builder.apiTracerFactory;
   }
 
   private static String getCredentialsPath() {
@@ -690,6 +700,10 @@ public abstract class ServiceOptions<
   /** Returns the library's version as a string. */
   public String getLibraryVersion() {
     return GaxProperties.getLibraryVersion(this.getClass());
+  }
+
+  public ApiTracerFactory getApiTracerFactory() {
+    return apiTracerFactory;
   }
 
   @InternalApi
