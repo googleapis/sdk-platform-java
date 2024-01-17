@@ -1,9 +1,9 @@
 #Required.
-gapic_generator_version: 2.30.0
+gapic_generator_version: 2.31.0
 #Optional.
-grpc_version: 1.59.1
+#grpc_version: 1.59.1
 #Optional.
-protobuf_version: 3.25.1
+#protobuf_version: 3.25.1
 #Required.
 googleapis_commitish: 4512234113a18c1fda1fb0d0ceac8f4b4efe9801
 #Required.

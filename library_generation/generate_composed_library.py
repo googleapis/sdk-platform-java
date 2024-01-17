@@ -56,7 +56,7 @@ def generate_composed_library(
   destination_path = f'java-{library.api_shortname}'
   if config.destination_path is not None:
     destination_path = config.destination_path + '/' + destination_path
-  base_arguments += ['--destination_path', destination_path]
+
   versions_file = ''
   if 'google-cloud-java' in destination_path:
     print('this is a monorepo library')
@@ -95,6 +95,9 @@ def generate_composed_library(
         '--service_yaml', service_yaml,
         '--include_samples', include_samples,
     ]
+    service_version = gapic.proto_path.split('/')[-1]
+    temp_destination_path = f'java-{library.api_shortname}-{service_version}'
+    effective_arguments += [ '--destination_path', temp_destination_path ]
     print('arguments: ')
     print(effective_arguments)
     print(f'Generating library from {gapic.proto_path} to {destination_path}...')
@@ -106,7 +109,8 @@ def generate_composed_library(
 
     if enable_postprocessing:
       util.sh_util(f'build_owlbot_cli_source_folder "{output_folder}/{destination_path}"'
-                   + f' "{owlbot_cli_source_folder}" "{output_folder}/{destination_path}"',
+                   + f' "{owlbot_cli_source_folder}" "{output_folder}/{temp_destination_path}"'
+                   + f' "{gapic.proto_path}"',
                    cwd=output_folder)
 
   if enable_postprocessing:

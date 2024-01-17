@@ -281,7 +281,10 @@ build_owlbot_cli_source_folder() {
   local postprocessing_target=$1
   local target_folder=$2
   local preprocessed_sources_path=$3
-  proto_path=$(get_proto_path_from_preprocessed_sources "${preprocessed_sources_path}")
+  local proto_path=$4
+  if [[ -z "${proto_path}" ]]; then
+    proto_path=$(get_proto_path_from_preprocessed_sources "${preprocessed_sources_path}")
+  fi
   owlbot_staging_folder="${postprocessing_target}/owl-bot-staging"
   mkdir -p "${owlbot_staging_folder}"
 
