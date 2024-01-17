@@ -33,6 +33,7 @@ import com.google.api.core.BetaApi;
 import com.google.api.gax.batching.BatchingSettings;
 import com.google.api.gax.longrunning.OperationResponsePollAlgorithm;
 import com.google.api.gax.longrunning.OperationSnapshot;
+import com.google.api.gax.retrying.BasicResultRetryAlgorithm;
 import com.google.api.gax.retrying.ExponentialRetryAlgorithm;
 import com.google.api.gax.retrying.RetryAlgorithm;
 import com.google.api.gax.retrying.RetrySettings;
@@ -67,9 +68,16 @@ public class Callables {
               .build();
     }
 
+    BasicResultRetryAlgorithm<ResponseT> resultRetryAlgorithm;
+    if (settings.getRetrySettings().getUseRetryInfo()) {
+      resultRetryAlgorithm = new RetryInfoRetryAlgorithm<>();
+    } else {
+      resultRetryAlgorithm = new ApiResultRetryAlgorithm<>();
+    }
+
     RetryAlgorithm<ResponseT> retryAlgorithm =
         new RetryAlgorithm<>(
-            new ApiResultRetryAlgorithm<ResponseT>(),
+            resultRetryAlgorithm,
             new ExponentialRetryAlgorithm(settings.getRetrySettings(), clientContext.getClock()));
     ScheduledRetryingExecutor<ResponseT> retryingExecutor =
         new ScheduledRetryingExecutor<>(retryAlgorithm, clientContext.getExecutor());
@@ -92,9 +100,15 @@ public class Callables {
               .build();
     }
 
+    BasicResultRetryAlgorithm resultRetryAlgorithm;
+    if (settings.getRetrySettings().getUseRetryInfo()) {
+      resultRetryAlgorithm = new RetryInfoRetryAlgorithm<>();
+    } else {
+      resultRetryAlgorithm = new ApiResultRetryAlgorithm<>();
+    }
     StreamingRetryAlgorithm<Void> retryAlgorithm =
         new StreamingRetryAlgorithm<>(
-            new ApiResultRetryAlgorithm<Void>(),
+            resultRetryAlgorithm,
             new ExponentialRetryAlgorithm(settings.getRetrySettings(), clientContext.getClock()));
 
     ScheduledRetryingExecutor<Void> retryingExecutor =

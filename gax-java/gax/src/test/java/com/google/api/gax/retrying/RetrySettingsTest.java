@@ -56,7 +56,8 @@ public class RetrySettingsTest {
             .setMaxRpcTimeout(Duration.ofMillis(30000))
             .setInitialRetryDelay(Duration.ofMillis(100))
             .setRetryDelayMultiplier(1.2)
-            .setMaxRetryDelay(Duration.ofMillis(1000));
+            .setMaxRetryDelay(Duration.ofMillis(1000))
+            .setUseRetryInfo(true);
     RetrySettings.Builder mergedBuilder = RetrySettings.newBuilder();
     mergedBuilder.merge(builder);
 
@@ -74,5 +75,6 @@ public class RetrySettingsTest {
         .isWithin(0)
         .of(settingsB.getRetryDelayMultiplier());
     Truth.assertThat(settingsA.getMaxRetryDelay()).isEqualTo(settingsB.getMaxRetryDelay());
+    Truth.assertThat(settingsA.getUseRetryInfo()).isEqualTo(settingsB.getUseRetryInfo());
   }
 }

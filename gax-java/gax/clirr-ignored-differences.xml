@@ -42,4 +42,14 @@
     <className>com/google/api/gax/rpc/ApiCallContext</className>
     <method>* validateUniverseDomain()</method>
   </difference>
+  <difference>
+    <differenceType>7013</differenceType>
+    <className>com/google/api/gax/retrying/RetrySettings</className>
+    <method>*UseRetryInfo*</method>
+  </difference>
+  <difference>
+    <differenceType>7013</differenceType>
+    <className>com/google/api/gax/retrying/RetrySettings$Builder</className>
+    <method>*UseRetryInfo*</method>
+  </difference>
 </differences>
