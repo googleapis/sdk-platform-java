@@ -31,7 +31,9 @@ package com.google.api.gax.httpjson;
 
 import static com.google.common.truth.Truth.assertThat;
 
+import com.google.api.client.http.HttpMethods;
 import com.google.api.client.http.HttpResponseException;
+import com.google.api.gax.httpjson.testing.FakeHttpJsonChannel;
 import com.google.api.gax.httpjson.testing.MockHttpService;
 import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.ApiExceptionFactory;
@@ -39,8 +41,11 @@ import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.rpc.testing.FakeStatusCode;
 import com.google.auth.Credentials;
+import com.google.common.base.Objects;
+import com.google.protobuf.Empty;
 import com.google.protobuf.Field;
 import com.google.protobuf.Field.Cardinality;
+import com.google.protobuf.TypeRegistry;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
@@ -94,6 +99,15 @@ public class HttpJsonDirectCallableTest {
                   .setDefaultInstance(Field.getDefaultInstance())
                   .build())
           .build();
+
+  private static final ApiMethodDescriptor<TestMessage, Empty>
+      FAKE_METHOD_DESCRIPTOR_FOR_REQUEST_MUTATOR =
+          ApiMethodDescriptor.newBuilder()
+              .setFullMethodName("google.cloud.v1.Fake/FakeMethodForRequestMutator")
+              .setHttpMethod(HttpMethods.POST)
+              .setRequestFormatter(Mockito.mock(HttpRequestFormatter.class))
+              .setResponseParser(Mockito.mock(HttpResponseParser.class))
+              .build();
 
   private static final MockHttpService MOCK_SERVICE =
       new MockHttpService(Collections.singletonList(FAKE_METHOD_DESCRIPTOR), "google.com:443");
@@ -160,6 +174,62 @@ public class HttpJsonDirectCallableTest {
     assertThat(MOCK_SERVICE.getRequestPaths().size()).isEqualTo(1);
     String headerValue = MOCK_SERVICE.getRequestHeaders().get("header-key").iterator().next();
     assertThat(headerValue).isEqualTo("headerValue");
+  }
+
+  @Test
+  public void testFutureCall_withRequestMutator() {
+    // Given
+    TestMessage expectedMessage = new TestMessage("Mutated");
+    HttpJsonCallSettings<TestMessage, Empty> httpJsonCallSettings =
+        HttpJsonCallSettings.<TestMessage, Empty>newBuilder()
+            .setRequestMutator(testMessage -> expectedMessage)
+            .setMethodDescriptor(FAKE_METHOD_DESCRIPTOR_FOR_REQUEST_MUTATOR)
+            .setTypeRegistry(TypeRegistry.newBuilder().build())
+            .build();
+    HttpJsonDirectCallable<TestMessage, Empty> httpJsonDirectCallable =
+        new HttpJsonDirectCallable<>(httpJsonCallSettings);
+    HttpJsonClientCall<TestMessage, Empty> clientCall = Mockito.mock(HttpJsonClientCall.class);
+    FakeHttpJsonChannel fakeChannel = new FakeHttpJsonChannel(clientCall);
+    EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
+
+    HttpJsonCallContext httpJsonCallContext =
+        HttpJsonCallContext.createDefault()
+            .withChannel(fakeChannel)
+            .withEndpointContext(endpointContext);
+
+    // When
+    httpJsonDirectCallable.futureCall(new TestMessage("Before"), httpJsonCallContext);
+
+    // Then
+    Mockito.verify(clientCall).sendMessage(expectedMessage);
+  }
+
+  @Test
+  public void testFutureCall_withNullRequestMutator() {
+    // Given
+    TestMessage expectedMessage = new TestMessage("Before");
+    HttpJsonCallSettings<TestMessage, Empty> httpJsonCallSettings =
+        HttpJsonCallSettings.<TestMessage, Empty>newBuilder()
+            .setRequestMutator(null)
+            .setMethodDescriptor(FAKE_METHOD_DESCRIPTOR_FOR_REQUEST_MUTATOR)
+            .setTypeRegistry(TypeRegistry.newBuilder().build())
+            .build();
+    HttpJsonDirectCallable<TestMessage, Empty> httpJsonDirectCallable =
+        new HttpJsonDirectCallable<>(httpJsonCallSettings);
+    HttpJsonClientCall<TestMessage, Empty> clientCall = Mockito.mock(HttpJsonClientCall.class);
+    FakeHttpJsonChannel fakeChannel = new FakeHttpJsonChannel(clientCall);
+    EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
+
+    HttpJsonCallContext httpJsonCallContext =
+        HttpJsonCallContext.createDefault()
+            .withChannel(fakeChannel)
+            .withEndpointContext(endpointContext);
+
+    // When
+    httpJsonDirectCallable.futureCall(new TestMessage("Before"), httpJsonCallContext);
+
+    // Then
+    Mockito.verify(clientCall).sendMessage(expectedMessage);
   }
 
   /**
@@ -357,5 +427,30 @@ public class HttpJsonDirectCallableTest {
         .setCardinality(Cardinality.CARDINALITY_OPTIONAL)
         .setDefaultValue("blah")
         .build();
+  }
+
+  class TestMessage {
+    private final String name;
+
+    public TestMessage(String name) {
+      this.name = name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+      if (this == o) {
+        return true;
+      }
+      if (!(o instanceof TestMessage)) {
+        return false;
+      }
+      TestMessage that = (TestMessage) o;
+      return Objects.equal(name, that.name);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hashCode(name);
+    }
   }
 }

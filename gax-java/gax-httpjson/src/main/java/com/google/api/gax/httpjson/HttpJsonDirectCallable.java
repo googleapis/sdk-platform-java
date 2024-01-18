@@ -59,12 +59,10 @@ class HttpJsonDirectCallable<RequestT, ResponseT> extends UnaryCallable<RequestT
     this.httpJsonCallSettings = httpJsonCallSettings;
   }
 
-  public HttpJsonDirectCallable(
-      ApiMethodDescriptor<RequestT, ResponseT> descriptor,
-      HttpJsonCallSettings httpJsonCallSettings) {
-    this.descriptor = descriptor;
+  public HttpJsonDirectCallable(HttpJsonCallSettings httpJsonCallSettings) {
+    this.descriptor = Preconditions.checkNotNull(httpJsonCallSettings.getMethodDescriptor());
     this.httpJsonCallSettings = httpJsonCallSettings;
-    this.typeRegistry = null;
+    this.typeRegistry = Preconditions.checkNotNull(httpJsonCallSettings.getTypeRegistry());
   }
 
   @Override
