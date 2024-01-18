@@ -83,6 +83,12 @@ def sh_util(statement: str, **kwargs) -> str:
     output = output[:-1]
   return output
 
+"""
+prints to stderr
+"""
+def eprint(*args, **kwargs):
+  print(*args, file=sys.stderr, **kwargs)
+
 def _get_raw_argument_component(raw_argument: str, index: int) -> str:
   result = raw_argument.split('=')[index]
   return result
