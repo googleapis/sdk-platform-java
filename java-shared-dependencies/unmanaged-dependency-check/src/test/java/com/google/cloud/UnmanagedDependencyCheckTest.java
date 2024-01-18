@@ -24,21 +24,8 @@ public class UnmanagedDependencyCheckTest {
       throws MavenRepositoryException, InvalidVersionSpecificationException {
     List<String> unManagedDependencies =
         UnmanagedDependencyCheck.getUnmanagedDependencies(
-            "src/test/resources/shared-dependency-3.18.0-pom.xml", "src/test/resources/bigtable-pom.xml");
-    assertTrue(unManagedDependencies.isEmpty());
-  }
-
-  @Test
-  public void getUnmanagedDependencyWithCustomizedArtifactTest()
-      throws MavenRepositoryException, InvalidVersionSpecificationException {
-    List<String> unManagedDependencies =
-        UnmanagedDependencyCheck.getUnmanagedDependencies(
-            "src/test/resources/shared-dependency-3.18.0-pom.xml", "src/test/resources/firestore-pom.xml");
-    assertTrue(unManagedDependencies.isEmpty());
-
-    unManagedDependencies =
-        UnmanagedDependencyCheck.getUnmanagedDependencies(
-            "src/test/resources/shared-dependency-3.18.0-pom.xml", "src/test/resources/datastore-pom.xml");
+            "src/test/resources/shared-dependency-3.18.0-pom.xml",
+            "src/test/resources/google-internal-artifact-test-case-pom.xml");
     assertTrue(unManagedDependencies.isEmpty());
   }
 
