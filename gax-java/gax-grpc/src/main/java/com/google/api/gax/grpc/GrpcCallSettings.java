@@ -38,7 +38,7 @@ import io.grpc.MethodDescriptor;
 public class GrpcCallSettings<RequestT, ResponseT> {
   private final MethodDescriptor<RequestT, ResponseT> methodDescriptor;
   private final RequestParamsExtractor<RequestT> paramsExtractor;
-  private final RequestMutator<RequestT, RequestT> requestMutator;
+  private final RequestMutator<RequestT> requestMutator;
   private final boolean alwaysAwaitTrailers;
 
   private GrpcCallSettings(Builder<RequestT, ResponseT> builder) {
@@ -56,7 +56,7 @@ public class GrpcCallSettings<RequestT, ResponseT> {
     return paramsExtractor;
   }
 
-  public RequestMutator<RequestT, RequestT> getRequestMutator() {
+  public RequestMutator<RequestT> getRequestMutator() {
     return requestMutator;
   }
 
@@ -84,7 +84,7 @@ public class GrpcCallSettings<RequestT, ResponseT> {
     private MethodDescriptor<RequestT, ResponseT> methodDescriptor;
     private RequestParamsExtractor<RequestT> paramsExtractor;
 
-    private RequestMutator<RequestT, RequestT> requestMutator;
+    private RequestMutator<RequestT> requestMutator;
     private boolean shouldAwaitTrailers;
 
     private Builder() {}
@@ -108,8 +108,7 @@ public class GrpcCallSettings<RequestT, ResponseT> {
       return this;
     }
 
-    public Builder<RequestT, ResponseT> setRequestMutator(
-        RequestMutator<RequestT, RequestT> requestMutator) {
+    public Builder<RequestT, ResponseT> setRequestMutator(RequestMutator<RequestT> requestMutator) {
       this.requestMutator = requestMutator;
       return this;
     }

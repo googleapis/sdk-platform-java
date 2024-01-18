@@ -32,6 +32,7 @@ package com.google.api.gax.grpc;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.InternalApi;
 import com.google.api.core.ListenableFutureToApiFuture;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.common.base.Preconditions;
@@ -49,12 +50,13 @@ class GrpcDirectCallable<RequestT, ResponseT> extends UnaryCallable<RequestT, Re
   private final MethodDescriptor<RequestT, ResponseT> descriptor;
   private final boolean awaitTrailers;
 
-  private final GrpcCallSettings<RequestT, ResponseT> grpcCallSettings;
+  private GrpcCallSettings<RequestT, ResponseT> grpcCallSettings;
 
+  /** Use {@link #GrpcDirectCallable GrpcDirectCallable} method instead. */
+  @ObsoleteApi("Please use other GrpcDirectCallable() method instead")
   GrpcDirectCallable(MethodDescriptor<RequestT, ResponseT> descriptor, boolean awaitTrailers) {
     this.descriptor = Preconditions.checkNotNull(descriptor);
     this.awaitTrailers = awaitTrailers;
-    this.grpcCallSettings = null;
   }
 
   GrpcDirectCallable(GrpcCallSettings<RequestT, ResponseT> grpcCallSettings) {

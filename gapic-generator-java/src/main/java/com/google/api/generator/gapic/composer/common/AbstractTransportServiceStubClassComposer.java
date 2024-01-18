@@ -14,7 +14,6 @@
 
 package com.google.api.generator.gapic.composer.common;
 
-import com.google.api.FieldInfo.Format;
 import com.google.api.core.BetaApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.BackgroundResourceAggregation;
@@ -324,8 +323,6 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
               .build();
     }
 
-    // TODO: See if there is a nicer way to check whether the Field requirements are met before
-    // setting a RequestMutator
     if (method.hasAutoPopulatedFields()
         && createRequestMutatorBody(method, messageTypes).size() > 0) {
       callSettingsBuilderExpr =
@@ -1279,27 +1276,18 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
             Variable.builder().setType(method.inputType()).setName("request").build());
 
     for (String field : method.autoPopulatedFields()) {
-      // Check that the field format is of UUID and that it is not annotated as required. Unless
-      // these two conditions are met, do not autopopulate the field.
-      // In the future, if additional formats are supported for autopopulated, this will need to be
-      // refactored to support those formats.
       Optional<Field> matchingField =
           messageTypes.get(method.inputType().reference().fullName()).fields().stream()
               .filter(field1 -> field1.name().equals(field))
               .findFirst();
-      if (matchingField.isPresent()) {
-        Field matchedField = matchingField.get();
-        Format fieldInfoFormat = matchedField.fieldInfoFormat();
-        // Check that the field is of String type
-        if (fieldInfoFormat != null
-            && fieldInfoFormat.equals(Format.UUID4)
-            && !matchedField.isRequired()
-            && matchedField.type().reference() != null
-            && matchedField.type().reference().fullName() == "java.lang.String") {
-          bodyStatements.add(
-              // Chain If statements based on number of autopopulated fields
-              createAutoPopulatedRequestStatement(method, requestVarExpr, matchedField.name()));
-        }
+      if (!matchingField.isPresent()) {
+        continue;
+      }
+      Field matchedField = matchingField.get();
+      if (matchedField.shouldAutoPopulate()) {
+        bodyStatements.add(
+            // Chain If statements based on number of autopopulated fields
+            createAutoPopulatedRequestStatement(method, requestVarExpr, matchedField.name()));
       }
     }
     return bodyStatements;

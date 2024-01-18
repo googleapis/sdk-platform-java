@@ -42,11 +42,11 @@ import com.google.api.core.InternalApi;
  */
 @InternalApi("For use by transport-specific implementations")
 @FunctionalInterface
-public interface RequestMutator<RequestT, ModifiedRequestT> {
+public interface RequestMutator<RequestT> {
   /**
    * Applies a Function to {@code request} message
    *
    * @param request request message
    */
-  ModifiedRequestT apply(RequestT request);
+  RequestT apply(RequestT request);
 }
