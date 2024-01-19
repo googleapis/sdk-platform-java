@@ -34,4 +34,43 @@ public class FieldTest {
 
     assertEquals(true, FIELD.shouldAutoPopulate());
   }
+
+  @Test
+  public void isRequired_shouldNotAutoPopulate() {
+    Field FIELD =
+        Field.builder()
+            .setName("SampleField")
+            .setIsRequired(true)
+            .setFieldInfoFormat(Format.UUID4)
+            .setType(TypeNode.STRING)
+            .build();
+
+    assertEquals(false, FIELD.shouldAutoPopulate());
+  }
+
+  @Test
+  public void fieldInfoFormatNotUUID4_shouldNotAutoPopulate() {
+    Field FIELD =
+        Field.builder()
+            .setName("SampleField")
+            .setIsRequired(true)
+            .setFieldInfoFormat(Format.IPV6)
+            .setType(TypeNode.STRING)
+            .build();
+
+    assertEquals(false, FIELD.shouldAutoPopulate());
+  }
+
+  @Test
+  public void typeNotString_shouldNotAutoPopulate() {
+    Field FIELD =
+        Field.builder()
+            .setName("SampleField")
+            .setIsRequired(true)
+            .setFieldInfoFormat(Format.UUID4)
+            .setType(TypeNode.BOOLEAN)
+            .build();
+
+    assertEquals(false, FIELD.shouldAutoPopulate());
+  }
 }
