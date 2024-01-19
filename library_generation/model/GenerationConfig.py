@@ -32,8 +32,9 @@ class GenerationConfig:
 
   @staticmethod
   def from_yaml(path_to_yaml):
-    file_stream = open(path_to_yaml, 'r')
-    config = yaml.load(file_stream, yaml.Loader)
+    config = None
+    with open(path_to_yaml, 'r') as file_stream:
+      config = yaml.load(file_stream, yaml.Loader)
 
     libraries = _required(config, 'libraries')
 
