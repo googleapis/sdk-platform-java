@@ -45,22 +45,22 @@ import io.opentelemetry.api.metrics.Meter;
  */
 @InternalApi("For google-cloud-java client use only")
 public class OpenTelemetryMetricsFactory implements ApiTracerFactory {
-    protected Meter meter;
+  protected Meter meter;
 
-    protected MetricsRecorder metricsRecorder;
+  protected MetricsRecorder metricsRecorder;
 
-    public OpenTelemetryMetricsFactory(
-            OpenTelemetry openTelemetry, String libraryName, String libraryVersion) {
-        meter =
-                openTelemetry
-                        .meterBuilder("gax")
-                        .setInstrumentationVersion(GaxProperties.getGaxVersion())
-                        .build();
-        metricsRecorder = new MetricsRecorder(meter);
-    }
+  public OpenTelemetryMetricsFactory(
+      OpenTelemetry openTelemetry, String libraryName, String libraryVersion) {
+    meter =
+        openTelemetry
+            .meterBuilder("gax")
+            .setInstrumentationVersion(GaxProperties.getGaxVersion())
+            .build();
+    metricsRecorder = new MetricsRecorder(meter);
+  }
 
-    @Override
-    public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
-        return new MetricsTracer(spanName, metricsRecorder);
-    }
+  @Override
+  public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
+    return new MetricsTracer(spanName, metricsRecorder);
+  }
 }
