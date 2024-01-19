@@ -49,21 +49,23 @@ public interface ApiTracer {
    * between clients using gax and external resources to share the same implementation of the
    * tracing. For example OpenCensus will install a thread local that can read by the GRPC.
    */
-  Scope inScope();
+  default Scope inScope() {
+    return () -> {
+      // noop
+    };
+  };
 
   /**
    * Signals that the overall operation has finished successfully. The tracer is now considered
    * closed and should no longer be used.
    */
-  void operationSucceeded();
-
-  default void operationSucceeded(Object response) {};
+  default void operationSucceeded() {};
 
   /**
    * Signals that the operation was cancelled by the user. The tracer is now considered closed and
    * should no longer be used.
    */
-  void operationCancelled();
+  default void operationCancelled() {};
 
   /**
    * Signals that the overall operation has failed and no further attempts will be made. The tracer
@@ -71,7 +73,7 @@ public interface ApiTracer {
    *
    * @param error the final error that caused the operation to fail.
    */
-  void operationFailed(Throwable error);
+  default void operationFailed(Throwable error) {};
 
   /**
    * Annotates the operation with selected connection id from the {@code ChannelPool}.
@@ -88,7 +90,7 @@ public interface ApiTracer {
    * @deprecated Please use {@link #attemptStarted(Object, int)} instead.
    */
   @Deprecated
-  void attemptStarted(int attemptNumber);
+  default void attemptStarted(int attemptNumber) {};
 
   /**
    * Adds an annotation that an attempt is about to start with additional information from the
@@ -103,15 +105,8 @@ public interface ApiTracer {
   /** Adds an annotation that the attempt succeeded. */
   default void attemptSucceeded() {};
 
-  default void attemptSucceeded(Object response) {};
-
-  // This is for libraries to override to intended name
-  default String attemptLatencyName() {
-    return "attempt_latency";
-  };
-
   /** Add an annotation that the attempt was cancelled by the user. */
-  void attemptCancelled();
+  default void attemptCancelled() {};
 
   /**
    * Adds an annotation that the attempt failed, but another attempt will be made after the delay.
@@ -119,7 +114,7 @@ public interface ApiTracer {
    * @param error the transient error that caused the attempt to fail.
    * @param delay the amount of time to wait before the next attempt will start.
    */
-  void attemptFailed(Throwable error, Duration delay);
+  default void attemptFailed(Throwable error, Duration delay) {};
 
   /**
    * Adds an annotation that the attempt failed and that no further attempts will be made because
@@ -127,7 +122,7 @@ public interface ApiTracer {
    *
    * @param error the last error received before retries were exhausted.
    */
-  void attemptFailedRetriesExhausted(Throwable error);
+  default void attemptFailedRetriesExhausted(Throwable error) {};
 
   /**
    * Adds an annotation that the attempt failed and that no further attempts will be made because
@@ -135,9 +130,8 @@ public interface ApiTracer {
    *
    * @param error the error that caused the final attempt to fail.
    */
-  void attemptPermanentFailure(Throwable error);
+  default void attemptPermanentFailure(Throwable error) {};
 
-  default void retryCount(int count) {};
   /**
    * Signals that the initial RPC for the long running operation failed.
    *
@@ -164,8 +158,6 @@ public interface ApiTracer {
    * @param requestSize the size of the batch in bytes.
    */
   default void batchRequestSent(long elementCount, long requestSize) {};
-
-  default void recordGfeMetadata(long latency) {};
 
   default void addAdditionalAttributes(String key, String value) {};
   /**

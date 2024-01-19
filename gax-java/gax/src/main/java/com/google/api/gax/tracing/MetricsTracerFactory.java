@@ -30,10 +30,7 @@
 package com.google.api.gax.tracing;
 
 import com.google.api.core.InternalApi;
-import com.google.api.gax.core.GaxProperties;
 import io.opencensus.trace.Tracer;
-import io.opentelemetry.api.OpenTelemetry;
-import io.opentelemetry.api.metrics.Meter;
 
 /**
  * A {@link ApiTracerFactory} to build instances of {@link OpencensusTracer}.
@@ -44,19 +41,11 @@ import io.opentelemetry.api.metrics.Meter;
  * <p>This class is thread safe.
  */
 @InternalApi("For google-cloud-java client use only")
-public class OpenTelemetryMetricsFactory implements ApiTracerFactory {
-  protected Meter meter;
-
+public class MetricsTracerFactory implements ApiTracerFactory {
   protected MetricsRecorder metricsRecorder;
 
-  public OpenTelemetryMetricsFactory(
-      OpenTelemetry openTelemetry, String libraryName, String libraryVersion) {
-    meter =
-        openTelemetry
-            .meterBuilder("gax")
-            .setInstrumentationVersion(GaxProperties.getGaxVersion())
-            .build();
-    metricsRecorder = new MetricsRecorder(meter);
+  public MetricsTracerFactory(MetricsRecorder metricsRecorder) {
+    this.metricsRecorder = metricsRecorder;
   }
 
   @Override
