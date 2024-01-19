@@ -20,7 +20,7 @@ public class UnmanagedDependencyCheckTest {
   }
 
   @Test
-  public void getUnmanagedDependencyFromHWBomTest()
+  public void getUnmanagedDependencyFromGapicAndHandwrittenBomTest()
       throws MavenRepositoryException, InvalidVersionSpecificationException {
     List<String> unManagedDependencies =
         UnmanagedDependencyCheck.getUnmanagedDependencies(
