@@ -39,7 +39,25 @@ jobs:
         # init pyenv
         eval "$(pyenv init --path)"
         eval "$(pyenv init -)"
+        eval "$(pyenv virtualenv-init -)"
+
+        # create and activate the python virtualenv
+        python_version=$(cat "${scripts_root}/configuration/python-version")
+        if [ $(pyenv versions | grep "${python_version}" | wc -l) -eq 0 ]; then
+          pyenv install "${python_version}"
+        fi
+        if [ $(pyenv virtualenvs | grep "${python_version}" | grep "postprocessing" | wc -l) -eq 0 ];then
+          pyenv virtualenv "${python_version}" "postprocessing"
+        fi
         set +ex
+    - name: install python dependencies
+      shell: bash
+      run: |
+        set -ex
+        pushd library_generation
+        pip install -r requirements.in
+        popd
+
     - name: install utils (macos)
       if: matrix.os == 'macos-12'
       shell: bash
