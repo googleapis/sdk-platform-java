@@ -39,5 +39,7 @@ jobs:
         # update the version.
         CHECK_LATEST_TAG="unmanaged-dependencies-check-latest"
         git tag ${CHECK_LATEST_TAG}
-        git push origin -f ${CHECK_LATEST_TAG}
+        # delete the tag in remote repo and push again.
+        git push --delete origin ${CHECK_LATEST_TAG}
+        git push origin ${CHECK_LATEST_TAG}
 
