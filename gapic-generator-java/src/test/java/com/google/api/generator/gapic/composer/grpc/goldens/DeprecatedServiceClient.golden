@@ -31,38 +31,39 @@ import javax.annotation.Generated;
  * close().
  *
  * <table>
+ *    <caption>Methods</caption>
  *    <tr>
  *      <th>Method</th>
  *      <th>Description</th>
  *      <th>Method Variants</th>
+ *    </tr>
  *    <tr>
- *      <td>FastFibonacci</td>
+ *      <td><p> FastFibonacci</td>
  *      <td><p> </td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *           <li>fastFibonacci(FibonacciRequest request)
+ *           <li><p> fastFibonacci(FibonacciRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *           <li>fastFibonacciCallable()
+ *           <li><p> fastFibonacciCallable()
  *      </ul>
  *       </td>
  *    </tr>
  *    <tr>
- *      <td>SlowFibonacci</td>
+ *      <td><p> SlowFibonacci</td>
  *      <td><p> </td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *           <li>slowFibonacci(FibonacciRequest request)
+ *           <li><p> slowFibonacci(FibonacciRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *           <li>slowFibonacciCallable()
+ *           <li><p> slowFibonacciCallable()
  *      </ul>
  *       </td>
- *    </tr>
  *    </tr>
  *  </table>
  *
