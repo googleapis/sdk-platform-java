@@ -90,7 +90,7 @@ public class MetricsTracer implements ApiTracer {
 
   @Override
   public void attemptStarted(int attemptNumber) {
-    // noop
+    //Ask Blakein how this works in comparison to baseApiTracer implementation 
   }
 
   @Override
