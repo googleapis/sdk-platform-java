@@ -58,6 +58,7 @@ class GenerationConfig:
         _optional(library, 'rest_documentation', None),
         _optional(library, 'rpc_documentation', None),
         parsed_gapics,
+        _optional(library, 'googleapis_commitish', None),
         _optional(library, 'group_id', 'com.google.cloud'),
         _optional(library, 'requires_billing', None),
       )

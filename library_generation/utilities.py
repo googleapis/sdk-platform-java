@@ -2,6 +2,7 @@
 import sys
 import subprocess
 import os
+import shutil
 from collections.abc import Sequence
 from model.GenerationConfig import GenerationConfig
 
@@ -88,6 +89,24 @@ prints to stderr
 """
 def eprint(*args, **kwargs):
   print(*args, file=sys.stderr, **kwargs)
+
+
+"""Deletes a file or folder if it exists.
+
+  Args:
+      path: The path to the file or folder.
+"""
+def delete_if_exists(path):
+  if os.path.isfile(path):  # Check if it's a file
+    os.remove(path)
+    print(f"File deleted: {path}")
+
+  elif os.path.isdir(path):  # Check if it's a directory
+    shutil.rmtree(path)
+    print(f"Folder deleted: {path}")
+
+  else:
+    print(f"Path does not exist: {path}")
 
 def _get_raw_argument_component(raw_argument: str, index: int) -> str:
   result = raw_argument.split('=')[index]

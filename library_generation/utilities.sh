@@ -517,3 +517,18 @@ get_include_samples_from_BUILD() {
   )
   echo "${include_samples}"
 }
+
+download_googleapis_files_and_folders() {
+  local output_folder=$1
+  local googleapis_commitish=$2
+  # checkout the master branch of googleapis/google (proto files) and WORKSPACE
+  echo "Checking out googlapis repository..."
+  # sparse_clone will remove folder contents first, so we have to checkout googleapis
+  # only once.
+  sparse_clone https://github.com/googleapis/googleapis.git "google grafeas WORKSPACE" "${googleapis_commitish}"
+  pushd googleapis
+  cp -r google "${output_folder}"
+  cp -r grafeas "${output_folder}"
+  cp -r WORKSPACE "${output_folder}"
+}
+

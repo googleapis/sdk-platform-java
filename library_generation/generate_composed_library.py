@@ -48,6 +48,21 @@ def generate_composed_library(
   print('library: ', library)
   os.makedirs(output_folder, exist_ok=True)
 
+  googleapis_commitish = config.googleapis_commitish
+  if library.googleapis_commitish is not None:
+    googleapis_commitish = library.googleapis_commitish
+    print('using library-specific googleapis commitish: ' + googleapis_commitish)
+  else:
+    print('using common googleapis_commitish')
+
+  print('removing old googleapis folders and files')
+  util.delete_if_exists(f'{output_folder}/WORKSPACE')
+  util.delete_if_exists(f'{output_folder}/google')
+  util.delete_if_exists(f'{output_folder}/grafeas')
+
+  print('downloading googleapis')
+  util.sh_util(f'download_googleapis_files_and_folders "{output_folder}" "{googleapis_commitish}"')
+
 
   base_arguments = []
   base_arguments += util.create_argument('gapic_generator_version', config)
@@ -73,6 +88,7 @@ def generate_composed_library(
 
   owlbot_cli_source_folder = util.sh_util('mktemp -d')
   for gapic in library.GAPICs:
+
     effective_arguments = list(base_arguments)
     effective_arguments += util.create_argument('proto_path', gapic)
 

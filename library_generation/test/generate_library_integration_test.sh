@@ -49,14 +49,7 @@ shift # past argument or value
 done
 
 mkdir -p "${output_folder}"
-pushd "${output_folder}"
-if [[ ! -f "WORKSPACE" ]] || [[ ! -d "google" ]] || [[ ! -d "grafeas" ]]; then
-  echo "necessary files/folders from googleapis not found in ${output_folder}"
-  echo "will now manually download googleapis"
-  download_googleapis_files_and_folders "${output_folder}"
-fi
-popd # googleapis
-popd # output_folder
+
 if [ -f "${output_folder}/generation_times" ];then
   rm "${output_folder}/generation_times"
 fi
@@ -96,6 +89,7 @@ for api_shortname in ${library_api_shortnames}; do
       ':!*pom.xml' \
       ':!*README.md' \
       ':!*gapic_metadata.json' \
+      ':!*reflect-config.json' \
       ':!*package-info.java' \
       || source_diff_result=$?
 

@@ -1,9 +1,9 @@
 #Required.
 gapic_generator_version: 2.31.0
 #Optional.
-grpc_version: 1.60.0
+# grpc_version: 1.60.0
 #Optional.
-protobuf_version: "25.1"
+# protobuf_version: "25.1"
 #Required.
 googleapis_commitish: 4512234113a18c1fda1fb0d0ceac8f4b4efe9801
 #Required.
@@ -18,6 +18,8 @@ destination_path: google-cloud-java
 libraries:
     #Required. Can be used for populating the folder name java-{api_shortName}. This is also the destination-name in new-client.py.
   - api_shortname: asset
+    #Optional. Overrides the root-level commit hash
+    googleapis_commitish: 4512234113a18c1fda1fb0d0ceac8f4b4efe9801
     #Optional. The default value is the title of service yaml
     name_pretty: Cloud Asset
     #Required.

@@ -22,6 +22,7 @@ class Library:
       rest_documentation: Optional[str],
       rpc_documentation: Optional[str],
       GAPICs: List[GAPIC],
+      googleapis_commitish: Optional[str],
       group_id: Optional[str] = 'com.google.cloud',
       requires_billing: Optional[bool] = True,
   ):
@@ -37,3 +38,4 @@ class Library:
       self.rpc_documentation = rpc_documentation
       self.group_id = group_id
       self.GAPICs = GAPICs
+      self.googleapis_commitish = googleapis_commitish
