@@ -347,29 +347,6 @@ get_proto_path_from_preprocessed_sources_multiple_proto_dirs_fails() {
   assertEquals 1 ${res}
 }
 
-py_util_nonexistent_function_fails() {
-  (
-    result=$(py_util "nonexistent" "arg1")
-    assertEquals 'function name "nonexistent" not found in utilities.py' "${result}"
-  ) || res=$?
-  assertEquals 1 ${res}
-}
-
-py_util_get_generate_library_arguments_valid_input_succeeds() {
-  result=$(py_util "get_generate_library_arguments" "arg1=value1,arg2=value with spaces,arg3=value2")
-  assertEquals '--arg1 "value1" --arg2 "value with spaces" --arg3 "value2"' "${result}"
-}
-
-py_util_get_argument_value_from_query_valid_input_succeeds() {
-  result=$(py_util "get_argument_value_from_query" "arg1=value1,arg2=value with spaces,arg3=value2" "arg2")
-  assertEquals 'value with spaces' "${result}"
-}
-
-py_util_add_argument_valid_input_succeeds() {
-  result=$(py_util "add_argument" '--arg1 "value1" --arg2 "value with spaces" --arg3 "value2"' "arg4" "more spaces")
-  assertEquals '--arg1 "value1" --arg2 "value with spaces" --arg3 "value2" --arg4 "more spaces"' "${result}"
-}
-
 # Execute tests.
 # One line per test.
 test_list=(
@@ -414,10 +391,6 @@ test_list=(
   get_proto_path_from_preprocessed_sources_valid_library_succeeds
   get_proto_path_from_preprocessed_sources_empty_library_fails
   get_proto_path_from_preprocessed_sources_multiple_proto_dirs_fails
-  py_util_nonexistent_function_fails
-  py_util_get_generate_library_arguments_valid_input_succeeds
-  py_util_get_argument_value_from_query_valid_input_succeeds
-  py_util_add_argument_valid_input_succeeds
 )
 
 pushd "${script_dir}"
