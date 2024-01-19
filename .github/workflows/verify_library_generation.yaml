@@ -42,7 +42,7 @@ jobs:
         eval "$(pyenv virtualenv-init -)"
 
         # create and activate the python virtualenv
-        python_version=$(cat "${scripts_root}/configuration/python-version")
+        python_version=$(cat "library_generation/configuration/python-version")
         if [ $(pyenv versions | grep "${python_version}" | wc -l) -eq 0 ]; then
           pyenv install "${python_version}"
         fi
