@@ -3,7 +3,7 @@ Class that represents a library in a generation_config.yaml file
 """
 from typing import Dict, List, Optional
 from enum import Enum
-from . import GAPIC
+from .GAPIC import GAPIC
 
 class _LibraryType(Enum):
   GAPIC_AUTO = 1
