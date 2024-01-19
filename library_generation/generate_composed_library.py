@@ -28,6 +28,7 @@ Note: googleapis repo is found in https://github.com/googleapis/googleapis.
 import click
 import utilities as util
 import os
+import sys
 import subprocess
 import json
 
@@ -101,11 +102,17 @@ def generate_composed_library(
     print('arguments: ')
     print(effective_arguments)
     print(f'Generating library from {gapic.proto_path} to {destination_path}...')
-    with subprocess.Popen(['bash', '-x', f'{script_dir}/generate_library.sh', *effective_arguments],
-      stdout=subprocess.PIPE, stderr=subprocess.STDOUT) as generation_process:
-      for line in generation_process.stdout:
-        print(line.decode(), end='', flush=True)
-    print('Generate library finished')
+    # check_output() raises an exception if it exited with a nonzero code
+    try:
+      output =  subprocess.check_output(['bash', '-x', f'{script_dir}/generate_library.sh', *effective_arguments],
+        stderr=subprocess.STDOUT)
+      print(output.decode(), end='', flush=True)
+      print('Generate library finished successfully')
+    except subprocess.CalledProcessError as ex:
+      print(ex.output.decode(), end='', flush=True)
+      print('Library generation failed')
+      sys.exit(1)
+
 
     if enable_postprocessing:
       util.sh_util(f'build_owlbot_cli_source_folder "{output_folder}/{destination_path}"'
