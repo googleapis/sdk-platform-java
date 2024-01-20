@@ -40,7 +40,7 @@ import java.util.Map;
  */
 @BetaApi
 @InternalApi
-interface MetricsRecorder {
+public interface MetricsRecorder {
 
   /** TODO: Add Javadoc */
   default void recordAttemptLatency(double attemptLatency, Map<String, String> attributes) {}

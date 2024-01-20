@@ -40,6 +40,7 @@ import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.NoHeaderProvider;
+import com.google.api.gax.tracing.ApiTracer;
 import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;
@@ -312,6 +313,12 @@ public abstract class ServiceOptions<
       return self();
     }
 
+    /**
+     * Sets the {@link ApiTracerFactory}. It will be used to create an {@link ApiTracer} that is
+     * annotated throughout the lifecycle of an RPC operation.
+     */
+    @BetaApi
+    @InternalApi
     public B setApiTracerFactory(ApiTracerFactory apiTracerFactory) {
       this.apiTracerFactory = apiTracerFactory;
       return self();
