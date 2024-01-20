@@ -87,3 +87,9 @@ function find_last_release_version {
   parts=($(echo "$primary_artifact" | tr ":" "\n"))
   echo "${parts[1]}"
 }
+
+function validate_renovate_config {
+  echo "running renovate bot config validation for: $1"
+  npm install --global renovate
+  renovate-config-validator
+}
