@@ -35,8 +35,8 @@ import com.google.api.core.InternalApi;
 /**
  * A {@link ApiTracerFactory} to build instances of {@link MetricsTracer}.
  *
- * <p>This class wraps the {@link MetricsRecorder} and pass it to {@link MetricsTracer}. It
- * will be used to record metrics in {@link MetricsTracer}.
+ * <p>This class wraps the {@link MetricsRecorder} and pass it to {@link MetricsTracer}. It will be
+ * used to record metrics in {@link MetricsTracer}.
  *
  * <p>This class is thread safe.
  */
@@ -51,6 +51,7 @@ public class MetricsTracerFactory implements ApiTracerFactory {
 
   @Override
   public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
-    return new MetricsTracer(MethodName.of(spanName.getClientName(), spanName.getMethodName()), metricsRecorder);
+    return new MetricsTracer(
+        MethodName.of(spanName.getClientName(), spanName.getMethodName()), metricsRecorder);
   }
 }

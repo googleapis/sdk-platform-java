@@ -35,30 +35,22 @@ import com.google.api.core.InternalApi;
 import java.util.Map;
 
 /**
- * Provides an interface for metrics recording. The implementer is expected to use an observability framework, e.g. OpenTelemetry
+ * Provides an interface for metrics recording. The implementer is expected to use an observability
+ * framework, e.g. OpenTelemetry
  */
 @BetaApi
 @InternalApi
 interface MetricsRecorder {
 
-  /**
-   * TODO: Add Javadoc
-   */
+  /** TODO: Add Javadoc */
   default void recordAttemptLatency(double attemptLatency, Map<String, String> attributes) {}
 
-  /**
-   * TODO: Add Javadoc
-   */
+  /** TODO: Add Javadoc */
   default void recordAttemptCount(long count, Map<String, String> attributes) {}
 
-  /**
-   * TODO: Add Javadoc
-   */
+  /** TODO: Add Javadoc */
   default void recordOperationLatency(double operationLatency, Map<String, String> attributes) {}
 
-  /**
-   * TODO: Add Javadoc
-   */
+  /** TODO: Add Javadoc */
   default void recordOperationCount(long count, Map<String, String> attributes) {}
-
 }

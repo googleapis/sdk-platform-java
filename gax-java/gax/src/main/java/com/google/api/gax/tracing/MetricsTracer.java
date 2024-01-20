@@ -42,7 +42,5 @@ import com.google.api.core.InternalApi;
 @InternalApi
 public class MetricsTracer implements ApiTracer {
 
-  public MetricsTracer(MethodName methodName, MetricsRecorder metricsRecorder) {
-
-  }
+  public MetricsTracer(MethodName methodName, MetricsRecorder metricsRecorder) {}
 }

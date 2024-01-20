@@ -35,15 +35,17 @@ import com.google.api.gax.rpc.StubSettings;
 import com.google.auto.value.AutoValue;
 
 /** A value class to represent the name of the RPC method in an {@link ApiTracer}. */
+@BetaApi
 @InternalApi
 @AutoValue
 public abstract class MethodName {
   /**
    * Creates a new instance of the RPC method name.
    *
-   * @param serviceName The name of the service. In general this will be GAPIC generated service name {@link StubSettings#getServiceName()}.
-   *     However, in some cases, when the GAPIC generated service is wrapped, this will be overridden
-   *     to specify the manually written wrapper's name.
+   * @param serviceName The name of the service. In general this will be GAPIC generated service
+   *     name {@link StubSettings#getServiceName()}. However, in some cases, when the GAPIC
+   *     generated service is wrapped, this will be overridden to specify the manually written
+   *     wrapper's name.
    * @param methodName The name of the logical operation being traced.
    */
   public static MethodName of(String serviceName, String methodName) {
