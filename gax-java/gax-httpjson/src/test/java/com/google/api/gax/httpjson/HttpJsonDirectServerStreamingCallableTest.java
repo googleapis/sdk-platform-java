@@ -35,6 +35,7 @@ import com.google.api.gax.httpjson.testing.MockHttpService;
 import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.DeadlineExceededException;
+import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.ResponseObserver;
 import com.google.api.gax.rpc.ServerStream;
 import com.google.api.gax.rpc.ServerStreamingCallSettings;
@@ -44,11 +45,13 @@ import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.rpc.StreamController;
 import com.google.api.gax.rpc.testing.FakeCallContext;
+import com.google.auth.Credentials;
 import com.google.common.collect.Lists;
 import com.google.common.truth.Truth;
 import com.google.protobuf.Field;
 import com.google.type.Color;
 import com.google.type.Money;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -65,6 +68,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.mockito.Mockito;
 import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
@@ -124,7 +128,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
   private static ExecutorService executorService;
 
   @BeforeClass
-  public static void initialize() {
+  public static void initialize() throws IOException {
     executorService = Executors.newFixedThreadPool(2);
     channel =
         new ManagedHttpJsonInterceptorChannel(
@@ -134,12 +138,18 @@ public class HttpJsonDirectServerStreamingCallableTest {
                 .setHttpTransport(MOCK_SERVICE)
                 .build(),
             new HttpJsonHeaderInterceptor(Collections.singletonMap("header-key", "headerValue")));
+    EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
+    Mockito.doNothing()
+        .when(endpointContext)
+        .validateUniverseDomain(
+            Mockito.any(Credentials.class), Mockito.any(HttpJsonStatusCode.class));
     clientContext =
         ClientContext.newBuilder()
             .setTransportChannel(HttpJsonTransportChannel.create(channel))
             .setDefaultCallContext(
                 HttpJsonCallContext.of(channel, HttpJsonCallOptions.DEFAULT)
-                    .withTimeout(Duration.ofSeconds(3)))
+                    .withTimeout(Duration.ofSeconds(3))
+                    .withEndpointContext(endpointContext))
             .build();
 
     streamingCallSettings = ServerStreamingCallSettings.<Color, Money>newBuilder().build();
@@ -202,7 +212,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
     // wait for the task to complete, otherwise it may interfere with other tests, since they share
     // the same MockService and unfinished request in this test may start reading messages
     // designated for other tests.
-    Truth.assertThat(latch.await(60, TimeUnit.SECONDS)).isTrue();
+    Truth.assertThat(latch.await(2, TimeUnit.SECONDS)).isTrue();
   }
 
   @Test

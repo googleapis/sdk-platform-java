@@ -35,12 +35,15 @@ import com.google.api.gax.grpc.testing.FakeServiceGrpc;
 import com.google.api.gax.grpc.testing.FakeServiceImpl;
 import com.google.api.gax.grpc.testing.InProcessServer;
 import com.google.api.gax.retrying.RetrySettings;
+import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.api.gax.rpc.ServerStreamingCallSettings;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.tracing.SpanName;
+import com.google.auth.Credentials;
 import com.google.common.collect.ImmutableList;
 import com.google.common.truth.Truth;
 import com.google.type.Color;
@@ -74,10 +77,16 @@ public class GrpcCallableFactoryTest {
     inprocessServer.start();
 
     channel = InProcessChannelBuilder.forName(serverName).directExecutor().usePlaintext().build();
+    EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
+    Mockito.doNothing()
+        .when(endpointContext)
+        .validateUniverseDomain(Mockito.any(Credentials.class), Mockito.any(GrpcStatusCode.class));
     clientContext =
         ClientContext.newBuilder()
             .setTransportChannel(GrpcTransportChannel.create(channel))
-            .setDefaultCallContext(GrpcCallContext.of(channel, CallOptions.DEFAULT))
+            .setDefaultCallContext(
+                GrpcCallContext.of(channel, CallOptions.DEFAULT)
+                    .withEndpointContext(endpointContext))
             .build();
   }
 
@@ -106,11 +115,10 @@ public class GrpcCallableFactoryTest {
         GrpcCallableFactory.createServerStreamingCallable(
             grpcCallSettings, nonRetryableSettings, clientContext);
 
+    ApiCallContext defaultCallContext = clientContext.getDefaultCallContext();
     Throwable actualError = null;
     try {
-      nonRetryableCallable
-          .first()
-          .call(Color.getDefaultInstance(), clientContext.getDefaultCallContext());
+      nonRetryableCallable.first().call(Color.getDefaultInstance(), defaultCallContext);
     } catch (Throwable e) {
       actualError = e;
     }
@@ -134,9 +142,7 @@ public class GrpcCallableFactoryTest {
 
     Throwable actualError2 = null;
     try {
-      retryableCallable
-          .first()
-          .call(Color.getDefaultInstance(), clientContext.getDefaultCallContext());
+      retryableCallable.first().call(Color.getDefaultInstance(), defaultCallContext);
     } catch (Throwable e) {
       actualError2 = e;
     }

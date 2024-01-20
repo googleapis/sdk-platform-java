@@ -1007,6 +1007,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     javaMethods.addAll(
         createMethodSettingsGetterMethods(methodSettingsMemberVarExprs, deprecatedSettingVarNames));
     javaMethods.add(createCreateStubMethod(service, typeStore));
+    javaMethods.add(createGetEndpointMethod());
     javaMethods.addAll(createDefaultHelperAndGetterMethods(service, typeStore));
     javaMethods.addAll(
         createNewBuilderMethods(
@@ -1018,6 +1019,45 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     javaMethods.addAll(createBuilderHelperMethods(service, typeStore));
     javaMethods.add(createClassConstructor(service, methodSettingsMemberVarExprs, typeStore));
     return javaMethods;
+  }
+
+  // Helper method to create the getEndpoint method in the ServiceStubSettings class
+  private MethodDefinition createGetEndpointMethod() {
+    Expr getEndpointExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("getEndpoint")
+            .setExprReferenceExpr(
+                ValueExpr.withValue(
+                    SuperObjectValue.withType(
+                        TypeNode.withReference(ConcreteReference.withClazz(StubSettings.class)))))
+            .setReturnType(TypeNode.STRING)
+            .build();
+    Expr isNotNullCheck =
+        RelationalOperationExpr.notEqualToWithExprs(getEndpointExpr, ValueExpr.createNullExpr());
+
+    IfStatement ifStatement =
+        IfStatement.builder()
+            .setConditionExpr(isNotNullCheck)
+            .setBody(ImmutableList.of(ExprStatement.withExpr(ReturnExpr.withExpr(getEndpointExpr))))
+            .build();
+
+    Expr getDefaultEndpointExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("getDefaultEndpoint")
+            .setReturnType(TypeNode.STRING)
+            .build();
+    ReturnExpr returnExpr = ReturnExpr.withExpr(getDefaultEndpointExpr);
+
+    return MethodDefinition.builder()
+        .setHeaderCommentStatements(SettingsCommentComposer.GET_ENDPOINT_COMMENT)
+        .setScope(ScopeNode.PUBLIC)
+        .setIsStatic(false)
+        .setAnnotations(ImmutableList.of(AnnotationNode.OVERRIDE))
+        .setReturnType(TypeNode.STRING)
+        .setName("getEndpoint")
+        .setBody(ImmutableList.of(ifStatement))
+        .setReturnExpr(returnExpr)
+        .build();
   }
 
   private static List<MethodDefinition> createMethodSettingsGetterMethods(
@@ -1465,6 +1505,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     nestedClassMethods.addAll(
         createNestedClassSettingsBuilderGetterMethods(
             nestedMethodSettingsMemberVarExprs, nestedDeprecatedSettingVarNames));
+    nestedClassMethods.add(createGetEndpointMethod());
     nestedClassMethods.add(createNestedClassBuildMethod(service, typeStore));
     return nestedClassMethods;
   }
@@ -1894,14 +1935,6 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                             .build())
                     .setMethodName("build")
                     .build())
-            .build());
-
-    bodyExprs.add(
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(builderVarExpr)
-            .setMethodName("setEndpoint")
-            .setArguments(
-                MethodInvocationExpr.builder().setMethodName("getDefaultEndpoint").build())
             .build());
     bodyExprs.add(
         MethodInvocationExpr.builder()
