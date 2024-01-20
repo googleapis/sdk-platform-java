@@ -30,9 +30,19 @@
 
 package com.google.api.gax.tracing;
 
+import com.google.api.core.BetaApi;
+import com.google.api.core.InternalApi;
+
+/**
+ * This class computes generic metrics that can be observed in the lifecycle of an RPC operation.
+ * The responsibility of recording metrics should delegate to {@link MetricsRecorder}, hence this
+ * class should not have any knowledge about the observability framework used for metrics recording.
+ */
+@BetaApi
+@InternalApi
 public class MetricsTracer implements ApiTracer {
 
-  public MetricsTracer(SpanName spanName, MetricsRecorder metricsRecorder) {
+  public MetricsTracer(MethodName methodName, MetricsRecorder metricsRecorder) {
 
   }
 }

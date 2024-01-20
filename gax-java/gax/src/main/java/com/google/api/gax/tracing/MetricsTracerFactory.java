@@ -29,18 +29,19 @@
  */
 package com.google.api.gax.tracing;
 
+import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
-import io.opencensus.trace.Tracer;
 
 /**
- * A {@link ApiTracerFactory} to build instances of {@link OpencensusTracer}.
+ * A {@link ApiTracerFactory} to build instances of {@link MetricsTracer}.
  *
- * <p>This class wraps the {@link Tracer} provided by Opencensus in {@code Tracing.getTracer()}. It
- * will be used to create new spans and wrap them in {@link OpencensusTracer} defined in gax.
+ * <p>This class wraps the {@link MetricsRecorder} and pass it to {@link MetricsTracer}. It
+ * will be used to record metrics in {@link MetricsTracer}.
  *
  * <p>This class is thread safe.
  */
-@InternalApi("For google-cloud-java client use only")
+@BetaApi
+@InternalApi
 public class MetricsTracerFactory implements ApiTracerFactory {
   protected MetricsRecorder metricsRecorder;
 
@@ -50,6 +51,6 @@ public class MetricsTracerFactory implements ApiTracerFactory {
 
   @Override
   public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
-    return new MetricsTracer(spanName, metricsRecorder);
+    return new MetricsTracer(MethodName.of(spanName.getClientName(), spanName.getMethodName()), metricsRecorder);
   }
 }
