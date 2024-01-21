@@ -8,7 +8,7 @@
   ],
   "customManagers": [
     {
-      "customTy": "regex",
+      "customType": "regex",
       "fileMatch": [
         "^gax-java/dependencies\\.properties$"
       ],
