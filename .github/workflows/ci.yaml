@@ -321,3 +321,13 @@ jobs:
       uses: ./java-shared-dependencies/unmanaged-dependency-check
       with:
         bom-path: gapic-generator-java-bom/pom.xml
+
+  renovate_config_check:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Run renovate config validator
+      run: |
+        npm install --global renovate
+        renovate-config-validator
