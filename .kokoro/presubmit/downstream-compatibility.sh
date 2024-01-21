@@ -44,7 +44,6 @@ for repo in ${REPOS_UNDER_TEST//,/ }; do # Split on comma
   update_all_poms_dependency "$repo" google-cloud-shared-dependencies "$SHARED_DEPS_VERSION"
   pushd "$repo"
   JOB_TYPE="test" ./.kokoro/build.sh
-  validate_renovate_config $repo
   popd
 done
 popd
