@@ -38,7 +38,7 @@ import com.google.api.core.InternalApi;
  * <p>This class wraps the {@link MetricsRecorder} and pass it to {@link MetricsTracer}. It will be
  * used to record metrics in {@link MetricsTracer}.
  *
- * <p>This class is thread safe.
+ * <p>This class is expected to be initialized once during client initialization.
  */
 @BetaApi
 @InternalApi
