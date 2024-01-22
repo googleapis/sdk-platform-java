@@ -5,14 +5,11 @@ set -xeo pipefail
 # This script is used to test the result of `generate_library.sh` against generated
 # source code in the specified repository.
 # Specifically, this script will do
-# 1. checkout the master branch of googleapis/google and WORKSPACE
-# 2. parse version of gapic-generator-java, protobuf and grpc from WORKSPACE
-# 3. generate a library with proto_path and destination_path in a proto_path
-#    list by invoking `generate_library.sh`. GAPIC options to generate a library
-#    will be parsed from proto_path/BUILD.bazel.
-# 4. depending on whether postprocessing is enabled,
-#   4.1 checkout the master branch of googleapis-gen repository and compare the result, or
-#   4.2 checkout the master branch of google-cloud-java or HW library repository and compare the result
+# 1. take a configuration yaml describing the structure of the libraries to
+# generate
+# 2. For each api_shortname, call generate_composed_library.py to generate the groups of libraries
+# 3. After the generation is done, compare the resulting library with the
+# corresponding cloned repository
 
 # defaults
 googleapis_gen_url="git@github.com:googleapis/googleapis-gen.git"
