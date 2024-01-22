@@ -4,18 +4,6 @@ service version. It is achieved by calling `generate_library.sh` without
 postprocessing for all service versions and then calling
 postprocess_library.sh at the end, once all libraries are ready.
 
-Arguments
---generation_queries: a single string of comma-separated key-value groups separated by a
-pipe | (i.e. the groups are spearated by pipe, while a group's key-values are
-separated by comma). They key-value groups are in the form of `key=value` and will
-be converted to an argument to generate_library.sh (`--key value`).
-  example: "proto_path=google/cloud/asset/v1,destination_path=google-cloud-asset-v1-java,(...)|proto_path=google/cloud/asset/v1p2beta5,destination_path=google-cloud-asset-v1-java,(...)"
-  In this case, generate_library.sh will be called once with
-    generate_library.sh --proto_path google/cloud/asset/v1 --destination_path google-cloud-asset-v1-java
-    and once with
-    generate_library.sh --proto_path google/cloud/asset/v1p2bet5 --destination_path google-cloud-asset-v1p2beta5-java
---versions_file: a file of newline-separated version strings in the form "module:released-version:current-version". The versions will be applied to the pom.xml files and readmes
-
 Prerequisites
 - Needs a folder named `output` in current working directory. This folder
 is automatically detected by `generate_library.sh` and this script ensures it
@@ -34,13 +22,20 @@ import json
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 
-def main(ctx):
-    pass
-
+"""
+Main function in charge of generating libraries composed of more than one
+service or service version.
+Arguments
+ - config: a GenerationConfig object representing a parsed configuration
+ yaml
+ - library: a Library object contained inside config, passed here for
+   convenience and to prevent all libraries to be processed
+ - enable_postprocessing: true if postprocessing should be done on the generated
+   libraries
+"""
 def generate_composed_library(
     config,
     library,
-    repository_path,
     enable_postprocessing
 ):
   output_folder = util.sh_util('get_output_folder')
@@ -144,5 +139,3 @@ def generate_composed_library(
       for line in postprocessing_process.stdout:
         print(line.decode(), end='', flush=True)
 
-if __name__ == "__main__":
-  main()
