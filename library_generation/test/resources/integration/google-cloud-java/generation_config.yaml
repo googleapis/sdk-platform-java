@@ -1,5 +1,5 @@
 #Required.
-gapic_generator_version: 2.31.0
+gapic_generator_version: 2.32.0
 #Optional.
 # grpc_version: 1.60.0
 #Optional. The protobuf version in googleapis (not sdk-platform-java) is the actual source of truth for generated protos in google-cloud-java
