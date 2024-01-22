@@ -44,8 +44,6 @@ public class MetricsTracer implements ApiTracer {
 
   public MetricsTracer(MethodName methodName, MetricsRecorder metricsRecorder) {}
 
-  /**
-   * TODO: Add Javadoc
-   */
+  /** TODO: Add Javadoc */
   void addAttributes(String key, String value) {};
 }
