@@ -1,5 +1,5 @@
-gapic_generator_version: 2.32.0
-# grpc_version: 1.60.0
+gapic_generator_version: 2.31.0
+grpc_version: 1.61.0
 protobuf_version: "23.2"
 googleapis_commitish: 4512234113a18c1fda1fb0d0ceac8f4b4efe9801
 owlbot_cli_image: sha256:623647ee79ac605858d09e60c1382a716c125fb776f69301b72de1cd35d49409
