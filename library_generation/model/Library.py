@@ -5,6 +5,11 @@ from typing import Dict, List, Optional
 from enum import Enum
 from .GAPIC import GAPIC
 
+"""
+Two possible library types:
+  - GAPIC_AUTO: pure generated library
+  - GAPIC_COMBO: generated library with a handwritten layer
+"""
 class _LibraryType(Enum):
   GAPIC_AUTO = 1
   GAPIC_COMBO = 2
