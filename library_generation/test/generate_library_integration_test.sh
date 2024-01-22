@@ -51,7 +51,6 @@ if [ -f "${output_folder}/generation_times" ];then
   rm "${output_folder}/generation_times"
 fi
 
-#configuration_yaml="${script_dir}/resources/integration/google-cloud-java/generation_config.yaml"
 declare -a configuration_yamls=(
   "${script_dir}/resources/integration/java-bigtable/generation_config.yaml"
   "${script_dir}/resources/integration/google-cloud-java/generation_config.yaml"
