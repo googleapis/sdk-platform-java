@@ -18,7 +18,6 @@ public class MetricsRecorder {
 
   protected LongCounter attemptCountRecorder;
 
-  protected Attributes attributes;
 
   public MetricsRecorder(Meter meter) {
     this.meter = meter;

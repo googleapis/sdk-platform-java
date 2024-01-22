@@ -127,11 +127,19 @@ public class MetricsTracer implements ApiTracer {
     // this is called in BasicRetryingFuture.java
     // imo, ideally, I think this should put the status_attribute in the map, and attempt_count
     // and attempt_latency should be calculated.
+
+    attributes.put(STATUS_ATTRIBUTE, extractStatus(error));
+    metricsRecorder.recordAttemptLatency(attemptTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
+    metricsRecorder.recordAttemptCount(1, attributes);
   }
 
   @Override
   public void attemptPermanentFailure(Throwable error) {
     // similar comments to attemptFailedRetriesExhausted(e) above.
+
+    attributes.put(STATUS_ATTRIBUTE, extractStatus(error));
+    metricsRecorder.recordAttemptLatency(attemptTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
+    metricsRecorder.recordAttemptCount(1, attributes);
   }
 
   static String extractStatus(@Nullable Throwable error) {

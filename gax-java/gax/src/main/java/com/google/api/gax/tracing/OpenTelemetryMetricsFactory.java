@@ -60,6 +60,7 @@ public class OpenTelemetryMetricsFactory implements ApiTracerFactory {
   }
 
   @Override
+  //no matter the operation type, same metrics-tracer is initialized for all.
   public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
     return new MetricsTracer(spanName, metricsRecorder);
   }
