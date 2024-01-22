@@ -159,7 +159,6 @@ public interface ApiTracer {
    */
   default void batchRequestSent(long elementCount, long requestSize) {};
 
-  default void addAdditionalAttributes(String key, String value) {};
   /**
    * A context class to be used with {@link #inScope()} and a try-with-resources block. Closing a
    * {@link Scope} removes any context that the underlying implementation might've set in {@link

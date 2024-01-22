@@ -43,4 +43,9 @@ import com.google.api.core.InternalApi;
 public class MetricsTracer implements ApiTracer {
 
   public MetricsTracer(MethodName methodName, MetricsRecorder metricsRecorder) {}
+
+  /**
+   * TODO: Add Javadoc
+   */
+  void addAttributes(String key, String value) {};
 }
