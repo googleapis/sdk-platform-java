@@ -525,10 +525,9 @@ download_googleapis_files_and_folders() {
   echo "Checking out googlapis repository..."
   # sparse_clone will remove folder contents first, so we have to checkout googleapis
   # only once.
-  sparse_clone https://github.com/googleapis/googleapis.git "google grafeas WORKSPACE" "${googleapis_commitish}"
+  sparse_clone https://github.com/googleapis/googleapis.git "google grafeas" "${googleapis_commitish}"
   pushd googleapis
   cp -r google "${output_folder}"
   cp -r grafeas "${output_folder}"
-  cp -r WORKSPACE "${output_folder}"
 }
 

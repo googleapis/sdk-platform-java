@@ -299,12 +299,6 @@ get_include_samples_from_BUILD_empty_test() {
   assertEquals "false" "${include_samples}"
 }
 
-get_version_from_valid_WORKSPACE_test() {
-  workspace_file="${script_dir}/resources/misc/TESTWORKSPACE"
-  obtained_ggj_version=$(get_version_from_WORKSPACE "_gapic_generator_java_version" "${workspace_file}")
-  assertEquals '2.25.1-SNAPSHOT' "${obtained_ggj_version}"
-}
-
 copy_directory_if_exists_valid_folder_succeeds() {
   local source_folder="${script_dir}/resources"
   local destination="${script_dir}/test_destination_folder"
@@ -385,7 +379,6 @@ test_list=(
   get_include_samples_from_BUILD_true_test
   get_include_samples_from_BUILD_false_test
   get_include_samples_from_BUILD_empty_test
-  get_version_from_valid_WORKSPACE_test
   copy_directory_if_exists_valid_folder_succeeds
   copy_directory_if_exists_invalid_folder_does_not_copy
   get_proto_path_from_preprocessed_sources_valid_library_succeeds
