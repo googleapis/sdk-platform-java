@@ -100,6 +100,16 @@ jobs:
       run: |
         brew update --preinstall
         brew install coreutils
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    - name: install python dependencies
+      shell: bash
+      run: |
+        set -ex
+        pushd library_generation
+        pip install -r requirements.in
+        popd
     - name: Run shell unit tests
       run: |
         set -x

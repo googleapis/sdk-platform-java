@@ -58,7 +58,7 @@ declare -a configuration_yamls=(
 )
 
 
-for configuration_yaml in ${configuration_yamls[@]}; do
+for configuration_yaml in "${configuration_yamls[@]}"; do
   library_api_shortnames=$(py_util "get_configuration_yaml_library_api_shortnames" "${configuration_yaml}")
   destination_path=$(py_util "get_configuration_yaml_destination_path" "${configuration_yaml}")
 
