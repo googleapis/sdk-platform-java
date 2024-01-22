@@ -31,6 +31,15 @@ def get_configuration_yaml_library_api_shortnames(generation_config_yaml):
   return result[:-1]
 
 """
+For a given configuration yaml path, it returns the destination_path
+entry at the root of the yaml
+"""
+def get_configuration_yaml_destination_path(generation_config_yaml):
+  config = GenerationConfig.from_yaml(generation_config_yaml)
+  return config.destination_path or ''
+
+
+"""
 Calls a function defined in library_generation/utilities.sh
 """
 def sh_util(statement: str, **kwargs) -> str:

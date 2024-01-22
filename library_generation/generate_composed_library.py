@@ -65,7 +65,7 @@ def generate_composed_library(
   base_arguments += util.create_argument('protobuf_version', config)
 
   destination_path = f'java-{library.api_shortname}'
-  if config.destination_path is not None:
+  if config.destination_path == 'google-cloud-java':
     destination_path = config.destination_path + '/' + destination_path
 
   versions_file = ''
@@ -77,6 +77,7 @@ def generate_composed_library(
     versions_file = f'{output_folder}/google-cloud-java/versions.txt'
   else:
     print('this is a HW library')
+    util.delete_if_exists(f'{output_folder}/{destination_path}')
     clone_out = util.sh_util(f'git clone "https://github.com/googleapis/{destination_path}.git"', cwd=output_folder)
     print(clone_out)
     versions_file = f'{output_folder}/{destination_path}/versions.txt'

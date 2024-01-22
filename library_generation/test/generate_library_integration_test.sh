@@ -51,78 +51,92 @@ if [ -f "${output_folder}/generation_times" ];then
   rm "${output_folder}/generation_times"
 fi
 
-configuration_yaml="${script_dir}/resources/integration/google-cloud-java/generation_config.yaml"
-library_api_shortnames=$(py_util "get_configuration_yaml_library_api_shortnames" "${configuration_yaml}")
+#configuration_yaml="${script_dir}/resources/integration/google-cloud-java/generation_config.yaml"
+declare -a configuration_yamls=(
+  "${script_dir}/resources/integration/java-bigtable/generation_config.yaml"
+  "${script_dir}/resources/integration/google-cloud-java/generation_config.yaml"
+)
 
-for api_shortname in ${library_api_shortnames}; do
-  pushd "${output_folder}"
 
-  echo "Generating library ${api_shortname}..."
-  generation_start=$(date "+%s")
-  python3 "${library_generation_dir}"/main.py generate-from-yaml \
-    --generation-config-yaml "${configuration_yaml}" \
-    --enable-postprocessing "${enable_postprocessing}" \
-    --target-library-api-shortname "${api_shortname}"
-  generation_end=$(date "+%s")
+for configuration_yaml in ${configuration_yamls[@]}; do
+  library_api_shortnames=$(py_util "get_configuration_yaml_library_api_shortnames" "${configuration_yaml}")
+  destination_path=$(py_util "get_configuration_yaml_destination_path" "${configuration_yaml}")
 
-  # some generations are less than 1 second (0 produces exit code 1 in `expr`)
-  generation_duration_seconds=$(expr "${generation_end}" - "${generation_start}" || true)
-  echo "Generation time for ${api_shortname} was ${generation_duration_seconds} seconds."
-  pushd "${output_folder}"
-  echo "${proto_path} ${generation_duration_seconds}" >> generation_times
+  for api_shortname in ${library_api_shortnames}; do
+    pushd "${output_folder}"
 
-  echo "Generate library finished."
-  echo "Compare generation result..."
-  if [ ${enable_postprocessing} == "true" ]; then
-    echo "Checking out repository..."
-    target_folder="${output_folder}/google-cloud-java/java-${api_shortname}"
-    pushd "${target_folder}"
-    source_diff_result=0
-    git diff \
-      --ignore-space-at-eol \
-      -r \
-      --exit-code \
-      -- \
-      ':!*pom.xml' \
-      ':!*README.md' \
-      ':!*gapic_metadata.json' \
-      ':!*reflect-config.json' \
-      ':!*package-info.java' \
-      || source_diff_result=$?
+    echo "Generating library ${api_shortname}..."
+    generation_start=$(date "+%s")
+    python3 "${library_generation_dir}"/main.py generate-from-yaml \
+      --generation-config-yaml "${configuration_yaml}" \
+      --enable-postprocessing "${enable_postprocessing}" \
+      --target-library-api-shortname "${api_shortname}"
+    generation_end=$(date "+%s")
 
-    pom_diff_result=$(compare_poms "${target_folder}")
-    popd # target_folder
-    if [[ ${source_diff_result} == 0 ]] && [[ ${pom_diff_result} == 0 ]] ; then
-      echo "SUCCESS: Comparison finished, no difference is found."
-      # Delete google-cloud-java to allow a sparse clone of the next library
-      rm -rdf google-cloud-java
-    elif [ ${source_diff_result} != 0 ]; then
-      echo "FAILURE: Differences found in proto path: java-${api_shortname}."
-      exit "${source_diff_result}"
-    elif [ ${pom_diff_result} != 0 ]; then
-      echo "FAILURE: Differences found in generated java-${api_shortname}'s poms"
-      exit "${pom_diff_result}"
-    fi
-  elif [ "${enable_postprocessing}" == "false" ]; then
-    for proto_path in "${proto_paths[@]}"; do
-      destination_path=$(compute_destination_path "${proto_path}" "${output_folder}")
-      # include gapic_metadata.json and package-info.java after
-      # resolving https://github.com/googleapis/sdk-platform-java/issues/1986
-      source_diff_result=0
-      diff --strip-trailing-cr -r "googleapis-gen/${proto_path}/${destination_path}" "${output_folder}/${destination_path}" \
-        -x "*gradle*" \
-        -x "gapic_metadata.json" \
-        -x "package-info.java" || source_diff_result=$?
-      if [ ${source_diff_result} == 0 ] ; then
-        echo "SUCCESS: Comparison finished, no difference is found."
+    # some generations are less than 1 second (0 produces exit code 1 in `expr`)
+    generation_duration_seconds=$(expr "${generation_end}" - "${generation_start}" || true)
+    echo "Generation time for ${api_shortname} was ${generation_duration_seconds} seconds."
+    pushd "${output_folder}"
+    echo "${proto_path} ${generation_duration_seconds}" >> generation_times
+
+    echo "Generate library finished."
+    echo "Compare generation result..."
+    if [ ${enable_postprocessing} == "true" ]; then
+      echo "Checking out repository..."
+      if [[ "${destination_path}" == *google-cloud-java* ]]; then
+        target_folder="${output_folder}/google-cloud-java/java-${api_shortname}"
       else
-        echo "FAILURE: Differences found in proto path: ${proto_path}."
-        exit "${source_diff_result}"
+        target_folder="${output_folder}/java-${api_shortname}"
       fi
-    done
-  fi
 
-  popd # output_folder
+      pushd "${target_folder}"
+      source_diff_result=0
+      git diff \
+        --ignore-space-at-eol \
+        -r \
+        --exit-code \
+        -- \
+        ':!*pom.xml' \
+        ':!*README.md' \
+        ':!*gapic_metadata.json' \
+        ':!*reflect-config.json' \
+        ':!*package-info.java' \
+        || source_diff_result=$?
+
+      pom_diff_result=$(compare_poms "${target_folder}")
+      popd # target_folder
+      if [[ ${source_diff_result} == 0 ]] && [[ ${pom_diff_result} == 0 ]] ; then
+        echo "SUCCESS: Comparison finished, no difference is found."
+        # Delete google-cloud-java to allow a sparse clone of the next library
+        rm -rdf google-cloud-java
+      elif [ ${source_diff_result} != 0 ]; then
+        echo "FAILURE: Differences found in proto path: java-${api_shortname}."
+        exit "${source_diff_result}"
+      elif [ ${pom_diff_result} != 0 ]; then
+        echo "FAILURE: Differences found in generated java-${api_shortname}'s poms"
+        exit "${pom_diff_result}"
+      fi
+    elif [ "${enable_postprocessing}" == "false" ]; then
+      for proto_path in "${proto_paths[@]}"; do
+        destination_path=$(compute_destination_path "${proto_path}" "${output_folder}")
+        # include gapic_metadata.json and package-info.java after
+        # resolving https://github.com/googleapis/sdk-platform-java/issues/1986
+        source_diff_result=0
+        diff --strip-trailing-cr -r "googleapis-gen/${proto_path}/${destination_path}" "${output_folder}/${destination_path}" \
+          -x "*gradle*" \
+          -x "gapic_metadata.json" \
+          -x "package-info.java" || source_diff_result=$?
+        if [ ${source_diff_result} == 0 ] ; then
+          echo "SUCCESS: Comparison finished, no difference is found."
+        else
+          echo "FAILURE: Differences found in proto path: ${proto_path}."
+          exit "${source_diff_result}"
+        fi
+      done
+    fi
+
+    popd # output_folder
+  done
 done
 echo "ALL TESTS SUCCEEDED"
 echo "generation times in seconds (does not consider repo checkout):"
