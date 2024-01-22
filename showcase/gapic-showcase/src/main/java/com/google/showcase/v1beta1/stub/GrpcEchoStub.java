@@ -37,6 +37,7 @@ import com.google.cloud.location.GetLocationRequest;
 import com.google.cloud.location.ListLocationsRequest;
 import com.google.cloud.location.ListLocationsResponse;
 import com.google.cloud.location.Location;
+import com.google.common.base.Strings;
 import com.google.iam.v1.GetIamPolicyRequest;
 import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
@@ -308,11 +309,11 @@ public class GrpcEchoStub extends EchoStub {
                 })
             .setRequestMutator(
                 request -> {
-                  if (request.getRequestId() == null || request.getRequestId().isEmpty()) {
-                    request =
-                        request.toBuilder().setRequestId(UUID.randomUUID().toString()).build();
+                  EchoRequest.Builder requestBuilder = request.toBuilder();
+                  if (Strings.isNullOrEmpty(request.getRequestId())) {
+                    requestBuilder.setRequestId(UUID.randomUUID().toString());
                   }
-                  return request;
+                  return requestBuilder.build();
                 })
             .build();
     GrpcCallSettings<EchoErrorDetailsRequest, EchoErrorDetailsResponse>

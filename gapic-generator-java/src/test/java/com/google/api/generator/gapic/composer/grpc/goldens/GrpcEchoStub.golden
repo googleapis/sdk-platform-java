@@ -186,19 +186,14 @@ public class GrpcEchoStub extends EchoStub {
             .setMethodDescriptor(echoMethodDescriptor)
             .setRequestMutator(
                 request -> {
-                  if (request.getRequestId() == null || request.getRequestId().isEmpty()) {
-                    request =
-                        request.toBuilder().setRequestId(UUID.randomUUID().toString()).build();
+                  EchoRequest.Builder requestBuilder = request.toBuilder();
+                  if (Strings.isNullOrEmpty(request.getRequestId())) {
+                    requestBuilder.setRequestId(UUID.randomUUID().toString());
                   }
-                  if (request.getSecondRequestId() == null
-                      || request.getSecondRequestId().isEmpty()) {
-                    request =
-                        request
-                            .toBuilder()
-                            .setSecondRequestId(UUID.randomUUID().toString())
-                            .build();
+                  if (Strings.isNullOrEmpty(request.getSecondRequestId())) {
+                    requestBuilder.setSecondRequestId(UUID.randomUUID().toString());
                   }
-                  return request;
+                  return requestBuilder.build();
                 })
             .build();
     GrpcCallSettings<ExpandRequest, EchoResponse> expandTransportSettings =
