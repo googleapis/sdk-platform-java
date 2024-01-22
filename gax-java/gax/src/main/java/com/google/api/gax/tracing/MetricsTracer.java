@@ -45,8 +45,9 @@ public class MetricsTracer implements ApiTracer {
   public MetricsTracer(MethodName methodName, MetricsRecorder metricsRecorder) {}
 
   /**
-   * Add attributes that will be attached to all metrics. This is expected to be called by handwritten client
-   * teams to add additional attributes that are not supposed be collected by Gax.
+   * Add attributes that will be attached to all metrics. This is expected to be called by
+   * handwritten client teams to add additional attributes that are not supposed be collected by
+   * Gax.
    */
   public void addAttributes(String key, String value) {};
 }

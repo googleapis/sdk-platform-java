@@ -42,23 +42,18 @@ import java.util.Map;
 @InternalApi
 public interface MetricsRecorder {
 
-  /**
-   *  Records the latency of an RPC attempt
-   */
+  /** Records the latency of an RPC attempt */
   default void recordAttemptLatency(double attemptLatency, Map<String, String> attributes) {}
 
-  /**
-   * Records the count of RPC attempts
-   */
+  /** Records the count of RPC attempts */
   default void recordAttemptCount(long count, Map<String, String> attributes) {}
 
   /**
-   *  Records the total end-to-end latency for an operation, including the initial RPC attempts and subsequent retries.
+   * Records the total end-to-end latency for an operation, including the initial RPC attempts and
+   * subsequent retries.
    */
   default void recordOperationLatency(double operationLatency, Map<String, String> attributes) {}
 
-  /**
-   * Records the count of operations
-   */
+  /** Records the count of operations */
   default void recordOperationCount(long count, Map<String, String> attributes) {}
 }
