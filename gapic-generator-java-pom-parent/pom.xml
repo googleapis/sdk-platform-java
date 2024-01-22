@@ -5,7 +5,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.google.api</groupId>
   <artifactId>gapic-generator-java-pom-parent</artifactId>
-  <version>2.31.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
+  <version>2.32.1-SNAPSHOT</version><!-- {x-version-update:gapic-generator-java:current} -->
   <packaging>pom</packaging>
   <name>GAPIC Generator Java POM Parent</name>
   <url>https://github.com/googleapis/sdk-platform-java</url>
@@ -110,7 +110,7 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-surefire-plugin</artifactId>
-              <version>3.2.2</version>
+              <version>3.2.5</version>
               <configuration>
                 <!-- Excludes integration tests and smoke tests when unit tests are run -->
                 <excludes>
@@ -126,7 +126,7 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-failsafe-plugin</artifactId>
-              <version>3.2.2</version>
+              <version>3.2.5</version>
               <executions>
                 <execution>
                   <goals>
