@@ -29,7 +29,8 @@ def main(ctx):
 @click.option(
     "--enable-postprocessing",
     required=False,
-    type=str,
+    default=True,
+    type=bool,
     help="""
     Path to repository where generated files will be merged into, via owlbot copy-code.
     Specifying this option enables postprocessing
