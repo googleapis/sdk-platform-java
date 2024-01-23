@@ -107,7 +107,7 @@ jobs:
         brew install coreutils
     - uses: actions/setup-python@v4
       with:
-        python-version: '3.11'
+        python-version: ${{ github.env.PYTHON_VERSION }}
     - name: install python dependencies
       shell: bash
       run: |
