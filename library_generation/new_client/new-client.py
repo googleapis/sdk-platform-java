@@ -381,15 +381,6 @@ def generate(
             cwd=repo_root_dir,
         )
 
-    print("Adding annotations in readme")
-    subprocess.check_call(
-        [
-            "bash",
-            f"{script_dir}/readme_update.sh",
-        ],
-        cwd=repo_root_dir,
-    )
-
     print("Deleting temp files")
     subprocess.check_call(
         [
