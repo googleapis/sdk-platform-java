@@ -1316,15 +1316,15 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
       VariableExpr returnBuilderVarExpr) {
 
     if (method.inputType().reference() == null
-        || method.inputType().reference().fullName() == null){
+        || method.inputType().reference().fullName() == null) {
       return bodyStatements;
     }
     String methodRequestName = method.inputType().reference().fullName();
-    if(Strings.isNullOrEmpty(methodRequestName)){
+    if (Strings.isNullOrEmpty(methodRequestName)) {
       return bodyStatements;
     }
     Message methodRequestMessage = messageTypes.get(methodRequestName);
-    if(methodRequestMessage == null || methodRequestMessage.fields() == null){
+    if (methodRequestMessage == null || methodRequestMessage.fields() == null) {
       return bodyStatements;
     }
     for (String field : method.autoPopulatedFields()) {
@@ -1422,10 +1422,21 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
       Method method, ImmutableMap<String, Message> messageTypes) {
 
     boolean shouldAutoPopulate = false;
-
+    if (method.inputType().reference() == null
+        || method.inputType().reference().fullName() == null) {
+      return shouldAutoPopulate;
+    }
+    String methodRequestName = method.inputType().reference().fullName();
+    if (Strings.isNullOrEmpty(methodRequestName)) {
+      return shouldAutoPopulate;
+    }
+    Message methodRequestMessage = messageTypes.get(methodRequestName);
+    if (methodRequestMessage == null || methodRequestMessage.fields() == null) {
+      return shouldAutoPopulate;
+    }
     for (String field : method.autoPopulatedFields()) {
       Optional<Field> matchingField =
-          messageTypes.get(method.inputType().reference().fullName()).fields().stream()
+          methodRequestMessage.fields().stream()
               .filter(field1 -> field1.name().equals(field))
               .findFirst();
       if (!matchingField.isPresent()) {
