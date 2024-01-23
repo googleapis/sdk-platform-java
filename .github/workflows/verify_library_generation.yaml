@@ -13,11 +13,13 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
     - name: compute python version
+      shell: bash
       run: |
-        source library_generation/utilities.sh
-        python_version_from_config_yaml=$(py_util "get_python_version" "library_generation/test/resources/integration/google-cloud-java/generation_config.yaml")
+        source sdk-platform-java/library_generation/utilities.sh
+        python_version_from_config_yaml=$(py_util "get_python_version" "sdk-platform-java/library_generation/test/resources/integration/google-cloud-java/generation_config.yaml")
         echo "PYTHON_VERSION=${python_version_from_config_yaml}" >> "${GITHUB_ENV}"
   integration_tests:
+    needs: compute_python_version
     strategy:
       matrix:
         java: [ 11 ]
@@ -94,6 +96,7 @@ jobs:
         --googleapis_gen_url https://cloud-java-bot:${{ secrets.CLOUD_JAVA_BOT_GITHUB_TOKEN }}@github.com/googleapis/googleapis-gen.git \
         --enable_postprocessing "${{ matrix.post_processing }}"
   unit_tests:
+    needs: compute_python_version
     strategy:
       matrix:
         java: [ 8 ]
