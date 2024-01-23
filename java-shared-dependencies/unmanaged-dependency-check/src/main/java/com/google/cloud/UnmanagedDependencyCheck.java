@@ -74,7 +74,7 @@ public class UnmanagedDependencyCheck {
       throws InvalidVersionSpecificationException {
     Set<String> res = new HashSet<>();
     new ClassPathBuilder()
-        .resolve(bom.getManagedDependencies(), true, DependencyMediation.MAVEN)
+        .resolve(bom.getManagedDependencies(), false, DependencyMediation.MAVEN)
         .getClassPath()
         .forEach(
             classPath -> {
