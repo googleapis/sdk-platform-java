@@ -10,7 +10,9 @@ on:
 name: verify_library_generation
 jobs:
   compute_python_version:
+    steps:
     - name: compute python version
+      runs-on: ubuntu-22.04
       run: |
         source library_generation/utilities.sh
         python_version_from_config_yaml=$(py_util "get_python_version" "library_generation/test/resources/integration/google-cloud-java/generation_config.yaml")
