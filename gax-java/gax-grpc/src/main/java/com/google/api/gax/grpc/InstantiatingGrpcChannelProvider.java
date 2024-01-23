@@ -295,6 +295,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
               Level.WARNING,
               "DirectPath is misconfigured. DirectPath is only available in a GCE environment.");
         }
+        // Case 4: Universe Domain is non-GDU
         if (!canUseDirectPathWithUniverseDomain()) {
           LOG.log(
               Level.WARNING, "DirectPath will only work in the the googleapis.com Universe Domain");
@@ -334,8 +335,16 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return false;
   }
 
-  private boolean canUseDirectPathWithUniverseDomain() {
-    return endpoint.contains("googleapis.com");
+  // Universe Domain configuration is currently only supported in the GDU
+  @VisibleForTesting
+  boolean canUseDirectPathWithUniverseDomain() {
+    // ClientContext will set an endpoint if it isn't provided to the TransportChannelProvider
+    // If the endpoint is null, then the endpoint hasn't been fully resolved yet (client not
+    // initialized). Before a call goes through with DirectPath, this validation must succeed.
+    if (endpoint == null) {
+      return true;
+    }
+    return endpoint.contains(Credentials.GOOGLE_DEFAULT_UNIVERSE);
   }
 
   @VisibleForTesting

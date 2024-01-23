@@ -293,6 +293,38 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
+  public void testDirectPathWithNullEndpoint() {
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setAttemptDirectPath(true)
+            .setAttemptDirectPathXds()
+            .build();
+    assertThat(provider.canUseDirectPathWithUniverseDomain()).isTrue();
+  }
+
+  @Test
+  public void testDirectPathWithGDUEndpoint() {
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setAttemptDirectPath(true)
+            .setAttemptDirectPathXds()
+            .setEndpoint("test.googleapis.com:443")
+            .build();
+    assertThat(provider.canUseDirectPathWithUniverseDomain()).isTrue();
+  }
+
+  @Test
+  public void testDirectPathWithNonGDUEndpoint() {
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setAttemptDirectPath(true)
+            .setAttemptDirectPathXds()
+            .setEndpoint("test.random.com:443")
+            .build();
+    assertThat(provider.canUseDirectPathWithUniverseDomain()).isFalse();
+  }
+
+  @Test
   public void testDirectPathXdsEnabled() throws IOException {
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
