@@ -12,6 +12,7 @@ jobs:
   compute_python_version:
     runs-on: ubuntu-22.04
     steps:
+    - uses: actions/checkout@v3
     - name: compute python version
       shell: bash
       run: |
