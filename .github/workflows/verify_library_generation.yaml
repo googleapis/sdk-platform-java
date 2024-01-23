@@ -20,7 +20,7 @@ jobs:
         pushd library_generation
         source utilities.sh
         python_version_from_config_yaml=$(py_util "get_configuration_yaml_python_version" "$(pwd)/test/resources/integration/google-cloud-java/generation_config.yaml")
-        echo "PYTHON_VERSION=${python_version_from_config_yaml}" >> "${GITHUB_ENV}"
+        echo "::set-output name=python_version::${python_version_from_config_yaml} world"
   integration_tests:
     needs: compute_python_version
     strategy:
@@ -38,7 +38,7 @@ jobs:
         cache: maven
     - uses: actions/setup-python@v4
       with:
-        python-version: ${{ github.env.PYTHON_VERSION }}
+        python-version: ${{ needs.compute_python_version.outputs.python_version }}
     - name: install pyenv
       shell: bash
       run: |
@@ -62,6 +62,8 @@ jobs:
           pyenv virtualenv "${PYTHON_VERSION}" "postprocessing"
         fi
         set +ex
+      env:
+        PYTHON_VERSION: ${{ needs.compute_python_version.outputs.python_version }}
     - name: install python dependencies
       shell: bash
       run: |
@@ -115,7 +117,7 @@ jobs:
         brew install coreutils
     - uses: actions/setup-python@v4
       with:
-        python-version: ${{ github.env.PYTHON_VERSION }}
+        python-version: ${{ needs.compute_python_version.outputs.python_version }}
     - name: install python dependencies
       shell: bash
       run: |
