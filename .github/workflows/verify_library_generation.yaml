@@ -20,7 +20,7 @@ jobs:
         pushd library_generation
         source utilities.sh
         python_version_from_config_yaml=$(py_util "get_configuration_yaml_python_version" "$(pwd)/test/resources/integration/google-cloud-java/generation_config.yaml")
-        echo "::set-output name=python_version::${python_version_from_config_yaml} world"
+        echo "::set-output name=python_version::${python_version_from_config_yaml}"
   integration_tests:
     needs: compute_python_version
     strategy:
