@@ -67,7 +67,8 @@ public class ITAutoPopulatedFields {
         HttpJsonCallOptions callOptions,
         HttpJsonChannel next) {
       HttpJsonClientCall<RequestT, ResponseT> call = next.newCall(method, callOptions);
-      return new ForwardingHttpJsonClientCall.SimpleForwardingHttpJsonClientCall<RequestT, ResponseT>(call) {
+      return new ForwardingHttpJsonClientCall.SimpleForwardingHttpJsonClientCall<
+          RequestT, ResponseT>(call) {
         @Override
         public void sendMessage(RequestT requestT) {
           requestSent = requestT;
@@ -77,12 +78,12 @@ public class ITAutoPopulatedFields {
     }
   }
 
-
   private GrpcRequestClientInterceptor grpcInterceptor;
   private HttpJsonRequestClientInterceptor httpJsonInterceptor;
   private EchoClient grpcClient;
 
   private EchoClient httpJsonClient;
+
   @Before
   public void createClients() throws Exception {
     // Create gRPC Interceptor and Client
@@ -95,12 +96,10 @@ public class ITAutoPopulatedFields {
         TestClientInitializer.createHttpJsonEchoClient(ImmutableList.of(httpJsonInterceptor));
   }
 
-
   @After
   public void destroyClient() {
     grpcClient.close();
   }
-
 
   @Test
   public void testGrpc_autoPopulateRequestId() {
