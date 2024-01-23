@@ -9,6 +9,12 @@ on:
   workflow_dispatch:
 name: verify_library_generation
 jobs:
+  compute_python_version:
+    - name: compute python version
+      run: |
+      source library_generation/utilities.sh
+      python_version_from_config_yaml=$(py_util "get_python_version" "library_generation/test/resources/integration/google-cloud-java/generation_config.yaml")
+      echo "PYTHON_VERSION=${python_version_from_config_yaml}" >> "${GITHUB_ENV}"
   integration_tests:
     strategy:
       matrix:
@@ -25,7 +31,7 @@ jobs:
         cache: maven
     - uses: actions/setup-python@v4
       with:
-        python-version: '3.11'
+        python-version: ${{ github.env.PYTHON_VERSION }}
     - name: install pyenv
       shell: bash
       run: |
@@ -42,12 +48,11 @@ jobs:
         eval "$(pyenv virtualenv-init -)"
 
         # create and activate the python virtualenv
-        python_version=$(cat "library_generation/configuration/python-version")
-        if [ $(pyenv versions | grep "${python_version}" | wc -l) -eq 0 ]; then
+        if [ $(pyenv versions | grep "${PYTHON_VERSION}" | wc -l) -eq 0 ]; then
           pyenv install "${python_version}"
         fi
-        if [ $(pyenv virtualenvs | grep "${python_version}" | grep "postprocessing" | wc -l) -eq 0 ];then
-          pyenv virtualenv "${python_version}" "postprocessing"
+        if [ $(pyenv virtualenvs | grep "${PYTHON_VERSION}" | grep "postprocessing" | wc -l) -eq 0 ];then
+          pyenv virtualenv "${PYTHON_VERSION}" "postprocessing"
         fi
         set +ex
     - name: install python dependencies

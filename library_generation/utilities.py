@@ -38,6 +38,14 @@ def get_configuration_yaml_destination_path(generation_config_yaml):
   config = GenerationConfig.from_yaml(generation_config_yaml)
   return config.destination_path or ''
 
+"""
+For a given configuration yaml path, it returns the python_version
+entry at the root of the yaml
+"""
+def get_configuration_yaml_python_version(generation_config_yaml):
+  config = GenerationConfig.from_yaml(generation_config_yaml)
+  return config.python_version
+
 
 """
 Calls a function defined in library_generation/utilities.sh
