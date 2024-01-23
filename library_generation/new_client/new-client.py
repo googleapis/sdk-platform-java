@@ -63,14 +63,6 @@ def main(ctx):
     help="Description that appears in README.md"
 )
 @click.option(
-    "--generator-version",
-    required=True,
-    type=str,
-    prompt="A released version of gapic-generator-java",
-    help="A released version of gapic-generator-java that can be found in "
-         "Maven Central"
-)
-@click.option(
     "--release-level",
     type=click.Choice(["stable", "preview"]),
     default="preview",
@@ -167,7 +159,6 @@ def generate(
     name_pretty,
     product_docs,
     api_description,
-    generator_version,
     release_level,
     distribution_name,
     api_id,
@@ -289,6 +280,11 @@ def generate(
         versioned_path=versioned_proto_path,
     )
     repo_root_dir = Path(f"{sys.path[0]}/../../").resolve()
+    generator_version = subprocess.check_output(
+        ["library_generation/new_client/get_generator_version_from_workspace.sh"],
+        cwd=repo_root_dir
+    ).strip()
+    print(f"Generator version: {generator_version}")
     # run generate_library.sh
     subprocess.check_call([
         "library_generation/generate_library.sh",
