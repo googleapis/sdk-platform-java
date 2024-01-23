@@ -5,6 +5,7 @@ import os
 import shutil
 from collections.abc import Sequence
 from model.GenerationConfig import GenerationConfig
+from typing import List
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 
@@ -13,7 +14,7 @@ script_dir = os.path.dirname(os.path.realpath(__file__))
 Generates a list of two elements [argument, value], or returns
 an empty array if arg_val is None
 """
-def create_argument(arg_key: str, arg_container: object) -> str:
+def create_argument(arg_key: str, arg_container: object) -> List[str]:
   arg_val = getattr(arg_container, arg_key, None)
   if arg_val is not None:
     return [f'--{arg_key}', f'{arg_val}']
@@ -23,7 +24,7 @@ def create_argument(arg_key: str, arg_container: object) -> str:
 For a given configuration yaml path, it returns a space-separated list of
 the api_shortnames contained in such configuration_yaml
 """
-def get_configuration_yaml_library_api_shortnames(generation_config_yaml):
+def get_configuration_yaml_library_api_shortnames(generation_config_yaml: str) -> List[str]:
   config = GenerationConfig.from_yaml(generation_config_yaml)
   result = ''
   for library in config.libraries:
@@ -34,7 +35,7 @@ def get_configuration_yaml_library_api_shortnames(generation_config_yaml):
 For a given configuration yaml path, it returns the destination_path
 entry at the root of the yaml
 """
-def get_configuration_yaml_destination_path(generation_config_yaml):
+def get_configuration_yaml_destination_path(generation_config_yaml: str) -> str:
   config = GenerationConfig.from_yaml(generation_config_yaml)
   return config.destination_path or ''
 
@@ -42,9 +43,24 @@ def get_configuration_yaml_destination_path(generation_config_yaml):
 For a given configuration yaml path, it returns the python_version
 entry at the root of the yaml
 """
-def get_configuration_yaml_python_version(generation_config_yaml):
+def get_configuration_yaml_python_version(generation_config_yaml: str) -> str:
   config = GenerationConfig.from_yaml(generation_config_yaml)
   return config.python_version
+
+"""
+Runs a process with the given "arguments" list and prints its output. If the process
+fails, then the whole program exits
+"""
+def run_process_and_print_output(arguments: List[str], job_name: str = 'Job'):
+  # check_output() raises an exception if it exited with a nonzero code
+  try:
+    output =  subprocess.check_output(arguments, stderr=subprocess.STDOUT)
+    print(output.decode(), end='', flush=True)
+    print(f'{job_name} finished successfully')
+  except subprocess.CalledProcessError as ex:
+    print(ex.output.decode(), end='', flush=True)
+    print(f'{job_name} failed')
+    sys.exit(1)
 
 
 """
@@ -87,7 +103,7 @@ def eprint(*args, **kwargs):
   Args:
       path: The path to the file or folder.
 """
-def delete_if_exists(path):
+def delete_if_exists(path: str):
   if os.path.isfile(path):  # Check if it's a file
     os.remove(path)
     print(f"File deleted: {path}")

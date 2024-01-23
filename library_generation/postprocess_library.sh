@@ -15,6 +15,8 @@
 # 3 - versions_file: path to file containing versions to be applied to the poms
 # 4 - owlbot_cli_source_folder: alternative folder with a structure exactly like
 # googleapis-gen. It will be used instead of preprocessed_sources_path if
+# 5 - owlbot_cli_image_sha: SHA of the image containing the OwlBot CLI
+# 6 - synthtool_commitish: Commit SHA of the synthtool repo
 # provided
 set -xeo pipefail
 scripts_root=$(dirname "$(readlink -f "$0")")
@@ -24,12 +26,17 @@ preprocessed_sources_path=$2
 versions_file=$3
 owlbot_cli_source_folder=$4
 owlbot_cli_image_sha=$5
+synthtool_commitish=$6
 
 source "${scripts_root}"/utilities.sh
 
-if [[ -z "${owlbot_cli_image_sha}" ]]; then
-  echo 'missing required owlbot_cli_image_sha argument, please specify one'
-fi
+declare -a required_inputs=("postprocessing_target" "versions_file" "owlbot_cli_image_sha" "synthtool_commitish")
+for required_input in "${required_inputs[@]}"; do
+  if [[ -z "${!required_input}" ]]; then
+    echo "missing required ${required_input} argument, please specify one"
+    exit 1
+  fi
+done
 
 for owlbot_file in ".repo-metadata.json" "owlbot.py" ".OwlBot.yaml"
 do
@@ -90,7 +97,6 @@ if [ ! -d "synthtool" ]; then
   git clone https://github.com/googleapis/synthtool.git
 fi
 pushd "synthtool"
-synthtool_commitish=$(cat "${scripts_root}/configuration/synthtool-commitish")
 git reset --hard "${synthtool_commitish}"
 python3 -m pip install -e .
 python3 -m pip install -r requirements.in

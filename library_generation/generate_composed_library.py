@@ -115,16 +115,8 @@ def generate_composed_library(
     print('arguments: ')
     print(effective_arguments)
     print(f'Generating library from {gapic.proto_path} to {destination_path}...')
-    # check_output() raises an exception if it exited with a nonzero code
-    try:
-      output =  subprocess.check_output(['bash', '-x', f'{script_dir}/generate_library.sh', *effective_arguments],
-        stderr=subprocess.STDOUT)
-      print(output.decode(), end='', flush=True)
-      print('Generate library finished successfully')
-    except subprocess.CalledProcessError as ex:
-      print(ex.output.decode(), end='', flush=True)
-      print('Library generation failed')
-      sys.exit(1)
+    util.run_process_and_print_output(['bash', '-x', f'{script_dir}/generate_library.sh',
+      *effective_arguments], 'Library postprocessing')
 
 
     if enable_postprocessing:
@@ -135,9 +127,7 @@ def generate_composed_library(
 
   if enable_postprocessing:
     # call postprocess library
-    with subprocess.Popen([f'{script_dir}/postprocess_library.sh', f'{output_folder}/{destination_path}',
-      '', versions_file, owlbot_cli_source_folder, config.owlbot_cli_image],
-      stdout=subprocess.PIPE, stderr=subprocess.STDOUT) as postprocessing_process:
-      for line in postprocessing_process.stdout:
-        print(line.decode(), end='', flush=True)
+    util.run_process_and_print_output([f'{script_dir}/postprocess_library.sh',
+        f'{output_folder}/{destination_path}', '', versions_file, owlbot_cli_source_folder,
+        config.owlbot_cli_image, config.synthtool_commitish], 'Library postprocessing')
 
