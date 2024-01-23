@@ -19,7 +19,7 @@ jobs:
         set -x
         pushd library_generation
         source utilities.sh
-        python_version_from_config_yaml=$(py_util "get_python_version" "library_generation/test/resources/integration/google-cloud-java/generation_config.yaml")
+        python_version_from_config_yaml=$(py_util "get_configuration_yaml_python_version" "library_generation/test/resources/integration/google-cloud-java/generation_config.yaml")
         echo "PYTHON_VERSION=${python_version_from_config_yaml}" >> "${GITHUB_ENV}"
   integration_tests:
     needs: compute_python_version
