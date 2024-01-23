@@ -55,11 +55,11 @@ def main(ctx):
     """
 )
 def generate_from_yaml(
-    generation_config_yaml,
-    enable_postprocessing,
-    target_library_api_shortname,
-    repository_path
-):
+    generation_config_yaml: str,
+    enable_postprocessing: bool,
+    target_library_api_shortname: str,
+    repository_path: str
+) -> None:
   config = GenerationConfig.from_yaml(generation_config_yaml)
   target_libraries = config.libraries
   if target_library_api_shortname is not None:
@@ -70,8 +70,6 @@ def generate_from_yaml(
     generate_composed_library(
         config, library, enable_postprocessing, repository_path
     )
-    pass
-  pass
 
 
 

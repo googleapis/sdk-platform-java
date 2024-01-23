@@ -8,8 +8,8 @@ Prerequisites
 - Needs a folder named `output` in current working directory. This folder
 is automatically detected by `generate_library.sh` and this script ensures it
 contains the necessary folders and files, specifically:
-  - A "google" folder found in the googleapis repository
-  - A "grafeas" folder found in the googleapis repository
+  - A "google" folder found in the googleapis/googleapis repository
+  - A "grafeas" folder found in the googleapis/googleapis repository
 Note: googleapis repo is found in https://github.com/googleapis/googleapis.
 """
 
@@ -19,6 +19,8 @@ import os
 import sys
 import subprocess
 import json
+from model.GenerationConfig import GenerationConfig
+from model.Library import Library
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 
@@ -36,11 +38,11 @@ Arguments
    sent. If not specified, it will be downloaded. The versions file will be inferred from this folder
 """
 def generate_composed_library(
-    config,
-    library,
-    enable_postprocessing,
-    repository_path
-):
+    config: GenerationConfig,
+    library: Library,
+    enable_postprocessing: bool,
+    repository_path: str
+) -> None:
   output_folder = util.sh_util('get_output_folder')
 
   print(f'output_folder: {output_folder}')
@@ -55,7 +57,6 @@ def generate_composed_library(
     print('using common googleapis_commitish')
 
   print('removing old googleapis folders and files')
-  util.delete_if_exists(f'{output_folder}/WORKSPACE')
   util.delete_if_exists(f'{output_folder}/google')
   util.delete_if_exists(f'{output_folder}/grafeas')
 
