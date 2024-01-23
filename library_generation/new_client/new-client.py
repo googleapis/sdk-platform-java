@@ -385,15 +385,6 @@ def generate(
             cwd=repo_root_dir,
         )
 
-    print("Applying the versions")
-    subprocess.check_call(
-        [
-            "bash",
-            f"{script_dir}/apply_current_versions.sh",
-        ],
-        cwd=repo_root_dir,
-    )
-
     print("Adding annotations in readme")
     subprocess.check_call(
         [
