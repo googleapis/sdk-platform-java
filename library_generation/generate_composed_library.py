@@ -39,6 +39,7 @@ def generate_composed_library(
     enable_postprocessing
 ):
   output_folder = util.sh_util('get_output_folder')
+
   print(f'output_folder: {output_folder}')
   print('library: ', library)
   os.makedirs(output_folder, exist_ok=True)
@@ -135,7 +136,7 @@ def generate_composed_library(
   if enable_postprocessing:
     # call postprocess library
     with subprocess.Popen([f'{script_dir}/postprocess_library.sh', f'{output_folder}/{destination_path}',
-      '', versions_file, owlbot_cli_source_folder],
+      '', versions_file, owlbot_cli_source_folder, config.owlbot_cli_image],
       stdout=subprocess.PIPE, stderr=subprocess.STDOUT) as postprocessing_process:
       for line in postprocessing_process.stdout:
         print(line.decode(), end='', flush=True)

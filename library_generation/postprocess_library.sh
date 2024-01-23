@@ -23,8 +23,13 @@ postprocessing_target=$1
 preprocessed_sources_path=$2
 versions_file=$3
 owlbot_cli_source_folder=$4
+owlbot_cli_image_sha=$5
 
 source "${scripts_root}"/utilities.sh
+
+if [[ -z "${owlbot_cli_image_sha}" ]]; then
+  echo 'missing required owlbot_cli_image_sha argument, please specify one'
+fi
 
 for owlbot_file in ".repo-metadata.json" "owlbot.py" ".OwlBot.yaml"
 do
@@ -56,7 +61,6 @@ if [[ -z "${owlbot_cli_source_folder}" ]]; then
   build_owlbot_cli_source_folder "${postprocessing_target}" "${owlbot_cli_source_folder}" "${preprocessed_sources_path}"
 fi
 
-owlbot_cli_image_sha=$(cat "${scripts_root}/configuration/owlbot-cli-sha" | grep "sha256")
 
 # we determine the location of the .OwlBot.yaml file by checking if the target
 # folder is a monorepo folder or not

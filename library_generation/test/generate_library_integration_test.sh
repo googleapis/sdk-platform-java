@@ -53,7 +53,7 @@ fi
 
 declare -a configuration_yamls=(
   "${script_dir}/resources/integration/java-bigtable/generation_config.yaml"
-  "${script_dir}/resources/integration/google-cloud-java/generation_config.yaml"
+  # "${script_dir}/resources/integration/google-cloud-java/generation_config.yaml"
 )
 
 
