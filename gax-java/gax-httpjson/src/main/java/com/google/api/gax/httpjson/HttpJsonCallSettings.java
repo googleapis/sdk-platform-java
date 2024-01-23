@@ -81,7 +81,7 @@ public class HttpJsonCallSettings<RequestT, ResponseT> {
 
   public static class Builder<RequestT, ResponseT> {
 
-    public RequestMutator<RequestT> requestMutator;
+    private RequestMutator<RequestT> requestMutator;
     private ApiMethodDescriptor<RequestT, ResponseT> methodDescriptor;
     private RequestParamsExtractor<RequestT> paramsExtractor;
     private TypeRegistry typeRegistry;

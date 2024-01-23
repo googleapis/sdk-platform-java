@@ -1254,9 +1254,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
   protected static LambdaExpr createRequestMutatorClassInstance(
       Method method, ImmutableMap<String, Message> messageTypes) {
     List<Statement> bodyStatements = new ArrayList<>();
-    VariableExpr requestVarExpr =
-        VariableExpr.withVariable(
-            Variable.builder().setType(method.inputType()).setName("request").build());
+    VariableExpr requestVarExpr = createRequestVarExpr(method);
 
     Reference requestBuilderRef =
         VaporReference.builder()
@@ -1274,7 +1272,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
             .setIsDecl(true)
             .build();
 
-    // SampleRequest.Builder request.toBuilder()
+    // Expected expression: SampleRequest.Builder request.toBuilder()
     MethodInvocationExpr setRequestBuilderInvocationExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(requestVarExpr)
@@ -1282,7 +1280,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
             .setReturnType(requestBuilderType)
             .build();
 
-    // SampleRequest.Builder requestBuilder = request.toBuilder();
+    // Expected expression: SampleRequest.Builder requestBuilder = request.toBuilder();
     Expr requestBuilderExpr =
         AssignmentExpr.builder()
             .setVariableExpr(requestBuilderVarExpr)
@@ -1324,7 +1322,8 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
       return bodyStatements;
     }
     for (String field : method.autoPopulatedFields()) {
-      if (messageTypes.get(method.inputType().reference().fullName()).fields() == null) {
+      if (messageTypes.get(method.inputType().reference().fullName()) == null
+          || messageTypes.get(method.inputType().reference().fullName()).fields() == null) {
         return bodyStatements;
       }
       Optional<Field> matchingField =
@@ -1348,11 +1347,9 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
   static Statement createAutoPopulatedRequestStatement(
       Method method, String fieldName, VariableExpr returnBuilderVarExpr) {
 
-    VariableExpr requestVarExpr =
-        VariableExpr.withVariable(
-            Variable.builder().setType(method.inputType()).setName("request").build());
+    VariableExpr requestVarExpr = createRequestVarExpr(method);
 
-    // request.getRequestId()
+    // Expected expression: request.getRequestId()
     MethodInvocationExpr getAutoPopulatedFieldInvocationExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(requestVarExpr)
@@ -1367,7 +1364,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
                 .setName("Strings")
                 .build());
 
-    // Strings.isNullOrEmpty(request.getRequestId())
+    // Expected expression: Strings.isNullOrEmpty(request.getRequestId())
     MethodInvocationExpr isNullOrEmptyFieldInvocationExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(stringsVar)
@@ -1386,7 +1383,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
                 .setName("UUID")
                 .build());
 
-    // UUID.randomUUID()
+    // Expected expression: UUID.randomUUID()
     MethodInvocationExpr autoPopulatedFieldsArgsHelper =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(uuidVarExpr)
@@ -1395,7 +1392,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
                 TypeNode.withReference(ConcreteReference.builder().setClazz(UUID.class).build()))
             .build();
 
-    // UUID.randomUUID().toString()
+    // Expected expression: UUID.randomUUID().toString()
     MethodInvocationExpr autoPopulatedFieldsArgsToString =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(autoPopulatedFieldsArgsHelper)
@@ -1403,7 +1400,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
             .setReturnType(TypeNode.STRING)
             .build();
 
-    // requestBuilder().setField(UUID.randomUUID().toString())
+    // Expected expression: requestBuilder().setField(UUID.randomUUID().toString())
     MethodInvocationExpr setAutoPopulatedFieldInvocationExpr =
         MethodInvocationExpr.builder()
             .setArguments(autoPopulatedFieldsArgsToString)
@@ -1443,9 +1440,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
   protected LambdaExpr createRequestParamsExtractorClassInstance(
       Method method, List<Statement> classStatements) {
     List<Statement> bodyStatements = new ArrayList<>();
-    VariableExpr requestVarExpr =
-        VariableExpr.withVariable(
-            Variable.builder().setType(method.inputType()).setName("request").build());
+    VariableExpr requestVarExpr = createRequestVarExpr(method);
     TypeNode returnType =
         TypeNode.withReference(
             ConcreteReference.builder()
@@ -1705,5 +1700,12 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
       }
     }
     return requestFieldGetterExprBuilder.build();
+  }
+
+  private static VariableExpr createRequestVarExpr(Method method) {
+    VariableExpr requestVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder().setType(method.inputType()).setName("request").build());
+    return requestVarExpr;
   }
 }
