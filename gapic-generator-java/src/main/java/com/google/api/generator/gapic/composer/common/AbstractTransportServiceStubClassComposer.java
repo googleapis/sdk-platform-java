@@ -325,7 +325,8 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
               .build();
     }
 
-    if (method.hasAutoPopulatedFields() && shouldAutoPopulateFields(method, messageTypes)) {
+    if (method.hasAutoPopulatedFields()
+        && Boolean.TRUE.equals(shouldAutoPopulateFields(method, messageTypes))) {
       callSettingsBuilderExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(callSettingsBuilderExpr)
@@ -1318,7 +1319,14 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
       List<Statement> bodyStatements,
       VariableExpr returnBuilderVarExpr) {
 
+    if (method.inputType().reference() == null
+        || method.inputType().reference().fullName() == null) {
+      return bodyStatements;
+    }
     for (String field : method.autoPopulatedFields()) {
+      if (messageTypes.get(method.inputType().reference().fullName()).fields() == null) {
+        return bodyStatements;
+      }
       Optional<Field> matchingField =
           messageTypes.get(method.inputType().reference().fullName()).fields().stream()
               .filter(field1 -> field1.name().equals(field))
@@ -1352,7 +1360,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
             .setReturnType(TypeNode.STRING)
             .build();
 
-    VariableExpr StringsVar =
+    VariableExpr stringsVar =
         VariableExpr.withVariable(
             Variable.builder()
                 .setType(TypeNode.withReference(ConcreteReference.withClazz(Strings.class)))
@@ -1362,14 +1370,14 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     // Strings.isNullOrEmpty(request.getRequestId())
     MethodInvocationExpr isNullOrEmptyFieldInvocationExpr =
         MethodInvocationExpr.builder()
-            .setExprReferenceExpr(StringsVar)
+            .setExprReferenceExpr(stringsVar)
             .setMethodName("isNullOrEmpty")
             .setReturnType(TypeNode.BOOLEAN)
             .setArguments(getAutoPopulatedFieldInvocationExpr)
             .build();
 
     // Note: Currently, autopopulation is only for UUID.
-    VariableExpr UUIDVarExpr =
+    VariableExpr uuidVarExpr =
         VariableExpr.withVariable(
             Variable.builder()
                 .setType(
@@ -1381,7 +1389,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     // UUID.randomUUID()
     MethodInvocationExpr autoPopulatedFieldsArgsHelper =
         MethodInvocationExpr.builder()
-            .setExprReferenceExpr(UUIDVarExpr)
+            .setExprReferenceExpr(uuidVarExpr)
             .setMethodName("randomUUID")
             .setReturnType(
                 TypeNode.withReference(ConcreteReference.builder().setClazz(UUID.class).build()))
@@ -1404,15 +1412,10 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
             .setReturnType(method.inputType())
             .build();
 
-    // if(Strings.notNullOrEmpty(request.getField())) {
-    // requestBuilder().setField(UUID.randomUUID().toString())};
-    IfStatement ifStatement =
-        IfStatement.builder()
-            .setConditionExpr(isNullOrEmptyFieldInvocationExpr)
-            .setBody(Arrays.asList(ExprStatement.withExpr(setAutoPopulatedFieldInvocationExpr)))
-            .build();
-
-    return ifStatement;
+    return IfStatement.builder()
+        .setConditionExpr(isNullOrEmptyFieldInvocationExpr)
+        .setBody(Arrays.asList(ExprStatement.withExpr(setAutoPopulatedFieldInvocationExpr)))
+        .build();
   }
 
   @VisibleForTesting

@@ -104,7 +104,7 @@ public class ITAutoPopulatedFields {
   public void testGrpc_autoPopulateRequestId() {
     grpcClient.echo(EchoRequest.newBuilder().build());
     EchoRequest requestSent = (EchoRequest) grpcInterceptor.requestSent;
-    assertEquals(UUID.fromString(requestSent.getRequestId()).version(), 4);
+    assertEquals(4, UUID.fromString(requestSent.getRequestId()).version());
   }
 
   @Test
@@ -112,14 +112,14 @@ public class ITAutoPopulatedFields {
     String UUIDsent = UUID.randomUUID().toString();
     grpcClient.echo(EchoRequest.newBuilder().setRequestId(UUIDsent).build());
     EchoRequest requestSent = (EchoRequest) grpcInterceptor.requestSent;
-    assertEquals(requestSent.getRequestId(), UUIDsent);
+    assertEquals(UUIDsent, requestSent.getRequestId());
   }
 
   @Test
   public void testHttpJson_autoPopulateRequestId() {
     httpJsonClient.echo(EchoRequest.newBuilder().build());
     EchoRequest requestSent = (EchoRequest) httpJsonInterceptor.requestSent;
-    assertEquals(UUID.fromString(requestSent.getRequestId()).version(), 4);
+    assertEquals(4, UUID.fromString(requestSent.getRequestId()).version());
   }
 
   @Test
@@ -127,6 +127,6 @@ public class ITAutoPopulatedFields {
     String UUIDsent = UUID.randomUUID().toString();
     httpJsonClient.echo(EchoRequest.newBuilder().setRequestId(UUIDsent).build());
     EchoRequest requestSent = (EchoRequest) httpJsonInterceptor.requestSent;
-    assertEquals(requestSent.getRequestId(), UUIDsent);
+    assertEquals(UUIDsent, requestSent.getRequestId());
   }
 }
