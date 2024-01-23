@@ -1316,14 +1316,20 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
       VariableExpr returnBuilderVarExpr) {
 
     if (method.inputType().reference() == null
-        || method.inputType().reference().fullName() == null
-        || messageTypes.get(method.inputType().reference().fullName()) == null
-        || messageTypes.get(method.inputType().reference().fullName()).fields() == null) {
+        || method.inputType().reference().fullName() == null){
+      return bodyStatements;
+    }
+    String methodRequestName = method.inputType().reference().fullName();
+    if(Strings.isNullOrEmpty(methodRequestName)){
+      return bodyStatements;
+    }
+    Message methodRequestMessage = messageTypes.get(methodRequestName);
+    if(methodRequestMessage == null || methodRequestMessage.fields() == null){
       return bodyStatements;
     }
     for (String field : method.autoPopulatedFields()) {
       Optional<Field> matchingField =
-          messageTypes.get(method.inputType().reference().fullName()).fields().stream()
+          methodRequestMessage.fields().stream()
               .filter(field1 -> field1.name().equals(field))
               .findFirst();
       if (!matchingField.isPresent()) {
