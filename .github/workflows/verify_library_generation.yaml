@@ -11,16 +11,19 @@ name: verify_library_generation
 jobs:
   compute_python_version:
     runs-on: ubuntu-22.04
+    outputs:
+      python_version: ${{ steps.python_version_step.outputs.python_version }}
     steps:
     - uses: actions/checkout@v3
     - name: compute python version
+      id: python_version_step
       shell: bash
       run: |
         set -x
         pushd library_generation
         source utilities.sh
         python_version_from_config_yaml=$(py_util "get_configuration_yaml_python_version" "$(pwd)/test/resources/integration/google-cloud-java/generation_config.yaml")
-        echo "::set-output name=python_version::${python_version_from_config_yaml}"
+        echo "python_version=${python_version_from_config_yaml}" >> "$GITHUB_OUTPUT"
   integration_tests:
     needs: compute_python_version
     strategy:
