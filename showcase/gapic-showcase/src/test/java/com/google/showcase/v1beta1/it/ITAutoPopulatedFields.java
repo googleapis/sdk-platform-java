@@ -16,7 +16,6 @@
 package com.google.showcase.v1beta1.it;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import com.google.api.gax.httpjson.ApiMethodDescriptor;
 import com.google.api.gax.httpjson.ForwardingHttpJsonClientCall;
@@ -105,7 +104,7 @@ public class ITAutoPopulatedFields {
   public void testGrpc_autoPopulateRequestId() {
     grpcClient.echo(EchoRequest.newBuilder().build());
     EchoRequest requestSent = (EchoRequest) grpcInterceptor.requestSent;
-    assertTrue(UUID.fromString(requestSent.getRequestId()).version() == 4);
+    assertEquals(UUID.fromString(requestSent.getRequestId()).version(), 4);
   }
 
   @Test
@@ -120,7 +119,7 @@ public class ITAutoPopulatedFields {
   public void testHttpJson_autoPopulateRequestId() {
     httpJsonClient.echo(EchoRequest.newBuilder().build());
     EchoRequest requestSent = (EchoRequest) httpJsonInterceptor.requestSent;
-    assertTrue(UUID.fromString(requestSent.getRequestId()).version() == 4);
+    assertEquals(UUID.fromString(requestSent.getRequestId()).version(), 4);
   }
 
   @Test
