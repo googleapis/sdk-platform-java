@@ -1272,7 +1272,6 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
             .setIsDecl(true)
             .build();
 
-    // Expected expression: SampleRequest.Builder request.toBuilder()
     MethodInvocationExpr setRequestBuilderInvocationExpr =
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(requestVarExpr)
@@ -1280,7 +1279,6 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
             .setReturnType(requestBuilderType)
             .build();
 
-    // Expected expression: SampleRequest.Builder requestBuilder = request.toBuilder();
     Expr requestBuilderExpr =
         AssignmentExpr.builder()
             .setVariableExpr(requestBuilderVarExpr)
@@ -1318,14 +1316,12 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
       VariableExpr returnBuilderVarExpr) {
 
     if (method.inputType().reference() == null
-        || method.inputType().reference().fullName() == null) {
+        || method.inputType().reference().fullName() == null
+        || messageTypes.get(method.inputType().reference().fullName()) == null
+        || messageTypes.get(method.inputType().reference().fullName()).fields() == null) {
       return bodyStatements;
     }
     for (String field : method.autoPopulatedFields()) {
-      if (messageTypes.get(method.inputType().reference().fullName()) == null
-          || messageTypes.get(method.inputType().reference().fullName()).fields() == null) {
-        return bodyStatements;
-      }
       Optional<Field> matchingField =
           messageTypes.get(method.inputType().reference().fullName()).fields().stream()
               .filter(field1 -> field1.name().equals(field))
@@ -1703,9 +1699,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
   }
 
   private static VariableExpr createRequestVarExpr(Method method) {
-    VariableExpr requestVarExpr =
-        VariableExpr.withVariable(
-            Variable.builder().setType(method.inputType()).setName("request").build());
-    return requestVarExpr;
+    return VariableExpr.withVariable(
+        Variable.builder().setType(method.inputType()).setName("request").build());
   }
 }
