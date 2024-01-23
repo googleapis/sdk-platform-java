@@ -45,10 +45,20 @@ def main(ctx):
     be generated. If not specified, all libraries in the configuration yaml will be generated
     """
 )
+@click.option(
+    "--repository-path",
+    required=False,
+    type=str,
+    help="""
+    If specified, the generated files will be sent to this location. If not specified, the
+    repository will be pulled into output_folder and move the generated files there
+    """
+)
 def generate_from_yaml(
     generation_config_yaml,
     enable_postprocessing,
-    target_library_api_shortname
+    target_library_api_shortname,
+    repository_path
 ):
   config = GenerationConfig.from_yaml(generation_config_yaml)
   target_libraries = config.libraries
@@ -58,7 +68,7 @@ def generate_from_yaml(
   for library in target_libraries:
     print(f'generating library {library.api_shortname}')
     generate_composed_library(
-        config, library, enable_postprocessing
+        config, library, enable_postprocessing, repository_path
     )
     pass
   pass

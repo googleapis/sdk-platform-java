@@ -60,6 +60,15 @@ declare -a configuration_yamls=(
 for configuration_yaml in "${configuration_yamls[@]}"; do
   library_api_shortnames=$(py_util "get_configuration_yaml_library_api_shortnames" "${configuration_yaml}")
   destination_path=$(py_util "get_configuration_yaml_destination_path" "${configuration_yaml}")
+  pushd "${output_folder}"
+  if [[ "${destination_path}" == *google-cloud-java* ]]; then
+    git clone "https://github.com/googleapis/google-cloud-java"
+    repository_path="${output_folder}/google-cloud-java/"
+  else
+    git clone "https://github.com/googleapis/${destination_path}"
+    repository_path="${output_folder}/${destination_path}"
+  fi
+  popd
 
   for api_shortname in ${library_api_shortnames}; do
     pushd "${output_folder}"
@@ -69,7 +78,8 @@ for configuration_yaml in "${configuration_yamls[@]}"; do
     python3 "${library_generation_dir}"/main.py generate-from-yaml \
       --generation-config-yaml "${configuration_yaml}" \
       --enable-postprocessing "${enable_postprocessing}" \
-      --target-library-api-shortname "${api_shortname}"
+      --target-library-api-shortname "${api_shortname}" \
+      --repository-path "${repository_path}"
     generation_end=$(date "+%s")
 
     # some generations are less than 1 second (0 produces exit code 1 in `expr`)

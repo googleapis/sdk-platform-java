@@ -32,11 +32,14 @@ Arguments
    convenience and to prevent all libraries to be processed
  - enable_postprocessing: true if postprocessing should be done on the generated
    libraries
+ - repository_path: path to the repository where the generated files will be
+   sent. If not specified, it will be downloaded. The versions file will be inferred from this folder
 """
 def generate_composed_library(
     config,
     library,
-    enable_postprocessing
+    enable_postprocessing,
+    repository_path
 ):
   output_folder = util.sh_util('get_output_folder')
 
@@ -73,15 +76,19 @@ def generate_composed_library(
   if 'google-cloud-java' in destination_path:
     print('this is a monorepo library')
     library_folder = destination_path.split('/')[-1]
-    clone_out = util.sh_util(f'sparse_clone "https://github.com/googleapis/google-cloud-java.git" "{library_folder} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"', cwd=output_folder)
-    print(clone_out)
-    versions_file = f'{output_folder}/google-cloud-java/versions.txt'
+    if repository_path is None:
+      repository_path = f'{output_folder}/google-cloud-java'
+      clone_out = util.sh_util(f'sparse_clone "https://github.com/googleapis/google-cloud-java.git" "{library_folder} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"', cwd=output_folder)
+      print(clone_out)
+    versions_file = f'{repository_path}/versions.txt'
   else:
     print('this is a HW library')
-    util.delete_if_exists(f'{output_folder}/{destination_path}')
-    clone_out = util.sh_util(f'git clone "https://github.com/googleapis/{destination_path}.git"', cwd=output_folder)
-    print(clone_out)
-    versions_file = f'{output_folder}/{destination_path}/versions.txt'
+    if repository_path is None:
+      repository_path = f'{output_folder}/{destination_path}'
+      util.delete_if_exists(f'{output_folder}/{destination_path}')
+      clone_out = util.sh_util(f'git clone "https://github.com/googleapis/{destination_path}.git"', cwd=output_folder)
+      print(clone_out)
+    versions_file = f'{repository_path}/versions.txt'
 
   owlbot_cli_source_folder = util.sh_util('mktemp -d')
   for gapic in library.GAPICs:
