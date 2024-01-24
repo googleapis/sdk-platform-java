@@ -239,12 +239,25 @@ def generate(
     with open(workdir / ".repo-metadata.json", "w") as fp:
         json.dump(repo_metadata, fp, indent=2)
 
+    template_excludes = [
+        ".github/*",
+        ".kokoro/*",
+        "samples/*",
+        "CODE_OF_CONDUCT.md",
+        "CONTRIBUTING.md",
+        "LICENSE",
+        "SECURITY.md",
+        "java.header",
+        "license-checks.xml",
+        "renovate.json",
+        ".gitignore"
+    ]
     # create owlbot.py
     templates.render(
         template_name="owlbot.py.j2",
         output_name=str(workdir / "owlbot.py"),
         should_include_templates=True,
-        template_excludes=[],
+        template_excludes=template_excludes,
     )
 
     # In monorepo, .OwlBot.yaml needs to be in the directory of the module.
@@ -326,15 +339,6 @@ def generate(
 
     # Repo level post process
     script_dir = "library_generation/repo-level-postprocess"
-    print("Remove irrelevant files from templates")
-    subprocess.check_call(
-        [
-            "bash",
-            f"{script_dir}/update_owlbot_postprocessor_config.sh"
-         ],
-        cwd=repo_root_dir
-    )
-
     print("Deleting non generated samples")
     subprocess.check_call(
         [
