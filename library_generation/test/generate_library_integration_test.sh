@@ -63,7 +63,7 @@ for configuration_yaml in "${configuration_yamls[@]}"; do
   pushd "${output_folder}"
   if [[ "${destination_path}" == *google-cloud-java* ]]; then
     git clone "https://github.com/googleapis/google-cloud-java"
-    repository_path="${output_folder}/google-cloud-java/"
+    repository_path="${output_folder}/google-cloud-java"
   else
     git clone "https://github.com/googleapis/${destination_path}"
     repository_path="${output_folder}/${destination_path}"
