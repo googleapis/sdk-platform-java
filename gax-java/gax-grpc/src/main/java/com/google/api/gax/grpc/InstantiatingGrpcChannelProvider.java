@@ -333,12 +333,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   // Universe Domain configuration is currently only supported in the GDU
   @VisibleForTesting
   boolean canUseDirectPathWithUniverseDomain() {
-    if (endpoint.contains(Credentials.GOOGLE_DEFAULT_UNIVERSE)) {
-      return true;
-    }
-    // This is only logged if DirectPath is enabled
-    LOG.log(Level.WARNING, "DirectPath will only work in the the googleapis.com Universe Domain");
-    return false;
+    return endpoint.contains(Credentials.GOOGLE_DEFAULT_UNIVERSE);
   }
 
   @VisibleForTesting
