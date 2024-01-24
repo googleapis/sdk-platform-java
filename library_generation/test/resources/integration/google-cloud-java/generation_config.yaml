@@ -51,7 +51,9 @@ libraries:
   - api_shortname: speech
     library_type: GAPIC_AUTO
     GAPICs:
-      - proto_path: google/cloud/asset/v1
+      - proto_path: google/cloud/speech/v1
+      - proto_path: google/cloud/speech/v1p1beta1
+      - proto_path: google/cloud/speech/v2
   - api_shortname: apigee-connect
     library_type: GAPIC_AUTO
     GAPICs:
