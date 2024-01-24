@@ -81,219 +81,220 @@ import javax.annotation.Generated;
  * as threads. In the example above, try-with-resources is used, which automatically calls close().
  *
  * <table>
+ *    <caption>Methods</caption>
  *    <tr>
  *      <th>Method</th>
  *      <th>Description</th>
  *      <th>Method Variants</th>
+ *    </tr>
  *    <tr>
- *      <td>CreateShelf</td>
+ *      <td><p> CreateShelf</td>
  *      <td><p> Creates a shelf, and returns the new Shelf.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *           <li>createShelf(CreateShelfRequest request)
+ *           <li><p> createShelf(CreateShelfRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *           <li>createShelf(Shelf shelf)
+ *           <li><p> createShelf(Shelf shelf)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *           <li>createShelfCallable()
+ *           <li><p> createShelfCallable()
  *      </ul>
  *       </td>
  *    </tr>
  *    <tr>
- *      <td>GetShelf</td>
+ *      <td><p> GetShelf</td>
  *      <td><p> Gets a shelf. Returns NOT_FOUND if the shelf does not exist.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *           <li>getShelf(GetShelfRequest request)
+ *           <li><p> getShelf(GetShelfRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *           <li>getShelf(ShelfName name)
- *           <li>getShelf(String name)
+ *           <li><p> getShelf(ShelfName name)
+ *           <li><p> getShelf(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *           <li>getShelfCallable()
+ *           <li><p> getShelfCallable()
  *      </ul>
  *       </td>
  *    </tr>
  *    <tr>
- *      <td>ListShelves</td>
+ *      <td><p> ListShelves</td>
  *      <td><p> Lists shelves. The order is unspecified but deterministic. Newly created shelves will not necessarily be added to the end of this list.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *           <li>listShelves(ListShelvesRequest request)
+ *           <li><p> listShelves(ListShelvesRequest request)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *           <li>listShelvesPagedCallable()
- *           <li>listShelvesCallable()
+ *           <li><p> listShelvesPagedCallable()
+ *           <li><p> listShelvesCallable()
  *      </ul>
  *       </td>
  *    </tr>
  *    <tr>
- *      <td>DeleteShelf</td>
+ *      <td><p> DeleteShelf</td>
  *      <td><p> Deletes a shelf. Returns NOT_FOUND if the shelf does not exist.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *           <li>deleteShelf(DeleteShelfRequest request)
+ *           <li><p> deleteShelf(DeleteShelfRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *           <li>deleteShelf(ShelfName name)
- *           <li>deleteShelf(String name)
+ *           <li><p> deleteShelf(ShelfName name)
+ *           <li><p> deleteShelf(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *           <li>deleteShelfCallable()
+ *           <li><p> deleteShelfCallable()
  *      </ul>
  *       </td>
  *    </tr>
  *    <tr>
- *      <td>MergeShelves</td>
+ *      <td><p> MergeShelves</td>
  *      <td><p> Merges two shelves by adding all books from the shelf named `other_shelf_name` to shelf `name`, and deletes `other_shelf_name`. Returns the updated shelf. The book ids of the moved books may not be the same as the original books.
  * <p>  Returns NOT_FOUND if either shelf does not exist. This call is a no-op if the specified shelves are the same.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *           <li>mergeShelves(MergeShelvesRequest request)
+ *           <li><p> mergeShelves(MergeShelvesRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *           <li>mergeShelves(ShelfName name, ShelfName otherShelf)
- *           <li>mergeShelves(ShelfName name, String otherShelf)
- *           <li>mergeShelves(String name, ShelfName otherShelf)
- *           <li>mergeShelves(String name, String otherShelf)
+ *           <li><p> mergeShelves(ShelfName name, ShelfName otherShelf)
+ *           <li><p> mergeShelves(ShelfName name, String otherShelf)
+ *           <li><p> mergeShelves(String name, ShelfName otherShelf)
+ *           <li><p> mergeShelves(String name, String otherShelf)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *           <li>mergeShelvesCallable()
+ *           <li><p> mergeShelvesCallable()
  *      </ul>
  *       </td>
  *    </tr>
  *    <tr>
- *      <td>CreateBook</td>
+ *      <td><p> CreateBook</td>
  *      <td><p> Creates a book, and returns the new Book.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *           <li>createBook(CreateBookRequest request)
+ *           <li><p> createBook(CreateBookRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *           <li>createBook(ShelfName parent, Book book)
- *           <li>createBook(String parent, Book book)
+ *           <li><p> createBook(ShelfName parent, Book book)
+ *           <li><p> createBook(String parent, Book book)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *           <li>createBookCallable()
+ *           <li><p> createBookCallable()
  *      </ul>
  *       </td>
  *    </tr>
  *    <tr>
- *      <td>GetBook</td>
+ *      <td><p> GetBook</td>
  *      <td><p> Gets a book. Returns NOT_FOUND if the book does not exist.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *           <li>getBook(GetBookRequest request)
+ *           <li><p> getBook(GetBookRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *           <li>getBook(BookName name)
- *           <li>getBook(String name)
+ *           <li><p> getBook(BookName name)
+ *           <li><p> getBook(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *           <li>getBookCallable()
+ *           <li><p> getBookCallable()
  *      </ul>
  *       </td>
  *    </tr>
  *    <tr>
- *      <td>ListBooks</td>
+ *      <td><p> ListBooks</td>
  *      <td><p> Lists books in a shelf. The order is unspecified but deterministic. Newly created books will not necessarily be added to the end of this list. Returns NOT_FOUND if the shelf does not exist.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *           <li>listBooks(ListBooksRequest request)
+ *           <li><p> listBooks(ListBooksRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *           <li>listBooks(ShelfName parent)
- *           <li>listBooks(String parent)
+ *           <li><p> listBooks(ShelfName parent)
+ *           <li><p> listBooks(String parent)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *           <li>listBooksPagedCallable()
- *           <li>listBooksCallable()
+ *           <li><p> listBooksPagedCallable()
+ *           <li><p> listBooksCallable()
  *      </ul>
  *       </td>
  *    </tr>
  *    <tr>
- *      <td>DeleteBook</td>
+ *      <td><p> DeleteBook</td>
  *      <td><p> Deletes a book. Returns NOT_FOUND if the book does not exist.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *           <li>deleteBook(DeleteBookRequest request)
+ *           <li><p> deleteBook(DeleteBookRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *           <li>deleteBook(BookName name)
- *           <li>deleteBook(String name)
+ *           <li><p> deleteBook(BookName name)
+ *           <li><p> deleteBook(String name)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *           <li>deleteBookCallable()
+ *           <li><p> deleteBookCallable()
  *      </ul>
  *       </td>
  *    </tr>
  *    <tr>
- *      <td>UpdateBook</td>
+ *      <td><p> UpdateBook</td>
  *      <td><p> Updates a book. Returns INVALID_ARGUMENT if the name of the book is non-empty and does not equal the existing name.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *           <li>updateBook(UpdateBookRequest request)
+ *           <li><p> updateBook(UpdateBookRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *           <li>updateBook(Book book, FieldMask updateMask)
+ *           <li><p> updateBook(Book book, FieldMask updateMask)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *           <li>updateBookCallable()
+ *           <li><p> updateBookCallable()
  *      </ul>
  *       </td>
  *    </tr>
  *    <tr>
- *      <td>MoveBook</td>
+ *      <td><p> MoveBook</td>
  *      <td><p> Moves a book to another shelf, and returns the new book. The book id of the new book may not be the same as the original book.</td>
  *      <td>
  *      <p>Request object method variants only take one parameter, a request object, which must be constructed before the call.</p>
  *      <ul>
- *           <li>moveBook(MoveBookRequest request)
+ *           <li><p> moveBook(MoveBookRequest request)
  *      </ul>
  *      <p>"Flattened" method variants have converted the fields of the request object into function parameters to enable multiple ways to call the same method.</p>
  *      <ul>
- *           <li>moveBook(BookName name, ShelfName otherShelfName)
- *           <li>moveBook(BookName name, String otherShelfName)
- *           <li>moveBook(String name, ShelfName otherShelfName)
- *           <li>moveBook(String name, String otherShelfName)
+ *           <li><p> moveBook(BookName name, ShelfName otherShelfName)
+ *           <li><p> moveBook(BookName name, String otherShelfName)
+ *           <li><p> moveBook(String name, ShelfName otherShelfName)
+ *           <li><p> moveBook(String name, String otherShelfName)
  *      </ul>
  *      <p>Callable method variants take no parameters and return an immutable API callable object, which can be used to initiate calls to the service.</p>
  *      <ul>
- *           <li>moveBookCallable()
+ *           <li><p> moveBookCallable()
  *      </ul>
  *       </td>
- *    </tr>
  *    </tr>
  *  </table>
  *

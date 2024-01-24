@@ -273,7 +273,8 @@ public class GrpcComplianceStub extends ComplianceStub {
                   builder.add("info.f_bool", String.valueOf(request.getInfo().getFBool()));
                   builder.add("info.f_double", String.valueOf(request.getInfo().getFDouble()));
                   builder.add("info.f_int32", String.valueOf(request.getInfo().getFInt32()));
-                  builder.add("info.f_kingdom", String.valueOf(request.getInfo().getFKingdom()));
+                  builder.add(
+                      "info.f_kingdom", String.valueOf(request.getInfo().getFKingdomValue()));
                   builder.add("info.f_string", String.valueOf(request.getInfo().getFString()));
                   return builder.build();
                 })
