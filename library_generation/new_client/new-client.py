@@ -368,15 +368,6 @@ def generate(
             cwd=repo_root_dir,
         )
 
-        print("Setting parent poms")
-        subprocess.check_call(
-            [
-                "bash",
-                f"{script_dir}/set_parent_pom.sh",
-            ],
-            cwd=repo_root_dir,
-        )
-
     print("Deleting temp files")
     subprocess.check_call(
         [

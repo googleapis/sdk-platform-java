@@ -41,7 +41,7 @@ def load_versions(filename: str, default_group_id: str) -> Mapping[str, module.M
                 group_id = (
                     default_group_id
                     if artifact_id.startswith("google-")
-                    else _proto_group_id(default_group_id)
+                    else __proto_group_id(default_group_id)
                 )
                 modules[artifact_id] = module.Module(
                     group_id=group_id,
@@ -283,7 +283,7 @@ def update_bom_pom(filename: str, modules: List[module.Module]):
 # https://github.com/googleapis/google-cloud-java/issues/9125
 # However, some exceptions are com.google.area120 and com.google.analytics.
 # https://github.com/googleapis/google-cloud-java/issues/9304
-def _proto_group_id(main_artifact_group_id: str) -> str:
+def __proto_group_id(main_artifact_group_id: str) -> str:
     prefix = "com.google"
     list_of_group_id = ["com.google.cloud",
                         "com.google.area120",
@@ -291,6 +291,18 @@ def _proto_group_id(main_artifact_group_id: str) -> str:
     if main_artifact_group_id not in list_of_group_id:
         prefix = main_artifact_group_id
     return f"{prefix}.api.grpc"
+
+
+def __get_monorepo_version(versions: str) -> str:
+    """
+    Returns the current version of google-cloud-java in the given version file
+    :param versions: the versions.txt
+    :return: the current version of google-cloud-java
+    """
+    with open(versions, "r") as f:
+        for line in f.readlines():
+            if "google-cloud-java" in line:
+                return line.split(":")[-1].strip()
 
 
 def main(versions_file, monorepo):
@@ -366,7 +378,7 @@ def main(versions_file, monorepo):
     for path in glob.glob("proto-google-*"):
         if not path in existing_modules:
             existing_modules[path] = module.Module(
-                group_id=_proto_group_id(group_id),
+                group_id=__proto_group_id(group_id),
                 artifact_id=path,
                 version=main_module.version,
                 release_version=main_module.release_version,
@@ -374,7 +386,7 @@ def main(versions_file, monorepo):
             if path not in excluded_dependencies_list \
                     and path not in main_module.artifact_id:
                 required_dependencies[path] = module.Module(
-                    group_id=_proto_group_id(group_id),
+                    group_id=__proto_group_id(group_id),
                     artifact_id=path,
                     version=main_module.version,
                     release_version=main_module.release_version,
@@ -391,7 +403,7 @@ def main(versions_file, monorepo):
             if path not in excluded_dependencies_list \
                 and path not in main_module.artifact_id:
                 required_dependencies[path] = module.Module(
-                    group_id=_proto_group_id(group_id),
+                    group_id=__proto_group_id(group_id),
                     artifact_id=path,
                     version=main_module.version,
                     release_version=main_module.release_version,
@@ -400,7 +412,7 @@ def main(versions_file, monorepo):
     for path in glob.glob("grpc-google-*"):
         if not path in existing_modules:
             existing_modules[path] = module.Module(
-                group_id=_proto_group_id(group_id),
+                group_id=__proto_group_id(group_id),
                 artifact_id=path,
                 version=main_module.version,
                 release_version=main_module.release_version,
@@ -408,7 +420,7 @@ def main(versions_file, monorepo):
             if path not in excluded_dependencies_list \
                 and path not in main_module.artifact_id:
                 required_dependencies[path] = module.Module(
-                    group_id=_proto_group_id(group_id),
+                    group_id=__proto_group_id(group_id),
                     artifact_id=path,
                     version=main_module.version,
                     release_version=main_module.release_version,
@@ -428,7 +440,7 @@ def main(versions_file, monorepo):
             if path not in excluded_dependencies_list \
                 and path not in main_module.artifact_id:
                 required_dependencies[path] = module.Module(
-                    group_id=_proto_group_id(group_id),
+                    group_id=__proto_group_id(group_id),
                     artifact_id=path,
                     version=main_module.version,
                     release_version=main_module.release_version,
@@ -478,6 +490,8 @@ def main(versions_file, monorepo):
             update_bom_pom(f"{artifact_id}-bom/pom.xml", modules)
     elif artifact_id+"-bom" not in excluded_poms_list:
         print("creating missing bom pom.xml")
+        monorepo_version = __get_monorepo_version(versions_file) \
+            if monorepo else ""
         templates.render(
             template_name="bom_pom.xml.j2",
             output_name=f"{artifact_id}-bom/pom.xml",
@@ -485,6 +499,8 @@ def main(versions_file, monorepo):
             name=name,
             modules=modules,
             main_module=main_module,
+            monorepo=monorepo,
+            monorepo_version=monorepo_version
         )
 
     if os.path.isfile("pom.xml"):
@@ -492,6 +508,8 @@ def main(versions_file, monorepo):
         update_parent_pom("pom.xml", modules)
     else:
         print("creating missing parent pom.xml")
+        monorepo_version = __get_monorepo_version(versions_file) \
+            if monorepo else ""
         templates.render(
             template_name="parent_pom.xml.j2",
             output_name="./pom.xml",
@@ -499,6 +517,8 @@ def main(versions_file, monorepo):
             modules=modules,
             main_module=main_module,
             name=name,
+            monorepo=monorepo,
+            monorepo_version=monorepo_version
         )
 
     print(f"updating modules in {versions_file}")
@@ -508,7 +528,7 @@ def main(versions_file, monorepo):
     for dependency_module in extra_managed_modules:
         if dependency_module not in existing_modules:
             existing_modules[dependency_module] = module.Module(
-                group_id=_proto_group_id(group_id),
+                group_id=__proto_group_id(group_id),
                 artifact_id=dependency_module,
                 version=main_module.version,
                 release_version=main_module.release_version,
