@@ -59,7 +59,7 @@ jobs:
 
         # create and activate the python virtualenv
         if [ $(pyenv versions | grep "${PYTHON_VERSION}" | wc -l) -eq 0 ]; then
-          pyenv install "${python_version}"
+          pyenv install "${PYTHON_VERSION}"
         fi
         if [ $(pyenv virtualenvs | grep "${PYTHON_VERSION}" | grep "postprocessing" | wc -l) -eq 0 ];then
           pyenv virtualenv "${PYTHON_VERSION}" "postprocessing"
