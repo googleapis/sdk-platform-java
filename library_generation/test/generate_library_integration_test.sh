@@ -22,6 +22,7 @@ source "${script_dir}/test_utilities.sh"
 source "${script_dir}/../utilities.sh"
 output_folder="$(pwd)/output"
 
+
 while [[ $# -gt 0 ]]; do
 key="$1"
 case $key in
@@ -116,8 +117,6 @@ for configuration_yaml in "${configuration_yamls[@]}"; do
       popd # target_folder
       if [[ ${source_diff_result} == 0 ]] && [[ ${pom_diff_result} == 0 ]] ; then
         echo "SUCCESS: Comparison finished, no difference is found."
-        # Delete google-cloud-java to allow a sparse clone of the next library
-        rm -rdf google-cloud-java
       elif [ ${source_diff_result} != 0 ]; then
         echo "FAILURE: Differences found in proto path: java-${api_shortname}."
         exit "${source_diff_result}"
