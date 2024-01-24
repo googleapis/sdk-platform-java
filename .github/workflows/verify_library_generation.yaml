@@ -9,23 +9,7 @@ on:
   workflow_dispatch:
 name: verify_library_generation
 jobs:
-  compute_python_version:
-    runs-on: ubuntu-22.04
-    outputs:
-      python_version: ${{ steps.python_version_step.outputs.python_version }}
-    steps:
-    - uses: actions/checkout@v3
-    - name: compute python version
-      id: python_version_step
-      shell: bash
-      run: |
-        set -x
-        pushd library_generation
-        source utilities.sh
-        python_version_from_config_yaml=$(py_util "get_configuration_yaml_python_version" "$(pwd)/test/resources/integration/google-cloud-java/generation_config.yaml")
-        echo "python_version=${python_version_from_config_yaml}" >> "$GITHUB_OUTPUT"
   integration_tests:
-    needs: compute_python_version
     strategy:
       matrix:
         java: [ 11 ]
@@ -41,7 +25,7 @@ jobs:
         cache: maven
     - uses: actions/setup-python@v4
       with:
-        python-version: ${{ needs.compute_python_version.outputs.python_version }}
+        python-version: 3.11
     - name: install pyenv
       shell: bash
       run: |
@@ -52,21 +36,8 @@ jobs:
         export PATH="$PYENV_ROOT/bin:$PATH"
         echo "PYENV_ROOT=${PYENV_ROOT}" >> $GITHUB_ENV
         echo "PATH=${PATH}" >> $GITHUB_ENV
-        # init pyenv
-        eval "$(pyenv init --path)"
-        eval "$(pyenv init -)"
-        eval "$(pyenv virtualenv-init -)"
 
-        # create and activate the python virtualenv
-        if [ $(pyenv versions | grep "${PYTHON_VERSION}" | wc -l) -eq 0 ]; then
-          pyenv install "${PYTHON_VERSION}"
-        fi
-        if [ $(pyenv virtualenvs | grep "${PYTHON_VERSION}" | grep "postprocessing" | wc -l) -eq 0 ];then
-          pyenv virtualenv "${PYTHON_VERSION}" "postprocessing"
-        fi
         set +ex
-      env:
-        PYTHON_VERSION: ${{ needs.compute_python_version.outputs.python_version }}
     - name: install python dependencies
       shell: bash
       run: |
@@ -104,7 +75,6 @@ jobs:
         --googleapis_gen_url https://cloud-java-bot:${{ secrets.CLOUD_JAVA_BOT_GITHUB_TOKEN }}@github.com/googleapis/googleapis-gen.git \
         --enable_postprocessing "${{ matrix.post_processing }}"
   unit_tests:
-    needs: compute_python_version
     strategy:
       matrix:
         java: [ 8 ]
@@ -120,7 +90,7 @@ jobs:
         brew install coreutils
     - uses: actions/setup-python@v4
       with:
-        python-version: ${{ needs.compute_python_version.outputs.python_version }}
+        python-version: 3.11
     - name: install python dependencies
       shell: bash
       run: |
