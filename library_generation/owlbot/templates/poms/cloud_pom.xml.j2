@@ -6,7 +6,9 @@
   <version>{{module.version}}</version><!-- {x-version-update:{{module.artifact_id}}:current} -->
   <packaging>jar</packaging>
   <name>Google {{name}}</name>
+  {%- if not monorepo %}
   <url>https://github.com/{{repo}}</url>
+  {%- endif %}
   <description>{{name}} {{description}}</description>
   <parent>
     <groupId>{{parent_module.group_id}}</groupId>
@@ -112,6 +114,7 @@
     </dependency>
   </dependencies>
 
+  {%- if not monorepo %}
   <profiles>
     <profile>
       <id>java9</id>
@@ -135,4 +138,5 @@
         </plugin>
     </plugins>
   </build>
+  {%- endif %}
 </project>

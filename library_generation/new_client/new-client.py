@@ -359,15 +359,6 @@ def generate(
         cwd=repo_root_dir,
     )
 
-    print("Consolidating configurations")
-    subprocess.check_call(
-        [
-            f"{script_dir}/consolidate_config.sh",
-            f"{output_dir}"
-        ],
-        cwd=repo_root_dir,
-    )
-
     if not split_repo:
         print("Regenerating the GAPIC BOM")
         subprocess.check_call(

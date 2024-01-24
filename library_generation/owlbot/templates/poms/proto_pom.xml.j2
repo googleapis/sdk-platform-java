@@ -35,6 +35,7 @@
     </dependency>
   </dependencies>
 
+  {%- if not monorepo %}
   <build>
     <plugins>
       <plugin>
@@ -43,4 +44,5 @@
         </plugin>
     </plugins>
   </build>
+  {%- endif %}
 </project>

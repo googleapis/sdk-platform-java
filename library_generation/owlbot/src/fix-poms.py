@@ -399,6 +399,7 @@ def main(versions_file, monorepo):
                 module=required_dependencies[path],
                 parent_module=parent_module,
                 main_module=main_module,
+                monorepo=monorepo,
             )
             if path not in excluded_dependencies_list \
                 and path not in main_module.artifact_id:
@@ -436,6 +437,7 @@ def main(versions_file, monorepo):
                 parent_module=parent_module,
                 main_module=main_module,
                 proto_module=existing_modules[proto_artifact_id],
+                monorepo=monorepo,
             )
             if path not in excluded_dependencies_list \
                 and path not in main_module.artifact_id:
@@ -482,6 +484,7 @@ def main(versions_file, monorepo):
             description=repo_metadata["api_description"],
             proto_modules=proto_modules,
             grpc_modules=grpc_modules,
+            monorepo=monorepo,
         )
 
     if os.path.isfile(f"{artifact_id}-bom/pom.xml"):
