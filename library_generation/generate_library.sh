@@ -291,7 +291,8 @@ case "${proto_path}" in
 esac
 # copy proto files to proto-*/src/main/proto
 for proto_src in ${proto_files}; do
-  if [[ "${proto_src}" == "google/cloud/common/operation_metadata.proto" ]]; then
+  if [[ "${proto_src}" == "google/cloud/common/operation_metadata.proto" ]] ||
+     [[ "${proto_src}" == "google/shopping/type/types.proto" ]]; then
     continue
   fi
   mkdir -p "${temp_destination_path}/proto-${folder_name}/src/main/proto"
