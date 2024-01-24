@@ -339,14 +339,6 @@ def generate(
 
     # Repo level post process
     script_dir = "library_generation/repo-level-postprocess"
-    print("Deleting non generated samples")
-    subprocess.check_call(
-        [
-            "bash",
-            f"{script_dir}/delete_non_generated_samples.sh"
-        ],
-        cwd=repo_root_dir
-    )
 
     print("Regenerating root pom.xml")
     subprocess.check_call(
