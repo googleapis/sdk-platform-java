@@ -35,7 +35,7 @@ class GenerationConfig:
   by the "model" classes
   """
   @staticmethod
-  def from_yaml(path_to_yaml: str): -> GenerationConfig:
+  def from_yaml(path_to_yaml: str):
     config = None
     with open(path_to_yaml, 'r') as file_stream:
       config = yaml.load(file_stream, yaml.Loader)

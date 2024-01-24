@@ -45,6 +45,14 @@ class UtilitiesTest(unittest.TestCase):
     self.assertEqual('asset speech apigee-connect dialogflow compute kms '
                      + 'redis containeranalysis iam iamcredentials', result)
 
+  def test_get_configuration_yaml_destination_path_returns_valid_destination_path(self):
+    result = util.get_configuration_yaml_destination_path(self.CONFIGURATION_YAML_PATH)
+    self.assertEqual('google-cloud-java', result)
+
+  def test_get_configuration_yaml_python_version_returns_valid_destination_path(self):
+    result = util.get_configuration_yaml_python_version(self.CONFIGURATION_YAML_PATH)
+    self.assertEqual('3.11.2', result)
+
   def test_sh_util_existent_function_succeeds(self):
     result = util.sh_util('extract_folder_name path/to/folder_name')
     self.assertEqual('folder_name', result)
@@ -81,7 +89,6 @@ class UtilitiesTest(unittest.TestCase):
     util.delete_if_exists(file)
     util.delete_if_exists(folder)
     self.assertEqual(0, len(os.listdir(temp_dir)))
-
 
 
 
