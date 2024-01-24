@@ -99,6 +99,13 @@ def main(ctx):
          "needed or not."
 )
 @click.option(
+    "--destination-name",
+    type=str,
+    default=None,
+    help="The directory name of the new library. By default it's "
+         "java-<api_shortname>"
+)
+@click.option(
     "--proto-path",
     required=True,
     type=str,
@@ -165,6 +172,7 @@ def generate(
     requires_billing,
     transport,
     language,
+    destination_name,
     proto_path,
     cloud_api,
     group_id,
@@ -177,6 +185,8 @@ def generate(
     cloud_prefix = "cloud-" if cloud_api else ""
 
     destination_path = f"{language}-{api_shortname}"
+    if destination_name is not None:
+        destination_path = f"{language}-{destination_name}"
 
     if distribution_name is None:
         distribution_name = f"{group_id}:google-{cloud_prefix}{api_shortname}"
@@ -224,7 +234,7 @@ def generate(
     if rpc_docs:
         repo_metadata["rpc_documentation"] = rpc_docs
     # Initialize workdir
-    workdir = Path(f"{sys.path[0]}/../../output/java-{api_shortname}").resolve()
+    workdir = Path(f"{sys.path[0]}/../../output/{destination_path}").resolve()
     if os.path.isdir(workdir):
         sys.exit(
             "Couldn't create the module because "
