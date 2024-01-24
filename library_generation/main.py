@@ -68,7 +68,7 @@ def generate_from_yaml(
   for library in target_libraries:
     print(f'generating library {library.api_shortname}')
     generate_composed_library(
-        config, library, enable_postprocessing, repository_path
+        config, library, repository_path, enable_postprocessing
     )
 
 

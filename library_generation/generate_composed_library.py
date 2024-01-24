@@ -35,13 +35,14 @@ Arguments
  - enable_postprocessing: true if postprocessing should be done on the generated
    libraries
  - repository_path: path to the repository where the generated files will be
-   sent. If not specified, it will be downloaded. The versions file will be inferred from this folder
+   sent. If not specified, it will default to the one defined in the configuration yaml
+   and will be downloaded. The versions file will be inferred from this folder
 """
 def generate_composed_library(
     config: GenerationConfig,
     library: Library,
-    enable_postprocessing: bool,
-    repository_path: str
+    repository_path: str,
+    enable_postprocessing: bool = True,
 ) -> None:
   output_folder = util.sh_util('get_output_folder')
 
