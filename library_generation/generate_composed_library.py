@@ -23,6 +23,7 @@ from model.GenerationConfig import GenerationConfig
 from model.Library import Library
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
+MONOREPO_NAME = 'google-cloud-java'
 
 """
 Main function in charge of generating libraries composed of more than one
@@ -64,6 +65,7 @@ def generate_composed_library(
   print('downloading googleapis')
   util.sh_util(f'download_googleapis_files_and_folders "{output_folder}" "{googleapis_commitish}"')
 
+  is_monorepo = config.destination_path == MONOREPO_NAME
 
   base_arguments = []
   base_arguments += util.create_argument('gapic_generator_version', config)
@@ -71,16 +73,16 @@ def generate_composed_library(
   base_arguments += util.create_argument('protobuf_version', config)
 
   destination_path = f'java-{library.api_shortname}'
-  if config.destination_path == 'google-cloud-java':
+  if is_monorepo:
     destination_path = config.destination_path + '/' + destination_path
 
   versions_file = ''
-  if 'google-cloud-java' in destination_path:
+  if is_monorepo:
     print('this is a monorepo library')
     library_folder = destination_path.split('/')[-1]
     if repository_path is None:
-      repository_path = f'{output_folder}/google-cloud-java'
-      clone_out = util.sh_util(f'sparse_clone "https://github.com/googleapis/google-cloud-java.git" "{library_folder} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"', cwd=output_folder)
+      repository_path = f'{output_folder}/{MONOREPO_NAME}'
+      clone_out = util.sh_util(f'sparse_clone "https://github.com/googleapis/{MONOREPO_NAME}.git" "{library_folder} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"', cwd=output_folder)
       print(clone_out)
     versions_file = f'{repository_path}/versions.txt'
   else:
