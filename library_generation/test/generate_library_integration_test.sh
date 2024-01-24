@@ -106,6 +106,7 @@ for configuration_yaml in "${configuration_yamls[@]}"; do
         -r \
         --exit-code \
         -- \
+        . \
         ':!*pom.xml' \
         ':!*README.md' \
         ':!*gapic_metadata.json' \
