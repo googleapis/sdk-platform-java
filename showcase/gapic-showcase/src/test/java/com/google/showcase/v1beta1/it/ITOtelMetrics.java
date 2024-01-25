@@ -76,4 +76,47 @@ public class ITOtelMetrics {
     // assertThat(exception.getStatusCode().getCode()).isEqualTo(StatusCode.Code.CANCELLED);
   }
 
+  @Test
+  public void testGrpc_attemptFailedRetriesExhausted_throwsException() throws Exception {
+
+    RetrySettings defaultRetrySettings =
+        RetrySettings.newBuilder()
+            .setMaxAttempts(2)
+            .build();
+    EchoClient grpcClientWithRetrySetting = TestClientInitializer.createGrpcEchoClientOtelWithRetrySettings(defaultRetrySettings, ImmutableSet.of(Code.INVALID_ARGUMENT));
+
+    BlockRequest blockRequest =
+        BlockRequest.newBuilder()
+            .setError(Status.newBuilder().setCode(Code.INVALID_ARGUMENT.ordinal()).build())
+            .build();
+    RetryingFuture<BlockResponse> retryingFuture =
+        (RetryingFuture<BlockResponse>) grpcClientWithRetrySetting.blockCallable().futureCall(blockRequest);
+    BlockResponse blockResponse = retryingFuture.get(100, TimeUnit.SECONDS);
+  }
+
+  @Test
+  public void testGrpc_attemptPermanentFailure_throwsException() throws Exception {
+
+    RetrySettings defaultRetrySettings =
+        RetrySettings.newBuilder()
+            .setMaxAttempts(2)
+            .build();
+    EchoClient grpcClientWithRetrySetting = TestClientInitializer.createGrpcEchoClientOtelWithRetrySettings(defaultRetrySettings, ImmutableSet.of(Code.UNAVAILABLE));
+
+    // if the request code is not in set of retryable codes, the ApiResultRetryAlgorithm
+    // send false for shouldRetry(), which sends false in retryAlgorithm.shouldRetryBasedOnResult()
+
+    BlockRequest blockRequest =
+        BlockRequest.newBuilder()
+            .setError(Status.newBuilder().setCode(Code.INVALID_ARGUMENT.ordinal()).build())
+            .build();
+
+    RetryingFuture<BlockResponse> retryingFuture =
+        (RetryingFuture<BlockResponse>) grpcClientWithRetrySetting.blockCallable().futureCall(blockRequest);
+    BlockResponse blockResponse = retryingFuture.get(100,TimeUnit.SECONDS);
+
+  }
+
+
+
 }
