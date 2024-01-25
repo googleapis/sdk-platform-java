@@ -30,7 +30,10 @@
 
 package com.google.api.generator.gapic.composer.common;
 
+import static com.google.api.generator.gapic.composer.common.AbstractTransportServiceStubClassComposer.shouldGenerateRequestMutator;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import com.google.api.FieldInfo.Format;
 import com.google.api.generator.engine.ast.LambdaExpr;
@@ -59,6 +62,91 @@ public class AbstractTransportServiceStubClassComposerTest {
     writerVisitor = new JavaWriterVisitor();
   }
 
+  @Test
+  public void shouldGenerateRequestMutator_fieldConfiguredCorrectly() {
+    String ECHO_PACKAGE = "com.google.showcase.v1beta1";
+    List<String> autoPopulatedFieldList = new ArrayList<>();
+    autoPopulatedFieldList.add("TestField");
+
+    Method METHOD =
+        Method.builder()
+            .setName("TestMethod")
+            .setInputType(
+                TypeNode.withReference(
+                    VaporReference.builder()
+                        .setName("SampleRequest")
+                        .setPakkage(ECHO_PACKAGE)
+                        .build()))
+            .setOutputType(TypeNode.STRING)
+            .setAutoPopulatedFields(autoPopulatedFieldList)
+            .build();
+
+    Field FIELD =
+        Field.builder()
+            .setName("TestField")
+            .setFieldInfoFormat(Format.UUID4)
+            .setType(TypeNode.STRING)
+            .build();
+    List<Field> fieldList = new ArrayList<>();
+    fieldList.add(FIELD);
+
+    Message MESSAGE =
+        Message.builder()
+            .setFullProtoName("com.google.showcase.v1beta1.SampleRequest")
+            .setName("SampleRequest")
+            .setType(TypeNode.STRING)
+            .setFields(fieldList)
+            .build();
+
+    ImmutableMap<String, Message> messageTypes =
+        ImmutableMap.of("com.google.showcase.v1beta1.SampleRequest", MESSAGE);
+
+    assertTrue(shouldGenerateRequestMutator(METHOD, messageTypes));
+  }
+
+  @Test
+  public void shouldNotGenerateRequestMutator_fieldConfiguredIncorrectly() {
+    String ECHO_PACKAGE = "com.google.showcase.v1beta1";
+    List<String> autoPopulatedFieldList = new ArrayList<>();
+    autoPopulatedFieldList.add("TestField");
+
+    Method METHOD =
+        Method.builder()
+            .setName("TestMethod")
+            .setInputType(
+                TypeNode.withReference(
+                    VaporReference.builder()
+                        .setName("SampleRequest")
+                        .setPakkage(ECHO_PACKAGE)
+                        .build()))
+            .setOutputType(TypeNode.STRING)
+            .setAutoPopulatedFields(autoPopulatedFieldList)
+            .build();
+
+    Field FIELD =
+        Field.builder()
+            .setName("TestField")
+            .setFieldInfoFormat(Format.IPV6)
+            .setType(TypeNode.STRING)
+            .build();
+    List<Field> fieldList = new ArrayList<>();
+    fieldList.add(FIELD);
+
+    Message MESSAGE =
+        Message.builder()
+            .setFullProtoName("com.google.showcase.v1beta1.SampleRequest")
+            .setName("SampleRequest")
+            .setType(TypeNode.STRING)
+            .setFields(fieldList)
+            .build();
+
+    ImmutableMap<String, Message> messageTypes =
+        ImmutableMap.of("com.google.showcase.v1beta1.SampleRequest", MESSAGE);
+
+    assertFalse(shouldGenerateRequestMutator(METHOD, messageTypes));
+  }
+
+  // TODO: add unit tests where the field is not found in the messageTypes map
   @Test
   public void createAutoPopulatedRequestStatement_sampleField() {
     Reference RequestBuilderRef =

@@ -92,6 +92,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import javax.annotation.Generated;
 import javax.annotation.Nullable;
@@ -325,8 +326,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
               .build();
     }
 
-    if (method.hasAutoPopulatedFields()
-        && Boolean.TRUE.equals(shouldAutoPopulateFields(method, messageTypes))) {
+    if (method.hasAutoPopulatedFields() && shouldGenerateRequestMutator(method, messageTypes)) {
       callSettingsBuilderExpr =
           MethodInvocationExpr.builder()
               .setExprReferenceExpr(callSettingsBuilderExpr)
@@ -1315,33 +1315,27 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
       List<Statement> bodyStatements,
       VariableExpr returnBuilderVarExpr) {
 
-    if (method.inputType().reference() == null
-        || method.inputType().reference().fullName() == null) {
+    if (!shouldGenerateRequestMutator(method, messageTypes)) {
       return bodyStatements;
     }
-    String methodRequestName = method.inputType().reference().fullName();
-    if (Strings.isNullOrEmpty(methodRequestName)) {
-      return bodyStatements;
-    }
-    Message methodRequestMessage = messageTypes.get(methodRequestName);
-    if (methodRequestMessage == null || methodRequestMessage.fields() == null) {
-      return bodyStatements;
-    }
-    for (String field : method.autoPopulatedFields()) {
-      Optional<Field> matchingField =
-          methodRequestMessage.fields().stream()
-              .filter(field1 -> field1.name().equals(field))
-              .findFirst();
-      if (!matchingField.isPresent()) {
-        continue;
-      }
-      Field matchedField = matchingField.get();
-      if (matchedField.shouldAutoPopulate()) {
-        bodyStatements.add(
-            // Chain If statements based on number of autopopulated fields
-            createAutoPopulatedRequestStatement(method, matchedField.name(), returnBuilderVarExpr));
-      }
-    }
+    Message methodRequestMessage = messageTypes.get(method.inputType().reference().fullName());
+    method.autoPopulatedFields().stream()
+        // Map each field name to its corresponding Field object, if present
+        .map(
+            fieldName ->
+                methodRequestMessage.fields().stream()
+                    .filter(field -> field.name().equals(fieldName))
+                    .findFirst())
+        .filter(Optional::isPresent) // Keep only the existing Fields
+        .map(Optional::get) // Extract the Field from the Optional
+        .filter(Field::canBeAutoPopulated) // Filter fields that can be autopopulated
+        .forEach(
+            matchedField -> {
+              // Create statements for each autopopulated Field
+              bodyStatements.add(
+                  createAutoPopulatedRequestStatement(
+                      method, matchedField.name(), returnBuilderVarExpr));
+            });
     return bodyStatements;
   }
 
@@ -1418,36 +1412,29 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
   }
 
   @VisibleForTesting
-  static Boolean shouldAutoPopulateFields(
+  static Boolean shouldGenerateRequestMutator(
       Method method, ImmutableMap<String, Message> messageTypes) {
-
-    boolean shouldAutoPopulate = false;
     if (method.inputType().reference() == null
         || method.inputType().reference().fullName() == null) {
-      return shouldAutoPopulate;
+      return false;
     }
     String methodRequestName = method.inputType().reference().fullName();
-    if (Strings.isNullOrEmpty(methodRequestName)) {
-      return shouldAutoPopulate;
-    }
+
     Message methodRequestMessage = messageTypes.get(methodRequestName);
     if (methodRequestMessage == null || methodRequestMessage.fields() == null) {
-      return shouldAutoPopulate;
+      return false;
     }
-    for (String field : method.autoPopulatedFields()) {
-      Optional<Field> matchingField =
-          methodRequestMessage.fields().stream()
-              .filter(field1 -> field1.name().equals(field))
-              .findFirst();
-      if (!matchingField.isPresent()) {
-        continue;
-      }
-      Field matchedField = matchingField.get();
-      if (matchedField.shouldAutoPopulate()) {
-        shouldAutoPopulate = true;
-      }
-    }
-    return shouldAutoPopulate;
+    return method.autoPopulatedFields().stream().anyMatch(shouldAutoPopulate(methodRequestMessage));
+  }
+
+  /**
+   * The field has to exist in the Message and properly configured in the Message(see {@link
+   * Field#canBeAutoPopulated()})
+   */
+  private static Predicate<String> shouldAutoPopulate(Message methodRequestMessage) {
+    return fieldName ->
+        methodRequestMessage.fields().stream()
+            .anyMatch(field -> field.name().equals(fieldName) && field.canBeAutoPopulated());
   }
 
   protected LambdaExpr createRequestParamsExtractorClassInstance(

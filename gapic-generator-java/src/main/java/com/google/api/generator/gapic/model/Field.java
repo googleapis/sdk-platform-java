@@ -77,7 +77,7 @@ public abstract class Field {
   // those three conditions are met, do not autopopulate the field.
   // In the future, if additional formats are supported for autopopulation, this will need to be
   // refactored to support those formats.
-  public boolean shouldAutoPopulate() {
+  public boolean canBeAutoPopulated() {
     return Format.UUID4.equals(fieldInfoFormat())
         && !isRequired()
         && TypeNode.STRING.equals(type());

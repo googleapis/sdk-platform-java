@@ -32,7 +32,7 @@ public class FieldTest {
             .setType(TypeNode.STRING)
             .build();
 
-    assertEquals(true, FIELD.shouldAutoPopulate());
+    assertEquals(true, FIELD.canBeAutoPopulated());
   }
 
   @Test
@@ -45,7 +45,7 @@ public class FieldTest {
             .setType(TypeNode.STRING)
             .build();
 
-    assertEquals(false, FIELD.shouldAutoPopulate());
+    assertEquals(false, FIELD.canBeAutoPopulated());
   }
 
   @Test
@@ -58,7 +58,7 @@ public class FieldTest {
             .setType(TypeNode.STRING)
             .build();
 
-    assertEquals(false, FIELD.shouldAutoPopulate());
+    assertEquals(false, FIELD.canBeAutoPopulated());
   }
 
   @Test
@@ -71,6 +71,6 @@ public class FieldTest {
             .setType(TypeNode.BOOLEAN)
             .build();
 
-    assertEquals(false, FIELD.shouldAutoPopulate());
+    assertEquals(false, FIELD.canBeAutoPopulated());
   }
 }
