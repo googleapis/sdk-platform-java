@@ -22,6 +22,7 @@ import click
 import templates
 from git import Repo
 from client_inputs import parse
+from repo_level_post_processor import repo_level_post_process
 import shutil
 
 
@@ -156,10 +157,10 @@ def main(ctx):
     help="If it exists, link to the RPC Documentation for a service"
 )
 @click.option(
-    "--split-repo",
+    "--is-monorepo",
     type=bool,
-    default=False,
-    help="Whether generating a library into a split repository"
+    default=True,
+    help="Whether generating a library into a monorepo, e.g., google-cloud-java"
 )
 def generate(
     api_shortname,
@@ -180,7 +181,7 @@ def generate(
     googleapis_url,
     rest_docs,
     rpc_docs,
-    split_repo,
+    is_monorepo,
 ):
     cloud_prefix = "cloud-" if cloud_api else ""
 
@@ -204,7 +205,7 @@ def generate(
         sys.exit("api_shortname is empty")
 
     repo = "googleapis/google-cloud-java"
-    if split_repo:
+    if not is_monorepo:
         repo = f"{language}-{output_name}"
 
     repo_metadata = {
@@ -237,7 +238,7 @@ def generate(
             "Couldn't create the module because "
             f"the module {workdir} already exists. In Java client library "
             "generation, a new API version of an existing module does not "
-            "require new-client.py invocation. "
+            "require generate_repo.py invocation. "
             "See go/yoshi-java-new-client#adding-a-new-service-version-by-owlbot."
         )
     print(f"Creating a new module {workdir}")
@@ -301,7 +302,7 @@ def generate(
     )
     repo_root_dir = Path(f"{sys.path[0]}/../../").resolve()
     generator_version = subprocess.check_output(
-        ["library_generation/new_client/get_generator_version_from_workspace.sh"],
+        ["library_generation/repo_generation/get_generator_version_from_workspace.sh"],
         cwd=repo_root_dir
     ).strip()
     print(f"Generator version: {generator_version}")
@@ -344,27 +345,11 @@ def generate(
         name_prefix="java-"
     )
 
-    # Repo level post process
-    script_dir = "library_generation/repo-level-postprocess"
-
-    print("Regenerating root pom.xml")
-    subprocess.check_call(
-        [
-            f"{script_dir}/generate_root_pom.sh",
-            f"{output_dir}"
-        ],
-        cwd=repo_root_dir,
+    repo_level_post_process(
+        repo_root_dir=repo_root_dir,
+        output_dir=output_dir,
+        is_monorepo=is_monorepo
     )
-
-    if not split_repo:
-        print("Regenerating the GAPIC BOM")
-        subprocess.check_call(
-            [
-                f"{script_dir}/generate_gapic_bom.sh",
-                f"{output_dir}"
-            ],
-            cwd=repo_root_dir,
-        )
 
     print("Deleting temp files")
     subprocess.check_call(
