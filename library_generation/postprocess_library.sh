@@ -88,16 +88,6 @@ docker run --rm \
   --source-repo=/pre-processed-libraries \
   --config-file=.OwlBot.yaml
 
-# if the postprocessing_target is a library of google-cloud-java, we have to "unpack" the
-# owl-bot-staging folder so it's properly processed by java owlbot
-if [[ $(basename $(dirname "${postprocessing_target}")) == "google-cloud-java" ]]; then
-  pushd "${postprocessing_target}"
-  mv owl-bot-staging/* temp
-  rm -rd owl-bot-staging/
-  mv temp owl-bot-staging
-  popd # postprocessing_target
-fi
-
 # we clone the synthtool library and manually build it
 mkdir -p /tmp/synthtool
 pushd /tmp/synthtool
