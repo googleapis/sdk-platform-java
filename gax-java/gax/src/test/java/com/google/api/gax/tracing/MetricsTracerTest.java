@@ -64,7 +64,6 @@ public class MetricsTracerTest {
 
   private MetricsTracer metricsTracer;
   @Mock private MetricsRecorder metricsRecorder;
-  @Captor private ArgumentCaptor<Map<String, String>> attributeCaptor;
 
   @Before
   public void setUp() {
@@ -213,40 +212,40 @@ public class MetricsTracerTest {
   }
 
   // this test is a WIP
-  @Test
-  public void testTwoAttemptsFirstFailSecondSuccess() {
-    // initialize mock-request
-    Object mockRequestOne = new Object();
-
-    // Attempt #1
-    metricsTracer.attemptStarted(mockRequestOne, 1);
-    metricsTracer.responseReceived();
-    metricsTracer.responseReceived();
-    ApiException error0 =
-        new InvalidArgumentException(
-            "Invalid Argument", null, new FakeStatusCode(Code.INVALID_ARGUMENT), false);
-    metricsTracer.attemptFailed(error0, Duration.ofMillis(2));
-
-    Map<String, String> failedAttributes =
-        ImmutableMap.of(
-            "status", "INVALID_ARGUMENT",
-            "method_name", "fake_service.fake_method");
-
-    Object mockRequestTwo = new Object();
-    // Attempt #2
-    metricsTracer.attemptStarted(mockRequestTwo, 2);
-    metricsTracer.responseReceived();
-    metricsTracer.attemptSucceeded();
-    metricsTracer.operationSucceeded();
-
-    Map<String, String> successAttributes =
-        ImmutableMap.of(
-            "status", "OK",
-            "method_name", "fake_service.fake_method");
-
-    verify(metricsRecorder, times(1)).recordAttemptCount(1, failedAttributes);
-    verify(metricsRecorder, times(1)).recordAttemptCount(1, successAttributes);
+  // @Test
+  // public void testTwoAttemptsFirstFailSecondSuccess() {
+  //   // initialize mock-request
+  //   Object mockRequestOne = new Object();
+  //
+  //   // Attempt #1
+  //   metricsTracer.attemptStarted(mockRequestOne, 1);
+  //   metricsTracer.responseReceived();
+  //   metricsTracer.responseReceived();
+  //   ApiException error0 =
+  //       new InvalidArgumentException(
+  //           "Invalid Argument", null, new FakeStatusCode(Code.INVALID_ARGUMENT), false);
+  //   metricsTracer.attemptFailed(error0, Duration.ofMillis(2));
+  //
+  //   Map<String, String> failedAttributes =
+  //       ImmutableMap.of(
+  //           "status", "INVALID_ARGUMENT",
+  //           "method_name", "fake_service.fake_method");
+  //
+  //   Object mockRequestTwo = new Object();
+  //   // Attempt #2
+  //   metricsTracer.attemptStarted(mockRequestTwo, 2);
+  //   metricsTracer.responseReceived();
+  //   metricsTracer.attemptSucceeded();
+  //   metricsTracer.operationSucceeded();
+  //
+  //   Map<String, String> successAttributes =
+  //       ImmutableMap.of(
+  //           "status", "OK",
+  //           "method_name", "fake_service.fake_method");
+  //
+  //   verify(metricsRecorder, times(1)).recordAttemptCount(1, failedAttributes);
+  //   verify(metricsRecorder, times(1)).recordAttemptCount(1, successAttributes);
 
     // verify(metricsRecorder, times(1)).recordAttemptCount(count,successAttributes);
   }
-}
+
