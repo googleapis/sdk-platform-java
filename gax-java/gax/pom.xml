@@ -57,19 +57,6 @@
       <artifactId>graal-sdk</artifactId>
       <scope>provided</scope>
     </dependency>
-    <!-- Adding Otel dependencies -->
-    <dependency>
-      <groupId>io.opentelemetry</groupId>
-      <artifactId>opentelemetry-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.opentelemetry</groupId>
-      <artifactId>opentelemetry-sdk</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.opentelemetry</groupId>
-      <artifactId>opentelemetry-exporter-otlp</artifactId>
-    </dependency>
   </dependencies>
 
   <build>

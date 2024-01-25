@@ -139,6 +139,7 @@ public class MetricsTracer implements ApiTracer {
     metricsRecorder.recordAttemptCount(1, attributes);
   }
 
+  @InternalApi("Visible for testing")
   static String extractStatus(@Nullable Throwable error) {
     final String statusString;
 
