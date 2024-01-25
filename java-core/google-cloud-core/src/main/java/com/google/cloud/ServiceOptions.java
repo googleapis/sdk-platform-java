@@ -113,8 +113,6 @@ public abstract class ServiceOptions<
   private transient ServiceRpc rpc;
   private final ApiTracerFactory apiTracerFactory;
 
-  private final ApiTracerFactory apiTracerFactory;
-
   /**
    * Builder for {@code ServiceOptions}.
    *
@@ -141,8 +139,6 @@ public abstract class ServiceOptions<
     private HeaderProvider headerProvider;
     private String clientLibToken = ServiceOptions.getGoogApiClientLibName();
     private String quotaProjectId;
-    private ApiTracerFactory apiTracerFactory;
-
     private ApiTracerFactory apiTracerFactory;
 
     @InternalApi("This class should only be extended within google-cloud-java")
