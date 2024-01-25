@@ -105,7 +105,8 @@ public class ITOtelMetrics {
 
     // if the request code is not in set of retryable codes, the ApiResultRetryAlgorithm
     // send false for shouldRetry(), which sends false in retryAlgorithm.shouldRetryBasedOnResult()
-
+    // which triggers this scenario - https://github.com/googleapis/sdk-platform-java/blob/main/gax-java/gax/src/main/java/com/google/api/gax/retrying/BasicRetryingFuture.java#L194-L198
+    
     BlockRequest blockRequest =
         BlockRequest.newBuilder()
             .setError(Status.newBuilder().setCode(Code.INVALID_ARGUMENT.ordinal()).build())
