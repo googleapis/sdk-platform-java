@@ -32,6 +32,15 @@ package com.google.api.gax.tracing;
 
 import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
+import com.google.api.gax.rpc.ApiException;
+import com.google.api.gax.rpc.StatusCode;
+import com.google.common.base.Stopwatch;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.TimeUnit;
+import javax.annotation.Nullable;
+import org.threeten.bp.Duration;
 
 /**
  * This class computes generic metrics that can be observed in the lifecycle of an RPC operation.
@@ -42,7 +51,110 @@ import com.google.api.core.InternalApi;
 @InternalApi
 public class MetricsTracer implements ApiTracer {
 
-  public MetricsTracer(MethodName methodName, MetricsRecorder metricsRecorder) {}
+  public static final String STATUS_ATTRIBUTE = "status";
+
+  private Stopwatch attemptTimer;
+
+  private final Stopwatch operationTimer = Stopwatch.createStarted();
+
+  private final Map<String, String> attributes = new HashMap<>();
+
+  protected MetricsRecorder metricsRecorder;
+
+  public MetricsTracer(MethodName methodName, MetricsRecorder metricsRecorder) {
+    this.attributes.put("method_name", methodName.toString());
+    this.metricsRecorder = metricsRecorder;
+  }
+
+  @Override
+  public void operationSucceeded() {
+    attributes.put(STATUS_ATTRIBUTE, StatusCode.Code.OK.toString());
+    metricsRecorder.recordOperationLatency(
+        operationTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
+    metricsRecorder.recordOperationCount(1, attributes);
+  }
+
+  @Override
+  public void operationCancelled() {
+    attributes.put(STATUS_ATTRIBUTE, StatusCode.Code.CANCELLED.toString());
+    metricsRecorder.recordOperationLatency(
+        operationTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
+    metricsRecorder.recordOperationCount(1, attributes);
+  }
+
+  @Override
+  public void operationFailed(Throwable error) {
+    attributes.put(STATUS_ATTRIBUTE, extractStatus(error));
+    metricsRecorder.recordOperationLatency(
+        operationTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
+    metricsRecorder.recordOperationCount(1, attributes);
+  }
+
+  @Override
+  public void attemptStarted(int attemptNumber) {
+    // no-op
+  }
+
+  @Override
+  public void attemptStarted(Object request, int attemptNumber) {
+    attemptTimer = Stopwatch.createStarted();
+  }
+
+  @Override
+  public void attemptSucceeded() {
+
+    attributes.put(STATUS_ATTRIBUTE, StatusCode.Code.OK.toString());
+    metricsRecorder.recordAttemptLatency(attemptTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
+    metricsRecorder.recordAttemptCount(1, attributes);
+  }
+
+  @Override
+  public void attemptCancelled() {
+
+    attributes.put(STATUS_ATTRIBUTE, StatusCode.Code.CANCELLED.toString());
+    metricsRecorder.recordAttemptLatency(attemptTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
+    metricsRecorder.recordAttemptCount(1, attributes);
+  }
+
+  @Override
+  public void attemptFailed(Throwable error, Duration delay) {
+
+    attributes.put(STATUS_ATTRIBUTE, extractStatus(error));
+    metricsRecorder.recordAttemptLatency(attemptTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
+    metricsRecorder.recordAttemptCount(1, attributes);
+  }
+
+  @Override
+  public void attemptFailedRetriesExhausted(Throwable error) {
+
+    attributes.put(STATUS_ATTRIBUTE, extractStatus(error));
+    metricsRecorder.recordAttemptLatency(attemptTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
+    metricsRecorder.recordAttemptCount(1, attributes);
+  }
+
+  @Override
+  public void attemptPermanentFailure(Throwable error) {
+
+    attributes.put(STATUS_ATTRIBUTE, extractStatus(error));
+    metricsRecorder.recordAttemptLatency(attemptTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
+    metricsRecorder.recordAttemptCount(1, attributes);
+  }
+
+  static String extractStatus(@Nullable Throwable error) {
+    final String statusString;
+
+    if (error == null) {
+      return StatusCode.Code.OK.toString();
+    } else if (error instanceof CancellationException) {
+      statusString = StatusCode.Code.CANCELLED.toString();
+    } else if (error instanceof ApiException) {
+      statusString = ((ApiException) error).getStatusCode().getCode().toString();
+    } else {
+      statusString = StatusCode.Code.UNKNOWN.toString();
+    }
+
+    return statusString;
+  }
 
   /**
    * Add attributes that will be attached to all metrics. This is expected to be called by
