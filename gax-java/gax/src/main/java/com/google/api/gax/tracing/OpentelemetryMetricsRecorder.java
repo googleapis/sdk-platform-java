@@ -69,4 +69,3 @@ public class OpentelemetryMetricsRecorder implements MetricsRecorder {
     return attributesBuilder.build();
   }
 }
-
