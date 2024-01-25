@@ -77,6 +77,8 @@ public final class GrpcCallContext implements ApiCallContext {
   private static final GrpcStatusCode UNAUTHENTICATED_STATUS_CODE =
       GrpcStatusCode.of(Status.Code.UNAUTHENTICATED);
 
+  // This field is made public for handwritten libraries to easily access the tracer from
+  // CallOptions
   public static final CallOptions.Key<ApiTracer> TRACER_KEY = CallOptions.Key.create("gax.tracer");
 
   private final Channel channel;

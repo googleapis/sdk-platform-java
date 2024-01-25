@@ -40,6 +40,7 @@ import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.NoHeaderProvider;
+import com.google.api.gax.tracing.ApiTracer;
 import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;
@@ -112,6 +113,8 @@ public abstract class ServiceOptions<
   private transient ServiceRpc rpc;
   private final ApiTracerFactory apiTracerFactory;
 
+  private final ApiTracerFactory apiTracerFactory;
+
   /**
    * Builder for {@code ServiceOptions}.
    *
@@ -138,6 +141,8 @@ public abstract class ServiceOptions<
     private HeaderProvider headerProvider;
     private String clientLibToken = ServiceOptions.getGoogApiClientLibName();
     private String quotaProjectId;
+    private ApiTracerFactory apiTracerFactory;
+
     private ApiTracerFactory apiTracerFactory;
 
     @InternalApi("This class should only be extended within google-cloud-java")
@@ -310,6 +315,12 @@ public abstract class ServiceOptions<
       return self();
     }
 
+    /**
+     * Sets the {@link ApiTracerFactory}. It will be used to create an {@link ApiTracer} that is
+     * annotated throughout the lifecycle of an RPC operation.
+     */
+    @BetaApi
+    @InternalApi
     public B setApiTracerFactory(ApiTracerFactory apiTracerFactory) {
       this.apiTracerFactory = apiTracerFactory;
       return self();
