@@ -90,7 +90,6 @@ public class MetricsTracer implements ApiTracer {
     metricsRecorder.recordOperationCount(1, attributes);
   }
 
-  @Override
   public void attemptStarted(int attemptNumber) {
     // no-op
   }

@@ -76,14 +76,17 @@ public class OpentelemetryMetricsRecorder implements MetricsRecorder {
             .build();
   }
 
+  @Override
   public void recordAttemptLatency(double attemptLatency, Map<String, String> attributes) {
     attemptLatencyRecorder.record(attemptLatency, toOtelAttributes(attributes));
   }
 
+  @Override
   public void recordAttemptCount(long count, Map<String, String> attributes) {
     attemptCountRecorder.add(count, toOtelAttributes(attributes));
   }
 
+  @Override
   public void recordOperationLatency(double operationLatency, Map<String, String> attributes) {
     operationLatencyRecorder.record(operationLatency, toOtelAttributes(attributes));
   }
