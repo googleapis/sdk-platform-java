@@ -32,13 +32,11 @@ package com.google.api.gax.tracing;
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.DeadlineExceededException;
-import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.api.gax.rpc.NotFoundException;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.rpc.testing.FakeStatusCode;
@@ -49,8 +47,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.mockito.ArgumentCaptor;
-import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
@@ -246,6 +242,5 @@ public class MetricsTracerTest {
   //   verify(metricsRecorder, times(1)).recordAttemptCount(1, failedAttributes);
   //   verify(metricsRecorder, times(1)).recordAttemptCount(1, successAttributes);
 
-    // verify(metricsRecorder, times(1)).recordAttemptCount(count,successAttributes);
-  }
-
+  // verify(metricsRecorder, times(1)).recordAttemptCount(count,successAttributes);
+}
