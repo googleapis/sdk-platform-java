@@ -17,6 +17,9 @@ target/
 
 *.iml
 
+# Python
+**/__pycache__/
+
 # library generation
 output/
 library_generation/output/

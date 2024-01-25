@@ -37,6 +37,7 @@ import com.google.api.core.ApiFuture;
 import com.google.api.gax.grpc.testing.FakeChannelFactory;
 import com.google.api.gax.grpc.testing.FakeMethodDescriptor;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.ResponseObserver;
 import com.google.api.gax.rpc.ServerStreamingCallSettings;
 import com.google.api.gax.rpc.ServerStreamingCallable;
@@ -44,6 +45,7 @@ import com.google.api.gax.rpc.StreamController;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.gax.util.FakeLogHandler;
+import com.google.auth.Credentials;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -628,10 +630,17 @@ public class ChannelPoolTest {
     ChannelPoolSettings channelPoolSettings = ChannelPoolSettings.staticallySized(1);
     ChannelFactory factory = new FakeChannelFactory(ImmutableList.of(fakeChannel));
     pool = ChannelPool.create(channelPoolSettings, factory);
+
+    EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
+    Mockito.doNothing()
+        .when(endpointContext)
+        .validateUniverseDomain(Mockito.any(Credentials.class), Mockito.any(GrpcStatusCode.class));
+
     ClientContext context =
         ClientContext.newBuilder()
             .setTransportChannel(GrpcTransportChannel.create(pool))
-            .setDefaultCallContext(GrpcCallContext.of(pool, CallOptions.DEFAULT))
+            .setDefaultCallContext(
+                GrpcCallContext.of(pool, CallOptions.DEFAULT).withEndpointContext(endpointContext))
             .build();
     ServerStreamingCallSettings settings =
         ServerStreamingCallSettings.<Color, Money>newBuilder().build();
@@ -680,11 +689,19 @@ public class ChannelPoolTest {
 
       pool = ChannelPool.create(channelPoolSettings, factory);
 
+      EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
+      Mockito.doNothing()
+          .when(endpointContext)
+          .validateUniverseDomain(
+              Mockito.any(Credentials.class), Mockito.any(GrpcStatusCode.class));
+
       // Construct a fake callable to use the channel pool
       ClientContext context =
           ClientContext.newBuilder()
               .setTransportChannel(GrpcTransportChannel.create(pool))
-              .setDefaultCallContext(GrpcCallContext.of(pool, CallOptions.DEFAULT))
+              .setDefaultCallContext(
+                  GrpcCallContext.of(pool, CallOptions.DEFAULT)
+                      .withEndpointContext(endpointContext))
               .build();
 
       UnaryCallSettings<Color, Money> settings =

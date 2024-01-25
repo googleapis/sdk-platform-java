@@ -31,6 +31,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ServiceClientCommentComposer {
   // Tokens.
@@ -231,15 +232,17 @@ public class ServiceClientCommentComposer {
     StringBuilder tableBuilder = new StringBuilder();
     tableBuilder
         .append("<table>\n")
+        .append("   <caption>Methods</caption>\n")
         .append("   <tr>\n")
         .append("     <th>Method</th>\n")
         .append("     <th>Description</th>\n")
-        .append("     <th>Method Variants</th>\n");
+        .append("     <th>Method Variants</th>\n")
+        .append("   </tr>\n");
     for (MethodAndVariants method : methodAndVariantsList) {
       tableBuilder
           .append("   <tr>\n")
           .append("     <td>")
-          .append(method.method)
+          .append(CommentFormatter.formatAsJavaDocComment(method.method, null))
           .append("</td>\n")
           .append("     <td>")
           .append(CommentFormatter.formatAsJavaDocComment(method.description, null))
@@ -253,18 +256,25 @@ public class ServiceClientCommentComposer {
       generateUnorderedListMethodVariants(tableBuilder, CALLABLE_METHODS, method.callableVariants);
       tableBuilder.append("      </td>\n").append("   </tr>\n");
     }
-    tableBuilder.append("   </tr>\n").append(" </table>\n");
+    tableBuilder.append(" </table>\n");
     return tableBuilder.toString();
   }
 
   private static void generateUnorderedListMethodVariants(
       StringBuilder tableBuilder, String methodType, List<String> methodVariants) {
+    List<String> formattedMethodVariants =
+        methodVariants.stream()
+            .map(
+                methodVariant ->
+                    CommentFormatter.formatAsJavaDocComment(
+                        methodVariant, null)) // Apply the formatting to each element
+            .collect(Collectors.toList());
     if (!methodVariants.isEmpty()) {
       tableBuilder
           .append("     " + methodType + "     ")
           .append("<ul>\n")
           .append("          <li>")
-          .append(String.join("\n          <li>", methodVariants))
+          .append(String.join("\n          <li>", formattedMethodVariants))
           .append("\n")
           .append("     </ul>")
           .append("\n");
