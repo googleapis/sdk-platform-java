@@ -184,12 +184,9 @@ def generate(
 ):
     cloud_prefix = "cloud-" if cloud_api else ""
 
-    destination_path = f"{language}-{api_shortname}"
-    if destination_name is not None:
-        destination_path = f"{language}-{destination_name}"
-
+    output_name = destination_name if destination_name else api_shortname
     if distribution_name is None:
-        distribution_name = f"{group_id}:google-{cloud_prefix}{api_shortname}"
+        distribution_name = f"{group_id}:google-{cloud_prefix}{output_name}"
 
     distribution_name_short = re.split(r"[:\/]", distribution_name)[-1]
 
@@ -208,7 +205,7 @@ def generate(
 
     repo = "googleapis/google-cloud-java"
     if split_repo:
-        repo = f"{language}-{api_shortname}"
+        repo = f"{language}-{output_name}"
 
     repo_metadata = {
         "api_shortname": api_shortname,
@@ -220,7 +217,7 @@ def generate(
         "transport": transport,
         "language": language,
         "repo": f"{repo}",
-        "repo_short": f"{language}-{api_shortname}",
+        "repo_short": f"{language}-{output_name}",
         "distribution_name": distribution_name,
         "api_id": api_id,
         "library_type": library_type,
@@ -234,7 +231,7 @@ def generate(
     if rpc_docs:
         repo_metadata["rpc_documentation"] = rpc_docs
     # Initialize workdir
-    workdir = Path(f"{sys.path[0]}/../../output/{destination_path}").resolve()
+    workdir = Path(f"{sys.path[0]}/../../output/java-{output_name}").resolve()
     if os.path.isdir(workdir):
         sys.exit(
             "Couldn't create the module because "
@@ -278,7 +275,7 @@ def generate(
         output_name=str(workdir / owlbot_yaml_location_from_module),
         artifact_name=distribution_name_short,
         proto_path=proto_path,
-        module_name=f"java-{api_shortname}",
+        module_name=f"java-{output_name}",
         api_shortname=api_shortname
     )
 
@@ -314,7 +311,7 @@ def generate(
         "-p",
         versioned_proto_path,
         "-d",
-        destination_path,
+        f"java-{output_name}",
         "--gapic_generator_version",
         generator_version,
         "--protobuf_version",
@@ -381,7 +378,7 @@ def generate(
 
     print(f"Prepared new library in {workdir}")
     print(f"Please create a pull request:\n"
-          f"  $ git checkout -b new_module_java-{api_shortname}\n"
+          f"  $ git checkout -b new_module_java-{output_name}\n"
           f"  $ git add .\n"
           f"  $ git commit -m 'feat: [{api_shortname}] new module for {api_shortname}'\n"
           f"  $ gh pr create --title 'feat: [{api_shortname}] new module for {api_shortname}'")
