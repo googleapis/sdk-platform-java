@@ -7,9 +7,9 @@ on:
       - .github/workflows/downstream_unmanaged_dependency_check.yaml
       - java-shared-dependencies/**
 
-name: Downstream Check
+name: Downstream Unmanaged Dependency Check
 jobs:
-  downstream-compatibility:
+  validate-unmanaged-dependency-check:
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
@@ -37,7 +37,7 @@ jobs:
         with:
           java-version: 11
           distribution: temurin
-      - run: mvn -version
+          cache: maven
       - name: Install unmanaged dependency check
         shell: bash
         working-directory: sdk-platform-java/java-shared-dependencies/unmanaged-dependency-check
