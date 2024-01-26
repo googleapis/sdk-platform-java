@@ -164,7 +164,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
    * endpoint (does not return null).
    */
   @InternalApi
-  String getClientEndpoint() {
+  String getUserSetEndpoint() {
     return endpoint;
   }
 
