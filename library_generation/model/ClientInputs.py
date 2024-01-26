@@ -71,6 +71,7 @@ class ClientInput:
 def parse(
     build_path: Path,
     versioned_path: str,
+    build_file_name: str = 'BUILD.bazel'
 ) -> ClientInput:
     """
     Utility function to parse inputs of generate_library.sh from BUILD.bazel.
@@ -79,18 +80,22 @@ def parse(
     google/cloud/asset/v1.
     :return: an ClientInput object.
     """
-    with open(f"{build_path}/BUILD.bazel") as build:
+    with open(f"{build_path}/{build_file_name}") as build:
         content = build.read()
 
     proto_library_target = re.compile(
         proto_library_pattern, re.DOTALL | re.VERBOSE
-    ).findall(content)[0]
-    additional_protos = __parse_additional_protos(proto_library_target)
+    ).findall(content)
+    additional_protos = ''
+    if len(proto_library_target) > 0:
+      additional_protos = __parse_additional_protos(proto_library_targets[0])
     gapic_target = re.compile(gapic_pattern, re.DOTALL | re.VERBOSE)\
                      .findall(content)
     assembly_target = re.compile(assembly_pattern, re.DOTALL | re.VERBOSE)\
                         .findall(content)
-    include_samples = __parse_include_samples(assembly_target[0])
+    include_samples = 'false'
+    if len(assembly_target) > 0:
+      include_samples = __parse_include_samples(assembly_target[0])
     if len(gapic_target) == 0:
         return ClientInput(
           include_samples=include_samples
@@ -137,6 +142,10 @@ def __parse_rest_numeric_enums(gapic_target: str) -> str:
 
 def __parse_gapic_yaml(gapic_target: str, versioned_path: str) -> str:
     gapic_yaml = re.findall(gapic_yaml_pattern, gapic_target)
+    print('*'*20)
+    print(gapic_target)
+    print(versioned_path)
+    print('*'*20)
     return f"{versioned_path}/{gapic_yaml[0]}" if len(gapic_yaml) != 0 else ""
 
 
