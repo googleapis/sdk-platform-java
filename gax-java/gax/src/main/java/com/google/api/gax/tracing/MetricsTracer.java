@@ -167,5 +167,7 @@ public class MetricsTracer implements ApiTracer {
    * handwritten client teams to add additional attributes that are not supposed be collected by
    * Gax.
    */
-  public void addAttributes(String key, String value) {};
+  public void addAttributes(String key, String value) {
+    attributes.put(key, value);
+  };
 }
