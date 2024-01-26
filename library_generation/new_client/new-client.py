@@ -21,8 +21,11 @@ import sys
 import click
 import templates
 from git import Repo
-from client_inputs import parse
 import shutil
+current_dir = os.path.dirname(os.path.realpath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.append(parent_dir)
+from model.ClientInputs import parse
 
 
 @click.group(invoke_without_command=False)
