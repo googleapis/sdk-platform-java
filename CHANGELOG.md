@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.33.0](https://github.com/googleapis/sdk-platform-java/compare/v2.32.0...v2.33.0) (2024-01-24)
+
+
+### Features
+
+* Introduce interfaces for metrics instrumentation ([#2403](https://github.com/googleapis/sdk-platform-java/issues/2403)) ([3c61b14](https://github.com/googleapis/sdk-platform-java/commit/3c61b14fef87c735ea2ed382f8510b29176a4279))
+
+
+### Bug Fixes
+
+* Verify Universe Domain's DirectPath Compatibility after Endpoint Resolution ([#2412](https://github.com/googleapis/sdk-platform-java/issues/2412)) ([e2de93b](https://github.com/googleapis/sdk-platform-java/commit/e2de93bb7051039e8a96128b9eacc0f2ea3a1205))
+
 ## [2.32.0](https://github.com/googleapis/sdk-platform-java/compare/v2.31.0...v2.32.0) (2024-01-19)
 
 

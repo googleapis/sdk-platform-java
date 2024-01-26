@@ -92,7 +92,6 @@ docker run --rm \
   --source-repo=/pre-processed-libraries \
   --config-file="${owlbot_yaml_relative_path}"
 
-
 # we clone the synthtool library and manually build it
 mkdir -p /tmp/synthtool
 pushd /tmp/synthtool
