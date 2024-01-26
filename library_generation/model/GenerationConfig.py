@@ -3,7 +3,7 @@ Class that represents the root of a generation_config.yaml
 """
 import yaml
 from typing import List, Optional, Dict
-from .Library import Library
+from .LibraryConfig import LibraryConfig
 from .GAPIC import GAPIC
 
 
@@ -17,7 +17,7 @@ class GenerationConfig:
       owlbot_cli_image: str,
       synthtool_commitish: str,
       destination_path: Optional[str],
-      libraries: List[Library],
+      libraries: List[LibraryConfig],
   ):
     self.gapic_generator_version = gapic_generator_version
     self.grpc_version = grpc_version
@@ -50,7 +50,7 @@ class GenerationConfig:
         new_gapic = GAPIC(proto_path)
         parsed_gapics.append(new_gapic)
 
-      new_library = Library(
+      new_library = LibraryConfig(
         _required(library, 'api_shortname'),
         _optional(library, 'name_pretty', None),
         _required(library, 'library_type'),

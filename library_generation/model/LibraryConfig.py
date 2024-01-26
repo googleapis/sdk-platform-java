@@ -14,7 +14,7 @@ class _LibraryType(Enum):
   GAPIC_AUTO = 1
   GAPIC_COMBO = 2
 
-class Library:
+class LibraryConfig:
   def __init__(
       self,
       api_shortname: str,

@@ -6,7 +6,6 @@ import click
 from generate_composed_library import generate_composed_library
 from typing import Dict
 from model.GenerationConfig import GenerationConfig
-from model.Library import Library
 from model.GAPIC import GAPIC
 from collections.abc import Sequence
 from absl import app

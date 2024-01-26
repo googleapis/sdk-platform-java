@@ -1,5 +1,5 @@
 """
-Class that represents a GAPIC entry, inside a `Library` in a generation_config.yaml
+Class that represents a GAPIC entry, inside a `LibraryConfig` in a generation_config.yaml
 """
 class GAPIC:
   def __init__(

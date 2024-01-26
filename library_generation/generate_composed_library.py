@@ -20,7 +20,7 @@ import sys
 import subprocess
 import json
 from model.GenerationConfig import GenerationConfig
-from model.Library import Library
+from model.LibraryConfig import LibraryConfig
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 
@@ -30,7 +30,7 @@ service or service version.
 Arguments
  - config: a GenerationConfig object representing a parsed configuration
  yaml
- - library: a Library object contained inside config, passed here for
+ - library: a LibraryConfig object contained inside config, passed here for
    convenience and to prevent all libraries to be processed
  - enable_postprocessing: true if postprocessing should be done on the generated
    libraries
@@ -40,7 +40,7 @@ Arguments
 """
 def generate_composed_library(
     config: GenerationConfig,
-    library: Library,
+    library: LibraryConfig,
     repository_path: str,
     enable_postprocessing: bool = True,
 ) -> None:
@@ -130,7 +130,7 @@ def generate_composed_library(
     print(effective_arguments)
     print(f'Generating library from {gapic.proto_path} to {destination_path}...')
     util.run_process_and_print_output(['bash', '-x', f'{script_dir}/generate_library.sh',
-      *effective_arguments], 'Library postprocessing')
+      *effective_arguments], 'Library generation')
 
 
     if enable_postprocessing:
