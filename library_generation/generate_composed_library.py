@@ -72,26 +72,30 @@ def generate_composed_library(
   base_arguments += util.create_argument('grpc_version', config)
   base_arguments += util.create_argument('protobuf_version', config)
 
-  destination_path = f'java-{library.api_shortname}'
-  if is_monorepo:
-    destination_path = config.destination_path + '/' + destination_path
+  library_name = f'java-{library.api_shortname}'
+  library_path = None
 
   versions_file = ''
   if is_monorepo:
     print('this is a monorepo library')
+    destination_path = config.destination_path + '/' + library_name
     library_folder = destination_path.split('/')[-1]
     if repository_path is None:
+      print(f'sparse_cloning google-cloud-java with {library_name}')
       repository_path = f'{output_folder}/{MONOREPO_NAME}'
       clone_out = util.sh_util(f'sparse_clone "https://github.com/googleapis/{MONOREPO_NAME}.git" "{library_folder} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"', cwd=output_folder)
       print(clone_out)
+    library_path = f'{repository_path}/{library_name}'
     versions_file = f'{repository_path}/versions.txt'
   else:
     print('this is a HW library')
+    destination_path = library_name
     if repository_path is None:
       repository_path = f'{output_folder}/{destination_path}'
       util.delete_if_exists(f'{output_folder}/{destination_path}')
       clone_out = util.sh_util(f'git clone "https://github.com/googleapis/{destination_path}.git"', cwd=output_folder)
       print(clone_out)
+    library_path = f'{repository_path}'
     versions_file = f'{repository_path}/versions.txt'
 
   owlbot_cli_source_folder = util.sh_util('mktemp -d')
@@ -100,7 +104,7 @@ def generate_composed_library(
     effective_arguments = list(base_arguments)
     effective_arguments += util.create_argument('proto_path', gapic)
 
-    build_file = f'{gapic.proto_path}/BUILD.bazel'
+    build_file = f'{output_folder}/{gapic.proto_path}/BUILD.bazel'
     print(f'build_file: {build_file}')
     proto_only = util.sh_util(f'get_proto_only_from_BUILD {build_file}')
     gapic_additional_protos=util.sh_util(f'get_gapic_additional_protos_from_BUILD {build_file}')
@@ -131,7 +135,7 @@ def generate_composed_library(
 
 
     if enable_postprocessing:
-      util.sh_util(f'build_owlbot_cli_source_folder "{output_folder}/{destination_path}"'
+      util.sh_util(f'build_owlbot_cli_source_folder "{library_path}"'
                    + f' "{owlbot_cli_source_folder}" "{output_folder}/{temp_destination_path}"'
                    + f' "{gapic.proto_path}"',
                    cwd=output_folder)
@@ -139,6 +143,6 @@ def generate_composed_library(
   if enable_postprocessing:
     # call postprocess library
     util.run_process_and_print_output([f'{script_dir}/postprocess_library.sh',
-              f'{output_folder}/{destination_path}', '', versions_file, owlbot_cli_source_folder,
+              f'{library_path}', '', versions_file, owlbot_cli_source_folder,
         config.owlbot_cli_image, config.synthtool_commitish], 'Library postprocessing')
 
