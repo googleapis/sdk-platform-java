@@ -23,7 +23,6 @@ public class UnmanagedDependencyCheck {
   // e.g., firestore and datastore, add entries in regex to exclude these artifacts.
   private final static String downstreamArtifact =
       "(com.google.cloud:google-.*)|"
-          + "(com.google.api.grpc:(gapic|grpc|proto)-google-.*)|"
           + "(com.google.cloud:proto-google-cloud-firestore-bundle-.*)|"
           + "(com.google.cloud.datastore:datastore-.*-proto-client)|"
           + "(com.google.analytics:google-analytics-.*)|"
