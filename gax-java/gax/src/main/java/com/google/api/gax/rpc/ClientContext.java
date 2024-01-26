@@ -165,7 +165,7 @@ public abstract class ClientContext {
         EndpointContext.newBuilder()
             .setServiceName(settings.getServiceName())
             .setUniverseDomain(settings.getUniverseDomain())
-            .setClientSettingsEndpoint(settings.getEndpoint())
+            .setClientSettingsEndpoint(settings.getClientEndpoint())
             .setTransportChannelProviderEndpoint(
                 settings.getTransportChannelProvider().getEndpoint())
             .setMtlsEndpoint(settings.getMtlsEndpoint())

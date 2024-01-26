@@ -157,6 +157,17 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     return endpoint;
   }
 
+  /**
+   * This is an internal api meant to either return the user set endpoint or null. The difference
+   * between this method and {@link #getEndpoint()}} is that {@link #getEndpoint()} is reimplemented
+   * by the child class and will return the default service endpoint if the user did not set an
+   * endpoint (does not return null).
+   */
+  @InternalApi
+  String getClientEndpoint() {
+    return endpoint;
+  }
+
   public final String getMtlsEndpoint() {
     return mtlsEndpoint;
   }
