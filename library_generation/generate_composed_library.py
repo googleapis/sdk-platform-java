@@ -21,6 +21,7 @@ import subprocess
 import json
 from model.GenerationConfig import GenerationConfig
 from model.LibraryConfig import LibraryConfig
+from model.ClientInputs import parse as parse_build_file
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 
@@ -103,25 +104,18 @@ def generate_composed_library(
     effective_arguments = list(base_arguments)
     effective_arguments += util.create_argument('proto_path', gapic)
 
-    build_file = f'{output_folder}/{gapic.proto_path}/BUILD.bazel'
-    print(f'build_file: {build_file}')
-    proto_only = util.sh_util(f'get_proto_only_from_BUILD {build_file}')
-    gapic_additional_protos=util.sh_util(f'get_gapic_additional_protos_from_BUILD {build_file}')
-    transport = util.sh_util(f'get_transport_from_BUILD {build_file}')
-    rest_numeric_enums = util.sh_util(f'get_rest_numeric_enums_from_BUILD {build_file}')
-    gapic_yaml = util.sh_util(f'get_gapic_yaml_from_BUILD {build_file}')
-    service_config = util.sh_util(f'get_service_config_from_BUILD {build_file}')
-    service_yaml = util.sh_util(f'get_service_yaml_from_BUILD {build_file}')
-    include_samples = util.sh_util(f'get_include_samples_from_BUILD {build_file}')
+    build_file_folder = f'{output_folder}/{gapic.proto_path}'
+    print(f'build_file_folder: {build_file_folder}')
+    client_inputs = parse_build_file(build_file_folder, gapic.proto_path)
     effective_arguments += [
-        '--proto_only', proto_only,
-        '--gapic_additional_protos', gapic_additional_protos,
-        '--transport', transport,
-        '--rest_numeric_enums', rest_numeric_enums,
-        '--gapic_yaml', gapic_yaml,
-        '--service_config', service_config,
-        '--service_yaml', service_yaml,
-        '--include_samples', include_samples,
+        '--proto_only', client_inputs.proto_only,
+        '--gapic_additional_protos', client_inputs.additional_protos,
+        '--transport', client_inputs.transport,
+        '--rest_numeric_enums', client_inputs.rest_numeric_enum,
+        '--gapic_yaml', client_inputs.gapic_yaml,
+        '--service_config', client_inputs.service_config,
+        '--service_yaml', client_inputs.service_yaml,
+        '--include_samples', client_inputs.include_samples,
     ]
     service_version = gapic.proto_path.split('/')[-1]
     temp_destination_path = f'java-{library.api_shortname}-{service_version}'
