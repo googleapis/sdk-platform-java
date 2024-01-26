@@ -40,14 +40,6 @@ def get_configuration_yaml_destination_path(generation_config_yaml: str) -> str:
   return config.destination_path or ''
 
 """
-For a given configuration yaml path, it returns the python_version
-entry at the root of the yaml
-"""
-def get_configuration_yaml_python_version(generation_config_yaml: str) -> str:
-  config = GenerationConfig.from_yaml(generation_config_yaml)
-  return config.python_version
-
-"""
 Runs a process with the given "arguments" list and prints its output. If the process
 fails, then the whole program exits
 """

@@ -16,7 +16,6 @@ class GenerationConfig:
       googleapis_commitish: str,
       owlbot_cli_image: str,
       synthtool_commitish: str,
-      python_version: str,
       destination_path: Optional[str],
       libraries: List[Library],
   ):
@@ -26,7 +25,6 @@ class GenerationConfig:
     self.googleapis_commitish = googleapis_commitish
     self.owlbot_cli_image = owlbot_cli_image
     self.synthtool_commitish = synthtool_commitish
-    self.python_version = python_version
     self.destination_path = destination_path
     self.libraries = libraries
 
@@ -76,7 +74,6 @@ class GenerationConfig:
       _required(config, 'googleapis_commitish'),
       _required(config, 'owlbot_cli_image'),
       _required(config, 'synthtool_commitish'),
-      _required(config, 'python_version'),
       _optional(config, 'destination_path', None),
       parsed_libraries
     )
