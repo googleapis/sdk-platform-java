@@ -38,13 +38,15 @@ jobs:
           java-version: 11
           distribution: temurin
           cache: maven
-      - name: Install unmanaged dependency check
+      - name: Install the modules of sdk-platform-java, including unmanaged dependency check
         shell: bash
-        working-directory: sdk-platform-java/java-shared-dependencies/unmanaged-dependency-check
+        working-directory: sdk-platform-java
         run: |
           set -euo pipefail
           echo "Install Unmanaged Dependency Check in $(pwd)"
-          mvn clean install -V --batch-mode --no-transfer-progress -DskipTests
+          # gapic-generator-java is irrelevant
+          mvn -q -B -ntp install --projects '!gapic-generator-java' \
+            -Dcheckstyle.skip -Dfmt.skip -DskipTests -T 1C
       - name: Install the modules of downstream repository
         shell: bash
         working-directory: ${{ matrix.repo }}
