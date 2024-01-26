@@ -73,7 +73,7 @@ jobs:
           unmanaged_dependencies=$(mvn exec:java -Dexec.args="../pom.xml ${bom_absolute_path}" -q)
           if [[ "${unmanaged_dependencies}" != "[]" ]]; then
             echo "With this change, the unmanaged dependencies check installed in ${{ matrix.repo }} will start to"
-            echo "fail due to ${unmanaged_dependencies}, among the artifacts listed in ${{ inputs.bom-path }}."
+            echo "fail due to ${unmanaged_dependencies}, among the artifacts listed in ${bom_absolute_path}."
             exit 1
           fi
           echo "Unmanaged dependency check passed"
