@@ -23,7 +23,6 @@ from model.GenerationConfig import GenerationConfig
 from model.Library import Library
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
-MONOREPO_NAME = 'google-cloud-java'
 
 """
 Main function in charge of generating libraries composed of more than one
@@ -65,7 +64,7 @@ def generate_composed_library(
   print('downloading googleapis')
   util.sh_util(f'download_googleapis_files_and_folders "{output_folder}" "{googleapis_commitish}"')
 
-  is_monorepo = config.destination_path == MONOREPO_NAME
+  is_monorepo = len(config.libraries) > 1
 
   base_arguments = []
   base_arguments += util.create_argument('gapic_generator_version', config)
@@ -81,8 +80,8 @@ def generate_composed_library(
     destination_path = config.destination_path + '/' + library_name
     library_folder = destination_path.split('/')[-1]
     if repository_path is None:
-      print(f'sparse_cloning google-cloud-java with {library_name}')
-      repository_path = f'{output_folder}/{MONOREPO_NAME}'
+      print(f'sparse_cloning monorepo with {library_name}')
+      repository_path = f'{output_folder}/{config.destination_path}'
       clone_out = util.sh_util(f'sparse_clone "https://github.com/googleapis/{MONOREPO_NAME}.git" "{library_folder} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"', cwd=output_folder)
       print(clone_out)
     library_path = f'{repository_path}/{library_name}'
@@ -144,5 +143,5 @@ def generate_composed_library(
     # call postprocess library
     util.run_process_and_print_output([f'{script_dir}/postprocess_library.sh',
               f'{library_path}', '', versions_file, owlbot_cli_source_folder,
-        config.owlbot_cli_image, config.synthtool_commitish], 'Library postprocessing')
+                                       config.owlbot_cli_image, config.synthtool_commitish, str(is_monorepo).lower()], 'Library postprocessing')
 

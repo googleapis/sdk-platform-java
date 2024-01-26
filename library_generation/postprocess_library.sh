@@ -18,6 +18,8 @@
 # 5 - owlbot_cli_image_sha: SHA of the image containing the OwlBot CLI
 # 6 - synthtool_commitish: Commit SHA of the synthtool repo
 # provided
+# 7 - is_monorepo: whether this library is a monorepo, which implies slightly
+# different logic
 set -xeo pipefail
 scripts_root=$(dirname "$(readlink -f "$0")")
 
@@ -27,10 +29,11 @@ versions_file=$3
 owlbot_cli_source_folder=$4
 owlbot_cli_image_sha=$5
 synthtool_commitish=$6
+is_monorepo=$7
 
 source "${scripts_root}"/utilities.sh
 
-declare -a required_inputs=("postprocessing_target" "versions_file" "owlbot_cli_image_sha" "synthtool_commitish")
+declare -a required_inputs=("postprocessing_target" "versions_file" "owlbot_cli_image_sha" "synthtool_commitish" "is_monorepo")
 for required_input in "${required_inputs[@]}"; do
   if [[ -z "${!required_input}" ]]; then
     echo "missing required ${required_input} argument, please specify one"
