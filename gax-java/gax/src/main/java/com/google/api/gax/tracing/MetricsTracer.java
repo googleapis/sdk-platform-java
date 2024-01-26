@@ -66,6 +66,7 @@ public class MetricsTracer implements ApiTracer {
     this.metricsRecorder = metricsRecorder;
   }
 
+  /** {@inheritDoc} */
   @Override
   public void operationSucceeded() {
     attributes.put(STATUS_ATTRIBUTE, StatusCode.Code.OK.toString());
@@ -74,6 +75,7 @@ public class MetricsTracer implements ApiTracer {
     metricsRecorder.recordOperationCount(1, attributes);
   }
 
+  /** {@inheritDoc} */
   @Override
   public void operationCancelled() {
     attributes.put(STATUS_ATTRIBUTE, StatusCode.Code.CANCELLED.toString());
@@ -82,6 +84,7 @@ public class MetricsTracer implements ApiTracer {
     metricsRecorder.recordOperationCount(1, attributes);
   }
 
+  /** {@inheritDoc} */
   @Override
   public void operationFailed(Throwable error) {
     attributes.put(STATUS_ATTRIBUTE, extractStatus(error));
@@ -90,16 +93,13 @@ public class MetricsTracer implements ApiTracer {
     metricsRecorder.recordOperationCount(1, attributes);
   }
 
-  @Override
-  public void attemptStarted(int attemptNumber) {
-    // no-op
-  }
-
+  /** {@inheritDoc} */
   @Override
   public void attemptStarted(Object request, int attemptNumber) {
     attemptTimer = Stopwatch.createStarted();
   }
 
+  /** {@inheritDoc} */
   @Override
   public void attemptSucceeded() {
 
@@ -108,6 +108,7 @@ public class MetricsTracer implements ApiTracer {
     metricsRecorder.recordAttemptCount(1, attributes);
   }
 
+  /** {@inheritDoc} */
   @Override
   public void attemptCancelled() {
 
@@ -116,6 +117,7 @@ public class MetricsTracer implements ApiTracer {
     metricsRecorder.recordAttemptCount(1, attributes);
   }
 
+  /** {@inheritDoc} */
   @Override
   public void attemptFailed(Throwable error, Duration delay) {
 
@@ -124,6 +126,7 @@ public class MetricsTracer implements ApiTracer {
     metricsRecorder.recordAttemptCount(1, attributes);
   }
 
+  /** {@inheritDoc} */
   @Override
   public void attemptFailedRetriesExhausted(Throwable error) {
 
@@ -132,6 +135,7 @@ public class MetricsTracer implements ApiTracer {
     metricsRecorder.recordAttemptCount(1, attributes);
   }
 
+  /** {@inheritDoc} */
   @Override
   public void attemptPermanentFailure(Throwable error) {
 
@@ -140,6 +144,7 @@ public class MetricsTracer implements ApiTracer {
     metricsRecorder.recordAttemptCount(1, attributes);
   }
 
+  /** {@inheritDoc} */
   @InternalApi("Visible for testing")
   static String extractStatus(@Nullable Throwable error) {
     final String statusString;

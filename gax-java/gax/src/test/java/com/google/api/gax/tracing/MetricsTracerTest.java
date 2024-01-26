@@ -32,11 +32,13 @@ package com.google.api.gax.tracing;
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.DeadlineExceededException;
+import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.api.gax.rpc.NotFoundException;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.rpc.testing.FakeStatusCode;
@@ -73,7 +75,7 @@ public class MetricsTracerTest {
     Object mockSuccessfulRequest = new Object();
 
     // Attempt #1
-    metricsTracer.attemptStarted(mockSuccessfulRequest, 1);
+    metricsTracer.attemptStarted(mockSuccessfulRequest, 0);
     metricsTracer.attemptSucceeded();
     metricsTracer.operationSucceeded();
 
@@ -97,7 +99,7 @@ public class MetricsTracerTest {
     Object mockFailedRequest = new Object();
 
     // Attempt #1
-    metricsTracer.attemptStarted(mockFailedRequest, 1);
+    metricsTracer.attemptStarted(mockFailedRequest, 0);
     ApiException error0 =
         new NotFoundException(
             "invalid argument", null, new FakeStatusCode(Code.INVALID_ARGUMENT), false);
@@ -124,7 +126,7 @@ public class MetricsTracerTest {
     Object mockCancelledRequest = new Object();
 
     // Attempt #1
-    metricsTracer.attemptStarted(mockCancelledRequest, 1);
+    metricsTracer.attemptStarted(mockCancelledRequest, 0);
     metricsTracer.attemptCancelled();
     metricsTracer.operationCancelled();
 
@@ -148,7 +150,7 @@ public class MetricsTracerTest {
     Object mockRequest = new Object();
 
     // Attempt #1
-    metricsTracer.attemptStarted(mockRequest, 1);
+    metricsTracer.attemptStarted(mockRequest, 0);
     ApiException error0 =
         new DeadlineExceededException(
             "deadline exceeded", null, new FakeStatusCode(Code.DEADLINE_EXCEEDED), false);
@@ -176,7 +178,7 @@ public class MetricsTracerTest {
     Object mockRequest = new Object();
 
     // Attempt #1
-    metricsTracer.attemptStarted(mockRequest, 1);
+    metricsTracer.attemptStarted(mockRequest, 0);
 
     ApiException error0 =
         new NotFoundException("not found", null, new FakeStatusCode(Code.NOT_FOUND), false);
@@ -207,40 +209,39 @@ public class MetricsTracerTest {
     }
   }
 
-  // this test is a WIP
-  // @Test
-  // public void testTwoAttemptsFirstFailSecondSuccess() {
-  //   // initialize mock-request
-  //   Object mockRequestOne = new Object();
-  //
-  //   // Attempt #1
-  //   metricsTracer.attemptStarted(mockRequestOne, 1);
-  //   metricsTracer.responseReceived();
-  //   metricsTracer.responseReceived();
-  //   ApiException error0 =
-  //       new InvalidArgumentException(
-  //           "Invalid Argument", null, new FakeStatusCode(Code.INVALID_ARGUMENT), false);
-  //   metricsTracer.attemptFailed(error0, Duration.ofMillis(2));
-  //
-  //   Map<String, String> failedAttributes =
-  //       ImmutableMap.of(
-  //           "status", "INVALID_ARGUMENT",
-  //           "method_name", "fake_service.fake_method");
-  //
-  //   Object mockRequestTwo = new Object();
-  //   // Attempt #2
-  //   metricsTracer.attemptStarted(mockRequestTwo, 2);
-  //   metricsTracer.responseReceived();
-  //   metricsTracer.attemptSucceeded();
-  //   metricsTracer.operationSucceeded();
-  //
-  //   Map<String, String> successAttributes =
-  //       ImmutableMap.of(
-  //           "status", "OK",
-  //           "method_name", "fake_service.fake_method");
-  //
-  //   verify(metricsRecorder, times(1)).recordAttemptCount(1, failedAttributes);
-  //   verify(metricsRecorder, times(1)).recordAttemptCount(1, successAttributes);
+  // this test needs detailed attention
+  @Test
+  public void testTwoAttemptsFirstFailSecondSuccess() {
+    // initialize mock-request
+    Object mockRequestOne = new Object();
 
-  // verify(metricsRecorder, times(1)).recordAttemptCount(count,successAttributes);
+    // Attempt #1, which fails
+    metricsTracer.attemptStarted(mockRequestOne, 0);
+    ApiException error0 =
+        new InvalidArgumentException(
+            "Invalid Argument", null, new FakeStatusCode(Code.INVALID_ARGUMENT), false);
+    metricsTracer.attemptFailed(error0, Duration.ofMillis(2));
+
+    // for this failed attempt, these should be the attributes
+    Map<String, String> failedAttributes =
+        ImmutableMap.of(
+            "status", "INVALID_ARGUMENT",
+            "method_name", "fake_service.fake_method");
+
+    // metricsRecorder should capture one failed attempt
+    verify(metricsRecorder, times(1)).recordAttemptCount(1, failedAttributes);
+
+    // Attempt #2, which succeeds
+    metricsTracer.attemptStarted(mockRequestOne, 1);
+    metricsTracer.attemptSucceeded();
+
+    //// for this successful attempt, these should be the attributes
+    Map<String, String> successAttributes =
+        ImmutableMap.of(
+            "status", "OK",
+            "method_name", "fake_service.fake_method");
+
+    // metricsRecorder should also capture successful attempt
+    verify(metricsRecorder, times(2)).recordAttemptCount(1, successAttributes);
+  }
 }
