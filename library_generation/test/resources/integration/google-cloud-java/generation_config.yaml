@@ -9,7 +9,7 @@ googleapis_commitish: 4512234113a18c1fda1fb0d0ceac8f4b4efe9801
 #Required.
 owlbot_cli_image: sha256:623647ee79ac605858d09e60c1382a716c125fb776f69301b72de1cd35d49409
 #Required.
-synthtool_commitish: 59fe44fde9866a26e7ee4e4450fd79f67f8cf599
+synthtool_commitish: 6612ab8f3afcd5e292aecd647f0fa68812c9f5b5
 #Required.
 python_version: 3.11.2
 #Required. The root folder name of generated client libraries. The value "google-cloud-java" implies special treatment in the lower level scripts
