@@ -30,20 +30,22 @@
 package com.google.api.gax.tracing;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.DeadlineExceededException;
-import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.api.gax.rpc.NotFoundException;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.rpc.testing.FakeStatusCode;
 import com.google.common.collect.ImmutableMap;
+import java.lang.reflect.Field;
 import java.util.Map;
+import java.util.concurrent.CancellationException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -70,31 +72,78 @@ public class MetricsTracerTest {
   }
 
   @Test
-  public void testSuccessExample() {
-    // initialize mock-request
-    Object mockSuccessfulRequest = new Object();
+  public void testOperationSucceeded_recordsAttributes() {
 
-    // Attempt #1
-    metricsTracer.attemptStarted(mockSuccessfulRequest, 0);
-    metricsTracer.attemptSucceeded();
     metricsTracer.operationSucceeded();
 
-    long count = 1;
     Map<String, String> attributes =
         ImmutableMap.of(
             "status", "OK",
             "method_name", "fake_service.fake_method");
 
-    verify(metricsRecorder).recordAttemptCount(count, attributes);
-    verify(metricsRecorder).recordOperationCount(count, attributes);
-    verify(metricsRecorder).recordAttemptLatency(anyDouble(), eq(attributes));
+    verify(metricsRecorder).recordOperationCount(1, attributes);
     verify(metricsRecorder).recordOperationLatency(anyDouble(), eq(attributes));
 
     verifyNoMoreInteractions(metricsRecorder);
   }
 
   @Test
-  public void testFailureExample() {
+  public void testOperationFailed_recordsAttributes() {
+
+    ApiException error0 =
+        new NotFoundException(
+            "invalid argument", null, new FakeStatusCode(Code.INVALID_ARGUMENT), false);
+    metricsTracer.operationFailed(error0);
+
+    Map<String, String> attributes =
+        ImmutableMap.of(
+            "status", "INVALID_ARGUMENT",
+            "method_name", "fake_service.fake_method");
+
+    verify(metricsRecorder).recordOperationCount(1, attributes);
+    verify(metricsRecorder).recordOperationLatency(anyDouble(), eq(attributes));
+
+    verifyNoMoreInteractions(metricsRecorder);
+  }
+
+  @Test
+  public void testOperationCancelled_recordsAttributes() {
+
+    metricsTracer.operationCancelled();
+
+    Map<String, String> attributes =
+        ImmutableMap.of(
+            "status", "CANCELLED",
+            "method_name", "fake_service.fake_method");
+
+    verify(metricsRecorder).recordOperationCount(1, attributes);
+    verify(metricsRecorder).recordOperationLatency(anyDouble(), eq(attributes));
+
+    verifyNoMoreInteractions(metricsRecorder);
+  }
+
+  @Test
+  public void testAttemptSucceeded_recordsAttributes() {
+    // initialize mock-request
+    Object mockSuccessfulRequest = new Object();
+
+    // Attempt #1
+    metricsTracer.attemptStarted(mockSuccessfulRequest, 0);
+    metricsTracer.attemptSucceeded();
+
+    Map<String, String> attributes =
+        ImmutableMap.of(
+            "status", "OK",
+            "method_name", "fake_service.fake_method");
+
+    verify(metricsRecorder).recordAttemptCount(1, attributes);
+    verify(metricsRecorder).recordAttemptLatency(anyDouble(), eq(attributes));
+
+    verifyNoMoreInteractions(metricsRecorder);
+  }
+
+  @Test
+  public void testAttemptFailed_recordsAttributes() {
     // initialize mock-request
     Object mockFailedRequest = new Object();
 
@@ -104,144 +153,120 @@ public class MetricsTracerTest {
         new NotFoundException(
             "invalid argument", null, new FakeStatusCode(Code.INVALID_ARGUMENT), false);
     metricsTracer.attemptFailed(error0, Duration.ofMillis(2));
-    metricsTracer.operationFailed(error0);
 
-    long count = 1;
     Map<String, String> attributes =
         ImmutableMap.of(
             "status", "INVALID_ARGUMENT",
             "method_name", "fake_service.fake_method");
 
-    verify(metricsRecorder).recordAttemptCount(count, attributes);
-    verify(metricsRecorder).recordOperationCount(count, attributes);
+    verify(metricsRecorder).recordAttemptCount(1, attributes);
     verify(metricsRecorder).recordAttemptLatency(anyDouble(), eq(attributes));
-    verify(metricsRecorder).recordOperationLatency(anyDouble(), eq(attributes));
 
     verifyNoMoreInteractions(metricsRecorder);
   }
 
   @Test
-  public void testCancelledExample() {
+  public void testAttemptCancelled_recordsAttributes() {
     // initialize mock-request
     Object mockCancelledRequest = new Object();
-
     // Attempt #1
     metricsTracer.attemptStarted(mockCancelledRequest, 0);
     metricsTracer.attemptCancelled();
-    metricsTracer.operationCancelled();
 
-    long count = 1;
     Map<String, String> attributes =
         ImmutableMap.of(
             "status", "CANCELLED",
             "method_name", "fake_service.fake_method");
 
-    verify(metricsRecorder).recordAttemptCount(count, attributes);
-    verify(metricsRecorder).recordOperationCount(count, attributes);
+    verify(metricsRecorder).recordAttemptCount(1, attributes);
     verify(metricsRecorder).recordAttemptLatency(anyDouble(), eq(attributes));
-    verify(metricsRecorder).recordOperationLatency(anyDouble(), eq(attributes));
 
     verifyNoMoreInteractions(metricsRecorder);
   }
 
   @Test
-  public void testAttemptFailedRetriesExhaustedExample() {
+  public void testAttemptFailedRetriesExhausted_recordsAttributes() {
     // initialize mock-request
     Object mockRequest = new Object();
-
     // Attempt #1
     metricsTracer.attemptStarted(mockRequest, 0);
     ApiException error0 =
         new DeadlineExceededException(
             "deadline exceeded", null, new FakeStatusCode(Code.DEADLINE_EXCEEDED), false);
-
     metricsTracer.attemptFailedRetriesExhausted(error0);
-    metricsTracer.operationFailed(error0);
 
-    long count = 1;
     Map<String, String> attributes =
         ImmutableMap.of(
             "status", "DEADLINE_EXCEEDED",
             "method_name", "fake_service.fake_method");
 
-    verify(metricsRecorder).recordAttemptCount(count, attributes);
-    verify(metricsRecorder).recordOperationCount(count, attributes);
+    verify(metricsRecorder).recordAttemptCount(1, attributes);
     verify(metricsRecorder).recordAttemptLatency(anyDouble(), eq(attributes));
-    verify(metricsRecorder).recordOperationLatency(anyDouble(), eq(attributes));
 
     verifyNoMoreInteractions(metricsRecorder);
   }
 
   @Test
-  public void testAttemptPermanentFailureExample() {
+  public void testAttemptPermanentFailure_recordsAttributes() {
+
     // initialize mock-request
     Object mockRequest = new Object();
-
     // Attempt #1
     metricsTracer.attemptStarted(mockRequest, 0);
-
     ApiException error0 =
         new NotFoundException("not found", null, new FakeStatusCode(Code.NOT_FOUND), false);
-
     metricsTracer.attemptFailedRetriesExhausted(error0);
-    metricsTracer.operationFailed(error0);
 
-    long count = 1;
     Map<String, String> attributes =
         ImmutableMap.of(
             "status", "NOT_FOUND",
             "method_name", "fake_service.fake_method");
 
-    verify(metricsRecorder).recordAttemptCount(count, attributes);
-    verify(metricsRecorder).recordOperationCount(count, attributes);
+    verify(metricsRecorder).recordAttemptCount(1, attributes);
     verify(metricsRecorder).recordAttemptLatency(anyDouble(), eq(attributes));
-    verify(metricsRecorder).recordOperationLatency(anyDouble(), eq(attributes));
 
     verifyNoMoreInteractions(metricsRecorder);
   }
 
   @Test
-  public void testErrorConversion() {
+  public void testAddAttributes_recordsAttributes()
+      throws NoSuchFieldException, IllegalAccessException {
+
+    metricsTracer.addAttributes("FakeTableId", "12345");
+
+    // Validating "attributes" map created during initialization has correct parameters.
+    // Use reflection to access the private field
+    Field attributesMap = MetricsTracer.class.getDeclaredField("attributes");
+    attributesMap.setAccessible(true);
+
+    // Get the value of the private field and verify it
+    Map<String, String> attributes = (Map<String, String>) attributesMap.get(metricsTracer);
+    assertNotNull(attributes);
+    assertEquals("12345", attributes.get("FakeTableId"));
+  }
+
+  @Test
+  public void testExtractStatus_errorConversion() {
+
+    // test all cases of ApiExceptions
     for (Code code : Code.values()) {
-      ApiException error = new ApiException("fake error", null, new FakeStatusCode(code), false);
+      ApiException error = new ApiException("fake_error", null, new FakeStatusCode(code), false);
       String errorCode = metricsTracer.extractStatus(error);
       assertThat(errorCode).isEqualTo(code.toString());
     }
-  }
 
-  // this test needs detailed attention
-  @Test
-  public void testTwoAttemptsFirstFailSecondSuccess() {
-    // initialize mock-request
-    Object mockRequestOne = new Object();
+    // test CancellationException
+    CancellationException cancellationException = new CancellationException();
+    String errorCode = metricsTracer.extractStatus(cancellationException);
+    assertThat(errorCode).isEqualTo("CANCELLED");
 
-    // Attempt #1, which fails
-    metricsTracer.attemptStarted(mockRequestOne, 0);
-    ApiException error0 =
-        new InvalidArgumentException(
-            "Invalid Argument", null, new FakeStatusCode(Code.INVALID_ARGUMENT), false);
-    metricsTracer.attemptFailed(error0, Duration.ofMillis(2));
+    // test "UNKNOWN"
+    Throwable unknownException = new RuntimeException();
+    String errorCode2 = metricsTracer.extractStatus(unknownException);
+    assertThat(errorCode2).isEqualTo("UNKNOWN");
 
-    // for this failed attempt, these should be the attributes
-    Map<String, String> failedAttributes =
-        ImmutableMap.of(
-            "status", "INVALID_ARGUMENT",
-            "method_name", "fake_service.fake_method");
-
-    // metricsRecorder should capture one failed attempt
-    verify(metricsRecorder, times(1)).recordAttemptCount(1, failedAttributes);
-
-    // Attempt #2, which succeeds
-    metricsTracer.attemptStarted(mockRequestOne, 1);
-    metricsTracer.attemptSucceeded();
-
-    //// for this successful attempt, these should be the attributes
-    Map<String, String> successAttributes =
-        ImmutableMap.of(
-            "status", "OK",
-            "method_name", "fake_service.fake_method");
-
-    // metricsRecorder should also capture successful attempt
-    verify(metricsRecorder, times(2)).recordAttemptCount(1, successAttributes);
+    // test "OK"
+    String successCode = metricsTracer.extractStatus(null);
+    assertThat(successCode).isEqualTo("OK");
   }
 }

@@ -34,6 +34,7 @@ import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.StatusCode;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Stopwatch;
 import java.util.HashMap;
 import java.util.Map;
@@ -61,6 +62,8 @@ public class MetricsTracer implements ApiTracer {
 
   protected MetricsRecorder metricsRecorder;
 
+  // we should initialize a new map for every scenario
+  //
   public MetricsTracer(MethodName methodName, MetricsRecorder metricsRecorder) {
     this.attributes.put("method_name", methodName.toString());
     this.metricsRecorder = metricsRecorder;
@@ -145,7 +148,7 @@ public class MetricsTracer implements ApiTracer {
   }
 
   /** {@inheritDoc} */
-  @InternalApi("Visible for testing")
+  @VisibleForTesting
   static String extractStatus(@Nullable Throwable error) {
     final String statusString;
 
