@@ -234,7 +234,6 @@ public class MetricsTracerTest {
 
     metricsTracer.addAttributes("FakeTableId", "12345");
 
-    // Validating "attributes" map created during initialization has correct parameters.
     // Use reflection to access the private field
     Field attributesMap = MetricsTracer.class.getDeclaredField("attributes");
     attributesMap.setAccessible(true);
