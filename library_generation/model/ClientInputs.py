@@ -88,7 +88,7 @@ def parse(
     ).findall(content)
     additional_protos = ''
     if len(proto_library_target) > 0:
-      additional_protos = __parse_additional_protos(proto_library_targets[0])
+      additional_protos = __parse_additional_protos(proto_library_target[0])
     gapic_target = re.compile(gapic_pattern, re.DOTALL | re.VERBOSE)\
                      .findall(content)
     assembly_target = re.compile(assembly_pattern, re.DOTALL | re.VERBOSE)\
@@ -142,10 +142,6 @@ def __parse_rest_numeric_enums(gapic_target: str) -> str:
 
 def __parse_gapic_yaml(gapic_target: str, versioned_path: str) -> str:
     gapic_yaml = re.findall(gapic_yaml_pattern, gapic_target)
-    print('*'*20)
-    print(gapic_target)
-    print(versioned_path)
-    print('*'*20)
     return f"{versioned_path}/{gapic_yaml[0]}" if len(gapic_yaml) != 0 else ""
 
 
