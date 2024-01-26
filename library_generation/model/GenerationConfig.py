@@ -4,7 +4,7 @@ Class that represents the root of a generation_config.yaml
 import yaml
 from typing import List, Optional, Dict
 from .LibraryConfig import LibraryConfig
-from .GAPIC import GAPIC
+from .GapicConfig import GapicConfig
 
 
 class GenerationConfig:
@@ -47,7 +47,7 @@ class GenerationConfig:
       parsed_gapics = list()
       for gapic in gapics:
         proto_path = _required(gapic, 'proto_path')
-        new_gapic = GAPIC(proto_path)
+        new_gapic = GapicConfig(proto_path)
         parsed_gapics.append(new_gapic)
 
       new_library = LibraryConfig(

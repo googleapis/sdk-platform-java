@@ -98,7 +98,7 @@ def generate_composed_library(
     versions_file = f'{repository_path}/versions.txt'
 
   owlbot_cli_source_folder = util.sh_util('mktemp -d')
-  for gapic in library.GAPICs:
+  for gapic in library.gapic_configs:
 
     effective_arguments = list(base_arguments)
     effective_arguments += util.create_argument('proto_path', gapic)

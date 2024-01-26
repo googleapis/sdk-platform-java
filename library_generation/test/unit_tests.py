@@ -12,7 +12,7 @@ current = os.path.dirname(os.path.realpath(__file__))
 parent = os.path.dirname(current)
 sys.path.append(parent)
 import utilities as util
-from model.GAPIC import GAPIC
+from model.GapicConfig import GapicConfig
 from model.GenerationConfig import GenerationConfig
 
 
@@ -23,7 +23,7 @@ class UtilitiesTest(unittest.TestCase):
 
   def test_create_argument_valid_container_succeeds(self):
     container_value = 'google/test/v1'
-    container = GAPIC(container_value)
+    container = GapicConfig(container_value)
     argument_key = 'proto_path'
     result = util.create_argument(argument_key, container)
     self.assertEqual([ f'--{argument_key}', container_value], result)

@@ -26,7 +26,7 @@ class LibraryConfig:
       client_documentation: Optional[str],
       rest_documentation: Optional[str],
       rpc_documentation: Optional[str],
-      gapic_configs: List[GapicConfig],
+      gapicConfigs: List[GapicConfig],
       googleapis_commitish: Optional[str],
       group_id: Optional[str] = 'com.google.cloud',
       requires_billing: Optional[bool] = True,
@@ -42,5 +42,5 @@ class LibraryConfig:
       self.rest_documentation = rest_documentation
       self.rpc_documentation = rpc_documentation
       self.group_id = group_id
-      self.gapic_configs = gapic_configs
+      self.gapicConfigs = gapicConfigs
       self.googleapis_commitish = googleapis_commitish
