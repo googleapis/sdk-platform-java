@@ -295,10 +295,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
               Level.WARNING,
               "DirectPath is misconfigured. DirectPath is only available in a GCE environment.");
         }
-        if (!canUseDirectPathWithUniverseDomain()) {
-          LOG.log(
-              Level.WARNING, "DirectPath will only work in the the googleapis.com Universe Domain");
-        }
       }
     }
   }
@@ -334,8 +330,10 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return false;
   }
 
-  private boolean canUseDirectPathWithUniverseDomain() {
-    return endpoint.contains("googleapis.com");
+  // Universe Domain configuration is currently only supported in the GDU
+  @VisibleForTesting
+  boolean canUseDirectPathWithUniverseDomain() {
+    return endpoint.contains(Credentials.GOOGLE_DEFAULT_UNIVERSE);
   }
 
   @VisibleForTesting

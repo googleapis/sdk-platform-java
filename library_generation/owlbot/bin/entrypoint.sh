@@ -65,49 +65,19 @@ function processModule() {
   echo "...done"
 }
 
-if [ "$(ls */.OwlBot.yaml|wc -l)" -gt 1 ];then
-  # Monorepo (googleapis/google-cloud-java) has multiple OwlBot.yaml config
-  # files in the modules.
-  echo "Processing monorepo"
-  if [ -d owl-bot-staging ]; then
-    # The content of owl-bot-staging is controlled by Owlbot.yaml files in
-    # each module in the monorepo
-    echo "Extracting contents from owl-bot-staging"
-    for module in owl-bot-staging/* ; do
-      if [ ! -d "$module" ]; then
-        continue
-      fi
-      # This relocation allows us continue to use owlbot.py without modification
-      # after monorepo migration.
-      mv "owl-bot-staging/$module" "$module/owl-bot-staging"
-      pushd "$module"
-      processModule
-      popd
-    done
-    rm -r owl-bot-staging
-  else
-    echo "In monorepo but no owl-bot-staging." \
-        "Formatting changes in the last commit"
-    # Find the files that were touched by the last commit.
-    last_commit=$(git log -1 --format=%H)
-    # [A]dded, [C]reated, [M]odified, and [R]enamed
-    changed_files=$(git show --name-only --no-renames --diff-filter=ACMR \
-        "${last_commit}")
-    changed_modules=$(echo "$changed_files" |grep -E '.java$' |cut -d '/' -f 1 \
-        |sort -u)
-    for module in ${changed_modules}; do
-      if [ ! -f "$module/.OwlBot.yaml" ]; then
-        # Changes irrelevant to Owlbot-generated module (such as .github) do not
-        # need formatting
-        continue
-      fi
-      pushd "$module"
-      processModule
-      popd
-    done
-  fi
-else
-  # Split repository
-  echo "Processing a split repo"
-  processModule
+# This script can be used to process HW libraries and monorepo
+# (google-cloud-java) libraries, which require a slightly different treatment
+# monorepo folders have an .OwlBot.yaml file in the module folder (e.g.
+# java-asset/.OwlBot.yaml), whereas HW libraries have the yaml in
+# `.github/.OwlBot.yaml`
+if [[ -f "$(pwd)/.OwlBot.yaml" ]]; then
+  monorepo="true"
 fi
+
+if [[ "${monorepo}" == "true" ]]; then
+  mv owl-bot-staging/* temp
+  rm -rd owl-bot-staging/
+  mv temp owl-bot-staging
+fi
+
+processModule

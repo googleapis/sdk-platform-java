@@ -43,6 +43,7 @@
     </dependency>
   </dependencies>
 
+  {%- if not monorepo %}
   <profiles>
     <profile>
       <id>java9</id>
@@ -66,4 +67,5 @@
         </plugin>
     </plugins>
   </build>
+  {%- endif %}
 </project>
