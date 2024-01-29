@@ -61,6 +61,8 @@ public interface ApiTracer {
    */
   default void operationSucceeded() {};
 
+  default void operationSucceeded(Object response) {};
+
   /**
    * Signals that the operation was cancelled by the user. The tracer is now considered closed and
    * should no longer be used.
@@ -132,6 +134,7 @@ public interface ApiTracer {
    */
   default void attemptPermanentFailure(Throwable error) {};
 
+  default void retryCount(int count) {};
   /**
    * Signals that the initial RPC for the long running operation failed.
    *

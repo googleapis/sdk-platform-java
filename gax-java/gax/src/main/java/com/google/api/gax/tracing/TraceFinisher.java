@@ -53,6 +53,6 @@ class TraceFinisher<T> implements ApiFutureCallback<T> {
 
   @Override
   public void onSuccess(T responseT) {
-    tracer.operationSucceeded();
+    tracer.operationSucceeded(responseT);
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 Google LLC
+ * Copyright 2023 Google LLC
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -27,35 +27,41 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package com.google.api.gax.tracing;
 
-import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
-import java.util.Map;
+import com.google.api.gax.core.GaxProperties;
+import io.opencensus.trace.Tracer;
+import io.opentelemetry.api.OpenTelemetry;
+import io.opentelemetry.api.metrics.Meter;
 
 /**
- * Provides an interface for metrics recording. The implementer is expected to use an observability
- * framework, e.g. OpenTelemetry. There should be only one instance of MetricsRecorder per client,
- * all the methods in this class are expected to be called from multiple threads, hence the
- * implementation must be thread safe.
+ * A {@link ApiTracerFactory} to build instances of {@link OpencensusTracer}.
+ *
+ * <p>This class wraps the {@link Tracer} provided by Opencensus in {@code Tracing.getTracer()}. It
+ * will be used to create new spans and wrap them in {@link OpencensusTracer} defined in gax.
+ *
+ * <p>This class is thread safe.
  */
-@BetaApi
-@InternalApi
-public interface MetricsRecorder {
+@InternalApi("For google-cloud-java client use only")
+public class OpenTelemetryMetricsFactory implements ApiTracerFactory {
+  protected Meter meter;
 
-  /** Records the latency of an RPC attempt */
-  default void recordAttemptLatency(double attemptLatency, Map<String, String> attributes) {}
+  protected MetricsRecorder metricsRecorder;
 
-  /** Records the count of RPC attempts */
-  default void recordAttemptCount(long count, Map<String, String> attributes) {}
+  public OpenTelemetryMetricsFactory(
+      OpenTelemetry openTelemetry, String libraryName, String libraryVersion) {
+    meter =
+        openTelemetry
+            .meterBuilder("gax")
+            .setInstrumentationVersion(GaxProperties.getGaxVersion())
+            .build();
+    metricsRecorder = new MetricsRecorder(meter);
+  }
 
-  /**
-   * Records the total end-to-end latency for an operation, including the initial RPC attempts and
-   * subsequent retries.
-   */
-  default void recordOperationLatency(double operationLatency, Map<String, String> attributes) {}
-
-  /** Records the count of operations */
-  default void recordOperationCount(long count, Map<String, String> attributes) {}
+  @Override
+  //no matter the operation type, same metrics-tracer is initialized for all.
+  public ApiTracer newTracer(ApiTracer parent, SpanName spanName, OperationType operationType) {
+    return new MetricsTracer(spanName, metricsRecorder);
+  }
 }
