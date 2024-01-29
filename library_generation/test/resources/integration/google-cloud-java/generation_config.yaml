@@ -10,9 +10,9 @@ googleapis_commitish: 4512234113a18c1fda1fb0d0ceac8f4b4efe9801
 owlbot_cli_image: sha256:623647ee79ac605858d09e60c1382a716c125fb776f69301b72de1cd35d49409
 #Required.
 synthtool_commitish: fac8444edd5f5526e804c306b766a271772a3e2f
-#Required. The root folder name of generated client libraries. The value "google-cloud-java" implies special treatment in the lower level scripts
+#Required. The root folder name of generated client libraries.
 destination_path: google-cloud-java
-#Required.
+#Required. If the number of libraries is greater than 1, the scripts will treat the target repository as a monorepo, with a slightly different workflow mainly in the postprocessing stage
 libraries:
     #Required. Can be used for populating the folder name java-{api_shortName}. This is also the destination-name in new-client.py.
   - api_shortname: asset
