@@ -30,7 +30,6 @@
 package com.google.api.gax.rpc;
 
 import com.google.api.core.BetaApi;
-import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.batching.BatchingSettings;
 import com.google.api.gax.longrunning.OperationResponsePollAlgorithm;
 import com.google.api.gax.longrunning.OperationSnapshot;
@@ -53,42 +52,52 @@ public class Callables {
   private Callables() {}
 
   /**
-   * Use {@link #retrying(UnaryCallable, UnaryCallSettings, ClientContext, RequestMutator)} method
-   * instead.
+   * Create a callable object that represents a Unary API method. Designed for use by generated
+   * code.
+   *
+   * @param innerCallable the callable to issue calls
+   * @param callSettings {@link UnaryCallSettings} to configure the unary call-related settings
+   *     with.
+   * @param clientContext {@link ClientContext} to use to connect to the service.
+   * @return {@link UnaryCallable} callable object.
    */
-  @ObsoleteApi("Please use other retrying() method instead")
   public static <RequestT, ResponseT> UnaryCallable<RequestT, ResponseT> retrying(
       UnaryCallable<RequestT, ResponseT> innerCallable,
       UnaryCallSettings<?, ?> callSettings,
       ClientContext clientContext) {
 
-    UnaryCallSettings<?, ?> settings = callSettings;
-
-    if (areRetriesDisabled(settings.getRetryableCodes(), settings.getRetrySettings())) {
-      // When retries are disabled, the total timeout can be treated as the rpc timeout.
-      settings =
-          settings
-              .toBuilder()
-              .setSimpleTimeoutNoRetries(settings.getRetrySettings().getTotalTimeout())
-              .build();
-    }
-
-    RetryAlgorithm<ResponseT> retryAlgorithm =
-        new RetryAlgorithm<>(
-            new ApiResultRetryAlgorithm<ResponseT>(),
-            new ExponentialRetryAlgorithm(settings.getRetrySettings(), clientContext.getClock()));
     ScheduledRetryingExecutor<ResponseT> retryingExecutor =
-        new ScheduledRetryingExecutor<>(retryAlgorithm, clientContext.getExecutor());
+        getRetryingExecutor(callSettings, clientContext);
     return new RetryingCallable<>(
-        clientContext.getDefaultCallContext(), innerCallable, retryingExecutor, null);
+        clientContext.getDefaultCallContext(), innerCallable, retryingExecutor);
   }
 
+  /**
+   * Create a callable object that represents a Unary API method. Designed for use by generated
+   * code.
+   *
+   * @param innerCallable the callable to issue calls
+   * @param callSettings {@link UnaryCallSettings} to configure the unary call-related settings
+   *     with.
+   * @param clientContext {@link ClientContext} to use to connect to the service.
+   * @param requestMutator {@link RequestMutator} to modify the request. Currently only used for
+   *     autopopulated fields.
+   * @return {@link UnaryCallable} callable object.
+   */
   public static <RequestT, ResponseT> UnaryCallable<RequestT, ResponseT> retrying(
       UnaryCallable<RequestT, ResponseT> innerCallable,
       UnaryCallSettings<?, ?> callSettings,
       ClientContext clientContext,
       RequestMutator requestMutator) {
 
+    ScheduledRetryingExecutor<ResponseT> retryingExecutor =
+        getRetryingExecutor(callSettings, clientContext);
+    return new RetryingCallable<>(
+        clientContext.getDefaultCallContext(), innerCallable, retryingExecutor, requestMutator);
+  }
+
+  private static <ResponseT> ScheduledRetryingExecutor<ResponseT> getRetryingExecutor(
+      UnaryCallSettings<?, ?> callSettings, ClientContext clientContext) {
     UnaryCallSettings<?, ?> settings = callSettings;
 
     if (areRetriesDisabled(settings.getRetryableCodes(), settings.getRetrySettings())) {
@@ -106,8 +115,7 @@ public class Callables {
             new ExponentialRetryAlgorithm(settings.getRetrySettings(), clientContext.getClock()));
     ScheduledRetryingExecutor<ResponseT> retryingExecutor =
         new ScheduledRetryingExecutor<>(retryAlgorithm, clientContext.getExecutor());
-    return new RetryingCallable<>(
-        clientContext.getDefaultCallContext(), innerCallable, retryingExecutor, requestMutator);
+    return retryingExecutor;
   }
 
   public static <RequestT, ResponseT> ServerStreamingCallable<RequestT, ResponseT> retrying(

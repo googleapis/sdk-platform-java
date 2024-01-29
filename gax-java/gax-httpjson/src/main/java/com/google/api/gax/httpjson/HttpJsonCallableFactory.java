@@ -88,14 +88,14 @@ public class HttpJsonCallableFactory {
   }
 
   /** Use {@link #createUnaryCallable createUnaryCallable} method instead. */
-  @ObsoleteApi("Please use other GrpcDirectCallable() method instead")
+  @ObsoleteApi("Please use other httpJson UnaryCallable method instead")
   static <RequestT, ResponseT> UnaryCallable<RequestT, ResponseT> createUnaryCallable(
       UnaryCallable<RequestT, ResponseT> innerCallable,
       UnaryCallSettings<?, ?> callSettings,
       ClientContext clientContext) {
     UnaryCallable<RequestT, ResponseT> callable =
         new HttpJsonExceptionCallable<>(innerCallable, callSettings.getRetryableCodes());
-    callable = Callables.retrying(callable, callSettings, clientContext, null);
+    callable = Callables.retrying(callable, callSettings, clientContext);
     return callable.withDefaultCallContext(clientContext.getDefaultCallContext());
   }
 
