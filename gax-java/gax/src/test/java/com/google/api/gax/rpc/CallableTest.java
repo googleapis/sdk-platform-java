@@ -125,7 +125,8 @@ public class CallableTest {
 
     Duration timeout = retrySettings.getInitialRpcTimeout();
 
-    ApiFuture<String> futureResponse = callable.futureCall(initialRequest, callContextWithRetrySettings);
+    ApiFuture<String> futureResponse =
+        callable.futureCall(initialRequest, callContextWithRetrySettings);
 
     ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(String.class);
     verify(innerCallable).futureCall(argumentCaptor.capture(), any(ApiCallContext.class));

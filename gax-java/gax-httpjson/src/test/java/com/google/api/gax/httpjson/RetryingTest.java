@@ -49,18 +49,15 @@ import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.ApiExceptionFactory;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.FailedPreconditionException;
-import com.google.api.gax.rpc.RequestMutator;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.gax.rpc.UnknownException;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.truth.Truth;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.UncheckedExecutionException;
 import com.google.protobuf.TypeRegistry;
-import java.util.ArrayList;
 import java.util.Set;
 import org.junit.After;
 import org.junit.Before;
@@ -77,8 +74,7 @@ public class RetryingTest {
   @SuppressWarnings("unchecked")
   private final UnaryCallable<Integer, Integer> callInt = Mockito.mock(UnaryCallable.class);
 
-  private final ApiMethodDescriptor<Integer, Integer>
-      FAKE_METHOD_DESCRIPTOR_FOR_REQUEST_MUTATOR =
+  private final ApiMethodDescriptor<Integer, Integer> FAKE_METHOD_DESCRIPTOR_FOR_REQUEST_MUTATOR =
       ApiMethodDescriptor.newBuilder()
           .setFullMethodName("google.cloud.v1.Fake/FakeMethodForRequestMutator")
           .setHttpMethod(HttpMethods.POST)
@@ -388,7 +384,8 @@ public class RetryingTest {
     UnaryCallable<Integer, Integer> callable =
         HttpJsonCallableFactory.createUnaryCallable(
             callInt, callSettings, httpJsonCallSettings, clientContext);
-    UnknownException exception = assertThrows(UnknownException.class, () -> callable.call(initialRequest));
+    UnknownException exception =
+        assertThrows(UnknownException.class, () -> callable.call(initialRequest));
     assertThat(exception).hasMessageThat().isEqualTo("java.lang.RuntimeException: unknown");
     // Capture the argument passed to futureCall
     ArgumentCaptor<Integer> argumentCaptor = ArgumentCaptor.forClass(Integer.class);
