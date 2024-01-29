@@ -1411,6 +1411,10 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
         .build();
   }
 
+  /**
+   * The Request Mutator should only be generated if the field exists in the Message and is properly
+   * configured in the Message(see {@link Field#canBeAutoPopulated()})
+   */
   @VisibleForTesting
   static Boolean shouldGenerateRequestMutator(
       Method method, ImmutableMap<String, Message> messageTypes) {
