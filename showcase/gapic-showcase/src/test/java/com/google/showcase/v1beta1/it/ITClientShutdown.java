@@ -34,7 +34,8 @@ public class ITClientShutdown {
   public void testGrpc_closeClient() throws Exception {
     EchoClient grpcClient = TestClientInitializer.createGrpcEchoClient();
     grpcClient.close();
-    grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+    // 500ms buffer time to properly terminate the client
+    grpcClient.awaitTermination(500, TimeUnit.MILLISECONDS);
     Truth.assertThat(grpcClient.isShutdown()).isTrue();
     Truth.assertThat(grpcClient.isTerminated()).isTrue();
   }
@@ -43,8 +44,8 @@ public class ITClientShutdown {
   public void testHttpJson_closeClient() throws Exception {
     EchoClient httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
     httpjsonClient.close();
-    httpjsonClient.awaitTermination(
-        TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+    // 500ms buffer time to properly terminate the client
+    httpjsonClient.awaitTermination(500, TimeUnit.MILLISECONDS);
     Truth.assertThat(httpjsonClient.isShutdown()).isTrue();
     Truth.assertThat(httpjsonClient.isTerminated()).isTrue();
   }
@@ -56,7 +57,8 @@ public class ITClientShutdown {
     grpcClient.echo(EchoRequest.newBuilder().setContent("Test").build());
 
     grpcClient.close();
-    grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+    // 1s buffer time to properly terminate the client after RPC is invoked
+    grpcClient.awaitTermination(1, TimeUnit.SECONDS);
     Truth.assertThat(grpcClient.isShutdown()).isTrue();
     Truth.assertThat(grpcClient.isTerminated()).isTrue();
   }
@@ -68,8 +70,8 @@ public class ITClientShutdown {
     httpjsonClient.echo(EchoRequest.newBuilder().setContent("Test").build());
 
     httpjsonClient.close();
-    httpjsonClient.awaitTermination(
-        TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+    // 1s buffer time to properly terminate the client after RPC is invoked
+    httpjsonClient.awaitTermination(1, TimeUnit.SECONDS);
     Truth.assertThat(httpjsonClient.isShutdown()).isTrue();
     Truth.assertThat(httpjsonClient.isTerminated()).isTrue();
   }

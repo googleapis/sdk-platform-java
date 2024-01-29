@@ -123,7 +123,8 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
   private volatile boolean closed;
 
   // Store the timeout future created by the deadline schedule executor. The future
-  // can be cancelled if a response has been received before the timeout.
+  // can be cancelled if a response (either an error or valid payload) has been
+  // received before the timeout.
   @GuardedBy("lock")
   private ScheduledFuture<?> timeoutFuture;
 
@@ -441,9 +442,10 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
       }
       closed = true;
 
-      // Cancel the timeout future if there is a timeout task created
+      // Cancel the timeout future if there is a timeout associated with the RPC
       if (timeoutFuture != null) {
-        // timeout() invokes close(), but cancelling a completed task should no-op
+        // The timeout method also invokes close(), but cancelling a completed task should no-op.
+        // Attempt to interrupt the future as the client should not wait for the timeout to complete
         timeoutFuture.cancel(true);
         timeoutFuture = null;
       }
