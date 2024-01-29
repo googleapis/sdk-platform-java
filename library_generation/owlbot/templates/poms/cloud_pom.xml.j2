@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>{{module.group_id}}</groupId>
@@ -6,7 +6,9 @@
   <version>{{module.version}}</version><!-- {x-version-update:{{module.artifact_id}}:current} -->
   <packaging>jar</packaging>
   <name>Google {{name}}</name>
+  {%- if not monorepo %}
   <url>https://github.com/{{repo}}</url>
+  {%- endif %}
   <description>{{name}} {{description}}</description>
   <parent>
     <groupId>{{parent_module.group_id}}</groupId>
@@ -64,6 +66,10 @@
     </dependency>
     <dependency>
       <groupId>com.google.api.grpc</groupId>
+      <artifactId>grpc-google-common-protos</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.google.api.grpc</groupId>
       <artifactId>proto-google-iam-v1</artifactId>
     </dependency>
     <dependency>
@@ -108,6 +114,7 @@
     </dependency>
   </dependencies>
 
+  {%- if not monorepo %}
   <profiles>
     <profile>
       <id>java9</id>
@@ -131,4 +138,5 @@
         </plugin>
     </plugins>
   </build>
+  {%- endif %}
 </project>
