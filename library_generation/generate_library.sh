@@ -126,7 +126,7 @@ if [ -z "${include_samples}" ]; then
 fi
 
 if [ -z "$enable_postprocessing" ]; then
-  enable_postprocessing="true"
+  enable_postprocessing="false"
 fi
 
 if [ -z "${os_architecture}" ]; then
@@ -154,7 +154,7 @@ case "${proto_path}" in
     find_depth="-maxdepth 1"
     ;;
 esac
-proto_files=$(find "${proto_path}" ${find_depth} -type f  -name "*.proto" | LC_COLLATE=C sort)
+proto_files=$(find "${proto_path}" ${find_depth} -name "*.proto" | LC_COLLATE=C sort)
 # include or exclude certain protos in grpc plugin and gapic generator java.
 case "${proto_path}" in
   "google/cloud")
@@ -295,8 +295,9 @@ for proto_src in ${proto_files}; do
      [[ "${proto_src}" == "google/shopping/type/types.proto" ]]; then
     continue
   fi
-  mkdir -p "${temp_destination_path}/proto-${folder_name}/src/main/proto"
-  rsync -R "${proto_src}" "${temp_destination_path}/proto-${folder_name}/src/main/proto"
+  proto_sub_dir="${proto_src%/*}"
+  mkdir -p "${temp_destination_path}/proto-${folder_name}/src/main/proto/${proto_sub_dir}"
+  cp "${proto_src}" "${temp_destination_path}/proto-${folder_name}/src/main/proto/${proto_sub_dir}"
 done
 popd # output_folder
 ##################### Section 4 #####################
@@ -308,11 +309,12 @@ popd # destination path
 ##################### Section 5 #####################
 # post-processing
 #####################################################
-if [ "${enable_postprocessing}" != "true" ];
-then
+if [ "${enable_postprocessing}" != "true" ]; then
   echo "post processing is disabled"
-  cp -r ${temp_destination_path}/* "${output_folder}/${destination_path}"
+  cp -R "${temp_destination_path}/" "${output_folder}/${destination_path}"
   rm -rdf "${temp_destination_path}"
+  tar -zchpf "${destination_path}-alt.tar.gz" "${destination_path}"/*
+  mv "${destination_path}-alt.tar.gz" "${GENDIR}/${proto_path}"
   exit 0
 fi
 if [ -z "${versions_file}" ];then
@@ -328,11 +330,10 @@ mkdir -p "${workspace}"
 
 # if destination_path is not empty, it will be used as a starting workspace for
 # postprocessing
-if [[ $(find "${output_folder}/${destination_path}" -mindepth 1 -maxdepth 1 -type d,f | wc -l) -gt 0 ]];then
+if [[ $(find "${output_folder}/${destination_path}" -mindepth 1 -maxdepth 1 -type d,f | wc -l) -gt 0 ]]; then
   workspace="${output_folder}/${destination_path}"
 fi
 
 bash -x "${script_dir}/postprocess_library.sh" "${workspace}" \
   "${temp_destination_path}" \
   "${versions_file}"
-

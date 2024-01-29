@@ -1,0 +1,11 @@
+package(default_visibility = ["//visibility:public"])
+
+exports_files([
+    "generate_library.sh",
+    "utilities.sh",
+])
+
+sh_binary(
+    name = "generate_library",
+    srcs = ["generate_library.sh"],
+)

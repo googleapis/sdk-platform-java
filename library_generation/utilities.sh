@@ -164,7 +164,6 @@ download_protobuf() {
     "protobuf-${protobuf_version}.zip" \
     "GitHub"
     unzip -o -q "protobuf-${protobuf_version}.zip" -d "protobuf-${protobuf_version}"
-    cp -r "protobuf-${protobuf_version}/include/google" .
     rm "protobuf-${protobuf_version}.zip"
   fi
 
@@ -209,7 +208,7 @@ download_fail() {
 
 # gets the output folder where all sources and dependencies will be located.
 get_output_folder() {
-  echo "$(pwd)/output"
+  pwd
 }
 
 detect_os_architecture() {
