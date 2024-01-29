@@ -15,12 +15,9 @@
  */
 package com.google.showcase.v1beta1.it;
 
-import static com.google.common.truth.Truth.assertThat;
-import static com.google.showcase.v1beta1.it.util.TestClientInitializer.createGrpcEchoClientWithRetrySettings;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import com.google.api.gax.httpjson.ApiMethodDescriptor;
 import com.google.api.gax.httpjson.ForwardingHttpJsonClientCall;
@@ -30,16 +27,10 @@ import com.google.api.gax.httpjson.HttpJsonClientCall;
 import com.google.api.gax.httpjson.HttpJsonClientInterceptor;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.retrying.RetryingFuture;
-import com.google.api.gax.rpc.DeadlineExceededException;
-import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.StatusCode.Code;
-import com.google.api.gax.rpc.UnknownException;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
-import com.google.common.truth.Truth;
 import com.google.rpc.Status;
-import com.google.showcase.v1beta1.BlockRequest;
-import com.google.showcase.v1beta1.BlockResponse;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
@@ -67,8 +58,7 @@ public class ITAutoPopulatedFields {
   private static class HttpJsonInterceptor implements HttpJsonClientInterceptor {
     private Consumer<Object> onRequestIntercepted;
 
-    private HttpJsonInterceptor() {
-    }
+    private HttpJsonInterceptor() {}
 
     private void setOnRequestIntercepted(Consumer<Object> onRequestIntercepted) {
       this.onRequestIntercepted = onRequestIntercepted;
@@ -81,8 +71,8 @@ public class ITAutoPopulatedFields {
         HttpJsonChannel next) {
       HttpJsonClientCall<ReqT, RespT> call = next.newCall(method, callOptions);
 
-      return new ForwardingHttpJsonClientCall.SimpleForwardingHttpJsonClientCall<
-          ReqT, RespT>(call) {
+      return new ForwardingHttpJsonClientCall.SimpleForwardingHttpJsonClientCall<ReqT, RespT>(
+          call) {
         @Override
         public void sendMessage(ReqT message) {
           // Capture the request message
@@ -95,13 +85,11 @@ public class ITAutoPopulatedFields {
     }
   }
 
-
   // Implement a request interceptor to retrieve the request ID being sent on the request.
   private static class GRPCInterceptor implements ClientInterceptor {
     private Consumer<Object> onRequestIntercepted;
 
-    private GRPCInterceptor() {
-    }
+    private GRPCInterceptor() {}
 
     private void setOnRequestIntercepted(Consumer<Object> onRequestIntercepted) {
       this.onRequestIntercepted = onRequestIntercepted;
@@ -109,11 +97,10 @@ public class ITAutoPopulatedFields {
 
     @Override
     public <ReqT, RespT> ClientCall<ReqT, RespT> interceptCall(
-        MethodDescriptor<ReqT, RespT> method,
-        CallOptions callOptions,
-        Channel next) {
+        MethodDescriptor<ReqT, RespT> method, CallOptions callOptions, Channel next) {
 
-      return new ForwardingClientCall.SimpleForwardingClientCall<ReqT, RespT>(next.newCall(method, callOptions)) {
+      return new ForwardingClientCall.SimpleForwardingClientCall<ReqT, RespT>(
+          next.newCall(method, callOptions)) {
         @Override
         public void sendMessage(ReqT message) {
           // Capture the request message
@@ -150,14 +137,19 @@ public class ITAutoPopulatedFields {
 
     // Create gRPC Interceptor and Client
     grpcRequestInterceptor = new ITAutoPopulatedFields.GRPCInterceptor();
-    grpcClientWithoutRetries = TestClientInitializer.createGrpcEchoClient(ImmutableList.of(grpcRequestInterceptor));
-    grpcClientWithRetries = TestClientInitializer.createGrpcEchoClientWithRetrySettings(defaultRetrySettings, retryableCodes, ImmutableList.of(grpcRequestInterceptor));
+    grpcClientWithoutRetries =
+        TestClientInitializer.createGrpcEchoClient(ImmutableList.of(grpcRequestInterceptor));
+    grpcClientWithRetries =
+        TestClientInitializer.createGrpcEchoClientWithRetrySettings(
+            defaultRetrySettings, retryableCodes, ImmutableList.of(grpcRequestInterceptor));
 
     // Create HttpJson Interceptor and Client
     httpJsonInterceptor = new ITAutoPopulatedFields.HttpJsonInterceptor();
     httpJsonClient =
         TestClientInitializer.createHttpJsonEchoClient(ImmutableList.of(httpJsonInterceptor));
-    httpJsonClientWithRetries = TestClientInitializer.createHttpJsonEchoClientWithRetrySettings(defaultRetrySettings, retryableCodes, ImmutableList.of(httpJsonInterceptor));
+    httpJsonClientWithRetries =
+        TestClientInitializer.createHttpJsonEchoClientWithRetrySettings(
+            defaultRetrySettings, retryableCodes, ImmutableList.of(httpJsonInterceptor));
   }
 
   @After
@@ -176,11 +168,10 @@ public class ITAutoPopulatedFields {
             EchoRequest echoRequest = (EchoRequest) request;
             capturedRequestIds.add(echoRequest.getRequestId());
           }
-        }
-    );
+        });
     grpcClientWithoutRetries.echo(EchoRequest.newBuilder().build());
     assertEquals(1, capturedRequestIds.size());
-    assertEquals( 4, UUID.fromString(capturedRequestIds.get(0)).version());
+    assertEquals(4, UUID.fromString(capturedRequestIds.get(0)).version());
   }
 
   @Test
@@ -192,8 +183,7 @@ public class ITAutoPopulatedFields {
             EchoRequest echoRequest = (EchoRequest) request;
             capturedRequestIds.add(echoRequest.getRequestId());
           }
-        }
-    );
+        });
     String UUIDsent = UUID.randomUUID().toString();
     grpcClientWithoutRetries.echo(EchoRequest.newBuilder().setRequestId(UUIDsent).build());
     assertEquals(1, capturedRequestIds.size());
@@ -209,8 +199,7 @@ public class ITAutoPopulatedFields {
             EchoRequest echoRequest = (EchoRequest) request;
             capturedRequestIds.add(echoRequest.getRequestId());
           }
-        }
-    );
+        });
     httpJsonClient.echo(EchoRequest.newBuilder().build());
 
     assertEquals(4, UUID.fromString(capturedRequestIds.get(0)).version());
@@ -226,8 +215,7 @@ public class ITAutoPopulatedFields {
             EchoRequest echoRequest = (EchoRequest) request;
             capturedRequestIds.add(echoRequest.getRequestId());
           }
-        }
-    );
+        });
     httpJsonClient.echo(EchoRequest.newBuilder().setRequestId(UUIDsent).build());
     assertEquals(1, capturedRequestIds.size());
     assertEquals(UUIDsent, capturedRequestIds.get(0));
@@ -242,23 +230,28 @@ public class ITAutoPopulatedFields {
             EchoRequest echoRequest = (EchoRequest) request;
             capturedRequestIds.add(echoRequest.getRequestId());
           }
-        }
-    );
+        });
     String UUIDsent = UUID.randomUUID().toString();
-    EchoRequest requestSent = EchoRequest.newBuilder().setRequestId(UUIDsent).setError(Status.newBuilder().setCode(Code.UNKNOWN.ordinal()).build()).build();
+    EchoRequest requestSent =
+        EchoRequest.newBuilder()
+            .setRequestId(UUIDsent)
+            .setError(Status.newBuilder().setCode(Code.UNKNOWN.ordinal()).build())
+            .build();
 
-    try{
+    try {
       RetryingFuture<EchoResponse> retryingFuture =
-          (RetryingFuture<EchoResponse>) grpcClientWithRetries.echoCallable().futureCall(requestSent);
+          (RetryingFuture<EchoResponse>)
+              grpcClientWithRetries.echoCallable().futureCall(requestSent);
       assertThrows(ExecutionException.class, () -> retryingFuture.get(10, TimeUnit.SECONDS));
       // assert that the number of request IDs is equal to the max attempt
       assertEquals(capturedRequestIds.size(), 5);
       // assert first request ID is same as UUIDSent
       assertEquals(capturedRequestIds.get(0), UUIDsent);
       // assert that each request ID sent is the same
-      assertTrue(capturedRequestIds.stream().allMatch(requestId -> requestId.equals(capturedRequestIds.get(0))));
-    }
-    finally {
+      assertTrue(
+          capturedRequestIds.stream()
+              .allMatch(requestId -> requestId.equals(capturedRequestIds.get(0))));
+    } finally {
       grpcClientWithRetries.close();
       grpcClientWithRetries.awaitTermination(
           TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
@@ -274,21 +267,25 @@ public class ITAutoPopulatedFields {
             EchoRequest echoRequest = (EchoRequest) request;
             capturedRequestIds.add(echoRequest.getRequestId());
           }
-        }
-    );
+        });
 
-    EchoRequest requestSent = EchoRequest.newBuilder().setError(Status.newBuilder().setCode(Code.UNKNOWN.ordinal()).build()).build();
+    EchoRequest requestSent =
+        EchoRequest.newBuilder()
+            .setError(Status.newBuilder().setCode(Code.UNKNOWN.ordinal()).build())
+            .build();
 
-    try{
+    try {
       RetryingFuture<EchoResponse> retryingFuture =
-          (RetryingFuture<EchoResponse>) grpcClientWithRetries.echoCallable().futureCall(requestSent);
+          (RetryingFuture<EchoResponse>)
+              grpcClientWithRetries.echoCallable().futureCall(requestSent);
       assertThrows(ExecutionException.class, () -> retryingFuture.get(10, TimeUnit.SECONDS));
       // assert that the number of request IDs is equal to the max attempt
       assertEquals(capturedRequestIds.size(), 5);
       // assert that each request ID sent is the same
-      assertTrue(capturedRequestIds.stream().allMatch(requestId -> requestId.equals(capturedRequestIds.get(0))));
-    }
-    finally {
+      assertTrue(
+          capturedRequestIds.stream()
+              .allMatch(requestId -> requestId.equals(capturedRequestIds.get(0))));
+    } finally {
       grpcClientWithRetries.close();
       grpcClientWithRetries.awaitTermination(
           TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
@@ -296,7 +293,8 @@ public class ITAutoPopulatedFields {
   }
 
   @Test
-  public void testHttpJson_setsSameRequestIdIfSetInRequestWhenRequestsAreRetried() throws Exception {
+  public void testHttpJson_setsSameRequestIdIfSetInRequestWhenRequestsAreRetried()
+      throws Exception {
     List<String> capturedRequestIds = new ArrayList<>();
     httpJsonInterceptor.setOnRequestIntercepted(
         request -> {
@@ -304,25 +302,31 @@ public class ITAutoPopulatedFields {
             EchoRequest echoRequest = (EchoRequest) request;
             capturedRequestIds.add(echoRequest.getRequestId());
           }
-        }
-    );
+        });
     String UUIDsent = UUID.randomUUID().toString();
-    EchoRequest requestSent = EchoRequest.newBuilder().setRequestId(UUIDsent).setError(Status.newBuilder().setCode(Code.UNKNOWN.getHttpStatusCode()).build()).build();
+    EchoRequest requestSent =
+        EchoRequest.newBuilder()
+            .setRequestId(UUIDsent)
+            .setError(Status.newBuilder().setCode(Code.UNKNOWN.getHttpStatusCode()).build())
+            .build();
     try {
       RetryingFuture<EchoResponse> retryingFuture =
-          (RetryingFuture<EchoResponse>) httpJsonClientWithRetries.echoCallable()
-              .futureCall(requestSent);
+          (RetryingFuture<EchoResponse>)
+              httpJsonClientWithRetries.echoCallable().futureCall(requestSent);
       assertThrows(ExecutionException.class, () -> retryingFuture.get(10, TimeUnit.SECONDS));
       assertEquals(5, capturedRequestIds.size());
       // assert first request ID is same as UUIDSent
       assertEquals(capturedRequestIds.get(0), UUIDsent);
-      assertTrue(capturedRequestIds.stream().allMatch(requestId -> requestId.equals(capturedRequestIds.get(0))));
+      assertTrue(
+          capturedRequestIds.stream()
+              .allMatch(requestId -> requestId.equals(capturedRequestIds.get(0))));
     } finally {
       httpJsonClientWithRetries.close();
       httpJsonClientWithRetries.awaitTermination(
           TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
     }
   }
+
   @Test
   public void testHttpJson_setsSameAutoPopulatedRequestIdWhenRequestsAreRetried() throws Exception {
     List<String> capturedRequestIds = new ArrayList<>();
@@ -332,16 +336,20 @@ public class ITAutoPopulatedFields {
             EchoRequest echoRequest = (EchoRequest) request;
             capturedRequestIds.add(echoRequest.getRequestId());
           }
-        }
-    );
-    EchoRequest requestSent = EchoRequest.newBuilder().setError(Status.newBuilder().setCode(Code.UNKNOWN.getHttpStatusCode()).build()).build();
+        });
+    EchoRequest requestSent =
+        EchoRequest.newBuilder()
+            .setError(Status.newBuilder().setCode(Code.UNKNOWN.getHttpStatusCode()).build())
+            .build();
     try {
       RetryingFuture<EchoResponse> retryingFuture =
-          (RetryingFuture<EchoResponse>) httpJsonClientWithRetries.echoCallable()
-              .futureCall(requestSent);
+          (RetryingFuture<EchoResponse>)
+              httpJsonClientWithRetries.echoCallable().futureCall(requestSent);
       assertThrows(ExecutionException.class, () -> retryingFuture.get(10, TimeUnit.SECONDS));
       assertEquals(5, capturedRequestIds.size());
-      assertTrue(capturedRequestIds.stream().allMatch(requestId -> requestId.equals(capturedRequestIds.get(0))));
+      assertTrue(
+          capturedRequestIds.stream()
+              .allMatch(requestId -> requestId.equals(capturedRequestIds.get(0))));
     } finally {
       httpJsonClientWithRetries.close();
       httpJsonClientWithRetries.awaitTermination(

@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-
 package com.google.showcase.v1beta1.it.util;
 
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -63,7 +62,10 @@ public class TestClientInitializer {
   }
 
   public static EchoClient createGrpcEchoClientWithRetrySettings(
-      RetrySettings retrySettings, Set<StatusCode.Code> retryableCodes, List<ClientInterceptor> interceptorList) throws Exception {
+      RetrySettings retrySettings,
+      Set<StatusCode.Code> retryableCodes,
+      List<ClientInterceptor> interceptorList)
+      throws Exception {
     EchoStubSettings.Builder grpcEchoSettingsBuilder = EchoStubSettings.newBuilder();
     grpcEchoSettingsBuilder
         .echoSettings()
@@ -104,7 +106,10 @@ public class TestClientInitializer {
     return EchoClient.create(httpJsonEchoSettings);
   }
 
-  public static EchoClient createHttpJsonEchoClientWithRetrySettings(RetrySettings retrySettings, Set<StatusCode.Code> retryableCodes, List<HttpJsonClientInterceptor> interceptorList)
+  public static EchoClient createHttpJsonEchoClientWithRetrySettings(
+      RetrySettings retrySettings,
+      Set<StatusCode.Code> retryableCodes,
+      List<HttpJsonClientInterceptor> interceptorList)
       throws Exception {
     EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
     httpJsonEchoSettingsBuilder
