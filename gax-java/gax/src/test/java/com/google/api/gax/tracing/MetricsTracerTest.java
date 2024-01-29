@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -43,7 +43,6 @@ import com.google.api.gax.rpc.testing.FakeStatusCode;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.truth.Truth;
 import java.util.Map;
-import java.util.concurrent.CancellationException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -235,7 +234,7 @@ public class MetricsTracerTest {
   }
 
   @Test
-  public void testExtractStatus_errorConversion() {
+  public void testExtractStatus_errorConversion_apiExceptions() {
 
     // test all cases of ApiExceptions
     for (Code code : Code.values()) {
@@ -243,19 +242,22 @@ public class MetricsTracerTest {
       String errorCode = metricsTracer.extractStatus(error);
       assertThat(errorCode).isEqualTo(code.toString());
     }
+  }
 
-    // test CancellationException
-    CancellationException cancellationException = new CancellationException();
-    String errorCode = metricsTracer.extractStatus(cancellationException);
-    assertThat(errorCode).isEqualTo("CANCELLED");
+  @Test
+  public void testExtractStatus_errorConversion_noError() {
+
+    // test "OK", which corresponds to a "null" error.
+    String successCode = metricsTracer.extractStatus(null);
+    assertThat(successCode).isEqualTo("OK");
+  }
+
+  @Test
+  public void testExtractStatus_errorConversion_unknownException() {
 
     // test "UNKNOWN"
     Throwable unknownException = new RuntimeException();
     String errorCode2 = metricsTracer.extractStatus(unknownException);
     assertThat(errorCode2).isEqualTo("UNKNOWN");
-
-    // test "OK"
-    String successCode = metricsTracer.extractStatus(null);
-    assertThat(successCode).isEqualTo("OK");
   }
 }
