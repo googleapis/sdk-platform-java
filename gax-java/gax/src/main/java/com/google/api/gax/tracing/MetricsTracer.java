@@ -62,8 +62,6 @@ public class MetricsTracer implements ApiTracer {
 
   protected MetricsRecorder metricsRecorder;
 
-  // we should initialize a new map for every scenario
-  //
   public MetricsTracer(MethodName methodName, MetricsRecorder metricsRecorder) {
     this.attributes.put("method_name", methodName.toString());
     this.metricsRecorder = metricsRecorder;
