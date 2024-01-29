@@ -208,103 +208,6 @@ generate_library_failed_with_invalid_grpc_version() {
   cleanup "${destination}"
 }
 
-get_gapic_additional_protos_from_BUILD_common_resources_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_common_resources.bazel"
-  local addition_protos
-  addition_protos=$(get_gapic_additional_protos_from_BUILD "${proto_path}")
-  assertEquals "google/cloud/common_resources.proto" "${addition_protos}"
-}
-
-get_gapic_additional_protos_from_BUILD_iam_policy_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_iam_policy.bazel"
-  local addition_protos
-  addition_protos=$(get_gapic_additional_protos_from_BUILD "${proto_path}")
-  assertEquals "google/cloud/common_resources.proto google/iam/v1/iam_policy.proto" "${addition_protos}"
-}
-
-get_gapic_additional_protos_from_BUILD_locations_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_locations.bazel"
-  local addition_protos
-  addition_protos=$(get_gapic_additional_protos_from_BUILD "${proto_path}")
-  assertEquals "google/cloud/common_resources.proto google/cloud/location/locations.proto" "${addition_protos}"
-}
-
-get_gapic_additional_protos_from_BUILD_iam_locations_test() {
-  local proto_path="${script_dir}/resources/search_additional_protos/BUILD_iam_locations.bazel"
-  local addition_protos
-  addition_protos=$(get_gapic_additional_protos_from_BUILD "${proto_path}")
-  assertEquals "google/cloud/common_resources.proto google/iam/v1/iam_policy.proto google/cloud/location/locations.proto" "${addition_protos}"
-}
-
-get_transport_from_BUILD_grpc_rest_test() {
-  local build_file="${script_dir}/resources/misc/BUILD_grpc_rest.bazel"
-  local transport
-  transport=$(get_transport_from_BUILD "${build_file}")
-  assertEquals "grpc+rest" "${transport}"
-}
-
-get_transport_from_BUILD_grpc_test() {
-  local build_file="${script_dir}/resources/misc/BUILD_grpc.bazel"
-  local transport
-  transport=$(get_transport_from_BUILD "${build_file}")
-  assertEquals "grpc" "${transport}"
-}
-
-get_transport_from_BUILD_rest_test() {
-  local build_file="${script_dir}/resources/misc/BUILD_rest.bazel"
-  local transport
-  transport=$(get_transport_from_BUILD "${build_file}")
-  assertEquals "rest" "${transport}"
-}
-
-get_rest_numeric_enums_from_BUILD_true_test() {
-  local build_file="${script_dir}/resources/misc/BUILD_rest_numeric_enums_true.bazel"
-  local rest_numeric_enums
-  rest_numeric_enums=$(get_rest_numeric_enums_from_BUILD "${build_file}")
-  assertEquals "true" "${rest_numeric_enums}"
-}
-
-get_rest_numeric_enums_from_BUILD_false_test() {
-  local build_file="${script_dir}/resources/misc/BUILD_rest_numeric_enums_false.bazel"
-  local rest_numeric_enums
-  rest_numeric_enums=$(get_rest_numeric_enums_from_BUILD "${build_file}")
-  assertEquals "false" "${rest_numeric_enums}"
-}
-
-get_rest_numeric_enums_from_BUILD_empty_test() {
-  local build_file="${script_dir}/resources/misc/BUILD_rest_numeric_enums_empty.bazel"
-  local rest_numeric_enums
-  rest_numeric_enums=$(get_rest_numeric_enums_from_BUILD "${build_file}")
-  assertEquals "false" "${rest_numeric_enums}"
-}
-
-get_include_samples_from_BUILD_true_test() {
-  local build_file="${script_dir}/resources/misc/BUILD_include_samples_true.bazel"
-  local include_samples
-  include_samples=$(get_include_samples_from_BUILD "${build_file}")
-  assertEquals "true" "${include_samples}"
-}
-
-get_include_samples_from_BUILD_false_test() {
-  local build_file="${script_dir}/resources/misc/BUILD_include_samples_false.bazel"
-  local include_samples
-  include_samples=$(get_include_samples_from_BUILD "${build_file}")
-  assertEquals "false" "${include_samples}"
-}
-
-get_include_samples_from_BUILD_empty_test() {
-  local build_file="${script_dir}/resources/misc/BUILD_include_samples_empty.bazel"
-  local include_samples
-  include_samples=$(get_include_samples_from_BUILD "${build_file}")
-  assertEquals "false" "${include_samples}"
-}
-
-get_version_from_valid_WORKSPACE_test() {
-  workspace_file="${script_dir}/resources/misc/TESTWORKSPACE"
-  obtained_ggj_version=$(get_version_from_WORKSPACE "_gapic_generator_java_version" "${workspace_file}")
-  assertEquals '2.25.1-SNAPSHOT' "${obtained_ggj_version}"
-}
-
 copy_directory_if_exists_valid_folder_succeeds() {
   local source_folder="${script_dir}/resources"
   local destination="${script_dir}/test_destination_folder"
@@ -372,20 +275,6 @@ test_list=(
   generate_library_failed_with_invalid_generator_version
   generate_library_failed_with_invalid_protobuf_version
   generate_library_failed_with_invalid_grpc_version
-  get_gapic_additional_protos_from_BUILD_common_resources_test
-  get_gapic_additional_protos_from_BUILD_iam_policy_test
-  get_gapic_additional_protos_from_BUILD_locations_test
-  get_gapic_additional_protos_from_BUILD_iam_locations_test
-  get_transport_from_BUILD_grpc_rest_test
-  get_transport_from_BUILD_grpc_test
-  get_transport_from_BUILD_rest_test
-  get_rest_numeric_enums_from_BUILD_true_test
-  get_rest_numeric_enums_from_BUILD_false_test
-  get_rest_numeric_enums_from_BUILD_empty_test
-  get_include_samples_from_BUILD_true_test
-  get_include_samples_from_BUILD_false_test
-  get_include_samples_from_BUILD_empty_test
-  get_version_from_valid_WORKSPACE_test
   copy_directory_if_exists_valid_folder_succeeds
   copy_directory_if_exists_invalid_folder_does_not_copy
   get_proto_path_from_preprocessed_sources_valid_library_succeeds

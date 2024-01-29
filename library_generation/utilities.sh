@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -xeo pipefail
+utilities_script_dir=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
 
 # Utility functions used in `generate_library.sh` and showcase generation.
 extract_folder_name() {
@@ -209,7 +210,11 @@ download_fail() {
 
 # gets the output folder where all sources and dependencies will be located.
 get_output_folder() {
-  echo "$(pwd)/output"
+  if [[ $(basename $(pwd)) != "output" ]]; then
+    echo "$(pwd)/output" 
+  else
+    echo $(pwd)
+  fi
 }
 
 detect_os_architecture() {
@@ -268,3 +273,75 @@ get_proto_path_from_preprocessed_sources() {
   popd > /dev/null # sources
   echo "${result}"
 }
+
+# for a pre-processed library stored in $preprocessed_sources_path, a folder
+# tree is built on $target_folder so it looks like a googleapis-gen folder and
+# is therefore consumable by an .OwlBot.yaml file
+build_owlbot_cli_source_folder() {
+  local postprocessing_target=$1
+  local target_folder=$2
+  local preprocessed_sources_path=$3
+  local proto_path=$4
+  if [[ -z "${proto_path}" ]]; then
+    proto_path=$(get_proto_path_from_preprocessed_sources "${preprocessed_sources_path}")
+  fi
+  owlbot_staging_folder="${postprocessing_target}/owl-bot-staging"
+  mkdir -p "${owlbot_staging_folder}"
+
+  # By default (thanks to generation templates), .OwlBot.yaml `deep-copy` section
+  # references a wildcard pattern matching a folder
+  # ending with `-java` at the leaf of proto_path. We then use a generated-java
+  # folder that will be picked up by copy-code
+  mkdir -p "${target_folder}/${proto_path}/generated-java"
+  copy_directory_if_exists "${preprocessed_sources_path}" "proto" \
+    "${target_folder}/${proto_path}/generated-java/proto-google-cloud-library"
+  copy_directory_if_exists "${preprocessed_sources_path}" "grpc" \
+    "${target_folder}/${proto_path}/generated-java/grpc-google-cloud-library"
+  copy_directory_if_exists "${preprocessed_sources_path}" "gapic" \
+    "${target_folder}/${proto_path}/generated-java/gapic-google-cloud-library"
+  copy_directory_if_exists "${preprocessed_sources_path}" "samples" \
+    "${target_folder}/${proto_path}/generated-java/samples"
+  pushd "${target_folder}"
+  # create an empty commit so owl-bot-copy can process this as a repo
+  # (it cannot process non-git-repositories)
+  git init
+  git commit --allow-empty -m 'empty commit'
+  popd # target_folder
+}
+
+# Convenience function to clone only the necessary folders from a git repository
+sparse_clone() {
+  repo_url=$1
+  paths=$2
+  commitish=$3
+  clone_dir=$(basename "${repo_url%.*}")
+  rm -rf "${clone_dir}"
+  git clone -n --depth=1 --no-single-branch --filter=tree:0 "${repo_url}"
+  pushd "${clone_dir}"
+  if [ -n "${commitish}" ]; then
+    git checkout "${commitish}"
+  fi
+  git sparse-checkout set --no-cone ${paths}
+  git checkout
+  popd
+}
+
+# calls a function in utilities.py. THe first argument is the function name, the
+# rest of the arguments are the positional arguments to such function
+py_util() {
+  python3 "${utilities_script_dir}/utilities.py" "$@"
+}
+
+download_googleapis_files_and_folders() {
+  local output_folder=$1
+  local googleapis_commitish=$2
+  # checkout the master branch of googleapis/google (proto files) and WORKSPACE
+  echo "Checking out googlapis repository..."
+  # sparse_clone will remove folder contents first, so we have to checkout googleapis
+  # only once.
+  sparse_clone https://github.com/googleapis/googleapis.git "google grafeas" "${googleapis_commitish}"
+  pushd googleapis
+  cp -r google "${output_folder}"
+  cp -r grafeas "${output_folder}"
+}
+

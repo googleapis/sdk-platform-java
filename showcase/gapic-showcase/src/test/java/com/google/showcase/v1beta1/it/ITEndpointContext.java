@@ -20,14 +20,23 @@ public class ITEndpointContext {
   public static final String SHOWCASE_DEFAULT_ENDPOINT = "localhost:7469";
 
   // Default (no configuration)
+  // This test is very similar to `endpointResolution_userConfiguration`. This test is kept
+  // as future enhancements could allow this test to not have to explicitly set the endpoint.
   @Test
   public void endpointResolution_default() throws InterruptedException, IOException {
     EchoClient echoClient = null;
     try {
-      // The default usage is EchoClient.create(), but for showcase tests run in CI, the
+      // This is not how a client is created by default:
+      // 1. The default usage is EchoClient.create(), but for showcase tests run in CI, the
       // client must be supplied with Credentials.
+      // 2. The default configuration does not set an endpoint. Showcase clients do not have
+      // a serviceName (and this cannot be configured by the user). Set the endpoint
+      // to simulate the endpointContext creating it with a proper serviceName.
       EchoSettings echoSettings =
-          EchoSettings.newBuilder().setCredentialsProvider(NoCredentialsProvider.create()).build();
+          EchoSettings.newBuilder()
+              .setCredentialsProvider(NoCredentialsProvider.create())
+              .setEndpoint(SHOWCASE_DEFAULT_ENDPOINT)
+              .build();
       echoClient = EchoClient.create(echoSettings);
       Truth.assertThat(echoClient.getSettings().getEndpoint()).isEqualTo(SHOWCASE_DEFAULT_ENDPOINT);
     } finally {

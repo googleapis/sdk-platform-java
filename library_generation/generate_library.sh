@@ -60,16 +60,8 @@ case $key in
     include_samples="$2"
     shift
     ;;
-  --enable_postprocessing)
-    enable_postprocessing="$2"
-    shift
-    ;;
   --os_architecture)
     os_architecture="$2"
-    shift
-    ;;
-  --versions_file)
-    versions_file="$2"
     shift
     ;;
   *)
@@ -84,6 +76,11 @@ script_dir=$(dirname "$(readlink -f "$0")")
 # source utility functions
 source "${script_dir}"/utilities.sh
 output_folder="$(get_output_folder)"
+
+if [ -z "${gapic_generator_version}" ]; then
+  echo 'missing required argument --gapic_generator_version'
+  exit 1
+fi
 
 if [ -z "${protobuf_version}" ]; then
   protobuf_version=$(get_protobuf_version "${gapic_generator_version}")
@@ -123,10 +120,6 @@ fi
 
 if [ -z "${include_samples}" ]; then
   include_samples="true"
-fi
-
-if [ -z "$enable_postprocessing" ]; then
-  enable_postprocessing="true"
 fi
 
 if [ -z "${os_architecture}" ]; then
@@ -305,34 +298,7 @@ popd # output_folder
 pushd "${temp_destination_path}"
 rm -rf java_gapic_srcjar java_gapic_srcjar_raw.srcjar.zip java_grpc.jar java_proto.jar temp-codegen.srcjar
 popd # destination path
-##################### Section 5 #####################
-# post-processing
-#####################################################
-if [ "${enable_postprocessing}" != "true" ];
-then
-  echo "post processing is disabled"
-  cp -r ${temp_destination_path}/* "${output_folder}/${destination_path}"
-  rm -rdf "${temp_destination_path}"
-  exit 0
-fi
-if [ -z "${versions_file}" ];then
-  echo "no versions.txt argument provided. Please provide one in order to enable post-processing"
-  exit 1
-fi
-workspace="${output_folder}/workspace"
-if [ -d "${workspace}" ]; then
-  rm -rdf "${workspace}"
-fi
 
-mkdir -p "${workspace}"
-
-# if destination_path is not empty, it will be used as a starting workspace for
-# postprocessing
-if [[ $(find "${output_folder}/${destination_path}" -mindepth 1 -maxdepth 1 -type d,f | wc -l) -gt 0 ]];then
-  workspace="${output_folder}/${destination_path}"
-fi
-
-bash -x "${script_dir}/postprocess_library.sh" "${workspace}" \
-  "${temp_destination_path}" \
-  "${versions_file}"
-
+cp -r ${temp_destination_path}/* "${output_folder}/${destination_path}"
+rm -rdf "${temp_destination_path}"
+exit 0

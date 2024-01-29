@@ -8,6 +8,7 @@ set -ex
 readonly SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 lib_gen_scripts_dir="${SCRIPT_DIR}/../../library_generation/"
 source "${lib_gen_scripts_dir}/test/test_utilities.sh"
+source "${lib_gen_scripts_dir}/utilities.sh"
 readonly perform_cleanup=$1
 
 cd "${SCRIPT_DIR}"
@@ -66,7 +67,6 @@ bash "${SCRIPT_DIR}/../../library_generation/generate_library.sh" \
   --service_config "${service_config}" \
   --service_yaml "${service_yaml}" \
   --include_samples "${include_samples}" \
-  --enable_postprocessing "false" \
   --transport "${transport}" 
 
 exit_code=$?
