@@ -213,6 +213,7 @@ public class TestClientInitializer {
                     .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
                     .setInterceptorProvider(() -> interceptorList)
                     .build())
+            .setEndpoint("localhost:7469")
             .build();
     return ComplianceClient.create(grpcComplianceSettings);
   }
