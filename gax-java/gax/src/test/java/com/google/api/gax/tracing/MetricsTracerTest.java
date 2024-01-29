@@ -57,6 +57,7 @@ import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
 public class MetricsTracerTest {
+  // stricter way of testing for early detection of unused stubs and argument mismatches
   @Rule
   public final MockitoRule mockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
 

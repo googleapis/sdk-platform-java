@@ -217,6 +217,7 @@ public class MetricsTracer implements ApiTracer {
     attributes.put(key, value);
   };
 
+  /** This method is only used for testing */
   Map<String, String> getAttributes() {
     return attributes;
   }
