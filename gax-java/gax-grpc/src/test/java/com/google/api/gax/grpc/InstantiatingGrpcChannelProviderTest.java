@@ -539,7 +539,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testLogDirectPathMisconfigAttrempDirectPathNotSet() throws Exception{
+  public void testLogDirectPathMisconfigAttrempDirectPathNotSet() throws Exception {
     FakeLogHandler logHandler = new FakeLogHandler();
     InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
     InstantiatingGrpcChannelProvider provider =
@@ -560,7 +560,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testLogDirectPathMisconfigWrongCredential() throws Exception{
+  public void testLogDirectPathMisconfigWrongCredential() throws Exception {
     FakeLogHandler logHandler = new FakeLogHandler();
     InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
     InstantiatingGrpcChannelProvider provider =
@@ -582,7 +582,7 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
-  public void testLogDirectPathMisconfigNotOnGCE() throws Exception{
+  public void testLogDirectPathMisconfigNotOnGCE() throws Exception {
     FakeLogHandler logHandler = new FakeLogHandler();
     InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
     InstantiatingGrpcChannelProvider provider =
