@@ -30,8 +30,6 @@
 package com.google.api.gax.tracing;
 
 import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.verify;
@@ -43,7 +41,7 @@ import com.google.api.gax.rpc.NotFoundException;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.rpc.testing.FakeStatusCode;
 import com.google.common.collect.ImmutableMap;
-import java.lang.reflect.Field;
+import com.google.common.truth.Truth;
 import java.util.Map;
 import java.util.concurrent.CancellationException;
 import org.junit.Before;
@@ -229,19 +227,10 @@ public class MetricsTracerTest {
   }
 
   @Test
-  public void testAddAttributes_recordsAttributes()
-      throws NoSuchFieldException, IllegalAccessException {
+  public void testAddAttributes_recordsAttributes() {
 
     metricsTracer.addAttributes("FakeTableId", "12345");
-
-    // Use reflection to access the private field
-    Field attributesMap = MetricsTracer.class.getDeclaredField("attributes");
-    attributesMap.setAccessible(true);
-
-    // Get the value of the private field and verify it
-    Map<String, String> attributes = (Map<String, String>) attributesMap.get(metricsTracer);
-    assertNotNull(attributes);
-    assertEquals("12345", attributes.get("FakeTableId"));
+    Truth.assertThat(metricsTracer.getAttributes().get("FakeTableId").equals("12345"));
   }
 
   @Test

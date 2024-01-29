@@ -29,13 +29,13 @@
  */
 package com.google.api.gax.tracing;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.google.api.gax.tracing.ApiTracerFactory.OperationType;
+import com.google.common.truth.Truth;
 import java.lang.reflect.Field;
 import java.util.Map;
 import org.junit.Before;
@@ -64,8 +64,8 @@ public class MetricsTracerFactoryTest {
     ApiTracer apiTracer = metricsTracerFactory.newTracer(parent, spanName, OperationType.Unary);
 
     // Assert that the apiTracer created has expected type and not null
-    assertTrue(apiTracer instanceof MetricsTracer);
-    assertNotNull(apiTracer);
+    Truth.assertThat(apiTracer).isInstanceOf(MetricsTracer.class);
+    Truth.assertThat(apiTracer).isNotNull();
   }
 
   @Test
@@ -86,7 +86,7 @@ public class MetricsTracerFactoryTest {
 
     // Get the value of the private field and verify it
     Map<String, String> attributes = (Map<String, String>) attributesMap.get(apiTracer);
-    assertNotNull(attributes);
-    assertEquals("testService.testMethod", attributes.get("method_name"));
+    Truth.assertThat(attributes).isNotNull();
+    Truth.assertThat(attributes.get("method_name")).isEqualTo("testService.testMethod");
   }
 }

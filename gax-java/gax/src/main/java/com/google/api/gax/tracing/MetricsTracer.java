@@ -52,7 +52,7 @@ import org.threeten.bp.Duration;
 @InternalApi
 public class MetricsTracer implements ApiTracer {
 
-  public static final String STATUS_ATTRIBUTE = "status";
+  private static final String STATUS_ATTRIBUTE = "status";
 
   private Stopwatch attemptTimer;
 
@@ -60,14 +60,18 @@ public class MetricsTracer implements ApiTracer {
 
   private final Map<String, String> attributes = new HashMap<>();
 
-  protected MetricsRecorder metricsRecorder;
+  private MetricsRecorder metricsRecorder;
 
   public MetricsTracer(MethodName methodName, MetricsRecorder metricsRecorder) {
     this.attributes.put("method_name", methodName.toString());
     this.metricsRecorder = metricsRecorder;
   }
 
-  /** {@inheritDoc} */
+  /**
+   * Signals that the overall operation has finished successfully. The tracer is now considered
+   * closed and should no longer be used. Successful operation adds "OK" value to the status
+   * attribute key.
+   */
   @Override
   public void operationSucceeded() {
     attributes.put(STATUS_ATTRIBUTE, StatusCode.Code.OK.toString());
@@ -76,7 +80,11 @@ public class MetricsTracer implements ApiTracer {
     metricsRecorder.recordOperationCount(1, attributes);
   }
 
-  /** {@inheritDoc} */
+  /**
+   * Signals that the operation was cancelled by the user. The tracer is now considered closed and
+   * should no longer be used. Cancelled operation adds "CANCELLED" value to the status attribute
+   * key.
+   */
   @Override
   public void operationCancelled() {
     attributes.put(STATUS_ATTRIBUTE, StatusCode.Code.CANCELLED.toString());
@@ -85,7 +93,11 @@ public class MetricsTracer implements ApiTracer {
     metricsRecorder.recordOperationCount(1, attributes);
   }
 
-  /** {@inheritDoc} */
+  /**
+   * Signals that the operation was cancelled by the user. The tracer is now considered closed and
+   * should no longer be used. Failed operation extracts the error from the throwable and adds it to
+   * the status attribute key.
+   */
   @Override
   public void operationFailed(Throwable error) {
     attributes.put(STATUS_ATTRIBUTE, extractStatus(error));
@@ -94,13 +106,24 @@ public class MetricsTracer implements ApiTracer {
     metricsRecorder.recordOperationCount(1, attributes);
   }
 
-  /** {@inheritDoc} */
+  /**
+   * Adds an annotation that an attempt is about to start with additional information from the
+   * request. In general this should occur at the very start of the operation. The attemptNumber is
+   * zero based. So the initial attempt will be 0. When the attempt starts, the attemptTimer starts
+   * the stopwatch.
+   *
+   * @param attemptNumber the zero based sequential attempt number.
+   * @param request request of this attempt.
+   */
   @Override
   public void attemptStarted(Object request, int attemptNumber) {
     attemptTimer = Stopwatch.createStarted();
   }
 
-  /** {@inheritDoc} */
+  /**
+   * Adds an annotation that the attempt succeeded. Successful attempt add "OK" value to the status
+   * attribute key.
+   */
   @Override
   public void attemptSucceeded() {
 
@@ -109,7 +132,10 @@ public class MetricsTracer implements ApiTracer {
     metricsRecorder.recordAttemptCount(1, attributes);
   }
 
-  /** {@inheritDoc} */
+  /**
+   * Add an annotation that the attempt was cancelled by the user. Cancelled attempt add "CANCELLED"
+   * to the status attribute key.
+   */
   @Override
   public void attemptCancelled() {
 
@@ -118,7 +144,14 @@ public class MetricsTracer implements ApiTracer {
     metricsRecorder.recordAttemptCount(1, attributes);
   }
 
-  /** {@inheritDoc} */
+  /**
+   * Adds an annotation that the attempt failed, but another attempt will be made after the delay.
+   *
+   * @param error the transient error that caused the attempt to fail.
+   * @param delay the amount of time to wait before the next attempt will start.
+   *     <p>Failed attempt extracts the error from the throwable and adds it to the status attribute
+   *     key.
+   */
   @Override
   public void attemptFailed(Throwable error, Duration delay) {
 
@@ -127,7 +160,13 @@ public class MetricsTracer implements ApiTracer {
     metricsRecorder.recordAttemptCount(1, attributes);
   }
 
-  /** {@inheritDoc} */
+  /**
+   * Adds an annotation that the attempt failed and that no further attempts will be made because
+   * retry limits have been reached. This extracts the error from the throwable and adds it to the
+   * status attribute key.
+   *
+   * @param error the last error received before retries were exhausted.
+   */
   @Override
   public void attemptFailedRetriesExhausted(Throwable error) {
 
@@ -136,7 +175,13 @@ public class MetricsTracer implements ApiTracer {
     metricsRecorder.recordAttemptCount(1, attributes);
   }
 
-  /** {@inheritDoc} */
+  /**
+   * Adds an annotation that the attempt failed and that no further attempts will be made because
+   * the last error was not retryable. This extracts the error from the throwable and adds it to the
+   * status attribute key.
+   *
+   * @param error the error that caused the final attempt to fail.
+   */
   @Override
   public void attemptPermanentFailure(Throwable error) {
 
@@ -145,7 +190,7 @@ public class MetricsTracer implements ApiTracer {
     metricsRecorder.recordAttemptCount(1, attributes);
   }
 
-  /** {@inheritDoc} */
+  /** Function to extract the status of the error as a string */
   @VisibleForTesting
   static String extractStatus(@Nullable Throwable error) {
     final String statusString;
@@ -171,4 +216,8 @@ public class MetricsTracer implements ApiTracer {
   public void addAttributes(String key, String value) {
     attributes.put(key, value);
   };
+
+  Map<String, String> getAttributes() {
+    return attributes;
+  }
 }
