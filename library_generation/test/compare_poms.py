@@ -4,16 +4,15 @@ This focuses on the tree structure of both XML files, meaning that element order
 The only comparison points are: element path (e.g. project/dependencies) and element text
 There is a special case for `dependency`, where the maven coordinates are prepared as well
 """
-
-import sys
 import xml.etree.ElementTree as ET
 from collections import Counter
+import sys
+import os
+current = os.path.dirname(os.path.realpath(__file__))
+parent = os.path.dirname(current)
+sys.path.append(parent)
+from utilities import eprint
 
-"""
-prints to stderr
-"""
-def eprint(*args, **kwargs):
-  print(*args, file=sys.stderr, **kwargs)
 
 """
 Convenience method to access a node's child elements via path and get its text

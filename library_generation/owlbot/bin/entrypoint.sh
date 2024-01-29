@@ -65,6 +65,8 @@ function processModule() {
   echo "...done"
 }
 
+# This script can be used to process HW libraries and monorepo
+# (google-cloud-java) libraries, which require a slightly different treatment
 # monorepo folders have an .OwlBot.yaml file in the module folder (e.g.
 # java-asset/.OwlBot.yaml), whereas HW libraries have the yaml in
 # `.github/.OwlBot.yaml`
