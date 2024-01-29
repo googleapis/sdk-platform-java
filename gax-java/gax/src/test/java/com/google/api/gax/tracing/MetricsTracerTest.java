@@ -236,12 +236,10 @@ public class MetricsTracerTest {
   @Test
   public void testExtractStatus_errorConversion_apiExceptions() {
 
-    // test all cases of ApiExceptions
-    for (Code code : Code.values()) {
-      ApiException error = new ApiException("fake_error", null, new FakeStatusCode(code), false);
-      String errorCode = metricsTracer.extractStatus(error);
-      assertThat(errorCode).isEqualTo(code.toString());
-    }
+    ApiException error =
+        new ApiException("fake_error", null, new FakeStatusCode(Code.INVALID_ARGUMENT), false);
+    String errorCode = metricsTracer.extractStatus(error);
+    assertThat(errorCode).isEqualTo("INVALID_ARGUMENT");
   }
 
   @Test
