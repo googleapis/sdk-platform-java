@@ -147,7 +147,7 @@ def __parse_gapic_yaml(gapic_target: str, versioned_path: str) -> str:
 
 def __parse_service_config(gapic_target: str, versioned_path: str) -> str:
     service_config = re.findall(service_config_pattern, gapic_target)
-    return f"{versioned_path}/{service_config[0]}" if len(service_config) != 0 \
+    return f"{versioned_path}/{service_config[0]}".replace(':','') if len(service_config) != 0 \
         else ""
 
 

@@ -61,10 +61,10 @@ libraries:
     GAPICs:
       - proto_path: google/cloud/dialogflow/v2beta1
       - proto_path: google/cloud/dialogflow/v2
-# - api_shortname: compute
-#   library_type: GAPIC_AUTO
-#   GAPICs:
-#     - proto_path: google/cloud/compute/v1
+  - api_shortname: compute
+    library_type: GAPIC_AUTO
+    GAPICs:
+      - proto_path: google/cloud/compute/v1
   - api_shortname: kms
     library_type: GAPIC_AUTO
     GAPICs:
