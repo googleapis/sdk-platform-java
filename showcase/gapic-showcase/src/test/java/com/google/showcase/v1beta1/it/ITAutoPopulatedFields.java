@@ -133,6 +133,11 @@ public class ITAutoPopulatedFields {
             .setMaxAttempts(5)
             .build();
 
+    // Adding `Code.INTERNAL` is necessary because for httpJson requests, the httpJson status code
+    // is mapped here:
+    // https://github.com/googleapis/sdk-platform-java/blob/acdde47445916dd306ce8b91489fab45c9c2ef50/gax-java/gax-httpjson/src/main/java/com/google/api/gax/httpjson/HttpJsonStatusCode.java#L96-L133
+    // Therefore, just setting the error code to `Code.UNKNOWN` for httpJson will get translated
+    // instead to `Code.INTERNAL`.
     Set<Code> retryableCodes = ImmutableSet.of(Code.UNKNOWN, Code.INTERNAL);
 
     // Create gRPC Interceptor and Client
