@@ -1,4 +1,4 @@
-#!/usr/bin/en bash
+#!/usr/bin/env bash
 
 set -xeo pipefail
 utilities_script_dir=$(dirname "$(realpath "${BASH_SOURCE[0]}")")
