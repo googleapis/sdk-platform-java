@@ -94,7 +94,7 @@ public class TracedCallableTest {
   public UnaryCallable<String, String> setupTracedUnaryCallable(
       UnaryCallSettings<Object, Object> callSettings) {
     UnaryCallable<String, String> callable =
-        Callables.retrying(innerCallable, callSettings, clientContext);
+        Callables.retrying(innerCallable, callSettings, clientContext, null);
     return new TracedUnaryCallable<>(callable, tracerFactory, SPAN_NAME);
   }
 

@@ -72,6 +72,9 @@ public class RetryingTest {
   private FakeApiClock fakeClock;
   private ClientContext clientContext;
 
+  private final HttpJsonCallSettings httpJsonCallSettings =
+      Mockito.mock(HttpJsonCallSettings.class);
+
   private static final int HTTP_CODE_PRECONDITION_FAILED = 412;
 
   private HttpResponseException HTTP_SERVICE_UNAVAILABLE_EXCEPTION =
@@ -121,7 +124,8 @@ public class RetryingTest {
     UnaryCallSettings<Integer, Integer> callSettings =
         createSettings(retryable, FAST_RETRY_SETTINGS);
     UnaryCallable<Integer, Integer> callable =
-        HttpJsonCallableFactory.createUnaryCallable(callInt, callSettings, clientContext);
+        HttpJsonCallableFactory.createUnaryCallable(
+            callInt, callSettings, httpJsonCallSettings, clientContext);
     Truth.assertThat(callable.call(1)).isEqualTo(2);
   }
 
@@ -152,7 +156,8 @@ public class RetryingTest {
             .build();
     UnaryCallSettings<Integer, Integer> callSettings = createSettings(retryable, retrySettings);
     UnaryCallable<Integer, Integer> callable =
-        HttpJsonCallableFactory.createUnaryCallable(callInt, callSettings, clientContext);
+        HttpJsonCallableFactory.createUnaryCallable(
+            callInt, callSettings, httpJsonCallSettings, clientContext);
     assertThrows(ApiException.class, () -> callable.call(1));
   }
 
@@ -167,7 +172,8 @@ public class RetryingTest {
     RetrySettings retrySettings = FAST_RETRY_SETTINGS.toBuilder().setMaxAttempts(2).build();
     UnaryCallSettings<Integer, Integer> callSettings = createSettings(retryable, retrySettings);
     UnaryCallable<Integer, Integer> callable =
-        HttpJsonCallableFactory.createUnaryCallable(callInt, callSettings, clientContext);
+        HttpJsonCallableFactory.createUnaryCallable(
+            callInt, callSettings, httpJsonCallSettings, clientContext);
     assertThrows(ApiException.class, () -> callable.call(1));
   }
 
@@ -182,7 +188,8 @@ public class RetryingTest {
     RetrySettings retrySettings = FAST_RETRY_SETTINGS.toBuilder().setMaxAttempts(3).build();
     UnaryCallSettings<Integer, Integer> callSettings = createSettings(retryable, retrySettings);
     UnaryCallable<Integer, Integer> callable =
-        HttpJsonCallableFactory.createUnaryCallable(callInt, callSettings, clientContext);
+        HttpJsonCallableFactory.createUnaryCallable(
+            callInt, callSettings, httpJsonCallSettings, clientContext);
     callable.call(1);
     Truth.assertThat(callable.call(1)).isEqualTo(2);
   }
@@ -204,7 +211,8 @@ public class RetryingTest {
     UnaryCallSettings<Integer, Integer> callSettings =
         createSettings(retryable, FAST_RETRY_SETTINGS);
     UnaryCallable<Integer, Integer> callable =
-        HttpJsonCallableFactory.createUnaryCallable(callInt, callSettings, clientContext);
+        HttpJsonCallableFactory.createUnaryCallable(
+            callInt, callSettings, httpJsonCallSettings, clientContext);
     Truth.assertThat(callable.call(1)).isEqualTo(2);
   }
 
@@ -217,7 +225,8 @@ public class RetryingTest {
     UnaryCallSettings<Integer, Integer> callSettings =
         createSettings(retryable, FAST_RETRY_SETTINGS);
     UnaryCallable<Integer, Integer> callable =
-        HttpJsonCallableFactory.createUnaryCallable(callInt, callSettings, clientContext);
+        HttpJsonCallableFactory.createUnaryCallable(
+            callInt, callSettings, httpJsonCallSettings, clientContext);
     ApiException exception = assertThrows(ApiException.class, () -> callable.call(1));
     Truth.assertThat(exception).hasCauseThat().isSameInstanceAs(throwable);
   }
@@ -241,7 +250,8 @@ public class RetryingTest {
     UnaryCallSettings<Integer, Integer> callSettings =
         createSettings(retryable, FAST_RETRY_SETTINGS);
     UnaryCallable<Integer, Integer> callable =
-        HttpJsonCallableFactory.createUnaryCallable(callInt, callSettings, clientContext);
+        HttpJsonCallableFactory.createUnaryCallable(
+            callInt, callSettings, httpJsonCallSettings, clientContext);
     ApiException exception = assertThrows(ApiException.class, () -> callable.call(1));
     Truth.assertThat(exception).isSameInstanceAs(apiException);
   }
@@ -258,7 +268,8 @@ public class RetryingTest {
     UnaryCallSettings<Integer, Integer> callSettings =
         createSettings(retryable, FAST_RETRY_SETTINGS);
     UnaryCallable<Integer, Integer> callable =
-        HttpJsonCallableFactory.createUnaryCallable(callInt, callSettings, clientContext);
+        HttpJsonCallableFactory.createUnaryCallable(
+            callInt, callSettings, httpJsonCallSettings, clientContext);
     // Need to advance time inside the call.
     ApiFuture<Integer> future = callable.futureCall(1);
 
@@ -296,7 +307,8 @@ public class RetryingTest {
             .setRetryableCodes(retryable)
             .build();
     UnaryCallable<Integer, Integer> callable =
-        HttpJsonCallableFactory.createUnaryCallable(callInt, callSettings, clientContext);
+        HttpJsonCallableFactory.createUnaryCallable(
+            callInt, callSettings, httpJsonCallSettings, clientContext);
     ApiException exception =
         assertThrows(FailedPreconditionException.class, () -> callable.call(1));
     Truth.assertThat(exception.getStatusCode().getTransportCode())
@@ -314,7 +326,8 @@ public class RetryingTest {
             .setRetryableCodes(retryable)
             .build();
     UnaryCallable<Integer, Integer> callable =
-        HttpJsonCallableFactory.createUnaryCallable(callInt, callSettings, clientContext);
+        HttpJsonCallableFactory.createUnaryCallable(
+            callInt, callSettings, httpJsonCallSettings, clientContext);
     UnknownException exception = assertThrows(UnknownException.class, () -> callable.call(1));
     Truth.assertThat(exception).hasMessageThat().isEqualTo("java.lang.RuntimeException: unknown");
   }

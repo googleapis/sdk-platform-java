@@ -32,7 +32,6 @@ package com.google.api.gax.grpc;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.InternalApi;
 import com.google.api.core.ListenableFutureToApiFuture;
-import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.rpc.ApiCallContext;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.common.base.Preconditions;
@@ -50,19 +49,9 @@ class GrpcDirectCallable<RequestT, ResponseT> extends UnaryCallable<RequestT, Re
   private final MethodDescriptor<RequestT, ResponseT> descriptor;
   private final boolean awaitTrailers;
 
-  private GrpcCallSettings<RequestT, ResponseT> grpcCallSettings;
-
-  /** Use {@link #GrpcDirectCallable GrpcDirectCallable} method instead. */
-  @ObsoleteApi("Please use other GrpcDirectCallable() method instead")
   GrpcDirectCallable(MethodDescriptor<RequestT, ResponseT> descriptor, boolean awaitTrailers) {
     this.descriptor = Preconditions.checkNotNull(descriptor);
     this.awaitTrailers = awaitTrailers;
-  }
-
-  GrpcDirectCallable(GrpcCallSettings<RequestT, ResponseT> grpcCallSettings) {
-    this.descriptor = Preconditions.checkNotNull(grpcCallSettings.getMethodDescriptor());
-    this.awaitTrailers = grpcCallSettings.shouldAwaitTrailers();
-    this.grpcCallSettings = Preconditions.checkNotNull(grpcCallSettings);
   }
 
   @Override
@@ -72,16 +61,10 @@ class GrpcDirectCallable<RequestT, ResponseT> extends UnaryCallable<RequestT, Re
 
     ClientCall<RequestT, ResponseT> clientCall = GrpcClientCalls.newCall(descriptor, inputContext);
 
-    RequestT modifiedRequest = request;
-    if (grpcCallSettings != null && grpcCallSettings.getRequestMutator() != null) {
-      modifiedRequest = grpcCallSettings.getRequestMutator().apply(request);
-    }
-
     if (awaitTrailers) {
-      return new ListenableFutureToApiFuture<>(
-          ClientCalls.futureUnaryCall(clientCall, modifiedRequest));
+      return new ListenableFutureToApiFuture<>(ClientCalls.futureUnaryCall(clientCall, request));
     } else {
-      return GrpcClientCalls.eagerFutureUnaryCall(clientCall, modifiedRequest);
+      return GrpcClientCalls.eagerFutureUnaryCall(clientCall, request);
     }
   }
 

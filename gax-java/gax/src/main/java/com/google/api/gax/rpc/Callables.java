@@ -54,7 +54,8 @@ public class Callables {
   public static <RequestT, ResponseT> UnaryCallable<RequestT, ResponseT> retrying(
       UnaryCallable<RequestT, ResponseT> innerCallable,
       UnaryCallSettings<?, ?> callSettings,
-      ClientContext clientContext) {
+      ClientContext clientContext,
+      RequestMutator requestMutator) {
 
     UnaryCallSettings<?, ?> settings = callSettings;
 
@@ -74,7 +75,7 @@ public class Callables {
     ScheduledRetryingExecutor<ResponseT> retryingExecutor =
         new ScheduledRetryingExecutor<>(retryAlgorithm, clientContext.getExecutor());
     return new RetryingCallable<>(
-        clientContext.getDefaultCallContext(), innerCallable, retryingExecutor);
+        clientContext.getDefaultCallContext(), innerCallable, retryingExecutor, requestMutator);
   }
 
   public static <RequestT, ResponseT> ServerStreamingCallable<RequestT, ResponseT> retrying(

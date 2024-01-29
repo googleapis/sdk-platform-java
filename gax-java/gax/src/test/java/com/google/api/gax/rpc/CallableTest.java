@@ -82,7 +82,7 @@ public class CallableTest {
     UnaryCallSettings<Object, Object> callSettings =
         UnaryCallSettings.newUnaryCallSettingsBuilder().setSimpleTimeoutNoRetries(timeout).build();
     UnaryCallable<String, String> callable =
-        Callables.retrying(innerCallable, callSettings, clientContext);
+        Callables.retrying(innerCallable, callSettings, clientContext, null);
     innerResult.set("No, my refrigerator is not running!");
 
     callable.futureCall("Is your refrigerator running?", callContext);
@@ -101,7 +101,7 @@ public class CallableTest {
             .setSimpleTimeoutNoRetries(Duration.ofMillis(10L))
             .build();
     UnaryCallable<String, String> callable =
-        Callables.retrying(innerCallable, callSettings, clientContext);
+        Callables.retrying(innerCallable, callSettings, clientContext, null);
     innerResult.set("No, my refrigerator is not running!");
 
     Duration timeout = retrySettings.getInitialRpcTimeout();
