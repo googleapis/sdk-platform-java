@@ -45,7 +45,7 @@ class UtilitiesTest(unittest.TestCase):
 
   def test_get_configuration_yaml_library_api_shortnames_valid_input_returns_valid_list(self):
     result = util.get_configuration_yaml_library_api_shortnames(self.CONFIGURATION_YAML_PATH)
-    self.assertEqual('asset speech apigee-connect dialogflow kms '
+    self.assertEqual('asset speech apigee-connect dialogflow compute kms '
                      + 'redis containeranalysis iam iamcredentials', result)
 
   def test_get_configuration_yaml_destination_path_returns_valid_destination_path(self):
