@@ -39,7 +39,6 @@ import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.rpc.testing.FakeStatusCode;
 import com.google.auth.Credentials;
-import com.google.common.base.Objects;
 import com.google.protobuf.Field;
 import com.google.protobuf.Field.Cardinality;
 import java.io.IOException;
@@ -358,30 +357,5 @@ public class HttpJsonDirectCallableTest {
         .setCardinality(Cardinality.CARDINALITY_OPTIONAL)
         .setDefaultValue("blah")
         .build();
-  }
-
-  class TestMessage {
-    private final String name;
-
-    public TestMessage(String name) {
-      this.name = name;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) {
-        return true;
-      }
-      if (!(o instanceof TestMessage)) {
-        return false;
-      }
-      TestMessage that = (TestMessage) o;
-      return Objects.equal(name, that.name);
-    }
-
-    @Override
-    public int hashCode() {
-      return Objects.hashCode(name);
-    }
   }
 }
