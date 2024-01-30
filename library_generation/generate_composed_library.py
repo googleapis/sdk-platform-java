@@ -34,6 +34,7 @@ import utilities as util
 import json
 import re
 import os
+import shutil
 from model.generation_config import GenerationConfig
 from model.library_config import LibraryConfig
 from model.gapic_inputs import parse as parse_build_file
@@ -125,10 +126,10 @@ def generate_composed_library(
         print("arguments: ")
         print(effective_arguments)
         print(
-            f"Generating library from {gapic.proto_path} " f"to {destination_path}..."
+            f"Generating library from {gapic.proto_path} to {output_config.library_path}..."
         )
         util.run_process_and_print_output(
-            ["bash", "-x", f"{script_dir}/generate_library.sh", *effective_arguments],
+            ["bash", f"{script_dir}/generate_library.sh", *effective_arguments],
             "Library generation",
         )
 
@@ -156,7 +157,7 @@ def generate_composed_library(
             "Library postprocessing",
         )
 
-        print("run repo-level post-processing.")
+    print("run repo-level post-processing.")
 
 
 def __construct_tooling_arg(config: GenerationConfig) -> List[str]:
@@ -179,7 +180,8 @@ def __prepare_destination(
     repository_path: str,
     output_folder: str,
     is_monorepo: bool,
-    exemptions: List[str] = None
+    exemptions: List[str] = None,
+    language: str = "java"
 ) -> OutputConfig:
     """
     Prepare the destination path for the generated library. All files in the
@@ -191,11 +193,12 @@ def __prepare_destination(
     :param output_folder:
     :param is_monorepo: whether to generate a monorepo
     :param exemptions: a list of files should be retained
+    :param language: the programming language of the generated library
     :return: an OutputConfig object containing the output attributes
     """
-    library_name = f"java-{library.api_shortname}"
+    library_name = f"{language}-{library.api_shortname}"
     if library.library_name is not None:
-        library_name = f"java-{library.library_name}"
+        library_name = f"{language}-{library.library_name}"
 
     if is_monorepo:
         print("this is a monorepo library")
@@ -205,7 +208,7 @@ def __prepare_destination(
             print(f"sparse_cloning monorepo with {library_name}")
             repository_path = f"{output_folder}/{config.destination_path}"
             clone_out = util.sh_util(
-                f'sparse_clone "https://github.com/googleapis/{MONOREPO_NAME}.git" "{library_folder} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"',
+                f'sparse_clone "https://github.com/googleapis/google-cloud-java.git" "{library_folder} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"',
                 cwd=output_folder,
             )
             print(clone_out)
@@ -225,8 +228,9 @@ def __prepare_destination(
         library_path = f"{repository_path}"
         versions_file = f"{repository_path}/versions.txt"
     if not exemptions:
-        exemptions = [".OwlBot.yaml", "owlbot.py"]
+        exemptions = [".OwlBot.yaml", "owlbot.py", "CHANGELOG.md"]
     print(f"deleting {library_path} before generating, excluding {exemptions}")
+    __delete_files_in(path=library_path, exemptions=exemptions)
 
     return OutputConfig(library_path=library_path, versions_file=versions_file)
 
@@ -242,10 +246,13 @@ def __delete_files_in(path: str, exemptions: List[str] = None):
     for file_path in target_folder.iterdir():
         if file_path.name not in exemptions:
             try:
-                file_path.unlink()
-                print(f"Deleted file: {file_path.name}")
+                if file_path.is_dir():
+                    shutil.rmtree(file_path)
+                else:
+                    file_path.unlink()
+                print(f"Deleted : {file_path.name}")
             except OSError as e:
-                print(f"Error deleting file {file_path.name}: {e}")
+                print(f"Error deleting {file_path.name}: {e}")
         else:
             print(f"Skipping file: {file_path.name} (exempted)")
 
@@ -346,7 +353,7 @@ def __generate_repo_metadata(
         "repo_short": f"{language}-{library_name}",
         "distribution_name": distribution_name,
         "api_id": api_id,
-        "library_type": library.library_type,
+        "library_type": library.library_type.name,
     }
 
     if library.requires_billing:

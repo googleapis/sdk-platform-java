@@ -16,8 +16,8 @@
 
 import yaml
 from typing import List, Optional, Dict
-from library_config import LibraryConfig
-from gapic_config import GapicConfig
+from .library_config import LibraryConfig
+from .gapic_config import GapicConfig
 
 
 class GenerationConfig:
@@ -51,60 +51,63 @@ def from_yaml(path_to_yaml: str):
     Parses a yaml located in path_to_yaml. Returns the parsed configuration
     represented by the "model" classes
     """
-    config = None
     with open(path_to_yaml, "r") as file_stream:
         config = yaml.load(file_stream, yaml.Loader)
 
-    libraries = _required(config, "libraries")
+    libraries = __required(config, "libraries")
 
     parsed_libraries = list()
     for library in libraries:
-        gapics = _required(library, "GAPICs")
+        gapics = __required(library, "GAPICs")
 
         parsed_gapics = list()
         for gapic in gapics:
-            proto_path = _required(gapic, "proto_path")
+            proto_path = __required(gapic, "proto_path")
             new_gapic = GapicConfig(proto_path)
             parsed_gapics.append(new_gapic)
 
         new_library = LibraryConfig(
-            _required(library, "api_shortname"),
-            _optional(library, "name_pretty", None),
-            _required(library, "library_type"),
-            _optional(library, "artifact_id", None),
-            _optional(library, "api_description", None),
-            _optional(library, "product_documentation", None),
-            _optional(library, "client_documentation", None),
-            _optional(library, "rest_documentation", None),
-            _optional(library, "rpc_documentation", None),
-            parsed_gapics,
-            _optional(library, "googleapis_commitish", None),
-            _optional(library, "group_id", "com.google.cloud"),
-            _optional(library, "requires_billing", None),
+            api_shortname=__required(library, "api_shortname"),
+            name_pretty=__required(library, "name_pretty"),
+            product_documentation=__required(library, "product_documentation"),
+            api_description=__required(library, "api_description"),
+            gapic_configs=parsed_gapics,
+            library_name=__optional(library, "library_name", None),
+            client_documentation=__optional(library, "client_documentation", None),
+            rest_documentation=__optional(library, "rest_documentation", None),
+            rpc_documentation=__optional(library, "rpc_documentation", None),
+            googleapis_commitish=__optional(library, "googleapis_commitish", None),
+            distribution_name=__optional(library, "distribution_name", None),
+            api_id=__optional(library, "api_id", None),
+            library_type=__optional(library, "library_type", None),
+            release_level=__optional(library, "release_level", None),
+            group_id=__optional(library, "group_id", "com.google.cloud"),
+            requires_billing=__optional(library, "requires_billing", None),
+            cloud_api=__optional(library, "cloud_api", None)
         )
         parsed_libraries.append(new_library)
 
     parsed_config = GenerationConfig(
-        _required(config, "gapic_generator_version"),
-        _optional(config, "grpc_version", None),
-        _optional(config, "protobuf_version", None),
-        _required(config, "googleapis_commitish"),
-        _required(config, "owlbot_cli_image"),
-        _required(config, "synthtool_commitish"),
-        _optional(config, "destination_path", None),
-        parsed_libraries,
+        gapic_generator_version=__required(config, "gapic_generator_version"),
+        grpc_version=__optional(config, "grpc_version", None),
+        protobuf_version=__optional(config, "protobuf_version", None),
+        googleapis_commitish=__required(config, "googleapis_commitish"),
+        owlbot_cli_image=__required(config, "owlbot_cli_image"),
+        synthtool_commitish=__required(config, "synthtool_commitish"),
+        destination_path=__optional(config, "destination_path", None),
+        libraries=parsed_libraries,
     )
 
     return parsed_config
 
 
-def _required(config: Dict, key: str):
+def __required(config: Dict, key: str):
     if key not in config:
         raise ValueError(f"required key {key} not found in yaml")
     return config[key]
 
 
-def _optional(config: Dict, key: str, default: any):
+def __optional(config: Dict, key: str, default: any):
     if key not in config:
         return default
     return config[key]

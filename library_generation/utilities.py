@@ -4,7 +4,7 @@ import os
 import shutil
 from collections.abc import Sequence
 
-from library_generation.model.generation_config import from_yaml
+from model.generation_config import from_yaml
 from typing import List
 
 script_dir = os.path.dirname(os.path.realpath(__file__))

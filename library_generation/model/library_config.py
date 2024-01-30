@@ -15,7 +15,7 @@
 
 from typing import List, Optional
 from enum import Enum
-from gapic_config import GapicConfig
+from .gapic_config import GapicConfig
 
 
 class _LibraryType(Enum):
@@ -47,15 +47,14 @@ class LibraryConfig:
         api_description: str,
         gapic_configs: List[GapicConfig],
         library_name: Optional[str],
-        artifact_id: Optional[str],
         client_documentation: Optional[str],
         rest_documentation: Optional[str],
         rpc_documentation: Optional[str],
         googleapis_commitish: Optional[str],
         distribution_name: Optional[str],
         api_id: Optional[str],
-        library_type: Optional[_LibraryType] = _LibraryType.GAPIC_AUTO,
-        release_level: Optional[_ReleaseLevel] = _ReleaseLevel.preview,
+        library_type: Optional[_LibraryType],
+        release_level: Optional[_ReleaseLevel],
         group_id: Optional[str] = "com.google.cloud",
         requires_billing: Optional[bool] = True,
         cloud_api: Optional[bool] = True,
@@ -66,15 +65,16 @@ class LibraryConfig:
         self.api_description = api_description
         self.gapic_configs = gapic_configs
         self.library_name = library_name
-        self.artifact_id = artifact_id
         self.client_documentation = client_documentation
         self.rest_documentation = rest_documentation
         self.rpc_documentation = rpc_documentation
         self.googleapis_commitish = googleapis_commitish
         self.distribution_name = distribution_name
         self.api_id = api_id
-        self.library_type = library_type
-        self.release_level = release_level
+        self.library_type = library_type \
+            if library_type else _LibraryType.GAPIC_AUTO
+        self.release_level = release_level \
+            if release_level else _ReleaseLevel.preview
         self.group_id = group_id
         self.requires_billing = requires_billing
         self.cloud_api = cloud_api
