@@ -75,7 +75,7 @@ public class MetricsTracerFactoryTest {
     Truth.assertThat(apiTracer).isNotNull();
 
     MetricsTracer metricsTracer = (MetricsTracer) apiTracer;
-    Truth.assertThat(
-        metricsTracer.getAttributes().get("method_name").equals("testService.testMethod"));
+    Truth.assertThat(metricsTracer.getAttributes().get("method_name"))
+        .isEqualTo("testService.testMethod");
   }
 }

@@ -147,7 +147,7 @@ public class MetricsTracer implements ApiTracer {
   /**
    * Adds an annotation that the attempt failed, but another attempt will be made after the delay.
    *
-   * @param error the transient error that caused the attempt to fail.
+   * @param error the error that caused the attempt to fail.
    * @param delay the amount of time to wait before the next attempt will start.
    *     <p>Failed attempt extracts the error from the throwable and adds it to the status attribute
    *     key.
@@ -217,7 +217,7 @@ public class MetricsTracer implements ApiTracer {
     attributes.put(key, value);
   };
 
-  /** This method is only used for testing */
+  @VisibleForTesting
   Map<String, String> getAttributes() {
     return attributes;
   }
