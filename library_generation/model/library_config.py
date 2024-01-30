@@ -29,6 +29,11 @@ class _LibraryType(Enum):
     GAPIC_COMBO = 2
 
 
+class _ReleaseLevel(Enum):
+    stable = 1
+    preview = 2
+
+
 class LibraryConfig:
     """
     Class that represents a library in a generation_config.yaml file
@@ -37,31 +42,39 @@ class LibraryConfig:
     def __init__(
         self,
         api_shortname: str,
+        name_pretty: str,
+        product_documentation: str,
+        api_description: str,
+        gapic_configs: List[GapicConfig],
         library_name: Optional[str],
-        name_pretty: Optional[str],
-        library_type: _LibraryType,
         artifact_id: Optional[str],
-        api_description: Optional[str],
-        product_documentation: Optional[str],
         client_documentation: Optional[str],
         rest_documentation: Optional[str],
         rpc_documentation: Optional[str],
-        gapic_configs: List[GapicConfig],
         googleapis_commitish: Optional[str],
+        distribution_name: Optional[str],
+        api_id: Optional[str],
+        library_type: Optional[_LibraryType] = _LibraryType.GAPIC_AUTO,
+        release_level: Optional[_ReleaseLevel] = _ReleaseLevel.preview,
         group_id: Optional[str] = "com.google.cloud",
         requires_billing: Optional[bool] = True,
+        cloud_api: Optional[bool] = True,
     ):
         self.api_shortname = api_shortname
-        self.library_name = library_name
         self.name_pretty = name_pretty
-        self.library_type = library_type
-        self.artifact_id = artifact_id
-        self.requires_billing = requires_billing
-        self.api_description = api_description
         self.product_documentation = product_documentation
+        self.api_description = api_description
+        self.gapic_configs = gapic_configs
+        self.library_name = library_name
+        self.artifact_id = artifact_id
         self.client_documentation = client_documentation
         self.rest_documentation = rest_documentation
         self.rpc_documentation = rpc_documentation
-        self.group_id = group_id
-        self.gapic_configs = gapic_configs
         self.googleapis_commitish = googleapis_commitish
+        self.distribution_name = distribution_name
+        self.api_id = api_id
+        self.library_type = library_type
+        self.release_level = release_level
+        self.group_id = group_id
+        self.requires_billing = requires_billing
+        self.cloud_api = cloud_api
