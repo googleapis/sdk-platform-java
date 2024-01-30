@@ -46,13 +46,11 @@ class GenerationConfig:
         self.libraries = libraries
 
 
-"""
-Parses a yaml located in path_to_yaml. Returns the parsed configuration represented
-by the "model" classes
-"""
-
-
 def from_yaml(path_to_yaml: str):
+    """
+    Parses a yaml located in path_to_yaml. Returns the parsed configuration
+    represented by the "model" classes
+    """
     config = None
     with open(path_to_yaml, "r") as file_stream:
         config = yaml.load(file_stream, yaml.Loader)

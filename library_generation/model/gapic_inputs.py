@@ -42,7 +42,7 @@ service_yaml_pattern = r"service_yaml = \"(.*?)\""
 include_samples_pattern = r"include_samples = True"
 
 
-class ClientInput:
+class GapicInputs:
     """
     A data class containing inputs to invoke generate_library.sh to generate
     a GAPIC library.
@@ -70,13 +70,16 @@ class ClientInput:
 
 
 def parse(
-    build_path: Path, versioned_path: str, build_file_name: str = "BUILD.bazel"
-) -> ClientInput:
+    build_path: Path,
+    versioned_path: str,
+    build_file_name: str = "BUILD.bazel"
+) -> GapicInputs:
     """
     Utility function to parse inputs of generate_library.sh from BUILD.bazel.
     :param build_path: the file path of BUILD.bazel
     :param versioned_path: a versioned path in googleapis repository, e.g.,
     google/cloud/asset/v1.
+    :param build_file_name: the name of the build file.
     :return: an ClientInput object.
     """
     with open(f"{build_path}/{build_file_name}") as build:
@@ -88,15 +91,15 @@ def parse(
     additional_protos = ""
     if len(proto_library_target) > 0:
         additional_protos = __parse_additional_protos(proto_library_target[0])
-    gapic_target = re.compile(gapic_pattern, re.DOTALL | re.VERBOSE).findall(content)
-    assembly_target = re.compile(assembly_pattern, re.DOTALL | re.VERBOSE).findall(
-        content
-    )
+    gapic_target = re.compile(gapic_pattern, re.DOTALL | re.VERBOSE)\
+                     .findall(content)
+    assembly_target = re.compile(assembly_pattern, re.DOTALL | re.VERBOSE)\
+                        .findall(content)
     include_samples = "false"
     if len(assembly_target) > 0:
         include_samples = __parse_include_samples(assembly_target[0])
     if len(gapic_target) == 0:
-        return ClientInput(include_samples=include_samples)
+        return GapicInputs(include_samples=include_samples)
 
     transport = __parse_transport(gapic_target[0])
     rest_numeric_enum = __parse_rest_numeric_enums(gapic_target[0])
@@ -104,7 +107,7 @@ def parse(
     service_config = __parse_service_config(gapic_target[0], versioned_path)
     service_yaml = __parse_service_yaml(gapic_target[0], versioned_path)
 
-    return ClientInput(
+    return GapicInputs(
         proto_only="false",
         additional_protos=additional_protos,
         transport=transport,

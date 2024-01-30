@@ -37,6 +37,7 @@ class LibraryConfig:
     def __init__(
         self,
         api_shortname: str,
+        library_name: Optional[str],
         name_pretty: Optional[str],
         library_type: _LibraryType,
         artifact_id: Optional[str],
@@ -51,6 +52,7 @@ class LibraryConfig:
         requires_billing: Optional[bool] = True,
     ):
         self.api_shortname = api_shortname
+        self.library_name = library_name
         self.name_pretty = name_pretty
         self.library_type = library_type
         self.artifact_id = artifact_id
