@@ -55,7 +55,7 @@ public class FakeCallableFactory {
       ClientContext clientContext) {
     UnaryCallable<RequestT, ResponseT> callable =
         new FakeExceptionCallable<>(innerCallable, callSettings.getRetryableCodes());
-    callable = Callables.retrying(callable, callSettings, clientContext, null);
+    callable = Callables.retrying(callable, callSettings, clientContext);
     return callable;
   }
 
