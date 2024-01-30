@@ -73,8 +73,8 @@ public class Callables {
   }
 
   /**
-   * Create a callable object that represents a Unary API method. Designed for use by generated
-   * code.
+   * Create a callable object that represents a Unary API method that contains a Request Mutator.
+   * Designed for use by generated code.
    *
    * @param innerCallable the callable to issue calls
    * @param callSettings {@link UnaryCallSettings} to configure the unary call-related settings
