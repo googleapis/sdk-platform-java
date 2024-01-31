@@ -37,6 +37,7 @@ import com.google.cloud.location.GetLocationRequest;
 import com.google.cloud.location.ListLocationsRequest;
 import com.google.cloud.location.ListLocationsResponse;
 import com.google.cloud.location.Location;
+import com.google.common.base.Strings;
 import com.google.iam.v1.GetIamPolicyRequest;
 import com.google.iam.v1.Policy;
 import com.google.iam.v1.SetIamPolicyRequest;
@@ -62,6 +63,7 @@ import io.grpc.MethodDescriptor;
 import io.grpc.protobuf.ProtoUtils;
 import java.io.IOException;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Generated;
 
@@ -304,6 +306,14 @@ public class GrpcEchoStub extends EchoStub {
                   builder.add(request.getOtherHeader(), "baz", ECHO_6_PATH_TEMPLATE);
                   builder.add(request.getOtherHeader(), "qux", ECHO_7_PATH_TEMPLATE);
                   return builder.build();
+                })
+            .setRequestMutator(
+                request -> {
+                  EchoRequest.Builder requestBuilder = request.toBuilder();
+                  if (Strings.isNullOrEmpty(request.getRequestId())) {
+                    requestBuilder.setRequestId(UUID.randomUUID().toString());
+                  }
+                  return requestBuilder.build();
                 })
             .build();
     GrpcCallSettings<EchoErrorDetailsRequest, EchoErrorDetailsResponse>
