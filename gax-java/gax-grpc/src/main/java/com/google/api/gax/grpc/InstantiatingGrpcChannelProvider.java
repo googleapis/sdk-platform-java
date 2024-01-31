@@ -273,9 +273,8 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   // This method should be called once per client initialization, hence can not be called in the
-  // builder
-  // or createSingleChannel, only in getTransportChannel which creates the first channel for a
-  // client.
+  // builder or createSingleChannel, only in getTransportChannel which creates the first channel
+  // for a client.
   private void logDirectPathMisconfig() {
     if (isDirectPathXdsEnabled()) {
       // Case 1: does not enable DirectPath
