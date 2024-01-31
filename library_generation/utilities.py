@@ -20,7 +20,7 @@ from collections.abc import Sequence
 import re
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
-from model.generation_config import from_yaml
+from library_generation.model.generation_config import from_yaml
 from typing import List
 from jinja2 import Environment, FileSystemLoader
 
