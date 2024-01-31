@@ -33,6 +33,8 @@ from typing import List
 import utilities as util
 import os
 from model.generation_config import GenerationConfig
+from model.gapic_config import GapicConfig
+from model.gapic_inputs import GapicInputs
 from model.library_config import LibraryConfig
 from model.gapic_inputs import parse as parse_build_file
 
@@ -67,13 +69,9 @@ def generate_composed_library(
     )
 
     is_monorepo = util.check_monorepo(config=config)
-
     base_arguments = __construct_tooling_arg(config=config)
-
     owlbot_cli_source_folder = util.sh_util("mktemp -d")
     for gapic in library.gapic_configs:
-        effective_arguments = list(base_arguments)
-        effective_arguments += util.create_argument("proto_path", gapic)
         build_file_folder = Path(f"{output_folder}/{gapic.proto_path}").resolve()
         print(f"build_file_folder: {build_file_folder}")
         gapic_inputs = parse_build_file(build_file_folder, gapic.proto_path)
@@ -86,27 +84,14 @@ def generate_composed_library(
             transport=gapic_inputs.transport,
             library_path=library_path,
         )
-        effective_arguments += [
-            "--proto_only",
-            gapic_inputs.proto_only,
-            "--gapic_additional_protos",
-            gapic_inputs.additional_protos,
-            "--transport",
-            gapic_inputs.transport,
-            "--rest_numeric_enums",
-            gapic_inputs.rest_numeric_enum,
-            "--gapic_yaml",
-            gapic_inputs.gapic_yaml,
-            "--service_config",
-            gapic_inputs.service_config,
-            "--service_yaml",
-            gapic_inputs.service_yaml,
-            "--include_samples",
-            gapic_inputs.include_samples,
-        ]
         service_version = gapic.proto_path.split("/")[-1]
         temp_destination_path = f"{language}-{library.api_shortname}-{service_version}"
-        effective_arguments += ["--destination_path", temp_destination_path]
+        effective_arguments = __construct_effective_arg(
+            base_arguments=base_arguments,
+            gapic=gapic,
+            gapic_inputs=gapic_inputs,
+            temp_destination_path=temp_destination_path,
+        )
         print("arguments: ")
         print(effective_arguments)
         print(f"Generating library from {gapic.proto_path} to {library_path}")
@@ -150,5 +135,36 @@ def __construct_tooling_arg(config: GenerationConfig) -> List[str]:
     arguments += util.create_argument("gapic_generator_version", config)
     arguments += util.create_argument("grpc_version", config)
     arguments += util.create_argument("protobuf_version", config)
+
+    return arguments
+
+
+def __construct_effective_arg(
+    base_arguments: List[str],
+    gapic: GapicConfig,
+    gapic_inputs: GapicInputs,
+    temp_destination_path: str,
+) -> List[str]:
+    arguments = list(base_arguments)
+    arguments += util.create_argument("proto_path", gapic)
+    arguments += [
+        "--proto_only",
+        gapic_inputs.proto_only,
+        "--gapic_additional_protos",
+        gapic_inputs.additional_protos,
+        "--transport",
+        gapic_inputs.transport,
+        "--rest_numeric_enums",
+        gapic_inputs.rest_numeric_enum,
+        "--gapic_yaml",
+        gapic_inputs.gapic_yaml,
+        "--service_config",
+        gapic_inputs.service_config,
+        "--service_yaml",
+        gapic_inputs.service_yaml,
+        "--include_samples",
+        gapic_inputs.include_samples,
+    ]
+    arguments += ["--destination_path", temp_destination_path]
 
     return arguments
