@@ -17,11 +17,7 @@ import subprocess
 import os
 import shutil
 from collections.abc import Sequence
-from pathlib import Path
 import re
-
-from typing import Dict
-
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
 from model.generation_config import from_yaml
@@ -66,9 +62,7 @@ def get_configuration_yaml_library_api_shortnames(
     return result[:-1]
 
 
-def get_configuration_yaml_destination_path(
-    generation_config_yaml: str
-) -> str:
+def get_configuration_yaml_destination_path(generation_config_yaml: str) -> str:
     """
     For a given configuration yaml path, it returns the destination_path
     entry at the root of the yaml
@@ -167,6 +161,42 @@ def check_monorepo(config: GenerationConfig) -> bool:
     return len(config.libraries) > 1
 
 
+def pull_api_definition(
+    config: GenerationConfig, library: LibraryConfig, output_folder: str
+) -> None:
+    """
+    Pull APIs definition from googleapis/googleapis repository.
+    To avoid duplicated pulling, only perform pulling if the library uses a
+    different commitish than in generation config.
+    :param config: a GenerationConfig object representing a parsed configuration
+    yaml
+    :param library: a LibraryConfig object contained inside config, passed here
+    for convenience and to prevent all libraries to be processed
+    :param output_folder: the folder to which APIs definition (proto files) goes
+    :return: None
+    """
+    googleapis_commitish = config.googleapis_commitish
+    if library.googleapis_commitish:
+        googleapis_commitish = library.googleapis_commitish
+        print(f"using library-specific googleapis commitish: {googleapis_commitish}")
+    else:
+        print(f"using common googleapis_commitish: {config.googleapis_commitish}")
+
+    if googleapis_commitish != config.googleapis_commitish:
+        print("removing existing APIs definition")
+        delete_if_exists(f"{output_folder}/google")
+        delete_if_exists(f"{output_folder}/grafeas")
+
+    if not (
+        os.path.exists(f"{output_folder}/google")
+        and os.path.exists(f"{output_folder}/grafeas")
+    ):
+        print("downloading googleapis")
+        sh_util(
+            f"download_googleapis_files_and_folders {output_folder} {googleapis_commitish}"
+        )
+
+
 def generate_prerequisite_files(
     library: LibraryConfig,
     proto_path: str,
@@ -175,8 +205,7 @@ def generate_prerequisite_files(
     language: str = "java",
     is_monorepo: bool = True,
 ) -> None:
-    """
-    Generate .repo-metadata.json for a library
+    """Generate .repo-metadata.json for a library
     :param library: the library configuration
     :param proto_path: the proto path without version
     :param transport: transport supported by the library
@@ -243,7 +272,7 @@ def generate_prerequisite_files(
             artifact_name=distribution_name_short,
             proto_path=proto_path,
             module_name=repo_metadata["repo_short"],
-            api_shortname=library.api_shortname
+            api_shortname=library.api_shortname,
         )
 
     # generate owlbot.py
@@ -259,7 +288,7 @@ def generate_prerequisite_files(
             "java.header",
             "license-checks.xml",
             "renovate.json",
-            ".gitignore"
+            ".gitignore",
         ]
         __render(
             template_name="owlbot.py.j2",

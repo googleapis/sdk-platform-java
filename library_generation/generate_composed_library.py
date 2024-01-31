@@ -49,7 +49,7 @@ def generate_composed_library(
     language: str = "java",
 ) -> None:
     """
-    Generate libraries composed of more than one service or service version.
+    Generate libraries composed of more than one service or service version
     :param config: a GenerationConfig object representing a parsed configuration
     yaml
     :param library_path: the path to which the generated file goes
@@ -60,8 +60,11 @@ def generate_composed_library(
     :param enable_postprocessing: true if postprocessing should be done on the
     generated library
     :param language: language: programming language of the library
+    :return None
     """
-    __pull_api_definition(config=config, library=library, output_folder=output_folder)
+    util.pull_api_definition(
+        config=config, library=library, output_folder=output_folder
+    )
 
     is_monorepo = util.check_monorepo(config=config)
 
@@ -81,7 +84,7 @@ def generate_composed_library(
             library=library,
             proto_path=util.remove_version_from(gapic.proto_path),
             transport=gapic_inputs.transport,
-            library_path=library_path
+            library_path=library_path,
         )
         effective_arguments += [
             "--proto_only",
@@ -149,37 +152,3 @@ def __construct_tooling_arg(config: GenerationConfig) -> List[str]:
     arguments += util.create_argument("protobuf_version", config)
 
     return arguments
-
-
-def __pull_api_definition(
-    config: GenerationConfig, library: LibraryConfig, output_folder: str
-) -> None:
-    """
-    Pull APIs definition from googleapis/googleapis repository.
-    To avoid duplicated pulling, only perform pulling if the library uses
-    a different commitish than in generation config.
-    :param config:
-    :param library:
-    :param output_folder:
-    :return: None
-    """
-    googleapis_commitish = config.googleapis_commitish
-    if library.googleapis_commitish:
-        googleapis_commitish = library.googleapis_commitish
-        print(f"using library-specific googleapis commitish: {googleapis_commitish}")
-    else:
-        print(f"using common googleapis_commitish: {config.googleapis_commitish}")
-
-    if googleapis_commitish != config.googleapis_commitish:
-        print("removing existing APIs definition")
-        util.delete_if_exists(f"{output_folder}/google")
-        util.delete_if_exists(f"{output_folder}/grafeas")
-
-    if not (
-        os.path.exists(f"{output_folder}/google")
-        and os.path.exists(f"{output_folder}/grafeas")
-    ):
-        print("downloading googleapis")
-        util.sh_util(
-            f"download_googleapis_files_and_folders {output_folder} {googleapis_commitish}"
-        )
