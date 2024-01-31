@@ -560,6 +560,19 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
+  public void testLogDirectPathMisconfig_shouldNotLogInTheBuilder() {
+    FakeLogHandler logHandler = new FakeLogHandler();
+    InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
+    InstantiatingGrpcChannelProvider.newBuilder()
+        .setAttemptDirectPathXds()
+        .setAttemptDirectPath(true)
+        .build();
+
+    assertThat(logHandler.getAllMessages()).isEmpty();
+    InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
+  }
+
+  @Test
   public void testLogDirectPathMisconfigWrongCredential() throws Exception {
     FakeLogHandler logHandler = new FakeLogHandler();
     InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
