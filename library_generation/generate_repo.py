@@ -98,12 +98,12 @@ def generate_from_yaml(
 
     for library_path, library in repo_config.libraries.items():
         print(f"generating library {library.api_shortname}")
+
         generate_composed_library(
             config=config,
             library_path=library_path,
             library=library,
             output_folder=repo_config.output_folder,
-            repository_path=repository_path,
             versions_file=repo_config.versions_file,
             enable_postprocessing=enable_postprocessing,
         )
@@ -138,7 +138,10 @@ def __prepare_repo(
             library_path = f"{repo_path}/{library_name}"
         else:
             library_path = f"{repo_path}"
-        libraries[library_path] = library
+        # use absolute path because docker requires absolute path
+        # in volume name.
+        absolute_library_path = str(Path(library_path).resolve())
+        libraries[absolute_library_path] = library
 
     if is_monorepo:
         print("this is a monorepo library")
@@ -160,7 +163,7 @@ def __prepare_repo(
                 cwd=output_folder,
             )
             print(clone_out)
-    versions_file = f"{repo_path}/versions.txt"
+
     if not exemptions:
         exemptions = [
             ".OwlBot.yaml",
@@ -172,10 +175,12 @@ def __prepare_repo(
         print(f"deleting {library_path} before generating, excluding {exemptions}")
         __delete_files_in(path=library_path, exemptions=exemptions)
 
+    versions_file = f"{repo_path}/versions.txt"
+
     return RepoConfig(
         output_folder=output_folder,
         libraries=libraries,
-        versions_file=versions_file
+        versions_file=str(Path(versions_file).resolve())
     )
 
 
