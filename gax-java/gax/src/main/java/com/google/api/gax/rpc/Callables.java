@@ -51,11 +51,53 @@ public class Callables {
 
   private Callables() {}
 
+  /**
+   * Create a callable object that represents a Unary API method. Designed for use by generated
+   * code.
+   *
+   * @param innerCallable the callable to issue calls
+   * @param callSettings {@link UnaryCallSettings} to configure the unary call-related settings
+   *     with.
+   * @param clientContext {@link ClientContext} to use to connect to the service.
+   * @return {@link UnaryCallable} callable object.
+   */
   public static <RequestT, ResponseT> UnaryCallable<RequestT, ResponseT> retrying(
       UnaryCallable<RequestT, ResponseT> innerCallable,
       UnaryCallSettings<?, ?> callSettings,
       ClientContext clientContext) {
 
+    ScheduledRetryingExecutor<ResponseT> retryingExecutor =
+        getRetryingExecutor(callSettings, clientContext);
+    return new RetryingCallable<>(
+        clientContext.getDefaultCallContext(), innerCallable, retryingExecutor);
+  }
+
+  /**
+   * Create a callable object that represents a Unary API method that contains a Request Mutator.
+   * Designed for use by generated code.
+   *
+   * @param innerCallable the callable to issue calls
+   * @param callSettings {@link UnaryCallSettings} to configure the unary call-related settings
+   *     with.
+   * @param clientContext {@link ClientContext} to use to connect to the service.
+   * @param requestMutator {@link RequestMutator} to modify the request. Currently only used for
+   *     autopopulated fields.
+   * @return {@link UnaryCallable} callable object.
+   */
+  public static <RequestT, ResponseT> UnaryCallable<RequestT, ResponseT> retrying(
+      UnaryCallable<RequestT, ResponseT> innerCallable,
+      UnaryCallSettings<?, ?> callSettings,
+      ClientContext clientContext,
+      RequestMutator requestMutator) {
+
+    ScheduledRetryingExecutor<ResponseT> retryingExecutor =
+        getRetryingExecutor(callSettings, clientContext);
+    return new RetryingCallable<>(
+        clientContext.getDefaultCallContext(), innerCallable, retryingExecutor, requestMutator);
+  }
+
+  private static <ResponseT> ScheduledRetryingExecutor<ResponseT> getRetryingExecutor(
+      UnaryCallSettings<?, ?> callSettings, ClientContext clientContext) {
     UnaryCallSettings<?, ?> settings = callSettings;
 
     if (areRetriesDisabled(settings.getRetryableCodes(), settings.getRetrySettings())) {
@@ -73,8 +115,7 @@ public class Callables {
             new ExponentialRetryAlgorithm(settings.getRetrySettings(), clientContext.getClock()));
     ScheduledRetryingExecutor<ResponseT> retryingExecutor =
         new ScheduledRetryingExecutor<>(retryAlgorithm, clientContext.getExecutor());
-    return new RetryingCallable<>(
-        clientContext.getDefaultCallContext(), innerCallable, retryingExecutor);
+    return retryingExecutor;
   }
 
   public static <RequestT, ResponseT> ServerStreamingCallable<RequestT, ResponseT> retrying(
