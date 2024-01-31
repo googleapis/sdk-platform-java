@@ -13,12 +13,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from typing import Dict
-from .library_config import LibraryConfig
+from library_generation.model.library_config import LibraryConfig
 
 
 class RepoConfig:
     """
-
+    Class that represents a generated repository
     """
     def __init__(
         self,
@@ -26,6 +26,12 @@ class RepoConfig:
         libraries: Dict[str, LibraryConfig],
         versions_file: str
     ):
+        """
+        Init a RepoConfig object
+        :param output_folder: the path to which the generated repo goes
+        :param libraries: a mapping from library_path to LibraryConfig object
+        :param versions_file: the path of versions.txt used in post-processing
+        """
         self.output_folder = output_folder
         self.libraries = libraries
         self.versions_file = versions_file

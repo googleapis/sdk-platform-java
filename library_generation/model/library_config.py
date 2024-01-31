@@ -15,7 +15,7 @@
 
 from typing import List, Optional
 from enum import Enum
-from .gapic_config import GapicConfig
+from library_generation.model.gapic_config import GapicConfig
 
 
 class _LibraryType(Enum):

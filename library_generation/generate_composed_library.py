@@ -61,7 +61,7 @@ def generate_composed_library(
     :param versions_file:
     :param enable_postprocessing: true if postprocessing should be done on the
     generated library
-    :param language: language: programming language of the library
+    :param language: programming language of the library
     :return None
     """
     util.pull_api_definition(

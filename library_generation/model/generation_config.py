@@ -16,8 +16,8 @@
 
 import yaml
 from typing import List, Optional, Dict
-from .library_config import LibraryConfig
-from .gapic_config import GapicConfig
+from library_generation.model.library_config import LibraryConfig
+from library_generation.model.gapic_config import GapicConfig
 
 
 class GenerationConfig:
