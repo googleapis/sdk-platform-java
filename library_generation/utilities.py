@@ -18,11 +18,15 @@ import os
 import shutil
 from collections.abc import Sequence
 import re
+from pathlib import Path
+
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
 from library_generation.model.generation_config import from_yaml
 from typing import List
 from jinja2 import Environment, FileSystemLoader
+
+from library_generation.model.repo_config import RepoConfig
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 jinja_env = Environment(loader=FileSystemLoader(f"{script_dir}/templates"))
@@ -35,6 +39,17 @@ def __render(template_name: str, output_name: str, **kwargs):
     if not os.path.isdir(directory):
         os.makedirs(directory)
     t.dump(str(output_name))
+
+
+def __search_for_java_modules(
+    repository_path: str,
+) -> List[str]:
+    repo = Path(repository_path).resolve()
+    modules = []
+    for sub_dir in repo.iterdir():
+        if sub_dir.is_dir() and sub_dir.name.startswith("java-"):
+            modules.append(sub_dir.name)
+    return sorted(modules)
 
 
 def create_argument(arg_key: str, arg_container: object) -> List[str]:
@@ -159,6 +174,70 @@ def check_monorepo(config: GenerationConfig) -> bool:
     :return: True if it's to generate a monorepo
     """
     return len(config.libraries) > 1
+
+
+def prepare_repo(
+    gen_config: GenerationConfig,
+    library_config: List[LibraryConfig],
+    repo_path: str,
+    language: str = "java",
+) -> RepoConfig:
+    """
+    Gather information of the generated repository.
+
+    :param gen_config: a GenerationConfig object representing a parsed
+    configuration yaml
+    :param library_config: a LibraryConfig object contained inside config,
+    passed here for convenience and to prevent all libraries to be processed
+    :param repo_path: the path to which the generated repository goes
+    :param language: programming language of the library
+    :return: a RepoConfig object contained repository information
+    """
+    output_folder = sh_util("get_output_folder")
+    print(f"output_folder: {output_folder}")
+    os.makedirs(output_folder, exist_ok=True)
+    is_monorepo = check_monorepo(gen_config)
+    libraries = {}
+    for library in library_config:
+        library_name = f"{language}-{library.api_shortname}"
+        if library.library_name is not None:
+            library_name = f"{language}-{library.library_name}"
+        if is_monorepo:
+            library_path = f"{repo_path}/{library_name}"
+        else:
+            library_path = f"{repo_path}"
+        # use absolute path because docker requires absolute path
+        # in volume name.
+        absolute_library_path = str(Path(library_path).resolve())
+        libraries[absolute_library_path] = library
+
+    if is_monorepo:
+        print("this is a monorepo library")
+        if repo_path is None:
+            repo_path = f"{output_folder}/{gen_config.destination_path}"
+            print(f"sparse_cloning monorepo with {libraries.keys()}")
+            clone_out = sh_util(
+                f'sparse_clone "https://github.com/googleapis/google-cloud-java.git" "{" ".join(libraries.keys())} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"',
+                cwd=output_folder,
+            )
+            print(clone_out)
+    else:
+        print("this is a standalone library")
+        if repo_path is None:
+            destination_path = libraries.keys()[0]
+            repo_path = f"{output_folder}/{destination_path}"
+            clone_out = sh_util(
+                f'git clone "https://github.com/googleapis/{"".join(libraries)}.git"',
+                cwd=output_folder,
+            )
+            print(clone_out)
+    versions_file = f"{repo_path}/versions.txt"
+
+    return RepoConfig(
+        output_folder=output_folder,
+        libraries=libraries,
+        versions_file=str(Path(versions_file).resolve()),
+    )
 
 
 def pull_api_definition(
@@ -296,6 +375,23 @@ def generate_prerequisite_files(
             should_include_templates=True,
             template_excludes=template_excludes,
         )
+
+
+def repo_level_post_process(
+    repository_path: str,
+) -> None:
+    """
+    Perform repository level post-processing
+    :param repository_path: the path of the repository
+    :return: None
+    """
+    print("Regenerating root pom.xml")
+    modules = __search_for_java_modules(repository_path)
+    __render(
+        template_name="root-pom.xml.j2",
+        output_name=f"{repository_path}/pom.xml",
+        modules=modules,
+    )
 
 
 def main(argv: Sequence[str]) -> None:

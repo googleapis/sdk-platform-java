@@ -13,21 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-"""
-Parses a config yaml and generates libraries via generate_composed_library.py
-"""
-import os
-from pathlib import Path
-
-from typing import List
-
 import click
 import utilities as util
 from generate_composed_library import generate_composed_library
-from library_generation.model.repo_config import RepoConfig
 from model.generation_config import from_yaml
-from model.generation_config import GenerationConfig
-from model.library_config import LibraryConfig
 
 
 @click.group(invoke_without_command=False)
@@ -43,7 +32,8 @@ def main(ctx):
     required=True,
     type=str,
     help="""
-    Path to generation_config.yaml that contains the metadata about library generation
+    Path to generation_config.yaml that contains the metadata about 
+    library generation
     """,
 )
 @click.option(
@@ -52,8 +42,9 @@ def main(ctx):
     default=True,
     type=bool,
     help="""
-    Path to repository where generated files will be merged into, via owlbot copy-code.
-    Specifying this option enables postprocessing
+    Path to repository where generated files will be merged into, 
+    via owlbot copy-code.
+    Specifying this option enables postprocessing.
     """,
 )
 @click.option(
@@ -61,8 +52,9 @@ def main(ctx):
     required=False,
     type=str,
     help="""
-    If specified, only the `library` with api_shortname = target-library-api-shortname will
-    be generated. If not specified, all libraries in the configuration yaml will be generated
+    If specified, only the `library` whose api_shortname equals to 
+    target-library-api-shortname will be generated. 
+    If not specified, all libraries in the configuration yaml will be generated.
     """,
 )
 @click.option(
@@ -70,8 +62,9 @@ def main(ctx):
     required=False,
     type=str,
     help="""
-    If specified, the generated files will be sent to this location. If not specified, the
-    repository will be pulled into output_folder and move the generated files there
+    If specified, the generated files will be sent to this location. 
+    If not specified, the repository will be pulled into output_folder 
+    and move the generated files there.
     """,
 )
 def generate_from_yaml(
@@ -80,6 +73,10 @@ def generate_from_yaml(
     target_library_api_shortname: str,
     repository_path: str,
 ) -> None:
+    """
+    Parses a config yaml and generates libraries via
+    generate_composed_library.py
+    """
     config = from_yaml(generation_config_yaml)
     target_libraries = config.libraries
     if target_library_api_shortname is not None:
@@ -89,8 +86,10 @@ def generate_from_yaml(
             if library.api_shortname == target_library_api_shortname
         ]
 
-    repo_config = __prepare_repo(
-        gen_config=config, library_config=target_libraries, repo_path=repository_path
+    repo_config = util.prepare_repo(
+        gen_config=config,
+        library_config=target_libraries,
+        repo_path=repository_path
     )
 
     for library_path, library in repo_config.libraries.items():
@@ -105,66 +104,7 @@ def generate_from_yaml(
             enable_postprocessing=enable_postprocessing,
         )
 
-
-def __prepare_repo(
-    gen_config: GenerationConfig,
-    library_config: List[LibraryConfig],
-    repo_path: str,
-    language: str = "java",
-) -> RepoConfig:
-    """
-
-    :param gen_config:
-    :param library_config:
-    :param repo_path:
-    :param language:
-    :return:
-    """
-    output_folder = util.sh_util("get_output_folder")
-    print(f"output_folder: {output_folder}")
-    os.makedirs(output_folder, exist_ok=True)
-    is_monorepo = util.check_monorepo(gen_config)
-    libraries = {}
-    for library in library_config:
-        library_name = f"{language}-{library.api_shortname}"
-        if library.library_name is not None:
-            library_name = f"{language}-{library.library_name}"
-        if is_monorepo:
-            library_path = f"{repo_path}/{library_name}"
-        else:
-            library_path = f"{repo_path}"
-        # use absolute path because docker requires absolute path
-        # in volume name.
-        absolute_library_path = str(Path(library_path).resolve())
-        libraries[absolute_library_path] = library
-
-    if is_monorepo:
-        print("this is a monorepo library")
-        if repo_path is None:
-            repo_path = f"{output_folder}/{gen_config.destination_path}"
-            print(f"sparse_cloning monorepo with {libraries.keys()}")
-            clone_out = util.sh_util(
-                f'sparse_clone "https://github.com/googleapis/google-cloud-java.git" "{" ".join(libraries.keys())} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"',
-                cwd=output_folder,
-            )
-            print(clone_out)
-    else:
-        print("this is a standalone library")
-        if repo_path is None:
-            destination_path = libraries.keys()[0]
-            repo_path = f"{output_folder}/{destination_path}"
-            clone_out = util.sh_util(
-                f'git clone "https://github.com/googleapis/{"".join(libraries)}.git"',
-                cwd=output_folder,
-            )
-            print(clone_out)
-    versions_file = f"{repo_path}/versions.txt"
-
-    return RepoConfig(
-        output_folder=output_folder,
-        libraries=libraries,
-        versions_file=str(Path(versions_file).resolve()),
-    )
+    util.repo_level_post_process(repository_path)
 
 
 if __name__ == "__main__":
