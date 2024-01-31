@@ -163,18 +163,6 @@ def __prepare_repo(
                 cwd=output_folder,
             )
             print(clone_out)
-
-    if not exemptions:
-        exemptions = [
-            ".OwlBot.yaml",
-            "owlbot.py",
-            "CHANGELOG.md",
-            ".readme-partials.yaml"
-        ]
-    for library_path in libraries.keys():
-        print(f"deleting {library_path} before generating, excluding {exemptions}")
-        __delete_files_in(path=library_path, exemptions=exemptions)
-
     versions_file = f"{repo_path}/versions.txt"
 
     return RepoConfig(
@@ -182,28 +170,6 @@ def __prepare_repo(
         libraries=libraries,
         versions_file=str(Path(versions_file).resolve())
     )
-
-
-def __delete_files_in(path: str, exemptions: List[str] = None):
-    """
-
-    :param path:
-    :param exemptions:
-    :return:
-    """
-    target_folder = Path(path).resolve()
-    for file_path in target_folder.iterdir():
-        if file_path.name not in exemptions:
-            try:
-                if file_path.is_dir():
-                    shutil.rmtree(file_path)
-                else:
-                    file_path.unlink()
-                print(f"Deleted : {file_path.name}")
-            except OSError as e:
-                print(f"Error deleting {file_path.name}: {e}")
-        else:
-            print(f"Skipping file: {file_path.name} (exempted)")
 
 
 if __name__ == "__main__":

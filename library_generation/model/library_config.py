@@ -77,4 +77,4 @@ class LibraryConfig:
             if release_level else _ReleaseLevel.preview
         self.group_id = group_id
         self.requires_billing = requires_billing
-        self.cloud_api = cloud_api
+        self.cloud_api = True if not cloud_api else cloud_api
