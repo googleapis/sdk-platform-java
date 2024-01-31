@@ -61,7 +61,7 @@ function processModule() {
 
   # ensure formatting on all .java files in the repository
   echo "Reformatting source..."
-  mvn fmt:format
+  ~/apache-maven-3.9.6/bin/mvn fmt:format
   echo "...done"
 }
 

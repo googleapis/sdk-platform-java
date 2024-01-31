@@ -34,55 +34,45 @@ import utilities as util
 import json
 import re
 import os
-import shutil
 from model.generation_config import GenerationConfig
 from model.library_config import LibraryConfig
 from model.gapic_inputs import parse as parse_build_file
-from model.output_config import OutputConfig
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 
 
 def generate_composed_library(
     config: GenerationConfig,
+    library_path: str,
     library: LibraryConfig,
+    output_folder: str,
     repository_path: str,
+    versions_file: str,
     enable_postprocessing: bool = True,
 ) -> None:
     """
     Generate libraries composed of more than one service or service version.
     :param config: a GenerationConfig object representing a parsed configuration
     yaml
+    :param library_path:
     :param library: a LibraryConfig object contained inside config, passed here
     for convenience and to prevent all libraries to be processed
+    :param output_folder:
     :param repository_path: path to the repository where the generated files
     will be sent. If not specified, it will default to the one defined in the
     configuration yaml and will be downloaded. The versions file will be
     inferred from this folder
+    :param versions_file:
     :param enable_postprocessing: true if postprocessing should be done on the
     generated libraries
     """
-    output_folder = util.sh_util("get_output_folder")
-
-    print(f"output_folder: {output_folder}")
-    print("library: ", library)
-    os.makedirs(output_folder, exist_ok=True)
-
     __pull_api_definition(
         config=config,
         library=library,
         output_folder=output_folder
     )
 
-    is_monorepo = __check_monorepo(config=config)
-
-    output_config = __prepare_destination(
-        config=config,
-        library=library,
-        repository_path=repository_path,
-        output_folder=output_folder,
-        is_monorepo=is_monorepo
-    )
+    is_monorepo = util.check_monorepo(config=config)
 
     base_arguments = __construct_tooling_arg(config=config)
 
@@ -93,14 +83,14 @@ def generate_composed_library(
         build_file_folder = Path(f"{output_folder}/{gapic.proto_path}").resolve()
         print(f"build_file_folder: {build_file_folder}")
         gapic_inputs = parse_build_file(build_file_folder, gapic.proto_path)
-        if not os.path.exists(f"{output_config.library_path}/.repo-meta.json"):
+        if not os.path.exists(f"{library_path}/.repo-meta.json"):
             # generate .repo-metadata.json here because transport is parsed from
             # BUILD, which lives in a versioned proto_path.
             print("generating .repo-metadata.json")
             __generate_repo_metadata(
                 library=library,
                 transport=gapic_inputs.transport,
-                dest_path=output_config.library_path,
+                dest_path=library_path,
             )
         effective_arguments += [
             "--proto_only",
@@ -126,7 +116,7 @@ def generate_composed_library(
         print("arguments: ")
         print(effective_arguments)
         print(
-            f"Generating library from {gapic.proto_path} to {output_config.library_path}..."
+            f"Generating library from {gapic.proto_path} to {library_path}"
         )
         util.run_process_and_print_output(
             ["bash", f"{script_dir}/generate_library.sh", *effective_arguments],
@@ -135,7 +125,7 @@ def generate_composed_library(
 
         if enable_postprocessing:
             util.sh_util(
-                f'build_owlbot_cli_source_folder "{output_config.library_path}"'
+                f'build_owlbot_cli_source_folder "{library_path}"'
                 + f' "{owlbot_cli_source_folder}" "{output_folder}/{temp_destination_path}"'
                 + f' "{gapic.proto_path}"',
                 cwd=output_folder,
@@ -146,9 +136,9 @@ def generate_composed_library(
         util.run_process_and_print_output(
             [
                 f"{script_dir}/postprocess_library.sh",
-                f"{output_config.library_path}",
+                f"{library_path}",
                 "",
-                output_config.versions_file,
+                versions_file,
                 owlbot_cli_source_folder,
                 config.owlbot_cli_image,
                 config.synthtool_commitish,
@@ -156,8 +146,6 @@ def generate_composed_library(
             ],
             "Library postprocessing",
         )
-
-    print("run repo-level post-processing.")
 
 
 def __construct_tooling_arg(config: GenerationConfig) -> List[str]:
@@ -172,99 +160,6 @@ def __construct_tooling_arg(config: GenerationConfig) -> List[str]:
     arguments += util.create_argument("protobuf_version", config)
 
     return arguments
-
-
-def __prepare_destination(
-    config: GenerationConfig,
-    library: LibraryConfig,
-    repository_path: str,
-    output_folder: str,
-    is_monorepo: bool,
-    exemptions: List[str] = None,
-    language: str = "java"
-) -> OutputConfig:
-    """
-    Prepare the destination path for the generated library. All files in the
-    library_path (defined in the returned object) will be deleted before the
-    generation, excepts for files listed in exemptions.
-    :param config: the generation config
-    :param library: the library config
-    :param repository_path:
-    :param output_folder:
-    :param is_monorepo: whether to generate a monorepo
-    :param exemptions: a list of files should be retained
-    :param language: the programming language of the generated library
-    :return: an OutputConfig object containing the output attributes
-    """
-    library_name = f"{language}-{library.api_shortname}"
-    if library.library_name is not None:
-        library_name = f"{language}-{library.library_name}"
-
-    if is_monorepo:
-        print("this is a monorepo library")
-        destination_path = f"{config.destination_path}/{library_name}"
-        library_folder = destination_path.split("/")[-1]
-        if repository_path is None:
-            print(f"sparse_cloning monorepo with {library_name}")
-            repository_path = f"{output_folder}/{config.destination_path}"
-            clone_out = util.sh_util(
-                f'sparse_clone "https://github.com/googleapis/google-cloud-java.git" "{library_folder} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"',
-                cwd=output_folder,
-            )
-            print(clone_out)
-        library_path = f"{repository_path}/{library_name}"
-        versions_file = f"{repository_path}/versions.txt"
-    else:
-        print("this is a standalone library")
-        destination_path = library_name
-        if repository_path is None:
-            repository_path = f"{output_folder}/{destination_path}"
-            util.delete_if_exists(f"{output_folder}/{destination_path}")
-            clone_out = util.sh_util(
-                f'git clone "https://github.com/googleapis/{destination_path}.git"',
-                cwd=output_folder,
-            )
-            print(clone_out)
-        library_path = f"{repository_path}"
-        versions_file = f"{repository_path}/versions.txt"
-    if not exemptions:
-        exemptions = [".OwlBot.yaml", "owlbot.py", "CHANGELOG.md"]
-    print(f"deleting {library_path} before generating, excluding {exemptions}")
-    __delete_files_in(path=library_path, exemptions=exemptions)
-
-    return OutputConfig(library_path=library_path, versions_file=versions_file)
-
-
-def __delete_files_in(path: str, exemptions: List[str] = None):
-    """
-
-    :param path:
-    :param exemptions:
-    :return:
-    """
-    target_folder = Path(path).resolve()
-    for file_path in target_folder.iterdir():
-        if file_path.name not in exemptions:
-            try:
-                if file_path.is_dir():
-                    shutil.rmtree(file_path)
-                else:
-                    file_path.unlink()
-                print(f"Deleted : {file_path.name}")
-            except OSError as e:
-                print(f"Error deleting {file_path.name}: {e}")
-        else:
-            print(f"Skipping file: {file_path.name} (exempted)")
-
-
-def __check_monorepo(config: GenerationConfig) -> bool:
-    """
-    Check whether to generate a monorepo according to the
-    generation config.
-    :param config: the generation configuration
-    :return: True if it's to generate a monorepo
-    """
-    return len(config.libraries) > 1
 
 
 def __pull_api_definition(

@@ -1,36 +1,19 @@
-#Required.
 gapic_generator_version: 2.32.0
-#Optional.
-# grpc_version: 1.60.0
-#Optional. The protobuf version in googleapis (not sdk-platform-java) is the actual source of truth for generated protos in google-cloud-java
 protobuf_version: 23.2
-#Required.
 googleapis_commitish: c3bddfb5456833770d651486905a60fa3889ec79
-#Required.
 owlbot_cli_image: sha256:623647ee79ac605858d09e60c1382a716c125fb776f69301b72de1cd35d49409
-#Required.
 synthtool_commitish: 6612ab8f3afcd5e292aecd647f0fa68812c9f5b5
-#Required. The root folder name of generated client libraries.
 destination_path: google-cloud-java
-#Required. If the number of libraries is greater than 1, the scripts will treat the target repository as a monorepo, with a slightly different workflow mainly in the postprocessing stage
 libraries:
-    #Required. Can be used for populating the folder name java-{api_shortName}. This is also the destination-name in new-client.py.
   - api_shortname: cloudasset
-    #Required. The default value is the title of service yaml
     name_pretty: Cloud Asset Inventory
-    #Required.
     product_documentation: "https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/overview"
-    #Required.
     api_description: "provides inventory services based on a time series database. This database keeps a five week history of Google Cloud asset metadata. The Cloud Asset Inventory export service allows you to export all asset metadata at a certain timestamp or export event change history during a timeframe."
-    #Optional.
     library_name: "asset"
-    #Optional.
     client_documentation: "https://cloud.google.com/java/docs/reference/google-cloud-asset/latest/overview"
     distribution_name: "com.google.cloud:google-cloud-asset"
     release_level: "stable"
-    #Required.
     GAPICs:
-        #Required. This is a relative path to googleapis/googleapis. We'll parse all the parameters needed by generate_library.sh from BUILD.bazel in this folder.
       - proto_path: google/cloud/asset/v1
       - proto_path: google/cloud/asset/v1p1beta1
       - proto_path: google/cloud/asset/v1p2beta1
@@ -38,21 +21,14 @@ libraries:
       - proto_path: google/cloud/asset/v1p7beta1
 
   - api_shortname: speech
-    #Required. The default value is the title of service yaml
     name_pretty: Cloud Speech
-    #Required.
     product_documentation: "https://cloud.google.com/speech-to-text/docs/"
-    #Required.
     api_description: "enables easy integration of Google speech recognition technologies into developer applications. Send audio and receive a text transcription from the Speech-to-Text API service."
-    #Optional.
     client_documentation: "https://cloud.google.com/java/docs/reference/google-cloud-speech/latest/overview"
-    #Optional.
     rest_documentation: "https://cloud.google.com/speech-to-text/docs/reference/rest"
-    #Optional.
     rpc_documentation: "https://cloud.google.com/speech-to-text/docs/reference/rpc"
     release_level: "stable"
     GAPICs:
       - proto_path: google/cloud/speech/v1
-      - proto_path: google/cloud/speech/v1beta1
       - proto_path: google/cloud/speech/v1p1beta1
       - proto_path: google/cloud/speech/v2

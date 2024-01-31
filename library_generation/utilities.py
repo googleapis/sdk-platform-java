@@ -4,6 +4,7 @@ import os
 import shutil
 from collections.abc import Sequence
 
+from library_generation.model.generation_config import GenerationConfig
 from model.generation_config import from_yaml
 from typing import List
 
@@ -114,6 +115,16 @@ def delete_if_exists(path: str) -> None:
         print(f"Folder deleted: {path}")
     else:
         print(f"Path does not exist: {path}")
+
+
+def check_monorepo(config: GenerationConfig) -> bool:
+    """
+    Check whether to generate a monorepo according to the
+    generation config.
+    :param config: the generation configuration
+    :return: True if it's to generate a monorepo
+    """
+    return len(config.libraries) > 1
 
 
 def main(argv: Sequence[str]) -> None:

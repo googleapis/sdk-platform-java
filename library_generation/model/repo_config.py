@@ -12,15 +12,20 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from typing import Dict
+from .library_config import LibraryConfig
 
-class OutputConfig:
+
+class RepoConfig:
     """
 
     """
     def __init__(
         self,
-        library_path: str,
+        output_folder: str,
+        libraries: Dict[str, LibraryConfig],
         versions_file: str
     ):
-        self.library_path = library_path
+        self.output_folder = output_folder
+        self.libraries = libraries
         self.versions_file = versions_file
