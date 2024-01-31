@@ -1,14 +1,44 @@
+# Copyright 2024 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+import json
 import sys
 import subprocess
 import os
 import shutil
 from collections.abc import Sequence
+from pathlib import Path
+import re
+
+from typing import Dict
 
 from library_generation.model.generation_config import GenerationConfig
+from library_generation.model.library_config import LibraryConfig
 from model.generation_config import from_yaml
 from typing import List
+from jinja2 import Environment, FileSystemLoader
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
+jinja_env = Environment(loader=FileSystemLoader(f"{script_dir}/templates"))
+
+
+def __render(template_name: str, output_name: str, **kwargs):
+    template = jinja_env.get_template(template_name)
+    t = template.stream(kwargs)
+    directory = os.path.dirname(output_name)
+    if not os.path.isdir(directory):
+        os.makedirs(directory)
+    t.dump(str(output_name))
 
 
 def create_argument(arg_key: str, arg_container: object) -> List[str]:
@@ -117,6 +147,16 @@ def delete_if_exists(path: str) -> None:
         print(f"Path does not exist: {path}")
 
 
+def remove_version_from(proto_path: str) -> str:
+    """
+    Remove the version of a proto_path
+    :param proto_path: versioned proto_path
+    :return: the proto_path without version
+    """
+    index = proto_path.rfind("/")
+    return proto_path[:index]
+
+
 def check_monorepo(config: GenerationConfig) -> bool:
     """
     Check whether to generate a monorepo according to the
@@ -125,6 +165,108 @@ def check_monorepo(config: GenerationConfig) -> bool:
     :return: True if it's to generate a monorepo
     """
     return len(config.libraries) > 1
+
+
+def generate_prerequisite_files(
+    library: LibraryConfig,
+    proto_path: str,
+    transport: str,
+    library_path: str,
+    language: str = "java",
+    is_monorepo: bool = True,
+) -> None:
+    """
+    Generate .repo-metadata.json for a library
+    :param library: the library configuration
+    :param proto_path: the proto path without version
+    :param transport: transport supported by the library
+    :param library_path: the path to which the generated file goes
+    :param language: programming language of the library
+    :param is_monorepo: whether the library is in a monorepo
+    :return: None
+    """
+    cloud_prefix = "cloud-" if library.cloud_api else ""
+    library_name = (
+        library.library_name if library.library_name else library.api_shortname
+    )
+    distribution_name = (
+        library.distribution_name
+        if library.distribution_name
+        else f"{library.group_id}:google-{cloud_prefix}{library_name}"
+    )
+    distribution_name_short = re.split(r"[:/]", distribution_name)[-1]
+    repo = (
+        "googleapis/google-cloud-java" if is_monorepo else f"{language}-{library_name}"
+    )
+    api_id = (
+        library.api_id if library.api_id else f"{library.api_shortname}.googleapis.com"
+    )
+    client_documentation = (
+        library.client_documentation
+        if library.client_documentation
+        else f"https://cloud.google.com/{language}/docs/reference/{distribution_name_short}/latest/overview"
+    )
+
+    repo_metadata = {
+        "api_shortname": library.api_shortname,
+        "name_pretty": library.name_pretty,
+        "product_documentation": library.product_documentation,
+        "api_description": library.api_description,
+        "client_documentation": client_documentation,
+        "release_level": library.release_level,
+        "transport": transport,
+        "language": language,
+        "repo": repo,
+        "repo_short": f"{language}-{library_name}",
+        "distribution_name": distribution_name,
+        "api_id": api_id,
+        "library_type": library.library_type.name,
+    }
+
+    if library.requires_billing:
+        repo_metadata["requires_billing"] = True
+    if library.rest_documentation:
+        repo_metadata["rest_documentation"] = library.rest_documentation
+    if library.rpc_documentation:
+        repo_metadata["rpc_documentation"] = library.rpc_documentation
+
+    # generate .repo-meta.json
+    if not os.path.exists(f"{library_path}/.repo-meta.json"):
+        with open(f"{library_path}/.repo-metadata.json", "w") as fp:
+            json.dump(repo_metadata, fp, indent=2)
+
+    # generate .OwlBot.yaml
+    if not os.path.exists(f"{library_path}/.OwlBot.yaml"):
+        __render(
+            template_name="owlbot.yaml.monorepo.j2",
+            output_name=f"{library_path}/.OwlBot.yaml",
+            artifact_name=distribution_name_short,
+            proto_path=proto_path,
+            module_name=repo_metadata["repo_short"],
+            api_shortname=library.api_shortname
+        )
+
+    # generate owlbot.py
+    if not os.path.exists(f"{library_path}/owlbot.py"):
+        template_excludes = [
+            ".github/*",
+            ".kokoro/*",
+            "samples/*",
+            "CODE_OF_CONDUCT.md",
+            "CONTRIBUTING.md",
+            "LICENSE",
+            "SECURITY.md",
+            "java.header",
+            "license-checks.xml",
+            "renovate.json",
+            ".gitignore"
+        ]
+        __render(
+            template_name="owlbot.py.j2",
+            output_name=f"{library_path}/owlbot.py",
+            should_include_templates=True,
+            template_excludes=template_excludes,
+        )
 
 
 def main(argv: Sequence[str]) -> None:

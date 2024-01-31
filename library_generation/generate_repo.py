@@ -17,7 +17,6 @@
 Parses a config yaml and generates libraries via generate_composed_library.py
 """
 import os
-import shutil
 from pathlib import Path
 
 from typing import List
@@ -91,9 +90,7 @@ def generate_from_yaml(
         ]
 
     repo_config = __prepare_repo(
-        gen_config=config,
-        library_config=target_libraries,
-        repo_path=repository_path
+        gen_config=config, library_config=target_libraries, repo_path=repository_path
     )
 
     for library_path, library in repo_config.libraries.items():
@@ -113,15 +110,13 @@ def __prepare_repo(
     gen_config: GenerationConfig,
     library_config: List[LibraryConfig],
     repo_path: str,
-    exemptions: List[str] = None,
-    language: str = "java"
+    language: str = "java",
 ) -> RepoConfig:
     """
 
     :param gen_config:
     :param library_config:
     :param repo_path:
-    :param exemptions:
     :param language:
     :return:
     """
@@ -168,7 +163,7 @@ def __prepare_repo(
     return RepoConfig(
         output_folder=output_folder,
         libraries=libraries,
-        versions_file=str(Path(versions_file).resolve())
+        versions_file=str(Path(versions_file).resolve()),
     )
 
 

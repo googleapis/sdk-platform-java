@@ -31,8 +31,6 @@ from pathlib import Path
 from typing import List
 
 import utilities as util
-import json
-import re
 import os
 from model.generation_config import GenerationConfig
 from model.library_config import LibraryConfig
@@ -48,26 +46,22 @@ def generate_composed_library(
     output_folder: str,
     versions_file: str,
     enable_postprocessing: bool = True,
-    language: str = "java"
+    language: str = "java",
 ) -> None:
     """
     Generate libraries composed of more than one service or service version.
     :param config: a GenerationConfig object representing a parsed configuration
     yaml
-    :param library_path:
+    :param library_path: the path to which the generated file goes
     :param library: a LibraryConfig object contained inside config, passed here
     for convenience and to prevent all libraries to be processed
     :param output_folder:
     :param versions_file:
     :param enable_postprocessing: true if postprocessing should be done on the
-    generated libraries
-    :param language:
+    generated library
+    :param language: language: programming language of the library
     """
-    __pull_api_definition(
-        config=config,
-        library=library,
-        output_folder=output_folder
-    )
+    __pull_api_definition(config=config, library=library, output_folder=output_folder)
 
     is_monorepo = util.check_monorepo(config=config)
 
@@ -80,15 +74,15 @@ def generate_composed_library(
         build_file_folder = Path(f"{output_folder}/{gapic.proto_path}").resolve()
         print(f"build_file_folder: {build_file_folder}")
         gapic_inputs = parse_build_file(build_file_folder, gapic.proto_path)
-        if not os.path.exists(f"{library_path}/.repo-meta.json"):
-            # generate .repo-metadata.json here because transport is parsed from
-            # BUILD, which lives in a versioned proto_path.
-            print("generating .repo-metadata.json")
-            __generate_repo_metadata(
-                library=library,
-                transport=gapic_inputs.transport,
-                dest_path=library_path,
-            )
+        # generate prerequisite files (.repo-metadata.json, .OwlBot.yaml,
+        # owlbot.py) here because transport is parsed from BUILD.bazel,
+        # which lives in a versioned proto_path.
+        util.generate_prerequisite_files(
+            library=library,
+            proto_path=util.remove_version_from(gapic.proto_path),
+            transport=gapic_inputs.transport,
+            library_path=library_path
+        )
         effective_arguments += [
             "--proto_only",
             gapic_inputs.proto_only,
@@ -112,9 +106,7 @@ def generate_composed_library(
         effective_arguments += ["--destination_path", temp_destination_path]
         print("arguments: ")
         print(effective_arguments)
-        print(
-            f"Generating library from {gapic.proto_path} to {library_path}"
-        )
+        print(f"Generating library from {gapic.proto_path} to {library_path}")
         util.run_process_and_print_output(
             ["bash", f"{script_dir}/generate_library.sh", *effective_arguments],
             "Library generation",
@@ -160,9 +152,7 @@ def __construct_tooling_arg(config: GenerationConfig) -> List[str]:
 
 
 def __pull_api_definition(
-    config: GenerationConfig,
-    library: LibraryConfig,
-    output_folder: str
+    config: GenerationConfig, library: LibraryConfig, output_folder: str
 ) -> None:
     """
     Pull APIs definition from googleapis/googleapis repository.
@@ -193,67 +183,3 @@ def __pull_api_definition(
         util.sh_util(
             f"download_googleapis_files_and_folders {output_folder} {googleapis_commitish}"
         )
-
-
-def __generate_repo_metadata(
-    library: LibraryConfig,
-    transport: str,
-    dest_path: str,
-    language: str = "java",
-    is_monorepo: bool = True,
-) -> None:
-    """
-    Generate .repo-metadata.json for a library
-    :param library: the library configuration
-    :param transport: transport supported by the library
-    :param language: programming language of the library
-    :param is_monorepo: whether the library is in a monorepo
-    :return: None
-    """
-    cloud_prefix = "cloud-" if library.cloud_api else ""
-    library_name = (
-        library.library_name if library.library_name else library.api_shortname
-    )
-    distribution_name = (
-        library.distribution_name
-        if library.distribution_name
-        else f"{library.group_id}:google-{cloud_prefix}{library_name}"
-    )
-    distribution_name_short = re.split(r"[:/]", distribution_name)[-1]
-    repo = (
-        "googleapis/google-cloud-java" if is_monorepo else f"{language}-{library_name}"
-    )
-    api_id = (
-        library.api_id if library.api_id else f"{library.api_shortname}.googleapis.com"
-    )
-    client_documentation = (
-        library.client_documentation
-        if library.client_documentation
-        else f"https://cloud.google.com/{language}/docs/reference/{distribution_name_short}/latest/overview"
-    )
-
-    repo_metadata = {
-        "api_shortname": library.api_shortname,
-        "name_pretty": library.name_pretty,
-        "product_documentation": library.product_documentation,
-        "api_description": library.api_description,
-        "client_documentation": client_documentation,
-        "release_level": library.release_level,
-        "transport": transport,
-        "language": language,
-        "repo": repo,
-        "repo_short": f"{language}-{library_name}",
-        "distribution_name": distribution_name,
-        "api_id": api_id,
-        "library_type": library.library_type.name,
-    }
-
-    if library.requires_billing:
-        repo_metadata["requires_billing"] = True
-    if library.rest_documentation:
-        repo_metadata["rest_documentation"] = library.rest_documentation
-    if library.rpc_documentation:
-        repo_metadata["rpc_documentation"] = library.rpc_documentation
-    dest = Path(dest_path).resolve()
-    with open(f"{dest}/.repo-metadata.json", "w") as fp:
-        json.dump(repo_metadata, fp, indent=2)
