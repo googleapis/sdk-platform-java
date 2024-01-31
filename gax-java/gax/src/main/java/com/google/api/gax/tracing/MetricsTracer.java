@@ -53,6 +53,7 @@ import org.threeten.bp.Duration;
 public class MetricsTracer implements ApiTracer {
 
   private static final String STATUS_ATTRIBUTE = "status";
+  private static final String LANGUAGE = "Java";
 
   private Stopwatch attemptTimer;
 
@@ -64,6 +65,7 @@ public class MetricsTracer implements ApiTracer {
 
   public MetricsTracer(MethodName methodName, MetricsRecorder metricsRecorder) {
     this.attributes.put("method_name", methodName.toString());
+    this.attributes.put("language", LANGUAGE);
     this.metricsRecorder = metricsRecorder;
   }
 
