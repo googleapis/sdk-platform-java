@@ -1315,9 +1315,6 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
       List<Statement> bodyStatements,
       VariableExpr returnBuilderVarExpr) {
 
-    if (!shouldGenerateRequestMutator(method, messageTypes)) {
-      return bodyStatements;
-    }
     Message methodRequestMessage = messageTypes.get(method.inputType().reference().fullName());
     method.autoPopulatedFields().stream()
         // Map each field name to its corresponding Field object, if present

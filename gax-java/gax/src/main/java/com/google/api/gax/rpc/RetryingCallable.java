@@ -48,22 +48,19 @@ class RetryingCallable<RequestT, ResponseT> extends UnaryCallable<RequestT, Resp
   RetryingCallable(
       ApiCallContext callContextPrototype,
       UnaryCallable<RequestT, ResponseT> callable,
+      RetryingExecutorWithContext<ResponseT> executor) {
+    this(callContextPrototype, callable, executor, null);
+  }
+
+  RetryingCallable(
+      ApiCallContext callContextPrototype,
+      UnaryCallable<RequestT, ResponseT> callable,
       RetryingExecutorWithContext<ResponseT> executor,
       RequestMutator<RequestT> requestMutator) {
     this.callContextPrototype = Preconditions.checkNotNull(callContextPrototype);
     this.callable = Preconditions.checkNotNull(callable);
     this.executor = Preconditions.checkNotNull(executor);
     this.requestMutator = requestMutator;
-  }
-
-  RetryingCallable(
-      ApiCallContext callContextPrototype,
-      UnaryCallable<RequestT, ResponseT> callable,
-      RetryingExecutorWithContext<ResponseT> executor) {
-    this.callContextPrototype = Preconditions.checkNotNull(callContextPrototype);
-    this.callable = Preconditions.checkNotNull(callable);
-    this.executor = Preconditions.checkNotNull(executor);
-    this.requestMutator = null;
   }
 
   @Override

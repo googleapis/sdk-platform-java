@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,9 +15,7 @@
  */
 package com.google.showcase.v1beta1.it;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
 
 import com.google.api.gax.httpjson.ApiMethodDescriptor;
 import com.google.api.gax.httpjson.ForwardingHttpJsonClientCall;
@@ -30,6 +28,7 @@ import com.google.api.gax.retrying.RetryingFuture;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.truth.Truth;
 import com.google.rpc.Status;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
@@ -165,7 +164,7 @@ public class ITAutoPopulatedFields {
   }
 
   @Test
-  public void testGrpc_autoPopulateRequestId() {
+  public void testGrpc_autoPopulateRequestIdWhenAttemptedOnceSuccessfully() {
     List<String> capturedRequestIds = new ArrayList<>();
     grpcRequestInterceptor.setOnRequestIntercepted(
         request -> {
@@ -175,8 +174,10 @@ public class ITAutoPopulatedFields {
           }
         });
     grpcClientWithoutRetries.echo(EchoRequest.newBuilder().build());
-    assertEquals(1, capturedRequestIds.size());
-    assertEquals(4, UUID.fromString(capturedRequestIds.get(0)).version());
+    Truth.assertThat(capturedRequestIds).isNotEmpty();
+    // Autopopulation of UUID is currently only configured for format UUID4.
+    Integer UUIDVersion = 4;
+    Truth.assertThat(UUID.fromString(capturedRequestIds.get(0)).version()).isEqualTo(UUIDVersion);
   }
 
   @Test
@@ -191,12 +192,12 @@ public class ITAutoPopulatedFields {
         });
     String UUIDsent = UUID.randomUUID().toString();
     grpcClientWithoutRetries.echo(EchoRequest.newBuilder().setRequestId(UUIDsent).build());
-    assertEquals(1, capturedRequestIds.size());
-    assertEquals(UUIDsent, capturedRequestIds.get(0));
+    Truth.assertThat(capturedRequestIds).isNotEmpty();
+    Truth.assertThat(capturedRequestIds).contains(UUIDsent);
   }
 
   @Test
-  public void testHttpJson_autoPopulateRequestId() {
+  public void testHttpJson_autoPopulateRequestIdWhenAttemptedOnceSuccessfully() {
     List<String> capturedRequestIds = new ArrayList<>();
     httpJsonInterceptor.setOnRequestIntercepted(
         request -> {
@@ -206,8 +207,10 @@ public class ITAutoPopulatedFields {
           }
         });
     httpJsonClient.echo(EchoRequest.newBuilder().build());
-
-    assertEquals(4, UUID.fromString(capturedRequestIds.get(0)).version());
+    Truth.assertThat(capturedRequestIds).isNotEmpty();
+    // Autopopulation of UUID is currently only configured for format UUID4.
+    Integer UUIDVersion = 4;
+    Truth.assertThat(UUID.fromString(capturedRequestIds.get(0)).version()).isEqualTo(UUIDVersion);
   }
 
   @Test
@@ -222,8 +225,8 @@ public class ITAutoPopulatedFields {
           }
         });
     httpJsonClient.echo(EchoRequest.newBuilder().setRequestId(UUIDsent).build());
-    assertEquals(1, capturedRequestIds.size());
-    assertEquals(UUIDsent, capturedRequestIds.get(0));
+    Truth.assertThat(capturedRequestIds).isNotEmpty();
+    Truth.assertThat(capturedRequestIds).contains(UUIDsent);
   }
 
   @Test
@@ -249,13 +252,10 @@ public class ITAutoPopulatedFields {
               grpcClientWithRetries.echoCallable().futureCall(requestSent);
       assertThrows(ExecutionException.class, () -> retryingFuture.get(10, TimeUnit.SECONDS));
       // assert that the number of request IDs is equal to the max attempt
-      assertEquals(capturedRequestIds.size(), 5);
-      // assert first request ID is same as UUIDSent
-      assertEquals(capturedRequestIds.get(0), UUIDsent);
-      // assert that each request ID sent is the same
-      assertTrue(
-          capturedRequestIds.stream()
-              .allMatch(requestId -> requestId.equals(capturedRequestIds.get(0))));
+      Truth.assertThat(capturedRequestIds).hasSize(5);
+      // assert that each request ID sent is the same as the UUIDSent
+      Truth.assertThat(capturedRequestIds)
+          .containsExactly(UUIDsent, UUIDsent, UUIDsent, UUIDsent, UUIDsent);
     } finally {
       grpcClientWithRetries.close();
       grpcClientWithRetries.awaitTermination(
@@ -285,11 +285,15 @@ public class ITAutoPopulatedFields {
               grpcClientWithRetries.echoCallable().futureCall(requestSent);
       assertThrows(ExecutionException.class, () -> retryingFuture.get(10, TimeUnit.SECONDS));
       // assert that the number of request IDs is equal to the max attempt
-      assertEquals(capturedRequestIds.size(), 5);
+      Truth.assertThat(capturedRequestIds).hasSize(5);
       // assert that each request ID sent is the same
-      assertTrue(
-          capturedRequestIds.stream()
-              .allMatch(requestId -> requestId.equals(capturedRequestIds.get(0))));
+      Truth.assertThat(capturedRequestIds)
+          .containsExactly(
+              capturedRequestIds.get(0),
+              capturedRequestIds.get(0),
+              capturedRequestIds.get(0),
+              capturedRequestIds.get(0),
+              capturedRequestIds.get(0));
     } finally {
       grpcClientWithRetries.close();
       grpcClientWithRetries.awaitTermination(
@@ -319,12 +323,11 @@ public class ITAutoPopulatedFields {
           (RetryingFuture<EchoResponse>)
               httpJsonClientWithRetries.echoCallable().futureCall(requestSent);
       assertThrows(ExecutionException.class, () -> retryingFuture.get(10, TimeUnit.SECONDS));
-      assertEquals(5, capturedRequestIds.size());
-      // assert first request ID is same as UUIDSent
-      assertEquals(capturedRequestIds.get(0), UUIDsent);
-      assertTrue(
-          capturedRequestIds.stream()
-              .allMatch(requestId -> requestId.equals(capturedRequestIds.get(0))));
+      // assert that the number of request IDs is equal to the max attempt
+      Truth.assertThat(capturedRequestIds).hasSize(5);
+      // assert that each request ID sent is the same as the UUIDSent
+      Truth.assertThat(capturedRequestIds)
+          .containsExactly(UUIDsent, UUIDsent, UUIDsent, UUIDsent, UUIDsent);
     } finally {
       httpJsonClientWithRetries.close();
       httpJsonClientWithRetries.awaitTermination(
@@ -351,10 +354,16 @@ public class ITAutoPopulatedFields {
           (RetryingFuture<EchoResponse>)
               httpJsonClientWithRetries.echoCallable().futureCall(requestSent);
       assertThrows(ExecutionException.class, () -> retryingFuture.get(10, TimeUnit.SECONDS));
-      assertEquals(5, capturedRequestIds.size());
-      assertTrue(
-          capturedRequestIds.stream()
-              .allMatch(requestId -> requestId.equals(capturedRequestIds.get(0))));
+      // assert that the number of request IDs is equal to the max attempt
+      Truth.assertThat(capturedRequestIds).hasSize(5);
+      // assert that each request ID sent is the same
+      Truth.assertThat(capturedRequestIds)
+          .containsExactly(
+              capturedRequestIds.get(0),
+              capturedRequestIds.get(0),
+              capturedRequestIds.get(0),
+              capturedRequestIds.get(0),
+              capturedRequestIds.get(0));
     } finally {
       httpJsonClientWithRetries.close();
       httpJsonClientWithRetries.awaitTermination(
