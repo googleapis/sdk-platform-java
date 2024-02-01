@@ -104,7 +104,10 @@ def generate_from_yaml(
             enable_postprocessing=enable_postprocessing,
         )
 
-    util.repo_level_post_process(repository_path)
+    util.repo_level_post_process(
+        repository_path=repository_path,
+        versions_file=repo_config.versions_file
+    )
 
 
 if __name__ == "__main__":

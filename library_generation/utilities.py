@@ -19,7 +19,8 @@ import shutil
 from collections.abc import Sequence
 import re
 from pathlib import Path
-
+from lxml import etree
+from library_generation.model.bom_config import BomConfig
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
 from library_generation.model.generation_config import from_yaml
@@ -30,6 +31,10 @@ from library_generation.model.repo_config import RepoConfig
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 jinja_env = Environment(loader=FileSystemLoader(f"{script_dir}/templates"))
+project_tag = "{http://maven.apache.org/POM/4.0.0}"
+group_id_tag = "groupId"
+artifact_tag = "artifactId"
+version_tag = "version"
 
 
 def __render(template_name: str, output_name: str, **kwargs):
@@ -50,6 +55,53 @@ def __search_for_java_modules(
         if sub_dir.is_dir() and sub_dir.name.startswith("java-"):
             modules.append(sub_dir.name)
     return sorted(modules)
+
+
+def __search_for_bom_artifact(
+    repository_path: str,
+) -> List[BomConfig]:
+    repo = Path(repository_path).resolve()
+    module_exclusions = ["gapic-libraries-bom"]
+    group_id_inclusions = [
+        "com.google.cloud",
+        "com.google.analytic",
+        "com.google.area120",
+    ]
+    bom_configs = []
+    for module in repo.iterdir():
+        if module.is_file() or module.name in module_exclusions:
+            continue
+        for sub_module in module.iterdir():
+            if sub_module.is_dir() and sub_module.name.endswith("-bom"):
+                root = etree.parse(f"{sub_module}/pom.xml").getroot()
+                group_id = root.find(f"{project_tag}{group_id_tag}").text
+                if group_id not in group_id_inclusions:
+                    continue
+                artifact_id = root.find(f"{project_tag}{artifact_tag}").text
+                version = root.find(f"{project_tag}{version_tag}").text
+                index = artifact_id.rfind("-")
+                version_annotation = artifact_id[:index]
+                bom_configs.append(
+                    BomConfig(
+                        group_id=group_id,
+                        artifact_id=artifact_id,
+                        version=version,
+                        version_annotation=version_annotation
+                    )
+                )
+    # handle edge case: io.grafeas
+    root = etree.parse(f"{repository_path}/java-grafeas/pom.xml").getroot()
+    version = root.find(f"{project_tag}{version_tag}").text
+    bom_configs.append(
+        BomConfig(
+            group_id="io.grafeas",
+            artifact_id="grafeas",
+            version=version,
+            version_annotation="grafeas"
+        )
+    )
+
+    return sorted(bom_configs)
 
 
 def create_argument(arg_key: str, arg_container: object) -> List[str]:
@@ -379,10 +431,12 @@ def generate_prerequisite_files(
 
 def repo_level_post_process(
     repository_path: str,
+    versions_file: str,
 ) -> None:
     """
     Perform repository level post-processing
     :param repository_path: the path of the repository
+    :param versions_file: the versions_txt contains version of modules
     :return: None
     """
     print("Regenerating root pom.xml")
@@ -392,6 +446,37 @@ def repo_level_post_process(
         output_name=f"{repository_path}/pom.xml",
         modules=modules,
     )
+    print("Regenerating gapic-libraries-bom")
+    bom_configs = __search_for_bom_artifact(repository_path)
+    monorepo_version = get_version_from(
+        versions_file=versions_file,
+        artifact_id="google-cloud-java",
+    )
+    __render(
+        template_name="gapic-libraries-bom.xml.j2",
+        output_name=f"{repository_path}/gapic-libraries-bom/pom.xml",
+        monorepo_version=monorepo_version,
+        bom_configs=bom_configs,
+    )
+
+
+def get_version_from(
+    versions_file: str,
+    artifact_id: str,
+    is_released: bool = False
+) -> str:
+    """
+    Get version of a given artifact from versions.txt
+    :param versions_file: the path of version.txt
+    :param artifact_id: the artifact id
+    :param is_released: whether returns the released or current version
+    :return: the version of the artifact
+    """
+    index = 1 if is_released else 2
+    with open(versions_file, "r") as f:
+        for line in f.readlines():
+            if artifact_id in line:
+                return line.split(":")[index].strip()
 
 
 def main(argv: Sequence[str]) -> None:
