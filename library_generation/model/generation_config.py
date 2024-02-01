@@ -28,22 +28,22 @@ class GenerationConfig:
     def __init__(
         self,
         gapic_generator_version: str,
-        grpc_version: Optional[str],
-        protobuf_version: Optional[str],
         googleapis_commitish: str,
         owlbot_cli_image: str,
         synthtool_commitish: str,
-        destination_path: Optional[str],
         libraries: List[LibraryConfig],
+        destination_path: Optional[str] = None,
+        grpc_version: Optional[str] = None,
+        protobuf_version: Optional[str] = None,
     ):
         self.gapic_generator_version = gapic_generator_version
-        self.grpc_version = grpc_version
-        self.protobuf_version = protobuf_version
         self.googleapis_commitish = googleapis_commitish
         self.owlbot_cli_image = owlbot_cli_image
         self.synthtool_commitish = synthtool_commitish
-        self.destination_path = destination_path
         self.libraries = libraries
+        self.destination_path = destination_path
+        self.grpc_version = grpc_version
+        self.protobuf_version = protobuf_version
 
 
 def from_yaml(path_to_yaml: str):

@@ -248,6 +248,7 @@ def prepare_repo(
     :param repo_path: the path to which the generated repository goes
     :param language: programming language of the library
     :return: a RepoConfig object contained repository information
+    :raise FileNotFoundError if there's not versions.txt in repo_path
     """
     output_folder = sh_util("get_output_folder")
     print(f"output_folder: {output_folder}")
@@ -280,7 +281,7 @@ def prepare_repo(
     else:
         print("this is a standalone library")
         if repo_path is None:
-            destination_path = libraries.keys()[0]
+            destination_path = list(libraries.keys())[0]
             repo_path = f"{output_folder}/{destination_path}"
             clone_out = sh_util(
                 f'git clone "https://github.com/googleapis/{"".join(libraries)}.git"',
@@ -288,6 +289,8 @@ def prepare_repo(
             )
             print(clone_out)
     versions_file = f"{repo_path}/versions.txt"
+    if not Path(versions_file).exists():
+        raise FileNotFoundError(f"{versions_file} is not found.")
 
     return RepoConfig(
         output_folder=output_folder,

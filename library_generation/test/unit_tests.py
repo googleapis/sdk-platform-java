@@ -24,11 +24,30 @@ from typing import List
 
 from library_generation import utilities as util
 from library_generation.model.gapic_config import GapicConfig
+from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.gapic_inputs import parse as parse_build_file
 from library_generation.model.library_config import LibraryConfig
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 resources_dir = os.path.join(script_dir, "resources")
+build_file = Path(os.path.join(resources_dir, "misc")).resolve()
+library_1 = LibraryConfig(
+    api_shortname="baremetalsolution",
+    name_pretty="Bare Metal Solution",
+    product_documentation="https://cloud.google.com/bare-metal/docs",
+    api_description="Bring your Oracle workloads to Google Cloud with Bare Metal Solution and jumpstart your cloud journey with minimal risk.",
+    gapic_configs=list(),
+    library_name="bare-metal-solution",
+    rest_documentation="https://cloud.google.com/bare-metal/docs/reference/rest",
+    rpc_documentation="https://cloud.google.com/bare-metal/docs/reference/rpc",
+)
+library_2 = LibraryConfig(
+    api_shortname="secretmanager",
+    name_pretty="Secret Management",
+    product_documentation="https://cloud.google.com/solutions/secrets-management/",
+    api_description="allows you to encrypt, store, manage, and audit infrastructure and application-level secrets.",
+    gapic_configs=list(),
+)
 
 
 class UtilitiesTest(unittest.TestCase):
@@ -121,82 +140,68 @@ class UtilitiesTest(unittest.TestCase):
         self.assertEqual(0, len(os.listdir(temp_dir)))
 
     def test_client_inputs_parse_grpc_only_succeeds(self):
-        build_file = Path(os.path.join(resources_dir, "misc")).resolve()
         parsed = parse_build_file(build_file, "", "BUILD_grpc.bazel")
         self.assertEqual("grpc", parsed.transport)
 
     def test_client_inputs_parse_grpc_rest_succeeds(self):
-        build_file = Path(os.path.join(resources_dir, "misc")).resolve()
         parsed = parse_build_file(build_file, "", "BUILD_grpc_rest.bazel")
         self.assertEqual("grpc+rest", parsed.transport)
 
     def test_client_inputs_parse_rest_succeeds(self):
-        build_file = Path(os.path.join(resources_dir, "misc")).resolve()
         parsed = parse_build_file(build_file, "", "BUILD_rest.bazel")
         self.assertEqual("rest", parsed.transport)
 
     def test_client_inputs_parse_empty_include_samples_succeeds(self):
-        build_file = Path(os.path.join(resources_dir, "misc")).resolve()
         parsed = parse_build_file(build_file, "", "BUILD_include_samples_empty.bazel")
         self.assertEqual("false", parsed.include_samples)
 
     def test_client_inputs_parse_include_samples_false_succeeds(self):
-        build_file = Path(os.path.join(resources_dir, "misc")).resolve()
         parsed = parse_build_file(build_file, "", "BUILD_include_samples_false.bazel")
         self.assertEqual("false", parsed.include_samples)
 
     def test_client_inputs_parse_include_samples_true_succeeds(self):
-        build_file = Path(os.path.join(resources_dir, "misc")).resolve()
         parsed = parse_build_file(build_file, "", "BUILD_include_samples_true.bazel")
         self.assertEqual("true", parsed.include_samples)
 
     def test_client_inputs_parse_empty_rest_numeric_enums_succeeds(self):
-        build_file = Path(os.path.join(resources_dir, "misc")).resolve()
         parsed = parse_build_file(
             build_file, "", "BUILD_rest_numeric_enums_empty.bazel"
         )
         self.assertEqual("false", parsed.rest_numeric_enum)
 
     def test_client_inputs_parse_rest_numeric_enums_false_succeeds(self):
-        build_file = Path(os.path.join(resources_dir, "misc")).resolve()
         parsed = parse_build_file(
             build_file, "", "BUILD_rest_numeric_enums_false.bazel"
         )
         self.assertEqual("false", parsed.rest_numeric_enum)
 
     def test_client_inputs_parse_rest_numeric_enums_true_succeeds(self):
-        build_file = Path(os.path.join(resources_dir, "misc")).resolve()
         parsed = parse_build_file(build_file, "", "BUILD_rest_numeric_enums_true.bazel")
         self.assertEqual("true", parsed.rest_numeric_enum)
 
     def test_client_inputs_parse_no_gapic_library_returns_proto_only_true(self):
-        build_file = Path(os.path.join(resources_dir, "misc")).resolve()
         # include_samples_empty only has a gradle assembly rule
         parsed = parse_build_file(build_file, "", "BUILD_include_samples_empty.bazel")
         self.assertEqual("true", parsed.proto_only)
 
     def test_client_inputs_parse_with_gapic_library_returns_proto_only_false(self):
-        build_file = Path(os.path.join(resources_dir, "misc")).resolve()
         # rest.bazel has a java_gapic_library rule
         parsed = parse_build_file(build_file, "", "BUILD_rest.bazel")
         self.assertEqual("false", parsed.proto_only)
 
     def test_client_inputs_parse_gapic_yaml_succeeds(self):
-        build_file = Path(os.path.join(resources_dir, "misc")).resolve()
         parsed = parse_build_file(
             build_file, "test/versioned/path", "BUILD_gapic_yaml.bazel"
         )
         self.assertEqual("test/versioned/path/test_gapic_yaml.yaml", parsed.gapic_yaml)
 
     def test_client_inputs_parse_no_gapic_yaml_returns_empty_string(self):
-        build_file = Path(os.path.join(resources_dir, "misc")).resolve()
         parsed = parse_build_file(
             build_file, "test/versioned/path", "BUILD_no_gapic_yaml.bazel"
         )
         self.assertEqual("", parsed.gapic_yaml)
 
     def test_client_inputs_parse_service_config_succeeds(self):
-        build_file = Path(os.path.join(resources_dir, "misc")).resolve()
         parsed = parse_build_file(
             build_file, "test/versioned/path", "BUILD_service_config.bazel"
         )
@@ -205,14 +210,12 @@ class UtilitiesTest(unittest.TestCase):
         )
 
     def test_client_inputs_parse_no_service_config_returns_empty_string(self):
-        build_file = Path(os.path.join(resources_dir, "misc")).resolve()
         parsed = parse_build_file(
             build_file, "test/versioned/path", "BUILD_no_service_config.bazel"
         )
         self.assertEqual("", parsed.service_config)
 
     def test_client_inputs_parse_service_yaml_succeeds(self):
-        build_file = Path(os.path.join(resources_dir, "misc")).resolve()
         parsed = parse_build_file(
             build_file, "test/versioned/path", "BUILD_service_yaml.bazel"
         )
@@ -221,7 +224,6 @@ class UtilitiesTest(unittest.TestCase):
         )
 
     def test_client_inputs_parse_no_service_yaml_returns_empty_string(self):
-        build_file = Path(os.path.join(resources_dir, "misc")).resolve()
         parsed = parse_build_file(
             build_file, "test/versioned/path", "BUILD_no_service_yaml.bazel"
         )
@@ -240,14 +242,14 @@ class UtilitiesTest(unittest.TestCase):
         )
 
     def test_get_version_from_returns_current(self):
-        versions_file = f"{resources_dir}/misc/testversions.txt"
+        versions_file = f"{resources_dir}/misc/versions.txt"
         artifact = "gax-grpc"
         self.assertEqual(
             "2.33.1-SNAPSHOT", util.get_version_from(versions_file, artifact)
         )
 
     def test_get_version_from_returns_released(self):
-        versions_file = f"{resources_dir}/misc/testversions.txt"
+        versions_file = f"{resources_dir}/misc/versions.txt"
         artifact = "gax-grpc"
         self.assertEqual("2.34.0", util.get_version_from(versions_file, artifact, True))
 
@@ -259,21 +261,10 @@ class UtilitiesTest(unittest.TestCase):
             f"{library_path}/owlbot.py",
         ]
         self.__cleanup(files)
-        library = LibraryConfig(
-            api_shortname="baremetalsolution",
-            name_pretty="Bare Metal Solution",
-            product_documentation="https://cloud.google.com/bare-metal/docs",
-            api_description="Bring your Oracle workloads to Google Cloud with Bare Metal Solution and jumpstart your cloud journey with minimal risk.",
-            gapic_configs=list(),
-            library_name="bare-metal-solution",
-            rest_documentation="https://cloud.google.com/bare-metal/docs/reference/rest",
-            rpc_documentation="https://cloud.google.com/bare-metal/docs/reference/rpc",
-        )
         proto_path = "google/cloud/baremetalsolution/v2"
         transport = "grpc"
-
         util.generate_prerequisite_files(
-            library=library,
+            library=library_1,
             proto_path=proto_path,
             transport=transport,
             library_path=library_path,
@@ -291,6 +282,40 @@ class UtilitiesTest(unittest.TestCase):
         )
         self.__cleanup(files)
 
+    def test_prepare_repo_monorepo_success(self):
+        gen_config = self.__get_a_gen_config(2)
+        repo_config = util.prepare_repo(
+            gen_config=gen_config,
+            library_config=gen_config.libraries,
+            repo_path=f"{resources_dir}/misc",
+        )
+        self.assertEqual("output", Path(repo_config.output_folder).name)
+        library_path = sorted([Path(key).name for key in repo_config.libraries])
+        self.assertEqual(
+            ["java-bare-metal-solution", "java-secretmanager"], library_path
+        )
+
+    def test_prepare_repo_monorepo_failed(self):
+        gen_config = self.__get_a_gen_config(2)
+        self.assertRaises(
+            FileNotFoundError,
+            util.prepare_repo,
+            gen_config,
+            gen_config.libraries,
+            f"{resources_dir}/non-exist",
+        )
+
+    def test_prepare_repo_split_repo_success(self):
+        gen_config = self.__get_a_gen_config(1)
+        repo_config = util.prepare_repo(
+            gen_config=gen_config,
+            library_config=gen_config.libraries,
+            repo_path=f"{resources_dir}/misc",
+        )
+        self.assertEqual("output", Path(repo_config.output_folder).name)
+        library_path = sorted([Path(key).name for key in repo_config.libraries])
+        self.assertEqual(["misc"], library_path)
+
     def __compare_files(self, expect: str, actual: str):
         with open(expect, "r") as f:
             expected_lines = f.readlines()
@@ -300,6 +325,29 @@ class UtilitiesTest(unittest.TestCase):
         diff = list(unified_diff(expected_lines, actual_lines))
         self.assertEqual(
             first=[], second=diff, msg="Unexpected file contents:\n" + "".join(diff)
+        )
+
+    @staticmethod
+    def __get_a_gen_config(num: int):
+        """
+        Returns an object of GenerationConfig with one or two of
+        LibraryConfig objects. Other attributes are set to empty str.
+
+        :param num: the number of LibraryConfig objects associated with
+        the GenerationConfig. Only support one or two.
+        :return: an object of GenerationConfig
+        """
+        if num > 1:
+            libraries = [library_1, library_2]
+        else:
+            libraries = [library_1]
+
+        return GenerationConfig(
+            gapic_generator_version="",
+            googleapis_commitish="",
+            owlbot_cli_image="",
+            synthtool_commitish="",
+            libraries=libraries,
         )
 
     @staticmethod
