@@ -46,6 +46,7 @@ import com.google.cloud.location.GetLocationRequest;
 import com.google.cloud.location.ListLocationsRequest;
 import com.google.cloud.location.ListLocationsResponse;
 import com.google.cloud.location.Location;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
 import com.google.iam.v1.GetIamPolicyRequest;
 import com.google.iam.v1.Policy;
@@ -73,6 +74,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Generated;
 
@@ -659,6 +661,14 @@ public class HttpJsonEchoStub extends EchoStub {
                   builder.add(request.getOtherHeader(), "baz", ECHO_6_PATH_TEMPLATE);
                   builder.add(request.getOtherHeader(), "qux", ECHO_7_PATH_TEMPLATE);
                   return builder.build();
+                })
+            .setRequestMutator(
+                request -> {
+                  EchoRequest.Builder requestBuilder = request.toBuilder();
+                  if (Strings.isNullOrEmpty(request.getRequestId())) {
+                    requestBuilder.setRequestId(UUID.randomUUID().toString());
+                  }
+                  return requestBuilder.build();
                 })
             .build();
     HttpJsonCallSettings<EchoErrorDetailsRequest, EchoErrorDetailsResponse>

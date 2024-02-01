@@ -14,6 +14,7 @@ import com.google.api.gax.rpc.ClientStreamingCallable;
 import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.ServerStreamingCallable;
 import com.google.api.gax.rpc.UnaryCallable;
+import com.google.common.base.Strings;
 import com.google.longrunning.Operation;
 import com.google.longrunning.stub.GrpcOperationsStub;
 import com.google.showcase.v1beta1.BlockRequest;
@@ -30,6 +31,7 @@ import com.google.showcase.v1beta1.WaitResponse;
 import io.grpc.MethodDescriptor;
 import io.grpc.protobuf.ProtoUtils;
 import java.io.IOException;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Generated;
 
@@ -183,6 +185,17 @@ public class GrpcEchoStub extends EchoStub {
     GrpcCallSettings<EchoRequest, EchoResponse> echoTransportSettings =
         GrpcCallSettings.<EchoRequest, EchoResponse>newBuilder()
             .setMethodDescriptor(echoMethodDescriptor)
+            .setRequestMutator(
+                request -> {
+                  EchoRequest.Builder requestBuilder = request.toBuilder();
+                  if (Strings.isNullOrEmpty(request.getRequestId())) {
+                    requestBuilder.setRequestId(UUID.randomUUID().toString());
+                  }
+                  if (Strings.isNullOrEmpty(request.getSecondRequestId())) {
+                    requestBuilder.setSecondRequestId(UUID.randomUUID().toString());
+                  }
+                  return requestBuilder.build();
+                })
             .build();
     GrpcCallSettings<ExpandRequest, EchoResponse> expandTransportSettings =
         GrpcCallSettings.<ExpandRequest, EchoResponse>newBuilder()

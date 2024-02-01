@@ -42,6 +42,7 @@ import com.google.api.generator.engine.ast.LogicalOperationExpr;
 import com.google.api.generator.engine.ast.MethodDefinition;
 import com.google.api.generator.engine.ast.MethodInvocationExpr;
 import com.google.api.generator.engine.ast.NewObjectExpr;
+import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.ReferenceConstructorExpr;
 import com.google.api.generator.engine.ast.RelationalOperationExpr;
 import com.google.api.generator.engine.ast.ScopeNode;
@@ -58,6 +59,7 @@ import com.google.api.generator.engine.ast.VariableExpr;
 import com.google.api.generator.gapic.composer.comment.StubCommentComposer;
 import com.google.api.generator.gapic.composer.store.TypeStore;
 import com.google.api.generator.gapic.composer.utils.PackageChecker;
+import com.google.api.generator.gapic.model.Field;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
@@ -70,8 +72,10 @@ import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.api.pathtemplate.PathTemplate;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.longrunning.Operation;
@@ -84,9 +88,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import javax.annotation.Generated;
 import javax.annotation.Nullable;
@@ -136,6 +142,7 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
             OperationCallable.class,
             OperationSnapshot.class,
             RequestParamsExtractor.class,
+            UUID.class,
             ServerStreamingCallable.class,
             TimeUnit.class,
             TypeRegistry.class,
@@ -277,7 +284,8 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
       Method method,
       VariableExpr transportSettingsVarExpr,
       VariableExpr methodDescriptorVarExpr,
-      List<Statement> classStatements) {
+      List<Statement> classStatements,
+      ImmutableMap<String, Message> messageTypes) {
     MethodInvocationExpr callSettingsBuilderExpr =
         MethodInvocationExpr.builder()
             .setStaticReferenceType(getTransportContext().transportCallSettingsType())
@@ -315,6 +323,15 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
               .setExprReferenceExpr(callSettingsBuilderExpr)
               .setMethodName("setParamsExtractor")
               .setArguments(createRequestParamsExtractorClassInstance(method, classStatements))
+              .build();
+    }
+
+    if (method.hasAutoPopulatedFields() && shouldGenerateRequestMutator(method, messageTypes)) {
+      callSettingsBuilderExpr =
+          MethodInvocationExpr.builder()
+              .setExprReferenceExpr(callSettingsBuilderExpr)
+              .setMethodName("setRequestMutator")
+              .setArguments(createRequestMutatorClassInstance(method, messageTypes))
               .build();
     }
 
@@ -760,7 +777,8 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
                         javaStyleMethodNameToTransportSettingsVarExprs.get(
                             JavaStyle.toLowerCamelCase(m.name())),
                         protoMethodNameToDescriptorVarExprs.get(m.name()),
-                        classStatements))
+                        classStatements,
+                        context.messages()))
             .collect(Collectors.toList()));
     secondCtorStatements.addAll(
         secondCtorExprs.stream().map(ExprStatement::withExpr).collect(Collectors.toList()));
@@ -1233,12 +1251,197 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
     return transportOpeationsStubType;
   }
 
+  protected static LambdaExpr createRequestMutatorClassInstance(
+      Method method, ImmutableMap<String, Message> messageTypes) {
+    List<Statement> bodyStatements = new ArrayList<>();
+    VariableExpr requestVarExpr = createRequestVarExpr(method);
+
+    Reference requestBuilderRef =
+        VaporReference.builder()
+            .setEnclosingClassNames(method.inputType().reference().name())
+            .setName("Builder")
+            .setPakkage(method.inputType().reference().pakkage())
+            .build();
+
+    TypeNode requestBuilderType = TypeNode.withReference(requestBuilderRef);
+
+    VariableExpr requestBuilderVarExpr =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder().setName("requestBuilder").setType(requestBuilderType).build())
+            .setIsDecl(true)
+            .build();
+
+    MethodInvocationExpr setRequestBuilderInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(requestVarExpr)
+            .setMethodName("toBuilder")
+            .setReturnType(requestBuilderType)
+            .build();
+
+    Expr requestBuilderExpr =
+        AssignmentExpr.builder()
+            .setVariableExpr(requestBuilderVarExpr)
+            .setValueExpr(setRequestBuilderInvocationExpr)
+            .build();
+
+    bodyStatements.add(ExprStatement.withExpr(requestBuilderExpr));
+
+    VariableExpr returnBuilderVarExpr =
+        VariableExpr.builder()
+            .setVariable(
+                Variable.builder().setName("requestBuilder").setType(requestBuilderType).build())
+            .setIsDecl(false)
+            .build();
+
+    MethodInvocationExpr.Builder returnExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(returnBuilderVarExpr)
+            .setMethodName("build");
+
+    createRequestMutatorBody(method, messageTypes, bodyStatements, returnBuilderVarExpr);
+
+    return LambdaExpr.builder()
+        .setArguments(requestVarExpr.toBuilder().setIsDecl(true).build())
+        .setBody(bodyStatements)
+        .setReturnExpr(returnExpr.build())
+        .build();
+  }
+
+  @VisibleForTesting
+  static List<Statement> createRequestMutatorBody(
+      Method method,
+      ImmutableMap<String, Message> messageTypes,
+      List<Statement> bodyStatements,
+      VariableExpr returnBuilderVarExpr) {
+
+    Message methodRequestMessage = messageTypes.get(method.inputType().reference().fullName());
+    method.autoPopulatedFields().stream()
+        // Map each field name to its corresponding Field object, if present
+        .map(
+            fieldName ->
+                methodRequestMessage.fields().stream()
+                    .filter(field -> field.name().equals(fieldName))
+                    .findFirst())
+        .filter(Optional::isPresent) // Keep only the existing Fields
+        .map(Optional::get) // Extract the Field from the Optional
+        .filter(Field::canBeAutoPopulated) // Filter fields that can be autopopulated
+        .forEach(
+            matchedField -> {
+              // Create statements for each autopopulated Field
+              bodyStatements.add(
+                  createAutoPopulatedRequestStatement(
+                      method, matchedField.name(), returnBuilderVarExpr));
+            });
+    return bodyStatements;
+  }
+
+  @VisibleForTesting
+  static Statement createAutoPopulatedRequestStatement(
+      Method method, String fieldName, VariableExpr returnBuilderVarExpr) {
+
+    VariableExpr requestVarExpr = createRequestVarExpr(method);
+
+    // Expected expression: request.getRequestId()
+    MethodInvocationExpr getAutoPopulatedFieldInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(requestVarExpr)
+            .setMethodName(String.format("get%s", JavaStyle.toUpperCamelCase(fieldName)))
+            .setReturnType(TypeNode.STRING)
+            .build();
+
+    VariableExpr stringsVar =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(TypeNode.withReference(ConcreteReference.withClazz(Strings.class)))
+                .setName("Strings")
+                .build());
+
+    // Expected expression: Strings.isNullOrEmpty(request.getRequestId())
+    MethodInvocationExpr isNullOrEmptyFieldInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(stringsVar)
+            .setMethodName("isNullOrEmpty")
+            .setReturnType(TypeNode.BOOLEAN)
+            .setArguments(getAutoPopulatedFieldInvocationExpr)
+            .build();
+
+    // Note: Currently, autopopulation is only for UUID.
+    VariableExpr uuidVarExpr =
+        VariableExpr.withVariable(
+            Variable.builder()
+                .setType(
+                    TypeNode.withReference(
+                        ConcreteReference.builder().setClazz(UUID.class).build()))
+                .setName("UUID")
+                .build());
+
+    // Expected expression: UUID.randomUUID()
+    MethodInvocationExpr autoPopulatedFieldsArgsHelper =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(uuidVarExpr)
+            .setMethodName("randomUUID")
+            .setReturnType(
+                TypeNode.withReference(ConcreteReference.builder().setClazz(UUID.class).build()))
+            .build();
+
+    // Expected expression: UUID.randomUUID().toString()
+    MethodInvocationExpr autoPopulatedFieldsArgsToString =
+        MethodInvocationExpr.builder()
+            .setExprReferenceExpr(autoPopulatedFieldsArgsHelper)
+            .setMethodName("toString")
+            .setReturnType(TypeNode.STRING)
+            .build();
+
+    // Expected expression: requestBuilder().setField(UUID.randomUUID().toString())
+    MethodInvocationExpr setAutoPopulatedFieldInvocationExpr =
+        MethodInvocationExpr.builder()
+            .setArguments(autoPopulatedFieldsArgsToString)
+            .setExprReferenceExpr(returnBuilderVarExpr)
+            .setMethodName(String.format("set%s", JavaStyle.toUpperCamelCase(fieldName)))
+            .setReturnType(method.inputType())
+            .build();
+
+    return IfStatement.builder()
+        .setConditionExpr(isNullOrEmptyFieldInvocationExpr)
+        .setBody(Arrays.asList(ExprStatement.withExpr(setAutoPopulatedFieldInvocationExpr)))
+        .build();
+  }
+
+  /**
+   * The Request Mutator should only be generated if the field exists in the Message and is properly
+   * configured in the Message(see {@link Field#canBeAutoPopulated()})
+   */
+  @VisibleForTesting
+  static Boolean shouldGenerateRequestMutator(
+      Method method, ImmutableMap<String, Message> messageTypes) {
+    if (method.inputType().reference() == null
+        || method.inputType().reference().fullName() == null) {
+      return false;
+    }
+    String methodRequestName = method.inputType().reference().fullName();
+
+    Message methodRequestMessage = messageTypes.get(methodRequestName);
+    if (methodRequestMessage == null || methodRequestMessage.fields() == null) {
+      return false;
+    }
+    return method.autoPopulatedFields().stream().anyMatch(shouldAutoPopulate(methodRequestMessage));
+  }
+
+  /**
+   * The field has to exist in the Message and properly configured in the Message(see {@link
+   * Field#canBeAutoPopulated()})
+   */
+  private static Predicate<String> shouldAutoPopulate(Message methodRequestMessage) {
+    return fieldName ->
+        methodRequestMessage.fields().stream()
+            .anyMatch(field -> field.name().equals(fieldName) && field.canBeAutoPopulated());
+  }
+
   protected LambdaExpr createRequestParamsExtractorClassInstance(
       Method method, List<Statement> classStatements) {
     List<Statement> bodyStatements = new ArrayList<>();
-    VariableExpr requestVarExpr =
-        VariableExpr.withVariable(
-            Variable.builder().setType(method.inputType()).setName("request").build());
+    VariableExpr requestVarExpr = createRequestVarExpr(method);
     TypeNode returnType =
         TypeNode.withReference(
             ConcreteReference.builder()
@@ -1498,5 +1701,10 @@ public abstract class AbstractTransportServiceStubClassComposer implements Class
       }
     }
     return requestFieldGetterExprBuilder.build();
+  }
+
+  private static VariableExpr createRequestVarExpr(Method method) {
+    return VariableExpr.withVariable(
+        Variable.builder().setType(method.inputType()).setName("request").build());
   }
 }
