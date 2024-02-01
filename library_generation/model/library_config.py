@@ -42,39 +42,37 @@ class LibraryConfig:
     def __init__(
         self,
         api_shortname: str,
+        api_description: str,
         name_pretty: str,
         product_documentation: str,
-        api_description: str,
         gapic_configs: List[GapicConfig],
-        library_name: Optional[str],
-        client_documentation: Optional[str],
-        rest_documentation: Optional[str],
-        rpc_documentation: Optional[str],
-        googleapis_commitish: Optional[str],
-        distribution_name: Optional[str],
-        api_id: Optional[str],
-        library_type: Optional[_LibraryType],
-        release_level: Optional[_ReleaseLevel],
+        library_type: Optional[_LibraryType] = _LibraryType.GAPIC_AUTO,
+        release_level: Optional[_ReleaseLevel] = _ReleaseLevel.preview,
+        api_id: Optional[str] = None,
+        client_documentation: Optional[str] = None,
+        distribution_name: Optional[str] = None,
+        googleapis_commitish: Optional[str] = None,
         group_id: Optional[str] = "com.google.cloud",
-        requires_billing: Optional[bool] = True,
+        library_name: Optional[str] = None,
+        rest_documentation: Optional[str] = None,
+        rpc_documentation: Optional[str] = None,
         cloud_api: Optional[bool] = True,
+        requires_billing: Optional[bool] = True,
     ):
         self.api_shortname = api_shortname
+        self.api_description = api_description
         self.name_pretty = name_pretty
         self.product_documentation = product_documentation
-        self.api_description = api_description
         self.gapic_configs = gapic_configs
-        self.library_name = library_name
+        self.library_type = library_type
+        self.release_level = release_level
+        self.api_id = api_id
         self.client_documentation = client_documentation
+        self.distribution_name = distribution_name
+        self.googleapis_commitish = googleapis_commitish
+        self.group_id = group_id
+        self.library_name = library_name
         self.rest_documentation = rest_documentation
         self.rpc_documentation = rpc_documentation
-        self.googleapis_commitish = googleapis_commitish
-        self.distribution_name = distribution_name
-        self.api_id = api_id
-        self.library_type = library_type \
-            if library_type else _LibraryType.GAPIC_AUTO
-        self.release_level = release_level \
-            if release_level else _ReleaseLevel.preview
-        self.group_id = group_id
+        self.cloud_api = cloud_api
         self.requires_billing = requires_billing
-        self.cloud_api = True if not cloud_api else cloud_api

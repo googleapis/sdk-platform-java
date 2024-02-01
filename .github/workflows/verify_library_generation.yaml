@@ -65,7 +65,7 @@ jobs:
         # launch docker
         sudo systemctl start docker
     - name: Run integration tests
-      # we don't run ITs with postprocessing on macos because one of its dependencies "synthtool" is designed to run on linux only
+      # we don't run integration tests with postprocessing on macOS because one of its dependencies "synthtool" is designed to run on linux only
       if: matrix.os == 'ubuntu-22.04' || matrix.post_processing == 'false'
       shell: bash
       run: |

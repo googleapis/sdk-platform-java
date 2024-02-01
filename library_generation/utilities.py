@@ -214,8 +214,12 @@ def remove_version_from(proto_path: str) -> str:
     :param proto_path: versioned proto_path
     :return: the proto_path without version
     """
+    version_pattern = "^v[1-9]"
     index = proto_path.rfind("/")
-    return proto_path[:index]
+    version = proto_path[index + 1:]
+    if re.match(version_pattern, version):
+        return proto_path[:index]
+    return proto_path
 
 
 def check_monorepo(config: GenerationConfig) -> bool:
@@ -336,9 +340,12 @@ def generate_prerequisite_files(
     language: str = "java",
     is_monorepo: bool = True,
 ) -> None:
-    """Generate .repo-metadata.json for a library
+    """
+    Generate .repo-metadata.json for a library.
+
+    Note that the version, if any, in the proto_path will be removed.
     :param library: the library configuration
-    :param proto_path: the proto path without version
+    :param proto_path: the proto path
     :param transport: transport supported by the library
     :param library_path: the path to which the generated file goes
     :param language: programming language of the library
@@ -373,7 +380,7 @@ def generate_prerequisite_files(
         "product_documentation": library.product_documentation,
         "api_description": library.api_description,
         "client_documentation": client_documentation,
-        "release_level": library.release_level,
+        "release_level": library.release_level.name,
         "transport": transport,
         "language": language,
         "repo": repo,
@@ -401,7 +408,7 @@ def generate_prerequisite_files(
             template_name="owlbot.yaml.monorepo.j2",
             output_name=f"{library_path}/.OwlBot.yaml",
             artifact_name=distribution_name_short,
-            proto_path=proto_path,
+            proto_path=remove_version_from(proto_path),
             module_name=repo_metadata["repo_short"],
             api_shortname=library.api_shortname,
         )

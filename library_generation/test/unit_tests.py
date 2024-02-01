@@ -19,10 +19,13 @@ import io
 import contextlib
 import subprocess
 from pathlib import Path
+from difflib import unified_diff
+from typing import List
 
 from library_generation import utilities as util
 from library_generation.model.gapic_config import GapicConfig
 from library_generation.model.gapic_inputs import parse as parse_build_file
+from library_generation.model.library_config import LibraryConfig
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 resources_dir = os.path.join(script_dir, "resources")
@@ -223,6 +226,90 @@ class UtilitiesTest(unittest.TestCase):
             build_file, "test/versioned/path", "BUILD_no_service_yaml.bazel"
         )
         self.assertEqual("", parsed.service_yaml)
+
+    def test_remove_version_from_returns_non_versioned_path(self):
+        proto_path = "google/cloud/aiplatform/v1"
+        self.assertEqual(
+            "google/cloud/aiplatform", util.remove_version_from(proto_path)
+        )
+
+    def test_remove_version_from_returns_self(self):
+        proto_path = "google/cloud/aiplatform"
+        self.assertEqual(
+            "google/cloud/aiplatform", util.remove_version_from(proto_path)
+        )
+
+    def test_get_version_from_returns_current(self):
+        versions_file = f"{resources_dir}/misc/testversions.txt"
+        artifact = "gax-grpc"
+        self.assertEqual(
+            "2.33.1-SNAPSHOT", util.get_version_from(versions_file, artifact)
+        )
+
+    def test_get_version_from_returns_released(self):
+        versions_file = f"{resources_dir}/misc/testversions.txt"
+        artifact = "gax-grpc"
+        self.assertEqual("2.34.0", util.get_version_from(versions_file, artifact, True))
+
+    def test_generate_prerequisite_files_success(self):
+        library_path = f"{resources_dir}/goldens"
+        files = [
+            f"{library_path}/.repo-metadata.json",
+            f"{library_path}/.OwlBot.yaml",
+            f"{library_path}/owlbot.py",
+        ]
+        self.__cleanup(files)
+        library = LibraryConfig(
+            api_shortname="baremetalsolution",
+            name_pretty="Bare Metal Solution",
+            product_documentation="https://cloud.google.com/bare-metal/docs",
+            api_description="Bring your Oracle workloads to Google Cloud with Bare Metal Solution and jumpstart your cloud journey with minimal risk.",
+            gapic_configs=list(),
+            library_name="bare-metal-solution",
+            rest_documentation="https://cloud.google.com/bare-metal/docs/reference/rest",
+            rpc_documentation="https://cloud.google.com/bare-metal/docs/reference/rpc",
+        )
+        proto_path = "google/cloud/baremetalsolution/v2"
+        transport = "grpc"
+
+        util.generate_prerequisite_files(
+            library=library,
+            proto_path=proto_path,
+            transport=transport,
+            library_path=library_path,
+        )
+
+        self.__compare_files(
+            f"{library_path}/.repo-metadata.json",
+            f"{library_path}/.repo-metadata-golden.json",
+        )
+        self.__compare_files(
+            f"{library_path}/.OwlBot.yaml", f"{library_path}/.OwlBot-golden.yaml"
+        )
+        self.__compare_files(
+            f"{library_path}/owlbot.py", f"{library_path}/owlbot-golden.py"
+        )
+        self.__cleanup(files)
+
+    def __compare_files(self, expect: str, actual: str):
+        with open(expect, "r") as f:
+            expected_lines = f.readlines()
+        with open(actual, "r") as f:
+            actual_lines = f.readlines()
+
+        diff = list(unified_diff(expected_lines, actual_lines))
+        self.assertEqual(
+            first=[], second=diff, msg="Unexpected file contents:\n" + "".join(diff)
+        )
+
+    @staticmethod
+    def __cleanup(files: List[str]):
+        for file in files:
+            path = Path(file).resolve()
+            if path.is_file():
+                path.unlink()
+            elif path.is_dir():
+                path.rmdir()
 
 
 if __name__ == "__main__":
