@@ -145,6 +145,15 @@ def __construct_effective_arg(
     gapic_inputs: GapicInputs,
     temp_destination_path: str,
 ) -> List[str]:
+    """
+    Construct arguments consist attributes of a GAPIC library which used in
+    generate_library.sh
+    :param base_arguments: arguments consist of tooling versions
+    :param gapic: an object of GapicConfig
+    :param gapic_inputs: an object of GapicInput
+    :param temp_destination_path: the path to which the generated library goes
+    :return: arguments containing attributes to generate a GAPIC library
+    """
     arguments = list(base_arguments)
     arguments += util.create_argument("proto_path", gapic)
     arguments += [

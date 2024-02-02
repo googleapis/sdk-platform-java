@@ -86,7 +86,7 @@ def __search_for_bom_artifact(
                         group_id=group_id,
                         artifact_id=artifact_id,
                         version=version,
-                        version_annotation=version_annotation
+                        version_annotation=version_annotation,
                     )
                 )
     # handle edge case: io.grafeas
@@ -97,7 +97,7 @@ def __search_for_bom_artifact(
             group_id="io.grafeas",
             artifact_id="grafeas",
             version=version,
-            version_annotation="grafeas"
+            version_annotation="grafeas",
         )
     )
 
@@ -216,7 +216,7 @@ def remove_version_from(proto_path: str) -> str:
     """
     version_pattern = "^v[1-9]"
     index = proto_path.rfind("/")
-    version = proto_path[index + 1:]
+    version = proto_path[index + 1 :]
     if re.match(version_pattern, version):
         return proto_path[:index]
     return proto_path
@@ -248,7 +248,7 @@ def prepare_repo(
     :param repo_path: the path to which the generated repository goes
     :param language: programming language of the library
     :return: a RepoConfig object contained repository information
-    :raise FileNotFoundError if there's not versions.txt in repo_path
+    :raise FileNotFoundError if there's no versions.txt in repo_path
     """
     output_folder = sh_util("get_output_folder")
     print(f"output_folder: {output_folder}")
@@ -256,38 +256,16 @@ def prepare_repo(
     is_monorepo = check_monorepo(gen_config)
     libraries = {}
     for library in library_config:
-        library_name = f"{language}-{library.api_shortname}"
-        if library.library_name is not None:
-            library_name = f"{language}-{library.library_name}"
-        if is_monorepo:
-            library_path = f"{repo_path}/{library_name}"
-        else:
-            library_path = f"{repo_path}"
+        library_name = (
+            f"{language}-{library.library_name}"
+            if library.library_name
+            else f"{language}-{library.api_shortname}"
+        )
+        library_path = f"{repo_path}/{library_name}" if is_monorepo else f"{repo_path}"
         # use absolute path because docker requires absolute path
         # in volume name.
         absolute_library_path = str(Path(library_path).resolve())
         libraries[absolute_library_path] = library
-
-    if is_monorepo:
-        print("this is a monorepo library")
-        if repo_path is None:
-            repo_path = f"{output_folder}/{gen_config.destination_path}"
-            print(f"sparse_cloning monorepo with {libraries.keys()}")
-            clone_out = sh_util(
-                f'sparse_clone "https://github.com/googleapis/google-cloud-java.git" "{" ".join(libraries.keys())} google-cloud-pom-parent google-cloud-jar-parent versions.txt .github"',
-                cwd=output_folder,
-            )
-            print(clone_out)
-    else:
-        print("this is a standalone library")
-        if repo_path is None:
-            destination_path = list(libraries.keys())[0]
-            repo_path = f"{output_folder}/{destination_path}"
-            clone_out = sh_util(
-                f'git clone "https://github.com/googleapis/{"".join(libraries)}.git"',
-                cwd=output_folder,
-            )
-            print(clone_out)
     versions_file = f"{repo_path}/versions.txt"
     if not Path(versions_file).exists():
         raise FileNotFoundError(f"{versions_file} is not found.")
@@ -344,7 +322,7 @@ def generate_prerequisite_files(
     is_monorepo: bool = True,
 ) -> None:
     """
-    Generate .repo-metadata.json for a library.
+    Generate prerequisite files for a library.
 
     Note that the version, if any, in the proto_path will be removed.
     :param library: the library configuration
@@ -471,9 +449,7 @@ def repo_level_post_process(
 
 
 def get_version_from(
-    versions_file: str,
-    artifact_id: str,
-    is_released: bool = False
+    versions_file: str, artifact_id: str, is_released: bool = False
 ) -> str:
     """
     Get version of a given artifact from versions.txt

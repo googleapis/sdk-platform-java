@@ -60,11 +60,12 @@ def main(ctx):
 @click.option(
     "--repository-path",
     required=False,
+    default=".",
     type=str,
     help="""
-    If specified, the generated files will be sent to this location. 
-    If not specified, the repository will be pulled into output_folder 
-    and move the generated files there.
+    If specified, the generated files will be sent to this location.
+    If not specified, the repository will be generated to the current working
+    directory.
     """,
 )
 def generate_from_yaml(
