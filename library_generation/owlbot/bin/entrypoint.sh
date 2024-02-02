@@ -29,15 +29,18 @@ versions_file=$2
 
 # Runs template and etc in current working directory
 function processModule() {
+  monorepo=$1
+
   # apply repo templates
+  echo "Generating templates"
   if [ -f "owlbot.py" ]
   then
     # defaults to run owlbot.py
-    python3 "${scripts_root}/owlbot/src/apply-repo-templates.py" owlbot.py
+    python3 "${scripts_root}/owlbot/src/apply-repo-templates.py" owlbot.py "${monorepo}"
   fi
 
   # templates as well as retrieving files from owl-bot-staging
-  echo "Generating templates and retrieving files from owl-bot-staging directory..."
+  echo "Retrieving files from owl-bot-staging directory..."
   if [ -f "owlbot.py" ]
   then
     # defaults to run owlbot.py
@@ -77,6 +80,7 @@ function processModule() {
 # monorepo folders have an .OwlBot.yaml file in the module folder (e.g.
 # java-asset/.OwlBot.yaml), whereas HW libraries have the yaml in
 # `.github/.OwlBot.yaml`
+monorepo="false"
 if [[ -f "$(pwd)/.OwlBot.yaml" ]]; then
   monorepo="true"
 fi
@@ -87,4 +91,4 @@ if [[ "${monorepo}" == "true" ]]; then
   mv temp owl-bot-staging
 fi
 
-processModule
+processModule monorepo
