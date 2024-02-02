@@ -1,6 +1,8 @@
-"""TODO(diegomarquezp): DO NOT SUBMIT without one-line documentation for apply-repo-templates.
-
-TODO(diegomarquezp): DO NOT SUBMIT without a detailed description of apply-repo-templates.
+"""
+This script parses an owlbot.py file, specifically the call to `java.common_templates` in
+order to extract the excluded files so it can be called with a custom template path
+pointing to the templates hosted in `sdk-platform-java/library_generation/owlbot/templates`.
+Briefly, this wraps the call to synthtool's common templates using a custom template folder.
 """
 
 import os
@@ -26,17 +28,21 @@ def apply_repo_templates(owlbot_py_path: str, monorepo: bool) -> None:
   )
 
 
-def _parse_template_excludes(owlbot_py_contents: str) -> str:
+def parse_template_excludes(owlbot_py_contents: str) -> str:
   print(f'owlbot_py_contents: {owlbot_py_contents}')
   excludes = re.search(
-      'java\.common_templates\(.*excludes=\[(.*)\]\)',
+      'java\.common_templates\(.*excludes=\[(.*)\].*\)',
       owlbot_py_contents,
       re.MULTILINE | re.DOTALL
   )
   if excludes is None:
     raise ValueError('Could not parse owlbot.py exclusions')
   raw_excludes = excludes.group(1).split(',')
-  result = map(lambda raw_exc: re.search('["\'](.*)["\']', raw_exc).group(1), raw_excludes)
+  result = []
+  for raw_exc in raw_excludes:
+    match = re.search('["\'](.*)["\']', raw_exc)
+    if match:
+      result.append(match.group(1))
   return result
 
 def main(argv: Sequence[str]) -> None:

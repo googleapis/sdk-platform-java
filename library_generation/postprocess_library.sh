@@ -95,11 +95,14 @@ docker run --rm \
 # we clone the synthtool library and manually build it
 mkdir -p /tmp/synthtool
 pushd /tmp/synthtool
+
 if [ ! -d "synthtool" ]; then
   git clone https://github.com/googleapis/synthtool.git
 fi
 pushd "synthtool"
+
 git reset --hard "${synthtool_commitish}"
+
 python3 -m pip install -e .
 python3 -m pip install -r requirements.in
 popd # synthtool

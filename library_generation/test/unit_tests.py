@@ -1,5 +1,5 @@
 """
-Unit tests for utilities.py
+Unit tests for utilities.py and non-transferred owlbot scripts
 """
 
 import unittest
@@ -15,6 +15,7 @@ import utilities as util
 from model.GapicConfig import GapicConfig
 from model.GenerationConfig import GenerationConfig
 from model.ClientInputs import parse as parse_build_file
+from owlbot.src.apply_repo_templates import parse_template_excludes
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 resources_dir = os.path.join(script_dir, 'resources')
@@ -181,8 +182,31 @@ class UtilitiesTest(unittest.TestCase):
     parsed = parse_build_file(build_file, 'test/versioned/path', 'BUILD_no_service_yaml.bazel')
     self.assertEqual('', parsed.service_yaml)
 
+  def test_apply_repo_templates_parse_template_excludes_valid_input_succeeds(self):
+    expected_excludes = ['exclude1', 'exclude2/*', 'exclude-3']
+    subcases = ["""
+        java.common_templates(excludes=['exclude1','exclude2/*','exclude-3'])
+        ""","""
+        java.common_templates(
+                excludes=[
+                  'exclude1',
+                  'exclude2/*',
+                  'exclude-3'
+                ]
+        )""","""
+        java.common_templates(
+                excludes=[
+                  "exclude1",
+                  "exclude2/*",
+                  "exclude-3",
 
+                ]
+        )"""
+    ]
 
+    for subcase in subcases:
+      result = parse_template_excludes(subcase)
+      self.assertEqual(expected_excludes, result)
 
 
 
