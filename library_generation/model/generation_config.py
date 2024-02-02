@@ -51,8 +51,12 @@ def from_yaml(path_to_yaml: str):
     Parses a yaml located in path_to_yaml. Returns the parsed configuration
     represented by the "model" classes
     """
+    # add enum constructors to parse str to enum.
+    yaml.add_constructor("LibraryType", __library_type_constructor)
+    yaml.add_constructor("ReleaseLevel", __release_level_constructor)
+
     with open(path_to_yaml, "r") as file_stream:
-        config = yaml.load(file_stream, yaml.Loader)
+        config = yaml.safe_load(file_stream)
 
     libraries = __required(config, "libraries")
 
@@ -68,22 +72,22 @@ def from_yaml(path_to_yaml: str):
 
         new_library = LibraryConfig(
             api_shortname=__required(library, "api_shortname"),
+            api_description=__required(library, "api_description"),
             name_pretty=__required(library, "name_pretty"),
             product_documentation=__required(library, "product_documentation"),
-            api_description=__required(library, "api_description"),
             gapic_configs=parsed_gapics,
-            library_name=__optional(library, "library_name", None),
+            library_type=__optional(library, "library_type", "GAPIC_AUTO"),
+            release_level=__optional(library, "release_level", "preview"),
+            api_id=__optional(library, "api_id", None),
             client_documentation=__optional(library, "client_documentation", None),
+            distribution_name=__optional(library, "distribution_name", None),
+            googleapis_commitish=__optional(library, "googleapis_commitish", None),
+            group_id=__optional(library, "group_id", "com.google.cloud"),
+            library_name=__optional(library, "library_name", None),
             rest_documentation=__optional(library, "rest_documentation", None),
             rpc_documentation=__optional(library, "rpc_documentation", None),
-            googleapis_commitish=__optional(library, "googleapis_commitish", None),
-            distribution_name=__optional(library, "distribution_name", None),
-            api_id=__optional(library, "api_id", None),
-            library_type=__optional(library, "library_type", None),
-            release_level=__optional(library, "release_level", None),
-            group_id=__optional(library, "group_id", "com.google.cloud"),
-            requires_billing=__optional(library, "requires_billing", None),
-            cloud_api=__optional(library, "cloud_api", None)
+            cloud_api=__optional(library, "cloud_api", True),
+            requires_billing=__optional(library, "requires_billing", True),
         )
         parsed_libraries.append(new_library)
 
@@ -111,3 +115,13 @@ def __optional(config: Dict, key: str, default: any):
     if key not in config:
         return default
     return config[key]
+
+
+def __library_type_constructor(loader, node):
+    value = loader.construct_scalar(node)
+    return LibraryType[value.upper()]
+
+
+def __release_level_constructor(loader, node):
+    value = loader.construct_scalar(node)
+    return ReleaseLevel[value.upper()]

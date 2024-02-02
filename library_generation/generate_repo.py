@@ -37,17 +37,6 @@ def main(ctx):
     """,
 )
 @click.option(
-    "--enable-postprocessing",
-    required=False,
-    default=True,
-    type=bool,
-    help="""
-    Path to repository where generated files will be merged into, 
-    via owlbot copy-code.
-    Specifying this option enables postprocessing.
-    """,
-)
-@click.option(
     "--target-library-api-shortname",
     required=False,
     type=str,
@@ -70,7 +59,6 @@ def main(ctx):
 )
 def generate_from_yaml(
     generation_config_yaml: str,
-    enable_postprocessing: bool,
     target_library_api_shortname: str,
     repository_path: str,
 ) -> None:
@@ -102,7 +90,6 @@ def generate_from_yaml(
             library=library,
             output_folder=repo_config.output_folder,
             versions_file=repo_config.versions_file,
-            enable_postprocessing=enable_postprocessing,
         )
 
     util.repo_level_post_process(

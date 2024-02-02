@@ -28,6 +28,7 @@ libraries:
     rest_documentation: "https://cloud.google.com/speech-to-text/docs/reference/rest"
     rpc_documentation: "https://cloud.google.com/speech-to-text/docs/reference/rpc"
     release_level: "stable"
+    requires_billing: false
     GAPICs:
       - proto_path: google/cloud/speech/v1
       - proto_path: google/cloud/speech/v1p1beta1

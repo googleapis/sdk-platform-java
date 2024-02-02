@@ -47,7 +47,6 @@ def generate_composed_library(
     library: LibraryConfig,
     output_folder: str,
     versions_file: str,
-    enable_postprocessing: bool = True,
     language: str = "java",
 ) -> None:
     """
@@ -59,8 +58,6 @@ def generate_composed_library(
     for convenience and to prevent all libraries to be processed
     :param output_folder:
     :param versions_file:
-    :param enable_postprocessing: true if postprocessing should be done on the
-    generated library
     :param language: programming language of the library
     :return None
     """
@@ -100,29 +97,27 @@ def generate_composed_library(
             "Library generation",
         )
 
-        if enable_postprocessing:
-            util.sh_util(
-                f'build_owlbot_cli_source_folder "{library_path}"'
-                + f' "{owlbot_cli_source_folder}" "{output_folder}/{temp_destination_path}"'
-                + f' "{gapic.proto_path}"',
-                cwd=output_folder,
-            )
-
-    if enable_postprocessing:
-        # call postprocess library
-        util.run_process_and_print_output(
-            [
-                f"{script_dir}/postprocess_library.sh",
-                f"{library_path}",
-                "",
-                versions_file,
-                owlbot_cli_source_folder,
-                config.owlbot_cli_image,
-                config.synthtool_commitish,
-                str(is_monorepo).lower(),
-            ],
-            "Library postprocessing",
+        util.sh_util(
+            f'build_owlbot_cli_source_folder "{library_path}"'
+            + f' "{owlbot_cli_source_folder}" "{output_folder}/{temp_destination_path}"'
+            + f' "{gapic.proto_path}"',
+            cwd=output_folder,
         )
+
+    # call postprocess library
+    util.run_process_and_print_output(
+        [
+            f"{script_dir}/postprocess_library.sh",
+            f"{library_path}",
+            "",
+            versions_file,
+            owlbot_cli_source_folder,
+            config.owlbot_cli_image,
+            config.synthtool_commitish,
+            str(is_monorepo).lower(),
+        ],
+        "Library postprocessing",
+    )
 
 
 def __construct_tooling_arg(config: GenerationConfig) -> List[str]:

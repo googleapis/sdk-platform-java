@@ -363,18 +363,17 @@ def generate_prerequisite_files(
         "product_documentation": library.product_documentation,
         "api_description": library.api_description,
         "client_documentation": client_documentation,
-        "release_level": library.release_level.lower(),
+        "release_level": library.release_level,
         "transport": transport,
         "language": language,
         "repo": repo,
         "repo_short": f"{language}-{library_name}",
         "distribution_name": distribution_name,
         "api_id": api_id,
-        "library_type": library.library_type.name
+        "library_type": library.library_type,
+        "requires_billing": library.requires_billing
     }
 
-    if library.requires_billing:
-        repo_metadata["requires_billing"] = True
     if library.rest_documentation:
         repo_metadata["rest_documentation"] = library.rest_documentation
     if library.rpc_documentation:
