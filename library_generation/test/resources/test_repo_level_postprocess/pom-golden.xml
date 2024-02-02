@@ -14,9 +14,8 @@
     <module>gapic-libraries-bom</module>
     <module>google-cloud-jar-parent</module>
     <module>google-cloud-pom-parent</module>
-    {%- for module in modules %}
-    <module>{{ module }}</module>
-    {%- endfor %}
+    <module>java-service-control</module>
+    <module>java-tasks</module>
   </modules>
 
   <!-- Do not deploy the aggregator POM -->

@@ -280,7 +280,6 @@ class UtilitiesTest(unittest.TestCase):
         self.__compare_files(
             f"{library_path}/owlbot.py", f"{library_path}/owlbot-golden.py"
         )
-        self.__cleanup(files)
 
     def test_prepare_repo_monorepo_success(self):
         gen_config = self.__get_a_gen_config(2)
@@ -315,6 +314,27 @@ class UtilitiesTest(unittest.TestCase):
         self.assertEqual("output", Path(repo_config.output_folder).name)
         library_path = sorted([Path(key).name for key in repo_config.libraries])
         self.assertEqual(["misc"], library_path)
+
+    def test_repo_level_post_process_success(self):
+        repository_path = f"{resources_dir}/test_repo_level_postprocess"
+        versions_file = f"{repository_path}/versions.txt"
+        files = [
+            f"{repository_path}/pom.xml",
+            f"{repository_path}/gapic-libraries-bom/pom.xml"
+        ]
+        self.__cleanup(files)
+        util.repo_level_post_process(
+            repository_path=repository_path,
+            versions_file=versions_file
+        )
+        self.__compare_files(
+            expect=f"{repository_path}/pom-golden.xml",
+            actual=f"{repository_path}/pom.xml",
+        )
+        self.__compare_files(
+            expect=f"{repository_path}/gapic-libraries-bom/pom-golden.xml",
+            actual=f"{repository_path}/gapic-libraries-bom/pom.xml",
+        )
 
     def __compare_files(self, expect: str, actual: str):
         with open(expect, "r") as f:

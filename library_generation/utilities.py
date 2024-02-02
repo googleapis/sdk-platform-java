@@ -90,16 +90,18 @@ def __search_for_bom_artifact(
                     )
                 )
     # handle edge case: io.grafeas
-    root = etree.parse(f"{repository_path}/java-grafeas/pom.xml").getroot()
-    version = root.find(f"{project_tag}{version_tag}").text
-    bom_configs.append(
-        BomConfig(
-            group_id="io.grafeas",
-            artifact_id="grafeas",
-            version=version,
-            version_annotation="grafeas",
+    grafeas_pom = f"{repository_path}/java-grafeas/pom.xml"
+    if Path(grafeas_pom).exists():
+        root = etree.parse(grafeas_pom).getroot()
+        version = root.find(f"{project_tag}{version_tag}").text
+        bom_configs.append(
+            BomConfig(
+                group_id="io.grafeas",
+                artifact_id="grafeas",
+                version=version,
+                version_annotation="grafeas",
+            )
         )
-    )
 
     return sorted(bom_configs)
 
