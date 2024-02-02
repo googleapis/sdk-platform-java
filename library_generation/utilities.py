@@ -363,14 +363,14 @@ def generate_prerequisite_files(
         "product_documentation": library.product_documentation,
         "api_description": library.api_description,
         "client_documentation": client_documentation,
-        "release_level": library.release_level.name,
+        "release_level": library.release_level.lower(),
         "transport": transport,
         "language": language,
         "repo": repo,
         "repo_short": f"{language}-{library_name}",
         "distribution_name": distribution_name,
         "api_id": api_id,
-        "library_type": library.library_type.name,
+        "library_type": library.library_type.name
     }
 
     if library.requires_billing:
