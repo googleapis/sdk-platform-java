@@ -29,6 +29,13 @@ versions_file=$2
 
 # Runs template and etc in current working directory
 function processModule() {
+  # apply repo templates
+  if [ -f "owlbot.py" ]
+  then
+    # defaults to run owlbot.py
+    python3 "${scripts_root}/owlbot/src/apply-repo-templates.py" owlbot.py
+  fi
+
   # templates as well as retrieving files from owl-bot-staging
   echo "Generating templates and retrieving files from owl-bot-staging directory..."
   if [ -f "owlbot.py" ]
