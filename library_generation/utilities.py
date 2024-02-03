@@ -117,27 +117,17 @@ def create_argument(arg_key: str, arg_container: object) -> List[str]:
     return []
 
 
-def get_configuration_yaml_library_api_shortnames(
-    generation_config_yaml: str,
-) -> List[str]:
+def get_library_name(
+    library: LibraryConfig,
+) -> str:
     """
-    For a given configuration yaml path, it returns a space-separated list of
-    the api_shortnames contained in such configuration_yaml
+    Return the library name of a given LibraryConfig object
+    :param library: an object of LibraryConfig
+    :return: the library name
     """
-    config = from_yaml(generation_config_yaml)
-    result = ""
-    for library in config.libraries:
-        result += f"{library.api_shortname} "
-    return result[:-1]
-
-
-def get_configuration_yaml_destination_path(generation_config_yaml: str) -> str:
-    """
-    For a given configuration yaml path, it returns the destination_path
-    entry at the root of the yaml
-    """
-    config = from_yaml(generation_config_yaml)
-    return config.destination_path or ""
+    return library.library_name \
+        if library.library_name \
+        else library.api_shortname
 
 
 def run_process_and_print_output(arguments: List[str], job_name: str = "Job"):
@@ -336,9 +326,7 @@ def generate_prerequisite_files(
     :return: None
     """
     cloud_prefix = "cloud-" if library.cloud_api else ""
-    library_name = (
-        library.library_name if library.library_name else library.api_shortname
-    )
+    library_name = get_library_name(library)
     distribution_name = (
         library.distribution_name
         if library.distribution_name
