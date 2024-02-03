@@ -82,26 +82,6 @@ class UtilitiesTest(unittest.TestCase):
         result = util.create_argument(argument_key, container)
         self.assertEqual([], result)
 
-    # def test_get_config_library_api_shortnames_valid_input_returns_valid_list(
-    #     self,
-    # ):
-    #     result = util.get_configuration_yaml_library_api_shortnames(
-    #         self.CONFIGURATION_YAML_PATH
-    #     )
-    #     self.assertEqual(
-    #         "cloudasset speech apigee-connect dialogflow compute kms "
-    #         + "redis containeranalysis iam iamcredentials",
-    #         result,
-    #     )
-
-    def test_get_config_destination_path_returns_valid_destination_path(
-        self,
-    ):
-        result = util.get_configuration_yaml_destination_path(
-            self.CONFIGURATION_YAML_PATH
-        )
-        self.assertEqual("google-cloud-java", result)
-
     def test_sh_util_existent_function_succeeds(self):
         result = util.sh_util("extract_folder_name path/to/folder_name")
         self.assertEqual("folder_name", result)
@@ -252,6 +232,12 @@ class UtilitiesTest(unittest.TestCase):
         versions_file = f"{resources_dir}/misc/versions.txt"
         artifact = "gax-grpc"
         self.assertEqual("2.34.0", util.get_version_from(versions_file, artifact, True))
+
+    def test_get_library_returns_library_name(self):
+        self.assertEqual("bare-metal-solution", util.get_library_name(library_1))
+
+    def test_get_library_returns_api_shortname(self):
+        self.assertEqual("secretmanager", util.get_library_name(library_2))
 
     def test_generate_prerequisite_files_success(self):
         library_path = f"{resources_dir}/goldens"

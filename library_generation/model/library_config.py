@@ -47,8 +47,8 @@ class LibraryConfig:
         self.name_pretty = name_pretty
         self.product_documentation = product_documentation
         self.gapic_configs = gapic_configs
-        self.library_type = library_type
-        self.release_level = release_level
+        self.library_type = library_type if library_type else "GAPIC_AUTO"
+        self.release_level = release_level if release_level else "preview"
         self.api_id = api_id
         self.client_documentation = client_documentation
         self.distribution_name = distribution_name
