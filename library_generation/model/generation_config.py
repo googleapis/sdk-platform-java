@@ -51,10 +51,6 @@ def from_yaml(path_to_yaml: str):
     Parses a yaml located in path_to_yaml. Returns the parsed configuration
     represented by the "model" classes
     """
-    # add enum constructors to parse str to enum.
-    yaml.add_constructor("LibraryType", __library_type_constructor)
-    yaml.add_constructor("ReleaseLevel", __release_level_constructor)
-
     with open(path_to_yaml, "r") as file_stream:
         config = yaml.safe_load(file_stream)
 
@@ -115,13 +111,3 @@ def __optional(config: Dict, key: str, default: any):
     if key not in config:
         return default
     return config[key]
-
-
-def __library_type_constructor(loader, node):
-    value = loader.construct_scalar(node)
-    return LibraryType[value.upper()]
-
-
-def __release_level_constructor(loader, node):
-    value = loader.construct_scalar(node)
-    return ReleaseLevel[value.upper()]
