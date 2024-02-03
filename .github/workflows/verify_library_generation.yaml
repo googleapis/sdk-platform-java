@@ -47,6 +47,8 @@ jobs:
       shell: bash
       run: |
         set -x
+        git config --global user.email "github-workflow@github.com"
+        git config --global user.name "Github Workflow"
         python -m unittest library_generation/test/integration_tests.py
   unit_tests:
     strategy:
