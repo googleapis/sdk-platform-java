@@ -125,9 +125,7 @@ def get_library_name(
     :param library: an object of LibraryConfig
     :return: the library name
     """
-    return library.library_name \
-        if library.library_name \
-        else library.api_shortname
+    return library.library_name if library.library_name else library.api_shortname
 
 
 def run_process_and_print_output(arguments: List[str], job_name: str = "Job"):
@@ -359,7 +357,7 @@ def generate_prerequisite_files(
         "distribution_name": distribution_name,
         "api_id": api_id,
         "library_type": library.library_type,
-        "requires_billing": library.requires_billing
+        "requires_billing": library.requires_billing,
     }
 
     if library.rest_documentation:

@@ -27,16 +27,15 @@ contains the necessary folders and files, specifically:
   - A "grafeas" folder found in the googleapis/googleapis repository
 Note: googleapis repo is found in https://github.com/googleapis/googleapis.
 """
+import os
 from pathlib import Path
 from typing import List
-
-import utilities as util
-import os
-from model.generation_config import GenerationConfig
-from model.gapic_config import GapicConfig
-from model.gapic_inputs import GapicInputs
-from model.library_config import LibraryConfig
-from model.gapic_inputs import parse as parse_build_file
+import library_generation.utilities as util
+from library_generation.model.generation_config import GenerationConfig
+from library_generation.model.gapic_config import GapicConfig
+from library_generation.model.gapic_inputs import GapicInputs
+from library_generation.model.library_config import LibraryConfig
+from library_generation.model.gapic_inputs import parse as parse_build_file
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 
