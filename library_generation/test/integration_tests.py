@@ -11,12 +11,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+import json
 import os
 import shutil
 import unittest
 from distutils.dir_util import copy_tree
 from distutils.file_util import copy_file
+from filecmp import dircmp
+
 from git import Repo
 from pathlib import Path
 from typing import List
@@ -56,17 +58,36 @@ class IntegrationTest(unittest.TestCase):
             generate_from_yaml(
                 generation_config_yaml=config_file, repository_path=repo_dest
             )
+            # compare result
+            for library_name in library_names:
+                compare_result = dircmp(
+                    f"{golden_dir}/{library_name}",
+                    f"{repo_dest}/{library_name}",
+                    ignore=[".repo-metadata.json"],
+                )
+                # compare source code
+                self.assertTrue(len(compare_result.left_only) == 0)
+                self.assertTrue(len(compare_result.right_only) == 0)
+                # self.assertTrue(len(compare_result.diff_files) == 0)
+                # compare .repo-metadata.json
+                self.assertTrue(
+                    self.__compare_json_files(
+                        f"{golden_dir}/{library_name}/.repo-metadata.json",
+                        f"{repo_dest}/{library_name}/.repo-metadata.json",
+                    ),
+                    msg=f"The generated {library_name}/.repo-metadata.json is different from golden.",
+                )
             # remove google-cloud-java
             i += 1
 
-    @staticmethod
-    def __pull_repo_to(dest: Path, repo: str, committish: str):
+    @classmethod
+    def __pull_repo_to(cls, dest: Path, repo: str, committish: str):
         repo_url = f"{repo_prefix}/{repo}"
         repo = Repo.clone_from(repo_url, dest)
         repo.git.checkout(committish)
 
-    @staticmethod
-    def __get_library_names_from_config(config_path: str) -> List[str]:
+    @classmethod
+    def __get_library_names_from_config(cls, config_path: str) -> List[str]:
         config = from_yaml(config_path)
         library_names = []
         for library in config.libraries:
@@ -74,8 +95,8 @@ class IntegrationTest(unittest.TestCase):
 
         return library_names
 
-    @staticmethod
-    def __get_config_files(path: str) -> Dict[str, str]:
+    @classmethod
+    def __get_config_files(cls, path: str) -> Dict[str, str]:
         config_files = {}
         for sub_dir in Path(path).resolve().iterdir():
             repo = sub_dir.name
@@ -85,3 +106,17 @@ class IntegrationTest(unittest.TestCase):
             config_files[repo] = config
 
         return config_files
+
+    @classmethod
+    def __compare_json_files(cls, expected: str, actual: str) -> bool:
+        return cls.__load_json_to_sorted_list(
+            expected
+        ) == cls.__load_json_to_sorted_list(actual)
+
+    @classmethod
+    def __load_json_to_sorted_list(cls, path: str) -> List[tuple]:
+        with open(path) as f:
+            data = json.load(f)
+        res = [(key, value) for key, value in data.items()]
+
+        return sorted(res, key=lambda x: x[0])
