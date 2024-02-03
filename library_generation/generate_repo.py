@@ -14,9 +14,9 @@
 # limitations under the License.
 
 import click
-import utilities as util
-from generate_composed_library import generate_composed_library
-from model.generation_config import from_yaml
+import library_generation.utilities as util
+from library_generation.generate_composed_library import generate_composed_library
+from library_generation.model.generation_config import from_yaml
 
 
 @click.group(invoke_without_command=False)
@@ -32,7 +32,7 @@ def main(ctx):
     required=True,
     type=str,
     help="""
-    Path to generation_config.yaml that contains the metadata about 
+    Path to generation_config.yaml that contains the metadata about
     library generation
     """,
 )
@@ -41,8 +41,8 @@ def main(ctx):
     required=False,
     type=str,
     help="""
-    If specified, only the `library` whose api_shortname equals to 
-    target-library-api-shortname will be generated. 
+    If specified, only the `library` whose api_shortname equals to
+    target-library-api-shortname will be generated.
     If not specified, all libraries in the configuration yaml will be generated.
     """,
 )
@@ -57,10 +57,22 @@ def main(ctx):
     directory.
     """,
 )
-def generate_from_yaml(
+def generate(
     generation_config_yaml: str,
     target_library_api_shortname: str,
     repository_path: str,
+):
+    generate_from_yaml(
+        generation_config_yaml=generation_config_yaml,
+        repository_path=repository_path,
+        target_library_api_shortname=target_library_api_shortname,
+    )
+
+
+def generate_from_yaml(
+    generation_config_yaml: str,
+    repository_path: str,
+    target_library_api_shortname: str = None,
 ) -> None:
     """
     Parses a config yaml and generates libraries via
@@ -76,9 +88,7 @@ def generate_from_yaml(
         ]
 
     repo_config = util.prepare_repo(
-        gen_config=config,
-        library_config=target_libraries,
-        repo_path=repository_path
+        gen_config=config, library_config=target_libraries, repo_path=repository_path
     )
 
     for library_path, library in repo_config.libraries.items():
@@ -93,8 +103,7 @@ def generate_from_yaml(
         )
 
     util.repo_level_post_process(
-        repository_path=repository_path,
-        versions_file=repo_config.versions_file
+        repository_path=repository_path, versions_file=repo_config.versions_file
     )
 
 
