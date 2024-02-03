@@ -20,11 +20,12 @@ class RepoConfig:
     """
     Class that represents a generated repository
     """
+
     def __init__(
         self,
         output_folder: str,
         libraries: Dict[str, LibraryConfig],
-        versions_file: str
+        versions_file: str,
     ):
         """
         Init a RepoConfig object

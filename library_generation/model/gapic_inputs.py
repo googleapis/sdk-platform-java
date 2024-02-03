@@ -70,9 +70,7 @@ class GapicInputs:
 
 
 def parse(
-    build_path: Path,
-    versioned_path: str,
-    build_file_name: str = "BUILD.bazel"
+    build_path: Path, versioned_path: str, build_file_name: str = "BUILD.bazel"
 ) -> GapicInputs:
     """
     Utility function to parse inputs of generate_library.sh from BUILD.bazel.
@@ -91,10 +89,10 @@ def parse(
     additional_protos = ""
     if len(proto_library_target) > 0:
         additional_protos = __parse_additional_protos(proto_library_target[0])
-    gapic_target = re.compile(gapic_pattern, re.DOTALL | re.VERBOSE)\
-                     .findall(content)
-    assembly_target = re.compile(assembly_pattern, re.DOTALL | re.VERBOSE)\
-                        .findall(content)
+    gapic_target = re.compile(gapic_pattern, re.DOTALL | re.VERBOSE).findall(content)
+    assembly_target = re.compile(assembly_pattern, re.DOTALL | re.VERBOSE).findall(
+        content
+    )
     include_samples = "false"
     if len(assembly_target) > 0:
         include_samples = __parse_include_samples(assembly_target[0])
