@@ -14,10 +14,10 @@
 
 import os
 import shutil
-import subprocess
 import unittest
 from distutils.dir_util import copy_tree
 from distutils.file_util import copy_file
+from git import Repo
 from pathlib import Path
 from typing import List
 from typing import Dict
@@ -62,8 +62,8 @@ class IntegrationTest(unittest.TestCase):
     @staticmethod
     def __pull_repo_to(dest: Path, repo: str, committish: str):
         repo_url = f"{repo_prefix}/{repo}"
-        subprocess.check_call(["git", "clone", repo_url, dest])
-        # subprocess.check_call(["git", "checkout", committish])
+        repo = Repo.clone_from(repo_url, dest)
+        repo.git.checkout(committish)
 
     @staticmethod
     def __get_library_names_from_config(config_path: str) -> List[str]:

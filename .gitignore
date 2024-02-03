@@ -19,6 +19,7 @@ target/
 
 # Python
 **/__pycache__/
+.venv
 
 # library generation
 output/
