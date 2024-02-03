@@ -36,6 +36,7 @@ class LibraryConfig:
         distribution_name: Optional[str] = None,
         googleapis_commitish: Optional[str] = None,
         group_id: Optional[str] = "com.google.cloud",
+        issue_tracker: Optional[str] = None,
         library_name: Optional[str] = None,
         rest_documentation: Optional[str] = None,
         rpc_documentation: Optional[str] = None,
@@ -54,6 +55,7 @@ class LibraryConfig:
         self.distribution_name = distribution_name
         self.googleapis_commitish = googleapis_commitish
         self.group_id = group_id
+        self.issue_tracker = issue_tracker
         self.library_name = library_name
         self.rest_documentation = rest_documentation
         self.rpc_documentation = rpc_documentation

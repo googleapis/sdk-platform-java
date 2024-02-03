@@ -79,6 +79,7 @@ def from_yaml(path_to_yaml: str):
             distribution_name=__optional(library, "distribution_name", None),
             googleapis_commitish=__optional(library, "googleapis_commitish", None),
             group_id=__optional(library, "group_id", "com.google.cloud"),
+            issue_tracker=__optional(library, "issue_tracker", None),
             library_name=__optional(library, "library_name", None),
             rest_documentation=__optional(library, "rest_documentation", None),
             rpc_documentation=__optional(library, "rpc_documentation", None),

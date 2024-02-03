@@ -364,6 +364,8 @@ def generate_prerequisite_files(
         repo_metadata["rest_documentation"] = library.rest_documentation
     if library.rpc_documentation:
         repo_metadata["rpc_documentation"] = library.rpc_documentation
+    if library.issue_tracker:
+        repo_metadata["issue_tracker"] = library.issue_tracker
 
     # generate .repo-meta.json
     if not os.path.exists(f"{library_path}/.repo-meta.json"):
