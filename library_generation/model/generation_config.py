@@ -75,6 +75,7 @@ def from_yaml(path_to_yaml: str):
             library_type=__optional(library, "library_type", "GAPIC_AUTO"),
             release_level=__optional(library, "release_level", "preview"),
             api_id=__optional(library, "api_id", None),
+            api_reference=__optional(library, "api_reference", None),
             client_documentation=__optional(library, "client_documentation", None),
             distribution_name=__optional(library, "distribution_name", None),
             googleapis_commitish=__optional(library, "googleapis_commitish", None),
