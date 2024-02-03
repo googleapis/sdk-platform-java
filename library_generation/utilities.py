@@ -256,6 +256,10 @@ def prepare_repo(
         # in volume name.
         absolute_library_path = str(Path(library_path).resolve())
         libraries[absolute_library_path] = library
+        # remove existing .repo-metadata.json
+        json_name = ".repo-metadata.json"
+        if os.path.exists(f"{absolute_library_path}/{json_name}"):
+            os.remove(f"{absolute_library_path}/{json_name}")
     versions_file = f"{repo_path}/versions.txt"
     if not Path(versions_file).exists():
         raise FileNotFoundError(f"{versions_file} is not found.")
@@ -370,15 +374,17 @@ def generate_prerequisite_files(
         repo_metadata["rpc_documentation"] = library.rpc_documentation
 
     # generate .repo-meta.json
-    if not os.path.exists(f"{library_path}/.repo-meta.json"):
-        with open(f"{library_path}/.repo-metadata.json", "w") as fp:
+    json_file = ".repo-metadata.json"
+    if not os.path.exists(f"{library_path}/{json_file}"):
+        with open(f"{library_path}/{json_file}", "w") as fp:
             json.dump(repo_metadata, fp, indent=2)
 
     # generate .OwlBot.yaml
-    if not os.path.exists(f"{library_path}/.OwlBot.yaml"):
+    yaml_file = ".OwlBot.yaml"
+    if not os.path.exists(f"{library_path}/{yaml_file}"):
         __render(
             template_name="owlbot.yaml.monorepo.j2",
-            output_name=f"{library_path}/.OwlBot.yaml",
+            output_name=f"{library_path}/{yaml_file}",
             artifact_name=distribution_name_short,
             proto_path=remove_version_from(proto_path),
             module_name=repo_metadata["repo_short"],
@@ -386,7 +392,8 @@ def generate_prerequisite_files(
         )
 
     # generate owlbot.py
-    if not os.path.exists(f"{library_path}/owlbot.py"):
+    py_file = "owlbot.py"
+    if not os.path.exists(f"{library_path}/{py_file}"):
         template_excludes = [
             ".github/*",
             ".kokoro/*",
@@ -402,7 +409,7 @@ def generate_prerequisite_files(
         ]
         __render(
             template_name="owlbot.py.j2",
-            output_name=f"{library_path}/owlbot.py",
+            output_name=f"{library_path}/{py_file}",
             should_include_templates=True,
             template_excludes=template_excludes,
         )
