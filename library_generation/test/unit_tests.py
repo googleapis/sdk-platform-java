@@ -101,24 +101,6 @@ class UtilitiesTest(unittest.TestCase):
         # print() appends a `\n` each time it's called
         self.assertEqual(test_input + "\n", result)
 
-    def test_delete_if_exists_preexisting_temp_files_succeeds(self):
-        # create temporary directory
-        # also remove last character (\n)
-        temp_dir = subprocess.check_output(["mktemp", "-d"]).decode()[:-1]
-
-        # add a file and a folder to the temp dir
-        file = os.path.join(temp_dir, "temp_file")
-        with open(file, "a"):
-            os.utime(file, None)
-        folder = os.path.join(temp_dir, "temp_child_dir")
-        os.mkdir(folder)
-        self.assertEqual(2, len(os.listdir(temp_dir)))
-
-        # remove file and folder
-        util.delete_if_exists(file)
-        util.delete_if_exists(folder)
-        self.assertEqual(0, len(os.listdir(temp_dir)))
-
     def test_gapic_inputs_parse_grpc_only_succeeds(self):
         parsed = parse_build_file(build_file, "", "BUILD_grpc.bazel")
         self.assertEqual("grpc", parsed.transport)

@@ -181,22 +181,6 @@ def eprint(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
 
 
-def delete_if_exists(path: str) -> None:
-    """
-    Deletes a file or folder if it exists.
-    :param path: the path to the file or folder
-    :return: None
-    """
-    if os.path.isfile(path):  # Check if it's a file
-        os.remove(path)
-        print(f"File deleted: {path}")
-    elif os.path.isdir(path):  # Check if it's a directory
-        shutil.rmtree(path)
-        print(f"Folder deleted: {path}")
-    else:
-        print(f"Path does not exist: {path}")
-
-
 def remove_version_from(proto_path: str) -> str:
     """
     Remove the version of a proto_path
@@ -293,8 +277,8 @@ def pull_api_definition(
 
     if googleapis_commitish != config.googleapis_commitish:
         print("removing existing APIs definition")
-        delete_if_exists(f"{output_folder}/google")
-        delete_if_exists(f"{output_folder}/grafeas")
+        shutil.rmtree(f"{output_folder}/google", ignore_errors=True)
+        shutil.rmtree(f"{output_folder}/grafeas", ignore_errors=True)
 
     if not (
         os.path.exists(f"{output_folder}/google")
