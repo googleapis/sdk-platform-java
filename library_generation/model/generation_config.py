@@ -32,7 +32,6 @@ class GenerationConfig:
         owlbot_cli_image: str,
         synthtool_commitish: str,
         libraries: List[LibraryConfig],
-        destination_path: Optional[str] = None,
         grpc_version: Optional[str] = None,
         protobuf_version: Optional[str] = None,
     ):
