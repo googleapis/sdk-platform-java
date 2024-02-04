@@ -41,7 +41,6 @@ class GenerationConfig:
         self.owlbot_cli_image = owlbot_cli_image
         self.synthtool_commitish = synthtool_commitish
         self.libraries = libraries
-        self.destination_path = destination_path
         self.grpc_version = grpc_version
         self.protobuf_version = protobuf_version
 
@@ -96,7 +95,6 @@ def from_yaml(path_to_yaml: str):
         googleapis_commitish=__required(config, "googleapis_commitish"),
         owlbot_cli_image=__required(config, "owlbot_cli_image"),
         synthtool_commitish=__required(config, "synthtool_commitish"),
-        destination_path=__optional(config, "destination_path", None),
         libraries=parsed_libraries,
     )
 
