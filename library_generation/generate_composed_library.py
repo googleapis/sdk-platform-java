@@ -67,6 +67,7 @@ def generate_composed_library(
     is_monorepo = util.check_monorepo(config=config)
     base_arguments = __construct_tooling_arg(config=config)
     owlbot_cli_source_folder = util.sh_util("mktemp -d")
+    os.makedirs(f"{library_path}", exist_ok=True)
     for gapic in library.gapic_configs:
         build_file_folder = Path(f"{output_folder}/{gapic.proto_path}").resolve()
         print(f"build_file_folder: {build_file_folder}")
