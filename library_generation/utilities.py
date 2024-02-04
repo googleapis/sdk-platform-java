@@ -23,7 +23,6 @@ from lxml import etree
 from library_generation.model.bom_config import BomConfig
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
-from library_generation.model.generation_config import from_yaml
 from typing import List
 from jinja2 import Environment, FileSystemLoader
 

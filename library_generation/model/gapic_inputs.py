@@ -78,7 +78,7 @@ def parse(
     :param versioned_path: a versioned path in googleapis repository, e.g.,
     google/cloud/asset/v1.
     :param build_file_name: the name of the build file.
-    :return: an ClientInput object.
+    :return: an GapicInputs object.
     """
     with open(f"{build_path}/{build_file_name}") as build:
         content = build.read()
@@ -154,7 +154,14 @@ def __parse_service_config(gapic_target: str, versioned_path: str) -> str:
 
 def __parse_service_yaml(gapic_target: str, versioned_path: str) -> str:
     service_yaml = re.findall(service_yaml_pattern, gapic_target)
-    return f"{versioned_path}/{service_yaml[0]}" if len(service_yaml) != 0 else ""
+    if len(service_yaml) == 0:
+        return ""
+    res = str(service_yaml[0])
+    if res.startswith("//"):
+        # special case if the service config starts with "//", is a Bazel
+        # target with an absolute path.
+        return res.replace("//", "").replace(":", "/")
+    return f"{versioned_path}/{res}"
 
 
 def __parse_include_samples(assembly_target: str) -> str:
