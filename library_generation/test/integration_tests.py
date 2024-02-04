@@ -60,6 +60,11 @@ class IntegrationTest(unittest.TestCase):
             )
             # compare result
             for library_name in library_names:
+                print(
+                    f"Compare generation result: "
+                    f"expected library in {golden_dir}/{library_name}, "
+                    f"actual library in {repo_dest}/{library_name}."
+                )
                 compare_result = dircmp(
                     f"{golden_dir}/{library_name}",
                     f"{repo_dest}/{library_name}",
@@ -69,6 +74,7 @@ class IntegrationTest(unittest.TestCase):
                 self.assertTrue(len(compare_result.left_only) == 0)
                 self.assertTrue(len(compare_result.right_only) == 0)
                 # self.assertTrue(len(compare_result.diff_files) == 0)
+                print("Source code comparison succeed.")
                 # compare .repo-metadata.json
                 self.assertTrue(
                     self.__compare_json_files(
@@ -77,6 +83,7 @@ class IntegrationTest(unittest.TestCase):
                     ),
                     msg=f"The generated {library_name}/.repo-metadata.json is different from golden.",
                 )
+                print(".repo-metadata.json comparison succeed.")
             # remove google-cloud-java
             i += 1
 
