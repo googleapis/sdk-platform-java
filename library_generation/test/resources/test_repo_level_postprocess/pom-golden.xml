@@ -14,6 +14,7 @@
     <module>gapic-libraries-bom</module>
     <module>google-cloud-jar-parent</module>
     <module>google-cloud-pom-parent</module>
+    <module>java-dns</module>
     <module>java-service-control</module>
     <module>java-tasks</module>
   </modules>

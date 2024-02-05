@@ -26,8 +26,10 @@
         <groupId>{{ bom_config.group_id }}</groupId>
         <artifactId>{{ bom_config.artifact_id }}</artifactId>
         <version>{{ bom_config.version }}</version><!-- {x-version-update:{{ bom_config.version_annotation }}:current} -->
+        {%- if bom_config.is_import %}
         <type>pom</type>
         <scope>import</scope>
+        {%- endif %}
       </dependency>
       {%- endfor %}
     </dependencies>

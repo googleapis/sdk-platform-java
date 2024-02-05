@@ -63,7 +63,7 @@ def __search_for_bom_artifact(
     module_exclusions = ["gapic-libraries-bom"]
     group_id_inclusions = [
         "com.google.cloud",
-        "com.google.analytic",
+        "com.google.analytics",
         "com.google.area120",
     ]
     bom_configs = []
@@ -88,21 +88,49 @@ def __search_for_bom_artifact(
                         version_annotation=version_annotation,
                     )
                 )
-    # handle edge case: io.grafeas
-    grafeas_pom = f"{repository_path}/java-grafeas/pom.xml"
-    if Path(grafeas_pom).exists():
-        root = etree.parse(grafeas_pom).getroot()
-        version = root.find(f"{project_tag}{version_tag}").text
-        bom_configs.append(
-            BomConfig(
-                group_id="io.grafeas",
-                artifact_id="grafeas",
-                version=version,
-                version_annotation="grafeas",
-            )
-        )
+    # handle edge case: java-grafeas
+    bom_configs += __handle_special_bom(
+        repository_path=repository_path,
+        module="java-grafeas",
+        group_id="io.grafeas",
+        artifact_id="grafeas"
+    )
+    # handle edge case: java-dns
+    bom_configs += __handle_special_bom(
+        repository_path=repository_path,
+        module="java-dns",
+        group_id="com.google.cloud",
+        artifact_id="google-cloud-dns"
+    )
+    # handle edge case: java-notification
+    bom_configs += __handle_special_bom(
+        repository_path=repository_path,
+        module="java-notification",
+        group_id="com.google.cloud",
+        artifact_id="google-cloud-notification"
+    )
 
     return sorted(bom_configs)
+
+
+def __handle_special_bom(
+    repository_path: str,
+    module: str,
+    group_id: str,
+    artifact_id: str,
+) -> List[BomConfig]:
+    pom = f"{repository_path}/{module}/pom.xml"
+    if not Path(pom).exists():
+        return []
+    root = etree.parse(pom).getroot()
+    version = root.find(f"{project_tag}{version_tag}").text
+    return [BomConfig(
+        group_id=group_id,
+        artifact_id=artifact_id,
+        version=version,
+        version_annotation=artifact_id,
+        is_import=False
+    )]
 
 
 def create_argument(arg_key: str, arg_container: object) -> List[str]:

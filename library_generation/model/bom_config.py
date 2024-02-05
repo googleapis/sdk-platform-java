@@ -16,16 +16,22 @@
 
 class BomConfig:
     """
-    Class that represents a bom artifact
+    Class that represents an entry in dependencyManagement section.
     """
 
     def __init__(
-        self, group_id: str, artifact_id: str, version: str, version_annotation
+        self,
+        group_id: str,
+        artifact_id: str,
+        version: str,
+        version_annotation: str,
+        is_import: bool = True
     ):
         self.group_id = group_id
         self.artifact_id = artifact_id
         self.version = version
         self.version_annotation = version_annotation
+        self.is_import = is_import
 
     def __lt__(self, another):
         return self.group_id < another.group_id or (

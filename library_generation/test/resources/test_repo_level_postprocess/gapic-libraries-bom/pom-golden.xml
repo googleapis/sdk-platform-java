@@ -23,6 +23,11 @@
     <dependencies>
       <dependency>
         <groupId>com.google.cloud</groupId>
+        <artifactId>google-cloud-dns</artifactId>
+        <version>2.33.0-SNAPSHOT</version><!-- {x-version-update:google-cloud-dns:current} -->
+      </dependency>
+      <dependency>
+        <groupId>com.google.cloud</groupId>
         <artifactId>google-cloud-service-control-bom</artifactId>
         <version>1.35.0-SNAPSHOT</version><!-- {x-version-update:google-cloud-service-control:current} -->
         <type>pom</type>
