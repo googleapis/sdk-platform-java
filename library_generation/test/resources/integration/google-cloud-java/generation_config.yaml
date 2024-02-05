@@ -12,7 +12,7 @@ libraries:
     release_level: "stable"
     library_name: "apigee-connect"
     GAPICs:
-      - proto_path: google/cloud/apigeeconnect/v1
+    - proto_path: google/cloud/apigeeconnect/v1
 
   - api_shortname: cloudasset
     name_pretty: Cloud Asset Inventory
