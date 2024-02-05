@@ -82,6 +82,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   // Track if deprecated setExecutorProvider is called
   private boolean deprecatedExecutorProviderSet;
   private final String universeDomain;
+  @Nonnull private final EndpointContext endpointContext;
 
   /**
    * Indicate when creating transport whether it is allowed to use mTLS endpoint instead of the
@@ -110,6 +111,11 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     this.deprecatedExecutorProviderSet = builder.deprecatedExecutorProviderSet;
     this.gdchApiAudience = builder.gdchApiAudience;
     this.universeDomain = builder.universeDomain;
+    try {
+      this.endpointContext = builder.endpointContextBuilder.build();
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   /** @deprecated Please use {@link #getBackgroundExecutorProvider()}. */
@@ -150,22 +156,17 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   }
 
   public final String getUniverseDomain() {
-    return universeDomain;
+    return endpointContext.resolvedUniverseDomain();
   }
 
   public String getEndpoint() {
-    return endpoint;
+    return endpointContext.resolvedEndpoint();
   }
 
-  /**
-   * This is an internal api meant to either return the user set endpoint or null. The difference
-   * between this method and {@link #getEndpoint()}} is that {@link #getEndpoint()} is reimplemented
-   * by the child class and will return the default service endpoint if the user did not set an
-   * endpoint (does not return null).
-   */
+  // Intended for Internal Use and is the EndpointContext to be passed to all the Callables
   @InternalApi
-  String getUserSetEndpoint() {
-    return endpoint;
+  final EndpointContext getEndpointContext() {
+    return endpointContext;
   }
 
   public final String getMtlsEndpoint() {
@@ -249,6 +250,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     @Nonnull private ApiTracerFactory tracerFactory;
     private boolean deprecatedExecutorProviderSet;
     private String universeDomain;
+    @Nonnull private EndpointContext.Builder endpointContextBuilder;
 
     /**
      * Indicate when creating transport whether it is allowed to use mTLS endpoint instead of the
@@ -277,6 +279,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       this.deprecatedExecutorProviderSet = settings.deprecatedExecutorProviderSet;
       this.gdchApiAudience = settings.gdchApiAudience;
       this.universeDomain = settings.universeDomain;
+      this.endpointContextBuilder = settings.endpointContext.toBuilder();
     }
 
     /** Get Quota Project ID from Client Context * */
@@ -314,6 +317,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.deprecatedExecutorProviderSet = false;
         this.gdchApiAudience = null;
         this.universeDomain = null;
+        this.endpointContextBuilder = EndpointContext.newBuilder();
       } else {
         ExecutorProvider fixedExecutorProvider =
             FixedExecutorProvider.create(clientContext.getExecutor());
@@ -338,6 +342,12 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.quotaProjectId = getQuotaProjectIdFromClientContext(clientContext);
         this.gdchApiAudience = clientContext.getGdchApiAudience();
         this.universeDomain = clientContext.getUniverseDomain();
+        this.endpointContextBuilder =
+            EndpointContext.newBuilder()
+                .setServiceName(serviceName)
+                .setClientSettingsEndpoint(this.endpoint)
+                .setMtlsEndpoint(this.mtlsEndpoint)
+                .setUniverseDomain(universeDomain);
       }
     }
 
@@ -427,6 +437,9 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
      */
     public B setTransportChannelProvider(TransportChannelProvider transportChannelProvider) {
       this.transportChannelProvider = transportChannelProvider;
+      this.endpointContextBuilder =
+          this.endpointContextBuilder.setTransportChannelProviderEndpoint(
+              this.transportChannelProvider.getEndpoint());
       return self();
     }
 
@@ -452,6 +465,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
 
     public B setUniverseDomain(String universeDomain) {
       this.universeDomain = universeDomain;
+      this.endpointContextBuilder = this.endpointContextBuilder.setUniverseDomain(universeDomain);
       return self();
     }
 
@@ -461,16 +475,24 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       if (this.endpoint != null && this.mtlsEndpoint == null) {
         this.mtlsEndpoint = this.endpoint.replace("googleapis.com", "mtls.googleapis.com");
       }
+      this.endpointContextBuilder =
+          this.endpointContextBuilder
+              .setClientSettingsEndpoint(endpoint)
+              .setSwitchToMtlsEndpointAllowed(false)
+              .setMtlsEndpoint(this.mtlsEndpoint);
       return self();
     }
 
     protected B setSwitchToMtlsEndpointAllowed(boolean switchToMtlsEndpointAllowed) {
       this.switchToMtlsEndpointAllowed = switchToMtlsEndpointAllowed;
+      this.endpointContextBuilder =
+          this.endpointContextBuilder.setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed);
       return self();
     }
 
     public B setMtlsEndpoint(String mtlsEndpoint) {
       this.mtlsEndpoint = mtlsEndpoint;
+      this.endpointContextBuilder = this.endpointContextBuilder.setMtlsEndpoint(mtlsEndpoint);
       return self();
     }
 
@@ -556,11 +578,11 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     }
 
     public String getEndpoint() {
-      return endpoint;
+      return endpointContextBuilder.clientSettingsEndpoint();
     }
 
     public String getMtlsEndpoint() {
-      return mtlsEndpoint;
+      return endpointContextBuilder.mtlsEndpoint();
     }
 
     /** Gets the QuotaProjectId that was previously set on this Builder. */

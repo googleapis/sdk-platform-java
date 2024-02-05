@@ -161,15 +161,12 @@ public abstract class ClientContext {
 
     Credentials credentials = settings.getCredentialsProvider().getCredentials();
     boolean usingGDCH = credentials instanceof GdchCredentials;
+    //
     EndpointContext endpointContext =
-        EndpointContext.newBuilder()
+        settings
+            .getEndpointContext()
+            .toBuilder()
             .setServiceName(settings.getServiceName())
-            .setUniverseDomain(settings.getUniverseDomain())
-            .setClientSettingsEndpoint(settings.getUserSetEndpoint())
-            .setTransportChannelProviderEndpoint(
-                settings.getTransportChannelProvider().getEndpoint())
-            .setMtlsEndpoint(settings.getMtlsEndpoint())
-            .setSwitchToMtlsEndpointAllowed(settings.getSwitchToMtlsEndpointAllowed())
             .setUsingGDCH(usingGDCH)
             .build();
     String endpoint = endpointContext.resolvedEndpoint();
