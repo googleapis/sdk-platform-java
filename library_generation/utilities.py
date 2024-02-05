@@ -358,6 +358,15 @@ def generate_prerequisite_files(
         else f"https://cloud.google.com/{language}/docs/reference/{distribution_name_short}/latest/overview"
     )
 
+    # The mapping is needed because transport in .repo-metadata.json
+    # is one of grpc, http and both,
+    if transport == "grpc":
+        converted_transport = "grpc"
+    elif transport == "rest":
+        converted_transport = "http"
+    else:
+        converted_transport = "both"
+
     repo_metadata = {
         "api_shortname": library.api_shortname,
         "name_pretty": library.name_pretty,
@@ -365,7 +374,7 @@ def generate_prerequisite_files(
         "api_description": library.api_description,
         "client_documentation": client_documentation,
         "release_level": library.release_level,
-        "transport": transport,
+        "transport": converted_transport,
         "language": language,
         "repo": repo,
         "repo_short": f"{language}-{library_name}",
