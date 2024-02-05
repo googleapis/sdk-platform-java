@@ -71,9 +71,9 @@ class IntegrationTest(unittest.TestCase):
                     ignore=[".repo-metadata.json"],
                 )
                 # compare source code
-                self.assertTrue(len(compare_result.left_only) == 0)
-                self.assertTrue(len(compare_result.right_only) == 0)
-                # self.assertTrue(len(compare_result.diff_files) == 0)
+                self.assertEqual([], compare_result.left_only)
+                self.assertEqual([], compare_result.right_only)
+                self.assertEqual([], compare_result.diff_files)
                 print("Source code comparison succeed.")
                 # compare .repo-metadata.json
                 self.assertTrue(
