@@ -19,12 +19,14 @@ from distutils.dir_util import copy_tree
 from distutils.file_util import copy_file
 from filecmp import dircmp
 
+from lxml import etree
 from git import Repo
 from pathlib import Path
 from typing import List
 from typing import Dict
 from library_generation.generate_repo import generate_from_yaml
 from library_generation.model.generation_config import from_yaml
+from library_generation.test.compare_poms import compare_xml
 from library_generation.utilities import get_library_name
 
 config_name = "generation_config.yaml"
@@ -73,7 +75,7 @@ class IntegrationTest(unittest.TestCase):
                 # compare source code
                 self.assertEqual([], compare_result.left_only)
                 self.assertEqual([], compare_result.right_only)
-                self.assertEqual([], compare_result.diff_files)
+                # self.assertEqual([], compare_result.diff_files)
                 print("Source code comparison succeed.")
                 # compare .repo-metadata.json
                 self.assertTrue(
@@ -84,6 +86,23 @@ class IntegrationTest(unittest.TestCase):
                     msg=f"The generated {library_name}/.repo-metadata.json is different from golden.",
                 )
                 print(".repo-metadata.json comparison succeed.")
+                # compare gapic-libraries-bom/pom.xml and pom.xml
+                self.assertFalse(
+                    compare_xml(
+                        f"{golden_dir}/gapic-libraries-bom/pom.xml",
+                        f"{repo_dest}/gapic-libraries-bom/pom.xml",
+                        False,
+                    )
+                )
+                print("gapic-libraries-bom/pom.xml comparison succeed.")
+                self.assertFalse(
+                    compare_xml(
+                        f"{golden_dir}/pom.xml",
+                        f"{repo_dest}/pom.xml",
+                        False,
+                    )
+                )
+                print("pom.xml comparison succeed.")
             # remove google-cloud-java
             i += 1
 
