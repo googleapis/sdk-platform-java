@@ -19,7 +19,6 @@ from distutils.dir_util import copy_tree
 from distutils.file_util import copy_file
 from filecmp import dircmp
 
-from lxml import etree
 from git import Repo
 from pathlib import Path
 from typing import List
@@ -75,7 +74,7 @@ class IntegrationTest(unittest.TestCase):
                 # compare source code
                 self.assertEqual([], compare_result.left_only)
                 self.assertEqual([], compare_result.right_only)
-                # self.assertEqual([], compare_result.diff_files)
+                self.assertEqual([], compare_result.diff_files)
                 print("Source code comparison succeed.")
                 # compare .repo-metadata.json
                 self.assertTrue(
