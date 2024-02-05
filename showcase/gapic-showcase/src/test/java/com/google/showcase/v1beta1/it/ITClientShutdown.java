@@ -30,6 +30,7 @@ import org.threeten.bp.Duration;
 
 public class ITClientShutdown {
 
+  // Test to ensure the client can close + terminate properly
   @Test
   public void testGrpc_closeClient() throws Exception {
     EchoClient grpcClient = TestClientInitializer.createGrpcEchoClient();
@@ -40,6 +41,7 @@ public class ITClientShutdown {
     Truth.assertThat(grpcClient.isTerminated()).isTrue();
   }
 
+  // Test to ensure the client can close + terminate properly
   @Test
   public void testHttpJson_closeClient() throws Exception {
     EchoClient httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
@@ -50,6 +52,7 @@ public class ITClientShutdown {
     Truth.assertThat(httpjsonClient.isTerminated()).isTrue();
   }
 
+  // Test to ensure hte client can close + terminate after a quick RPC invocation
   @Test
   public void testGrpc_rpcInvoked_closeClient() throws Exception {
     EchoClient grpcClient = TestClientInitializer.createGrpcEchoClient();
@@ -63,6 +66,7 @@ public class ITClientShutdown {
     Truth.assertThat(grpcClient.isTerminated()).isTrue();
   }
 
+  // Test to ensure hte client can close + terminate after a quick RPC invocation
   @Test
   public void testHttpJson_rpcInvoked_closeClient() throws Exception {
     EchoClient httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
@@ -115,7 +119,6 @@ public class ITClientShutdown {
     long end = System.currentTimeMillis();
 
     Truth.assertThat(grpcClient.isShutdown()).isTrue();
-    Truth.assertThat(grpcClient.isTerminated()).isTrue();
 
     // Check the termination time. If all the tasks/ resources are closed successfully,
     // the termination time should only take about 2s (time to receive a response) + time
@@ -164,7 +167,6 @@ public class ITClientShutdown {
     long end = System.currentTimeMillis();
 
     Truth.assertThat(httpjsonClient.isShutdown()).isTrue();
-    Truth.assertThat(httpjsonClient.isTerminated()).isTrue();
 
     // Check the termination time. If all the tasks/ resources are closed successfully,
     // the termination time should only take about 2s (time to receive a response) + time
@@ -180,7 +182,7 @@ public class ITClientShutdown {
   private static void busyWaitUntilClientTermination(EchoClient client)
       throws InterruptedException {
     while (!client.isTerminated()) {
-      Thread.sleep(1000L);
+      Thread.sleep(500L);
     }
   }
 }
