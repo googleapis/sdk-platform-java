@@ -82,7 +82,7 @@ jobs:
       run: |
         set -x
         python -m unittest library_generation/test/unit_tests.py
-  lint:
+  lint (shell):
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
@@ -92,3 +92,20 @@ jobs:
         scandir: 'library_generation'
         format: tty
         severity: error
+  lint (python):
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3
+    - name: install python dependencies
+      shell: bash
+      run: |
+        set -ex
+        pushd library_generation
+        pip install -r requirements.in
+        popd
+    - name: Lint
+      shell: bash
+      run: |
+        # exclude generated golden files
+        # exclude owlbot until further refaction
+        black --check library_generation --exclude "(library_generation/owlbot)|(library_generation/test/resources/goldens)"
