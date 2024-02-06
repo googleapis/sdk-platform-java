@@ -66,7 +66,6 @@ libraries:
     GAPICs:
       - proto_path: google/cloud/compute/v1
   - api_shortname: kms
-    googleapis_commitish: 667eaac011c8a0096241ae4d27061e212af16540
     library_type: GAPIC_AUTO
     GAPICs:
       - proto_path: google/cloud/kms/v1
