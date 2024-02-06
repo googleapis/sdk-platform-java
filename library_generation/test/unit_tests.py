@@ -1,5 +1,5 @@
 """
-Unit tests for utilities.py and non-transferred owlbot scripts
+Unit tests for python scripts
 """
 
 import unittest

@@ -35,7 +35,6 @@ function processModule() {
   echo "Generating templates"
   if [ -f "owlbot.py" ]
   then
-    # defaults to run owlbot.py
     python3 "${scripts_root}/owlbot/src/apply_repo_templates.py" owlbot.py "${monorepo}"
   fi
 
