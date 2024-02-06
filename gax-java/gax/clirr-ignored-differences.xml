@@ -42,4 +42,16 @@
     <className>com/google/api/gax/rpc/ApiCallContext</className>
     <method>* validateUniverseDomain()</method>
   </difference>
+  <!-- Add Endpoint Context Getter to ApiCallContext -->
+  <difference>
+    <differenceType>7012</differenceType>
+    <className>com/google/api/gax/rpc/ApiCallContext</className>
+    <method>* getEndpointContext(*)</method>
+  </difference>
+  <!-- Remove InternalApi for getServiceName -->
+  <difference>
+    <differenceType>7002</differenceType>
+    <className>com/google/api/gax/rpc/StubSettings</className>
+    <method>* getServiceName()</method>
+  </difference>
 </differences>
