@@ -82,7 +82,7 @@ jobs:
       run: |
         set -x
         python -m unittest library_generation/test/unit_tests.py
-  lint (shell):
+  lint-shell:
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
@@ -92,7 +92,7 @@ jobs:
         scandir: 'library_generation'
         format: tty
         severity: error
-  lint (python):
+  lint-python:
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
