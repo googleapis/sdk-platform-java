@@ -16,7 +16,6 @@ import sys
 import subprocess
 import os
 import shutil
-from collections.abc import Sequence
 import re
 from pathlib import Path
 from lxml import etree
