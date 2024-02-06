@@ -52,7 +52,7 @@ public class ITClientShutdown {
     Truth.assertThat(httpjsonClient.isTerminated()).isTrue();
   }
 
-  // Test to ensure hte client can close + terminate after a quick RPC invocation
+  // Test to ensure the client can close + terminate after a quick RPC invocation
   @Test
   public void testGrpc_rpcInvoked_closeClient() throws Exception {
     EchoClient grpcClient = TestClientInitializer.createGrpcEchoClient();
@@ -66,7 +66,7 @@ public class ITClientShutdown {
     Truth.assertThat(grpcClient.isTerminated()).isTrue();
   }
 
-  // Test to ensure hte client can close + terminate after a quick RPC invocation
+  // Test to ensure the client can close + terminate after a quick RPC invocation
   @Test
   public void testHttpJson_rpcInvoked_closeClient() throws Exception {
     EchoClient httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
