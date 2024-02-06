@@ -273,6 +273,11 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
             "Transport not supported: %s", getTransportChannelProvider().getTransportName()));
   }
 
+  /** Returns the default service name. */
+  public static String getServiceName() {
+    return "";
+  }
+
   /** Returns a builder for the default ExecutorProvider for this service. */
   public static InstantiatingExecutorProvider.Builder defaultExecutorProviderBuilder() {
     return InstantiatingExecutorProvider.newBuilder();
@@ -518,6 +523,7 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
+      builder.setServiceName(getServiceName());
 
       return initDefaults(builder);
     }
@@ -530,6 +536,7 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
       builder.setInternalHeaderProvider(defaultHttpJsonApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
+      builder.setServiceName(getServiceName());
 
       return initDefaults(builder);
     }

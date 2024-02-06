@@ -303,6 +303,11 @@ public class IdentityStubSettings extends StubSettings<IdentityStubSettings> {
             "Transport not supported: %s", getTransportChannelProvider().getTransportName()));
   }
 
+  /** Returns the default service name. */
+  public static String getServiceName() {
+    return "";
+  }
+
   /** Returns a builder for the default ExecutorProvider for this service. */
   public static InstantiatingExecutorProvider.Builder defaultExecutorProviderBuilder() {
     return InstantiatingExecutorProvider.newBuilder();
@@ -526,6 +531,7 @@ public class IdentityStubSettings extends StubSettings<IdentityStubSettings> {
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
+      builder.setServiceName(getServiceName());
 
       return initDefaults(builder);
     }
@@ -538,6 +544,7 @@ public class IdentityStubSettings extends StubSettings<IdentityStubSettings> {
       builder.setInternalHeaderProvider(defaultHttpJsonApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
+      builder.setServiceName(getServiceName());
 
       return initDefaults(builder);
     }

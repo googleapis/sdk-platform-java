@@ -42,11 +42,6 @@ public class FakeStubSettings extends StubSettings {
   }
 
   @Override
-  public String getServiceName() {
-    return "test";
-  }
-
-  @Override
   public StubSettings.Builder toBuilder() {
     return new Builder(this);
   }

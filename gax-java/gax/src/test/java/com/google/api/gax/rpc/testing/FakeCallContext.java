@@ -299,6 +299,11 @@ public class FakeCallContext implements ApiCallContext {
         endpointContext);
   }
 
+  @Override
+  public EndpointContext getEndpointContext() {
+    return endpointContext;
+  }
+
   public FakeCallContext withChannel(FakeChannel channel) {
     return new FakeCallContext(
         this.credentials,

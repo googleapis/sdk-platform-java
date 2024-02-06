@@ -148,13 +148,6 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     return clock;
   }
 
-  // Intended for Internal Use and Overriden by generated ServiceStubSettings classes.
-  // Meant to be shared between StubSettings and ClientContext.
-  @InternalApi
-  public String getServiceName() {
-    return "";
-  }
-
   public final String getUniverseDomain() {
     return endpointContext.resolvedUniverseDomain();
   }
@@ -343,11 +336,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.gdchApiAudience = clientContext.getGdchApiAudience();
         this.universeDomain = clientContext.getUniverseDomain();
         this.endpointContextBuilder =
-            EndpointContext.newBuilder()
-                .setServiceName(serviceName)
-                .setClientSettingsEndpoint(this.endpoint)
-                .setMtlsEndpoint(this.mtlsEndpoint)
-                .setUniverseDomain(universeDomain);
+            clientContext.getDefaultCallContext().getEndpointContext().toBuilder();
       }
     }
 
@@ -460,6 +449,17 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
      */
     public B setClock(ApiClock clock) {
       this.clock = clock;
+      return self();
+    }
+
+    /**
+     * This is intended to be used by the generated Client StubSettings' classes. Explicitly setting
+     * this value may result in unintended client behavior.
+     */
+    @InternalApi
+    public B setServiceName(String serviceName) {
+      this.serviceName = serviceName;
+      this.endpointContextBuilder = this.endpointContextBuilder.setServiceName(serviceName);
       return self();
     }
 

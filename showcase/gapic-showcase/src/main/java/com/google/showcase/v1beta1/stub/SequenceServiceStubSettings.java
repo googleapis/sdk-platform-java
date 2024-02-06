@@ -268,6 +268,11 @@ public class SequenceServiceStubSettings extends StubSettings<SequenceServiceStu
             "Transport not supported: %s", getTransportChannelProvider().getTransportName()));
   }
 
+  /** Returns the default service name. */
+  public static String getServiceName() {
+    return "";
+  }
+
   /** Returns a builder for the default ExecutorProvider for this service. */
   public static InstantiatingExecutorProvider.Builder defaultExecutorProviderBuilder() {
     return InstantiatingExecutorProvider.newBuilder();
@@ -509,6 +514,7 @@ public class SequenceServiceStubSettings extends StubSettings<SequenceServiceStu
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
+      builder.setServiceName(getServiceName());
 
       return initDefaults(builder);
     }
@@ -521,6 +527,7 @@ public class SequenceServiceStubSettings extends StubSettings<SequenceServiceStu
       builder.setInternalHeaderProvider(defaultHttpJsonApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
+      builder.setServiceName(getServiceName());
 
       return initDefaults(builder);
     }

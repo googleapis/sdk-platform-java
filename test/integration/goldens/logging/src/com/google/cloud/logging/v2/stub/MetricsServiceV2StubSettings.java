@@ -206,18 +206,8 @@ public class MetricsServiceV2StubSettings extends StubSettings<MetricsServiceV2S
             "Transport not supported: %s", getTransportChannelProvider().getTransportName()));
   }
 
-  /** Returns the endpoint set by the user or the the service's default endpoint. */
-  @Override
-  public String getEndpoint() {
-    if (super.getEndpoint() != null) {
-      return super.getEndpoint();
-    }
-    return getDefaultEndpoint();
-  }
-
   /** Returns the default service name. */
-  @Override
-  public String getServiceName() {
+  public static String getServiceName() {
     return "logging";
   }
 
@@ -398,6 +388,7 @@ public class MetricsServiceV2StubSettings extends StubSettings<MetricsServiceV2S
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
+      builder.setServiceName(getServiceName());
 
       return initDefaults(builder);
     }
@@ -471,15 +462,6 @@ public class MetricsServiceV2StubSettings extends StubSettings<MetricsServiceV2S
     /** Returns the builder for the settings used for calls to deleteLogMetric. */
     public UnaryCallSettings.Builder<DeleteLogMetricRequest, Empty> deleteLogMetricSettings() {
       return deleteLogMetricSettings;
-    }
-
-    /** Returns the endpoint set by the user or the the service's default endpoint. */
-    @Override
-    public String getEndpoint() {
-      if (super.getEndpoint() != null) {
-        return super.getEndpoint();
-      }
-      return getDefaultEndpoint();
     }
 
     @Override

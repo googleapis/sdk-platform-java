@@ -432,8 +432,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
   }
 
   /** Returns the default service name. */
-  @Override
-  public String getServiceName() {
+  public static String getServiceName() {
     return "pubsub";
   }
 
@@ -669,6 +668,7 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
+      builder.setServiceName(getServiceName());
 
       return initDefaults(builder);
     }

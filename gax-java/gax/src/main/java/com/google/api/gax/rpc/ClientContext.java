@@ -161,14 +161,9 @@ public abstract class ClientContext {
 
     Credentials credentials = settings.getCredentialsProvider().getCredentials();
     boolean usingGDCH = credentials instanceof GdchCredentials;
-    //
+    // GDC-H is determined by the Credentials passed in
     EndpointContext endpointContext =
-        settings
-            .getEndpointContext()
-            .toBuilder()
-            .setServiceName(settings.getServiceName())
-            .setUsingGDCH(usingGDCH)
-            .build();
+        settings.getEndpointContext().toBuilder().setUsingGDCH(usingGDCH).build();
     String endpoint = endpointContext.resolvedEndpoint();
 
     String settingsGdchApiAudience = settings.getGdchApiAudience();
@@ -267,7 +262,7 @@ public abstract class ClientContext {
         .setInternalHeaders(ImmutableMap.copyOf(settings.getInternalHeaderProvider().getHeaders()))
         .setClock(clock)
         .setDefaultCallContext(defaultCallContext)
-        .setServiceName(settings.getServiceName())
+        .setServiceName(endpointContext.serviceName())
         .setUniverseDomain(settings.getUniverseDomain())
         .setEndpoint(settings.getEndpoint())
         .setQuotaProjectId(settings.getQuotaProjectId())
