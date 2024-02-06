@@ -37,7 +37,6 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Reader;
 import java.time.Duration;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -58,25 +57,7 @@ public class HttpJsonClientCallImplTest {
   @Mock private HttpTransport httpTransport;
   @Mock private Executor executor;
   private ScheduledThreadPoolExecutor deadlineSchedulerExecutor;
-  private HttpJsonClientCall.Listener listener =
-      new HttpJsonClientCall.Listener() {
-        @Override
-        public void onHeaders(HttpJsonMetadata responseHeaders) {
-          super.onHeaders(responseHeaders);
-        }
-
-        @Override
-        public void onMessage(Object message) {
-          super.onMessage(message);
-        }
-
-        @Override
-        public void onClose(int statusCode, HttpJsonMetadata trailers) {
-          super.onClose(statusCode, trailers);
-          countDownLatch.countDown();
-        }
-      };
-  private CountDownLatch countDownLatch;
+  @Mock private HttpJsonClientCall.Listener listener;
 
   @Test
   public void responseReceived_noCancellationTask() throws InterruptedException {
@@ -109,7 +90,7 @@ public class HttpJsonClientCallImplTest {
     deadlineSchedulerExecutor.awaitTermination(AWAIT_TERMINATION_TIME, TimeUnit.SECONDS);
   }
 
-  @Test
+  @Test(timeout = 100000L)
   public void responseReceived_cancellationTaskExist_isCancelledProperly()
       throws InterruptedException {
     // Create a ScheduledExecutorService for creating the timeout task
@@ -119,8 +100,7 @@ public class HttpJsonClientCallImplTest {
     deadlineSchedulerExecutor.setRemoveOnCancelPolicy(true);
 
     // Setting a timeout for this call will enqueue a timeout task
-    Mockito.when(httpJsonCallOptions.getTimeout())
-        .thenReturn(Duration.ofSeconds(AWAIT_TERMINATION_TIME));
+    Mockito.when(httpJsonCallOptions.getTimeout()).thenReturn(Duration.ofMinutes(10));
 
     String response = "Content";
     InputStream inputStream = new ByteArrayInputStream(response.getBytes());
@@ -137,7 +117,6 @@ public class HttpJsonClientCallImplTest {
             httpTransport,
             executor,
             deadlineSchedulerExecutor);
-    countDownLatch = new CountDownLatch(1);
     httpJsonClientCall.start(listener, HttpJsonMetadata.newBuilder().build());
     // The timeout task is scheduled for 10 seconds from invocation. The task should be
     // populated in the work queue, but not active yet
@@ -150,7 +129,6 @@ public class HttpJsonClientCallImplTest {
             .setTrailers(HttpJsonMetadata.newBuilder().build())
             .setResponseContent(inputStream)
             .build());
-    countDownLatch.await(5, TimeUnit.SECONDS);
     // After the result is received, `close()` should have run and removed the timeout task
     // Expect that there are no tasks in the queue and no active tasks
     Truth.assertThat(deadlineSchedulerExecutor.getQueue().size()).isEqualTo(0);
