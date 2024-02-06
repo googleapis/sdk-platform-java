@@ -87,7 +87,7 @@ for configuration_yaml in "${configuration_yamls[@]}"; do
     generation_duration_seconds=$(expr "${generation_end}" - "${generation_start}" || true)
     echo "Generation time for ${api_shortname} was ${generation_duration_seconds} seconds."
     pushd "${output_folder}"
-    echo "${proto_path} ${generation_duration_seconds}" >> generation_times
+    echo "${api_shortname} ${generation_duration_seconds}" >> generation_times
 
     echo "Generate library finished."
     echo "Compare generation result..."

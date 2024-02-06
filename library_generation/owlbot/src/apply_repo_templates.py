@@ -18,7 +18,7 @@ repo_templates_path = os.path.join(script_dir, '..', 'templates', 'java_library'
 def apply_repo_templates(owlbot_py_path: str, monorepo: bool) -> None:
   excludes = []
   with open(owlbot_py_path) as contents:
-    excludes += _parse_template_excludes(contents.read())
+    excludes += parse_template_excludes(contents.read())
   print(f'repo_templates_path: {repo_templates_path}')
   print(f'excludes: {excludes}')
   common_templates(

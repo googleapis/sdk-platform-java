@@ -36,7 +36,7 @@ function processModule() {
   if [ -f "owlbot.py" ]
   then
     # defaults to run owlbot.py
-    python3 "${scripts_root}/owlbot/src/apply-repo-templates.py" owlbot.py "${monorepo}"
+    python3 "${scripts_root}/owlbot/src/apply_repo_templates.py" owlbot.py "${monorepo}"
   fi
 
   # templates as well as retrieving files from owl-bot-staging
