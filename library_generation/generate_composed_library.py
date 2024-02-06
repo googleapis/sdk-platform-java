@@ -46,7 +46,6 @@ def generate_composed_library(
     library: LibraryConfig,
     output_folder: str,
     versions_file: str,
-    language: str = "java",
 ) -> None:
     """
     Generate libraries composed of more than one service or service version
@@ -57,7 +56,6 @@ def generate_composed_library(
     for convenience and to prevent all libraries to be processed
     :param output_folder:
     :param versions_file:
-    :param language: programming language of the library
     :return None
     """
     util.pull_api_definition(
@@ -82,7 +80,7 @@ def generate_composed_library(
             library_path=library_path,
         )
         service_version = gapic.proto_path.split("/")[-1]
-        temp_destination_path = f"{language}-{library.api_shortname}-{service_version}"
+        temp_destination_path = f"java-{library.api_shortname}-{service_version}"
         effective_arguments = __construct_effective_arg(
             base_arguments=base_arguments,
             gapic=gapic,

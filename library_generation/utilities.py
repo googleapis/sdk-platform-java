@@ -395,6 +395,8 @@ def generate_prerequisite_files(
 
     # generate .repo-meta.json
     json_file = ".repo-metadata.json"
+    # .repo-metadata.json is removed before generating the first version of
+    # a library. This check ensures no duplicated generation.
     if not os.path.exists(f"{library_path}/{json_file}"):
         with open(f"{library_path}/{json_file}", "w") as fp:
             json.dump(repo_metadata, fp, indent=2)
@@ -481,23 +483,3 @@ def get_version_from(
         for line in f.readlines():
             if artifact_id in line:
                 return line.split(":")[index].strip()
-
-
-def main(argv: Sequence[str]) -> None:
-    if len(argv) < 1:
-        raise ValueError(
-            "Usage: python generate_composed_library_args.py function_name arg1...argN"
-        )
-
-    function_name = argv[1]
-    arguments = argv[2:]
-    try:
-        function = getattr(sys.modules[__name__], function_name)
-        print(function(*arguments))
-    except AttributeError:
-        print(f'function name "{function_name}" not found in utilities.py')
-        sys.exit(1)
-
-
-if __name__ == "__main__":
-    main(sys.argv)
