@@ -120,13 +120,19 @@ public class IAMPolicyStubSettings extends StubSettings<IAMPolicyStubSettings> {
   }
 
   /** Returns the default service name. */
-  public static String getServiceName() {
+  @Override
+  public String getServiceName() {
     return "iam-meta-api";
   }
 
   /** Returns a builder for the default ExecutorProvider for this service. */
   public static InstantiatingExecutorProvider.Builder defaultExecutorProviderBuilder() {
     return InstantiatingExecutorProvider.newBuilder();
+  }
+
+  /** Returns the default service endpoint. */
+  public static String getDefaultServiceName() {
+    return "iam-meta-api";
   }
 
   /** Returns the default service endpoint. */
@@ -267,7 +273,7 @@ public class IAMPolicyStubSettings extends StubSettings<IAMPolicyStubSettings> {
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setServiceName(getServiceName());
+      builder.setServiceName(getDefaultServiceName());
 
       return initDefaults(builder);
     }

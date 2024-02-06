@@ -307,13 +307,19 @@ public class LibraryServiceStubSettings extends StubSettings<LibraryServiceStubS
   }
 
   /** Returns the default service name. */
-  public static String getServiceName() {
+  @Override
+  public String getServiceName() {
     return "library-example";
   }
 
   /** Returns a builder for the default ExecutorProvider for this service. */
   public static InstantiatingExecutorProvider.Builder defaultExecutorProviderBuilder() {
     return InstantiatingExecutorProvider.newBuilder();
+  }
+
+  /** Returns the default service endpoint. */
+  public static String getDefaultServiceName() {
+    return "library-example";
   }
 
   /** Returns the default service endpoint. */
@@ -551,7 +557,7 @@ public class LibraryServiceStubSettings extends StubSettings<LibraryServiceStubS
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setServiceName(getServiceName());
+      builder.setServiceName(getDefaultServiceName());
 
       return initDefaults(builder);
     }
@@ -564,7 +570,7 @@ public class LibraryServiceStubSettings extends StubSettings<LibraryServiceStubS
       builder.setInternalHeaderProvider(defaultHttpJsonApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setServiceName(getServiceName());
+      builder.setServiceName(getDefaultServiceName());
 
       return initDefaults(builder);
     }

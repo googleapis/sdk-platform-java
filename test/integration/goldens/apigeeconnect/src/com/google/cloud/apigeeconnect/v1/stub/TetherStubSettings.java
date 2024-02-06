@@ -103,13 +103,19 @@ public class TetherStubSettings extends StubSettings<TetherStubSettings> {
   }
 
   /** Returns the default service name. */
-  public static String getServiceName() {
+  @Override
+  public String getServiceName() {
     return "apigeeconnect";
   }
 
   /** Returns a builder for the default ExecutorProvider for this service. */
   public static InstantiatingExecutorProvider.Builder defaultExecutorProviderBuilder() {
     return InstantiatingExecutorProvider.newBuilder();
+  }
+
+  /** Returns the default service endpoint. */
+  public static String getDefaultServiceName() {
+    return "apigeeconnect";
   }
 
   /** Returns the default service endpoint. */
@@ -230,7 +236,7 @@ public class TetherStubSettings extends StubSettings<TetherStubSettings> {
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setServiceName(getServiceName());
+      builder.setServiceName(getDefaultServiceName());
 
       return initDefaults(builder);
     }

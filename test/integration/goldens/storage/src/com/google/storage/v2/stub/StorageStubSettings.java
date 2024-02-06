@@ -590,13 +590,19 @@ public class StorageStubSettings extends StubSettings<StorageStubSettings> {
   }
 
   /** Returns the default service name. */
-  public static String getServiceName() {
+  @Override
+  public String getServiceName() {
     return "storage";
   }
 
   /** Returns a builder for the default ExecutorProvider for this service. */
   public static InstantiatingExecutorProvider.Builder defaultExecutorProviderBuilder() {
     return InstantiatingExecutorProvider.newBuilder();
+  }
+
+  /** Returns the default service endpoint. */
+  public static String getDefaultServiceName() {
+    return "storage";
   }
 
   /** Returns the default service endpoint. */
@@ -923,7 +929,7 @@ public class StorageStubSettings extends StubSettings<StorageStubSettings> {
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setServiceName(getServiceName());
+      builder.setServiceName(getDefaultServiceName());
 
       return initDefaults(builder);
     }

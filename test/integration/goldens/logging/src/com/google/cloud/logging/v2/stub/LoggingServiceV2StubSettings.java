@@ -439,13 +439,19 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
   }
 
   /** Returns the default service name. */
-  public static String getServiceName() {
+  @Override
+  public String getServiceName() {
     return "logging";
   }
 
   /** Returns a builder for the default ExecutorProvider for this service. */
   public static InstantiatingExecutorProvider.Builder defaultExecutorProviderBuilder() {
     return InstantiatingExecutorProvider.newBuilder();
+  }
+
+  /** Returns the default service endpoint. */
+  public static String getDefaultServiceName() {
+    return "logging";
   }
 
   /** Returns the default service endpoint. */
@@ -643,7 +649,7 @@ public class LoggingServiceV2StubSettings extends StubSettings<LoggingServiceV2S
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setServiceName(getServiceName());
+      builder.setServiceName(getDefaultServiceName());
 
       return initDefaults(builder);
     }

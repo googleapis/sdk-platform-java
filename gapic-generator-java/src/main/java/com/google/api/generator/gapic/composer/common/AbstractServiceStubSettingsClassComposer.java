@@ -97,6 +97,7 @@ import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -1140,18 +1141,21 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     TypeNode returnType;
 
     // Create the getServiceName method.
-    returnType = TypeNode.STRING;
-    javaMethods.add(
-        MethodDefinition.builder()
-            .setHeaderCommentStatements(SettingsCommentComposer.DEFAULT_SERVICE_NAME_METHOD_COMMENT)
-            .setIsOverride(false)
-            .setScope(ScopeNode.PUBLIC)
-            .setIsStatic(true)
-            .setReturnType(returnType)
-            .setName("getServiceName")
-            .setReturnExpr(
-                ValueExpr.withValue(StringObjectValue.withValue(service.hostServiceName())))
-            .build());
+    if (!Strings.isNullOrEmpty(service.hostServiceName())) {
+      returnType = TypeNode.STRING;
+      javaMethods.add(
+          MethodDefinition.builder()
+              .setHeaderCommentStatements(
+                  SettingsCommentComposer.DEFAULT_SERVICE_NAME_METHOD_COMMENT)
+              .setIsOverride(true)
+              .setScope(ScopeNode.PUBLIC)
+              .setIsStatic(false)
+              .setReturnType(returnType)
+              .setName("getServiceName")
+              .setReturnExpr(
+                  ValueExpr.withValue(StringObjectValue.withValue(service.hostServiceName())))
+              .build());
+    }
 
     // Create the defaultExecutorProviderBuilder method.
     returnType =
@@ -1171,6 +1175,20 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                     .setMethodName("newBuilder")
                     .setReturnType(returnType)
                     .build())
+            .build());
+
+    // Create the getDefaultServiceName method.
+    returnType = TypeNode.STRING;
+    javaMethods.add(
+        MethodDefinition.builder()
+            .setHeaderCommentStatements(
+                SettingsCommentComposer.DEFAULT_SERVICE_ENDPOINT_METHOD_COMMENT)
+            .setScope(ScopeNode.PUBLIC)
+            .setIsStatic(true)
+            .setReturnType(returnType)
+            .setName("getDefaultServiceName")
+            .setReturnExpr(
+                ValueExpr.withValue(StringObjectValue.withValue(service.hostServiceName())))
             .build());
 
     // Create the getDefaultEndpoint method.
@@ -1910,7 +1928,8 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         MethodInvocationExpr.builder()
             .setExprReferenceExpr(builderVarExpr)
             .setMethodName("setServiceName")
-            .setArguments(MethodInvocationExpr.builder().setMethodName("getServiceName").build())
+            .setArguments(
+                MethodInvocationExpr.builder().setMethodName("getDefaultServiceName").build())
             .build());
     bodyStatements.addAll(
         bodyExprs.stream().map(e -> ExprStatement.withExpr(e)).collect(Collectors.toList()));

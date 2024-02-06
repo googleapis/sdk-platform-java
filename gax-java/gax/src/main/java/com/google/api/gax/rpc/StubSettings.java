@@ -148,6 +148,12 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     return clock;
   }
 
+  // Meant to be shared between StubSettings and ClientContext.
+  @InternalApi
+  public String getServiceName() {
+    return "";
+  }
+
   public final String getUniverseDomain() {
     return endpointContext.resolvedUniverseDomain();
   }
