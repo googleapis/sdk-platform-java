@@ -25,7 +25,7 @@ class BomConfig:
         artifact_id: str,
         version: str,
         version_annotation: str,
-        is_import: bool = True
+        is_import: bool = True,
     ):
         self.group_id = group_id
         self.artifact_id = artifact_id

@@ -93,21 +93,21 @@ def __search_for_bom_artifact(
         repository_path=repository_path,
         module="java-grafeas",
         group_id="io.grafeas",
-        artifact_id="grafeas"
+        artifact_id="grafeas",
     )
     # handle edge case: java-dns
     bom_configs += __handle_special_bom(
         repository_path=repository_path,
         module="java-dns",
         group_id="com.google.cloud",
-        artifact_id="google-cloud-dns"
+        artifact_id="google-cloud-dns",
     )
     # handle edge case: java-notification
     bom_configs += __handle_special_bom(
         repository_path=repository_path,
         module="java-notification",
         group_id="com.google.cloud",
-        artifact_id="google-cloud-notification"
+        artifact_id="google-cloud-notification",
     )
 
     return sorted(bom_configs)
@@ -124,13 +124,15 @@ def __handle_special_bom(
         return []
     root = etree.parse(pom).getroot()
     version = root.find(f"{project_tag}{version_tag}").text
-    return [BomConfig(
-        group_id=group_id,
-        artifact_id=artifact_id,
-        version=version,
-        version_annotation=artifact_id,
-        is_import=False
-    )]
+    return [
+        BomConfig(
+            group_id=group_id,
+            artifact_id=artifact_id,
+            version=version,
+            version_annotation=artifact_id,
+            is_import=False,
+        )
+    ]
 
 
 def create_argument(arg_key: str, arg_container: object) -> List[str]:
