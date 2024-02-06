@@ -98,6 +98,21 @@ jobs:
         pushd library_generation
         pip install -r requirements.in
         popd
+    - name: install synthtool
+      shell: bash
+      run: |
+        set -ex
+        mkdir -p /tmp/synthtool
+        pushd /tmp/synthtool
+        if [ ! -d "synthtool" ]; then
+          git clone https://github.com/googleapis/synthtool.git
+        fi
+        pushd "synthtool"
+
+        git reset --hard origin/no-java-templates
+
+        python3 -m pip install -e .
+        python3 -m pip install -r requirements.in
     - name: Run shell unit tests
       run: |
         set -x
