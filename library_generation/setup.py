@@ -1,6 +1,5 @@
-"""TODO(diegomarquezp): DO NOT SUBMIT without one-line documentation for setup.
-
-TODO(diegomarquezp): DO NOT SUBMIT without a detailed description of setup.
+"""
+Package information of library_generation python scripts
 """
 
 from distutils.core import setup
