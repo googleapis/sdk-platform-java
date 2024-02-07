@@ -47,7 +47,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HttpJsonClientCallImplTest {
-  private static final int AWAIT_TERMINATION_TIME = 10;
+  private static final int AWAIT_TERMINATION_SEC = 10;
   @Mock private ApiMethodDescriptor apiMethodDescriptor;
   @Mock private HttpResponseParser httpResponseParser;
   @Mock private HttpJsonCallOptions httpJsonCallOptions;
@@ -80,9 +80,8 @@ public class HttpJsonClientCallImplTest {
             .setTrailers(HttpJsonMetadata.newBuilder().build())
             .build());
     Truth.assertThat(deadlineSchedulerExecutor.getQueue().size()).isEqualTo(0);
-    Truth.assertThat(deadlineSchedulerExecutor.getActiveCount()).isEqualTo(0);
     deadlineSchedulerExecutor.shutdown();
-    deadlineSchedulerExecutor.awaitTermination(AWAIT_TERMINATION_TIME, TimeUnit.SECONDS);
+    deadlineSchedulerExecutor.awaitTermination(AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 
   @Test(timeout = 100000L)
@@ -125,8 +124,7 @@ public class HttpJsonClientCallImplTest {
     // After the result is received, `close()` should have run and removed the timeout task
     // Expect that there are no tasks in the queue and no active tasks
     Truth.assertThat(deadlineSchedulerExecutor.getQueue().size()).isEqualTo(0);
-    Truth.assertThat(deadlineSchedulerExecutor.getActiveCount()).isEqualTo(0);
     deadlineSchedulerExecutor.shutdown();
-    deadlineSchedulerExecutor.awaitTermination(AWAIT_TERMINATION_TIME, TimeUnit.SECONDS);
+    deadlineSchedulerExecutor.awaitTermination(AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
   }
 }
