@@ -16,7 +16,6 @@
 
 package com.google.showcase.v1beta1.it;
 
-
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.rpc.Status;
 import com.google.showcase.v1beta1.EchoClient;

@@ -233,8 +233,8 @@ public class TestClientInitializer {
             .build();
     return ComplianceClient.create(httpJsonComplianceSettings);
   }
-  public static EchoClient createHttpJsonEchoClientOpenTelemetry()
-      throws Exception {
+
+  public static EchoClient createHttpJsonEchoClientOpenTelemetry() throws Exception {
 
     EchoSettings httpJsonEchoSettingsOtel =
         EchoSettings.createHttpJsonDefaultOtel()
@@ -249,17 +249,17 @@ public class TestClientInitializer {
     return EchoClient.create(httpJsonEchoSettingsOtel);
   }
 
-  public static EchoClient createGrpcEchoClientOpenTelemetry()
-      throws Exception {
+  public static EchoClient createGrpcEchoClientOpenTelemetry() throws Exception {
 
-    EchoSettings grpcEchoSettingsOtel = EchoSettings.createGrpcDefaultOtel()
-        .setCredentialsProvider(NoCredentialsProvider.create())
-        .setTransportChannelProvider(
-            EchoSettings.defaultGrpcTransportProviderBuilder()
-                .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
-                .build())
-        .setEndpoint("localhost:7469")
-        .build();
+    EchoSettings grpcEchoSettingsOtel =
+        EchoSettings.createGrpcDefaultOtel()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultGrpcTransportProviderBuilder()
+                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .build())
+            .setEndpoint("localhost:7469")
+            .build();
     return EchoClient.create(grpcEchoSettingsOtel);
   }
 }
