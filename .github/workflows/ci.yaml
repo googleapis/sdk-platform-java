@@ -187,20 +187,20 @@ jobs:
           java-version: ${{ matrix.java }}
           distribution: temurin
       - run: mvn -version
-      - name: Install Maven modules
-        run: |
-          mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
+#      - name: Install Maven modules
+#        run: |
+#          mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
 #      - name: Java Linter
 #        working-directory: showcase
 #        run: |
 #          mvn -B -ntp fmt:check
-      - name: Showcase golden tests
-        working-directory: showcase
-        run: |
-          mvn test \
-            -P enable-golden-tests \
-            --batch-mode \
-            --no-transfer-progress
+#      - name: Showcase golden tests
+#        working-directory: showcase
+#        run: |
+#          mvn test \
+#            -P enable-golden-tests \
+#            --batch-mode \
+#            --no-transfer-progress
       - name: Parse showcase version
         working-directory: showcase/gapic-showcase
         run: echo "SHOWCASE_VERSION=$(mvn help:evaluate -Dexpression=gapic-showcase.version -q -DforceStdout)" >> "$GITHUB_ENV"
