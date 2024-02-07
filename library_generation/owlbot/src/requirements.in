@@ -8,5 +8,3 @@ colorlog
 protobuf
 watchdog
 requests
-pyyaml
-absl-py

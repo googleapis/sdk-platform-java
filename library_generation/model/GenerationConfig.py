@@ -17,6 +17,8 @@ class GenerationConfig:
       owlbot_cli_image: str,
       synthtool_commitish: str,
       destination_path: Optional[str],
+      template_excludes: str,
+      path_to_yaml: str,
       libraries: List[LibraryConfig],
   ):
     self.gapic_generator_version = gapic_generator_version
@@ -26,6 +28,8 @@ class GenerationConfig:
     self.owlbot_cli_image = owlbot_cli_image
     self.synthtool_commitish = synthtool_commitish
     self.destination_path = destination_path
+    self.template_excludes = template_excludes
+    self.path_to_yaml = path_to_yaml
     self.libraries = libraries
 
   """
@@ -75,6 +79,8 @@ class GenerationConfig:
       _required(config, 'owlbot_cli_image'),
       _required(config, 'synthtool_commitish'),
       _optional(config, 'destination_path', None),
+      _required(config, 'template_excludes'),
+      path_to_yaml,
       parsed_libraries
     )
 

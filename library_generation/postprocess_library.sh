@@ -20,6 +20,8 @@
 # provided
 # 7 - is_monorepo: whether this library is a monorepo, which implies slightly
 # different logic
+# 8 - configuration_yaml_path: path to the configuration yaml containing library
+# generation information for this library
 set -xeo pipefail
 scripts_root=$(dirname "$(readlink -f "$0")")
 
@@ -30,6 +32,7 @@ owlbot_cli_source_folder=$4
 owlbot_cli_image_sha=$5
 synthtool_commitish=$6
 is_monorepo=$7
+configuration_yaml_path=$8
 
 source "${scripts_root}"/utilities.sh
 
@@ -116,5 +119,5 @@ popd # owlbot/src
 # run the postprocessor
 echo 'running owl-bot post-processor'
 pushd "${postprocessing_target}"
-bash "${scripts_root}/owlbot/bin/entrypoint.sh" "${scripts_root}" "${versions_file}"
+bash "${scripts_root}/owlbot/bin/entrypoint.sh" "${scripts_root}" "${versions_file}" "${configuration_yaml_path}"
 popd # postprocessing_target

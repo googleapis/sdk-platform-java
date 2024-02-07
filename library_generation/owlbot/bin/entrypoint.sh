@@ -26,6 +26,14 @@
 set -ex
 scripts_root=$1
 versions_file=$2
+configuration_yaml=$3
+
+pushd "${scripts_root}"
+# install library_generation which contains model classes used by the the
+# template rendering step
+python -m pip install -e .
+popd #scripts_root
+
 
 # Runs template and etc in current working directory
 function processModule() {
@@ -35,7 +43,7 @@ function processModule() {
   echo "Generating templates"
   if [ -f "owlbot.py" ]
   then
-    python3 "${scripts_root}/owlbot/src/apply_repo_templates.py" owlbot.py "${monorepo}"
+    python3 "${scripts_root}/owlbot/src/apply_repo_templates.py" "${configuration_yaml}" "${monorepo}"
   fi
 
   # templates as well as retrieving files from owl-bot-staging

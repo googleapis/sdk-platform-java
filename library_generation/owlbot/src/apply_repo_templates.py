@@ -6,54 +6,38 @@ Briefly, this wraps the call to synthtool's common templates using a custom temp
 """
 
 import os
+import sys
 from collections.abc import Sequence
-from absl import app
 from synthtool.languages.java import common_templates
 from pathlib import Path
-import re
+from model.GenerationConfig import GenerationConfig
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 repo_templates_path = os.path.join(script_dir, '..', 'templates', 'java_library')
 
-def apply_repo_templates(owlbot_py_path: str, monorepo: bool) -> None:
-  excludes = []
-  with open(owlbot_py_path) as contents:
-    excludes += parse_template_excludes(contents.read())
+def apply_repo_templates(configuration_yaml_path: str, monorepo: bool) -> None:
+  config = GenerationConfig.from_yaml(configuration_yaml_path)
   print(f'repo_templates_path: {repo_templates_path}')
-  print(f'excludes: {excludes}')
+  print(f'excludes: {config.template_excludes}')
   common_templates(
-      excludes=excludes,
+      excludes=config.template_excludes,
       template_path=Path(repo_templates_path),
       monorepo=monorepo
   )
 
 
-def parse_template_excludes(owlbot_py_contents: str) -> str:
-  print(f'owlbot_py_contents: {owlbot_py_contents}')
-  excludes = re.search(
-      'java\.common_templates\(.*excludes=\[(.*)\].*\)',
-      owlbot_py_contents,
-      re.MULTILINE | re.DOTALL
-  )
-  if excludes is None:
-    raise ValueError('Could not parse owlbot.py exclusions')
-  raw_excludes = excludes.group(1).split(',')
-  result = []
-  for raw_exc in raw_excludes:
-    match = re.search('["\'](.*)["\']', raw_exc)
-    if match:
-      result.append(match.group(1))
-  return result
-
 def main(argv: Sequence[str]) -> None:
   if len(argv) != 3:
-    raise app.UsageError("Usage: python apply-repo-templates.py owlbot_py_path monorepo")
+    raise ValueError("Usage: python apply-repo-templates.py configuration_yaml_path monorepo")
 
-  owlbot_py_path = argv[1]
+  configuration_yaml_path = argv[1]
   monorepo = argv[2]
-  apply_repo_templates(owlbot_py_path, monorepo.lower() == 'true')
+  apply_repo_templates(
+      configuration_yaml_path,
+      monorepo.lower() == 'true'
+  )
 
 
 
 if __name__ == "__main__":
-  app.run(main)
+  main(sys.argv)

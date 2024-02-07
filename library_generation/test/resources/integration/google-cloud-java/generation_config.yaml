@@ -12,6 +12,19 @@ owlbot_cli_image: sha256:623647ee79ac605858d09e60c1382a716c125fb776f69301b72de1c
 synthtool_commitish: 5e1fb2032fa44bc170677b38713023b4fec51a4e
 #Required. The root folder name of generated client libraries.
 destination_path: google-cloud-java
+#Required. This indicates which template files should not be added to the target library in the postprocessing step. This is originally expressed in owlbot.py. Since google-cloud-java has the same exclusion list for all libraries, this will be a repo-level configuration (for now, while we don't find exceptions).
+template_excludes:
+  - ".github/*"
+  - ".kokoro/*"
+  - "samples/*"
+  - "CODE_OF_CONDUCT.md"
+  - "CONTRIBUTING.md"
+  - "LICENSE"
+  - "SECURITY.md"
+  - "java.header"
+  - "license-checks.xml"
+  - "renovate.json"
+  - ".gitignore"
 #Required. If the number of libraries is greater than 1, the scripts will treat the target repository as a monorepo, with a slightly different workflow mainly in the postprocessing stage
 libraries:
     #Required. Can be used for populating the folder name java-{api_shortName}. This is also the destination-name in new-client.py.

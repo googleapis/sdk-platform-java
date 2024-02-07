@@ -137,5 +137,5 @@ def generate_composed_library(
     # call postprocess library
     util.run_process_and_print_output([f'{script_dir}/postprocess_library.sh',
               f'{library_path}', '', versions_file, owlbot_cli_source_folder,
-                                       config.owlbot_cli_image, config.synthtool_commitish, str(is_monorepo).lower()], 'Library postprocessing')
+                                       config.owlbot_cli_image, config.synthtool_commitish, str(is_monorepo).lower(), config.path_to_yaml], 'Library postprocessing')
 
