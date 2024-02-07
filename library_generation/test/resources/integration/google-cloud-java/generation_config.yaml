@@ -5,7 +5,7 @@ gapic_generator_version: 2.34.0
 #Optional. The protobuf version in googleapis (not sdk-platform-java) is the actual source of truth for generated protos in google-cloud-java
 protobuf_version: 25.2
 #Required.
-googleapis_commitish: 00b0ded37f3e6c64282730e782a8c95c4f9be4bd
+googleapis_commitish: bfa99682e3fd1cf14e2b8a4945942ec7cf984f96
 #Required.
 owlbot_cli_image: sha256:623647ee79ac605858d09e60c1382a716c125fb776f69301b72de1cd35d49409
 #Required.
