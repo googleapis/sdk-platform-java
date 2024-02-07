@@ -125,7 +125,8 @@ class IntegrationTest(unittest.TestCase):
         config_files = {}
         for sub_dir in Path(path).resolve().iterdir():
             repo = sub_dir.name
-            if repo == "golden":
+            # skip the split repo.
+            if repo == "golden" or repo == "java-bigtable":
                 continue
             config = f"{sub_dir}/{config_name}"
             config_files[repo] = config
