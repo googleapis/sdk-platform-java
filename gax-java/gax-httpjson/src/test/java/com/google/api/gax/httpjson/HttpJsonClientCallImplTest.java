@@ -38,6 +38,8 @@ import java.io.Reader;
 import java.time.Duration;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -81,11 +83,11 @@ public class HttpJsonClientCallImplTest {
     Truth.assertThat(deadlineSchedulerExecutor.getQueue().size()).isEqualTo(0);
     deadlineSchedulerExecutor.shutdown();
     // Scheduler is not waiting for any task and should terminate immediately
-    Truth.assertThat(deadlineSchedulerExecutor.isTerminated());
+    Truth.assertThat(deadlineSchedulerExecutor.isTerminated()).isTrue();
   }
 
   @Test
-  public void responseReceived_cancellationTaskExists_isCancelledProperly() {
+  public void responseReceived_cancellationTaskExists_isCancelledProperly() throws InterruptedException {
     ScheduledThreadPoolExecutor deadlineSchedulerExecutor = new ScheduledThreadPoolExecutor(1);
     // SetRemoveOnCancelPolicy will immediately remove the task from the work queue
     // when the task is cancelled
@@ -125,7 +127,13 @@ public class HttpJsonClientCallImplTest {
     // Expect that there are no tasks in the queue and no active tasks
     Truth.assertThat(deadlineSchedulerExecutor.getQueue().size()).isEqualTo(0);
     deadlineSchedulerExecutor.shutdown();
-    // Scheduler is not waiting for any task and should terminate immediately
-    Truth.assertThat(deadlineSchedulerExecutor.isTerminated());
+
+    // Ideally, this test wouldn't need to awaitTermination. Given the machine this test
+    // is running on, we can't guarantee that isTerminated is true immediately. The point
+    // of this test is that it doesn't wait the full timeout duration (10 min) to terminate
+    // and rather is able to terminate after we invoke shutdown on the deadline scheduler.
+    deadlineSchedulerExecutor.awaitTermination(5, TimeUnit.SECONDS);
+    // Scheduler is not waiting for any task and should terminate quickly
+    Truth.assertThat(deadlineSchedulerExecutor.isTerminated()).isTrue();
   }
 }
