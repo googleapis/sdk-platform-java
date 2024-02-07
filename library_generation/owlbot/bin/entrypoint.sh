@@ -40,7 +40,7 @@ function processModule() {
   monorepo=$1
 
   # apply repo templates
-  echo "Generating templates"
+  echo "Rendering templates"
   if [ -f "owlbot.py" ]
   then
     python3 "${scripts_root}/owlbot/src/apply_repo_templates.py" "${configuration_yaml}" "${monorepo}"
