@@ -39,7 +39,6 @@ import java.time.Duration;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -87,7 +86,8 @@ public class HttpJsonClientCallImplTest {
   }
 
   @Test
-  public void responseReceived_cancellationTaskExists_isCancelledProperly() throws InterruptedException {
+  public void responseReceived_cancellationTaskExists_isCancelledProperly()
+      throws InterruptedException {
     ScheduledThreadPoolExecutor deadlineSchedulerExecutor = new ScheduledThreadPoolExecutor(1);
     // SetRemoveOnCancelPolicy will immediately remove the task from the work queue
     // when the task is cancelled
