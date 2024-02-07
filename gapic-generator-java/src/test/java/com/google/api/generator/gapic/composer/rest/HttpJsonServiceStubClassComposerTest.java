@@ -207,4 +207,14 @@ public class HttpJsonServiceStubClassComposerTest {
     Assert.assertGoldenClass(this.getClass(), clazz, "HttpJsonRoutingHeadersStub.golden");
     Assert.assertEmptySamples(clazz.samples());
   }
+
+  @Test
+  public void generateHttpJsonServiceStubClass_routingHeaders() {
+    GapicContext context = RestTestProtoLoader.instance().parseAutoPopulateFieldTesting();
+    Service service = context.services().get(0);
+    GapicClass clazz = HttpJsonServiceStubClassComposer.instance().generate(context, service);
+
+    Assert.assertGoldenClass(this.getClass(), clazz, "HttpJsonAutoPopulateFieldTestingStub.golden");
+    Assert.assertEmptySamples(clazz.samples());
+  }
 }
