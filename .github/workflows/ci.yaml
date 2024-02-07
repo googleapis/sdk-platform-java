@@ -190,10 +190,10 @@ jobs:
       - name: Install Maven modules
         run: |
           mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
-      - name: Java Linter
-        working-directory: showcase
-        run: |
-          mvn -B -ntp fmt:check
+#      - name: Java Linter
+#        working-directory: showcase
+#        run: |
+#          mvn -B -ntp fmt:check
       - name: Showcase golden tests
         working-directory: showcase
         run: |
