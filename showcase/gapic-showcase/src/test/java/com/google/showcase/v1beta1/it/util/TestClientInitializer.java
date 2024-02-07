@@ -61,44 +61,8 @@ public class TestClientInitializer {
     return EchoClient.create(grpcEchoSettings);
   }
 
-  public static EchoClient createGrpcEchoClientOtelWithRetrySettings(RetrySettings retrySettings, Set<StatusCode.Code> retryableCodes)
-      throws Exception {
-    EchoStubSettings.Builder grpcEchoSettingsBuilder = EchoStubSettings.newGrpcBuilderOtel();
-    grpcEchoSettingsBuilder
-        .blockSettings()
-        .setRetrySettings(retrySettings)
-        .setRetryableCodes(retryableCodes);
-    EchoSettings grpcEchoSettingsOtel = EchoSettings.create(grpcEchoSettingsBuilder.build());
-    grpcEchoSettingsOtel =
-        grpcEchoSettingsOtel
-            .toBuilder()
-            .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTransportChannelProvider(
-                EchoSettings.defaultGrpcTransportProviderBuilder()
-                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
-                    .build())
-            .setEndpoint("localhost:7469")
-            .build();
-    return EchoClient.create(grpcEchoSettingsOtel);
-  }
-
   public static EchoClient createHttpJsonEchoClient() throws Exception {
     return createHttpJsonEchoClient(ImmutableList.of());
-  }
-
-  public static EchoClient createHttpJsonEchoClientOtel()
-      throws Exception {
-    EchoSettings httpJsonEchoSettingsOtel =
-        EchoSettings.createHttpJsonDefaultOtel()
-            .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTransportChannelProvider(
-                EchoSettings.defaultHttpJsonTransportProviderBuilder()
-                    .setHttpTransport(
-                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
-                    .setEndpoint("http://localhost:7469")
-                    .build())
-            .build();
-    return EchoClient.create(httpJsonEchoSettingsOtel);
   }
 
   public static EchoClient createHttpJsonEchoClient(List<HttpJsonClientInterceptor> interceptorList)
