@@ -38,7 +38,6 @@ import java.io.Reader;
 import java.time.Duration;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -47,7 +46,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HttpJsonClientCallImplTest {
-  private static final int AWAIT_TERMINATION_SEC = 10;
   @Mock private ApiMethodDescriptor apiMethodDescriptor;
   @Mock private HttpResponseParser httpResponseParser;
   @Mock private HttpJsonCallOptions httpJsonCallOptions;
@@ -71,8 +69,10 @@ public class HttpJsonClientCallImplTest {
             executor,
             deadlineSchedulerExecutor);
     httpJsonClientCall.start(listener, HttpJsonMetadata.newBuilder().build());
-    // No timeout task in the work queue
+    // No timeout task in the work queue and no active tasks (timeout is scheduled to
+    // be 10 min in the future and will not be active).
     Truth.assertThat(deadlineSchedulerExecutor.getQueue().size()).isEqualTo(0);
+    // Follows the numMessages requested from HttpJsonClientCalls.futureUnaryCall()
     httpJsonClientCall.request(2);
     httpJsonClientCall.setResult(
         HttpRequestRunnable.RunnableResult.builder()
@@ -81,15 +81,16 @@ public class HttpJsonClientCallImplTest {
             .build());
     Truth.assertThat(deadlineSchedulerExecutor.getQueue().size()).isEqualTo(0);
     deadlineSchedulerExecutor.shutdown();
-    deadlineSchedulerExecutor.awaitTermination(AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
+    // Scheduler is not waiting for any task and should terminate immediately
+    Truth.assertThat(deadlineSchedulerExecutor.isTerminated());
   }
 
   @Test(timeout = 100000L)
-  public void responseReceived_cancellationTaskExist_isCancelledProperly()
+  public void responseReceived_cancellationTaskExists_isCancelledProperly()
       throws InterruptedException {
     // Create a ScheduledExecutorService for creating the timeout task
-    // SetRemoveOnCancelPolicy will immediately remove the task from the work queue
     ScheduledThreadPoolExecutor deadlineSchedulerExecutor = new ScheduledThreadPoolExecutor(1);
+    // SetRemoveOnCancelPolicy will immediately remove the task from the work queue
     deadlineSchedulerExecutor.setRemoveOnCancelPolicy(true);
 
     // Setting a timeout for this call will enqueue a timeout task
@@ -112,8 +113,9 @@ public class HttpJsonClientCallImplTest {
             deadlineSchedulerExecutor);
     httpJsonClientCall.start(listener, HttpJsonMetadata.newBuilder().build());
     // The timeout task is scheduled for 10 minutes from invocation. The task should be
-    // populated in the work queue, scheduled to run, but not active yet
+    // populated in the work queue, scheduled to run, but not active yet.
     Truth.assertThat(deadlineSchedulerExecutor.getQueue().size()).isEqualTo(1);
+    // Follows the numMessages requested from HttpJsonClientCalls.futureUnaryCall()
     httpJsonClientCall.request(2);
     httpJsonClientCall.setResult(
         HttpRequestRunnable.RunnableResult.builder()
@@ -125,6 +127,7 @@ public class HttpJsonClientCallImplTest {
     // Expect that there are no tasks in the queue and no active tasks
     Truth.assertThat(deadlineSchedulerExecutor.getQueue().size()).isEqualTo(0);
     deadlineSchedulerExecutor.shutdown();
-    deadlineSchedulerExecutor.awaitTermination(AWAIT_TERMINATION_SEC, TimeUnit.SECONDS);
+    // Scheduler is not waiting for any task and should terminate immediately
+    Truth.assertThat(deadlineSchedulerExecutor.isTerminated());
   }
 }
