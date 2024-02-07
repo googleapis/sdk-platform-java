@@ -41,10 +41,7 @@ function processModule() {
 
   # apply repo templates
   echo "Rendering templates"
-  if [ -f "owlbot.py" ]
-  then
-    python3 "${scripts_root}/owlbot/src/apply_repo_templates.py" "${configuration_yaml}" "${monorepo}"
-  fi
+  python3 "${scripts_root}/owlbot/src/apply_repo_templates.py" "${configuration_yaml}" "${monorepo}"
 
   # templates as well as retrieving files from owl-bot-staging
   echo "Retrieving files from owl-bot-staging directory..."
