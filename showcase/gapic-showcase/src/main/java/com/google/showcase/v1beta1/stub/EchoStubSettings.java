@@ -99,6 +99,7 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.Generated;
 import org.threeten.bp.Duration;
+import  io.opentelemetry.exporter.otlp.metrics.OtlpGrpcMetricExporter;
 
 // AUTO-GENERATED DOCUMENTATION AND CLASS.
 /**
@@ -169,33 +170,32 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
   private final UnaryCallSettings<TestIamPermissionsRequest, TestIamPermissionsResponse>
       testIamPermissionsSettings;
 
-  private static Meter meter = openTelemetry()
+  private final static Meter meter = openTelemetry()
       .meterBuilder("gax")
       .setInstrumentationVersion(GaxProperties.getGaxVersion())
       .build();
 
-  static OpentelemetryMetricsRecorder otelMetricsRecorder = new OpentelemetryMetricsRecorder(meter);
+  private static OpentelemetryMetricsRecorder otelMetricsRecorder = new OpentelemetryMetricsRecorder(meter);
   private static MetricsTracerFactory createOpenTelemetryTracerFactory() {
     return new MetricsTracerFactory(otelMetricsRecorder);
   }
 
+  OtlpGrpcMetricExporter metricExporter = OtlpGrpcMetricExporter.builder()
+      .setEndpoint("http://localhost:4317") // Assuming default OTel Collector endpoint
+      .build();
+
+
   public static OpenTelemetry openTelemetry() {
     Resource resource = Resource.builder().build();
 
-    MetricExporter metricExporter = GoogleCloudMetricExporter.createWithConfiguration(
-        MetricConfiguration.builder()
-            // Configure the cloud project id.  Note: this is autodiscovered by default.
-            .setProjectId("spanner-demo-326919")
-            .setPrefix("custom.googleapis.com")
-            // Configure a strategy for how/when to configure metric descriptors.
-            .setDescriptorStrategy(MetricDescriptorStrategy.SEND_ONCE)
-            .build());
-    PrometheusHttpServer prometheusReader = PrometheusHttpServer.builder().setPort(9090).build();
+    OtlpGrpcMetricExporter metricExporter = OtlpGrpcMetricExporter.builder()
+        .setEndpoint("http://localhost:4317") // Assuming default OTel Collector endpoint
+        .build();
+
     PeriodicMetricReader metricReader = PeriodicMetricReader.builder(metricExporter).setInterval(
         java.time.Duration.ofSeconds(10)).build();
 
     SdkMeterProvider sdkMeterProvider = SdkMeterProvider.builder()
-        .registerMetricReader(prometheusReader)
         .registerMetricReader(metricReader)
         .setResource(resource)
         .build();
