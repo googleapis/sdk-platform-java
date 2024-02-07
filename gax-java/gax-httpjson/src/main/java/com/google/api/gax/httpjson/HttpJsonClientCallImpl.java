@@ -444,9 +444,10 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
 
       // Cancel the timeout future if there is a timeout associated with the RPC
       if (timeoutFuture != null) {
-        // The timeout method also invokes close(), but cancelling a completed task should no-op.
-        // Attempt to interrupt the future as the client should not wait for the timeout to complete
-        timeoutFuture.cancel(true);
+        // The timeout method also invokes close() and the second invocation of close()
+        // will be guarded by the closed check above. No need to interrupt the timeout
+        // task as running the timeout task is quick.
+        timeoutFuture.cancel(false);
         timeoutFuture = null;
       }
 

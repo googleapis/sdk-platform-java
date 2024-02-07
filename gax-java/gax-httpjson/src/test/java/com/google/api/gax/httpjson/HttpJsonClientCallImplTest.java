@@ -55,9 +55,9 @@ public class HttpJsonClientCallImplTest {
   @Mock private HttpJsonClientCall.Listener listener;
 
   @Test
-  public void responseReceived_noCancellationTask() throws InterruptedException {
+  public void responseReceived_noCancellationTask() {
     ScheduledThreadPoolExecutor deadlineSchedulerExecutor = new ScheduledThreadPoolExecutor(1);
-    // No timeout means to timeout task created
+    // Null timeout means no timeout task created
     Mockito.when(httpJsonCallOptions.getTimeout()).thenReturn(null);
 
     HttpJsonClientCallImpl httpJsonClientCall =
@@ -69,8 +69,7 @@ public class HttpJsonClientCallImplTest {
             executor,
             deadlineSchedulerExecutor);
     httpJsonClientCall.start(listener, HttpJsonMetadata.newBuilder().build());
-    // No timeout task in the work queue and no active tasks (timeout is scheduled to
-    // be 10 min in the future and will not be active).
+    // No timeout task in the work queue
     Truth.assertThat(deadlineSchedulerExecutor.getQueue().size()).isEqualTo(0);
     // Follows the numMessages requested from HttpJsonClientCalls.futureUnaryCall()
     httpJsonClientCall.request(2);
@@ -85,12 +84,11 @@ public class HttpJsonClientCallImplTest {
     Truth.assertThat(deadlineSchedulerExecutor.isTerminated());
   }
 
-  @Test(timeout = 100000L)
-  public void responseReceived_cancellationTaskExists_isCancelledProperly()
-      throws InterruptedException {
-    // Create a ScheduledExecutorService for creating the timeout task
+  @Test
+  public void responseReceived_cancellationTaskExists_isCancelledProperly() {
     ScheduledThreadPoolExecutor deadlineSchedulerExecutor = new ScheduledThreadPoolExecutor(1);
     // SetRemoveOnCancelPolicy will immediately remove the task from the work queue
+    // when the task is cancelled
     deadlineSchedulerExecutor.setRemoveOnCancelPolicy(true);
 
     // Setting a timeout for this call will enqueue a timeout task
