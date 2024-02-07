@@ -31,7 +31,6 @@ package com.google.api.gax.httpjson;
 
 import com.google.api.client.http.HttpTransport;
 import com.google.common.truth.Truth;
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.google.protobuf.TypeRegistry;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -51,25 +50,22 @@ public class HttpJsonClientCallImplTest {
   private static final int AWAIT_TERMINATION_TIME = 10;
   @Mock private ApiMethodDescriptor apiMethodDescriptor;
   @Mock private HttpResponseParser httpResponseParser;
-  private String endpoint;
   @Mock private HttpJsonCallOptions httpJsonCallOptions;
   @Mock private TypeRegistry typeRegistry;
   @Mock private HttpTransport httpTransport;
   @Mock private Executor executor;
-  private ScheduledThreadPoolExecutor deadlineSchedulerExecutor;
   @Mock private HttpJsonClientCall.Listener listener;
 
   @Test
   public void responseReceived_noCancellationTask() throws InterruptedException {
-    deadlineSchedulerExecutor =
-        new ScheduledThreadPoolExecutor(1, new ThreadFactoryBuilder().build());
+    ScheduledThreadPoolExecutor deadlineSchedulerExecutor = new ScheduledThreadPoolExecutor(1);
     // No timeout means to timeout task created
     Mockito.when(httpJsonCallOptions.getTimeout()).thenReturn(null);
 
     HttpJsonClientCallImpl httpJsonClientCall =
         new HttpJsonClientCallImpl<>(
             apiMethodDescriptor,
-            endpoint,
+            "",
             httpJsonCallOptions,
             httpTransport,
             executor,
@@ -95,8 +91,7 @@ public class HttpJsonClientCallImplTest {
       throws InterruptedException {
     // Create a ScheduledExecutorService for creating the timeout task
     // SetRemoveOnCancelPolicy will immediately remove the task from the work queue
-    deadlineSchedulerExecutor =
-        new ScheduledThreadPoolExecutor(1, new ThreadFactoryBuilder().build());
+    ScheduledThreadPoolExecutor deadlineSchedulerExecutor = new ScheduledThreadPoolExecutor(1);
     deadlineSchedulerExecutor.setRemoveOnCancelPolicy(true);
 
     // Setting a timeout for this call will enqueue a timeout task
@@ -112,7 +107,7 @@ public class HttpJsonClientCallImplTest {
     HttpJsonClientCallImpl httpJsonClientCall =
         new HttpJsonClientCallImpl<>(
             apiMethodDescriptor,
-            endpoint,
+            "",
             httpJsonCallOptions,
             httpTransport,
             executor,
