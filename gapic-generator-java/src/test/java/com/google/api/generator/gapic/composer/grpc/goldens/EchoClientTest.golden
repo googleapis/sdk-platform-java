@@ -109,6 +109,11 @@ public class EchoClientTest {
               .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
               .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
               .setRequestId("requestId693933066")
+              .setSecondRequestId("secondRequestId344404470")
+              .setThirdRequestId(true)
+              .setFourthRequestId("fourthRequestId-2116417776")
+              .setFifthRequestId("fifthRequestId959024147")
+              .setSixthRequestId("sixthRequestId1005218260")
               .setSeverity(Severity.forNumber(0))
               .setFoobar(Foobar.newBuilder().build())
               .build();
@@ -459,6 +464,11 @@ public class EchoClientTest {
             .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
             .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
             .setRequestId("requestId693933066")
+            .setSecondRequestId("secondRequestId344404470")
+            .setThirdRequestId(true)
+            .setFourthRequestId("fourthRequestId-2116417776")
+            .setFifthRequestId("fifthRequestId959024147")
+            .setSixthRequestId("sixthRequestId1005218260")
             .setSeverity(Severity.forNumber(0))
             .setFoobar(Foobar.newBuilder().build())
             .build();
@@ -485,6 +495,11 @@ public class EchoClientTest {
             .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
             .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
             .setRequestId("requestId693933066")
+            .setSecondRequestId("secondRequestId344404470")
+            .setThirdRequestId(true)
+            .setFourthRequestId("fourthRequestId-2116417776")
+            .setFifthRequestId("fifthRequestId959024147")
+            .setSixthRequestId("sixthRequestId1005218260")
             .setSeverity(Severity.forNumber(0))
             .setFoobar(Foobar.newBuilder().build())
             .build();
@@ -519,6 +534,11 @@ public class EchoClientTest {
             .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
             .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
             .setRequestId("requestId693933066")
+            .setSecondRequestId("secondRequestId344404470")
+            .setThirdRequestId(true)
+            .setFourthRequestId("fourthRequestId-2116417776")
+            .setFifthRequestId("fifthRequestId959024147")
+            .setSixthRequestId("sixthRequestId1005218260")
             .setSeverity(Severity.forNumber(0))
             .setFoobar(Foobar.newBuilder().build())
             .build();
@@ -545,6 +565,11 @@ public class EchoClientTest {
             .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
             .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
             .setRequestId("requestId693933066")
+            .setSecondRequestId("secondRequestId344404470")
+            .setThirdRequestId(true)
+            .setFourthRequestId("fourthRequestId-2116417776")
+            .setFifthRequestId("fifthRequestId959024147")
+            .setSixthRequestId("sixthRequestId1005218260")
             .setSeverity(Severity.forNumber(0))
             .setFoobar(Foobar.newBuilder().build())
             .build();
@@ -579,6 +604,11 @@ public class EchoClientTest {
             .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
             .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
             .setRequestId("requestId693933066")
+            .setSecondRequestId("secondRequestId344404470")
+            .setThirdRequestId(true)
+            .setFourthRequestId("fourthRequestId-2116417776")
+            .setFifthRequestId("fifthRequestId959024147")
+            .setSixthRequestId("sixthRequestId1005218260")
             .setSeverity(Severity.forNumber(0))
             .setFoobar(Foobar.newBuilder().build())
             .build();
@@ -605,6 +635,11 @@ public class EchoClientTest {
             .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
             .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
             .setRequestId("requestId693933066")
+            .setSecondRequestId("secondRequestId344404470")
+            .setThirdRequestId(true)
+            .setFourthRequestId("fourthRequestId-2116417776")
+            .setFifthRequestId("fifthRequestId959024147")
+            .setSixthRequestId("sixthRequestId1005218260")
             .setSeverity(Severity.forNumber(0))
             .setFoobar(Foobar.newBuilder().build())
             .build();
@@ -864,6 +899,11 @@ public class EchoClientTest {
             .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
             .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
             .setRequestId("requestId693933066")
+            .setSecondRequestId("secondRequestId344404470")
+            .setThirdRequestId(true)
+            .setFourthRequestId("fourthRequestId-2116417776")
+            .setFifthRequestId("fifthRequestId959024147")
+            .setSixthRequestId("sixthRequestId1005218260")
             .setSeverity(Severity.forNumber(0))
             .setFoobar(Foobar.newBuilder().build())
             .build();
@@ -878,6 +918,11 @@ public class EchoClientTest {
     Assert.assertEquals(request.getName(), actualRequest.getName());
     Assert.assertEquals(request.getParent(), actualRequest.getParent());
     Assert.assertEquals(request.getRequestId(), actualRequest.getRequestId());
+    Assert.assertEquals(request.getSecondRequestId(), actualRequest.getSecondRequestId());
+    Assert.assertEquals(request.getThirdRequestId(), actualRequest.getThirdRequestId());
+    Assert.assertEquals(request.getFourthRequestId(), actualRequest.getFourthRequestId());
+    Assert.assertEquals(request.getFifthRequestId(), actualRequest.getFifthRequestId());
+    Assert.assertEquals(request.getSixthRequestId(), actualRequest.getSixthRequestId());
     Assert.assertEquals(request.getContent(), actualRequest.getContent());
     Assert.assertEquals(request.getError(), actualRequest.getError());
     Assert.assertEquals(request.getSeverity(), actualRequest.getSeverity());
@@ -899,6 +944,11 @@ public class EchoClientTest {
               .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
               .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
               .setRequestId("requestId693933066")
+              .setSecondRequestId("secondRequestId344404470")
+              .setThirdRequestId(true)
+              .setFourthRequestId("fourthRequestId-2116417776")
+              .setFifthRequestId("fifthRequestId959024147")
+              .setSixthRequestId("sixthRequestId1005218260")
               .setSeverity(Severity.forNumber(0))
               .setFoobar(Foobar.newBuilder().build())
               .build();

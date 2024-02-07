@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -42,6 +42,11 @@ public class SyncCollideName {
               .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
               .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
               .setRequestId("requestId693933066")
+              .setSecondRequestId("secondRequestId344404470")
+              .setThirdRequestId(true)
+              .setFourthRequestId("fourthRequestId-2116417776")
+              .setFifthRequestId("fifthRequestId959024147")
+              .setSixthRequestId("sixthRequestId1005218260")
               .setSeverity(Severity.forNumber(0))
               .setFoobar(Foobar.newBuilder().build())
               .build();

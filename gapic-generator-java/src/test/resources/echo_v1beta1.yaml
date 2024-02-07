@@ -97,7 +97,10 @@ http:
         - post: '/v1beta3/{name=operations/**}:cancel'
 publishing:
     method_settings:
-    # TODO: Add more test cases for scenarios where the field does not exist, the field is not a String, etc. Eventually the API Linter should handle some of those cases.
     - selector: google.showcase.v1beta1.Echo.Echo
       auto_populated_fields:
       - request_id
+      - second_request_id
+      - third_request_id
+      - fourth_request_id
+      - non_existent_field
