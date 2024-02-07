@@ -16,31 +16,15 @@
 
 package com.google.showcase.v1beta1.it;
 
-import static com.google.common.truth.Truth.assertThat;
-import static org.junit.Assert.assertThrows;
 
-import com.google.api.core.ApiFuture;
-import com.google.api.gax.grpc.GrpcStatusCode;
-import com.google.api.gax.retrying.RetrySettings;
-import com.google.api.gax.retrying.RetryingFuture;
-import com.google.api.gax.rpc.CancelledException;
-import com.google.api.gax.rpc.InvalidArgumentException;
-import com.google.api.gax.rpc.NotFoundException;
-import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.StatusCode.Code;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.util.concurrent.FutureCallback;
 import com.google.rpc.Status;
-import com.google.showcase.v1beta1.BlockRequest;
-import com.google.showcase.v1beta1.BlockResponse;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -63,7 +47,8 @@ public class ITOtelMetrics {
     // grpcClientOpenTelemetry.close();
     httpjsonClientOpenTelemetry.close();
 
-    // grpcClientOpenTelemetry.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+    // grpcClientOpenTelemetry.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS,
+    // TimeUnit.SECONDS);
     httpjsonClientOpenTelemetry.awaitTermination(
         TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
@@ -94,7 +79,8 @@ public class ITOtelMetrics {
   //       RetrySettings.newBuilder()
   //           .setMaxAttempts(2)
   //           .build();
-  //   EchoClient grpcClientWithRetrySetting = TestClientInitializer.createGrpcEchoClientOtelWithRetrySettings(
+  //   EchoClient grpcClientWithRetrySetting =
+  // TestClientInitializer.createGrpcEchoClientOtelWithRetrySettings(
   //       defaultRetrySettings, ImmutableSet.of(Code.INVALID_ARGUMENT));
   //
   //   BlockRequest blockRequest =
@@ -118,12 +104,15 @@ public class ITOtelMetrics {
   //       RetrySettings.newBuilder()
   //           .setMaxAttempts(2)
   //           .build();
-  //   EchoClient grpcClientWithRetrySetting = TestClientInitializer.createGrpcEchoClientOtelWithRetrySettings(
+  //   EchoClient grpcClientWithRetrySetting =
+  // TestClientInitializer.createGrpcEchoClientOtelWithRetrySettings(
   //       defaultRetrySettings, ImmutableSet.of(Code.UNAVAILABLE));
   //
   //   // if the request code is not in set of retryable codes, the ApiResultRetryAlgorithm
-  //   // send false for shouldRetry(), which sends false in retryAlgorithm.shouldRetryBasedOnResult()
-  //   // which triggers this scenario - https://github.com/googleapis/sdk-platform-java/blob/main/gax-java/gax/src/main/java/com/google/api/gax/retrying/BasicRetryingFuture.java#L194-L198
+  //   // send false for shouldRetry(), which sends false in
+  // retryAlgorithm.shouldRetryBasedOnResult()
+  //   // which triggers this scenario -
+  // https://github.com/googleapis/sdk-platform-java/blob/main/gax-java/gax/src/main/java/com/google/api/gax/retrying/BasicRetryingFuture.java#L194-L198
   //
   //   BlockRequest blockRequest =
   //       BlockRequest.newBuilder()
