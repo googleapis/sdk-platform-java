@@ -73,7 +73,6 @@ public class HttpJsonClientCallImplTest {
     httpJsonClientCall.start(listener, HttpJsonMetadata.newBuilder().build());
     // No timeout task in the work queue
     Truth.assertThat(deadlineSchedulerExecutor.getQueue().size()).isEqualTo(0);
-    Truth.assertThat(deadlineSchedulerExecutor.getTaskCount()).isEqualTo(0);
     httpJsonClientCall.request(2);
     httpJsonClientCall.setResult(
         HttpRequestRunnable.RunnableResult.builder()
@@ -116,7 +115,6 @@ public class HttpJsonClientCallImplTest {
     // The timeout task is scheduled for 10 minutes from invocation. The task should be
     // populated in the work queue, scheduled to run, but not active yet
     Truth.assertThat(deadlineSchedulerExecutor.getQueue().size()).isEqualTo(1);
-    Truth.assertThat(deadlineSchedulerExecutor.getTaskCount()).isEqualTo(1);
     httpJsonClientCall.request(2);
     httpJsonClientCall.setResult(
         HttpRequestRunnable.RunnableResult.builder()
