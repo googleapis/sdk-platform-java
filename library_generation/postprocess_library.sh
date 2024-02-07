@@ -20,7 +20,7 @@
 # provided
 # 7 - is_monorepo: whether this library is a monorepo, which implies slightly
 # different logic
-set -xeo pipefail
+set -eo pipefail
 scripts_root=$(dirname "$(readlink -f "$0")")
 
 postprocessing_target=$1
@@ -50,22 +50,6 @@ do
   fi
 done
 
-
-# ensure pyenv scripts are available
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-
-# create and activate the python virtualenv
-python_version=$(cat "${scripts_root}/configuration/python-version")
-if [ $(pyenv versions | grep "${python_version}" | wc -l) -eq 0 ]; then
-  pyenv install "${python_version}"
-fi
-if [ $(pyenv virtualenvs | grep "${python_version}" | grep "postprocessing" | wc -l) -eq 0 ];then
-  pyenv virtualenv "${python_version}" "postprocessing"
-fi
-pyenv activate "postprocessing"
-
 if [[ -z "${owlbot_cli_source_folder}" ]]; then
   owlbot_cli_source_folder=$(mktemp -d)
   build_owlbot_cli_source_folder "${postprocessing_target}" "${owlbot_cli_source_folder}" "${preprocessed_sources_path}"
@@ -81,7 +65,7 @@ else
 fi
 
 docker run --rm \
-  --user $(id -u):$(id -g) \
+  --user "$(id -u)":"$(id -g)" \
   -v "${postprocessing_target}:/repo" \
   -v "${owlbot_cli_source_folder}:/pre-processed-libraries" \
   -w /repo \
