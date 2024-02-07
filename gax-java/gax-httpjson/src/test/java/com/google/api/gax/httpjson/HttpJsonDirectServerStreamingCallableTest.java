@@ -72,42 +72,6 @@ import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
 public class HttpJsonDirectServerStreamingCallableTest {
-  private static final ApiMethodDescriptor<Color, Money> METHOD_SERVER_STREAMING_RECOGNIZE =
-      ApiMethodDescriptor.<Color, Money>newBuilder()
-          .setFullMethodName("google.cloud.v1.Fake/ServerStreamingRecognize")
-          .setHttpMethod("POST")
-          .setRequestFormatter(
-              ProtoMessageRequestFormatter.<Color>newBuilder()
-                  .setPath(
-                      "/fake/v1/recognize/{blue}",
-                      request -> {
-                        Map<String, String> fields = new HashMap<>();
-                        ProtoRestSerializer<Field> serializer = ProtoRestSerializer.create();
-                        serializer.putPathParam(fields, "blue", request.getBlue());
-                        return fields;
-                      })
-                  .setQueryParamsExtractor(
-                      request -> {
-                        Map<String, List<String>> fields = new HashMap<>();
-                        ProtoRestSerializer<Field> serializer = ProtoRestSerializer.create();
-                        serializer.putQueryParam(fields, "red", request.getRed());
-                        return fields;
-                      })
-                  .setRequestBodyExtractor(
-                      request ->
-                          ProtoRestSerializer.create()
-                              .toBody(
-                                  "*", request.toBuilder().clearBlue().clearRed().build(), false))
-                  .build())
-          .setResponseParser(
-              ProtoMessageResponseParser.<Money>newBuilder()
-                  .setDefaultInstance(Money.getDefaultInstance())
-                  .build())
-          .setType(MethodType.SERVER_STREAMING)
-          .build();
-
-  private MockHttpService mockService;
-
   private static final Color DEFAULT_REQUEST = Color.newBuilder().setRed(0.5f).build();
   private static final Color ASYNC_REQUEST = DEFAULT_REQUEST.toBuilder().setGreen(1000).build();
   private static final Color ERROR_REQUEST = Color.newBuilder().setRed(-1).build();
@@ -115,7 +79,6 @@ public class HttpJsonDirectServerStreamingCallableTest {
       Money.newBuilder().setCurrencyCode("USD").setUnits(127).build();
   private static final Money DEFAULTER_RESPONSE =
       Money.newBuilder().setCurrencyCode("UAH").setUnits(255).build();
-  private static final int AWAIT_TERMINATION_SECONDS = 10;
 
   private ServerStreamingCallSettings<Color, Money> streamingCallSettings;
   private ServerStreamingCallable<Color, Money> streamingCallable;
@@ -123,12 +86,51 @@ public class HttpJsonDirectServerStreamingCallableTest {
   private ManagedHttpJsonChannel channel;
   private ClientContext clientContext;
   private ExecutorService executorService;
+  private MockHttpService mockService;
+  ApiMethodDescriptor<Color, Money> methodServerStreamingRecognize;
 
   @Before
   public void initialize() throws IOException {
-    mockService =
+    initialize(Duration.ofSeconds(30));
+  }
+
+  public void initialize(Duration timeout) throws IOException {
+    this.methodServerStreamingRecognize =
+        ApiMethodDescriptor.<Color, Money>newBuilder()
+            .setFullMethodName("google.cloud.v1.Fake/ServerStreamingRecognize")
+            .setHttpMethod("POST")
+            .setRequestFormatter(
+                ProtoMessageRequestFormatter.<Color>newBuilder()
+                    .setPath(
+                        "/fake/v1/recognize/{blue}",
+                        request -> {
+                          Map<String, String> fields = new HashMap<>();
+                          ProtoRestSerializer<Field> serializer = ProtoRestSerializer.create();
+                          serializer.putPathParam(fields, "blue", request.getBlue());
+                          return fields;
+                        })
+                    .setQueryParamsExtractor(
+                        request -> {
+                          Map<String, List<String>> fields = new HashMap<>();
+                          ProtoRestSerializer<Field> serializer = ProtoRestSerializer.create();
+                          serializer.putQueryParam(fields, "red", request.getRed());
+                          return fields;
+                        })
+                    .setRequestBodyExtractor(
+                        request ->
+                            ProtoRestSerializer.create()
+                                .toBody(
+                                    "*", request.toBuilder().clearBlue().clearRed().build(), false))
+                    .build())
+            .setResponseParser(
+                ProtoMessageResponseParser.<Money>newBuilder()
+                    .setDefaultInstance(Money.getDefaultInstance())
+                    .build())
+            .setType(MethodType.SERVER_STREAMING)
+            .build();
+    this.mockService =
         new MockHttpService(
-            Collections.singletonList(METHOD_SERVER_STREAMING_RECOGNIZE), "google.com:443");
+            Collections.singletonList(methodServerStreamingRecognize), "google.com:443");
     executorService = Executors.newFixedThreadPool(2);
     channel =
         new ManagedHttpJsonInterceptorChannel(
@@ -148,28 +150,22 @@ public class HttpJsonDirectServerStreamingCallableTest {
             .setTransportChannel(HttpJsonTransportChannel.create(channel))
             .setDefaultCallContext(
                 HttpJsonCallContext.of(channel, HttpJsonCallOptions.DEFAULT)
-                    .withTimeout(Duration.ofSeconds(3))
+                    .withTimeout(timeout)
                     .withEndpointContext(endpointContext))
             .build();
 
     streamingCallSettings = ServerStreamingCallSettings.<Color, Money>newBuilder().build();
     streamingCallable =
         HttpJsonCallableFactory.createServerStreamingCallable(
-            HttpJsonCallSettings.create(METHOD_SERVER_STREAMING_RECOGNIZE),
+            HttpJsonCallSettings.create(methodServerStreamingRecognize),
             streamingCallSettings,
             clientContext);
-
-    mockService.reset();
   }
 
   @After
   public void destroy() throws InterruptedException {
     executorService.shutdown();
     channel.shutdown();
-
-    executorService.awaitTermination(AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
-    channel.awaitTermination(AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
-    mockService.reset();
   }
 
   @Test
@@ -178,7 +174,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
     // Create a local callable with a bad context
     ServerStreamingCallable<Color, Money> streamingCallable =
         HttpJsonCallableFactory.createServerStreamingCallable(
-            HttpJsonCallSettings.create(METHOD_SERVER_STREAMING_RECOGNIZE),
+            HttpJsonCallSettings.create(this.methodServerStreamingRecognize),
             streamingCallSettings,
             clientContext
                 .toBuilder()
@@ -337,9 +333,12 @@ public class HttpJsonDirectServerStreamingCallableTest {
 
   // This test ensures that the server-side streaming does not exceed the timeout value
   @Test
-  public void testDeadlineExceededServerStreaming() throws InterruptedException {
+  public void testDeadlineExceededServerStreaming() throws InterruptedException, IOException {
+    // set a low timeout to trigger deadline-exceeded sooner
+    initialize(Duration.ofSeconds(1));
+
     mockService.addResponse(
-        new Money[] {DEFAULT_RESPONSE, DEFAULTER_RESPONSE}, java.time.Duration.ofSeconds(5));
+        new Money[] {DEFAULT_RESPONSE, DEFAULTER_RESPONSE}, java.time.Duration.ofSeconds(30));
     Color request = Color.newBuilder().setRed(0.5f).build();
     CountDownLatch latch = new CountDownLatch(1);
     MoneyObserver moneyObserver = new MoneyObserver(false, latch);
@@ -349,7 +348,7 @@ public class HttpJsonDirectServerStreamingCallableTest {
     moneyObserver.controller.request(2);
     // Set the latch's await time to above the context's timeout value to ensure that
     // the latch has been released.
-    Truth.assertThat(latch.await(5000, TimeUnit.MILLISECONDS)).isTrue();
+    Truth.assertThat(latch.await(30, TimeUnit.SECONDS)).isTrue();
 
     Truth.assertThat(moneyObserver.error).isInstanceOf(DeadlineExceededException.class);
     Truth.assertThat(moneyObserver.error).hasMessageThat().isEqualTo("Deadline exceeded");
