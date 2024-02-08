@@ -113,6 +113,7 @@ def generate_composed_library(
             config.owlbot_cli_image,
             config.synthtool_commitish,
             str(is_monorepo).lower(),
+            config.path_to_yaml,
         ],
         "Library postprocessing",
     )

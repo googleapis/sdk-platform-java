@@ -12,6 +12,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+"""
+Unit tests for python scripts
+"""
 
 import unittest
 import os
@@ -354,6 +357,8 @@ class UtilitiesTest(unittest.TestCase):
             googleapis_commitish="",
             owlbot_cli_image="",
             synthtool_commitish="",
+            template_excludes=[],
+            path_to_yaml=".",
             libraries=libraries,
         )
 
