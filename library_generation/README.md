@@ -1,6 +1,8 @@
 # Generate a repository containing GAPIC Client Libraries
 
-The script, `generate_repo.py`, allows you to generate a repository containing GAPIC client libraries from a configuration file.
+The script, `generate_repo.py`, allows you to generate a repository containing
+GAPIC client libraries (a monorepo, for example, google-cloud-java) from a
+configuration file.
 
 ## Environment
 
@@ -174,8 +176,78 @@ python -m library_generation/generate_repo.py generate \
 ## An example of generated repository using `generate_repo.py`
 
 If you run `generate_repo.py` with the example [configuration](#an-example-of-generation-configuration)
-shown above, the repository structure is
-
+shown above, the repository structure is:
+```
+$repository_path
+|_gapic-libraries-bom
+|    |_pom.xml
+|_java-apigee-connect
+|    |_google-cloud-apigee-connect
+|    |    |_src
+|    |    |_pom.xml
+|    |_google-cloud-apigee-connect-bom
+|    |    |_pom.xml
+|    |_grpc-google-cloud-apigee-connect-v1
+|    |    |_src
+|    |    |_pom.xml
+|    |_proto-google-cloud-apigee-connect-v1
+|    |    |_src
+|    |    |_pom.xml
+|    |_samples
+|    |    |_snippets
+|    |    |    |_generated
+|    |_.OwlBot.yaml
+|    |_.repo-metadata.json
+|    |_owlbot.py
+|    |_pom.xml
+|    |_README.md
+|_java-asset
+|    |_google-cloud-asset
+|    |    |_src
+|    |    |_pom.xml
+|    |_google-cloud-asset-bom
+|    |    |_pom.xml
+|    |_grpc-google-cloud-asset-v1
+|    |    |_src
+|    |    |_pom.xml
+|    |_grpc-google-cloud-asset-v1p1beta1
+|    |    |_src
+|    |    |_pom.xml
+|    |_grpc-google-cloud-asset-v1p2beta1
+|    |    |_src
+|    |    |_pom.xml
+|    |_grpc-google-cloud-asset-v1p5beta1
+|    |    |_src
+|    |    |_pom.xml
+|    |_grpc-google-cloud-asset-v1p7beta1
+|    |    |_src
+|    |    |_pom.xml
+|    |_proto-google-cloud-asset-v1
+|    |    |_src
+|    |    |_pom.xml
+|    |_proto-google-cloud-asset-v1p1beta1
+|    |    |_src
+|    |    |_pom.xml
+|    |_proto-google-cloud-asset-v1p2beta1
+|    |    |_src
+|    |    |_pom.xml
+|    |_proto-google-cloud-asset-v1p5beta1
+|    |    |_src
+|    |    |_pom.xml
+|    |_proto-google-cloud-asset-v1p7beta1
+|    |    |_src
+|    |    |_pom.xml
+|    |_samples
+|    |    |_snippets
+|    |    |    |_generated
+|    |_.OwlBot.yaml
+|    |_.repo-metadata.json
+|    |_owlbot.py
+|    |_pom.xml
+|    |_README.md
+|_pom.xml
+|_versions.txt
+```
 
 # Owlbot Java Postprocessor
 
