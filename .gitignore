@@ -27,3 +27,4 @@ target/
 library_generation/test/resources/goldens/
 library_generation/test/resources/test_repo_level_postprocess/
 **/*egg-info/
+**/build/
