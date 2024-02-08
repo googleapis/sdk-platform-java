@@ -588,15 +588,6 @@ public class ResourceNameHelperClassComposer {
     String setMethodNameFormat = "set%s";
     String buildMethodName = "build";
     String toStringMethodName = "toString";
-    AnnotationNode betaAnnotation =
-        AnnotationNode.builder()
-            .setType(FIXED_TYPESTORE.get("BetaApi"))
-            .setDescription(
-                String.format(
-                    "The static %s methods are not stable yet and may be changed in the future.",
-                    isFormatMethod ? "format" : "create"))
-            .build();
-    List<AnnotationNode> annotations = Arrays.asList(betaAnnotation);
 
     TypeNode thisClassType = typeStore.get(getThisClassName(resourceName));
     TypeNode returnType = isFormatMethod ? TypeNode.STRING : thisClassType;
@@ -615,7 +606,6 @@ public class ResourceNameHelperClassComposer {
             MethodDefinition.builder()
                 .setScope(ScopeNode.PUBLIC)
                 .setIsStatic(true)
-                .setAnnotations(annotations)
                 .setReturnType(returnType)
                 .setName(
                     String.format(methodNameFormat, concatToUpperCamelCaseName(tokens) + "Name"))
@@ -673,7 +663,6 @@ public class ResourceNameHelperClassComposer {
           MethodDefinition.builder()
               .setScope(ScopeNode.PUBLIC)
               .setIsStatic(true)
-              .setAnnotations(i == 0 ? Collections.emptyList() : annotations)
               .setReturnType(returnType)
               .setName(
                   String.format(
@@ -687,7 +676,6 @@ public class ResourceNameHelperClassComposer {
             MethodDefinition.builder()
                 .setScope(ScopeNode.PUBLIC)
                 .setIsStatic(true)
-                .setAnnotations(annotations)
                 .setReturnType(returnType)
                 .setName(
                     String.format(

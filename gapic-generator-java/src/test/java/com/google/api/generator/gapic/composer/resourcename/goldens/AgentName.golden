@@ -71,12 +71,10 @@ public class AgentName implements ResourceName {
     return newBuilder().setProject(project).setLocation(location).build();
   }
 
-  @BetaApi("The static create methods are not stable yet and may be changed in the future.")
   public static AgentName ofProjectLocationName(String project, String location) {
     return newBuilder().setProject(project).setLocation(location).build();
   }
 
-  @BetaApi("The static create methods are not stable yet and may be changed in the future.")
   public static AgentName ofProjectName(String project) {
     return newProjectBuilder().setProject(project).build();
   }
@@ -85,12 +83,10 @@ public class AgentName implements ResourceName {
     return newBuilder().setProject(project).setLocation(location).build().toString();
   }
 
-  @BetaApi("The static format methods are not stable yet and may be changed in the future.")
   public static String formatProjectLocationName(String project, String location) {
     return newBuilder().setProject(project).setLocation(location).build().toString();
   }
 
-  @BetaApi("The static format methods are not stable yet and may be changed in the future.")
   public static String formatProjectName(String project) {
     return newProjectBuilder().setProject(project).build().toString();
   }

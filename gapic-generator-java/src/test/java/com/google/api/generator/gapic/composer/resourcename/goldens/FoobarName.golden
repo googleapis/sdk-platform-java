@@ -116,12 +116,10 @@ public class FoobarName implements ResourceName {
     return newBuilder().setProject(project).setFoobar(foobar).build();
   }
 
-  @BetaApi("The static create methods are not stable yet and may be changed in the future.")
   public static FoobarName ofProjectFoobarName(String project, String foobar) {
     return newBuilder().setProject(project).setFoobar(foobar).build();
   }
 
-  @BetaApi("The static create methods are not stable yet and may be changed in the future.")
   public static FoobarName ofProjectVariantFoobarName(
       String project, String variant, String foobar) {
     return newProjectVariantFoobarBuilder()
@@ -131,12 +129,10 @@ public class FoobarName implements ResourceName {
         .build();
   }
 
-  @BetaApi("The static create methods are not stable yet and may be changed in the future.")
   public static FoobarName ofFoobarName(String foobar) {
     return newFoobarBuilder().setFoobar(foobar).build();
   }
 
-  @BetaApi("The static create methods are not stable yet and may be changed in the future.")
   public static FoobarName ofBarFooFoobarName(String barFoo, String foobar) {
     return newBarFooFoobarBuilder().setBarFoo(barFoo).setFoobar(foobar).build();
   }
@@ -145,12 +141,10 @@ public class FoobarName implements ResourceName {
     return newBuilder().setProject(project).setFoobar(foobar).build().toString();
   }
 
-  @BetaApi("The static format methods are not stable yet and may be changed in the future.")
   public static String formatProjectFoobarName(String project, String foobar) {
     return newBuilder().setProject(project).setFoobar(foobar).build().toString();
   }
 
-  @BetaApi("The static format methods are not stable yet and may be changed in the future.")
   public static String formatProjectVariantFoobarName(
       String project, String variant, String foobar) {
     return newProjectVariantFoobarBuilder()
@@ -161,12 +155,10 @@ public class FoobarName implements ResourceName {
         .toString();
   }
 
-  @BetaApi("The static format methods are not stable yet and may be changed in the future.")
   public static String formatFoobarName(String foobar) {
     return newFoobarBuilder().setFoobar(foobar).build().toString();
   }
 
-  @BetaApi("The static format methods are not stable yet and may be changed in the future.")
   public static String formatBarFooFoobarName(String barFoo, String foobar) {
     return newBarFooFoobarBuilder().setBarFoo(barFoo).setFoobar(foobar).build().toString();
   }
