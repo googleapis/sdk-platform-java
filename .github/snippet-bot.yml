@@ -4,3 +4,4 @@ ignoreFiles:
   - src/test/**
   - test/**
   - showcase/**
+  - library_generation/owlbot/templates/**
