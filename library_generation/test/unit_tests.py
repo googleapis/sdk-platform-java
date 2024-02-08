@@ -358,7 +358,7 @@ class UtilitiesTest(unittest.TestCase):
             owlbot_cli_image="",
             synthtool_commitish="",
             template_excludes=[],
-            path_to_yaml='.',
+            path_to_yaml=".",
             libraries=libraries,
         )
 

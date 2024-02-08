@@ -13,31 +13,30 @@ from pathlib import Path
 from library_generation.model.generation_config import from_yaml
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
-repo_templates_path = os.path.join(script_dir, '..', 'templates', 'java_library')
+repo_templates_path = os.path.join(script_dir, "..", "templates", "java_library")
+
 
 def apply_repo_templates(configuration_yaml_path: str, monorepo: bool) -> None:
-  config = from_yaml(configuration_yaml_path)
-  print(f'repo_templates_path: {repo_templates_path}')
-  print(f'excludes: {config.template_excludes}')
-  common_templates(
-      excludes=config.template_excludes,
-      template_path=Path(repo_templates_path),
-      monorepo=monorepo
-  )
+    config = from_yaml(configuration_yaml_path)
+    print(f"repo_templates_path: {repo_templates_path}")
+    print(f"excludes: {config.template_excludes}")
+    common_templates(
+        excludes=config.template_excludes,
+        template_path=Path(repo_templates_path),
+        monorepo=monorepo,
+    )
 
 
 def main(argv: Sequence[str]) -> None:
-  if len(argv) != 3:
-    raise ValueError("Usage: python apply-repo-templates.py configuration_yaml_path monorepo")
+    if len(argv) != 3:
+        raise ValueError(
+            "Usage: python apply-repo-templates.py configuration_yaml_path monorepo"
+        )
 
-  configuration_yaml_path = argv[1]
-  monorepo = argv[2]
-  apply_repo_templates(
-      configuration_yaml_path,
-      monorepo.lower() == 'true'
-  )
-
+    configuration_yaml_path = argv[1]
+    monorepo = argv[2]
+    apply_repo_templates(configuration_yaml_path, monorepo.lower() == "true")
 
 
 if __name__ == "__main__":
-  main(sys.argv)
+    main(sys.argv)

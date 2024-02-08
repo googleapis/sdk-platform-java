@@ -98,7 +98,7 @@ def from_yaml(path_to_yaml: str):
         googleapis_commitish=__required(config, "googleapis_commitish"),
         owlbot_cli_image=__required(config, "owlbot_cli_image"),
         synthtool_commitish=__required(config, "synthtool_commitish"),
-        template_excludes=__required(config, 'template_excludes'),
+        template_excludes=__required(config, "template_excludes"),
         path_to_yaml=path_to_yaml,
         libraries=parsed_libraries,
     )
