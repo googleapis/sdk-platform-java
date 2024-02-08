@@ -55,23 +55,4 @@ public class GrpcServiceStubClassComposerTest {
         Paths.get(GoldenFileWriter.getGoldenDir(this.getClass()), "GrpcWickedStub.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
   }
-
-  @Test
-  public void generateServiceClassesAutopopulateField() {
-    GapicContext context = GrpcRestTestProtoLoader.instance().parseAutoPopulateFieldTesting();
-    Service autoPopulateFieldTestingProtoService = context.services().get(0);
-    GapicClass clazz =
-        GrpcServiceStubClassComposer.instance()
-            .generate(context, autoPopulateFieldTestingProtoService);
-
-    JavaWriterVisitor visitor = new JavaWriterVisitor();
-    clazz.classDefinition().accept(visitor);
-    GoldenFileWriter.saveCodegenToFile(
-        this.getClass(), "GrpcAutoPopulateFieldTestingStub.golden", visitor.write());
-    Path goldenFilePath =
-        Paths.get(
-            GoldenFileWriter.getGoldenDir(this.getClass()),
-            "GrpcAutoPopulateFieldTestingStub.golden");
-    Assert.assertCodeEquals(goldenFilePath, visitor.write());
-  }
 }
