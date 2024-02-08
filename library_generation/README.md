@@ -31,7 +31,7 @@ If specified, the libray whose `api_shortname` equals to `target_library_api_sho
 will be generated; otherwise all libraries in the configuration file will be
 generated.
 This can be useful when you just want to generate one library for debugging
-purpose.
+purposes.
 
 The default value is an empty string, which means all libraries will be generated.
 
@@ -40,6 +40,9 @@ The default value is an empty string, which means all libraries will be generate
 The path to where the generated repository goes.
 
 The default value is the current working directory when running the script.
+For example, `cd google-cloud-java && python generate_repo.py ...` without
+specifying the `--repository_path` option will modify the `google-cloud-java`
+repository the user `cd`'d into.
 
 Note that versions.txt has to exist in `repository_path` in order to generate
 right version for each library.
@@ -47,6 +50,9 @@ Please refer [here](go/java-client-releasing#versionstxt-manifest) for more info
 of versions.txt.
 
 ## Output of `generate_repo.py`
+
+For each module (e.g. `google-cloud-java/java-asset`), the following files/folders
+will be created/modified:
 
 | Name                        | Notes                                                                    |
 |:----------------------------|:-------------------------------------------------------------------------|
@@ -87,6 +93,7 @@ They are shared by library level parameters.
 | googleapis-commitish    |   Yes    |                                              |
 | owlbot-cli-image        |   Yes    |                                              |
 | synthtool-commitish     |   Yes    |                                              |
+| template_excludes       |   Yes    |                                              |
 
 ### Library level parameters
 
@@ -165,7 +172,7 @@ libraries:
 ## An example to generate a repository using `generate_repo.py`
 
 ```bash
-# install python module
+# install python module (allows the `library_generation` module to be imported from anywhere)
 python -m pip install -r library_generation/requirements.in
 # generate the repository
 python -m library_generation/generate_repo.py generate \
