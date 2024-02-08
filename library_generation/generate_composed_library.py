@@ -54,8 +54,8 @@ def generate_composed_library(
     :param library_path: the path to which the generated file goes
     :param library: a LibraryConfig object contained inside config, passed here
     for convenience and to prevent all libraries to be processed
-    :param output_folder:
-    :param versions_file:
+    :param output_folder: the folder to where tools go
+    :param versions_file: the file containing version of libraries
     :return None
     """
     util.pull_api_definition(
@@ -74,6 +74,7 @@ def generate_composed_library(
         # owlbot.py) here because transport is parsed from BUILD.bazel,
         # which lives in a versioned proto_path.
         util.generate_prerequisite_files(
+            config=config,
             library=library,
             proto_path=util.remove_version_from(gapic.proto_path),
             transport=gapic_inputs.transport,

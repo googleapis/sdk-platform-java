@@ -252,9 +252,11 @@ class UtilitiesTest(unittest.TestCase):
             f"{library_path}/owlbot.py",
         ]
         self.__cleanup(files)
+        config = self.__get_a_gen_config(1)
         proto_path = "google/cloud/baremetalsolution/v2"
         transport = "grpc"
         util.generate_prerequisite_files(
+            config=config,
             library=library_1,
             proto_path=proto_path,
             transport=transport,
@@ -357,7 +359,19 @@ class UtilitiesTest(unittest.TestCase):
             googleapis_commitish="",
             owlbot_cli_image="",
             synthtool_commitish="",
-            template_excludes=[],
+            template_excludes=[
+                ".github/*",
+                ".kokoro/*",
+                "samples/*",
+                "CODE_OF_CONDUCT.md",
+                "CONTRIBUTING.md",
+                "LICENSE",
+                "SECURITY.md",
+                "java.header",
+                "license-checks.xml",
+                "renovate.json",
+                ".gitignore",
+            ],
             path_to_yaml=".",
             libraries=libraries,
         )

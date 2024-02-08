@@ -31,7 +31,7 @@ class GenerationConfig:
         googleapis_commitish: str,
         owlbot_cli_image: str,
         synthtool_commitish: str,
-        template_excludes: str,
+        template_excludes: List[str],
         path_to_yaml: str,
         libraries: List[LibraryConfig],
         grpc_version: Optional[str] = None,
