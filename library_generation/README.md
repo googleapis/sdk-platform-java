@@ -161,6 +161,7 @@ libraries:
 ```
 
 ## An example to generate a repository using `generate_repo.py`
+
 ```bash
 # install python module
 python -m pip install -r library_generation/requirements.in
@@ -169,6 +170,12 @@ python -m library_generation/generate_repo.py generate \
 --generation-config-yaml=/path/to/config-file \
 --repository-path=/path/to/repository
 ```
+
+## An example of generated repository using `generate_repo.py`
+
+If you run `generate_repo.py` with the example [configuration](#an-example-of-generation-configuration)
+shown above, the repository structure is
+
 
 # Owlbot Java Postprocessor
 
