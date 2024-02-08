@@ -209,7 +209,7 @@ public class HttpJsonServiceStubClassComposerTest {
   }
 
   @Test
-  public void generateHttpJsonServiceStubClass_routingHeaders() {
+  public void generateHttpJsonServiceStubClass_autopopulateField() {
     GapicContext context = RestTestProtoLoader.instance().parseAutoPopulateFieldTesting();
     Service service = context.services().get(0);
     GapicClass clazz = HttpJsonServiceStubClassComposer.instance().generate(context, service);
