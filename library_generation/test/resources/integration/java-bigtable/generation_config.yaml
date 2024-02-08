@@ -22,9 +22,9 @@ template_excludes:
   - ".kokoro/requirements.in"
   - ".kokoro/requirements.txt"
 libraries:
-  - api_shortname: bigtable
-    name_pretty: Cloud Bigtable
-    library_type: GAPIC_COMBO
-    GAPICs:
-      - proto_path: google/bigtable/admin/v2
-      - proto_path: google/bigtable/v2
+- api_shortname: bigtable
+  name_pretty: Cloud Bigtable
+  library_type: GAPIC_COMBO
+  GAPICs:
+  - proto_path: google/bigtable/admin/v2
+  - proto_path: google/bigtable/v2

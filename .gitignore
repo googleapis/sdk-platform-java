@@ -19,8 +19,12 @@ target/
 
 # Python
 **/__pycache__/
+.venv
 
 # library generation
 output/
 library_generation/output/
+library_generation/test/output
+library_generation/test/googleapis
+library_generation/test/resources/integration/golden
 showcase/scripts/output/

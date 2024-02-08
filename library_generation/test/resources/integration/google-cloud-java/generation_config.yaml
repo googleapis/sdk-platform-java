@@ -1,18 +1,9 @@
-#Required.
 gapic_generator_version: 2.34.0
-#Optional.
-# grpc_version: 1.60.0
-#Optional. The protobuf version in googleapis (not sdk-platform-java) is the actual source of truth for generated protos in google-cloud-java
 protobuf_version: 25.2
-#Required.
-googleapis_commitish: eeb00f98eaa96ce7a58f2558b702141354f74ff0
-#Required.
+googleapis_commitish: 1a45bf7393b52407188c82e63101db7dc9c72026
 owlbot_cli_image: sha256:623647ee79ac605858d09e60c1382a716c125fb776f69301b72de1cd35d49409
-#Required.
-synthtool_commitish: 5e1fb2032fa44bc170677b38713023b4fec51a4e
-#Required. The root folder name of generated client libraries.
+synthtool_commitish: 6612ab8f3afcd5e292aecd647f0fa68812c9f5b5
 destination_path: google-cloud-java
-#Required. This indicates which template files should not be added to the target library in the postprocessing step. This is originally expressed in owlbot.py. Since google-cloud-java has the same exclusion list for all libraries, this will be a repo-level configuration (for now, while we don't find exceptions).
 template_excludes:
   - ".github/*"
   - ".kokoro/*"
@@ -25,79 +16,29 @@ template_excludes:
   - "license-checks.xml"
   - "renovate.json"
   - ".gitignore"
-#Required. If the number of libraries is greater than 1, the scripts will treat the target repository as a monorepo, with a slightly different workflow mainly in the postprocessing stage
 libraries:
-    #Required. Can be used for populating the folder name java-{api_shortName}. This is also the destination-name in new-client.py.
-  - api_shortname: asset
-    #Optional. Overrides the root-level commit hash
-    googleapis_commitish: 4512234113a18c1fda1fb0d0ceac8f4b4efe9801
-    #Optional. The default value is the title of service yaml
-    name_pretty: Cloud Asset
-    #Required.
-    library_type: GAPIC_AUTO
-    #Optional. The default value is com.google.cloud
-    group_id: com.google.cloud
-    #Optional. The default value is google.cloud.{api_shortname}
-    artifact_id: google.cloud.asset
-    #Optional. The default value is true.
-    requires_billing: true
-    #Optional. The default value is documentation.summary from service yaml
-    api_description:
-    #Optional.
-    product_documentation:
-    #Optional.
-    client_documentation:
-    #Optional.
-    rest_documentation:
-    #Optional.
-    rpc_documentation:
-    #Required.
+  - api_shortname: apigeeconnect
+    name_pretty: Apigee Connect
+    product_documentation: "https://cloud.google.com/apigee/docs/hybrid/v1.3/apigee-connect/"
+    api_description: "allows the Apigee hybrid management plane to connect securely to the MART service in the runtime plane without requiring you to expose the MART endpoint on the internet."
+    release_level: "stable"
+    library_name: "apigee-connect"
     GAPICs:
-        #Required. This is a relative path to googleapis/googleapis. We'll parse all the parameters needed by generate_library.sh from BUILD.bazel in this folder.
+      - proto_path: google/cloud/apigeeconnect/v1
+
+  - api_shortname: cloudasset
+    name_pretty: Cloud Asset Inventory
+    product_documentation: "https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/overview"
+    api_description: "provides inventory services based on a time series database. This database keeps a five week history of Google Cloud asset metadata. The Cloud Asset Inventory export service allows you to export all asset metadata at a certain timestamp or export event change history during a timeframe."
+    library_name: "asset"
+    client_documentation: "https://cloud.google.com/java/docs/reference/google-cloud-asset/latest/overview"
+    distribution_name: "com.google.cloud:google-cloud-asset"
+    release_level: "stable"
+    issue_tracker: "https://issuetracker.google.com/issues/new?component=187210&template=0"
+    api_reference: "https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/overview"
+    GAPICs:
       - proto_path: google/cloud/asset/v1
       - proto_path: google/cloud/asset/v1p1beta1
       - proto_path: google/cloud/asset/v1p2beta1
       - proto_path: google/cloud/asset/v1p5beta1
       - proto_path: google/cloud/asset/v1p7beta1
-  - api_shortname: speech
-    library_type: GAPIC_AUTO
-    GAPICs:
-      - proto_path: google/cloud/speech/v1
-      - proto_path: google/cloud/speech/v1p1beta1
-      - proto_path: google/cloud/speech/v2
-  - api_shortname: apigee-connect
-    library_type: GAPIC_AUTO
-    GAPICs:
-      - proto_path: google/cloud/apigeeconnect/v1
-  - api_shortname: dialogflow
-    library_type: GAPIC_AUTO
-    GAPICs:
-      - proto_path: google/cloud/dialogflow/v2beta1
-      - proto_path: google/cloud/dialogflow/v2
-  - api_shortname: compute
-    library_type: GAPIC_AUTO
-    GAPICs:
-      - proto_path: google/cloud/compute/v1
-  - api_shortname: kms
-    library_type: GAPIC_AUTO
-    GAPICs:
-      - proto_path: google/cloud/kms/v1
-  - api_shortname: redis
-    library_type: GAPIC_AUTO
-    GAPICs:
-      - proto_path: google/cloud/redis/v1
-      - proto_path: google/cloud/redis/v1beta1
-  - api_shortname: containeranalysis
-    library_type: GAPIC_AUTO
-    GAPICs:
-      - proto_path: google/devtools/containeranalysis/v1
-  - api_shortname: iam
-    library_type: GAPIC_AUTO
-    GAPICs:
-      - proto_path: google/iam/v1
-      - proto_path: google/iam/v2
-  - api_shortname: iamcredentials
-    library_type: GAPIC_AUTO
-    GAPICs:
-      - proto_path: google/iam/credentials/v1
-
