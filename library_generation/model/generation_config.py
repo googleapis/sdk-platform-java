@@ -31,6 +31,8 @@ class GenerationConfig:
         googleapis_commitish: str,
         owlbot_cli_image: str,
         synthtool_commitish: str,
+        template_excludes: str,
+        path_to_yaml: str,
         libraries: List[LibraryConfig],
         grpc_version: Optional[str] = None,
         protobuf_version: Optional[str] = None,
@@ -39,6 +41,8 @@ class GenerationConfig:
         self.googleapis_commitish = googleapis_commitish
         self.owlbot_cli_image = owlbot_cli_image
         self.synthtool_commitish = synthtool_commitish
+        self.template_excludes = template_excludes
+        self.path_to_yaml = path_to_yaml
         self.libraries = libraries
         self.grpc_version = grpc_version
         self.protobuf_version = protobuf_version
@@ -94,6 +98,8 @@ def from_yaml(path_to_yaml: str):
         googleapis_commitish=__required(config, "googleapis_commitish"),
         owlbot_cli_image=__required(config, "owlbot_cli_image"),
         synthtool_commitish=__required(config, "synthtool_commitish"),
+        template_excludes=__required(config, "template_excludes"),
+        path_to_yaml=path_to_yaml,
         libraries=parsed_libraries,
     )
 
