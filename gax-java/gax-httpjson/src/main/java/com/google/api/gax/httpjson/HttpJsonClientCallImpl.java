@@ -124,7 +124,7 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
 
   // Store the timeout future created by the deadline schedule executor. The future
   // can be cancelled if a response (either an error or valid payload) has been
-  // received before the timeout.
+  // received before the timeout. This value may be null if no the RPC has no timeout.
   @GuardedBy("lock")
   private volatile ScheduledFuture<?> timeoutFuture;
 
