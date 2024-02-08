@@ -357,6 +357,8 @@ class UtilitiesTest(unittest.TestCase):
             googleapis_commitish="",
             owlbot_cli_image="",
             synthtool_commitish="",
+            template_excludes=[],
+            path_to_yaml='.',
             libraries=libraries,
         )
 
