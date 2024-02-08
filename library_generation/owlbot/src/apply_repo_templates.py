@@ -10,13 +10,13 @@ import sys
 from collections.abc import Sequence
 from synthtool.languages.java import common_templates
 from pathlib import Path
-from model.GenerationConfig import GenerationConfig
+from library_generation.model.generation_config import from_yaml
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 repo_templates_path = os.path.join(script_dir, '..', 'templates', 'java_library')
 
 def apply_repo_templates(configuration_yaml_path: str, monorepo: bool) -> None:
-  config = GenerationConfig.from_yaml(configuration_yaml_path)
+  config = from_yaml(configuration_yaml_path)
   print(f'repo_templates_path: {repo_templates_path}')
   print(f'excludes: {config.template_excludes}')
   common_templates(

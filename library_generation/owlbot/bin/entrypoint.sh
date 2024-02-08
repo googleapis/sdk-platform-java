@@ -28,12 +28,6 @@ scripts_root=$1
 versions_file=$2
 configuration_yaml=$3
 
-pushd "${scripts_root}"
-# install library_generation which contains model classes used by the the
-# template rendering step
-python -m pip install -e .
-popd #scripts_root
-
 # This script can be used to process HW libraries and monorepo
 # (google-cloud-java) libraries, which require a slightly different treatment
 # monorepo folders have an .OwlBot.yaml file in the module folder (e.g.
