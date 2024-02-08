@@ -526,9 +526,7 @@ public class ResourceNameHelperClassComposer {
 
       String variantName = getBuilderTypeName(tokenHierarchies, i);
       javaMethods.add(
-          methodDefStarterFn
-              .apply(String.format(newMethodNameFormat, variantName))
-              .build());
+          methodDefStarterFn.apply(String.format(newMethodNameFormat, variantName)).build());
       if (i == 0 && tokenHierarchies.size() > 1) {
         // Create another builder creator method, but with the per-variant name.
         javaMethods.add(
