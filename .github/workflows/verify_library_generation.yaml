@@ -124,4 +124,4 @@ jobs:
       run: |
         # exclude generated golden files
         # exclude owlbot until further refaction
-        black --check library_generation --exclude "(library_generation/owlbot)|(library_generation/test/resources/goldens)"
+        black --check library_generation --exclude "(library_generation/test/resources/goldens)"
