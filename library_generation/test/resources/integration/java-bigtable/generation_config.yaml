@@ -6,9 +6,9 @@ owlbot_cli_image: sha256:623647ee79ac605858d09e60c1382a716c125fb776f69301b72de1c
 synthtool_commitish: 6612ab8f3afcd5e292aecd647f0fa68812c9f5b5
 destination_path: java-bigtable
 libraries:
-  - api_shortname: bigtable
-    name_pretty: Cloud Bigtable
-    library_type: GAPIC_COMBO
-    GAPICs:
-      - proto_path: google/bigtable/admin/v2
-      - proto_path: google/bigtable/v2
+- api_shortname: bigtable
+  name_pretty: Cloud Bigtable
+  library_type: GAPIC_COMBO
+  GAPICs:
+  - proto_path: google/bigtable/admin/v2
+  - proto_path: google/bigtable/v2
