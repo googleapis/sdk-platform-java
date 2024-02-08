@@ -1,205 +1,139 @@
-# Generate GAPIC Client Library with and without post-processing
+# Generate a repository containing GAPIC Client Libraries
 
-The script, `generate_library.sh`, allows you to generate a GAPIC client library from proto files.
+The script, `generate_repo.py`, allows you to generate a repository containing GAPIC client libraries from a configuration file.
 
 ## Environment
 
-Use Linux environment and install java runtime environment (8 or above).
+- OS: Linux
+- Java runtime environment (8 or above)
+- Apache Maven (used in formatting source code)
+- Python (3.11.6 or above)
 
 ## Prerequisite
-Protos referenced by protos in `proto_path` (see `proto_path` below) should be copied to an `output`
-directory located in the working directory, referred as `$cwd`
-(for example, `library_generation/output` if planning to call from the same folder).
-The directory structure should be the same as import statements in protos.
-
-For example, you want to generate from `folder1/folder2/protoA`, so `proto_path` 
-should be set to `folder1/folder2` (a relative path from `output`). 
-protoA imports protoB as `folder3/folder4/protoB`, then there should 
-be `folder3/folder4` (containing protoB) in `output`.
-
-In order to generate a GAPIC library, you need to pull `google/` from [googleapis](https://github.com/googleapis/googleapis)
-and put it into `output` since protos in `google/` are likely referenced by 
-protos from which the library are generated.
-
-In order to generate a post-processed GAPIC library, you need to pull the
-original repository (i.e. google-cloud-java) and pass the monorepo as
-`destination_path` (e.g. `google-cloud-java/java-asset`). 
-This repository will be the source of truth for pre-existing
-pom.xml files, owlbot.py and .OwlBot.yaml files. See the option belows for
-custom postprocessed generations (e.g. custom `versions.txt` file).
-
-Post-processing makes use of python scripts. The script will automatically use
-`pyenv` to use the specified version in
-`library_generation/configuration/python-version`. Pyenv is then a requirement
-in the environment.
+In order to generate a version for each library, 
 
 
-## Parameters to run `generate_library.sh`
+## Parameters to generate a repository using `generate_repo.py`
 
-You need to run the script with the following parameters.
+### Generation configuration yaml (`generation_config_yaml`)
 
-### proto_path
-A directory in `$cwd/output` and copy proto files into it. 
-The absolute path of `proto_path` is `$cwd/output/$proto_path`. 
+A path to a configuration file containing parameters to generate the repository.
+Please refer here for
 
-Use `-p` or `--proto_path` to specify the value.
+### Target library API shortname (`target_library_api_shortname`), optional
 
-### destination_path 
-A directory within `$cwd/output`. 
-This is the path in which the generated library will reside. 
-The absolute path of `destination_path` is `$cwd/output/$destination_path`. 
+If specified, the libray whose `api_shortname` equals to `target_library_api_shortname`
+will be generated; otherwise all libraries in the configuration file will be
+generated.
+This can be useful when you just want to generate one library for debugging
+purpose.
 
-Use `-d` or `--destination_path` to specify the value.
-   
-Note that you do not need to create `$destination_path` beforehand.
+The default value is an empty string, which means all libraries will be generated.
 
-The directory structure of the generated library _withtout_ postprocessing is
+### Repository path (`repository_path`), optional
+
+The path to where the generated repository goes.
+
+The default value is the current working directory when running the script.
+
+Note that versions.txt has to exist in `repository_path` in order to generate
+right version for each library.
+Please refer [here](go/java-client-releasing#versionstxt-manifest) for more info
+of versions.txt.
+
+## Configuration to generate a repository
+
+There are three levels of parameters in the configuration: repository level,
+library level and GAPIC level.
+
+### Repository level parameters
+
+The repository level parameters define the version of API definition (proto)
+and tools.
+They are shared by library level parameters.
+
+| Name                    | Required | Notes                                        |
+|:------------------------|:--------:|:---------------------------------------------|
+| gapic_generator_version |   Yes    |                                              |
+| protobuf_version        |    No    | inferred from the generator if not specified |
+| grpc_version            |    No    | inferred from the generator if not specified |
+| googleapis-commitish    |   Yes    |                                              |
+| owlbot-cli-image        |   Yes    |                                              |
+| synthtool-commitish     |   Yes    |                                              |
+
+### Library level parameters
+
+The library level parameters define how to generate a (multi-versions) GAPIC
+library.
+They are shared by all GAPICs of a library.
+
+| Name                 | Required | Notes                                                             |
+|:---------------------|:--------:|:------------------------------------------------------------------|
+| api_shortname        |   Yes    |                                                                   |
+| api_description      |   Yes    |                                                                   |
+| name_pretty          |   Yes    |                                                                   |
+| product_docs         |   Yes    |                                                                   |
+| library_type         |    No    | `GAPIC_AUTO` if not specified                                     |
+| release_level        |    No    | `preview` if not specified                                        |
+| api_id               |    No    | `{api_shortname}.googleapis.com` if not specified                 |
+| api_reference        |    No    |                                                                   |
+| client_documentation |    No    |                                                                   |
+| distribution_name    |    No    | `{group_id}:google-{cloud_prefix}{library_name}` if not specified |
+| googleapis_commitish |    No    | use repository level `googleapis_commitish` if not specified.     |
+| group_id             |    No    | `com.google.cloud` if not specified                               |
+| issue_tracker        |    No    |                                                                   |
+| library_name         |    No    | `api_shortname` is not specified                                  |
+| rest_documentation   |    No    |                                                                   |
+| rpc_documentation    |    No    |                                                                   |
+| cloud_api            |    No    | `true` if not specified                                           |
+| requires-billing     |    No    | `true` if not specified                                           |
+
+Note that `cloud_prefix` is `cloud-` if `cloud_api` is `true`; empty otherwise.
+
+### GAPIC level parameters
+
+The GAPIC level parameters define how to generate a GAPIC library.
+
+| Name       | Required | Notes                                     |
+|:-----------|:--------:|:------------------------------------------|
+| proto_path |   Yes    | versioned proto_path starts with `google` |
+
+### An example of generation configuration
+
+```yaml
+gapic_generator_version: 2.34.0
+protobuf_version: 25.2
+googleapis_commitish: 1a45bf7393b52407188c82e63101db7dc9c72026
+owlbot_cli_image: sha256:623647ee79ac605858d09e60c1382a716c125fb776f69301b72de1cd35d49409
+synthtool_commitish: 6612ab8f3afcd5e292aecd647f0fa68812c9f5b5
+destination_path: google-cloud-java
+libraries:
+  - api_shortname: apigeeconnect
+    name_pretty: Apigee Connect
+    product_documentation: "https://cloud.google.com/apigee/docs/hybrid/v1.3/apigee-connect/"
+    api_description: "allows the Apigee hybrid management plane to connect securely to the MART service in the runtime plane without requiring you to expose the MART endpoint on the internet."
+    release_level: "stable"
+    library_name: "apigee-connect"
+    GAPICs:
+      - proto_path: google/cloud/apigeeconnect/v1
+
+  - api_shortname: cloudasset
+    name_pretty: Cloud Asset Inventory
+    product_documentation: "https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/overview"
+    api_description: "provides inventory services based on a time series database. This database keeps a five week history of Google Cloud asset metadata. The Cloud Asset Inventory export service allows you to export all asset metadata at a certain timestamp or export event change history during a timeframe."
+    library_name: "asset"
+    client_documentation: "https://cloud.google.com/java/docs/reference/google-cloud-asset/latest/overview"
+    distribution_name: "com.google.cloud:google-cloud-asset"
+    release_level: "stable"
+    issue_tracker: "https://issuetracker.google.com/issues/new?component=187210&template=0"
+    api_reference: "https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/overview"
+    GAPICs:
+      - proto_path: google/cloud/asset/v1
+      - proto_path: google/cloud/asset/v1p1beta1
+      - proto_path: google/cloud/asset/v1p2beta1
+      - proto_path: google/cloud/asset/v1p5beta1
+      - proto_path: google/cloud/asset/v1p7beta1
 ```
-$destination_path
-  |_gapic-*
-  |    |_src
-  |       |_main
-  |          |_java
-  |          |_resources
-  |       |_test
-  |_grpc-*
-  |    |_src
-  |       |_main
-  |          |_java
-  |    
-  |_proto-*
-  |    |_src
-  |       |_main
-  |          |_java
-  |          |_proto
-  |_samples
-      |_snippets
-          |_generated
-```
-You can't build the library as-is since it does not have `pom.xml` or `build.gradle`.
-To use the library, copy the generated files to the corresponding directory
-of a library repository, e.g., `google-cloud-java` or use the
-`enable_postprocessing` flag on top of a pre-existing generated library to
-produce the necessary pom files.
-
-For `asset/v1` the directory structure of the generated library _with_ postprocessing is
-```
-
-├── google-cloud-asset
-│   └── src
-│       ├── main
-│       │   ├── java
-│       │   └── resources
-│       └── test
-│           └── java
-├── google-cloud-asset-bom
-├── grpc-google-cloud-asset-v*
-│   └── src
-│       └── main
-│           └── java
-├── proto-google-cloud-asset-v*
-│   └── src
-│       └── main
-│           ├── java
-│           └── proto
-└── samples
-    └── snippets
-        └── generated
-
-```
-
-### gapic_generator_version
-You can find the released version of gapic-generator-java in [maven central](https://repo1.maven.org/maven2/com/google/api/gapic-generator-java/).
-
-Use `--gapic_generator_version` to specify the value.
-
-Note that you can specify any non-published version (e.g. a SNAPSHOT) as long as you have installed it in your maven
-local repository. The script will search locally first.
-
-### protobuf_version (optional)
-You can find the released version of protobuf in [GitHub](https://github.com/protocolbuffers/protobuf/releases/).
-The default value is defined in `gapic-generator-java-pom-parent/pom.xml`.
-
-Use `--protobuf_version` to specify the value.
-
-Note that if specified, the version should be compatible with gapic-generator-java.
-
-### grpc_version (optional)
-You can find the released version of grpc in [maven central](https://repo1.maven.org/maven2/io/grpc/protoc-gen-grpc-java/).
-The default value is defined in `gapic-generator-java-pom-parent/pom.xml`.
-
-Use `--grpc_version` to specify the value.
-
-Note that if specified, the version should be compatible with gapic-generator-java.
-
-### proto_only (optional)
-Whether this is a proto-only library (no `gapic-*` directory in the generated 
-library).
-The default value is `false`.
-
-When set to `true`, the GAPIC generator will not be invoked.
-Therefore, GAPIC options (`transport`, `rest_numeric_enums`) and 
-`gapic_additional_protos` will be ignored.
-
-Use `--proto_only` to specify the value.
-
-### gapic_additional_protos (optional)
-Additional protos that pass to the generator.
-The default value is `google/cloud/common_resources.proto`.
-
-Use `--gapic_additional_protos` to specify the value.
-
-### transport (optional)
-One of GAPIC options passed to the generator.
-The value is either `grpc` or `grpc+rest`.
-The default value is `grpc`.
-
-Use `--transport` to specify the value.
-
-### rest_numeric_enums (optional)
-One of GAPIC options passed to the generator.
-The value is either `true` or `false`.
-The default value is `true`.
-
-Use `--rest_numeric_enums` to specify the value.
-
-### gapic_yaml (optional)
-One of GAPIC options passed to the generator.
-The default value is an empty string.
-
-Use `--gapic_yaml` to specify the value.
-
-### service_config (optional)
-One of GAPIC options passed to the generator.
-The default value is an empty string.
-
-Use `--service_config` to specify the value.
-
-### service_yaml (optional)
-One of GAPIC options passed to the generator.
-The default value is an empty string.
-
-Use `--service_yaml` to specify the value.
-
-### include_samples (optional)
-Whether generates code samples. The value is either `true` or `false`. 
-The default value is `true`.
-
-Use `--include_samples` to specify the value.
-
-### os_architecture (optional)
-Choose the protoc binary type from https://github.com/protocolbuffers/protobuf/releases.
-Default is "linux-x86_64".
-
-### enable_postprocessing (optional)
-Whether to enable the post-processing steps (usage of owlbot) in the generation
-of this library
-Default is "true".
-
-### versions_file (optional)
-It must point to a versions.txt file containing the versions the post-processed
-poms will have. It is required when `enable_postprocessing` is `"true"`
-
 
 ## An example to generate a non post-processed client library
 ```bash
