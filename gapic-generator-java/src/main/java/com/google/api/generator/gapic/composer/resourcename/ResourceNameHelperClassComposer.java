@@ -503,13 +503,6 @@ public class ResourceNameHelperClassComposer {
       ResourceName resourceName, List<List<String>> tokenHierarchies, TypeStore typeStore) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
     String newMethodNameFormat = "new%s";
-    AnnotationNode betaAnnotation =
-        AnnotationNode.builder()
-            .setType(FIXED_TYPESTORE.get("BetaApi"))
-            .setDescription(
-                "The per-pattern Builders are not stable yet and may be changed in the future.")
-            .build();
-    List<AnnotationNode> annotations = Arrays.asList(betaAnnotation);
 
     // Create the newBuilder and variation methods here.
     // Variation example: newProjectLocationAutoscalingPolicyBuilder().
@@ -535,7 +528,6 @@ public class ResourceNameHelperClassComposer {
       javaMethods.add(
           methodDefStarterFn
               .apply(String.format(newMethodNameFormat, variantName))
-              .setAnnotations(i == 0 ? Collections.emptyList() : annotations)
               .build());
       if (i == 0 && tokenHierarchies.size() > 1) {
         // Create another builder creator method, but with the per-variant name.
@@ -543,7 +535,6 @@ public class ResourceNameHelperClassComposer {
             methodDefStarterFn
                 .apply(
                     String.format(newMethodNameFormat, getBuilderTypeName(tokenHierarchies.get(i))))
-                .setAnnotations(annotations)
                 .build());
       }
     }

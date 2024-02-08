@@ -92,22 +92,18 @@ public class FoobarName implements ResourceName {
     return new Builder();
   }
 
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static Builder newProjectFoobarBuilder() {
     return new Builder();
   }
 
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static ProjectVariantFoobarBuilder newProjectVariantFoobarBuilder() {
     return new ProjectVariantFoobarBuilder();
   }
 
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static FoobarBuilder newFoobarBuilder() {
     return new FoobarBuilder();
   }
 
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static BarFooFoobarBuilder newBarFooFoobarBuilder() {
     return new BarFooFoobarBuilder();
   }
