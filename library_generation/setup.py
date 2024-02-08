@@ -2,12 +2,22 @@
 Package information of library_generation python scripts
 """
 
-from distutils.core import setup
+from setuptools import setup
 
-setup(name='sdk_platform_java_library_generation',
+setup(name='library_generation',
       version='0.1',
-      py_modules=[
-          'model',
-          'owlbot.src'
-      ],
-    )
+      package_dir={
+        'library_generation': '.',
+      },
+      package_data={
+          'library_generation': [
+              '*.sh',
+              'templates/*.j2',
+              'gapic-generator-java-wrapper',
+              'requirements.*',
+              'owlbot/src/requirements.*',
+              'owlbot/bin/*.sh',
+              'owlbot/templates/**/*.j2',
+          ],
+      }
+)
