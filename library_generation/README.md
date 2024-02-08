@@ -141,6 +141,18 @@ googleapis_commitish: 1a45bf7393b52407188c82e63101db7dc9c72026
 owlbot_cli_image: sha256:623647ee79ac605858d09e60c1382a716c125fb776f69301b72de1cd35d49409
 synthtool_commitish: 6612ab8f3afcd5e292aecd647f0fa68812c9f5b5
 destination_path: google-cloud-java
+template_excludes:
+  - ".github/*"
+  - ".kokoro/*"
+  - "samples/*"
+  - "CODE_OF_CONDUCT.md"
+  - "CONTRIBUTING.md"
+  - "LICENSE"
+  - "SECURITY.md"
+  - "java.header"
+  - "license-checks.xml"
+  - "renovate.json"
+  - ".gitignore"
 libraries:
   - api_shortname: apigeeconnect
     name_pretty: Apigee Connect
