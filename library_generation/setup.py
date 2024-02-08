@@ -10,6 +10,6 @@ setup(name='library_generation',
         'library_generation': '.',
       },
       package_data={
-          'library_generation': ['**/*.sh', '**/*.j2'],
+          'library_generation': ['*/*.sh', 'templates/*.j2'],
       }
 )
