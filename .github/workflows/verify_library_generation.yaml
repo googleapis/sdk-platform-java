@@ -42,6 +42,7 @@ jobs:
         set -ex
         pushd library_generation
         pip install -r requirements.in
+        pip install .
         popd
     - name: Run integration tests
       shell: bash
