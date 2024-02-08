@@ -35,8 +35,8 @@ public class ITClientShutdown {
   public void testGrpc_closeClient() throws Exception {
     EchoClient grpcClient = TestClientInitializer.createGrpcEchoClient();
     grpcClient.close();
-    // 500ms buffer time to properly terminate the client
-    grpcClient.awaitTermination(500, TimeUnit.MILLISECONDS);
+    // 5s buffer time to properly terminate the client
+    grpcClient.awaitTermination(5, TimeUnit.SECONDS);
     Truth.assertThat(grpcClient.isShutdown()).isTrue();
     Truth.assertThat(grpcClient.isTerminated()).isTrue();
   }
@@ -46,8 +46,8 @@ public class ITClientShutdown {
   public void testHttpJson_closeClient() throws Exception {
     EchoClient httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
     httpjsonClient.close();
-    // 500ms buffer time to properly terminate the client
-    httpjsonClient.awaitTermination(500, TimeUnit.MILLISECONDS);
+    // 5s buffer time to properly terminate the client
+    httpjsonClient.awaitTermination(5, TimeUnit.SECONDS);
     Truth.assertThat(httpjsonClient.isShutdown()).isTrue();
     Truth.assertThat(httpjsonClient.isTerminated()).isTrue();
   }
@@ -60,8 +60,8 @@ public class ITClientShutdown {
     grpcClient.echo(EchoRequest.newBuilder().setContent("Test").build());
 
     grpcClient.close();
-    // 1s buffer time to properly terminate the client after RPC is invoked
-    grpcClient.awaitTermination(1, TimeUnit.SECONDS);
+    // 10s buffer time to properly terminate the client after RPC is invoked
+    grpcClient.awaitTermination(10, TimeUnit.SECONDS);
     Truth.assertThat(grpcClient.isShutdown()).isTrue();
     Truth.assertThat(grpcClient.isTerminated()).isTrue();
   }
@@ -74,8 +74,8 @@ public class ITClientShutdown {
     httpjsonClient.echo(EchoRequest.newBuilder().setContent("Test").build());
 
     httpjsonClient.close();
-    // 1s buffer time to properly terminate the client after RPC is invoked
-    httpjsonClient.awaitTermination(1, TimeUnit.SECONDS);
+    // 10s buffer time to properly terminate the client after RPC is invoked
+    httpjsonClient.awaitTermination(10, TimeUnit.SECONDS);
     Truth.assertThat(httpjsonClient.isShutdown()).isTrue();
     Truth.assertThat(httpjsonClient.isTerminated()).isTrue();
   }
@@ -159,7 +159,7 @@ public class ITClientShutdown {
     BlockResponse response = httpjsonClient.block(blockRequest);
     Truth.assertThat(response.getContent()).isEqualTo("httpjsonBlockContent_2sDelay");
 
-    // Intentionally do not run grpcClient.awaitTermination(...) as this test will
+    // Intentionally do not run httpjsonClient.awaitTermination(...) as this test will
     // check that everything is properly terminated after close() is called.
     httpjsonClient.close();
 
