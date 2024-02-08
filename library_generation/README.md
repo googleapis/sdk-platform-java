@@ -10,7 +10,9 @@ The script, `generate_repo.py`, allows you to generate a repository containing G
 - Python (3.11.6 or above)
 
 ## Prerequisite
-In order to generate a version for each library, 
+In order to generate a version for each library, a versions.txt has to exist
+in `repository_path`.
+Please refer to [Repository path](#repository-path--repositorypath---optional) for more information.
 
 
 ## Parameters to generate a repository using `generate_repo.py`
@@ -135,35 +137,11 @@ libraries:
       - proto_path: google/cloud/asset/v1p7beta1
 ```
 
-## An example to generate a non post-processed client library
+## An example to generate a repository using `generate_repo.py`
 ```bash
-library_generation/generate_library.sh \
--p google/cloud/confidentialcomputing/v1 \
--d google-cloud-confidentialcomputing-v1-java \
---gapic_generator_version 2.24.0 \
---protobuf_version 23.2 \
---grpc_version 1.55.1 \
---gapic_additional_protos "google/cloud/common_resources.proto google/cloud/location/locations.proto" \
---transport grpc+rest \
---rest_numeric_enums true \
---enable_postprocessing false \
---include_samples true
-```
-
-## An example to generate a library with postprocessing
-```bash
-library_generation/generate_library.sh \
--p google/cloud/confidentialcomputing/v1 \
--d google-cloud-confidentialcomputing-v1-java \
---gapic_generator_version 2.24.0 \
---protobuf_version 23.2 \
---grpc_version 1.55.1 \
---gapic_additional_protos "google/cloud/common_resources.proto google/cloud/location/locations.proto" \
---transport grpc+rest \
---rest_numeric_enums true \
---enable_postprocessing true \
---versions_file "path/to/versions.txt" \
---include_samples true
+python -m library_generation/generate_repo.py generate \
+--generation-config-yaml=/path/to/config-file \
+--repository-path=/path/to/repository
 ```
 
 # Owlbot Java Postprocessor
