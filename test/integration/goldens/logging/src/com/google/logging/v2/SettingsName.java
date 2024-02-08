@@ -107,22 +107,18 @@ public class SettingsName implements ResourceName {
     return new Builder();
   }
 
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static Builder newProjectBuilder() {
     return new Builder();
   }
 
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static OrganizationBuilder newOrganizationBuilder() {
     return new OrganizationBuilder();
   }
 
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static FolderBuilder newFolderBuilder() {
     return new FolderBuilder();
   }
 
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static BillingAccountBuilder newBillingAccountBuilder() {
     return new BillingAccountBuilder();
   }
@@ -135,22 +131,18 @@ public class SettingsName implements ResourceName {
     return newBuilder().setProject(project).build();
   }
 
-  @BetaApi("The static create methods are not stable yet and may be changed in the future.")
   public static SettingsName ofProjectName(String project) {
     return newBuilder().setProject(project).build();
   }
 
-  @BetaApi("The static create methods are not stable yet and may be changed in the future.")
   public static SettingsName ofOrganizationName(String organization) {
     return newOrganizationBuilder().setOrganization(organization).build();
   }
 
-  @BetaApi("The static create methods are not stable yet and may be changed in the future.")
   public static SettingsName ofFolderName(String folder) {
     return newFolderBuilder().setFolder(folder).build();
   }
 
-  @BetaApi("The static create methods are not stable yet and may be changed in the future.")
   public static SettingsName ofBillingAccountName(String billingAccount) {
     return newBillingAccountBuilder().setBillingAccount(billingAccount).build();
   }
@@ -159,22 +151,18 @@ public class SettingsName implements ResourceName {
     return newBuilder().setProject(project).build().toString();
   }
 
-  @BetaApi("The static format methods are not stable yet and may be changed in the future.")
   public static String formatProjectName(String project) {
     return newBuilder().setProject(project).build().toString();
   }
 
-  @BetaApi("The static format methods are not stable yet and may be changed in the future.")
   public static String formatOrganizationName(String organization) {
     return newOrganizationBuilder().setOrganization(organization).build().toString();
   }
 
-  @BetaApi("The static format methods are not stable yet and may be changed in the future.")
   public static String formatFolderName(String folder) {
     return newFolderBuilder().setFolder(folder).build().toString();
   }
 
-  @BetaApi("The static format methods are not stable yet and may be changed in the future.")
   public static String formatBillingAccountName(String billingAccount) {
     return newBillingAccountBuilder().setBillingAccount(billingAccount).build().toString();
   }

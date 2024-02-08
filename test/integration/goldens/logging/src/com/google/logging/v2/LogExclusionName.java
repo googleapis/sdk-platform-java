@@ -118,22 +118,18 @@ public class LogExclusionName implements ResourceName {
     return new Builder();
   }
 
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static Builder newProjectExclusionBuilder() {
     return new Builder();
   }
 
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static OrganizationExclusionBuilder newOrganizationExclusionBuilder() {
     return new OrganizationExclusionBuilder();
   }
 
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static FolderExclusionBuilder newFolderExclusionBuilder() {
     return new FolderExclusionBuilder();
   }
 
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static BillingAccountExclusionBuilder newBillingAccountExclusionBuilder() {
     return new BillingAccountExclusionBuilder();
   }
@@ -146,12 +142,10 @@ public class LogExclusionName implements ResourceName {
     return newBuilder().setProject(project).setExclusion(exclusion).build();
   }
 
-  @BetaApi("The static create methods are not stable yet and may be changed in the future.")
   public static LogExclusionName ofProjectExclusionName(String project, String exclusion) {
     return newBuilder().setProject(project).setExclusion(exclusion).build();
   }
 
-  @BetaApi("The static create methods are not stable yet and may be changed in the future.")
   public static LogExclusionName ofOrganizationExclusionName(
       String organization, String exclusion) {
     return newOrganizationExclusionBuilder()
@@ -160,12 +154,10 @@ public class LogExclusionName implements ResourceName {
         .build();
   }
 
-  @BetaApi("The static create methods are not stable yet and may be changed in the future.")
   public static LogExclusionName ofFolderExclusionName(String folder, String exclusion) {
     return newFolderExclusionBuilder().setFolder(folder).setExclusion(exclusion).build();
   }
 
-  @BetaApi("The static create methods are not stable yet and may be changed in the future.")
   public static LogExclusionName ofBillingAccountExclusionName(
       String billingAccount, String exclusion) {
     return newBillingAccountExclusionBuilder()
@@ -178,12 +170,10 @@ public class LogExclusionName implements ResourceName {
     return newBuilder().setProject(project).setExclusion(exclusion).build().toString();
   }
 
-  @BetaApi("The static format methods are not stable yet and may be changed in the future.")
   public static String formatProjectExclusionName(String project, String exclusion) {
     return newBuilder().setProject(project).setExclusion(exclusion).build().toString();
   }
 
-  @BetaApi("The static format methods are not stable yet and may be changed in the future.")
   public static String formatOrganizationExclusionName(String organization, String exclusion) {
     return newOrganizationExclusionBuilder()
         .setOrganization(organization)
@@ -192,12 +182,10 @@ public class LogExclusionName implements ResourceName {
         .toString();
   }
 
-  @BetaApi("The static format methods are not stable yet and may be changed in the future.")
   public static String formatFolderExclusionName(String folder, String exclusion) {
     return newFolderExclusionBuilder().setFolder(folder).setExclusion(exclusion).build().toString();
   }
 
-  @BetaApi("The static format methods are not stable yet and may be changed in the future.")
   public static String formatBillingAccountExclusionName(String billingAccount, String exclusion) {
     return newBillingAccountExclusionBuilder()
         .setBillingAccount(billingAccount)

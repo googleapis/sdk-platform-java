@@ -97,17 +97,14 @@ public class FeedName implements ResourceName {
     return new Builder();
   }
 
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static Builder newProjectFeedBuilder() {
     return new Builder();
   }
 
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static FolderFeedBuilder newFolderFeedBuilder() {
     return new FolderFeedBuilder();
   }
 
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static OrganizationFeedBuilder newOrganizationFeedBuilder() {
     return new OrganizationFeedBuilder();
   }
@@ -120,17 +117,14 @@ public class FeedName implements ResourceName {
     return newBuilder().setProject(project).setFeed(feed).build();
   }
 
-  @BetaApi("The static create methods are not stable yet and may be changed in the future.")
   public static FeedName ofProjectFeedName(String project, String feed) {
     return newBuilder().setProject(project).setFeed(feed).build();
   }
 
-  @BetaApi("The static create methods are not stable yet and may be changed in the future.")
   public static FeedName ofFolderFeedName(String folder, String feed) {
     return newFolderFeedBuilder().setFolder(folder).setFeed(feed).build();
   }
 
-  @BetaApi("The static create methods are not stable yet and may be changed in the future.")
   public static FeedName ofOrganizationFeedName(String organization, String feed) {
     return newOrganizationFeedBuilder().setOrganization(organization).setFeed(feed).build();
   }
@@ -139,17 +133,14 @@ public class FeedName implements ResourceName {
     return newBuilder().setProject(project).setFeed(feed).build().toString();
   }
 
-  @BetaApi("The static format methods are not stable yet and may be changed in the future.")
   public static String formatProjectFeedName(String project, String feed) {
     return newBuilder().setProject(project).setFeed(feed).build().toString();
   }
 
-  @BetaApi("The static format methods are not stable yet and may be changed in the future.")
   public static String formatFolderFeedName(String folder, String feed) {
     return newFolderFeedBuilder().setFolder(folder).setFeed(feed).build().toString();
   }
 
-  @BetaApi("The static format methods are not stable yet and may be changed in the future.")
   public static String formatOrganizationFeedName(String organization, String feed) {
     return newOrganizationFeedBuilder()
         .setOrganization(organization)

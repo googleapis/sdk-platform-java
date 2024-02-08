@@ -98,17 +98,14 @@ public class SavedQueryName implements ResourceName {
     return new Builder();
   }
 
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static Builder newProjectSavedQueryBuilder() {
     return new Builder();
   }
 
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static FolderSavedQueryBuilder newFolderSavedQueryBuilder() {
     return new FolderSavedQueryBuilder();
   }
 
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static OrganizationSavedQueryBuilder newOrganizationSavedQueryBuilder() {
     return new OrganizationSavedQueryBuilder();
   }
@@ -121,17 +118,14 @@ public class SavedQueryName implements ResourceName {
     return newBuilder().setProject(project).setSavedQuery(savedQuery).build();
   }
 
-  @BetaApi("The static create methods are not stable yet and may be changed in the future.")
   public static SavedQueryName ofProjectSavedQueryName(String project, String savedQuery) {
     return newBuilder().setProject(project).setSavedQuery(savedQuery).build();
   }
 
-  @BetaApi("The static create methods are not stable yet and may be changed in the future.")
   public static SavedQueryName ofFolderSavedQueryName(String folder, String savedQuery) {
     return newFolderSavedQueryBuilder().setFolder(folder).setSavedQuery(savedQuery).build();
   }
 
-  @BetaApi("The static create methods are not stable yet and may be changed in the future.")
   public static SavedQueryName ofOrganizationSavedQueryName(
       String organization, String savedQuery) {
     return newOrganizationSavedQueryBuilder()
@@ -144,12 +138,10 @@ public class SavedQueryName implements ResourceName {
     return newBuilder().setProject(project).setSavedQuery(savedQuery).build().toString();
   }
 
-  @BetaApi("The static format methods are not stable yet and may be changed in the future.")
   public static String formatProjectSavedQueryName(String project, String savedQuery) {
     return newBuilder().setProject(project).setSavedQuery(savedQuery).build().toString();
   }
 
-  @BetaApi("The static format methods are not stable yet and may be changed in the future.")
   public static String formatFolderSavedQueryName(String folder, String savedQuery) {
     return newFolderSavedQueryBuilder()
         .setFolder(folder)
@@ -158,7 +150,6 @@ public class SavedQueryName implements ResourceName {
         .toString();
   }
 
-  @BetaApi("The static format methods are not stable yet and may be changed in the future.")
   public static String formatOrganizationSavedQueryName(String organization, String savedQuery) {
     return newOrganizationSavedQueryBuilder()
         .setOrganization(organization)
