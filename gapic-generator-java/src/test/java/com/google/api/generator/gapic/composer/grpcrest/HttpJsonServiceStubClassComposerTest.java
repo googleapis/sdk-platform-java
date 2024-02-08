@@ -51,4 +51,22 @@ public class HttpJsonServiceStubClassComposerTest {
         HttpJsonServiceStubClassComposer.instance().generate(context, wickedProtoService);
     assertThat(clazz.kind()).isEqualTo(GapicClass.Kind.NON_GENERATED);
   }
+
+  @Test
+  public void generateServiceClassesAutoPopulateFieldTesting() {
+    GapicContext context = GrpcRestTestProtoLoader.instance().parseAutoPopulateFieldTesting();
+    Service autoPopulateFieldTestingProtoService = context.services().get(0);
+    GapicClass clazz =
+        HttpJsonServiceStubClassComposer.instance()
+            .generate(context, autoPopulateFieldTestingProtoService);
+    JavaWriterVisitor visitor = new JavaWriterVisitor();
+    clazz.classDefinition().accept(visitor);
+    GoldenFileWriter.saveCodegenToFile(
+        this.getClass(), "HttpJsonAutoPopulateFieldTestingStub.golden", visitor.write());
+    Path goldenFilePath =
+        Paths.get(
+            GoldenFileWriter.getGoldenDir(this.getClass()),
+            "HttpJsonAutoPopulateFieldTestingStub.golden");
+    Assert.assertCodeEquals(goldenFilePath, visitor.write());
+  }
 }
