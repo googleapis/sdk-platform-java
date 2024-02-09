@@ -146,6 +146,56 @@ class UtilitiesTest(unittest.TestCase):
             path_to_yaml,
         )
 
+    def test_from_yaml_succeeds(self):
+        config = from_yaml(f"{test_config_dir}/generation_config.yaml")
+        self.assertEqual("2.34.0", config.gapic_generator_version)
+        self.assertEqual(25.2, config.protobuf_version)
+        self.assertEqual(
+            "1a45bf7393b52407188c82e63101db7dc9c72026", config.googleapis_commitish
+        )
+        self.assertEqual(
+            "sha256:623647ee79ac605858d09e60c1382a716c125fb776f69301b72de1cd35d49409",
+            config.owlbot_cli_image,
+        )
+        self.assertEqual(
+            "6612ab8f3afcd5e292aecd647f0fa68812c9f5b5", config.synthtool_commitish
+        )
+        self.assertEqual(
+            [
+                ".github/*",
+                ".kokoro/*",
+                "samples/*",
+                "CODE_OF_CONDUCT.md",
+                "CONTRIBUTING.md",
+                "LICENSE",
+                "SECURITY.md",
+                "java.header",
+                "license-checks.xml",
+                "renovate.json",
+                ".gitignore",
+            ],
+            config.template_excludes,
+        )
+        library = config.libraries[0]
+        self.assertEqual("cloudasset", library.api_shortname)
+        self.assertEqual("Cloud Asset Inventory", library.name_pretty)
+        self.assertEqual(
+            "https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/overview",
+            library.product_documentation,
+        )
+        self.assertEqual(
+            "provides inventory services based on a time series database.",
+            library.api_description,
+        )
+        self.assertEqual("asset", library.library_name)
+        gapics = library.gapic_configs
+        self.assertEqual(5, len(gapics))
+        self.assertEqual("google/cloud/asset/v1", gapics[0].proto_path)
+        self.assertEqual("google/cloud/asset/v1p1beta1", gapics[1].proto_path)
+        self.assertEqual("google/cloud/asset/v1p2beta1", gapics[2].proto_path)
+        self.assertEqual("google/cloud/asset/v1p5beta1", gapics[3].proto_path)
+        self.assertEqual("google/cloud/asset/v1p7beta1", gapics[4].proto_path)
+
     def test_gapic_inputs_parse_grpc_only_succeeds(self):
         parsed = parse_build_file(build_file, "", "BUILD_grpc.bazel")
         self.assertEqual("grpc", parsed.transport)
