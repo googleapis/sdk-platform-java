@@ -286,8 +286,9 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     }
 
     /**
-     * Sets the ApiTracerFactory for the client instance. To enable default metrics, users need to create an instance
-     * of metricsRecorder and pass it to the metricsTracerFactory, and set it here.
+     * Sets the ApiTracerFactory for the client instance. To enable default metrics, users need to
+     * create an instance of metricsRecorder and pass it to the metricsTracerFactory, and set it
+     * here.
      */
     public B setTracerFactory(@Nullable ApiTracerFactory tracerFactory) {
       stubSettings.setTracerFactory(tracerFactory);
