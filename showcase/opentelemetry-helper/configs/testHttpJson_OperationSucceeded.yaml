@@ -6,7 +6,7 @@ receivers:
 
 exporters:
   file:
-    path: "testHttpJson_OperationSucceded-metrics.txt"
+    path: "testHttpJson_OperationSucceeded_metrics.txt"
 
 service:
   extensions: []

@@ -1,10 +1,6 @@
 #!/bin/bash
 
-# add logic for verifying metrics
-
-
-# perform cleanup
-# Specify the directory to delete
+# perform cleanup, Specify the directory to delete
 directory_to_delete="../opentelemetry-logs"
 
 # Check if the directory exists
