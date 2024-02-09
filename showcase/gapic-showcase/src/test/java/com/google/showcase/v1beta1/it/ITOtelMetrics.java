@@ -19,15 +19,22 @@ package com.google.showcase.v1beta1.it;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.GaxProperties;
 import com.google.api.gax.core.NoCredentialsProvider;
+import com.google.api.gax.retrying.RetrySettings;
+import com.google.api.gax.retrying.RetryingFuture;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.api.gax.tracing.MetricsTracerFactory;
 import com.google.api.gax.tracing.OpentelemetryMetricsRecorder;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.truth.Truth;
 import com.google.rpc.Status;
+import com.google.showcase.v1beta1.BlockRequest;
+import com.google.showcase.v1beta1.BlockResponse;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoSettings;
+import com.google.showcase.v1beta1.stub.EchoStubSettings;
+import io.grpc.ManagedChannelBuilder;
 import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.api.metrics.Meter;
 import io.opentelemetry.exporter.otlp.metrics.OtlpGrpcMetricExporter;
@@ -35,12 +42,17 @@ import io.opentelemetry.sdk.OpenTelemetrySdk;
 import io.opentelemetry.sdk.metrics.SdkMeterProvider;
 import io.opentelemetry.sdk.metrics.export.PeriodicMetricReader;
 import io.opentelemetry.sdk.resources.Resource;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import org.junit.AfterClass;
 import org.junit.Test;
 
 public class ITOtelMetrics {
 
-  public void cleanup_otelcol() throws Exception {
+  @AfterClass
+  public static void cleanup_otelcol() throws Exception {
     Process process = Runtime.getRuntime().exec("../scripts/cleanup_otelcol.sh");
     process.waitFor();
   }
@@ -51,6 +63,7 @@ public class ITOtelMetrics {
     // initialize the otel-collector
     setupOtelCollector(
         "../scripts/start_otelcol.sh",
+        "../directory1",
         "../opentelemetry-helper/configs/testHttpJson_OperationSucceeded.yaml");
 
     EchoSettings httpJsonEchoSettings =
@@ -64,6 +77,7 @@ public class ITOtelMetrics {
                     .setEndpoint("http://localhost:7469")
                     .build())
             .build();
+
     EchoClient client = EchoClient.create(httpJsonEchoSettings);
 
     EchoRequest requestWithNoError =
@@ -74,14 +88,23 @@ public class ITOtelMetrics {
     client.echoCallable().futureCall(requestWithNoError).get();
 
     // wait for the metrics to get uploaded
-    Thread.sleep(4000);
+    Thread.sleep(5000);
 
-    String filePath = "../opentelemetry-logs/testHttpJson_OperationSucceeded_metrics.txt";
+    String filePath = "../directory1/testHttpJson_OperationSucceeded_metrics.txt";
     // 1. Check if the log file exists
     File file = new File(filePath);
     Truth.assertThat(file.exists()).isTrue();
     Truth.assertThat(file.length() > 0).isTrue();
-    cleanup_otelcol();
+
+    // this is for test purpose only, I'm verifying the correct logs exist or not
+    try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+      String line;
+      while ((line = br.readLine()) != null) {
+        System.out.println(line);
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   @Test
@@ -90,12 +113,13 @@ public class ITOtelMetrics {
     // initialize the otel-collector
     setupOtelCollector(
         "../scripts/start_otelcol.sh",
+        "../directory2",
         "../opentelemetry-helper/configs/testHttpJson_OperationCancelled.yaml");
 
     EchoSettings httpJsonEchoSettings =
         EchoSettings.newHttpJsonBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTracerFactory(createOpenTelemetryTracerFactory("4317"))
+            .setTracerFactory(createOpenTelemetryTracerFactory("4318"))
             .setTransportChannelProvider(
                 EchoSettings.defaultHttpJsonTransportProviderBuilder()
                     .setHttpTransport(
@@ -116,14 +140,71 @@ public class ITOtelMetrics {
     // wait for the metrics to get uploaded
     Thread.sleep(5000);
 
-    String filePath = "../opentelemetry-logs/testHttpJson_OperationCancelled_metrics.txt";
+    String filePath = "../directory2/testHttpJson_OperationCancelled_metrics.txt";
     File file = new File(filePath);
     Truth.assertThat(file.exists()).isTrue();
     Truth.assertThat(file.length() > 0).isTrue();
-    cleanup_otelcol();
   }
 
-  // Helper function for creating opentelemetry object
+  @Test
+  public void testGrpc_attemptFailedRetriesExhausted_throwsException() throws Exception {
+
+    setupOtelCollector(
+        "../scripts/start_otelcol.sh",
+        "../directory3",
+        "../opentelemetry-helper/configs/testGrpc_attemptFailedRetriesExhausted.yaml");
+
+    RetrySettings retrySettings = RetrySettings.newBuilder().setMaxAttempts(2).build();
+
+    EchoStubSettings.Builder grpcEchoSettingsBuilder = EchoStubSettings.newBuilder();
+    grpcEchoSettingsBuilder
+        .blockSettings()
+        .setRetrySettings(retrySettings)
+        .setRetryableCodes(ImmutableSet.of(Code.INVALID_ARGUMENT));
+
+    EchoSettings grpcEchoSettingsOtel = EchoSettings.create(grpcEchoSettingsBuilder.build());
+    grpcEchoSettingsOtel =
+        grpcEchoSettingsOtel
+            .toBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTracerFactory(createOpenTelemetryTracerFactory("4319"))
+            .setTransportChannelProvider(
+                EchoSettings.defaultGrpcTransportProviderBuilder()
+                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .build())
+            .setEndpoint("localhost:7469")
+            .build();
+
+    EchoClient grpcClientWithRetrySetting = EchoClient.create(grpcEchoSettingsOtel);
+
+    BlockRequest blockRequest =
+        BlockRequest.newBuilder()
+            .setError(Status.newBuilder().setCode(Code.INVALID_ARGUMENT.ordinal()).build())
+            .build();
+
+    RetryingFuture<BlockResponse> retryingFuture =
+        (RetryingFuture<BlockResponse>)
+            grpcClientWithRetrySetting.blockCallable().futureCall(blockRequest);
+
+    Thread.sleep(4000);
+
+    String filePath = "../directory3/testGrpc_attemptFailedRetriesExhausted_metrics.txt";
+    File file = new File(filePath);
+    Truth.assertThat(file.exists()).isTrue();
+    Truth.assertThat(file.length() > 0).isTrue();
+
+    // this is for test purpose only, I'm verifying the correct logs exist or not
+    try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+      String line;
+      while ((line = br.readLine()) != null) {
+        System.out.println(line);
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  // Helper function for creating Opentelemetry object
   private static ApiTracerFactory createOpenTelemetryTracerFactory(String port) {
     // OTLP Metric Exporter setup
     String endpoint = "http://localhost:" + port;
@@ -133,7 +214,7 @@ public class ITOtelMetrics {
     // Periodic Metric Reader configuration
     PeriodicMetricReader metricReader =
         PeriodicMetricReader.builder(metricExporter)
-            .setInterval(java.time.Duration.ofSeconds(3))
+            .setInterval(java.time.Duration.ofSeconds(2))
             .build();
 
     // OpenTelemetry SDK Configuration
@@ -158,8 +239,10 @@ public class ITOtelMetrics {
     return new MetricsTracerFactory(otelMetricsRecorder);
   }
 
-  private void setupOtelCollector(String scriptPath, String configPath) throws Exception {
-    Process process = Runtime.getRuntime().exec(scriptPath + " " + configPath);
+  private void setupOtelCollector(String scriptPath, String directoryPath, String configPath)
+      throws Exception {
+    Process process =
+        Runtime.getRuntime().exec(scriptPath + " " + directoryPath + " " + configPath);
     process.waitFor();
   }
 }

@@ -2,15 +2,21 @@
 
 killall otelcol
 
-# perform cleanup, Specify the directory to delete
-directory_to_delete="../opentelemetry-logs"
+# Directories to delete
+directories_to_delete=(
+    "../directory1"
+    "../directory2"
+    "../directory3"
+)
 
-# Check if the directory exists
-if [ -d "$directory_to_delete" ]; then
-  rm -rf "$directory_to_delete"
-  echo "Directory '$directory_to_delete' has been deleted."
-else
-  echo "Error: Directory '$directory_to_delete' does not exist."
-fi
+# Iterate over each directory and delete it if it exists
+for directory in "${directories_to_delete[@]}"; do
+    if [ -d "$directory" ]; then
+        rm -rf "$directory"
+        echo "Directory '$directory' has been deleted."
+    else
+        echo "Error: Directory '$directory' does not exist."
+    fi
+done
 
 exit 0
