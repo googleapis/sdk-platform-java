@@ -20,20 +20,21 @@ import unittest
 import os
 import io
 import contextlib
-import subprocess
 from pathlib import Path
 from difflib import unified_diff
 from typing import List
-
+from parameterized import parameterized
 from library_generation import utilities as util
 from library_generation.model.gapic_config import GapicConfig
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.gapic_inputs import parse as parse_build_file
+from library_generation.model.generation_config import from_yaml
 from library_generation.model.library_config import LibraryConfig
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 resources_dir = os.path.join(script_dir, "resources")
 build_file = Path(os.path.join(resources_dir, "misc")).resolve()
+test_config_dir = Path(os.path.join(resources_dir, "test-config")).resolve()
 library_1 = LibraryConfig(
     api_shortname="baremetalsolution",
     name_pretty="Bare Metal Solution",
@@ -103,6 +104,34 @@ class UtilitiesTest(unittest.TestCase):
         result = stderr_capture.getvalue()
         # print() appends a `\n` each time it's called
         self.assertEqual(test_input + "\n", result)
+
+    # parameterized tests need to run from the class, see
+    # https://github.com/wolever/parameterized/issues/37 for more info.
+    @parameterized.expand([
+        ("libraries", f"{test_config_dir}/config_without_libraries.yaml"),
+        ("GAPICs", f"{test_config_dir}/config_without_gapics.yaml"),
+        ("proto_path", f"{test_config_dir}/config_without_proto_path.yaml"),
+        ("api_shortname", f"{test_config_dir}/config_without_api_shortname.yaml"),
+        ("api_description", f"{test_config_dir}/config_without_api_description.yaml"),
+        ("name_pretty", f"{test_config_dir}/config_without_name_pretty.yaml"),
+        ("product_documentation", f"{test_config_dir}/config_without_product_docs.yaml"),
+        ("gapic_generator_version", f"{test_config_dir}/config_without_generator.yaml"),
+        ("googleapis_commitish", f"{test_config_dir}/config_without_googleapis.yaml"),
+        ("owlbot_cli_image", f"{test_config_dir}/config_without_owlbot.yaml"),
+        ("synthtool_commitish", f"{test_config_dir}/config_without_synthtool.yaml"),
+        ("template_excludes", f"{test_config_dir}/config_without_temp_excludes.yaml"),
+    ])
+    def test_from_yaml_without_key_fails(
+        self,
+        error_message_contains,
+        path_to_yaml
+    ):
+        self.assertRaisesRegex(
+            ValueError,
+            error_message_contains,
+            from_yaml,
+            path_to_yaml,
+        )
 
     def test_gapic_inputs_parse_grpc_only_succeeds(self):
         parsed = parse_build_file(build_file, "", "BUILD_grpc.bazel")
