@@ -35,8 +35,10 @@ import com.google.api.generator.gapic.model.MethodArgument;
 import com.google.api.generator.gapic.model.ResourceName;
 import com.google.api.generator.gapic.model.ResourceReference;
 import com.google.api.generator.gapic.model.Transport;
+import com.google.auto.populate.field.AutoPopulateFieldTestingOuterClass;
 import com.google.bookshop.v1beta1.BookshopProto;
 import com.google.common.collect.ImmutableList;
+import com.google.common.truth.Truth;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
@@ -144,15 +146,7 @@ public class ParserTest {
     Method echoMethod = methods.get(0);
     assertEquals(echoMethod.name(), "Echo");
     assertEquals(echoMethod.stream(), Method.Stream.NONE);
-    assertEquals(true, echoMethod.hasAutoPopulatedFields());
-    assertEquals(
-        Arrays.asList(
-            "request_id",
-            "second_request_id",
-            "third_request_id",
-            "fourth_request_id",
-            "non_existent_field"),
-        echoMethod.autoPopulatedFields());
+    assertEquals(false, echoMethod.hasAutoPopulatedFields());
 
     // Detailed method signature parsing tests are in a separate unit test.
     List<List<MethodArgument>> methodSignatures = echoMethod.methodSignatures();
@@ -447,17 +441,13 @@ public class ParserTest {
 
   @Test
   public void parseFields_autoPopulated() {
-    Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
-    Message message = messageTypes.get("com.google.showcase.v1beta1.EchoRequest");
+    Map<String, Message> messageTypes =
+        Parser.parseMessages(AutoPopulateFieldTestingOuterClass.getDescriptor());
+    Message message =
+        messageTypes.get("com.google.auto.populate.field.AutoPopulateFieldTestingEchoRequest");
     Field field = message.fieldMap().get("request_id");
     assertEquals(false, field.isRequired());
     assertEquals(Format.UUID4, field.fieldInfoFormat());
-    field = message.fieldMap().get("name");
-    assertEquals(true, field.isRequired());
-    assertEquals(null, field.fieldInfoFormat());
-    field = message.fieldMap().get("severity");
-    assertEquals(false, field.isRequired());
-    assertEquals(null, field.fieldInfoFormat());
     field = message.fieldMap().get("second_request_id");
     assertEquals(false, field.isRequired());
     assertEquals(Format.UUID4, field.fieldInfoFormat());
@@ -474,18 +464,24 @@ public class ParserTest {
     assertEquals(true, field.isRequired());
     assertEquals(Format.UUID4, field.fieldInfoFormat());
 
-    message = messageTypes.get("com.google.showcase.v1beta1.ExpandRequest");
+    message =
+        messageTypes.get("com.google.auto.populate.field.AutoPopulateFieldTestingExpandRequest");
     field = message.fieldMap().get("request_id");
     assertEquals(false, field.isRequired());
-    assertEquals(Format.IPV6, field.fieldInfoFormat());
+    assertEquals(Format.UUID4, field.fieldInfoFormat());
   }
 
   @Test
   public void parseAutoPopulatedMethodsAndFields_exists() {
+    String yamlFilename = "auto_populate_field_testing.yaml";
+    Path yamlPath = Paths.get(YAML_DIRECTORY, yamlFilename);
     Map<String, List<String>> autoPopulatedMethodsWithFields =
-        Parser.parseAutoPopulatedMethodsAndFields(serviceYamlProtoOpt);
+        Parser.parseAutoPopulatedMethodsAndFields(ServiceYamlParser.parse(yamlPath.toString()));
+
     assertEquals(
-        true, autoPopulatedMethodsWithFields.containsKey("google.showcase.v1beta1.Echo.Echo"));
+        true,
+        autoPopulatedMethodsWithFields.containsKey(
+            "google.auto.populate.field.AutoPopulateFieldTesting.AutoPopulateFieldTestingEcho"));
     assertEquals(
         Arrays.asList(
             "request_id",
@@ -493,7 +489,8 @@ public class ParserTest {
             "third_request_id",
             "fourth_request_id",
             "non_existent_field"),
-        autoPopulatedMethodsWithFields.get("google.showcase.v1beta1.Echo.Echo"));
+        autoPopulatedMethodsWithFields.get(
+            "google.auto.populate.field.AutoPopulateFieldTesting.AutoPopulateFieldTestingEcho"));
   }
 
   @Test
@@ -535,17 +532,15 @@ public class ParserTest {
             .build();
     Optional<Service> testService =
         Optional.of(Service.newBuilder().setPublishing(testPublishing).build());
-    assertEquals(
-        Arrays.asList("test_field", "test_field_2"),
-        Parser.parseAutoPopulatedMethodsAndFields(testService).get("test_method"));
-    assertEquals(
-        Arrays.asList("test_field_3"),
-        Parser.parseAutoPopulatedMethodsAndFields(testService).get("test_method_2"));
-    assertEquals(
-        Arrays.asList(),
-        Parser.parseAutoPopulatedMethodsAndFields(testService).get("test_method_3"));
-    assertEquals(
-        false, Parser.parseAutoPopulatedMethodsAndFields(testService).containsKey("test_method_4"));
+    Truth.assertThat(Parser.parseAutoPopulatedMethodsAndFields(testService).get("test_method"))
+        .containsExactly("test_field", "test_field_2");
+    Truth.assertThat(Parser.parseAutoPopulatedMethodsAndFields(testService).get("test_method_2"))
+        .containsExactly("test_field_3");
+    Truth.assertThat(Parser.parseAutoPopulatedMethodsAndFields(testService).get("test_method_3"))
+        .isEmpty();
+    Truth.assertThat(
+            Parser.parseAutoPopulatedMethodsAndFields(testService).containsKey("test_method_4"))
+        .isEqualTo(false);
   }
 
   @Test

@@ -517,12 +517,6 @@ public class EchoClient implements BackgroundResource {
    *       EchoRequest.newBuilder()
    *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
    *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
-   *           .setRequestId("requestId693933066")
-   *           .setSecondRequestId("secondRequestId344404470")
-   *           .setThirdRequestId(true)
-   *           .setFourthRequestId("fourthRequestId-2116417776")
-   *           .setFifthRequestId("fifthRequestId959024147")
-   *           .setSixthRequestId("sixthRequestId1005218260")
    *           .setSeverity(Severity.forNumber(0))
    *           .setFoobar(Foobar.newBuilder().build())
    *           .build();
@@ -552,12 +546,6 @@ public class EchoClient implements BackgroundResource {
    *       EchoRequest.newBuilder()
    *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
    *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
-   *           .setRequestId("requestId693933066")
-   *           .setSecondRequestId("secondRequestId344404470")
-   *           .setThirdRequestId(true)
-   *           .setFourthRequestId("fourthRequestId-2116417776")
-   *           .setFifthRequestId("fifthRequestId959024147")
-   *           .setSixthRequestId("sixthRequestId1005218260")
    *           .setSeverity(Severity.forNumber(0))
    *           .setFoobar(Foobar.newBuilder().build())
    *           .build();
@@ -583,11 +571,7 @@ public class EchoClient implements BackgroundResource {
    * // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
    * try (EchoClient echoClient = EchoClient.create()) {
    *   ExpandRequest request =
-   *       ExpandRequest.newBuilder()
-   *           .setContent("content951530617")
-   *           .setInfo("info3237038")
-   *           .setRequestId("requestId693933066")
-   *           .build();
+   *       ExpandRequest.newBuilder().setContent("content951530617").setInfo("info3237038").build();
    *   ServerStream<EchoResponse> stream = echoClient.expandCallable().call(request);
    *   for (EchoResponse response : stream) {
    *     // Do something when a response is received.
@@ -633,12 +617,6 @@ public class EchoClient implements BackgroundResource {
    *       EchoRequest.newBuilder()
    *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
    *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
-   *           .setRequestId("requestId693933066")
-   *           .setSecondRequestId("secondRequestId344404470")
-   *           .setThirdRequestId(true)
-   *           .setFourthRequestId("fourthRequestId-2116417776")
-   *           .setFifthRequestId("fifthRequestId959024147")
-   *           .setSixthRequestId("sixthRequestId1005218260")
    *           .setSeverity(Severity.forNumber(0))
    *           .setFoobar(Foobar.newBuilder().build())
    *           .build();
@@ -666,12 +644,6 @@ public class EchoClient implements BackgroundResource {
    *       EchoRequest.newBuilder()
    *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
    *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
-   *           .setRequestId("requestId693933066")
-   *           .setSecondRequestId("secondRequestId344404470")
-   *           .setThirdRequestId(true)
-   *           .setFourthRequestId("fourthRequestId-2116417776")
-   *           .setFifthRequestId("fifthRequestId959024147")
-   *           .setSixthRequestId("sixthRequestId1005218260")
    *           .setSeverity(Severity.forNumber(0))
    *           .setFoobar(Foobar.newBuilder().build())
    *           .build();
@@ -702,12 +674,6 @@ public class EchoClient implements BackgroundResource {
    *       EchoRequest.newBuilder()
    *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
    *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
-   *           .setRequestId("requestId693933066")
-   *           .setSecondRequestId("secondRequestId344404470")
-   *           .setThirdRequestId(true)
-   *           .setFourthRequestId("fourthRequestId-2116417776")
-   *           .setFifthRequestId("fifthRequestId959024147")
-   *           .setSixthRequestId("sixthRequestId1005218260")
    *           .setSeverity(Severity.forNumber(0))
    *           .setFoobar(Foobar.newBuilder().build())
    *           .build();
@@ -1116,12 +1082,6 @@ public class EchoClient implements BackgroundResource {
    *       EchoRequest.newBuilder()
    *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
    *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
-   *           .setRequestId("requestId693933066")
-   *           .setSecondRequestId("secondRequestId344404470")
-   *           .setThirdRequestId(true)
-   *           .setFourthRequestId("fourthRequestId-2116417776")
-   *           .setFifthRequestId("fifthRequestId959024147")
-   *           .setSixthRequestId("sixthRequestId1005218260")
    *           .setSeverity(Severity.forNumber(0))
    *           .setFoobar(Foobar.newBuilder().build())
    *           .build();
@@ -1151,12 +1111,6 @@ public class EchoClient implements BackgroundResource {
    *       EchoRequest.newBuilder()
    *           .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
    *           .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
-   *           .setRequestId("requestId693933066")
-   *           .setSecondRequestId("secondRequestId344404470")
-   *           .setThirdRequestId(true)
-   *           .setFourthRequestId("fourthRequestId-2116417776")
-   *           .setFifthRequestId("fifthRequestId959024147")
-   *           .setSixthRequestId("sixthRequestId1005218260")
    *           .setSeverity(Severity.forNumber(0))
    *           .setFoobar(Foobar.newBuilder().build())
    *           .build();
