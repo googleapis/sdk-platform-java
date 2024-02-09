@@ -31,7 +31,7 @@ class GenerationConfig:
         googleapis_commitish: str,
         owlbot_cli_image: str,
         synthtool_commitish: str,
-        template_excludes: str,
+        template_excludes: List[str],
         path_to_yaml: str,
         libraries: List[LibraryConfig],
         grpc_version: Optional[str] = None,
@@ -48,10 +48,11 @@ class GenerationConfig:
         self.protobuf_version = protobuf_version
 
 
-def from_yaml(path_to_yaml: str):
+def from_yaml(path_to_yaml: str) -> GenerationConfig:
     """
-    Parses a yaml located in path_to_yaml. Returns the parsed configuration
-    represented by the "model" classes
+    Parses a yaml located in path_to_yaml.
+    :param path_to_yaml: the path to the configuration file
+    :return the parsed configuration represented by the "model" classes
     """
     with open(path_to_yaml, "r") as file_stream:
         config = yaml.safe_load(file_stream)

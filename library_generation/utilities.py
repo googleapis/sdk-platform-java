@@ -320,6 +320,7 @@ def pull_api_definition(
 
 
 def generate_prerequisite_files(
+    config: GenerationConfig,
     library: LibraryConfig,
     proto_path: str,
     transport: str,
@@ -331,6 +332,8 @@ def generate_prerequisite_files(
     Generate prerequisite files for a library.
 
     Note that the version, if any, in the proto_path will be removed.
+    :param config: a GenerationConfig object representing a parsed configuration
+    yaml
     :param library: the library configuration
     :param proto_path: the proto path
     :param transport: transport supported by the library
@@ -417,24 +420,11 @@ def generate_prerequisite_files(
     # generate owlbot.py
     py_file = "owlbot.py"
     if not os.path.exists(f"{library_path}/{py_file}"):
-        template_excludes = [
-            ".github/*",
-            ".kokoro/*",
-            "samples/*",
-            "CODE_OF_CONDUCT.md",
-            "CONTRIBUTING.md",
-            "LICENSE",
-            "SECURITY.md",
-            "java.header",
-            "license-checks.xml",
-            "renovate.json",
-            ".gitignore",
-        ]
         __render(
             template_name="owlbot.py.j2",
             output_name=f"{library_path}/{py_file}",
             should_include_templates=True,
-            template_excludes=template_excludes,
+            template_excludes=config.template_excludes,
         )
 
 

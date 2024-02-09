@@ -16,19 +16,10 @@ template_excludes:
   - "renovate.json"
   - ".gitignore"
 libraries:
-  - api_shortname: apigeeconnect
-    name_pretty: Apigee Connect
-    product_documentation: "https://cloud.google.com/apigee/docs/hybrid/v1.3/apigee-connect/"
-    api_description: "allows the Apigee hybrid management plane to connect securely to the MART service in the runtime plane without requiring you to expose the MART endpoint on the internet."
-    release_level: "stable"
-    library_name: "apigee-connect"
-    GAPICs:
-      - proto_path: google/cloud/apigeeconnect/v1
-
   - api_shortname: cloudasset
     name_pretty: Cloud Asset Inventory
     product_documentation: "https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/overview"
-    api_description: "provides inventory services based on a time series database. This database keeps a five week history of Google Cloud asset metadata. The Cloud Asset Inventory export service allows you to export all asset metadata at a certain timestamp or export event change history during a timeframe."
+    api_description: "provides inventory services based on a time series database."
     library_name: "asset"
     client_documentation: "https://cloud.google.com/java/docs/reference/google-cloud-asset/latest/overview"
     distribution_name: "com.google.cloud:google-cloud-asset"
