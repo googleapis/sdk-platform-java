@@ -37,6 +37,7 @@
     <checker-qual.version>3.42.0</checker-qual.version>
     <perfmark-api.version>0.27.0</perfmark-api.version>
     <j2objc-annotations.version>2.8</j2objc-annotations.version>
+    <opentelemetry.version>1.34.1</opentelemetry.version>
   </properties>
 
   <dependencyManagement>
@@ -145,6 +146,16 @@
         <groupId>com.google.j2objc</groupId>
         <artifactId>j2objc-annotations</artifactId>
         <version>${j2objc-annotations.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.opentelemetry</groupId>
+        <artifactId>opentelemetry-api</artifactId>
+        <version>${opentelemetry.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.opentelemetry</groupId>
+        <artifactId>opentelemetry-context</artifactId>
+        <version>${opentelemetry.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
