@@ -34,6 +34,9 @@ import io.opentelemetry.sdk.OpenTelemetrySdk;
 import io.opentelemetry.sdk.metrics.SdkMeterProvider;
 import io.opentelemetry.sdk.metrics.export.PeriodicMetricReader;
 import io.opentelemetry.sdk.resources.Resource;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import org.junit.Test;
 
 public class ITOtelMetrics {
@@ -69,6 +72,20 @@ public class ITOtelMetrics {
     client.echoCallable().futureCall(requestWithNoError).get();
     // wait for the metrics to get uploaded
     Thread.sleep(3000);
+
+    String filePath = "../opentelemetry-logs/testHttpJson_OperationSucceded-metrics.txt";
+
+    try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+      String currentLine;
+
+      while ((currentLine = reader.readLine()) != null) {
+        System.out.println(currentLine); // Process each line
+      }
+
+    } catch (IOException e) {
+      System.err.println("Error reading file: " + e.getMessage());
+    }
+
     // verify the metrics and cleanup
     Process cleanup =
         Runtime.getRuntime()
