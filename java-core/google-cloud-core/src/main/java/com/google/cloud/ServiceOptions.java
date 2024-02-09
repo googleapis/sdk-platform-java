@@ -868,7 +868,7 @@ public abstract class ServiceOptions<
       return host;
     }
     String resolvedUniverseDomain =
-            universeDomain != null ? universeDomain : Credentials.GOOGLE_DEFAULT_UNIVERSE;
+        universeDomain != null ? universeDomain : Credentials.GOOGLE_DEFAULT_UNIVERSE;
     return "https://" + serviceName + "." + resolvedUniverseDomain + "/";
   }
 
