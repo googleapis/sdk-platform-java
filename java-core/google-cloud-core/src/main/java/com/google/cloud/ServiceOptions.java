@@ -862,8 +862,13 @@ public abstract class ServiceOptions<
    */
   @InternalApi
   public String getResolvedApiaryHost(String serviceName) {
+    // The host value set to DEFAULT_HOST if the user didn't configure a host. If the
+    // user set a host the library uses that value, otherwise, construct the host for the user.
+    if (!DEFAULT_HOST.equals(host)) {
+      return host;
+    }
     String resolvedUniverseDomain =
-        universeDomain != null ? universeDomain : Credentials.GOOGLE_DEFAULT_UNIVERSE;
+            universeDomain != null ? universeDomain : Credentials.GOOGLE_DEFAULT_UNIVERSE;
     return "https://" + serviceName + "." + resolvedUniverseDomain + "/";
   }
 
