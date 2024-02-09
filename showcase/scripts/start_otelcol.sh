@@ -9,8 +9,6 @@ mkdir -p "$install_dir"
 # Change directory to the install directory
 cd "$install_dir"
 
-echo "the otel collector installation is running"
-
 ## in future iterations/improvement, make this version dynamic
 curl --proto '=https' --tlsv1.2 -fOL https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.93.0/otelcol_0.93.0_linux_amd64.tar.gz
 tar -xvf otelcol_0.93.0_linux_amd64.tar.gz

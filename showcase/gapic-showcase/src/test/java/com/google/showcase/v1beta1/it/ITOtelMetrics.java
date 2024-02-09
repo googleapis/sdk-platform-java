@@ -76,7 +76,7 @@ public class ITOtelMetrics {
     client.echoCallable().futureCall(requestWithNoError).get();
 
     // wait for the metrics to get uploaded
-    Thread.sleep(3000);
+    Thread.sleep(4000);
 
     String filePath = "../opentelemetry-logs/testHttpJson_OperationSucceeded_metrics.txt";
     // 1. Check if the log file exists
@@ -116,7 +116,7 @@ public class ITOtelMetrics {
     client.echoCallable().futureCall(requestWithNoError).cancel(true);
 
     // wait for the metrics to get uploaded
-    Thread.sleep(3000);
+    Thread.sleep(4000);
 
     String filePath = "../opentelemetry-logs/testHttpJson_OperationCancelled_metrics.txt";
     // 1. Check if the log file exists
@@ -135,7 +135,7 @@ public class ITOtelMetrics {
     // Periodic Metric Reader configuration
     PeriodicMetricReader metricReader =
         PeriodicMetricReader.builder(metricExporter)
-            .setInterval(java.time.Duration.ofSeconds(2))
+            .setInterval(java.time.Duration.ofSeconds(3))
             .build();
 
     // OpenTelemetry SDK Configuration
