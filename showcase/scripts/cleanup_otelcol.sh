@@ -1,5 +1,7 @@
 #!/bin/bash
 
+killall otelcol
+
 # perform cleanup, Specify the directory to delete
 directory_to_delete="../opentelemetry-logs"
 

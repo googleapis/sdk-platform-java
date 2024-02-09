@@ -36,12 +36,10 @@ import io.opentelemetry.sdk.metrics.SdkMeterProvider;
 import io.opentelemetry.sdk.metrics.export.PeriodicMetricReader;
 import io.opentelemetry.sdk.resources.Resource;
 import java.io.File;
-import org.junit.After;
 import org.junit.Test;
 
 public class ITOtelMetrics {
 
-  @After
   public void cleanup_otelcol() throws Exception {
     Process process = Runtime.getRuntime().exec("../scripts/cleanup_otelcol.sh");
     process.waitFor();
@@ -58,7 +56,7 @@ public class ITOtelMetrics {
     EchoSettings httpJsonEchoSettings =
         EchoSettings.newHttpJsonBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTracerFactory(createOpenTelemetryTracerFactory())
+            .setTracerFactory(createOpenTelemetryTracerFactory("4317"))
             .setTransportChannelProvider(
                 EchoSettings.defaultHttpJsonTransportProviderBuilder()
                     .setHttpTransport(
@@ -82,8 +80,8 @@ public class ITOtelMetrics {
     // 1. Check if the log file exists
     File file = new File(filePath);
     Truth.assertThat(file.exists()).isTrue();
-    // Assert that the file is not empty
     Truth.assertThat(file.length() > 0).isTrue();
+    cleanup_otelcol();
   }
 
   @Test
@@ -97,7 +95,7 @@ public class ITOtelMetrics {
     EchoSettings httpJsonEchoSettings =
         EchoSettings.newHttpJsonBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTracerFactory(createOpenTelemetryTracerFactory())
+            .setTracerFactory(createOpenTelemetryTracerFactory("4317"))
             .setTransportChannelProvider(
                 EchoSettings.defaultHttpJsonTransportProviderBuilder()
                     .setHttpTransport(
@@ -116,21 +114,21 @@ public class ITOtelMetrics {
     client.echoCallable().futureCall(requestWithNoError).cancel(true);
 
     // wait for the metrics to get uploaded
-    Thread.sleep(4000);
+    Thread.sleep(5000);
 
     String filePath = "../opentelemetry-logs/testHttpJson_OperationCancelled_metrics.txt";
-    // 1. Check if the log file exists
     File file = new File(filePath);
     Truth.assertThat(file.exists()).isTrue();
-    // Assert that the file is not empty
     Truth.assertThat(file.length() > 0).isTrue();
+    cleanup_otelcol();
   }
 
   // Helper function for creating opentelemetry object
-  private static ApiTracerFactory createOpenTelemetryTracerFactory() {
+  private static ApiTracerFactory createOpenTelemetryTracerFactory(String port) {
     // OTLP Metric Exporter setup
+    String endpoint = "http://localhost:" + port;
     OtlpGrpcMetricExporter metricExporter =
-        OtlpGrpcMetricExporter.builder().setEndpoint("http://localhost:4317").build();
+        OtlpGrpcMetricExporter.builder().setEndpoint(endpoint).build();
 
     // Periodic Metric Reader configuration
     PeriodicMetricReader metricReader =

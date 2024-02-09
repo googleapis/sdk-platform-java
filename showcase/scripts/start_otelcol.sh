@@ -13,7 +13,6 @@ cd "$install_dir"
 curl --proto '=https' --tlsv1.2 -fOL https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.93.0/otelcol_0.93.0_linux_amd64.tar.gz
 tar -xvf otelcol_0.93.0_linux_amd64.tar.gz
 
-killall otelcol
 
 ## Start OpenTelemetry Collector with the updated config file
 echo "Starting OpenTelemetry Collector with the updated config file: $1"
