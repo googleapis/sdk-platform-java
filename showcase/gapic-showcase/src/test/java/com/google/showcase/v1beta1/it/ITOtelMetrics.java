@@ -16,7 +16,6 @@
 
 package com.google.showcase.v1beta1.it;
 
-
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.GaxProperties;
 import com.google.api.gax.core.NoCredentialsProvider;
