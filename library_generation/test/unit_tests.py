@@ -107,6 +107,10 @@ class UtilitiesTest(unittest.TestCase):
 
     # parameterized tests need to run from the class, see
     # https://github.com/wolever/parameterized/issues/37 for more info.
+    # This test confirms that a ValueError with an error message about a
+    # missing key (specified in the first parameter of each `parameterized`
+    # tuple) when parsing a test configuration yaml (second parameter) will
+    # be raised.
     @parameterized.expand(
         [
             ("libraries", f"{test_config_dir}/config_without_libraries.yaml"),
