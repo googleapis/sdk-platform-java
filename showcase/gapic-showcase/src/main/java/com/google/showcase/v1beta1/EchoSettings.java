@@ -234,16 +234,6 @@ public class EchoSettings extends ClientSettings<EchoSettings> {
     return Builder.createHttpJsonDefault();
   }
 
-  @BetaApi
-  public static Builder createHttpJsonDefaultOtel() {
-    return new Builder(EchoStubSettings.newHttpJsonBuilderOtel());
-  }
-
-  @BetaApi
-  public static Builder createGrpcDefaultOtel() {
-    return new Builder(EchoStubSettings.newGrpcBuilderOtel());
-  }
-
   /** Returns a new builder for this class. */
   public static Builder newBuilder(ClientContext clientContext) {
     return new Builder(clientContext);

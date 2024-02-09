@@ -233,33 +233,4 @@ public class TestClientInitializer {
             .build();
     return ComplianceClient.create(httpJsonComplianceSettings);
   }
-
-  public static EchoClient createHttpJsonEchoClientOpenTelemetry() throws Exception {
-
-    EchoSettings httpJsonEchoSettingsOtel =
-        EchoSettings.createHttpJsonDefaultOtel()
-            .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTransportChannelProvider(
-                EchoSettings.defaultHttpJsonTransportProviderBuilder()
-                    .setHttpTransport(
-                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
-                    .setEndpoint("http://localhost:7469")
-                    .build())
-            .build();
-    return EchoClient.create(httpJsonEchoSettingsOtel);
-  }
-
-  public static EchoClient createGrpcEchoClientOpenTelemetry() throws Exception {
-
-    EchoSettings grpcEchoSettingsOtel =
-        EchoSettings.createGrpcDefaultOtel()
-            .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTransportChannelProvider(
-                EchoSettings.defaultGrpcTransportProviderBuilder()
-                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
-                    .build())
-            .setEndpoint("localhost:7469")
-            .build();
-    return EchoClient.create(grpcEchoSettingsOtel);
-  }
 }
