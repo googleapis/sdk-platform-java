@@ -390,6 +390,8 @@ def generate_prerequisite_files(
 
     if library.api_reference:
         repo_metadata["api_reference"] = library.api_reference
+    if library.codeowner_team:
+        repo_metadata["codeowner_team"] = library.codeowner_team
     if library.issue_tracker:
         repo_metadata["issue_tracker"] = library.issue_tracker
     if library.rest_documentation:
