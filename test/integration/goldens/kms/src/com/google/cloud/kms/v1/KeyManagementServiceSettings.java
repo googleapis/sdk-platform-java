@@ -23,7 +23,6 @@ import static com.google.cloud.kms.v1.KeyManagementServiceClient.ListKeyRingsPag
 import static com.google.cloud.kms.v1.KeyManagementServiceClient.ListLocationsPagedResponse;
 
 import com.google.api.core.ApiFunction;
-import com.google.api.core.BetaApi;
 import com.google.api.gax.core.GoogleCredentialsProvider;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
@@ -277,7 +276,6 @@ public class KeyManagementServiceSettings extends ClientSettings<KeyManagementSe
     return KeyManagementServiceStubSettings.defaultTransportChannelProvider();
   }
 
-  @BetaApi("The surface for customizing headers is not stable yet and may change in the future.")
   public static ApiClientHeaderProvider.Builder defaultApiClientHeaderProviderBuilder() {
     return KeyManagementServiceStubSettings.defaultApiClientHeaderProviderBuilder();
   }

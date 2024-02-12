@@ -21,7 +21,6 @@ import static com.google.cloud.logging.v2.LoggingClient.ListLogsPagedResponse;
 import static com.google.cloud.logging.v2.LoggingClient.ListMonitoredResourceDescriptorsPagedResponse;
 
 import com.google.api.core.ApiFunction;
-import com.google.api.core.BetaApi;
 import com.google.api.gax.core.GoogleCredentialsProvider;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
@@ -163,7 +162,6 @@ public class LoggingSettings extends ClientSettings<LoggingSettings> {
     return LoggingServiceV2StubSettings.defaultTransportChannelProvider();
   }
 
-  @BetaApi("The surface for customizing headers is not stable yet and may change in the future.")
   public static ApiClientHeaderProvider.Builder defaultApiClientHeaderProviderBuilder() {
     return LoggingServiceV2StubSettings.defaultApiClientHeaderProviderBuilder();
   }

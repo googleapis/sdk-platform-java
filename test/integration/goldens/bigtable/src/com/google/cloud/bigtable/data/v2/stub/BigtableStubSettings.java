@@ -17,7 +17,6 @@
 package com.google.cloud.bigtable.data.v2.stub;
 
 import com.google.api.core.ApiFunction;
-import com.google.api.core.BetaApi;
 import com.google.api.gax.core.GaxProperties;
 import com.google.api.gax.core.GoogleCredentialsProvider;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
@@ -209,7 +208,6 @@ public class BigtableStubSettings extends StubSettings<BigtableStubSettings> {
     return defaultGrpcTransportProviderBuilder().build();
   }
 
-  @BetaApi("The surface for customizing headers is not stable yet and may change in the future.")
   public static ApiClientHeaderProvider.Builder defaultApiClientHeaderProviderBuilder() {
     return ApiClientHeaderProvider.newBuilder()
         .setGeneratedLibToken("gapic", GaxProperties.getLibraryVersion(BigtableStubSettings.class))

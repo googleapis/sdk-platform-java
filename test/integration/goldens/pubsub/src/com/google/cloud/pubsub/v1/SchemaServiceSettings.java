@@ -20,7 +20,6 @@ import static com.google.cloud.pubsub.v1.SchemaServiceClient.ListSchemaRevisions
 import static com.google.cloud.pubsub.v1.SchemaServiceClient.ListSchemasPagedResponse;
 
 import com.google.api.core.ApiFunction;
-import com.google.api.core.BetaApi;
 import com.google.api.gax.core.GoogleCredentialsProvider;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
@@ -200,7 +199,6 @@ public class SchemaServiceSettings extends ClientSettings<SchemaServiceSettings>
     return SchemaServiceStubSettings.defaultTransportChannelProvider();
   }
 
-  @BetaApi("The surface for customizing headers is not stable yet and may change in the future.")
   public static ApiClientHeaderProvider.Builder defaultApiClientHeaderProviderBuilder() {
     return SchemaServiceStubSettings.defaultApiClientHeaderProviderBuilder();
   }

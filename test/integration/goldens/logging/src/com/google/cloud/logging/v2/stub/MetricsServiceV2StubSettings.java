@@ -20,7 +20,6 @@ import static com.google.cloud.logging.v2.MetricsClient.ListLogMetricsPagedRespo
 
 import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
-import com.google.api.core.BetaApi;
 import com.google.api.gax.core.GaxProperties;
 import com.google.api.gax.core.GoogleCredentialsProvider;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
@@ -249,7 +248,6 @@ public class MetricsServiceV2StubSettings extends StubSettings<MetricsServiceV2S
     return defaultGrpcTransportProviderBuilder().build();
   }
 
-  @BetaApi("The surface for customizing headers is not stable yet and may change in the future.")
   public static ApiClientHeaderProvider.Builder defaultApiClientHeaderProviderBuilder() {
     return ApiClientHeaderProvider.newBuilder()
         .setGeneratedLibToken(

@@ -20,7 +20,6 @@ import static com.google.cloud.compute.v1small.AddressesClient.AggregatedListPag
 import static com.google.cloud.compute.v1small.AddressesClient.ListPagedResponse;
 
 import com.google.api.core.ApiFunction;
-import com.google.api.core.BetaApi;
 import com.google.api.gax.core.GoogleCredentialsProvider;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
 import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
@@ -144,7 +143,6 @@ public class AddressesSettings extends ClientSettings<AddressesSettings> {
     return AddressesStubSettings.defaultTransportChannelProvider();
   }
 
-  @BetaApi("The surface for customizing headers is not stable yet and may change in the future.")
   public static ApiClientHeaderProvider.Builder defaultApiClientHeaderProviderBuilder() {
     return AddressesStubSettings.defaultApiClientHeaderProviderBuilder();
   }

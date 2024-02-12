@@ -17,7 +17,6 @@
 package com.google.cloud.compute.v1small;
 
 import com.google.api.core.ApiFunction;
-import com.google.api.core.BetaApi;
 import com.google.api.gax.core.GoogleCredentialsProvider;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
 import com.google.api.gax.httpjson.InstantiatingHttpJsonChannelProvider;
@@ -117,7 +116,6 @@ public class RegionOperationsSettings extends ClientSettings<RegionOperationsSet
     return RegionOperationsStubSettings.defaultTransportChannelProvider();
   }
 
-  @BetaApi("The surface for customizing headers is not stable yet and may change in the future.")
   public static ApiClientHeaderProvider.Builder defaultApiClientHeaderProviderBuilder() {
     return RegionOperationsStubSettings.defaultApiClientHeaderProviderBuilder();
   }
