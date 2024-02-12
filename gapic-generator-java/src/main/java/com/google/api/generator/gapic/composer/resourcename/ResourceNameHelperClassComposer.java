@@ -14,7 +14,6 @@
 
 package com.google.api.generator.gapic.composer.resourcename;
 
-import com.google.api.core.BetaApi;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.AssignmentOperationExpr;
@@ -1696,7 +1695,6 @@ public class ResourceNameHelperClassComposer {
     List<Class<?>> concreteClazzes =
         Arrays.asList(
             ArrayList.class,
-            BetaApi.class,
             Generated.class,
             ImmutableMap.class,
             List.class,
