@@ -172,7 +172,7 @@
         "^io.opencensus"
       ],
       "groupName": "OpenCensus dependencies"
-    },
+    }
     {
       "matchPackagePatterns": [
         "^io.netty"
