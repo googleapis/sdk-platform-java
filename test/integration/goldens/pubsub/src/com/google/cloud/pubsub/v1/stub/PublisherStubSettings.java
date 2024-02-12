@@ -23,6 +23,7 @@ import static com.google.cloud.pubsub.v1.TopicAdminClient.ListTopicsPagedRespons
 import com.google.api.core.ApiFunction;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.BetaApi;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.batching.BatchingSettings;
 import com.google.api.gax.batching.FlowControlSettings;
 import com.google.api.gax.batching.FlowController;
@@ -493,6 +494,8 @@ public class PublisherStubSettings extends StubSettings<PublisherStubSettings> {
   }
 
   /** Returns the default service endpoint. */
+  @ObsoleteApi(
+      "See https://github.com/googleapis/sdk-platform-java/issues/2346 for more information")
   public static String getDefaultEndpoint() {
     return "pubsub.googleapis.com:443";
   }

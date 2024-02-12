@@ -18,6 +18,7 @@ package com.google.iam.v1.stub;
 
 import com.google.api.core.ApiFunction;
 import com.google.api.core.BetaApi;
+import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.core.GaxProperties;
 import com.google.api.gax.core.GoogleCredentialsProvider;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
@@ -140,6 +141,8 @@ public class IAMPolicyStubSettings extends StubSettings<IAMPolicyStubSettings> {
   }
 
   /** Returns the default service endpoint. */
+  @ObsoleteApi(
+      "See https://github.com/googleapis/sdk-platform-java/issues/2346 for more information")
   public static String getDefaultEndpoint() {
     return "iam-meta-api.googleapis.com:443";
   }
