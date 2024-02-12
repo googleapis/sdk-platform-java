@@ -29,7 +29,7 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
-import com.google.api.generator.gapic.protoparser.NoServicesFoundException;
+import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import javax.annotation.Generated;
 
@@ -44,9 +44,8 @@ public class ClientLibraryPackageInfoComposer {
   private static final String SERVICE_DESCRIPTION_HEADER_PATTERN = "Service Description: %s";
 
   public static GapicPackageInfo generatePackageInfo(GapicContext context) {
-    if (context.services().isEmpty()) {
-      throw new NoServicesFoundException("No services found to generate");
-    }
+    Preconditions.checkState(!context.services().isEmpty(), "No services found to generate");
+
     // Pick some service's package, as we assume they are all the same.
     String libraryPakkage = context.services().get(0).pakkage();
 
