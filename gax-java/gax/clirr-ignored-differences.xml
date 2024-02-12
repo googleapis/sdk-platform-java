@@ -25,4 +25,21 @@
     <className>com/google/api/gax/rpc/TransportChannelProvider</className>
     <method>* getEndpoint()</method>
   </difference>
+  <!-- Add Universe Domain to ClientContext -->
+  <difference>
+    <differenceType>7013</differenceType>
+    <className>com/google/api/gax/rpc/ClientContext*</className>
+    <method>* *UniverseDomain*(*)</method>
+  </difference>
+  <!-- Add Endpoint Context to ApiCallContext -->
+  <difference>
+    <differenceType>7012</differenceType>
+    <className>com/google/api/gax/rpc/ApiCallContext</className>
+    <method>* withEndpointContext(*)</method>
+  </difference>
+  <difference>
+    <differenceType>7012</differenceType>
+    <className>com/google/api/gax/rpc/ApiCallContext</className>
+    <method>* validateUniverseDomain()</method>
+  </difference>
 </differences>

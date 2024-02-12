@@ -81,6 +81,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   @Nonnull private final ApiTracerFactory tracerFactory;
   // Track if deprecated setExecutorProvider is called
   private boolean deprecatedExecutorProviderSet;
+  private final String universeDomain;
 
   /**
    * Indicate when creating transport whether it is allowed to use mTLS endpoint instead of the
@@ -108,6 +109,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     this.tracerFactory = builder.tracerFactory;
     this.deprecatedExecutorProviderSet = builder.deprecatedExecutorProviderSet;
     this.gdchApiAudience = builder.gdchApiAudience;
+    this.universeDomain = builder.universeDomain;
   }
 
   /** @deprecated Please use {@link #getBackgroundExecutorProvider()}. */
@@ -147,7 +149,22 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     return "";
   }
 
-  public final String getEndpoint() {
+  public final String getUniverseDomain() {
+    return universeDomain;
+  }
+
+  public String getEndpoint() {
+    return endpoint;
+  }
+
+  /**
+   * This is an internal api meant to either return the user set endpoint or null. The difference
+   * between this method and {@link #getEndpoint()}} is that {@link #getEndpoint()} is reimplemented
+   * by the child class and will return the default service endpoint if the user did not set an
+   * endpoint (does not return null).
+   */
+  @InternalApi
+  String getUserSetEndpoint() {
     return endpoint;
   }
 
@@ -199,6 +216,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         .add("headerProvider", headerProvider)
         .add("internalHeaderProvider", internalHeaderProvider)
         .add("clock", clock)
+        .add("universeDomain", universeDomain)
         .add("endpoint", endpoint)
         .add("mtlsEndpoint", mtlsEndpoint)
         .add("switchToMtlsEndpointAllowed", switchToMtlsEndpointAllowed)
@@ -230,6 +248,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     @Nonnull private Duration streamWatchdogCheckInterval;
     @Nonnull private ApiTracerFactory tracerFactory;
     private boolean deprecatedExecutorProviderSet;
+    private String universeDomain;
 
     /**
      * Indicate when creating transport whether it is allowed to use mTLS endpoint instead of the
@@ -257,6 +276,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       this.tracerFactory = settings.tracerFactory;
       this.deprecatedExecutorProviderSet = settings.deprecatedExecutorProviderSet;
       this.gdchApiAudience = settings.gdchApiAudience;
+      this.universeDomain = settings.universeDomain;
     }
 
     /** Get Quota Project ID from Client Context * */
@@ -293,6 +313,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.tracerFactory = BaseApiTracerFactory.getInstance();
         this.deprecatedExecutorProviderSet = false;
         this.gdchApiAudience = null;
+        this.universeDomain = null;
       } else {
         ExecutorProvider fixedExecutorProvider =
             FixedExecutorProvider.create(clientContext.getExecutor());
@@ -316,6 +337,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.tracerFactory = clientContext.getTracerFactory();
         this.quotaProjectId = getQuotaProjectIdFromClientContext(clientContext);
         this.gdchApiAudience = clientContext.getGdchApiAudience();
+        this.universeDomain = clientContext.getUniverseDomain();
       }
     }
 
@@ -425,6 +447,11 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
      */
     public B setClock(ApiClock clock) {
       this.clock = clock;
+      return self();
+    }
+
+    public B setUniverseDomain(String universeDomain) {
+      this.universeDomain = universeDomain;
       return self();
     }
 
@@ -577,6 +604,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
           .add("headerProvider", headerProvider)
           .add("internalHeaderProvider", internalHeaderProvider)
           .add("clock", clock)
+          .add("universeDomain", universeDomain)
           .add("endpoint", endpoint)
           .add("mtlsEndpoint", mtlsEndpoint)
           .add("switchToMtlsEndpointAllowed", switchToMtlsEndpointAllowed)

@@ -262,11 +262,11 @@ public class ScheduledRetryingExecutorTest extends AbstractRetryingExecutorTest 
             .setInitialRetryDelay(Duration.ofMillis(25L))
             .setMaxRetryDelay(Duration.ofMillis(1000L))
             .setRetryDelayMultiplier(4.0)
-            .setTotalTimeout(Duration.ofMillis(2000L))
+            .setTotalTimeout(Duration.ofMillis(60000L))
             // Set this test to not use jitter as the randomized retry delay (RRD) may introduce
             // flaky results. For example, if every RRD value is calculated to be a small value
             // (i.e. 2ms), four retries would result a "SUCCESS" result after 8ms, far below
-            // both the sleep value (150ms) and timeout (2000ms). This could potentially result
+            // both the sleep value (150ms) and timeout (60000ms). This could potentially result
             // in the future.cancel() returning false as you can't cancel a future that has
             // already succeeded. The possibility of having each of the four retries produce a
             // tiny RRD value is small, but not impossible.

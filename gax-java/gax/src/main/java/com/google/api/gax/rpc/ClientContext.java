@@ -105,6 +105,9 @@ public abstract class ClientContext {
   abstract String getServiceName();
 
   @Nullable
+  public abstract String getUniverseDomain();
+
+  @Nullable
   public abstract String getEndpoint();
 
   @Nullable
@@ -157,15 +160,28 @@ public abstract class ClientContext {
     final ScheduledExecutorService backgroundExecutor = backgroundExecutorProvider.getExecutor();
 
     Credentials credentials = settings.getCredentialsProvider().getCredentials();
+    boolean usingGDCH = credentials instanceof GdchCredentials;
+    EndpointContext endpointContext =
+        EndpointContext.newBuilder()
+            .setServiceName(settings.getServiceName())
+            .setUniverseDomain(settings.getUniverseDomain())
+            .setClientSettingsEndpoint(settings.getUserSetEndpoint())
+            .setTransportChannelProviderEndpoint(
+                settings.getTransportChannelProvider().getEndpoint())
+            .setMtlsEndpoint(settings.getMtlsEndpoint())
+            .setSwitchToMtlsEndpointAllowed(settings.getSwitchToMtlsEndpointAllowed())
+            .setUsingGDCH(usingGDCH)
+            .build();
+    String endpoint = endpointContext.resolvedEndpoint();
 
     String settingsGdchApiAudience = settings.getGdchApiAudience();
-    if (credentials instanceof GdchCredentials) {
+    if (usingGDCH) {
       // We recompute the GdchCredentials with the audience
       String audienceString;
       if (!Strings.isNullOrEmpty(settingsGdchApiAudience)) {
         audienceString = settingsGdchApiAudience;
-      } else if (!Strings.isNullOrEmpty(settings.getEndpoint())) {
-        audienceString = settings.getEndpoint();
+      } else if (!Strings.isNullOrEmpty(endpoint)) {
+        audienceString = endpoint;
       } else {
         throw new IllegalArgumentException("Could not infer GDCH api audience from settings");
       }
@@ -204,16 +220,6 @@ public abstract class ClientContext {
     if (transportChannelProvider.needsCredentials() && credentials != null) {
       transportChannelProvider = transportChannelProvider.withCredentials(credentials);
     }
-    EndpointContext endpointContext =
-        EndpointContext.newBuilder()
-            .setServiceName(settings.getServiceName())
-            .setClientSettingsEndpoint(settings.getEndpoint())
-            .setTransportChannelProviderEndpoint(
-                settings.getTransportChannelProvider().getEndpoint())
-            .setMtlsEndpoint(settings.getMtlsEndpoint())
-            .setSwitchToMtlsEndpointAllowed(settings.getSwitchToMtlsEndpointAllowed())
-            .build();
-    String endpoint = endpointContext.getResolvedEndpoint();
     if (transportChannelProvider.needsEndpoint()) {
       transportChannelProvider = transportChannelProvider.withEndpoint(endpoint);
     }
@@ -224,6 +230,7 @@ public abstract class ClientContext {
     if (credentials != null) {
       defaultCallContext = defaultCallContext.withCredentials(credentials);
     }
+    defaultCallContext = defaultCallContext.withEndpointContext(endpointContext);
 
     WatchdogProvider watchdogProvider = settings.getStreamWatchdogProvider();
     @Nullable Watchdog watchdog = null;
@@ -264,6 +271,7 @@ public abstract class ClientContext {
         .setClock(clock)
         .setDefaultCallContext(defaultCallContext)
         .setServiceName(settings.getServiceName())
+        .setUniverseDomain(settings.getUniverseDomain())
         .setEndpoint(settings.getEndpoint())
         .setQuotaProjectId(settings.getQuotaProjectId())
         .setStreamWatchdog(watchdog)
@@ -331,6 +339,8 @@ public abstract class ClientContext {
 
     // Package-Private scope for internal use only. Shared between StubSettings and ClientContext
     abstract Builder setServiceName(String serviceName);
+
+    public abstract Builder setUniverseDomain(String universeDomain);
 
     public abstract Builder setEndpoint(String endpoint);
 

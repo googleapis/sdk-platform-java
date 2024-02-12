@@ -16,7 +16,12 @@ package com.google.api.generator.gapic.protoparser;
 
 import com.google.api.ClientProto;
 import com.google.api.DocumentationRule;
+import com.google.api.FieldBehavior;
+import com.google.api.FieldBehaviorProto;
+import com.google.api.FieldInfo.Format;
+import com.google.api.FieldInfoProto;
 import com.google.api.HttpRule;
+import com.google.api.MethodSettings;
 import com.google.api.ResourceDescriptor;
 import com.google.api.ResourceProto;
 import com.google.api.generator.engine.ast.TypeNode;
@@ -47,6 +52,7 @@ import com.google.common.base.Strings;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Maps;
 import com.google.longrunning.OperationInfo;
@@ -493,6 +499,7 @@ public class Parser {
                           messageTypes,
                           resourceNames,
                           serviceConfigOpt,
+                          serviceYamlProtoOpt,
                           outputArgResourceNames,
                           transport))
                   .build();
@@ -683,9 +690,15 @@ public class Parser {
       Map<String, Message> messageTypes,
       Map<String, ResourceName> resourceNames,
       Optional<GapicServiceConfig> serviceConfigOpt,
+      Optional<com.google.api.Service> serviceYamlProtoOpt,
       Set<ResourceName> outputArgResourceNames,
       Transport transport) {
     List<Method> methods = new ArrayList<>();
+
+    // Parse the serviceYaml for autopopulated methods and fields once and put into a map
+    Map<String, List<String>> autoPopulatedMethodsWithFields =
+        parseAutoPopulatedMethodsAndFields(serviceYamlProtoOpt);
+
     for (MethodDescriptor protoMethod : serviceDescriptor.getMethods()) {
       // Parse the method.
       TypeNode inputType = TypeParser.parseType(protoMethod.getInputType());
@@ -697,6 +710,12 @@ public class Parser {
             && !Strings.isNullOrEmpty(protoMethodLocation.getLeadingComments())) {
           methodBuilder.setDescription(protoMethodLocation.getLeadingComments());
         }
+      }
+
+      // Associate the autopopulated fields with the correct method
+      List<String> autoPopulatedFields = new ArrayList<>();
+      if (autoPopulatedMethodsWithFields.containsKey(protoMethod.getFullName())) {
+        autoPopulatedFields = autoPopulatedMethodsWithFields.get(protoMethod.getFullName());
       }
 
       boolean isDeprecated = false;
@@ -743,6 +762,7 @@ public class Parser {
                       resourceNames,
                       outputArgResourceNames))
               .setHttpBindings(httpBindings)
+              .setAutoPopulatedFields(autoPopulatedFields)
               .setRoutingHeaderRule(routingHeaderRule)
               .setIsBatching(isBatching)
               .setPageSizeFieldName(parsePageSizeFieldName(protoMethod, messageTypes, transport))
@@ -970,6 +990,8 @@ public class Parser {
     FieldOptions fieldOptions = fieldDescriptor.getOptions();
     MessageOptions messageOptions = messageDescriptor.getOptions();
     ResourceReference resourceReference = null;
+    boolean isRequired = false;
+    Format fieldInfoFormat = null;
     if (fieldOptions.hasExtension(ResourceProto.resourceReference)) {
       com.google.api.ResourceReference protoResourceReference =
           fieldOptions.getExtension(ResourceProto.resourceReference);
@@ -998,6 +1020,19 @@ public class Parser {
       if (fieldDescriptor.getName().equals(resourceFieldNameValue)) {
         resourceReference = ResourceReference.withType(protoResource.getType());
       }
+    }
+
+    if (fieldOptions.hasExtension(FieldInfoProto.fieldInfo)) {
+      fieldInfoFormat = fieldOptions.getExtension(FieldInfoProto.fieldInfo).getFormat();
+    }
+
+    // Cannot directly check fieldOptions.hasExtension(FieldBehaviorProto.fieldBehavior) because the
+    // default is null
+    if (fieldOptions.getExtensionCount(FieldBehaviorProto.fieldBehavior) > 0
+        && fieldOptions
+            .getExtension(FieldBehaviorProto.fieldBehavior)
+            .contains(FieldBehavior.REQUIRED)) {
+      isRequired = true;
     }
 
     Field.Builder fieldBuilder = Field.builder();
@@ -1030,6 +1065,8 @@ public class Parser {
             fieldDescriptor.getContainingOneof() != null
                 && fieldDescriptor.getContainingOneof().isSynthetic())
         .setIsRepeated(fieldDescriptor.isRepeated())
+        .setIsRequired(isRequired)
+        .setFieldInfoFormat(fieldInfoFormat)
         .setIsMap(fieldDescriptor.isMapField())
         .setResourceReference(resourceReference)
         .build();
@@ -1123,5 +1160,26 @@ public class Parser {
             .mapToObj(i -> components[i])
             .collect(Collectors.toList());
     return String.join(".", nestedTypeComponents);
+  }
+
+  /**
+   * Converts a serviceYaml file to a map of methods and autopopulated fields. Note: this does NOT
+   * currently support wildcards in MethodSettings.selectors.
+   */
+  @VisibleForTesting
+  static Map<String, List<String>> parseAutoPopulatedMethodsAndFields(
+      Optional<com.google.api.Service> serviceYamlProtoOpt) {
+    if (!hasMethodSettings(serviceYamlProtoOpt)) {
+      return ImmutableMap.<String, List<String>>builder().build();
+    }
+    return serviceYamlProtoOpt.get().getPublishing().getMethodSettingsList().stream()
+        .collect(
+            Collectors.toMap(
+                MethodSettings::getSelector, MethodSettings::getAutoPopulatedFieldsList));
+  }
+
+  @VisibleForTesting
+  static boolean hasMethodSettings(Optional<com.google.api.Service> serviceYamlProtoOpt) {
+    return serviceYamlProtoOpt.isPresent() && serviceYamlProtoOpt.get().hasPublishing();
   }
 }
