@@ -115,7 +115,7 @@ public class Parser {
     }
   }
 
-  public static GapicContext parse(CodeGeneratorRequest request) {
+  public static GapicContext parse(CodeGeneratorRequest request) throws NoServicesFoundException {
     Optional<String> gapicYamlConfigPathOpt =
         PluginArgumentParser.parseGapicYamlConfigPath(request);
     Optional<List<GapicBatchingSettings>> batchingSettingsOpt =
@@ -175,7 +175,9 @@ public class Parser {
             mixinServices,
             transport);
 
-    Preconditions.checkState(!services.isEmpty(), "No services found to generate");
+    if (services.isEmpty()) {
+      throw new NoServicesFoundException();
+    }
 
     // TODO(vam-google): Figure out whether we should keep this allowlist or bring
     // back the unused resource names for all APIs.
