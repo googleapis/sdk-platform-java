@@ -28,7 +28,7 @@ libraries:
     api_reference: "https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/overview"
     codeowner_team: "@googleapis/analytics-dpe"
     excluded_poms: proto-google-iam-v1-bom,google-iam-policy,proto-google-iam-v1
-    excluded_dependencies: "google-iam-policy"
+    excluded_dependencies: google-iam-policy
     GAPICs:
       - proto_path: google/cloud/asset/v1
       - proto_path: google/cloud/asset/v1p1beta1
