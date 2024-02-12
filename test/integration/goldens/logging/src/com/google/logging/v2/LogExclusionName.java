@@ -16,7 +16,6 @@
 
 package com.google.logging.v2;
 
-import com.google.api.core.BetaApi;
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.api.pathtemplate.ValidationException;
 import com.google.api.resourcenames.ResourceName;
@@ -352,7 +351,6 @@ public class LogExclusionName implements ResourceName {
   }
 
   /** Builder for organizations/{organization}/exclusions/{exclusion}. */
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static class OrganizationExclusionBuilder {
     private String organization;
     private String exclusion;
@@ -383,7 +381,6 @@ public class LogExclusionName implements ResourceName {
   }
 
   /** Builder for folders/{folder}/exclusions/{exclusion}. */
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static class FolderExclusionBuilder {
     private String folder;
     private String exclusion;
@@ -414,7 +411,6 @@ public class LogExclusionName implements ResourceName {
   }
 
   /** Builder for billingAccounts/{billing_account}/exclusions/{exclusion}. */
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static class BillingAccountExclusionBuilder {
     private String billingAccount;
     private String exclusion;

@@ -16,7 +16,6 @@
 
 package com.google.logging.v2;
 
-import com.google.api.core.BetaApi;
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.api.pathtemplate.ValidationException;
 import com.google.api.resourcenames.ResourceName;
@@ -414,7 +413,6 @@ public class LogBucketName implements ResourceName {
   }
 
   /** Builder for organizations/{organization}/locations/{location}/buckets/{bucket}. */
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static class OrganizationLocationBucketBuilder {
     private String organization;
     private String location;
@@ -455,7 +453,6 @@ public class LogBucketName implements ResourceName {
   }
 
   /** Builder for folders/{folder}/locations/{location}/buckets/{bucket}. */
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static class FolderLocationBucketBuilder {
     private String folder;
     private String location;
@@ -496,7 +493,6 @@ public class LogBucketName implements ResourceName {
   }
 
   /** Builder for billingAccounts/{billing_account}/locations/{location}/buckets/{bucket}. */
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static class BillingAccountLocationBucketBuilder {
     private String billingAccount;
     private String location;

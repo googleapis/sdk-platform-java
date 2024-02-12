@@ -1,6 +1,5 @@
 package com.google.cloud.dialogflow.v2beta1;
 
-import com.google.api.core.BetaApi;
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.api.pathtemplate.ValidationException;
 import com.google.api.resourcenames.ResourceName;
@@ -221,7 +220,6 @@ public class AgentName implements ResourceName {
   }
 
   /** Builder for projects/{project}/agent. */
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static class ProjectBuilder {
     private String project;
 

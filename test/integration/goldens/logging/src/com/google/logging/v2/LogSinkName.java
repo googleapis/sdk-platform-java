@@ -16,7 +16,6 @@
 
 package com.google.logging.v2;
 
-import com.google.api.core.BetaApi;
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.api.pathtemplate.ValidationException;
 import com.google.api.resourcenames.ResourceName;
@@ -342,7 +341,6 @@ public class LogSinkName implements ResourceName {
   }
 
   /** Builder for organizations/{organization}/sinks/{sink}. */
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static class OrganizationSinkBuilder {
     private String organization;
     private String sink;
@@ -373,7 +371,6 @@ public class LogSinkName implements ResourceName {
   }
 
   /** Builder for folders/{folder}/sinks/{sink}. */
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static class FolderSinkBuilder {
     private String folder;
     private String sink;
@@ -404,7 +401,6 @@ public class LogSinkName implements ResourceName {
   }
 
   /** Builder for billingAccounts/{billing_account}/sinks/{sink}. */
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static class BillingAccountSinkBuilder {
     private String billingAccount;
     private String sink;

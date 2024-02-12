@@ -16,7 +16,6 @@
 
 package com.google.showcase.v1beta1;
 
-import com.google.api.core.BetaApi;
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.api.pathtemplate.ValidationException;
 import com.google.api.resourcenames.ResourceName;
@@ -357,7 +356,6 @@ public class BlurbName implements ResourceName {
   }
 
   /** Builder for users/{user}/profile/blurbs/{blurb}. */
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static class UserBlurbBuilder {
     private String user;
     private String blurb;
@@ -388,7 +386,6 @@ public class BlurbName implements ResourceName {
   }
 
   /** Builder for rooms/{room}/blurbs/{blurb}. */
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static class RoomBlurbBuilder {
     private String room;
     private String blurb;
@@ -419,7 +416,6 @@ public class BlurbName implements ResourceName {
   }
 
   /** Builder for rooms/{room}/blurbs/legacy/{legacy_room}.{blurb}. */
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static class RoomLegacyRoomBlurbBuilder {
     private String room;
     private String legacyRoom;

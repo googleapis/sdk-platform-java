@@ -16,7 +16,6 @@
 
 package com.google.cloud.asset.v1;
 
-import com.google.api.core.BetaApi;
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.api.pathtemplate.ValidationException;
 import com.google.api.resourcenames.ResourceName;
@@ -296,7 +295,6 @@ public class FeedName implements ResourceName {
   }
 
   /** Builder for folders/{folder}/feeds/{feed}. */
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static class FolderFeedBuilder {
     private String folder;
     private String feed;
@@ -327,7 +325,6 @@ public class FeedName implements ResourceName {
   }
 
   /** Builder for organizations/{organization}/feeds/{feed}. */
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static class OrganizationFeedBuilder {
     private String organization;
     private String feed;

@@ -16,7 +16,6 @@
 
 package com.google.cloud.asset.v1;
 
-import com.google.api.core.BetaApi;
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.api.pathtemplate.ValidationException;
 import com.google.api.resourcenames.ResourceName;
@@ -306,7 +305,6 @@ public class SavedQueryName implements ResourceName {
   }
 
   /** Builder for folders/{folder}/savedQueries/{saved_query}. */
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static class FolderSavedQueryBuilder {
     private String folder;
     private String savedQuery;
@@ -337,7 +335,6 @@ public class SavedQueryName implements ResourceName {
   }
 
   /** Builder for organizations/{organization}/savedQueries/{saved_query}. */
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static class OrganizationSavedQueryBuilder {
     private String organization;
     private String savedQuery;

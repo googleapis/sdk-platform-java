@@ -1,6 +1,5 @@
 package com.google.showcase.v1beta1;
 
-import com.google.api.core.BetaApi;
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.api.pathtemplate.ValidationException;
 import com.google.api.resourcenames.ResourceName;
@@ -315,7 +314,6 @@ public class FoobarName implements ResourceName {
   }
 
   /** Builder for projects/{project}/chocolate/variants/{variant}/foobars/{foobar}. */
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static class ProjectVariantFoobarBuilder {
     private String project;
     private String variant;
@@ -356,7 +354,6 @@ public class FoobarName implements ResourceName {
   }
 
   /** Builder for foobars/{foobar}. */
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static class FoobarBuilder {
     private String foobar;
 
@@ -377,7 +374,6 @@ public class FoobarName implements ResourceName {
   }
 
   /** Builder for bar_foos/{bar_foo}/foobars/{foobar}. */
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static class BarFooFoobarBuilder {
     private String barFoo;
     private String foobar;

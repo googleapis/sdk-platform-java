@@ -60,7 +60,6 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -1678,21 +1677,12 @@ public class ResourceNameHelperClassComposer {
     nestedClassMethods.add(buildMethod);
 
     // Return the class.
-    AnnotationNode betaAnnotation =
-        AnnotationNode.builder()
-            .setType(FIXED_TYPESTORE.get("BetaApi"))
-            .setDescription(
-                "The per-pattern Builders are not stable yet and may be changed in the future.")
-            .build();
-    List<AnnotationNode> classAnnotations =
-        isDefaultClass ? Collections.emptyList() : Arrays.asList(betaAnnotation);
 
     return ClassDefinition.builder()
         .setHeaderCommentStatements(
             CommentStatement.withComment(
                 JavaDocComment.withComment(
                     String.format(BUILDER_CLASS_HEADER_PATTERN, resourceNamePattern))))
-        .setAnnotations(classAnnotations)
         .setIsNested(true)
         .setScope(ScopeNode.PUBLIC)
         .setIsStatic(true)

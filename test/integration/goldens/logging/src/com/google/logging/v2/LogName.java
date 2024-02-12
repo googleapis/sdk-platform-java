@@ -16,7 +16,6 @@
 
 package com.google.logging.v2;
 
-import com.google.api.core.BetaApi;
 import com.google.api.pathtemplate.PathTemplate;
 import com.google.api.pathtemplate.ValidationException;
 import com.google.api.resourcenames.ResourceName;
@@ -338,7 +337,6 @@ public class LogName implements ResourceName {
   }
 
   /** Builder for organizations/{organization}/logs/{log}. */
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static class OrganizationLogBuilder {
     private String organization;
     private String log;
@@ -369,7 +367,6 @@ public class LogName implements ResourceName {
   }
 
   /** Builder for folders/{folder}/logs/{log}. */
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static class FolderLogBuilder {
     private String folder;
     private String log;
@@ -400,7 +397,6 @@ public class LogName implements ResourceName {
   }
 
   /** Builder for billingAccounts/{billing_account}/logs/{log}. */
-  @BetaApi("The per-pattern Builders are not stable yet and may be changed in the future.")
   public static class BillingAccountLogBuilder {
     private String billingAccount;
     private String log;
