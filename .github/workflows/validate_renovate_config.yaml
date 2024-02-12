@@ -1,0 +1,20 @@
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+name: validate_renovate_bot_config
+jobs:
+  verify_renovate_config:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 16
+    - name: Install renovate-config-validator
+      run: npm install --global renovate
+    - name: Validate Renovate Bot configuration
+      run: renovate-config-validator
