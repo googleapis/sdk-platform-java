@@ -85,7 +85,7 @@ public class ITOtelMetrics {
     client.echoCallable().futureCall(requestWithNoError).isDone();
 
     // wait for the metrics to get uploaded
-    Thread.sleep(3000);
+    Thread.sleep(5000);
 
     String filePath = "../directory1/testHttpJson_OperationSucceeded_metrics.txt";
     // 1. Check if the log file exists
@@ -127,7 +127,7 @@ public class ITOtelMetrics {
     client.echoCallable().futureCall(requestWithNoError).isDone();
 
     // wait for the metrics to get uploaded
-    Thread.sleep(3000);
+    Thread.sleep(5000);
 
     String filePath = "../directory2/testGrpc_OperationSucceeded_metrics.txt";
     // 1. Check if the log file exists
@@ -170,7 +170,7 @@ public class ITOtelMetrics {
     client.echoCallable().futureCall(requestWithNoError).cancel(true);
 
     // wait for the metrics to get uploaded
-    Thread.sleep(3000);
+    Thread.sleep(5000);
 
     String filePath = "../directory3/testHttpJson_OperationCancelled_metrics.txt";
     File file = new File(filePath);
@@ -211,7 +211,7 @@ public class ITOtelMetrics {
     client.echoCallable().futureCall(requestWithNoError).cancel(true);
 
     // wait for the metrics to get uploaded
-    Thread.sleep(3000);
+    Thread.sleep(5000);
 
     String filePath = "../directory4/testGrpc_OperationCancelled_metrics.txt";
     // 1. Check if the log file exists
@@ -253,7 +253,7 @@ public class ITOtelMetrics {
     client.echoCallable().futureCall(requestWithError).isDone();
 
     // wait for the metrics to get uploaded
-    Thread.sleep(3000);
+    Thread.sleep(5000);
 
     String filePath = "../directory5/testHttpJson_OperationFailed_metrics.txt";
     File file = new File(filePath);
@@ -294,7 +294,7 @@ public class ITOtelMetrics {
     client.echoCallable().futureCall(requestWithError).isDone();
 
     // wait for the metrics to get uploaded
-    Thread.sleep(3000);
+    Thread.sleep(5000);
 
     String filePath = "../directory6/testGrpc_OperationFailed_metrics.txt";
     // 1. Check if the log file exists
@@ -344,7 +344,7 @@ public class ITOtelMetrics {
 
     grpcClientWithRetrySetting.blockCallable().futureCall(blockRequest).isDone();
 
-    Thread.sleep(3000);
+    Thread.sleep(5000);
 
     String filePath = "../directory7/testGrpc_attemptFailedRetriesExhausted_metrics.txt";
     File file = new File(filePath);
@@ -395,7 +395,7 @@ public class ITOtelMetrics {
 
     httpJsonClientWithRetrySetting.blockCallable().futureCall(blockRequest).isDone();
 
-    Thread.sleep(3000);
+    Thread.sleep(5000);
 
     String filePath = "../directory8/testHttpjson_attemptFailedRetriesExhausted_metrics.txt";
     File file = new File(filePath);
@@ -446,7 +446,7 @@ public class ITOtelMetrics {
 
     httpJsonClientWithRetrySetting.blockCallable().futureCall(blockRequest).isDone();
 
-    Thread.sleep(3000);
+    Thread.sleep(5000);
 
     String filePath = "../directory9/testHttpjson_attemptPermanentFailure_metrics.txt";
     File file = new File(filePath);
@@ -496,7 +496,7 @@ public class ITOtelMetrics {
 
     grpcClientWithRetrySetting.blockCallable().futureCall(blockRequest).isDone();
 
-    Thread.sleep(3000);
+    Thread.sleep(5000);
 
     String filePath = "../directory10/testGrpc_attemptPermanentFailure_metrics.txt";
     File file = new File(filePath);
@@ -520,7 +520,7 @@ public class ITOtelMetrics {
     // Periodic Metric Reader configuration
     PeriodicMetricReader metricReader =
         PeriodicMetricReader.builder(metricExporter)
-            .setInterval(java.time.Duration.ofSeconds(2))
+            .setInterval(java.time.Duration.ofSeconds(3))
             .build();
 
     // OpenTelemetry SDK Configuration
