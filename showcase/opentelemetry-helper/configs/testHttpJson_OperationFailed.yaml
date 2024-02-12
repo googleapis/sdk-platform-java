@@ -2,11 +2,11 @@ receivers:
   otlp:
     protocols:
       grpc:
-        endpoint: "localhost:4323"
+        endpoint: "localhost:4321"
 
 exporters:
   file:
-    path: "testGrpc_attemptFailedRetriesExhausted_metrics.txt"
+    path: "testHttpJson_OperationFailed_metrics.txt"
 
 service:
   extensions: []

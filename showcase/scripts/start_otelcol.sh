@@ -1,5 +1,7 @@
 #!/bin/bash
 
+killall otelcol
+
 # Define the directory where you want to install everything
 install_dir="$1"
 

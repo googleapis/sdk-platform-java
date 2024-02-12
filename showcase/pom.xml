@@ -121,6 +121,12 @@
       <artifactId>opentelemetry-semconv</artifactId>
       <version>1.27.0-alpha</version>
     </dependency>
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-core</artifactId>
+      <version>2.19.0</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <modules>
