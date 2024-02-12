@@ -392,6 +392,10 @@ def generate_prerequisite_files(
         repo_metadata["api_reference"] = library.api_reference
     if library.codeowner_team:
         repo_metadata["codeowner_team"] = library.codeowner_team
+    if library.excluded_dependencies:
+        repo_metadata["excluded_dependencies"] = library.excluded_dependencies
+    if library.excluded_poms:
+        repo_metadata["excluded_poms"] = library.excluded_poms
     if library.issue_tracker:
         repo_metadata["issue_tracker"] = library.issue_tracker
     if library.rest_documentation:

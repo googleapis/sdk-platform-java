@@ -36,6 +36,8 @@ class LibraryConfig:
         codeowner_team: Optional[str] = None,
         client_documentation: Optional[str] = None,
         distribution_name: Optional[str] = None,
+        excluded_dependencies: Optional[str] = None,
+        excluded_poms: Optional[str] = None,
         googleapis_commitish: Optional[str] = None,
         group_id: Optional[str] = "com.google.cloud",
         issue_tracker: Optional[str] = None,
@@ -55,6 +57,8 @@ class LibraryConfig:
         self.api_id = api_id
         self.api_reference = api_reference
         self.codeowner_team = codeowner_team
+        self.excluded_dependencies = excluded_dependencies
+        self.excluded_poms = excluded_poms
         self.client_documentation = client_documentation
         self.distribution_name = distribution_name
         self.googleapis_commitish = googleapis_commitish
