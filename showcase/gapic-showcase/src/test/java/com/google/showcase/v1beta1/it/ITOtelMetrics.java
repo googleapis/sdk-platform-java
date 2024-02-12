@@ -16,24 +16,18 @@
 
 package com.google.showcase.v1beta1.it;
 
-import static org.junit.Assert.assertThrows;
-
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.gax.core.GaxProperties;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.retrying.RetrySettings;
-import com.google.api.gax.retrying.RetryingFuture;
-import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.api.gax.tracing.MetricsTracerFactory;
 import com.google.api.gax.tracing.OpentelemetryMetricsRecorder;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.truth.Truth;
 import com.google.rpc.Status;
 import com.google.showcase.v1beta1.BlockRequest;
-import com.google.showcase.v1beta1.BlockResponse;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoSettings;
@@ -47,12 +41,8 @@ import io.opentelemetry.sdk.OpenTelemetrySdk;
 import io.opentelemetry.sdk.metrics.SdkMeterProvider;
 import io.opentelemetry.sdk.metrics.export.PeriodicMetricReader;
 import io.opentelemetry.sdk.resources.Resource;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Test;
 
@@ -362,7 +352,8 @@ public class ITOtelMetrics {
     Truth.assertThat(file.length() > 0).isTrue();
 
     grpcClientWithRetrySetting.close();
-    grpcClientWithRetrySetting.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+    grpcClientWithRetrySetting.awaitTermination(
+        TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
   @Test
@@ -412,7 +403,8 @@ public class ITOtelMetrics {
     Truth.assertThat(file.length() > 0).isTrue();
 
     httpJsonClientWithRetrySetting.close();
-    httpJsonClientWithRetrySetting.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+    httpJsonClientWithRetrySetting.awaitTermination(
+        TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
   @Test
@@ -462,7 +454,8 @@ public class ITOtelMetrics {
     Truth.assertThat(file.length() > 0).isTrue();
 
     httpJsonClientWithRetrySetting.close();
-    httpJsonClientWithRetrySetting.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+    httpJsonClientWithRetrySetting.awaitTermination(
+        TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
   @Test
@@ -511,10 +504,12 @@ public class ITOtelMetrics {
     Truth.assertThat(file.length() > 0).isTrue();
 
     grpcClientWithRetrySetting.close();
-    grpcClientWithRetrySetting.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+    grpcClientWithRetrySetting.awaitTermination(
+        TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
-  // Helper function for creating Opentelemetry object with a different port for exporter for every test
+  // Helper function for creating Opentelemetry object with a different port for exporter for every
+  // test
   // this ensures that logs for each test are collected separately
   private static ApiTracerFactory createOpenTelemetryTracerFactory(String port) {
     // OTLP Metric Exporter setup
