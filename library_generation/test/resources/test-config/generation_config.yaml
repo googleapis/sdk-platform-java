@@ -26,6 +26,9 @@ libraries:
     release_level: "stable"
     issue_tracker: "https://issuetracker.google.com/issues/new?component=187210&template=0"
     api_reference: "https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/overview"
+    codeowner_team: @googleapis/analytics-dpe
+    excluded_poms: proto-google-iam-v1-bom,google-iam-policy,proto-google-iam-v1
+    excluded_dependencies: "google-iam-policy"
     GAPICs:
       - proto_path: google/cloud/asset/v1
       - proto_path: google/cloud/asset/v1p1beta1
