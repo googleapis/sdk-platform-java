@@ -26,6 +26,10 @@ public abstract class GapicPackageInfo {
     return builder().setPackageInfo(packageInfo).build();
   }
 
+  public static GapicPackageInfo empty() {
+    return builder().setPackageInfo(PackageInfoDefinition.builder().build()).build();
+  }
+
   static Builder builder() {
     return new AutoValue_GapicPackageInfo.Builder();
   }
