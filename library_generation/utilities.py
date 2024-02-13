@@ -297,6 +297,7 @@ def pull_api_definition(
     :param output_folder: the folder to which APIs definition (proto files) goes
     :return: None
     """
+    print('pull_api_definition 1')
     googleapis_commitish = config.googleapis_commitish
     if library.googleapis_commitish:
         googleapis_commitish = library.googleapis_commitish

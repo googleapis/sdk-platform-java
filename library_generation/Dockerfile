@@ -15,7 +15,11 @@
 # build from the root of this repo:
 FROM gcr.io/cloud-devrel-public-resources/python
 
+# install tools
+RUN apt-get update && apt-get install unzip
+
 COPY . /src
+
 RUN ln -s $(which python3.12) /usr/local/bin/python
 RUN cd /src && python -m pip install -r requirements.in
 RUN cd /src && python -m pip install .
