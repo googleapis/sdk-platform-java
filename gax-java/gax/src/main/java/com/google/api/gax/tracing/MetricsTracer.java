@@ -47,6 +47,7 @@ import org.threeten.bp.Duration;
  * This class computes generic metrics that can be observed in the lifecycle of an RPC operation.
  * The responsibility of recording metrics should delegate to {@link MetricsRecorder}, hence this
  * class should not have any knowledge about the observability framework used for metrics recording.
+ * method_name and language will be autopopulated attributes. Default value of language is 'Java'.
  */
 @BetaApi
 @InternalApi

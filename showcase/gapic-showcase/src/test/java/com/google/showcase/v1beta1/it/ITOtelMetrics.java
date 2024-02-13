@@ -43,16 +43,15 @@ import io.opentelemetry.sdk.metrics.export.PeriodicMetricReader;
 import io.opentelemetry.sdk.resources.Resource;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
-import org.junit.AfterClass;
 import org.junit.Test;
 
 public class ITOtelMetrics {
 
-  @AfterClass
-  public static void cleanup_otelcol() throws Exception {
-    Process process = Runtime.getRuntime().exec("../scripts/cleanup_otelcol.sh");
-    process.waitFor();
-  }
+  // @AfterClass
+  // public static void cleanup_otelcol() throws Exception {
+  //   Process process = Runtime.getRuntime().exec("../scripts/cleanup_otelcol.sh");
+  //   process.waitFor();
+  // }
 
   @Test
   public void testHttpJson_OperationSucceded_recordsMetrics() throws Exception {
@@ -60,19 +59,9 @@ public class ITOtelMetrics {
     // initialize the otel-collector
     setupOtelCollector("../opentelemetry-helper/configs/testHttpJson_OperationSucceeded.yaml");
 
-    EchoSettings httpJsonEchoSettings =
-        EchoSettings.newHttpJsonBuilder()
-            .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTracerFactory(createOpenTelemetryTracerFactory("4317"))
-            .setTransportChannelProvider(
-                EchoSettings.defaultHttpJsonTransportProviderBuilder()
-                    .setHttpTransport(
-                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
-                    .setEndpoint("http://localhost:7469")
-                    .build())
-            .build();
-
-    EchoClient client = EchoClient.create(httpJsonEchoSettings);
+    EchoClient client =
+        TestClientInitializer.createHttpJsonEchoClientOpentelemetry(
+            createOpenTelemetryTracerFactory("4317"));
 
     EchoRequest requestWithNoError =
         EchoRequest.newBuilder()
@@ -102,18 +91,9 @@ public class ITOtelMetrics {
     // initialize the otel-collector
     setupOtelCollector("../opentelemetry-helper/configs/testGrpc_OperationSucceeded.yaml");
 
-    EchoSettings grpcEchoSettings =
-        EchoSettings.newBuilder()
-            .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTracerFactory(createOpenTelemetryTracerFactory("4318"))
-            .setTransportChannelProvider(
-                EchoSettings.defaultGrpcTransportProviderBuilder()
-                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
-                    .build())
-            .setEndpoint("localhost:7469")
-            .build();
-
-    EchoClient client = EchoClient.create(grpcEchoSettings);
+    EchoClient client =
+        TestClientInitializer.createGrpcEchoClientOpentelemetry(
+            createOpenTelemetryTracerFactory("4318"));
 
     EchoRequest requestWithNoError =
         EchoRequest.newBuilder().setContent("test_grpc_operation_succeeded").build();
@@ -141,18 +121,9 @@ public class ITOtelMetrics {
     // initialize the otel-collector
     setupOtelCollector("../opentelemetry-helper/configs/testHttpJson_OperationCancelled.yaml");
 
-    EchoSettings httpJsonEchoSettings =
-        EchoSettings.newHttpJsonBuilder()
-            .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTracerFactory(createOpenTelemetryTracerFactory("4319"))
-            .setTransportChannelProvider(
-                EchoSettings.defaultHttpJsonTransportProviderBuilder()
-                    .setHttpTransport(
-                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
-                    .setEndpoint("http://localhost:7469")
-                    .build())
-            .build();
-    EchoClient client = EchoClient.create(httpJsonEchoSettings);
+    EchoClient client =
+        TestClientInitializer.createHttpJsonEchoClientOpentelemetry(
+            createOpenTelemetryTracerFactory("4319"));
 
     EchoRequest requestWithNoError =
         EchoRequest.newBuilder()
@@ -183,18 +154,9 @@ public class ITOtelMetrics {
     // initialize the otel-collector
     setupOtelCollector("../opentelemetry-helper/configs/testGrpc_OperationCancelled.yaml");
 
-    EchoSettings grpcEchoSettings =
-        EchoSettings.newBuilder()
-            .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTracerFactory(createOpenTelemetryTracerFactory("4320"))
-            .setTransportChannelProvider(
-                EchoSettings.defaultGrpcTransportProviderBuilder()
-                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
-                    .build())
-            .setEndpoint("localhost:7469")
-            .build();
-
-    EchoClient client = EchoClient.create(grpcEchoSettings);
+    EchoClient client =
+        TestClientInitializer.createGrpcEchoClientOpentelemetry(
+            createOpenTelemetryTracerFactory("4320"));
 
     EchoRequest requestWithNoError =
         EchoRequest.newBuilder()
@@ -224,18 +186,9 @@ public class ITOtelMetrics {
     // initialize the otel-collector
     setupOtelCollector("../opentelemetry-helper/configs/testHttpJson_OperationFailed.yaml");
 
-    EchoSettings httpJsonEchoSettings =
-        EchoSettings.newHttpJsonBuilder()
-            .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTracerFactory(createOpenTelemetryTracerFactory("4321"))
-            .setTransportChannelProvider(
-                EchoSettings.defaultHttpJsonTransportProviderBuilder()
-                    .setHttpTransport(
-                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
-                    .setEndpoint("http://localhost:7469")
-                    .build())
-            .build();
-    EchoClient client = EchoClient.create(httpJsonEchoSettings);
+    EchoClient client =
+        TestClientInitializer.createHttpJsonEchoClientOpentelemetry(
+            createOpenTelemetryTracerFactory("4321"));
 
     EchoRequest requestWithError =
         EchoRequest.newBuilder()
@@ -265,18 +218,9 @@ public class ITOtelMetrics {
     // initialize the otel-collector
     setupOtelCollector("../opentelemetry-helper/configs/testGrpc_OperationFailed.yaml");
 
-    EchoSettings grpcEchoSettings =
-        EchoSettings.newBuilder()
-            .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTracerFactory(createOpenTelemetryTracerFactory("4322"))
-            .setTransportChannelProvider(
-                EchoSettings.defaultGrpcTransportProviderBuilder()
-                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
-                    .build())
-            .setEndpoint("localhost:7469")
-            .build();
-
-    EchoClient client = EchoClient.create(grpcEchoSettings);
+    EchoClient client =
+        TestClientInitializer.createGrpcEchoClientOpentelemetry(
+            createOpenTelemetryTracerFactory("4322"));
 
     EchoRequest requestWithError =
         EchoRequest.newBuilder()
