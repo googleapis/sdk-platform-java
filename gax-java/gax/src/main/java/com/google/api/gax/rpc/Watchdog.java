@@ -227,7 +227,6 @@ public final class Watchdog implements Runnable, BackgroundResource {
                 // called.
                 if (state == State.WAITING) {
                   state = State.IDLE;
-                  lastActivityAt = clock.millisTime();
                 }
               }
 
