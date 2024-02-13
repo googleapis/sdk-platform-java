@@ -19,13 +19,17 @@ import org.eclipse.aether.version.InvalidVersionSpecificationException;
  */
 public class UnmanagedDependencyCheck {
   // Regex of handwritten artifacts.
-  // There are customized artifacts defined in some handwritten libraries, e.g., firestore and
-  // datastore, add entries in regex to exclude these artifacts.
+  // There are customized artifacts defined in gapic-bom and handwritten libraries,
+  // e.g., firestore and datastore, add entries in regex to exclude these artifacts.
   private final static String downstreamArtifact =
       "(com.google.cloud:google-.*)|"
-          + "(com.google.api.grpc:(grpc|proto)-google-.*)|"
+          + "(com.google.api.grpc:(gapic|grpc|proto)-google-.*)|"
           + "(com.google.cloud:proto-google-cloud-firestore-bundle-.*)|"
-          + "(com.google.cloud.datastore:datastore-.*-proto-client)";
+          + "(com.google.cloud.datastore:datastore-.*-proto-client)|"
+          + "(com.google.analytics:google-analytics-.*)|"
+          + "(com.google.apis:google-api-.*)|"
+          + "(com.google.area120:google-area120-.*)|"
+          + "(io.grafeas:grafeas)";
 
   /**
    * @param args An array with two elements.<p> The first string is the path of Java shared
@@ -70,7 +74,7 @@ public class UnmanagedDependencyCheck {
       throws InvalidVersionSpecificationException {
     Set<String> res = new HashSet<>();
     new ClassPathBuilder()
-        .resolve(bom.getManagedDependencies(), true, DependencyMediation.MAVEN)
+        .resolve(bom.getManagedDependencies(), false, DependencyMediation.MAVEN)
         .getClassPath()
         .forEach(
             classPath -> {

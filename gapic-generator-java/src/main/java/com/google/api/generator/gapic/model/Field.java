@@ -72,6 +72,17 @@ public abstract class Field {
     return type().equals(TypeNode.STRING) && resourceReference() != null;
   }
 
+  // Check that the field format is of UUID, it is not annotated as required, and is of type String.
+  // Unless
+  // those three conditions are met, do not autopopulate the field.
+  // In the future, if additional formats are supported for autopopulation, this will need to be
+  // refactored to support those formats.
+  public boolean canBeAutoPopulated() {
+    return Format.UUID4.equals(fieldInfoFormat())
+        && !isRequired()
+        && TypeNode.STRING.equals(type());
+  }
+
   @Override
   public boolean equals(Object o) {
     if (!(o instanceof Field)) {

@@ -1,0 +1,7 @@
+libraries:
+  - api_shortname: apigeeconnect
+    name_pretty: Apigee Connect
+    api_description: "allows the Apigee hybrid management"
+    product_documentation: "https://cloud.google.com/apigee/docs/hybrid/v1.3/apigee-connect/"
+    GAPICs:
+    - proto_path: google/cloud/apigeeconnect/v1

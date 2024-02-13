@@ -17,7 +17,14 @@ target/
 
 *.iml
 
+# Python
+**/__pycache__/
+.venv
+
 # library generation
-output/
-library_generation/output/
-showcase/scripts/output/
+**/output/
+**/googleapis
+library_generation/test/**/golden*/
+library_generation/test/resources/test_repo_level_postprocess/
+**/*egg-info/
+**/build/
