@@ -1,0 +1,29 @@
+gapic_generator_version: 2.32.0
+grpc_version: 1.61.0
+protobuf_version: 25.2
+googleapis_commitish: 40203ca1880849480bbff7b8715491060bbccdf1
+owlbot_cli_image: sha256:623647ee79ac605858d09e60c1382a716c125fb776f69301b72de1cd35d49409
+synthtool_commitish: 6612ab8f3afcd5e292aecd647f0fa68812c9f5b5
+template_excludes:
+  - ".gitignore"
+  - ".kokoro/presubmit/integration.cfg"
+  - ".kokoro/presubmit/graalvm-native.cfg"
+  - ".kokoro/presubmit/graalvm-native-17.cfg"
+  - ".kokoro/nightly/integration.cfg"
+  - ".kokoro/presubmit/samples.cfg"
+  - ".kokoro/nightly/samples.cfg"
+  - ".github/ISSUE_TEMPLATE/bug_report.md"
+  - ".github/PULL_REQUEST_TEMPLATE.md"
+  - "CONTRIBUTING.md"
+  - "codecov.yaml"
+  - ".github/release-please.yml"
+  - "renovate.json"
+  - ".kokoro/requirements.in"
+  - ".kokoro/requirements.txt"
+libraries:
+- api_shortname: bigtable
+  name_pretty: Cloud Bigtable
+  library_type: GAPIC_COMBO
+  GAPICs:
+  - proto_path: google/bigtable/admin/v2
+  - proto_path: google/bigtable/v2

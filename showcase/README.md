@@ -18,7 +18,7 @@ update to a compatible client version in `./WORKSPACE`.
 ```shell
 # Install the showcase server version defined in gapic-showcase/pom.xml
 cd showcase
-go install github.com/googleapis/gapic-showcase/cmd/gapic-showcase@v"$(cd gapic-showcase;mvn help:evaluate -Dexpression=gapic-showcase.version -q -DforceStdout)"
+go install github.com/googleapis/gapic-showcase/cmd/gapic-showcase@v"$(cd gapic-showcase;mvn help:evaluate -Dexpression=gapic-showcase.version -q -DforceStdout |sed 's/\x1b\[[0-9;]*m//g')"
 PATH=$PATH:`go env GOPATH`/bin
 gapic-showcase --help
 > Root command of gapic-showcase
