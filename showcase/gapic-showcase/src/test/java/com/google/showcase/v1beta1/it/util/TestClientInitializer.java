@@ -61,6 +61,31 @@ public class TestClientInitializer {
     return EchoClient.create(grpcEchoSettings);
   }
 
+  public static EchoClient createGrpcEchoClientWithRetrySettings(
+      RetrySettings retrySettings,
+      Set<StatusCode.Code> retryableCodes,
+      List<ClientInterceptor> interceptorList)
+      throws Exception {
+    EchoStubSettings.Builder grpcEchoSettingsBuilder = EchoStubSettings.newBuilder();
+    grpcEchoSettingsBuilder
+        .echoSettings()
+        .setRetrySettings(retrySettings)
+        .setRetryableCodes(retryableCodes);
+    EchoSettings grpcEchoSettings = EchoSettings.create(grpcEchoSettingsBuilder.build());
+    grpcEchoSettings =
+        grpcEchoSettings
+            .toBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultGrpcTransportProviderBuilder()
+                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .setInterceptorProvider(() -> interceptorList)
+                    .build())
+            .setEndpoint("localhost:7469")
+            .build();
+    return EchoClient.create(grpcEchoSettings);
+  }
+
   public static EchoClient createHttpJsonEchoClient() throws Exception {
     return createHttpJsonEchoClient(ImmutableList.of());
   }
@@ -76,6 +101,32 @@ public class TestClientInitializer {
                         new NetHttpTransport.Builder().doNotValidateCertificate().build())
                     .setEndpoint("http://localhost:7469")
                     .setInterceptorProvider(() -> interceptorList)
+                    .build())
+            .build();
+    return EchoClient.create(httpJsonEchoSettings);
+  }
+
+  public static EchoClient createHttpJsonEchoClientWithRetrySettings(
+      RetrySettings retrySettings,
+      Set<StatusCode.Code> retryableCodes,
+      List<HttpJsonClientInterceptor> interceptorList)
+      throws Exception {
+    EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
+    httpJsonEchoSettingsBuilder
+        .echoSettings()
+        .setRetrySettings(retrySettings)
+        .setRetryableCodes(retryableCodes);
+    EchoSettings httpJsonEchoSettings = EchoSettings.create(httpJsonEchoSettingsBuilder.build());
+    httpJsonEchoSettings =
+        httpJsonEchoSettings
+            .toBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultHttpJsonTransportProviderBuilder()
+                    .setHttpTransport(
+                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
+                    .setInterceptorProvider(() -> interceptorList)
+                    .setEndpoint("http://localhost:7469")
                     .build())
             .build();
     return EchoClient.create(httpJsonEchoSettings);
@@ -213,6 +264,7 @@ public class TestClientInitializer {
                     .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
                     .setInterceptorProvider(() -> interceptorList)
                     .build())
+            .setEndpoint("localhost:7469")
             .build();
     return ComplianceClient.create(grpcComplianceSettings);
   }

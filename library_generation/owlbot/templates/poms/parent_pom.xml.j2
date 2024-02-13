@@ -10,11 +10,20 @@
     Java idiomatic client for Google Cloud Platform services.
   </description>
 
+  {% if monorepo -%}
+  <parent>
+    <groupId>com.google.cloud</groupId>
+    <artifactId>google-cloud-jar-parent</artifactId>
+    <version>{{ monorepo_version }}</version><!-- {x-version-update:google-cloud-java:current} -->
+    <relativePath>../google-cloud-jar-parent/pom.xml</relativePath>
+  </parent>
+  {%- else -%}
   <parent>
     <groupId>com.google.cloud</groupId>
     <artifactId>google-cloud-shared-config</artifactId>
     <version>1.5.3</version>
   </parent>
+  {%- endif %}
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -33,7 +42,6 @@
 {% endfor %}
     </dependencies>
   </dependencyManagement>
-
 
   <modules>
 {% for module in modules %}    <module>{{module.artifact_id}}</module>

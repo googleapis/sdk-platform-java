@@ -40,6 +40,8 @@ import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.FixedHeaderProvider;
 import com.google.api.gax.rpc.HeaderProvider;
 import com.google.api.gax.rpc.NoHeaderProvider;
+import com.google.api.gax.tracing.ApiTracer;
+import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.auth.oauth2.QuotaProjectIdProvider;
@@ -110,6 +112,8 @@ public abstract class ServiceOptions<
   private transient ServiceT service;
   private transient ServiceRpc rpc;
 
+  private final ApiTracerFactory apiTracerFactory;
+
   /**
    * Builder for {@code ServiceOptions}.
    *
@@ -137,6 +141,8 @@ public abstract class ServiceOptions<
     private String clientLibToken = ServiceOptions.getGoogApiClientLibName();
     private String quotaProjectId;
 
+    private ApiTracerFactory apiTracerFactory;
+
     @InternalApi("This class should only be extended within google-cloud-java")
     protected Builder() {}
 
@@ -153,6 +159,7 @@ public abstract class ServiceOptions<
       transportOptions = options.transportOptions;
       clientLibToken = options.clientLibToken;
       quotaProjectId = options.quotaProjectId;
+      apiTracerFactory = options.apiTracerFactory;
     }
 
     protected abstract ServiceOptions<ServiceT, OptionsT> build();
@@ -306,6 +313,17 @@ public abstract class ServiceOptions<
       return self();
     }
 
+    /**
+     * Sets the {@link ApiTracerFactory}. It will be used to create an {@link ApiTracer} that is
+     * annotated throughout the lifecycle of an RPC operation.
+     */
+    @BetaApi
+    @InternalApi
+    public B setApiTracerFactory(ApiTracerFactory apiTracerFactory) {
+      this.apiTracerFactory = apiTracerFactory;
+      return self();
+    }
+
     protected Set<String> getAllowedClientLibTokens() {
       return allowedClientLibTokens;
     }
@@ -347,6 +365,7 @@ public abstract class ServiceOptions<
         builder.quotaProjectId != null
             ? builder.quotaProjectId
             : getValueFromCredentialsFile(getCredentialsPath(), "quota_project_id");
+    apiTracerFactory = builder.apiTracerFactory;
   }
 
   private static String getCredentialsPath() {
@@ -692,6 +711,10 @@ public abstract class ServiceOptions<
     return GaxProperties.getLibraryVersion(this.getClass());
   }
 
+  public ApiTracerFactory getApiTracerFactory() {
+    return apiTracerFactory;
+  }
+
   @InternalApi
   public final HeaderProvider getMergedHeaderProvider(HeaderProvider internalHeaderProvider) {
     Map<String, String> mergedHeaders =
@@ -828,17 +851,24 @@ public abstract class ServiceOptions<
   }
 
   /**
-   * Temporarily used for BigQuery and Storage Apiary Wrapped Libraries. To be removed in the future
-   * when Apiary clients can resolve their endpoints. Returns the host to be used as the rootUrl.
+   * Returns a host value to be used for BigQuery and Storage Apiary Wrapped Libraries. To be
+   * removed in the future when Apiary clients can resolve their endpoints. Returns the host to be
+   * used as the rootUrl.
    *
    * <p>The resolved host will be in `https://{serviceName}.{resolvedUniverseDomain}/` format. The
    * resolvedUniverseDomain will be set to `googleapis.com` if universeDomain is null.
+   *
+   * <p>The host value is set to DEFAULT_HOST if the user didn't configure a host. Returns the host
+   * value the user set, otherwise constructs the host for the user.
    *
    * @see <a
    *     href="https://github.com/googleapis/google-api-java-client/blob/76765d5f9689be9d266a7d62fa6ffb4cabf701f5/google-api-client/src/main/java/com/google/api/client/googleapis/services/AbstractGoogleClient.java#L49">rootUrl</a>
    */
   @InternalApi
   public String getResolvedApiaryHost(String serviceName) {
+    if (!DEFAULT_HOST.equals(host)) {
+      return host;
+    }
     String resolvedUniverseDomain =
         universeDomain != null ? universeDomain : Credentials.GOOGLE_DEFAULT_UNIVERSE;
     return "https://" + serviceName + "." + resolvedUniverseDomain + "/";
