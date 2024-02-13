@@ -3,3 +3,4 @@ README.md
 **/*.egg-info/
 **/output/
 **/build/
+**/google-cloud-java/
