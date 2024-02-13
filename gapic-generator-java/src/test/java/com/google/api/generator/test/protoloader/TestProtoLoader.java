@@ -27,6 +27,8 @@ import com.google.api.generator.gapic.model.Transport;
 import com.google.api.generator.gapic.protoparser.BatchingSettingsConfigParser;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.gapic.protoparser.ServiceConfigParser;
+import com.google.api.generator.gapic.protoparser.ServiceYamlParser;
+import com.google.auto.populate.field.AutoPopulateFieldTestingOuterClass;
 import com.google.bookshop.v1beta1.BookshopProto;
 import com.google.explicit.dynamic.routing.header.ExplicitDynamicRoutingHeaderTestingOuterClass;
 import com.google.logging.v2.LogEntryProto;
@@ -162,12 +164,18 @@ public class TestProtoLoader {
     ServiceDescriptor echoServiceDescriptor = echoFileDescriptor.getServices().get(0);
     assertEquals(echoServiceDescriptor.getName(), "Echo");
 
+    String serviceYamlFilename = "echo_v1beta1.yaml";
+    Path serviceYamlPath = Paths.get(testFilesDirectory, serviceYamlFilename);
+    Optional<com.google.api.Service> serviceYamlOpt =
+        ServiceYamlParser.parse(serviceYamlPath.toString());
+    assertTrue(serviceYamlOpt.isPresent());
+
     Map<String, Message> messageTypes = Parser.parseMessages(echoFileDescriptor);
     Map<String, ResourceName> resourceNames = Parser.parseResourceNames(echoFileDescriptor);
     Set<ResourceName> outputResourceNames = new HashSet<>();
     List<Service> services =
         Parser.parseService(
-            echoFileDescriptor, messageTypes, resourceNames, Optional.empty(), outputResourceNames);
+            echoFileDescriptor, messageTypes, resourceNames, serviceYamlOpt, outputResourceNames);
 
     // Explicitly adds service description, since this is not parsed from source code location
     // in test protos, as it would from a protoc CodeGeneratorRequest
@@ -274,6 +282,40 @@ public class TestProtoLoader {
             messageTypes,
             resourceNames,
             Optional.empty(),
+            outputResourceNames);
+
+    return GapicContext.builder()
+        .setMessages(messageTypes)
+        .setResourceNames(resourceNames)
+        .setServices(services)
+        .setHelperResourceNames(outputResourceNames)
+        .setTransport(transport)
+        .build();
+  }
+
+  public GapicContext parseAutoPopulateFieldTesting() {
+    FileDescriptor autopopulationFileDescriptor =
+        AutoPopulateFieldTestingOuterClass.getDescriptor();
+    ServiceDescriptor autopopulationServiceDescriptor =
+        autopopulationFileDescriptor.getServices().get(0);
+    assertEquals(autopopulationServiceDescriptor.getName(), "AutoPopulateFieldTesting");
+
+    String serviceYamlFilename = "auto_populate_field_testing.yaml";
+    Path serviceYamlPath = Paths.get(testFilesDirectory, serviceYamlFilename);
+    Optional<com.google.api.Service> serviceYamlOpt =
+        ServiceYamlParser.parse(serviceYamlPath.toString());
+    assertTrue(serviceYamlOpt.isPresent());
+
+    Map<String, Message> messageTypes = Parser.parseMessages(autopopulationFileDescriptor);
+    Map<String, ResourceName> resourceNames =
+        Parser.parseResourceNames(autopopulationFileDescriptor);
+    Set<ResourceName> outputResourceNames = new HashSet<>();
+    List<Service> services =
+        Parser.parseService(
+            autopopulationFileDescriptor,
+            messageTypes,
+            resourceNames,
+            serviceYamlOpt,
             outputResourceNames);
 
     return GapicContext.builder()

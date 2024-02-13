@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.34.0](https://github.com/googleapis/sdk-platform-java/compare/v2.33.0...v2.34.0) (2024-01-31)
+
+
+### Features
+
+* autopopulate fields in the request ([#2353](https://github.com/googleapis/sdk-platform-java/issues/2353)) ([b28235a](https://github.com/googleapis/sdk-platform-java/commit/b28235ab20fd174deddafc0426b8d20352af6e85))
+* enable generation with postprocessing of multiple service versions ([#2342](https://github.com/googleapis/sdk-platform-java/issues/2342)) ([363e35e](https://github.com/googleapis/sdk-platform-java/commit/363e35e46e41c88b810e4b0672906f73cb7c38b6))
+* MetricsTracer implementation ([#2421](https://github.com/googleapis/sdk-platform-java/issues/2421)) ([5c291e8](https://github.com/googleapis/sdk-platform-java/commit/5c291e8786b8e976979ec2e26b13f0327333bb02))
+* move new client script ([#2333](https://github.com/googleapis/sdk-platform-java/issues/2333)) ([acdde47](https://github.com/googleapis/sdk-platform-java/commit/acdde47445916dd306ce8b91489fab45c9c2ef50))
+
+
+### Bug Fixes
+
+* Endpoint resolution uses user set endpoint from ClientSettings ([#2429](https://github.com/googleapis/sdk-platform-java/issues/2429)) ([46b0a85](https://github.com/googleapis/sdk-platform-java/commit/46b0a857eaa4484c5f1ebe1170338fc90a994375))
+* Move direct path misconfiguration log to before creating the first channel ([#2430](https://github.com/googleapis/sdk-platform-java/issues/2430)) ([9916540](https://github.com/googleapis/sdk-platform-java/commit/99165403902ff91ecb0b14b858333855e7a10c60))
+
 ## [2.33.0](https://github.com/googleapis/sdk-platform-java/compare/v2.32.0...v2.33.0) (2024-01-24)
 
 

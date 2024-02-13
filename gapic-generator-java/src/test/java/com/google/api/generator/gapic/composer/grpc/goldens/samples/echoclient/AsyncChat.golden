@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,7 +43,6 @@ public class AsyncChat {
           EchoRequest.newBuilder()
               .setName(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
               .setParent(FoobarName.ofProjectFoobarName("[PROJECT]", "[FOOBAR]").toString())
-              .setRequestId("requestId693933066")
               .setSeverity(Severity.forNumber(0))
               .setFoobar(Foobar.newBuilder().build())
               .build();
