@@ -41,7 +41,7 @@ import io.opentelemetry.sdk.OpenTelemetrySdk;
 import io.opentelemetry.sdk.metrics.SdkMeterProvider;
 import io.opentelemetry.sdk.metrics.export.PeriodicMetricReader;
 import io.opentelemetry.sdk.resources.Resource;
-import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import org.junit.AfterClass;
 import org.junit.Test;
@@ -58,10 +58,7 @@ public class ITOtelMetrics {
   public void testHttpJson_OperationSucceded_recordsMetrics() throws Exception {
 
     // initialize the otel-collector
-    setupOtelCollector(
-        "../scripts/start_otelcol.sh",
-        "../directory1",
-        "../opentelemetry-helper/configs/testHttpJson_OperationSucceeded.yaml");
+    setupOtelCollector("../opentelemetry-helper/configs/testHttpJson_OperationSucceeded.yaml");
 
     EchoSettings httpJsonEchoSettings =
         EchoSettings.newHttpJsonBuilder()
@@ -82,16 +79,18 @@ public class ITOtelMetrics {
             .setError(Status.newBuilder().setCode(Code.OK.ordinal()).build())
             .build();
 
-    client.echoCallable().futureCall(requestWithNoError).isDone();
+    client.echo(requestWithNoError);
 
     // wait for the metrics to get uploaded
     Thread.sleep(5000);
 
-    String filePath = "../directory1/testHttpJson_OperationSucceeded_metrics.txt";
-    // 1. Check if the log file exists
-    File file = new File(filePath);
-    Truth.assertThat(file.exists()).isTrue();
-    Truth.assertThat(file.length() > 0).isTrue();
+    String filePath = "../test_data/testHttpJson_OperationSucceeded_metrics.txt";
+    String attribute1 =
+        "\"attributes\":[{\"key\":\"language\",\"value\":{\"stringValue\":\"Java\"}},{\"key\":\"method_name\",\"value\":{\"stringValue\":\"google.showcase.v1beta1.Echo/Echo\"}},{\"key\":\"status\",\"value\":{\"stringValue\":\"OK\"}}]";
+
+    String[] params = {filePath, attribute1};
+    int result = verify_metrics(params);
+    Truth.assertThat(result).isEqualTo(0);
 
     client.close();
     client.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
@@ -101,10 +100,7 @@ public class ITOtelMetrics {
   public void testGrpc_OperationSucceded_recordsMetrics() throws Exception {
 
     // initialize the otel-collector
-    setupOtelCollector(
-        "../scripts/start_otelcol.sh",
-        "../directory2",
-        "../opentelemetry-helper/configs/testGrpc_OperationSucceeded.yaml");
+    setupOtelCollector("../opentelemetry-helper/configs/testGrpc_OperationSucceeded.yaml");
 
     EchoSettings grpcEchoSettings =
         EchoSettings.newBuilder()
@@ -120,20 +116,20 @@ public class ITOtelMetrics {
     EchoClient client = EchoClient.create(grpcEchoSettings);
 
     EchoRequest requestWithNoError =
-        EchoRequest.newBuilder()
-            .setError(Status.newBuilder().setCode(Code.OK.ordinal()).build())
-            .build();
+        EchoRequest.newBuilder().setContent("test_grpc_operation_succeeded").build();
 
-    client.echoCallable().futureCall(requestWithNoError).isDone();
+    client.echo(requestWithNoError);
 
     // wait for the metrics to get uploaded
     Thread.sleep(5000);
 
-    String filePath = "../directory2/testGrpc_OperationSucceeded_metrics.txt";
-    // 1. Check if the log file exists
-    File file = new File(filePath);
-    Truth.assertThat(file.exists()).isTrue();
-    Truth.assertThat(file.length() > 0).isTrue();
+    String filePath = "../test_data/testGrpc_OperationSucceeded_metrics.txt";
+    String attribute1 =
+        "\"attributes\":[{\"key\":\"language\",\"value\":{\"stringValue\":\"Java\"}},{\"key\":\"method_name\",\"value\":{\"stringValue\":\"Echo.Echo\"}},{\"key\":\"status\",\"value\":{\"stringValue\":\"OK\"}}]";
+
+    String[] params = {filePath, attribute1};
+    int result = verify_metrics(params);
+    Truth.assertThat(result).isEqualTo(0);
 
     client.close();
     client.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
@@ -143,10 +139,7 @@ public class ITOtelMetrics {
   public void testHttpJson_OperationCancelled_recordsMetrics() throws Exception {
 
     // initialize the otel-collector
-    setupOtelCollector(
-        "../scripts/start_otelcol.sh",
-        "../directory3",
-        "../opentelemetry-helper/configs/testHttpJson_OperationCancelled.yaml");
+    setupOtelCollector("../opentelemetry-helper/configs/testHttpJson_OperationCancelled.yaml");
 
     EchoSettings httpJsonEchoSettings =
         EchoSettings.newHttpJsonBuilder()
@@ -172,10 +165,13 @@ public class ITOtelMetrics {
     // wait for the metrics to get uploaded
     Thread.sleep(5000);
 
-    String filePath = "../directory3/testHttpJson_OperationCancelled_metrics.txt";
-    File file = new File(filePath);
-    Truth.assertThat(file.exists()).isTrue();
-    Truth.assertThat(file.length() > 0).isTrue();
+    String filePath = "../test_data/testHttpJson_OperationCancelled_metrics.txt";
+    String attribute1 =
+        "\"attributes\":[{\"key\":\"language\",\"value\":{\"stringValue\":\"Java\"}},{\"key\":\"method_name\",\"value\":{\"stringValue\":\"google.showcase.v1beta1.Echo/Echo\"}},{\"key\":\"status\",\"value\":{\"stringValue\":\"CANCELLED\"}}]";
+
+    String[] params = {filePath, attribute1};
+    int result = verify_metrics(params);
+    Truth.assertThat(result).isEqualTo(0);
 
     client.close();
     client.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
@@ -185,10 +181,7 @@ public class ITOtelMetrics {
   public void testGrpc_OperationCancelled_recordsMetrics() throws Exception {
 
     // initialize the otel-collector
-    setupOtelCollector(
-        "../scripts/start_otelcol.sh",
-        "../directory4",
-        "../opentelemetry-helper/configs/testGrpc_OperationCancelled.yaml");
+    setupOtelCollector("../opentelemetry-helper/configs/testGrpc_OperationCancelled.yaml");
 
     EchoSettings grpcEchoSettings =
         EchoSettings.newBuilder()
@@ -213,11 +206,13 @@ public class ITOtelMetrics {
     // wait for the metrics to get uploaded
     Thread.sleep(5000);
 
-    String filePath = "../directory4/testGrpc_OperationCancelled_metrics.txt";
-    // 1. Check if the log file exists
-    File file = new File(filePath);
-    Truth.assertThat(file.exists()).isTrue();
-    Truth.assertThat(file.length() > 0).isTrue();
+    String filePath = "../test_data/testGrpc_OperationCancelled_metrics.txt";
+    String attribute1 =
+        "\"attributes\":[{\"key\":\"language\",\"value\":{\"stringValue\":\"Java\"}},{\"key\":\"method_name\",\"value\":{\"stringValue\":\"Echo.Echo\"}},{\"key\":\"status\",\"value\":{\"stringValue\":\"CANCELLED\"}}]";
+
+    String[] params = {filePath, attribute1};
+    int result = verify_metrics(params);
+    Truth.assertThat(result).isEqualTo(0);
 
     client.close();
     client.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
@@ -227,10 +222,7 @@ public class ITOtelMetrics {
   public void testHttpJson_OperationFailed_recordsMetrics() throws Exception {
 
     // initialize the otel-collector
-    setupOtelCollector(
-        "../scripts/start_otelcol.sh",
-        "../directory5",
-        "../opentelemetry-helper/configs/testHttpJson_OperationFailed.yaml");
+    setupOtelCollector("../opentelemetry-helper/configs/testHttpJson_OperationFailed.yaml");
 
     EchoSettings httpJsonEchoSettings =
         EchoSettings.newHttpJsonBuilder()
@@ -247,7 +239,7 @@ public class ITOtelMetrics {
 
     EchoRequest requestWithError =
         EchoRequest.newBuilder()
-            .setError(Status.newBuilder().setCode(Code.PERMISSION_DENIED.ordinal()).build())
+            .setError(Status.newBuilder().setCode(Code.UNKNOWN.ordinal()).build())
             .build();
 
     client.echoCallable().futureCall(requestWithError).isDone();
@@ -255,10 +247,13 @@ public class ITOtelMetrics {
     // wait for the metrics to get uploaded
     Thread.sleep(5000);
 
-    String filePath = "../directory5/testHttpJson_OperationFailed_metrics.txt";
-    File file = new File(filePath);
-    Truth.assertThat(file.exists()).isTrue();
-    Truth.assertThat(file.length() > 0).isTrue();
+    String filePath = "../test_data/testHttpJson_OperationFailed_metrics.txt";
+    String attribute1 =
+        "\"attributes\":[{\"key\":\"language\",\"value\":{\"stringValue\":\"Java\"}},{\"key\":\"method_name\",\"value\":{\"stringValue\":\"google.showcase.v1beta1.Echo/Echo\"}},{\"key\":\"status\",\"value\":{\"stringValue\":\"UNKNOWN\"}}]";
+
+    String[] params = {filePath, attribute1};
+    int result = verify_metrics(params);
+    Truth.assertThat(result).isEqualTo(0);
 
     client.close();
     client.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
@@ -268,10 +263,7 @@ public class ITOtelMetrics {
   public void testGrpc_OperationFailed_recordsMetrics() throws Exception {
 
     // initialize the otel-collector
-    setupOtelCollector(
-        "../scripts/start_otelcol.sh",
-        "../directory6",
-        "../opentelemetry-helper/configs/testGrpc_OperationFailed.yaml");
+    setupOtelCollector("../opentelemetry-helper/configs/testGrpc_OperationFailed.yaml");
 
     EchoSettings grpcEchoSettings =
         EchoSettings.newBuilder()
@@ -296,11 +288,13 @@ public class ITOtelMetrics {
     // wait for the metrics to get uploaded
     Thread.sleep(5000);
 
-    String filePath = "../directory6/testGrpc_OperationFailed_metrics.txt";
-    // 1. Check if the log file exists
-    File file = new File(filePath);
-    Truth.assertThat(file.exists()).isTrue();
-    Truth.assertThat(file.length() > 0).isTrue();
+    String filePath = "../test_data/testGrpc_OperationFailed_metrics.txt";
+    String attribute1 =
+        "\"attributes\":[{\"key\":\"language\",\"value\":{\"stringValue\":\"Java\"}},{\"key\":\"method_name\",\"value\":{\"stringValue\":\"Echo.Echo\"}},{\"key\":\"status\",\"value\":{\"stringValue\":\"UNAUTHENTICATED\"}}]";
+
+    String[] params = {filePath, attribute1};
+    int result = verify_metrics(params);
+    Truth.assertThat(result).isEqualTo(0);
 
     client.close();
     client.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
@@ -310,11 +304,9 @@ public class ITOtelMetrics {
   public void testGrpc_attemptFailedRetriesExhausted_recordsMetrics() throws Exception {
 
     setupOtelCollector(
-        "../scripts/start_otelcol.sh",
-        "../directory7",
         "../opentelemetry-helper/configs/testGrpc_attemptFailedRetriesExhausted.yaml");
 
-    RetrySettings retrySettings = RetrySettings.newBuilder().setMaxAttempts(2).build();
+    RetrySettings retrySettings = RetrySettings.newBuilder().setMaxAttempts(5).build();
 
     EchoStubSettings.Builder grpcEchoSettingsBuilder = EchoStubSettings.newBuilder();
     grpcEchoSettingsBuilder
@@ -346,10 +338,21 @@ public class ITOtelMetrics {
 
     Thread.sleep(5000);
 
-    String filePath = "../directory7/testGrpc_attemptFailedRetriesExhausted_metrics.txt";
-    File file = new File(filePath);
-    Truth.assertThat(file.exists()).isTrue();
-    Truth.assertThat(file.length() > 0).isTrue();
+    String filePath = "../test_data/testGrpc_attemptFailedRetriesExhausted_metrics.txt";
+
+    String attribute1 =
+        "\"attributes\":[{\"key\":\"language\",\"value\":{\"stringValue\":\"Java\"}},{\"key\":\"method_name\",\"value\":{\"stringValue\":\"Echo.Block\"}},{\"key\":\"status\",\"value\":{\"stringValue\":\"INVALID_ARGUMENT\"}}]";
+
+    // additionally verify that 5 attempts were made
+    // when we make 'x' attempts, attempt_count.asInt = 'x' and there are 'x' datapoints in
+    // attempt_latency (Count : x} histogram
+    // String attribute2 = "\"asInt\":\"5\"";
+    String attribute2 = "\"asInt\":\"5\"";
+    String attribute3 = "\"count\":\"5\"";
+
+    String[] params = {filePath, attribute1, attribute2, attribute3};
+    int result = verify_metrics(params);
+    Truth.assertThat(result).isEqualTo(0);
 
     grpcClientWithRetrySetting.close();
     grpcClientWithRetrySetting.awaitTermination(
@@ -360,8 +363,6 @@ public class ITOtelMetrics {
   public void testHttpjson_attemptFailedRetriesExhausted_recordsMetrics() throws Exception {
 
     setupOtelCollector(
-        "../scripts/start_otelcol.sh",
-        "../directory8",
         "../opentelemetry-helper/configs/testHttpjson_attemptFailedRetriesExhausted.yaml");
 
     RetrySettings retrySettings = RetrySettings.newBuilder().setMaxAttempts(3).build();
@@ -370,7 +371,7 @@ public class ITOtelMetrics {
     httpJsonEchoSettingsBuilder
         .blockSettings()
         .setRetrySettings(retrySettings)
-        .setRetryableCodes(ImmutableSet.of(Code.INVALID_ARGUMENT));
+        .setRetryableCodes(ImmutableSet.of(Code.UNKNOWN));
 
     EchoSettings httpJsonEchoSettings = EchoSettings.create(httpJsonEchoSettingsBuilder.build());
     httpJsonEchoSettings =
@@ -390,68 +391,21 @@ public class ITOtelMetrics {
 
     BlockRequest blockRequest =
         BlockRequest.newBuilder()
-            .setError(Status.newBuilder().setCode(Code.INVALID_ARGUMENT.ordinal()).build())
+            .setError(Status.newBuilder().setCode(Code.UNKNOWN.ordinal()).build())
             .build();
 
     httpJsonClientWithRetrySetting.blockCallable().futureCall(blockRequest).isDone();
 
     Thread.sleep(5000);
 
-    String filePath = "../directory8/testHttpjson_attemptFailedRetriesExhausted_metrics.txt";
-    File file = new File(filePath);
-    Truth.assertThat(file.exists()).isTrue();
-    Truth.assertThat(file.length() > 0).isTrue();
+    String filePath = "../test_data/testHttpjson_attemptFailedRetriesExhausted_metrics.txt";
 
-    httpJsonClientWithRetrySetting.close();
-    httpJsonClientWithRetrySetting.awaitTermination(
-        TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
-  }
+    String attribute1 =
+        "\"attributes\":[{\"key\":\"language\",\"value\":{\"stringValue\":\"Java\"}},{\"key\":\"method_name\",\"value\":{\"stringValue\":\"google.showcase.v1beta1.Echo/Block\"}},{\"key\":\"status\",\"value\":{\"stringValue\":\"UNKNOWN\"}}]";
 
-  @Test
-  public void testHttpjson_attemptPermanentFailure_recordsMetrics() throws Exception {
-
-    setupOtelCollector(
-        "../scripts/start_otelcol.sh",
-        "../directory9",
-        "../opentelemetry-helper/configs/testHttpjson_attemptPermanentFailure.yaml");
-
-    RetrySettings retrySettings = RetrySettings.newBuilder().setMaxAttempts(5).build();
-
-    EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
-    httpJsonEchoSettingsBuilder
-        .blockSettings()
-        .setRetrySettings(retrySettings)
-        .setRetryableCodes(ImmutableSet.of(Code.NOT_FOUND));
-
-    EchoSettings httpJsonEchoSettings = EchoSettings.create(httpJsonEchoSettingsBuilder.build());
-    httpJsonEchoSettings =
-        httpJsonEchoSettings
-            .toBuilder()
-            .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTracerFactory(createOpenTelemetryTracerFactory("4325"))
-            .setTransportChannelProvider(
-                EchoSettings.defaultHttpJsonTransportProviderBuilder()
-                    .setHttpTransport(
-                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
-                    .setEndpoint("http://localhost:7469")
-                    .build())
-            .build();
-
-    EchoClient httpJsonClientWithRetrySetting = EchoClient.create(httpJsonEchoSettings);
-
-    BlockRequest blockRequest =
-        BlockRequest.newBuilder()
-            .setError(Status.newBuilder().setCode(Code.INVALID_ARGUMENT.ordinal()).build())
-            .build();
-
-    httpJsonClientWithRetrySetting.blockCallable().futureCall(blockRequest).isDone();
-
-    Thread.sleep(5000);
-
-    String filePath = "../directory9/testHttpjson_attemptPermanentFailure_metrics.txt";
-    File file = new File(filePath);
-    Truth.assertThat(file.exists()).isTrue();
-    Truth.assertThat(file.length() > 0).isTrue();
+    String[] params = {filePath, attribute1};
+    int result = verify_metrics(params);
+    Truth.assertThat(result).isEqualTo(0);
 
     httpJsonClientWithRetrySetting.close();
     httpJsonClientWithRetrySetting.awaitTermination(
@@ -461,12 +415,9 @@ public class ITOtelMetrics {
   @Test
   public void testGrpc_attemptPermanentFailure_recordsMetrics() throws Exception {
 
-    setupOtelCollector(
-        "../scripts/start_otelcol.sh",
-        "../directory10",
-        "../opentelemetry-helper/configs/testGrpc_attemptPermanentFailure.yaml");
+    setupOtelCollector("../opentelemetry-helper/configs/testGrpc_attemptPermanentFailure.yaml");
 
-    RetrySettings retrySettings = RetrySettings.newBuilder().setMaxAttempts(3).build();
+    RetrySettings retrySettings = RetrySettings.newBuilder().setMaxAttempts(6).build();
 
     EchoStubSettings.Builder grpcEchoSettingsBuilder = EchoStubSettings.newBuilder();
     grpcEchoSettingsBuilder
@@ -498,10 +449,17 @@ public class ITOtelMetrics {
 
     Thread.sleep(5000);
 
-    String filePath = "../directory10/testGrpc_attemptPermanentFailure_metrics.txt";
-    File file = new File(filePath);
-    Truth.assertThat(file.exists()).isTrue();
-    Truth.assertThat(file.length() > 0).isTrue();
+    String filePath = "../test_data/testGrpc_attemptPermanentFailure_metrics.txt";
+
+    String attribute1 =
+        "\"attributes\":[{\"key\":\"language\",\"value\":{\"stringValue\":\"Java\"}},{\"key\":\"method_name\",\"value\":{\"stringValue\":\"Echo.Block\"}},{\"key\":\"status\",\"value\":{\"stringValue\":\"INVALID_ARGUMENT\"}}]";
+    // additionally verify that only 1 attempt was made
+    String attribute2 = "\"asInt\":\"1\"";
+    String attribute3 = "\"count\":\"1\"";
+
+    String[] params = {filePath, attribute1, attribute2, attribute3};
+    int result = verify_metrics(params);
+    Truth.assertThat(result).isEqualTo(0);
 
     grpcClientWithRetrySetting.close();
     grpcClientWithRetrySetting.awaitTermination(
@@ -545,10 +503,25 @@ public class ITOtelMetrics {
     return new MetricsTracerFactory(otelMetricsRecorder);
   }
 
-  private void setupOtelCollector(String scriptPath, String directoryPath, String configPath)
-      throws Exception {
+  private void setupOtelCollector(String configPath) throws Exception {
+    String scriptPath = "../scripts/start_otelcol.sh";
+    String test_dataPath = "../test_data";
     Process process =
-        Runtime.getRuntime().exec(scriptPath + " " + directoryPath + " " + configPath);
+        Runtime.getRuntime().exec(scriptPath + " " + test_dataPath + " " + configPath);
     process.waitFor();
+  }
+
+  public static int verify_metrics(String... parameters) throws IOException, InterruptedException {
+
+    String SCRIPT_PATH = "../scripts/verify_metrics.sh";
+
+    // Construct the command to execute the script with parameters
+    StringBuilder command = new StringBuilder(SCRIPT_PATH);
+    for (String parameter : parameters) {
+      command.append(" ").append(parameter);
+    }
+    // Execute the command
+    Process process = Runtime.getRuntime().exec(command.toString());
+    return process.waitFor();
   }
 }
