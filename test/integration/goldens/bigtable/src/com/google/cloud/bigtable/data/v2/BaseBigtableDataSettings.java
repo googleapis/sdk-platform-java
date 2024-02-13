@@ -17,7 +17,6 @@
 package com.google.cloud.bigtable.data.v2;
 
 import com.google.api.core.ApiFunction;
-import com.google.api.core.BetaApi;
 import com.google.api.gax.core.GoogleCredentialsProvider;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
@@ -159,7 +158,6 @@ public class BaseBigtableDataSettings extends ClientSettings<BaseBigtableDataSet
     return BigtableStubSettings.defaultTransportChannelProvider();
   }
 
-  @BetaApi("The surface for customizing headers is not stable yet and may change in the future.")
   public static ApiClientHeaderProvider.Builder defaultApiClientHeaderProviderBuilder() {
     return BigtableStubSettings.defaultApiClientHeaderProviderBuilder();
   }

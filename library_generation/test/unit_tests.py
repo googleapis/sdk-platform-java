@@ -20,20 +20,21 @@ import unittest
 import os
 import io
 import contextlib
-import subprocess
 from pathlib import Path
 from difflib import unified_diff
 from typing import List
-
+from parameterized import parameterized
 from library_generation import utilities as util
 from library_generation.model.gapic_config import GapicConfig
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.gapic_inputs import parse as parse_build_file
+from library_generation.model.generation_config import from_yaml
 from library_generation.model.library_config import LibraryConfig
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 resources_dir = os.path.join(script_dir, "resources")
 build_file = Path(os.path.join(resources_dir, "misc")).resolve()
+test_config_dir = Path(os.path.join(resources_dir, "test-config")).resolve()
 library_1 = LibraryConfig(
     api_shortname="baremetalsolution",
     name_pretty="Bare Metal Solution",
@@ -103,6 +104,101 @@ class UtilitiesTest(unittest.TestCase):
         result = stderr_capture.getvalue()
         # print() appends a `\n` each time it's called
         self.assertEqual(test_input + "\n", result)
+
+    # parameterized tests need to run from the class, see
+    # https://github.com/wolever/parameterized/issues/37 for more info.
+    # This test confirms that a ValueError with an error message about a
+    # missing key (specified in the first parameter of each `parameterized`
+    # tuple) when parsing a test configuration yaml (second parameter) will
+    # be raised.
+    @parameterized.expand(
+        [
+            ("libraries", f"{test_config_dir}/config_without_libraries.yaml"),
+            ("GAPICs", f"{test_config_dir}/config_without_gapics.yaml"),
+            ("proto_path", f"{test_config_dir}/config_without_proto_path.yaml"),
+            ("api_shortname", f"{test_config_dir}/config_without_api_shortname.yaml"),
+            (
+                "api_description",
+                f"{test_config_dir}/config_without_api_description.yaml",
+            ),
+            ("name_pretty", f"{test_config_dir}/config_without_name_pretty.yaml"),
+            (
+                "product_documentation",
+                f"{test_config_dir}/config_without_product_docs.yaml",
+            ),
+            (
+                "gapic_generator_version",
+                f"{test_config_dir}/config_without_generator.yaml",
+            ),
+            (
+                "googleapis_commitish",
+                f"{test_config_dir}/config_without_googleapis.yaml",
+            ),
+            ("owlbot_cli_image", f"{test_config_dir}/config_without_owlbot.yaml"),
+            ("synthtool_commitish", f"{test_config_dir}/config_without_synthtool.yaml"),
+            (
+                "template_excludes",
+                f"{test_config_dir}/config_without_temp_excludes.yaml",
+            ),
+        ]
+    )
+    def test_from_yaml_without_key_fails(self, error_message_contains, path_to_yaml):
+        self.assertRaisesRegex(
+            ValueError,
+            error_message_contains,
+            from_yaml,
+            path_to_yaml,
+        )
+
+    def test_from_yaml_succeeds(self):
+        config = from_yaml(f"{test_config_dir}/generation_config.yaml")
+        self.assertEqual("2.34.0", config.gapic_generator_version)
+        self.assertEqual(25.2, config.protobuf_version)
+        self.assertEqual(
+            "1a45bf7393b52407188c82e63101db7dc9c72026", config.googleapis_commitish
+        )
+        self.assertEqual(
+            "sha256:623647ee79ac605858d09e60c1382a716c125fb776f69301b72de1cd35d49409",
+            config.owlbot_cli_image,
+        )
+        self.assertEqual(
+            "6612ab8f3afcd5e292aecd647f0fa68812c9f5b5", config.synthtool_commitish
+        )
+        self.assertEqual(
+            [
+                ".github/*",
+                ".kokoro/*",
+                "samples/*",
+                "CODE_OF_CONDUCT.md",
+                "CONTRIBUTING.md",
+                "LICENSE",
+                "SECURITY.md",
+                "java.header",
+                "license-checks.xml",
+                "renovate.json",
+                ".gitignore",
+            ],
+            config.template_excludes,
+        )
+        library = config.libraries[0]
+        self.assertEqual("cloudasset", library.api_shortname)
+        self.assertEqual("Cloud Asset Inventory", library.name_pretty)
+        self.assertEqual(
+            "https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/overview",
+            library.product_documentation,
+        )
+        self.assertEqual(
+            "provides inventory services based on a time series database.",
+            library.api_description,
+        )
+        self.assertEqual("asset", library.library_name)
+        gapics = library.gapic_configs
+        self.assertEqual(5, len(gapics))
+        self.assertEqual("google/cloud/asset/v1", gapics[0].proto_path)
+        self.assertEqual("google/cloud/asset/v1p1beta1", gapics[1].proto_path)
+        self.assertEqual("google/cloud/asset/v1p2beta1", gapics[2].proto_path)
+        self.assertEqual("google/cloud/asset/v1p5beta1", gapics[3].proto_path)
+        self.assertEqual("google/cloud/asset/v1p7beta1", gapics[4].proto_path)
 
     def test_gapic_inputs_parse_grpc_only_succeeds(self):
         parsed = parse_build_file(build_file, "", "BUILD_grpc.bazel")
@@ -252,9 +348,11 @@ class UtilitiesTest(unittest.TestCase):
             f"{library_path}/owlbot.py",
         ]
         self.__cleanup(files)
+        config = self.__get_a_gen_config(1)
         proto_path = "google/cloud/baremetalsolution/v2"
         transport = "grpc"
         util.generate_prerequisite_files(
+            config=config,
             library=library_1,
             proto_path=proto_path,
             transport=transport,
@@ -357,7 +455,19 @@ class UtilitiesTest(unittest.TestCase):
             googleapis_commitish="",
             owlbot_cli_image="",
             synthtool_commitish="",
-            template_excludes=[],
+            template_excludes=[
+                ".github/*",
+                ".kokoro/*",
+                "samples/*",
+                "CODE_OF_CONDUCT.md",
+                "CONTRIBUTING.md",
+                "LICENSE",
+                "SECURITY.md",
+                "java.header",
+                "license-checks.xml",
+                "renovate.json",
+                ".gitignore",
+            ],
             path_to_yaml=".",
             libraries=libraries,
         )

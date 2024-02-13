@@ -95,12 +95,3 @@ http:
       additional_bindings:
         - post: '/v1beta2/{name=operations/**}:cancel'
         - post: '/v1beta3/{name=operations/**}:cancel'
-publishing:
-    method_settings:
-    - selector: google.showcase.v1beta1.Echo.Echo
-      auto_populated_fields:
-      - request_id
-      - second_request_id
-      - third_request_id
-      - fourth_request_id
-      - non_existent_field
