@@ -15,9 +15,11 @@ import java.net.http.HttpResponse.BodyHandlers;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class DependencyInfoCheck {
@@ -35,15 +37,21 @@ public class DependencyInfoCheck {
 
   public static Map<String, List<String>> infoCheck(String groupId, String artifactId, String version)
       throws URISyntaxException, IOException, InterruptedException {
-    MavenCoordinate mavenCoordinate = new MavenCoordinate(groupId, artifactId, version);
+    MavenCoordinate initial = new MavenCoordinate(groupId, artifactId, version);
+    Set<MavenCoordinate> seenCoordinate = new HashSet<>();
+    seenCoordinate.add(initial);
     Queue<MavenCoordinate> queue = new ArrayDeque<>();
-    queue.offer(mavenCoordinate);
+    queue.offer(initial);
     List<MavenCoordinate> dependencies = new ArrayList<>();
     while (!queue.isEmpty()) {
       MavenCoordinate coordinate = queue.poll();
       dependencies.add(coordinate);
       List<MavenCoordinate> directDependencies = getDirectDependencies(coordinate);
-      directDependencies.forEach(queue::offer);
+      // only add unseen dependencies to the queue.
+      directDependencies
+          .stream()
+          .filter(seenCoordinate::add)
+          .forEach(queue::offer);
     }
 
     Map<String, List<String>> res = new HashMap<>();
@@ -74,7 +82,7 @@ public class DependencyInfoCheck {
     return dependencyResponse
         .getNodes()
         .stream()
-        .filter(node -> node.getRelation().equals(Relation.DIRECT))
+        .filter(node -> Relation.DIRECT.equals(node.getRelation()))
         .map(node -> node.getVersionKey().toMavenCoordinate())
         .collect(Collectors.toList());
   }
@@ -107,6 +115,7 @@ public class DependencyInfoCheck {
 
   public static void main(String[] args)
       throws URISyntaxException, IOException, InterruptedException {
-    System.out.println(infoCheck("io.opentelemetry", "opentelemetry-api", "1.35.0"));
+    // System.out.println(infoCheck("io.opentelemetry", "opentelemetry-api", "1.35.0"));
+    System.out.println(infoCheck("io.grpc", "grpc-api", "1.61.1"));
   }
 }
