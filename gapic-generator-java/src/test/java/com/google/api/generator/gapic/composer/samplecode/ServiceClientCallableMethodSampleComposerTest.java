@@ -462,11 +462,7 @@ public class ServiceClientCallableMethodSampleComposerTest {
         LineFormatter.lines(
             "try (EchoClient echoClient = EchoClient.create()) {\n",
             "  ExpandRequest request =\n",
-            "      ExpandRequest.newBuilder()\n",
-            "          .setContent(\"content951530617\")\n",
-            "          .setInfo(\"info3237038\")\n",
-            "          .setRequestId(\"requestId693933066\")\n",
-            "          .build();\n",
+            "      ExpandRequest.newBuilder().setContent(\"content951530617\").setInfo(\"info3237038\").build();\n",
             "  ServerStream<EchoResponse> stream = echoClient.expandCallable().call(request);\n",
             "  for (EchoResponse response : stream) {\n",
             "    // Do something when a response is received.\n",
@@ -579,7 +575,6 @@ public class ServiceClientCallableMethodSampleComposerTest {
                 + " \"[FOOBAR]\").toString())\n",
             "          .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\","
                 + " \"[FOOBAR]\").toString())\n",
-            "          .setRequestId(\"requestId693933066\")\n",
             "          .setSeverity(Severity.forNumber(0))\n",
             "          .setFoobar(Foobar.newBuilder().build())\n",
             "          .build();\n",
@@ -712,7 +707,6 @@ public class ServiceClientCallableMethodSampleComposerTest {
                 + " \"[FOOBAR]\").toString())\n",
             "          .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\","
                 + " \"[FOOBAR]\").toString())\n",
-            "          .setRequestId(\"requestId693933066\")\n",
             "          .setSeverity(Severity.forNumber(0))\n",
             "          .setFoobar(Foobar.newBuilder().build())\n",
             "          .build();\n",
@@ -819,7 +813,6 @@ public class ServiceClientCallableMethodSampleComposerTest {
                 + " \"[FOOBAR]\").toString())\n",
             "          .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\","
                 + " \"[FOOBAR]\").toString())\n",
-            "          .setRequestId(\"requestId693933066\")\n",
             "          .setSeverity(Severity.forNumber(0))\n",
             "          .setFoobar(Foobar.newBuilder().build())\n",
             "          .build();\n",

@@ -568,7 +568,6 @@ public class DefaultValueComposerTest {
         "EchoRequest.newBuilder().setName("
             + "FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())"
             + ".setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\", \"[FOOBAR]\").toString())"
-            + ".setRequestId(\"requestId693933066\")"
             + ".setSeverity(Severity.forNumber(0))"
             + ".setFoobar(Foobar.newBuilder().build()).build()",
         writerVisitor.write());

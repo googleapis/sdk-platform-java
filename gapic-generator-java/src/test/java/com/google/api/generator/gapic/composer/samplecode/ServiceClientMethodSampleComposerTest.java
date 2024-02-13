@@ -335,7 +335,6 @@ public class ServiceClientMethodSampleComposerTest {
                 + " \"[FOOBAR]\").toString())\n",
             "          .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\","
                 + " \"[FOOBAR]\").toString())\n",
-            "          .setRequestId(\"requestId693933066\")\n",
             "          .setSeverity(Severity.forNumber(0))\n",
             "          .setFoobar(Foobar.newBuilder().build())\n",
             "          .build();\n",
@@ -398,7 +397,6 @@ public class ServiceClientMethodSampleComposerTest {
                 + " \"[FOOBAR]\").toString())\n",
             "          .setParent(FoobarName.ofProjectFoobarName(\"[PROJECT]\","
                 + " \"[FOOBAR]\").toString())\n",
-            "          .setRequestId(\"requestId693933066\")\n",
             "          .setSeverity(Severity.forNumber(0))\n",
             "          .setFoobar(Foobar.newBuilder().build())\n",
             "          .build();\n",
