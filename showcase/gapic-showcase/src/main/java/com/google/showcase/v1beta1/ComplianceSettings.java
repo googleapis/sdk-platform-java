@@ -202,7 +202,6 @@ public class ComplianceSettings extends ClientSettings<ComplianceSettings> {
     return ComplianceStubSettings.defaultTransportChannelProvider();
   }
 
-  @BetaApi("The surface for customizing headers is not stable yet and may change in the future.")
   public static ApiClientHeaderProvider.Builder defaultApiClientHeaderProviderBuilder() {
     return ComplianceStubSettings.defaultApiClientHeaderProviderBuilder();
   }

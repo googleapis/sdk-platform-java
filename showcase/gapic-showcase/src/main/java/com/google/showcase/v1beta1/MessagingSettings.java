@@ -238,7 +238,6 @@ public class MessagingSettings extends ClientSettings<MessagingSettings> {
     return MessagingStubSettings.defaultTransportChannelProvider();
   }
 
-  @BetaApi("The surface for customizing headers is not stable yet and may change in the future.")
   public static ApiClientHeaderProvider.Builder defaultApiClientHeaderProviderBuilder() {
     return MessagingStubSettings.defaultApiClientHeaderProviderBuilder();
   }
