@@ -50,8 +50,6 @@ public class OpentelemetryMetricsRecorder implements MetricsRecorder {
 
   private LongCounter attemptCountRecorder;
 
-  private Attributes attributes;
-
   public OpentelemetryMetricsRecorder(Meter meter) {
     this.meter = meter;
     this.attemptLatencyRecorder =

@@ -289,7 +289,7 @@ public class ITOtelMetrics {
 
     // additionally verify that 5 attempts were made
     // when we make 'x' attempts, attempt_count.asInt = 'x' and there are 'x' datapoints in
-    // attempt_latency (Count : x} histogram
+    // attempt_latency histogram -> (count : x}
     // String attribute2 = "\"asInt\":\"5\"";
     String attribute2 = "\"asInt\":\"5\"";
     String attribute3 = "\"count\":\"5\"";
