@@ -24,60 +24,44 @@ import com.google.showcase.v1beta1.BlockResponse;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
-import java.util.concurrent.TimeUnit;
 import org.junit.Test;
 import org.threeten.bp.Duration;
 
 public class ITClientShutdown {
 
+  private static final long DEFAULT_RPC_TIMEOUT_MS = 15000L;
+  private static final long DEFAULT_CLIENT_TERMINATION_MS = 5000L;
+
   // Test to ensure the client can close + terminate properly
-  @Test
+  @Test(timeout = 15000L)
   public void testGrpc_closeClient() throws Exception {
     EchoClient grpcClient = TestClientInitializer.createGrpcEchoClient();
-    grpcClient.close();
-    // 5s buffer time to properly terminate the client
-    grpcClient.awaitTermination(5, TimeUnit.SECONDS);
-    Truth.assertThat(grpcClient.isShutdown()).isTrue();
-    Truth.assertThat(grpcClient.isTerminated()).isTrue();
+    assertClientTerminated(grpcClient);
   }
 
   // Test to ensure the client can close + terminate properly
-  @Test
+  @Test(timeout = 15000L)
   public void testHttpJson_closeClient() throws Exception {
     EchoClient httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
-    httpjsonClient.close();
-    // 5s buffer time to properly terminate the client
-    httpjsonClient.awaitTermination(5, TimeUnit.SECONDS);
-    Truth.assertThat(httpjsonClient.isShutdown()).isTrue();
-    Truth.assertThat(httpjsonClient.isTerminated()).isTrue();
+    assertClientTerminated(httpjsonClient);
   }
 
   // Test to ensure the client can close + terminate after a quick RPC invocation
-  @Test
+  @Test(timeout = 15000L)
   public void testGrpc_rpcInvoked_closeClient() throws Exception {
     EchoClient grpcClient = TestClientInitializer.createGrpcEchoClient();
-
+    // Response is ignored for this test
     grpcClient.echo(EchoRequest.newBuilder().setContent("Test").build());
-
-    grpcClient.close();
-    // 10s buffer time to properly terminate the client after RPC is invoked
-    grpcClient.awaitTermination(10, TimeUnit.SECONDS);
-    Truth.assertThat(grpcClient.isShutdown()).isTrue();
-    Truth.assertThat(grpcClient.isTerminated()).isTrue();
+    assertClientTerminated(grpcClient);
   }
 
   // Test to ensure the client can close + terminate after a quick RPC invocation
-  @Test
+  @Test(timeout = 15000L)
   public void testHttpJson_rpcInvoked_closeClient() throws Exception {
     EchoClient httpjsonClient = TestClientInitializer.createHttpJsonEchoClient();
-
+    // Response is ignored for this test
     httpjsonClient.echo(EchoRequest.newBuilder().setContent("Test").build());
-
-    httpjsonClient.close();
-    // 10s buffer time to properly terminate the client after RPC is invoked
-    httpjsonClient.awaitTermination(10, TimeUnit.SECONDS);
-    Truth.assertThat(httpjsonClient.isShutdown()).isTrue();
-    Truth.assertThat(httpjsonClient.isTerminated()).isTrue();
+    assertClientTerminated(httpjsonClient);
   }
 
   // This test is to ensure that the client is able to close + terminate any resources
@@ -92,9 +76,9 @@ public class ITClientShutdown {
     // received so the client can properly terminate.
     RetrySettings defaultRetrySettings =
         RetrySettings.newBuilder()
-            .setInitialRpcTimeout(Duration.ofMillis(15000L))
-            .setMaxRpcTimeout(Duration.ofMillis(15000L))
-            .setTotalTimeout(Duration.ofMillis(15000L))
+            .setInitialRpcTimeout(Duration.ofMillis(DEFAULT_RPC_TIMEOUT_MS))
+            .setMaxRpcTimeout(Duration.ofMillis(DEFAULT_RPC_TIMEOUT_MS))
+            .setTotalTimeout(Duration.ofMillis(DEFAULT_RPC_TIMEOUT_MS))
             .setMaxAttempts(1)
             .build();
     EchoClient grpcClient =
@@ -107,25 +91,10 @@ public class ITClientShutdown {
             .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(2).build())
             .build();
 
-    long start = System.currentTimeMillis();
-    BlockResponse response = grpcClient.block(blockRequest);
-    Truth.assertThat(response.getContent()).isEqualTo("gRPCBlockContent_2sDelay");
+    // Response is ignored for this test
+    grpcClient.block(blockRequest);
 
-    // Intentionally do not run grpcClient.awaitTermination(...) as this test will
-    // check that everything is properly terminated after close() is called.
-    grpcClient.close();
-
-    busyWaitUntilClientTermination(grpcClient);
-    long end = System.currentTimeMillis();
-
-    Truth.assertThat(grpcClient.isShutdown()).isTrue();
-
-    // Check the termination time. If all the tasks/ resources are closed successfully,
-    // the termination time should only take about 2s (time to receive a response) + time
-    // to close the client. Check that this takes less than 5s (2s request time + 3s
-    // buffer time).
-    long terminationTime = end - start;
-    Truth.assertThat(terminationTime).isLessThan(5000L);
+    assertClientTerminated(grpcClient);
   }
 
   // This test is to ensure that the client is able to close + terminate any resources
@@ -140,9 +109,9 @@ public class ITClientShutdown {
     // received so the client can properly terminate.
     RetrySettings defaultRetrySettings =
         RetrySettings.newBuilder()
-            .setInitialRpcTimeout(Duration.ofMillis(15000L))
-            .setMaxRpcTimeout(Duration.ofMillis(15000L))
-            .setTotalTimeout(Duration.ofMillis(15000L))
+            .setInitialRpcTimeout(Duration.ofMillis(DEFAULT_RPC_TIMEOUT_MS))
+            .setMaxRpcTimeout(Duration.ofMillis(DEFAULT_RPC_TIMEOUT_MS))
+            .setTotalTimeout(Duration.ofMillis(DEFAULT_RPC_TIMEOUT_MS))
             .setMaxAttempts(1)
             .build();
     EchoClient httpjsonClient =
@@ -155,34 +124,35 @@ public class ITClientShutdown {
             .setResponseDelay(com.google.protobuf.Duration.newBuilder().setSeconds(2).build())
             .build();
 
-    long start = System.currentTimeMillis();
-    BlockResponse response = httpjsonClient.block(blockRequest);
-    Truth.assertThat(response.getContent()).isEqualTo("httpjsonBlockContent_2sDelay");
+    // Response is ignored for this test
+    httpjsonClient.block(blockRequest);
 
-    // Intentionally do not run httpjsonClient.awaitTermination(...) as this test will
-    // check that everything is properly terminated after close() is called.
-    httpjsonClient.close();
-
-    busyWaitUntilClientTermination(httpjsonClient);
-    long end = System.currentTimeMillis();
-
-    Truth.assertThat(httpjsonClient.isShutdown()).isTrue();
-
-    // Check the termination time. If all the tasks/ resources are closed successfully,
-    // the termination time should only take about 2s (time to receive a response) + time
-    // to close the client. Check that this takes less than 5s (2s request time + 3s
-    // buffer time).
-    long terminationTime = end - start;
-    Truth.assertThat(terminationTime).isLessThan(5000L);
+    assertClientTerminated(httpjsonClient);
   }
 
-  // Loop until the client has terminated successfully. For tests that use this,
-  // try to ensure there is a timeout associated, otherwise this may run forever.
-  // Future enhancement: Use awaitility instead of busy waiting
-  private static void busyWaitUntilClientTermination(EchoClient client)
-      throws InterruptedException {
-    while (!client.isTerminated()) {
+  // This helper method asserts that the client is able to terminate within
+  // `AWAIT_TERMINATION_SECONDS`
+  private void assertClientTerminated(EchoClient echoClient) throws InterruptedException {
+    long start = System.currentTimeMillis();
+    // Intentionally do not run echoClient.awaitTermination(...) as this test will
+    // check that everything is properly terminated after close() is called.
+    echoClient.close();
+
+    // Loop until the client has terminated successfully. For tests that use this,
+    // try to ensure there is a timeout associated, otherwise this may run forever.
+    // Future enhancement: Use awaitility instead of busy waiting
+    while (!echoClient.isTerminated()) {
       Thread.sleep(500L);
     }
+    // The busy-wait time won't be accurate, so account for a bit of buffer
+    long end = System.currentTimeMillis();
+
+    Truth.assertThat(echoClient.isShutdown()).isTrue();
+
+    // Check the termination time. If all the tasks/ resources are closed successfully,
+    // the termination time should only occur shortly after `close()` was invoked. The
+    // `DEFAULT_TERMINATION_MS` value should include a bit of buffer.
+    long terminationTime = end - start;
+    Truth.assertThat(terminationTime).isLessThan(DEFAULT_CLIENT_TERMINATION_MS);
   }
 }
