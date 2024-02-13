@@ -219,7 +219,8 @@ jobs:
           mvn verify \
             -P enable-integration-tests \
             --batch-mode \
-            --no-transfer-progress
+            --no-transfer-progress \
+            -T 2
 
   showcase-native:
     runs-on: ubuntu-22.04
