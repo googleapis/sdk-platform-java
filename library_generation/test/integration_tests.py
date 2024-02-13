@@ -108,6 +108,7 @@ class IntegrationTest(unittest.TestCase):
     @classmethod
     def __pull_repo_to(cls, dest: Path, repo: str, committish: str):
         repo_url = f"{repo_prefix}/{repo}"
+        print(f"Cloning repository {repo_url}")
         repo = Repo.clone_from(repo_url, dest)
         repo.git.checkout(committish)
 
