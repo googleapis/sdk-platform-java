@@ -46,6 +46,7 @@ import java.util.Queue;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Nullable;
 
@@ -121,6 +122,13 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
   @GuardedBy("lock")
   private volatile boolean closed;
 
+  // Store the timeout future created by the deadline schedule executor. The future
+  // can be cancelled if a response (either an error or valid payload) has been
+  // received before the timeout. This value may be null if the RPC does not have a
+  // timeout.
+  @GuardedBy("lock")
+  private volatile ScheduledFuture<?> timeoutFuture;
+
   HttpJsonClientCallImpl(
       ApiMethodDescriptor<RequestT, ResponseT> methodDescriptor,
       String endpoint,
@@ -167,16 +175,20 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
       Preconditions.checkState(this.listener == null, "The call is already started");
       this.listener = responseListener;
       this.requestHeaders = requestHeaders;
-    }
 
-    // Use the timeout duration value instead of calculating the future Instant
-    // Only schedule the deadline if the RPC timeout has been set in the RetrySettings
-    Duration timeout = callOptions.getTimeout();
-    if (timeout != null) {
-      // The future timeout value is guaranteed to not be a negative value as the
-      // RetryAlgorithm will not retry
-      long timeoutMs = timeout.toMillis();
-      this.deadlineCancellationExecutor.schedule(this::timeout, timeoutMs, TimeUnit.MILLISECONDS);
+      // Use the timeout duration value instead of calculating the future Instant
+      // Only schedule the deadline if the RPC timeout has been set in the RetrySettings
+      Duration timeout = callOptions.getTimeout();
+      if (timeout != null) {
+        // The future timeout value is guaranteed to not be a negative value as the
+        // RetryAlgorithm will not retry
+        long timeoutMs = timeout.toMillis();
+        // Assign the scheduled future so that it can be cancelled if the timeout task
+        // is not needed (response received prior to timeout)
+        timeoutFuture =
+            this.deadlineCancellationExecutor.schedule(
+                this::timeout, timeoutMs, TimeUnit.MILLISECONDS);
+      }
     }
   }
 
@@ -430,6 +442,16 @@ final class HttpJsonClientCallImpl<RequestT, ResponseT>
         return;
       }
       closed = true;
+
+      // Cancel the timeout future if there is a timeout associated with the RPC
+      if (timeoutFuture != null) {
+        // The timeout method also invokes close() and the second invocation of close()
+        // will be guarded by the closed check above. No need to interrupt the timeout
+        // task as running the timeout task is quick.
+        timeoutFuture.cancel(false);
+        timeoutFuture = null;
+      }
+
       // Best effort task cancellation (to not be confused with task's thread interruption).
       // If the task is in blocking I/O waiting for the server response, it will keep waiting for
       // the response from the server, but once response is received the task will exit silently.
