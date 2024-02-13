@@ -37,10 +37,7 @@ public class SyncDeleteLog {
     loggingServiceV2SettingsBuilder
         .deleteLogSettings()
         .setRetrySettings(
-            loggingServiceV2SettingsBuilder
-                .deleteLogSettings()
-                .getRetrySettings()
-                .toBuilder()
+            loggingServiceV2SettingsBuilder.deleteLogSettings().getRetrySettings().toBuilder()
                 .setTotalTimeout(Duration.ofSeconds(30))
                 .build());
     LoggingServiceV2StubSettings loggingServiceV2Settings = loggingServiceV2SettingsBuilder.build();

@@ -54,10 +54,7 @@ import javax.annotation.Generated;
  * complianceSettingsBuilder
  *     .repeatDataBodySettings()
  *     .setRetrySettings(
- *         complianceSettingsBuilder
- *             .repeatDataBodySettings()
- *             .getRetrySettings()
- *             .toBuilder()
+ *         complianceSettingsBuilder.repeatDataBodySettings().getRetrySettings().toBuilder()
  *             .setTotalTimeout(Duration.ofSeconds(30))
  *             .build());
  * ComplianceStubSettings complianceSettings = complianceSettingsBuilder.build();

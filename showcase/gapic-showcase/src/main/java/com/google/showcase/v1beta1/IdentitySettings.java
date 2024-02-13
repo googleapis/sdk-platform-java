@@ -74,10 +74,7 @@ import javax.annotation.Generated;
  * identitySettingsBuilder
  *     .createUserSettings()
  *     .setRetrySettings(
- *         identitySettingsBuilder
- *             .createUserSettings()
- *             .getRetrySettings()
- *             .toBuilder()
+ *         identitySettingsBuilder.createUserSettings().getRetrySettings().toBuilder()
  *             .setTotalTimeout(Duration.ofSeconds(30))
  *             .build());
  * IdentitySettings identitySettings = identitySettingsBuilder.build();

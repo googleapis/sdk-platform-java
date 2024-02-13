@@ -52,10 +52,7 @@ import javax.annotation.Generated;
  * echoSettingsBuilder
  *     .echoSettings()
  *     .setRetrySettings(
- *         echoSettingsBuilder
- *             .echoSettings()
- *             .getRetrySettings()
- *             .toBuilder()
+ *         echoSettingsBuilder.echoSettings().getRetrySettings().toBuilder()
  *             .setTotalTimeout(Duration.ofSeconds(30))
  *             .build());
  * EchoSettings echoSettings = echoSettingsBuilder.build();

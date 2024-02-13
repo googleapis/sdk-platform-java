@@ -119,10 +119,7 @@ import org.threeten.bp.Duration;
  * messagingSettingsBuilder
  *     .createRoomSettings()
  *     .setRetrySettings(
- *         messagingSettingsBuilder
- *             .createRoomSettings()
- *             .getRetrySettings()
- *             .toBuilder()
+ *         messagingSettingsBuilder.createRoomSettings().getRetrySettings().toBuilder()
  *             .setTotalTimeout(Duration.ofSeconds(30))
  *             .build());
  * MessagingStubSettings messagingSettings = messagingSettingsBuilder.build();

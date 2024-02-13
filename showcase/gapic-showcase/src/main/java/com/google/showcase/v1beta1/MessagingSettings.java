@@ -79,10 +79,7 @@ import javax.annotation.Generated;
  * messagingSettingsBuilder
  *     .createRoomSettings()
  *     .setRetrySettings(
- *         messagingSettingsBuilder
- *             .createRoomSettings()
- *             .getRetrySettings()
- *             .toBuilder()
+ *         messagingSettingsBuilder.createRoomSettings().getRetrySettings().toBuilder()
  *             .setTotalTimeout(Duration.ofSeconds(30))
  *             .build());
  * MessagingSettings messagingSettings = messagingSettingsBuilder.build();

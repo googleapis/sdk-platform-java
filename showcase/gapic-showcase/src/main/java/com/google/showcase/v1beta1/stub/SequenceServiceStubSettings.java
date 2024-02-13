@@ -102,10 +102,7 @@ import org.threeten.bp.Duration;
  * sequenceServiceSettingsBuilder
  *     .createSequenceSettings()
  *     .setRetrySettings(
- *         sequenceServiceSettingsBuilder
- *             .createSequenceSettings()
- *             .getRetrySettings()
- *             .toBuilder()
+ *         sequenceServiceSettingsBuilder.createSequenceSettings().getRetrySettings().toBuilder()
  *             .setTotalTimeout(Duration.ofSeconds(30))
  *             .build());
  * SequenceServiceStubSettings sequenceServiceSettings = sequenceServiceSettingsBuilder.build();

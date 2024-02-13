@@ -75,10 +75,7 @@ import javax.annotation.Generated;
  * sequenceServiceSettingsBuilder
  *     .createSequenceSettings()
  *     .setRetrySettings(
- *         sequenceServiceSettingsBuilder
- *             .createSequenceSettings()
- *             .getRetrySettings()
- *             .toBuilder()
+ *         sequenceServiceSettingsBuilder.createSequenceSettings().getRetrySettings().toBuilder()
  *             .setTotalTimeout(Duration.ofSeconds(30))
  *             .build());
  * SequenceServiceSettings sequenceServiceSettings = sequenceServiceSettingsBuilder.build();

@@ -75,10 +75,7 @@ import javax.annotation.Generated;
  * testingSettingsBuilder
  *     .createSessionSettings()
  *     .setRetrySettings(
- *         testingSettingsBuilder
- *             .createSessionSettings()
- *             .getRetrySettings()
- *             .toBuilder()
+ *         testingSettingsBuilder.createSessionSettings().getRetrySettings().toBuilder()
  *             .setTotalTimeout(Duration.ofSeconds(30))
  *             .build());
  * TestingSettings testingSettings = testingSettingsBuilder.build();

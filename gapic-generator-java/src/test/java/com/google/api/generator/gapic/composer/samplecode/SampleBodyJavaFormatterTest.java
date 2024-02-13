@@ -56,10 +56,7 @@ public class SampleBodyJavaFormatterTest {
             "echoSettingsBuilder\n",
             "    .echoSettings()\n",
             "    .setRetrySettings(\n",
-            "        echoSettingsBuilder\n",
-            "            .echoSettings()\n",
-            "            .getRetrySettings()\n",
-            "            .toBuilder()\n",
+            "        echoSettingsBuilder.echoSettings().getRetrySettings().toBuilder()\n",
             "            .setTotalTimeout(Duration.ofSeconds(30))\n",
             "            .build());");
     assertEquals(expected, result);

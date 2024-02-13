@@ -44,10 +44,7 @@ import javax.annotation.Generated;
  * deprecatedServiceSettingsBuilder
  *     .fastFibonacciSettings()
  *     .setRetrySettings(
- *         deprecatedServiceSettingsBuilder
- *             .fastFibonacciSettings()
- *             .getRetrySettings()
- *             .toBuilder()
+ *         deprecatedServiceSettingsBuilder.fastFibonacciSettings().getRetrySettings().toBuilder()
  *             .setTotalTimeout(Duration.ofSeconds(30))
  *             .build());
  * DeprecatedServiceSettings deprecatedServiceSettings = deprecatedServiceSettingsBuilder.build();

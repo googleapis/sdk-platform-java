@@ -72,10 +72,7 @@ import javax.annotation.Generated;
  * complianceSettingsBuilder
  *     .repeatDataBodySettings()
  *     .setRetrySettings(
- *         complianceSettingsBuilder
- *             .repeatDataBodySettings()
- *             .getRetrySettings()
- *             .toBuilder()
+ *         complianceSettingsBuilder.repeatDataBodySettings().getRetrySettings().toBuilder()
  *             .setTotalTimeout(Duration.ofSeconds(30))
  *             .build());
  * ComplianceSettings complianceSettings = complianceSettingsBuilder.build();

@@ -97,10 +97,7 @@ import org.threeten.bp.Duration;
  * identitySettingsBuilder
  *     .createUserSettings()
  *     .setRetrySettings(
- *         identitySettingsBuilder
- *             .createUserSettings()
- *             .getRetrySettings()
- *             .toBuilder()
+ *         identitySettingsBuilder.createUserSettings().getRetrySettings().toBuilder()
  *             .setTotalTimeout(Duration.ofSeconds(30))
  *             .build());
  * IdentityStubSettings identitySettings = identitySettingsBuilder.build();

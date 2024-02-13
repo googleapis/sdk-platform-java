@@ -53,10 +53,7 @@ import javax.annotation.Generated;
  * wickedSettingsBuilder
  *     .craftEvilPlanSettings()
  *     .setRetrySettings(
- *         wickedSettingsBuilder
- *             .craftEvilPlanSettings()
- *             .getRetrySettings()
- *             .toBuilder()
+ *         wickedSettingsBuilder.craftEvilPlanSettings().getRetrySettings().toBuilder()
  *             .setTotalTimeout(Duration.ofSeconds(30))
  *             .build());
  * WickedStubSettings wickedSettings = wickedSettingsBuilder.build();

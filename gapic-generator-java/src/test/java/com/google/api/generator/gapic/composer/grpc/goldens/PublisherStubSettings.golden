@@ -86,10 +86,7 @@ import org.threeten.bp.Duration;
  * publisherSettingsBuilder
  *     .createTopicSettings()
  *     .setRetrySettings(
- *         publisherSettingsBuilder
- *             .createTopicSettings()
- *             .getRetrySettings()
- *             .toBuilder()
+ *         publisherSettingsBuilder.createTopicSettings().getRetrySettings().toBuilder()
  *             .setTotalTimeout(Duration.ofSeconds(30))
  *             .build());
  * PublisherStubSettings publisherSettings = publisherSettingsBuilder.build();

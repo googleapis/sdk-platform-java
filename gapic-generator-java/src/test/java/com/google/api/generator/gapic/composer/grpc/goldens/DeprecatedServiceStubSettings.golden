@@ -53,10 +53,7 @@ import org.threeten.bp.Duration;
  * deprecatedServiceSettingsBuilder
  *     .fastFibonacciSettings()
  *     .setRetrySettings(
- *         deprecatedServiceSettingsBuilder
- *             .fastFibonacciSettings()
- *             .getRetrySettings()
- *             .toBuilder()
+ *         deprecatedServiceSettingsBuilder.fastFibonacciSettings().getRetrySettings().toBuilder()
  *             .setTotalTimeout(Duration.ofSeconds(30))
  *             .build());
  * DeprecatedServiceStubSettings deprecatedServiceSettings =

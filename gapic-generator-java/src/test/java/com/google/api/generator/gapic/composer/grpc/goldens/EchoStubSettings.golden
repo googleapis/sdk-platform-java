@@ -79,10 +79,7 @@ import org.threeten.bp.Duration;
  * echoSettingsBuilder
  *     .echoSettings()
  *     .setRetrySettings(
- *         echoSettingsBuilder
- *             .echoSettings()
- *             .getRetrySettings()
- *             .toBuilder()
+ *         echoSettingsBuilder.echoSettings().getRetrySettings().toBuilder()
  *             .setTotalTimeout(Duration.ofSeconds(30))
  *             .build());
  * EchoStubSettings echoSettings = echoSettingsBuilder.build();
