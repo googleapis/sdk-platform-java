@@ -95,11 +95,6 @@ python3 -m pip install -r requirements.in
 popd # synthtool
 popd # temp dir
 
-# we install the owlbot requirements
-pushd "${scripts_root}/owlbot/src/"
-python3 -m pip install -r requirements.in
-popd # owlbot/src
-
 # run the postprocessor
 echo 'running owl-bot post-processor'
 pushd "${postprocessing_target}"
