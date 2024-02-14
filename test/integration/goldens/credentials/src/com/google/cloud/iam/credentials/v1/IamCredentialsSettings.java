@@ -137,7 +137,6 @@ public class IamCredentialsSettings extends ClientSettings<IamCredentialsSetting
     return IamCredentialsStubSettings.defaultTransportChannelProvider();
   }
 
-  @BetaApi("The surface for customizing headers is not stable yet and may change in the future.")
   public static ApiClientHeaderProvider.Builder defaultApiClientHeaderProviderBuilder() {
     return IamCredentialsStubSettings.defaultApiClientHeaderProviderBuilder();
   }

@@ -19,6 +19,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.google.api.MethodSettings;
 import com.google.api.Publishing;
+import com.google.common.truth.Truth;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -45,19 +46,32 @@ public class ServiceYamlParserTest {
   // FieldNames, etc.)
   @Test
   public void parseServiceYaml_autoPopulatedFields() {
-    String yamlFilename = "echo_v1beta1.yaml";
+    String yamlFilename = "auto_populate_field_testing.yaml";
     Path yamlPath = Paths.get(YAML_DIRECTORY, yamlFilename);
     Optional<com.google.api.Service> serviceYamlProtoOpt =
         ServiceYamlParser.parse(yamlPath.toString());
     assertTrue(serviceYamlProtoOpt.isPresent());
 
     com.google.api.Service serviceYamlProto = serviceYamlProtoOpt.get();
-    assertEquals("showcase.googleapis.com", serviceYamlProto.getName());
+    assertEquals("autopopulatefieldtesting.googleapis.com", serviceYamlProto.getName());
 
     Publishing publishingSettings = serviceYamlProto.getPublishing();
     List<MethodSettings> methodSettings = publishingSettings.getMethodSettingsList();
-    MethodSettings methodSetting = methodSettings.get(0);
-    assertEquals("google.showcase.v1beta1.Echo.Echo", methodSetting.getSelector());
-    assertEquals("request_id", methodSetting.getAutoPopulatedFieldsList().get(0));
+    Truth.assertThat(methodSettings.size() == 2);
+    Truth.assertThat(methodSettings.get(0).getSelector())
+        .isEqualTo(
+            "google.auto.populate.field.AutoPopulateFieldTesting.AutoPopulateFieldTestingEcho");
+    Truth.assertThat(methodSettings.get(0).getAutoPopulatedFieldsList())
+        .containsExactly(
+            "request_id",
+            "second_request_id",
+            "third_request_id",
+            "fourth_request_id",
+            "non_existent_field");
+    Truth.assertThat(methodSettings.get(1).getSelector())
+        .isEqualTo(
+            "google.auto.populate.field.AutoPopulateFieldTesting.AutoPopulateFieldTestingExpand");
+    Truth.assertThat(methodSettings.get(1).getAutoPopulatedFieldsList())
+        .containsExactly("request_id");
   }
 }
