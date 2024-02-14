@@ -14,11 +14,13 @@
 
 package com.google.api.generator.gapic;
 
+import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.generator.gapic.composer.Composer;
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.gapic.model.ReflectConfig;
+import com.google.api.generator.gapic.protoparser.NoServicesFoundException;
 import com.google.api.generator.gapic.protoparser.Parser;
 import com.google.api.generator.gapic.protowriter.Writer;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
@@ -26,7 +28,8 @@ import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
 import java.util.List;
 
 public class Generator {
-  public static CodeGeneratorResponse generateGapic(CodeGeneratorRequest request) {
+  public static CodeGeneratorResponse generateGapic(CodeGeneratorRequest request)
+      throws NoServicesFoundException {
     GapicContext context = Parser.parse(request);
     List<GapicClass> clazzes = Composer.composeServiceClasses(context);
     GapicPackageInfo packageInfo = Composer.composePackageInfo(context);
