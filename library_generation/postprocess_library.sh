@@ -58,7 +58,7 @@ fi
 
 # we determine the location of the .OwlBot.yaml file by checking if the target
 # folder is a monorepo folder or not
-if [[ "${postprocessing_target}" == *google-cloud-java* ]]; then
+if [[ "${is_monorepo}" == "true" ]]; then
   owlbot_yaml_relative_path=".OwlBot.yaml"
 else
   owlbot_yaml_relative_path=".github/.OwlBot.yaml"
