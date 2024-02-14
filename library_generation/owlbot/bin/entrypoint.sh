@@ -39,8 +39,7 @@ if [[ -f "$(pwd)/.OwlBot.yaml" ]]; then
 fi
 
 if [[ "${monorepo}" == "true" ]]; then
-  mkdir temp
-  mv owl-bot-staging/* temp/
+  mv owl-bot-staging/* temp
   rm -rd owl-bot-staging/
   mv temp owl-bot-staging
 fi
