@@ -24,6 +24,10 @@ RUN ln -s $(which python3.12) /usr/local/bin/python
 RUN cd /src && python -m pip install -r requirements.in
 RUN cd /src && python -m pip install .
 
+# set dummy git credentials for empty commit used in postprocessing
+RUN git config --global user.email "cloud-java-bot@google.com"
+RUN git config --global user.name "Cloud Java Bot"
+
 WORKDIR /workspace
 RUN chmod 750 /workspace
 RUN chmod 750 /src/generate_repo.py
