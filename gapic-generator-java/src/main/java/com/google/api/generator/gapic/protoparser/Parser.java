@@ -176,13 +176,13 @@ public class Parser {
             transport);
 
     if (services.isEmpty()) {
-      System.err.println("No services found. Will not generate Gapic clients");
+      //throw new NoServicesFoundException();
     }
 
     // TODO(vam-google): Figure out whether we should keep this allowlist or bring
     // back the unused resource names for all APIs.
     // Temporary workaround for Ads, who still need these resource names.
-    if (!services.isEmpty() && services.get(0).protoPakkage().startsWith("google.ads.googleads.v")) {
+    if (services.get(0).protoPakkage().startsWith("google.ads.googleads.v")) {
       Function<ResourceName, String> typeNameFn =
           r -> r.resourceTypeString().substring(r.resourceTypeString().indexOf("/") + 1);
       Function<Set<ResourceName>, Set<String>> typeStringSetFn =
