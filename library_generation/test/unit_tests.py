@@ -192,6 +192,12 @@ class UtilitiesTest(unittest.TestCase):
             library.api_description,
         )
         self.assertEqual("asset", library.library_name)
+        self.assertEqual("@googleapis/analytics-dpe", library.codeowner_team)
+        self.assertEqual(
+            "proto-google-iam-v1-bom,google-iam-policy,proto-google-iam-v1",
+            library.excluded_poms,
+        )
+        self.assertEqual("google-iam-policy", library.excluded_dependencies)
         gapics = library.gapic_configs
         self.assertEqual(5, len(gapics))
         self.assertEqual("google/cloud/asset/v1", gapics[0].proto_path)
