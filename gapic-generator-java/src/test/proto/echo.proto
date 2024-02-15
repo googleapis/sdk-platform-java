@@ -180,11 +180,6 @@ message EchoRequest {
     (google.api.field_behavior) = REQUIRED
   ];
 
-  // This field is added based on go/client-populate-request-id-design; subject to change
-  string request_id = 7 [
-    (google.api.field_info).format = UUID4
-  ];
-
   oneof response {
     // The content to be echoed by the server.
     string content = 1;
@@ -224,10 +219,6 @@ message ExpandRequest {
 
   string info = 3;
 
-  // This field is added based on go/client-populate-request-id-design; subject to change
-  string request_id = 4 [
-    (google.api.field_info).format = IPV6
-  ];
 }
 
 // The request for the PagedExpand method.

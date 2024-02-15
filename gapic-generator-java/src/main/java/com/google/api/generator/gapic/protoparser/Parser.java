@@ -1025,10 +1025,13 @@ public class Parser {
     if (fieldOptions.hasExtension(FieldInfoProto.fieldInfo)) {
       fieldInfoFormat = fieldOptions.getExtension(FieldInfoProto.fieldInfo).getFormat();
     }
-    if (fieldOptions.getExtensionCount(FieldBehaviorProto.fieldBehavior) > 0) {
-      if (fieldOptions
-          .getExtension(FieldBehaviorProto.fieldBehavior)
-          .contains(FieldBehavior.REQUIRED)) ;
+
+    // Cannot directly check fieldOptions.hasExtension(FieldBehaviorProto.fieldBehavior) because the
+    // default is null
+    if (fieldOptions.getExtensionCount(FieldBehaviorProto.fieldBehavior) > 0
+        && fieldOptions
+            .getExtension(FieldBehaviorProto.fieldBehavior)
+            .contains(FieldBehavior.REQUIRED)) {
       isRequired = true;
     }
 

@@ -1,5 +1,46 @@
 # Changelog
 
+## [2.35.0](https://github.com/googleapis/sdk-platform-java/compare/v2.34.0...v2.35.0) (2024-02-13)
+
+
+### Features
+
+* add `generate_repo.py` ([#2431](https://github.com/googleapis/sdk-platform-java/issues/2431)) ([47b632a](https://github.com/googleapis/sdk-platform-java/commit/47b632aa011874abe04212168ccc74dae50f5fbe))
+* move synthtool templates to `library_generation/owlbot` ([#2443](https://github.com/googleapis/sdk-platform-java/issues/2443)) ([5c95472](https://github.com/googleapis/sdk-platform-java/commit/5c95472ffd9085a6eac3d227f96c0b25097c60ec))
+
+
+### Bug Fixes
+
+* Apiary Host returns user set host if set ([#2455](https://github.com/googleapis/sdk-platform-java/issues/2455)) ([5f17e62](https://github.com/googleapis/sdk-platform-java/commit/5f17e62a7b0f10035205ec4197b8f77388b059f8))
+* Cancel the Timeout Task for HttpJson ([#2360](https://github.com/googleapis/sdk-platform-java/issues/2360)) ([b177d9e](https://github.com/googleapis/sdk-platform-java/commit/b177d9e40fd7107bbed67506da0acb021c8f346d))
+
+
+### Dependencies
+
+* update dependency commons-codec:commons-codec to v1.16.1 ([#2473](https://github.com/googleapis/sdk-platform-java/issues/2473)) ([8c6e91d](https://github.com/googleapis/sdk-platform-java/commit/8c6e91df765b4e42d0d4de77eaf73936fa43895a))
+* update google api dependencies ([#2469](https://github.com/googleapis/sdk-platform-java/issues/2469)) ([ad4d4e6](https://github.com/googleapis/sdk-platform-java/commit/ad4d4e65c0afae0e13905fe78b8ea711253dcab3))
+* update google auth library dependencies to v1.23.0 ([#2466](https://github.com/googleapis/sdk-platform-java/issues/2466)) ([349a5d3](https://github.com/googleapis/sdk-platform-java/commit/349a5d3b6e31e6184f71d3470a406b2e78eb0775))
+* update google auth library dependencies to v1.23.0 ([#2476](https://github.com/googleapis/sdk-platform-java/issues/2476)) ([6c9127c](https://github.com/googleapis/sdk-platform-java/commit/6c9127cf177ed1965ac2d7823808c9f4a835a44f))
+* update google http client dependencies to v1.44.1 ([#2467](https://github.com/googleapis/sdk-platform-java/issues/2467)) ([87d1435](https://github.com/googleapis/sdk-platform-java/commit/87d143569e3e2fee5050a905b1841995fc20c528))
+* update googleapis/java-cloud-bom digest to ac9893c ([#2472](https://github.com/googleapis/sdk-platform-java/issues/2472)) ([7fff34a](https://github.com/googleapis/sdk-platform-java/commit/7fff34ab3a8e6e0a77b638be81d67fcb4f061686))
+* update grpc dependencies to v1.61.1 ([#2463](https://github.com/googleapis/sdk-platform-java/issues/2463)) ([9ec575b](https://github.com/googleapis/sdk-platform-java/commit/9ec575bae059a96ed3d68af4abc372031d9c4dc7))
+
+## [2.34.0](https://github.com/googleapis/sdk-platform-java/compare/v2.33.0...v2.34.0) (2024-01-31)
+
+
+### Features
+
+* autopopulate fields in the request ([#2353](https://github.com/googleapis/sdk-platform-java/issues/2353)) ([b28235a](https://github.com/googleapis/sdk-platform-java/commit/b28235ab20fd174deddafc0426b8d20352af6e85))
+* enable generation with postprocessing of multiple service versions ([#2342](https://github.com/googleapis/sdk-platform-java/issues/2342)) ([363e35e](https://github.com/googleapis/sdk-platform-java/commit/363e35e46e41c88b810e4b0672906f73cb7c38b6))
+* MetricsTracer implementation ([#2421](https://github.com/googleapis/sdk-platform-java/issues/2421)) ([5c291e8](https://github.com/googleapis/sdk-platform-java/commit/5c291e8786b8e976979ec2e26b13f0327333bb02))
+* move new client script ([#2333](https://github.com/googleapis/sdk-platform-java/issues/2333)) ([acdde47](https://github.com/googleapis/sdk-platform-java/commit/acdde47445916dd306ce8b91489fab45c9c2ef50))
+
+
+### Bug Fixes
+
+* Endpoint resolution uses user set endpoint from ClientSettings ([#2429](https://github.com/googleapis/sdk-platform-java/issues/2429)) ([46b0a85](https://github.com/googleapis/sdk-platform-java/commit/46b0a857eaa4484c5f1ebe1170338fc90a994375))
+* Move direct path misconfiguration log to before creating the first channel ([#2430](https://github.com/googleapis/sdk-platform-java/issues/2430)) ([9916540](https://github.com/googleapis/sdk-platform-java/commit/99165403902ff91ecb0b14b858333855e7a10c60))
+
 ## [2.33.0](https://github.com/googleapis/sdk-platform-java/compare/v2.32.0...v2.33.0) (2024-01-24)
 
 

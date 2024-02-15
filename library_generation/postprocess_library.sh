@@ -20,7 +20,9 @@
 # provided
 # 7 - is_monorepo: whether this library is a monorepo, which implies slightly
 # different logic
-set -xeo pipefail
+# 8 - configuration_yaml_path: path to the configuration yaml containing library
+# generation information for this library
+set -eo pipefail
 scripts_root=$(dirname "$(readlink -f "$0")")
 
 postprocessing_target=$1
@@ -30,6 +32,7 @@ owlbot_cli_source_folder=$4
 owlbot_cli_image_sha=$5
 synthtool_commitish=$6
 is_monorepo=$7
+configuration_yaml_path=$8
 
 source "${scripts_root}"/utilities.sh
 
@@ -50,22 +53,6 @@ do
   fi
 done
 
-
-# ensure pyenv scripts are available
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-
-# create and activate the python virtualenv
-python_version=$(cat "${scripts_root}/configuration/python-version")
-if [ $(pyenv versions | grep "${python_version}" | wc -l) -eq 0 ]; then
-  pyenv install "${python_version}"
-fi
-if [ $(pyenv virtualenvs | grep "${python_version}" | grep "postprocessing" | wc -l) -eq 0 ];then
-  pyenv virtualenv "${python_version}" "postprocessing"
-fi
-pyenv activate "postprocessing"
-
 if [[ -z "${owlbot_cli_source_folder}" ]]; then
   owlbot_cli_source_folder=$(mktemp -d)
   build_owlbot_cli_source_folder "${postprocessing_target}" "${owlbot_cli_source_folder}" "${preprocessed_sources_path}"
@@ -81,7 +68,7 @@ else
 fi
 
 docker run --rm \
-  --user $(id -u):$(id -g) \
+  --user "$(id -u)":"$(id -g)" \
   -v "${postprocessing_target}:/repo" \
   -v "${owlbot_cli_source_folder}:/pre-processed-libraries" \
   -w /repo \
@@ -95,23 +82,21 @@ docker run --rm \
 # we clone the synthtool library and manually build it
 mkdir -p /tmp/synthtool
 pushd /tmp/synthtool
+
 if [ ! -d "synthtool" ]; then
   git clone https://github.com/googleapis/synthtool.git
 fi
 pushd "synthtool"
+
 git reset --hard "${synthtool_commitish}"
+
 python3 -m pip install -e .
 python3 -m pip install -r requirements.in
 popd # synthtool
 popd # temp dir
 
-# we install the owlbot requirements
-pushd "${scripts_root}/owlbot/src/"
-python3 -m pip install -r requirements.in
-popd # owlbot/src
-
 # run the postprocessor
 echo 'running owl-bot post-processor'
 pushd "${postprocessing_target}"
-bash "${scripts_root}/owlbot/bin/entrypoint.sh" "${scripts_root}" "${versions_file}"
+bash "${scripts_root}/owlbot/bin/entrypoint.sh" "${scripts_root}" "${versions_file}" "${configuration_yaml_path}"
 popd # postprocessing_target
