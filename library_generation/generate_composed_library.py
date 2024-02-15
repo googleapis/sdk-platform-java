@@ -152,8 +152,6 @@ def __construct_effective_arg(
     arguments = list(base_arguments)
     arguments += util.create_argument("proto_path", gapic)
     arguments += [
-        "--proto_only",
-        gapic_inputs.proto_only,
         "--gapic_additional_protos",
         gapic_inputs.additional_protos,
         "--transport",
