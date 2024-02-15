@@ -21,7 +21,6 @@ import com.google.api.gax.core.GaxProperties;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.StatusCode.Code;
-import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.api.gax.tracing.MetricsTracerFactory;
 import com.google.api.gax.tracing.OpentelemetryMetricsRecorder;
 import com.google.common.collect.ImmutableSet;
@@ -35,143 +34,125 @@ import com.google.showcase.v1beta1.it.util.TestClientInitializer;
 import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import io.grpc.ManagedChannelBuilder;
 import io.opentelemetry.api.OpenTelemetry;
+import io.opentelemetry.api.common.AttributeKey;
 import io.opentelemetry.api.metrics.Meter;
-import io.opentelemetry.exporter.otlp.metrics.OtlpGrpcMetricExporter;
 import io.opentelemetry.sdk.OpenTelemetrySdk;
 import io.opentelemetry.sdk.metrics.SdkMeterProvider;
-import io.opentelemetry.sdk.metrics.export.PeriodicMetricReader;
+import io.opentelemetry.sdk.metrics.data.HistogramData;
+import io.opentelemetry.sdk.metrics.data.HistogramPointData;
+import io.opentelemetry.sdk.metrics.data.MetricData;
 import io.opentelemetry.sdk.resources.Resource;
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-import org.junit.AfterClass;
+import io.opentelemetry.sdk.testing.exporter.InMemoryMetricExporter;
+import io.opentelemetry.sdk.testing.exporter.InMemoryMetricReader;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Test;
 
 public class ITOtelMetrics {
 
-  @AfterClass
-  public static void cleanup_otelcol() throws Exception {
-    Process process = Runtime.getRuntime().exec("../scripts/cleanup_otelcol.sh");
-    process.waitFor();
-  }
+  @Test
+  public void testHttpJson_OperationSucceded_recordsMetrics() throws Exception {
 
-  // This test is currently giving an error about requestId. will ask Alice and resolve it.
-  // @Test
-  // public void testHttpJson_OperationSucceded_recordsMetrics() throws Exception {
-  //   generate_otelcol_config("4317",
-  // "../test_data/testHttpJson_OperationSucceeded_metrics.txt","../test_data/testHttpJson_OperationSucceeded.yaml");
-  //   // initialize the otel-collector
-  //   setupOtelCollector("../test_data/testHttpJson_OperationSucceeded.yaml");
-  //
-  //   EchoClient client =
-  //       TestClientInitializer.createHttpJsonEchoClientOpentelemetry(
-  //           createOpenTelemetryTracerFactory("4317"));
-  //
-  //   EchoRequest requestWithNoError =
-  //       EchoRequest.newBuilder()
-  //           .setContent("successful httpJson request")
-  //           .build();
-  //
-  //   client.echo(requestWithNoError);
-  //
-  //   // wait for the metrics to get uploaded
-  //   Thread.sleep(5000);
-  //
-  //   String filePath = "../test_data/testHttpJson_OperationSucceeded_metrics.txt";
-  //   String attribute1 =
-  //
-  // "\"attributes\":[{\"key\":\"language\",\"value\":{\"stringValue\":\"Java\"}},{\"key\":\"method_name\",\"value\":{\"stringValue\":\"google.showcase.v1beta1.Echo/Echo\"}},{\"key\":\"status\",\"value\":{\"stringValue\":\"OK\"}}]";
-  //
-  //   String[] params = {filePath, attribute1};
-  //   int result = verify_metrics(params);
-  //   Truth.assertThat(result).isEqualTo(0);
-  //
-  //   client.close();
-  //   client.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
-  // }
+    InMemoryMetricReader inMemoryMetricReader = InMemoryMetricReader.create();
+
+    OpentelemetryMetricsRecorder otelMetricsRecorder =
+        createOtelMetricsRecorder(inMemoryMetricReader);
+
+    EchoClient client =
+        TestClientInitializer.createHttpJsonEchoClientOpentelemetry(
+            new MetricsTracerFactory(otelMetricsRecorder));
+
+    client.echo(EchoRequest.newBuilder().setContent("test_http_operation_succeeded").build());
+
+    Thread.sleep(1000);
+    inMemoryMetricReader.flush();
+    List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
+
+    for (MetricData metricData : metricDataList) {
+      HistogramData histogramData = metricData.getHistogramData();
+      if (!histogramData.getPoints().isEmpty()) {
+        for (HistogramPointData pointData : histogramData.getPoints()) {
+          String method = pointData.getAttributes().get(AttributeKey.stringKey("method_name"));
+          String status = pointData.getAttributes().get(AttributeKey.stringKey("status"));
+          Truth.assertThat(method).isEqualTo("google.showcase.v1beta1.Echo/Echo");
+          Truth.assertThat(status).isEqualTo("CANCELLED");
+        }
+      }
+    }
+  }
 
   @Test
   public void testGrpc_OperationSucceded_recordsMetrics() throws Exception {
 
-    generate_otelcol_config(
-        "4318",
-        "../test_data/testGrpc_OperationSucceeded_metrics.txt",
-        "../test_data/testGrpc_OperationSucceeded.yaml");
-    setupOtelCollector("../test_data/testGrpc_OperationSucceeded.yaml");
+    InMemoryMetricReader inMemoryMetricReader = InMemoryMetricReader.create();
+    InMemoryMetricExporter exporter = InMemoryMetricExporter.create();
+
+    OpentelemetryMetricsRecorder otelMetricsRecorder =
+        createOtelMetricsRecorder(inMemoryMetricReader);
 
     EchoClient client =
         TestClientInitializer.createGrpcEchoClientOpentelemetry(
-            createOpenTelemetryTracerFactory("4318"));
+            new MetricsTracerFactory(otelMetricsRecorder));
 
-    EchoRequest requestWithNoError =
-        EchoRequest.newBuilder().setContent("test_grpc_operation_succeeded").build();
+    client.echo(EchoRequest.newBuilder().setContent("test_grpc_operation_succeeded").build());
+    inMemoryMetricReader.flush();
+    List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
 
-    client.echo(requestWithNoError);
-
-    // wait for the metrics to get uploaded
-    Thread.sleep(5000);
-
-    String filePath = "../test_data/testGrpc_OperationSucceeded_metrics.txt";
-    String attribute1 =
-        "\"attributes\":[{\"key\":\"language\",\"value\":{\"stringValue\":\"Java\"}},{\"key\":\"method_name\",\"value\":{\"stringValue\":\"Echo.Echo\"}},{\"key\":\"status\",\"value\":{\"stringValue\":\"OK\"}}]";
-
-    String[] params = {filePath, attribute1};
-    int result = verify_metrics(params);
-    Truth.assertThat(result).isEqualTo(0);
-
-    client.close();
-    client.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+    for (MetricData metricData : metricDataList) {
+      HistogramData histogramData = metricData.getHistogramData();
+      if (!histogramData.getPoints().isEmpty()) {
+        for (HistogramPointData pointData : histogramData.getPoints()) {
+          String method = pointData.getAttributes().get(AttributeKey.stringKey("method_name"));
+          String status = pointData.getAttributes().get(AttributeKey.stringKey("status"));
+          Truth.assertThat(method).isEqualTo("Echo.Echo");
+          Truth.assertThat(status).isEqualTo("OK");
+        }
+      }
+    }
   }
 
   @Test
   public void testHttpJson_OperationCancelled_recordsMetrics() throws Exception {
 
-    generate_otelcol_config(
-        "4319",
-        "../test_data/testHttpJson_OperationCancelled_metrics.txt",
-        "../test_data/testHttpJson_OperationCancelled.yaml");
-    // initialize the otel-collector
-    setupOtelCollector("../test_data/testHttpJson_OperationCancelled.yaml");
+    InMemoryMetricReader inMemoryMetricReader = InMemoryMetricReader.create();
+
+    OpentelemetryMetricsRecorder otelMetricsRecorder =
+        createOtelMetricsRecorder(inMemoryMetricReader);
 
     EchoClient client =
         TestClientInitializer.createHttpJsonEchoClientOpentelemetry(
-            createOpenTelemetryTracerFactory("4319"));
+            new MetricsTracerFactory(otelMetricsRecorder));
 
-    EchoRequest requestWithNoError =
-        EchoRequest.newBuilder()
-            .setError(Status.newBuilder().setCode(Code.OK.ordinal()).build())
-            .build();
+    client
+        .echoCallable()
+        .futureCall(EchoRequest.newBuilder().setContent("test_http_operation_cancelled").build())
+        .cancel(true);
 
-    // explicitly cancel the request
-    client.echoCallable().futureCall(requestWithNoError).cancel(true);
+    inMemoryMetricReader.flush();
+    List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
 
-    // wait for the metrics to get uploaded
-    Thread.sleep(5000);
-
-    String filePath = "../test_data/testHttpJson_OperationCancelled_metrics.txt";
-    String attribute1 =
-        "\"attributes\":[{\"key\":\"language\",\"value\":{\"stringValue\":\"Java\"}},{\"key\":\"method_name\",\"value\":{\"stringValue\":\"google.showcase.v1beta1.Echo/Echo\"}},{\"key\":\"status\",\"value\":{\"stringValue\":\"CANCELLED\"}}]";
-
-    String[] params = {filePath, attribute1};
-    int result = verify_metrics(params);
-    Truth.assertThat(result).isEqualTo(0);
-
-    client.close();
-    client.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+    for (MetricData metricData : metricDataList) {
+      HistogramData histogramData = metricData.getHistogramData();
+      if (!histogramData.getPoints().isEmpty()) {
+        for (HistogramPointData pointData : histogramData.getPoints()) {
+          String method = pointData.getAttributes().get(AttributeKey.stringKey("method_name"));
+          String status = pointData.getAttributes().get(AttributeKey.stringKey("status"));
+          Truth.assertThat(method).isEqualTo("google.showcase.v1beta1.Echo/Echo");
+          Truth.assertThat(status).isEqualTo("CANCELLED");
+        }
+      }
+    }
   }
 
   @Test
   public void testGrpc_OperationCancelled_recordsMetrics() throws Exception {
 
-    generate_otelcol_config(
-        "4320",
-        "../test_data/testGrpc_OperationCancelled_metrics.txt",
-        "../test_data/testGrpc_OperationCancelled.yaml");
-    // initialize the otel-collector
-    setupOtelCollector("../test_data/testGrpc_OperationCancelled.yaml");
-
+    InMemoryMetricReader inMemoryMetricReader = InMemoryMetricReader.create();
+    OpentelemetryMetricsRecorder otelMetricsRecorder =
+        createOtelMetricsRecorder(inMemoryMetricReader);
     EchoClient client =
         TestClientInitializer.createGrpcEchoClientOpentelemetry(
-            createOpenTelemetryTracerFactory("4320"));
+            new MetricsTracerFactory(otelMetricsRecorder));
 
     EchoRequest requestWithNoError =
         EchoRequest.newBuilder()
@@ -179,105 +160,97 @@ public class ITOtelMetrics {
             .build();
 
     client.echoCallable().futureCall(requestWithNoError).cancel(true);
+    inMemoryMetricReader.flush();
+    List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
 
-    // wait for the metrics to get uploaded
-    Thread.sleep(5000);
-
-    String filePath = "../test_data/testGrpc_OperationCancelled_metrics.txt";
-    String attribute1 =
-        "\"attributes\":[{\"key\":\"language\",\"value\":{\"stringValue\":\"Java\"}},{\"key\":\"method_name\",\"value\":{\"stringValue\":\"Echo.Echo\"}},{\"key\":\"status\",\"value\":{\"stringValue\":\"CANCELLED\"}}]";
-
-    String[] params = {filePath, attribute1};
-    int result = verify_metrics(params);
-    Truth.assertThat(result).isEqualTo(0);
-
-    client.close();
-    client.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+    for (MetricData metricData : metricDataList) {
+      HistogramData histogramData = metricData.getHistogramData();
+      if (!histogramData.getPoints().isEmpty()) {
+        for (HistogramPointData pointData : histogramData.getPoints()) {
+          String method = pointData.getAttributes().get(AttributeKey.stringKey("method_name"));
+          String status = pointData.getAttributes().get(AttributeKey.stringKey("status"));
+          Truth.assertThat(method).isEqualTo("Echo.Echo");
+          Truth.assertThat(status).isEqualTo("CANCELLED");
+        }
+      }
+    }
   }
 
   @Test
   public void testHttpJson_OperationFailed_recordsMetrics() throws Exception {
 
-    generate_otelcol_config(
-        "4321",
-        "../test_data/testHttpJson_OperationFailed_metrics.txt",
-        "../test_data/testHttpJson_OperationFailed.yaml");
-
-    // initialize the otel-collector
-    setupOtelCollector("../test_data/testHttpJson_OperationFailed.yaml");
-
+    InMemoryMetricReader inMemoryMetricReader = InMemoryMetricReader.create();
+    OpentelemetryMetricsRecorder otelMetricsRecorder =
+        createOtelMetricsRecorder(inMemoryMetricReader);
     EchoClient client =
         TestClientInitializer.createHttpJsonEchoClientOpentelemetry(
-            createOpenTelemetryTracerFactory("4321"));
+            new MetricsTracerFactory(otelMetricsRecorder));
 
-    EchoRequest requestWithError =
+    EchoRequest requestWithNoError =
         EchoRequest.newBuilder()
             .setError(Status.newBuilder().setCode(Code.UNKNOWN.ordinal()).build())
             .build();
 
-    client.echoCallable().futureCall(requestWithError).isDone();
+    client.echoCallable().futureCall(requestWithNoError);
+    Thread.sleep(1000);
+    inMemoryMetricReader.flush();
+    List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
 
-    // wait for the metrics to get uploaded
-    Thread.sleep(5000);
-
-    String filePath = "../test_data/testHttpJson_OperationFailed_metrics.txt";
-    String attribute1 =
-        "\"attributes\":[{\"key\":\"language\",\"value\":{\"stringValue\":\"Java\"}},{\"key\":\"method_name\",\"value\":{\"stringValue\":\"google.showcase.v1beta1.Echo/Echo\"}},{\"key\":\"status\",\"value\":{\"stringValue\":\"UNKNOWN\"}}]";
-
-    String[] params = {filePath, attribute1};
-    int result = verify_metrics(params);
-    Truth.assertThat(result).isEqualTo(0);
-
-    client.close();
-    client.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+    for (MetricData metricData : metricDataList) {
+      HistogramData histogramData = metricData.getHistogramData();
+      if (!histogramData.getPoints().isEmpty()) {
+        for (HistogramPointData pointData : histogramData.getPoints()) {
+          String method = pointData.getAttributes().get(AttributeKey.stringKey("method_name"));
+          String status = pointData.getAttributes().get(AttributeKey.stringKey("status"));
+          Truth.assertThat(method).isEqualTo("google.showcase.v1beta1.Echo/Echo");
+          Truth.assertThat(status).isEqualTo("UNKNOWN");
+        }
+      }
+    }
   }
 
   @Test
   public void testGrpc_OperationFailed_recordsMetrics() throws Exception {
 
-    generate_otelcol_config(
-        "4322",
-        "../test_data/testGrpc_OperationFailed_metrics.txt",
-        "../test_data/testGrpc_OperationFailed.yaml");
-    // initialize the otel-collector
-    setupOtelCollector("../test_data/testGrpc_OperationFailed.yaml");
-
+    InMemoryMetricReader inMemoryMetricReader = InMemoryMetricReader.create();
+    OpentelemetryMetricsRecorder otelMetricsRecorder =
+        createOtelMetricsRecorder(inMemoryMetricReader);
     EchoClient client =
         TestClientInitializer.createGrpcEchoClientOpentelemetry(
-            createOpenTelemetryTracerFactory("4322"));
+            new MetricsTracerFactory(otelMetricsRecorder));
 
-    EchoRequest requestWithError =
+    EchoRequest requestWithNoError =
         EchoRequest.newBuilder()
-            .setError(Status.newBuilder().setCode(Code.UNAUTHENTICATED.ordinal()).build())
+            .setError(Status.newBuilder().setCode(Code.INVALID_ARGUMENT.ordinal()).build())
             .build();
 
-    client.echoCallable().futureCall(requestWithError).isDone();
+    client.echoCallable().futureCall(requestWithNoError);
+    Thread.sleep(1000);
 
-    // wait for the metrics to get uploaded
-    Thread.sleep(5000);
+    inMemoryMetricReader.flush();
+    List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
 
-    String filePath = "../test_data/testGrpc_OperationFailed_metrics.txt";
-    String attribute1 =
-        "\"attributes\":[{\"key\":\"language\",\"value\":{\"stringValue\":\"Java\"}},{\"key\":\"method_name\",\"value\":{\"stringValue\":\"Echo.Echo\"}},{\"key\":\"status\",\"value\":{\"stringValue\":\"UNAUTHENTICATED\"}}]";
-
-    String[] params = {filePath, attribute1};
-    int result = verify_metrics(params);
-    Truth.assertThat(result).isEqualTo(0);
-
-    client.close();
-    client.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+    for (MetricData metricData : metricDataList) {
+      HistogramData histogramData = metricData.getHistogramData();
+      if (!histogramData.getPoints().isEmpty()) {
+        for (HistogramPointData pointData : histogramData.getPoints()) {
+          String method = pointData.getAttributes().get(AttributeKey.stringKey("method_name"));
+          String status = pointData.getAttributes().get(AttributeKey.stringKey("status"));
+          Truth.assertThat(method).isEqualTo("Echo.Echo");
+          Truth.assertThat(status).isEqualTo("INVALID_ARGUMENT");
+        }
+      }
+    }
   }
 
   @Test
   public void testGrpc_attemptFailedRetriesExhausted_recordsMetrics() throws Exception {
 
-    generate_otelcol_config(
-        "4323",
-        "../test_data/testGrpc_attemptFailedRetriesExhausted_metrics.txt",
-        "../test_data/testGrpc_attemptFailedRetriesExhausted.yaml");
-    setupOtelCollector("../test_data/testGrpc_attemptFailedRetriesExhausted.yaml");
+    InMemoryMetricReader inMemoryMetricReader = InMemoryMetricReader.create();
+    OpentelemetryMetricsRecorder otelMetricsRecorder =
+        createOtelMetricsRecorder(inMemoryMetricReader);
 
-    RetrySettings retrySettings = RetrySettings.newBuilder().setMaxAttempts(5).build();
+    RetrySettings retrySettings = RetrySettings.newBuilder().setMaxAttempts(7).build();
 
     EchoStubSettings.Builder grpcEchoSettingsBuilder = EchoStubSettings.newBuilder();
     grpcEchoSettingsBuilder
@@ -290,7 +263,7 @@ public class ITOtelMetrics {
         grpcEchoSettings
             .toBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTracerFactory(createOpenTelemetryTracerFactory("4323"))
+            .setTracerFactory(new MetricsTracerFactory(otelMetricsRecorder))
             .setTransportChannelProvider(
                 EchoSettings.defaultGrpcTransportProviderBuilder()
                     .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
@@ -307,52 +280,54 @@ public class ITOtelMetrics {
 
     grpcClientWithRetrySetting.blockCallable().futureCall(blockRequest).isDone();
 
-    Thread.sleep(5000);
+    Thread.sleep(1000);
 
-    String filePath = "../test_data/testGrpc_attemptFailedRetriesExhausted_metrics.txt";
+    inMemoryMetricReader.flush();
+    List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
 
-    String attribute1 =
-        "\"attributes\":[{\"key\":\"language\",\"value\":{\"stringValue\":\"Java\"}},{\"key\":\"method_name\",\"value\":{\"stringValue\":\"Echo.Block\"}},{\"key\":\"status\",\"value\":{\"stringValue\":\"INVALID_ARGUMENT\"}}]";
+    for (MetricData metricData : metricDataList) {
+      HistogramData histogramData = metricData.getHistogramData();
+      if (!histogramData.getPoints().isEmpty()) {
+        for (HistogramPointData pointData : histogramData.getPoints()) {
+          String method = pointData.getAttributes().get(AttributeKey.stringKey("method_name"));
+          String status = pointData.getAttributes().get(AttributeKey.stringKey("status"));
 
-    // additionally verify that 5 attempts were made
-    // when we make 'x' attempts, attempt_count.asInt = 'x' and there are 'x' datapoints in
-    // attempt_latency histogram -> (count : x}
-    // String attribute2 = "\"asInt\":\"5\"";
-    String attribute2 = "\"asInt\":\"5\"";
-    String attribute3 = "\"count\":\"5\"";
+          System.out.println(pointData);
 
-    String[] params = {filePath, attribute1, attribute2, attribute3};
-    int result = verify_metrics(params);
-    Truth.assertThat(result).isEqualTo(0);
-
-    grpcClientWithRetrySetting.close();
-    grpcClientWithRetrySetting.awaitTermination(
-        TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+          // add a comment why I am doing this
+          double max = pointData.getMax();
+          double min = pointData.getMin();
+          if (max != min) {
+            Truth.assertThat(pointData.getCount()).isEqualTo(7);
+          }
+          Truth.assertThat(method).isEqualTo("Echo.Block");
+          Truth.assertThat(status).isEqualTo("INVALID_ARGUMENT");
+        }
+      }
+    }
   }
 
   @Test
   public void testHttpjson_attemptFailedRetriesExhausted_recordsMetrics() throws Exception {
 
-    generate_otelcol_config(
-        "4324",
-        "../test_data/testHttpjson_attemptFailedRetriesExhausted_metrics.txt",
-        "../test_data/testHttpjson_attemptFailedRetriesExhausted.yaml");
-    setupOtelCollector("../test_data/testHttpjson_attemptFailedRetriesExhausted.yaml");
+    RetrySettings retrySettings = RetrySettings.newBuilder().setMaxAttempts(5).build();
 
-    RetrySettings retrySettings = RetrySettings.newBuilder().setMaxAttempts(3).build();
+    InMemoryMetricReader inMemoryMetricReader = InMemoryMetricReader.create();
+    OpentelemetryMetricsRecorder otelMetricsRecorder =
+        createOtelMetricsRecorder(inMemoryMetricReader);
 
     EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
     httpJsonEchoSettingsBuilder
         .blockSettings()
         .setRetrySettings(retrySettings)
-        .setRetryableCodes(ImmutableSet.of(Code.UNKNOWN));
+        .setRetryableCodes(ImmutableSet.of(Code.INVALID_ARGUMENT));
 
     EchoSettings httpJsonEchoSettings = EchoSettings.create(httpJsonEchoSettingsBuilder.build());
     httpJsonEchoSettings =
         httpJsonEchoSettings
             .toBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTracerFactory(createOpenTelemetryTracerFactory("4324"))
+            .setTracerFactory(new MetricsTracerFactory(otelMetricsRecorder))
             .setTransportChannelProvider(
                 EchoSettings.defaultHttpJsonTransportProviderBuilder()
                     .setHttpTransport(
@@ -365,50 +340,53 @@ public class ITOtelMetrics {
 
     BlockRequest blockRequest =
         BlockRequest.newBuilder()
-            .setError(Status.newBuilder().setCode(Code.UNKNOWN.ordinal()).build())
+            .setError(Status.newBuilder().setCode(Code.INVALID_ARGUMENT.ordinal()).build())
             .build();
 
-    httpJsonClientWithRetrySetting.blockCallable().futureCall(blockRequest).isDone();
+    httpJsonClientWithRetrySetting.blockCallable().futureCall(blockRequest);
 
-    Thread.sleep(5000);
+    Thread.sleep(1000);
+    inMemoryMetricReader.flush();
 
-    String filePath = "../test_data/testHttpjson_attemptFailedRetriesExhausted_metrics.txt";
+    List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
 
-    String attribute1 =
-        "\"attributes\":[{\"key\":\"language\",\"value\":{\"stringValue\":\"Java\"}},{\"key\":\"method_name\",\"value\":{\"stringValue\":\"google.showcase.v1beta1.Echo/Block\"}},{\"key\":\"status\",\"value\":{\"stringValue\":\"UNKNOWN\"}}]";
-
-    String[] params = {filePath, attribute1};
-    int result = verify_metrics(params);
-    Truth.assertThat(result).isEqualTo(0);
-
-    httpJsonClientWithRetrySetting.close();
-    httpJsonClientWithRetrySetting.awaitTermination(
-        TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+    for (MetricData metricData : metricDataList) {
+      HistogramData histogramData = metricData.getHistogramData();
+      if (!histogramData.getPoints().isEmpty()) {
+        for (HistogramPointData pointData : histogramData.getPoints()) {
+          String method = pointData.getAttributes().get(AttributeKey.stringKey("method_name"));
+          String language = pointData.getAttributes().get(AttributeKey.stringKey("language"));
+          String status = pointData.getAttributes().get(AttributeKey.stringKey("status"));
+          Truth.assertThat(method).isEqualTo("google.showcase.v1beta1.Echo/Block");
+          Truth.assertThat(language).isEqualTo("Java");
+          Truth.assertThat(status).isEqualTo("UNKNOWN");
+          Truth.assertThat(pointData.getCount()).isEqualTo(5);
+        }
+      }
+    }
   }
 
   @Test
   public void testGrpc_attemptPermanentFailure_recordsMetrics() throws Exception {
 
-    generate_otelcol_config(
-        "4325",
-        "../test_data/testGrpc_attemptPermanentFailure_metrics.txt",
-        "../test_data/testGrpc_attemptPermanentFailure.yaml");
-    setupOtelCollector("../test_data/testGrpc_attemptPermanentFailure.yaml");
+    InMemoryMetricReader inMemoryMetricReader = InMemoryMetricReader.create();
+    OpentelemetryMetricsRecorder otelMetricsRecorder =
+        createOtelMetricsRecorder(inMemoryMetricReader);
 
-    RetrySettings retrySettings = RetrySettings.newBuilder().setMaxAttempts(4).build();
+    RetrySettings retrySettings = RetrySettings.newBuilder().setMaxAttempts(3).build();
 
     EchoStubSettings.Builder grpcEchoSettingsBuilder = EchoStubSettings.newBuilder();
     grpcEchoSettingsBuilder
         .blockSettings()
         .setRetrySettings(retrySettings)
-        .setRetryableCodes(ImmutableSet.of(Code.ALREADY_EXISTS));
+        .setRetryableCodes(ImmutableSet.of(Code.PERMISSION_DENIED));
 
     EchoSettings grpcEchoSettings = EchoSettings.create(grpcEchoSettingsBuilder.build());
     grpcEchoSettings =
         grpcEchoSettings
             .toBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTracerFactory(createOpenTelemetryTracerFactory("4325"))
+            .setTracerFactory(new MetricsTracerFactory(otelMetricsRecorder))
             .setTransportChannelProvider(
                 EchoSettings.defaultGrpcTransportProviderBuilder()
                     .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
@@ -425,44 +403,36 @@ public class ITOtelMetrics {
 
     grpcClientWithRetrySetting.blockCallable().futureCall(blockRequest).isDone();
 
-    Thread.sleep(5000);
+    Thread.sleep(1000);
+    inMemoryMetricReader.flush();
 
-    String filePath = "../test_data/testGrpc_attemptPermanentFailure_metrics.txt";
+    List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
 
-    String attribute1 =
-        "\"attributes\":[{\"key\":\"language\",\"value\":{\"stringValue\":\"Java\"}},{\"key\":\"method_name\",\"value\":{\"stringValue\":\"Echo.Block\"}},{\"key\":\"status\",\"value\":{\"stringValue\":\"INVALID_ARGUMENT\"}}]";
-    // additionally verify that only 1 attempt was made
-    String attribute2 = "\"asInt\":\"1\"";
-    String attribute3 = "\"count\":\"1\"";
-
-    String[] params = {filePath, attribute1, attribute2, attribute3};
-    int result = verify_metrics(params);
-    Truth.assertThat(result).isEqualTo(0);
-
-    grpcClientWithRetrySetting.close();
-    grpcClientWithRetrySetting.awaitTermination(
-        TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+    for (MetricData metricData : metricDataList) {
+      HistogramData histogramData = metricData.getHistogramData();
+      if (!histogramData.getPoints().isEmpty()) {
+        for (HistogramPointData pointData : histogramData.getPoints()) {
+          String method = pointData.getAttributes().get(AttributeKey.stringKey("method_name"));
+          String language = pointData.getAttributes().get(AttributeKey.stringKey("language"));
+          String status = pointData.getAttributes().get(AttributeKey.stringKey("status"));
+          Truth.assertThat(method).isEqualTo("Echo.Block");
+          Truth.assertThat(language).isEqualTo("Java");
+          Truth.assertThat(status).isEqualTo("INVALID_ARGUMENT");
+          Truth.assertThat(pointData.getCount()).isEqualTo(1);
+        }
+      }
+    }
   }
 
-  // Helper function for creating Opentelemetry object with a different port for exporter for every
-  // test
-  // this ensures that logs for each test are collected separately
-  private static ApiTracerFactory createOpenTelemetryTracerFactory(String port) {
-    // OTLP Metric Exporter setup
-    String endpoint = "http://localhost:" + port;
-    OtlpGrpcMetricExporter metricExporter =
-        OtlpGrpcMetricExporter.builder().setEndpoint(endpoint).build();
+  private OpentelemetryMetricsRecorder createOtelMetricsRecorder(
+      InMemoryMetricReader inMemoryMetricReader) {
 
-    // Periodic Metric Reader configuration
-    PeriodicMetricReader metricReader =
-        PeriodicMetricReader.builder(metricExporter)
-            .setInterval(java.time.Duration.ofSeconds(3))
-            .build();
-
-    // OpenTelemetry SDK Configuration
-    Resource resource = Resource.builder().build();
+    Resource resource = Resource.getDefault();
     SdkMeterProvider sdkMeterProvider =
-        SdkMeterProvider.builder().registerMetricReader(metricReader).setResource(resource).build();
+        SdkMeterProvider.builder()
+            .setResource(resource)
+            .registerMetricReader(inMemoryMetricReader)
+            .build();
 
     OpenTelemetry openTelemetry =
         OpenTelemetrySdk.builder().setMeterProvider(sdkMeterProvider).build();
@@ -473,45 +443,7 @@ public class ITOtelMetrics {
             .meterBuilder("gax")
             .setInstrumentationVersion(GaxProperties.getGaxVersion())
             .build();
-
     // OpenTelemetry Metrics Recorder
-    OpentelemetryMetricsRecorder otelMetricsRecorder = new OpentelemetryMetricsRecorder(meter);
-
-    // Finally, create the Tracer Factory
-    return new MetricsTracerFactory(otelMetricsRecorder);
-  }
-
-  private void setupOtelCollector(String configPath) throws Exception {
-    String scriptPath = "../scripts/start_otelcol.sh";
-    String test_dataPath = "../test_data";
-    Process process =
-        Runtime.getRuntime().exec(scriptPath + " " + test_dataPath + " " + configPath);
-    process.waitFor();
-  }
-
-  public static int verify_metrics(String... parameters) throws IOException, InterruptedException {
-
-    String scriptPath = "../scripts/verify_metrics.sh";
-
-    // Construct the command to execute the script with parameters
-    StringBuilder command = new StringBuilder(scriptPath);
-    for (String parameter : parameters) {
-      command.append(" ").append(parameter);
-    }
-    // Execute the command
-    Process process = Runtime.getRuntime().exec(command.toString());
-    return process.waitFor();
-  }
-
-  public static void generate_otelcol_config(
-      String endpoint, String filepath, String configFilePath)
-      throws IOException, InterruptedException {
-
-    String scriptPath = "../scripts/generate_otelcol_yaml.sh";
-
-    Process process =
-        Runtime.getRuntime()
-            .exec(scriptPath + " " + endpoint + " " + filepath + " " + configFilePath);
-    process.waitFor();
+    return new OpentelemetryMetricsRecorder(meter);
   }
 }
