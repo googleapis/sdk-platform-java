@@ -22,7 +22,6 @@ import static com.google.storage.v2.StorageClient.ListNotificationsPagedResponse
 import static com.google.storage.v2.StorageClient.ListObjectsPagedResponse;
 
 import com.google.api.core.ApiFunction;
-import com.google.api.core.BetaApi;
 import com.google.api.gax.core.GoogleCredentialsProvider;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
 import com.google.api.gax.grpc.InstantiatingGrpcChannelProvider;
@@ -278,7 +277,6 @@ public class StorageSettings extends ClientSettings<StorageSettings> {
     return StorageStubSettings.defaultTransportChannelProvider();
   }
 
-  @BetaApi("The surface for customizing headers is not stable yet and may change in the future.")
   public static ApiClientHeaderProvider.Builder defaultApiClientHeaderProviderBuilder() {
     return StorageStubSettings.defaultApiClientHeaderProviderBuilder();
   }
