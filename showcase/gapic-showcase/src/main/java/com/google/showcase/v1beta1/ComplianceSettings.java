@@ -212,7 +212,6 @@ public class ComplianceSettings extends ClientSettings<ComplianceSettings> {
   }
 
   /** Returns a new REST builder for this class. */
-  @BetaApi
   public static Builder newHttpJsonBuilder() {
     return Builder.createHttpJsonDefault();
   }
@@ -254,7 +253,6 @@ public class ComplianceSettings extends ClientSettings<ComplianceSettings> {
       return new Builder(ComplianceStubSettings.newBuilder());
     }
 
-    @BetaApi
     private static Builder createHttpJsonDefault() {
       return new Builder(ComplianceStubSettings.newHttpJsonBuilder());
     }

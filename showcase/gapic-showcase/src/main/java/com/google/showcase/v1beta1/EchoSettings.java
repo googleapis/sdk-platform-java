@@ -228,7 +228,6 @@ public class EchoSettings extends ClientSettings<EchoSettings> {
   }
 
   /** Returns a new REST builder for this class. */
-  @BetaApi
   public static Builder newHttpJsonBuilder() {
     return Builder.createHttpJsonDefault();
   }
@@ -270,7 +269,6 @@ public class EchoSettings extends ClientSettings<EchoSettings> {
       return new Builder(EchoStubSettings.newBuilder());
     }
 
-    @BetaApi
     private static Builder createHttpJsonDefault() {
       return new Builder(EchoStubSettings.newHttpJsonBuilder());
     }
