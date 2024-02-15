@@ -200,7 +200,6 @@ public class SequenceServiceSettings extends ClientSettings<SequenceServiceSetti
   }
 
   /** Returns a new REST builder for this class. */
-  @BetaApi
   public static Builder newHttpJsonBuilder() {
     return Builder.createHttpJsonDefault();
   }
@@ -242,7 +241,6 @@ public class SequenceServiceSettings extends ClientSettings<SequenceServiceSetti
       return new Builder(SequenceServiceStubSettings.newBuilder());
     }
 
-    @BetaApi
     private static Builder createHttpJsonDefault() {
       return new Builder(SequenceServiceStubSettings.newHttpJsonBuilder());
     }
