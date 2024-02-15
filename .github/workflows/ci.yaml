@@ -219,8 +219,7 @@ jobs:
           mvn verify \
             -P enable-integration-tests \
             --batch-mode \
-            --no-transfer-progress \
-            -T 2
+            --no-transfer-progress
 
   showcase-native:
     runs-on: ubuntu-22.04
@@ -296,7 +295,7 @@ jobs:
       run: |
         mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
     - name: Validate gapic-generator-java-bom
-      uses: googleapis/java-cloud-bom/tests/validate-bom@ac9893c4ba759cda192b11c2e8bac0d5a6bd60a5
+      uses: googleapis/java-cloud-bom/tests/validate-bom@8bc17e9ae3c6354f04df2fdf2d57aeafa63add66
       with:
         bom-path: gapic-generator-java-bom/pom.xml
 

@@ -80,12 +80,7 @@
     </dependency>
     <dependency>
       <groupId>io.opentelemetry</groupId>
-      <artifactId>opentelemetry-exporter-otlp</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.opentelemetry</groupId>
       <artifactId>opentelemetry-sdk-metrics-testing</artifactId>
-      <version>1.13.0-alpha</version>
     </dependency>
   </dependencies>
 

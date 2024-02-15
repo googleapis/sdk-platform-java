@@ -75,7 +75,7 @@ public class ITOtelMetrics {
           String method = pointData.getAttributes().get(AttributeKey.stringKey("method_name"));
           String status = pointData.getAttributes().get(AttributeKey.stringKey("status"));
           Truth.assertThat(method).isEqualTo("google.showcase.v1beta1.Echo/Echo");
-          Truth.assertThat(status).isEqualTo("CANCELLED");
+          Truth.assertThat(status).isEqualTo("OK");
         }
       }
     }
