@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -67,6 +67,8 @@ import com.google.iam.v1.TestIamPermissionsResponse;
 import com.google.longrunning.Operation;
 import com.google.showcase.v1beta1.BlockRequest;
 import com.google.showcase.v1beta1.BlockResponse;
+import com.google.showcase.v1beta1.EchoErrorDetailsRequest;
+import com.google.showcase.v1beta1.EchoErrorDetailsResponse;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.ExpandRequest;
@@ -129,6 +131,8 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
       ImmutableList.<String>builder().build();
 
   private final UnaryCallSettings<EchoRequest, EchoResponse> echoSettings;
+  private final UnaryCallSettings<EchoErrorDetailsRequest, EchoErrorDetailsResponse>
+      echoErrorDetailsSettings;
   private final ServerStreamingCallSettings<ExpandRequest, EchoResponse> expandSettings;
   private final StreamingCallSettings<EchoRequest, EchoResponse> collectSettings;
   private final StreamingCallSettings<EchoRequest, EchoResponse> chatSettings;
@@ -330,6 +334,12 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
     return echoSettings;
   }
 
+  /** Returns the object with the settings used for calls to echoErrorDetails. */
+  public UnaryCallSettings<EchoErrorDetailsRequest, EchoErrorDetailsResponse>
+      echoErrorDetailsSettings() {
+    return echoErrorDetailsSettings;
+  }
+
   /** Returns the object with the settings used for calls to expand. */
   public ServerStreamingCallSettings<ExpandRequest, EchoResponse> expandSettings() {
     return expandSettings;
@@ -422,6 +432,15 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
             "Transport not supported: %s", getTransportChannelProvider().getTransportName()));
   }
 
+  /** Returns the endpoint set by the user or the the service's default endpoint. */
+  @Override
+  public String getEndpoint() {
+    if (super.getEndpoint() != null) {
+      return super.getEndpoint();
+    }
+    return getDefaultEndpoint();
+  }
+
   /** Returns a builder for the default ExecutorProvider for this service. */
   public static InstantiatingExecutorProvider.Builder defaultExecutorProviderBuilder() {
     return InstantiatingExecutorProvider.newBuilder();
@@ -466,7 +485,6 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
     return defaultGrpcTransportProviderBuilder().build();
   }
 
-  @BetaApi("The surface for customizing headers is not stable yet and may change in the future.")
   public static ApiClientHeaderProvider.Builder defaultGrpcApiClientHeaderProviderBuilder() {
     return ApiClientHeaderProvider.newBuilder()
         .setGeneratedLibToken("gapic", GaxProperties.getLibraryVersion(EchoStubSettings.class))
@@ -474,7 +492,6 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
             GaxGrpcProperties.getGrpcTokenName(), GaxGrpcProperties.getGrpcVersion());
   }
 
-  @BetaApi("The surface for customizing headers is not stable yet and may change in the future.")
   public static ApiClientHeaderProvider.Builder defaultHttpJsonApiClientHeaderProviderBuilder() {
     return ApiClientHeaderProvider.newBuilder()
         .setGeneratedLibToken("gapic", GaxProperties.getLibraryVersion(EchoStubSettings.class))
@@ -511,6 +528,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
     super(settingsBuilder);
 
     echoSettings = settingsBuilder.echoSettings().build();
+    echoErrorDetailsSettings = settingsBuilder.echoErrorDetailsSettings().build();
     expandSettings = settingsBuilder.expandSettings().build();
     collectSettings = settingsBuilder.collectSettings().build();
     chatSettings = settingsBuilder.chatSettings().build();
@@ -531,6 +549,8 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
   public static class Builder extends StubSettings.Builder<EchoStubSettings, Builder> {
     private final ImmutableList<UnaryCallSettings.Builder<?, ?>> unaryMethodSettingsBuilders;
     private final UnaryCallSettings.Builder<EchoRequest, EchoResponse> echoSettings;
+    private final UnaryCallSettings.Builder<EchoErrorDetailsRequest, EchoErrorDetailsResponse>
+        echoErrorDetailsSettings;
     private final ServerStreamingCallSettings.Builder<ExpandRequest, EchoResponse> expandSettings;
     private final StreamingCallSettings.Builder<EchoRequest, EchoResponse> collectSettings;
     private final StreamingCallSettings.Builder<EchoRequest, EchoResponse> chatSettings;
@@ -607,6 +627,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
       super(clientContext);
 
       echoSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
+      echoErrorDetailsSettings = UnaryCallSettings.newUnaryCallSettingsBuilder();
       expandSettings = ServerStreamingCallSettings.newBuilder();
       collectSettings = StreamingCallSettings.newBuilder();
       chatSettings = StreamingCallSettings.newBuilder();
@@ -626,6 +647,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
       unaryMethodSettingsBuilders =
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
               echoSettings,
+              echoErrorDetailsSettings,
               pagedExpandSettings,
               pagedExpandLegacySettings,
               pagedExpandLegacyMappedSettings,
@@ -643,6 +665,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
       super(settings);
 
       echoSettings = settings.echoSettings.toBuilder();
+      echoErrorDetailsSettings = settings.echoErrorDetailsSettings.toBuilder();
       expandSettings = settings.expandSettings.toBuilder();
       collectSettings = settings.collectSettings.toBuilder();
       chatSettings = settings.chatSettings.toBuilder();
@@ -661,6 +684,7 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
       unaryMethodSettingsBuilders =
           ImmutableList.<UnaryCallSettings.Builder<?, ?>>of(
               echoSettings,
+              echoErrorDetailsSettings,
               pagedExpandSettings,
               pagedExpandLegacySettings,
               pagedExpandLegacyMappedSettings,
@@ -679,7 +703,6 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
       builder.setTransportChannelProvider(defaultTransportChannelProvider());
       builder.setCredentialsProvider(defaultCredentialsProviderBuilder().build());
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
-      builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
 
@@ -692,7 +715,6 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
       builder.setTransportChannelProvider(defaultHttpJsonTransportProviderBuilder().build());
       builder.setCredentialsProvider(defaultCredentialsProviderBuilder().build());
       builder.setInternalHeaderProvider(defaultHttpJsonApiClientHeaderProviderBuilder().build());
-      builder.setEndpoint(getDefaultEndpoint());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
 
@@ -704,6 +726,11 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
           .echoSettings()
           .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("retry_policy_1_codes"))
           .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("retry_policy_1_params"));
+
+      builder
+          .echoErrorDetailsSettings()
+          .setRetryableCodes(RETRYABLE_CODE_DEFINITIONS.get("no_retry_0_codes"))
+          .setRetrySettings(RETRY_PARAM_DEFINITIONS.get("no_retry_0_params"));
 
       builder
           .expandSettings()
@@ -806,6 +833,12 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
       return echoSettings;
     }
 
+    /** Returns the builder for the settings used for calls to echoErrorDetails. */
+    public UnaryCallSettings.Builder<EchoErrorDetailsRequest, EchoErrorDetailsResponse>
+        echoErrorDetailsSettings() {
+      return echoErrorDetailsSettings;
+    }
+
     /** Returns the builder for the settings used for calls to expand. */
     public ServerStreamingCallSettings.Builder<ExpandRequest, EchoResponse> expandSettings() {
       return expandSettings;
@@ -887,6 +920,15 @@ public class EchoStubSettings extends StubSettings<EchoStubSettings> {
     public UnaryCallSettings.Builder<TestIamPermissionsRequest, TestIamPermissionsResponse>
         testIamPermissionsSettings() {
       return testIamPermissionsSettings;
+    }
+
+    /** Returns the endpoint set by the user or the the service's default endpoint. */
+    @Override
+    public String getEndpoint() {
+      if (super.getEndpoint() != null) {
+        return super.getEndpoint();
+      }
+      return getDefaultEndpoint();
     }
 
     @Override

@@ -52,11 +52,17 @@ public class SettingsCommentComposer {
   private static final String CLASS_HEADER_DEFAULTS_RETRIES_DESCRIPTION =
       "Retries are configured for idempotent methods but not for non-idempotent methods.";
 
+  public static final CommentStatement GET_ENDPOINT_COMMENT =
+      toSimpleComment(
+          "Returns the endpoint set by the user or the the service's default endpoint.");
   public static final CommentStatement DEFAULT_SCOPES_COMMENT =
       toSimpleComment("The default scopes of the service.");
 
   public static final CommentStatement DEFAULT_EXECUTOR_PROVIDER_BUILDER_METHOD_COMMENT =
       toSimpleComment("Returns a builder for the default ExecutorProvider for this service.");
+
+  public static final CommentStatement DEFAULT_SERVICE_NAME_METHOD_COMMENT =
+      toSimpleComment("Returns the default service name.");
   public static final CommentStatement DEFAULT_SERVICE_ENDPOINT_METHOD_COMMENT =
       toSimpleComment("Returns the default service endpoint.");
   public static final CommentStatement DEFAULT_SERVICE_MTLS_ENDPOINT_METHOD_COMMENT =

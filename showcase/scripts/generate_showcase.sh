@@ -8,6 +8,7 @@ set -ex
 readonly SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 lib_gen_scripts_dir="${SCRIPT_DIR}/../../library_generation/"
 source "${lib_gen_scripts_dir}/test/test_utilities.sh"
+source "${lib_gen_scripts_dir}/utilities.sh"
 readonly perform_cleanup=$1
 
 cd "${SCRIPT_DIR}"
@@ -49,6 +50,9 @@ ggj_version=$(get_version_from_versions_txt ../../versions.txt "gapic-generator-
 gapic_additional_protos="google/iam/v1/iam_policy.proto google/cloud/location/locations.proto"
 rest_numeric_enums="false"
 transport="grpc+rest"
+gapic_yaml=""
+service_config="schema/google/showcase/v1beta1/showcase_grpc_service_config.json"
+service_yaml="schema/google/showcase/v1beta1/showcase_v1beta1.yaml"
 include_samples="false"
 rm -rdf output/showcase-output
 mkdir output/showcase-output
@@ -59,6 +63,9 @@ bash "${SCRIPT_DIR}/../../library_generation/generate_library.sh" \
   --gapic_generator_version "${ggj_version}" \
   --gapic_additional_protos "${gapic_additional_protos}" \
   --rest_numeric_enums "${rest_numeric_enums}" \
+  --gapic_yaml "${gapic_yaml}" \
+  --service_config "${service_config}" \
+  --service_yaml "${service_yaml}" \
   --include_samples "${include_samples}" \
   --transport "${transport}" 
 

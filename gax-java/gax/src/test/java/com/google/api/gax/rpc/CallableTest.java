@@ -29,17 +29,20 @@
  */
 package com.google.api.gax.rpc;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.google.api.core.ApiFuture;
 import com.google.api.core.SettableApiFuture;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.testing.FakeCallContext;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnit;
@@ -78,17 +81,28 @@ public class CallableTest {
     innerResult = SettableApiFuture.create();
     when(innerCallable.futureCall(anyString(), any(ApiCallContext.class))).thenReturn(innerResult);
     Duration timeout = Duration.ofMillis(5L);
+    String initialRequest = "Is your refrigerator running?";
+    String modifiedRequest = "What about now?";
+
+    RequestMutator requestMutator = (request -> modifiedRequest);
 
     UnaryCallSettings<Object, Object> callSettings =
         UnaryCallSettings.newUnaryCallSettingsBuilder().setSimpleTimeoutNoRetries(timeout).build();
     UnaryCallable<String, String> callable =
-        Callables.retrying(innerCallable, callSettings, clientContext);
-    innerResult.set("No, my refrigerator is not running!");
+        Callables.retrying(innerCallable, callSettings, clientContext, requestMutator);
+    String expectedResponse = "No, my refrigerator is not running!";
+    innerResult.set(expectedResponse);
 
-    callable.futureCall("Is your refrigerator running?", callContext);
+    ApiFuture<String> futureResponse = callable.futureCall(initialRequest, callContext);
+
+    ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(String.class);
+    verify(innerCallable).futureCall(argumentCaptor.capture(), any(ApiCallContext.class));
+    String expectedRequest = "What about now?";
+    assertEquals(expectedRequest, argumentCaptor.getValue());
     verify(callContext, atLeastOnce()).getRetrySettings();
     verify(callContext).getTimeout();
     verify(callContext).withTimeout(timeout);
+    assertEquals(expectedResponse, futureResponse.get());
   }
 
   @Test
@@ -96,21 +110,33 @@ public class CallableTest {
     innerResult = SettableApiFuture.create();
     when(innerCallable.futureCall(anyString(), any(ApiCallContext.class))).thenReturn(innerResult);
 
+    String initialRequest = "Is your refrigerator running?";
+    String modifiedRequest = "What about now?";
+    RequestMutator requestMutator = (request -> modifiedRequest);
+
     UnaryCallSettings<Object, Object> callSettings =
         UnaryCallSettings.newUnaryCallSettingsBuilder()
             .setSimpleTimeoutNoRetries(Duration.ofMillis(10L))
             .build();
     UnaryCallable<String, String> callable =
-        Callables.retrying(innerCallable, callSettings, clientContext);
-    innerResult.set("No, my refrigerator is not running!");
+        Callables.retrying(innerCallable, callSettings, clientContext, requestMutator);
+    String expectedResponse = "No, my refrigerator is not running!";
+    innerResult.set(expectedResponse);
 
     Duration timeout = retrySettings.getInitialRpcTimeout();
 
-    callable.futureCall("Is your refrigerator running?", callContextWithRetrySettings);
+    ApiFuture<String> futureResponse =
+        callable.futureCall(initialRequest, callContextWithRetrySettings);
+
+    ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(String.class);
+    verify(innerCallable).futureCall(argumentCaptor.capture(), any(ApiCallContext.class));
+    String expectedRequest = "What about now?";
+    assertEquals(expectedRequest, argumentCaptor.getValue());
 
     verify(callContextWithRetrySettings, atLeastOnce()).getRetrySettings();
     verify(callContextWithRetrySettings).getTimeout();
     verify(callContextWithRetrySettings).withTimeout(timeout);
+    assertEquals(expectedResponse, futureResponse.get());
   }
 
   @Test

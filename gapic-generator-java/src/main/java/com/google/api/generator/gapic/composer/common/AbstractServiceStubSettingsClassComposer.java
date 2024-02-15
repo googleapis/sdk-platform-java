@@ -97,6 +97,7 @@ import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
 import com.google.api.generator.gapic.utils.JavaStyle;
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -369,15 +370,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .setReturnType(returnType)
             .build();
 
-    AnnotationNode annotation =
-        AnnotationNode.builder()
-            .setType(FIXED_TYPESTORE.get("BetaApi"))
-            .setDescription(
-                "The surface for customizing headers is not stable yet and may change in the"
-                    + " future.")
-            .build();
     return MethodDefinition.builder()
-        .setAnnotations(Arrays.asList(annotation))
         .setScope(ScopeNode.PUBLIC)
         .setIsStatic(true)
         .setReturnType(returnType)
@@ -1006,6 +999,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     javaMethods.addAll(
         createMethodSettingsGetterMethods(methodSettingsMemberVarExprs, deprecatedSettingVarNames));
     javaMethods.add(createCreateStubMethod(service, typeStore));
+    javaMethods.add(createGetEndpointMethod());
     javaMethods.addAll(createDefaultHelperAndGetterMethods(service, typeStore));
     javaMethods.addAll(
         createNewBuilderMethods(
@@ -1017,6 +1011,45 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     javaMethods.addAll(createBuilderHelperMethods(service, typeStore));
     javaMethods.add(createClassConstructor(service, methodSettingsMemberVarExprs, typeStore));
     return javaMethods;
+  }
+
+  // Helper method to create the getEndpoint method in the ServiceStubSettings class
+  private MethodDefinition createGetEndpointMethod() {
+    Expr getEndpointExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("getEndpoint")
+            .setExprReferenceExpr(
+                ValueExpr.withValue(
+                    SuperObjectValue.withType(
+                        TypeNode.withReference(ConcreteReference.withClazz(StubSettings.class)))))
+            .setReturnType(TypeNode.STRING)
+            .build();
+    Expr isNotNullCheck =
+        RelationalOperationExpr.notEqualToWithExprs(getEndpointExpr, ValueExpr.createNullExpr());
+
+    IfStatement ifStatement =
+        IfStatement.builder()
+            .setConditionExpr(isNotNullCheck)
+            .setBody(ImmutableList.of(ExprStatement.withExpr(ReturnExpr.withExpr(getEndpointExpr))))
+            .build();
+
+    Expr getDefaultEndpointExpr =
+        MethodInvocationExpr.builder()
+            .setMethodName("getDefaultEndpoint")
+            .setReturnType(TypeNode.STRING)
+            .build();
+    ReturnExpr returnExpr = ReturnExpr.withExpr(getDefaultEndpointExpr);
+
+    return MethodDefinition.builder()
+        .setHeaderCommentStatements(SettingsCommentComposer.GET_ENDPOINT_COMMENT)
+        .setScope(ScopeNode.PUBLIC)
+        .setIsStatic(false)
+        .setAnnotations(ImmutableList.of(AnnotationNode.OVERRIDE))
+        .setReturnType(TypeNode.STRING)
+        .setName("getEndpoint")
+        .setBody(ImmutableList.of(ifStatement))
+        .setReturnExpr(returnExpr)
+        .build();
   }
 
   private static List<MethodDefinition> createMethodSettingsGetterMethods(
@@ -1137,9 +1170,27 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
   private List<MethodDefinition> createDefaultHelperAndGetterMethods(
       Service service, TypeStore typeStore) {
     List<MethodDefinition> javaMethods = new ArrayList<>();
+    TypeNode returnType;
+
+    // Create the getServiceName method.
+    if (!Strings.isNullOrEmpty(service.hostServiceName())) {
+      returnType = TypeNode.STRING;
+      javaMethods.add(
+          MethodDefinition.builder()
+              .setHeaderCommentStatements(
+                  SettingsCommentComposer.DEFAULT_SERVICE_NAME_METHOD_COMMENT)
+              .setIsOverride(true)
+              .setScope(ScopeNode.PUBLIC)
+              .setIsStatic(false)
+              .setReturnType(returnType)
+              .setName("getServiceName")
+              .setReturnExpr(
+                  ValueExpr.withValue(StringObjectValue.withValue(service.hostServiceName())))
+              .build());
+    }
 
     // Create the defaultExecutorProviderBuilder method.
-    TypeNode returnType =
+    returnType =
         TypeNode.withReference(
             ConcreteReference.withClazz(InstantiatingExecutorProvider.Builder.class));
     javaMethods.add(
@@ -1446,6 +1497,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
     nestedClassMethods.addAll(
         createNestedClassSettingsBuilderGetterMethods(
             nestedMethodSettingsMemberVarExprs, nestedDeprecatedSettingVarNames));
+    nestedClassMethods.add(createGetEndpointMethod());
     nestedClassMethods.add(createNestedClassBuildMethod(service, typeStore));
     return nestedClassMethods;
   }
@@ -1875,14 +1927,6 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
                             .build())
                     .setMethodName("build")
                     .build())
-            .build());
-
-    bodyExprs.add(
-        MethodInvocationExpr.builder()
-            .setExprReferenceExpr(builderVarExpr)
-            .setMethodName("setEndpoint")
-            .setArguments(
-                MethodInvocationExpr.builder().setMethodName("getDefaultEndpoint").build())
             .build());
     bodyExprs.add(
         MethodInvocationExpr.builder()

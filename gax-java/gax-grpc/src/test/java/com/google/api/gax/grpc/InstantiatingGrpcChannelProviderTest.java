@@ -56,6 +56,9 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
+import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -282,11 +285,42 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
   }
 
   @Test
+  public void testDirectPathDisallowNullCredentials() throws IOException {
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder().build();
+
+    assertThat(provider.isCredentialDirectPathCompatible()).isFalse();
+  }
+
+  @Test
+  public void testDirectPathWithGDUEndpoint() {
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setAttemptDirectPath(true)
+            .setAttemptDirectPathXds()
+            .setEndpoint("test.googleapis.com:443")
+            .build();
+    assertThat(provider.canUseDirectPathWithUniverseDomain()).isTrue();
+  }
+
+  @Test
+  public void testDirectPathWithNonGDUEndpoint() {
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setAttemptDirectPath(true)
+            .setAttemptDirectPathXds()
+            .setEndpoint("test.random.com:443")
+            .build();
+    assertThat(provider.canUseDirectPathWithUniverseDomain()).isFalse();
+  }
+
+  @Test
   public void testDirectPathXdsEnabled() throws IOException {
     InstantiatingGrpcChannelProvider provider =
         InstantiatingGrpcChannelProvider.newBuilder()
             .setAttemptDirectPath(true)
             .setAttemptDirectPathXds()
+            .setEndpoint("test.googleapis.com:443")
             .build();
 
     assertThat(provider.isDirectPathXdsEnabled()).isTrue();
@@ -502,5 +536,104 @@ public class InstantiatingGrpcChannelProviderTest extends AbstractMtlsTransportC
             .setExecutor(Mockito.mock(Executor.class))
             .build();
     return channelProvider.createMtlsChannelCredentials();
+  }
+
+  @Test
+  public void testLogDirectPathMisconfigAttrempDirectPathNotSet() throws Exception {
+    FakeLogHandler logHandler = new FakeLogHandler();
+    InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setAttemptDirectPathXds()
+            .setHeaderProvider(Mockito.mock(HeaderProvider.class))
+            .setExecutor(Mockito.mock(Executor.class))
+            .setEndpoint("localhost:8080")
+            .build();
+
+    provider.getTransportChannel();
+
+    assertThat(logHandler.getAllMessages())
+        .contains(
+            "DirectPath is misconfigured. Please set the attemptDirectPath option along with the"
+                + " attemptDirectPathXds option.");
+    InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
+  }
+
+  @Test
+  public void testLogDirectPathMisconfig_shouldNotLogInTheBuilder() {
+    FakeLogHandler logHandler = new FakeLogHandler();
+    InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
+    InstantiatingGrpcChannelProvider.newBuilder()
+        .setAttemptDirectPathXds()
+        .setAttemptDirectPath(true)
+        .build();
+
+    assertThat(logHandler.getAllMessages()).isEmpty();
+    InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
+  }
+
+  @Test
+  public void testLogDirectPathMisconfigWrongCredential() throws Exception {
+    FakeLogHandler logHandler = new FakeLogHandler();
+    InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setAttemptDirectPathXds()
+            .setAttemptDirectPath(true)
+            .setHeaderProvider(Mockito.mock(HeaderProvider.class))
+            .setExecutor(Mockito.mock(Executor.class))
+            .setEndpoint("test.googleapis.com:443")
+            .build();
+
+    provider.getTransportChannel();
+
+    assertThat(logHandler.getAllMessages())
+        .contains(
+            "DirectPath is misconfigured. Please make sure the credential is an instance of"
+                + " com.google.auth.oauth2.ComputeEngineCredentials .");
+    InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
+  }
+
+  @Test
+  public void testLogDirectPathMisconfigNotOnGCE() throws Exception {
+    FakeLogHandler logHandler = new FakeLogHandler();
+    InstantiatingGrpcChannelProvider.LOG.addHandler(logHandler);
+    InstantiatingGrpcChannelProvider provider =
+        InstantiatingGrpcChannelProvider.newBuilder()
+            .setAttemptDirectPathXds()
+            .setAttemptDirectPath(true)
+            .setAllowNonDefaultServiceAccount(true)
+            .setHeaderProvider(Mockito.mock(HeaderProvider.class))
+            .setExecutor(Mockito.mock(Executor.class))
+            .setEndpoint("test.googleapis.com:443")
+            .build();
+
+    provider.getTransportChannel();
+
+    if (!InstantiatingGrpcChannelProvider.isOnComputeEngine()) {
+      assertThat(logHandler.getAllMessages())
+          .contains(
+              "DirectPath is misconfigured. DirectPath is only available in a GCE environment.");
+    }
+    InstantiatingGrpcChannelProvider.LOG.removeHandler(logHandler);
+  }
+
+  private static class FakeLogHandler extends Handler {
+    List<LogRecord> records = new ArrayList<>();
+
+    @Override
+    public void publish(LogRecord record) {
+      records.add(record);
+    }
+
+    @Override
+    public void flush() {}
+
+    @Override
+    public void close() throws SecurityException {}
+
+    List<String> getAllMessages() {
+      return records.stream().map(LogRecord::getMessage).collect(Collectors.toList());
+    }
   }
 }

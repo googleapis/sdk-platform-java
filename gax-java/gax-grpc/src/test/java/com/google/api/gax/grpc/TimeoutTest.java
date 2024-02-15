@@ -35,6 +35,7 @@ import static org.mockito.Mockito.times;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.ApiException;
 import com.google.api.gax.rpc.ClientContext;
+import com.google.api.gax.rpc.EndpointContext;
 import com.google.api.gax.rpc.RequestParamsExtractor;
 import com.google.api.gax.rpc.ServerStreamingCallSettings;
 import com.google.api.gax.rpc.ServerStreamingCallable;
@@ -43,6 +44,7 @@ import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.gax.rpc.testing.FakeStatusCode;
+import com.google.auth.Credentials;
 import com.google.common.collect.ImmutableSet;
 import io.grpc.CallOptions;
 import io.grpc.ClientCall;
@@ -51,7 +53,9 @@ import io.grpc.ManagedChannel;
 import io.grpc.MethodDescriptor;
 import io.grpc.MethodDescriptor.Marshaller;
 import io.grpc.MethodDescriptor.MethodType;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -77,12 +81,21 @@ public class TimeoutTest {
   private static final Duration totalTimeout = Duration.ofDays(DEADLINE_IN_DAYS);
   private static final Duration maxRpcTimeout = Duration.ofMinutes(DEADLINE_IN_MINUTES);
   private static final Duration initialRpcTimeout = Duration.ofSeconds(DEADLINE_IN_SECONDS);
-  private static final GrpcCallContext defaultCallContext = GrpcCallContext.createDefault();
+  private static GrpcCallContext defaultCallContext;
 
   @Rule public MockitoRule mockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
   @Mock private Marshaller<String> stringMarshaller;
   @Mock private RequestParamsExtractor<String> paramsExtractor;
   @Mock private ManagedChannel managedChannel;
+
+  @BeforeClass
+  public static void setUp() throws IOException {
+    EndpointContext endpointContext = Mockito.mock(EndpointContext.class);
+    Mockito.doNothing()
+        .when(endpointContext)
+        .validateUniverseDomain(Mockito.any(Credentials.class), Mockito.any(GrpcStatusCode.class));
+    defaultCallContext = GrpcCallContext.createDefault().withEndpointContext(endpointContext);
+  }
 
   @Test
   public void testNonRetryUnarySettings() {

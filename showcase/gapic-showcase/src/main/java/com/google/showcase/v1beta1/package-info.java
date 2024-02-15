@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -75,6 +75,7 @@
  *           .setSeverity(Severity.forNumber(0))
  *           .setHeader("header-1221270899")
  *           .setOtherHeader("otherHeader-2026585667")
+ *           .setRequestId("requestId693933066")
  *           .build();
  *   EchoResponse response = echoClient.echo(request);
  * }
@@ -140,6 +141,8 @@
  * <p>======================= TestingClient =======================
  *
  * <p>Service Description: A service to facilitate running discrete sets of tests against Showcase.
+ * Adding this comment with special characters for comment formatting tests: 1.
+ * (abra-&gt;kadabra-&gt;alakazam) 2) [Nonsense][]: `pokemon/&#42;/psychic/&#42;`
  *
  * <p>Sample for TestingClient:
  *

@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -94,6 +94,12 @@ public class EchoSettings extends ClientSettings<EchoSettings> {
   /** Returns the object with the settings used for calls to echo. */
   public UnaryCallSettings<EchoRequest, EchoResponse> echoSettings() {
     return ((EchoStubSettings) getStubSettings()).echoSettings();
+  }
+
+  /** Returns the object with the settings used for calls to echoErrorDetails. */
+  public UnaryCallSettings<EchoErrorDetailsRequest, EchoErrorDetailsResponse>
+      echoErrorDetailsSettings() {
+    return ((EchoStubSettings) getStubSettings()).echoErrorDetailsSettings();
   }
 
   /** Returns the object with the settings used for calls to expand. */
@@ -212,7 +218,6 @@ public class EchoSettings extends ClientSettings<EchoSettings> {
     return EchoStubSettings.defaultTransportChannelProvider();
   }
 
-  @BetaApi("The surface for customizing headers is not stable yet and may change in the future.")
   public static ApiClientHeaderProvider.Builder defaultApiClientHeaderProviderBuilder() {
     return EchoStubSettings.defaultApiClientHeaderProviderBuilder();
   }
@@ -223,7 +228,6 @@ public class EchoSettings extends ClientSettings<EchoSettings> {
   }
 
   /** Returns a new REST builder for this class. */
-  @BetaApi
   public static Builder newHttpJsonBuilder() {
     return Builder.createHttpJsonDefault();
   }
@@ -265,7 +269,6 @@ public class EchoSettings extends ClientSettings<EchoSettings> {
       return new Builder(EchoStubSettings.newBuilder());
     }
 
-    @BetaApi
     private static Builder createHttpJsonDefault() {
       return new Builder(EchoStubSettings.newHttpJsonBuilder());
     }
@@ -289,6 +292,12 @@ public class EchoSettings extends ClientSettings<EchoSettings> {
     /** Returns the builder for the settings used for calls to echo. */
     public UnaryCallSettings.Builder<EchoRequest, EchoResponse> echoSettings() {
       return getStubSettingsBuilder().echoSettings();
+    }
+
+    /** Returns the builder for the settings used for calls to echoErrorDetails. */
+    public UnaryCallSettings.Builder<EchoErrorDetailsRequest, EchoErrorDetailsResponse>
+        echoErrorDetailsSettings() {
+      return getStubSettingsBuilder().echoErrorDetailsSettings();
     }
 
     /** Returns the builder for the settings used for calls to expand. */

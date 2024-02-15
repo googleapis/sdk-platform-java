@@ -64,6 +64,8 @@ import java.util.Map;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.Nullable;
 import javax.net.ssl.KeyManagerFactory;
 import org.threeten.bp.Duration;
@@ -82,6 +84,9 @@ import org.threeten.bp.Duration;
  */
 @InternalExtensionOnly
 public final class InstantiatingGrpcChannelProvider implements TransportChannelProvider {
+  @VisibleForTesting
+  static final Logger LOG = Logger.getLogger(InstantiatingGrpcChannelProvider.class.getName());
+
   private static final String DIRECT_PATH_ENV_DISABLE_DIRECT_PATH =
       "GOOGLE_CLOUD_DISABLE_DIRECT_PATH";
   private static final String DIRECT_PATH_ENV_ENABLE_XDS = "GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS";
@@ -228,6 +233,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     } else if (needsEndpoint()) {
       throw new IllegalStateException("getTransportChannel() called when needsEndpoint() is true");
     } else {
+      logDirectPathMisconfig();
       return createChannel();
     }
   }
@@ -266,7 +272,42 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return false;
   }
 
-  private boolean isNonDefaultServiceAccountAllowed() {
+  // This method should be called once per client initialization, hence can not be called in the
+  // builder or createSingleChannel, only in getTransportChannel which creates the first channel
+  // for a client.
+  private void logDirectPathMisconfig() {
+    if (isDirectPathXdsEnabled()) {
+      // Case 1: does not enable DirectPath
+      if (!isDirectPathEnabled()) {
+        LOG.log(
+            Level.WARNING,
+            "DirectPath is misconfigured. Please set the attemptDirectPath option along with the"
+                + " attemptDirectPathXds option.");
+      } else {
+        // Case 2: credential is not correctly set
+        if (!isCredentialDirectPathCompatible()) {
+          LOG.log(
+              Level.WARNING,
+              "DirectPath is misconfigured. Please make sure the credential is an instance of "
+                  + ComputeEngineCredentials.class.getName()
+                  + " .");
+        }
+        // Case 3: not running on GCE
+        if (!isOnComputeEngine()) {
+          LOG.log(
+              Level.WARNING,
+              "DirectPath is misconfigured. DirectPath is only available in a GCE environment.");
+        }
+      }
+    }
+  }
+
+  @VisibleForTesting
+  boolean isCredentialDirectPathCompatible() {
+    // DirectPath requires a call credential during gRPC channel construction.
+    if (needsCredentials()) {
+      return false;
+    }
     if (allowNonDefaultServiceAccount != null && allowNonDefaultServiceAccount) {
       return true;
     }
@@ -275,6 +316,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
   // DirectPath should only be used on Compute Engine.
   // Notice Windows is supported for now.
+  @VisibleForTesting
   static boolean isOnComputeEngine() {
     String osName = System.getProperty("os.name");
     if ("Linux".equals(osName)) {
@@ -289,6 +331,12 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
       }
     }
     return false;
+  }
+
+  // Universe Domain configuration is currently only supported in the GDU
+  @VisibleForTesting
+  boolean canUseDirectPathWithUniverseDomain() {
+    return endpoint.contains(Credentials.GOOGLE_DEFAULT_UNIVERSE);
   }
 
   @VisibleForTesting
@@ -322,7 +370,10 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
 
     // Check DirectPath traffic.
     boolean useDirectPathXds = false;
-    if (isDirectPathEnabled() && isNonDefaultServiceAccountAllowed() && isOnComputeEngine()) {
+    if (isDirectPathEnabled()
+        && isCredentialDirectPathCompatible()
+        && isOnComputeEngine()
+        && canUseDirectPathWithUniverseDomain()) {
       CallCredentials callCreds = MoreCallCredentials.from(credentials);
       ChannelCredentials channelCreds =
           GoogleDefaultChannelCredentials.newBuilder().callCredentials(callCreds).build();
@@ -396,6 +447,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   /** The endpoint to be used for the channel. */
+  @Override
   public String getEndpoint() {
     return endpoint;
   }

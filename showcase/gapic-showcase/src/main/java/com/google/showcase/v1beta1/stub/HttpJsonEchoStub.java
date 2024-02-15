@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 Google LLC
+ * Copyright 2024 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -46,6 +46,7 @@ import com.google.cloud.location.GetLocationRequest;
 import com.google.cloud.location.ListLocationsRequest;
 import com.google.cloud.location.ListLocationsResponse;
 import com.google.cloud.location.Location;
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
 import com.google.iam.v1.GetIamPolicyRequest;
 import com.google.iam.v1.Policy;
@@ -56,6 +57,8 @@ import com.google.longrunning.Operation;
 import com.google.protobuf.TypeRegistry;
 import com.google.showcase.v1beta1.BlockRequest;
 import com.google.showcase.v1beta1.BlockResponse;
+import com.google.showcase.v1beta1.EchoErrorDetailsRequest;
+import com.google.showcase.v1beta1.EchoErrorDetailsResponse;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoResponse;
 import com.google.showcase.v1beta1.ExpandRequest;
@@ -71,6 +74,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Generated;
 
@@ -120,6 +124,41 @@ public class HttpJsonEchoStub extends EchoStub {
                   .setDefaultTypeRegistry(typeRegistry)
                   .build())
           .build();
+
+  private static final ApiMethodDescriptor<EchoErrorDetailsRequest, EchoErrorDetailsResponse>
+      echoErrorDetailsMethodDescriptor =
+          ApiMethodDescriptor.<EchoErrorDetailsRequest, EchoErrorDetailsResponse>newBuilder()
+              .setFullMethodName("google.showcase.v1beta1.Echo/EchoErrorDetails")
+              .setHttpMethod("POST")
+              .setType(ApiMethodDescriptor.MethodType.UNARY)
+              .setRequestFormatter(
+                  ProtoMessageRequestFormatter.<EchoErrorDetailsRequest>newBuilder()
+                      .setPath(
+                          "/v1beta1/echo:error-details",
+                          request -> {
+                            Map<String, String> fields = new HashMap<>();
+                            ProtoRestSerializer<EchoErrorDetailsRequest> serializer =
+                                ProtoRestSerializer.create();
+                            return fields;
+                          })
+                      .setQueryParamsExtractor(
+                          request -> {
+                            Map<String, List<String>> fields = new HashMap<>();
+                            ProtoRestSerializer<EchoErrorDetailsRequest> serializer =
+                                ProtoRestSerializer.create();
+                            return fields;
+                          })
+                      .setRequestBodyExtractor(
+                          request ->
+                              ProtoRestSerializer.create()
+                                  .toBody("*", request.toBuilder().build(), false))
+                      .build())
+              .setResponseParser(
+                  ProtoMessageResponseParser.<EchoErrorDetailsResponse>newBuilder()
+                      .setDefaultInstance(EchoErrorDetailsResponse.getDefaultInstance())
+                      .setDefaultTypeRegistry(typeRegistry)
+                      .build())
+              .build();
 
   private static final ApiMethodDescriptor<ExpandRequest, EchoResponse> expandMethodDescriptor =
       ApiMethodDescriptor.<ExpandRequest, EchoResponse>newBuilder()
@@ -511,6 +550,8 @@ public class HttpJsonEchoStub extends EchoStub {
               .build();
 
   private final UnaryCallable<EchoRequest, EchoResponse> echoCallable;
+  private final UnaryCallable<EchoErrorDetailsRequest, EchoErrorDetailsResponse>
+      echoErrorDetailsCallable;
   private final ServerStreamingCallable<ExpandRequest, EchoResponse> expandCallable;
   private final UnaryCallable<PagedExpandRequest, PagedExpandResponse> pagedExpandCallable;
   private final UnaryCallable<PagedExpandRequest, PagedExpandPagedResponse>
@@ -621,7 +662,21 @@ public class HttpJsonEchoStub extends EchoStub {
                   builder.add(request.getOtherHeader(), "qux", ECHO_7_PATH_TEMPLATE);
                   return builder.build();
                 })
+            .setRequestMutator(
+                request -> {
+                  EchoRequest.Builder requestBuilder = request.toBuilder();
+                  if (Strings.isNullOrEmpty(request.getRequestId())) {
+                    requestBuilder.setRequestId(UUID.randomUUID().toString());
+                  }
+                  return requestBuilder.build();
+                })
             .build();
+    HttpJsonCallSettings<EchoErrorDetailsRequest, EchoErrorDetailsResponse>
+        echoErrorDetailsTransportSettings =
+            HttpJsonCallSettings.<EchoErrorDetailsRequest, EchoErrorDetailsResponse>newBuilder()
+                .setMethodDescriptor(echoErrorDetailsMethodDescriptor)
+                .setTypeRegistry(typeRegistry)
+                .build();
     HttpJsonCallSettings<ExpandRequest, EchoResponse> expandTransportSettings =
         HttpJsonCallSettings.<ExpandRequest, EchoResponse>newBuilder()
             .setMethodDescriptor(expandMethodDescriptor)
@@ -715,6 +770,9 @@ public class HttpJsonEchoStub extends EchoStub {
     this.echoCallable =
         callableFactory.createUnaryCallable(
             echoTransportSettings, settings.echoSettings(), clientContext);
+    this.echoErrorDetailsCallable =
+        callableFactory.createUnaryCallable(
+            echoErrorDetailsTransportSettings, settings.echoErrorDetailsSettings(), clientContext);
     this.expandCallable =
         callableFactory.createServerStreamingCallable(
             expandTransportSettings, settings.expandSettings(), clientContext);
@@ -780,6 +838,7 @@ public class HttpJsonEchoStub extends EchoStub {
   public static List<ApiMethodDescriptor> getMethodDescriptors() {
     List<ApiMethodDescriptor> methodDescriptors = new ArrayList<>();
     methodDescriptors.add(echoMethodDescriptor);
+    methodDescriptors.add(echoErrorDetailsMethodDescriptor);
     methodDescriptors.add(expandMethodDescriptor);
     methodDescriptors.add(pagedExpandMethodDescriptor);
     methodDescriptors.add(pagedExpandLegacyMethodDescriptor);
@@ -801,6 +860,12 @@ public class HttpJsonEchoStub extends EchoStub {
   @Override
   public UnaryCallable<EchoRequest, EchoResponse> echoCallable() {
     return echoCallable;
+  }
+
+  @Override
+  public UnaryCallable<EchoErrorDetailsRequest, EchoErrorDetailsResponse>
+      echoErrorDetailsCallable() {
+    return echoErrorDetailsCallable;
   }
 
   @Override

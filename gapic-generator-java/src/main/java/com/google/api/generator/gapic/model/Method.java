@@ -17,6 +17,7 @@ package com.google.api.generator.gapic.model;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nullable;
 
@@ -68,6 +69,16 @@ public abstract class Method {
   // Example from Expand in echo.proto: Thet TypeNodes that map to
   // [["content", "error"], ["content", "error", "info"]].
   public abstract ImmutableList<List<MethodArgument>> methodSignatures();
+
+  public abstract List<String> autoPopulatedFields();
+
+  /**
+   * If a service's service_config.yaml file contains method_settings.auto_populated_fields for this
+   * method, and the method is a Unary-type, then this is true
+   */
+  public boolean hasAutoPopulatedFields() {
+    return !autoPopulatedFields().isEmpty() && stream() == Stream.NONE;
+  }
 
   public abstract boolean operationPollingMethod();
 
@@ -123,6 +134,7 @@ public abstract class Method {
   public static Builder builder() {
     return new AutoValue_Method.Builder()
         .setStream(Stream.NONE)
+        .setAutoPopulatedFields(new ArrayList<>())
         .setMethodSignatures(ImmutableList.of())
         .setIsBatching(false)
         .setIsDeprecated(false)
@@ -169,6 +181,8 @@ public abstract class Method {
     public abstract Builder setIsDeprecated(boolean isDeprecated);
 
     public abstract Builder setOperationPollingMethod(boolean operationPollingMethod);
+
+    public abstract Builder setAutoPopulatedFields(List<String> autoPopulatedFields);
 
     public abstract Builder setRoutingHeaderRule(RoutingHeaderRule routingHeaderRule);
 

@@ -1,0 +1,11 @@
+{
+  "release-type": "java-yoshi-mono-repo",
+  "separate-pull-requests": false,
+  "include-component-in-tag": false,
+  "group-pull-request-title-pattern": "chore(${branch}): release ${version}",
+  "packages": {
+    ".": {
+      "extra-files": ["WORKSPACE", ".cloudbuild/cloudbuild.yaml", ".cloudbuild/cloudbuild-test-a.yaml", ".cloudbuild/cloudbuild-test-b.yaml"]
+    }
+  }
+}

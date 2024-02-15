@@ -37,7 +37,6 @@ import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.ExecutorAsBackgroundResource;
 import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.rpc.internal.QuotaProjectIdHidingCredentials;
-import com.google.api.gax.rpc.mtls.MtlsProvider;
 import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.api.gax.tracing.BaseApiTracerFactory;
 import com.google.auth.Credentials;
@@ -101,6 +100,13 @@ public abstract class ClientContext {
   @Nonnull
   public abstract Duration getStreamWatchdogCheckInterval();
 
+  // Package-Private scope for internal use only. Shared between StubSettings and ClientContext
+  @Nullable
+  abstract String getServiceName();
+
+  @Nullable
+  public abstract String getUniverseDomain();
+
   @Nullable
   public abstract String getEndpoint();
 
@@ -143,29 +149,6 @@ public abstract class ClientContext {
     return create(settings.getStubSettings());
   }
 
-  /** Returns the endpoint that should be used. See https://google.aip.dev/auth/4114. */
-  static String getEndpoint(
-      String endpoint,
-      String mtlsEndpoint,
-      boolean switchToMtlsEndpointAllowed,
-      MtlsProvider mtlsProvider)
-      throws IOException {
-    if (switchToMtlsEndpointAllowed) {
-      switch (mtlsProvider.getMtlsEndpointUsagePolicy()) {
-        case ALWAYS:
-          return mtlsEndpoint;
-        case NEVER:
-          return endpoint;
-        default:
-          if (mtlsProvider.useMtlsClientCertificate() && mtlsProvider.getKeyStore() != null) {
-            return mtlsEndpoint;
-          }
-          return endpoint;
-      }
-    }
-    return endpoint;
-  }
-
   /**
    * Instantiates the executor, credentials, and transport context based on the given client
    * settings.
@@ -177,15 +160,28 @@ public abstract class ClientContext {
     final ScheduledExecutorService backgroundExecutor = backgroundExecutorProvider.getExecutor();
 
     Credentials credentials = settings.getCredentialsProvider().getCredentials();
+    boolean usingGDCH = credentials instanceof GdchCredentials;
+    EndpointContext endpointContext =
+        EndpointContext.newBuilder()
+            .setServiceName(settings.getServiceName())
+            .setUniverseDomain(settings.getUniverseDomain())
+            .setClientSettingsEndpoint(settings.getUserSetEndpoint())
+            .setTransportChannelProviderEndpoint(
+                settings.getTransportChannelProvider().getEndpoint())
+            .setMtlsEndpoint(settings.getMtlsEndpoint())
+            .setSwitchToMtlsEndpointAllowed(settings.getSwitchToMtlsEndpointAllowed())
+            .setUsingGDCH(usingGDCH)
+            .build();
+    String endpoint = endpointContext.resolvedEndpoint();
 
     String settingsGdchApiAudience = settings.getGdchApiAudience();
-    if (credentials instanceof GdchCredentials) {
+    if (usingGDCH) {
       // We recompute the GdchCredentials with the audience
       String audienceString;
       if (!Strings.isNullOrEmpty(settingsGdchApiAudience)) {
         audienceString = settingsGdchApiAudience;
-      } else if (!Strings.isNullOrEmpty(settings.getEndpoint())) {
-        audienceString = settings.getEndpoint();
+      } else if (!Strings.isNullOrEmpty(endpoint)) {
+        audienceString = endpoint;
       } else {
         throw new IllegalArgumentException("Could not infer GDCH api audience from settings");
       }
@@ -224,12 +220,6 @@ public abstract class ClientContext {
     if (transportChannelProvider.needsCredentials() && credentials != null) {
       transportChannelProvider = transportChannelProvider.withCredentials(credentials);
     }
-    String endpoint =
-        getEndpoint(
-            settings.getEndpoint(),
-            settings.getMtlsEndpoint(),
-            settings.getSwitchToMtlsEndpointAllowed(),
-            new MtlsProvider());
     if (transportChannelProvider.needsEndpoint()) {
       transportChannelProvider = transportChannelProvider.withEndpoint(endpoint);
     }
@@ -240,6 +230,7 @@ public abstract class ClientContext {
     if (credentials != null) {
       defaultCallContext = defaultCallContext.withCredentials(credentials);
     }
+    defaultCallContext = defaultCallContext.withEndpointContext(endpointContext);
 
     WatchdogProvider watchdogProvider = settings.getStreamWatchdogProvider();
     @Nullable Watchdog watchdog = null;
@@ -279,6 +270,8 @@ public abstract class ClientContext {
         .setInternalHeaders(ImmutableMap.copyOf(settings.getInternalHeaderProvider().getHeaders()))
         .setClock(clock)
         .setDefaultCallContext(defaultCallContext)
+        .setServiceName(settings.getServiceName())
+        .setUniverseDomain(settings.getUniverseDomain())
         .setEndpoint(settings.getEndpoint())
         .setQuotaProjectId(settings.getQuotaProjectId())
         .setStreamWatchdog(watchdog)
@@ -343,6 +336,11 @@ public abstract class ClientContext {
     public abstract Builder setClock(ApiClock clock);
 
     public abstract Builder setDefaultCallContext(ApiCallContext defaultCallContext);
+
+    // Package-Private scope for internal use only. Shared between StubSettings and ClientContext
+    abstract Builder setServiceName(String serviceName);
+
+    public abstract Builder setUniverseDomain(String universeDomain);
 
     public abstract Builder setEndpoint(String endpoint);
 

@@ -32,7 +32,7 @@ public final class PoliciesGrpc {
 
   private PoliciesGrpc() {}
 
-  public static final String SERVICE_NAME = "google.iam.v2beta.Policies";
+  public static final java.lang.String SERVICE_NAME = "google.iam.v2beta.Policies";
 
   // Static method descriptors that strictly reflect the proto.
   private static volatile io.grpc.MethodDescriptor<
@@ -791,9 +791,9 @@ public final class PoliciesGrpc {
 
   private static final class PoliciesMethodDescriptorSupplier extends PoliciesBaseDescriptorSupplier
       implements io.grpc.protobuf.ProtoMethodDescriptorSupplier {
-    private final String methodName;
+    private final java.lang.String methodName;
 
-    PoliciesMethodDescriptorSupplier(String methodName) {
+    PoliciesMethodDescriptorSupplier(java.lang.String methodName) {
       this.methodName = methodName;
     }
 

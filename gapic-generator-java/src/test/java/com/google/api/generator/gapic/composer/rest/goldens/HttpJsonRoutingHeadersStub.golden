@@ -1,6 +1,5 @@
 package com.google.explicit.dynamic.routing.header.stub;
 
-import com.google.api.core.BetaApi;
 import com.google.api.core.InternalApi;
 import com.google.api.gax.core.BackgroundResource;
 import com.google.api.gax.core.BackgroundResourceAggregation;
@@ -14,6 +13,8 @@ import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.RequestParamsBuilder;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.pathtemplate.PathTemplate;
+import com.google.explicit.dynamic.routing.header.EnumRequest;
+import com.google.explicit.dynamic.routing.header.EnumResponse;
 import com.google.explicit.dynamic.routing.header.Request;
 import com.google.explicit.dynamic.routing.header.RequestWithNestedField;
 import com.google.protobuf.Empty;
@@ -33,7 +34,6 @@ import javax.annotation.Generated;
  * <p>This class is for advanced usage and reflects the underlying API directly.
  */
 @Generated("by gapic-generator-java")
-@BetaApi
 public class HttpJsonExplicitDynamicRoutingHeaderTestingStub
     extends ExplicitDynamicRoutingHeaderTestingStub {
   private static final TypeRegistry typeRegistry = TypeRegistry.newBuilder().build();
@@ -140,9 +140,48 @@ public class HttpJsonExplicitDynamicRoutingHeaderTestingStub
                       .build())
               .build();
 
+  private static final ApiMethodDescriptor<EnumRequest, EnumResponse>
+      implicitRoutingHeaderWithEnumTestMethodDescriptor =
+          ApiMethodDescriptor.<EnumRequest, EnumResponse>newBuilder()
+              .setFullMethodName(
+                  "google.explicit.dynamic.routing.header.ExplicitDynamicRoutingHeaderTesting/ImplicitRoutingHeaderWithEnumTest")
+              .setHttpMethod("POST")
+              .setType(ApiMethodDescriptor.MethodType.UNARY)
+              .setRequestFormatter(
+                  ProtoMessageRequestFormatter.<EnumRequest>newBuilder()
+                      .setPath(
+                          "/v1beta1/{info.enumTest}",
+                          request -> {
+                            Map<String, String> fields = new HashMap<>();
+                            ProtoRestSerializer<EnumRequest> serializer =
+                                ProtoRestSerializer.create();
+                            serializer.putPathParam(
+                                fields, "info.enumTest", request.getInfo().getEnumTestValue());
+                            return fields;
+                          })
+                      .setQueryParamsExtractor(
+                          request -> {
+                            Map<String, List<String>> fields = new HashMap<>();
+                            ProtoRestSerializer<EnumRequest> serializer =
+                                ProtoRestSerializer.create();
+                            return fields;
+                          })
+                      .setRequestBodyExtractor(
+                          request ->
+                              ProtoRestSerializer.create()
+                                  .toBody("*", request.toBuilder().build(), false))
+                      .build())
+              .setResponseParser(
+                  ProtoMessageResponseParser.<EnumResponse>newBuilder()
+                      .setDefaultInstance(EnumResponse.getDefaultInstance())
+                      .setDefaultTypeRegistry(typeRegistry)
+                      .build())
+              .build();
+
   private final UnaryCallable<Request, Empty> backwardsCompatible1TestCallable;
   private final UnaryCallable<Request, Empty> backwardsCompatible2TestCallable;
   private final UnaryCallable<Request, Empty> backwardsCompatible3TestCallable;
+  private final UnaryCallable<EnumRequest, EnumResponse> implicitRoutingHeaderWithEnumTestCallable;
 
   private final BackgroundResource backgroundResources;
   private final HttpJsonStubCallableFactory callableFactory;
@@ -223,6 +262,19 @@ public class HttpJsonExplicitDynamicRoutingHeaderTestingStub
                   return builder.build();
                 })
             .build();
+    HttpJsonCallSettings<EnumRequest, EnumResponse>
+        implicitRoutingHeaderWithEnumTestTransportSettings =
+            HttpJsonCallSettings.<EnumRequest, EnumResponse>newBuilder()
+                .setMethodDescriptor(implicitRoutingHeaderWithEnumTestMethodDescriptor)
+                .setTypeRegistry(typeRegistry)
+                .setParamsExtractor(
+                    request -> {
+                      RequestParamsBuilder builder = RequestParamsBuilder.create();
+                      builder.add(
+                          "info.enum_test", String.valueOf(request.getInfo().getEnumTestValue()));
+                      return builder.build();
+                    })
+                .build();
 
     this.backwardsCompatible1TestCallable =
         callableFactory.createUnaryCallable(
@@ -239,6 +291,11 @@ public class HttpJsonExplicitDynamicRoutingHeaderTestingStub
             backwardsCompatible3TestTransportSettings,
             settings.backwardsCompatible3TestSettings(),
             clientContext);
+    this.implicitRoutingHeaderWithEnumTestCallable =
+        callableFactory.createUnaryCallable(
+            implicitRoutingHeaderWithEnumTestTransportSettings,
+            settings.implicitRoutingHeaderWithEnumTestSettings(),
+            clientContext);
 
     this.backgroundResources =
         new BackgroundResourceAggregation(clientContext.getBackgroundResources());
@@ -250,6 +307,7 @@ public class HttpJsonExplicitDynamicRoutingHeaderTestingStub
     methodDescriptors.add(backwardsCompatible1TestMethodDescriptor);
     methodDescriptors.add(backwardsCompatible2TestMethodDescriptor);
     methodDescriptors.add(backwardsCompatible3TestMethodDescriptor);
+    methodDescriptors.add(implicitRoutingHeaderWithEnumTestMethodDescriptor);
     return methodDescriptors;
   }
 
@@ -266,6 +324,11 @@ public class HttpJsonExplicitDynamicRoutingHeaderTestingStub
   @Override
   public UnaryCallable<Request, Empty> backwardsCompatible3TestCallable() {
     return backwardsCompatible3TestCallable;
+  }
+
+  @Override
+  public UnaryCallable<EnumRequest, EnumResponse> implicitRoutingHeaderWithEnumTestCallable() {
+    return implicitRoutingHeaderWithEnumTestCallable;
   }
 
   @Override
