@@ -267,6 +267,8 @@ def prepare_repo(
         # use absolute path because docker requires absolute path
         # in volume name.
         absolute_library_path = str(Path(library_path).resolve())
+        if absolute_library_path in libraries:
+            raise ValueError(f"{absolute_library_path} already exists.")
         libraries[absolute_library_path] = library
         # remove existing .repo-metadata.json
         json_name = ".repo-metadata.json"

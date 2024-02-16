@@ -52,6 +52,14 @@ library_2 = LibraryConfig(
     api_description="allows you to encrypt, store, manage, and audit infrastructure and application-level secrets.",
     gapic_configs=list(),
 )
+library_3 = LibraryConfig(
+    api_shortname="secret",
+    name_pretty="Secret Management Example",
+    product_documentation="https://cloud.google.com/solutions/",
+    api_description="allows you to encrypt, store, and audit infrastructure and application-level secrets.",
+    library_name="secretmanager",
+    gapic_configs=list(),
+)
 
 
 class UtilitiesTest(unittest.TestCase):
@@ -389,6 +397,17 @@ class UtilitiesTest(unittest.TestCase):
             ["java-bare-metal-solution", "java-secretmanager"], library_path
         )
 
+    def test_prepare_repo_monorepo_duplicated_library_name_failed(self):
+        gen_config = self.__get_a_gen_config(3)
+        self.assertRaisesRegex(
+            ValueError,
+            "secretmanager",
+            util.prepare_repo,
+            gen_config,
+            gen_config.libraries,
+            f"{resources_dir}/misc",
+        )
+
     def test_prepare_repo_monorepo_failed(self):
         gen_config = self.__get_a_gen_config(2)
         self.assertRaises(
@@ -451,8 +470,10 @@ class UtilitiesTest(unittest.TestCase):
         the GenerationConfig. Only support one or two.
         :return: an object of GenerationConfig
         """
-        if num > 1:
+        if num == 2:
             libraries = [library_1, library_2]
+        elif num == 3:
+            libraries = [library_1, library_2, library_3]
         else:
             libraries = [library_1]
 
