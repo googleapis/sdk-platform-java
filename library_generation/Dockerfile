@@ -16,11 +16,14 @@
 FROM gcr.io/cloud-devrel-public-resources/python
 
 # install tools
-RUN apt-get update && apt-get install -y unzip openjdk-17-jdk rsync && apt-get clean
+RUN apt-get update && apt-get install -y \
+	unzip openjdk-17-jdk rsync maven \
+	&& apt-get clean
 
 COPY . /src
 
-RUN ln -s $(which python3.12) /usr/local/bin/python
+RUN ln -s $(which python3.11) /usr/local/bin/python
+RUN python -m pip --upgrade
 RUN cd /src && python -m pip install -r requirements.in
 RUN cd /src && python -m pip install .
 
