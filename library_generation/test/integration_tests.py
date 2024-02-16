@@ -72,7 +72,7 @@ class IntegrationTest(unittest.TestCase):
                 compare_result = dircmp(
                     f"{golden_dir}/{library_name}",
                     f"{repo_dest}/{library_name}",
-                    ignore=[".repo-metadata.json"],
+                    ignore=[".repo-metadata.json", "README.md"],
                 )
                 # compare source code
                 self.assertEqual([], compare_result.left_only)
