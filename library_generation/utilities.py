@@ -268,6 +268,8 @@ def prepare_repo(
         # in volume name.
         absolute_library_path = str(Path(library_path).resolve())
         if absolute_library_path in libraries:
+            # check whether the java_library is unique among all libraries
+            # because two libraries should not go to the same destination.
             raise ValueError(f"{absolute_library_path} already exists.")
         libraries[absolute_library_path] = library
         # remove existing .repo-metadata.json
