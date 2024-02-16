@@ -36,7 +36,7 @@ comment_pattern = r"^\s*\#+"
 pattern_to_proto = {
     r"//google/cloud:common_resources_proto": "google/cloud/common_resources.proto",
     r"//google/cloud/location:location_proto": "google/cloud/location/locations.proto",
-    r"//google/iam/v1:iam_policy_proto": "google/iam/v1/iam_policy.proto"
+    r"//google/iam/v1:iam_policy_proto": "google/iam/v1/iam_policy.proto",
 }
 transport_pattern = r"transport = \"(.*?)\""
 rest_pattern = r"rest_numeric_enums = True"
