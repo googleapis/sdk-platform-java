@@ -251,6 +251,7 @@ def prepare_repo(
     :param language: programming language of the library
     :return: a RepoConfig object contained repository information
     :raise FileNotFoundError if there's no versions.txt in repo_path
+    :raise ValueError if two libraries have the same library_name
     """
     output_folder = sh_util("get_output_folder")
     print(f"output_folder: {output_folder}")
