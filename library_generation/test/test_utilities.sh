@@ -104,9 +104,9 @@ compare_poms() {
   set -e
   result=0
   if [ "${os_architecture}" == "linux-x86_64" ]; then
-    find . -name 'pom.xml' -print0 | xargs -i -0 python3 "${test_utilities_script_dir}/compare_poms.py" {} {}.new false || result=$?
+    find . -name 'pom.xml' -print0 | xargs -i -0 python "${test_utilities_script_dir}/compare_poms.py" {} {}.new false || result=$?
   else
-    find . -name 'pom.xml' -print0 | xargs -I{} -0 python3 "${test_utilities_script_dir}/compare_poms.py" {} {}.new false || result=$?
+    find . -name 'pom.xml' -print0 | xargs -I{} -0 python "${test_utilities_script_dir}/compare_poms.py" {} {}.new false || result=$?
   fi
   popd &> /dev/null # target_dir
   echo ${result}
