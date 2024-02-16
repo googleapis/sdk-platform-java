@@ -251,6 +251,7 @@ def prepare_repo(
     :param language: programming language of the library
     :return: a RepoConfig object contained repository information
     :raise FileNotFoundError if there's no versions.txt in repo_path
+    :raise ValueError if two libraries have the same library_name
     """
     output_folder = sh_util("get_output_folder")
     print(f"output_folder: {output_folder}")
@@ -267,6 +268,10 @@ def prepare_repo(
         # use absolute path because docker requires absolute path
         # in volume name.
         absolute_library_path = str(Path(library_path).resolve())
+        if absolute_library_path in libraries:
+            # check whether the java_library is unique among all libraries
+            # because two libraries should not go to the same destination.
+            raise ValueError(f"{absolute_library_path} already exists.")
         libraries[absolute_library_path] = library
         # remove existing .repo-metadata.json
         json_name = ".repo-metadata.json"
