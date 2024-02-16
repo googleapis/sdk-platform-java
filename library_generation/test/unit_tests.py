@@ -463,11 +463,11 @@ class UtilitiesTest(unittest.TestCase):
     @staticmethod
     def __get_a_gen_config(num: int):
         """
-        Returns an object of GenerationConfig with one or two of
+        Returns an object of GenerationConfig with one to three of
         LibraryConfig objects. Other attributes are set to empty str.
 
         :param num: the number of LibraryConfig objects associated with
-        the GenerationConfig. Only support one or two.
+        the GenerationConfig. Only support 1, 2 or 3.
         :return: an object of GenerationConfig
         """
         if num == 2:
