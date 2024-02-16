@@ -76,7 +76,7 @@ preprocessed_libraries_binding="${owlbot_cli_source_folder}"
 # being mapped from the host machine to the child container (instead of the
 # parent container to child container) because we bind the `docker.sock` socket
 # to the parent container (i.e. docker calls use the host's filesystem context)
-# We solve this by referencing environment variables that will be arbitrarily
+# We solve this by referencing environment variables that will be
 # set to produce the correct volume mapping.
 #
 # The workflow is: to check if we are in a docker container (via passed env var)
