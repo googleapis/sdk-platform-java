@@ -1,6 +1,6 @@
-gapic_generator_version: 2.34.0
+gapic_generator_version: 2.35.0
 protobuf_version: 25.2
-googleapis_commitish: 1a45bf7393b52407188c82e63101db7dc9c72026
+googleapis_commitish: 1da529959b075366bfc281070cdbd7874c6f132e
 owlbot_cli_image: sha256:623647ee79ac605858d09e60c1382a716c125fb776f69301b72de1cd35d49409
 synthtool_commitish: 6612ab8f3afcd5e292aecd647f0fa68812c9f5b5
 template_excludes:
@@ -25,19 +25,25 @@ libraries:
     GAPICs:
       - proto_path: google/cloud/apigeeconnect/v1
 
-  - api_shortname: cloudasset
-    name_pretty: Cloud Asset Inventory
-    product_documentation: "https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/overview"
-    api_description: "provides inventory services based on a time series database. This database keeps a five week history of Google Cloud asset metadata. The Cloud Asset Inventory export service allows you to export all asset metadata at a certain timestamp or export event change history during a timeframe."
-    library_name: "asset"
-    client_documentation: "https://cloud.google.com/java/docs/reference/google-cloud-asset/latest/overview"
-    distribution_name: "com.google.cloud:google-cloud-asset"
-    release_level: "stable"
-    issue_tracker: "https://issuetracker.google.com/issues/new?component=187210&template=0"
-    api_reference: "https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/overview"
+  - api_shortname: alloydb
+    name_pretty: AlloyDB
+    product_documentation: https://cloud.google.com/alloydb/
+    api_description: AlloyDB is a fully managed, PostgreSQL-compatible database service
+      with industry-leading performance, availability, and scale.
+    rest_documentation: https://cloud.google.com/alloydb/docs/reference/rest
     GAPICs:
-      - proto_path: google/cloud/asset/v1
-      - proto_path: google/cloud/asset/v1p1beta1
-      - proto_path: google/cloud/asset/v1p2beta1
-      - proto_path: google/cloud/asset/v1p5beta1
-      - proto_path: google/cloud/asset/v1p7beta1
+      - proto_path: google/cloud/alloydb/v1
+      - proto_path: google/cloud/alloydb/v1alpha
+      - proto_path: google/cloud/alloydb/v1beta
+  - api_shortname: alloydb
+    name_pretty: AlloyDB connectors
+    product_documentation: https://cloud.google.com/alloydb/docs
+    api_description: AlloyDB is a fully-managed, PostgreSQL-compatible database for
+      demanding transactional workloads. It provides enterprise-grade performance and
+      availability while maintaining 100% compatibility with open-source PostgreSQL.
+    library_name: alloydb-connectors
+    rest_documentation: https://cloud.google.com/alloydb/docs/reference/rest
+    GAPICs:
+      - proto_path: google/cloud/alloydb/connectors/v1
+      - proto_path: google/cloud/alloydb/connectors/v1alpha
+      - proto_path: google/cloud/alloydb/connectors/v1beta
