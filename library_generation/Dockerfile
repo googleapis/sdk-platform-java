@@ -23,7 +23,7 @@ RUN apt-get update && apt-get install -y \
 COPY . /src
 
 RUN ln -s $(which python3.11) /usr/local/bin/python
-RUN python -m pip --upgrade
+RUN python -m pip install --upgrade pip
 RUN cd /src && python -m pip install -r requirements.in
 RUN cd /src && python -m pip install .
 
