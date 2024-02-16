@@ -221,14 +221,10 @@ public final class Watchdog implements Runnable, BackgroundResource {
               Preconditions.checkState(
                   !hasStarted, "Can't disable automatic flow control after the stream has started");
 
-              synchronized (lock) {
-                // WatchdogStream is created with waiting state. If auto flow control is disabled,
-                // set the state to be IDLE, which will be updated to WAITING when onRequest() is
-                // called.
-                if (state == State.WAITING) {
-                  state = State.IDLE;
-                }
-              }
+              // WatchdogStream is created with waiting state. If auto flow control is disabled,
+              // set the state to be IDLE, which will be updated to WAITING when onRequest() is
+              // called.
+              state = State.IDLE;
 
               autoAutoFlowControl = false;
               innerController.disableAutoInboundFlowControl();
