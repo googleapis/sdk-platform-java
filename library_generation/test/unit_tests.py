@@ -214,44 +214,25 @@ class UtilitiesTest(unittest.TestCase):
         self.assertEqual("google/cloud/asset/v1p5beta1", gapics[3].proto_path)
         self.assertEqual("google/cloud/asset/v1p7beta1", gapics[4].proto_path)
 
-    def test_gapic_inputs_parse_add_protos_no_additions(self):
-        parsed = parse_build_file(build_file, "", "BUILD_no_additional_protos.bazel")
-        self.assertEqual(" ", parsed.additional_protos)
-
-    def test_gapic_inputs_parse_add_protos_common_resources(self):
-        parsed = parse_build_file(build_file, "", "BUILD_common_resources.bazel")
+    @parameterized.expand(
+        [
+            ("BUILD_no_additional_protos.bazel", " "),
+            ("BUILD_common_resources.bazel", "  google/cloud/common_resources.proto"),
+            ("BUILD_comment_common_resources.bazel", " "),
+            ("BUILD_locations.bazel", "  google/cloud/location/locations.proto"),
+            ("BUILD_comment_locations.bazel", " "),
+            ("BUILD_iam_policy.bazel", "  google/iam/v1/iam_policy.proto"),
+            ("BUILD_comment_iam_policy.bazel", " "),
+            (
+                "BUILD_iam_locations.bazel",
+                "  google/cloud/location/locations.proto google/iam/v1/iam_policy.proto",
+            ),
+        ]
+    )
+    def test_gapic_inputs_parse_additional_protos(self, build_name, expected):
+        parsed = parse_build_file(build_file, "", build_name)
         self.assertEqual(
-            "  google/cloud/common_resources.proto", parsed.additional_protos
-        )
-
-    def test_gapic_inputs_parse_add_protos_common_resources_comment_out(self):
-        parsed = parse_build_file(
-            build_file, "", "BUILD_comment_common_resources.bazel"
-        )
-        self.assertEqual(" ", parsed.additional_protos)
-
-    def test_gapic_inputs_parse_add_protos_location(self):
-        parsed = parse_build_file(build_file, "", "BUILD_locations.bazel")
-        self.assertEqual(
-            "  google/cloud/location/locations.proto", parsed.additional_protos
-        )
-
-    def test_gapic_inputs_parse_add_protos_location_comment_out(self):
-        parsed = parse_build_file(build_file, "", "BUILD_comment_locations.bazel")
-        self.assertEqual(" ", parsed.additional_protos)
-
-    def test_gapic_inputs_parse_add_protos_iam(self):
-        parsed = parse_build_file(build_file, "", "BUILD_iam_policy.bazel")
-        self.assertEqual("  google/iam/v1/iam_policy.proto", parsed.additional_protos)
-
-    def test_gapic_inputs_parse_add_protos_iam_comment_out(self):
-        parsed = parse_build_file(build_file, "", "BUILD_comment_iam_policy.bazel")
-        self.assertEqual(" ", parsed.additional_protos)
-
-    def test_gapic_inputs_parse_add_protos_iam_locations(self):
-        parsed = parse_build_file(build_file, "", "BUILD_iam_locations.bazel")
-        self.assertEqual(
-            "  google/cloud/location/locations.proto google/iam/v1/iam_policy.proto",
+            expected,
             parsed.additional_protos,
         )
 
