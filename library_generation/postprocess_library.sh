@@ -67,11 +67,6 @@ else
   owlbot_yaml_relative_path=".github/.OwlBot.yaml"
 fi
 
-# Default values for running copy-code directly from host
-repo_binding="${postprocessing_target}"
-repo_workspace="/repo"
-preprocessed_libraries_binding="${owlbot_cli_source_folder}"
-
 # When running docker inside docker, we run into the issue of volume bindings
 # being mapped from the host machine to the child container (instead of the
 # parent container to child container) because we bind the `docker.sock` socket
@@ -83,25 +78,24 @@ preprocessed_libraries_binding="${owlbot_cli_source_folder}"
 # and use managed volumes (docker volume create) instead of bindings
 # (-v /path:/other-path). The volume names are also received as env vars.
 
+repo_binding="${postprocessing_target}"
+preprocessed_libraries_binding="${owlbot_cli_source_folder}"
 if [[ -n "${RUNNING_IN_DOCKER}" ]]; then
   set -u # temporarily fail on unset variables
   repo_binding="${REPO_BINDING_VOLUME}"
   set +u
-  if [[ "${is_monorepo}" == "true" ]]; then
-    repo_workspace="/repo/$(echo "${postprocessing_target}" | rev | cut -d'/' -f1 | rev)"
-  fi
 fi
 
 docker run --rm \
   --user "$(id -u)":"$(id -g)" \
   -v "${repo_binding}:/repo" \
-  -v "/tmp:/tmp" \
-  -w "${repo_workspace}" \
+  -v "${preprocessed_libraries_binding}:/pre-processed-libraries" \
+  -w /repo \
   --env HOME=/tmp \
   gcr.io/cloud-devrel-public-resources/owlbot-cli@"${owlbot_cli_image_sha}" \
   copy-code \
   --source-repo-commit-hash=none \
-  --source-repo="${preprocessed_libraries_binding}" \
+  --source-repo=/pre-processed-libraries \
   --config-file="${owlbot_yaml_relative_path}"
 
 # we clone the synthtool library and manually build it
@@ -111,7 +105,6 @@ pushd /tmp/synthtool
 if [ ! -d "synthtool" ]; then
   git clone https://github.com/googleapis/synthtool.git
 fi
-git config --global --add safe.directory /tmp/synthtool/synthtool
 pushd "synthtool"
 
 git reset --hard "${synthtool_commitish}"
