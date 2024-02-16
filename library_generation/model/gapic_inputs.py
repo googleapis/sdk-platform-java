@@ -31,9 +31,11 @@ java_gapic_assembly_gradle_pkg\(
 (.*?)
 \)
 """
-resource_pattern = r"//google/cloud:common_resources_proto"
-location_pattern = r"//google/cloud/location:location_proto"
-iam_pattern = r"//google/iam/v1:iam_policy_proto"
+# match leading "#" and any number of whitespace before
+# "//google/cloud:common_resources_proto.
+resource_pattern = r"\#*\s*\"//google/cloud:common_resources_proto"
+location_pattern = r"\#*\s*\"//google/cloud/location:location_proto"
+iam_pattern = r"\#*\s*\"//google/iam/v1:iam_policy_proto"
 transport_pattern = r"transport = \"(.*?)\""
 rest_pattern = r"rest_numeric_enums = True"
 gapic_yaml_pattern = r"gapic_yaml = \"(.*?)\""
@@ -97,7 +99,9 @@ def parse(
     if len(assembly_target) > 0:
         include_samples = __parse_include_samples(assembly_target[0])
     if len(gapic_target) == 0:
-        return GapicInputs(include_samples=include_samples)
+        return GapicInputs(
+            additional_protos=additional_protos, include_samples=include_samples
+        )
 
     transport = __parse_transport(gapic_target[0])
     rest_numeric_enum = __parse_rest_numeric_enums(gapic_target[0])
@@ -119,11 +123,16 @@ def parse(
 
 def __parse_additional_protos(proto_library_target: str) -> str:
     res = [" "]
-    if len(re.findall(resource_pattern, proto_library_target)) != 0:
+    resource = re.findall(resource_pattern, proto_library_target)
+    if len(resource) != 0 and (not str(resource[0]).strip().startswith("#")):
+        # only add common_resources.proto if this is not a comment (with
+        # leading "#").
         res.append("google/cloud/common_resources.proto")
-    if len(re.findall(location_pattern, proto_library_target)) != 0:
+    location = re.findall(location_pattern, proto_library_target)
+    if len(location) != 0 and (not str(location[0]).strip().startswith("#")):
         res.append("google/cloud/location/locations.proto")
-    if len(re.findall(iam_pattern, proto_library_target)) != 0:
+    iam = re.findall(iam_pattern, proto_library_target)
+    if len(iam) != 0 and (not str(iam[0]).strip().startswith("#")):
         res.append("google/iam/v1/iam_policy.proto")
     return " ".join(res)
 
