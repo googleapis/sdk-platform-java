@@ -58,17 +58,14 @@ def generate_composed_library(
     :param versions_file: the file containing version of libraries
     :return None
     """
-    print(1)
     util.pull_api_definition(
         config=config, library=library, output_folder=output_folder
     )
 
-    print(2)
     is_monorepo = util.check_monorepo(config=config)
     base_arguments = __construct_tooling_arg(config=config)
     owlbot_cli_source_folder = util.sh_util("mktemp -d")
     os.makedirs(f"{library_path}", exist_ok=True)
-    print(3)
     for gapic in library.gapic_configs:
         build_file_folder = Path(f"{output_folder}/{gapic.proto_path}").resolve()
         print(f"build_file_folder: {build_file_folder}")
@@ -76,7 +73,6 @@ def generate_composed_library(
         # generate prerequisite files (.repo-metadata.json, .OwlBot.yaml,
         # owlbot.py) here because transport is parsed from BUILD.bazel,
         # which lives in a versioned proto_path.
-        print(4)
         util.generate_prerequisite_files(
             config=config,
             library=library,
@@ -95,7 +91,6 @@ def generate_composed_library(
         print("arguments: ")
         print(effective_arguments)
         print(f"Generating library from {gapic.proto_path} to {library_path}")
-        print(5)
         util.run_process_and_print_output(
             ["bash", f"{script_dir}/generate_library.sh", *effective_arguments],
             "Library generation",
@@ -109,7 +104,6 @@ def generate_composed_library(
         )
 
     # call postprocess library
-    print(6)
     util.run_process_and_print_output(
         [
             f"{script_dir}/postprocess_library.sh",
