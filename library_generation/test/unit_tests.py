@@ -52,6 +52,14 @@ library_2 = LibraryConfig(
     api_description="allows you to encrypt, store, manage, and audit infrastructure and application-level secrets.",
     gapic_configs=list(),
 )
+library_3 = LibraryConfig(
+    api_shortname="secret",
+    name_pretty="Secret Management Example",
+    product_documentation="https://cloud.google.com/solutions/",
+    api_description="allows you to encrypt, store, and audit infrastructure and application-level secrets.",
+    library_name="secretmanager",
+    gapic_configs=list(),
+)
 
 
 class UtilitiesTest(unittest.TestCase):
@@ -192,6 +200,12 @@ class UtilitiesTest(unittest.TestCase):
             library.api_description,
         )
         self.assertEqual("asset", library.library_name)
+        self.assertEqual("@googleapis/analytics-dpe", library.codeowner_team)
+        self.assertEqual(
+            "proto-google-iam-v1-bom,google-iam-policy,proto-google-iam-v1",
+            library.excluded_poms,
+        )
+        self.assertEqual("google-iam-policy", library.excluded_dependencies)
         gapics = library.gapic_configs
         self.assertEqual(5, len(gapics))
         self.assertEqual("google/cloud/asset/v1", gapics[0].proto_path)
@@ -383,6 +397,17 @@ class UtilitiesTest(unittest.TestCase):
             ["java-bare-metal-solution", "java-secretmanager"], library_path
         )
 
+    def test_prepare_repo_monorepo_duplicated_library_name_failed(self):
+        gen_config = self.__get_a_gen_config(3)
+        self.assertRaisesRegex(
+            ValueError,
+            "secretmanager",
+            util.prepare_repo,
+            gen_config,
+            gen_config.libraries,
+            f"{resources_dir}/misc",
+        )
+
     def test_prepare_repo_monorepo_failed(self):
         gen_config = self.__get_a_gen_config(2)
         self.assertRaises(
@@ -438,15 +463,17 @@ class UtilitiesTest(unittest.TestCase):
     @staticmethod
     def __get_a_gen_config(num: int):
         """
-        Returns an object of GenerationConfig with one or two of
+        Returns an object of GenerationConfig with one to three of
         LibraryConfig objects. Other attributes are set to empty str.
 
         :param num: the number of LibraryConfig objects associated with
-        the GenerationConfig. Only support one or two.
+        the GenerationConfig. Only support 1, 2 or 3.
         :return: an object of GenerationConfig
         """
-        if num > 1:
+        if num == 2:
             libraries = [library_1, library_2]
+        elif num == 3:
+            libraries = [library_1, library_2, library_3]
         else:
             libraries = [library_1]
 
