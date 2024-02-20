@@ -46,18 +46,18 @@ class IntegrationTest(unittest.TestCase):
         config_files = self.__get_config_files(config_dir)
         i = 0
         for repo, config_file in config_files.items():
-            if 'RUNNING_IN_DOCKER' in os.environ:
-              # the docker image expects the repo to be in /workspace
-              repo_dest = '/workspace'
-              run_process_and_print_output(
-                  ["git", "config", '--global', '--add', 'safe.directory', repo_dest],
-                "Add /workspace to safe directories",
-              )
-              repo = Repo(Path(repo_dest))
-              repo.git.checkout(committish_list[i])
+            if "RUNNING_IN_DOCKER" in os.environ:
+                # the docker image expects the repo to be in /workspace
+                repo_dest = "/workspace"
+                run_process_and_print_output(
+                    ["git", "config", "--global", "--add", "safe.directory", repo_dest],
+                    "Add /workspace to safe directories",
+                )
+                repo = Repo(Path(repo_dest))
+                repo.git.checkout(committish_list[i])
             else:
-              repo_dest = f"{golden_dir}/{repo}"
-              self.__pull_repo_to(Path(repo_dest), repo, committish_list[i])
+                repo_dest = f"{golden_dir}/{repo}"
+                self.__pull_repo_to(Path(repo_dest), repo, committish_list[i])
             library_names = self.__get_library_names_from_config(config_file)
             # prepare golden files
             for library_name in library_names:
