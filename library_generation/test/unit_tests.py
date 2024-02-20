@@ -52,6 +52,14 @@ library_2 = LibraryConfig(
     api_description="allows you to encrypt, store, manage, and audit infrastructure and application-level secrets.",
     gapic_configs=list(),
 )
+library_3 = LibraryConfig(
+    api_shortname="secret",
+    name_pretty="Secret Management Example",
+    product_documentation="https://cloud.google.com/solutions/",
+    api_description="allows you to encrypt, store, and audit infrastructure and application-level secrets.",
+    library_name="secretmanager",
+    gapic_configs=list(),
+)
 
 
 class UtilitiesTest(unittest.TestCase):
@@ -205,6 +213,28 @@ class UtilitiesTest(unittest.TestCase):
         self.assertEqual("google/cloud/asset/v1p2beta1", gapics[2].proto_path)
         self.assertEqual("google/cloud/asset/v1p5beta1", gapics[3].proto_path)
         self.assertEqual("google/cloud/asset/v1p7beta1", gapics[4].proto_path)
+
+    @parameterized.expand(
+        [
+            ("BUILD_no_additional_protos.bazel", " "),
+            ("BUILD_common_resources.bazel", "  google/cloud/common_resources.proto"),
+            ("BUILD_comment_common_resources.bazel", " "),
+            ("BUILD_locations.bazel", "  google/cloud/location/locations.proto"),
+            ("BUILD_comment_locations.bazel", " "),
+            ("BUILD_iam_policy.bazel", "  google/iam/v1/iam_policy.proto"),
+            ("BUILD_comment_iam_policy.bazel", " "),
+            (
+                "BUILD_iam_locations.bazel",
+                "  google/cloud/location/locations.proto google/iam/v1/iam_policy.proto",
+            ),
+        ]
+    )
+    def test_gapic_inputs_parse_additional_protos(self, build_name, expected):
+        parsed = parse_build_file(build_file, "", build_name)
+        self.assertEqual(
+            expected,
+            parsed.additional_protos,
+        )
 
     def test_gapic_inputs_parse_grpc_only_succeeds(self):
         parsed = parse_build_file(build_file, "", "BUILD_grpc.bazel")
@@ -389,6 +419,17 @@ class UtilitiesTest(unittest.TestCase):
             ["java-bare-metal-solution", "java-secretmanager"], library_path
         )
 
+    def test_prepare_repo_monorepo_duplicated_library_name_failed(self):
+        gen_config = self.__get_a_gen_config(3)
+        self.assertRaisesRegex(
+            ValueError,
+            "secretmanager",
+            util.prepare_repo,
+            gen_config,
+            gen_config.libraries,
+            f"{resources_dir}/misc",
+        )
+
     def test_prepare_repo_monorepo_failed(self):
         gen_config = self.__get_a_gen_config(2)
         self.assertRaises(
@@ -444,15 +485,17 @@ class UtilitiesTest(unittest.TestCase):
     @staticmethod
     def __get_a_gen_config(num: int):
         """
-        Returns an object of GenerationConfig with one or two of
+        Returns an object of GenerationConfig with one to three of
         LibraryConfig objects. Other attributes are set to empty str.
 
         :param num: the number of LibraryConfig objects associated with
-        the GenerationConfig. Only support one or two.
+        the GenerationConfig. Only support 1, 2 or 3.
         :return: an object of GenerationConfig
         """
-        if num > 1:
+        if num == 2:
             libraries = [library_1, library_2]
+        elif num == 3:
+            libraries = [library_1, library_2, library_3]
         else:
             libraries = [library_1]
 
