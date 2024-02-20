@@ -14,7 +14,9 @@ fi
 pushd google-cloud-java
 git reset --hard main
 popd
-docker volume rm repo
+if [[ $(docker volume inspect repo) == '[]' ]]; then
+  docker volume rm repo
+fi
 docker volume create --name "repo" --opt "type=none" --opt "device=$(pwd)/google-cloud-java" --opt "o=bind"
 
 image_id="gcr.io/cloud-devrel-public-resources/java-library-generation:${SHARED_DEPENDENCIES_VERSION}"
