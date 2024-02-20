@@ -46,18 +46,7 @@ class IntegrationTest(unittest.TestCase):
         config_files = self.__get_config_files(config_dir)
         i = 0
         for repo, config_file in config_files.items():
-            if "RUNNING_IN_DOCKER" in os.environ:
-                # the docker image expects the repo to be in /workspace
-                repo_dest = "/workspace"
-                run_process_and_print_output(
-                    ["git", "config", "--global", "--add", "safe.directory", repo_dest],
-                    "Add /workspace to safe directories",
-                )
-                repo = Repo(Path(repo_dest))
-                repo.git.checkout(committish_list[i])
-            else:
-                repo_dest = f"{golden_dir}/{repo}"
-                self.__pull_repo_to(Path(repo_dest), repo, committish_list[i])
+            repo_dest = self.__pull_repo_to(Path(f"{golden_dir}/{repo}"), repo, committish_list[i])
             library_names = self.__get_library_names_from_config(config_file)
             # prepare golden files
             for library_name in library_names:
@@ -116,11 +105,24 @@ class IntegrationTest(unittest.TestCase):
             i += 1
 
     @classmethod
-    def __pull_repo_to(cls, dest: Path, repo: str, committish: str):
-        repo_url = f"{repo_prefix}/{repo}"
-        print(f"Cloning repository {repo_url}")
-        repo = Repo.clone_from(repo_url, dest)
+    def __pull_repo_to(cls, default_dest: Path, repo: str, committish: str) -> str:
+        if "RUNNING_IN_DOCKER" in os.environ:
+            # the docker image expects the repo to be in /workspace
+            dest_str = "/workspace"
+            run_process_and_print_output(
+                ["git", "config", "--global", "--add", "safe.directory", dest_str],
+                "Add /workspace to safe directories",
+            )
+            dest = Path(dest_str)
+            repo = Repo(dest)
+        else:
+            dest = default_dest
+            repo_dest = f"{golden_dir}/{repo}"
+            repo_url = f"{repo_prefix}/{repo}"
+            print(f"Cloning repository {repo_url}")
+            repo = Repo.clone_from(repo_url, dest)
         repo.git.checkout(committish)
+        return str(dest)
 
     @classmethod
     def __get_library_names_from_config(cls, config_path: str) -> List[str]:
