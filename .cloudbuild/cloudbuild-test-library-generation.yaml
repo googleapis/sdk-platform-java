@@ -23,7 +23,7 @@ steps:
     id: library-generation-build
     waitFor: ["-"]
   - name: gcr.io/cloud-devrel-public-resources/java-library-generation:${_SHARED_DEPENDENCIES_VERSION}
-    entrypoint: docker
+    entrypoint: bash
     args: [ './library_generation/test/container_integration_tests.sh' ]
     waitFor: [ "library-generation-build" ]
     env:
