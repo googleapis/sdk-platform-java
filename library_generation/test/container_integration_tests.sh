@@ -14,7 +14,7 @@ fi
 pushd google-cloud-java
 git reset --hard main
 popd
-if [[ $(docker volume inspect repo) == '[]' ]]; then
+if [[ $(docker volume inspect repo) != '[]' ]]; then
   docker volume rm repo
 fi
 docker volume create --name "repo" --opt "type=none" --opt "device=$(pwd)/google-cloud-java" --opt "o=bind"
