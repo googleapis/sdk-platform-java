@@ -20,7 +20,7 @@ fi
 docker volume create --name "repo" --opt "type=none" --opt "device=$(pwd)/google-cloud-java" --opt "o=bind"
 
 image_id="gcr.io/cloud-devrel-public-resources/java-library-generation:${SHARED_DEPENDENCIES_VERSION}"
-docker run --rm -it \
+docker run --rm \
   -v repo:/workspace \
   -v /tmp:/tmp \
   -v /var/run/docker.sock:/var/run/docker.sock \
