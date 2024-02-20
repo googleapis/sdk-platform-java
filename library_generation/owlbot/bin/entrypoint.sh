@@ -46,7 +46,6 @@ fi
 
 
 # Runs template and etc in current working directory
-monorepo=$1
 
 # apply repo templates
 echo "Rendering templates"
