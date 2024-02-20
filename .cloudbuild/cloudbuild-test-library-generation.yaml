@@ -17,7 +17,7 @@ substitutions:
   _SHARED_DEPENDENCIES_VERSION: '3.25.1-SNAPSHOT' # {x-version-update:google-cloud-shared-dependencies:current}
 
 steps:
-  # GraalVM A build
+  # Library generation build
   - name: gcr.io/cloud-builders/docker
     args: ["build", "-t", "gcr.io/cloud-devrel-public-resources/java-library-generation:${_SHARED_DEPENDENCIES_VERSION}", "--file", ".cloudbuild/library_generation.Dockerfile", "."]
     id: library-generation-build
