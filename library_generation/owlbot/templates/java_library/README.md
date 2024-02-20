@@ -1,6 +1,6 @@
 {% set group_id = metadata['repo']['distribution_name'].split(':')|first -%}
 {% set artifact_id = metadata['repo']['distribution_name'].split(':')|last -%}
-{% set repo_short = metadata['repo']['repo'].split('/')|last -%}
+{% set repo_short = metadata['repo']['repo_short'] if metadata['repo']['repo_short'] else metadata['repo']['repo'].split('/')|last -%}
 
 # Google {{ metadata['repo']['name_pretty'] }} Client for Java
 
@@ -273,9 +273,9 @@ Java is a registered trademark of Oracle and/or its affiliates.
 [create-project]: https://cloud.google.com/resource-manager/docs/creating-managing-projects
 [cloud-cli]: https://cloud.google.com/cli
 [troubleshooting]: https://github.com/googleapis/google-cloud-java/blob/main/TROUBLESHOOTING.md
-[contributing]: https://github.com/{{metadata['repo']['repo']}}/blob/main/CONTRIBUTING.md
-[code-of-conduct]: https://github.com/{{metadata['repo']['repo']}}/blob/main/CODE_OF_CONDUCT.md#contributor-code-of-conduct
-[license]: https://github.com/{{metadata['repo']['repo']}}/blob/main/LICENSE
+[contributing]: https://github.com/{{repo_short]}}/blob/main/CONTRIBUTING.md
+[code-of-conduct]: https://github.com/{{repo_short}}/blob/main/CODE_OF_CONDUCT.md#contributor-code-of-conduct
+[license]: https://github.com/{{repo_short}}/blob/main/LICENSE
 {% if metadata['repo']['requires_billing'] %}[enable-billing]: https://cloud.google.com/apis/docs/getting-started#enabling_billing{% endif %}
 {% if metadata['repo']['api_id'] %}[enable-api]: https://console.cloud.google.com/flows/enableapi?apiid={{ metadata['repo']['api_id'] }}{% endif %}
 [libraries-bom]: https://github.com/GoogleCloudPlatform/cloud-opensource-java/wiki/The-Google-Cloud-Platform-Libraries-BOM
