@@ -46,7 +46,9 @@ class IntegrationTest(unittest.TestCase):
         config_files = self.__get_config_files(config_dir)
         i = 0
         for repo, config_file in config_files.items():
-            repo_dest = self.__pull_repo_to(Path(f"{golden_dir}/{repo}"), repo, committish_list[i])
+            repo_dest = self.__pull_repo_to(
+                Path(f"{golden_dir}/{repo}"), repo, committish_list[i]
+            )
             library_names = self.__get_library_names_from_config(config_file)
             # prepare golden files
             for library_name in library_names:
