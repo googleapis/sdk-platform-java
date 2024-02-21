@@ -112,7 +112,7 @@ class IntegrationTest(unittest.TestCase):
             # the docker image expects the repo to be in /workspace
             dest_in_docker = "/workspace"
             run_process_and_print_output(
-                ["git", "config", "--global", "--add", "safe.directory", dest_str],
+                ["git", "config", "--global", "--add", "safe.directory", dest_in_docker],
                 "Add /workspace to safe directories",
             )
             dest = Path(dest_in_docker)
