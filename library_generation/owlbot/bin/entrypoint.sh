@@ -86,7 +86,7 @@ echo "...done"
 
 # ensure formatting on all .java files in the repository
 echo "Reformatting source..."
-mvn fmt:format
+mvn fmt:format -V --batch-mode --no-transfer-progress
 echo "...done"
 
 
