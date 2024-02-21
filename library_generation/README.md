@@ -101,26 +101,29 @@ The library level parameters define how to generate a (multi-versions) GAPIC
 library.
 They are shared by all GAPICs of a library.
 
-| Name                 | Required | Notes                                                             |
-|:---------------------|:--------:|:------------------------------------------------------------------|
-| api_shortname        |   Yes    |                                                                   |
-| api_description      |   Yes    |                                                                   |
-| name_pretty          |   Yes    |                                                                   |
-| product_docs         |   Yes    |                                                                   |
-| library_type         |    No    | `GAPIC_AUTO` if not specified                                     |
-| release_level        |    No    | `preview` if not specified                                        |
-| api_id               |    No    | `{api_shortname}.googleapis.com` if not specified                 |
-| api_reference        |    No    |                                                                   |
-| client_documentation |    No    |                                                                   |
-| distribution_name    |    No    | `{group_id}:google-{cloud_prefix}{library_name}` if not specified |
-| googleapis_commitish |    No    | use repository level `googleapis_commitish` if not specified.     |
-| group_id             |    No    | `com.google.cloud` if not specified                               |
-| issue_tracker        |    No    |                                                                   |
-| library_name         |    No    | `api_shortname` is not specified                                  |
-| rest_documentation   |    No    |                                                                   |
-| rpc_documentation    |    No    |                                                                   |
-| cloud_api            |    No    | `true` if not specified                                           |
-| requires-billing     |    No    | `true` if not specified                                           |
+| Name                  | Required | Notes                                                                              |
+|:----------------------|:--------:|:-----------------------------------------------------------------------------------|
+| api_shortname         |   Yes    |                                                                                    |
+| api_description       |   Yes    |                                                                                    |
+| name_pretty           |   Yes    |                                                                                    |
+| product_docs          |   Yes    |                                                                                    |
+| library_type          |    No    | `GAPIC_AUTO` if not specified                                                      |
+| release_level         |    No    | `preview` if not specified                                                         |
+| api_id                |    No    | `{api_shortname}.googleapis.com` if not specified                                  |
+| api_reference         |    No    |                                                                                    |
+| codeowner_team        |    No    |                                                                                    |
+| client_documentation  |    No    |                                                                                    |
+| distribution_name     |    No    | `{group_id}:google-{cloud_prefix}{library_name}` if not specified                  |
+| excluded_poms         |    No    |                                                                                    |
+| excluded_dependencies |    No    |                                                                                    |
+| googleapis_commitish  |    No    | use repository level `googleapis_commitish` if not specified.                      |
+| group_id              |    No    | `com.google.cloud` if not specified                                                |
+| issue_tracker         |    No    |                                                                                    |
+| library_name          |    No    | `api_shortname` is not specified. This value should be unique among all libraries. |
+| rest_documentation    |    No    |                                                                                    |
+| rpc_documentation     |    No    |                                                                                    |
+| cloud_api             |    No    | `true` if not specified                                                            |
+| requires-billing      |    No    | `true` if not specified                                                            |
 
 Note that `cloud_prefix` is `cloud-` if `cloud_api` is `true`; empty otherwise.
 
