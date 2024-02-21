@@ -22,7 +22,7 @@
 # different logic
 # 8 - configuration_yaml_path: path to the configuration yaml containing library
 # generation information for this library
-set -eox pipefail
+set -eo pipefail
 scripts_root=$(dirname "$(readlink -f "$0")")
 
 postprocessing_target=$1
