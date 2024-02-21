@@ -116,7 +116,7 @@ class IntegrationTest(unittest.TestCase):
                 "Add /workspace to safe directories",
             )
             dest = Path(dest_str)
-            repo = Repo(dest)
+            repo = Repo(Path(dest_in_docker))
         else:
             dest = default_dest
             repo_dest = f"{golden_dir}/{repo}"
