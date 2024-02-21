@@ -38,7 +38,7 @@ config_dir = f"{script_dir}/resources/integration"
 golden_dir = f"{config_dir}/golden"
 repo_prefix = "https://github.com/googleapis"
 committish_list = ["chore/test-hermetic-build"]  # google-cloud-java
-output_folder = shell_call('get_output_folder')
+output_folder = shell_call("get_output_folder")
 
 
 class IntegrationTest(unittest.TestCase):

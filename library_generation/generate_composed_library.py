@@ -81,7 +81,9 @@ def generate_composed_library(
             library_path=library_path,
         )
         service_version = gapic.proto_path.split("/")[-1]
-        temp_destination_path = f'java-{util.get_library_name(library)}-{service_version}'
+        temp_destination_path = (
+            f"java-{util.get_library_name(library)}-{service_version}"
+        )
         effective_arguments = __construct_effective_arg(
             base_arguments=base_arguments,
             gapic=gapic,
