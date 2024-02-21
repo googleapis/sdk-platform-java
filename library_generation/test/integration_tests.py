@@ -115,8 +115,8 @@ class IntegrationTest(unittest.TestCase):
                 ["git", "config", "--global", "--add", "safe.directory", dest_str],
                 "Add /workspace to safe directories",
             )
-            dest = Path(dest_str)
-            repo = Repo(Path(dest_in_docker))
+            dest = Path(dest_in_docker)
+            repo = Repo(dest)
         else:
             dest = default_dest
             repo_dest = f"{golden_dir}/{repo}"
