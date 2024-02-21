@@ -110,7 +110,7 @@ class IntegrationTest(unittest.TestCase):
     def __pull_repo_to(cls, default_dest: Path, repo: str, committish: str) -> str:
         if "RUNNING_IN_DOCKER" in os.environ:
             # the docker image expects the repo to be in /workspace
-            dest_str = "/workspace"
+            dest_in_docker = "/workspace"
             run_process_and_print_output(
                 ["git", "config", "--global", "--add", "safe.directory", dest_str],
                 "Add /workspace to safe directories",
