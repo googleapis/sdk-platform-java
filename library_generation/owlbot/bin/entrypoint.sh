@@ -26,50 +26,14 @@
 set -ex
 scripts_root=$1
 versions_file=$2
-
-# Runs template and etc in current working directory
-function processModule() {
-  # templates as well as retrieving files from owl-bot-staging
-  echo "Generating templates and retrieving files from owl-bot-staging directory..."
-  if [ -f "owlbot.py" ]
-  then
-    # defaults to run owlbot.py
-    python3 owlbot.py
-  fi
-  echo "...done"
-
-  # write or restore pom.xml files
-  echo "Generating missing pom.xml..."
-  python3 "${scripts_root}/owlbot/src/fix-poms.py" "${versions_file}" "true"
-  echo "...done"
-
-  # write or restore clirr-ignored-differences.xml
-  echo "Generating clirr-ignored-differences.xml..."
-  ${scripts_root}/owlbot/bin/write_clirr_ignore.sh "${scripts_root}"
-  echo "...done"
-
-  # fix license headers
-  echo "Fixing missing license headers..."
-  python3 "${scripts_root}/owlbot/src/fix-license-headers.py"
-  echo "...done"
-
-  # TODO: re-enable this once we resolve thrashing
-  # restore license headers years
-  # echo "Restoring copyright years..."
-  # /owlbot/bin/restore_license_headers.sh
-  # echo "...done"
-
-  # ensure formatting on all .java files in the repository
-  echo "Reformatting source..."
-  mvn fmt:format -q
-  echo "...done"
-}
+configuration_yaml=$3
 
 # This script can be used to process HW libraries and monorepo
 # (google-cloud-java) libraries, which require a slightly different treatment
 # monorepo folders have an .OwlBot.yaml file in the module folder (e.g.
 # java-asset/.OwlBot.yaml), whereas HW libraries have the yaml in
 # `.github/.OwlBot.yaml`
+monorepo="false"
 if [[ -f "$(pwd)/.OwlBot.yaml" ]]; then
   monorepo="true"
 fi
@@ -80,4 +44,50 @@ if [[ "${monorepo}" == "true" ]]; then
   mv temp owl-bot-staging
 fi
 
-processModule
+
+# Runs template and etc in current working directory
+
+# apply repo templates
+echo "Rendering templates"
+python3 "${scripts_root}/owlbot/src/apply_repo_templates.py" "${configuration_yaml}" "${monorepo}"
+
+# templates as well as retrieving files from owl-bot-staging
+echo "Retrieving files from owl-bot-staging directory..."
+if [ -f "owlbot.py" ]
+then
+  # we use an empty synthtool folder to prevent cached templates from being used
+  export SYNTHTOOL_TEMPLATES=$(mktemp -d)
+  # defaults to run owlbot.py
+  python3 owlbot.py
+  export SYNTHTOOL_TEMPLATES=""
+fi
+echo "...done"
+
+# write or restore pom.xml files
+echo "Generating missing pom.xml..."
+python3 "${scripts_root}/owlbot/src/fix-poms.py" "${versions_file}" "true"
+echo "...done"
+
+# write or restore clirr-ignored-differences.xml
+echo "Generating clirr-ignored-differences.xml..."
+${scripts_root}/owlbot/bin/write_clirr_ignore.sh "${scripts_root}"
+echo "...done"
+
+# fix license headers
+echo "Fixing missing license headers..."
+python3 "${scripts_root}/owlbot/src/fix-license-headers.py"
+echo "...done"
+
+# TODO: re-enable this once we resolve thrashing
+# restore license headers years
+# echo "Restoring copyright years..."
+# /owlbot/bin/restore_license_headers.sh
+# echo "...done"
+
+# ensure formatting on all .java files in the repository
+echo "Reformatting source..."
+mvn fmt:format -V --batch-mode --no-transfer-progress
+echo "...done"
+
+
+

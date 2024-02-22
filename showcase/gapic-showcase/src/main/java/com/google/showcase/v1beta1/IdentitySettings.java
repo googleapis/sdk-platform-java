@@ -180,7 +180,6 @@ public class IdentitySettings extends ClientSettings<IdentitySettings> {
     return IdentityStubSettings.defaultTransportChannelProvider();
   }
 
-  @BetaApi("The surface for customizing headers is not stable yet and may change in the future.")
   public static ApiClientHeaderProvider.Builder defaultApiClientHeaderProviderBuilder() {
     return IdentityStubSettings.defaultApiClientHeaderProviderBuilder();
   }
@@ -191,7 +190,6 @@ public class IdentitySettings extends ClientSettings<IdentitySettings> {
   }
 
   /** Returns a new REST builder for this class. */
-  @BetaApi
   public static Builder newHttpJsonBuilder() {
     return Builder.createHttpJsonDefault();
   }
@@ -233,7 +231,6 @@ public class IdentitySettings extends ClientSettings<IdentitySettings> {
       return new Builder(IdentityStubSettings.newBuilder());
     }
 
-    @BetaApi
     private static Builder createHttpJsonDefault() {
       return new Builder(IdentityStubSettings.newHttpJsonBuilder());
     }

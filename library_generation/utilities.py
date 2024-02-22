@@ -251,6 +251,7 @@ def prepare_repo(
     :param language: programming language of the library
     :return: a RepoConfig object contained repository information
     :raise FileNotFoundError if there's no versions.txt in repo_path
+    :raise ValueError if two libraries have the same library_name
     """
     output_folder = sh_util("get_output_folder")
     print(f"output_folder: {output_folder}")
@@ -267,6 +268,10 @@ def prepare_repo(
         # use absolute path because docker requires absolute path
         # in volume name.
         absolute_library_path = str(Path(library_path).resolve())
+        if absolute_library_path in libraries:
+            # check whether the java_library is unique among all libraries
+            # because two libraries should not go to the same destination.
+            raise ValueError(f"{absolute_library_path} already exists.")
         libraries[absolute_library_path] = library
         # remove existing .repo-metadata.json
         json_name = ".repo-metadata.json"
@@ -320,6 +325,7 @@ def pull_api_definition(
 
 
 def generate_prerequisite_files(
+    config: GenerationConfig,
     library: LibraryConfig,
     proto_path: str,
     transport: str,
@@ -331,6 +337,8 @@ def generate_prerequisite_files(
     Generate prerequisite files for a library.
 
     Note that the version, if any, in the proto_path will be removed.
+    :param config: a GenerationConfig object representing a parsed configuration
+    yaml
     :param library: the library configuration
     :param proto_path: the proto path
     :param transport: transport supported by the library
@@ -387,6 +395,12 @@ def generate_prerequisite_files(
 
     if library.api_reference:
         repo_metadata["api_reference"] = library.api_reference
+    if library.codeowner_team:
+        repo_metadata["codeowner_team"] = library.codeowner_team
+    if library.excluded_dependencies:
+        repo_metadata["excluded_dependencies"] = library.excluded_dependencies
+    if library.excluded_poms:
+        repo_metadata["excluded_poms"] = library.excluded_poms
     if library.issue_tracker:
         repo_metadata["issue_tracker"] = library.issue_tracker
     if library.rest_documentation:
@@ -417,24 +431,11 @@ def generate_prerequisite_files(
     # generate owlbot.py
     py_file = "owlbot.py"
     if not os.path.exists(f"{library_path}/{py_file}"):
-        template_excludes = [
-            ".github/*",
-            ".kokoro/*",
-            "samples/*",
-            "CODE_OF_CONDUCT.md",
-            "CONTRIBUTING.md",
-            "LICENSE",
-            "SECURITY.md",
-            "java.header",
-            "license-checks.xml",
-            "renovate.json",
-            ".gitignore",
-        ]
         __render(
             template_name="owlbot.py.j2",
             output_name=f"{library_path}/{py_file}",
             should_include_templates=True,
-            template_excludes=template_excludes,
+            template_excludes=config.template_excludes,
         )
 
 

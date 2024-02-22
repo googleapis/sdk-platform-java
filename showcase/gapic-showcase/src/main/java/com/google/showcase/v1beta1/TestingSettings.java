@@ -197,7 +197,6 @@ public class TestingSettings extends ClientSettings<TestingSettings> {
     return TestingStubSettings.defaultTransportChannelProvider();
   }
 
-  @BetaApi("The surface for customizing headers is not stable yet and may change in the future.")
   public static ApiClientHeaderProvider.Builder defaultApiClientHeaderProviderBuilder() {
     return TestingStubSettings.defaultApiClientHeaderProviderBuilder();
   }
@@ -208,7 +207,6 @@ public class TestingSettings extends ClientSettings<TestingSettings> {
   }
 
   /** Returns a new REST builder for this class. */
-  @BetaApi
   public static Builder newHttpJsonBuilder() {
     return Builder.createHttpJsonDefault();
   }
@@ -250,7 +248,6 @@ public class TestingSettings extends ClientSettings<TestingSettings> {
       return new Builder(TestingStubSettings.newBuilder());
     }
 
-    @BetaApi
     private static Builder createHttpJsonDefault() {
       return new Builder(TestingStubSettings.newHttpJsonBuilder());
     }

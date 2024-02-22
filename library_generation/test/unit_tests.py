@@ -12,25 +12,29 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+"""
+Unit tests for python scripts
+"""
 
 import unittest
 import os
 import io
 import contextlib
-import subprocess
 from pathlib import Path
 from difflib import unified_diff
 from typing import List
-
+from parameterized import parameterized
 from library_generation import utilities as util
 from library_generation.model.gapic_config import GapicConfig
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.gapic_inputs import parse as parse_build_file
+from library_generation.model.generation_config import from_yaml
 from library_generation.model.library_config import LibraryConfig
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 resources_dir = os.path.join(script_dir, "resources")
 build_file = Path(os.path.join(resources_dir, "misc")).resolve()
+test_config_dir = Path(os.path.join(resources_dir, "test-config")).resolve()
 library_1 = LibraryConfig(
     api_shortname="baremetalsolution",
     name_pretty="Bare Metal Solution",
@@ -46,6 +50,14 @@ library_2 = LibraryConfig(
     name_pretty="Secret Management",
     product_documentation="https://cloud.google.com/solutions/secrets-management/",
     api_description="allows you to encrypt, store, manage, and audit infrastructure and application-level secrets.",
+    gapic_configs=list(),
+)
+library_3 = LibraryConfig(
+    api_shortname="secret",
+    name_pretty="Secret Management Example",
+    product_documentation="https://cloud.google.com/solutions/",
+    api_description="allows you to encrypt, store, and audit infrastructure and application-level secrets.",
+    library_name="secretmanager",
     gapic_configs=list(),
 )
 
@@ -100,6 +112,129 @@ class UtilitiesTest(unittest.TestCase):
         result = stderr_capture.getvalue()
         # print() appends a `\n` each time it's called
         self.assertEqual(test_input + "\n", result)
+
+    # parameterized tests need to run from the class, see
+    # https://github.com/wolever/parameterized/issues/37 for more info.
+    # This test confirms that a ValueError with an error message about a
+    # missing key (specified in the first parameter of each `parameterized`
+    # tuple) when parsing a test configuration yaml (second parameter) will
+    # be raised.
+    @parameterized.expand(
+        [
+            ("libraries", f"{test_config_dir}/config_without_libraries.yaml"),
+            ("GAPICs", f"{test_config_dir}/config_without_gapics.yaml"),
+            ("proto_path", f"{test_config_dir}/config_without_proto_path.yaml"),
+            ("api_shortname", f"{test_config_dir}/config_without_api_shortname.yaml"),
+            (
+                "api_description",
+                f"{test_config_dir}/config_without_api_description.yaml",
+            ),
+            ("name_pretty", f"{test_config_dir}/config_without_name_pretty.yaml"),
+            (
+                "product_documentation",
+                f"{test_config_dir}/config_without_product_docs.yaml",
+            ),
+            (
+                "gapic_generator_version",
+                f"{test_config_dir}/config_without_generator.yaml",
+            ),
+            (
+                "googleapis_commitish",
+                f"{test_config_dir}/config_without_googleapis.yaml",
+            ),
+            ("owlbot_cli_image", f"{test_config_dir}/config_without_owlbot.yaml"),
+            ("synthtool_commitish", f"{test_config_dir}/config_without_synthtool.yaml"),
+            (
+                "template_excludes",
+                f"{test_config_dir}/config_without_temp_excludes.yaml",
+            ),
+        ]
+    )
+    def test_from_yaml_without_key_fails(self, error_message_contains, path_to_yaml):
+        self.assertRaisesRegex(
+            ValueError,
+            error_message_contains,
+            from_yaml,
+            path_to_yaml,
+        )
+
+    def test_from_yaml_succeeds(self):
+        config = from_yaml(f"{test_config_dir}/generation_config.yaml")
+        self.assertEqual("2.34.0", config.gapic_generator_version)
+        self.assertEqual(25.2, config.protobuf_version)
+        self.assertEqual(
+            "1a45bf7393b52407188c82e63101db7dc9c72026", config.googleapis_commitish
+        )
+        self.assertEqual(
+            "sha256:623647ee79ac605858d09e60c1382a716c125fb776f69301b72de1cd35d49409",
+            config.owlbot_cli_image,
+        )
+        self.assertEqual(
+            "6612ab8f3afcd5e292aecd647f0fa68812c9f5b5", config.synthtool_commitish
+        )
+        self.assertEqual(
+            [
+                ".github/*",
+                ".kokoro/*",
+                "samples/*",
+                "CODE_OF_CONDUCT.md",
+                "CONTRIBUTING.md",
+                "LICENSE",
+                "SECURITY.md",
+                "java.header",
+                "license-checks.xml",
+                "renovate.json",
+                ".gitignore",
+            ],
+            config.template_excludes,
+        )
+        library = config.libraries[0]
+        self.assertEqual("cloudasset", library.api_shortname)
+        self.assertEqual("Cloud Asset Inventory", library.name_pretty)
+        self.assertEqual(
+            "https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/overview",
+            library.product_documentation,
+        )
+        self.assertEqual(
+            "provides inventory services based on a time series database.",
+            library.api_description,
+        )
+        self.assertEqual("asset", library.library_name)
+        self.assertEqual("@googleapis/analytics-dpe", library.codeowner_team)
+        self.assertEqual(
+            "proto-google-iam-v1-bom,google-iam-policy,proto-google-iam-v1",
+            library.excluded_poms,
+        )
+        self.assertEqual("google-iam-policy", library.excluded_dependencies)
+        gapics = library.gapic_configs
+        self.assertEqual(5, len(gapics))
+        self.assertEqual("google/cloud/asset/v1", gapics[0].proto_path)
+        self.assertEqual("google/cloud/asset/v1p1beta1", gapics[1].proto_path)
+        self.assertEqual("google/cloud/asset/v1p2beta1", gapics[2].proto_path)
+        self.assertEqual("google/cloud/asset/v1p5beta1", gapics[3].proto_path)
+        self.assertEqual("google/cloud/asset/v1p7beta1", gapics[4].proto_path)
+
+    @parameterized.expand(
+        [
+            ("BUILD_no_additional_protos.bazel", " "),
+            ("BUILD_common_resources.bazel", "  google/cloud/common_resources.proto"),
+            ("BUILD_comment_common_resources.bazel", " "),
+            ("BUILD_locations.bazel", "  google/cloud/location/locations.proto"),
+            ("BUILD_comment_locations.bazel", " "),
+            ("BUILD_iam_policy.bazel", "  google/iam/v1/iam_policy.proto"),
+            ("BUILD_comment_iam_policy.bazel", " "),
+            (
+                "BUILD_iam_locations.bazel",
+                "  google/cloud/location/locations.proto google/iam/v1/iam_policy.proto",
+            ),
+        ]
+    )
+    def test_gapic_inputs_parse_additional_protos(self, build_name, expected):
+        parsed = parse_build_file(build_file, "", build_name)
+        self.assertEqual(
+            expected,
+            parsed.additional_protos,
+        )
 
     def test_gapic_inputs_parse_grpc_only_succeeds(self):
         parsed = parse_build_file(build_file, "", "BUILD_grpc.bazel")
@@ -249,9 +384,11 @@ class UtilitiesTest(unittest.TestCase):
             f"{library_path}/owlbot.py",
         ]
         self.__cleanup(files)
+        config = self.__get_a_gen_config(1)
         proto_path = "google/cloud/baremetalsolution/v2"
         transport = "grpc"
         util.generate_prerequisite_files(
+            config=config,
             library=library_1,
             proto_path=proto_path,
             transport=transport,
@@ -280,6 +417,17 @@ class UtilitiesTest(unittest.TestCase):
         library_path = sorted([Path(key).name for key in repo_config.libraries])
         self.assertEqual(
             ["java-bare-metal-solution", "java-secretmanager"], library_path
+        )
+
+    def test_prepare_repo_monorepo_duplicated_library_name_failed(self):
+        gen_config = self.__get_a_gen_config(3)
+        self.assertRaisesRegex(
+            ValueError,
+            "secretmanager",
+            util.prepare_repo,
+            gen_config,
+            gen_config.libraries,
+            f"{resources_dir}/misc",
         )
 
     def test_prepare_repo_monorepo_failed(self):
@@ -337,15 +485,17 @@ class UtilitiesTest(unittest.TestCase):
     @staticmethod
     def __get_a_gen_config(num: int):
         """
-        Returns an object of GenerationConfig with one or two of
+        Returns an object of GenerationConfig with one to three of
         LibraryConfig objects. Other attributes are set to empty str.
 
         :param num: the number of LibraryConfig objects associated with
-        the GenerationConfig. Only support one or two.
+        the GenerationConfig. Only support 1, 2 or 3.
         :return: an object of GenerationConfig
         """
-        if num > 1:
+        if num == 2:
             libraries = [library_1, library_2]
+        elif num == 3:
+            libraries = [library_1, library_2, library_3]
         else:
             libraries = [library_1]
 
@@ -354,6 +504,20 @@ class UtilitiesTest(unittest.TestCase):
             googleapis_commitish="",
             owlbot_cli_image="",
             synthtool_commitish="",
+            template_excludes=[
+                ".github/*",
+                ".kokoro/*",
+                "samples/*",
+                "CODE_OF_CONDUCT.md",
+                "CONTRIBUTING.md",
+                "LICENSE",
+                "SECURITY.md",
+                "java.header",
+                "license-checks.xml",
+                "renovate.json",
+                ".gitignore",
+            ],
+            path_to_yaml=".",
             libraries=libraries,
         )
 
