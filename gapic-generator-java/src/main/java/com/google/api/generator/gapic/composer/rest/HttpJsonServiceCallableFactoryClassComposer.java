@@ -18,7 +18,6 @@ import com.google.api.gax.httpjson.HttpJsonCallableFactory;
 import com.google.api.gax.httpjson.HttpJsonOperationSnapshotCallable;
 import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.UnaryCallable;
-import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AssignmentExpr;
 import com.google.api.generator.engine.ast.ConcreteReference;
 import com.google.api.generator.engine.ast.ExprStatement;
@@ -36,6 +35,7 @@ import com.google.api.generator.gapic.model.Service;
 import com.google.longrunning.Operation;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,20 +53,6 @@ public class HttpJsonServiceCallableFactoryClassComposer
 
   public static HttpJsonServiceCallableFactoryClassComposer instance() {
     return INSTANCE;
-  }
-
-  @Override
-  protected List<AnnotationNode> createClassAnnotations(Service service, TypeStore typeStore) {
-    List<AnnotationNode> annotations = super.createClassAnnotations(service, typeStore);
-    // Always add @BetaApi annotation to the generated CallableFactory for now. It is a public class
-    // for technical reasons, end users are not expected to interact with it, but it may change
-    // when we add LRO support, that is why making it @BetaApi for now.
-    //
-    // Remove the @BetaApi annotation once the LRO feature is fully implemented and stabilized.
-    if (annotations.stream().noneMatch(a -> a.type().equals(typeStore.get("BetaApi")))) {
-      annotations.add(AnnotationNode.withType(typeStore.get("BetaApi")));
-    }
-    return annotations;
   }
 
   @Override
@@ -104,16 +90,6 @@ public class HttpJsonServiceCallableFactoryClassComposer
     List<String> methodTemplateNames =
         Arrays.asList(requestTemplateName, responseTemplateName, "MetadataT");
 
-    // Always add @BetaApi annotation to the generated createOperationCallable() method for now,
-    // until LRO is fully implemented.
-    //
-    // Remove the @BetaApi annotation once the LRO feature is fully implemented and stabilized.
-    AnnotationNode betaAnnotation =
-        AnnotationNode.withTypeAndDescription(
-            typeStore.get("BetaApi"),
-            "The surface for long-running operations is not stable yet and may change in the"
-                + " future.");
-
     // Generate generic method without the body
     TypeNode operationType = service.operationType();
     if (operationType == null) {
@@ -133,7 +109,7 @@ public class HttpJsonServiceCallableFactoryClassComposer
             /*callSettingsTemplateObjects=*/ methodTemplateNames.stream()
                 .map(n -> (Object) n)
                 .collect(Collectors.toList()),
-            Arrays.asList(betaAnnotation));
+            Collections.emptyList());
 
     List<Statement> createOperationCallableBody = new ArrayList<>();
     List<VariableExpr> arguments = new ArrayList<>(method.arguments());
