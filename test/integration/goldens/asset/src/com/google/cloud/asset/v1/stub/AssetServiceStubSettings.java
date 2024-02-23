@@ -1164,8 +1164,6 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
     }
 
     /** Returns the builder for the settings used for calls to exportAssets. */
-    @BetaApi(
-        "The surface for use by generated code is not stable yet and may change in the future.")
     public OperationCallSettings.Builder<
             ExportAssetsRequest, ExportAssetsResponse, ExportAssetsRequest>
         exportAssetsOperationSettings() {
@@ -1238,8 +1236,6 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
     }
 
     /** Returns the builder for the settings used for calls to analyzeIamPolicyLongrunning. */
-    @BetaApi(
-        "The surface for use by generated code is not stable yet and may change in the future.")
     public OperationCallSettings.Builder<
             AnalyzeIamPolicyLongrunningRequest,
             AnalyzeIamPolicyLongrunningResponse,
