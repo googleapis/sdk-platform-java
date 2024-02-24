@@ -3,8 +3,8 @@
 # the script in a docker container
 
 set -xe
-if [[ -z "${SHARED_DEPENDENCIES_VERSION}" ]]; then
-  echo "required environemnt variable SHARED_DEPENDENCIES_VERSION is not set"
+if [[ -z "${TEST_IMAGE_ID}" ]]; then
+  echo "required environemnt variable TEST_IMAGE_ID is not set"
   exit 1
 fi
 
@@ -28,7 +28,6 @@ if [[ $(docker volume inspect repo) != '[]' ]]; then
 fi
 docker volume create --name "repo" --opt "type=none" --opt "device=$(pwd)/google-cloud-java" --opt "o=bind"
 
-image_id="gcr.io/cloud-devrel-public-resources/java-library-generation:${SHARED_DEPENDENCIES_VERSION}"
 docker run --rm \
   -v repo:/workspace \
   -v /tmp:/tmp \
@@ -36,5 +35,5 @@ docker run --rm \
   -e "RUNNING_IN_DOCKER=true" \
   -e "REPO_BINDING_VOLUME=repo" \
   -w "/src" \
-  "${image_id}" \
+  "${TEST_IMAGE_ID}" \
   python -m unittest /src/test/integration_tests.py
