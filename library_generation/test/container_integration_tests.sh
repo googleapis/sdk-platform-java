@@ -14,6 +14,15 @@ fi
 pushd google-cloud-java
 git reset --hard main
 popd
+
+# We use a volume to hold the google-cloud-java repository used in the
+# integration tests. This is because the test container creates a child
+# container using the host machine's docker socket, meaning that we can only
+# reference volumes created from within the host machine (i.e. the machine
+# running this script)
+#
+# To summarize, we create a special volume that can be referenced both in the
+# main container and in any child containers created by this one.
 if [[ $(docker volume inspect repo) != '[]' ]]; then
   docker volume rm repo
 fi
