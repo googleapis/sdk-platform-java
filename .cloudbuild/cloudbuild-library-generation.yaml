@@ -14,13 +14,20 @@
 
 timeout: 7200s # 2 hours
 substitutions:
-  _IMAGE_ID: "gcr.io/cloud-devrel-public-resources/java-library-generation:${COMMIT_SHA}"
+  _IMAGE_NAME: "gcr.io/cloud-devrel-public-resources/java-library-generation"
+  _SHA_IMAGE_ID: "${_IMAGE_NAME}:${COMMIT_SHA}"
+  _LATEST_IMAGE_ID: "${_IMAGE_NAME}:latest"
 steps:
   # Library generation build
   - name: gcr.io/cloud-builders/docker
-    args: ["build", "-t", "${_IMAGE_ID}", "--file", ".cloudbuild/library_generation.Dockerfile", "."]
+    args: [
+      "build",
+      "-t", "${_SHA_IMAGE_ID}",
+      "-t", "${_LATEST_IMAGE_ID}",
+      "--file", ".cloudbuild/library_generation.Dockerfile", "."]
     id: library-generation-build
     waitFor: ["-"]
 
 images:
-  - ${_IMAGE_ID}
+  - ${_SHA_IMAGE_ID}
+  - ${_LATEST_IMAGE_ID}
