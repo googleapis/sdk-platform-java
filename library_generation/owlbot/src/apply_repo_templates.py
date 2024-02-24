@@ -13,7 +13,7 @@ from pathlib import Path
 from library_generation.model.generation_config import from_yaml
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
-repo_templates_path = os.path.join(script_dir, "..", "templates", "java_library")
+repo_templates_path = os.path.normpath(os.path.join(script_dir, "..", "templates"))
 
 
 def apply_repo_templates(configuration_yaml_path: str, monorepo: bool) -> None:

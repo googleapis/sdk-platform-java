@@ -26,7 +26,11 @@ from typing import Dict
 from library_generation.generate_repo import generate_from_yaml
 from library_generation.model.generation_config import from_yaml
 from library_generation.test.compare_poms import compare_xml
-from library_generation.utilities import get_library_name, run_process_and_print_output
+from library_generation.utilities import (
+    get_library_name,
+    sh_util as shell_call,
+    run_process_and_print_output,
+)
 
 config_name = "generation_config.yaml"
 script_dir = os.path.dirname(os.path.realpath(__file__))
@@ -37,6 +41,7 @@ config_dir = f"{script_dir}/resources/integration"
 golden_dir = f"{config_dir}/golden"
 repo_prefix = "https://github.com/googleapis"
 committish_list = ["chore/test-hermetic-build"]  # google-cloud-java
+output_folder = shell_call("get_output_folder")
 
 
 class IntegrationTest(unittest.TestCase):
@@ -63,9 +68,10 @@ class IntegrationTest(unittest.TestCase):
             # compare result
             for library_name in library_names:
                 print(
+                    f"Generation finished. Will now compare "
+                    f"the expected library in {golden_dir}/{library_name}, "
+                    f"with the actual library in {repo_dest}/{library_name}. "
                     f"Compare generation result: "
-                    f"expected library in {golden_dir}/{library_name}, "
-                    f"actual library in {repo_dest}/{library_name}."
                 )
                 compare_result = dircmp(
                     f"{golden_dir}/{library_name}",
