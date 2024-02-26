@@ -17,6 +17,7 @@ import subprocess
 import os
 import shutil
 import re
+from git import Repo
 from pathlib import Path
 from lxml import etree
 from library_generation.model.bom_config import BomConfig
@@ -485,3 +486,28 @@ def get_version_from(
         for line in f.readlines():
             if artifact_id in line:
                 return line.split(":")[index].strip()
+
+
+def get_commit_messages(repo_url: str, new_committish: str, old_committish: str) -> str:
+    """
+    Get commit messages of a repository from new_committish to
+    old_committish.
+    :param repo_url: the url of the repository.
+    :param new_committish:
+    :param old_committish:
+    :return:
+    """
+    tmp_dir = "/tmp/repo"
+    shutil.rmtree(tmp_dir, ignore_errors=True)
+    os.mkdir(tmp_dir)
+    messages = []
+    repo = Repo.clone_from(repo_url, tmp_dir)
+    commit = repo.commit(new_committish)
+    while str(commit.hexsha) != old_committish:
+        messages.append(f"{commit.hexsha}\n{commit.message}")
+        commit_parents = commit.parents
+        if len(commit_parents) == 0:
+            break
+        commit = commit_parents[0]
+    shutil.rmtree(tmp_dir, ignore_errors=True)
+    return "\n\n".join(messages)
