@@ -6,6 +6,7 @@ We'd love to accept your patches and contributions to this project. There are ju
 3. Discuss the priority and potential solutions with the maintainers in the issue. The maintainers would review the issue and add a label "Accepting Contributions" once the issue is ready for accepting contributions.
 4. Open a PR only if the issue is labeled with "Accepting Contributions", ensure the PR description clearly describes the problem and solution. Note that an open PR without an issue labeled with "Accepting Contributions" will not be accepted.
 
+
 ## Contributor License Agreement
 
 Contributions to this project must be accompanied by a Contributor License

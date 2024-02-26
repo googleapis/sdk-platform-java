@@ -31,6 +31,7 @@ package com.google.api.gax.rpc;
 
 import com.google.api.core.ApiClock;
 import com.google.api.core.ApiFunction;
+import com.google.api.core.BetaApi;
 import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.tracing.ApiTracerFactory;
@@ -119,6 +120,16 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
   /** Gets the GDCH API audience that was previously set in this Builder */
   public final String getGdchApiAudience() {
     return stubSettings.getGdchApiAudience();
+  }
+
+  /**
+   * Gets the configured {@link ApiTracerFactory} that will be used to generate traces for
+   * operations.
+   */
+  @BetaApi("The surface for tracing is not stable yet and may change in the future.")
+  @Nonnull
+  public ApiTracerFactory getTracerFactory() {
+    return stubSettings.getTracerFactory();
   }
 
   public String toString() {
@@ -360,11 +371,6 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     @Nullable
     public Duration getWatchdogCheckInterval() {
       return stubSettings.getStreamWatchdogCheckInterval();
-    }
-
-    /** Gets the TracerFactory that was previously set in this Builder */
-    public ApiTracerFactory getTracerFactory() {
-      return stubSettings.getTracerFactory();
     }
 
     /** Gets the GDCH API audience that was previously set in this Builder */

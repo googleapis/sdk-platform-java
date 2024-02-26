@@ -31,6 +31,7 @@
 package com.google.api.gax.tracing;
 
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Preconditions;
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.common.AttributesBuilder;
 import io.opentelemetry.api.metrics.DoubleHistogram;
@@ -39,23 +40,16 @@ import io.opentelemetry.api.metrics.Meter;
 import java.util.Map;
 
 public class OpentelemetryMetricsRecorder implements MetricsRecorder {
-
-  private Meter meter;
-
   private DoubleHistogram attemptLatencyRecorder;
-
   private DoubleHistogram operationLatencyRecorder;
-
   private LongCounter operationCountRecorder;
-
   private LongCounter attemptCountRecorder;
 
   public OpentelemetryMetricsRecorder(Meter meter) {
-    this.meter = meter;
     this.attemptLatencyRecorder =
         meter
             .histogramBuilder("attempt_latency")
-            .setDescription("Duration of an individual attempt")
+            .setDescription("Time an individual attempt took")
             .setUnit("ms")
             .build();
     this.operationLatencyRecorder =
@@ -68,40 +62,67 @@ public class OpentelemetryMetricsRecorder implements MetricsRecorder {
     this.operationCountRecorder =
         meter
             .counterBuilder("operation_count")
-            .setDescription("Count of Operations")
-            .setUnit("1")
+            .setDescription("Number of operations made")
             .build();
     this.attemptCountRecorder =
         meter
             .counterBuilder("attempt_count")
-            .setDescription("Count of Attempts")
-            .setUnit("1")
+            .setDescription("Number of attempts made")
             .build();
   }
 
+  /**
+   * Record the latency for an individual attempt. Data is stored in a Histogram.
+   *
+   * @param attemptLatency Attempt Latency in ms
+   * @param attributes Map of the attributes to store
+   */
+  @Override
   public void recordAttemptLatency(double attemptLatency, Map<String, String> attributes) {
     attemptLatencyRecorder.record(attemptLatency, toOtelAttributes(attributes));
   }
 
+  /**
+   * Record an attempt made. The attempt count number is stored in a LongCounter.
+   *
+   * <p>The count should be set as 1 every time this is invoked (each retry attempt)
+   *
+   * @param count The number of attempts made
+   * @param attributes Map of the attributes to store
+   */
+  @Override
   public void recordAttemptCount(long count, Map<String, String> attributes) {
     attemptCountRecorder.add(count, toOtelAttributes(attributes));
   }
 
+  /**
+   * Record the latency for the entire operation. This is the latency for the entire RPC, including
+   * all the retry attempts
+   *
+   * @param operationLatency Operation Latency in ms
+   * @param attributes Map of the attributes to store
+   */
+  @Override
   public void recordOperationLatency(double operationLatency, Map<String, String> attributes) {
     operationLatencyRecorder.record(operationLatency, toOtelAttributes(attributes));
   }
 
+  /**
+   * Record an operation made. The operation count number is stored in a LongCounter.
+   *
+   * <p>The operation count should always be 1 and this should be invoked once.
+   *
+   * @param count The number of operations made
+   * @param attributes Map of the attributes to store
+   */
+  @Override
   public void recordOperationCount(long count, Map<String, String> attributes) {
     operationCountRecorder.add(count, toOtelAttributes(attributes));
   }
 
   @VisibleForTesting
   Attributes toOtelAttributes(Map<String, String> attributes) {
-
-    if (attributes == null) {
-      throw new IllegalArgumentException("Input attributes map cannot be null");
-    }
-
+    Preconditions.checkNotNull(attributes, "Attributes map cannot be null");
     AttributesBuilder attributesBuilder = Attributes.builder();
     attributes.forEach(attributesBuilder::put);
     return attributesBuilder.build();
