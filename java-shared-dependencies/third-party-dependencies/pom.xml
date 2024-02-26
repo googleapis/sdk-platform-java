@@ -24,6 +24,7 @@
     <site.installationModule>${project.artifactId}</site.installationModule>
 
     <threeten.version>1.6.8</threeten.version>
+    <threeten-extra.version>1.7.2</threeten-extra.version>
     <javax.annotations.version>1.3.2</javax.annotations.version>
     <animal-sniffer.version>1.23</animal-sniffer.version>
     <opencensus.version>0.31.1</opencensus.version>
@@ -80,7 +81,7 @@
       <dependency>
         <groupId>org.threeten</groupId>
         <artifactId>threeten-extra</artifactId>
-        <version>${threeten.version}</version>
+        <version>${threeten-extra.version}</version>
       </dependency>
       <dependency>
         <groupId>javax.annotation</groupId>
