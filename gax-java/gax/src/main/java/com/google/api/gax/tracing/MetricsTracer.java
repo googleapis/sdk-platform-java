@@ -47,12 +47,14 @@ import org.threeten.bp.Duration;
  * This class computes generic metrics that can be observed in the lifecycle of an RPC operation.
  * The responsibility of recording metrics should delegate to {@link MetricsRecorder}, hence this
  * class should not have any knowledge about the observability framework used for metrics recording.
+ * method_name and language will be autopopulated attributes. Default value of language is 'Java'.
  */
 @BetaApi
 @InternalApi
 public class MetricsTracer implements ApiTracer {
 
   private static final String STATUS_ATTRIBUTE = "status";
+  private static final String LANGUAGE = "Java";
 
   private Stopwatch attemptTimer;
 
@@ -64,6 +66,7 @@ public class MetricsTracer implements ApiTracer {
 
   public MetricsTracer(MethodName methodName, MetricsRecorder metricsRecorder) {
     this.attributes.put("method_name", methodName.toString());
+    this.attributes.put("language", LANGUAGE);
     this.metricsRecorder = metricsRecorder;
   }
 

@@ -77,7 +77,8 @@ public class MetricsTracerTest {
     Map<String, String> attributes =
         ImmutableMap.of(
             "status", "OK",
-            "method_name", "fake_service.fake_method");
+            "method_name", "fake_service.fake_method",
+            "language", "Java");
 
     verify(metricsRecorder).recordOperationCount(1, attributes);
     verify(metricsRecorder).recordOperationLatency(anyDouble(), eq(attributes));
@@ -96,7 +97,8 @@ public class MetricsTracerTest {
     Map<String, String> attributes =
         ImmutableMap.of(
             "status", "INVALID_ARGUMENT",
-            "method_name", "fake_service.fake_method");
+            "method_name", "fake_service.fake_method",
+            "language", "Java");
 
     verify(metricsRecorder).recordOperationCount(1, attributes);
     verify(metricsRecorder).recordOperationLatency(anyDouble(), eq(attributes));
@@ -112,7 +114,8 @@ public class MetricsTracerTest {
     Map<String, String> attributes =
         ImmutableMap.of(
             "status", "CANCELLED",
-            "method_name", "fake_service.fake_method");
+            "method_name", "fake_service.fake_method",
+            "language", "Java");
 
     verify(metricsRecorder).recordOperationCount(1, attributes);
     verify(metricsRecorder).recordOperationLatency(anyDouble(), eq(attributes));
@@ -132,7 +135,8 @@ public class MetricsTracerTest {
     Map<String, String> attributes =
         ImmutableMap.of(
             "status", "OK",
-            "method_name", "fake_service.fake_method");
+            "method_name", "fake_service.fake_method",
+            "language", "Java");
 
     verify(metricsRecorder).recordAttemptCount(1, attributes);
     verify(metricsRecorder).recordAttemptLatency(anyDouble(), eq(attributes));
@@ -155,7 +159,8 @@ public class MetricsTracerTest {
     Map<String, String> attributes =
         ImmutableMap.of(
             "status", "INVALID_ARGUMENT",
-            "method_name", "fake_service.fake_method");
+            "method_name", "fake_service.fake_method",
+            "language", "Java");
 
     verify(metricsRecorder).recordAttemptCount(1, attributes);
     verify(metricsRecorder).recordAttemptLatency(anyDouble(), eq(attributes));
@@ -174,7 +179,8 @@ public class MetricsTracerTest {
     Map<String, String> attributes =
         ImmutableMap.of(
             "status", "CANCELLED",
-            "method_name", "fake_service.fake_method");
+            "method_name", "fake_service.fake_method",
+            "language", "Java");
 
     verify(metricsRecorder).recordAttemptCount(1, attributes);
     verify(metricsRecorder).recordAttemptLatency(anyDouble(), eq(attributes));
@@ -196,7 +202,8 @@ public class MetricsTracerTest {
     Map<String, String> attributes =
         ImmutableMap.of(
             "status", "DEADLINE_EXCEEDED",
-            "method_name", "fake_service.fake_method");
+            "method_name", "fake_service.fake_method",
+            "language", "Java");
 
     verify(metricsRecorder).recordAttemptCount(1, attributes);
     verify(metricsRecorder).recordAttemptLatency(anyDouble(), eq(attributes));
@@ -218,7 +225,8 @@ public class MetricsTracerTest {
     Map<String, String> attributes =
         ImmutableMap.of(
             "status", "NOT_FOUND",
-            "method_name", "fake_service.fake_method");
+            "method_name", "fake_service.fake_method",
+            "language", "Java");
 
     verify(metricsRecorder).recordAttemptCount(1, attributes);
     verify(metricsRecorder).recordAttemptLatency(anyDouble(), eq(attributes));

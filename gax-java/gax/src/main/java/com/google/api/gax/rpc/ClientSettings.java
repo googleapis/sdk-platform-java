@@ -33,6 +33,7 @@ import com.google.api.core.ApiClock;
 import com.google.api.core.ApiFunction;
 import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.ExecutorProvider;
+import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.common.base.MoreObjects;
 import java.io.IOException;
 import java.util.concurrent.Executor;
@@ -285,6 +286,16 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     }
 
     /**
+     * Sets the ApiTracerFactory for the client instance. To enable default metrics, users need to
+     * create an instance of metricsRecorder and pass it to the metricsTracerFactory, and set it
+     * here.
+     */
+    public B setTracerFactory(@Nullable ApiTracerFactory tracerFactory) {
+      stubSettings.setTracerFactory(tracerFactory);
+      return self();
+    }
+
+    /**
      * Gets the ExecutorProvider that was previously set on this Builder. This ExecutorProvider is
      * to use for running asynchronous API call logic (such as retries and long-running operations),
      * and also to pass to the transport settings if an executor is needed for the transport and it
@@ -349,6 +360,11 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     @Nullable
     public Duration getWatchdogCheckInterval() {
       return stubSettings.getStreamWatchdogCheckInterval();
+    }
+
+    /** Gets the TracerFactory that was previously set in this Builder */
+    public ApiTracerFactory getTracerFactory() {
+      return stubSettings.getTracerFactory();
     }
 
     /** Gets the GDCH API audience that was previously set in this Builder */
