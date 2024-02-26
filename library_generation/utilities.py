@@ -394,6 +394,8 @@ def generate_prerequisite_files(
         repo_metadata["rest_documentation"] = library.rest_documentation
     if library.rpc_documentation:
         repo_metadata["rpc_documentation"] = library.rpc_documentation
+    if library.extra_versioned_modules:
+        repo_metadata["extra_versioned_modules"] = library.extra_versioned_modules
 
     # generate .repo-meta.json
     json_file = ".repo-metadata.json"
