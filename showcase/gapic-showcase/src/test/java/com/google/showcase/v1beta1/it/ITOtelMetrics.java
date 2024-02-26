@@ -163,7 +163,7 @@ public class ITOtelMetrics {
 
   /**
    * Extract the attributes from the Metric Data and ensure that the attributes recorded match the
-   * keys and values stored inside the attributeMapping
+   * keys and values stored inside the attributeMapping.
    */
   private void verifyMetricAttributes(MetricData metricData, Map<String, String> attributeMapping) {
     List<PointData> pointDataList = extractPointData(metricData);
@@ -202,7 +202,6 @@ public class ITOtelMetrics {
     int attemptCount = 1;
     grpcClient.echo(EchoRequest.newBuilder().setContent("test_grpc_operation_succeeded").build());
 
-    inMemoryMetricReader.forceFlush();
     List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
     verifyMetricData(metricDataList, operationCount, attemptCount);
 
@@ -217,7 +216,6 @@ public class ITOtelMetrics {
     int attemptCount = 1;
     httpClient.echo(EchoRequest.newBuilder().setContent("test_http_operation_succeeded").build());
 
-    inMemoryMetricReader.forceFlush();
     List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
     verifyMetricData(metricDataList, operationCount, attemptCount);
 
@@ -236,10 +234,10 @@ public class ITOtelMetrics {
 
     UnaryCallable<BlockRequest, BlockResponse> blockCallable = grpcClient.blockCallable();
     ApiFuture<BlockResponse> blockResponseApiFuture = blockCallable.futureCall(blockRequest);
+    // Sleep 1s before cancelling to let the request go through
     Thread.sleep(1000);
     blockResponseApiFuture.cancel(true);
 
-    inMemoryMetricReader.forceFlush();
     List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
     verifyMetricData(metricDataList, operationCount, attemptCount);
 
@@ -257,10 +255,10 @@ public class ITOtelMetrics {
 
     UnaryCallable<BlockRequest, BlockResponse> blockCallable = httpClient.blockCallable();
     ApiFuture<BlockResponse> blockResponseApiFuture = blockCallable.futureCall(blockRequest);
+    // Sleep 1s before cancelling to let the request go through
     Thread.sleep(1000);
     blockResponseApiFuture.cancel(true);
 
-    inMemoryMetricReader.forceFlush();
     List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
     verifyMetricData(metricDataList, operationCount, attemptCount);
 
@@ -289,7 +287,6 @@ public class ITOtelMetrics {
     ApiFuture<BlockResponse> blockResponseApiFuture = blockCallable.futureCall(blockRequest);
     assertThrows(ExecutionException.class, blockResponseApiFuture::get);
 
-    inMemoryMetricReader.forceFlush();
     List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
     verifyMetricData(metricDataList, operationCount, attemptCount);
 
@@ -313,7 +310,6 @@ public class ITOtelMetrics {
     ApiFuture<BlockResponse> blockResponseApiFuture = blockCallable.futureCall(blockRequest);
     assertThrows(ExecutionException.class, blockResponseApiFuture::get);
 
-    inMemoryMetricReader.forceFlush();
     List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
     verifyMetricData(metricDataList, operationCount, attemptCount);
 
@@ -367,7 +363,6 @@ public class ITOtelMetrics {
 
     assertThrows(UnavailableException.class, () -> grpcClient.echo(echoRequest));
 
-    inMemoryMetricReader.forceFlush();
     List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
     verifyMetricData(metricDataList, operationCount, attemptCount);
 
@@ -421,7 +416,6 @@ public class ITOtelMetrics {
 
     assertThrows(UnavailableException.class, () -> httpClient.echo(echoRequest));
 
-    inMemoryMetricReader.forceFlush();
     List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
     verifyMetricData(metricDataList, operationCount, attemptCount);
 
@@ -450,7 +444,6 @@ public class ITOtelMetrics {
 
     assertThrows(InvalidArgumentException.class, () -> grpcClient.block(blockRequest));
 
-    inMemoryMetricReader.forceFlush();
     List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
     verifyMetricData(metricDataList, operationCount, attemptCount);
 
@@ -472,7 +465,6 @@ public class ITOtelMetrics {
 
     assertThrows(InvalidArgumentException.class, () -> httpClient.block(blockRequest));
 
-    inMemoryMetricReader.forceFlush();
     List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
     verifyMetricData(metricDataList, operationCount, attemptCount);
 
