@@ -36,12 +36,6 @@ version_tag = "version"
 
 
 def __render(template_name: str, output_name: str, **kwargs):
-  
-    print(f'START __render({template_name}, {output_name})')
-    import traceback
-    traceback.print_exc()
-    print(f'END   __render({template_name}, {output_name})')
-
     template = jinja_env.get_template(template_name)
     t = template.stream(kwargs)
     directory = os.path.dirname(output_name)
