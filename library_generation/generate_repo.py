@@ -108,6 +108,11 @@ def generate_from_yaml(
             versions_file=repo_config.versions_file,
         )
 
+    # we skip repo_level_postprocess if not in a monorepo since it's meant for
+    # monorepos only
+    if not config.is_monorepo:
+      return
+
     util.repo_level_post_process(
         repository_path=repository_path, versions_file=repo_config.versions_file
     )
