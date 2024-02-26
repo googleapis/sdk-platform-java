@@ -38,10 +38,30 @@
     <perfmark-api.version>0.27.0</perfmark-api.version>
     <j2objc-annotations.version>2.8</j2objc-annotations.version>
     <opentelemetry.version>1.34.1</opentelemetry.version>
+    <flogger.version>0.8</flogger.version>
+    <arrow.version>15.0.0</arrow.version>
   </properties>
 
   <dependencyManagement>
     <dependencies>
+
+      <!-- org.apache.arrow:arrow-memory-core, org.threeten:threeten-extra, org.apache.arrow:arrow-memory-netty, org.apache.arrow:arrow-vector, org.apache.arrow:arrow-format -->
+      <dependency>
+        <groupId>org.apache.arrow</groupId>
+        <artifactId>arrow-memory-core</artifactId>
+        <version>${arrow.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.arrow</groupId>
+        <artifactId>arrow-memory-netty</artifactId>
+        <version>${arrow.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.arrow</groupId>
+        <artifactId>arrow-vector</artifactId>
+        <version>${arrow.version}</version>
+      </dependency>
+
       <dependency>
         <groupId>org.apache.httpcomponents</groupId>
         <artifactId>httpcore</artifactId>
@@ -55,6 +75,11 @@
       <dependency>
         <groupId>org.threeten</groupId>
         <artifactId>threetenbp</artifactId>
+        <version>${threeten.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.threeten</groupId>
+        <artifactId>threeten-extra</artifactId>
         <version>${threeten.version}</version>
       </dependency>
       <dependency>
@@ -77,6 +102,18 @@
         <groupId>com.google.errorprone</groupId>
         <artifactId>error_prone_annotations</artifactId>
         <version>${errorprone.version}</version>
+      </dependency>
+      <!-- Grandfathering java-pubsublite's flogger dependencies.
+      In general, let's avoid declaring logging backend dependencies -->
+      <dependency>
+        <groupId>com.google.flogger</groupId>
+        <artifactId>google-extensions</artifactId>
+        <version>${flogger.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.flogger</groupId>
+        <artifactId>flogger-system-backend</artifactId>
+        <version>${flogger.version}</version>
       </dependency>
       <dependency>
         <groupId>com.fasterxml.jackson</groupId>
