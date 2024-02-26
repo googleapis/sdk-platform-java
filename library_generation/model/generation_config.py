@@ -46,6 +46,8 @@ class GenerationConfig:
         self.libraries = libraries
         self.grpc_version = grpc_version
         self.protobuf_version = protobuf_version
+        # monorepos have more than one library defined in the config yaml
+        self.is_monorepo = len(libraries) > 1
 
 
 def from_yaml(path_to_yaml: str) -> GenerationConfig:

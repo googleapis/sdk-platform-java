@@ -62,7 +62,6 @@ def generate_composed_library(
         config=config, library=library, output_folder=output_folder
     )
 
-    is_monorepo = util.check_monorepo(config=config)
     base_arguments = __construct_tooling_arg(config=config)
     owlbot_cli_source_folder = util.sh_util("mktemp -d")
     os.makedirs(f"{library_path}", exist_ok=True)
@@ -115,7 +114,7 @@ def generate_composed_library(
             owlbot_cli_source_folder,
             config.owlbot_cli_image,
             config.synthtool_commitish,
-            str(is_monorepo).lower(),
+            str(config.is_monorepo).lower(),
             config.path_to_yaml,
         ],
         "Library postprocessing",
