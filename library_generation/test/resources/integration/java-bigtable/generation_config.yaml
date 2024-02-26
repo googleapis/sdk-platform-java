@@ -31,6 +31,7 @@ libraries:
   repo: "googleapis/java-bigtable"
   repo_short: "java-bigtable"
   distribution_name: "com.google.cloud:google-cloud-bigtable"
+  excluded_poms: "google-cloud-bigtable-bom"
   library_type: GAPIC_COMBO
   GAPICs:
   - proto_path: google/bigtable/admin/v2
