@@ -1,4 +1,4 @@
-gapic_generator_version: 2.34.0
+gapic_generator_version: 2.32.0
 protobuf_version: 25.2
 googleapis_commitish: 1a45bf7393b52407188c82e63101db7dc9c72026
 owlbot_cli_image: sha256:623647ee79ac605858d09e60c1382a716c125fb776f69301b72de1cd35d49409
@@ -32,6 +32,8 @@ libraries:
   repo_short: "java-bigtable"
   distribution_name: "com.google.cloud:google-cloud-bigtable"
   excluded_poms: "google-cloud-bigtable-bom"
+  extra_versioned_modules: "google-cloud-bigtable-emulator,google-cloud-bigtable-emulator-core"
+  codeowner_team: "@googleapis/api-bigtable @googleapis/api-bigtable-partners"
   library_type: GAPIC_COMBO
   GAPICs:
   - proto_path: google/bigtable/admin/v2
