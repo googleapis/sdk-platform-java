@@ -45,8 +45,6 @@
 
   <dependencyManagement>
     <dependencies>
-
-      <!-- org.apache.arrow:arrow-memory-core, org.threeten:threeten-extra, org.apache.arrow:arrow-memory-netty, org.apache.arrow:arrow-vector, org.apache.arrow:arrow-format -->
       <dependency>
         <groupId>org.apache.arrow</groupId>
         <artifactId>arrow-memory-core</artifactId>
@@ -62,7 +60,6 @@
         <artifactId>arrow-vector</artifactId>
         <version>${arrow.version}</version>
       </dependency>
-
       <dependency>
         <groupId>org.apache.httpcomponents</groupId>
         <artifactId>httpcore</artifactId>
@@ -104,7 +101,7 @@
         <artifactId>error_prone_annotations</artifactId>
         <version>${errorprone.version}</version>
       </dependency>
-      <!-- Grandfathering java-pubsublite's flogger dependencies.
+      <!-- Legacy exemption of java-pubsublite's flogger dependencies.
       In general, let's avoid declaring logging backend dependencies -->
       <dependency>
         <groupId>com.google.flogger</groupId>
