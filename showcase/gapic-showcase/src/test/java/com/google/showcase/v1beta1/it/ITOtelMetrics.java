@@ -20,7 +20,6 @@ import static org.junit.Assert.assertThrows;
 
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.core.ApiFuture;
-import com.google.api.core.InternalApi;
 import com.google.api.gax.core.GaxProperties;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.retrying.RetrySettings;
@@ -52,7 +51,6 @@ import io.opentelemetry.sdk.metrics.SdkMeterProvider;
 import io.opentelemetry.sdk.metrics.data.HistogramData;
 import io.opentelemetry.sdk.metrics.data.LongPointData;
 import io.opentelemetry.sdk.metrics.data.MetricData;
-import io.opentelemetry.sdk.metrics.data.MetricDataType;
 import io.opentelemetry.sdk.metrics.data.PointData;
 import io.opentelemetry.sdk.metrics.data.SumData;
 import io.opentelemetry.sdk.resources.Resource;
@@ -150,17 +148,12 @@ public class ITOtelMetrics {
     }
   }
 
+  /**
+   * Extract the attributes from the Metric Data and ensure that the attributes recorded match the
+   * keys and values stored inside the attributeMapping
+   */
   private void verifyMetricAttributes(MetricData metricData, Map<String, String> attributeMapping) {
-    List<PointData> pointDataList;
-    if (metricData.getType().equals(MetricDataType.HISTOGRAM)) {
-      HistogramData histogramData = metricData.getHistogramData();
-      pointDataList = new ArrayList<>(histogramData.getPoints());
-    } else if (metricData.getType().equals(MetricDataType.LONG_SUM)) {
-      SumData<LongPointData> longSumData = metricData.getLongSumData();
-      pointDataList = new ArrayList<>(longSumData.getPoints());
-    } else {
-      pointDataList = new ArrayList<>();
-    }
+    List<PointData> pointDataList = extractPointData(metricData);
     Truth.assertThat(pointDataList.size()).isEqualTo(1);
     PointData pointData = pointDataList.get(0);
     Attributes attributes = pointData.getAttributes();
@@ -170,6 +163,24 @@ public class ITOtelMetrics {
         Truth.assertThat(entrySet.getValue()).isEqualTo(attributeMapping.get(key));
       }
     }
+  }
+
+  private static List<PointData> extractPointData(MetricData metricData) {
+    List<PointData> pointDataList;
+    switch (metricData.getType()) {
+      case HISTOGRAM:
+        HistogramData histogramData = metricData.getHistogramData();
+        pointDataList = new ArrayList<>(histogramData.getPoints());
+        break;
+      case LONG_SUM:
+        SumData<LongPointData> longSumData = metricData.getLongSumData();
+        pointDataList = new ArrayList<>(longSumData.getPoints());
+        break;
+      default:
+        pointDataList = new ArrayList<>();
+        break;
+    }
+    return pointDataList;
   }
 
   @Test
@@ -183,18 +194,8 @@ public class ITOtelMetrics {
     verifyMetricData(metricDataList, operationCount, attemptCount);
 
     ImmutableMap<String, String> attributeMapping =
-        ImmutableMap.of("method_name", "Echo.Echo", "status", "OK");
+        ImmutableMap.of("method_name", "Echo.Echo", "status", "OK", "language", "Java");
     verifyMetricAttributes(metricDataList.get(0), attributeMapping);
-    //      HistogramData histogramData = metricData.getHistogramData();
-    //      if (!histogramData.getPoints().isEmpty()) {
-    //        for (HistogramPointData pointData : histogramData.getPoints()) {
-    //          String method =
-    // pointData.getAttributes().get(AttributeKey.stringKey("method_name"));
-    //          String status = pointData.getAttributes().get(AttributeKey.stringKey("status"));
-    //          Truth.assertThat(method).isEqualTo("Echo.Echo");
-    //          Truth.assertThat(status).isEqualTo("OK");
-    //        }
-    //      }
   }
 
   @Test
@@ -208,23 +209,9 @@ public class ITOtelMetrics {
     verifyMetricData(metricDataList, operationCount, attemptCount);
 
     ImmutableMap<String, String> attributeMapping =
-        ImmutableMap.of("method_name", "google.showcase.v1beta1.Echo/Echo", "status", "OK");
+        ImmutableMap.of(
+            "method_name", "google.showcase.v1beta1.Echo/Echo", "status", "OK", "language", "Java");
     verifyMetricAttributes(metricDataList.get(0), attributeMapping);
-    //    inMemoryMetricReader.forceFlush();
-    //    List<MetricData> metricDataList = new
-    // ArrayList<>(inMemoryMetricReader.collectAllMetrics());
-    //    for (MetricData metricData : metricDataList) {
-    //      HistogramData histogramData = metricData.getHistogramData();
-    //      if (!histogramData.getPoints().isEmpty()) {
-    //        for (HistogramPointData pointData : histogramData.getPoints()) {
-    //          String method =
-    // pointData.getAttributes().get(AttributeKey.stringKey("method_name"));
-    //          String status = pointData.getAttributes().get(AttributeKey.stringKey("status"));
-    //          Truth.assertThat(method).isEqualTo("google.showcase.v1beta1.Echo/Echo");
-    //          Truth.assertThat(status).isEqualTo("OK");
-    //        }
-    //      }
-    //    }
   }
 
   @Test
@@ -244,24 +231,8 @@ public class ITOtelMetrics {
     verifyMetricData(metricDataList, operationCount, attemptCount);
 
     ImmutableMap<String, String> attributeMapping =
-        ImmutableMap.of("method_name", "Echo.Block", "status", "CANCELLED");
+        ImmutableMap.of("method_name", "Echo.Block", "status", "CANCELLED", "language", "Java");
     verifyMetricAttributes(metricDataList.get(0), attributeMapping);
-    //    inMemoryMetricReader.forceFlush();
-    //    List<MetricData> metricDataList = new
-    // ArrayList<>(inMemoryMetricReader.collectAllMetrics());
-    //
-    //    for (MetricData metricData : metricDataList) {
-    //      HistogramData histogramData = metricData.getHistogramData();
-    //      if (!histogramData.getPoints().isEmpty()) {
-    //        for (HistogramPointData pointData : histogramData.getPoints()) {
-    //          String method =
-    // pointData.getAttributes().get(AttributeKey.stringKey("method_name"));
-    //          String status = pointData.getAttributes().get(AttributeKey.stringKey("status"));
-    //          Truth.assertThat(method).isEqualTo("Echo.Block");
-    //          Truth.assertThat(status).isEqualTo("CANCELLED");
-    //        }
-    //      }
-    //    }
   }
 
   @Test
@@ -281,24 +252,14 @@ public class ITOtelMetrics {
     verifyMetricData(metricDataList, operationCount, attemptCount);
 
     ImmutableMap<String, String> attributeMapping =
-        ImmutableMap.of("method_name", "google.showcase.v1beta1.Echo/Block", "status", "CANCELLED");
+        ImmutableMap.of(
+            "method_name",
+            "google.showcase.v1beta1.Echo/Block",
+            "status",
+            "CANCELLED",
+            "language",
+            "Java");
     verifyMetricAttributes(metricDataList.get(0), attributeMapping);
-    //    inMemoryMetricReader.forceFlush();
-    //    List<MetricData> metricDataList = new
-    // ArrayList<>(inMemoryMetricReader.collectAllMetrics());
-    //
-    //    for (MetricData metricData : metricDataList) {
-    //      HistogramData histogramData = metricData.getHistogramData();
-    //      if (!histogramData.getPoints().isEmpty()) {
-    //        for (HistogramPointData pointData : histogramData.getPoints()) {
-    //          String method =
-    // pointData.getAttributes().get(AttributeKey.stringKey("method_name"));
-    //          String status = pointData.getAttributes().get(AttributeKey.stringKey("status"));
-    //          Truth.assertThat(method).isEqualTo("google.showcase.v1beta1.Echo/Block");
-    //          Truth.assertThat(status).isEqualTo("CANCELLED");
-    //        }
-    //      }
-    //    }
   }
 
   @Test
@@ -320,24 +281,9 @@ public class ITOtelMetrics {
     verifyMetricData(metricDataList, operationCount, attemptCount);
 
     ImmutableMap<String, String> attributeMapping =
-        ImmutableMap.of("method_name", "Echo.Block", "status", "INVALID_ARGUMENT");
+        ImmutableMap.of(
+            "method_name", "Echo.Block", "status", "INVALID_ARGUMENT", "language", "Java");
     verifyMetricAttributes(metricDataList.get(0), attributeMapping);
-    //    inMemoryMetricReader.forceFlush();
-    //    List<MetricData> metricDataList = new
-    // ArrayList<>(inMemoryMetricReader.collectAllMetrics());
-    //
-    //    for (MetricData metricData : metricDataList) {
-    //      HistogramData histogramData = metricData.getHistogramData();
-    //      if (!histogramData.getPoints().isEmpty()) {
-    //        for (HistogramPointData pointData : histogramData.getPoints()) {
-    //          String method =
-    // pointData.getAttributes().get(AttributeKey.stringKey("method_name"));
-    //          String status = pointData.getAttributes().get(AttributeKey.stringKey("status"));
-    //          Truth.assertThat(method).isEqualTo("Echo.Block");
-    //          Truth.assertThat(status).isEqualTo("INVALID_ARGUMENT");
-    //        }
-    //      }
-    //    }
   }
 
   @Test
@@ -359,24 +305,14 @@ public class ITOtelMetrics {
     verifyMetricData(metricDataList, operationCount, attemptCount);
 
     ImmutableMap<String, String> attributeMapping =
-        ImmutableMap.of("method_name", "google.showcase.v1beta1.Echo/Block", "status", "UNKNOWN");
+        ImmutableMap.of(
+            "method_name",
+            "google.showcase.v1beta1.Echo/Block",
+            "status",
+            "UNKNOWN",
+            "language",
+            "Java");
     verifyMetricAttributes(metricDataList.get(0), attributeMapping);
-    //    inMemoryMetricReader.forceFlush();
-    //    List<MetricData> metricDataList = new
-    // ArrayList<>(inMemoryMetricReader.collectAllMetrics());
-    //
-    //    for (MetricData metricData : metricDataList) {
-    //      HistogramData histogramData = metricData.getHistogramData();
-    //      if (!histogramData.getPoints().isEmpty()) {
-    //        for (HistogramPointData pointData : histogramData.getPoints()) {
-    //          String method =
-    // pointData.getAttributes().get(AttributeKey.stringKey("method_name"));
-    //          String status = pointData.getAttributes().get(AttributeKey.stringKey("status"));
-    //          Truth.assertThat(method).isEqualTo("google.showcase.v1beta1.Echo/Block");
-    //          Truth.assertThat(status).isEqualTo("UNKNOWN");
-    //        }
-    //      }
-    //    }
   }
 
   @Test
@@ -423,32 +359,8 @@ public class ITOtelMetrics {
     verifyMetricData(metricDataList, operationCount, attemptCount);
 
     ImmutableMap<String, String> attributeMapping =
-        ImmutableMap.of("method_name", "Echo.Echo", "status", "UNAVAILABLE");
+        ImmutableMap.of("method_name", "Echo.Echo", "status", "UNAVAILABLE", "language", "Java");
     verifyMetricAttributes(metricDataList.get(0), attributeMapping);
-    //    inMemoryMetricReader.forceFlush();
-    //    List<MetricData> metricDataList = new
-    // ArrayList<>(inMemoryMetricReader.collectAllMetrics());
-    //    for (MetricData metricData : metricDataList) {
-    //      HistogramData histogramData = metricData.getHistogramData();
-    //      if (!histogramData.getPoints().isEmpty()) {
-    //        for (HistogramPointData pointData : histogramData.getPoints()) {
-    //          String method =
-    // pointData.getAttributes().get(AttributeKey.stringKey("method_name"));
-    //          String status = pointData.getAttributes().get(AttributeKey.stringKey("status"));
-    //
-    //          System.out.println(pointData);
-    //
-    //          // add a comment why I am doing this
-    //          double max = pointData.getMax();
-    //          double min = pointData.getMin();
-    //          if (max != min) {
-    //            Truth.assertThat(pointData.getCount()).isEqualTo(3);
-    //          }
-    //          Truth.assertThat(method).isEqualTo("Echo.Echo");
-    //          Truth.assertThat(status).isEqualTo("UNKNOWN");
-    //        }
-    //      }
-    //    }
     grpcClient.close();
     grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
@@ -502,26 +414,13 @@ public class ITOtelMetrics {
 
     ImmutableMap<String, String> attributeMapping =
         ImmutableMap.of(
-            "method_name", "google.showcase.v1beta1.Echo/Echo", "status", "UNAVAILABLE");
+            "method_name",
+            "google.showcase.v1beta1.Echo/Echo",
+            "status",
+            "UNAVAILABLE",
+            "language",
+            "Java");
     verifyMetricAttributes(metricDataList.get(0), attributeMapping);
-    //    inMemoryMetricReader.forceFlush();
-    //    List<MetricData> metricDataList = new
-    // ArrayList<>(inMemoryMetricReader.collectAllMetrics());
-    //    for (MetricData metricData : metricDataList) {
-    //      HistogramData histogramData = metricData.getHistogramData();
-    //      if (!histogramData.getPoints().isEmpty()) {
-    //        for (HistogramPointData pointData : histogramData.getPoints()) {
-    //          String method =
-    // pointData.getAttributes().get(AttributeKey.stringKey("method_name"));
-    //          String language = pointData.getAttributes().get(AttributeKey.stringKey("language"));
-    //          String status = pointData.getAttributes().get(AttributeKey.stringKey("status"));
-    //          Truth.assertThat(method).isEqualTo("google.showcase.v1beta1.Echo/Echo");
-    //          Truth.assertThat(language).isEqualTo("Java");
-    //          Truth.assertThat(status).isEqualTo("UNKNOWN");
-    //          Truth.assertThat(pointData.getCount()).isEqualTo(3);
-    //        }
-    //      }
-    //    }
     httpClient.close();
     httpClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
@@ -543,26 +442,9 @@ public class ITOtelMetrics {
     verifyMetricData(metricDataList, operationCount, attemptCount);
 
     ImmutableMap<String, String> attributeMapping =
-        ImmutableMap.of("method_name", "Echo.Block", "status", "INVALID_ARGUMENT");
+        ImmutableMap.of(
+            "method_name", "Echo.Block", "status", "INVALID_ARGUMENT", "language", "Java");
     verifyMetricAttributes(metricDataList.get(0), attributeMapping);
-    //    inMemoryMetricReader.forceFlush();
-    //    List<MetricData> metricDataList = new
-    // ArrayList<>(inMemoryMetricReader.collectAllMetrics());
-    //    for (MetricData metricData : metricDataList) {
-    //      HistogramData histogramData = metricData.getHistogramData();
-    //      if (!histogramData.getPoints().isEmpty()) {
-    //        for (HistogramPointData pointData : histogramData.getPoints()) {
-    //          String method =
-    // pointData.getAttributes().get(AttributeKey.stringKey("method_name"));
-    //          String language = pointData.getAttributes().get(AttributeKey.stringKey("language"));
-    //          String status = pointData.getAttributes().get(AttributeKey.stringKey("status"));
-    //          Truth.assertThat(method).isEqualTo("Echo.Block");
-    //          Truth.assertThat(language).isEqualTo("Java");
-    //          Truth.assertThat(status).isEqualTo("INVALID_ARGUMENT");
-    //          Truth.assertThat(pointData.getCount()).isEqualTo(1);
-    //        }
-    //      }
-    //    }
   }
 
   @Test
@@ -582,25 +464,13 @@ public class ITOtelMetrics {
     verifyMetricData(metricDataList, operationCount, attemptCount);
 
     ImmutableMap<String, String> attributeMapping =
-        ImmutableMap.of("method_name", "google.showcase.v1beta1.Echo/Block", "status", "UNKNOWN");
+        ImmutableMap.of(
+            "method_name",
+            "google.showcase.v1beta1.Echo/Block",
+            "status",
+            "UNKNOWN",
+            "language",
+            "Java");
     verifyMetricAttributes(metricDataList.get(0), attributeMapping);
-    //    inMemoryMetricReader.forceFlush();
-    //    List<MetricData> metricDataList = new
-    // ArrayList<>(inMemoryMetricReader.collectAllMetrics());
-    //    for (MetricData metricData : metricDataList) {
-    //      HistogramData histogramData = metricData.getHistogramData();
-    //      if (!histogramData.getPoints().isEmpty()) {
-    //        for (HistogramPointData pointData : histogramData.getPoints()) {
-    //          String method =
-    // pointData.getAttributes().get(AttributeKey.stringKey("method_name"));
-    //          String language = pointData.getAttributes().get(AttributeKey.stringKey("language"));
-    //          String status = pointData.getAttributes().get(AttributeKey.stringKey("status"));
-    //          Truth.assertThat(method).isEqualTo("google.showcase.v1beta1.Echo/Block");
-    //          Truth.assertThat(language).isEqualTo("Java");
-    //          Truth.assertThat(status).isEqualTo("UNKNOWN");
-    //          Truth.assertThat(pointData.getCount()).isEqualTo(3);
-    //        }
-    //      }
-    //    }
   }
 }
