@@ -24,6 +24,7 @@
     <site.installationModule>${project.artifactId}</site.installationModule>
 
     <threeten.version>1.6.8</threeten.version>
+    <threeten-extra.version>1.7.2</threeten-extra.version>
     <javax.annotations.version>1.3.2</javax.annotations.version>
     <animal-sniffer.version>1.23</animal-sniffer.version>
     <opencensus.version>0.31.1</opencensus.version>
@@ -38,10 +39,27 @@
     <perfmark-api.version>0.27.0</perfmark-api.version>
     <j2objc-annotations.version>2.8</j2objc-annotations.version>
     <opentelemetry.version>1.34.1</opentelemetry.version>
+    <flogger.version>0.8</flogger.version>
+    <arrow.version>15.0.0</arrow.version>
   </properties>
 
   <dependencyManagement>
     <dependencies>
+      <dependency>
+        <groupId>org.apache.arrow</groupId>
+        <artifactId>arrow-memory-core</artifactId>
+        <version>${arrow.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.arrow</groupId>
+        <artifactId>arrow-memory-netty</artifactId>
+        <version>${arrow.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.arrow</groupId>
+        <artifactId>arrow-vector</artifactId>
+        <version>${arrow.version}</version>
+      </dependency>
       <dependency>
         <groupId>org.apache.httpcomponents</groupId>
         <artifactId>httpcore</artifactId>
@@ -56,6 +74,11 @@
         <groupId>org.threeten</groupId>
         <artifactId>threetenbp</artifactId>
         <version>${threeten.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.threeten</groupId>
+        <artifactId>threeten-extra</artifactId>
+        <version>${threeten-extra.version}</version>
       </dependency>
       <dependency>
         <groupId>javax.annotation</groupId>
@@ -77,6 +100,18 @@
         <groupId>com.google.errorprone</groupId>
         <artifactId>error_prone_annotations</artifactId>
         <version>${errorprone.version}</version>
+      </dependency>
+      <!-- Legacy exemption of java-pubsublite's flogger dependencies.
+      In general, let's avoid declaring logging backend dependencies -->
+      <dependency>
+        <groupId>com.google.flogger</groupId>
+        <artifactId>google-extensions</artifactId>
+        <version>${flogger.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.flogger</groupId>
+        <artifactId>flogger-system-backend</artifactId>
+        <version>${flogger.version}</version>
       </dependency>
       <dependency>
         <groupId>com.fasterxml.jackson</groupId>
