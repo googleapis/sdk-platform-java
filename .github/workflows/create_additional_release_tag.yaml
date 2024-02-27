@@ -38,6 +38,8 @@ jobs:
         # Use fixed tag so that checks in handwritten libraries do not need to
         # update the version.
         CHECK_LATEST_TAG="unmanaged-dependencies-check-latest"
+        # delete and create the tag locally.
+        git tag --delete ${CHECK_LATEST_TAG}
         git tag ${CHECK_LATEST_TAG}
         # delete the tag in remote repo and push again.
         git push --delete origin ${CHECK_LATEST_TAG}
