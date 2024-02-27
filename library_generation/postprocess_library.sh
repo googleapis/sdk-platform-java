@@ -88,8 +88,11 @@ if [[ -n "${RUNNING_IN_DOCKER}" ]]; then
   set -u # temporarily fail on unset variables
   repo_binding="${REPO_BINDING_VOLUME}"
   set +u
+  library_name=$(echo "${postprocessing_target}" | rev | cut -d'/' -f1 | rev)
   if [[ "${is_monorepo}" == "true" ]]; then
-    repo_workspace="/repo/$(echo "${postprocessing_target}" | rev | cut -d'/' -f1 | rev)"
+    repo_workspace="/repo/google-cloud-java/${library_name}"
+  else
+    repo_workspace="/repo/${library_name}"
   fi
 fi
 
