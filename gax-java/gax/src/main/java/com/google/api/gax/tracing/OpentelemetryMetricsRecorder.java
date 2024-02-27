@@ -39,12 +39,33 @@ import io.opentelemetry.api.metrics.LongCounter;
 import io.opentelemetry.api.metrics.Meter;
 import java.util.Map;
 
+/**
+ * OpenTelemetry implementation of recording metrics. This implementation collections the
+ * measurements related to the lifecyle of an RPC.
+ *
+ * <p>For the Otel implementation, an attempt is a single RPC invocation and an operation is the
+ * collection of all the attempts made before a response is returned (either as a success or an
+ * error). A single call (i.e. `EchoClient.echo()`) should have an operation_count of 1 and may have
+ * an attempt_count of 1+ (depending on the retry configurations).
+ */
 public class OpentelemetryMetricsRecorder implements MetricsRecorder {
-  private DoubleHistogram attemptLatencyRecorder;
-  private DoubleHistogram operationLatencyRecorder;
-  private LongCounter operationCountRecorder;
-  private LongCounter attemptCountRecorder;
+  private final DoubleHistogram attemptLatencyRecorder;
+  private final DoubleHistogram operationLatencyRecorder;
+  private final LongCounter operationCountRecorder;
+  private final LongCounter attemptCountRecorder;
 
+  /**
+   * Creates the following instruments for the following metrics.
+   *
+   * <ul>
+   *   <li>Attempt Latency: Histogram
+   *   <li>Operation Latency: Histogram
+   *   <li>Attempt Count: Counter
+   *   <li>Operation Count: Counter
+   * </ul>
+   *
+   * @param meter Otel Meter used to create the instruments of measurements
+   */
   public OpentelemetryMetricsRecorder(Meter meter) {
     this.attemptLatencyRecorder =
         meter
@@ -59,10 +80,10 @@ public class OpentelemetryMetricsRecorder implements MetricsRecorder {
                 "Total time until final operation success or failure, including retries and backoff.")
             .setUnit("ms")
             .build();
-    this.operationCountRecorder =
-        meter.counterBuilder("operation_count").setDescription("Number of Operations").build();
     this.attemptCountRecorder =
         meter.counterBuilder("attempt_count").setDescription("Number of Attempts").build();
+    this.operationCountRecorder =
+        meter.counterBuilder("operation_count").setDescription("Number of Operations").build();
   }
 
   /**
