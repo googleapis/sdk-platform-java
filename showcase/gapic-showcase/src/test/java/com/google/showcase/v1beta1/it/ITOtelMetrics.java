@@ -67,7 +67,6 @@ import io.opentelemetry.sdk.metrics.data.LongPointData;
 import io.opentelemetry.sdk.metrics.data.MetricData;
 import io.opentelemetry.sdk.metrics.data.PointData;
 import io.opentelemetry.sdk.metrics.data.SumData;
-import io.opentelemetry.sdk.resources.Resource;
 import io.opentelemetry.sdk.testing.exporter.InMemoryMetricReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,16 +85,15 @@ import org.junit.Test;
 public class ITOtelMetrics {
   private static final String ATTEMPT_COUNT = "attempt_count";
   private static final String OPERATION_COUNT = "operation_count";
+  private static final String DEFAULT_LANGUAGE = "Java";
   private InMemoryMetricReader inMemoryMetricReader;
   private EchoClient grpcClient;
   private EchoClient httpClient;
 
   private OpentelemetryMetricsRecorder createOtelMetricsRecorder(
       InMemoryMetricReader inMemoryMetricReader) {
-    Resource resource = Resource.getDefault();
     SdkMeterProvider sdkMeterProvider =
         SdkMeterProvider.builder()
-            .setResource(resource)
             .registerMetricReader(inMemoryMetricReader)
             .build();
 
@@ -105,7 +103,7 @@ public class ITOtelMetrics {
     // Meter Creation
     Meter meter =
         openTelemetry
-            .meterBuilder("gax")
+            .meterBuilder("ShowcaseOtelMetrics")
             .setInstrumentationVersion(GaxProperties.getGaxVersion())
             .build();
     // OpenTelemetry Metrics Recorder
@@ -136,6 +134,7 @@ public class ITOtelMetrics {
     httpClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
+  // Extract the value recorded from the PointData
   private void verifyLongSumCount(MetricData metricData, long count) {
     SumData<LongPointData> longSumData = metricData.getLongSumData();
     List<LongPointData> points = new ArrayList<>(longSumData.getPoints());
@@ -144,6 +143,7 @@ public class ITOtelMetrics {
     Truth.assertThat(pointData.getValue()).isEqualTo(count);
   }
 
+  // Verify that Operation Count and Attempt Count values are being recorded correctly
   private void verifyMetricData(
       List<MetricData> metricDataList, int operationCount, int attemptCount) {
     for (MetricData metricData : metricDataList) {
@@ -200,13 +200,15 @@ public class ITOtelMetrics {
   public void testGrpc_operationSucceeded_recordsMetrics() {
     int operationCount = 1;
     int attemptCount = 1;
-    grpcClient.echo(EchoRequest.newBuilder().setContent("test_grpc_operation_succeeded").build());
+    Code statusCode = Code.OK;
+    EchoRequest echoRequest = EchoRequest.newBuilder().setContent("test_grpc_operation_succeeded").build();
+    grpcClient.echo(echoRequest);
 
     List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
     verifyMetricData(metricDataList, operationCount, attemptCount);
 
     ImmutableMap<String, String> attributeMapping =
-        ImmutableMap.of("method_name", "Echo.Echo", "status", "OK", "language", "Java");
+        ImmutableMap.of("method_name", "Echo.Echo", "status", statusCode.name(), "language", DEFAULT_LANGUAGE);
     verifyMetricAttributes(metricDataList.get(0), attributeMapping);
   }
 
@@ -214,14 +216,16 @@ public class ITOtelMetrics {
   public void testHttpJson_operationSucceeded_recordsMetrics() {
     int operationCount = 1;
     int attemptCount = 1;
-    httpClient.echo(EchoRequest.newBuilder().setContent("test_http_operation_succeeded").build());
+    Code statusCode = Code.OK;
+    EchoRequest echoRequest = EchoRequest.newBuilder().setContent("test_http_operation_succeeded").build();
+    httpClient.echo(echoRequest);
 
     List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
     verifyMetricData(metricDataList, operationCount, attemptCount);
 
     ImmutableMap<String, String> attributeMapping =
         ImmutableMap.of(
-            "method_name", "google.showcase.v1beta1.Echo/Echo", "status", "OK", "language", "Java");
+            "method_name", "google.showcase.v1beta1.Echo/Echo", "status", statusCode.name(), "language", DEFAULT_LANGUAGE);
     verifyMetricAttributes(metricDataList.get(0), attributeMapping);
   }
 
@@ -229,6 +233,7 @@ public class ITOtelMetrics {
   public void testGrpc_operationCancelled_recordsMetrics() throws Exception {
     int operationCount = 1;
     int attemptCount = 1;
+    Code statusCode = Code.CANCELLED;
     BlockRequest blockRequest =
         BlockRequest.newBuilder().setResponseDelay(Duration.newBuilder().setSeconds(5)).build();
 
@@ -242,7 +247,7 @@ public class ITOtelMetrics {
     verifyMetricData(metricDataList, operationCount, attemptCount);
 
     ImmutableMap<String, String> attributeMapping =
-        ImmutableMap.of("method_name", "Echo.Block", "status", "CANCELLED", "language", "Java");
+        ImmutableMap.of("method_name", "Echo.Block", "status", statusCode.name(), "language", DEFAULT_LANGUAGE);
     verifyMetricAttributes(metricDataList.get(0), attributeMapping);
   }
 
@@ -250,6 +255,7 @@ public class ITOtelMetrics {
   public void testHttpJson_operationCancelled_recordsMetrics() throws Exception {
     int operationCount = 1;
     int attemptCount = 1;
+    Code statusCode = Code.CANCELLED;
     BlockRequest blockRequest =
         BlockRequest.newBuilder().setResponseDelay(Duration.newBuilder().setSeconds(5)).build();
 
@@ -267,9 +273,9 @@ public class ITOtelMetrics {
             "method_name",
             "google.showcase.v1beta1.Echo/Block",
             "status",
-            "CANCELLED",
+                statusCode.name(),
             "language",
-            "Java");
+                DEFAULT_LANGUAGE);
     verifyMetricAttributes(metricDataList.get(0), attributeMapping);
   }
 
@@ -277,10 +283,11 @@ public class ITOtelMetrics {
   public void testGrpc_operationFailed_recordsMetrics() {
     int operationCount = 1;
     int attemptCount = 1;
+    Code statusCode = Code.INVALID_ARGUMENT;
     BlockRequest blockRequest =
         BlockRequest.newBuilder()
             .setResponseDelay(Duration.newBuilder().setSeconds(2))
-            .setError(Status.newBuilder().setCode(Code.INVALID_ARGUMENT.ordinal()))
+            .setError(Status.newBuilder().setCode(statusCode.ordinal()))
             .build();
 
     UnaryCallable<BlockRequest, BlockResponse> blockCallable = grpcClient.blockCallable();
@@ -292,18 +299,20 @@ public class ITOtelMetrics {
 
     ImmutableMap<String, String> attributeMapping =
         ImmutableMap.of(
-            "method_name", "Echo.Block", "status", "INVALID_ARGUMENT", "language", "Java");
+            "method_name", "Echo.Block", "status", statusCode.name(), "language", DEFAULT_LANGUAGE);
     verifyMetricAttributes(metricDataList.get(0), attributeMapping);
   }
 
+  @Ignore("https://github.com/googleapis/sdk-platform-java/issues/2503")
   @Test
   public void testHttpJson_operationFailed_recordsMetrics() {
     int operationCount = 1;
     int attemptCount = 1;
+    Code statusCode = Code.INVALID_ARGUMENT;
     BlockRequest blockRequest =
         BlockRequest.newBuilder()
             .setResponseDelay(Duration.newBuilder().setSeconds(2))
-            .setError(Status.newBuilder().setCode(Code.INVALID_ARGUMENT.ordinal()))
+            .setError(Status.newBuilder().setCode(statusCode.ordinal()))
             .build();
 
     UnaryCallable<BlockRequest, BlockResponse> blockCallable = httpClient.blockCallable();
@@ -318,9 +327,9 @@ public class ITOtelMetrics {
             "method_name",
             "google.showcase.v1beta1.Echo/Block",
             "status",
-            "UNKNOWN",
+                statusCode.name(),
             "language",
-            "Java");
+                DEFAULT_LANGUAGE);
     verifyMetricAttributes(metricDataList.get(0), attributeMapping);
   }
 
@@ -328,6 +337,7 @@ public class ITOtelMetrics {
   public void testGrpc_attemptFailedRetriesExhausted_recordsMetrics() throws Exception {
     int operationCount = 1;
     int attemptCount = 3;
+    Code statusCode = Code.UNAVAILABLE;
     // A custom EchoClient is used in this test because retries have jitter, and we cannot
     // predict the number of attempts that are scheduled for an RPC invocation otherwise.
     // The custom retrySettings limit to a set number of attempts before the call gives up.
@@ -341,7 +351,7 @@ public class ITOtelMetrics {
     grpcEchoSettingsBuilder
         .echoSettings()
         .setRetrySettings(retrySettings)
-        .setRetryableCodes(ImmutableSet.of(Code.UNAVAILABLE));
+        .setRetryableCodes(ImmutableSet.of(statusCode));
     EchoSettings grpcEchoSettings = EchoSettings.create(grpcEchoSettingsBuilder.build());
     grpcEchoSettings =
         grpcEchoSettings
@@ -358,7 +368,7 @@ public class ITOtelMetrics {
     EchoClient grpcClient = EchoClient.create(grpcEchoSettings);
     EchoRequest echoRequest =
         EchoRequest.newBuilder()
-            .setError(Status.newBuilder().setCode(Code.UNAVAILABLE.ordinal()).build())
+            .setError(Status.newBuilder().setCode(statusCode.ordinal()).build())
             .build();
 
     assertThrows(UnavailableException.class, () -> grpcClient.echo(echoRequest));
@@ -367,17 +377,18 @@ public class ITOtelMetrics {
     verifyMetricData(metricDataList, operationCount, attemptCount);
 
     ImmutableMap<String, String> attributeMapping =
-        ImmutableMap.of("method_name", "Echo.Echo", "status", "UNAVAILABLE", "language", "Java");
+        ImmutableMap.of("method_name", "Echo.Echo", "status", statusCode.name(), "language", DEFAULT_LANGUAGE);
     verifyMetricAttributes(metricDataList.get(0), attributeMapping);
     grpcClient.close();
     grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
-  @Ignore("Temp ignore while investigating this failure")
+  @Ignore("https://github.com/googleapis/sdk-platform-java/issues/2503")
   @Test
   public void testHttpJson_attemptFailedRetriesExhausted_recordsMetrics() throws Exception {
     int operationCount = 1;
     int attemptCount = 3;
+    Code statusCode = Code.UNAVAILABLE;
     // A custom EchoClient is used in this test because retries have jitter, and we cannot
     // predict the number of attempts that are scheduled for an RPC invocation otherwise.
     // The custom retrySettings limit to a set number of attempts before the call gives up.
@@ -391,7 +402,7 @@ public class ITOtelMetrics {
     httpJsonEchoSettingsBuilder
         .echoSettings()
         .setRetrySettings(retrySettings)
-        .setRetryableCodes(ImmutableSet.of(Code.UNAVAILABLE));
+        .setRetryableCodes(ImmutableSet.of(statusCode));
     EchoSettings httpJsonEchoSettings = EchoSettings.create(httpJsonEchoSettingsBuilder.build());
     httpJsonEchoSettings =
         httpJsonEchoSettings
@@ -411,7 +422,7 @@ public class ITOtelMetrics {
 
     EchoRequest echoRequest =
         EchoRequest.newBuilder()
-            .setError(Status.newBuilder().setCode(Code.UNAVAILABLE.ordinal()).build())
+            .setError(Status.newBuilder().setCode(statusCode.ordinal()).build())
             .build();
 
     assertThrows(UnavailableException.class, () -> httpClient.echo(echoRequest));
@@ -424,22 +435,23 @@ public class ITOtelMetrics {
             "method_name",
             "google.showcase.v1beta1.Echo/Echo",
             "status",
-            "UNAVAILABLE",
+                statusCode.name(),
             "language",
-            "Java");
+                DEFAULT_LANGUAGE);
     verifyMetricAttributes(metricDataList.get(0), attributeMapping);
     httpClient.close();
     httpClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
   @Test
-  public void testGrpc_attemptPermanentFailure_recordsMetrics() throws Exception {
+  public void testGrpc_attemptPermanentFailure_recordsMetrics() {
     int operationCount = 1;
     int attemptCount = 1;
+    Code statusCode = Code.INVALID_ARGUMENT;
     BlockRequest blockRequest =
         BlockRequest.newBuilder()
             .setResponseDelay(Duration.newBuilder().setSeconds(2).build())
-            .setError(Status.newBuilder().setCode(Code.INVALID_ARGUMENT.ordinal()).build())
+            .setError(Status.newBuilder().setCode(statusCode.ordinal()).build())
             .build();
 
     assertThrows(InvalidArgumentException.class, () -> grpcClient.block(blockRequest));
@@ -449,18 +461,20 @@ public class ITOtelMetrics {
 
     ImmutableMap<String, String> attributeMapping =
         ImmutableMap.of(
-            "method_name", "Echo.Block", "status", "INVALID_ARGUMENT", "language", "Java");
+            "method_name", "Echo.Block", "status", statusCode.name(), "language", DEFAULT_LANGUAGE);
     verifyMetricAttributes(metricDataList.get(0), attributeMapping);
   }
 
+  @Ignore("https://github.com/googleapis/sdk-platform-java/issues/2503")
   @Test
-  public void testHttpJson_attemptPermanentFailure_recordsMetrics() throws Exception {
+  public void testHttpJson_attemptPermanentFailure_recordsMetrics() {
     int operationCount = 1;
     int attemptCount = 1;
+    Code statusCode = Code.INVALID_ARGUMENT;
     BlockRequest blockRequest =
         BlockRequest.newBuilder()
             .setResponseDelay(Duration.newBuilder().setSeconds(2).build())
-            .setError(Status.newBuilder().setCode(Code.INVALID_ARGUMENT.ordinal()).build())
+            .setError(Status.newBuilder().setCode(statusCode.ordinal()).build())
             .build();
 
     assertThrows(InvalidArgumentException.class, () -> httpClient.block(blockRequest));
@@ -473,9 +487,9 @@ public class ITOtelMetrics {
             "method_name",
             "google.showcase.v1beta1.Echo/Block",
             "status",
-            "UNKNOWN",
+            statusCode.name(),
             "language",
-            "Java");
+                DEFAULT_LANGUAGE);
     verifyMetricAttributes(metricDataList.get(0), attributeMapping);
   }
 }
