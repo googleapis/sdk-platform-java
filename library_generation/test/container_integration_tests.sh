@@ -8,28 +8,38 @@ if [[ -z "${TEST_IMAGE_ID}" ]]; then
   exit 1
 fi
 
-if [[ ! -d google-cloud-java ]]; then
-  git clone https://github.com/googleapis/google-cloud-java
-fi
-pushd google-cloud-java
-git reset --hard main
-popd
+repo_volumes=""
+for repo in google-cloud-java java-bigtable; do
+  if [[ ! -d "${repo}" ]]; then
+    git clone "https://github.com/googleapis/${repo}"
+  fi
+  pushd "${repo}"
+  git reset --hard main
+  popd
 
-# We use a volume to hold the google-cloud-java repository used in the
-# integration tests. This is because the test container creates a child
-# container using the host machine's docker socket, meaning that we can only
-# reference volumes created from within the host machine (i.e. the machine
-# running this script)
-#
-# To summarize, we create a special volume that can be referenced both in the
-# main container and in any child containers created by this one.
-if [[ $(docker volume inspect repo) != '[]' ]]; then
-  docker volume rm repo
-fi
-docker volume create --name "repo" --opt "type=none" --opt "device=$(pwd)/google-cloud-java" --opt "o=bind"
+  # We use a volume to hold the repositories used in the
+  # integration tests. This is because the test container creates a child
+  # container using the host machine's docker socket, meaning that we can only
+  # reference volumes created from within the host machine (i.e. the machine
+  # running this script)
+  #
+  # To summarize, we create a special volume that can be referenced both in the
+  # main container and in any child containers created by this one.
+  volume_name="repo-${repo}"
+  if [[ $(docker volume inspect "${volume_name}") != '[]' ]]; then
+    docker volume rm "${volume_name}"
+  fi
+  docker volume create \
+    --name "${volume_name}" \
+    --opt "type=none" \
+    --opt "device=$(pwd)/${repo}" \
+    --opt "o=bind"
+
+  repo_volumes="${repo_volumes} -v ${volume_name}:/workspace/${repo}"
+done
 
 docker run --rm \
-  -v repo:/workspace \
+  ${repo_volumes} \
   -v /tmp:/tmp \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -e "RUNNING_IN_DOCKER=true" \
