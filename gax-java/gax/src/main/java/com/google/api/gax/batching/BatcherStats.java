@@ -54,8 +54,12 @@ class BatcherStats {
   private final Map<Class, Integer> entryExceptionCounts = new HashMap<>();
   private final Map<Code, Integer> entryStatusCounts = new HashMap<>();
 
-  private final EvictingQueue<String> sampleOfRpcErrors = EvictingQueue.create(Integer.getInteger("com.google.api.gax.batching.errors.max-samples", 50));
-  private final EvictingQueue<String> sampleOfEntryErrors = EvictingQueue.create(Integer.getInteger("com.google.api.gax.batching.errors.max-samples", 50));
+  private final EvictingQueue<String> sampleOfRpcErrors =
+      EvictingQueue.create(
+          Integer.getInteger("com.google.api.gax.batching.errors.max-samples", 50));
+  private final EvictingQueue<String> sampleOfEntryErrors =
+      EvictingQueue.create(
+          Integer.getInteger("com.google.api.gax.batching.errors.max-samples", 50));
 
   /**
    * Records the count of the exception and it's type when a complete batch failed to apply.

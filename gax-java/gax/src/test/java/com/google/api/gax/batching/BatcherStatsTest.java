@@ -55,7 +55,10 @@ public class BatcherStatsTest {
 
     batcherStats.recordBatchFailure(
         ApiExceptionFactory.createException(
-            "fake api error", new RuntimeException(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false));
+            "fake api error",
+            new RuntimeException(),
+            FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT),
+            false));
 
     batcherStats.recordBatchFailure(new RuntimeException("Request failed"));
 
@@ -65,8 +68,10 @@ public class BatcherStatsTest {
     assertThat(exception).hasMessageThat().contains("1 RuntimeException");
     assertThat(exception).hasMessageThat().contains("1 ApiException(1 INVALID_ARGUMENT)");
     assertThat(exception).hasMessageThat().contains("and 0 partial failures.");
-    assertThat(exception).hasMessageThat().contains("com.google.api.gax.rpc.InvalidArgumentException: fake api error, java.lang.RuntimeException: Request failed.");
-
+    assertThat(exception)
+        .hasMessageThat()
+        .contains(
+            "com.google.api.gax.rpc.InvalidArgumentException: fake api error, java.lang.RuntimeException: Request failed.");
   }
 
   @Test
@@ -81,7 +86,10 @@ public class BatcherStatsTest {
     SettableApiFuture<Integer> batchTwoResult = SettableApiFuture.create();
     batchTwoResult.setException(
         ApiExceptionFactory.createException(
-            "fake entry error", new RuntimeException(), FakeStatusCode.of(StatusCode.Code.UNAVAILABLE), false));
+            "fake entry error",
+            new RuntimeException(),
+            FakeStatusCode.of(StatusCode.Code.UNAVAILABLE),
+            false));
     batcherStats.recordBatchElementsCompletion(
         ImmutableList.of(BatchEntry.create(2, batchTwoResult)));
 
@@ -91,7 +99,10 @@ public class BatcherStatsTest {
         .contains("The 2 partial failures contained 2 entries that failed with:");
     assertThat(ex).hasMessageThat().contains("1 ApiException(1 UNAVAILABLE)");
     assertThat(ex).hasMessageThat().contains("1 IllegalStateException");
-    assertThat(ex).hasMessageThat().contains("Sample of entry errors: java.lang.IllegalStateException: local element failure, com.google.api.gax.rpc.UnavailableException: fake entry error.");
+    assertThat(ex)
+        .hasMessageThat()
+        .contains(
+            "Sample of entry errors: java.lang.IllegalStateException: local element failure, com.google.api.gax.rpc.UnavailableException: fake entry error.");
   }
 
   @Test
