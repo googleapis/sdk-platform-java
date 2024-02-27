@@ -65,7 +65,7 @@ echo "...done"
 
 # write or restore pom.xml files
 echo "Generating missing pom.xml..."
-python3 "${scripts_root}/owlbot/src/fix-poms.py" "${versions_file}" "monorepo"
+python3 "${scripts_root}/owlbot/src/fix-poms.py" "${versions_file}" "${monorepo}"
 echo "...done"
 
 # write or restore clirr-ignored-differences.xml
