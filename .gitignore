@@ -28,3 +28,4 @@ library_generation/test/**/golden*/
 library_generation/test/resources/test_repo_level_postprocess/
 **/*egg-info/
 **/build/
+**/dist/
