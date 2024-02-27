@@ -40,6 +40,7 @@ script_dir = os.path.dirname(os.path.realpath(__file__))
 config_dir = f"{script_dir}/resources/integration"
 golden_dir = f"{config_dir}/golden"
 repo_prefix = "https://github.com/googleapis"
+# this map tells which branch of each repo should we use for our diff tests
 committish_map = {
     "google-cloud-java": "chore/test-hermetic-build", # google-cloud-java
     "java-bigtable": "chore/test-hermetic-build", # java-bigtable

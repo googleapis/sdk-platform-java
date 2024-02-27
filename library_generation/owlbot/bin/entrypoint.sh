@@ -28,8 +28,6 @@ scripts_root=$1
 versions_file=$2
 configuration_yaml=$3
 
-# we use an empty synthtool folder to prevent cached templates from being used
-export SYNTHTOOL_TEMPLATES=$(mktemp -d)
 
 # This script can be used to process HW libraries and monorepo
 # (google-cloud-java) libraries, which require a slightly different treatment
@@ -58,8 +56,11 @@ python3 "${scripts_root}/owlbot/src/apply_repo_templates.py" "${configuration_ya
 echo "Retrieving files from owl-bot-staging directory..."
 if [ -f "owlbot.py" ]
 then
+  # we use an empty synthtool folder to prevent cached templates from being used
+  export SYNTHTOOL_TEMPLATES=$(mktemp -d)
   # defaults to run owlbot.py
   python3 owlbot.py
+  export SYNTHTOOL_TEMPLATES=""
 fi
 echo "...done"
 
@@ -82,5 +83,3 @@ echo "...done"
 echo "Reformatting source..."
 mvn fmt:format -V --batch-mode --no-transfer-progress
 echo "...done"
-
-export SYNTHTOOL_TEMPLATES=""
