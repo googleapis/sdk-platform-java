@@ -62,11 +62,11 @@ import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.metrics.Meter;
 import io.opentelemetry.sdk.OpenTelemetrySdk;
 import io.opentelemetry.sdk.metrics.SdkMeterProvider;
-import io.opentelemetry.sdk.metrics.data.HistogramData;
+import io.opentelemetry.sdk.metrics.data.Data;
+import io.opentelemetry.sdk.metrics.data.HistogramPointData;
 import io.opentelemetry.sdk.metrics.data.LongPointData;
 import io.opentelemetry.sdk.metrics.data.MetricData;
 import io.opentelemetry.sdk.metrics.data.PointData;
-import io.opentelemetry.sdk.metrics.data.SumData;
 import io.opentelemetry.sdk.testing.exporter.InMemoryMetricReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,6 +85,8 @@ import org.junit.Test;
 public class ITOtelMetrics {
   private static final String ATTEMPT_COUNT = "attempt_count";
   private static final String OPERATION_COUNT = "operation_count";
+  private static final String ATTEMPT_LATENCY = "attempt_latency";
+  private static final String OPERATION_LATENCY = "operation_latency";
   private static final String DEFAULT_LANGUAGE = "Java";
   private InMemoryMetricReader inMemoryMetricReader;
   private EchoClient grpcClient;
@@ -93,9 +95,7 @@ public class ITOtelMetrics {
   private OpentelemetryMetricsRecorder createOtelMetricsRecorder(
       InMemoryMetricReader inMemoryMetricReader) {
     SdkMeterProvider sdkMeterProvider =
-        SdkMeterProvider.builder()
-            .registerMetricReader(inMemoryMetricReader)
-            .build();
+        SdkMeterProvider.builder().registerMetricReader(inMemoryMetricReader).build();
 
     OpenTelemetry openTelemetry =
         OpenTelemetrySdk.builder().setMeterProvider(sdkMeterProvider).build();
@@ -134,28 +134,31 @@ public class ITOtelMetrics {
     httpClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
-  // Extract the value recorded from the PointData
-  private void verifyLongSumCount(MetricData metricData, long count) {
-    SumData<LongPointData> longSumData = metricData.getLongSumData();
-    List<LongPointData> points = new ArrayList<>(longSumData.getPoints());
-    Truth.assertThat(points.size()).isEqualTo(1);
-    LongPointData pointData = points.get(0);
-    Truth.assertThat(pointData.getValue()).isEqualTo(count);
-  }
-
-  // Verify that Operation Count and Attempt Count values are being recorded correctly
   private void verifyMetricData(
       List<MetricData> metricDataList, int operationCount, int attemptCount) {
     for (MetricData metricData : metricDataList) {
+      Data<?> data = metricData.getData();
+      List<PointData> points = new ArrayList<>(data.getPoints());
+      Truth.assertThat(points.size()).isEqualTo(1);
+      PointData pointData = points.get(0);
       switch (metricData.getName()) {
         case OPERATION_COUNT:
-          verifyLongSumCount(metricData, operationCount);
+          Truth.assertThat(((LongPointData) pointData).getValue()).isEqualTo(operationCount);
           break;
         case ATTEMPT_COUNT:
-          verifyLongSumCount(metricData, attemptCount);
+          Truth.assertThat(((LongPointData) pointData).getValue()).isEqualTo(attemptCount);
+          break;
+        case OPERATION_LATENCY:
+          // It is difficult to verify the actual latency values (operation or attempt)
+          // without flaky behavior. Test that the number of data points recorded matches.
+          Truth.assertThat(((HistogramPointData) pointData).getCount()).isEqualTo(operationCount);
+          break;
+        case ATTEMPT_LATENCY:
+          // It is difficult to verify the actual latency values (operation or attempt)
+          // without flaky behavior. Test that the number of data points recorded matches.
+          Truth.assertThat(((HistogramPointData) pointData).getCount()).isEqualTo(attemptCount);
           break;
         default:
-          // It is difficult to verify latency (operation or attempt) without flaky behavior
           break;
       }
     }
@@ -166,34 +169,16 @@ public class ITOtelMetrics {
    * keys and values stored inside the attributeMapping.
    */
   private void verifyMetricAttributes(MetricData metricData, Map<String, String> attributeMapping) {
-    List<PointData> pointDataList = extractPointData(metricData);
+    List<PointData> pointDataList = (List<PointData>) metricData.getData().getPoints();
     Truth.assertThat(pointDataList.size()).isEqualTo(1);
-    PointData pointData = pointDataList.get(0);
-    Attributes attributes = pointData.getAttributes();
-    for (Map.Entry<AttributeKey<?>, Object> entrySet : attributes.asMap().entrySet()) {
-      if (attributeMapping.containsKey(entrySet.getKey().getKey())) {
-        String key = entrySet.getKey().getKey();
-        Truth.assertThat(entrySet.getValue()).isEqualTo(attributeMapping.get(key));
-      }
+    Attributes attributes = pointDataList.get(0).getAttributes();
+    Map<AttributeKey<?>, Object> attributesMap = attributes.asMap();
+    for (Map.Entry<AttributeKey<?>, Object> entrySet : attributesMap.entrySet()) {
+      String key = entrySet.getKey().getKey();
+      String value = entrySet.getValue().toString();
+      Truth.assertThat(attributeMapping.containsKey(key)).isTrue();
+      Truth.assertThat(attributeMapping.get(key)).isEqualTo(value);
     }
-  }
-
-  private static List<PointData> extractPointData(MetricData metricData) {
-    List<PointData> pointDataList;
-    switch (metricData.getType()) {
-      case HISTOGRAM:
-        HistogramData histogramData = metricData.getHistogramData();
-        pointDataList = new ArrayList<>(histogramData.getPoints());
-        break;
-      case LONG_SUM:
-        SumData<LongPointData> longSumData = metricData.getLongSumData();
-        pointDataList = new ArrayList<>(longSumData.getPoints());
-        break;
-      default:
-        pointDataList = new ArrayList<>();
-        break;
-    }
-    return pointDataList;
   }
 
   @Test
@@ -201,14 +186,16 @@ public class ITOtelMetrics {
     int operationCount = 1;
     int attemptCount = 1;
     Code statusCode = Code.OK;
-    EchoRequest echoRequest = EchoRequest.newBuilder().setContent("test_grpc_operation_succeeded").build();
+    EchoRequest echoRequest =
+        EchoRequest.newBuilder().setContent("test_grpc_operation_succeeded").build();
     grpcClient.echo(echoRequest);
 
     List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
     verifyMetricData(metricDataList, operationCount, attemptCount);
 
     ImmutableMap<String, String> attributeMapping =
-        ImmutableMap.of("method_name", "Echo.Echo", "status", statusCode.name(), "language", DEFAULT_LANGUAGE);
+        ImmutableMap.of(
+            "method_name", "Echo.Echo", "status", statusCode.name(), "language", DEFAULT_LANGUAGE);
     verifyMetricAttributes(metricDataList.get(0), attributeMapping);
   }
 
@@ -217,7 +204,8 @@ public class ITOtelMetrics {
     int operationCount = 1;
     int attemptCount = 1;
     Code statusCode = Code.OK;
-    EchoRequest echoRequest = EchoRequest.newBuilder().setContent("test_http_operation_succeeded").build();
+    EchoRequest echoRequest =
+        EchoRequest.newBuilder().setContent("test_http_operation_succeeded").build();
     httpClient.echo(echoRequest);
 
     List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
@@ -225,7 +213,12 @@ public class ITOtelMetrics {
 
     ImmutableMap<String, String> attributeMapping =
         ImmutableMap.of(
-            "method_name", "google.showcase.v1beta1.Echo/Echo", "status", statusCode.name(), "language", DEFAULT_LANGUAGE);
+            "method_name",
+            "google.showcase.v1beta1.Echo/Echo",
+            "status",
+            statusCode.name(),
+            "language",
+            DEFAULT_LANGUAGE);
     verifyMetricAttributes(metricDataList.get(0), attributeMapping);
   }
 
@@ -247,7 +240,8 @@ public class ITOtelMetrics {
     verifyMetricData(metricDataList, operationCount, attemptCount);
 
     ImmutableMap<String, String> attributeMapping =
-        ImmutableMap.of("method_name", "Echo.Block", "status", statusCode.name(), "language", DEFAULT_LANGUAGE);
+        ImmutableMap.of(
+            "method_name", "Echo.Block", "status", statusCode.name(), "language", DEFAULT_LANGUAGE);
     verifyMetricAttributes(metricDataList.get(0), attributeMapping);
   }
 
@@ -273,9 +267,9 @@ public class ITOtelMetrics {
             "method_name",
             "google.showcase.v1beta1.Echo/Block",
             "status",
-                statusCode.name(),
+            statusCode.name(),
             "language",
-                DEFAULT_LANGUAGE);
+            DEFAULT_LANGUAGE);
     verifyMetricAttributes(metricDataList.get(0), attributeMapping);
   }
 
@@ -327,9 +321,9 @@ public class ITOtelMetrics {
             "method_name",
             "google.showcase.v1beta1.Echo/Block",
             "status",
-                statusCode.name(),
+            statusCode.name(),
             "language",
-                DEFAULT_LANGUAGE);
+            DEFAULT_LANGUAGE);
     verifyMetricAttributes(metricDataList.get(0), attributeMapping);
   }
 
@@ -377,7 +371,8 @@ public class ITOtelMetrics {
     verifyMetricData(metricDataList, operationCount, attemptCount);
 
     ImmutableMap<String, String> attributeMapping =
-        ImmutableMap.of("method_name", "Echo.Echo", "status", statusCode.name(), "language", DEFAULT_LANGUAGE);
+        ImmutableMap.of(
+            "method_name", "Echo.Echo", "status", statusCode.name(), "language", DEFAULT_LANGUAGE);
     verifyMetricAttributes(metricDataList.get(0), attributeMapping);
     grpcClient.close();
     grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
@@ -435,9 +430,9 @@ public class ITOtelMetrics {
             "method_name",
             "google.showcase.v1beta1.Echo/Echo",
             "status",
-                statusCode.name(),
+            statusCode.name(),
             "language",
-                DEFAULT_LANGUAGE);
+            DEFAULT_LANGUAGE);
     verifyMetricAttributes(metricDataList.get(0), attributeMapping);
     httpClient.close();
     httpClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
@@ -489,7 +484,7 @@ public class ITOtelMetrics {
             "status",
             statusCode.name(),
             "language",
-                DEFAULT_LANGUAGE);
+            DEFAULT_LANGUAGE);
     verifyMetricAttributes(metricDataList.get(0), attributeMapping);
   }
 }
