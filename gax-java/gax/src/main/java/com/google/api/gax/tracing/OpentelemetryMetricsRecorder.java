@@ -60,9 +60,9 @@ public class OpentelemetryMetricsRecorder implements MetricsRecorder {
             .setUnit("ms")
             .build();
     this.operationCountRecorder =
-        meter.counterBuilder("operation_count").setDescription("Number of operations made").build();
+        meter.counterBuilder("operation_count").setDescription("Number of Operations").build();
     this.attemptCountRecorder =
-        meter.counterBuilder("attempt_count").setDescription("Number of attempts made").build();
+        meter.counterBuilder("attempt_count").setDescription("Number of Attempts").build();
   }
 
   /**
