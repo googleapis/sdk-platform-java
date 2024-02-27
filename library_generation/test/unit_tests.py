@@ -399,8 +399,10 @@ class UtilitiesTest(unittest.TestCase):
             f"{library_path}/.repo-metadata.json",
             f"{library_path}/.repo-metadata-golden.json",
         )
+        # since this is a single library, we treat this as HW repository,
+        # meaning that the owlbot yaml will be inside a .github folder
         self.__compare_files(
-            f"{library_path}/.OwlBot.yaml", f"{library_path}/.OwlBot-golden.yaml"
+            f"{library_path}/.github/.OwlBot.yaml", f"{library_path}/.OwlBot-golden.yaml"
         )
         self.__compare_files(
             f"{library_path}/owlbot.py", f"{library_path}/owlbot-golden.py"

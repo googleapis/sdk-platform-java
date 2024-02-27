@@ -416,7 +416,6 @@ def generate_prerequisite_files(
         if config.is_monorepo
         else f"{library_path}/.github/{owlbot_yaml_file}"
     )
-    print(f"path_to_owlbot_yaml_file={path_to_owlbot_yaml_file}")
     if not os.path.exists(path_to_owlbot_yaml_file):
         __render(
             template_name="owlbot.yaml.monorepo.j2",
