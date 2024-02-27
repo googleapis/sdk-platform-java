@@ -55,7 +55,7 @@ public class BatcherStatsTest {
 
     batcherStats.recordBatchFailure(
         ApiExceptionFactory.createException(
-            new RuntimeException(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false));
+            "fake api error", new RuntimeException(), FakeStatusCode.of(StatusCode.Code.INVALID_ARGUMENT), false));
 
     batcherStats.recordBatchFailure(new RuntimeException("Request failed"));
 
@@ -65,6 +65,8 @@ public class BatcherStatsTest {
     assertThat(exception).hasMessageThat().contains("1 RuntimeException");
     assertThat(exception).hasMessageThat().contains("1 ApiException(1 INVALID_ARGUMENT)");
     assertThat(exception).hasMessageThat().contains("and 0 partial failures.");
+    assertThat(exception).hasMessageThat().contains("com.google.api.gax.rpc.InvalidArgumentException: fake api error, java.lang.RuntimeException: Request failed.");
+
   }
 
   @Test
@@ -79,7 +81,7 @@ public class BatcherStatsTest {
     SettableApiFuture<Integer> batchTwoResult = SettableApiFuture.create();
     batchTwoResult.setException(
         ApiExceptionFactory.createException(
-            new RuntimeException(), FakeStatusCode.of(StatusCode.Code.UNAVAILABLE), false));
+            "fake entry error", new RuntimeException(), FakeStatusCode.of(StatusCode.Code.UNAVAILABLE), false));
     batcherStats.recordBatchElementsCompletion(
         ImmutableList.of(BatchEntry.create(2, batchTwoResult)));
 
@@ -89,6 +91,7 @@ public class BatcherStatsTest {
         .contains("The 2 partial failures contained 2 entries that failed with:");
     assertThat(ex).hasMessageThat().contains("1 ApiException(1 UNAVAILABLE)");
     assertThat(ex).hasMessageThat().contains("1 IllegalStateException");
+    assertThat(ex).hasMessageThat().contains("Sample of entry errors: java.lang.IllegalStateException: local element failure, com.google.api.gax.rpc.UnavailableException: fake entry error.");
   }
 
   @Test
@@ -110,6 +113,8 @@ public class BatcherStatsTest {
         .contains(
             "Batching finished with 1 batches failed to apply due to: 1 RuntimeException and 1 "
                 + "partial failures. The 1 partial failures contained 1 entries that failed with:"
-                + " 1 ApiException(1 ALREADY_EXISTS).");
+                + " 1 ApiException(1 ALREADY_EXISTS)."
+                + " Sample of RPC errors: java.lang.RuntimeException: Batch failure."
+                + " Sample of entry errors: com.google.api.gax.rpc.AlreadyExistsException: java.lang.RuntimeException.");
   }
 }
