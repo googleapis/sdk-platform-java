@@ -1,8 +1,8 @@
-gapic_generator_version: 2.32.0
+gapic_generator_version: 2.35.0
 protobuf_version: 25.2
-googleapis_commitish: 1a45bf7393b52407188c82e63101db7dc9c72026
+googleapis_commitish: fc3043ebe12fb6bc1729c175e1526c859ce751d8
 owlbot_cli_image: sha256:623647ee79ac605858d09e60c1382a716c125fb776f69301b72de1cd35d49409
-synthtool_commitish: 6612ab8f3afcd5e292aecd647f0fa68812c9f5b5
+synthtool_commitish: a6fb7d5f072b75698af1cbf06c5b001565753cfb
 template_excludes:
   - ".gitignore"
   - ".kokoro/presubmit/integration.cfg"

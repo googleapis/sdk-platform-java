@@ -115,6 +115,7 @@ fi
 git config --global --add safe.directory /tmp/synthtool/synthtool
 pushd "synthtool"
 
+git fetch --all
 git reset --hard "${synthtool_commitish}"
 
 python3 -m pip install -e .
