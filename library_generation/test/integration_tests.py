@@ -42,8 +42,8 @@ golden_dir = f"{config_dir}/golden"
 repo_prefix = "https://github.com/googleapis"
 # this map tells which branch of each repo should we use for our diff tests
 committish_map = {
-    "google-cloud-java": "chore/test-hermetic-build", # google-cloud-java
-    "java-bigtable": "chore/test-hermetic-build", # java-bigtable
+    "google-cloud-java": "chore/test-hermetic-build",  # google-cloud-java
+    "java-bigtable": "chore/test-hermetic-build",  # java-bigtable
 }
 
 
@@ -52,7 +52,7 @@ class IntegrationTest(unittest.TestCase):
         shutil.rmtree(f"{golden_dir}", ignore_errors=True)
         os.makedirs(f"{golden_dir}", exist_ok=True)
         config_files = self.__get_config_files(config_dir)
-        for (repo, config_file) in config_files:
+        for repo, config_file in config_files:
             config = from_yaml(config_file)
             repo_dest = self.__pull_repo_to(
                 Path(f"{golden_dir}/{repo}"), repo, committish_map[repo]
@@ -61,13 +61,16 @@ class IntegrationTest(unittest.TestCase):
             # prepare golden files
             for library_name in library_names:
                 if config.is_monorepo:
-                  copy_tree(f"{repo_dest}/{library_name}", f"{golden_dir}/{library_name}")
-                  copy_tree(
-                    f"{repo_dest}/gapic-libraries-bom", f"{golden_dir}/gapic-libraries-bom"
-                  )
-                  copy_file(f"{repo_dest}/pom.xml", golden_dir)
+                    copy_tree(
+                        f"{repo_dest}/{library_name}", f"{golden_dir}/{library_name}"
+                    )
+                    copy_tree(
+                        f"{repo_dest}/gapic-libraries-bom",
+                        f"{golden_dir}/gapic-libraries-bom",
+                    )
+                    copy_file(f"{repo_dest}/pom.xml", golden_dir)
                 else:
-                  copy_tree(f"{repo_dest}", f"{golden_dir}/{library_name}")
+                    copy_tree(f"{repo_dest}", f"{golden_dir}/{library_name}")
             generate_from_yaml(
                 generation_config_yaml=config_file, repository_path=repo_dest
             )
@@ -79,7 +82,9 @@ class IntegrationTest(unittest.TestCase):
                     f"with the actual library in {repo_dest}/{library_name}. "
                     f"Compare generation result: "
                 )
-                target_repo_dest = f"{repo_dest}/{library_name}" if config.is_monorepo else repo_dest
+                target_repo_dest = (
+                    f"{repo_dest}/{library_name}" if config.is_monorepo else repo_dest
+                )
                 compare_result = dircmp(
                     f"{golden_dir}/{library_name}",
                     target_repo_dest,
@@ -101,7 +106,7 @@ class IntegrationTest(unittest.TestCase):
                 print(".repo-metadata.json comparison succeed.")
 
                 if not config.is_monorepo:
-                  continue
+                    continue
 
                 # compare gapic-libraries-bom/pom.xml and pom.xml
                 self.assertFalse(
@@ -161,8 +166,8 @@ class IntegrationTest(unittest.TestCase):
         config_files = []
         for sub_dir in Path(path).resolve().iterdir():
             repo = sub_dir.name
-            if repo == 'golden':
-              continue
+            if repo == "golden":
+                continue
             config = f"{sub_dir}/{config_name}"
             config_files.append((repo, config))
 
