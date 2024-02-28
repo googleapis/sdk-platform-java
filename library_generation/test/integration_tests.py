@@ -42,8 +42,8 @@ golden_dir = f"{config_dir}/golden"
 repo_prefix = "https://github.com/googleapis"
 # this map tells which branch of each repo should we use for our diff tests
 committish_map = {
-    "google-cloud-java": "chore/test-hermetic-build",  # google-cloud-java
-    "java-bigtable": "chore/test-hermetic-build",  # java-bigtable
+    "google-cloud-java": "chore/test-hermetic-build",
+    "java-bigtable": "chore/test-hermetic-build",
 }
 
 
