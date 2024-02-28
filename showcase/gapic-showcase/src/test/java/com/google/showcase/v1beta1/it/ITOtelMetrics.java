@@ -41,8 +41,10 @@ import com.google.api.gax.rpc.InvalidArgumentException;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.gax.rpc.UnavailableException;
+import com.google.api.gax.tracing.MetricsTracer;
 import com.google.api.gax.tracing.MetricsTracerFactory;
 import com.google.api.gax.tracing.OpentelemetryMetricsRecorder;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.truth.Truth;
@@ -71,6 +73,7 @@ import io.opentelemetry.sdk.testing.exporter.InMemoryMetricReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import org.junit.After;
@@ -83,14 +86,36 @@ import org.junit.Test;
  * recorded. Utilizes an in-memory metric reader to collect the data.
  */
 public class ITOtelMetrics {
+  private static final int DEFAULT_OPERATION_COUNT = 1;
   private static final String ATTEMPT_COUNT = "attempt_count";
   private static final String OPERATION_COUNT = "operation_count";
   private static final String ATTEMPT_LATENCY = "attempt_latency";
   private static final String OPERATION_LATENCY = "operation_latency";
-  private static final String DEFAULT_LANGUAGE = "Java";
   private InMemoryMetricReader inMemoryMetricReader;
   private EchoClient grpcClient;
   private EchoClient httpClient;
+
+  private static class StatusCount {
+    private final Code statusCode;
+    private final int count;
+
+    public StatusCount(Code statusCode) {
+      this(statusCode, 1);
+    }
+
+    public StatusCount(Code statusCode, int count) {
+      this.statusCode = statusCode;
+      this.count = count;
+    }
+
+    public Code getStatusCode() {
+      return statusCode;
+    }
+
+    public int getCount() {
+      return count;
+    }
+  }
 
   private OpentelemetryMetricsRecorder createOtelMetricsRecorder(
       InMemoryMetricReader inMemoryMetricReader) {
@@ -134,29 +159,34 @@ public class ITOtelMetrics {
     httpClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
-  private void verifyMetricData(
-      List<MetricData> metricDataList, int operationCount, int attemptCount) {
+  private void verifyMetricData(List<MetricData> metricDataList, int attemptCount) {
     for (MetricData metricData : metricDataList) {
       Data<?> data = metricData.getData();
       List<PointData> points = new ArrayList<>(data.getPoints());
-      Truth.assertThat(points.size()).isEqualTo(1);
-      PointData pointData = points.get(0);
       switch (metricData.getName()) {
         case OPERATION_COUNT:
-          Truth.assertThat(((LongPointData) pointData).getValue()).isEqualTo(operationCount);
+          long operationCountSum =
+              points.stream().map(x -> ((LongPointData) x).getValue()).reduce(0L, Long::sum);
+          Truth.assertThat(operationCountSum).isEqualTo(DEFAULT_OPERATION_COUNT);
           break;
         case ATTEMPT_COUNT:
-          Truth.assertThat(((LongPointData) pointData).getValue()).isEqualTo(attemptCount);
+          long attemptCountSum =
+              points.stream().map(x -> ((LongPointData) x).getValue()).reduce(0L, Long::sum);
+          Truth.assertThat(attemptCountSum).isEqualTo(attemptCount);
           break;
         case OPERATION_LATENCY:
+          long operationLatencyCountSum =
+              points.stream().map(x -> ((HistogramPointData) x).getCount()).reduce(0L, Long::sum);
           // It is difficult to verify the actual latency values (operation or attempt)
           // without flaky behavior. Test that the number of data points recorded matches.
-          Truth.assertThat(((HistogramPointData) pointData).getCount()).isEqualTo(operationCount);
+          Truth.assertThat(operationLatencyCountSum).isEqualTo(DEFAULT_OPERATION_COUNT);
           break;
         case ATTEMPT_LATENCY:
+          long attemptLatencyCountSum =
+              points.stream().map(x -> ((HistogramPointData) x).getCount()).reduce(0L, Long::sum);
           // It is difficult to verify the actual latency values (operation or attempt)
           // without flaky behavior. Test that the number of data points recorded matches.
-          Truth.assertThat(((HistogramPointData) pointData).getCount()).isEqualTo(attemptCount);
+          Truth.assertThat(attemptLatencyCountSum).isEqualTo(attemptCount);
           break;
         default:
           break;
@@ -165,117 +195,160 @@ public class ITOtelMetrics {
   }
 
   /**
-   * Extract the attributes from the Metric Data and ensure that the attributes recorded match the
-   * keys and values stored inside the attributeMapping.
+   * Extract the attributes from MetricData and ensures that default attributes are recorded. Uses
+   * the `OPERATION_COUNT` MetricData to test the attributes. The `OPERATION_COUNT` is only recorded
+   * once and should only have element of PointData.
+   *
+   * <p>Although the Status attribute is recorded by default on every operation, this helper method
+   * does not verify it. This is because every individual attempt (retry) may have a different
+   * status. {@link #verifyStatusAttribute(List, List)} is used to verify the statuses for every
+   * attempt.
    */
-  private void verifyMetricAttributes(MetricData metricData, Map<String, String> attributeMapping) {
-    List<PointData> pointDataList = (List<PointData>) metricData.getData().getPoints();
+  private void verifyDefaultMetricsAttributes(
+      List<MetricData> metricDataList, Map<String, String> attributeMapping) {
+    Optional<MetricData> metricDataOptional =
+        metricDataList.stream().filter(x -> x.getName().equals(OPERATION_COUNT)).findAny();
+    Truth.assertThat(metricDataOptional.isPresent()).isTrue();
+    MetricData operationCountMetricData = metricDataOptional.get();
+
+    List<PointData> pointDataList = new ArrayList<>(operationCountMetricData.getData().getPoints());
     Truth.assertThat(pointDataList.size()).isEqualTo(1);
     Attributes attributes = pointDataList.get(0).getAttributes();
     Map<AttributeKey<?>, Object> attributesMap = attributes.asMap();
-    for (Map.Entry<AttributeKey<?>, Object> entrySet : attributesMap.entrySet()) {
-      String key = entrySet.getKey().getKey();
-      String value = entrySet.getValue().toString();
-      Truth.assertThat(attributeMapping.containsKey(key)).isTrue();
-      Truth.assertThat(attributeMapping.get(key)).isEqualTo(value);
+    for (Map.Entry<String, String> entrySet : attributeMapping.entrySet()) {
+      String key = entrySet.getKey();
+      String value = entrySet.getValue();
+      AttributeKey<String> stringAttributeKey = AttributeKey.stringKey(key);
+      Truth.assertThat(attributesMap.containsKey(stringAttributeKey)).isTrue();
+      Truth.assertThat(attributesMap.get(stringAttributeKey)).isEqualTo(value);
+    }
+  }
+
+  /**
+   * Extract the attributes from MetricData and ensures that default attributes are recorded. Uses
+   * the `ATTEMPT_COUNT` MetricData to test the attributes. The `ATTEMPT_COUNT` is recorded for
+   * every retry attempt and should record the status received that each attempt made.
+   */
+  private void verifyStatusAttribute(
+      List<MetricData> metricDataList, List<StatusCount> statusCountList) {
+    Optional<MetricData> metricDataOptional =
+        metricDataList.stream().filter(x -> x.getName().equals(ATTEMPT_COUNT)).findAny();
+    Truth.assertThat(metricDataOptional.isPresent()).isTrue();
+    MetricData attemptCountMetricData = metricDataOptional.get();
+
+    List<PointData> pointDataList = new ArrayList<>(attemptCountMetricData.getData().getPoints());
+    Truth.assertThat(pointDataList.size()).isEqualTo(statusCountList.size());
+    for (int i = 0; i < pointDataList.size(); i++) {
+      LongPointData longPointData = (LongPointData) pointDataList.get(i);
+      Truth.assertThat(longPointData.getValue()).isEqualTo(statusCountList.get(i).getCount());
+      Attributes attributes = longPointData.getAttributes();
+      Truth.assertThat(attributes.get(AttributeKey.stringKey(MetricsTracer.STATUS_ATTRIBUTE)))
+          .isEqualTo(statusCountList.get(i).getStatusCode().toString());
     }
   }
 
   @Test
   public void testGrpc_operationSucceeded_recordsMetrics() {
-    int operationCount = 1;
     int attemptCount = 1;
-    Code statusCode = Code.OK;
     EchoRequest echoRequest =
         EchoRequest.newBuilder().setContent("test_grpc_operation_succeeded").build();
     grpcClient.echo(echoRequest);
 
     List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
-    verifyMetricData(metricDataList, operationCount, attemptCount);
+    verifyMetricData(metricDataList, attemptCount);
 
-    ImmutableMap<String, String> attributeMapping =
+    Map<String, String> attributeMapping =
         ImmutableMap.of(
-            "method_name", "Echo.Echo", "status", statusCode.name(), "language", DEFAULT_LANGUAGE);
-    verifyMetricAttributes(metricDataList.get(0), attributeMapping);
+            MetricsTracer.METHOD_NAME_ATTRIBUTE,
+            "Echo.Echo",
+            MetricsTracer.LANGUAGE_ATTRIBUTE,
+            MetricsTracer.DEFAULT_LANGUAGE);
+    verifyDefaultMetricsAttributes(metricDataList, attributeMapping);
+
+    List<StatusCount> statusCountList = ImmutableList.of(new StatusCount(Code.OK));
+    verifyStatusAttribute(metricDataList, statusCountList);
   }
 
+  @Ignore("https://github.com/googleapis/sdk-platform-java/issues/2503")
   @Test
   public void testHttpJson_operationSucceeded_recordsMetrics() {
-    int operationCount = 1;
     int attemptCount = 1;
-    Code statusCode = Code.OK;
     EchoRequest echoRequest =
         EchoRequest.newBuilder().setContent("test_http_operation_succeeded").build();
     httpClient.echo(echoRequest);
 
     List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
-    verifyMetricData(metricDataList, operationCount, attemptCount);
+    verifyMetricData(metricDataList, attemptCount);
 
-    ImmutableMap<String, String> attributeMapping =
+    Map<String, String> attributeMapping =
         ImmutableMap.of(
-            "method_name",
+            MetricsTracer.METHOD_NAME_ATTRIBUTE,
             "google.showcase.v1beta1.Echo/Echo",
-            "status",
-            statusCode.name(),
-            "language",
-            DEFAULT_LANGUAGE);
-    verifyMetricAttributes(metricDataList.get(0), attributeMapping);
+            MetricsTracer.LANGUAGE_ATTRIBUTE,
+            MetricsTracer.DEFAULT_LANGUAGE);
+    verifyDefaultMetricsAttributes(metricDataList, attributeMapping);
+
+    List<StatusCount> statusCountList = ImmutableList.of(new StatusCount(Code.OK));
+    verifyStatusAttribute(metricDataList, statusCountList);
   }
 
   @Test
   public void testGrpc_operationCancelled_recordsMetrics() throws Exception {
-    int operationCount = 1;
     int attemptCount = 1;
-    Code statusCode = Code.CANCELLED;
     BlockRequest blockRequest =
         BlockRequest.newBuilder().setResponseDelay(Duration.newBuilder().setSeconds(5)).build();
 
     UnaryCallable<BlockRequest, BlockResponse> blockCallable = grpcClient.blockCallable();
     ApiFuture<BlockResponse> blockResponseApiFuture = blockCallable.futureCall(blockRequest);
-    // Sleep 1s before cancelling to let the request go through
+    // Sleep 3s before cancelling to let the request go through
     Thread.sleep(1000);
     blockResponseApiFuture.cancel(true);
 
     List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
-    verifyMetricData(metricDataList, operationCount, attemptCount);
+    verifyMetricData(metricDataList, attemptCount);
 
-    ImmutableMap<String, String> attributeMapping =
+    Map<String, String> attributeMapping =
         ImmutableMap.of(
-            "method_name", "Echo.Block", "status", statusCode.name(), "language", DEFAULT_LANGUAGE);
-    verifyMetricAttributes(metricDataList.get(0), attributeMapping);
+            MetricsTracer.METHOD_NAME_ATTRIBUTE,
+            "Echo.Block",
+            MetricsTracer.LANGUAGE_ATTRIBUTE,
+            MetricsTracer.DEFAULT_LANGUAGE);
+    verifyDefaultMetricsAttributes(metricDataList, attributeMapping);
+
+    List<StatusCount> statusCountList = ImmutableList.of(new StatusCount(Code.CANCELLED));
+    verifyStatusAttribute(metricDataList, statusCountList);
   }
 
+  @Ignore("https://github.com/googleapis/sdk-platform-java/issues/2503")
   @Test
   public void testHttpJson_operationCancelled_recordsMetrics() throws Exception {
-    int operationCount = 1;
     int attemptCount = 1;
-    Code statusCode = Code.CANCELLED;
     BlockRequest blockRequest =
         BlockRequest.newBuilder().setResponseDelay(Duration.newBuilder().setSeconds(5)).build();
 
     UnaryCallable<BlockRequest, BlockResponse> blockCallable = httpClient.blockCallable();
     ApiFuture<BlockResponse> blockResponseApiFuture = blockCallable.futureCall(blockRequest);
-    // Sleep 1s before cancelling to let the request go through
+    // Sleep 3s before cancelling to let the request go through
     Thread.sleep(1000);
     blockResponseApiFuture.cancel(true);
 
     List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
-    verifyMetricData(metricDataList, operationCount, attemptCount);
+    verifyMetricData(metricDataList, attemptCount);
 
-    ImmutableMap<String, String> attributeMapping =
+    Map<String, String> attributeMapping =
         ImmutableMap.of(
-            "method_name",
+            MetricsTracer.METHOD_NAME_ATTRIBUTE,
             "google.showcase.v1beta1.Echo/Block",
-            "status",
-            statusCode.name(),
-            "language",
-            DEFAULT_LANGUAGE);
-    verifyMetricAttributes(metricDataList.get(0), attributeMapping);
+            MetricsTracer.LANGUAGE_ATTRIBUTE,
+            MetricsTracer.DEFAULT_LANGUAGE);
+    verifyDefaultMetricsAttributes(metricDataList, attributeMapping);
+
+    List<StatusCount> statusCountList = ImmutableList.of(new StatusCount(Code.CANCELLED));
+    verifyStatusAttribute(metricDataList, statusCountList);
   }
 
   @Test
   public void testGrpc_operationFailed_recordsMetrics() {
-    int operationCount = 1;
     int attemptCount = 1;
     Code statusCode = Code.INVALID_ARGUMENT;
     BlockRequest blockRequest =
@@ -289,18 +362,23 @@ public class ITOtelMetrics {
     assertThrows(ExecutionException.class, blockResponseApiFuture::get);
 
     List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
-    verifyMetricData(metricDataList, operationCount, attemptCount);
+    verifyMetricData(metricDataList, attemptCount);
 
-    ImmutableMap<String, String> attributeMapping =
+    Map<String, String> attributeMapping =
         ImmutableMap.of(
-            "method_name", "Echo.Block", "status", statusCode.name(), "language", DEFAULT_LANGUAGE);
-    verifyMetricAttributes(metricDataList.get(0), attributeMapping);
+            MetricsTracer.METHOD_NAME_ATTRIBUTE,
+            "Echo.Block",
+            MetricsTracer.LANGUAGE_ATTRIBUTE,
+            MetricsTracer.DEFAULT_LANGUAGE);
+    verifyDefaultMetricsAttributes(metricDataList, attributeMapping);
+
+    List<StatusCount> statusCountList = ImmutableList.of(new StatusCount(statusCode));
+    verifyStatusAttribute(metricDataList, statusCountList);
   }
 
   @Ignore("https://github.com/googleapis/sdk-platform-java/issues/2503")
   @Test
   public void testHttpJson_operationFailed_recordsMetrics() {
-    int operationCount = 1;
     int attemptCount = 1;
     Code statusCode = Code.INVALID_ARGUMENT;
     BlockRequest blockRequest =
@@ -314,22 +392,22 @@ public class ITOtelMetrics {
     assertThrows(ExecutionException.class, blockResponseApiFuture::get);
 
     List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
-    verifyMetricData(metricDataList, operationCount, attemptCount);
+    verifyMetricData(metricDataList, attemptCount);
 
-    ImmutableMap<String, String> attributeMapping =
+    Map<String, String> attributeMapping =
         ImmutableMap.of(
-            "method_name",
+            MetricsTracer.METHOD_NAME_ATTRIBUTE,
             "google.showcase.v1beta1.Echo/Block",
-            "status",
-            statusCode.name(),
-            "language",
-            DEFAULT_LANGUAGE);
-    verifyMetricAttributes(metricDataList.get(0), attributeMapping);
+            MetricsTracer.LANGUAGE_ATTRIBUTE,
+            MetricsTracer.DEFAULT_LANGUAGE);
+    verifyDefaultMetricsAttributes(metricDataList, attributeMapping);
+
+    List<StatusCount> statusCountList = ImmutableList.of(new StatusCount(statusCode));
+    verifyStatusAttribute(metricDataList, statusCountList);
   }
 
   @Test
   public void testGrpc_attemptFailedRetriesExhausted_recordsMetrics() throws Exception {
-    int operationCount = 1;
     int attemptCount = 3;
     Code statusCode = Code.UNAVAILABLE;
     // A custom EchoClient is used in this test because retries have jitter, and we cannot
@@ -368,12 +446,19 @@ public class ITOtelMetrics {
     assertThrows(UnavailableException.class, () -> grpcClient.echo(echoRequest));
 
     List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
-    verifyMetricData(metricDataList, operationCount, attemptCount);
+    verifyMetricData(metricDataList, attemptCount);
 
-    ImmutableMap<String, String> attributeMapping =
+    Map<String, String> attributeMapping =
         ImmutableMap.of(
-            "method_name", "Echo.Echo", "status", statusCode.name(), "language", DEFAULT_LANGUAGE);
-    verifyMetricAttributes(metricDataList.get(0), attributeMapping);
+            MetricsTracer.METHOD_NAME_ATTRIBUTE,
+            "Echo.Echo",
+            MetricsTracer.LANGUAGE_ATTRIBUTE,
+            MetricsTracer.DEFAULT_LANGUAGE);
+    verifyDefaultMetricsAttributes(metricDataList, attributeMapping);
+
+    List<StatusCount> statusCountList = ImmutableList.of(new StatusCount(statusCode, 3));
+    verifyStatusAttribute(metricDataList, statusCountList);
+
     grpcClient.close();
     grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
@@ -381,7 +466,6 @@ public class ITOtelMetrics {
   @Ignore("https://github.com/googleapis/sdk-platform-java/issues/2503")
   @Test
   public void testHttpJson_attemptFailedRetriesExhausted_recordsMetrics() throws Exception {
-    int operationCount = 1;
     int attemptCount = 3;
     Code statusCode = Code.UNAVAILABLE;
     // A custom EchoClient is used in this test because retries have jitter, and we cannot
@@ -423,24 +507,25 @@ public class ITOtelMetrics {
     assertThrows(UnavailableException.class, () -> httpClient.echo(echoRequest));
 
     List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
-    verifyMetricData(metricDataList, operationCount, attemptCount);
+    verifyMetricData(metricDataList, attemptCount);
 
-    ImmutableMap<String, String> attributeMapping =
+    Map<String, String> attributeMapping =
         ImmutableMap.of(
-            "method_name",
+            MetricsTracer.METHOD_NAME_ATTRIBUTE,
             "google.showcase.v1beta1.Echo/Echo",
-            "status",
-            statusCode.name(),
-            "language",
-            DEFAULT_LANGUAGE);
-    verifyMetricAttributes(metricDataList.get(0), attributeMapping);
+            MetricsTracer.LANGUAGE_ATTRIBUTE,
+            MetricsTracer.DEFAULT_LANGUAGE);
+    verifyDefaultMetricsAttributes(metricDataList, attributeMapping);
+
+    List<StatusCount> statusCountList = ImmutableList.of(new StatusCount(statusCode, 3));
+    verifyStatusAttribute(metricDataList, statusCountList);
+
     httpClient.close();
     httpClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
   @Test
   public void testGrpc_attemptPermanentFailure_recordsMetrics() {
-    int operationCount = 1;
     int attemptCount = 1;
     Code statusCode = Code.INVALID_ARGUMENT;
     BlockRequest blockRequest =
@@ -452,18 +537,23 @@ public class ITOtelMetrics {
     assertThrows(InvalidArgumentException.class, () -> grpcClient.block(blockRequest));
 
     List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
-    verifyMetricData(metricDataList, operationCount, attemptCount);
+    verifyMetricData(metricDataList, attemptCount);
 
-    ImmutableMap<String, String> attributeMapping =
+    Map<String, String> attributeMapping =
         ImmutableMap.of(
-            "method_name", "Echo.Block", "status", statusCode.name(), "language", DEFAULT_LANGUAGE);
-    verifyMetricAttributes(metricDataList.get(0), attributeMapping);
+            MetricsTracer.METHOD_NAME_ATTRIBUTE,
+            "Echo.Block",
+            MetricsTracer.LANGUAGE_ATTRIBUTE,
+            MetricsTracer.DEFAULT_LANGUAGE);
+    verifyDefaultMetricsAttributes(metricDataList, attributeMapping);
+
+    List<StatusCount> statusCountList = ImmutableList.of(new StatusCount(statusCode));
+    verifyStatusAttribute(metricDataList, statusCountList);
   }
 
   @Ignore("https://github.com/googleapis/sdk-platform-java/issues/2503")
   @Test
   public void testHttpJson_attemptPermanentFailure_recordsMetrics() {
-    int operationCount = 1;
     int attemptCount = 1;
     Code statusCode = Code.INVALID_ARGUMENT;
     BlockRequest blockRequest =
@@ -475,16 +565,133 @@ public class ITOtelMetrics {
     assertThrows(InvalidArgumentException.class, () -> httpClient.block(blockRequest));
 
     List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
-    verifyMetricData(metricDataList, operationCount, attemptCount);
+    verifyMetricData(metricDataList, attemptCount);
 
-    ImmutableMap<String, String> attributeMapping =
+    Map<String, String> attributeMapping =
         ImmutableMap.of(
-            "method_name",
+            MetricsTracer.METHOD_NAME_ATTRIBUTE,
             "google.showcase.v1beta1.Echo/Block",
-            "status",
-            statusCode.name(),
-            "language",
-            DEFAULT_LANGUAGE);
-    verifyMetricAttributes(metricDataList.get(0), attributeMapping);
+            MetricsTracer.LANGUAGE_ATTRIBUTE,
+            MetricsTracer.DEFAULT_LANGUAGE);
+    verifyDefaultMetricsAttributes(metricDataList, attributeMapping);
+
+    List<StatusCount> statusCountList = ImmutableList.of(new StatusCount(statusCode));
+    verifyStatusAttribute(metricDataList, statusCountList);
+  }
+
+  @Test
+  public void testGrpc_multipleFailedAttempts_successfulOperation() throws Exception {
+    int attemptCount = 3;
+    RetrySettings retrySettings =
+        RetrySettings.newBuilder()
+            .setInitialRpcTimeout(org.threeten.bp.Duration.ofMillis(500L))
+            .setRpcTimeoutMultiplier(2.0)
+            .setMaxRpcTimeout(org.threeten.bp.Duration.ofMillis(2000L))
+            .setTotalTimeout(org.threeten.bp.Duration.ofMillis(6000L))
+            .setJittered(false)
+            .build();
+
+    EchoStubSettings.Builder grpcEchoSettingsBuilder = EchoStubSettings.newBuilder();
+    grpcEchoSettingsBuilder
+        .blockSettings()
+        .setRetrySettings(retrySettings)
+        .setRetryableCodes(ImmutableSet.of(Code.DEADLINE_EXCEEDED));
+    EchoSettings grpcEchoSettings = EchoSettings.create(grpcEchoSettingsBuilder.build());
+    grpcEchoSettings =
+        grpcEchoSettings
+            .toBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTracerFactory(
+                new MetricsTracerFactory(createOtelMetricsRecorder(inMemoryMetricReader)))
+            .setTransportChannelProvider(
+                EchoSettings.defaultGrpcTransportProviderBuilder()
+                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .build())
+            .setEndpoint("localhost:7469")
+            .build();
+    EchoClient grpcClient = EchoClient.create(grpcEchoSettings);
+
+    BlockRequest blockRequest =
+        BlockRequest.newBuilder()
+            .setResponseDelay(Duration.newBuilder().setSeconds(1))
+            .setSuccess(BlockResponse.newBuilder().setContent("grpcBlockResponse"))
+            .build();
+
+    grpcClient.block(blockRequest);
+
+    List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
+    verifyMetricData(metricDataList, attemptCount);
+
+    Map<String, String> attributeMapping =
+        ImmutableMap.of(
+            MetricsTracer.METHOD_NAME_ATTRIBUTE,
+            "Echo.Block",
+            MetricsTracer.LANGUAGE_ATTRIBUTE,
+            MetricsTracer.DEFAULT_LANGUAGE);
+    verifyDefaultMetricsAttributes(metricDataList, attributeMapping);
+
+    List<StatusCount> statusCountList =
+        ImmutableList.of(new StatusCount(Code.DEADLINE_EXCEEDED, 2), new StatusCount(Code.OK));
+    verifyStatusAttribute(metricDataList, statusCountList);
+
+    grpcClient.close();
+    grpcClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
+  }
+
+  @Ignore("https://github.com/googleapis/sdk-platform-java/issues/2503")
+  @Test
+  public void testHttpJson_multipleFailedAttempts_successfulOperation() throws Exception {
+    int attemptCount = 3;
+    RetrySettings retrySettings =
+        RetrySettings.newBuilder()
+            .setInitialRpcTimeout(org.threeten.bp.Duration.ofMillis(500L))
+            .setRpcTimeoutMultiplier(2.0)
+            .setMaxRpcTimeout(org.threeten.bp.Duration.ofMillis(2000L))
+            .setTotalTimeout(org.threeten.bp.Duration.ofMillis(6000L))
+            .setJittered(false)
+            .build();
+
+    EchoStubSettings.Builder httpJsonEchoSettingsBuilder = EchoStubSettings.newHttpJsonBuilder();
+    httpJsonEchoSettingsBuilder
+        .echoSettings()
+        .setRetrySettings(retrySettings)
+        .setRetryableCodes(ImmutableSet.of(Code.DEADLINE_EXCEEDED));
+    EchoSettings httpJsonEchoSettings = EchoSettings.create(httpJsonEchoSettingsBuilder.build());
+    httpJsonEchoSettings =
+        httpJsonEchoSettings
+            .toBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTracerFactory(
+                new MetricsTracerFactory(createOtelMetricsRecorder(inMemoryMetricReader)))
+            .setTransportChannelProvider(
+                EchoSettings.defaultHttpJsonTransportProviderBuilder()
+                    .setHttpTransport(
+                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
+                    .setEndpoint("http://localhost:7469")
+                    .build())
+            .build();
+
+    EchoClient httpClient = EchoClient.create(httpJsonEchoSettings);
+
+    BlockRequest blockRequest =
+        BlockRequest.newBuilder()
+            .setResponseDelay(Duration.newBuilder().setSeconds(1))
+            .setSuccess(BlockResponse.newBuilder().setContent("httpjsonBlockResponse"))
+            .build();
+
+    grpcClient.block(blockRequest);
+
+    List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
+    verifyMetricData(metricDataList, attemptCount);
+
+    Map<String, String> attributeMapping =
+        ImmutableMap.of(
+            MetricsTracer.METHOD_NAME_ATTRIBUTE,
+            "google.showcase.v1beta1.Echo/Block",
+            MetricsTracer.LANGUAGE_ATTRIBUTE,
+            MetricsTracer.DEFAULT_LANGUAGE);
+    verifyDefaultMetricsAttributes(metricDataList, attributeMapping);
+    httpClient.close();
+    httpClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 }
