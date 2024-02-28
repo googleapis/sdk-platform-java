@@ -43,7 +43,7 @@ docker run --rm \
   -v /tmp:/tmp \
   -v /var/run/docker.sock:/var/run/docker.sock \
   -e "RUNNING_IN_DOCKER=true" \
-  -e "REPO_BINDING_VOLUME=repo" \
+  -e "REPO_BINDING_VOLUMES=${repo_volumes}" \
   -w "/src" \
   "${TEST_IMAGE_ID}" \
   python -m unittest /src/test/integration_tests.py

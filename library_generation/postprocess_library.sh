@@ -68,7 +68,7 @@ else
 fi
 
 # Default values for running copy-code directly from host
-repo_binding="${postprocessing_target}"
+repo_bindings="-v ${postprocessing_target}:/repo"
 repo_workspace="/repo"
 preprocessed_libraries_binding="${owlbot_cli_source_folder}"
 
@@ -86,7 +86,7 @@ preprocessed_libraries_binding="${owlbot_cli_source_folder}"
 
 if [[ -n "${RUNNING_IN_DOCKER}" ]]; then
   set -u # temporarily fail on unset variables
-  repo_binding="${REPO_BINDING_VOLUME}"
+  repo_bindings="${REPO_BINDING_VOLUMES}"
   set +u
   library_name=$(echo "${postprocessing_target}" | rev | cut -d'/' -f1 | rev)
   repo_workspace="/repo/"
@@ -99,7 +99,7 @@ fi
 
 docker run --rm \
   --user "$(id -u)":"$(id -g)" \
-  -v "${repo_binding}:/repo" \
+  "${repo_bindings}" \
   -v "/tmp:/tmp" \
   -w "${repo_workspace}" \
   --env HOME=/tmp \
