@@ -44,6 +44,7 @@ library_1 = LibraryConfig(
     library_name="bare-metal-solution",
     rest_documentation="https://cloud.google.com/bare-metal/docs/reference/rest",
     rpc_documentation="https://cloud.google.com/bare-metal/docs/reference/rpc",
+    extra_versioned_modules="test-module",
 )
 library_2 = LibraryConfig(
     api_shortname="secretmanager",
