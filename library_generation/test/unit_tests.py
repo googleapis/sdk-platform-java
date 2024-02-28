@@ -378,8 +378,7 @@ class UtilitiesTest(unittest.TestCase):
         self.assertEqual("secretmanager", util.get_library_name(library_2))
 
     def test_generate_prerequisite_files_non_monorepo_success(self):
-        num_libraries = 1
-        library_path = self.__setup_prerequisite_files(num_libraries)
+        library_path = self.__setup_prerequisite_files(num_libraries=1)
 
         self.__compare_files(
             f"{library_path}/.repo-metadata.json",
@@ -396,8 +395,7 @@ class UtilitiesTest(unittest.TestCase):
         )
 
     def test_generate_prerequisite_files_monorepo_success(self):
-        num_libraries = 2
-        library_path = self.__setup_prerequisite_files(num_libraries)
+        library_path = self.__setup_prerequisite_files(num_libraries=2)
 
         self.__compare_files(
             f"{library_path}/.repo-metadata.json",
