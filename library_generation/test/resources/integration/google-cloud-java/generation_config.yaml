@@ -26,6 +26,17 @@ libraries:
       - proto_path: google/cloud/apigeeconnect/v1
 
   - api_shortname: alloydb
+    name_pretty: AlloyDB
+    product_documentation: https://cloud.google.com/alloydb/
+    api_description: AlloyDB is a fully managed, PostgreSQL-compatible database service
+      with industry-leading performance, availability, and scale.
+    rest_documentation: https://cloud.google.com/alloydb/docs/reference/rest
+    GAPICs:
+    - proto_path: google/cloud/alloydb/v1
+    - proto_path: google/cloud/alloydb/v1alpha
+    - proto_path: google/cloud/alloydb/v1beta
+
+  - api_shortname: alloydb
     name_pretty: AlloyDB connectors
     product_documentation: https://cloud.google.com/alloydb/docs
     api_description: AlloyDB is a fully-managed, PostgreSQL-compatible database for
