@@ -19,7 +19,7 @@ substitutions:
 steps:
   # Library generation build
   - name: gcr.io/cloud-builders/docker
-    args: ["build", "-t", "${_TEST_IMAGE_ID}", "--file", ".cloudbuild/library_generation.Dockerfile", "."]
+    args: ["build", "-t", "${_TEST_IMAGE_ID}", "--file", ".cloudbuild/library_generation/library_generation.Dockerfile", "."]
     id: library-generation-build
     waitFor: ["-"]
   - name: ${_TEST_IMAGE_ID}

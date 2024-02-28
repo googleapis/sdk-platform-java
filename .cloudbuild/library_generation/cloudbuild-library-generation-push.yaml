@@ -24,7 +24,7 @@ steps:
       "build",
       "-t", "${_SHA_IMAGE_ID}",
       "-t", "${_LATEST_IMAGE_ID}",
-      "--file", ".cloudbuild/library_generation.Dockerfile", "."]
+      "--file", ".cloudbuild/library_generation/library_generation.Dockerfile", "."]
     id: library-generation-build
     waitFor: ["-"]
 
