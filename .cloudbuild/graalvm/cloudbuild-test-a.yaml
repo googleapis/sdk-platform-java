@@ -21,7 +21,7 @@ steps:
   # GraalVM A build
   - name: gcr.io/cloud-builders/docker
     args: ["build", "-t", "gcr.io/cloud-devrel-public-resources/graalvm_sdk_platform_a:${_SHARED_DEPENDENCIES_VERSION}", "--file", "graalvm_a.Dockerfile", "--build-arg", "JAVA_SHARED_CONFIG_VERSION=$_JAVA_SHARED_CONFIG_VERSION", "."]
-    dir: .cloudbuild
+    dir: .cloudbuild/graalvm
     id: graalvm-a-build
     waitFor: ["-"]
   - name: gcr.io/cloud-devrel-public-resources/graalvm_sdk_platform_a:${_SHARED_DEPENDENCIES_VERSION}
