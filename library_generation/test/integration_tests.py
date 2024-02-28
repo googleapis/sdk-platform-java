@@ -40,6 +40,7 @@ script_dir = os.path.dirname(os.path.realpath(__file__))
 config_dir = f"{script_dir}/resources/integration"
 golden_dir = f"{config_dir}/golden"
 repo_prefix = "https://github.com/googleapis"
+output_dir = shell_call("get_output_folder")
 # this map tells which branch of each repo should we use for our diff tests
 committish_map = {
     "google-cloud-java": "chore/test-hermetic-build",
@@ -55,7 +56,7 @@ class IntegrationTest(unittest.TestCase):
         for repo, config_file in config_files:
             config = from_yaml(config_file)
             repo_dest = self.__pull_repo_to(
-                Path(f"{golden_dir}/{repo}"), repo, committish_map[repo]
+                Path(f"{output_dir}/{repo}"), repo, committish_map[repo]
             )
             library_names = self.__get_library_names_from_config(config)
             # prepare golden files
@@ -76,10 +77,13 @@ class IntegrationTest(unittest.TestCase):
             )
             # compare result
             for library_name in library_names:
+                actual_library = (
+                    f"{repo_dest}/{library_name}" if config.is_monorepo else repo_dest
+                )
                 print(
                     f"Generation finished. Will now compare "
                     f"the expected library in {golden_dir}/{library_name}, "
-                    f"with the actual library in {repo_dest}/{library_name}. "
+                    f"with the actual library in {actual_library}. "
                     f"Compare generation result: "
                 )
                 target_repo_dest = (
