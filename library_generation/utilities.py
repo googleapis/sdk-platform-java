@@ -347,7 +347,7 @@ def generate_prerequisite_files(
     repo = (
         "googleapis/google-cloud-java"
         if config.is_monorepo
-        else f"{language}-{library_name}"
+        else f"googleapis/{language}-{library_name}"
     )
     api_id = (
         library.api_id if library.api_id else f"{library.api_shortname}.googleapis.com"
