@@ -89,11 +89,12 @@ if [[ -n "${RUNNING_IN_DOCKER}" ]]; then
   repo_binding="${REPO_BINDING_VOLUME}"
   set +u
   library_name=$(echo "${postprocessing_target}" | rev | cut -d'/' -f1 | rev)
+  repo_workspace="/repo/"
   if [[ "${is_monorepo}" == "true" ]]; then
-    repo_workspace="/repo/google-cloud-java/${library_name}"
-  else
-    repo_workspace="/repo/${library_name}"
+    monorepo_name=$(echo "${postprocessing_target}" | rev | cut -d'/' -f2 | rev)
+    repo_workspace+="${monorepo_name}/"
   fi
+  repo_workspace+="${library_name}"
 fi
 
 docker run --rm \
