@@ -54,12 +54,20 @@ class BatcherStats {
   private final Map<Class, Integer> entryExceptionCounts = new HashMap<>();
   private final Map<Code, Integer> entryStatusCounts = new HashMap<>();
 
+  /**
+   * The maximum number of error messages that a Batcher instance will retain. By default, a Batcher
+   * instance will retain 50 entry error messages and 50 RPC error messages. This limit can be
+   * temporarily increased by setting the {@code com.google.api.gax.batching.errors.max-samples}
+   * system property. This should only be needed in very rare situations and should not be
+   * considered part of the public api.
+   */
+  private final int MAX_ERROR_MSG_SAMPLES =
+      Integer.getInteger("com.google.api.gax.batching.errors.max-samples", 50);
+
   private final EvictingQueue<String> sampleOfRpcErrors =
-      EvictingQueue.create(
-          Integer.getInteger("com.google.api.gax.batching.errors.max-samples", 50));
+      EvictingQueue.create(MAX_ERROR_MSG_SAMPLES);
   private final EvictingQueue<String> sampleOfEntryErrors =
-      EvictingQueue.create(
-          Integer.getInteger("com.google.api.gax.batching.errors.max-samples", 50));
+      EvictingQueue.create(MAX_ERROR_MSG_SAMPLES);
 
   /**
    * Records the count of the exception and it's type when a complete batch failed to apply.
