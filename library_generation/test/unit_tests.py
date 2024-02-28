@@ -376,33 +376,34 @@ class UtilitiesTest(unittest.TestCase):
     def test_get_library_returns_api_shortname(self):
         self.assertEqual("secretmanager", util.get_library_name(library_2))
 
-    def test_generate_prerequisite_files_success(self):
-        library_path = f"{resources_dir}/goldens"
-        files = [
-            f"{library_path}/.repo-metadata.json",
-            f"{library_path}/.OwlBot.yaml",
-            f"{library_path}/owlbot.py",
-        ]
-        self.__cleanup(files)
-        config = self.__get_a_gen_config(1)
-        proto_path = "google/cloud/baremetalsolution/v2"
-        transport = "grpc"
-        util.generate_prerequisite_files(
-            config=config,
-            library=library_1,
-            proto_path=proto_path,
-            transport=transport,
-            library_path=library_path,
-        )
+    def test_generate_prerequisite_files_non_monorepo_success(self):
+        num_libraries = 1
+        library_path = self.__setup_prerequisite_files(num_libraries)
 
         self.__compare_files(
             f"{library_path}/.repo-metadata.json",
-            f"{library_path}/.repo-metadata-golden.json",
+            f"{library_path}/.repo-metadata-non-monorepo-golden.json",
         )
         # since this is a single library, we treat this as HW repository,
         # meaning that the owlbot yaml will be inside a .github folder
         self.__compare_files(
             f"{library_path}/.github/.OwlBot.yaml",
+            f"{library_path}/.OwlBot-golden.yaml",
+        )
+        self.__compare_files(
+            f"{library_path}/owlbot.py", f"{library_path}/owlbot-golden.py"
+        )
+
+    def test_generate_prerequisite_files_monorepo_success(self):
+        num_libraries = 2
+        library_path = self.__setup_prerequisite_files(num_libraries)
+
+        self.__compare_files(
+            f"{library_path}/.repo-metadata.json",
+            f"{library_path}/.repo-metadata-monorepo-golden.json",
+        )
+        self.__compare_files(
+            f"{library_path}/.OwlBot.yaml",
             f"{library_path}/.OwlBot-golden.yaml",
         )
         self.__compare_files(
@@ -485,19 +486,39 @@ class UtilitiesTest(unittest.TestCase):
             first=[], second=diff, msg="Unexpected file contents:\n" + "".join(diff)
         )
 
+    def __setup_prerequisite_files(self, num_libraries: int):
+        library_path = f"{resources_dir}/goldens"
+        files = [
+            f"{library_path}/.repo-metadata.json",
+            f"{library_path}/.OwlBot.yaml",
+            f"{library_path}/owlbot.py",
+        ]
+        self.__cleanup(files)
+        config = self.__get_a_gen_config(num_libraries)
+        proto_path = "google/cloud/baremetalsolution/v2"
+        transport = "grpc"
+        util.generate_prerequisite_files(
+            config=config,
+            library=library_1,
+            proto_path=proto_path,
+            transport=transport,
+            library_path=library_path,
+        )
+        return library_path
+
     @staticmethod
-    def __get_a_gen_config(num: int):
+    def __get_a_gen_config(num_libraries: int):
         """
         Returns an object of GenerationConfig with one to three of
         LibraryConfig objects. Other attributes are set to empty str.
 
-        :param num: the number of LibraryConfig objects associated with
+        :param num_libraries: the number of LibraryConfig objects associated with
         the GenerationConfig. Only support 1, 2 or 3.
         :return: an object of GenerationConfig
         """
-        if num == 2:
+        if num_libraries == 2:
             libraries = [library_1, library_2]
-        elif num == 3:
+        elif num_libraries == 3:
             libraries = [library_1, library_2, library_3]
         else:
             libraries = [library_1]
