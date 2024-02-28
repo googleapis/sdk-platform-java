@@ -68,8 +68,8 @@ else
 fi
 
 # Default values for running copy-code directly from host
-repo_bindings="-v ${postprocessing_target}:/repo"
-repo_workspace="/repo"
+repo_bindings="-v ${postprocessing_target}:/workspace"
+repo_workspace="/workspace"
 preprocessed_libraries_binding="${owlbot_cli_source_folder}"
 
 # When running docker inside docker, we run into the issue of volume bindings
@@ -89,7 +89,7 @@ if [[ -n "${RUNNING_IN_DOCKER}" ]]; then
   repo_bindings="${REPO_BINDING_VOLUMES}"
   set +u
   library_name=$(echo "${postprocessing_target}" | rev | cut -d'/' -f1 | rev)
-  repo_workspace="/repo/"
+  repo_workspace="/workspace/"
   if [[ "${is_monorepo}" == "true" ]]; then
     monorepo_name=$(echo "${postprocessing_target}" | rev | cut -d'/' -f2 | rev)
     repo_workspace+="${monorepo_name}/"
