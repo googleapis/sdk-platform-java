@@ -99,7 +99,7 @@ fi
 
 docker run --rm \
   --user "$(id -u)":"$(id -g)" \
-  "${repo_bindings}" \
+  ${repo_bindings} \
   -v "/tmp:/tmp" \
   -w "${repo_workspace}" \
   --env HOME=/tmp \
