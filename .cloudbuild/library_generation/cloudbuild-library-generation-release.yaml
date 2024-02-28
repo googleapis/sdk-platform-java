@@ -14,18 +14,18 @@
 
 timeout: 7200s # 2 hours
 substitutions:
-  _TEST_IMAGE_ID: 'gcr.io/cloud-devrel-public-resources/java-library-generation:${COMMIT_SHA}'
-
+  _GAPIC_GENERATOR_JAVA_VERSION: '2.35.1-SNAPSHOT' # {x-version-update:gapic-generator-java:current}
+  _IMAGE_ID: "gcr.io/cloud-devrel-public-resources/java-library-generation:${_GAPIC_GENERATOR_JAVA_VERSION}"
 steps:
   # Library generation build
   - name: gcr.io/cloud-builders/docker
-    args: ["build", "-t", "${_TEST_IMAGE_ID}", "--file", ".cloudbuild/library_generation/library_generation.Dockerfile", "."]
+    args: [
+      "build",
+      "-t", "${_IMAGE_ID}",
+      "--file", ".cloudbuild/library_generation/library_generation.Dockerfile", "."]
     id: library-generation-build
     waitFor: ["-"]
-  - name: ${_TEST_IMAGE_ID}
-    entrypoint: bash
-    args: [ './library_generation/test/container_integration_tests.sh' ]
-    waitFor: [ "library-generation-build" ]
-    env:
-      - 'TEST_IMAGE_ID=${_TEST_IMAGE_ID}'
+
+images:
+  - ${_IMAGE_ID}
 
