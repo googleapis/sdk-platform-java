@@ -60,7 +60,7 @@ maven_install(
     repositories = ["https://repo.maven.apache.org/maven2/"],
 )
 
-_gapic_generator_java_version = "2.36.1-SNAPSHOT"  # {x-version-update:gapic-generator-java:current}
+_gapic_generator_java_version = "2.37.0"  # {x-version-update:gapic-generator-java:current}
 
 maven_install(
     artifacts = [

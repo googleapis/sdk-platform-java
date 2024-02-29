@@ -1,5 +1,17 @@
 # Changelog
 
+## [2.37.0](https://github.com/googleapis/sdk-platform-java/compare/v2.36.0...v2.37.0) (2024-02-29)
+
+
+### Features
+
+* improve batching summary errors ([#2509](https://github.com/googleapis/sdk-platform-java/issues/2509)) ([d6964a4](https://github.com/googleapis/sdk-platform-java/commit/d6964a4cfda60ef7c5f1871b215a9cf222361e7e))
+
+
+### Bug Fixes
+
+* adjust release please config to reflect file location change. ([#2524](https://github.com/googleapis/sdk-platform-java/issues/2524)) ([1e5af1e](https://github.com/googleapis/sdk-platform-java/commit/1e5af1e651a079220b8a63952b7dbc68586d9b7d))
+
 ## [2.36.0](https://github.com/googleapis/sdk-platform-java/compare/v2.35.0...v2.36.0) (2024-02-29)
 
 
