@@ -361,15 +361,18 @@ public class EndpointContextTest {
   @Test
   public void endpointContextBuild_multipleUniverseDomainConfigurations_clientSettingsHasPriority()
       throws IOException {
-    String envVarUniverseDomain = "envVarUniverseDomain.com";
+    // This test has `GOOGLE_CLOUD_UNIVERSE_DOMAIN` = `random.com`
+    String clientSettingsUniverseDomain = "clientSettingsUniverseDomain.com";
     EndpointContext endpointContext =
         defaultEndpointContextBuilder
-            .setUniverseDomain("clientSettingsUniverseDomain.com")
+            .setUniverseDomain(clientSettingsUniverseDomain)
             .setClientSettingsEndpoint(null)
             .build();
     Truth.assertThat(endpointContext.resolvedEndpoint())
         .isEqualTo("test.clientSettingsUniverseDomain.com:443");
-    Truth.assertThat(endpointContext.resolvedUniverseDomain()).isEqualTo(envVarUniverseDomain);
+    // Client Settings Universe Domain (if set) takes priority
+    Truth.assertThat(endpointContext.resolvedUniverseDomain())
+        .isEqualTo(clientSettingsUniverseDomain);
   }
 
   @Test
