@@ -355,6 +355,23 @@ public class EndpointContextTest {
     Truth.assertThat(endpointContext.resolvedUniverseDomain()).isEqualTo(envVarUniverseDomain);
   }
 
+  // This Universe Domain should match the `GOOGLE_CLOUD_UNIVERSE_DOMAIN` Env Var
+  // For this test running locally or in CI, check that the Env Var is set properly.
+  // This test should only run when the maven profile `EnvVarTest` is enabled.
+  @Test
+  public void endpointContextBuild_multipleUniverseDomainConfigurations_clientSettingsHasPriority()
+      throws IOException {
+    String envVarUniverseDomain = "envVarUniverseDomain.com";
+    EndpointContext endpointContext =
+        defaultEndpointContextBuilder
+            .setUniverseDomain(null)
+            .setClientSettingsEndpoint("clientSettingsUniverseDomain.com")
+            .build();
+    Truth.assertThat(endpointContext.resolvedEndpoint())
+        .isEqualTo("test.clientSettingsUniverseDomain.com:443");
+    Truth.assertThat(endpointContext.resolvedUniverseDomain()).isEqualTo(envVarUniverseDomain);
+  }
+
   @Test
   public void hasValidUniverseDomain_gdchFlow_anyCredentials() throws IOException {
     Credentials noCredentials = NoCredentialsProvider.create().getCredentials();

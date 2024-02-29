@@ -202,21 +202,27 @@ public abstract class EndpointContext {
     abstract EndpointContext autoBuild();
 
     private String determineUniverseDomain() {
+      String universeDomain = universeDomain();
       if (usingGDCH()) {
         // GDC-H has no concept of Universe Domain. User should not set a custom value
-        if (universeDomain() != null) {
+        if (universeDomain != null) {
           throw new IllegalArgumentException(
               "Universe domain configuration is incompatible with GDC-H");
         }
         return Credentials.GOOGLE_DEFAULT_UNIVERSE;
       }
       // Check for "" (empty string)
-      if (universeDomain() != null && universeDomain().isEmpty()) {
+      if (universeDomain != null && universeDomain.isEmpty()) {
         throw new IllegalArgumentException("The universe domain value cannot be empty.");
+      }
+      // If the universe domain wasn't configured explicitly in the settings, check the
+      // environment variable for the value
+      if (universeDomain == null) {
+        universeDomain = System.getenv(GOOGLE_CLOUD_UNIVERSE_DOMAIN);
       }
       // If the universe domain is configured by the user, the universe domain will either be
       // from the settings or from the env var. The value from ClientSettings has priority.
-      return universeDomain() != null ? universeDomain() : Credentials.GOOGLE_DEFAULT_UNIVERSE;
+      return universeDomain != null ? universeDomain : Credentials.GOOGLE_DEFAULT_UNIVERSE;
     }
 
     /** Determines the fully resolved endpoint and universe domain values */
@@ -285,11 +291,6 @@ public abstract class EndpointContext {
     }
 
     public EndpointContext build() throws IOException {
-      // If the universe domain wasn't configured explicitly in the settings, check the
-      // environment variable for the value
-      if (universeDomain() == null) {
-        setUniverseDomain(System.getenv(GOOGLE_CLOUD_UNIVERSE_DOMAIN));
-      }
       // The Universe Domain is used to resolve the Endpoint. It should be resolved first
       setResolvedUniverseDomain(determineUniverseDomain());
       setResolvedEndpoint(determineEndpoint());
