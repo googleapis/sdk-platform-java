@@ -1,5 +1,33 @@
 # Changelog
 
+## [2.36.0](https://github.com/googleapis/sdk-platform-java/compare/v2.35.0...v2.36.0) (2024-02-29)
+
+
+### Features
+
+* check library_name is unique among libraries ([#2490](https://github.com/googleapis/sdk-platform-java/issues/2490)) ([8123f0b](https://github.com/googleapis/sdk-platform-java/commit/8123f0b15970c76b08086d8988de14e1ed58a77e))
+
+
+### Bug Fixes
+
+* cleanup @BetaApi from Resource Name Builder Methods  ([#2450](https://github.com/googleapis/sdk-platform-java/issues/2450)) ([6e8d098](https://github.com/googleapis/sdk-platform-java/commit/6e8d09845610401665556118cd78c7229c46d426)), closes [#2099](https://github.com/googleapis/sdk-platform-java/issues/2099)
+* Fix watchdog to start with WAITING state ([#2468](https://github.com/googleapis/sdk-platform-java/issues/2468)) ([dedc40f](https://github.com/googleapis/sdk-platform-java/commit/dedc40fb451633b11be10013b74a91053e155620))
+* ignore comment in BUILD ([#2492](https://github.com/googleapis/sdk-platform-java/issues/2492)) ([6ca20e5](https://github.com/googleapis/sdk-platform-java/commit/6ca20e529a86561cdc935d0d44dd971de3b9e4b2))
+* remove @BetaApi from ApiFutures and ApiService ([#2454](https://github.com/googleapis/sdk-platform-java/issues/2454)) ([f59e717](https://github.com/googleapis/sdk-platform-java/commit/f59e717402d00bc953648e1e780dd84dda7915b3)), closes [#2098](https://github.com/googleapis/sdk-platform-java/issues/2098)
+
+
+### Dependencies
+
+* grandfathering the dependencies for java-pubsublite and java-bigquery ([#2504](https://github.com/googleapis/sdk-platform-java/issues/2504)) ([9ceab23](https://github.com/googleapis/sdk-platform-java/commit/9ceab23144ba7a9ca9114d585376e09587fd1bee))
+* update dependency gradle to v7.6.4 ([#2474](https://github.com/googleapis/sdk-platform-java/issues/2474)) ([607dc59](https://github.com/googleapis/sdk-platform-java/commit/607dc59f8eb5a70f8807c4d5f7d0745438842381))
+* update dependency org.graalvm.sdk:graal-sdk to v22.3.5 ([#2475](https://github.com/googleapis/sdk-platform-java/issues/2475)) ([2de487b](https://github.com/googleapis/sdk-platform-java/commit/2de487b34c43fee3b81e4af7a2dfe4f2eb6418ac))
+* update grpc dependencies to v1.62.2 ([#2506](https://github.com/googleapis/sdk-platform-java/issues/2506)) ([f438603](https://github.com/googleapis/sdk-platform-java/commit/f4386038766c2381e141d7073959cc6bde896efb))
+
+
+### Documentation
+
+* Add contribution guidelines. ([#2045](https://github.com/googleapis/sdk-platform-java/issues/2045)) ([9939b43](https://github.com/googleapis/sdk-platform-java/commit/9939b43dce041c75405cea66a0dde171d991d3eb))
+
 ## [2.35.0](https://github.com/googleapis/sdk-platform-java/compare/v2.34.0...v2.35.0) (2024-02-13)
 
 
