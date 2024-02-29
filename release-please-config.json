@@ -5,7 +5,7 @@
   "group-pull-request-title-pattern": "chore(${branch}): release ${version}",
   "packages": {
     ".": {
-      "extra-files": ["WORKSPACE", ".cloudbuild/graalvm/cloudbuild.yaml", ".cloudbuild/graalvm/cloudbuild-test-a.yaml", ".cloudbuild/graalvm/cloudbuild-test-b.yaml"]
+      "extra-files": ["WORKSPACE", ".cloudbuild/graalvm/cloudbuild.yaml", ".cloudbuild/graalvm/cloudbuild-test-a.yaml", ".cloudbuild/graalvm/cloudbuild-test-b.yaml", ".cloudbuild/library_generation/cloudbuild-library-generation-release.yaml"]
     }
   }
 }
