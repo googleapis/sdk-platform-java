@@ -47,12 +47,14 @@ jobs:
             tar -xf showcase-*
             ./gapic-showcase run &
             cd -
+      # Intentionally do not run the Env Var Tests (no -PenvVarTests) as setting the Env Var
+      # may alter the results for other tests that use Env Var in the logic. Adding a Sonar
+      # step for a few tests (env var tests) may be overkill and should be better covered
+      # when we can upgrade to JUnit 5 (https://github.com/googleapis/sdk-platform-java/issues/1611#issuecomment-1970079325)
       - name: Build and analyze for full test coverage
-        # Set the Env Vars needed for the test to get coverage on Env Var Tests
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          GOOGLE_CLOUD_UNIVERSE_DOMAIN: random.com
         run: |
           mvn -B verify -Dcheckstyle.skip \
               -DenableFullTestCoverage \
@@ -60,8 +62,7 @@ jobs:
               org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
               -Dsonar.projectKey=googleapis_gapic-generator-java \
               -Dsonar.organization=googleapis \
-              -Dsonar.host.url=https://sonarcloud.io \
-              -PenvVarTest
+              -Dsonar.host.url=https://sonarcloud.io
       - name: Build and analyze Showcase Integration Tests Coverage
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
