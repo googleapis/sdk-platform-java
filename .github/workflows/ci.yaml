@@ -18,8 +18,6 @@ jobs:
           distribution: temurin
           cache: maven
       - run: java -version
-      # Run the tests except for `EndpointContextTest#endpointContextBuild_universeDomainEnvVarSet`
-      # This test requires an Environmental Variable to pass
       - name: Unit Tests
         run: |
           mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
