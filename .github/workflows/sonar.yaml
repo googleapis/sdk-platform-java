@@ -61,6 +61,7 @@ jobs:
               -Dsonar.projectKey=googleapis_gapic-generator-java \
               -Dsonar.organization=googleapis \
               -Dsonar.host.url=https://sonarcloud.io \
+              -Dsurefire.failIfNoSpecifiedTests=false \
               -Dtest=\!EndpointContextTest#endpointContextBuild_universeDomainEnvVarSet
       - name: Build and analyze Showcase Integration Tests Coverage
         env:
