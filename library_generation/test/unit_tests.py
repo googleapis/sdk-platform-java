@@ -455,15 +455,15 @@ class UtilitiesTest(unittest.TestCase):
         library_path = sorted([Path(key).name for key in repo_config.libraries])
         self.assertEqual(["misc"], library_path)
 
-    def test_repo_level_post_process_success(self):
-        repository_path = f"{resources_dir}/test_repo_level_postprocess"
+    def test_monorepo_postprocessing_valid_repository_success(self):
+        repository_path = f"{resources_dir}/test_monorepo_postprocessing"
         versions_file = f"{repository_path}/versions.txt"
         files = [
             f"{repository_path}/pom.xml",
             f"{repository_path}/gapic-libraries-bom/pom.xml",
         ]
         self.__cleanup(files)
-        util.repo_level_post_process(
+        util.monorepo_postprocessing(
             repository_path=repository_path, versions_file=versions_file
         )
         self.__compare_files(

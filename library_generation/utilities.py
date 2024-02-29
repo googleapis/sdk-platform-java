@@ -437,7 +437,7 @@ def generate_prerequisite_files(
         )
 
 
-def repo_level_post_process(
+def monorepo_postprocessing(
     repository_path: str,
     versions_file: str,
 ) -> None:
