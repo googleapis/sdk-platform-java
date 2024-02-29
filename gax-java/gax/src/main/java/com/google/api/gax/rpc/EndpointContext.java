@@ -47,6 +47,7 @@ import javax.annotation.Nullable;
 @InternalApi
 @AutoValue
 public abstract class EndpointContext {
+  private static final String GOOGLE_CLOUD_UNIVERSE_DOMAIN = "GOOGLE_CLOUD_UNIVERSE_DOMAIN";
   private static final String INVALID_UNIVERSE_DOMAIN_ERROR_TEMPLATE =
       "The configured universe domain (%s) does not match the universe domain found in the credentials (%s). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.";
   public static final String UNABLE_TO_RETRIEVE_CREDENTIALS_ERROR_MESSAGE =
@@ -213,7 +214,8 @@ public abstract class EndpointContext {
       if (universeDomain() != null && universeDomain().isEmpty()) {
         throw new IllegalArgumentException("The universe domain value cannot be empty.");
       }
-      // Override with user set universe domain if provided
+      // If the universe domain is configured by the user, the universe domain will either be
+      // from the settings or from the env var. The value from ClientSettings has priority.
       return universeDomain() != null ? universeDomain() : Credentials.GOOGLE_DEFAULT_UNIVERSE;
     }
 
@@ -283,6 +285,11 @@ public abstract class EndpointContext {
     }
 
     public EndpointContext build() throws IOException {
+      // If the universe domain wasn't configured explicitly in the settings, check the
+      // environment variable for the value
+      if (universeDomain() == null) {
+        setUniverseDomain(System.getenv(GOOGLE_CLOUD_UNIVERSE_DOMAIN));
+      }
       // The Universe Domain is used to resolve the Endpoint. It should be resolved first
       setResolvedUniverseDomain(determineUniverseDomain());
       setResolvedEndpoint(determineEndpoint());

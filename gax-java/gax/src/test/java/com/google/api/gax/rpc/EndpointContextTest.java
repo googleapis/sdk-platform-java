@@ -341,6 +341,18 @@ public class EndpointContextTest {
   }
 
   @Test
+  public void endpointContextBuild_universeDomainEnvVarSet() throws IOException {
+    String envVarUniverseDomain = "random.com";
+    EndpointContext endpointContext =
+        defaultEndpointContextBuilder
+            .setUniverseDomain(null)
+            .setClientSettingsEndpoint(null)
+            .build();
+    Truth.assertThat(endpointContext.resolvedEndpoint()).isEqualTo("test.random.com:443");
+    Truth.assertThat(endpointContext.resolvedUniverseDomain()).isEqualTo(envVarUniverseDomain);
+  }
+
+  @Test
   public void hasValidUniverseDomain_gdchFlow_anyCredentials() throws IOException {
     Credentials noCredentials = NoCredentialsProvider.create().getCredentials();
     Credentials validCredentials = Mockito.mock(Credentials.class);

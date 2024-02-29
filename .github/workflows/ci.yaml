@@ -21,7 +21,15 @@ jobs:
       - name: Unit Tests
         run: |
           mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
-              -Dfmt.skip -DenableTestCoverage
+              -Dfmt.skip -DenableTestCoverage -Dsurefire.failIfNoSpecifiedTests=false \
+              -Dtest=\!EndpointContextTest#endpointContextBuild_universeDomainEnvVarSet
+      - run: echo "GOOGLE_CLOUD_UNIVERSE_DOMAIN=random.com" >> $GITHUB_ENV
+      - name: EndpointContext Env Var Test
+        run: |
+          mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
+              -Dfmt.skip -DenableTestCoverage -Dsurefire.failIfNoSpecifiedTests=false \
+              -Dtest=EndpointContextTest#endpointContextBuild_universeDomainEnvVarSet
+      - run: echo "GOOGLE_CLOUD_UNIVERSE_DOMAIN=" >> $GITHUB_ENV
       - run: bazelisk version
       - name: Install Maven modules
         run: |
@@ -63,7 +71,15 @@ jobs:
       - name: Unit Tests
         run: |
           mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
-              -Dfmt.skip -DenableTestCoverage
+              -Dfmt.skip -DenableTestCoverage -Dsurefire.failIfNoSpecifiedTests=false \
+              -Dtest=\!EndpointContextTest#endpointContextBuild_universeDomainEnvVarSet
+      - run: echo "GOOGLE_CLOUD_UNIVERSE_DOMAIN=random.com" >> $GITHUB_ENV
+      - name: EndpointContext Env Var Test
+        run: |
+          mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
+              -Dfmt.skip -DenableTestCoverage -Dsurefire.failIfNoSpecifiedTests=false \
+              -Dtest=EndpointContextTest#endpointContextBuild_universeDomainEnvVarSet
+      - run: echo "GOOGLE_CLOUD_UNIVERSE_DOMAIN=" >> $GITHUB_ENV
       - run: bazelisk version
       - name: Install Maven modules
         run: |
@@ -97,7 +113,13 @@ jobs:
           # the "jvm" system property.
           mvn verify --batch-mode --no-transfer-progress -Dcheckstyle.skip \
               -Dfmt.skip \
-              -Djvm="${JAVA8_HOME}/bin/java"
+              -Djvm="${JAVA8_HOME}/bin/java" -Dsurefire.failIfNoSpecifiedTests=false \
+              -Dtest=\!EndpointContextTest#endpointContextBuild_universeDomainEnvVarSet
+          export GOOGLE_CLOUD_UNIVERSE_DOMAIN=random.com
+          mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
+              -Dfmt.skip -DenableTestCoverage -Dsurefire.failIfNoSpecifiedTests=false \
+              -Dtest=EndpointContextTest#endpointContextBuild_universeDomainEnvVarSet
+      - run: echo "GOOGLE_CLOUD_UNIVERSE_DOMAIN=" >> $GITHUB_ENV
 
   build-java8-gapic-generator-java:
     name: "build(8) for gapic-generator-java"
