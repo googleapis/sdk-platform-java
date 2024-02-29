@@ -364,8 +364,8 @@ public class EndpointContextTest {
     String envVarUniverseDomain = "envVarUniverseDomain.com";
     EndpointContext endpointContext =
         defaultEndpointContextBuilder
-            .setUniverseDomain(null)
-            .setClientSettingsEndpoint("clientSettingsUniverseDomain.com")
+            .setUniverseDomain("clientSettingsUniverseDomain.com")
+            .setClientSettingsEndpoint(null)
             .build();
     Truth.assertThat(endpointContext.resolvedEndpoint())
         .isEqualTo("test.clientSettingsUniverseDomain.com:443");
