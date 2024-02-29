@@ -47,6 +47,8 @@ jobs:
             tar -xf showcase-*
             ./gapic-showcase run &
             cd -
+      # Run the tests except for `EndpointContextTest#endpointContextBuild_universeDomainEnvVarSet`
+      # This test requires an Environmental Variable to pass. This test is covered in the ci.yaml workflow
       - name: Build and analyze for full test coverage
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
@@ -58,8 +60,8 @@ jobs:
               org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
               -Dsonar.projectKey=googleapis_gapic-generator-java \
               -Dsonar.organization=googleapis \
-              -Dsonar.host.url=https://sonarcloud.io
-
+              -Dsonar.host.url=https://sonarcloud.io \
+              -Dtest=\!EndpointContextTest#endpointContextBuild_universeDomainEnvVarSet
       - name: Build and analyze Showcase Integration Tests Coverage
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any

@@ -18,11 +18,14 @@ jobs:
           distribution: temurin
           cache: maven
       - run: java -version
+      # Run the tests except for `EndpointContextTest#endpointContextBuild_universeDomainEnvVarSet`
+      # This test requires an Environmental Variable to pass
       - name: Unit Tests
         run: |
           mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
               -Dfmt.skip -DenableTestCoverage -Dsurefire.failIfNoSpecifiedTests=false \
               -Dtest=\!EndpointContextTest#endpointContextBuild_universeDomainEnvVarSet
+      # Only run the `EndpointContextTest#endpointContextBuild_universeDomainEnvVarSet` test
       - name: EndpointContext Env Var Test
         run: |
           mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
@@ -68,11 +71,14 @@ jobs:
           distribution: temurin
           cache: maven
       - run: java -version
+      # Run the tests except for `EndpointContextTest#endpointContextBuild_universeDomainEnvVarSet`
+      # This test requires an Environmental Variable to pass
       - name: Unit Tests
         run: |
           mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
               -Dfmt.skip -DenableTestCoverage -Dsurefire.failIfNoSpecifiedTests=false \
               -Dtest=\!EndpointContextTest#endpointContextBuild_universeDomainEnvVarSet
+      # Only run the `EndpointContextTest#endpointContextBuild_universeDomainEnvVarSet` test
       - name: EndpointContext Env Var Test
         run: |
           mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
@@ -103,6 +109,8 @@ jobs:
         with:
           java-version: 17
           distribution: temurin
+      # Run the tests except for `EndpointContextTest#endpointContextBuild_universeDomainEnvVarSet`
+      # This test requires an Environmental Variable to pass
       - name: Compile with Java 17 and run tests with Java 8
         shell: bash
         run: |
@@ -115,6 +123,7 @@ jobs:
               -Dfmt.skip \
               -Djvm="${JAVA8_HOME}/bin/java" -Dsurefire.failIfNoSpecifiedTests=false \
               -Dtest=\!EndpointContextTest#endpointContextBuild_universeDomainEnvVarSet
+      # Only run the `EndpointContextTest#endpointContextBuild_universeDomainEnvVarSet` test
       - name: Compile with Java 17 and run tests with Java 8 (Universe Domain Env Var)
         shell: bash
         run: |
