@@ -16,9 +16,10 @@ setup(
             "templates/*.j2",
             "gapic-generator-java-wrapper",
             "requirements.*",
-            "owlbot/src/requirements.*",
             "owlbot/bin/*.sh",
-            "owlbot/templates/**/*.j2",
+            "owlbot/templates/clirr/*.j2",
+            "owlbot/templates/poms/*.j2",
+            "owlbot/templates/java_library/**/*",
         ],
     },
 )
