@@ -378,7 +378,9 @@ class UtilitiesTest(unittest.TestCase):
         self.assertEqual("secretmanager", util.get_library_name(library_2))
 
     def test_generate_prerequisite_files_non_monorepo_success(self):
-        library_path = self.__setup_prerequisite_files(num_libraries=1)
+        library_path = self.__setup_prerequisite_files(
+            num_libraries=1, library_type="GAPIC_COMBO"
+        )
 
         self.__compare_files(
             f"{library_path}/.repo-metadata.json",
@@ -485,7 +487,9 @@ class UtilitiesTest(unittest.TestCase):
             first=[], second=diff, msg="Unexpected file contents:\n" + "".join(diff)
         )
 
-    def __setup_prerequisite_files(self, num_libraries: int):
+    def __setup_prerequisite_files(
+        self, num_libraries: int, library_type: str = "GAPIC_AUTO"
+    ) -> str:
         library_path = f"{resources_dir}/goldens"
         files = [
             f"{library_path}/.repo-metadata.json",
@@ -493,7 +497,7 @@ class UtilitiesTest(unittest.TestCase):
             f"{library_path}/owlbot.py",
         ]
         self.__cleanup(files)
-        config = self.__get_a_gen_config(num_libraries)
+        config = self.__get_a_gen_config(num_libraries, library_type=library_type)
         proto_path = "google/cloud/baremetalsolution/v2"
         transport = "grpc"
         util.generate_prerequisite_files(
@@ -506,7 +510,9 @@ class UtilitiesTest(unittest.TestCase):
         return library_path
 
     @staticmethod
-    def __get_a_gen_config(num_libraries: int):
+    def __get_a_gen_config(
+        num_libraries: int, library_type: str = "GAPIC_AUTO"
+    ) -> GenerationConfig:
         """
         Returns an object of GenerationConfig with one to three of
         LibraryConfig objects. Other attributes are set to empty str.
@@ -521,6 +527,11 @@ class UtilitiesTest(unittest.TestCase):
             libraries = [library_1, library_2, library_3]
         else:
             libraries = [library_1]
+
+        # update libraries with custom configuration (for now, only
+        # library_type)
+        for library in libraries:
+            library.library_type = library_type
 
         return GenerationConfig(
             gapic_generator_version="",

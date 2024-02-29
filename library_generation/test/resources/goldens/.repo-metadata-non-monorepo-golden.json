@@ -11,7 +11,7 @@
   "repo_short": "java-bare-metal-solution",
   "distribution_name": "com.google.cloud:google-cloud-bare-metal-solution",
   "api_id": "baremetalsolution.googleapis.com",
-  "library_type": "GAPIC_AUTO",
+  "library_type": "GAPIC_COMBO",
   "requires_billing": true,
   "rest_documentation": "https://cloud.google.com/bare-metal/docs/reference/rest",
   "rpc_documentation": "https://cloud.google.com/bare-metal/docs/reference/rpc",
