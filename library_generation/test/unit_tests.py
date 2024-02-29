@@ -527,17 +527,16 @@ class UtilitiesTest(unittest.TestCase):
         else:
             libraries = [library_1]
 
-
         # update libraries with custom configuration (for now, only
         # library_type)
         for library in libraries:
             library.library_type = library_type
             if num_libraries == 1:
-              # treat this as a HW library case to generate a real-life
-              # repo-metadata
-              library.extra_versioned_modules = 'test-module'
+                # treat this as a HW library case to generate a real-life
+                # repo-metadata
+                library.extra_versioned_modules = "test-module"
             else:
-              library.extra_versioned_modules = None
+                library.extra_versioned_modules = None
 
         return GenerationConfig(
             gapic_generator_version="",
