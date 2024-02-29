@@ -44,7 +44,6 @@ library_1 = LibraryConfig(
     library_name="bare-metal-solution",
     rest_documentation="https://cloud.google.com/bare-metal/docs/reference/rest",
     rpc_documentation="https://cloud.google.com/bare-metal/docs/reference/rpc",
-    extra_versioned_modules="test-module",
 )
 library_2 = LibraryConfig(
     api_shortname="secretmanager",
@@ -528,10 +527,17 @@ class UtilitiesTest(unittest.TestCase):
         else:
             libraries = [library_1]
 
+
         # update libraries with custom configuration (for now, only
         # library_type)
         for library in libraries:
             library.library_type = library_type
+            if num_libraries == 1:
+              # treat this as a HW library case to generate a real-life
+              # repo-metadata
+              library.extra_versioned_modules = 'test-module'
+            else:
+              library.extra_versioned_modules = None
 
         return GenerationConfig(
             gapic_generator_version="",
