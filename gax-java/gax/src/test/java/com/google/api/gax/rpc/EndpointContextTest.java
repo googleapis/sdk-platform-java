@@ -340,6 +340,9 @@ public class EndpointContextTest {
         .isEqualTo(Credentials.GOOGLE_DEFAULT_UNIVERSE);
   }
 
+  // This Universe Domain should match the `GOOGLE_CLOUD_UNIVERSE_DOMAIN` Env Var
+  // For this test running locally or in CI, check that the Env Var is set properly.
+  // This test should only run when the maven profile `EnvVarTest` is enabled.
   @Test
   public void endpointContextBuild_universeDomainEnvVarSet() throws IOException {
     String envVarUniverseDomain = "random.com";
