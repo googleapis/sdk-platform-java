@@ -17,11 +17,12 @@ import subprocess
 import os
 import shutil
 import re
-from git import Repo
+from git import Commit, Repo
 from pathlib import Path
 from lxml import etree
 from library_generation.model.bom_config import BomConfig
 from library_generation.model.generation_config import GenerationConfig
+from library_generation.model.generation_config import from_yaml
 from library_generation.model.library_config import LibraryConfig
 from typing import List
 from jinja2 import Environment, FileSystemLoader
@@ -34,6 +35,13 @@ project_tag = "{http://maven.apache.org/POM/4.0.0}"
 group_id_tag = "groupId"
 artifact_tag = "artifactId"
 version_tag = "version"
+common_protos = {
+    "google/api",
+    "google/longrunning",
+    "google/rpc",
+    "google/shopping/type",
+    "google/type",
+}
 
 
 def __render(template_name: str, output_name: str, **kwargs):
@@ -488,15 +496,35 @@ def get_version_from(
                 return line.split(":")[index].strip()
 
 
-def get_commit_messages(repo_url: str, new_committish: str, old_committish: str) -> str:
+def get_file_paths(path_to_yaml: str) -> set[str]:
+    """
+    Get versioned proto_path from configuration file, plus known paths of
+    common protos.
+
+    :param path_to_yaml: the path to the configuration file
+    :return: versioned proto_path plus paths of common protos
+    """
+    config = from_yaml(path_to_yaml)
+    paths = set()
+    for library in config.libraries:
+        for gapic_config in library.gapic_configs:
+            paths.add(gapic_config.proto_path)
+    return paths.union(common_protos)
+
+
+def get_commit_messages(
+    repo_url: str, new_committish: str, old_committish: str, paths: set[str]
+) -> str:
     """
     Get commit messages of a repository from new_committish to
-    old_committish.
+    old_committish. Only messages of a commit which affects files in a
+    pre-defined set will be added.
     Note that old_committish should be an ancestor of new_committish.
 
     :param repo_url: the url of the repository.
     :param new_committish:
     :param old_committish:
+    :param paths: a set of file paths
     :return: commit messages.
     """
     tmp_dir = "/tmp/repo"
@@ -506,10 +534,19 @@ def get_commit_messages(repo_url: str, new_committish: str, old_committish: str)
     repo = Repo.clone_from(repo_url, tmp_dir)
     commit = repo.commit(new_committish)
     while str(commit.hexsha) != old_committish:
-        messages.append(f"{commit.hexsha}\n{commit.message}")
+        if __is_relevant_commit(paths, commit):
+            messages.append(f"{commit.hexsha}\n{commit.message}")
         commit_parents = commit.parents
         if len(commit_parents) == 0:
             break
         commit = commit_parents[0]
     shutil.rmtree(tmp_dir, ignore_errors=True)
     return "\n\n".join(messages)
+
+
+def __is_relevant_commit(paths: set[str], commit: Commit) -> bool:
+    for file in commit.stats.files.keys():
+        idx = file.rfind("/")
+        if file[:idx] in paths:
+            return True
+    return False

@@ -27,6 +27,7 @@ from library_generation.generate_repo import generate_from_yaml
 from library_generation.model.generation_config import from_yaml
 from library_generation.test.compare_poms import compare_xml
 from library_generation.utilities import get_commit_messages
+from library_generation.utilities import get_file_paths
 from library_generation.utilities import (
     get_library_name,
     sh_util as shell_call,
@@ -50,10 +51,12 @@ class IntegrationTest(unittest.TestCase):
         repo_url = "https://github.com/googleapis/googleapis.git"
         new_committish = "5c5ecf0eb9bd8acf5bed57fe1ce0df1770466089"
         old_committish = "e04130efabc98c20c56675b0c0af603087681f48"
+        paths = get_file_paths(f"{config_dir}/google-cloud-java/{config_name}")
         message = get_commit_messages(
             repo_url=repo_url,
             new_committish=new_committish,
             old_committish=old_committish,
+            paths=paths,
         )
         self.assertTrue("5c5ecf0eb9bd8acf5bed57fe1ce0df1770466089" in message)
         self.assertTrue("8df1cd698e2fe0b7d1c298dabafdf13aa01c4d39" in message)
