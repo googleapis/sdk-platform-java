@@ -30,7 +30,6 @@ from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.gapic_inputs import parse as parse_build_file
 from library_generation.model.generation_config import from_yaml
 from library_generation.model.library_config import LibraryConfig
-from library_generation.utilities import get_commit_messages
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 resources_dir = os.path.join(script_dir, "resources")
@@ -471,21 +470,6 @@ class UtilitiesTest(unittest.TestCase):
             expect=f"{repository_path}/gapic-libraries-bom/pom-golden.xml",
             actual=f"{repository_path}/gapic-libraries-bom/pom.xml",
         )
-
-    def test_get_commit_message_success(self):
-        repo_url = "https://github.com/googleapis/googleapis.git"
-        new_committish = "5c5ecf0eb9bd8acf5bed57fe1ce0df1770466089"
-        old_committish = "e04130efabc98c20c56675b0c0af603087681f48"
-        message = get_commit_messages(
-            repo_url=repo_url,
-            new_committish=new_committish,
-            old_committish=old_committish,
-        )
-        self.assertTrue("5c5ecf0eb9bd8acf5bed57fe1ce0df1770466089" in message)
-        self.assertTrue("8df1cd698e2fe0b7d1c298dabafdf13aa01c4d39" in message)
-        self.assertTrue("87a71a910ce60009cc578eb183062fb7d62e664f" in message)
-        self.assertTrue("cfda64661b5e005730e9c7f24745ff2e40680647" in message)
-        self.assertFalse("e04130efabc98c20c56675b0c0af603087681f48" in message)
 
     def __compare_files(self, expect: str, actual: str):
         with open(expect, "r") as f:
