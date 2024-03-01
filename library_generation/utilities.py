@@ -492,10 +492,12 @@ def get_commit_messages(repo_url: str, new_committish: str, old_committish: str)
     """
     Get commit messages of a repository from new_committish to
     old_committish.
+    Note that old_committish should be an ancestor of new_committish.
+
     :param repo_url: the url of the repository.
     :param new_committish:
     :param old_committish:
-    :return:
+    :return: commit messages.
     """
     tmp_dir = "/tmp/repo"
     shutil.rmtree(tmp_dir, ignore_errors=True)
