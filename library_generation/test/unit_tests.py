@@ -216,7 +216,7 @@ class UtilitiesTest(unittest.TestCase):
         self.assertEqual("google/cloud/asset/v1p7beta1", gapics[4].proto_path)
 
     def test_get_file_paths_from_yaml_success(self):
-        paths = get_file_paths(f"{test_config_dir}/generation_config.yaml")
+        paths = get_file_paths(from_yaml(f"{test_config_dir}/generation_config.yaml"))
         self.assertEqual(
             {
                 "google/cloud/asset/v1",
