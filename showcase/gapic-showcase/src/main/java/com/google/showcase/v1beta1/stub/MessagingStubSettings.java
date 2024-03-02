@@ -943,8 +943,6 @@ public class MessagingStubSettings extends StubSettings<MessagingStubSettings> {
     }
 
     /** Returns the builder for the settings used for calls to searchBlurbs. */
-    @BetaApi(
-        "The surface for use by generated code is not stable yet and may change in the future.")
     public OperationCallSettings.Builder<
             SearchBlurbsRequest, SearchBlurbsResponse, SearchBlurbsMetadata>
         searchBlurbsOperationSettings() {

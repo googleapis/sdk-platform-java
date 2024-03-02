@@ -46,7 +46,6 @@ fi
 
 
 # Runs template and etc in current working directory
-monorepo=$1
 
 # apply repo templates
 echo "Rendering templates"
@@ -56,8 +55,11 @@ python3 "${scripts_root}/owlbot/src/apply_repo_templates.py" "${configuration_ya
 echo "Retrieving files from owl-bot-staging directory..."
 if [ -f "owlbot.py" ]
 then
+  # we use an empty synthtool folder to prevent cached templates from being used
+  export SYNTHTOOL_TEMPLATES=$(mktemp -d)
   # defaults to run owlbot.py
   python3 owlbot.py
+  export SYNTHTOOL_TEMPLATES=""
 fi
 echo "...done"
 
@@ -84,7 +86,7 @@ echo "...done"
 
 # ensure formatting on all .java files in the repository
 echo "Reformatting source..."
-mvn fmt:format
+mvn fmt:format -V --batch-mode --no-transfer-progress
 echo "...done"
 
 
