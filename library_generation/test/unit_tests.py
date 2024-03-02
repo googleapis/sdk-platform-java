@@ -30,6 +30,7 @@ from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.gapic_inputs import parse as parse_build_file
 from library_generation.model.generation_config import from_yaml
 from library_generation.model.library_config import LibraryConfig
+from library_generation.utilities import get_file_paths
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 resources_dir = os.path.join(script_dir, "resources")
@@ -213,6 +214,24 @@ class UtilitiesTest(unittest.TestCase):
         self.assertEqual("google/cloud/asset/v1p2beta1", gapics[2].proto_path)
         self.assertEqual("google/cloud/asset/v1p5beta1", gapics[3].proto_path)
         self.assertEqual("google/cloud/asset/v1p7beta1", gapics[4].proto_path)
+
+    def test_get_file_paths_from_yaml_success(self):
+        paths = get_file_paths(f"{test_config_dir}/generation_config.yaml")
+        self.assertEqual(
+            {
+                "google/cloud/asset/v1",
+                "google/cloud/asset/v1p1beta1",
+                "google/cloud/asset/v1p2beta1",
+                "google/cloud/asset/v1p5beta1",
+                "google/cloud/asset/v1p7beta1",
+                "google/api",
+                "google/longrunning",
+                "google/rpc",
+                "google/shopping/type",
+                "google/type",
+            },
+            paths,
+        )
 
     @parameterized.expand(
         [
