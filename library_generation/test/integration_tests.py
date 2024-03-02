@@ -23,11 +23,11 @@ from git import Repo
 from pathlib import Path
 from typing import List
 from typing import Dict
+
+from library_generation.generate_pr_description import generate_pr_descriptions
 from library_generation.generate_repo import generate_from_yaml
 from library_generation.model.generation_config import from_yaml
 from library_generation.test.compare_poms import compare_xml
-from library_generation.utilities import get_commit_messages
-from library_generation.utilities import get_file_paths
 from library_generation.utilities import (
     get_library_name,
     sh_util as shell_call,
@@ -49,20 +49,21 @@ output_folder = shell_call("get_output_folder")
 class IntegrationTest(unittest.TestCase):
     def test_get_commit_message_success(self):
         repo_url = "https://github.com/googleapis/googleapis.git"
-        new_committish = "5c5ecf0eb9bd8acf5bed57fe1ce0df1770466089"
-        old_committish = "e04130efabc98c20c56675b0c0af603087681f48"
-        paths = get_file_paths(f"{config_dir}/google-cloud-java/{config_name}")
-        message = get_commit_messages(
+        baseline_commit = "a17d4caf184b050d50cacf2b0d579ce72c31ce74"
+        description = generate_pr_descriptions(
+            f"{config_dir}/google-cloud-java/{config_name}",
             repo_url=repo_url,
-            new_committish=new_committish,
-            old_committish=old_committish,
-            paths=paths,
+            baseline_commit=baseline_commit,
         )
-        self.assertTrue("5c5ecf0eb9bd8acf5bed57fe1ce0df1770466089" in message)
-        self.assertTrue("8df1cd698e2fe0b7d1c298dabafdf13aa01c4d39" in message)
-        self.assertTrue("87a71a910ce60009cc578eb183062fb7d62e664f" in message)
-        self.assertTrue("cfda64661b5e005730e9c7f24745ff2e40680647" in message)
-        self.assertFalse("e04130efabc98c20c56675b0c0af603087681f48" in message)
+        # There are five commits from googleapis commitish to baseline commit,
+        # inclusively. Only two of the commits contain changes in proto_path
+        # that are in configuration. Therefore, only two commit messages should
+        # be included in the PR description.
+        self.assertFalse("a17d4caf184b050d50cacf2b0d579ce72c31ce74" in description)
+        self.assertFalse("9063da8b4d45339db4e2d7d92a27c6708620e694" in description)
+        self.assertTrue("7a9a855287b5042410c93e5a510f40efd4ce6cb1" in description)
+        self.assertTrue("c7fd8bd652ac690ca84f485014f70b52eef7cb9e" in description)
+        self.assertFalse("a17d4caf184b050d50cacf2b0d579ce72c31ce74" in description)
 
     def test_generate_repo(self):
         shutil.rmtree(f"{golden_dir}", ignore_errors=True)
