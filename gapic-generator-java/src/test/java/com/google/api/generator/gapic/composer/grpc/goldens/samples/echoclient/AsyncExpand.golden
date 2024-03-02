@@ -36,11 +36,7 @@ public class AsyncExpand {
     // https://cloud.google.com/java/docs/setup#configure_endpoints_for_the_client_library
     try (EchoClient echoClient = EchoClient.create()) {
       ExpandRequest request =
-          ExpandRequest.newBuilder()
-              .setContent("content951530617")
-              .setInfo("info3237038")
-              .setRequestId("requestId693933066")
-              .build();
+          ExpandRequest.newBuilder().setContent("content951530617").setInfo("info3237038").build();
       ServerStream<EchoResponse> stream = echoClient.expandCallable().call(request);
       for (EchoResponse response : stream) {
         // Do something when a response is received.

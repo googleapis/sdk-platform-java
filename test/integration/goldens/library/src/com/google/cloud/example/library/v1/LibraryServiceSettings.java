@@ -192,7 +192,6 @@ public class LibraryServiceSettings extends ClientSettings<LibraryServiceSetting
     return LibraryServiceStubSettings.defaultTransportChannelProvider();
   }
 
-  @BetaApi("The surface for customizing headers is not stable yet and may change in the future.")
   public static ApiClientHeaderProvider.Builder defaultApiClientHeaderProviderBuilder() {
     return LibraryServiceStubSettings.defaultApiClientHeaderProviderBuilder();
   }
@@ -203,7 +202,6 @@ public class LibraryServiceSettings extends ClientSettings<LibraryServiceSetting
   }
 
   /** Returns a new REST builder for this class. */
-  @BetaApi
   public static Builder newHttpJsonBuilder() {
     return Builder.createHttpJsonDefault();
   }
@@ -245,7 +243,6 @@ public class LibraryServiceSettings extends ClientSettings<LibraryServiceSetting
       return new Builder(LibraryServiceStubSettings.newBuilder());
     }
 
-    @BetaApi
     private static Builder createHttpJsonDefault() {
       return new Builder(LibraryServiceStubSettings.newHttpJsonBuilder());
     }

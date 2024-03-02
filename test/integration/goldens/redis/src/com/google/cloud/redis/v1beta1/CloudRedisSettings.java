@@ -226,7 +226,6 @@ public class CloudRedisSettings extends ClientSettings<CloudRedisSettings> {
     return CloudRedisStubSettings.defaultTransportChannelProvider();
   }
 
-  @BetaApi("The surface for customizing headers is not stable yet and may change in the future.")
   public static ApiClientHeaderProvider.Builder defaultApiClientHeaderProviderBuilder() {
     return CloudRedisStubSettings.defaultApiClientHeaderProviderBuilder();
   }
@@ -237,7 +236,6 @@ public class CloudRedisSettings extends ClientSettings<CloudRedisSettings> {
   }
 
   /** Returns a new REST builder for this class. */
-  @BetaApi
   public static Builder newHttpJsonBuilder() {
     return Builder.createHttpJsonDefault();
   }
@@ -279,7 +277,6 @@ public class CloudRedisSettings extends ClientSettings<CloudRedisSettings> {
       return new Builder(CloudRedisStubSettings.newBuilder());
     }
 
-    @BetaApi
     private static Builder createHttpJsonDefault() {
       return new Builder(CloudRedisStubSettings.newHttpJsonBuilder());
     }

@@ -252,7 +252,6 @@ public class AssetServiceSettings extends ClientSettings<AssetServiceSettings> {
     return AssetServiceStubSettings.defaultTransportChannelProvider();
   }
 
-  @BetaApi("The surface for customizing headers is not stable yet and may change in the future.")
   public static ApiClientHeaderProvider.Builder defaultApiClientHeaderProviderBuilder() {
     return AssetServiceStubSettings.defaultApiClientHeaderProviderBuilder();
   }
@@ -263,7 +262,6 @@ public class AssetServiceSettings extends ClientSettings<AssetServiceSettings> {
   }
 
   /** Returns a new REST builder for this class. */
-  @BetaApi
   public static Builder newHttpJsonBuilder() {
     return Builder.createHttpJsonDefault();
   }
@@ -305,7 +303,6 @@ public class AssetServiceSettings extends ClientSettings<AssetServiceSettings> {
       return new Builder(AssetServiceStubSettings.newBuilder());
     }
 
-    @BetaApi
     private static Builder createHttpJsonDefault() {
       return new Builder(AssetServiceStubSettings.newHttpJsonBuilder());
     }

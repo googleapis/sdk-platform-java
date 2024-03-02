@@ -566,10 +566,10 @@ public class ServiceOptionsTest {
     TestServiceOptions options =
         TestServiceOptions.newBuilder()
             .setUniverseDomain("test.com")
-            .setHost("https://service.random.com")
+            .setHost("https://service.random.com/")
             .setProjectId("project-id")
             .build();
-    assertThat(options.getResolvedApiaryHost("service")).isEqualTo("https://service.test.com/");
+    assertThat(options.getResolvedApiaryHost("service")).isEqualTo("https://service.random.com/");
   }
 
   // No User Configuration = GDU, Default Credentials = GDU

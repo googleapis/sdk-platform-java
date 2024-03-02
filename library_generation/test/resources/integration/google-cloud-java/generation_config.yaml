@@ -1,90 +1,50 @@
-#Required.
-gapic_generator_version: 2.32.0
-#Optional.
-# grpc_version: 1.60.0
-#Optional. The protobuf version in googleapis (not sdk-platform-java) is the actual source of truth for generated protos in google-cloud-java
-protobuf_version: 23.2
-#Required.
-googleapis_commitish: 4512234113a18c1fda1fb0d0ceac8f4b4efe9801
-#Required.
+gapic_generator_version: 2.34.0
+protobuf_version: 25.2
+googleapis_commitish: 1a45bf7393b52407188c82e63101db7dc9c72026
 owlbot_cli_image: sha256:623647ee79ac605858d09e60c1382a716c125fb776f69301b72de1cd35d49409
-#Required.
-synthtool_commitish: fac8444edd5f5526e804c306b766a271772a3e2f
-#Required. The root folder name of generated client libraries.
-destination_path: google-cloud-java
-#Required. If the number of libraries is greater than 1, the scripts will treat the target repository as a monorepo, with a slightly different workflow mainly in the postprocessing stage
+synthtool_commitish: 6612ab8f3afcd5e292aecd647f0fa68812c9f5b5
+template_excludes:
+  - ".github/*"
+  - ".kokoro/*"
+  - "samples/*"
+  - "CODE_OF_CONDUCT.md"
+  - "CONTRIBUTING.md"
+  - "LICENSE"
+  - "SECURITY.md"
+  - "java.header"
+  - "license-checks.xml"
+  - "renovate.json"
+  - ".gitignore"
 libraries:
-    #Required. Can be used for populating the folder name java-{api_shortName}. This is also the destination-name in new-client.py.
-  - api_shortname: asset
-    #Optional. Overrides the root-level commit hash
-    googleapis_commitish: 4512234113a18c1fda1fb0d0ceac8f4b4efe9801
-    #Optional. The default value is the title of service yaml
-    name_pretty: Cloud Asset
-    #Required.
-    library_type: GAPIC_AUTO
-    #Optional. The default value is com.google.cloud
-    group_id: com.google.cloud
-    #Optional. The default value is google.cloud.{api_shortname}
-    artifact_id: google.cloud.asset
-    #Optional. The default value is true.
-    requires_billing: true
-    #Optional. The default value is documentation.summary from service yaml
-    api_description:
-    #Optional.
-    product_documentation:
-    #Optional.
-    client_documentation:
-    #Optional.
-    rest_documentation:
-    #Optional.
-    rpc_documentation:
-    #Required.
-    GAPICs:
-        #Required. This is a relative path to googleapis/googleapis. We'll parse all the parameters needed by generate_library.sh from BUILD.bazel in this folder.
-      - proto_path: google/cloud/asset/v1
-      - proto_path: google/cloud/asset/v1p1beta1
-      - proto_path: google/cloud/asset/v1p2beta1
-      - proto_path: google/cloud/asset/v1p5beta1
-      - proto_path: google/cloud/asset/v1p7beta1
-  - api_shortname: speech
-    library_type: GAPIC_AUTO
-    GAPICs:
-      - proto_path: google/cloud/speech/v1
-      - proto_path: google/cloud/speech/v1p1beta1
-      - proto_path: google/cloud/speech/v2
-  - api_shortname: apigee-connect
-    library_type: GAPIC_AUTO
+  - api_shortname: apigeeconnect
+    name_pretty: Apigee Connect
+    product_documentation: "https://cloud.google.com/apigee/docs/hybrid/v1.3/apigee-connect/"
+    api_description: "allows the Apigee hybrid management plane to connect securely to the MART service in the runtime plane without requiring you to expose the MART endpoint on the internet."
+    release_level: "stable"
+    library_name: "apigee-connect"
     GAPICs:
       - proto_path: google/cloud/apigeeconnect/v1
-  - api_shortname: dialogflow
-    library_type: GAPIC_AUTO
-    GAPICs:
-      - proto_path: google/cloud/dialogflow/v2beta1
-      - proto_path: google/cloud/dialogflow/v2
-  - api_shortname: compute
-    library_type: GAPIC_AUTO
-    GAPICs:
-      - proto_path: google/cloud/compute/v1
-  - api_shortname: kms
-    library_type: GAPIC_AUTO
-    GAPICs:
-      - proto_path: google/cloud/kms/v1
-  - api_shortname: redis
-    library_type: GAPIC_AUTO
-    GAPICs:
-      - proto_path: google/cloud/redis/v1
-      - proto_path: google/cloud/redis/v1beta1
-  - api_shortname: containeranalysis
-    library_type: GAPIC_AUTO
-    GAPICs:
-      - proto_path: google/devtools/containeranalysis/v1
-  - api_shortname: iam
-    library_type: GAPIC_AUTO
-    GAPICs:
-      - proto_path: google/iam/v1
-      - proto_path: google/iam/v2
-  - api_shortname: iamcredentials
-    library_type: GAPIC_AUTO
-    GAPICs:
-      - proto_path: google/iam/credentials/v1
 
+  - api_shortname: alloydb
+    name_pretty: AlloyDB
+    product_documentation: https://cloud.google.com/alloydb/
+    api_description: AlloyDB is a fully managed, PostgreSQL-compatible database service
+      with industry-leading performance, availability, and scale.
+    rest_documentation: https://cloud.google.com/alloydb/docs/reference/rest
+    GAPICs:
+    - proto_path: google/cloud/alloydb/v1
+    - proto_path: google/cloud/alloydb/v1alpha
+    - proto_path: google/cloud/alloydb/v1beta
+
+  - api_shortname: alloydb
+    name_pretty: AlloyDB connectors
+    product_documentation: https://cloud.google.com/alloydb/docs
+    api_description: AlloyDB is a fully-managed, PostgreSQL-compatible database for
+      demanding transactional workloads. It provides enterprise-grade performance and
+      availability while maintaining 100% compatibility with open-source PostgreSQL.
+    library_name: alloydb-connectors
+    rest_documentation: https://cloud.google.com/alloydb/docs/reference/rest
+    GAPICs:
+    - proto_path: google/cloud/alloydb/connectors/v1
+    - proto_path: google/cloud/alloydb/connectors/v1alpha
+    - proto_path: google/cloud/alloydb/connectors/v1beta

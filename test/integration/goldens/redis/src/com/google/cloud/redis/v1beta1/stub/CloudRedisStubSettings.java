@@ -382,7 +382,6 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
     return defaultGrpcTransportProviderBuilder().build();
   }
 
-  @BetaApi("The surface for customizing headers is not stable yet and may change in the future.")
   public static ApiClientHeaderProvider.Builder defaultGrpcApiClientHeaderProviderBuilder() {
     return ApiClientHeaderProvider.newBuilder()
         .setGeneratedLibToken(
@@ -391,7 +390,6 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
             GaxGrpcProperties.getGrpcTokenName(), GaxGrpcProperties.getGrpcVersion());
   }
 
-  @BetaApi("The surface for customizing headers is not stable yet and may change in the future.")
   public static ApiClientHeaderProvider.Builder defaultHttpJsonApiClientHeaderProviderBuilder() {
     return ApiClientHeaderProvider.newBuilder()
         .setGeneratedLibToken(
@@ -909,8 +907,6 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
     }
 
     /** Returns the builder for the settings used for calls to createInstance. */
-    @BetaApi(
-        "The surface for use by generated code is not stable yet and may change in the future.")
     public OperationCallSettings.Builder<CreateInstanceRequest, Instance, Any>
         createInstanceOperationSettings() {
       return createInstanceOperationSettings;
@@ -922,8 +918,6 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
     }
 
     /** Returns the builder for the settings used for calls to updateInstance. */
-    @BetaApi(
-        "The surface for use by generated code is not stable yet and may change in the future.")
     public OperationCallSettings.Builder<UpdateInstanceRequest, Instance, Any>
         updateInstanceOperationSettings() {
       return updateInstanceOperationSettings;
@@ -935,8 +929,6 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
     }
 
     /** Returns the builder for the settings used for calls to upgradeInstance. */
-    @BetaApi(
-        "The surface for use by generated code is not stable yet and may change in the future.")
     public OperationCallSettings.Builder<UpgradeInstanceRequest, Instance, Any>
         upgradeInstanceOperationSettings() {
       return upgradeInstanceOperationSettings;
@@ -948,8 +940,6 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
     }
 
     /** Returns the builder for the settings used for calls to importInstance. */
-    @BetaApi(
-        "The surface for use by generated code is not stable yet and may change in the future.")
     public OperationCallSettings.Builder<ImportInstanceRequest, Instance, Any>
         importInstanceOperationSettings() {
       return importInstanceOperationSettings;
@@ -961,8 +951,6 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
     }
 
     /** Returns the builder for the settings used for calls to exportInstance. */
-    @BetaApi(
-        "The surface for use by generated code is not stable yet and may change in the future.")
     public OperationCallSettings.Builder<ExportInstanceRequest, Instance, Any>
         exportInstanceOperationSettings() {
       return exportInstanceOperationSettings;
@@ -975,8 +963,6 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
     }
 
     /** Returns the builder for the settings used for calls to failoverInstance. */
-    @BetaApi(
-        "The surface for use by generated code is not stable yet and may change in the future.")
     public OperationCallSettings.Builder<FailoverInstanceRequest, Instance, Any>
         failoverInstanceOperationSettings() {
       return failoverInstanceOperationSettings;
@@ -988,8 +974,6 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
     }
 
     /** Returns the builder for the settings used for calls to deleteInstance. */
-    @BetaApi(
-        "The surface for use by generated code is not stable yet and may change in the future.")
     public OperationCallSettings.Builder<DeleteInstanceRequest, Empty, Any>
         deleteInstanceOperationSettings() {
       return deleteInstanceOperationSettings;
@@ -1002,8 +986,6 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
     }
 
     /** Returns the builder for the settings used for calls to rescheduleMaintenance. */
-    @BetaApi(
-        "The surface for use by generated code is not stable yet and may change in the future.")
     public OperationCallSettings.Builder<RescheduleMaintenanceRequest, Instance, Any>
         rescheduleMaintenanceOperationSettings() {
       return rescheduleMaintenanceOperationSettings;
