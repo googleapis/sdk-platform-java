@@ -22,7 +22,6 @@ from pathlib import Path
 from lxml import etree
 from library_generation.model.bom_config import BomConfig
 from library_generation.model.generation_config import GenerationConfig
-from library_generation.model.generation_config import from_yaml
 from library_generation.model.library_config import LibraryConfig
 from typing import List
 from jinja2 import Environment, FileSystemLoader
@@ -141,6 +140,14 @@ def __handle_special_bom(
             is_import=False,
         )
     ]
+
+
+def __is_relevant_commit(paths: set[str], commit: Commit) -> bool:
+    for file in commit.stats.files.keys():
+        idx = file.rfind("/")
+        if file[:idx] in paths:
+            return True
+    return False
 
 
 def create_argument(arg_key: str, arg_container: object) -> List[str]:
@@ -496,15 +503,14 @@ def get_version_from(
                 return line.split(":")[index].strip()
 
 
-def get_file_paths(path_to_yaml: str) -> set[str]:
+def get_file_paths(config: GenerationConfig) -> set[str]:
     """
     Get versioned proto_path from configuration file, plus known paths of
     common protos.
 
-    :param path_to_yaml: the path to the configuration file
+    :param config:
     :return: versioned proto_path plus paths of common protos
     """
-    config = from_yaml(path_to_yaml)
     paths = set()
     for library in config.libraries:
         for gapic_config in library.gapic_configs:
@@ -513,17 +519,19 @@ def get_file_paths(path_to_yaml: str) -> set[str]:
 
 
 def get_commit_messages(
-    repo_url: str, new_committish: str, old_committish: str, paths: set[str]
+    repo_url: str, latest_commit: str, baseline_commit: str, paths: set[str]
 ) -> str:
     """
-    Get commit messages of a repository from new_committish to
-    old_committish. Only messages of a commit which affects files in a
-    pre-defined set will be added.
-    Note that old_committish should be an ancestor of new_committish.
+    Combine commit messages of a repository from latest_commit to
+    baseline_commit. Only commits which change files in a pre-defined
+    file paths will be considered.
+    Note that baseline_commit should be an ancestor of latest_commit.
 
     :param repo_url: the url of the repository.
-    :param new_committish:
-    :param old_committish:
+    :param latest_commit: the newest commit to be considered in
+    selecting commit message.
+    :param baseline_commit: the oldest commit to be considered in
+    selecting commit message. This commit should be an ancestor of
     :param paths: a set of file paths
     :return: commit messages.
     """
@@ -532,8 +540,8 @@ def get_commit_messages(
     os.mkdir(tmp_dir)
     messages = []
     repo = Repo.clone_from(repo_url, tmp_dir)
-    commit = repo.commit(new_committish)
-    while str(commit.hexsha) != old_committish:
+    commit = repo.commit(latest_commit)
+    while str(commit.hexsha) != baseline_commit:
         if __is_relevant_commit(paths, commit):
             messages.append(f"{commit.hexsha}\n{commit.message}")
         commit_parents = commit.parents
@@ -542,11 +550,3 @@ def get_commit_messages(
         commit = commit_parents[0]
     shutil.rmtree(tmp_dir, ignore_errors=True)
     return "\n\n".join(messages)
-
-
-def __is_relevant_commit(paths: set[str], commit: Commit) -> bool:
-    for file in commit.stats.files.keys():
-        idx = file.rfind("/")
-        if file[:idx] in paths:
-            return True
-    return False
