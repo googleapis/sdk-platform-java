@@ -142,7 +142,7 @@ def __handle_special_bom(
     ]
 
 
-def __is_relevant_commit(paths: set[str], commit: Commit) -> bool:
+def __is_qualified_commit(paths: set[str], commit: Commit) -> bool:
     for file in commit.stats.files.keys():
         idx = file.rfind("/")
         if file[:idx] in paths:
@@ -542,7 +542,7 @@ def get_commit_messages(
     repo = Repo.clone_from(repo_url, tmp_dir)
     commit = repo.commit(latest_commit)
     while str(commit.hexsha) != baseline_commit:
-        if __is_relevant_commit(paths, commit):
+        if __is_qualified_commit(paths, commit):
             messages.append(f"{commit.hexsha}\n{commit.message}")
         commit_parents = commit.parents
         if len(commit_parents) == 0:
