@@ -78,6 +78,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Predicate;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -85,6 +86,13 @@ import org.junit.Test;
 /**
  * Showcase Test to confirm that metrics are being collected and that the correct metrics are being
  * recorded. Utilizes an in-memory metric reader to collect the data.
+ *
+ * <p>Every test flows through the same way and runs through the same assertions. First, all th
+ * metrics are pulled in via {@link #getMetricDataList()} which are polled until all the metrics are
+ * collected. Then the test will attempt check that reader collected the correct number of data
+ * points in {@link #verifyPointDataSum(List, int)}. Then, check that the attributes to be collected
+ * via {@link #verifyStatusAttribute(List, List)}. Finally, check that the status for each attempt
+ * is correct.
  */
 public class ITOtelMetrics {
   private static final int DEFAULT_OPERATION_COUNT = 1;
@@ -93,7 +101,7 @@ public class ITOtelMetrics {
   private static final String ATTEMPT_LATENCY = "attempt_latency";
   private static final String OPERATION_LATENCY = "operation_latency";
   private static final int NUM_METRICS = 4;
-  private static final int NUM_COLLECTION_RETRY_ATTEMPTS = 10;
+  private static final int NUM_COLLECTION_FLUSH_ATTEMPTS = 10;
   private InMemoryMetricReader inMemoryMetricReader;
   private EchoClient grpcClient;
   private EchoClient httpClient;
@@ -165,7 +173,14 @@ public class ITOtelMetrics {
     httpClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
 
-  private void verifyMetricData(List<MetricData> metricDataList, int attemptCount) {
+  /**
+   * Iterate through all MetricData elements and check that the number of PointData values matches
+   * the expected value. A PointData element may have multiple values/ counts inside, so this
+   * extracts the value/ count from the PointData before summing.
+   *
+   * <p>The expected sum for an operation is `1`. Expected sum for an attempt may be 1+.
+   */
+  private void verifyPointDataSum(List<MetricData> metricDataList, int attemptCount) {
     for (MetricData metricData : metricDataList) {
       Data<?> data = metricData.getData();
       List<PointData> points = new ArrayList<>(data.getPoints());
@@ -211,22 +226,23 @@ public class ITOtelMetrics {
    * attempt.
    */
   private void verifyDefaultMetricsAttributes(
-      List<MetricData> metricDataList, Map<String, String> attributeMapping) {
+      List<MetricData> metricDataList, Map<String, String> defaultAttributeMapping) {
     Optional<MetricData> metricDataOptional =
         metricDataList.stream().filter(x -> x.getName().equals(OPERATION_COUNT)).findAny();
     Truth.assertThat(metricDataOptional.isPresent()).isTrue();
     MetricData operationCountMetricData = metricDataOptional.get();
 
     List<PointData> pointDataList = new ArrayList<>(operationCountMetricData.getData().getPoints());
+    // Operation Metrics should only have a 1 data point
     Truth.assertThat(pointDataList.size()).isEqualTo(1);
-    Attributes attributes = pointDataList.get(0).getAttributes();
-    Map<AttributeKey<?>, Object> attributesMap = attributes.asMap();
-    for (Map.Entry<String, String> entrySet : attributeMapping.entrySet()) {
+    Attributes recordedAttributes = pointDataList.get(0).getAttributes();
+    Map<AttributeKey<?>, Object> recordedAttributesMap = recordedAttributes.asMap();
+    for (Map.Entry<String, String> entrySet : defaultAttributeMapping.entrySet()) {
       String key = entrySet.getKey();
       String value = entrySet.getValue();
       AttributeKey<String> stringAttributeKey = AttributeKey.stringKey(key);
-      Truth.assertThat(attributesMap.containsKey(stringAttributeKey)).isTrue();
-      Truth.assertThat(attributesMap.get(stringAttributeKey)).isEqualTo(value);
+      Truth.assertThat(recordedAttributesMap.containsKey(stringAttributeKey)).isTrue();
+      Truth.assertThat(recordedAttributesMap.get(stringAttributeKey)).isEqualTo(value);
     }
   }
 
@@ -245,9 +261,10 @@ public class ITOtelMetrics {
     List<PointData> pointDataList = new ArrayList<>(attemptCountMetricData.getData().getPoints());
     Truth.assertThat(pointDataList.size()).isEqualTo(statusCountList.size());
 
-    // The data for attempt count can come in any order (i.e. the last data point recorded may
-    // not be the first element in the PointData list). Search for the expected StatusCode from
-    // the statusCountList and match with the data inside the pointDataList
+    // The data for attempt count may not be ordered (i.e. the last data point recorded may be the
+    // first element in the PointData list). Search for the expected StatusCode from the
+    // statusCountList
+    // and match with the data inside the pointDataList
     for (StatusCount statusCount : statusCountList) {
       Code statusCode = statusCount.getStatusCode();
       Predicate<PointData> pointDataPredicate =
@@ -266,16 +283,17 @@ public class ITOtelMetrics {
   /**
    * Attempts to retrieve the metrics from the InMemoryMetricsReader. Sleep every second for at most
    * 10s to try and retrieve all the metrics available. If it is unable to retrieve all the metrics,
-   * return an empty List.
+   * fail the test.
    */
   private List<MetricData> getMetricDataList() throws InterruptedException {
-    for (int i = 0; i < NUM_COLLECTION_RETRY_ATTEMPTS; i++) {
+    for (int i = 0; i < NUM_COLLECTION_FLUSH_ATTEMPTS; i++) {
       Thread.sleep(1000L);
-      ArrayList<MetricData> metricData = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
+      List<MetricData> metricData = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
       if (metricData.size() == NUM_METRICS) {
         return metricData;
       }
     }
+    Assert.fail("Unable to collect all the metrics required for the test");
     return new ArrayList<>();
   }
 
@@ -287,7 +305,7 @@ public class ITOtelMetrics {
     grpcClient.echo(echoRequest);
 
     List<MetricData> metricDataList = getMetricDataList();
-    verifyMetricData(metricDataList, attemptCount);
+    verifyPointDataSum(metricDataList, attemptCount);
 
     Map<String, String> attributeMapping =
         ImmutableMap.of(
@@ -310,7 +328,7 @@ public class ITOtelMetrics {
     httpClient.echo(echoRequest);
 
     List<MetricData> metricDataList = getMetricDataList();
-    verifyMetricData(metricDataList, attemptCount);
+    verifyPointDataSum(metricDataList, attemptCount);
 
     Map<String, String> attributeMapping =
         ImmutableMap.of(
@@ -340,7 +358,7 @@ public class ITOtelMetrics {
     blockResponseApiFuture.cancel(true);
 
     List<MetricData> metricDataList = getMetricDataList();
-    verifyMetricData(metricDataList, attemptCount);
+    verifyPointDataSum(metricDataList, attemptCount);
 
     Map<String, String> attributeMapping =
         ImmutableMap.of(
@@ -368,7 +386,7 @@ public class ITOtelMetrics {
     blockResponseApiFuture.cancel(true);
 
     List<MetricData> metricDataList = getMetricDataList();
-    verifyMetricData(metricDataList, attemptCount);
+    verifyPointDataSum(metricDataList, attemptCount);
 
     Map<String, String> attributeMapping =
         ImmutableMap.of(
@@ -397,7 +415,7 @@ public class ITOtelMetrics {
     assertThrows(ExecutionException.class, blockResponseApiFuture::get);
 
     List<MetricData> metricDataList = getMetricDataList();
-    verifyMetricData(metricDataList, attemptCount);
+    verifyPointDataSum(metricDataList, attemptCount);
 
     Map<String, String> attributeMapping =
         ImmutableMap.of(
@@ -427,7 +445,7 @@ public class ITOtelMetrics {
     assertThrows(ExecutionException.class, blockResponseApiFuture::get);
 
     List<MetricData> metricDataList = getMetricDataList();
-    verifyMetricData(metricDataList, attemptCount);
+    verifyPointDataSum(metricDataList, attemptCount);
 
     Map<String, String> attributeMapping =
         ImmutableMap.of(
@@ -481,7 +499,7 @@ public class ITOtelMetrics {
     assertThrows(UnavailableException.class, () -> grpcClient.echo(echoRequest));
 
     List<MetricData> metricDataList = getMetricDataList();
-    verifyMetricData(metricDataList, attemptCount);
+    verifyPointDataSum(metricDataList, attemptCount);
 
     Map<String, String> attributeMapping =
         ImmutableMap.of(
@@ -542,7 +560,7 @@ public class ITOtelMetrics {
     assertThrows(UnavailableException.class, () -> httpClient.echo(echoRequest));
 
     List<MetricData> metricDataList = getMetricDataList();
-    verifyMetricData(metricDataList, attemptCount);
+    verifyPointDataSum(metricDataList, attemptCount);
 
     Map<String, String> attributeMapping =
         ImmutableMap.of(
@@ -572,7 +590,7 @@ public class ITOtelMetrics {
     assertThrows(InvalidArgumentException.class, () -> grpcClient.block(blockRequest));
 
     List<MetricData> metricDataList = getMetricDataList();
-    verifyMetricData(metricDataList, attemptCount);
+    verifyPointDataSum(metricDataList, attemptCount);
 
     Map<String, String> attributeMapping =
         ImmutableMap.of(
@@ -600,7 +618,7 @@ public class ITOtelMetrics {
     assertThrows(InvalidArgumentException.class, () -> httpClient.block(blockRequest));
 
     List<MetricData> metricDataList = getMetricDataList();
-    verifyMetricData(metricDataList, attemptCount);
+    verifyPointDataSum(metricDataList, attemptCount);
 
     Map<String, String> attributeMapping =
         ImmutableMap.of(
@@ -660,7 +678,7 @@ public class ITOtelMetrics {
     grpcClient.block(blockRequest);
 
     List<MetricData> metricDataList = getMetricDataList();
-    verifyMetricData(metricDataList, attemptCount);
+    verifyPointDataSum(metricDataList, attemptCount);
 
     Map<String, String> attributeMapping =
         ImmutableMap.of(
@@ -722,7 +740,7 @@ public class ITOtelMetrics {
     grpcClient.block(blockRequest);
 
     List<MetricData> metricDataList = getMetricDataList();
-    verifyMetricData(metricDataList, attemptCount);
+    verifyPointDataSum(metricDataList, attemptCount);
 
     Map<String, String> attributeMapping =
         ImmutableMap.of(
@@ -731,6 +749,7 @@ public class ITOtelMetrics {
             MetricsTracer.LANGUAGE_ATTRIBUTE,
             MetricsTracer.DEFAULT_LANGUAGE);
     verifyDefaultMetricsAttributes(metricDataList, attributeMapping);
+
     httpClient.close();
     httpClient.awaitTermination(TestClientInitializer.AWAIT_TERMINATION_SECONDS, TimeUnit.SECONDS);
   }
