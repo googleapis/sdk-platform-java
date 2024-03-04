@@ -180,7 +180,7 @@ public class Parser {
             transport);
 
     if (services.isEmpty()) {
-      LOGGER.warning("No services found to generate");
+      LOGGER.warning("No services found to generate. This will produce an empty generated srcjar");
       return GapicContext.empty();
     }
 
