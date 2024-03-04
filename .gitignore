@@ -25,6 +25,7 @@ target/
 **/output/
 **/googleapis
 library_generation/test/**/golden*/
-library_generation/test/resources/test_repo_level_postprocess/
+library_generation/test/resources/test_monorepo_postprocessing/
 **/*egg-info/
 **/build/
+**/dist/

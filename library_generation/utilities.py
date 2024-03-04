@@ -224,16 +224,6 @@ def remove_version_from(proto_path: str) -> str:
     return proto_path
 
 
-def check_monorepo(config: GenerationConfig) -> bool:
-    """
-    Check whether to generate a monorepo according to the
-    generation config.
-    :param config: the generation configuration
-    :return: True if it's to generate a monorepo
-    """
-    return len(config.libraries) > 1
-
-
 def prepare_repo(
     gen_config: GenerationConfig,
     library_config: List[LibraryConfig],
@@ -256,7 +246,6 @@ def prepare_repo(
     output_folder = sh_util("get_output_folder")
     print(f"output_folder: {output_folder}")
     os.makedirs(output_folder, exist_ok=True)
-    is_monorepo = check_monorepo(gen_config)
     libraries = {}
     for library in library_config:
         library_name = (
@@ -264,7 +253,9 @@ def prepare_repo(
             if library.library_name
             else f"{language}-{library.api_shortname}"
         )
-        library_path = f"{repo_path}/{library_name}" if is_monorepo else f"{repo_path}"
+        library_path = (
+            f"{repo_path}/{library_name}" if gen_config.is_monorepo else f"{repo_path}"
+        )
         # use absolute path because docker requires absolute path
         # in volume name.
         absolute_library_path = str(Path(library_path).resolve())
@@ -331,7 +322,6 @@ def generate_prerequisite_files(
     transport: str,
     library_path: str,
     language: str = "java",
-    is_monorepo: bool = True,
 ) -> None:
     """
     Generate prerequisite files for a library.
@@ -344,7 +334,6 @@ def generate_prerequisite_files(
     :param transport: transport supported by the library
     :param library_path: the path to which the generated file goes
     :param language: programming language of the library
-    :param is_monorepo: whether the library is in a monorepo
     :return: None
     """
     cloud_prefix = "cloud-" if library.cloud_api else ""
@@ -356,7 +345,9 @@ def generate_prerequisite_files(
     )
     distribution_name_short = re.split(r"[:/]", distribution_name)[-1]
     repo = (
-        "googleapis/google-cloud-java" if is_monorepo else f"{language}-{library_name}"
+        "googleapis/google-cloud-java"
+        if config.is_monorepo
+        else f"googleapis/{language}-{library_name}"
     )
     api_id = (
         library.api_id if library.api_id else f"{library.api_shortname}.googleapis.com"
@@ -407,6 +398,8 @@ def generate_prerequisite_files(
         repo_metadata["rest_documentation"] = library.rest_documentation
     if library.rpc_documentation:
         repo_metadata["rpc_documentation"] = library.rpc_documentation
+    if library.extra_versioned_modules:
+        repo_metadata["extra_versioned_modules"] = library.extra_versioned_modules
 
     # generate .repo-meta.json
     json_file = ".repo-metadata.json"
@@ -417,11 +410,16 @@ def generate_prerequisite_files(
             json.dump(repo_metadata, fp, indent=2)
 
     # generate .OwlBot.yaml
-    yaml_file = ".OwlBot.yaml"
-    if not os.path.exists(f"{library_path}/{yaml_file}"):
+    owlbot_yaml_file = ".OwlBot.yaml"
+    path_to_owlbot_yaml_file = (
+        f"{library_path}/{owlbot_yaml_file}"
+        if config.is_monorepo
+        else f"{library_path}/.github/{owlbot_yaml_file}"
+    )
+    if not os.path.exists(path_to_owlbot_yaml_file):
         __render(
             template_name="owlbot.yaml.monorepo.j2",
-            output_name=f"{library_path}/{yaml_file}",
+            output_name=path_to_owlbot_yaml_file,
             artifact_name=distribution_name_short,
             proto_path=remove_version_from(proto_path),
             module_name=repo_metadata["repo_short"],
@@ -439,7 +437,7 @@ def generate_prerequisite_files(
         )
 
 
-def repo_level_post_process(
+def monorepo_postprocessing(
     repository_path: str,
     versions_file: str,
 ) -> None:

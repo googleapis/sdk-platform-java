@@ -46,6 +46,7 @@ class LibraryConfig:
         rpc_documentation: Optional[str] = None,
         cloud_api: Optional[bool] = True,
         requires_billing: Optional[bool] = True,
+        extra_versioned_modules: Optional[str] = None,
     ):
         self.api_shortname = api_shortname
         self.api_description = api_description
@@ -69,3 +70,4 @@ class LibraryConfig:
         self.rpc_documentation = rpc_documentation
         self.cloud_api = cloud_api
         self.requires_billing = requires_billing
+        self.extra_versioned_modules = extra_versioned_modules
