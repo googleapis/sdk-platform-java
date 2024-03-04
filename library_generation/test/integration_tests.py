@@ -17,6 +17,7 @@ import shutil
 import unittest
 from distutils.dir_util import copy_tree
 from distutils.file_util import copy_file
+from filecmp import cmp
 from filecmp import dircmp
 
 from git import Repo
@@ -55,15 +56,19 @@ class IntegrationTest(unittest.TestCase):
             repo_url=repo_url,
             baseline_commit=baseline_commit,
         )
+        description_file = f"{config_dir}/pr-description.txt"
+        if os.path.isfile(f"{description_file}"):
+            os.remove(f"{description_file}")
+        with open(f"{description_file}", "w+") as f:
+            f.write(description)
         # There are five commits from googleapis commitish to baseline commit,
         # inclusively. Only two of the commits contain changes in proto_path
         # that are in configuration. Therefore, only two commit messages should
         # be included in the PR description.
-        self.assertFalse("a17d4caf184b050d50cacf2b0d579ce72c31ce74" in description)
-        self.assertFalse("9063da8b4d45339db4e2d7d92a27c6708620e694" in description)
-        self.assertTrue("7a9a855287b5042410c93e5a510f40efd4ce6cb1" in description)
-        self.assertTrue("c7fd8bd652ac690ca84f485014f70b52eef7cb9e" in description)
-        self.assertFalse("a17d4caf184b050d50cacf2b0d579ce72c31ce74" in description)
+        self.assertTrue(
+            cmp(f"{config_dir}/pr-description-golden.txt", f"{description_file}")
+        )
+        os.remove(f"{description_file}")
 
     def test_generate_repo(self):
         shutil.rmtree(f"{golden_dir}", ignore_errors=True)

@@ -1,0 +1,10 @@
+7a9a855287b5042410c93e5a510f40efd4ce6cb1
+feat: expose model_type in v1 processor, so that user can see the model_type after get or list processor version
+
+PiperOrigin-RevId: 603727585
+
+
+c7fd8bd652ac690ca84f485014f70b52eef7cb9e
+feat: add model_type in v1beta3 processor proto
+
+PiperOrigin-RevId: 603726122
