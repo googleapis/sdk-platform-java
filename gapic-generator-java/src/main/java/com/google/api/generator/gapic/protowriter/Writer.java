@@ -167,8 +167,12 @@ public class Writer {
     }
   }
 
-  private static String writePackageInfo(
+  @VisibleForTesting
+  static String writePackageInfo(
       GapicPackageInfo gapicPackageInfo, JavaWriterVisitor codeWriter, JarOutputStream jos) {
+    if (gapicPackageInfo.isEmpty()) {
+      return "";
+    }
     PackageInfoDefinition packageInfo = gapicPackageInfo.packageInfo();
     packageInfo.accept(codeWriter);
     String code = codeWriter.write();

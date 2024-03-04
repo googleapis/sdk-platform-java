@@ -15,23 +15,18 @@
 package com.google.api.generator;
 
 import com.google.api.generator.gapic.Generator;
-import com.google.api.generator.gapic.protoparser.NoServicesFoundException;
 import com.google.protobuf.ExtensionRegistry;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
 import java.io.IOException;
 
 public class Main {
+
   public static void main(String[] args) throws IOException {
     ExtensionRegistry registry = ExtensionRegistry.newInstance();
     ProtoRegistry.registerAllExtensions(registry);
     CodeGeneratorRequest request = CodeGeneratorRequest.parseFrom(System.in, registry);
-    try {
-      CodeGeneratorResponse response = Generator.generateGapic(request);
-      response.writeTo(System.out);
-    } catch (NoServicesFoundException ex) {
-      // If no services are found in the protos we will no-op
-      System.err.println("No services found to generate");
-    }
+    CodeGeneratorResponse response = Generator.generateGapic(request);
+    response.writeTo(System.out);
   }
 }

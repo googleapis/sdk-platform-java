@@ -4,6 +4,8 @@ import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 
+import com.google.api.generator.engine.writer.JavaWriterVisitor;
+import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.gapic.model.ReflectConfig;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
@@ -32,12 +34,15 @@ public class WriterTest {
 
   private JarOutputStream jarOutputStream;
 
+  private JavaWriterVisitor visitor;
+
   private File file;
 
   @Before
   public void createJarOutputStream() throws IOException {
     file = tempFolder.newFile("test.jar");
     jarOutputStream = new JarOutputStream(Files.newOutputStream(file.toPath()));
+    visitor = new JavaWriterVisitor();
   }
 
   @After
@@ -85,5 +90,14 @@ public class WriterTest {
         assertEquals("com.google.Class", config.getName());
       }
     }
+  }
+
+  @Test
+  public void writePackageInfo_emptyPackageInfo_writesEmptyString() throws IOException {
+    String result = Writer.writePackageInfo(GapicPackageInfo.empty(), visitor, jarOutputStream);
+    assertThat(result).isEmpty();
+    jarOutputStream.finish();
+    jarOutputStream.flush();
+    jarOutputStream.close();
   }
 }

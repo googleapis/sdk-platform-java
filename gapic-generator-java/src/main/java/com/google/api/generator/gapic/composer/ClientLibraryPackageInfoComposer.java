@@ -29,11 +29,15 @@ import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
-import com.google.api.generator.gapic.protoparser.NoServicesFoundException;
 import com.google.common.base.Strings;
+import java.util.logging.Logger;
 import javax.annotation.Generated;
 
 public class ClientLibraryPackageInfoComposer {
+
+  private static final Logger LOGGER =
+      Logger.getLogger(ClientLibraryPackageInfoComposer.class.getName());
+
   private static final String DIVIDER = "=======================";
 
   private static final String PACKAGE_INFO_DESCRIPTION =
@@ -45,7 +49,8 @@ public class ClientLibraryPackageInfoComposer {
 
   public static GapicPackageInfo generatePackageInfo(GapicContext context) {
     if (context.services().isEmpty()) {
-      throw new NoServicesFoundException("No services found to generate");
+      LOGGER.info("No services to generate");
+      return GapicPackageInfo.empty();
     }
     // Pick some service's package, as we assume they are all the same.
     String libraryPakkage = context.services().get(0).pakkage();

@@ -21,6 +21,7 @@ import com.google.gapic.metadata.GapicMetadata;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
@@ -59,6 +60,8 @@ public abstract class GapicContext {
   @Nullable
   public abstract com.google.api.Service serviceYamlProto();
 
+  public abstract boolean isEmpty();
+
   public boolean hasServiceYamlProto() {
     return serviceYamlProto() != null;
   }
@@ -84,11 +87,27 @@ public abstract class GapicContext {
     return new AutoValue_GapicContext.Builder()
         .setMixinServices(Collections.emptyList())
         .setGapicMetadataEnabled(false)
-        .setRestNumericEnumsEnabled(false);
+        .setRestNumericEnumsEnabled(false)
+        .setIsEmpty(false);
+  }
+
+  public static GapicContext empty() {
+    return builder()
+        .setServices(Collections.emptyList())
+        .setMessages(Collections.emptyMap())
+        .setServiceConfig(GapicServiceConfig.create(Optional.empty()))
+        .setResourceNames(Collections.emptyMap())
+        .setHelperResourceNames(Collections.emptySet())
+        .setTransport(Transport.GRPC)
+        .setIsEmpty(true)
+        .build();
   }
 
   @AutoValue.Builder
   public abstract static class Builder {
+
+    abstract Builder setIsEmpty(boolean isEmpty);
+
     public abstract Builder setMessages(Map<String, Message> messages);
 
     public abstract Builder setResourceNames(Map<String, ResourceName> resourceNames);

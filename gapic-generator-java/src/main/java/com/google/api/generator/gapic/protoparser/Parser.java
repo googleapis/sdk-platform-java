@@ -83,10 +83,13 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Parser {
+
+  private static final Logger LOGGER = Logger.getLogger(Parser.class.getName());
   private static final String COMMA = ",";
   private static final String COLON = ":";
   private static final String DEFAULT_PORT = "443";
@@ -110,12 +113,13 @@ public class Parser {
   protected static final SourceCodeInfoParser SOURCE_CODE_INFO_PARSER = new SourceCodeInfoParser();
 
   static class GapicParserException extends RuntimeException {
+
     public GapicParserException(String errorMessage) {
       super(errorMessage);
     }
   }
 
-  public static GapicContext parse(CodeGeneratorRequest request) throws NoServicesFoundException {
+  public static GapicContext parse(CodeGeneratorRequest request) {
     Optional<String> gapicYamlConfigPathOpt =
         PluginArgumentParser.parseGapicYamlConfigPath(request);
     Optional<List<GapicBatchingSettings>> batchingSettingsOpt =
@@ -176,7 +180,8 @@ public class Parser {
             transport);
 
     if (services.isEmpty()) {
-      throw new NoServicesFoundException();
+      LOGGER.warning("No services found to generate");
+      return GapicContext.empty();
     }
 
     // TODO(vam-google): Figure out whether we should keep this allowlist or bring

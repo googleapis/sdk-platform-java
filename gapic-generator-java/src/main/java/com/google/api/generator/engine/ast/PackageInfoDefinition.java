@@ -24,6 +24,8 @@ import java.util.List;
 public abstract class PackageInfoDefinition implements AstNode {
   public abstract String pakkage();
 
+  public abstract boolean isEmpty();
+
   public abstract ImmutableList<CommentStatement> fileHeader();
 
   public abstract ImmutableList<CommentStatement> headerCommentStatements();
@@ -39,14 +41,21 @@ public abstract class PackageInfoDefinition implements AstNode {
 
   public static Builder builder() {
     return new AutoValue_PackageInfoDefinition.Builder()
+        .setIsEmpty(false)
         .setFileHeader(Collections.emptyList())
         .setHeaderCommentStatements(Collections.emptyList())
         .setAnnotations(Collections.emptyList());
   }
 
+  public static PackageInfoDefinition empty() {
+    return builder().setPakkage("").setIsEmpty(true).build();
+  }
+
   @AutoValue.Builder
   public abstract static class Builder {
     public abstract Builder setPakkage(String pakkage);
+
+    abstract Builder setIsEmpty(boolean isEmpty);
 
     public Builder setFileHeader(CommentStatement... headerComments) {
       return setFileHeader(Arrays.asList(headerComments));

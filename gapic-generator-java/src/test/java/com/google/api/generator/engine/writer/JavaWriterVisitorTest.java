@@ -2908,6 +2908,13 @@ public class JavaWriterVisitorTest {
         writerVisitor.write());
   }
 
+  @Test
+  public void writeEmptyPackageInfoDefinition() {
+    PackageInfoDefinition definition = PackageInfoDefinition.empty();
+    definition.accept(writerVisitor);
+    assertEquals("", writerVisitor.write());
+  }
+
   /** =============================== GOLDEN TESTS =============================== */
   @Test
   public void writeSGrpcServiceClientWithNestedClassImport() {
