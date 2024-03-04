@@ -47,6 +47,7 @@ import javax.annotation.Nullable;
 @InternalApi
 @AutoValue
 public abstract class EndpointContext {
+  private static final String GOOGLE_CLOUD_UNIVERSE_DOMAIN = "GOOGLE_CLOUD_UNIVERSE_DOMAIN";
   private static final String INVALID_UNIVERSE_DOMAIN_ERROR_TEMPLATE =
       "The configured universe domain (%s) does not match the universe domain found in the credentials (%s). If you haven't configured the universe domain explicitly, `googleapis.com` is the default.";
   public static final String UNABLE_TO_RETRIEVE_CREDENTIALS_ERROR_MESSAGE =
@@ -201,20 +202,27 @@ public abstract class EndpointContext {
     abstract EndpointContext autoBuild();
 
     private String determineUniverseDomain() {
+      String universeDomain = universeDomain();
       if (usingGDCH()) {
         // GDC-H has no concept of Universe Domain. User should not set a custom value
-        if (universeDomain() != null) {
+        if (universeDomain != null) {
           throw new IllegalArgumentException(
               "Universe domain configuration is incompatible with GDC-H");
         }
         return Credentials.GOOGLE_DEFAULT_UNIVERSE;
       }
       // Check for "" (empty string)
-      if (universeDomain() != null && universeDomain().isEmpty()) {
+      if (universeDomain != null && universeDomain.isEmpty()) {
         throw new IllegalArgumentException("The universe domain value cannot be empty.");
       }
-      // Override with user set universe domain if provided
-      return universeDomain() != null ? universeDomain() : Credentials.GOOGLE_DEFAULT_UNIVERSE;
+      // If the universe domain wasn't configured explicitly in the settings, check the
+      // environment variable for the value
+      if (universeDomain == null) {
+        universeDomain = System.getenv(GOOGLE_CLOUD_UNIVERSE_DOMAIN);
+      }
+      // If the universe domain is configured by the user, the universe domain will either be
+      // from the settings or from the env var. The value from ClientSettings has priority.
+      return universeDomain != null ? universeDomain : Credentials.GOOGLE_DEFAULT_UNIVERSE;
     }
 
     /** Determines the fully resolved endpoint and universe domain values */
