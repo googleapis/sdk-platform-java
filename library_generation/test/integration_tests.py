@@ -23,7 +23,6 @@ from filecmp import dircmp
 from git import Repo
 from pathlib import Path
 from typing import List
-from typing import Dict
 
 from library_generation.generate_pr_description import generate_pr_descriptions
 from library_generation.generate_repo import generate_from_yaml
@@ -175,7 +174,7 @@ class IntegrationTest(unittest.TestCase):
             repo = Repo(dest)
         else:
             dest = default_dest
-            repo_dest = f"{golden_dir}/{repo}"
+            shutil.rmtree(dest, ignore_errors=True)
             repo_url = f"{repo_prefix}/{repo}"
             print(f"Cloning repository {repo_url}")
             repo = Repo.clone_from(repo_url, dest)
@@ -194,6 +193,8 @@ class IntegrationTest(unittest.TestCase):
     def __get_config_files(cls, path: str) -> List[tuple[str, str]]:
         config_files = []
         for sub_dir in Path(path).resolve().iterdir():
+            if sub_dir.is_file():
+                continue
             repo = sub_dir.name
             if repo == "golden":
                 continue
