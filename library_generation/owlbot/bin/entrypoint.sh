@@ -28,6 +28,7 @@ scripts_root=$1
 versions_file=$2
 configuration_yaml=$3
 
+
 # This script can be used to process HW libraries and monorepo
 # (google-cloud-java) libraries, which require a slightly different treatment
 # monorepo folders have an .OwlBot.yaml file in the module folder (e.g.
@@ -65,7 +66,7 @@ echo "...done"
 
 # write or restore pom.xml files
 echo "Generating missing pom.xml..."
-python3 "${scripts_root}/owlbot/src/fix-poms.py" "${versions_file}" "true"
+python3 "${scripts_root}/owlbot/src/fix-poms.py" "${versions_file}" "${monorepo}"
 echo "...done"
 
 # write or restore clirr-ignored-differences.xml
@@ -78,16 +79,7 @@ echo "Fixing missing license headers..."
 python3 "${scripts_root}/owlbot/src/fix-license-headers.py"
 echo "...done"
 
-# TODO: re-enable this once we resolve thrashing
-# restore license headers years
-# echo "Restoring copyright years..."
-# /owlbot/bin/restore_license_headers.sh
-# echo "...done"
-
 # ensure formatting on all .java files in the repository
 echo "Reformatting source..."
 mvn fmt:format -V --batch-mode --no-transfer-progress
 echo "...done"
-
-
-
