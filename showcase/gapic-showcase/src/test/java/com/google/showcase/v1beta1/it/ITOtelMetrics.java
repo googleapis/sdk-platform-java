@@ -76,6 +76,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Predicate;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -91,10 +92,15 @@ public class ITOtelMetrics {
   private static final String OPERATION_COUNT = "operation_count";
   private static final String ATTEMPT_LATENCY = "attempt_latency";
   private static final String OPERATION_LATENCY = "operation_latency";
+  private static final int NUM_METRICS = 4;
+  private static final int NUM_COLLECTION_RETRY_ATTEMPTS = 10;
   private InMemoryMetricReader inMemoryMetricReader;
   private EchoClient grpcClient;
   private EchoClient httpClient;
 
+  /**
+   * Internal class in the Otel Showcases test used to assert that number of status codes recorded.
+   */
   private static class StatusCount {
     private final Code statusCode;
     private final int count;
@@ -197,7 +203,7 @@ public class ITOtelMetrics {
   /**
    * Extract the attributes from MetricData and ensures that default attributes are recorded. Uses
    * the `OPERATION_COUNT` MetricData to test the attributes. The `OPERATION_COUNT` is only recorded
-   * once and should only have element of PointData.
+   * once and should only have one element of PointData.
    *
    * <p>Although the Status attribute is recorded by default on every operation, this helper method
    * does not verify it. This is because every individual attempt (retry) may have a different
@@ -238,23 +244,49 @@ public class ITOtelMetrics {
 
     List<PointData> pointDataList = new ArrayList<>(attemptCountMetricData.getData().getPoints());
     Truth.assertThat(pointDataList.size()).isEqualTo(statusCountList.size());
-    for (int i = 0; i < pointDataList.size(); i++) {
-      LongPointData longPointData = (LongPointData) pointDataList.get(i);
-      Truth.assertThat(longPointData.getValue()).isEqualTo(statusCountList.get(i).getCount());
-      Attributes attributes = longPointData.getAttributes();
-      Truth.assertThat(attributes.get(AttributeKey.stringKey(MetricsTracer.STATUS_ATTRIBUTE)))
-          .isEqualTo(statusCountList.get(i).getStatusCode().toString());
+
+    // The data for attempt count can come in any order (i.e. the last data point recorded may
+    // not be the first element in the PointData list). Search for the expected StatusCode from
+    // the statusCountList and match with the data inside the pointDataList
+    for (StatusCount statusCount : statusCountList) {
+      Code statusCode = statusCount.getStatusCode();
+      Predicate<PointData> pointDataPredicate =
+          x ->
+              x.getAttributes()
+                  .get(AttributeKey.stringKey(MetricsTracer.STATUS_ATTRIBUTE))
+                  .equals(statusCode.toString());
+      Optional<PointData> pointDataOptional =
+          pointDataList.stream().filter(pointDataPredicate).findFirst();
+      Truth.assertThat(pointDataOptional.isPresent()).isTrue();
+      LongPointData longPointData = (LongPointData) pointDataOptional.get();
+      Truth.assertThat(longPointData.getValue()).isEqualTo(statusCount.getCount());
     }
   }
 
+  /**
+   * Attempts to retrieve the metrics from the InMemoryMetricsReader. Sleep every second for at most
+   * 10s to try and retrieve all the metrics available. If it is unable to retrieve all the metrics,
+   * return an empty List.
+   */
+  private List<MetricData> getMetricDataList() throws InterruptedException {
+    for (int i = 0; i < NUM_COLLECTION_RETRY_ATTEMPTS; i++) {
+      Thread.sleep(1000L);
+      ArrayList<MetricData> metricData = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
+      if (metricData.size() == NUM_METRICS) {
+        return metricData;
+      }
+    }
+    return new ArrayList<>();
+  }
+
   @Test
-  public void testGrpc_operationSucceeded_recordsMetrics() {
+  public void testGrpc_operationSucceeded_recordsMetrics() throws InterruptedException {
     int attemptCount = 1;
     EchoRequest echoRequest =
         EchoRequest.newBuilder().setContent("test_grpc_operation_succeeded").build();
     grpcClient.echo(echoRequest);
 
-    List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
+    List<MetricData> metricDataList = getMetricDataList();
     verifyMetricData(metricDataList, attemptCount);
 
     Map<String, String> attributeMapping =
@@ -271,13 +303,13 @@ public class ITOtelMetrics {
 
   @Ignore("https://github.com/googleapis/sdk-platform-java/issues/2503")
   @Test
-  public void testHttpJson_operationSucceeded_recordsMetrics() {
+  public void testHttpJson_operationSucceeded_recordsMetrics() throws InterruptedException {
     int attemptCount = 1;
     EchoRequest echoRequest =
         EchoRequest.newBuilder().setContent("test_http_operation_succeeded").build();
     httpClient.echo(echoRequest);
 
-    List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
+    List<MetricData> metricDataList = getMetricDataList();
     verifyMetricData(metricDataList, attemptCount);
 
     Map<String, String> attributeMapping =
@@ -296,15 +328,18 @@ public class ITOtelMetrics {
   public void testGrpc_operationCancelled_recordsMetrics() throws Exception {
     int attemptCount = 1;
     BlockRequest blockRequest =
-        BlockRequest.newBuilder().setResponseDelay(Duration.newBuilder().setSeconds(5)).build();
+        BlockRequest.newBuilder()
+            .setResponseDelay(Duration.newBuilder().setSeconds(5))
+            .setSuccess(BlockResponse.newBuilder().setContent("grpc_operationCancelled"))
+            .build();
 
     UnaryCallable<BlockRequest, BlockResponse> blockCallable = grpcClient.blockCallable();
     ApiFuture<BlockResponse> blockResponseApiFuture = blockCallable.futureCall(blockRequest);
-    // Sleep 3s before cancelling to let the request go through
+    // Sleep 1s before cancelling to let the request go through
     Thread.sleep(1000);
     blockResponseApiFuture.cancel(true);
 
-    List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
+    List<MetricData> metricDataList = getMetricDataList();
     verifyMetricData(metricDataList, attemptCount);
 
     Map<String, String> attributeMapping =
@@ -328,11 +363,11 @@ public class ITOtelMetrics {
 
     UnaryCallable<BlockRequest, BlockResponse> blockCallable = httpClient.blockCallable();
     ApiFuture<BlockResponse> blockResponseApiFuture = blockCallable.futureCall(blockRequest);
-    // Sleep 3s before cancelling to let the request go through
+    // Sleep 1s before cancelling to let the request go through
     Thread.sleep(1000);
     blockResponseApiFuture.cancel(true);
 
-    List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
+    List<MetricData> metricDataList = getMetricDataList();
     verifyMetricData(metricDataList, attemptCount);
 
     Map<String, String> attributeMapping =
@@ -348,7 +383,7 @@ public class ITOtelMetrics {
   }
 
   @Test
-  public void testGrpc_operationFailed_recordsMetrics() {
+  public void testGrpc_operationFailed_recordsMetrics() throws InterruptedException {
     int attemptCount = 1;
     Code statusCode = Code.INVALID_ARGUMENT;
     BlockRequest blockRequest =
@@ -361,7 +396,7 @@ public class ITOtelMetrics {
     ApiFuture<BlockResponse> blockResponseApiFuture = blockCallable.futureCall(blockRequest);
     assertThrows(ExecutionException.class, blockResponseApiFuture::get);
 
-    List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
+    List<MetricData> metricDataList = getMetricDataList();
     verifyMetricData(metricDataList, attemptCount);
 
     Map<String, String> attributeMapping =
@@ -378,7 +413,7 @@ public class ITOtelMetrics {
 
   @Ignore("https://github.com/googleapis/sdk-platform-java/issues/2503")
   @Test
-  public void testHttpJson_operationFailed_recordsMetrics() {
+  public void testHttpJson_operationFailed_recordsMetrics() throws InterruptedException {
     int attemptCount = 1;
     Code statusCode = Code.INVALID_ARGUMENT;
     BlockRequest blockRequest =
@@ -391,7 +426,7 @@ public class ITOtelMetrics {
     ApiFuture<BlockResponse> blockResponseApiFuture = blockCallable.futureCall(blockRequest);
     assertThrows(ExecutionException.class, blockResponseApiFuture::get);
 
-    List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
+    List<MetricData> metricDataList = getMetricDataList();
     verifyMetricData(metricDataList, attemptCount);
 
     Map<String, String> attributeMapping =
@@ -445,7 +480,7 @@ public class ITOtelMetrics {
 
     assertThrows(UnavailableException.class, () -> grpcClient.echo(echoRequest));
 
-    List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
+    List<MetricData> metricDataList = getMetricDataList();
     verifyMetricData(metricDataList, attemptCount);
 
     Map<String, String> attributeMapping =
@@ -506,7 +541,7 @@ public class ITOtelMetrics {
 
     assertThrows(UnavailableException.class, () -> httpClient.echo(echoRequest));
 
-    List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
+    List<MetricData> metricDataList = getMetricDataList();
     verifyMetricData(metricDataList, attemptCount);
 
     Map<String, String> attributeMapping =
@@ -525,7 +560,7 @@ public class ITOtelMetrics {
   }
 
   @Test
-  public void testGrpc_attemptPermanentFailure_recordsMetrics() {
+  public void testGrpc_attemptPermanentFailure_recordsMetrics() throws InterruptedException {
     int attemptCount = 1;
     Code statusCode = Code.INVALID_ARGUMENT;
     BlockRequest blockRequest =
@@ -536,7 +571,7 @@ public class ITOtelMetrics {
 
     assertThrows(InvalidArgumentException.class, () -> grpcClient.block(blockRequest));
 
-    List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
+    List<MetricData> metricDataList = getMetricDataList();
     verifyMetricData(metricDataList, attemptCount);
 
     Map<String, String> attributeMapping =
@@ -553,7 +588,7 @@ public class ITOtelMetrics {
 
   @Ignore("https://github.com/googleapis/sdk-platform-java/issues/2503")
   @Test
-  public void testHttpJson_attemptPermanentFailure_recordsMetrics() {
+  public void testHttpJson_attemptPermanentFailure_recordsMetrics() throws InterruptedException {
     int attemptCount = 1;
     Code statusCode = Code.INVALID_ARGUMENT;
     BlockRequest blockRequest =
@@ -564,7 +599,7 @@ public class ITOtelMetrics {
 
     assertThrows(InvalidArgumentException.class, () -> httpClient.block(blockRequest));
 
-    List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
+    List<MetricData> metricDataList = getMetricDataList();
     verifyMetricData(metricDataList, attemptCount);
 
     Map<String, String> attributeMapping =
@@ -582,6 +617,11 @@ public class ITOtelMetrics {
   @Test
   public void testGrpc_multipleFailedAttempts_successfulOperation() throws Exception {
     int attemptCount = 3;
+    // Disable Jitter on this test to try and ensure that the there are 3 attempts made
+    // for test. The first two calls should result in a DEADLINE_EXCEEDED exception as
+    // 0.5s and 1s are too short for the 1s blocking call (1s still requires time for
+    // the showcase server to respond back to the client). The 3rd and final call (2s)
+    // should result in an OK Status Code.
     RetrySettings retrySettings =
         RetrySettings.newBuilder()
             .setInitialRpcTimeout(org.threeten.bp.Duration.ofMillis(500L))
@@ -619,7 +659,7 @@ public class ITOtelMetrics {
 
     grpcClient.block(blockRequest);
 
-    List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
+    List<MetricData> metricDataList = getMetricDataList();
     verifyMetricData(metricDataList, attemptCount);
 
     Map<String, String> attributeMapping =
@@ -681,7 +721,7 @@ public class ITOtelMetrics {
 
     grpcClient.block(blockRequest);
 
-    List<MetricData> metricDataList = new ArrayList<>(inMemoryMetricReader.collectAllMetrics());
+    List<MetricData> metricDataList = getMetricDataList();
     verifyMetricData(metricDataList, attemptCount);
 
     Map<String, String> attributeMapping =
