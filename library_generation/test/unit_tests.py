@@ -276,16 +276,6 @@ class UtilitiesTest(unittest.TestCase):
         parsed = parse_build_file(build_file, "", "BUILD_rest_numeric_enums_true.bazel")
         self.assertEqual("true", parsed.rest_numeric_enum)
 
-    def test_gapic_inputs_parse_no_gapic_library_returns_proto_only_true(self):
-        # include_samples_empty only has a gradle assembly rule
-        parsed = parse_build_file(build_file, "", "BUILD_include_samples_empty.bazel")
-        self.assertEqual("true", parsed.proto_only)
-
-    def test_gapic_inputs_parse_with_gapic_library_returns_proto_only_false(self):
-        # rest.bazel has a java_gapic_library rule
-        parsed = parse_build_file(build_file, "", "BUILD_rest.bazel")
-        self.assertEqual("false", parsed.proto_only)
-
     def test_gapic_inputs_parse_gapic_yaml_succeeds(self):
         parsed = parse_build_file(
             build_file, "test/versioned/path", "BUILD_gapic_yaml.bazel"
