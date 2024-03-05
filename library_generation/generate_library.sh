@@ -200,12 +200,12 @@ fi
 "--java_gapic_opt=$(get_gapic_opts "${transport}" "${rest_numeric_enums}" "${gapic_yaml}" "${service_config}" "${service_yaml}")" \
 ${proto_files} ${gapic_additional_protos}
 
+unzip -o -q "${temp_destination_path}/java_gapic_srcjar_raw.srcjar.zip" -d "${temp_destination_path}"
 # check if the generator produced any files into the srcjar
 did_generate_gapic="true"
-zipinfo -t "${temp_destination_path}/java_gapic_srcjar_raw.srcjar.zip" || did_generate_gapic="false"
+zipinfo -t "${temp_destination_path}/temp-codegen.srcjar" || did_generate_gapic="false"
 if [[ "${did_generate_gapic}" == "true" ]];
 then
-  unzip -o -q "${temp_destination_path}/java_gapic_srcjar_raw.srcjar.zip" -d "${temp_destination_path}"
   # Sync'\''d to the output file name in Writer.java.
   unzip -o -q "${temp_destination_path}/temp-codegen.srcjar" -d "${temp_destination_path}/java_gapic_srcjar"
   # Resource name source files.
