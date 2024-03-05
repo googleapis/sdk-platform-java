@@ -30,6 +30,7 @@
 package com.google.api.gax.tracing;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertThrows;
 import static org.mockito.ArgumentMatchers.anyDouble;
 import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.verify;
@@ -41,7 +42,6 @@ import com.google.api.gax.rpc.NotFoundException;
 import com.google.api.gax.rpc.StatusCode.Code;
 import com.google.api.gax.rpc.testing.FakeStatusCode;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.truth.Truth;
 import java.util.Map;
 import org.junit.Before;
 import org.junit.Rule;
@@ -56,6 +56,7 @@ import org.threeten.bp.Duration;
 
 @RunWith(JUnit4.class)
 public class MetricsTracerTest {
+  private static final String DEFAULT_METHOD_NAME = "fake_service.fake_method";
   // stricter way of testing for early detection of unused stubs and argument mismatches
   @Rule
   public final MockitoRule mockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
@@ -69,16 +70,21 @@ public class MetricsTracerTest {
         new MetricsTracer(MethodName.of("fake_service", "fake_method"), metricsRecorder);
   }
 
+  private ImmutableMap<String, String> getAttributes(Code statusCode) {
+    return ImmutableMap.of(
+        "status",
+        statusCode.toString(),
+        "method_name",
+        DEFAULT_METHOD_NAME,
+        "language",
+        MetricsTracer.DEFAULT_LANGUAGE);
+  }
+
   @Test
   public void testOperationSucceeded_recordsAttributes() {
-
     metricsTracer.operationSucceeded();
 
-    Map<String, String> attributes =
-        ImmutableMap.of(
-            "status", "OK",
-            "method_name", "fake_service.fake_method",
-            "language", "Java");
+    Map<String, String> attributes = getAttributes(Code.OK);
 
     verify(metricsRecorder).recordOperationCount(1, attributes);
     verify(metricsRecorder).recordOperationLatency(anyDouble(), eq(attributes));
@@ -88,17 +94,12 @@ public class MetricsTracerTest {
 
   @Test
   public void testOperationFailed_recordsAttributes() {
-
     ApiException error0 =
         new NotFoundException(
             "invalid argument", null, new FakeStatusCode(Code.INVALID_ARGUMENT), false);
     metricsTracer.operationFailed(error0);
 
-    Map<String, String> attributes =
-        ImmutableMap.of(
-            "status", "INVALID_ARGUMENT",
-            "method_name", "fake_service.fake_method",
-            "language", "Java");
+    Map<String, String> attributes = getAttributes(Code.INVALID_ARGUMENT);
 
     verify(metricsRecorder).recordOperationCount(1, attributes);
     verify(metricsRecorder).recordOperationLatency(anyDouble(), eq(attributes));
@@ -108,14 +109,9 @@ public class MetricsTracerTest {
 
   @Test
   public void testOperationCancelled_recordsAttributes() {
-
     metricsTracer.operationCancelled();
 
-    Map<String, String> attributes =
-        ImmutableMap.of(
-            "status", "CANCELLED",
-            "method_name", "fake_service.fake_method",
-            "language", "Java");
+    Map<String, String> attributes = getAttributes(Code.CANCELLED);
 
     verify(metricsRecorder).recordOperationCount(1, attributes);
     verify(metricsRecorder).recordOperationLatency(anyDouble(), eq(attributes));
@@ -132,11 +128,7 @@ public class MetricsTracerTest {
     metricsTracer.attemptStarted(mockSuccessfulRequest, 0);
     metricsTracer.attemptSucceeded();
 
-    Map<String, String> attributes =
-        ImmutableMap.of(
-            "status", "OK",
-            "method_name", "fake_service.fake_method",
-            "language", "Java");
+    Map<String, String> attributes = getAttributes(Code.OK);
 
     verify(metricsRecorder).recordAttemptCount(1, attributes);
     verify(metricsRecorder).recordAttemptLatency(anyDouble(), eq(attributes));
@@ -156,11 +148,7 @@ public class MetricsTracerTest {
             "invalid argument", null, new FakeStatusCode(Code.INVALID_ARGUMENT), false);
     metricsTracer.attemptFailed(error0, Duration.ofMillis(2));
 
-    Map<String, String> attributes =
-        ImmutableMap.of(
-            "status", "INVALID_ARGUMENT",
-            "method_name", "fake_service.fake_method",
-            "language", "Java");
+    Map<String, String> attributes = getAttributes(Code.INVALID_ARGUMENT);
 
     verify(metricsRecorder).recordAttemptCount(1, attributes);
     verify(metricsRecorder).recordAttemptLatency(anyDouble(), eq(attributes));
@@ -176,11 +164,7 @@ public class MetricsTracerTest {
     metricsTracer.attemptStarted(mockCancelledRequest, 0);
     metricsTracer.attemptCancelled();
 
-    Map<String, String> attributes =
-        ImmutableMap.of(
-            "status", "CANCELLED",
-            "method_name", "fake_service.fake_method",
-            "language", "Java");
+    Map<String, String> attributes = getAttributes(Code.CANCELLED);
 
     verify(metricsRecorder).recordAttemptCount(1, attributes);
     verify(metricsRecorder).recordAttemptLatency(anyDouble(), eq(attributes));
@@ -199,11 +183,7 @@ public class MetricsTracerTest {
             "deadline exceeded", null, new FakeStatusCode(Code.DEADLINE_EXCEEDED), false);
     metricsTracer.attemptFailedRetriesExhausted(error0);
 
-    Map<String, String> attributes =
-        ImmutableMap.of(
-            "status", "DEADLINE_EXCEEDED",
-            "method_name", "fake_service.fake_method",
-            "language", "Java");
+    Map<String, String> attributes = getAttributes(Code.DEADLINE_EXCEEDED);
 
     verify(metricsRecorder).recordAttemptCount(1, attributes);
     verify(metricsRecorder).recordAttemptLatency(anyDouble(), eq(attributes));
@@ -213,7 +193,6 @@ public class MetricsTracerTest {
 
   @Test
   public void testAttemptPermanentFailure_recordsAttributes() {
-
     // initialize mock-request
     Object mockRequest = new Object();
     // Attempt #1
@@ -222,11 +201,7 @@ public class MetricsTracerTest {
         new NotFoundException("not found", null, new FakeStatusCode(Code.NOT_FOUND), false);
     metricsTracer.attemptFailedRetriesExhausted(error0);
 
-    Map<String, String> attributes =
-        ImmutableMap.of(
-            "status", "NOT_FOUND",
-            "method_name", "fake_service.fake_method",
-            "language", "Java");
+    Map<String, String> attributes = getAttributes(Code.NOT_FOUND);
 
     verify(metricsRecorder).recordAttemptCount(1, attributes);
     verify(metricsRecorder).recordAttemptLatency(anyDouble(), eq(attributes));
@@ -235,35 +210,42 @@ public class MetricsTracerTest {
   }
 
   @Test
-  public void testAddAttributes_recordsAttributes() {
+  public void testMultipleOperationCalls_throwsError() {
+    metricsTracer.operationSucceeded();
+    IllegalStateException exception1 =
+        assertThrows(IllegalStateException.class, () -> metricsTracer.operationCancelled());
+    assertThat(exception1.getMessage()).isEqualTo("Operation has already been completed");
+    IllegalStateException exception2 =
+        assertThrows(IllegalStateException.class, () -> metricsTracer.operationSucceeded());
+    assertThat(exception2.getMessage()).isEqualTo("Operation has already been completed");
+  }
 
+  @Test
+  public void testAddAttributes_recordsAttributes() {
     metricsTracer.addAttributes("FakeTableId", "12345");
-    Truth.assertThat(metricsTracer.getAttributes().get("FakeTableId").equals("12345"));
+    assertThat(metricsTracer.getAttributes().get("FakeTableId")).isEqualTo("12345");
   }
 
   @Test
   public void testExtractStatus_errorConversion_apiExceptions() {
-
     ApiException error =
         new ApiException("fake_error", null, new FakeStatusCode(Code.INVALID_ARGUMENT), false);
     String errorCode = metricsTracer.extractStatus(error);
-    assertThat(errorCode).isEqualTo("INVALID_ARGUMENT");
+    assertThat(errorCode).isEqualTo(Code.INVALID_ARGUMENT.toString());
   }
 
   @Test
   public void testExtractStatus_errorConversion_noError() {
-
     // test "OK", which corresponds to a "null" error.
     String successCode = metricsTracer.extractStatus(null);
-    assertThat(successCode).isEqualTo("OK");
+    assertThat(successCode).isEqualTo(Code.OK.toString());
   }
 
   @Test
   public void testExtractStatus_errorConversion_unknownException() {
-
     // test "UNKNOWN"
     Throwable unknownException = new RuntimeException();
     String errorCode2 = metricsTracer.extractStatus(unknownException);
-    assertThat(errorCode2).isEqualTo("UNKNOWN");
+    assertThat(errorCode2).isEqualTo(Code.UNKNOWN.toString());
   }
 }
