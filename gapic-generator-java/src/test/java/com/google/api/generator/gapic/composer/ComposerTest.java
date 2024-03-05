@@ -16,6 +16,7 @@ package com.google.api.generator.gapic.composer;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import com.google.api.generator.engine.ast.ClassDefinition;
@@ -37,6 +38,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import org.junit.Before;
 import org.junit.Test;
 
 public class ComposerTest {
@@ -54,6 +56,11 @@ public class ComposerTest {
               RegionTag.builder().setServiceName("serviceName").setRpcName("rpcName").build())
           .build();
   private List<Sample> ListofSamples = Arrays.asList(new Sample[] {sample});
+
+  @Before
+  public void initialSanityCheck() {
+    assertFalse(context.isEmpty());
+  }
 
   @Test
   public void gapicClass_addApacheLicense() {
@@ -159,6 +166,17 @@ public class ComposerTest {
       assertEquals("ApiShortName should be Vision", sample.regionTag().apiShortName(), "Vision");
       assertEquals("ApiVersion should be empty", sample.regionTag().apiVersion(), "");
     }
+  }
+
+  @Test
+  public void testEmptyGapicContext_succeeds() {
+    Exception unexpected = null;
+    try {
+      Composer.composeServiceClasses(GapicContext.empty());
+    } catch (Exception ex) {
+      unexpected = ex;
+    }
+    assertNull(unexpected);
   }
 
   private List<GapicClass> getTestClassListFromService(Service testService) {

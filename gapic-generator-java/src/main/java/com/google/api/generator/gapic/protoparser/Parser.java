@@ -1106,7 +1106,8 @@ public class Parser {
     return fileDescriptors;
   }
 
-  private static String parseServiceJavaPackage(CodeGeneratorRequest request) {
+  @VisibleForTesting
+  protected static String parseServiceJavaPackage(CodeGeneratorRequest request) {
     Map<String, Integer> javaPackageCount = new HashMap<>();
     Map<String, FileDescriptor> fileDescriptors = getFilesToGenerate(request);
     for (String fileToGenerate : request.getFileToGenerateList()) {
@@ -1139,13 +1140,17 @@ public class Parser {
       processedJavaPackageCount = javaPackageCount;
     }
 
-    String finalJavaPackage =
-        processedJavaPackageCount.entrySet().stream()
-            .max(Map.Entry.comparingByValue())
-            .get()
-            .getKey();
-    Preconditions.checkState(
-        !Strings.isNullOrEmpty(finalJavaPackage), "No service Java package found");
+    String finalJavaPackage = "";
+    if (!processedJavaPackageCount.isEmpty()) {
+      finalJavaPackage =
+          processedJavaPackageCount.entrySet().stream()
+              .max(Map.Entry.comparingByValue())
+              .get()
+              .getKey();
+    }
+    if (!Strings.isNullOrEmpty(finalJavaPackage)) {
+      LOGGER.warning("No service Java package found");
+    }
     return finalJavaPackage;
   }
 

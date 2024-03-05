@@ -29,6 +29,7 @@ import com.google.api.generator.engine.ast.Reference;
 import com.google.api.generator.engine.ast.TypeNode;
 import com.google.api.generator.engine.ast.VaporReference;
 import com.google.api.generator.gapic.model.Field;
+import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.Message;
 import com.google.api.generator.gapic.model.Method;
 import com.google.api.generator.gapic.model.MethodArgument;
@@ -42,6 +43,7 @@ import com.google.common.truth.Truth;
 import com.google.protobuf.Descriptors.FileDescriptor;
 import com.google.protobuf.Descriptors.MethodDescriptor;
 import com.google.protobuf.Descriptors.ServiceDescriptor;
+import com.google.protobuf.compiler.PluginProtos.CodeGeneratorRequest;
 import com.google.showcase.v1beta1.EchoOuterClass;
 import com.google.showcase.v1beta1.TestingOuterClass;
 import com.google.testgapic.v1beta1.LockerProto;
@@ -605,6 +607,17 @@ public class ParserTest {
         "MutateJob.MutateJobMetadata",
         Parser.parseNestedProtoTypeName(
             "google.ads.googleads.v3.resources.MutateJob.MutateJobMetadata"));
+  }
+
+  @Test
+  public void testParse_noServices_returnsEmptyGapicContext() {
+    GapicContext result = Parser.parse(CodeGeneratorRequest.newBuilder().build());
+    assertTrue(result.isEmpty());
+  }
+
+  @Test
+  public void testParseServiceJavaPackage_emptyRequest_noop() {
+    assertThat(Parser.parseServiceJavaPackage(CodeGeneratorRequest.newBuilder().build())).isEmpty();
   }
 
   private void assertMethodArgumentEquals(
