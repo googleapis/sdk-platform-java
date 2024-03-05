@@ -63,7 +63,7 @@ public class ComposerTest {
   }
 
   @Test
-  public void gapicClass_addApacheLicense() {
+  public void gapicClass_addApacheLicense_validInput_succeeds() {
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString("com.google.showcase.v1beta1.stub")
@@ -177,6 +177,11 @@ public class ComposerTest {
       unexpected = ex;
     }
     assertNull(unexpected);
+  }
+
+  @Test
+  public void gapicClass_addApacheLicense_emptyPackageInfo_noop() {
+    assertTrue(Composer.addApacheLicense(GapicPackageInfo.empty()).isEmpty());
   }
 
   private List<GapicClass> getTestClassListFromService(Service testService) {
