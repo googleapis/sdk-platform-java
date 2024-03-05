@@ -135,13 +135,18 @@ def __combine_commit_messages(
 ) -> str:
     messages = [
         f"This pull request is generated with proto changes between googleapis commit {baseline_commit} and {latest_commit}.",
-        "BEGIN_COMMIT_OVERRIDE",
+        "Qualified commits are:",
     ]
     for commit in commits:
         short_sha = commit.hexsha[:7]
         messages.append(
-            f"[googleapis/googleapis@{short_sha}](https://github.com/googleapis/googleapis/commit/{commit.hexsha})\n{commit.message}"
+            f"[googleapis/googleapis@{short_sha}](https://github.com/googleapis/googleapis/commit/{commit.hexsha})"
         )
+
+    messages.append("BEGIN_COMMIT_OVERRIDE")
+    for commit in commits:
+        first_line = commit.message.partition("\n")[0]
+        messages.append(f"{first_line}")
     messages.append("END_COMMIT_OVERRIDE")
 
     return "\n\n".join(messages)

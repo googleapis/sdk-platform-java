@@ -1,17 +1,15 @@
 This pull request is generated with proto changes between googleapis commit 679060c64136e85b52838f53cfe612ce51e60d1d and fc3043ebe12fb6bc1729c175e1526c859ce751d8.
 
-BEGIN_COMMIT_OVERRIDE
+Qualified commits are:
 
 [googleapis/googleapis@fbcfef0](https://github.com/googleapis/googleapis/commit/fbcfef09510b842774530989889ed1584a8b5acb)
-fix: extend timeouts for deleting snapshots, backups and tables
-
-PiperOrigin-RevId: 605388988
-
 
 [googleapis/googleapis@63d2a60](https://github.com/googleapis/googleapis/commit/63d2a60056ad5b156c05c7fb13138fc886c3b739)
+
+BEGIN_COMMIT_OVERRIDE
+
+fix: extend timeouts for deleting snapshots, backups and tables
+
 chore: update retry settings for backup rpcs
-
-PiperOrigin-RevId: 605367937
-
 
 END_COMMIT_OVERRIDE
