@@ -17,7 +17,6 @@ import subprocess
 import os
 import shutil
 import re
-from git import Commit, Repo
 from pathlib import Path
 from lxml import etree
 from library_generation.model.bom_config import BomConfig
@@ -140,14 +139,6 @@ def __handle_special_bom(
             is_import=False,
         )
     ]
-
-
-def __is_qualified_commit(paths: set[str], commit: Commit) -> bool:
-    for file in commit.stats.files.keys():
-        idx = file.rfind("/")
-        if file[:idx] in paths:
-            return True
-    return False
 
 
 def create_argument(arg_key: str, arg_container: object) -> List[str]:
@@ -514,37 +505,3 @@ def get_file_paths(config: GenerationConfig) -> set[str]:
         for gapic_config in library.gapic_configs:
             paths.add(gapic_config.proto_path)
     return paths.union(common_protos)
-
-
-def get_commit_messages(
-    repo_url: str, latest_commit: str, baseline_commit: str, paths: set[str]
-) -> str:
-    """
-    Combine commit messages of a repository from latest_commit to
-    baseline_commit. Only commits which change files in a pre-defined
-    file paths will be considered.
-    Note that baseline_commit should be an ancestor of latest_commit.
-
-    :param repo_url: the url of the repository.
-    :param latest_commit: the newest commit to be considered in
-    selecting commit message.
-    :param baseline_commit: the oldest commit to be considered in
-    selecting commit message. This commit should be an ancestor of
-    :param paths: a set of file paths
-    :return: commit messages.
-    """
-    tmp_dir = "/tmp/repo"
-    shutil.rmtree(tmp_dir, ignore_errors=True)
-    os.mkdir(tmp_dir)
-    messages = []
-    repo = Repo.clone_from(repo_url, tmp_dir)
-    commit = repo.commit(latest_commit)
-    while str(commit.hexsha) != baseline_commit:
-        if __is_qualified_commit(paths, commit):
-            messages.append(f"{commit.hexsha}\n{commit.message}")
-        commit_parents = commit.parents
-        if len(commit_parents) == 0:
-            break
-        commit = commit_parents[0]
-    shutil.rmtree(tmp_dir, ignore_errors=True)
-    return "\n\n".join(messages)
