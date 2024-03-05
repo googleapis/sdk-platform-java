@@ -31,13 +31,11 @@ package com.google.api.gax.tracing;
 
 import static org.junit.Assert.assertThrows;
 
-import com.google.api.gax.core.GaxProperties;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.truth.Truth;
 import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.api.common.AttributeKey;
 import io.opentelemetry.api.common.Attributes;
-import io.opentelemetry.api.metrics.Meter;
 import io.opentelemetry.sdk.OpenTelemetrySdk;
 import io.opentelemetry.sdk.metrics.SdkMeterProvider;
 import io.opentelemetry.sdk.metrics.data.Data;
@@ -76,15 +74,7 @@ public class OpentelemetryMetricsRecorderTest {
         SdkMeterProvider.builder().registerMetricReader(periodicMetricReader).build();
     OpenTelemetry openTelemetry =
         OpenTelemetrySdk.builder().setMeterProvider(sdkMeterProvider).build();
-
-    // Meter Creation
-    Meter meter =
-        openTelemetry
-            .meterBuilder("OtelMetricsRecorderTest")
-            .setInstrumentationVersion(GaxProperties.getGaxVersion())
-            .build();
-
-    otelMetricsRecorder = new OpentelemetryMetricsRecorder(meter);
+    otelMetricsRecorder = new OpentelemetryMetricsRecorder(openTelemetry, "MetricsRecorderTest");
   }
 
   @After

@@ -138,15 +138,7 @@ public class ITOtelMetrics {
 
     OpenTelemetry openTelemetry =
         OpenTelemetrySdk.builder().setMeterProvider(sdkMeterProvider).build();
-
-    // Meter Creation
-    Meter meter =
-        openTelemetry
-            .meterBuilder("ShowcaseOtelMetrics")
-            .setInstrumentationVersion(GaxProperties.getGaxVersion())
-            .build();
-    // OpenTelemetry Metrics Recorder
-    return new OpentelemetryMetricsRecorder(meter);
+    return new OpentelemetryMetricsRecorder(openTelemetry, "ShowcaseTest");
   }
 
   @Before

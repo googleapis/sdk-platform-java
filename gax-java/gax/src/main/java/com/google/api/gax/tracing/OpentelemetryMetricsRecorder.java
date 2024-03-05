@@ -30,8 +30,10 @@
 
 package com.google.api.gax.tracing;
 
+import com.google.api.gax.core.GaxProperties;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
+import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.api.common.Attributes;
 import io.opentelemetry.api.common.AttributesBuilder;
 import io.opentelemetry.api.metrics.DoubleHistogram;
@@ -55,7 +57,7 @@ public class OpentelemetryMetricsRecorder implements MetricsRecorder {
   private final LongCounter attemptCountRecorder;
 
   /**
-   * Creates the following instruments for the following metrics.
+   * Creates the following instruments for the following metrics:
    *
    * <ul>
    *   <li>Attempt Latency: Histogram
@@ -64,31 +66,37 @@ public class OpentelemetryMetricsRecorder implements MetricsRecorder {
    *   <li>Operation Count: Counter
    * </ul>
    *
-   * @param meter Otel Meter used to create the instruments of measurements
+   * @param openTelemetry OpenTelemetry instance
+   * @param serviceName Service Name
    */
-  public OpentelemetryMetricsRecorder(Meter meter) {
+  public OpentelemetryMetricsRecorder(OpenTelemetry openTelemetry, String serviceName) {
+    Meter meter =
+        openTelemetry
+            .meterBuilder("Gax-OtelMetrics")
+            .setInstrumentationVersion(GaxProperties.getGaxVersion())
+            .build();
     this.attemptLatencyRecorder =
         meter
-            .histogramBuilder("attempt_latency")
+            .histogramBuilder(serviceName + "/attempt_latency")
             .setDescription("Time an individual attempt took")
             .setUnit("ms")
             .build();
     this.operationLatencyRecorder =
         meter
-            .histogramBuilder("operation_latency")
+            .histogramBuilder(serviceName + "/operation_latency")
             .setDescription(
                 "Total time until final operation success or failure, including retries and backoff.")
             .setUnit("ms")
             .build();
     this.attemptCountRecorder =
         meter
-            .counterBuilder("attempt_count")
+            .counterBuilder(serviceName + "/attempt_count")
             .setDescription("Number of Attempts")
             .setUnit("1")
             .build();
     this.operationCountRecorder =
         meter
-            .counterBuilder("operation_count")
+            .counterBuilder(serviceName + "/operation_count")
             .setDescription("Number of Operations")
             .setUnit("1")
             .build();
