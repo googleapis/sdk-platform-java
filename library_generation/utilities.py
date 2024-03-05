@@ -18,6 +18,8 @@ import os
 import shutil
 import re
 from pathlib import Path
+from typing import Dict
+
 from lxml import etree
 from library_generation.model.bom_config import BomConfig
 from library_generation.model.generation_config import GenerationConfig
@@ -485,15 +487,34 @@ def get_version_from(
                 return line.split(":")[index].strip()
 
 
-def get_file_paths(config: GenerationConfig) -> set[str]:
+def get_file_paths(config: GenerationConfig) -> Dict[str, str]:
     """
-    Get versioned proto_path from configuration file.
+    Get versioned proto_path to library_name mapping from configuration file.
 
-    :param config:
-    :return: versioned proto_path plus paths of common protos
+    :param config: a GenerationConfig object.
+    :return: versioned proto_path to library_name mapping
     """
-    paths = set()
+    paths = {}
     for library in config.libraries:
         for gapic_config in library.gapic_configs:
-            paths.add(gapic_config.proto_path)
+            paths[gapic_config.proto_path] = get_library_name(library)
     return paths
+
+
+def find_versioned_proto_path(file_path: str) -> str:
+    """
+    Returns a versioned proto_path from a given file_path; or file_path itself
+    if it doesn't contain a versioned proto_path.
+
+    :param file_path:
+    :return:
+    """
+    version_regex = re.compile(r"^v[1-9].*")
+    directories = file_path.split("/")
+    for directory in directories:
+        result = version_regex.search(directory)
+        if result:
+            version = result[0]
+            idx = file_path.find(version)
+            return file_path[:idx] + version
+    return file_path
