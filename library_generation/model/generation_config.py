@@ -46,6 +46,8 @@ class GenerationConfig:
         self.libraries = libraries
         self.grpc_version = grpc_version
         self.protobuf_version = protobuf_version
+        # monorepos have more than one library defined in the config yaml
+        self.is_monorepo = len(libraries) > 1
 
 
 def from_yaml(path_to_yaml: str) -> GenerationConfig:
@@ -92,6 +94,9 @@ def from_yaml(path_to_yaml: str) -> GenerationConfig:
             rpc_documentation=__optional(library, "rpc_documentation", None),
             cloud_api=__optional(library, "cloud_api", True),
             requires_billing=__optional(library, "requires_billing", True),
+            extra_versioned_modules=__optional(
+                library, "extra_versioned_modules", None
+            ),
         )
         parsed_libraries.append(new_library)
 

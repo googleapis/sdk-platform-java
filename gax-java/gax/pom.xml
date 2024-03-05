@@ -99,8 +99,27 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <configuration>
           <argLine>-Djava.util.logging.SimpleFormatter.format="%1$tY %1$tl:%1$tM:%1$tS.%1$tL %2$s %4$s: %5$s%6$s%n"</argLine>
+          <!-- These tests require an Env Var to be set. Use -PenvVarTest to ONLY run these tests -->
+          <test>!EndpointContextTest#endpointContextBuild_universeDomainEnvVarSet+endpointContextBuild_multipleUniverseDomainConfigurations_clientSettingsHasPriority</test>
         </configuration>
       </plugin>
     </plugins>
   </build>
+
+  <profiles>
+    <profile>
+      <id>envVarTest</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <configuration>
+              <test>EndpointContextTest#endpointContextBuild_universeDomainEnvVarSet+endpointContextBuild_multipleUniverseDomainConfigurations_clientSettingsHasPriority</test>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>
