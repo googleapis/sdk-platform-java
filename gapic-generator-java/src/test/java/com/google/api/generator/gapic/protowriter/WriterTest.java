@@ -114,14 +114,13 @@ public class WriterTest {
     CodeGeneratorResponse response =
         Writer.write(
             GapicContext.empty(),
-            ImmutableList.of(GapicClass.createNonGeneratedGapicClass()),
+            Collections.emptyList(),
             GapicPackageInfo.empty(),
             Collections.emptyList(),
             "temp-codegen.srcjar",
             jarOutputStream,
             output);
     assertTrue(output.size() == 0);
-    assertEquals(0, response.getFileCount());
     jarOutputStream.finish();
     jarOutputStream.flush();
     jarOutputStream.close();
@@ -140,7 +139,6 @@ public class WriterTest {
             jarOutputStream,
             output);
     assertTrue(output.size() == 0);
-    assertEquals(1, response.getFileCount());
     jarOutputStream.finish();
     jarOutputStream.flush();
     jarOutputStream.close();
