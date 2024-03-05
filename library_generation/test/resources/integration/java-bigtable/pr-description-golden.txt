@@ -1,4 +1,4 @@
-This pull request is generated with proto changes between googleapis commit 679060c64136e85b52838f53cfe612ce51e60d1d and fc3043ebe12fb6bc1729c175e1526c859ce751d8.
+This pull request is generated with proto changes between googleapis commit 679060c64136e85b52838f53cfe612ce51e60d1d (exclusive) and fc3043ebe12fb6bc1729c175e1526c859ce751d8 (inclusive).
 
 Qualified commits are:
 

@@ -161,7 +161,7 @@ def __combine_commit_messages(
     generator_version: str,
 ) -> str:
     messages = [
-        f"This pull request is generated with proto changes between googleapis commit {baseline_commit} and {latest_commit}.",
+        f"This pull request is generated with proto changes between googleapis commit {baseline_commit} (exclusive) and {latest_commit} (inclusive).",
         "Qualified commits are:",
     ]
     for commit in commits:
