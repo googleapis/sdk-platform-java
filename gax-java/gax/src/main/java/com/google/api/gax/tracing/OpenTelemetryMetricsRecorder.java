@@ -50,7 +50,7 @@ import java.util.Map;
  * error). A single call (i.e. `EchoClient.echo()`) should have an operation_count of 1 and may have
  * an attempt_count of 1+ (depending on the retry configurations).
  */
-public class OpentelemetryMetricsRecorder implements MetricsRecorder {
+public class OpenTelemetryMetricsRecorder implements MetricsRecorder {
   private final DoubleHistogram attemptLatencyRecorder;
   private final DoubleHistogram operationLatencyRecorder;
   private final LongCounter operationCountRecorder;
@@ -69,7 +69,7 @@ public class OpentelemetryMetricsRecorder implements MetricsRecorder {
    * @param openTelemetry OpenTelemetry instance
    * @param serviceName Service Name
    */
-  public OpentelemetryMetricsRecorder(OpenTelemetry openTelemetry, String serviceName) {
+  public OpenTelemetryMetricsRecorder(OpenTelemetry openTelemetry, String serviceName) {
     Meter meter =
         openTelemetry
             .meterBuilder("Gax-OtelMetrics")

@@ -34,7 +34,6 @@ import static org.junit.Assert.assertThrows;
 
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.core.ApiFuture;
-import com.google.api.gax.core.GaxProperties;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.InvalidArgumentException;
@@ -43,7 +42,7 @@ import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.gax.rpc.UnavailableException;
 import com.google.api.gax.tracing.MetricsTracer;
 import com.google.api.gax.tracing.MetricsTracerFactory;
-import com.google.api.gax.tracing.OpentelemetryMetricsRecorder;
+import com.google.api.gax.tracing.OpenTelemetryMetricsRecorder;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -61,7 +60,6 @@ import io.grpc.ManagedChannelBuilder;
 import io.opentelemetry.api.OpenTelemetry;
 import io.opentelemetry.api.common.AttributeKey;
 import io.opentelemetry.api.common.Attributes;
-import io.opentelemetry.api.metrics.Meter;
 import io.opentelemetry.sdk.OpenTelemetrySdk;
 import io.opentelemetry.sdk.metrics.SdkMeterProvider;
 import io.opentelemetry.sdk.metrics.data.Data;
@@ -96,10 +94,11 @@ import org.junit.Test;
  */
 public class ITOtelMetrics {
   private static final int DEFAULT_OPERATION_COUNT = 1;
-  private static final String ATTEMPT_COUNT = "attempt_count";
-  private static final String OPERATION_COUNT = "operation_count";
-  private static final String ATTEMPT_LATENCY = "attempt_latency";
-  private static final String OPERATION_LATENCY = "operation_latency";
+  private static final String SERVICE_NAME = "ShowcaseTest";
+  private static final String ATTEMPT_COUNT = SERVICE_NAME + "/attempt_count";
+  private static final String OPERATION_COUNT = SERVICE_NAME + "/operation_count";
+  private static final String ATTEMPT_LATENCY = SERVICE_NAME+ "/attempt_latency";
+  private static final String OPERATION_LATENCY = SERVICE_NAME + "/operation_latency";
   private static final int NUM_METRICS = 4;
   private static final int NUM_COLLECTION_FLUSH_ATTEMPTS = 10;
   private InMemoryMetricReader inMemoryMetricReader;
@@ -131,20 +130,20 @@ public class ITOtelMetrics {
     }
   }
 
-  private OpentelemetryMetricsRecorder createOtelMetricsRecorder(
+  private OpenTelemetryMetricsRecorder createOtelMetricsRecorder(
       InMemoryMetricReader inMemoryMetricReader) {
     SdkMeterProvider sdkMeterProvider =
         SdkMeterProvider.builder().registerMetricReader(inMemoryMetricReader).build();
 
     OpenTelemetry openTelemetry =
         OpenTelemetrySdk.builder().setMeterProvider(sdkMeterProvider).build();
-    return new OpentelemetryMetricsRecorder(openTelemetry, "ShowcaseTest");
+    return new OpenTelemetryMetricsRecorder(openTelemetry, SERVICE_NAME);
   }
 
   @Before
   public void setup() throws Exception {
     inMemoryMetricReader = InMemoryMetricReader.create();
-    OpentelemetryMetricsRecorder otelMetricsRecorder =
+    OpenTelemetryMetricsRecorder otelMetricsRecorder =
         createOtelMetricsRecorder(inMemoryMetricReader);
     grpcClient =
         TestClientInitializer.createGrpcEchoClientOpentelemetry(
