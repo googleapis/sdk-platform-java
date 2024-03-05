@@ -55,6 +55,7 @@ import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoRequest;
 import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
+import com.google.showcase.v1beta1.stub.EchoStub;
 import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import io.grpc.ManagedChannelBuilder;
 import io.opentelemetry.api.OpenTelemetry;
@@ -97,7 +98,7 @@ public class ITOtelMetrics {
   private static final String SERVICE_NAME = "ShowcaseTest";
   private static final String ATTEMPT_COUNT = SERVICE_NAME + "/attempt_count";
   private static final String OPERATION_COUNT = SERVICE_NAME + "/operation_count";
-  private static final String ATTEMPT_LATENCY = SERVICE_NAME+ "/attempt_latency";
+  private static final String ATTEMPT_LATENCY = SERVICE_NAME + "/attempt_latency";
   private static final String OPERATION_LATENCY = SERVICE_NAME + "/operation_latency";
   private static final int NUM_METRICS = 4;
   private static final int NUM_COLLECTION_FLUSH_ATTEMPTS = 10;
@@ -473,15 +474,24 @@ public class ITOtelMetrics {
         grpcEchoSettings
             .toBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTracerFactory(
-                new MetricsTracerFactory(createOtelMetricsRecorder(inMemoryMetricReader)))
             .setTransportChannelProvider(
                 EchoSettings.defaultGrpcTransportProviderBuilder()
                     .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
                     .build())
             .setEndpoint("localhost:7469")
             .build();
-    EchoClient grpcClient = EchoClient.create(grpcEchoSettings);
+
+    EchoStubSettings echoStubSettings =
+        (EchoStubSettings)
+            grpcEchoSettings
+                .getStubSettings()
+                .toBuilder()
+                .setTracerFactory(
+                    new MetricsTracerFactory(createOtelMetricsRecorder(inMemoryMetricReader)))
+                .build();
+    EchoStub stub = echoStubSettings.createStub();
+    EchoClient grpcClient = EchoClient.create(stub);
+
     EchoRequest echoRequest =
         EchoRequest.newBuilder()
             .setError(Status.newBuilder().setCode(statusCode.ordinal()).build())
@@ -531,8 +541,6 @@ public class ITOtelMetrics {
         httpJsonEchoSettings
             .toBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTracerFactory(
-                new MetricsTracerFactory(createOtelMetricsRecorder(inMemoryMetricReader)))
             .setTransportChannelProvider(
                 EchoSettings.defaultHttpJsonTransportProviderBuilder()
                     .setHttpTransport(
@@ -541,7 +549,16 @@ public class ITOtelMetrics {
                     .build())
             .build();
 
-    EchoClient httpClient = EchoClient.create(httpJsonEchoSettings);
+    EchoStubSettings echoStubSettings =
+        (EchoStubSettings)
+            httpJsonEchoSettings
+                .getStubSettings()
+                .toBuilder()
+                .setTracerFactory(
+                    new MetricsTracerFactory(createOtelMetricsRecorder(inMemoryMetricReader)))
+                .build();
+    EchoStub stub = echoStubSettings.createStub();
+    EchoClient httpClient = EchoClient.create(stub);
 
     EchoRequest echoRequest =
         EchoRequest.newBuilder()
@@ -650,15 +667,24 @@ public class ITOtelMetrics {
         grpcEchoSettings
             .toBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTracerFactory(
-                new MetricsTracerFactory(createOtelMetricsRecorder(inMemoryMetricReader)))
             .setTransportChannelProvider(
                 EchoSettings.defaultGrpcTransportProviderBuilder()
                     .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
                     .build())
             .setEndpoint("localhost:7469")
             .build();
-    EchoClient grpcClient = EchoClient.create(grpcEchoSettings);
+
+    EchoStubSettings echoStubSettings =
+        (EchoStubSettings)
+            grpcEchoSettings
+                .getStubSettings()
+                .toBuilder()
+                .setTracerFactory(
+                    new MetricsTracerFactory(createOtelMetricsRecorder(inMemoryMetricReader)))
+                .build();
+    EchoStub stub = echoStubSettings.createStub();
+
+    EchoClient grpcClient = EchoClient.create(stub);
 
     BlockRequest blockRequest =
         BlockRequest.newBuilder()
@@ -710,8 +736,6 @@ public class ITOtelMetrics {
         httpJsonEchoSettings
             .toBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTracerFactory(
-                new MetricsTracerFactory(createOtelMetricsRecorder(inMemoryMetricReader)))
             .setTransportChannelProvider(
                 EchoSettings.defaultHttpJsonTransportProviderBuilder()
                     .setHttpTransport(
@@ -720,7 +744,17 @@ public class ITOtelMetrics {
                     .build())
             .build();
 
-    EchoClient httpClient = EchoClient.create(httpJsonEchoSettings);
+    EchoStubSettings echoStubSettings =
+        (EchoStubSettings)
+            httpJsonEchoSettings
+                .getStubSettings()
+                .toBuilder()
+                .setTracerFactory(
+                    new MetricsTracerFactory(createOtelMetricsRecorder(inMemoryMetricReader)))
+                .build();
+    EchoStub stub = echoStubSettings.createStub();
+
+    EchoClient httpClient = EchoClient.create(stub);
 
     BlockRequest blockRequest =
         BlockRequest.newBuilder()

@@ -33,6 +33,7 @@ import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.IdentityClient;
 import com.google.showcase.v1beta1.IdentitySettings;
 import com.google.showcase.v1beta1.WaitRequest;
+import com.google.showcase.v1beta1.stub.EchoStub;
 import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import io.grpc.ClientInterceptor;
 import io.grpc.ManagedChannelBuilder;
@@ -286,13 +287,37 @@ public class TestClientInitializer {
     return ComplianceClient.create(httpJsonComplianceSettings);
   }
 
+  public static EchoClient createGrpcEchoClientOpentelemetry(ApiTracerFactory metricsTracerFactory)
+      throws Exception {
+
+    EchoSettings grpcEchoSettings =
+        EchoSettings.newBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultGrpcTransportProviderBuilder()
+                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .build())
+            .setEndpoint("localhost:7469")
+            .build();
+
+    EchoStubSettings echoStubSettings =
+        (EchoStubSettings)
+            grpcEchoSettings
+                .getStubSettings()
+                .toBuilder()
+                .setTracerFactory(metricsTracerFactory)
+                .build();
+    EchoStub stub = echoStubSettings.createStub();
+
+    return EchoClient.create(stub);
+  }
+
   public static EchoClient createHttpJsonEchoClientOpentelemetry(
       ApiTracerFactory metricsTracerFactory) throws Exception {
 
     EchoSettings httpJsonEchoSettings =
         EchoSettings.newHttpJsonBuilder()
             .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTracerFactory(metricsTracerFactory)
             .setTransportChannelProvider(
                 EchoSettings.defaultHttpJsonTransportProviderBuilder()
                     .setHttpTransport(
@@ -301,23 +326,15 @@ public class TestClientInitializer {
                     .build())
             .build();
 
-    return EchoClient.create(httpJsonEchoSettings);
-  }
+    EchoStubSettings echoStubSettings =
+        (EchoStubSettings)
+            httpJsonEchoSettings
+                .getStubSettings()
+                .toBuilder()
+                .setTracerFactory(metricsTracerFactory)
+                .build();
+    EchoStub stub = echoStubSettings.createStub();
 
-  public static EchoClient createGrpcEchoClientOpentelemetry(ApiTracerFactory metricsTracerFactory)
-      throws Exception {
-
-    EchoSettings grpcEchoSettings =
-        EchoSettings.newBuilder()
-            .setCredentialsProvider(NoCredentialsProvider.create())
-            .setTracerFactory(metricsTracerFactory)
-            .setTransportChannelProvider(
-                EchoSettings.defaultGrpcTransportProviderBuilder()
-                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
-                    .build())
-            .setEndpoint("localhost:7469")
-            .build();
-
-    return EchoClient.create(grpcEchoSettings);
+    return EchoClient.create(stub);
   }
 }
