@@ -201,6 +201,7 @@ fi
 ${proto_files} ${gapic_additional_protos}
 
 unzip -o -q "${temp_destination_path}/java_gapic_srcjar_raw.srcjar.zip" -d "${temp_destination_path}"
+
 # check if the generator produced any files into the srcjar
 did_generate_gapic="true"
 zipinfo -t "${temp_destination_path}/temp-codegen.srcjar" || did_generate_gapic="false"
