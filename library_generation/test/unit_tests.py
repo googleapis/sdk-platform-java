@@ -224,11 +224,6 @@ class UtilitiesTest(unittest.TestCase):
                 "google/cloud/asset/v1p2beta1",
                 "google/cloud/asset/v1p5beta1",
                 "google/cloud/asset/v1p7beta1",
-                "google/api",
-                "google/longrunning",
-                "google/rpc",
-                "google/shopping/type",
-                "google/type",
             },
             paths,
         )

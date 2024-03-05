@@ -33,13 +33,6 @@ project_tag = "{http://maven.apache.org/POM/4.0.0}"
 group_id_tag = "groupId"
 artifact_tag = "artifactId"
 version_tag = "version"
-common_protos = {
-    "google/api",
-    "google/longrunning",
-    "google/rpc",
-    "google/shopping/type",
-    "google/type",
-}
 
 
 def __render(template_name: str, output_name: str, **kwargs):
@@ -494,8 +487,7 @@ def get_version_from(
 
 def get_file_paths(config: GenerationConfig) -> set[str]:
     """
-    Get versioned proto_path from configuration file, plus known paths of
-    common protos.
+    Get versioned proto_path from configuration file.
 
     :param config:
     :return: versioned proto_path plus paths of common protos
@@ -504,4 +496,4 @@ def get_file_paths(config: GenerationConfig) -> set[str]:
     for library in config.libraries:
         for gapic_config in library.gapic_configs:
             paths.add(gapic_config.proto_path)
-    return paths.union(common_protos)
+    return paths
