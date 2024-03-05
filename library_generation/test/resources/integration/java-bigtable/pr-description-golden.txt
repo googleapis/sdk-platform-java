@@ -12,4 +12,6 @@ fix: extend timeouts for deleting snapshots, backups and tables
 
 chore: update retry settings for backup rpcs
 
+feat: Regenerate with the Java code generator (gapic-generator-java) v2.35.0
+
 END_COMMIT_OVERRIDE

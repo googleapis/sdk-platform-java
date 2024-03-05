@@ -84,11 +84,16 @@ def generate_pr_descriptions(
         latest_commit=config.googleapis_commitish,
         baseline_commit=baseline_commit,
         paths=paths,
+        generator_version=config.gapic_generator_version,
     )
 
 
 def __get_commit_messages(
-    repo_url: str, latest_commit: str, baseline_commit: str, paths: set[str]
+    repo_url: str,
+    latest_commit: str,
+    baseline_commit: str,
+    paths: set[str],
+    generator_version: str,
 ) -> str:
     """
     Combine commit messages of a repository from latest_commit to
@@ -102,6 +107,7 @@ def __get_commit_messages(
     :param baseline_commit: the oldest commit to be considered in
     selecting commit message. This commit should be an ancestor of
     :param paths: a set of file paths
+    :param generator_version: the version of the generator.
     :return: commit messages.
     """
     tmp_dir = "/tmp/repo"
@@ -122,6 +128,7 @@ def __get_commit_messages(
         latest_commit=latest_commit,
         baseline_commit=baseline_commit,
         commits=qualified_commits,
+        generator_version=generator_version,
     )
 
 
@@ -134,7 +141,10 @@ def __is_qualified_commit(paths: set[str], commit: Commit) -> bool:
 
 
 def __combine_commit_messages(
-    latest_commit: str, baseline_commit: str, commits: List[Commit]
+    latest_commit: str,
+    baseline_commit: str,
+    commits: List[Commit],
+    generator_version: str,
 ) -> str:
     messages = [
         f"This pull request is generated with proto changes between googleapis commit {baseline_commit} and {latest_commit}.",
@@ -150,6 +160,9 @@ def __combine_commit_messages(
     for commit in commits:
         first_line = commit.message.partition("\n")[0]
         messages.append(f"{first_line}")
+    messages.append(
+        f"feat: Regenerate with the Java code generator (gapic-generator-java) v{generator_version}"
+    )
     messages.append("END_COMMIT_OVERRIDE")
 
     return "\n\n".join(messages)
