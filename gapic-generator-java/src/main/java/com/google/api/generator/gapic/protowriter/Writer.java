@@ -69,8 +69,10 @@ public class Writer {
       writeSamples(gapicClazz, getSamplePackage(gapicClazz), classPath, jos);
     }
 
-    writeMetadataFile(context, writePackageInfo(gapicPackageInfo, codeWriter, jos), jos);
-    writeReflectConfigFile(gapicPackageInfo.packageInfo().pakkage(), reflectConfigInfo, jos);
+    if (!gapicPackageInfo.isEmpty()) {
+      writeMetadataFile(context, writePackageInfo(gapicPackageInfo, codeWriter, jos), jos);
+      writeReflectConfigFile(gapicPackageInfo.packageInfo().pakkage(), reflectConfigInfo, jos);
+    }
 
     try {
       jos.finish();

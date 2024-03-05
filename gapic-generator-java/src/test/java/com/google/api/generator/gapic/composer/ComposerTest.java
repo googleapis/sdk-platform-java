@@ -16,6 +16,7 @@ package com.google.api.generator.gapic.composer;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ScopeNode;
@@ -25,6 +26,7 @@ import com.google.api.generator.gapic.composer.grpc.GrpcServiceCallableFactoryCl
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
+import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.gapic.model.RegionTag;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
@@ -71,6 +73,11 @@ public class ComposerTest {
         Paths.get(
             GoldenFileWriter.getGoldenDir(this.getClass()), "ComposerPostProcOnFooBar.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
+  }
+
+  @Test
+  public void testGapicPackageInfoAddLicense_emptyPackageInfo_noop() {
+    assertTrue(Composer.addApacheLicense(GapicPackageInfo.empty()).isEmpty());
   }
 
   @Test
