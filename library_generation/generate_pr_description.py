@@ -46,7 +46,8 @@ def main(ctx):
     required=True,
     type=str,
     help="""
-    The baseline, exclusively, commit from which the commit message is considered.
+    The baseline (oldest) commit, exclusively, from which the commit message is
+    considered.
     This commit should be an ancestor of googleapis commit in configuration.
     """,
 )
