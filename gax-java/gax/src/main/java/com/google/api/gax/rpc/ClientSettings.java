@@ -31,10 +31,8 @@ package com.google.api.gax.rpc;
 
 import com.google.api.core.ApiClock;
 import com.google.api.core.ApiFunction;
-import com.google.api.core.BetaApi;
 import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.ExecutorProvider;
-import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.common.base.MoreObjects;
 import java.io.IOException;
 import java.util.concurrent.Executor;
@@ -120,16 +118,6 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
   /** Gets the GDCH API audience that was previously set in this Builder */
   public final String getGdchApiAudience() {
     return stubSettings.getGdchApiAudience();
-  }
-
-  /**
-   * Gets the configured {@link ApiTracerFactory} that will be used to generate traces for
-   * operations.
-   */
-  @BetaApi("The surface for tracing is not stable yet and may change in the future.")
-  @Nonnull
-  public ApiTracerFactory getTracerFactory() {
-    return stubSettings.getTracerFactory();
   }
 
   public String toString() {
@@ -293,16 +281,6 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
      */
     public B setGdchApiAudience(@Nullable String gdchApiAudience) {
       stubSettings.setGdchApiAudience(gdchApiAudience);
-      return self();
-    }
-
-    /**
-     * Sets the ApiTracerFactory for the client instance. To enable default metrics, users need to
-     * create an instance of metricsRecorder and pass it to the metricsTracerFactory, and set it
-     * here.
-     */
-    public B setTracerFactory(@Nullable ApiTracerFactory tracerFactory) {
-      stubSettings.setTracerFactory(tracerFactory);
       return self();
     }
 
