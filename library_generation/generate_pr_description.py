@@ -88,6 +88,7 @@ def generate_pr_descriptions(
         baseline_commit=baseline_commit,
         paths=paths,
         generator_version=config.gapic_generator_version,
+        is_monorepo=config.is_monorepo,
     )
 
 
@@ -97,6 +98,7 @@ def __get_commit_messages(
     baseline_commit: str,
     paths: Dict[str, str],
     generator_version: str,
+    is_monorepo: bool,
 ) -> str:
     """
     Combine commit messages of a repository from latest_commit to
@@ -111,6 +113,7 @@ def __get_commit_messages(
     selecting commit message. This commit should be an ancestor of
     :param paths: a mapping from file paths to library_name.
     :param generator_version: the version of the generator.
+    :param is_monorepo: whether to generate commit messages in a monorepo.
     :return: commit messages.
     """
     tmp_dir = "/tmp/repo"
@@ -133,6 +136,7 @@ def __get_commit_messages(
         baseline_commit=baseline_commit,
         commits=qualified_commits,
         generator_version=generator_version,
+        is_monorepo=is_monorepo,
     )
 
 
@@ -159,6 +163,7 @@ def __combine_commit_messages(
     baseline_commit: str,
     commits: Dict[Commit, str],
     generator_version: str,
+    is_monorepo: bool,
 ) -> str:
     messages = [
         f"This pull request is generated with proto changes between googleapis commit {baseline_commit} (exclusive) and {latest_commit} (inclusive).",
@@ -174,7 +179,12 @@ def __combine_commit_messages(
     for commit, library_name in commits.items():
         first_line = commit.message.partition("\n")[0]
         convention, _, summary = first_line.partition(":")
-        messages.append(f"{convention}: [{library_name}] {summary.strip()}")
+        formatted_message = (
+            f"{convention}: [{library_name}] {summary.strip()}"
+            if is_monorepo
+            else f"{convention}: {summary.strip()}"
+        )
+        messages.append(formatted_message)
     messages.append(
         f"feat: Regenerate with the Java code generator (gapic-generator-java) v{generator_version}"
     )
