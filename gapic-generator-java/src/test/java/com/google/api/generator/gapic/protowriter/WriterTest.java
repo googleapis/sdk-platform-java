@@ -5,13 +5,17 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
+import com.google.api.generator.engine.ast.PackageInfoDefinition;
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
+import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.gapic.model.ReflectConfig;
+import com.google.common.collect.ImmutableList;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.protobuf.ByteString;
+import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -107,15 +111,36 @@ public class WriterTest {
   @Test
   public void write_emptyGapicContext_writesNoBytes() throws IOException {
     ByteString.Output output = ByteString.newOutput();
-    Writer.write(
-        GapicContext.empty(),
-        Collections.emptyList(),
-        GapicPackageInfo.empty(),
-        Collections.emptyList(),
-        "temp-codegen.srcjar",
-        jarOutputStream,
-        output);
+    CodeGeneratorResponse response =
+        Writer.write(
+            GapicContext.empty(),
+            ImmutableList.of(GapicClass.createNonGeneratedGapicClass()),
+            GapicPackageInfo.empty(),
+            Collections.emptyList(),
+            "temp-codegen.srcjar",
+            jarOutputStream,
+            output);
     assertTrue(output.size() == 0);
+    assertEquals(0, response.getFileCount());
+    jarOutputStream.finish();
+    jarOutputStream.flush();
+    jarOutputStream.close();
+  }
+
+  @Test
+  public void write_emptyGapicContextAndFilledPackageInfo_succeeds() throws IOException {
+    ByteString.Output output = ByteString.newOutput();
+    CodeGeneratorResponse response =
+        Writer.write(
+            GapicContext.empty(),
+            ImmutableList.of(GapicClass.createNonGeneratedGapicClass()),
+            GapicPackageInfo.with(PackageInfoDefinition.builder().setPakkage("com.test").build()),
+            Collections.emptyList(),
+            "temp-codegen.srcjar",
+            jarOutputStream,
+            output);
+    assertTrue(output.size() == 0);
+    assertEquals(1, response.getFileCount());
     jarOutputStream.finish();
     jarOutputStream.flush();
     jarOutputStream.close();
