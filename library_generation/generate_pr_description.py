@@ -14,11 +14,14 @@
 # limitations under the License.
 import os
 import shutil
+from typing import Dict
+
 from typing import List
 
 import click
 from git import Commit, Repo
 from library_generation.model.generation_config import from_yaml
+from library_generation.utilities import find_versioned_proto_path
 from library_generation.utilities import get_file_paths
 
 
@@ -92,7 +95,7 @@ def __get_commit_messages(
     repo_url: str,
     latest_commit: str,
     baseline_commit: str,
-    paths: set[str],
+    paths: Dict[str, str],
     generator_version: str,
 ) -> str:
     """
@@ -106,7 +109,7 @@ def __get_commit_messages(
     selecting commit message.
     :param baseline_commit: the oldest commit to be considered in
     selecting commit message. This commit should be an ancestor of
-    :param paths: a set of file paths
+    :param paths: a mapping from file paths to library_name.
     :param generator_version: the version of the generator.
     :return: commit messages.
     """
@@ -115,10 +118,11 @@ def __get_commit_messages(
     os.mkdir(tmp_dir)
     repo = Repo.clone_from(repo_url, tmp_dir)
     commit = repo.commit(latest_commit)
-    qualified_commits = []
+    qualified_commits = {}
     while str(commit.hexsha) != baseline_commit:
-        if __is_qualified_commit(paths, commit):
-            qualified_commits.append(commit)
+        commit_and_name = __filter_qualified_commit(paths=paths, commit=commit)
+        if commit_and_name != ():
+            qualified_commits[commit_and_name[0]] = commit_and_name[1]
         commit_parents = commit.parents
         if len(commit_parents) == 0:
             break
@@ -132,18 +136,28 @@ def __get_commit_messages(
     )
 
 
-def __is_qualified_commit(paths: set[str], commit: Commit) -> bool:
+def __filter_qualified_commit(paths: Dict[str, str], commit: Commit) -> (Commit, str):
+    """
+    Returns a tuple of a commit and libray_name.
+    A qualified commit means at least one file changes in that commit is
+    within the versioned proto_path in paths.
+
+    :param paths: a mapping from versioned proto_path to library_name.
+    :param commit: a commit under consideration.
+    :return: a tuple of a commit and library_name if the commit is
+    qualified; otherwise an empty tuple.
+    """
     for file in commit.stats.files.keys():
-        idx = file.rfind("/")
-        if file[:idx] in paths:
-            return True
-    return False
+        versioned_proto_path = find_versioned_proto_path(file)
+        if versioned_proto_path in paths:
+            return commit, paths[versioned_proto_path]
+    return ()
 
 
 def __combine_commit_messages(
     latest_commit: str,
     baseline_commit: str,
-    commits: List[Commit],
+    commits: Dict[Commit, str],
     generator_version: str,
 ) -> str:
     messages = [
@@ -157,9 +171,10 @@ def __combine_commit_messages(
         )
 
     messages.append("BEGIN_COMMIT_OVERRIDE")
-    for commit in commits:
+    for commit, library_name in commits.items():
         first_line = commit.message.partition("\n")[0]
-        messages.append(f"{first_line}")
+        convention, _, summary = first_line.partition(":")
+        messages.append(f"{convention}: [{library_name}] {summary.strip()}")
     messages.append(
         f"feat: Regenerate with the Java code generator (gapic-generator-java) v{generator_version}"
     )
