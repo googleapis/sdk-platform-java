@@ -37,6 +37,8 @@ def main(ctx):
     help="""
     Path to generation_config.yaml that contains the metadata about
     library generation.
+    The googleapis commit in the configuration is the latest commit,
+    inclusively, from which the commit message is considered.
     """,
 )
 @click.option(
@@ -44,7 +46,7 @@ def main(ctx):
     required=True,
     type=str,
     help="""
-    The baseline commit from which the commit message is considered.
+    The baseline, exclusively, commit from which the commit message is considered.
     This commit should be an ancestor of googleapis commit in configuration.
     """,
 )
