@@ -57,7 +57,11 @@ class IntegrationTest(unittest.TestCase):
         monorepo_baseline_commit = "a17d4caf184b050d50cacf2b0d579ce72c31ce74"
         split_repo_baseline_commit = "679060c64136e85b52838f53cfe612ce51e60d1d"
         for repo, config_file in config_files:
-            baseline_commit = monorepo_baseline_commit if repo == "google-cloud-java" else split_repo_baseline_commit
+            baseline_commit = (
+                monorepo_baseline_commit
+                if repo == "google-cloud-java"
+                else split_repo_baseline_commit
+            )
             description = generate_pr_descriptions(
                 generation_config_yaml=config_file,
                 repo_url=repo_url,
@@ -69,7 +73,10 @@ class IntegrationTest(unittest.TestCase):
             with open(f"{description_file}", "w+") as f:
                 f.write(description)
             self.assertTrue(
-                cmp(f"{config_dir}/{repo}/pr-description-golden.txt", f"{description_file}")
+                cmp(
+                    f"{config_dir}/{repo}/pr-description-golden.txt",
+                    f"{description_file}",
+                )
             )
             os.remove(f"{description_file}")
 
