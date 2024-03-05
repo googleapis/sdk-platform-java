@@ -53,25 +53,25 @@ committish_map = {
 class IntegrationTest(unittest.TestCase):
     def test_get_commit_message_success(self):
         repo_url = "https://github.com/googleapis/googleapis.git"
-        baseline_commit = "a17d4caf184b050d50cacf2b0d579ce72c31ce74"
-        description = generate_pr_descriptions(
-            f"{config_dir}/google-cloud-java/{config_name}",
-            repo_url=repo_url,
-            baseline_commit=baseline_commit,
-        )
-        description_file = f"{config_dir}/pr-description.txt"
-        if os.path.isfile(f"{description_file}"):
+        config_files = self.__get_config_files(config_dir)
+        monorepo_baseline_commit = "a17d4caf184b050d50cacf2b0d579ce72c31ce74"
+        split_repo_baseline_commit = "679060c64136e85b52838f53cfe612ce51e60d1d"
+        for repo, config_file in config_files:
+            baseline_commit = monorepo_baseline_commit if repo == "google-cloud-java" else split_repo_baseline_commit
+            description = generate_pr_descriptions(
+                generation_config_yaml=config_file,
+                repo_url=repo_url,
+                baseline_commit=baseline_commit,
+            )
+            description_file = f"{config_dir}/{repo}/pr-description.txt"
+            if os.path.isfile(f"{description_file}"):
+                os.remove(f"{description_file}")
+            with open(f"{description_file}", "w+") as f:
+                f.write(description)
+            self.assertTrue(
+                cmp(f"{config_dir}/{repo}/pr-description-golden.txt", f"{description_file}")
+            )
             os.remove(f"{description_file}")
-        with open(f"{description_file}", "w+") as f:
-            f.write(description)
-        # There are five commits from googleapis commitish to baseline commit,
-        # inclusively. Only two of the commits contain changes in proto_path
-        # that are in configuration. Therefore, only two commit messages should
-        # be included in the PR description.
-        self.assertTrue(
-            cmp(f"{config_dir}/pr-description-golden.txt", f"{description_file}")
-        )
-        os.remove(f"{description_file}")
 
     def test_generate_repo(self):
         shutil.rmtree(f"{golden_dir}", ignore_errors=True)
