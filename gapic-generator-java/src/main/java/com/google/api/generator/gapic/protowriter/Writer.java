@@ -36,7 +36,9 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarOutputStream;
 
 public class Writer {
+
   static class GapicWriterException extends RuntimeException {
+
     public GapicWriterException(String errorMessage) {
       super(errorMessage);
     }
@@ -54,29 +56,21 @@ public class Writer {
       String outputFilePath) {
     ByteString.Output output = ByteString.newOutput();
     JavaWriterVisitor codeWriter = new JavaWriterVisitor();
-    JarOutputStream jos;
-    try {
-      jos = new JarOutputStream(output);
-    } catch (IOException e) {
-      throw new GapicWriterException(e.getMessage(), e);
-    }
+    try (JarOutputStream jos = new JarOutputStream(output)) {
 
-    for (GapicClass gapicClazz : clazzes) {
-      if (gapicClazz.kind() == GapicClass.Kind.NON_GENERATED) {
-        continue;
+      for (GapicClass gapicClazz : clazzes) {
+        if (gapicClazz.kind() == GapicClass.Kind.NON_GENERATED) {
+          continue;
+        }
+        String classPath = writeClazz(gapicClazz, codeWriter, jos);
+        writeSamples(gapicClazz, getSamplePackage(gapicClazz), classPath, jos);
       }
-      String classPath = writeClazz(gapicClazz, codeWriter, jos);
-      writeSamples(gapicClazz, getSamplePackage(gapicClazz), classPath, jos);
-    }
 
-    if (!gapicPackageInfo.isEmpty()) {
-      writeMetadataFile(context, writePackageInfo(gapicPackageInfo, codeWriter, jos), jos);
-      writeReflectConfigFile(gapicPackageInfo.packageInfo().pakkage(), reflectConfigInfo, jos);
-    }
+      if (!gapicPackageInfo.isEmpty()) {
+        writeMetadataFile(context, writePackageInfo(gapicPackageInfo, codeWriter, jos), jos);
+        writeReflectConfigFile(gapicPackageInfo.packageInfo().pakkage(), reflectConfigInfo, jos);
+      }
 
-    try {
-      jos.finish();
-      jos.flush();
     } catch (IOException e) {
       throw new GapicWriterException(e.getMessage(), e);
     }
