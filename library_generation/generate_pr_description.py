@@ -177,12 +177,11 @@ def __combine_commit_messages(
 
     messages.append("BEGIN_COMMIT_OVERRIDE")
     for commit, library_name in commits.items():
-        first_line = commit.message.partition("\n")[0]
-        convention, _, summary = first_line.partition(":")
+        convention, _, summary = commit.message.partition(":")
         formatted_message = (
-            f"{convention}: [{library_name}] {summary.strip()}"
+            f"{convention}: [{library_name}]{summary}"
             if is_monorepo
-            else f"{convention}: {summary.strip()}"
+            else f"{convention}:{summary}"
         )
         messages.append(formatted_message)
     messages.append(
