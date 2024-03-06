@@ -20,7 +20,9 @@ import click
 from git import Commit, Repo
 from library_generation.model.generation_config import from_yaml
 from library_generation.utilities import find_versioned_proto_path
+from library_generation.utilities import format_commit_message
 from library_generation.utilities import get_file_paths
+from library_generation.utilities import wrap_nested_commit
 
 
 @click.group(invoke_without_command=False)
@@ -173,26 +175,16 @@ def __combine_commit_messages(
             f"[googleapis/googleapis@{short_sha}](https://github.com/googleapis/googleapis/commit/{commit.hexsha})"
         )
 
-    for commit, library_name in commits.items():
-        convention, _, summary = commit.message.partition(":")
-        formatted_message = (
-            f"{convention}: [{library_name}]{str(summary).rstrip()}"
-            if is_monorepo
-            else f"{convention}:{str(summary).rstrip()}"
-        )
-        messages.append(__wrap_nested_commit(formatted_message))
-    messages.append(
-        __wrap_nested_commit(
-            f"feat: Regenerate with the Java code generator (gapic-generator-java) v{generator_version}"
+    messages.extend(format_commit_message(commits=commits, is_monorepo=is_monorepo))
+    messages.extend(
+        wrap_nested_commit(
+            [
+                f"feat: Regenerate with the Java code generator (gapic-generator-java) v{generator_version}"
+            ]
         )
     )
 
     return "\n".join(messages)
-
-
-def __wrap_nested_commit(message: str) -> str:
-    result = ["BEGIN_NESTED_COMMIT", message, "END_NESTED_COMMIT"]
-    return "\n".join(result)
 
 
 if __name__ == "__main__":

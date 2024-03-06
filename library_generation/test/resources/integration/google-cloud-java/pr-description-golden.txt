@@ -6,11 +6,13 @@ BEGIN_NESTED_COMMIT
 feat: [document-ai] expose model_type in v1 processor, so that user can see the model_type after get or list processor version
 
 PiperOrigin-RevId: 603727585
+
 END_NESTED_COMMIT
 BEGIN_NESTED_COMMIT
 feat: [document-ai] add model_type in v1beta3 processor proto
 
 PiperOrigin-RevId: 603726122
+
 END_NESTED_COMMIT
 BEGIN_NESTED_COMMIT
 feat: Regenerate with the Java code generator (gapic-generator-java) v2.34.0
