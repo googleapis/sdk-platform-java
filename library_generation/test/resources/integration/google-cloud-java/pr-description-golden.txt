@@ -6,7 +6,7 @@ Qualified commits are:
 
 [googleapis/googleapis@c7fd8bd](https://github.com/googleapis/googleapis/commit/c7fd8bd652ac690ca84f485014f70b52eef7cb9e)
 
-BEGIN_COMMIT_OVERRIDE
+BEGIN_NESTED_COMMIT
 
 feat: [document-ai] expose model_type in v1 processor, so that user can see the model_type after get or list processor version
 
@@ -20,4 +20,4 @@ PiperOrigin-RevId: 603726122
 
 feat: Regenerate with the Java code generator (gapic-generator-java) v2.34.0
 
-END_COMMIT_OVERRIDE
+END_NESTED_COMMIT

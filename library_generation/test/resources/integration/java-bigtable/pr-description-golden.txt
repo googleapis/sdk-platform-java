@@ -6,7 +6,7 @@ Qualified commits are:
 
 [googleapis/googleapis@63d2a60](https://github.com/googleapis/googleapis/commit/63d2a60056ad5b156c05c7fb13138fc886c3b739)
 
-BEGIN_COMMIT_OVERRIDE
+BEGIN_NESTED_COMMIT
 
 fix: extend timeouts for deleting snapshots, backups and tables
 
@@ -20,4 +20,4 @@ PiperOrigin-RevId: 605367937
 
 feat: Regenerate with the Java code generator (gapic-generator-java) v2.35.0
 
-END_COMMIT_OVERRIDE
+END_NESTED_COMMIT

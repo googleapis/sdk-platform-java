@@ -175,7 +175,7 @@ def __combine_commit_messages(
             f"[googleapis/googleapis@{short_sha}](https://github.com/googleapis/googleapis/commit/{commit.hexsha})"
         )
 
-    messages.append("BEGIN_COMMIT_OVERRIDE")
+    messages.append("BEGIN_NESTED_COMMIT")
     for commit, library_name in commits.items():
         convention, _, summary = commit.message.partition(":")
         formatted_message = (
@@ -187,7 +187,7 @@ def __combine_commit_messages(
     messages.append(
         f"feat: Regenerate with the Java code generator (gapic-generator-java) v{generator_version}"
     )
-    messages.append("END_COMMIT_OVERRIDE")
+    messages.append("END_NESTED_COMMIT")
 
     return "\n\n".join(messages)
 
