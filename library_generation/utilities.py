@@ -506,8 +506,8 @@ def find_versioned_proto_path(file_path: str) -> str:
     Returns a versioned proto_path from a given file_path; or file_path itself
     if it doesn't contain a versioned proto_path.
 
-    :param file_path:
-    :return:
+    :param file_path: a proto file path
+    :return: the versioned proto_path
     """
     version_regex = re.compile(r"^v[1-9].*")
     directories = file_path.split("/")
