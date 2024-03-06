@@ -64,6 +64,7 @@ public class OpenTelemetryMetricsRecorderTest {
   private static final String OPERATION_COUNT = SERVICE_NAME + "/operation_count";
   private static final String ATTEMPT_LATENCY = SERVICE_NAME + "/attempt_latency";
   private static final String OPERATION_LATENCY = SERVICE_NAME + "/operation_latency";
+  private static final String DEFAULT_METHOD_NAME = "fake_service.fake_method";
   // stricter way of testing for early detection of unused stubs and argument mismatches
   @Rule
   public final MockitoRule mockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
@@ -101,7 +102,7 @@ public class OpenTelemetryMetricsRecorderTest {
         "status",
         statusCode.toString(),
         "method_name",
-        "fake_service.fake_method",
+        DEFAULT_METHOD_NAME,
         "language",
         MetricsTracer.DEFAULT_LANGUAGE);
   }
@@ -156,10 +157,12 @@ public class OpenTelemetryMetricsRecorderTest {
 
     Attributes otelAttributes = otelMetricsRecorder.toOtelAttributes(attributes);
 
-    Truth.assertThat(otelAttributes.get(AttributeKey.stringKey("status"))).isEqualTo("OK");
+    Truth.assertThat(otelAttributes.get(AttributeKey.stringKey("status")))
+        .isEqualTo(Code.OK.toString());
     Truth.assertThat(otelAttributes.get(AttributeKey.stringKey("method_name")))
-        .isEqualTo("fake_service.fake_method");
-    Truth.assertThat(otelAttributes.get(AttributeKey.stringKey("language"))).isEqualTo("Java");
+        .isEqualTo(DEFAULT_METHOD_NAME);
+    Truth.assertThat(otelAttributes.get(AttributeKey.stringKey("language")))
+        .isEqualTo(MetricsTracer.DEFAULT_LANGUAGE);
   }
 
   @Test

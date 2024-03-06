@@ -72,7 +72,7 @@ public class OpenTelemetryMetricsRecorder implements MetricsRecorder {
   public OpenTelemetryMetricsRecorder(OpenTelemetry openTelemetry, String serviceName) {
     Meter meter =
         openTelemetry
-            .meterBuilder("Gax-OtelMetrics")
+            .meterBuilder("gax-java")
             .setInstrumentationVersion(GaxProperties.getGaxVersion())
             .build();
     this.attemptLatencyRecorder =
