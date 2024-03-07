@@ -50,8 +50,8 @@ public class HttpJsonCallableFactoryTest {
   public void testGetSpanName() {
     Map<String, SpanName> validNames =
         ImmutableMap.of(
-            "compute.projects.disableXpnHost", SpanName.of("compute.projects", "disableXpnHost"),
-            "client.method", SpanName.of("client", "method"));
+            "google.cloud.service.v1.CoolService/CoolRPC", SpanName.of("CoolService", "CoolRPC"),
+            "CoolService/CoolRPC", SpanName.of("CoolService", "CoolRPC"));
 
     for (Entry<String, SpanName> entry : validNames.entrySet()) {
       @SuppressWarnings("unchecked")
