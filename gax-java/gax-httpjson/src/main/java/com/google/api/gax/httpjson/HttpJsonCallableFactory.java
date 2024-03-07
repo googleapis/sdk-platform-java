@@ -52,10 +52,8 @@ import javax.annotation.Nonnull;
 
 /** Class with utility methods to create http/json-based direct callables. */
 public class HttpJsonCallableFactory {
-  // Used to extract service and method name from a grpc MethodDescriptor.
-  // fullMethodName has the format: service.resource.action
-  // For example: compute.instances.addAccessConfig
-  private static final Pattern FULL_METHOD_NAME_REGEX = Pattern.compile("^(.+)\\.(.+)$");
+  // Used to extract service and method name from a HttpJson MethodDescriptor.
+  private static final Pattern FULL_METHOD_NAME_REGEX = Pattern.compile("^.*?([^./]+)/([^./]+)$");
 
   private HttpJsonCallableFactory() {}
 
