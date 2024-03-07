@@ -30,7 +30,6 @@
 package com.google.api.gax.httpjson;
 
 import com.google.api.core.InternalApi;
-import com.google.api.core.ObsoleteApi;
 import com.google.api.gax.longrunning.OperationSnapshot;
 import com.google.api.gax.rpc.BatchingCallSettings;
 import com.google.api.gax.rpc.Callables;
@@ -41,11 +40,15 @@ import com.google.api.gax.rpc.OperationCallable;
 import com.google.api.gax.rpc.PagedCallSettings;
 import com.google.api.gax.rpc.ServerStreamingCallSettings;
 import com.google.api.gax.rpc.ServerStreamingCallable;
+import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.UnaryCallSettings;
 import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.gax.tracing.SpanName;
+import com.google.api.gax.tracing.TracedBatchingCallable;
+import com.google.api.gax.tracing.TracedServerStreamingCallable;
 import com.google.api.gax.tracing.TracedUnaryCallable;
 import com.google.common.base.Preconditions;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.Nonnull;
@@ -59,8 +62,9 @@ public class HttpJsonCallableFactory {
 
   private HttpJsonCallableFactory() {}
 
-  private static <RequestT, ResponseT> UnaryCallable<RequestT, ResponseT> createDirectUnaryCallable(
-      HttpJsonCallSettings<RequestT, ResponseT> httpJsonCallSettings) {
+  private static <RequestT, ResponseT> UnaryCallable<RequestT, ResponseT> createUnaryCallable(
+      HttpJsonCallSettings<RequestT, ResponseT> httpJsonCallSettings,
+      Set<StatusCode.Code> retryableCodes) {
     UnaryCallable<RequestT, ResponseT> callable =
         new HttpJsonDirectCallable<>(
             httpJsonCallSettings.getMethodDescriptor(), httpJsonCallSettings.getTypeRegistry());
@@ -70,33 +74,7 @@ public class HttpJsonCallableFactory {
           new HttpJsonUnaryRequestParamCallable<>(
               callable, httpJsonCallSettings.getParamsExtractor());
     }
-    return callable;
-  }
-
-  /** Create httpJson UnaryCallable with request mutator. */
-  static <RequestT, ResponseT> UnaryCallable<RequestT, ResponseT> createUnaryCallable(
-      UnaryCallable<RequestT, ResponseT> innerCallable,
-      UnaryCallSettings<?, ?> callSettings,
-      HttpJsonCallSettings<RequestT, ResponseT> httpJsonCallSettings,
-      ClientContext clientContext) {
-    UnaryCallable<RequestT, ResponseT> callable =
-        new HttpJsonExceptionCallable<>(innerCallable, callSettings.getRetryableCodes());
-    callable =
-        Callables.retrying(
-            callable, callSettings, clientContext, httpJsonCallSettings.getRequestMutator());
-    return callable.withDefaultCallContext(clientContext.getDefaultCallContext());
-  }
-
-  /** Use {@link #createUnaryCallable createUnaryCallable} method instead. */
-  @ObsoleteApi("Please use other httpJson UnaryCallable method instead")
-  static <RequestT, ResponseT> UnaryCallable<RequestT, ResponseT> createUnaryCallable(
-      UnaryCallable<RequestT, ResponseT> innerCallable,
-      UnaryCallSettings<?, ?> callSettings,
-      ClientContext clientContext) {
-    UnaryCallable<RequestT, ResponseT> callable =
-        new HttpJsonExceptionCallable<>(innerCallable, callSettings.getRetryableCodes());
-    callable = Callables.retrying(callable, callSettings, clientContext);
-    return callable.withDefaultCallContext(clientContext.getDefaultCallContext());
+    return new HttpJsonExceptionCallable<>(callable, retryableCodes);
   }
 
   /**
@@ -111,12 +89,15 @@ public class HttpJsonCallableFactory {
       HttpJsonCallSettings<RequestT, ResponseT> httpJsonCallSettings,
       UnaryCallSettings<?, ?> callSettings,
       ClientContext clientContext) {
-    UnaryCallable<RequestT, ResponseT> callable = createDirectUnaryCallable(httpJsonCallSettings);
-    callable = new HttpJsonExceptionCallable<>(callable, callSettings.getRetryableCodes());
-    callable =
-        Callables.retrying(
-            callable, callSettings, clientContext, httpJsonCallSettings.getRequestMutator());
-
+    UnaryCallable<RequestT, ResponseT> callable =
+        createUnaryCallable(httpJsonCallSettings, callSettings.getRetryableCodes());
+    if (httpJsonCallSettings.getRequestMutator() != null) {
+      callable =
+          Callables.retrying(
+              callable, callSettings, clientContext, httpJsonCallSettings.getRequestMutator());
+    } else {
+      callable = Callables.retrying(callable, callSettings, clientContext);
+    }
     return callable;
   }
 
@@ -133,16 +114,15 @@ public class HttpJsonCallableFactory {
       HttpJsonCallSettings<RequestT, ResponseT> httpJsonCallSettings,
       UnaryCallSettings<RequestT, ResponseT> callSettings,
       ClientContext clientContext) {
-    UnaryCallable<RequestT, ResponseT> innerCallable =
-        createDirectUnaryCallable(httpJsonCallSettings);
-
-    innerCallable =
+    UnaryCallable<RequestT, ResponseT> callable =
+        createBaseUnaryCallable(httpJsonCallSettings, callSettings, clientContext);
+    callable =
         new TracedUnaryCallable<>(
-            innerCallable,
+            callable,
             clientContext.getTracerFactory(),
             getSpanName(httpJsonCallSettings.getMethodDescriptor()));
 
-    return createUnaryCallable(innerCallable, callSettings, httpJsonCallSettings, clientContext);
+    return callable.withDefaultCallContext(clientContext.getDefaultCallContext());
   }
 
   /**
@@ -159,9 +139,8 @@ public class HttpJsonCallableFactory {
           HttpJsonCallSettings<RequestT, ResponseT> httpJsonCallSettings,
           PagedCallSettings<RequestT, ResponseT, PagedListResponseT> pagedCallSettings,
           ClientContext clientContext) {
-    UnaryCallable<RequestT, ResponseT> callable = createDirectUnaryCallable(httpJsonCallSettings);
-    callable =
-        createUnaryCallable(callable, pagedCallSettings, httpJsonCallSettings, clientContext);
+    UnaryCallable<RequestT, ResponseT> callable =
+        createUnaryCallable(httpJsonCallSettings, pagedCallSettings.getRetryableCodes());
     UnaryCallable<RequestT, PagedListResponseT> pagedCallable =
         Callables.paged(callable, pagedCallSettings);
     return pagedCallable.withDefaultCallContext(clientContext.getDefaultCallContext());
@@ -181,9 +160,14 @@ public class HttpJsonCallableFactory {
       HttpJsonCallSettings<RequestT, ResponseT> httpJsonCallSettings,
       BatchingCallSettings<RequestT, ResponseT> batchingCallSettings,
       ClientContext clientContext) {
-    UnaryCallable<RequestT, ResponseT> callable = createDirectUnaryCallable(httpJsonCallSettings);
+    UnaryCallable<RequestT, ResponseT> callable =
+        createBaseUnaryCallable(httpJsonCallSettings, batchingCallSettings, clientContext);
     callable =
-        createUnaryCallable(callable, batchingCallSettings, httpJsonCallSettings, clientContext);
+        new TracedBatchingCallable<>(
+            callable,
+            clientContext.getTracerFactory(),
+            getSpanName(httpJsonCallSettings.getMethodDescriptor()),
+            batchingCallSettings.getBatchingDescriptor());
     callable = Callables.batching(callable, batchingCallSettings, clientContext);
     return callable.withDefaultCallContext(clientContext.getDefaultCallContext());
   }
@@ -224,6 +208,13 @@ public class HttpJsonCallableFactory {
     }
 
     callable = Callables.retrying(callable, streamingCallSettings, clientContext);
+
+    callable =
+        new TracedServerStreamingCallable<>(
+            callable,
+            clientContext.getTracerFactory(),
+            getSpanName(httpJsoncallSettings.getMethodDescriptor()));
+
     return callable.withDefaultCallContext(clientContext.getDefaultCallContext());
   }
 

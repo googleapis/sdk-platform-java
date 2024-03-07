@@ -81,7 +81,7 @@ public class HttpJsonSequenceServiceCallableFactory
           ClientContext clientContext,
           OperationsStub operationsStub) {
     UnaryCallable<RequestT, Operation> innerCallable =
-        HttpJsonCallableFactory.createBaseUnaryCallable(
+        HttpJsonCallableFactory.createUnaryCallable(
             httpJsonCallSettings, callSettings.getInitialCallSettings(), clientContext);
     HttpJsonOperationSnapshotCallable<RequestT, Operation> initialCallable =
         new HttpJsonOperationSnapshotCallable<RequestT, Operation>(
