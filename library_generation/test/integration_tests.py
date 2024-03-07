@@ -17,12 +17,14 @@ import shutil
 import unittest
 from distutils.dir_util import copy_tree
 from distutils.file_util import copy_file
+from filecmp import cmp
 from filecmp import dircmp
 
 from git import Repo
 from pathlib import Path
 from typing import List
-from typing import Dict
+
+from library_generation.generate_pr_description import generate_pr_descriptions
 from library_generation.generate_repo import generate_from_yaml
 from library_generation.model.generation_config import from_yaml, GenerationConfig
 from library_generation.test.compare_poms import compare_xml
@@ -49,6 +51,35 @@ committish_map = {
 
 
 class IntegrationTest(unittest.TestCase):
+    def test_get_commit_message_success(self):
+        repo_url = "https://github.com/googleapis/googleapis.git"
+        config_files = self.__get_config_files(config_dir)
+        monorepo_baseline_commit = "a17d4caf184b050d50cacf2b0d579ce72c31ce74"
+        split_repo_baseline_commit = "679060c64136e85b52838f53cfe612ce51e60d1d"
+        for repo, config_file in config_files:
+            baseline_commit = (
+                monorepo_baseline_commit
+                if repo == "google-cloud-java"
+                else split_repo_baseline_commit
+            )
+            description = generate_pr_descriptions(
+                generation_config_yaml=config_file,
+                repo_url=repo_url,
+                baseline_commit=baseline_commit,
+            )
+            description_file = f"{config_dir}/{repo}/pr-description.txt"
+            if os.path.isfile(f"{description_file}"):
+                os.remove(f"{description_file}")
+            with open(f"{description_file}", "w+") as f:
+                f.write(description)
+            self.assertTrue(
+                cmp(
+                    f"{config_dir}/{repo}/pr-description-golden.txt",
+                    f"{description_file}",
+                )
+            )
+            os.remove(f"{description_file}")
+
     def test_generate_repo(self):
         shutil.rmtree(f"{golden_dir}", ignore_errors=True)
         os.makedirs(f"{golden_dir}", exist_ok=True)
@@ -150,7 +181,7 @@ class IntegrationTest(unittest.TestCase):
             repo = Repo(dest)
         else:
             dest = default_dest
-            repo_dest = f"{golden_dir}/{repo}"
+            shutil.rmtree(dest, ignore_errors=True)
             repo_url = f"{repo_prefix}/{repo}"
             print(f"Cloning repository {repo_url}")
             repo = Repo.clone_from(repo_url, dest)
@@ -169,6 +200,8 @@ class IntegrationTest(unittest.TestCase):
     def __get_config_files(cls, path: str) -> List[tuple[str, str]]:
         config_files = []
         for sub_dir in Path(path).resolve().iterdir():
+            if sub_dir.is_file():
+                continue
             repo = sub_dir.name
             if repo == "golden":
                 continue
