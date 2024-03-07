@@ -94,10 +94,14 @@ class IntegrationTest(unittest.TestCase):
                     target_repo_dest,
                     ignore=[".repo-metadata.json"],
                 )
+                diff_files = []
+                left_only = []
+                right_only = []
+                self.__recursive_diff_files(compare_result, diff_files, left_only, right_only)
                 # compare source code
-                self.assertEqual([], compare_result.left_only)
-                self.assertEqual([], compare_result.right_only)
-                self.assertEqual([], compare_result.diff_files)
+                self.assertEqual([], left_only, "There were files found only in the golden dir")
+                self.assertEqual([], right_only, "There were files found only in the generated dir")
+                self.assertEqual([], diff_files, "Some files were found to have differences")
                 print("Source code comparison succeed.")
                 # compare .repo-metadata.json
                 self.assertTrue(
@@ -190,3 +194,16 @@ class IntegrationTest(unittest.TestCase):
         res = [(key, value) for key, value in data.items()]
 
         return sorted(res, key=lambda x: x[0])
+
+    @classmethod
+    def __recursive_diff_files(self, dcmp: dircmp, diff_files: List[str], left_only: List[str], right_only: List[str]):
+        """
+        recursively compares two subdirectories. The found differences are passed to three expected list references
+        """
+        found_differences = False
+        diff_files.extend(dcmp.diff_files)
+        left_only.extend(dcmp.left_only)
+        right_only.extend(dcmp.right_only)
+        for sub_dcmp in dcmp.subdirs.values():
+            recursive_diff_files(sub_dcmp)
+
