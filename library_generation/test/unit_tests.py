@@ -22,7 +22,6 @@ import io
 import contextlib
 from pathlib import Path
 from difflib import unified_diff
-from unittest.mock import patch
 
 from typing import List
 from parameterized import parameterized
@@ -33,9 +32,7 @@ from library_generation.model.gapic_inputs import parse as parse_build_file
 from library_generation.model.generation_config import from_yaml
 from library_generation.model.library_config import LibraryConfig
 from library_generation.utilities import find_versioned_proto_path
-from library_generation.utilities import format_commit_message
 from library_generation.utilities import get_file_paths
-from library_generation.utilities import wrap_nested_commit
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 resources_dir = os.path.join(script_dir, "resources")
@@ -509,71 +506,6 @@ class UtilitiesTest(unittest.TestCase):
         self.__compare_files(
             expect=f"{repository_path}/gapic-libraries-bom/pom-golden.xml",
             actual=f"{repository_path}/gapic-libraries-bom/pom.xml",
-        )
-
-    @parameterized.expand(
-        [
-            (
-                "feat: a commit message\nPiperOrigin-RevId: 123456",
-                [
-                    "BEGIN_NESTED_COMMIT",
-                    "feat: [example_library] a commit message",
-                    "PiperOrigin-RevId: 123456",
-                    "END_NESTED_COMMIT",
-                ],
-                True,
-            ),
-            (
-                "feat: a commit message\nPiperOrigin-RevId: 123456",
-                [
-                    "BEGIN_NESTED_COMMIT",
-                    "feat: a commit message",
-                    "PiperOrigin-RevId: 123456",
-                    "END_NESTED_COMMIT",
-                ],
-                False,
-            ),
-            (
-                "feat: a commit message\nfix: an another commit message\nPiperOrigin-RevId: 123456",
-                [
-                    "BEGIN_NESTED_COMMIT",
-                    "feat: [example_library] a commit message",
-                    "fix: [example_library] an another commit message",
-                    "PiperOrigin-RevId: 123456",
-                    "END_NESTED_COMMIT",
-                ],
-                True,
-            ),
-            (
-                "feat: a commit message\nfix: an another commit message\nPiperOrigin-RevId: 123456",
-                [
-                    "BEGIN_NESTED_COMMIT",
-                    "feat: a commit message",
-                    "fix: an another commit message",
-                    "PiperOrigin-RevId: 123456",
-                    "END_NESTED_COMMIT",
-                ],
-                False,
-            ),
-        ]
-    )
-    def test_format_commit_message_success(self, message, expected, is_monorepo):
-        with patch("git.Commit") as mock_commit:
-            commit = mock_commit.return_value
-            commit.message = message
-            commits = {commit: "example_library"}
-            self.assertEqual(expected, format_commit_message(commits, is_monorepo))
-
-    def test_wrap_nested_commit_success(self):
-        messages = ["a commit message", "another message"]
-        self.assertEqual(
-            [
-                "BEGIN_NESTED_COMMIT",
-                "a commit message",
-                "another message",
-                "END_NESTED_COMMIT",
-            ],
-            wrap_nested_commit(messages),
         )
 
     def __compare_files(self, expect: str, actual: str):
