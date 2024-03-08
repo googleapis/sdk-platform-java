@@ -19,20 +19,20 @@ If you are using Maven, add this to your pom.xml file:
 <dependency>
   <groupId>com.google.api.grpc</groupId>
   <artifactId>proto-google-common-protos</artifactId>
-  <version>2.33.0</version>
+  <version>2.36.0</version>
 </dependency>
 ```
 
 If you are using Gradle without BOM, add this to your dependencies:
 
 ```Groovy
-implementation 'com.google.api.grpc:proto-google-common-protos:2.33.0'
+implementation 'com.google.api.grpc:proto-google-common-protos:2.36.0'
 ```
 
 If you are using SBT, add this to your dependencies:
 
 ```Scala
-libraryDependencies += "com.google.api.grpc" % "proto-google-common-protos" % "2.33.0"
+libraryDependencies += "com.google.api.grpc" % "proto-google-common-protos" % "2.36.0"
 ```
 
 ## Authentication
