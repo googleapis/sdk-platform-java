@@ -107,12 +107,14 @@ class IntegrationTest(unittest.TestCase):
                 generation_config_yaml=config_file, repository_path=repo_dest
             )
             # compare result
-            print('Generation finished successfully. Will now compare differences between generated and existing libraries')
+            print(
+                "Generation finished successfully. Will now compare differences between generated and existing libraries"
+            )
             for library_name in library_names:
                 actual_library = (
                     f"{repo_dest}/{library_name}" if config.is_monorepo else repo_dest
                 )
-                print('*'*50)
+                print("*" * 50)
                 print(f"Checking for differences in '{library_name}'.")
                 print(f"  The expected library is in {golden_dir}/{library_name}.")
                 print(f"  The actual library is in {actual_library}. ")
@@ -128,19 +130,21 @@ class IntegrationTest(unittest.TestCase):
                 golden_only = []
                 generated_only = []
                 # compare source code
-                self.__recursive_diff_files(compare_result, diff_files, golden_only, generated_only)
+                self.__recursive_diff_files(
+                    compare_result, diff_files, golden_only, generated_only
+                )
 
                 # print all found differences for inspection
-                print_file = lambda f: print(f'   -  {f}')
+                print_file = lambda f: print(f"   -  {f}")
                 if len(diff_files) > 0:
-                  print("  Some files (found in both folders) are differing:")
-                  [print_file(f) for f in diff_files]
+                    print("  Some files (found in both folders) are differing:")
+                    [print_file(f) for f in diff_files]
                 if len(golden_only) > 0:
-                  print("  There were files found only in the golden dir:")
-                  [print_file(f) for f in golden_only]
+                    print("  There were files found only in the golden dir:")
+                    [print_file(f) for f in golden_only]
                 if len(generated_only) > 0:
-                  print("  Some files were found to have differences:")
-                  [print_file(f) for f in generated_only]
+                    print("  Some files were found to have differences:")
+                    [print_file(f) for f in generated_only]
 
                 self.assertTrue(len(golden_only) == 0)
                 self.assertTrue(len(generated_only) == 0)
@@ -220,7 +224,7 @@ class IntegrationTest(unittest.TestCase):
             if sub_dir.is_file():
                 continue
             repo = sub_dir.name
-            if repo in ["golden", 'java-bigtable']:
+            if repo in ["golden", "java-bigtable"]:
                 continue
             config = f"{sub_dir}/{config_name}"
             config_files.append((repo, config))
@@ -242,7 +246,14 @@ class IntegrationTest(unittest.TestCase):
         return sorted(res, key=lambda x: x[0])
 
     @classmethod
-    def __recursive_diff_files(self, dcmp: dircmp, diff_files: List[str], left_only: List[str], right_only: List[str], dirname: str = ''):
+    def __recursive_diff_files(
+        self,
+        dcmp: dircmp,
+        diff_files: List[str],
+        left_only: List[str],
+        right_only: List[str],
+        dirname: str = "",
+    ):
         """
         recursively compares two subdirectories. The found differences are passed to three expected list references
         """
@@ -251,5 +262,6 @@ class IntegrationTest(unittest.TestCase):
         left_only.extend(map(append_dirname, dcmp.left_only))
         right_only.extend(map(append_dirname, dcmp.right_only))
         for sub_dirname, sub_dcmp in dcmp.subdirs.items():
-            self.__recursive_diff_files(sub_dcmp, diff_files, left_only, right_only, dirname + sub_dirname + '/')
-
+            self.__recursive_diff_files(
+                sub_dcmp, diff_files, left_only, right_only, dirname + sub_dirname + "/"
+            )
