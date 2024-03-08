@@ -17,14 +17,16 @@ import shutil
 import unittest
 from distutils.dir_util import copy_tree
 from distutils.file_util import copy_file
+from filecmp import cmp
 from filecmp import dircmp
 
 from git import Repo
 from pathlib import Path
 from typing import List
-from typing import Dict
+
+from library_generation.generate_pr_description import generate_pr_descriptions
 from library_generation.generate_repo import generate_from_yaml
-from library_generation.model.generation_config import from_yaml
+from library_generation.model.generation_config import from_yaml, GenerationConfig
 from library_generation.test.compare_poms import compare_xml
 from library_generation.utilities import (
     get_library_name,
@@ -40,42 +42,87 @@ script_dir = os.path.dirname(os.path.realpath(__file__))
 config_dir = f"{script_dir}/resources/integration"
 golden_dir = f"{config_dir}/golden"
 repo_prefix = "https://github.com/googleapis"
-committish_list = ["chore/test-hermetic-build"]  # google-cloud-java
-output_folder = shell_call("get_output_folder")
+output_dir = shell_call("get_output_folder")
+# this map tells which branch of each repo should we use for our diff tests
+committish_map = {
+    "google-cloud-java": "chore/test-hermetic-build",
+    "java-bigtable": "chore/test-hermetic-build",
+}
 
 
 class IntegrationTest(unittest.TestCase):
+    def test_get_commit_message_success(self):
+        repo_url = "https://github.com/googleapis/googleapis.git"
+        config_files = self.__get_config_files(config_dir)
+        monorepo_baseline_commit = "a17d4caf184b050d50cacf2b0d579ce72c31ce74"
+        split_repo_baseline_commit = "679060c64136e85b52838f53cfe612ce51e60d1d"
+        for repo, config_file in config_files:
+            baseline_commit = (
+                monorepo_baseline_commit
+                if repo == "google-cloud-java"
+                else split_repo_baseline_commit
+            )
+            description = generate_pr_descriptions(
+                generation_config_yaml=config_file,
+                repo_url=repo_url,
+                baseline_commit=baseline_commit,
+            )
+            description_file = f"{config_dir}/{repo}/pr-description.txt"
+            if os.path.isfile(f"{description_file}"):
+                os.remove(f"{description_file}")
+            with open(f"{description_file}", "w+") as f:
+                f.write(description)
+            self.assertTrue(
+                cmp(
+                    f"{config_dir}/{repo}/pr-description-golden.txt",
+                    f"{description_file}",
+                )
+            )
+            os.remove(f"{description_file}")
+
     def test_generate_repo(self):
         shutil.rmtree(f"{golden_dir}", ignore_errors=True)
         os.makedirs(f"{golden_dir}", exist_ok=True)
         config_files = self.__get_config_files(config_dir)
-        i = 0
-        for repo, config_file in config_files.items():
+        for repo, config_file in config_files:
+            config = from_yaml(config_file)
             repo_dest = self.__pull_repo_to(
-                Path(f"{golden_dir}/{repo}"), repo, committish_list[i]
+                Path(f"{output_dir}/{repo}"), repo, committish_map[repo]
             )
-            library_names = self.__get_library_names_from_config(config_file)
+            library_names = self.__get_library_names_from_config(config)
             # prepare golden files
             for library_name in library_names:
-                copy_tree(f"{repo_dest}/{library_name}", f"{golden_dir}/{library_name}")
-            copy_tree(
-                f"{repo_dest}/gapic-libraries-bom", f"{golden_dir}/gapic-libraries-bom"
-            )
-            copy_file(f"{repo_dest}/pom.xml", golden_dir)
+                if config.is_monorepo:
+                    copy_tree(
+                        f"{repo_dest}/{library_name}", f"{golden_dir}/{library_name}"
+                    )
+                    copy_tree(
+                        f"{repo_dest}/gapic-libraries-bom",
+                        f"{golden_dir}/gapic-libraries-bom",
+                    )
+                    copy_file(f"{repo_dest}/pom.xml", golden_dir)
+                else:
+                    copy_tree(f"{repo_dest}", f"{golden_dir}/{library_name}")
             generate_from_yaml(
                 generation_config_yaml=config_file, repository_path=repo_dest
             )
             # compare result
             for library_name in library_names:
+                actual_library = (
+                    f"{repo_dest}/{library_name}" if config.is_monorepo else repo_dest
+                )
                 print(
                     f"Generation finished. Will now compare "
                     f"the expected library in {golden_dir}/{library_name}, "
-                    f"with the actual library in {repo_dest}/{library_name}. "
+                    f"with the actual library in {actual_library}. "
                     f"Compare generation result: "
+                )
+                target_repo_dest = (
+                    f"{repo_dest}/{library_name}" if config.is_monorepo else repo_dest
                 )
                 compare_result = dircmp(
                     f"{golden_dir}/{library_name}",
-                    f"{repo_dest}/{library_name}",
+                    target_repo_dest,
                     ignore=[".repo-metadata.json"],
                 )
                 # compare source code
@@ -87,11 +134,15 @@ class IntegrationTest(unittest.TestCase):
                 self.assertTrue(
                     self.__compare_json_files(
                         f"{golden_dir}/{library_name}/.repo-metadata.json",
-                        f"{repo_dest}/{library_name}/.repo-metadata.json",
+                        f"{target_repo_dest}/.repo-metadata.json",
                     ),
                     msg=f"The generated {library_name}/.repo-metadata.json is different from golden.",
                 )
                 print(".repo-metadata.json comparison succeed.")
+
+                if not config.is_monorepo:
+                    continue
+
                 # compare gapic-libraries-bom/pom.xml and pom.xml
                 self.assertFalse(
                     compare_xml(
@@ -109,14 +160,12 @@ class IntegrationTest(unittest.TestCase):
                     )
                 )
                 print("pom.xml comparison succeed.")
-            # remove google-cloud-java
-            i += 1
 
     @classmethod
     def __pull_repo_to(cls, default_dest: Path, repo: str, committish: str) -> str:
         if "RUNNING_IN_DOCKER" in os.environ:
             # the docker image expects the repo to be in /workspace
-            dest_in_docker = "/workspace"
+            dest_in_docker = f"/workspace/{repo}"
             run_process_and_print_output(
                 [
                     "git",
@@ -126,13 +175,13 @@ class IntegrationTest(unittest.TestCase):
                     "safe.directory",
                     dest_in_docker,
                 ],
-                "Add /workspace to safe directories",
+                f"Add /workspace/{repo} to safe directories",
             )
             dest = Path(dest_in_docker)
             repo = Repo(dest)
         else:
             dest = default_dest
-            repo_dest = f"{golden_dir}/{repo}"
+            shutil.rmtree(dest, ignore_errors=True)
             repo_url = f"{repo_prefix}/{repo}"
             print(f"Cloning repository {repo_url}")
             repo = Repo.clone_from(repo_url, dest)
@@ -140,8 +189,7 @@ class IntegrationTest(unittest.TestCase):
         return str(dest)
 
     @classmethod
-    def __get_library_names_from_config(cls, config_path: str) -> List[str]:
-        config = from_yaml(config_path)
+    def __get_library_names_from_config(cls, config: GenerationConfig) -> List[str]:
         library_names = []
         for library in config.libraries:
             library_names.append(f"java-{get_library_name(library)}")
@@ -149,15 +197,16 @@ class IntegrationTest(unittest.TestCase):
         return library_names
 
     @classmethod
-    def __get_config_files(cls, path: str) -> Dict[str, str]:
-        config_files = {}
+    def __get_config_files(cls, path: str) -> List[tuple[str, str]]:
+        config_files = []
         for sub_dir in Path(path).resolve().iterdir():
+            if sub_dir.is_file():
+                continue
             repo = sub_dir.name
-            # skip the split repo.
             if repo == "golden" or repo == "java-bigtable":
                 continue
             config = f"{sub_dir}/{config_name}"
-            config_files[repo] = config
+            config_files.append((repo, config))
 
         return config_files
 
