@@ -76,7 +76,7 @@ class IntegrationTest(unittest.TestCase):
                 cmp(
                     f"{config_dir}/{repo}/pr-description-golden.txt",
                     f"{description_file}",
-                )
+                ), "The generated PR description does not match the expected golden file"
             )
             os.remove(f"{description_file}")
 
