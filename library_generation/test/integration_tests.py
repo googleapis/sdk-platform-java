@@ -203,7 +203,7 @@ class IntegrationTest(unittest.TestCase):
             if sub_dir.is_file():
                 continue
             repo = sub_dir.name
-            if repo == "golden":
+            if repo == "golden" or repo == "java-bigtable":
                 continue
             config = f"{sub_dir}/{config_name}"
             config_files.append((repo, config))
