@@ -68,11 +68,16 @@ def generate(
     repo_url: str,
     baseline_commit: str,
 ) -> str:
-    return generate_pr_descriptions(
+    description = generate_pr_descriptions(
         generation_config_yaml=generation_config_yaml,
         repo_url=repo_url,
         baseline_commit=baseline_commit,
     )
+    idx = generation_config_yaml.rfind("/")
+    config_path = generation_config_yaml[:idx]
+    with open(f"{config_path}/pr_description.txt", "w+") as f:
+        f.write(description)
+    return description
 
 
 def generate_pr_descriptions(
