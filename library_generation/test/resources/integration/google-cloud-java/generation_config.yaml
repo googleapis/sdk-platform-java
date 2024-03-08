@@ -48,3 +48,17 @@ libraries:
     - proto_path: google/cloud/alloydb/connectors/v1
     - proto_path: google/cloud/alloydb/connectors/v1alpha
     - proto_path: google/cloud/alloydb/connectors/v1beta
+
+  - api_shortname: documentai
+    name_pretty: Document AI
+    product_documentation: https://cloud.google.com/compute/docs/documentai/
+    api_description: allows developers to unlock insights from your documents with machine
+        learning.
+    library_name: document-ai
+    release_level: stable
+    issue_tracker: https://issuetracker.google.com/savedsearches/559755
+    GAPICs:
+    - proto_path: google/cloud/documentai/v1
+    - proto_path: google/cloud/documentai/v1beta1
+    - proto_path: google/cloud/documentai/v1beta2
+    - proto_path: google/cloud/documentai/v1beta3

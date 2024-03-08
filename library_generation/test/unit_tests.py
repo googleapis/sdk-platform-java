@@ -22,6 +22,7 @@ import io
 import contextlib
 from pathlib import Path
 from difflib import unified_diff
+
 from typing import List
 from parameterized import parameterized
 from library_generation import utilities as util
@@ -30,6 +31,8 @@ from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.gapic_inputs import parse as parse_build_file
 from library_generation.model.generation_config import from_yaml
 from library_generation.model.library_config import LibraryConfig
+from library_generation.utilities import find_versioned_proto_path
+from library_generation.utilities import get_file_paths
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 resources_dir = os.path.join(script_dir, "resources")
@@ -213,6 +216,36 @@ class UtilitiesTest(unittest.TestCase):
         self.assertEqual("google/cloud/asset/v1p2beta1", gapics[2].proto_path)
         self.assertEqual("google/cloud/asset/v1p5beta1", gapics[3].proto_path)
         self.assertEqual("google/cloud/asset/v1p7beta1", gapics[4].proto_path)
+
+    def test_get_file_paths_from_yaml_success(self):
+        paths = get_file_paths(from_yaml(f"{test_config_dir}/generation_config.yaml"))
+        self.assertEqual(
+            {
+                "google/cloud/asset/v1": "asset",
+                "google/cloud/asset/v1p1beta1": "asset",
+                "google/cloud/asset/v1p2beta1": "asset",
+                "google/cloud/asset/v1p5beta1": "asset",
+                "google/cloud/asset/v1p7beta1": "asset",
+            },
+            paths,
+        )
+
+    @parameterized.expand(
+        [
+            (
+                "google/cloud/aiplatform/v1/schema/predict/params/image_classification.proto",
+                "google/cloud/aiplatform/v1",
+            ),
+            (
+                "google/cloud/asset/v1p2beta1/assets.proto",
+                "google/cloud/asset/v1p2beta1",
+            ),
+            ("google/type/color.proto", "google/type/color.proto"),
+        ]
+    )
+    def test_find_versioned_proto_path(self, file_path, expected):
+        proto_path = find_versioned_proto_path(file_path)
+        self.assertEqual(expected, proto_path)
 
     @parameterized.expand(
         [
