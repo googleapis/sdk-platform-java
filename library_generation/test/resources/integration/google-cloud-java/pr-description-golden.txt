@@ -1,7 +1,55 @@
-This pull request is generated with proto changes between googleapis commit a17d4caf184b050d50cacf2b0d579ce72c31ce74 (exclusive) and 1a45bf7393b52407188c82e63101db7dc9c72026 (inclusive).
+This pull request is generated with proto changes between googleapis commit a17d4caf184b050d50cacf2b0d579ce72c31ce74 (exclusive) and 9868a57470a969ffa1d21194a5c05d7a6e4e98cc (inclusive).
 Qualified commits are:
+[googleapis/googleapis@aa16fda](https://github.com/googleapis/googleapis/commit/aa16fdad909bc33e2d4ff04cfde56a46d0e52b13)
+[googleapis/googleapis@0733fdb](https://github.com/googleapis/googleapis/commit/0733fdb5f745192f9f3c95f8d08039286567cbcc)
+[googleapis/googleapis@b7c2f98](https://github.com/googleapis/googleapis/commit/b7c2f98f6df3231538514822de6d9ecedb83298b)
+[googleapis/googleapis@1da5299](https://github.com/googleapis/googleapis/commit/1da529959b075366bfc281070cdbd7874c6f132e)
+[googleapis/googleapis@9a9bc9b](https://github.com/googleapis/googleapis/commit/9a9bc9b427e4516f79b9753c4fad91d425334755)
 [googleapis/googleapis@7a9a855](https://github.com/googleapis/googleapis/commit/7a9a855287b5042410c93e5a510f40efd4ce6cb1)
 [googleapis/googleapis@c7fd8bd](https://github.com/googleapis/googleapis/commit/c7fd8bd652ac690ca84f485014f70b52eef7cb9e)
+BEGIN_NESTED_COMMIT
+feat: [alloydb] support for obtaining the public IP address of an Instance
+feat: [alloydb] support for getting PSC DNS name from the GetConnectionInfo API
+feat: [alloydb] add PSC cluster and instance configuration settings to enable/disable PSC and obtain the PSC endpoint name
+feat: [alloydb] add new API to list the databases in a project and location
+docs: [alloydb] clarified read pool config is for read pool type instances
+
+PiperOrigin-RevId: 610475013
+
+END_NESTED_COMMIT
+BEGIN_NESTED_COMMIT
+feat: [alloydb] support for obtaining the public IP address of an Instance
+feat: [alloydb] support for getting PSC DNS name from the GetConnectionInfo API
+
+PiperOrigin-RevId: 610415824
+
+END_NESTED_COMMIT
+BEGIN_NESTED_COMMIT
+docs: [document-ai] updated comments
+
+PiperOrigin-RevId: 607453878
+
+END_NESTED_COMMIT
+BEGIN_NESTED_COMMIT
+feat: [document-ai] A new message FoundationModelTuningOptions is added
+feat: [document-ai] A new field foundation_model_tuning_options is added to message TrainProcessorVersionRequest
+feat: [document-ai] A new field `labels` is added to messages `ProcessRequest` and `BatchProcessRequest`
+feat: [document-ai] A new field `display_name` is added to message `DocumentSchema`
+fix: [document-ai] deprecate `Dataset.document_warehouse_config`
+docs: [document-ai] updated comments
+
+PiperOrigin-RevId: 607358355
+
+END_NESTED_COMMIT
+BEGIN_NESTED_COMMIT
+feat: [document-ai] A new field `schema_override` is added to message `ProcessOptions`
+feat: [document-ai] A new field `labels` is added to messages `ProcessRequest` and `BatchProcessRequest`
+feat: [document-ai] A new field `display_name` is added to message `DocumentSchema`
+docs: [document-ai] updated comments
+
+PiperOrigin-RevId: 607148983
+
+END_NESTED_COMMIT
 BEGIN_NESTED_COMMIT
 feat: [document-ai] expose model_type in v1 processor, so that user can see the model_type after get or list processor version
 
@@ -15,5 +63,5 @@ PiperOrigin-RevId: 603726122
 
 END_NESTED_COMMIT
 BEGIN_NESTED_COMMIT
-feat: Regenerate with the Java code generator (gapic-generator-java) v2.34.0
+feat: Regenerate with the Java code generator (gapic-generator-java) v2.37.0
 END_NESTED_COMMIT
