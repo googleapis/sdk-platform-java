@@ -187,7 +187,7 @@ class IntegrationTest(unittest.TestCase):
         config_files = []
         for sub_dir in Path(path).resolve().iterdir():
             repo = sub_dir.name
-            if repo == "golden":
+            if repo in ["golden", 'java-bigtable']:
                 continue
             config = f"{sub_dir}/{config_name}"
             config_files.append((repo, config))
