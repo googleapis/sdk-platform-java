@@ -33,13 +33,13 @@ deep-copy-regex:
   dest: "/owl-bot-staging/java-common-protos/v1/proto-google-common-protos/src"
 
 # For shopping common protos
-- source: "google/shopping/merchant/reports/v1beta/google-cloud-merchant-reports-v1beta-java"
+- source: "/google/shopping/merchant/reports/v1beta/google-cloud-merchant-reports-v1beta-java"
   dest: "/owl-bot-staging/java-common-protos/v1/proto-google-common-protos/src"
 
 # It is only used once in https://github.com/googleapis/googleapis/blob/master/google/chat/v1/BUILD.bazel#L47,
 # and technically not a common proto, maybe a violation of AIP-215 if it is not.
 # However, it's better to put it here so that we don't have to manually add it to BUILD.bazel file and hermetic build scripts.
-- source: "google/apps/card/v1/google-apps-card-v1-java/proto-google-apps-card-v1-java"
+- source: "/google/apps/card/v1/google-apps-card-v1-java/proto-google-apps-card-v1-java"
   dest: "/owl-bot-staging/java-common-protos/v1/proto-google-common-protos/src"
 
 - source: "/google/logging/type/google-logging-type-java/proto-google-logging-type-java/src"
