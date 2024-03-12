@@ -50,6 +50,3 @@ feat: [cloudcontrolspartner] added CloudControlsPartner API
 PiperOrigin-RevId: 606720708
 
 END_NESTED_COMMIT
-BEGIN_NESTED_COMMIT
-feat: Regenerate with the Java code generator (gapic-generator-java) v2.37.0
-END_NESTED_COMMIT
