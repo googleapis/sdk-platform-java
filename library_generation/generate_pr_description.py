@@ -148,8 +148,8 @@ def __get_commit_messages(
 def __filter_qualified_commit(paths: Dict[str, str], commit: Commit) -> (Commit, str):
     """
     Returns a tuple of a commit and libray_name.
-    A qualified commit means at least one file changes in that commit is
-    within the versioned proto_path in paths.
+    A qualified commit means at least one file, excluding BUILD.bazel, changes
+    in that commit is within the versioned proto_path in paths.
 
     :param paths: a mapping from versioned proto_path to library_name.
     :param commit: a commit under consideration.
@@ -158,7 +158,7 @@ def __filter_qualified_commit(paths: Dict[str, str], commit: Commit) -> (Commit,
     """
     for file in commit.stats.files.keys():
         versioned_proto_path = find_versioned_proto_path(file)
-        if versioned_proto_path in paths:
+        if versioned_proto_path in paths and (not file.endswith("BUILD.bazel")):
             return commit, paths[versioned_proto_path]
     return ()
 
