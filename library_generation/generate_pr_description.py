@@ -23,6 +23,7 @@ from library_generation.utilities import find_versioned_proto_path
 from library_generation.utils.commit_message_formatter import format_commit_message
 from library_generation.utilities import get_file_paths
 from library_generation.utils.commit_message_formatter import wrap_nested_commit
+from library_generation.utils.commit_message_formatter import wrap_override_commit
 
 
 @click.group(invoke_without_command=False)
@@ -175,7 +176,11 @@ def __combine_commit_messages(
             f"[googleapis/googleapis@{short_sha}](https://github.com/googleapis/googleapis/commit/{commit.hexsha})"
         )
 
-    messages.extend(format_commit_message(commits=commits, is_monorepo=is_monorepo))
+    messages.extend(
+        wrap_override_commit(
+            format_commit_message(commits=commits, is_monorepo=is_monorepo)
+        )
+    )
 
     return "\n".join(messages)
 
