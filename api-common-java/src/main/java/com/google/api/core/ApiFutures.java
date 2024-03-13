@@ -161,7 +161,6 @@ public final class ApiFutures {
    *     callback}
    * @see Futures#catchingAsync(ListenableFuture, Class, AsyncFunction, Executor)
    */
-  @BetaApi
   public static <V, X extends Throwable> ApiFuture<V> catchingAsync(
       ApiFuture<V> input,
       Class<X> exceptionType,

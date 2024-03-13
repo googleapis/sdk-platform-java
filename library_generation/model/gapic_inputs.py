@@ -31,9 +31,13 @@ java_gapic_assembly_gradle_pkg\(
 (.*?)
 \)
 """
-resource_pattern = r"//google/cloud:common_resources_proto"
-location_pattern = r"//google/cloud/location:location_proto"
-iam_pattern = r"//google/iam/v1:iam_policy_proto"
+# match a line which the first character is "#".
+comment_pattern = r"^\s*\#+"
+pattern_to_proto = {
+    r"//google/cloud:common_resources_proto": "google/cloud/common_resources.proto",
+    r"//google/cloud/location:location_proto": "google/cloud/location/locations.proto",
+    r"//google/iam/v1:iam_policy_proto": "google/iam/v1/iam_policy.proto",
+}
 transport_pattern = r"transport = \"(.*?)\""
 rest_pattern = r"rest_numeric_enums = True"
 gapic_yaml_pattern = r"gapic_yaml = \"(.*?)\""
@@ -97,7 +101,9 @@ def parse(
     if len(assembly_target) > 0:
         include_samples = __parse_include_samples(assembly_target[0])
     if len(gapic_target) == 0:
-        return GapicInputs(include_samples=include_samples)
+        return GapicInputs(
+            additional_protos=additional_protos, include_samples=include_samples
+        )
 
     transport = __parse_transport(gapic_target[0])
     rest_numeric_enum = __parse_rest_numeric_enums(gapic_target[0])
@@ -119,12 +125,16 @@ def parse(
 
 def __parse_additional_protos(proto_library_target: str) -> str:
     res = [" "]
-    if len(re.findall(resource_pattern, proto_library_target)) != 0:
-        res.append("google/cloud/common_resources.proto")
-    if len(re.findall(location_pattern, proto_library_target)) != 0:
-        res.append("google/cloud/location/locations.proto")
-    if len(re.findall(iam_pattern, proto_library_target)) != 0:
-        res.append("google/iam/v1/iam_policy.proto")
+    lines = proto_library_target.split("\n")
+    for line in lines:
+        if len(re.findall(comment_pattern, line)) != 0:
+            # skip a line which the first charactor is "#" since it's
+            # a comment.
+            continue
+        for pattern in pattern_to_proto:
+            if len(re.findall(pattern, line)) == 0:
+                continue
+            res.append(pattern_to_proto[pattern])
     return " ".join(res)
 
 

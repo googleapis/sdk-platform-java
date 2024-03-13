@@ -15,8 +15,10 @@
 
 import click
 import library_generation.utilities as util
+import os
 from library_generation.generate_composed_library import generate_composed_library
 from library_generation.model.generation_config import from_yaml
+from library_generation.utils.monorepo_postprocessor import monorepo_postprocessing
 
 
 @click.group(invoke_without_command=False)
@@ -78,6 +80,11 @@ def generate_from_yaml(
     Parses a config yaml and generates libraries via
     generate_composed_library.py
     """
+    # convert paths to absolute paths so they can be correctly referenced in
+    # downstream scripts
+    generation_config_yaml = os.path.abspath(generation_config_yaml)
+    repository_path = os.path.abspath(repository_path)
+
     config = from_yaml(generation_config_yaml)
     target_libraries = config.libraries
     if target_library_api_shortname is not None:
@@ -102,7 +109,11 @@ def generate_from_yaml(
             versions_file=repo_config.versions_file,
         )
 
-    util.repo_level_post_process(
+    # we skip monorepo_postprocessing if not in a monorepo
+    if not config.is_monorepo:
+        return
+
+    monorepo_postprocessing(
         repository_path=repository_path, versions_file=repo_config.versions_file
     )
 

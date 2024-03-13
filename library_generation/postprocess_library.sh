@@ -22,7 +22,7 @@
 # different logic
 # 8 - configuration_yaml_path: path to the configuration yaml containing library
 # generation information for this library
-set -eo pipefail
+set -exo pipefail
 scripts_root=$(dirname "$(readlink -f "$0")")
 
 postprocessing_target=$1
@@ -61,22 +61,52 @@ fi
 
 # we determine the location of the .OwlBot.yaml file by checking if the target
 # folder is a monorepo folder or not
-if [[ "${postprocessing_target}" == *google-cloud-java* ]]; then
+if [[ "${is_monorepo}" == "true" ]]; then
   owlbot_yaml_relative_path=".OwlBot.yaml"
 else
   owlbot_yaml_relative_path=".github/.OwlBot.yaml"
 fi
 
+# Default values for running copy-code directly from host
+repo_bindings="-v ${postprocessing_target}:/workspace"
+repo_workspace="/workspace"
+preprocessed_libraries_binding="${owlbot_cli_source_folder}"
+
+# When running docker inside docker, we run into the issue of volume bindings
+# being mapped from the host machine to the child container (instead of the
+# parent container to child container) because we bind the `docker.sock` socket
+# to the parent container (i.e. docker calls use the host's filesystem context)
+# see https://serverfault.com/a/819371
+# We solve this by referencing environment variables that will be
+# set to produce the correct volume mapping.
+#
+# The workflow is: to check if we are in a docker container (via passed env var)
+# and use managed volumes (docker volume create) instead of bindings
+# (-v /path:/other-path). The volume names are also received as env vars.
+
+if [[ -n "${RUNNING_IN_DOCKER}" ]]; then
+  set -u # temporarily fail on unset variables
+  repo_bindings="${REPO_BINDING_VOLUMES}"
+  set +u
+  library_name=$(echo "${postprocessing_target}" | rev | cut -d'/' -f1 | rev)
+  repo_workspace="/workspace/"
+  if [[ "${is_monorepo}" == "true" ]]; then
+    monorepo_name=$(echo "${postprocessing_target}" | rev | cut -d'/' -f2 | rev)
+    repo_workspace+="${monorepo_name}/"
+  fi
+  repo_workspace+="${library_name}"
+fi
+
 docker run --rm \
   --user "$(id -u)":"$(id -g)" \
-  -v "${postprocessing_target}:/repo" \
-  -v "${owlbot_cli_source_folder}:/pre-processed-libraries" \
-  -w /repo \
+  ${repo_bindings} \
+  -v "/tmp:/tmp" \
+  -w "${repo_workspace}" \
   --env HOME=/tmp \
   gcr.io/cloud-devrel-public-resources/owlbot-cli@"${owlbot_cli_image_sha}" \
   copy-code \
   --source-repo-commit-hash=none \
-  --source-repo=/pre-processed-libraries \
+  --source-repo="${preprocessed_libraries_binding}" \
   --config-file="${owlbot_yaml_relative_path}"
 
 # we clone the synthtool library and manually build it
@@ -86,8 +116,10 @@ pushd /tmp/synthtool
 if [ ! -d "synthtool" ]; then
   git clone https://github.com/googleapis/synthtool.git
 fi
+git config --global --add safe.directory /tmp/synthtool/synthtool
 pushd "synthtool"
 
+git fetch --all
 git reset --hard "${synthtool_commitish}"
 
 python3 -m pip install -e .
