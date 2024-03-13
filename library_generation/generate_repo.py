@@ -18,8 +18,7 @@ import library_generation.utilities as util
 import os
 from library_generation.generate_composed_library import generate_composed_library
 from library_generation.model.generation_config import from_yaml
-from library_generation.utils.monorepo_postprocessor import \
-    monorepo_postprocessing
+from library_generation.utils.monorepo_postprocessor import monorepo_postprocessing
 
 
 @click.group(invoke_without_command=False)
