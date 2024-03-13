@@ -92,7 +92,6 @@ def generate_pr_descriptions(
         latest_commit=config.googleapis_commitish,
         baseline_commit=baseline_commit,
         paths=paths,
-        generator_version=config.gapic_generator_version,
         is_monorepo=config.is_monorepo,
     )
 
@@ -102,7 +101,6 @@ def __get_commit_messages(
     latest_commit: str,
     baseline_commit: str,
     paths: Dict[str, str],
-    generator_version: str,
     is_monorepo: bool,
 ) -> str:
     """
@@ -117,7 +115,6 @@ def __get_commit_messages(
     :param baseline_commit: the oldest commit to be considered in
     selecting commit message. This commit should be an ancestor of
     :param paths: a mapping from file paths to library_name.
-    :param generator_version: the version of the generator.
     :param is_monorepo: whether to generate commit messages in a monorepo.
     :return: commit messages.
     """
@@ -140,7 +137,6 @@ def __get_commit_messages(
         latest_commit=latest_commit,
         baseline_commit=baseline_commit,
         commits=qualified_commits,
-        generator_version=generator_version,
         is_monorepo=is_monorepo,
     )
 
@@ -167,7 +163,6 @@ def __combine_commit_messages(
     latest_commit: str,
     baseline_commit: str,
     commits: Dict[Commit, str],
-    generator_version: str,
     is_monorepo: bool,
 ) -> str:
     messages = [
@@ -181,13 +176,6 @@ def __combine_commit_messages(
         )
 
     messages.extend(format_commit_message(commits=commits, is_monorepo=is_monorepo))
-    messages.extend(
-        wrap_nested_commit(
-            [
-                f"feat: Regenerate with the Java code generator (gapic-generator-java) v{generator_version}"
-            ]
-        )
-    )
 
     return "\n".join(messages)
 
