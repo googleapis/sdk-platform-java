@@ -68,6 +68,17 @@
       ],
       "depNameTemplate": "com.google.cloud:google-cloud-shared-config",
       "datasourceTemplate": "maven"
+    },
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "^.github/workflows/dependencies\\.properties$"
+      ],
+      "matchStrings": [
+        "version\\.com_google_protobuf=(?<currentValue>.+?)\\n"
+      ],
+      "depNameTemplate": "com.google.protobuf:protobuf-java",
+      "datasourceTemplate": "maven"
     }
   ],
   "packageRules": [
