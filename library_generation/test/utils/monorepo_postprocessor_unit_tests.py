@@ -23,7 +23,7 @@ resources_dir = os.path.join(script_dir, "..", "resources")
 file_comparator = FileComparator()
 
 
-class CommitMessageFormatterTest(unittest.TestCase):
+class MonorepoPostprocessorTest(unittest.TestCase):
     def test_monorepo_postprocessing_valid_repository_success(self):
         repository_path = f"{resources_dir}/test_monorepo_postprocessing"
         versions_file = f"{repository_path}/versions.txt"

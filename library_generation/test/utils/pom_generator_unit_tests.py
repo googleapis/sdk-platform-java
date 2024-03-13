@@ -20,7 +20,7 @@ script_dir = os.path.dirname(os.path.realpath(__file__))
 resources_dir = os.path.join(script_dir, "..", "resources")
 
 
-class CommitMessageFormatterTest(unittest.TestCase):
+class PomGeneratorTest(unittest.TestCase):
     def test_get_version_from_returns_current(self):
         versions_file = f"{resources_dir}/misc/versions.txt"
         artifact = "gax-grpc"
