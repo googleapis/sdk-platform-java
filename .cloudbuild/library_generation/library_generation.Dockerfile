@@ -17,7 +17,7 @@ FROM gcr.io/cloud-devrel-public-resources/python
 
 # install tools
 RUN apt-get update && apt-get install -y \
-	unzip openjdk-17-jdk rsync maven \
+	unzip openjdk-17-jdk rsync maven jq \
 	&& apt-get clean
 
 COPY library_generation /src

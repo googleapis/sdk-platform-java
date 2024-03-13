@@ -64,7 +64,7 @@
         "^.cloudbuild/*"
       ],
       "matchStrings": [
-        "_JAVA_SHARED_CONFIG_VERSION: \"(?<currentValue>.+?)\""
+        "  _JAVA_SHARED_CONFIG_VERSION: '(?<currentValue>.+?)'"
       ],
       "depNameTemplate": "com.google.cloud:google-cloud-shared-config",
       "datasourceTemplate": "maven"
@@ -103,7 +103,8 @@
         "^com.google.cloud:google-cloud-shared-config"
       ],
       "semanticCommitType": "build",
-      "semanticCommitScope": "deps"
+      "semanticCommitScope": "deps",
+      "enabled": true
     },
     {
       "matchPackagePatterns": [
