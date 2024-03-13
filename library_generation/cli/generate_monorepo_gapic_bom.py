@@ -38,7 +38,8 @@ def main(ctx):
     required=True,
     type=str,
     help="""
-    the file containing version of libraries
+    The file containing version of libraries.
+    Throw FileNotFoundError if the file doesn't exist.
     """,
 )
 def generate(repository_path: str, versions_file: str) -> None:
