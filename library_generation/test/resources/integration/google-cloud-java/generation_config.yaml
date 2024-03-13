@@ -1,6 +1,6 @@
-gapic_generator_version: 2.34.0
+gapic_generator_version: 2.37.0
 protobuf_version: 25.2
-googleapis_commitish: 1a45bf7393b52407188c82e63101db7dc9c72026
+googleapis_commitish: 4ce0ff67a3d4509be641cbe47a35844ddc1268fc
 owlbot_cli_image: sha256:623647ee79ac605858d09e60c1382a716c125fb776f69301b72de1cd35d49409
 synthtool_commitish: 5e1fb2032fa44bc170677b38713023b4fec51a4e
 template_excludes:
@@ -49,16 +49,10 @@ libraries:
     - proto_path: google/cloud/alloydb/connectors/v1alpha
     - proto_path: google/cloud/alloydb/connectors/v1beta
 
-  - api_shortname: documentai
-    name_pretty: Document AI
-    product_documentation: https://cloud.google.com/compute/docs/documentai/
-    api_description: allows developers to unlock insights from your documents with machine
-        learning.
-    library_name: document-ai
-    release_level: stable
-    issue_tracker: https://issuetracker.google.com/savedsearches/559755
+  - api_shortname: cloudcontrolspartner
+    name_pretty: Cloud Controls Partner API
+    product_documentation: https://cloud.google.com/sovereign-controls-by-partners/docs/sovereign-partners
+    api_description: Provides insights about your customers and their Assured Workloads based on your Sovereign Controls by Partners offering.
     GAPICs:
-    - proto_path: google/cloud/documentai/v1
-    - proto_path: google/cloud/documentai/v1beta1
-    - proto_path: google/cloud/documentai/v1beta2
-    - proto_path: google/cloud/documentai/v1beta3
+    - proto_path: google/cloud/cloudcontrolspartner/v1
+    - proto_path: google/cloud/cloudcontrolspartner/v1beta

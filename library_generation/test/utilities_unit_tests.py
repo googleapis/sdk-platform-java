@@ -21,9 +21,6 @@ import os
 import io
 import contextlib
 from pathlib import Path
-from difflib import unified_diff
-
-from typing import List
 from parameterized import parameterized
 from library_generation import utilities as util
 from library_generation.model.gapic_config import GapicConfig
@@ -31,6 +28,8 @@ from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.gapic_inputs import parse as parse_build_file
 from library_generation.model.generation_config import from_yaml
 from library_generation.model.library_config import LibraryConfig
+from library_generation.test.test_utils import FileComparator
+from library_generation.test.test_utils import cleanup
 from library_generation.utilities import find_versioned_proto_path
 from library_generation.utilities import get_file_paths
 
@@ -38,6 +37,7 @@ script_dir = os.path.dirname(os.path.realpath(__file__))
 resources_dir = os.path.join(script_dir, "resources")
 build_file = Path(os.path.join(resources_dir, "misc")).resolve()
 test_config_dir = Path(os.path.join(resources_dir, "test-config")).resolve()
+file_comparator = FileComparator()
 library_1 = LibraryConfig(
     api_shortname="baremetalsolution",
     name_pretty="Bare Metal Solution",
@@ -391,18 +391,6 @@ class UtilitiesTest(unittest.TestCase):
             "google/cloud/aiplatform", util.remove_version_from(proto_path)
         )
 
-    def test_get_version_from_returns_current(self):
-        versions_file = f"{resources_dir}/misc/versions.txt"
-        artifact = "gax-grpc"
-        self.assertEqual(
-            "2.33.1-SNAPSHOT", util.get_version_from(versions_file, artifact)
-        )
-
-    def test_get_version_from_returns_released(self):
-        versions_file = f"{resources_dir}/misc/versions.txt"
-        artifact = "gax-grpc"
-        self.assertEqual("2.34.0", util.get_version_from(versions_file, artifact, True))
-
     def test_get_library_returns_library_name(self):
         self.assertEqual("bare-metal-solution", util.get_library_name(library_1))
 
@@ -414,32 +402,32 @@ class UtilitiesTest(unittest.TestCase):
             num_libraries=1, library_type="GAPIC_COMBO"
         )
 
-        self.__compare_files(
+        file_comparator.compare_files(
             f"{library_path}/.repo-metadata.json",
             f"{library_path}/.repo-metadata-non-monorepo-golden.json",
         )
         # since this is a single library, we treat this as HW repository,
         # meaning that the owlbot yaml will be inside a .github folder
-        self.__compare_files(
+        file_comparator.compare_files(
             f"{library_path}/.github/.OwlBot.yaml",
             f"{library_path}/.OwlBot-golden.yaml",
         )
-        self.__compare_files(
+        file_comparator.compare_files(
             f"{library_path}/owlbot.py", f"{library_path}/owlbot-golden.py"
         )
 
     def test_generate_prerequisite_files_monorepo_success(self):
         library_path = self.__setup_prerequisite_files(num_libraries=2)
 
-        self.__compare_files(
+        file_comparator.compare_files(
             f"{library_path}/.repo-metadata.json",
             f"{library_path}/.repo-metadata-monorepo-golden.json",
         )
-        self.__compare_files(
+        file_comparator.compare_files(
             f"{library_path}/.OwlBot.yaml",
             f"{library_path}/.OwlBot-golden.yaml",
         )
-        self.__compare_files(
+        file_comparator.compare_files(
             f"{library_path}/owlbot.py", f"{library_path}/owlbot-golden.py"
         )
 
@@ -488,37 +476,6 @@ class UtilitiesTest(unittest.TestCase):
         library_path = sorted([Path(key).name for key in repo_config.libraries])
         self.assertEqual(["misc"], library_path)
 
-    def test_monorepo_postprocessing_valid_repository_success(self):
-        repository_path = f"{resources_dir}/test_monorepo_postprocessing"
-        versions_file = f"{repository_path}/versions.txt"
-        files = [
-            f"{repository_path}/pom.xml",
-            f"{repository_path}/gapic-libraries-bom/pom.xml",
-        ]
-        self.__cleanup(files)
-        util.monorepo_postprocessing(
-            repository_path=repository_path, versions_file=versions_file
-        )
-        self.__compare_files(
-            expect=f"{repository_path}/pom-golden.xml",
-            actual=f"{repository_path}/pom.xml",
-        )
-        self.__compare_files(
-            expect=f"{repository_path}/gapic-libraries-bom/pom-golden.xml",
-            actual=f"{repository_path}/gapic-libraries-bom/pom.xml",
-        )
-
-    def __compare_files(self, expect: str, actual: str):
-        with open(expect, "r") as f:
-            expected_lines = f.readlines()
-        with open(actual, "r") as f:
-            actual_lines = f.readlines()
-
-        diff = list(unified_diff(expected_lines, actual_lines))
-        self.assertEqual(
-            first=[], second=diff, msg="Unexpected file contents:\n" + "".join(diff)
-        )
-
     def __setup_prerequisite_files(
         self, num_libraries: int, library_type: str = "GAPIC_AUTO"
     ) -> str:
@@ -528,7 +485,7 @@ class UtilitiesTest(unittest.TestCase):
             f"{library_path}/.OwlBot.yaml",
             f"{library_path}/owlbot.py",
         ]
-        self.__cleanup(files)
+        cleanup(files)
         config = self.__get_a_gen_config(num_libraries, library_type=library_type)
         proto_path = "google/cloud/baremetalsolution/v2"
         transport = "grpc"
@@ -592,15 +549,6 @@ class UtilitiesTest(unittest.TestCase):
             path_to_yaml=".",
             libraries=libraries,
         )
-
-    @staticmethod
-    def __cleanup(files: List[str]):
-        for file in files:
-            path = Path(file).resolve()
-            if path.is_file():
-                path.unlink()
-            elif path.is_dir():
-                path.rmdir()
 
 
 if __name__ == "__main__":

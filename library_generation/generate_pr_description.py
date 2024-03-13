@@ -68,11 +68,16 @@ def generate(
     repo_url: str,
     baseline_commit: str,
 ) -> str:
-    return generate_pr_descriptions(
+    description = generate_pr_descriptions(
         generation_config_yaml=generation_config_yaml,
         repo_url=repo_url,
         baseline_commit=baseline_commit,
     )
+    idx = generation_config_yaml.rfind("/")
+    config_path = generation_config_yaml[:idx]
+    with open(f"{config_path}/pr_description.txt", "w+") as f:
+        f.write(description)
+    return description
 
 
 def generate_pr_descriptions(
@@ -87,7 +92,6 @@ def generate_pr_descriptions(
         latest_commit=config.googleapis_commitish,
         baseline_commit=baseline_commit,
         paths=paths,
-        generator_version=config.gapic_generator_version,
         is_monorepo=config.is_monorepo,
     )
 
@@ -97,7 +101,6 @@ def __get_commit_messages(
     latest_commit: str,
     baseline_commit: str,
     paths: Dict[str, str],
-    generator_version: str,
     is_monorepo: bool,
 ) -> str:
     """
@@ -112,7 +115,6 @@ def __get_commit_messages(
     :param baseline_commit: the oldest commit to be considered in
     selecting commit message. This commit should be an ancestor of
     :param paths: a mapping from file paths to library_name.
-    :param generator_version: the version of the generator.
     :param is_monorepo: whether to generate commit messages in a monorepo.
     :return: commit messages.
     """
@@ -135,7 +137,6 @@ def __get_commit_messages(
         latest_commit=latest_commit,
         baseline_commit=baseline_commit,
         commits=qualified_commits,
-        generator_version=generator_version,
         is_monorepo=is_monorepo,
     )
 
@@ -143,8 +144,8 @@ def __get_commit_messages(
 def __filter_qualified_commit(paths: Dict[str, str], commit: Commit) -> (Commit, str):
     """
     Returns a tuple of a commit and libray_name.
-    A qualified commit means at least one file changes in that commit is
-    within the versioned proto_path in paths.
+    A qualified commit means at least one file, excluding BUILD.bazel, changes
+    in that commit is within the versioned proto_path in paths.
 
     :param paths: a mapping from versioned proto_path to library_name.
     :param commit: a commit under consideration.
@@ -153,7 +154,7 @@ def __filter_qualified_commit(paths: Dict[str, str], commit: Commit) -> (Commit,
     """
     for file in commit.stats.files.keys():
         versioned_proto_path = find_versioned_proto_path(file)
-        if versioned_proto_path in paths:
+        if versioned_proto_path in paths and (not file.endswith("BUILD.bazel")):
             return commit, paths[versioned_proto_path]
     return ()
 
@@ -162,7 +163,6 @@ def __combine_commit_messages(
     latest_commit: str,
     baseline_commit: str,
     commits: Dict[Commit, str],
-    generator_version: str,
     is_monorepo: bool,
 ) -> str:
     messages = [
@@ -176,13 +176,6 @@ def __combine_commit_messages(
         )
 
     messages.extend(format_commit_message(commits=commits, is_monorepo=is_monorepo))
-    messages.extend(
-        wrap_nested_commit(
-            [
-                f"feat: Regenerate with the Java code generator (gapic-generator-java) v{generator_version}"
-            ]
-        )
-    )
 
     return "\n".join(messages)
 
