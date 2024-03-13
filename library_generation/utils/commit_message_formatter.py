@@ -62,3 +62,16 @@ def wrap_nested_commit(messages: List[str]) -> List[str]:
     result.extend(messages)
     result.append("END_NESTED_COMMIT")
     return result
+
+
+def wrap_override_commit(messages: List[str]) -> List[str]:
+    """
+    Wrap message between `BEGIN_COMMIT_OVERRIDE` and `END_COMMIT_OVERRIDE`.
+
+    :param messages: a (multi-line) commit message, one line per item.
+    :return: wrapped messages.
+    """
+    result = ["BEGIN_COMMIT_OVERRIDE"]
+    result.extend(messages)
+    result.append("END_COMMIT_OVERRIDE")
+    return result
