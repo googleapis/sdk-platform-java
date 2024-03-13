@@ -88,12 +88,14 @@ public class Writer {
       List<ReflectConfig> reflectConfigInfo,
       String outputFilePath) {
     ByteString.Output output = ByteString.newOutput();
+    CodeGeneratorResponse response;
     try (JarOutputStream jos = new JarOutputStream(output)) {
-      return write(
+      response = write(
           context, clazzes, gapicPackageInfo, reflectConfigInfo, outputFilePath, jos, output);
     } catch (IOException e) {
       throw new GapicWriterException(e.getMessage(), e);
     }
+    return response;
   }
 
   @VisibleForTesting
