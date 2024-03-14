@@ -80,6 +80,11 @@
             <version>1.4.2</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.google.errorprone</groupId>
+            <artifactId>error_prone_annotationsa</artifactId>
+            <version>${errorprone.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
