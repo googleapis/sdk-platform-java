@@ -30,6 +30,8 @@
 
 package com.google.api.gax.tracing;
 
+import com.google.api.core.BetaApi;
+import com.google.api.core.InternalApi;
 import com.google.api.gax.core.GaxProperties;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
