@@ -68,6 +68,11 @@
         <version>1.10.19</version>
         <scope>test</scope>
       </dependency>
+      <dependency>
+        <groupId>com.google.errorprone</groupId>
+        <artifactId>error_prone_annotationsa</artifactId>
+        <version>${errorprone.version}</version>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 
