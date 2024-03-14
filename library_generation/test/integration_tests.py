@@ -17,12 +17,14 @@ import shutil
 import unittest
 from distutils.dir_util import copy_tree
 from distutils.file_util import copy_file
+from filecmp import cmp
 from filecmp import dircmp
 
 from git import Repo
 from pathlib import Path
 from typing import List
-from typing import Dict
+
+from library_generation.generate_pr_description import generate_pr_descriptions
 from library_generation.generate_repo import generate_from_yaml
 from library_generation.model.generation_config import from_yaml, GenerationConfig
 from library_generation.test.compare_poms import compare_xml
@@ -49,6 +51,36 @@ committish_map = {
 
 
 class IntegrationTest(unittest.TestCase):
+    def test_get_commit_message_success(self):
+        repo_url = "https://github.com/googleapis/googleapis.git"
+        config_files = self.__get_config_files(config_dir)
+        monorepo_baseline_commit = "a17d4caf184b050d50cacf2b0d579ce72c31ce74"
+        split_repo_baseline_commit = "679060c64136e85b52838f53cfe612ce51e60d1d"
+        for repo, config_file in config_files:
+            baseline_commit = (
+                monorepo_baseline_commit
+                if repo == "google-cloud-java"
+                else split_repo_baseline_commit
+            )
+            description = generate_pr_descriptions(
+                generation_config_yaml=config_file,
+                repo_url=repo_url,
+                baseline_commit=baseline_commit,
+            )
+            description_file = f"{config_dir}/{repo}/pr-description.txt"
+            if os.path.isfile(f"{description_file}"):
+                os.remove(f"{description_file}")
+            with open(f"{description_file}", "w+") as f:
+                f.write(description)
+            self.assertTrue(
+                cmp(
+                    f"{config_dir}/{repo}/pr-description-golden.txt",
+                    f"{description_file}",
+                ),
+                "The generated PR description does not match the expected golden file",
+            )
+            os.remove(f"{description_file}")
+
     def test_generate_repo(self):
         shutil.rmtree(f"{golden_dir}", ignore_errors=True)
         os.makedirs(f"{golden_dir}", exist_ok=True)
@@ -76,16 +108,17 @@ class IntegrationTest(unittest.TestCase):
                 generation_config_yaml=config_file, repository_path=repo_dest
             )
             # compare result
+            print(
+                "Generation finished successfully. Will now compare differences between generated and existing libraries"
+            )
             for library_name in library_names:
                 actual_library = (
                     f"{repo_dest}/{library_name}" if config.is_monorepo else repo_dest
                 )
-                print(
-                    f"Generation finished. Will now compare "
-                    f"the expected library in {golden_dir}/{library_name}, "
-                    f"with the actual library in {actual_library}. "
-                    f"Compare generation result: "
-                )
+                print("*" * 50)
+                print(f"Checking for differences in '{library_name}'.")
+                print(f"  The expected library is in {golden_dir}/{library_name}.")
+                print(f"  The actual library is in {actual_library}. ")
                 target_repo_dest = (
                     f"{repo_dest}/{library_name}" if config.is_monorepo else repo_dest
                 )
@@ -94,20 +127,40 @@ class IntegrationTest(unittest.TestCase):
                     target_repo_dest,
                     ignore=[".repo-metadata.json"],
                 )
+                diff_files = []
+                golden_only = []
+                generated_only = []
                 # compare source code
-                self.assertEqual([], compare_result.left_only)
-                self.assertEqual([], compare_result.right_only)
-                self.assertEqual([], compare_result.diff_files)
-                print("Source code comparison succeed.")
+                self.__recursive_diff_files(
+                    compare_result, diff_files, golden_only, generated_only
+                )
+
+                # print all found differences for inspection
+                print_file = lambda f: print(f"   -  {f}")
+                if len(diff_files) > 0:
+                    print("  Some files (found in both folders) are differing:")
+                    [print_file(f) for f in diff_files]
+                if len(golden_only) > 0:
+                    print("  There were files found only in the golden dir:")
+                    [print_file(f) for f in golden_only]
+                if len(generated_only) > 0:
+                    print("  Some files were found to have differences:")
+                    [print_file(f) for f in generated_only]
+
+                self.assertTrue(len(golden_only) == 0)
+                self.assertTrue(len(generated_only) == 0)
+                self.assertTrue(len(diff_files) == 0)
+
+                print("  No differences found in {library_name}")
                 # compare .repo-metadata.json
                 self.assertTrue(
                     self.__compare_json_files(
                         f"{golden_dir}/{library_name}/.repo-metadata.json",
                         f"{target_repo_dest}/.repo-metadata.json",
                     ),
-                    msg=f"The generated {library_name}/.repo-metadata.json is different from golden.",
+                    msg=f"  The generated {library_name}/.repo-metadata.json is different from golden.",
                 )
-                print(".repo-metadata.json comparison succeed.")
+                print("  .repo-metadata.json comparison succeed.")
 
                 if not config.is_monorepo:
                     continue
@@ -120,7 +173,7 @@ class IntegrationTest(unittest.TestCase):
                         False,
                     )
                 )
-                print("gapic-libraries-bom/pom.xml comparison succeed.")
+                print("  gapic-libraries-bom/pom.xml comparison succeed.")
                 self.assertFalse(
                     compare_xml(
                         f"{golden_dir}/pom.xml",
@@ -128,7 +181,7 @@ class IntegrationTest(unittest.TestCase):
                         False,
                     )
                 )
-                print("pom.xml comparison succeed.")
+                print("  pom.xml comparison succeed.")
 
     @classmethod
     def __pull_repo_to(cls, default_dest: Path, repo: str, committish: str) -> str:
@@ -150,7 +203,7 @@ class IntegrationTest(unittest.TestCase):
             repo = Repo(dest)
         else:
             dest = default_dest
-            repo_dest = f"{golden_dir}/{repo}"
+            shutil.rmtree(dest, ignore_errors=True)
             repo_url = f"{repo_prefix}/{repo}"
             print(f"Cloning repository {repo_url}")
             repo = Repo.clone_from(repo_url, dest)
@@ -169,8 +222,10 @@ class IntegrationTest(unittest.TestCase):
     def __get_config_files(cls, path: str) -> List[tuple[str, str]]:
         config_files = []
         for sub_dir in Path(path).resolve().iterdir():
+            if sub_dir.is_file():
+                continue
             repo = sub_dir.name
-            if repo == "golden":
+            if repo in ["golden", "java-bigtable"]:
                 continue
             config = f"{sub_dir}/{config_name}"
             config_files.append((repo, config))
@@ -190,3 +245,24 @@ class IntegrationTest(unittest.TestCase):
         res = [(key, value) for key, value in data.items()]
 
         return sorted(res, key=lambda x: x[0])
+
+    @classmethod
+    def __recursive_diff_files(
+        self,
+        dcmp: dircmp,
+        diff_files: List[str],
+        left_only: List[str],
+        right_only: List[str],
+        dirname: str = "",
+    ):
+        """
+        recursively compares two subdirectories. The found differences are passed to three expected list references
+        """
+        append_dirname = lambda d: dirname + d
+        diff_files.extend(map(append_dirname, dcmp.diff_files))
+        left_only.extend(map(append_dirname, dcmp.left_only))
+        right_only.extend(map(append_dirname, dcmp.right_only))
+        for sub_dirname, sub_dcmp in dcmp.subdirs.items():
+            self.__recursive_diff_files(
+                sub_dcmp, diff_files, left_only, right_only, dirname + sub_dirname + "/"
+            )

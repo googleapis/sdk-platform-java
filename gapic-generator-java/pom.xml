@@ -351,7 +351,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.5.1</version>
+        <version>3.5.2</version>
         <executions>
           <execution>
             <phase>package</phase>
@@ -467,7 +467,7 @@
     <dependency>
       <groupId>com.google.truth</groupId>
       <artifactId>truth</artifactId>
-      <version>1.4.1</version>
+      <version>1.4.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
