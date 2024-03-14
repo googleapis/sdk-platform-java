@@ -80,6 +80,11 @@
             <version>1.4.2</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+          <groupId>com.google.j2objc</groupId>
+          <artifactId>j2objc-annotations</artifactId>
+          <version>${j2objc-annotations.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

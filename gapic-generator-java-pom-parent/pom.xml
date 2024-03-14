@@ -35,6 +35,7 @@
     <opentelemetry.version>1.35.0</opentelemetry.version>
     <maven.compiler.release>8</maven.compiler.release>
     <errorprone.version>2.26.1</errorprone.version>
+    <j2objc-annotations.version>3.0.0</j2objc-annotations.version>
   </properties>
 
   <developers>
