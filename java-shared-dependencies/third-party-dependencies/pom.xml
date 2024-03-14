@@ -29,8 +29,8 @@
     <animal-sniffer.version>1.23</animal-sniffer.version>
     <opencensus.version>0.31.1</opencensus.version>
     <findbugs.version>3.0.2</findbugs.version>
-    <jackson.version>2.16.1</jackson.version>
-    <errorprone.version>2.24.1</errorprone.version>
+    <jackson.version>2.17.0</jackson.version>
+    <errorprone.version>2.26.1</errorprone.version>
     <codec.version>1.16.1</codec.version>
     <httpcomponents.httpcore.version>4.4.16</httpcomponents.httpcore.version>
     <httpcomponents.httpclient.version>4.5.14</httpcomponents.httpclient.version>
@@ -38,9 +38,9 @@
     <checker-qual.version>3.42.0</checker-qual.version>
     <perfmark-api.version>0.27.0</perfmark-api.version>
     <j2objc-annotations.version>2.8</j2objc-annotations.version>
-    <opentelemetry.version>1.35.0</opentelemetry.version>
+    <opentelemetry.version>1.36.0</opentelemetry.version>
     <flogger.version>0.8</flogger.version>
-    <arrow.version>15.0.0</arrow.version>
+    <arrow.version>15.0.1</arrow.version>
   </properties>
 
   <dependencyManagement>
@@ -181,16 +181,6 @@
         <groupId>com.google.j2objc</groupId>
         <artifactId>j2objc-annotations</artifactId>
         <version>${j2objc-annotations.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.opentelemetry</groupId>
-        <artifactId>opentelemetry-api</artifactId>
-        <version>${opentelemetry.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.opentelemetry</groupId>
-        <artifactId>opentelemetry-context</artifactId>
-        <version>${opentelemetry.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
