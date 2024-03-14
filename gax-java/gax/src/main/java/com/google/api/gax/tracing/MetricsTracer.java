@@ -40,6 +40,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import javax.annotation.Nullable;
 import org.threeten.bp.Duration;
 
@@ -47,33 +48,42 @@ import org.threeten.bp.Duration;
  * This class computes generic metrics that can be observed in the lifecycle of an RPC operation.
  * The responsibility of recording metrics should delegate to {@link MetricsRecorder}, hence this
  * class should not have any knowledge about the observability framework used for metrics recording.
+ * method_name and language will be autopopulated attributes. Default value of language is 'Java'.
  */
 @BetaApi
 @InternalApi
 public class MetricsTracer implements ApiTracer {
-
-  private static final String STATUS_ATTRIBUTE = "status";
-
+  public static final String METHOD_NAME_ATTRIBUTE = "method_name";
+  public static final String LANGUAGE_ATTRIBUTE = "language";
+  public static final String STATUS_ATTRIBUTE = "status";
+  public static final String DEFAULT_LANGUAGE = "Java";
+  private static final String OPERATION_FINISHED_STATUS_MESSAGE =
+      "Operation has already been completed";
   private Stopwatch attemptTimer;
-
   private final Stopwatch operationTimer = Stopwatch.createStarted();
-
   private final Map<String, String> attributes = new HashMap<>();
-
-  private MetricsRecorder metricsRecorder;
+  private final MetricsRecorder metricsRecorder;
+  private final AtomicBoolean operationFinished;
 
   public MetricsTracer(MethodName methodName, MetricsRecorder metricsRecorder) {
-    this.attributes.put("method_name", methodName.toString());
+    this.attributes.put(METHOD_NAME_ATTRIBUTE, methodName.toString());
+    this.attributes.put(LANGUAGE_ATTRIBUTE, DEFAULT_LANGUAGE);
     this.metricsRecorder = metricsRecorder;
+    this.operationFinished = new AtomicBoolean();
   }
 
   /**
    * Signals that the overall operation has finished successfully. The tracer is now considered
    * closed and should no longer be used. Successful operation adds "OK" value to the status
    * attribute key.
+   *
+   * @throws IllegalStateException if an operation completion call has already been invoked
    */
   @Override
   public void operationSucceeded() {
+    if (operationFinished.getAndSet(true)) {
+      throw new IllegalStateException(OPERATION_FINISHED_STATUS_MESSAGE);
+    }
     attributes.put(STATUS_ATTRIBUTE, StatusCode.Code.OK.toString());
     metricsRecorder.recordOperationLatency(
         operationTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
@@ -84,9 +94,14 @@ public class MetricsTracer implements ApiTracer {
    * Signals that the operation was cancelled by the user. The tracer is now considered closed and
    * should no longer be used. Cancelled operation adds "CANCELLED" value to the status attribute
    * key.
+   *
+   * @throws IllegalStateException if an operation completion call has already been invoked
    */
   @Override
   public void operationCancelled() {
+    if (operationFinished.getAndSet(true)) {
+      throw new IllegalStateException(OPERATION_FINISHED_STATUS_MESSAGE);
+    }
     attributes.put(STATUS_ATTRIBUTE, StatusCode.Code.CANCELLED.toString());
     metricsRecorder.recordOperationLatency(
         operationTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
@@ -97,9 +112,14 @@ public class MetricsTracer implements ApiTracer {
    * Signals that the operation was cancelled by the user. The tracer is now considered closed and
    * should no longer be used. Failed operation extracts the error from the throwable and adds it to
    * the status attribute key.
+   *
+   * @throws IllegalStateException if an operation completion call has already been invoked
    */
   @Override
   public void operationFailed(Throwable error) {
+    if (operationFinished.getAndSet(true)) {
+      throw new IllegalStateException(OPERATION_FINISHED_STATUS_MESSAGE);
+    }
     attributes.put(STATUS_ATTRIBUTE, extractStatus(error));
     metricsRecorder.recordOperationLatency(
         operationTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
@@ -126,7 +146,6 @@ public class MetricsTracer implements ApiTracer {
    */
   @Override
   public void attemptSucceeded() {
-
     attributes.put(STATUS_ATTRIBUTE, StatusCode.Code.OK.toString());
     metricsRecorder.recordAttemptLatency(attemptTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
     metricsRecorder.recordAttemptCount(1, attributes);
@@ -138,7 +157,6 @@ public class MetricsTracer implements ApiTracer {
    */
   @Override
   public void attemptCancelled() {
-
     attributes.put(STATUS_ATTRIBUTE, StatusCode.Code.CANCELLED.toString());
     metricsRecorder.recordAttemptLatency(attemptTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
     metricsRecorder.recordAttemptCount(1, attributes);
@@ -154,7 +172,6 @@ public class MetricsTracer implements ApiTracer {
    */
   @Override
   public void attemptFailed(Throwable error, Duration delay) {
-
     attributes.put(STATUS_ATTRIBUTE, extractStatus(error));
     metricsRecorder.recordAttemptLatency(attemptTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
     metricsRecorder.recordAttemptCount(1, attributes);
@@ -169,7 +186,6 @@ public class MetricsTracer implements ApiTracer {
    */
   @Override
   public void attemptFailedRetriesExhausted(Throwable error) {
-
     attributes.put(STATUS_ATTRIBUTE, extractStatus(error));
     metricsRecorder.recordAttemptLatency(attemptTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
     metricsRecorder.recordAttemptCount(1, attributes);
@@ -184,7 +200,6 @@ public class MetricsTracer implements ApiTracer {
    */
   @Override
   public void attemptPermanentFailure(Throwable error) {
-
     attributes.put(STATUS_ATTRIBUTE, extractStatus(error));
     metricsRecorder.recordAttemptLatency(attemptTimer.elapsed(TimeUnit.MILLISECONDS), attributes);
     metricsRecorder.recordAttemptCount(1, attributes);

@@ -182,16 +182,6 @@
         <artifactId>j2objc-annotations</artifactId>
         <version>${j2objc-annotations.version}</version>
       </dependency>
-      <dependency>
-        <groupId>io.opentelemetry</groupId>
-        <artifactId>opentelemetry-api</artifactId>
-        <version>${opentelemetry.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>io.opentelemetry</groupId>
-        <artifactId>opentelemetry-context</artifactId>
-        <version>${opentelemetry.version}</version>
-      </dependency>
     </dependencies>
   </dependencyManagement>
 </project>
