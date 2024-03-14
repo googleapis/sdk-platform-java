@@ -63,7 +63,7 @@
         <dependency>
             <groupId>com.google.errorprone</groupId>
             <artifactId>error_prone_annotations</artifactId>
-            <version>2.24.1</version>
+            <version>${errorprone.version}</version>
             <scope>compile</scope>
         </dependency>
 
@@ -79,11 +79,6 @@
             <artifactId>truth</artifactId>
             <version>1.4.2</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.errorprone</groupId>
-            <artifactId>error_prone_annotationsa</artifactId>
-            <version>${errorprone.version}</version>
         </dependency>
     </dependencies>
 
