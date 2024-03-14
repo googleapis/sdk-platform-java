@@ -16,6 +16,7 @@ from unittest.mock import patch
 
 from library_generation.utils.commit_message_formatter import format_commit_message
 from library_generation.utils.commit_message_formatter import wrap_nested_commit
+from library_generation.utils.commit_message_formatter import wrap_override_commit
 
 
 class CommitMessageFormatterTest(unittest.TestCase):
@@ -113,4 +114,16 @@ class CommitMessageFormatterTest(unittest.TestCase):
                 "END_NESTED_COMMIT",
             ],
             wrap_nested_commit(messages),
+        )
+
+    def test_wrap_override_commit_success(self):
+        messages = ["a commit message", "another message"]
+        self.assertEqual(
+            [
+                "BEGIN_COMMIT_OVERRIDE",
+                "a commit message",
+                "another message",
+                "END_COMMIT_OVERRIDE",
+            ],
+            wrap_override_commit(messages),
         )

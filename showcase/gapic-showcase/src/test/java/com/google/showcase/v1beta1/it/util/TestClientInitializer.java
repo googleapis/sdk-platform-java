@@ -24,6 +24,7 @@ import com.google.api.gax.longrunning.OperationTimedPollAlgorithm;
 import com.google.api.gax.retrying.RetrySettings;
 import com.google.api.gax.rpc.StatusCode;
 import com.google.api.gax.rpc.UnaryCallSettings;
+import com.google.api.gax.tracing.ApiTracerFactory;
 import com.google.common.collect.ImmutableList;
 import com.google.showcase.v1beta1.ComplianceClient;
 import com.google.showcase.v1beta1.ComplianceSettings;
@@ -32,6 +33,7 @@ import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.IdentityClient;
 import com.google.showcase.v1beta1.IdentitySettings;
 import com.google.showcase.v1beta1.WaitRequest;
+import com.google.showcase.v1beta1.stub.EchoStub;
 import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import io.grpc.ClientInterceptor;
 import io.grpc.ManagedChannelBuilder;
@@ -283,5 +285,56 @@ public class TestClientInitializer {
                     .build())
             .build();
     return ComplianceClient.create(httpJsonComplianceSettings);
+  }
+
+  public static EchoClient createGrpcEchoClientOpentelemetry(ApiTracerFactory metricsTracerFactory)
+      throws Exception {
+
+    EchoSettings grpcEchoSettings =
+        EchoSettings.newBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultGrpcTransportProviderBuilder()
+                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .build())
+            .setEndpoint("localhost:7469")
+            .build();
+
+    EchoStubSettings echoStubSettings =
+        (EchoStubSettings)
+            grpcEchoSettings
+                .getStubSettings()
+                .toBuilder()
+                .setTracerFactory(metricsTracerFactory)
+                .build();
+    EchoStub stub = echoStubSettings.createStub();
+
+    return EchoClient.create(stub);
+  }
+
+  public static EchoClient createHttpJsonEchoClientOpentelemetry(
+      ApiTracerFactory metricsTracerFactory) throws Exception {
+
+    EchoSettings httpJsonEchoSettings =
+        EchoSettings.newHttpJsonBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setTransportChannelProvider(
+                EchoSettings.defaultHttpJsonTransportProviderBuilder()
+                    .setHttpTransport(
+                        new NetHttpTransport.Builder().doNotValidateCertificate().build())
+                    .setEndpoint("http://localhost:7469")
+                    .build())
+            .build();
+
+    EchoStubSettings echoStubSettings =
+        (EchoStubSettings)
+            httpJsonEchoSettings
+                .getStubSettings()
+                .toBuilder()
+                .setTracerFactory(metricsTracerFactory)
+                .build();
+    EchoStub stub = echoStubSettings.createStub();
+
+    return EchoClient.create(stub);
   }
 }
