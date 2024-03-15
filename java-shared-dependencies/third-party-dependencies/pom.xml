@@ -6,7 +6,7 @@
   <groupId>com.google.cloud</groupId>
   <artifactId>third-party-dependencies</artifactId>
   <packaging>pom</packaging>
-  <version>3.28.0</version><!-- {x-version-update:google-cloud-shared-dependencies:current} -->
+  <version>3.28.1-SNAPSHOT</version><!-- {x-version-update:google-cloud-shared-dependencies:current} -->
   <name>Google Cloud Third-party Shared Dependencies</name>
   <description>
     Shared third-party dependencies for Google Cloud Java libraries.
@@ -37,6 +37,7 @@
     <!-- ensure checker-qual version matches what Guava uses -->
     <checker-qual.version>3.42.0</checker-qual.version>
     <perfmark-api.version>0.27.0</perfmark-api.version>
+    <google.cloud.opentelemetry.version>0.27.0</google.cloud.opentelemetry.version>
     <j2objc-annotations.version>3.0.0</j2objc-annotations.version>
     <opentelemetry.version>1.36.0</opentelemetry.version>
     <flogger.version>0.8</flogger.version>
@@ -181,6 +182,11 @@
         <groupId>com.google.j2objc</groupId>
         <artifactId>j2objc-annotations</artifactId>
         <version>${j2objc-annotations.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.cloud.opentelemetry</groupId>
+        <artifactId>detector-resources-support</artifactId>
+        <version>${google.cloud.opentelemetry.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
