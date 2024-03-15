@@ -26,6 +26,7 @@ public final class ClientProto {
     registry.add(com.google.api.ClientProto.methodSignature);
     registry.add(com.google.api.ClientProto.defaultHost);
     registry.add(com.google.api.ClientProto.oauthScopes);
+    registry.add(com.google.api.ClientProto.apiVersion);
   }
 
   public static void registerAllExtensions(com.google.protobuf.ExtensionRegistry registry) {
@@ -141,6 +142,35 @@ public final class ClientProto {
           com.google.protobuf.GeneratedMessage.newFileScopedGeneratedExtension(
               java.lang.String.class, null);
 
+  public static final int API_VERSION_FIELD_NUMBER = 525000001;
+  /**
+   *
+   *
+   * <pre>
+   * The API version of this service, which should be sent by version-aware
+   * clients to the service. This allows services to abide by the schema and
+   * behavior of the service at the time this API version was deployed.
+   * The format of the API version must be treated as opaque by clients.
+   * Services may use a format with an apparent structure, but clients must
+   * not rely on this to determine components within an API version, or attempt
+   * to construct other valid API versions. Note that this is for upcoming
+   * functionality and may not be implemented for all services.
+   *
+   * Example:
+   *
+   *   service Foo {
+   *     option (google.api.api_version) = "v1_20230821_preview";
+   *   }
+   * </pre>
+   *
+   * <code>extend .google.protobuf.ServiceOptions { ... }</code>
+   */
+  public static final com.google.protobuf.GeneratedMessage.GeneratedExtension<
+          com.google.protobuf.DescriptorProtos.ServiceOptions, java.lang.String>
+      apiVersion =
+          com.google.protobuf.GeneratedMessage.newFileScopedGeneratedExtension(
+              java.lang.String.class, null);
+
   static final com.google.protobuf.Descriptors.Descriptor
       internal_static_google_api_CommonLanguageSettings_descriptor;
   static final com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -233,7 +263,7 @@ public final class ClientProto {
           + "2\032.google.api.DotnetSettings\022/\n\rruby_set"
           + "tings\030\033 \001(\0132\030.google.api.RubySettings\022+\n"
           + "\013go_settings\030\034 \001(\0132\026.google.api.GoSettin"
-          + "gs\"\376\002\n\nPublishing\0223\n\017method_settings\030\002 \003"
+          + "gs\"\250\003\n\nPublishing\0223\n\017method_settings\030\002 \003"
           + "(\0132\032.google.api.MethodSettings\022\025\n\rnew_is"
           + "sue_uri\030e \001(\t\022\031\n\021documentation_uri\030f \001(\t"
           + "\022\026\n\016api_short_name\030g \001(\t\022\024\n\014github_label"
@@ -242,56 +272,59 @@ public final class ClientProto {
           + " \001(\0162%.google.api.ClientLibraryOrganizat"
           + "ion\022;\n\020library_settings\030m \003(\0132!.google.a"
           + "pi.ClientLibrarySettings\022)\n!proto_refere"
-          + "nce_documentation_uri\030n \001(\t\"\343\001\n\014JavaSett"
-          + "ings\022\027\n\017library_package\030\001 \001(\t\022L\n\023service"
-          + "_class_names\030\002 \003(\0132/.google.api.JavaSett"
-          + "ings.ServiceClassNamesEntry\0222\n\006common\030\003 "
-          + "\001(\0132\".google.api.CommonLanguageSettings\032"
-          + "8\n\026ServiceClassNamesEntry\022\013\n\003key\030\001 \001(\t\022\r"
-          + "\n\005value\030\002 \001(\t:\0028\001\"A\n\013CppSettings\0222\n\006comm"
-          + "on\030\001 \001(\0132\".google.api.CommonLanguageSett"
-          + "ings\"A\n\013PhpSettings\0222\n\006common\030\001 \001(\0132\".go"
-          + "ogle.api.CommonLanguageSettings\"D\n\016Pytho"
-          + "nSettings\0222\n\006common\030\001 \001(\0132\".google.api.C"
-          + "ommonLanguageSettings\"B\n\014NodeSettings\0222\n"
-          + "\006common\030\001 \001(\0132\".google.api.CommonLanguag"
-          + "eSettings\"\252\003\n\016DotnetSettings\0222\n\006common\030\001"
-          + " \001(\0132\".google.api.CommonLanguageSettings"
-          + "\022I\n\020renamed_services\030\002 \003(\0132/.google.api."
-          + "DotnetSettings.RenamedServicesEntry\022K\n\021r"
-          + "enamed_resources\030\003 \003(\01320.google.api.Dotn"
-          + "etSettings.RenamedResourcesEntry\022\031\n\021igno"
-          + "red_resources\030\004 \003(\t\022 \n\030forced_namespace_"
-          + "aliases\030\005 \003(\t\022\036\n\026handwritten_signatures\030"
-          + "\006 \003(\t\0326\n\024RenamedServicesEntry\022\013\n\003key\030\001 \001"
-          + "(\t\022\r\n\005value\030\002 \001(\t:\0028\001\0327\n\025RenamedResource"
-          + "sEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\"B"
-          + "\n\014RubySettings\0222\n\006common\030\001 \001(\0132\".google."
-          + "api.CommonLanguageSettings\"@\n\nGoSettings"
-          + "\0222\n\006common\030\001 \001(\0132\".google.api.CommonLang"
-          + "uageSettings\"\317\002\n\016MethodSettings\022\020\n\010selec"
-          + "tor\030\001 \001(\t\022<\n\014long_running\030\002 \001(\0132&.google"
-          + ".api.MethodSettings.LongRunning\022\035\n\025auto_"
-          + "populated_fields\030\003 \003(\t\032\315\001\n\013LongRunning\0225"
-          + "\n\022initial_poll_delay\030\001 \001(\0132\031.google.prot"
-          + "obuf.Duration\022\035\n\025poll_delay_multiplier\030\002"
-          + " \001(\002\0221\n\016max_poll_delay\030\003 \001(\0132\031.google.pr"
-          + "otobuf.Duration\0225\n\022total_poll_timeout\030\004 "
-          + "\001(\0132\031.google.protobuf.Duration*\243\001\n\031Clien"
-          + "tLibraryOrganization\022+\n\'CLIENT_LIBRARY_O"
-          + "RGANIZATION_UNSPECIFIED\020\000\022\t\n\005CLOUD\020\001\022\007\n\003"
-          + "ADS\020\002\022\n\n\006PHOTOS\020\003\022\017\n\013STREET_VIEW\020\004\022\014\n\010SH"
-          + "OPPING\020\005\022\007\n\003GEO\020\006\022\021\n\rGENERATIVE_AI\020\007*g\n\030"
-          + "ClientLibraryDestination\022*\n&CLIENT_LIBRA"
-          + "RY_DESTINATION_UNSPECIFIED\020\000\022\n\n\006GITHUB\020\n"
-          + "\022\023\n\017PACKAGE_MANAGER\020\024:9\n\020method_signatur"
-          + "e\022\036.google.protobuf.MethodOptions\030\233\010 \003(\t"
-          + ":6\n\014default_host\022\037.google.protobuf.Servi"
-          + "ceOptions\030\231\010 \001(\t:6\n\014oauth_scopes\022\037.googl"
-          + "e.protobuf.ServiceOptions\030\232\010 \001(\tBi\n\016com."
-          + "google.apiB\013ClientProtoP\001ZAgoogle.golang"
-          + ".org/genproto/googleapis/api/annotations"
-          + ";annotations\242\002\004GAPIb\006proto3"
+          + "nce_documentation_uri\030n \001(\t\022(\n rest_refe"
+          + "rence_documentation_uri\030o \001(\t\"\343\001\n\014JavaSe"
+          + "ttings\022\027\n\017library_package\030\001 \001(\t\022L\n\023servi"
+          + "ce_class_names\030\002 \003(\0132/.google.api.JavaSe"
+          + "ttings.ServiceClassNamesEntry\0222\n\006common\030"
+          + "\003 \001(\0132\".google.api.CommonLanguageSetting"
+          + "s\0328\n\026ServiceClassNamesEntry\022\013\n\003key\030\001 \001(\t"
+          + "\022\r\n\005value\030\002 \001(\t:\0028\001\"A\n\013CppSettings\0222\n\006co"
+          + "mmon\030\001 \001(\0132\".google.api.CommonLanguageSe"
+          + "ttings\"A\n\013PhpSettings\0222\n\006common\030\001 \001(\0132\"."
+          + "google.api.CommonLanguageSettings\"D\n\016Pyt"
+          + "honSettings\0222\n\006common\030\001 \001(\0132\".google.api"
+          + ".CommonLanguageSettings\"B\n\014NodeSettings\022"
+          + "2\n\006common\030\001 \001(\0132\".google.api.CommonLangu"
+          + "ageSettings\"\252\003\n\016DotnetSettings\0222\n\006common"
+          + "\030\001 \001(\0132\".google.api.CommonLanguageSettin"
+          + "gs\022I\n\020renamed_services\030\002 \003(\0132/.google.ap"
+          + "i.DotnetSettings.RenamedServicesEntry\022K\n"
+          + "\021renamed_resources\030\003 \003(\01320.google.api.Do"
+          + "tnetSettings.RenamedResourcesEntry\022\031\n\021ig"
+          + "nored_resources\030\004 \003(\t\022 \n\030forced_namespac"
+          + "e_aliases\030\005 \003(\t\022\036\n\026handwritten_signature"
+          + "s\030\006 \003(\t\0326\n\024RenamedServicesEntry\022\013\n\003key\030\001"
+          + " \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001\0327\n\025RenamedResour"
+          + "cesEntry\022\013\n\003key\030\001 \001(\t\022\r\n\005value\030\002 \001(\t:\0028\001"
+          + "\"B\n\014RubySettings\0222\n\006common\030\001 \001(\0132\".googl"
+          + "e.api.CommonLanguageSettings\"@\n\nGoSettin"
+          + "gs\0222\n\006common\030\001 \001(\0132\".google.api.CommonLa"
+          + "nguageSettings\"\317\002\n\016MethodSettings\022\020\n\010sel"
+          + "ector\030\001 \001(\t\022<\n\014long_running\030\002 \001(\0132&.goog"
+          + "le.api.MethodSettings.LongRunning\022\035\n\025aut"
+          + "o_populated_fields\030\003 \003(\t\032\315\001\n\013LongRunning"
+          + "\0225\n\022initial_poll_delay\030\001 \001(\0132\031.google.pr"
+          + "otobuf.Duration\022\035\n\025poll_delay_multiplier"
+          + "\030\002 \001(\002\0221\n\016max_poll_delay\030\003 \001(\0132\031.google."
+          + "protobuf.Duration\0225\n\022total_poll_timeout\030"
+          + "\004 \001(\0132\031.google.protobuf.Duration*\243\001\n\031Cli"
+          + "entLibraryOrganization\022+\n\'CLIENT_LIBRARY"
+          + "_ORGANIZATION_UNSPECIFIED\020\000\022\t\n\005CLOUD\020\001\022\007"
+          + "\n\003ADS\020\002\022\n\n\006PHOTOS\020\003\022\017\n\013STREET_VIEW\020\004\022\014\n\010"
+          + "SHOPPING\020\005\022\007\n\003GEO\020\006\022\021\n\rGENERATIVE_AI\020\007*g"
+          + "\n\030ClientLibraryDestination\022*\n&CLIENT_LIB"
+          + "RARY_DESTINATION_UNSPECIFIED\020\000\022\n\n\006GITHUB"
+          + "\020\n\022\023\n\017PACKAGE_MANAGER\020\024:9\n\020method_signat"
+          + "ure\022\036.google.protobuf.MethodOptions\030\233\010 \003"
+          + "(\t:6\n\014default_host\022\037.google.protobuf.Ser"
+          + "viceOptions\030\231\010 \001(\t:6\n\014oauth_scopes\022\037.goo"
+          + "gle.protobuf.ServiceOptions\030\232\010 \001(\t:8\n\013ap"
+          + "i_version\022\037.google.protobuf.ServiceOptio"
+          + "ns\030\301\272\253\372\001 \001(\tBi\n\016com.google.apiB\013ClientPr"
+          + "otoP\001ZAgoogle.golang.org/genproto/google"
+          + "apis/api/annotations;annotations\242\002\004GAPIb"
+          + "\006proto3"
     };
     descriptor =
         com.google.protobuf.Descriptors.FileDescriptor.internalBuildGeneratedFileFrom(
@@ -342,6 +375,7 @@ public final class ClientProto {
               "Organization",
               "LibrarySettings",
               "ProtoReferenceDocumentationUri",
+              "RestReferenceDocumentationUri",
             });
     internal_static_google_api_JavaSettings_descriptor = getDescriptor().getMessageTypes().get(3);
     internal_static_google_api_JavaSettings_fieldAccessorTable =
@@ -447,6 +481,7 @@ public final class ClientProto {
     methodSignature.internalInit(descriptor.getExtensions().get(0));
     defaultHost.internalInit(descriptor.getExtensions().get(1));
     oauthScopes.internalInit(descriptor.getExtensions().get(2));
+    apiVersion.internalInit(descriptor.getExtensions().get(3));
     com.google.api.LaunchStageProto.getDescriptor();
     com.google.protobuf.DescriptorProtos.getDescriptor();
     com.google.protobuf.DurationProto.getDescriptor();

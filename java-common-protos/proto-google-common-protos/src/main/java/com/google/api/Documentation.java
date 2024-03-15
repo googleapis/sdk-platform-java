@@ -35,7 +35,7 @@ package com.google.api;
  *     content: &amp;#40;== include google/foo/overview.md ==&amp;#41;
  *   - name: Tutorial
  *     content: &amp;#40;== include google/foo/tutorial.md ==&amp;#41;
- *     subpages;
+ *     subpages:
  *     - name: Java
  *       content: &amp;#40;== include google/foo/tutorial_java.md ==&amp;#41;
  *   rules:
@@ -733,7 +733,7 @@ public final class Documentation extends com.google.protobuf.GeneratedMessageV3
    *     content: &amp;#40;== include google/foo/overview.md ==&amp;#41;
    *   - name: Tutorial
    *     content: &amp;#40;== include google/foo/tutorial.md ==&amp;#41;
-   *     subpages;
+   *     subpages:
    *     - name: Java
    *       content: &amp;#40;== include google/foo/tutorial_java.md ==&amp;#41;
    *   rules:

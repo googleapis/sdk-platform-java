@@ -148,7 +148,7 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    * <pre>
    * Required. The monitored resource type. For example, the type
    * `"cloudsql_database"` represents databases in Google Cloud SQL.
-   *  For a list of types, see [Monitoring resource
+   *  For a list of types, see [Monitored resource
    *  types](https://cloud.google.com/monitoring/api/resources)
    * and [Logging resource
    * types](https://cloud.google.com/logging/docs/api/v2/resource-list).
@@ -176,7 +176,7 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
    * <pre>
    * Required. The monitored resource type. For example, the type
    * `"cloudsql_database"` represents databases in Google Cloud SQL.
-   *  For a list of types, see [Monitoring resource
+   *  For a list of types, see [Monitored resource
    *  types](https://cloud.google.com/monitoring/api/resources)
    * and [Logging resource
    * types](https://cloud.google.com/logging/docs/api/v2/resource-list).
@@ -1076,7 +1076,7 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      * <pre>
      * Required. The monitored resource type. For example, the type
      * `"cloudsql_database"` represents databases in Google Cloud SQL.
-     *  For a list of types, see [Monitoring resource
+     *  For a list of types, see [Monitored resource
      *  types](https://cloud.google.com/monitoring/api/resources)
      * and [Logging resource
      * types](https://cloud.google.com/logging/docs/api/v2/resource-list).
@@ -1103,7 +1103,7 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      * <pre>
      * Required. The monitored resource type. For example, the type
      * `"cloudsql_database"` represents databases in Google Cloud SQL.
-     *  For a list of types, see [Monitoring resource
+     *  For a list of types, see [Monitored resource
      *  types](https://cloud.google.com/monitoring/api/resources)
      * and [Logging resource
      * types](https://cloud.google.com/logging/docs/api/v2/resource-list).
@@ -1130,7 +1130,7 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      * <pre>
      * Required. The monitored resource type. For example, the type
      * `"cloudsql_database"` represents databases in Google Cloud SQL.
-     *  For a list of types, see [Monitoring resource
+     *  For a list of types, see [Monitored resource
      *  types](https://cloud.google.com/monitoring/api/resources)
      * and [Logging resource
      * types](https://cloud.google.com/logging/docs/api/v2/resource-list).
@@ -1156,7 +1156,7 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      * <pre>
      * Required. The monitored resource type. For example, the type
      * `"cloudsql_database"` represents databases in Google Cloud SQL.
-     *  For a list of types, see [Monitoring resource
+     *  For a list of types, see [Monitored resource
      *  types](https://cloud.google.com/monitoring/api/resources)
      * and [Logging resource
      * types](https://cloud.google.com/logging/docs/api/v2/resource-list).
@@ -1178,7 +1178,7 @@ public final class MonitoredResourceDescriptor extends com.google.protobuf.Gener
      * <pre>
      * Required. The monitored resource type. For example, the type
      * `"cloudsql_database"` represents databases in Google Cloud SQL.
-     *  For a list of types, see [Monitoring resource
+     *  For a list of types, see [Monitored resource
      *  types](https://cloud.google.com/monitoring/api/resources)
      * and [Logging resource
      * types](https://cloud.google.com/logging/docs/api/v2/resource-list).
