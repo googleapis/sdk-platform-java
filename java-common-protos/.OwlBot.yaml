@@ -33,7 +33,7 @@ deep-copy-regex:
   dest: "/owl-bot-staging/java-common-protos/v1/proto-google-common-protos/src"
 
 # For shopping common protos
-- source: "/google/shopping/type/google-shopping-type-java/proto-google-shopping-type-java/src
+- source: "/google/shopping/type/google-shopping-type-java/proto-google-shopping-type-java/src"
   dest: "/owl-bot-staging/java-common-protos/v1/proto-google-common-protos/src"
 
 # It is only used once in https://github.com/googleapis/googleapis/blob/master/google/chat/v1/BUILD.bazel#L47,
