@@ -1,5 +1,18 @@
 # Changelog
 
+## [2.38.1](https://github.com/googleapis/sdk-platform-java/compare/v2.38.0...v2.38.1) (2024-03-15)
+
+
+### Bug Fixes
+
+* **deps:** add detector-resource-support dependencies ([#2559](https://github.com/googleapis/sdk-platform-java/issues/2559)) ([53f2c85](https://github.com/googleapis/sdk-platform-java/commit/53f2c85ff700e114ca88ab74360733144581b861))
+* Update shopping and chat common protos. ([#2580](https://github.com/googleapis/sdk-platform-java/issues/2580)) ([f472756](https://github.com/googleapis/sdk-platform-java/commit/f472756590215308305bbb370097e300439f168b))
+
+
+### Dependencies
+
+* update google api dependencies ([#2582](https://github.com/googleapis/sdk-platform-java/issues/2582)) ([dd03d93](https://github.com/googleapis/sdk-platform-java/commit/dd03d9378c6efbaf7a0785f235461cc5951c50d2))
+
 ## [2.38.0](https://github.com/googleapis/sdk-platform-java/compare/v2.37.0...v2.38.0) (2024-03-15)
 
 
