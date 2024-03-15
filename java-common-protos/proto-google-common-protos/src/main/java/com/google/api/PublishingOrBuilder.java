@@ -383,4 +383,31 @@ public interface PublishingOrBuilder
    * @return The bytes for protoReferenceDocumentationUri.
    */
   com.google.protobuf.ByteString getProtoReferenceDocumentationUriBytes();
+
+  /**
+   *
+   *
+   * <pre>
+   * Optional link to REST reference documentation.  Example:
+   * https://cloud.google.com/pubsub/lite/docs/reference/rest
+   * </pre>
+   *
+   * <code>string rest_reference_documentation_uri = 111;</code>
+   *
+   * @return The restReferenceDocumentationUri.
+   */
+  java.lang.String getRestReferenceDocumentationUri();
+  /**
+   *
+   *
+   * <pre>
+   * Optional link to REST reference documentation.  Example:
+   * https://cloud.google.com/pubsub/lite/docs/reference/rest
+   * </pre>
+   *
+   * <code>string rest_reference_documentation_uri = 111;</code>
+   *
+   * @return The bytes for restReferenceDocumentationUri.
+   */
+  com.google.protobuf.ByteString getRestReferenceDocumentationUriBytes();
 }

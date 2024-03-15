@@ -35,7 +35,7 @@ public interface CommonLanguageSettingsOrBuilder
    * <code>string reference_docs_uri = 1 [deprecated = true];</code>
    *
    * @deprecated google.api.CommonLanguageSettings.reference_docs_uri is deprecated. See
-   *     google/api/client.proto;l=106
+   *     google/api/client.proto;l=122
    * @return The referenceDocsUri.
    */
   @java.lang.Deprecated
@@ -51,7 +51,7 @@ public interface CommonLanguageSettingsOrBuilder
    * <code>string reference_docs_uri = 1 [deprecated = true];</code>
    *
    * @deprecated google.api.CommonLanguageSettings.reference_docs_uri is deprecated. See
-   *     google/api/client.proto;l=106
+   *     google/api/client.proto;l=122
    * @return The bytes for referenceDocsUri.
    */
   @java.lang.Deprecated
