@@ -90,8 +90,8 @@ public class Writer {
     ByteString.Output output = ByteString.newOutput();
     CodeGeneratorResponse response;
     try (JarOutputStream jos = new JarOutputStream(output)) {
-      response = write(
-          context, clazzes, gapicPackageInfo, reflectConfigInfo, outputFilePath, jos, output);
+      response =
+          write(context, clazzes, gapicPackageInfo, reflectConfigInfo, outputFilePath, jos, output);
     } catch (IOException e) {
       throw new GapicWriterException(e.getMessage(), e);
     }
