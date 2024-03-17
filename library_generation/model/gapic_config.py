@@ -23,11 +23,3 @@ class GapicConfig:
 
     def __init__(self, proto_path: str):
         self.proto_path = proto_path
-
-    def __eq__(self, other):
-        return self.proto_path == other.proto_path
-
-    def __hash__(self):
-        m = sha1()
-        m.update([self.proto_path])
-        return m.hexdigest()

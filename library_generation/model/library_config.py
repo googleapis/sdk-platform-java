@@ -103,30 +103,32 @@ class LibraryConfig:
     def __hash__(self):
         m = sha1()
         m.update(
-            [
-                self.api_shortname,
-                self.api_description,
-                self.name_pretty,
-                self.product_documentation,
-                self.library_type,
-                self.release_level,
-                self.api_id,
-                self.api_reference,
-                self.codeowner_team,
-                self.excluded_dependencies,
-                self.excluded_poms,
-                self.client_documentation,
-                self.distribution_name,
-                self.googleapis_commitish,
-                self.group_id,
-                self.issue_tracker,
-                self.library_name,
-                self.rest_documentation,
-                self.rpc_documentation,
-                self.cloud_api,
-                self.requires_billing,
-                self.extra_versioned_modules,
-            ]
-            + [hash(config) for config in self.gapic_configs]
+            str(
+                [
+                    self.api_shortname,
+                    self.api_description,
+                    self.name_pretty,
+                    self.product_documentation,
+                    self.library_type,
+                    self.release_level,
+                    self.api_id,
+                    self.api_reference,
+                    self.codeowner_team,
+                    self.excluded_dependencies,
+                    self.excluded_poms,
+                    self.client_documentation,
+                    self.distribution_name,
+                    self.googleapis_commitish,
+                    self.group_id,
+                    self.issue_tracker,
+                    self.library_name,
+                    self.rest_documentation,
+                    self.rpc_documentation,
+                    self.cloud_api,
+                    self.requires_billing,
+                    self.extra_versioned_modules,
+                ]
+                + [config.proto_path for config in self.gapic_configs]
+            ).encode("utf-8")
         )
-        return m.hexdigest()
+        return int(m.hexdigest(), 16)

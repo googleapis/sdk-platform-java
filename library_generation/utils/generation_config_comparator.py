@@ -51,6 +51,12 @@ class ChangeType(Enum):
     VERSION_REMOVAL = 27
 
 
+class HashLibrary:
+    def __init__(self, hash_value: int, library: LibraryConfig):
+        self.hash_value = hash_value
+        self.library = library
+
+
 def compare_config(
     path_to_baseline_config_yaml: str, path_to_latest_config_yaml: str
 ) -> Dict[ChangeType, List[str]]:
@@ -101,7 +107,7 @@ def __compare_libraries(
     latest_libraries = __convert(latest_library_configs)
     changed_libraries = []
     # 1st round comparison.
-    for library_name, (hash_value, _) in baseline_libraries:
+    for library_name, hash_library in baseline_libraries.items():
         # 1. find any library removed from baseline_libraries.
         # a library is removed from baseline_libraries if the library_name
         # is not in latest_libraries.
@@ -113,11 +119,11 @@ def __compare_libraries(
         # parameter is changed, which means the hash value is different.
         if (
             library_name in latest_libraries
-            and hash_value != latest_libraries[library_name][0]
+            and hash_library.hash_value != latest_libraries[library_name].hash_value
         ):
             changed_libraries.append(library_name)
     # 2nd round comparison.
-    for library_name, (hash_value, _) in latest_libraries:
+    for library_name in latest_libraries:
         # find any library added to latest_libraries.
         # a library is added to latest_libraries if the library_name
         # is not in baseline_libraries.
@@ -134,7 +140,7 @@ def __compare_libraries(
     )
 
 
-def __convert(libraries: List[LibraryConfig]) -> Dict[str, (int, LibraryConfig)]:
+def __convert(libraries: List[LibraryConfig]) -> Dict[str, HashLibrary]:
     """
     Convert a list of LibraryConfig objects to a Dict.
     For each library object, the key is the library_name of the object, the
@@ -144,14 +150,14 @@ def __convert(libraries: List[LibraryConfig]) -> Dict[str, (int, LibraryConfig)]
     :return:
     """
     return {
-        get_library_name(library): (hash(library), library) for library in libraries
+        get_library_name(library): HashLibrary(hash(library), library) for library in libraries
     }
 
 
 def __compare_changed_libraries(
     diff: Dict[ChangeType, List[str]],
-    baseline_libraries: Dict[str, (int, LibraryConfig)],
-    latest_libraries: Dict[str, (int, LibraryConfig)],
+    baseline_libraries: Dict[str, HashLibrary],
+    latest_libraries: Dict[str, HashLibrary],
     changed_libraries: List[str],
 ) -> None:
     """
@@ -173,132 +179,134 @@ def __compare_changed_libraries(
     :return:
     """
     for library_name in changed_libraries:
+        baseline_library = baseline_libraries[library_name].library
+        latest_library = latest_libraries[library_name].library
         if (
-            baseline_libraries[library_name][1].api_description
-            != latest_libraries[library_name][1].api_description
+            baseline_library.api_description
+            != latest_libraries[library_name].library.api_description
         ):
             if ChangeType.API_DESCRIPTION not in diff:
                 diff[ChangeType.API_DESCRIPTION] = []
             diff[ChangeType.API_DESCRIPTION].append(library_name)
         if (
-            baseline_libraries[library_name][1].name_pretty
-            != latest_libraries[library_name][1].name_pretty
+            baseline_library.name_pretty
+            != latest_libraries[library_name].library.name_pretty
         ):
             if ChangeType.NAME_PRETTY not in diff:
                 diff[ChangeType.NAME_PRETTY] = []
             diff[ChangeType.NAME_PRETTY].append(library_name)
         if (
-            baseline_libraries[library_name][1].product_documentation
-            != latest_libraries[library_name][1].product_documentation
+            baseline_library.product_documentation
+            != latest_library.product_documentation
         ):
             if ChangeType.PRODUCT_DOCS not in diff:
                 diff[ChangeType.PRODUCT_DOCS] = []
             diff[ChangeType.PRODUCT_DOCS].append(library_name)
 
         if (
-            baseline_libraries[library_name][1].library_type
-            != latest_libraries[library_name][1].library_type
+            baseline_library.library_type
+            != latest_library.library_type
         ):
             if ChangeType.LIBRARY_TYPE not in diff:
                 diff[ChangeType.LIBRARY_TYPE] = []
             diff[ChangeType.LIBRARY_TYPE].append(library_name)
 
         if (
-            baseline_libraries[library_name][1].release_level
-            != latest_libraries[library_name][1].release_level
+            baseline_library.release_level
+            != latest_library.release_level
         ):
             if ChangeType.RELEASE_LEVEL not in diff:
                 diff[ChangeType.RELEASE_LEVEL] = []
             diff[ChangeType.RELEASE_LEVEL].append(library_name)
 
         if (
-            baseline_libraries[library_name][1].api_id
-            != latest_libraries[library_name][1].api_id
+            baseline_library.api_id
+            != latest_library.api_id
         ):
             if ChangeType.API_ID not in diff:
                 diff[ChangeType.API_ID] = []
             diff[ChangeType.API_ID].append(library_name)
 
         if (
-            baseline_libraries[library_name][1].api_reference
-            != latest_libraries[library_name][1].api_reference
+            baseline_library.api_reference
+            != latest_library.api_reference
         ):
             if ChangeType.API_REFERENCE not in diff:
                 diff[ChangeType.API_REFERENCE] = []
             diff[ChangeType.API_REFERENCE].append(library_name)
 
         if (
-            baseline_libraries[library_name][1].codeowner_team
-            != latest_libraries[library_name][1].codeowner_team
+            baseline_library.codeowner_team
+            != latest_library.codeowner_team
         ):
             if ChangeType.CODEOWNER_TEAM not in diff:
                 diff[ChangeType.CODEOWNER_TEAM] = []
             diff[ChangeType.CODEOWNER_TEAM].append(library_name)
         if (
-            baseline_libraries[library_name][1].excluded_dependencies
-            != latest_libraries[library_name][1].excluded_dependencies
+            baseline_library.excluded_dependencies
+            != latest_library.excluded_dependencies
         ):
             if ChangeType.EXCLUDED_DEPENDENCIES not in diff:
                 diff[ChangeType.EXCLUDED_DEPENDENCIES] = []
             diff[ChangeType.EXCLUDED_DEPENDENCIES].append(library_name)
         if (
-            baseline_libraries[library_name][1].excluded_poms
-            != latest_libraries[library_name][1].excluded_poms
+            baseline_library.excluded_poms
+            != latest_library.excluded_poms
         ):
             if ChangeType.EXCLUDED_POMS not in diff:
                 diff[ChangeType.EXCLUDED_POMS] = []
             diff[ChangeType.EXCLUDED_POMS].append(library_name)
 
         if (
-            baseline_libraries[library_name][1].client_documentation
-            != latest_libraries[library_name][1].client_documentation
+            baseline_library.client_documentation
+            != latest_library.client_documentation
         ):
             if ChangeType.CLIENT_DOCS not in diff:
                 diff[ChangeType.CLIENT_DOCS] = []
             diff[ChangeType.CLIENT_DOCS].append(library_name)
 
         if (
-            baseline_libraries[library_name][1].issue_tracker
-            != latest_libraries[library_name][1].issue_tracker
+            baseline_library.issue_tracker
+            != latest_library.issue_tracker
         ):
             if ChangeType.ISSUE_TRACKER not in diff:
                 diff[ChangeType.ISSUE_TRACKER] = []
             diff[ChangeType.ISSUE_TRACKER].append(library_name)
 
         if (
-            baseline_libraries[library_name][1].rest_documentation
-            != latest_libraries[library_name][1].rest_documentation
+            baseline_library.rest_documentation
+            != latest_library.rest_documentation
         ):
             if ChangeType.REST_DOCS not in diff:
                 diff[ChangeType.REST_DOCS] = []
             diff[ChangeType.REST_DOCS].append(library_name)
 
         if (
-            baseline_libraries[library_name][1].rpc_documentation
-            != latest_libraries[library_name][1].rpc_documentation
+            baseline_library.rpc_documentation
+            != latest_library.rpc_documentation
         ):
             if ChangeType.RPC_DOCS not in diff:
                 diff[ChangeType.RPC_DOCS] = []
             diff[ChangeType.RPC_DOCS].append(library_name)
 
         if (
-            baseline_libraries[library_name][1].requires_billing
-            != latest_libraries[library_name][1].requires_billing
+            baseline_library.requires_billing
+            != latest_library.requires_billing
         ):
             if ChangeType.REQUIRES_BILLING not in diff:
                 diff[ChangeType.REQUIRES_BILLING] = []
             diff[ChangeType.REQUIRES_BILLING].append(library_name)
 
         if (
-            baseline_libraries[library_name][1].extra_versioned_modules
-            != latest_libraries[library_name][1].extra_versioned_modules
+            baseline_library.extra_versioned_modules
+            != latest_library.extra_versioned_modules
         ):
             if ChangeType.EXTRA_VERSIONED_MODULES not in diff:
                 diff[ChangeType.EXTRA_VERSIONED_MODULES] = []
             diff[ChangeType.EXTRA_VERSIONED_MODULES].append(library_name)
         # compare gapic_configs
-        baseline_gapic_configs = baseline_libraries[library_name][1].gapic_configs
-        latest_gapic_configs = latest_libraries[library_name][1].gapic_configs
+        baseline_gapic_configs = baseline_library.gapic_configs
+        latest_gapic_configs = latest_library.gapic_configs
         __compare_gapic_configs(
             diff=diff,
             library_name=library_name,
