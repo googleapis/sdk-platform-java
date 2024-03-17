@@ -14,12 +14,27 @@
 import unittest
 
 from library_generation.model.generation_config import GenerationConfig
+from library_generation.model.library_config import LibraryConfig
 from library_generation.utils.generation_config_comparator import ChangeType
 from library_generation.utils.generation_config_comparator import compare_config
 
 
 class GenerationConfigComparatorTest(unittest.TestCase):
     def setUp(self) -> None:
+        self.baseline_library = LibraryConfig(
+            api_shortname="existing_library",
+            api_description="",
+            name_pretty="",
+            product_documentation="",
+            gapic_configs=[],
+        )
+        self.latest_library = LibraryConfig(
+            api_shortname="existing_library",
+            api_description="",
+            name_pretty="",
+            product_documentation="",
+            gapic_configs=[],
+        )
         self.baseline_config = GenerationConfig(
             gapic_generator_version="",
             googleapis_commitish="",
@@ -29,7 +44,7 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             path_to_yaml="",
             grpc_version="",
             protobuf_version="",
-            libraries=[],
+            libraries=[self.baseline_library],
         )
         self.latest_config = GenerationConfig(
             gapic_generator_version="",
@@ -40,7 +55,7 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             path_to_yaml="",
             grpc_version="",
             protobuf_version="",
-            libraries=[],
+            libraries=[self.latest_library],
         )
 
     def test_compare_config_not_change(self):
@@ -121,3 +136,159 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             latest_config=self.latest_config,
         )
         self.assertEqual({ChangeType.TEMPLATE_EXCLUDES: []}, result)
+
+    def test_compare_config_library_addition(self):
+        self.latest_config.libraries.append(
+            LibraryConfig(
+                api_shortname="new_library",
+                api_description="",
+                name_pretty="",
+                product_documentation="",
+                gapic_configs=[],
+            )
+        )
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            latest_config=self.latest_config,
+        )
+        self.assertEqual({ChangeType.LIBRARIES_ADDITION: ["new_library"]}, result)
+
+    def test_compare_config_library_removal(self):
+        self.latest_config.libraries = []
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            latest_config=self.latest_config,
+        )
+        self.assertEqual({ChangeType.LIBRARIES_REMOVAL: ["existing_library"]}, result)
+
+    def test_compare_config_api_description_update(self):
+        self.latest_config.libraries[0].api_description = "updated description"
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            latest_config=self.latest_config,
+        )
+        self.assertEqual({ChangeType.API_DESCRIPTION: ["existing_library"]}, result)
+
+    def test_compare_config_name_pretty_update(self):
+        self.latest_config.libraries[0].name_pretty = "new name"
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            latest_config=self.latest_config,
+        )
+        self.assertEqual({ChangeType.NAME_PRETTY: ["existing_library"]}, result)
+
+    def test_compare_config_product_docs_update(self):
+        self.latest_config.libraries[0].product_documentation = "new docs"
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            latest_config=self.latest_config,
+        )
+        self.assertEqual({ChangeType.PRODUCT_DOCS: ["existing_library"]}, result)
+
+    def test_compare_config_library_type_update(self):
+        self.latest_config.libraries[0].library_type = "GAPIC_COMBO"
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            latest_config=self.latest_config,
+        )
+        self.assertEqual({ChangeType.LIBRARY_TYPE: ["existing_library"]}, result)
+
+    def test_compare_config_release_level_update(self):
+        self.latest_config.libraries[0].release_level = "STABLE"
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            latest_config=self.latest_config,
+        )
+        self.assertEqual({ChangeType.RELEASE_LEVEL: ["existing_library"]}, result)
+
+    def test_compare_config_api_id_update(self):
+        self.latest_config.libraries[0].api_id = "new_id"
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            latest_config=self.latest_config,
+        )
+        self.assertEqual({ChangeType.API_ID: ["existing_library"]}, result)
+
+    def test_compare_config_api_reference_update(self):
+        self.latest_config.libraries[0].api_reference = "new api_reference"
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            latest_config=self.latest_config,
+        )
+        self.assertEqual({ChangeType.API_REFERENCE: ["existing_library"]}, result)
+
+    def test_compare_config_code_owner_team_update(self):
+        self.latest_config.libraries[0].codeowner_team = "new team"
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            latest_config=self.latest_config,
+        )
+        self.assertEqual({ChangeType.CODEOWNER_TEAM: ["existing_library"]}, result)
+
+    def test_compare_config_excluded_deps_update(self):
+        self.latest_config.libraries[0].excluded_dependencies = "group:artifact"
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            latest_config=self.latest_config,
+        )
+        self.assertEqual(
+            {ChangeType.EXCLUDED_DEPENDENCIES: ["existing_library"]}, result
+        )
+
+    def test_compare_config_excluded_poms_update(self):
+        self.latest_config.libraries[0].excluded_poms = "pom.xml"
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            latest_config=self.latest_config,
+        )
+        self.assertEqual({ChangeType.EXCLUDED_POMS: ["existing_library"]}, result)
+
+    def test_compare_config_client_docs_update(self):
+        self.latest_config.libraries[0].client_documentation = "new client docs"
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            latest_config=self.latest_config,
+        )
+        self.assertEqual({ChangeType.CLIENT_DOCS: ["existing_library"]}, result)
+
+    def test_compare_config_issue_tracker_update(self):
+        self.latest_config.libraries[0].issue_tracker = "new issue tracker"
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            latest_config=self.latest_config,
+        )
+        self.assertEqual({ChangeType.ISSUE_TRACKER: ["existing_library"]}, result)
+
+    def test_compare_config_rest_docs_update(self):
+        self.latest_config.libraries[0].rest_documentation = "new rest docs"
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            latest_config=self.latest_config,
+        )
+        self.assertEqual({ChangeType.REST_DOCS: ["existing_library"]}, result)
+
+    def test_compare_config_rpc_docs_update(self):
+        self.latest_config.libraries[0].rpc_documentation = "new rpc docs"
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            latest_config=self.latest_config,
+        )
+        self.assertEqual({ChangeType.RPC_DOCS: ["existing_library"]}, result)
+
+    def test_compare_config_requires_billing_update(self):
+        self.latest_config.libraries[0].requires_billing = False
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            latest_config=self.latest_config,
+        )
+        self.assertEqual({ChangeType.REQUIRES_BILLING: ["existing_library"]}, result)
+
+    def test_compare_config_extra_versioned_mod_update(self):
+        self.latest_config.libraries[0].extra_versioned_modules = "extra module"
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            latest_config=self.latest_config,
+        )
+        self.assertEqual(
+            {ChangeType.EXTRA_VERSIONED_MODULES: ["existing_library"]}, result
+        )
