@@ -13,6 +13,7 @@
 # limitations under the License.
 import unittest
 
+from library_generation.model.gapic_config import GapicConfig
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
 from library_generation.utils.generation_config_comparator import ChangeType
@@ -292,3 +293,23 @@ class GenerationConfigComparatorTest(unittest.TestCase):
         self.assertEqual(
             {ChangeType.EXTRA_VERSIONED_MODULES: ["existing_library"]}, result
         )
+
+    def test_compare_config_version_addition(self):
+        self.latest_config.libraries[0].gapic_configs = [
+            GapicConfig(proto_path="google/new/library/v1")
+        ]
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            latest_config=self.latest_config,
+        )
+        self.assertEqual({ChangeType.VERSION_ADDITION: ["existing_library"]}, result)
+
+    def test_compare_config_version_removal(self):
+        self.baseline_config.libraries[0].gapic_configs = [
+            GapicConfig(proto_path="google/old/library/v1")
+        ]
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            latest_config=self.latest_config,
+        )
+        self.assertEqual({ChangeType.VERSION_REMOVAL: ["existing_library"]}, result)
