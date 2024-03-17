@@ -31,3 +31,4 @@ steps:
     env:
       - 'MODULES_UNDER_TEST=java-os-login'
       - 'GOOGLE_CLOUD_PROJECT=mpeddada-test'
+      - 'GOOGLE_APPLICATION_CREDENTIALS=secret_manager/cloud-java-ci-it-service-account'
