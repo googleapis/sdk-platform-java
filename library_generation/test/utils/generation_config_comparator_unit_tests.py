@@ -61,8 +61,7 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertTrue(ChangeType.GOOGLEAPIS_COMMIT in result)
-        self.assertEqual([], result[ChangeType.GOOGLEAPIS_COMMIT])
+        self.assertEqual({ChangeType.GOOGLEAPIS_COMMIT: []}, result)
 
     def test_compare_config_generator_update(self):
         self.baseline_config.gapic_generator_version = "1.2.3"
@@ -71,5 +70,54 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertTrue(ChangeType.GENERATOR in result)
-        self.assertEqual([], result[ChangeType.GENERATOR])
+        self.assertEqual({ChangeType.GENERATOR: []}, result)
+
+    def test_compare_config_owlbot_cli_update(self):
+        self.baseline_config.owlbot_cli_image = "image_version_123"
+        self.latest_config.owlbot_cli_image = "image_version_456"
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            latest_config=self.latest_config,
+        )
+        self.assertEqual({ChangeType.OWLBOT_CLI: []}, result)
+
+    def test_compare_config_synthtool_update(self):
+        self.baseline_config.synthtool_commitish = "commit123"
+        self.latest_config.synthtool_commitish = "commit456"
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            latest_config=self.latest_config,
+        )
+        self.assertEqual({ChangeType.SYNTHTOOL: []}, result)
+
+    def test_compare_protobuf_update(self):
+        self.baseline_config.protobuf_version = "3.25.2"
+        self.latest_config.protobuf_version = "3.27.0"
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            latest_config=self.latest_config,
+        )
+        self.assertEqual({ChangeType.PROTOBUF: []}, result)
+
+    def test_compare_config_grpc_update(self):
+        self.baseline_config.grpc_version = "1.60.0"
+        self.latest_config.grpc_version = "1.61.0"
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            latest_config=self.latest_config,
+        )
+        self.assertEqual({ChangeType.GRPC: []}, result)
+
+    def test_compare_config_template_excludes_update(self):
+        self.baseline_config.template_excludes = [".github/*", ".kokoro/*"]
+        self.latest_config.template_excludes = [
+            ".github/*",
+            ".kokoro/*",
+            "samples/*",
+            "CODE_OF_CONDUCT.md",
+        ]
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            latest_config=self.latest_config,
+        )
+        self.assertEqual({ChangeType.TEMPLATE_EXCLUDES: []}, result)

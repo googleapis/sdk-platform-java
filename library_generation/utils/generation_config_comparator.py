@@ -17,7 +17,6 @@ from typing import List
 
 from library_generation.model.gapic_config import GapicConfig
 from library_generation.model.generation_config import GenerationConfig
-from library_generation.model.generation_config import from_yaml
 from library_generation.model.library_config import LibraryConfig
 from library_generation.utilities import get_library_name
 
