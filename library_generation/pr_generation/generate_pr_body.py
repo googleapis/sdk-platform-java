@@ -34,14 +34,14 @@ def generate_pr_body(
     return __get_affected_libraries(
         compare_result=compare_result,
         baseline_config=baseline_config,
-        latest_config=latest_config
+        latest_config=latest_config,
     )
 
 
 def __get_affected_libraries(
     compare_result: dict[ChangeType, list[str]],
     baseline_config: GenerationConfig,
-    latest_config: GenerationConfig
+    latest_config: GenerationConfig,
 ) -> List[str]:
     affected_libraries = []
 

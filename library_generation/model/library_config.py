@@ -132,3 +132,14 @@ class LibraryConfig:
             ).encode("utf-8")
         )
         return int(m.hexdigest(), 16)
+
+
+def get_library_name(
+    library: LibraryConfig,
+) -> str:
+    """
+    Return the library name of a given LibraryConfig object
+    :param library: an object of LibraryConfig
+    :return: the library name
+    """
+    return library.library_name if library.library_name else library.api_shortname
