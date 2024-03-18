@@ -20,6 +20,8 @@ from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
 from library_generation.utilities import get_library_name
 
+ALL_LIBRARIES = []
+
 
 class ChangeType(Enum):
     GOOGLEAPIS_COMMIT = 1
@@ -67,8 +69,8 @@ def compare_config(
     """
     Compare two GenerationConfig object and output a mapping from ChangeType
     to a list of library_name of affected libraries.
-    All libraries in the latest configuration will be affected if the library
-    list is empty.
+    All libraries in the latest configuration will be affected if one of the
+    repository level parameters is changed.
 
     :param baseline_config: the baseline GenerationConfig object
     :param latest_config: the latest GenerationConfig object
@@ -77,19 +79,19 @@ def compare_config(
     """
     diff = {}
     if baseline_config.googleapis_commitish != latest_config.googleapis_commitish:
-        diff[ChangeType.GOOGLEAPIS_COMMIT] = []
+        diff[ChangeType.GOOGLEAPIS_COMMIT] = ALL_LIBRARIES
     if baseline_config.gapic_generator_version != latest_config.gapic_generator_version:
-        diff[ChangeType.GENERATOR] = []
+        diff[ChangeType.GENERATOR] = ALL_LIBRARIES
     if baseline_config.owlbot_cli_image != latest_config.owlbot_cli_image:
-        diff[ChangeType.OWLBOT_CLI] = []
+        diff[ChangeType.OWLBOT_CLI] = ALL_LIBRARIES
     if baseline_config.synthtool_commitish != latest_config.synthtool_commitish:
-        diff[ChangeType.SYNTHTOOL] = []
+        diff[ChangeType.SYNTHTOOL] = ALL_LIBRARIES
     if baseline_config.protobuf_version != latest_config.protobuf_version:
-        diff[ChangeType.PROTOBUF] = []
+        diff[ChangeType.PROTOBUF] = ALL_LIBRARIES
     if baseline_config.grpc_version != latest_config.grpc_version:
-        diff[ChangeType.GRPC] = []
+        diff[ChangeType.GRPC] = ALL_LIBRARIES
     if baseline_config.template_excludes != latest_config.template_excludes:
-        diff[ChangeType.TEMPLATE_EXCLUDES] = []
+        diff[ChangeType.TEMPLATE_EXCLUDES] = ALL_LIBRARIES
 
     __compare_libraries(
         diff=diff,
@@ -113,8 +115,8 @@ def __compare_libraries(
     :param baseline_library_configs: a list of LibraryConfig object
     :param latest_library_configs: a list of LibraryConfig object
     """
-    baseline_libraries = __convert(baseline_library_configs)
-    latest_libraries = __convert(latest_library_configs)
+    baseline_libraries = __convert_to_hashed_library_dict(baseline_library_configs)
+    latest_libraries = __convert_to_hashed_library_dict(latest_library_configs)
     changed_libraries = []
     # 1st round comparison.
     for library_name, hash_library in baseline_libraries.items():
@@ -150,7 +152,9 @@ def __compare_libraries(
     )
 
 
-def __convert(libraries: List[LibraryConfig]) -> Dict[str, HashLibrary]:
+def __convert_to_hashed_library_dict(
+    libraries: List[LibraryConfig],
+) -> Dict[str, HashLibrary]:
     """
     Convert a list of LibraryConfig objects to a Dict.
     For each library object, the key is the library_name of the object, the
