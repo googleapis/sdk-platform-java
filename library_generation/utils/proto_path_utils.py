@@ -34,7 +34,7 @@ def remove_version_from(proto_path: str) -> str:
     return proto_path
 
 
-def get_file_paths(config: GenerationConfig) -> Dict[str, str]:
+def get_proto_paths(config: GenerationConfig) -> Dict[str, str]:
     """
     Get versioned proto_path to library_name mapping from configuration file.
 

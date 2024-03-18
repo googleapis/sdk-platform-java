@@ -15,6 +15,7 @@
 from typing import List
 
 from library_generation.model.generation_config import from_yaml, GenerationConfig
+from library_generation.utils.commit_filter import get_qualified_commit
 from library_generation.utils.generation_config_comparator import (
     compare_config,
     ChangeType,
@@ -31,27 +32,28 @@ def generate_pr_body(
         baseline_config=baseline_config, latest_config=latest_config
     )
 
-    return __get_affected_libraries(
+    return __get_changed_libraries(
         compare_result=compare_result,
         baseline_config=baseline_config,
         latest_config=latest_config,
     )
 
 
-def __get_affected_libraries(
+def __get_changed_libraries(
     compare_result: dict[ChangeType, list[str]],
     baseline_config: GenerationConfig,
     latest_config: GenerationConfig,
 ) -> List[str]:
     affected_libraries = []
-
-    for changeType, library_names in compare_result.items():
+    for changeType in compare_result:
         if __is_full_generation_type(changeType):
             return []
+        library_names = compare_result[changeType]
         if changeType == ChangeType.GOOGLEAPIS_COMMIT:
-            pass
-        else:
-            affected_libraries.extend(library_names)
+            library_names = __get_library_name_from_qualified_commits(
+                baseline_config=baseline_config, latest_config=latest_config
+            )
+        affected_libraries.extend(library_names)
     return affected_libraries
 
 
@@ -64,3 +66,16 @@ def __is_full_generation_type(change_type: ChangeType) -> bool:
         or change_type == ChangeType.GRPC
         or change_type == ChangeType.TEMPLATE_EXCLUDES
     )
+
+
+def __get_library_name_from_qualified_commits(
+    baseline_config: GenerationConfig,
+    latest_config: GenerationConfig,
+) -> List[str]:
+    qualified_commits = get_qualified_commit(
+        baseline_config=baseline_config, latest_config=latest_config
+    )
+    library_names = []
+    for qualified_commit in qualified_commits:
+        library_names.extend(qualified_commit.libraries)
+    return library_names
