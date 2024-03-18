@@ -347,12 +347,6 @@ class UtilitiesTest(unittest.TestCase):
         )
         self.assertEqual("", parsed.service_yaml)
 
-    def test_get_library_returns_library_name(self):
-        self.assertEqual("bare-metal-solution", util.get_library_name(library_1))
-
-    def test_get_library_returns_api_shortname(self):
-        self.assertEqual("secretmanager", util.get_library_name(library_2))
-
     def test_generate_prerequisite_files_non_monorepo_success(self):
         library_path = self.__setup_prerequisite_files(
             num_libraries=1, library_type="GAPIC_COMBO"
