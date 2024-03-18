@@ -52,6 +52,10 @@ class ChangeType(Enum):
 
 
 class HashLibrary:
+    """
+    Data class to group a LibraryConfig object and its hash value together.
+    """
+
     def __init__(self, hash_value: int, library: LibraryConfig):
         self.hash_value = hash_value
         self.library = library
@@ -61,14 +65,15 @@ def compare_config(
     baseline_config: GenerationConfig, latest_config: GenerationConfig
 ) -> Dict[ChangeType, List[str]]:
     """
-    Compare two GenerationConfig object and output a mapping from DiffType
+    Compare two GenerationConfig object and output a mapping from ChangeType
     to a list of library_name of affected libraries.
     All libraries in the latest configuration will be affected if the library
     list is empty.
 
-    :param baseline_config:
-    :param latest_config:
-    :return:
+    :param baseline_config: the baseline GenerationConfig object
+    :param latest_config: the latest GenerationConfig object
+    :return: a mapping from ChangeType to a list of library_name of affected
+    libraries.
     """
     diff = {}
     if baseline_config.googleapis_commitish != latest_config.googleapis_commitish:
@@ -99,6 +104,15 @@ def __compare_libraries(
     baseline_library_configs: List[LibraryConfig],
     latest_library_configs: List[LibraryConfig],
 ) -> None:
+    """
+    Compare two lists of LibraryConfig and put the difference into a
+    given Dict.
+
+    :param diff: a mapping from ChangeType to a list of library_name of
+    affected libraries.
+    :param baseline_library_configs: a list of LibraryConfig object
+    :param latest_library_configs: a list of LibraryConfig object
+    """
     baseline_libraries = __convert(baseline_library_configs)
     latest_libraries = __convert(latest_library_configs)
     changed_libraries = []
@@ -140,10 +154,10 @@ def __convert(libraries: List[LibraryConfig]) -> Dict[str, HashLibrary]:
     """
     Convert a list of LibraryConfig objects to a Dict.
     For each library object, the key is the library_name of the object, the
-    value is a tuple, which contains the hash value of the object and the object
-    itself.
-    :param libraries:
-    :return:
+    value is a HashLibrary object.
+
+    :param libraries: a list of LibraryConfig object.
+    :return: a mapping from library_name to HashLibrary object.
     """
     return {
         get_library_name(library): HashLibrary(hash(library), library)
@@ -169,11 +183,12 @@ def __compare_changed_libraries(
     - group_id
     - cloud_api
 
-    :param diff:
-    :param baseline_libraries:
-    :param latest_libraries:
-    :param changed_libraries:
-    :return:
+    :param diff: a mapping from ChangeType to a list of library_name of
+    affected libraries.
+    :param baseline_libraries: a mapping from library_name to HashLibrary
+    object.
+    :param latest_libraries: a mapping from library_name to HashLibrary object.
+    :param changed_libraries: a list of library_name of changed libraries.
     """
     for library_name in changed_libraries:
         baseline_library = baseline_libraries[library_name].library
