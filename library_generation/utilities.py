@@ -19,8 +19,7 @@ import shutil
 import re
 from pathlib import Path
 from library_generation.model.generation_config import GenerationConfig
-from library_generation.model.library_config import LibraryConfig, \
-    get_library_name
+from library_generation.model.library_config import LibraryConfig, get_library_name
 from typing import List
 from library_generation.model.repo_config import RepoConfig
 from library_generation.utils.file_render import render

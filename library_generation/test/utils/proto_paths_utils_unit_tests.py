@@ -16,12 +16,11 @@ import os
 import unittest
 from pathlib import Path
 
-import parameterized as parameterized
-
 from library_generation.model.generation_config import from_yaml
 from library_generation.utils.proto_path_utils import (
     get_file_paths,
-    find_versioned_proto_path, remove_version_from,
+    find_versioned_proto_path,
+    remove_version_from,
 )
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
@@ -43,31 +42,28 @@ class ProtoPathsUtilsTest(unittest.TestCase):
             paths,
         )
 
-    @parameterized.expand(
-        [
-            (
-                "google/cloud/aiplatform/v1/schema/predict/params/image_classification.proto",
-                "google/cloud/aiplatform/v1",
-            ),
-            (
-                "google/cloud/asset/v1p2beta1/assets.proto",
-                "google/cloud/asset/v1p2beta1",
-            ),
-            ("google/type/color.proto", "google/type/color.proto"),
-        ]
-    )
-    def test_find_versioned_proto_path(self, file_path, expected):
+    def test_find_versioned_proto_path_nested_version_success(self):
+        file_path = "google/cloud/aiplatform/v1/schema/predict/params/image_classification.proto"
+        expected = "google/cloud/aiplatform/v1"
+        proto_path = find_versioned_proto_path(file_path)
+        self.assertEqual(expected, proto_path)
+
+    def test_find_versioned_proto_path_success(self):
+        file_path = "google/cloud/asset/v1p2beta1/assets.proto"
+        expected = "google/cloud/asset/v1p2beta1"
+        proto_path = find_versioned_proto_path(file_path)
+        self.assertEqual(expected, proto_path)
+
+    def test_find_versioned_proto_without_version_return_itself(self):
+        file_path = "google/type/color.proto"
+        expected = "google/type/color.proto"
         proto_path = find_versioned_proto_path(file_path)
         self.assertEqual(expected, proto_path)
 
     def test_remove_version_from_returns_non_versioned_path(self):
         proto_path = "google/cloud/aiplatform/v1"
-        self.assertEqual(
-            "google/cloud/aiplatform", remove_version_from(proto_path)
-        )
+        self.assertEqual("google/cloud/aiplatform", remove_version_from(proto_path))
 
     def test_remove_version_from_returns_self(self):
         proto_path = "google/cloud/aiplatform"
-        self.assertEqual(
-            "google/cloud/aiplatform", remove_version_from(proto_path)
-        )
+        self.assertEqual("google/cloud/aiplatform", remove_version_from(proto_path))
