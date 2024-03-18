@@ -49,8 +49,8 @@ class ChangeType(Enum):
     RPC_DOCS = 23
     REQUIRES_BILLING = 24
     EXTRA_VERSIONED_MODULES = 25
-    VERSION_ADDITION = 26
-    VERSION_REMOVAL = 27
+    GAPIC_ADDITION = 26
+    GAPIC_REMOVAL = 27
 
 
 class HashLibrary:
@@ -311,14 +311,14 @@ def __compare_gapic_configs(
     for proto_path in baseline_proto_paths:
         if proto_path in latest_proto_paths:
             continue
-        if ChangeType.VERSION_REMOVAL not in diff:
-            diff[ChangeType.VERSION_REMOVAL] = []
-        diff[ChangeType.VERSION_REMOVAL].append(library_name)
+        if ChangeType.GAPIC_REMOVAL not in diff:
+            diff[ChangeType.GAPIC_REMOVAL] = []
+        diff[ChangeType.GAPIC_REMOVAL].append(library_name)
     # 2nd round of comparison, find any versioned proto_path is added
     # to latest gapic configs.
     for proto_path in latest_proto_paths:
         if proto_path in baseline_proto_paths:
             continue
-        if ChangeType.VERSION_ADDITION not in diff:
-            diff[ChangeType.VERSION_ADDITION] = []
-        diff[ChangeType.VERSION_ADDITION].append(library_name)
+        if ChangeType.GAPIC_ADDITION not in diff:
+            diff[ChangeType.GAPIC_ADDITION] = []
+        diff[ChangeType.GAPIC_ADDITION].append(library_name)

@@ -302,7 +302,7 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertEqual({ChangeType.VERSION_ADDITION: ["existing_library"]}, result)
+        self.assertEqual({ChangeType.GAPIC_ADDITION: ["existing_library"]}, result)
 
     def test_compare_config_version_removal(self):
         self.baseline_config.libraries[0].gapic_configs = [
@@ -312,4 +312,4 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertEqual({ChangeType.VERSION_REMOVAL: ["existing_library"]}, result)
+        self.assertEqual({ChangeType.GAPIC_REMOVAL: ["existing_library"]}, result)
