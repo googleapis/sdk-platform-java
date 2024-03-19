@@ -154,6 +154,15 @@ public class HttpTransportOptions implements TransportOptions {
         serviceOptions.getMergedHeaderProvider(internalHeaderProvider);
 
     return new HttpRequestInitializer() {
+
+      private String determineUniverseDomain() {
+        String universeDomain = serviceOptions.getUniverseDomain();
+        if (universeDomain == null) {
+          universeDomain = System.getenv(GOOGLE_CLOUD_UNIVERSE_DOMAIN);
+        }
+        return universeDomain == null ? Credentials.GOOGLE_DEFAULT_UNIVERSE : universeDomain;
+      }
+
       @Override
       public void initialize(HttpRequest httpRequest) throws IOException {
         if (delegate != null) {
@@ -161,13 +170,7 @@ public class HttpTransportOptions implements TransportOptions {
           HttpCredentialsAdapter httpCredentialsAdapter = (HttpCredentialsAdapter) delegate;
           String credentialsUniverseDomain =
               httpCredentialsAdapter.getCredentials().getUniverseDomain();
-          String configuredUniverseDomain = serviceOptions.getUniverseDomain();
-          if (configuredUniverseDomain == null) {
-            configuredUniverseDomain = System.getenv(GOOGLE_CLOUD_UNIVERSE_DOMAIN);
-          }
-          if (configuredUniverseDomain == null) {
-            configuredUniverseDomain = Credentials.GOOGLE_DEFAULT_UNIVERSE;
-          }
+          String configuredUniverseDomain = determineUniverseDomain();
           if (!configuredUniverseDomain.equals(credentialsUniverseDomain)) {
             throw new IllegalStateException(
                 String.format(

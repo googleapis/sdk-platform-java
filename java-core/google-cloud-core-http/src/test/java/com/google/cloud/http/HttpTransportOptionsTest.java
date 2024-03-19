@@ -65,6 +65,11 @@ public class HttpTransportOptionsTest {
       HttpTransportOptions.newBuilder().build();
   private static final HttpTransportOptions OPTIONS_COPY = OPTIONS.toBuilder().build();
 
+  /**
+   * The following interfaces and classes are from ServiceOptionsTest. Copied over here as
+   * ServiceOptions resides inside google-cloud-core test folder and is not accessible from
+   * google-cloud-core-http.
+   */
   interface TestService extends Service<TestServiceOptions> {}
 
   private static class TestServiceImpl extends BaseService<TestServiceOptions>
