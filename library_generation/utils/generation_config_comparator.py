@@ -19,7 +19,6 @@ from typing import List
 from library_generation.model.gapic_config import GapicConfig
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
-from library_generation.utilities import get_library_name
 
 
 class ChangeType(Enum):
@@ -173,7 +172,7 @@ def __convert_to_hashed_library_dict(
     :return: a mapping from library_name to HashLibrary object.
     """
     return {
-        get_library_name(library): HashLibrary(hash(library), library)
+        library.get_library_name(): HashLibrary(hash(library), library)
         for library in libraries
     }
 

@@ -73,6 +73,13 @@ class LibraryConfig:
         self.requires_billing = requires_billing
         self.extra_versioned_modules = extra_versioned_modules
 
+    def get_library_name(self) -> str:
+        """
+        Return the library name of a given LibraryConfig object
+        :return: the library name
+        """
+        return self.library_name if self.library_name else self.api_shortname
+
     def __eq__(self, other):
         return (
             self.api_shortname == other.api_shortname
