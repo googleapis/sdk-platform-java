@@ -145,7 +145,6 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
         builder.directPathServiceConfig == null
             ? getDefaultDirectPathServiceConfig()
             : builder.directPathServiceConfig;
-    logDirectPathMisconfig();
   }
 
   /**
@@ -234,6 +233,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     } else if (needsEndpoint()) {
       throw new IllegalStateException("getTransportChannel() called when needsEndpoint() is true");
     } else {
+      logDirectPathMisconfig();
       return createChannel();
     }
   }
@@ -272,6 +272,9 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return false;
   }
 
+  // This method should be called once per client initialization, hence can not be called in the
+  // builder or createSingleChannel, only in getTransportChannel which creates the first channel
+  // for a client.
   private void logDirectPathMisconfig() {
     if (isDirectPathXdsEnabled()) {
       // Case 1: does not enable DirectPath

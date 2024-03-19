@@ -22,6 +22,14 @@ jobs:
         run: |
           mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
               -Dfmt.skip -DenableTestCoverage
+      # The `envVarTest` profile runs tests that require an environment variable
+      - name: Env Var Tests
+        run: |
+          mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
+              -Dfmt.skip -DenableTestCoverage -PenvVarTest
+        # Set the Env Var for this step only
+        env:
+          GOOGLE_CLOUD_UNIVERSE_DOMAIN: random.com
       - run: bazelisk version
       - name: Install Maven modules
         run: |
@@ -64,6 +72,14 @@ jobs:
         run: |
           mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
               -Dfmt.skip -DenableTestCoverage
+      # The `envVarTest` profile runs tests that require an environment variable
+      - name: Env Var Tests
+        run: |
+          mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
+              -Dfmt.skip -DenableTestCoverage -PenvVarTest
+        # Set the Env Var for this step only
+        env:
+          GOOGLE_CLOUD_UNIVERSE_DOMAIN: random.com
       - run: bazelisk version
       - name: Install Maven modules
         run: |
@@ -98,6 +114,22 @@ jobs:
           mvn verify --batch-mode --no-transfer-progress -Dcheckstyle.skip \
               -Dfmt.skip \
               -Djvm="${JAVA8_HOME}/bin/java"
+      # The `envVarTest` profile runs tests that require an environment variable
+      - name: Compile with Java 17 and run tests with Java 8 (Env Var Tests)
+        shell: bash
+        run: |
+          set -x
+          export JAVA_HOME=$JAVA_HOME
+          export PATH=${JAVA_HOME}/bin:$PATH
+          # Maven surefire plugin lets us to specify the JVM when running tests via
+          # the "jvm" system property.
+          export GOOGLE_CLOUD_UNIVERSE_DOMAIN=random.com
+          mvn test --batch-mode --no-transfer-progress -Dcheckstyle.skip \
+              -Dfmt.skip -DenableTestCoverage -Dsurefire.failIfNoSpecifiedTests=false \
+              -PenvVarTest
+        # Set the Env Var for this step only
+        env:
+          GOOGLE_CLOUD_UNIVERSE_DOMAIN: random.com
 
   build-java8-gapic-generator-java:
     name: "build(8) for gapic-generator-java"
@@ -295,7 +327,7 @@ jobs:
       run: |
         mvn install -B -ntp -DskipTests -Dclirr.skip -Dcheckstyle.skip
     - name: Validate gapic-generator-java-bom
-      uses: googleapis/java-cloud-bom/tests/validate-bom@8bc17e9ae3c6354f04df2fdf2d57aeafa63add66
+      uses: googleapis/java-cloud-bom/tests/validate-bom@659764fa38f3c80b36319e9692d5a46b23f599eb
       with:
         bom-path: gapic-generator-java-bom/pom.xml
 

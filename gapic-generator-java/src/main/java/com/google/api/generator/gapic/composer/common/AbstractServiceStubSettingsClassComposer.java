@@ -370,15 +370,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             .setReturnType(returnType)
             .build();
 
-    AnnotationNode annotation =
-        AnnotationNode.builder()
-            .setType(FIXED_TYPESTORE.get("BetaApi"))
-            .setDescription(
-                "The surface for customizing headers is not stable yet and may change in the"
-                    + " future.")
-            .build();
     return MethodDefinition.builder()
-        .setAnnotations(Arrays.asList(annotation))
         .setScope(ScopeNode.PUBLIC)
         .setIsStatic(true)
         .setReturnType(returnType)
@@ -2011,13 +2003,6 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
             t.reference()
                 .copyAndSetGenerics(ImmutableList.of())
                 .equals(operationCallSettingsBuilderRef);
-    AnnotationNode lroBetaAnnotation =
-        AnnotationNode.builder()
-            .setType(FIXED_TYPESTORE.get("BetaApi"))
-            .setDescription(
-                "The surface for use by generated code is not stable yet and may change in the"
-                    + " future.")
-            .build();
     AnnotationNode deprecatedAnnotation = AnnotationNode.withType(TypeNode.DEPRECATED);
 
     List<MethodDefinition> javaMethods = new ArrayList<>();
@@ -2025,13 +2010,7 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         nestedMethodSettingsMemberVarExprs.entrySet()) {
       String varName = settingsVarEntry.getKey();
       VariableExpr settingsVarExpr = settingsVarEntry.getValue();
-      boolean isOperationCallSettings =
-          isOperationCallSettingsBuilderFn.apply(settingsVarExpr.type());
-
       List<AnnotationNode> annotations = new ArrayList<>();
-      if (isOperationCallSettings) {
-        annotations.add(lroBetaAnnotation);
-      }
 
       boolean isDeprecated = nestedDeprecatedSettingVarNames.contains(varName);
       if (isDeprecated) {

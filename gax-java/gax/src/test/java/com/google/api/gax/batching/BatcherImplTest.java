@@ -873,7 +873,7 @@ public class BatcherImplTest {
                 public void run() {
                   batcherAddThreadHolder.add(Thread.currentThread());
                   batcher.add(1);
-                  logger.info("Called batcher.add(1)");
+                  logger.fine("Called batcher.add(1)");
                 }
               });
 
@@ -893,20 +893,20 @@ public class BatcherImplTest {
           () -> {
             try {
               Thread.sleep(throttledTime);
-              logger.info("Calling flowController.release");
+              logger.fine("Calling flowController.release");
               flowController.release(1, 1);
-              logger.info("Called flowController.release");
+              logger.fine("Called flowController.release");
             } catch (InterruptedException e) {
             }
           });
 
       try {
-        logger.info("Calling future.get(10 ms)");
+        logger.fine("Calling future.get(10 ms)");
         future.get(10, TimeUnit.MILLISECONDS);
         long afterGetCall = System.currentTimeMillis();
         long actualWaitTimeMs = afterGetCall - beforeGetCall;
 
-        logger.info("future.get(10 ms) unexpectedly returned. Wait time: " + actualWaitTimeMs);
+        logger.fine("future.get(10 ms) unexpectedly returned. Wait time: " + actualWaitTimeMs);
         // In a flaky test troubleshooting
         // (https://github.com/googleapis/sdk-platform-java/issues/1931), we observed that
         // "future.get" method did not throw TimeoutException in this multithreaded test.
@@ -919,7 +919,7 @@ public class BatcherImplTest {
             .isAtLeast(10);
       } catch (TimeoutException e) {
         // expected
-        logger.info("future.get(10 ms) timed out expectedly.");
+        logger.fine("future.get(10 ms) timed out expectedly.");
       }
 
       try {

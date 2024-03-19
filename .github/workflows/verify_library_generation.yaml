@@ -13,17 +13,15 @@ jobs:
     strategy:
       matrix:
         java: [ 11 ]
-        os: [ ubuntu-22.04, macos-12 ]
-        post_processing: [ 'true', 'false' ]
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-22.04
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-java@v3
+    - uses: actions/checkout@v4
+    - uses: actions/setup-java@v4
       with:
         java-version: ${{ matrix.java }}
         distribution: temurin
         cache: maven
-    - uses: actions/setup-python@v4
+    - uses: actions/setup-python@v5
       with:
         python-version: 3.11
     - name: install pyenv
@@ -44,36 +42,15 @@ jobs:
         set -ex
         pushd library_generation
         pip install -r requirements.in
+        pip install .
         popd
-
-    - name: install utils (macos)
-      if: matrix.os == 'macos-12'
-      shell: bash
-      run: |
-        brew update --preinstall
-        # we need the `realpath` command to be available
-        brew install coreutils
-    - name: install docker (ubuntu)
-      if: matrix.os == 'ubuntu-22.04'
+    - name: Run integration tests
       shell: bash
       run: |
         set -x
-        # install docker
-        sudo apt install containerd -y
-        sudo apt install -y docker.io docker-compose
-
-        # launch docker
-        sudo systemctl start docker
-    - name: Run integration tests
-      # we don't run ITs with postprocessing on macos because one of its dependencies "synthtool" is designed to run on linux only
-      if: matrix.os == 'ubuntu-22.04' || matrix.post_processing == 'false'
-      shell: bash
-      run: |
         git config --global user.email "github-workflow@github.com"
         git config --global user.name "Github Workflow"
-        library_generation/test/generate_library_integration_test.sh \
-        --googleapis_gen_url https://cloud-java-bot:${{ secrets.CLOUD_JAVA_BOT_GITHUB_TOKEN }}@github.com/googleapis/googleapis-gen.git \
-        --enable_postprocessing "${{ matrix.post_processing }}"
+        python -m unittest library_generation/test/integration_tests.py
   unit_tests:
     strategy:
       matrix:
@@ -81,14 +58,14 @@ jobs:
         os: [ ubuntu-22.04, macos-12 ]
     runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: install utils (macos)
       if: matrix.os == 'macos-12'
       shell: bash
       run: |
         brew update --preinstall
         brew install coreutils
-    - uses: actions/setup-python@v4
+    - uses: actions/setup-python@v5
       with:
         python-version: 3.11
     - name: install python dependencies
@@ -98,6 +75,21 @@ jobs:
         pushd library_generation
         pip install -r requirements.in
         popd
+    - name: install synthtool
+      shell: bash
+      run: |
+        set -ex
+        mkdir -p /tmp/synthtool
+        pushd /tmp/synthtool
+        if [ ! -d "synthtool" ]; then
+          git clone https://github.com/googleapis/synthtool.git
+        fi
+        pushd "synthtool"
+
+        git reset --hard origin/no-java-templates
+
+        python3 -m pip install -e .
+        python3 -m pip install -r requirements.in
     - name: Run shell unit tests
       run: |
         set -x
@@ -105,14 +97,31 @@ jobs:
     - name: Run python unit tests
       run: |
         set -x
-        python -m unittest library_generation/test/unit_tests.py
-  lint:
+        python -m unittest discover -s library_generation/test/ -p "*unit_tests.py"
+  lint-shell:
     runs-on: ubuntu-22.04
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Run ShellCheck
       uses: ludeeus/action-shellcheck@2.0.0
       with:
         scandir: 'library_generation'
         format: tty
         severity: error
+  lint-python:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v4
+    - name: install python dependencies
+      shell: bash
+      run: |
+        set -ex
+        pushd library_generation
+        pip install -r requirements.in
+        popd
+    - name: Lint
+      shell: bash
+      run: |
+        # exclude generated golden files
+        # exclude owlbot until further refaction
+        black --check library_generation --exclude "(library_generation/test/resources/goldens)"

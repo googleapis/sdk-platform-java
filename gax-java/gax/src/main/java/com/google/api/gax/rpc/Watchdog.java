@@ -193,8 +193,11 @@ public final class Watchdog implements Runnable, BackgroundResource {
     private final ResponseObserver<ResponseT> outerResponseObserver;
     private volatile StreamController innerController;
 
+    // When a stream is created it has automatic inbound flow control enabled. The stream
+    // won't wait for the caller to request a message. Setting the default to WAITING
+    // to reflect this state.
     @GuardedBy("lock")
-    private State state = State.IDLE;
+    private State state = State.WAITING;
 
     @GuardedBy("lock")
     private int pendingCount = 0;
@@ -220,6 +223,16 @@ public final class Watchdog implements Runnable, BackgroundResource {
             public void disableAutoInboundFlowControl() {
               Preconditions.checkState(
                   !hasStarted, "Can't disable automatic flow control after the stream has started");
+
+              // Adding the lock only to satisfy the annotation. It doesn't matter because before
+              // the stream is started, this is only accessed by the caller.
+              synchronized (lock) {
+                // When auto flow control is disabled, caller needs to call onRequest() to request a
+                // message. Setting the state to IDLE because now we're waiting for caller to call
+                // onRequest().
+                state = State.IDLE;
+              }
+
               autoAutoFlowControl = false;
               innerController.disableAutoInboundFlowControl();
             }
