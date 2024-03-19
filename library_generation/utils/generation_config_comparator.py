@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from collections import defaultdict
 from enum import Enum
 from typing import Dict
 from typing import List
@@ -20,37 +21,15 @@ from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
 from library_generation.utilities import get_library_name
 
-ALL_LIBRARIES = []
-
 
 class ChangeType(Enum):
     GOOGLEAPIS_COMMIT = 1
-    GENERATOR = 2
-    OWLBOT_CLI = 3
-    SYNTHTOOL = 4
-    PROTOBUF = 5
-    GRPC = 6
-    TEMPLATE_EXCLUDES = 7
-    LIBRARIES_ADDITION = 8
-    LIBRARIES_REMOVAL = 9
-    API_DESCRIPTION = 10
-    NAME_PRETTY = 11
-    PRODUCT_DOCS = 12
-    LIBRARY_TYPE = 13
-    RELEASE_LEVEL = 14
-    API_ID = 15
-    API_REFERENCE = 16
-    CODEOWNER_TEAM = 17
-    EXCLUDED_DEPENDENCIES = 18
-    EXCLUDED_POMS = 19
-    CLIENT_DOCS = 20
-    ISSUE_TRACKER = 21
-    REST_DOCS = 22
-    RPC_DOCS = 23
-    REQUIRES_BILLING = 24
-    EXTRA_VERSIONED_MODULES = 25
-    GAPIC_ADDITION = 26
-    GAPIC_REMOVAL = 27
+    REPO_LEVEL_CHANGE = 2
+    LIBRARIES_ADDITION = 3
+    LIBRARIES_REMOVAL = 4
+    LIBRARY_LEVEL_CHANGE = 5
+    GAPIC_ADDITION = 6
+    GAPIC_REMOVAL = 7
 
 
 class HashLibrary:
@@ -63,35 +42,64 @@ class HashLibrary:
         self.library = library
 
 
+class ConfigChange:
+    def __init__(self, changed_param: str, latest_value: str, library_name: str = ""):
+        self.changed_param = changed_param
+        self.latest_value = latest_value
+        self.library_name = library_name
+
+
 def compare_config(
     baseline_config: GenerationConfig, latest_config: GenerationConfig
-) -> Dict[ChangeType, List[str]]:
+) -> Dict[ChangeType, list[ConfigChange]]:
     """
-    Compare two GenerationConfig object and output a mapping from ChangeType
-    to a list of library_name of affected libraries.
+    Compare two GenerationConfig object and output a mapping from ConfigChange
+    to a list of ConfigChange objects.
     All libraries in the latest configuration will be affected if one of the
     repository level parameters is changed.
 
     :param baseline_config: the baseline GenerationConfig object
     :param latest_config: the latest GenerationConfig object
-    :return: a mapping from ChangeType to a list of library_name of affected
-    libraries.
+    :return: a mapping from ConfigChange to a list of ConfigChange objects.
     """
-    diff = {}
+    diff = defaultdict(list[ConfigChange])
     if baseline_config.googleapis_commitish != latest_config.googleapis_commitish:
-        diff[ChangeType.GOOGLEAPIS_COMMIT] = ALL_LIBRARIES
+        diff[ChangeType.GOOGLEAPIS_COMMIT] = []
     if baseline_config.gapic_generator_version != latest_config.gapic_generator_version:
-        diff[ChangeType.GENERATOR] = ALL_LIBRARIES
+        config_change = ConfigChange(
+            changed_param="GAPIC generator version",
+            latest_value=latest_config.gapic_generator_version,
+        )
+        diff[ChangeType.REPO_LEVEL_CHANGE].append(config_change)
     if baseline_config.owlbot_cli_image != latest_config.owlbot_cli_image:
-        diff[ChangeType.OWLBOT_CLI] = ALL_LIBRARIES
+        config_change = ConfigChange(
+            changed_param="OwlBot cli commit",
+            latest_value=latest_config.owlbot_cli_image,
+        )
+        diff[ChangeType.REPO_LEVEL_CHANGE].append(config_change)
     if baseline_config.synthtool_commitish != latest_config.synthtool_commitish:
-        diff[ChangeType.SYNTHTOOL] = ALL_LIBRARIES
+        config_change = ConfigChange(
+            changed_param="Synthtool commit",
+            latest_value=latest_config.synthtool_commitish,
+        )
+        diff[ChangeType.REPO_LEVEL_CHANGE].append(config_change)
     if baseline_config.protobuf_version != latest_config.protobuf_version:
-        diff[ChangeType.PROTOBUF] = ALL_LIBRARIES
+        config_change = ConfigChange(
+            changed_param="Protobuf version",
+            latest_value=latest_config.protobuf_version,
+        )
+        diff[ChangeType.REPO_LEVEL_CHANGE].append(config_change)
     if baseline_config.grpc_version != latest_config.grpc_version:
-        diff[ChangeType.GRPC] = ALL_LIBRARIES
+        config_change = ConfigChange(
+            changed_param="Grpc version", latest_value=latest_config.grpc_version
+        )
+        diff[ChangeType.REPO_LEVEL_CHANGE].append(config_change)
     if baseline_config.template_excludes != latest_config.template_excludes:
-        diff[ChangeType.TEMPLATE_EXCLUDES] = ALL_LIBRARIES
+        config_change = ConfigChange(
+            changed_param="Template excludes",
+            latest_value=str(latest_config.template_excludes),
+        )
+        diff[ChangeType.REPO_LEVEL_CHANGE].append(config_change)
 
     __compare_libraries(
         diff=diff,
@@ -102,7 +110,7 @@ def compare_config(
 
 
 def __compare_libraries(
-    diff: Dict[ChangeType, List[str]],
+    diff: Dict[ChangeType, list[ConfigChange]],
     baseline_library_configs: List[LibraryConfig],
     latest_library_configs: List[LibraryConfig],
 ) -> None:
@@ -110,10 +118,9 @@ def __compare_libraries(
     Compare two lists of LibraryConfig and put the difference into a
     given Dict.
 
-    :param diff: a mapping from ChangeType to a list of library_name of
-    affected libraries.
-    :param baseline_library_configs: a list of LibraryConfig object
-    :param latest_library_configs: a list of LibraryConfig object
+    :param diff: a mapping from ConfigChange to a list of ConfigChange objects.
+    :param baseline_library_configs: a list of LibraryConfig object.
+    :param latest_library_configs: a list of LibraryConfig object.
     """
     baseline_libraries = __convert_to_hashed_library_dict(baseline_library_configs)
     latest_libraries = __convert_to_hashed_library_dict(latest_library_configs)
@@ -124,9 +131,10 @@ def __compare_libraries(
         # a library is removed from baseline_libraries if the library_name
         # is not in latest_libraries.
         if library_name not in latest_libraries:
-            if ChangeType.LIBRARIES_REMOVAL not in diff:
-                diff[ChangeType.LIBRARIES_REMOVAL] = []
-            diff[ChangeType.LIBRARIES_REMOVAL].append(library_name)
+            config_change = ConfigChange(
+                changed_param="", latest_value="", library_name=library_name
+            )
+            diff[ChangeType.LIBRARIES_REMOVAL].append(config_change)
         # 2. find any library that exists in both configs but at least one
         # parameter is changed, which means the hash value is different.
         if (
@@ -140,9 +148,10 @@ def __compare_libraries(
         # a library is added to latest_libraries if the library_name
         # is not in baseline_libraries.
         if library_name not in baseline_libraries:
-            if ChangeType.LIBRARIES_ADDITION not in diff:
-                diff[ChangeType.LIBRARIES_ADDITION] = []
-            diff[ChangeType.LIBRARIES_ADDITION].append(library_name)
+            config_change = ConfigChange(
+                changed_param="", latest_value="", library_name=library_name
+            )
+            diff[ChangeType.LIBRARIES_ADDITION].append(config_change)
     # 3rd round comparison.
     __compare_changed_libraries(
         diff=diff,
@@ -170,7 +179,7 @@ def __convert_to_hashed_library_dict(
 
 
 def __compare_changed_libraries(
-    diff: Dict[ChangeType, List[str]],
+    diff: Dict[ChangeType, list[ConfigChange]],
     baseline_libraries: Dict[str, HashLibrary],
     latest_libraries: Dict[str, HashLibrary],
     changed_libraries: List[str],
@@ -179,16 +188,7 @@ def __compare_changed_libraries(
     Compare each library with the same library_name to find what parameters are
     changed.
 
-    Some parameters should not change:
-
-    - api_shortname
-    - library_name
-    - distribution_name
-    - group_id
-    - cloud_api
-
-    :param diff: a mapping from ChangeType to a list of library_name of
-    affected libraries.
+    :param diff: a mapping from ConfigChange to a list of ConfigChange objects.
     :param baseline_libraries: a mapping from library_name to HashLibrary
     object.
     :param latest_libraries: a mapping from library_name to HashLibrary object.
@@ -197,96 +197,149 @@ def __compare_changed_libraries(
     for library_name in changed_libraries:
         baseline_library = baseline_libraries[library_name].library
         latest_library = latest_libraries[library_name].library
-        if (
-            baseline_library.api_description
-            != latest_libraries[library_name].library.api_description
-        ):
-            if ChangeType.API_DESCRIPTION not in diff:
-                diff[ChangeType.API_DESCRIPTION] = []
-            diff[ChangeType.API_DESCRIPTION].append(library_name)
-        if (
-            baseline_library.name_pretty
-            != latest_libraries[library_name].library.name_pretty
-        ):
-            if ChangeType.NAME_PRETTY not in diff:
-                diff[ChangeType.NAME_PRETTY] = []
-            diff[ChangeType.NAME_PRETTY].append(library_name)
+        if baseline_library.api_description != latest_library.api_description:
+            config_change = ConfigChange(
+                changed_param="api description",
+                latest_value=latest_library.api_description,
+                library_name=library_name,
+            )
+            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
+        if baseline_library.name_pretty != latest_library.name_pretty:
+            config_change = ConfigChange(
+                changed_param="name pretty",
+                latest_value=latest_library.name_pretty,
+                library_name=library_name,
+            )
+            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
         if (
             baseline_library.product_documentation
             != latest_library.product_documentation
         ):
-            if ChangeType.PRODUCT_DOCS not in diff:
-                diff[ChangeType.PRODUCT_DOCS] = []
-            diff[ChangeType.PRODUCT_DOCS].append(library_name)
-
+            config_change = ConfigChange(
+                changed_param="product documentation",
+                latest_value=latest_library.product_documentation,
+                library_name=library_name,
+            )
+            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
         if baseline_library.library_type != latest_library.library_type:
-            if ChangeType.LIBRARY_TYPE not in diff:
-                diff[ChangeType.LIBRARY_TYPE] = []
-            diff[ChangeType.LIBRARY_TYPE].append(library_name)
-
+            config_change = ConfigChange(
+                changed_param="library type",
+                latest_value=latest_library.library_type,
+                library_name=library_name,
+            )
+            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
         if baseline_library.release_level != latest_library.release_level:
-            if ChangeType.RELEASE_LEVEL not in diff:
-                diff[ChangeType.RELEASE_LEVEL] = []
-            diff[ChangeType.RELEASE_LEVEL].append(library_name)
-
+            config_change = ConfigChange(
+                changed_param="release level",
+                latest_value=latest_library.release_level,
+                library_name=library_name,
+            )
+            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
         if baseline_library.api_id != latest_library.api_id:
-            if ChangeType.API_ID not in diff:
-                diff[ChangeType.API_ID] = []
-            diff[ChangeType.API_ID].append(library_name)
-
+            config_change = ConfigChange(
+                changed_param="api id",
+                latest_value=latest_library.api_id,
+                library_name=library_name,
+            )
+            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
         if baseline_library.api_reference != latest_library.api_reference:
-            if ChangeType.API_REFERENCE not in diff:
-                diff[ChangeType.API_REFERENCE] = []
-            diff[ChangeType.API_REFERENCE].append(library_name)
-
+            config_change = ConfigChange(
+                changed_param="api reference",
+                latest_value=latest_library.api_reference,
+                library_name=library_name,
+            )
+            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
         if baseline_library.codeowner_team != latest_library.codeowner_team:
-            if ChangeType.CODEOWNER_TEAM not in diff:
-                diff[ChangeType.CODEOWNER_TEAM] = []
-            diff[ChangeType.CODEOWNER_TEAM].append(library_name)
+            config_change = ConfigChange(
+                changed_param="code owner team",
+                latest_value=latest_library.codeowner_team,
+                library_name=library_name,
+            )
+            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
         if (
             baseline_library.excluded_dependencies
             != latest_library.excluded_dependencies
         ):
-            if ChangeType.EXCLUDED_DEPENDENCIES not in diff:
-                diff[ChangeType.EXCLUDED_DEPENDENCIES] = []
-            diff[ChangeType.EXCLUDED_DEPENDENCIES].append(library_name)
+            config_change = ConfigChange(
+                changed_param="excluded dependencies",
+                latest_value=latest_library.excluded_dependencies,
+                library_name=library_name,
+            )
+            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
         if baseline_library.excluded_poms != latest_library.excluded_poms:
-            if ChangeType.EXCLUDED_POMS not in diff:
-                diff[ChangeType.EXCLUDED_POMS] = []
-            diff[ChangeType.EXCLUDED_POMS].append(library_name)
-
+            config_change = ConfigChange(
+                changed_param="excluded poms",
+                latest_value=latest_library.excluded_poms,
+                library_name=library_name,
+            )
+            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
         if baseline_library.client_documentation != latest_library.client_documentation:
-            if ChangeType.CLIENT_DOCS not in diff:
-                diff[ChangeType.CLIENT_DOCS] = []
-            diff[ChangeType.CLIENT_DOCS].append(library_name)
-
+            config_change = ConfigChange(
+                changed_param="client documentation",
+                latest_value=latest_library.client_documentation,
+                library_name=library_name,
+            )
+            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
+        if baseline_library.distribution_name != latest_library.distribution_name:
+            config_change = ConfigChange(
+                changed_param="distribution name",
+                latest_value=latest_library.distribution_name,
+                library_name=library_name,
+            )
+            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
+        if baseline_library.group_id != latest_library.group_id:
+            config_change = ConfigChange(
+                changed_param="group id",
+                latest_value=latest_library.group_id,
+                library_name=library_name,
+            )
+            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
         if baseline_library.issue_tracker != latest_library.issue_tracker:
-            if ChangeType.ISSUE_TRACKER not in diff:
-                diff[ChangeType.ISSUE_TRACKER] = []
-            diff[ChangeType.ISSUE_TRACKER].append(library_name)
-
+            config_change = ConfigChange(
+                changed_param="issue tracker",
+                latest_value=latest_library.issue_tracker,
+                library_name=library_name,
+            )
+            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
         if baseline_library.rest_documentation != latest_library.rest_documentation:
-            if ChangeType.REST_DOCS not in diff:
-                diff[ChangeType.REST_DOCS] = []
-            diff[ChangeType.REST_DOCS].append(library_name)
-
+            config_change = ConfigChange(
+                changed_param="rest documentation",
+                latest_value=latest_library.rest_documentation,
+                library_name=library_name,
+            )
+            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
         if baseline_library.rpc_documentation != latest_library.rpc_documentation:
-            if ChangeType.RPC_DOCS not in diff:
-                diff[ChangeType.RPC_DOCS] = []
-            diff[ChangeType.RPC_DOCS].append(library_name)
-
+            config_change = ConfigChange(
+                changed_param="rpc documentation",
+                latest_value=latest_library.rpc_documentation,
+                library_name=library_name,
+            )
+            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
+        if baseline_library.cloud_api != latest_library.cloud_api:
+            config_change = ConfigChange(
+                changed_param="cloud api",
+                latest_value=str(latest_library.cloud_api),
+                library_name=library_name,
+            )
+            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
         if baseline_library.requires_billing != latest_library.requires_billing:
-            if ChangeType.REQUIRES_BILLING not in diff:
-                diff[ChangeType.REQUIRES_BILLING] = []
-            diff[ChangeType.REQUIRES_BILLING].append(library_name)
+            config_change = ConfigChange(
+                changed_param="requires billing",
+                latest_value=str(latest_library.requires_billing),
+                library_name=library_name,
+            )
+            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
 
         if (
             baseline_library.extra_versioned_modules
             != latest_library.extra_versioned_modules
         ):
-            if ChangeType.EXTRA_VERSIONED_MODULES not in diff:
-                diff[ChangeType.EXTRA_VERSIONED_MODULES] = []
-            diff[ChangeType.EXTRA_VERSIONED_MODULES].append(library_name)
+            config_change = ConfigChange(
+                changed_param="extra versioned modules",
+                latest_value=latest_library.extra_versioned_modules,
+                library_name=library_name,
+            )
+            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
         # compare gapic_configs
         baseline_gapic_configs = baseline_library.gapic_configs
         latest_gapic_configs = latest_library.gapic_configs
@@ -299,7 +352,7 @@ def __compare_changed_libraries(
 
 
 def __compare_gapic_configs(
-    diff: Dict[ChangeType, List[str]],
+    diff: Dict[ChangeType, list[ConfigChange]],
     library_name: str,
     baseline_gapic_configs: List[GapicConfig],
     latest_gapic_configs: List[GapicConfig],
@@ -311,14 +364,16 @@ def __compare_gapic_configs(
     for proto_path in baseline_proto_paths:
         if proto_path in latest_proto_paths:
             continue
-        if ChangeType.GAPIC_REMOVAL not in diff:
-            diff[ChangeType.GAPIC_REMOVAL] = []
-        diff[ChangeType.GAPIC_REMOVAL].append(library_name)
+        config_change = ConfigChange(
+            changed_param="", latest_value=proto_path, library_name=library_name
+        )
+        diff[ChangeType.GAPIC_REMOVAL].append(config_change)
     # 2nd round of comparison, find any versioned proto_path is added
     # to latest gapic configs.
     for proto_path in latest_proto_paths:
         if proto_path in baseline_proto_paths:
             continue
-        if ChangeType.GAPIC_ADDITION not in diff:
-            diff[ChangeType.GAPIC_ADDITION] = []
-        diff[ChangeType.GAPIC_ADDITION].append(library_name)
+        config_change = ConfigChange(
+            changed_param="", latest_value=proto_path, library_name=library_name
+        )
+        diff[ChangeType.GAPIC_ADDITION].append(config_change)

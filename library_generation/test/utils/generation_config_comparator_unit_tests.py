@@ -86,7 +86,10 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertEqual({ChangeType.GENERATOR: []}, result)
+        self.assertTrue(len(result[ChangeType.REPO_LEVEL_CHANGE]) == 1)
+        config_change = result[ChangeType.REPO_LEVEL_CHANGE][0]
+        self.assertEqual("GAPIC generator version", config_change.changed_param)
+        self.assertEqual("1.2.4", config_change.latest_value)
 
     def test_compare_config_owlbot_cli_update(self):
         self.baseline_config.owlbot_cli_image = "image_version_123"
@@ -95,7 +98,10 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertEqual({ChangeType.OWLBOT_CLI: []}, result)
+        self.assertTrue(len(result[ChangeType.REPO_LEVEL_CHANGE]) == 1)
+        config_change = result[ChangeType.REPO_LEVEL_CHANGE][0]
+        self.assertEqual("OwlBot cli commit", config_change.changed_param)
+        self.assertEqual("image_version_456", config_change.latest_value)
 
     def test_compare_config_synthtool_update(self):
         self.baseline_config.synthtool_commitish = "commit123"
@@ -104,7 +110,10 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertEqual({ChangeType.SYNTHTOOL: []}, result)
+        self.assertTrue(len(result[ChangeType.REPO_LEVEL_CHANGE]) == 1)
+        config_change = result[ChangeType.REPO_LEVEL_CHANGE][0]
+        self.assertEqual("Synthtool commit", config_change.changed_param)
+        self.assertEqual("commit456", config_change.latest_value)
 
     def test_compare_protobuf_update(self):
         self.baseline_config.protobuf_version = "3.25.2"
@@ -113,7 +122,10 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertEqual({ChangeType.PROTOBUF: []}, result)
+        self.assertTrue(len(result[ChangeType.REPO_LEVEL_CHANGE]) == 1)
+        config_change = result[ChangeType.REPO_LEVEL_CHANGE][0]
+        self.assertEqual("Protobuf version", config_change.changed_param)
+        self.assertEqual("3.27.0", config_change.latest_value)
 
     def test_compare_config_grpc_update(self):
         self.baseline_config.grpc_version = "1.60.0"
@@ -122,7 +134,10 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertEqual({ChangeType.GRPC: []}, result)
+        self.assertTrue(len(result[ChangeType.REPO_LEVEL_CHANGE]) == 1)
+        config_change = result[ChangeType.REPO_LEVEL_CHANGE][0]
+        self.assertEqual("Grpc version", config_change.changed_param)
+        self.assertEqual("1.61.0", config_change.latest_value)
 
     def test_compare_config_template_excludes_update(self):
         self.baseline_config.template_excludes = [".github/*", ".kokoro/*"]
@@ -136,7 +151,20 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertEqual({ChangeType.TEMPLATE_EXCLUDES: []}, result)
+        self.assertTrue(len(result[ChangeType.REPO_LEVEL_CHANGE]) == 1)
+        config_change = result[ChangeType.REPO_LEVEL_CHANGE][0]
+        self.assertEqual("Template excludes", config_change.changed_param)
+        self.assertEqual(
+            str(
+                [
+                    ".github/*",
+                    ".kokoro/*",
+                    "samples/*",
+                    "CODE_OF_CONDUCT.md",
+                ]
+            ),
+            config_change.latest_value,
+        )
 
     def test_compare_config_library_addition(self):
         self.latest_config.libraries.append(
@@ -152,7 +180,9 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertEqual({ChangeType.LIBRARIES_ADDITION: ["new_library"]}, result)
+        self.assertTrue(len(result[ChangeType.LIBRARIES_ADDITION]) == 1)
+        config_change = result[ChangeType.LIBRARIES_ADDITION][0]
+        self.assertEqual("new_library", config_change.library_name)
 
     def test_compare_config_library_removal(self):
         self.latest_config.libraries = []
@@ -160,7 +190,35 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertEqual({ChangeType.LIBRARIES_REMOVAL: ["existing_library"]}, result)
+        self.assertTrue(len(result[ChangeType.LIBRARIES_REMOVAL]) == 1)
+        config_change = result[ChangeType.LIBRARIES_REMOVAL][0]
+        self.assertEqual("existing_library", config_change.library_name)
+
+    def test_compare_config_api_shortname_update(self):
+        self.latest_config.libraries[0].api_shortname = "new_api_shortname"
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            latest_config=self.latest_config,
+        )
+        self.assertTrue(len(result[ChangeType.LIBRARIES_REMOVAL]) == 1)
+        config_change = result[ChangeType.LIBRARIES_REMOVAL][0]
+        self.assertEqual("existing_library", config_change.library_name)
+        self.assertTrue(len(result[ChangeType.LIBRARIES_ADDITION]) == 1)
+        config_change = result[ChangeType.LIBRARIES_ADDITION][0]
+        self.assertEqual("new_api_shortname", config_change.library_name)
+
+    def test_compare_config_library_name_update(self):
+        self.latest_config.libraries[0].library_name = "new_library_name"
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            latest_config=self.latest_config,
+        )
+        self.assertTrue(len(result[ChangeType.LIBRARIES_REMOVAL]) == 1)
+        config_change = result[ChangeType.LIBRARIES_REMOVAL][0]
+        self.assertEqual("existing_library", config_change.library_name)
+        self.assertTrue(len(result[ChangeType.LIBRARIES_ADDITION]) == 1)
+        config_change = result[ChangeType.LIBRARIES_ADDITION][0]
+        self.assertEqual("new_library_name", config_change.library_name)
 
     def test_compare_config_api_description_update(self):
         self.latest_config.libraries[0].api_description = "updated description"
@@ -168,7 +226,11 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertEqual({ChangeType.API_DESCRIPTION: ["existing_library"]}, result)
+        self.assertTrue(len(result[ChangeType.LIBRARY_LEVEL_CHANGE]) == 1)
+        config_change = result[ChangeType.LIBRARY_LEVEL_CHANGE][0]
+        self.assertEqual("api description", config_change.changed_param)
+        self.assertEqual("updated description", config_change.latest_value)
+        self.assertEqual("existing_library", config_change.library_name)
 
     def test_compare_config_name_pretty_update(self):
         self.latest_config.libraries[0].name_pretty = "new name"
@@ -176,7 +238,11 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertEqual({ChangeType.NAME_PRETTY: ["existing_library"]}, result)
+        self.assertTrue(len(result[ChangeType.LIBRARY_LEVEL_CHANGE]) == 1)
+        config_change = result[ChangeType.LIBRARY_LEVEL_CHANGE][0]
+        self.assertEqual("name pretty", config_change.changed_param)
+        self.assertEqual("new name", config_change.latest_value)
+        self.assertEqual("existing_library", config_change.library_name)
 
     def test_compare_config_product_docs_update(self):
         self.latest_config.libraries[0].product_documentation = "new docs"
@@ -184,7 +250,11 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertEqual({ChangeType.PRODUCT_DOCS: ["existing_library"]}, result)
+        self.assertTrue(len(result[ChangeType.LIBRARY_LEVEL_CHANGE]) == 1)
+        config_change = result[ChangeType.LIBRARY_LEVEL_CHANGE][0]
+        self.assertEqual("product documentation", config_change.changed_param)
+        self.assertEqual("new docs", config_change.latest_value)
+        self.assertEqual("existing_library", config_change.library_name)
 
     def test_compare_config_library_type_update(self):
         self.latest_config.libraries[0].library_type = "GAPIC_COMBO"
@@ -192,7 +262,11 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertEqual({ChangeType.LIBRARY_TYPE: ["existing_library"]}, result)
+        self.assertTrue(len(result[ChangeType.LIBRARY_LEVEL_CHANGE]) == 1)
+        config_change = result[ChangeType.LIBRARY_LEVEL_CHANGE][0]
+        self.assertEqual("library type", config_change.changed_param)
+        self.assertEqual("GAPIC_COMBO", config_change.latest_value)
+        self.assertEqual("existing_library", config_change.library_name)
 
     def test_compare_config_release_level_update(self):
         self.latest_config.libraries[0].release_level = "STABLE"
@@ -200,7 +274,11 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertEqual({ChangeType.RELEASE_LEVEL: ["existing_library"]}, result)
+        self.assertTrue(len(result[ChangeType.LIBRARY_LEVEL_CHANGE]) == 1)
+        config_change = result[ChangeType.LIBRARY_LEVEL_CHANGE][0]
+        self.assertEqual("release level", config_change.changed_param)
+        self.assertEqual("STABLE", config_change.latest_value)
+        self.assertEqual("existing_library", config_change.library_name)
 
     def test_compare_config_api_id_update(self):
         self.latest_config.libraries[0].api_id = "new_id"
@@ -208,7 +286,11 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertEqual({ChangeType.API_ID: ["existing_library"]}, result)
+        self.assertTrue(len(result[ChangeType.LIBRARY_LEVEL_CHANGE]) == 1)
+        config_change = result[ChangeType.LIBRARY_LEVEL_CHANGE][0]
+        self.assertEqual("api id", config_change.changed_param)
+        self.assertEqual("new_id", config_change.latest_value)
+        self.assertEqual("existing_library", config_change.library_name)
 
     def test_compare_config_api_reference_update(self):
         self.latest_config.libraries[0].api_reference = "new api_reference"
@@ -216,7 +298,11 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertEqual({ChangeType.API_REFERENCE: ["existing_library"]}, result)
+        self.assertTrue(len(result[ChangeType.LIBRARY_LEVEL_CHANGE]) == 1)
+        config_change = result[ChangeType.LIBRARY_LEVEL_CHANGE][0]
+        self.assertEqual("api reference", config_change.changed_param)
+        self.assertEqual("new api_reference", config_change.latest_value)
+        self.assertEqual("existing_library", config_change.library_name)
 
     def test_compare_config_code_owner_team_update(self):
         self.latest_config.libraries[0].codeowner_team = "new team"
@@ -224,7 +310,11 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertEqual({ChangeType.CODEOWNER_TEAM: ["existing_library"]}, result)
+        self.assertTrue(len(result[ChangeType.LIBRARY_LEVEL_CHANGE]) == 1)
+        config_change = result[ChangeType.LIBRARY_LEVEL_CHANGE][0]
+        self.assertEqual("code owner team", config_change.changed_param)
+        self.assertEqual("new team", config_change.latest_value)
+        self.assertEqual("existing_library", config_change.library_name)
 
     def test_compare_config_excluded_deps_update(self):
         self.latest_config.libraries[0].excluded_dependencies = "group:artifact"
@@ -232,9 +322,11 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertEqual(
-            {ChangeType.EXCLUDED_DEPENDENCIES: ["existing_library"]}, result
-        )
+        self.assertTrue(len(result[ChangeType.LIBRARY_LEVEL_CHANGE]) == 1)
+        config_change = result[ChangeType.LIBRARY_LEVEL_CHANGE][0]
+        self.assertEqual("excluded dependencies", config_change.changed_param)
+        self.assertEqual("group:artifact", config_change.latest_value)
+        self.assertEqual("existing_library", config_change.library_name)
 
     def test_compare_config_excluded_poms_update(self):
         self.latest_config.libraries[0].excluded_poms = "pom.xml"
@@ -242,7 +334,11 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertEqual({ChangeType.EXCLUDED_POMS: ["existing_library"]}, result)
+        self.assertTrue(len(result[ChangeType.LIBRARY_LEVEL_CHANGE]) == 1)
+        config_change = result[ChangeType.LIBRARY_LEVEL_CHANGE][0]
+        self.assertEqual("excluded poms", config_change.changed_param)
+        self.assertEqual("pom.xml", config_change.latest_value)
+        self.assertEqual("existing_library", config_change.library_name)
 
     def test_compare_config_client_docs_update(self):
         self.latest_config.libraries[0].client_documentation = "new client docs"
@@ -250,7 +346,35 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertEqual({ChangeType.CLIENT_DOCS: ["existing_library"]}, result)
+        self.assertTrue(len(result[ChangeType.LIBRARY_LEVEL_CHANGE]) == 1)
+        config_change = result[ChangeType.LIBRARY_LEVEL_CHANGE][0]
+        self.assertEqual("client documentation", config_change.changed_param)
+        self.assertEqual("new client docs", config_change.latest_value)
+        self.assertEqual("existing_library", config_change.library_name)
+
+    def test_compare_config_distribution_name_update(self):
+        self.latest_config.libraries[0].distribution_name = "new_group:new_artifact"
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            latest_config=self.latest_config,
+        )
+        self.assertTrue(len(result[ChangeType.LIBRARY_LEVEL_CHANGE]) == 1)
+        config_change = result[ChangeType.LIBRARY_LEVEL_CHANGE][0]
+        self.assertEqual("distribution name", config_change.changed_param)
+        self.assertEqual("new_group:new_artifact", config_change.latest_value)
+        self.assertEqual("existing_library", config_change.library_name)
+
+    def test_compare_config_group_id_update(self):
+        self.latest_config.libraries[0].group_id = "new_group"
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            latest_config=self.latest_config,
+        )
+        self.assertTrue(len(result[ChangeType.LIBRARY_LEVEL_CHANGE]) == 1)
+        config_change = result[ChangeType.LIBRARY_LEVEL_CHANGE][0]
+        self.assertEqual("group id", config_change.changed_param)
+        self.assertEqual("new_group", config_change.latest_value)
+        self.assertEqual("existing_library", config_change.library_name)
 
     def test_compare_config_issue_tracker_update(self):
         self.latest_config.libraries[0].issue_tracker = "new issue tracker"
@@ -258,7 +382,11 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertEqual({ChangeType.ISSUE_TRACKER: ["existing_library"]}, result)
+        self.assertTrue(len(result[ChangeType.LIBRARY_LEVEL_CHANGE]) == 1)
+        config_change = result[ChangeType.LIBRARY_LEVEL_CHANGE][0]
+        self.assertEqual("issue tracker", config_change.changed_param)
+        self.assertEqual("new issue tracker", config_change.latest_value)
+        self.assertEqual("existing_library", config_change.library_name)
 
     def test_compare_config_rest_docs_update(self):
         self.latest_config.libraries[0].rest_documentation = "new rest docs"
@@ -266,7 +394,11 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertEqual({ChangeType.REST_DOCS: ["existing_library"]}, result)
+        self.assertTrue(len(result[ChangeType.LIBRARY_LEVEL_CHANGE]) == 1)
+        config_change = result[ChangeType.LIBRARY_LEVEL_CHANGE][0]
+        self.assertEqual("rest documentation", config_change.changed_param)
+        self.assertEqual("new rest docs", config_change.latest_value)
+        self.assertEqual("existing_library", config_change.library_name)
 
     def test_compare_config_rpc_docs_update(self):
         self.latest_config.libraries[0].rpc_documentation = "new rpc docs"
@@ -274,7 +406,23 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertEqual({ChangeType.RPC_DOCS: ["existing_library"]}, result)
+        self.assertTrue(len(result[ChangeType.LIBRARY_LEVEL_CHANGE]) == 1)
+        config_change = result[ChangeType.LIBRARY_LEVEL_CHANGE][0]
+        self.assertEqual("rpc documentation", config_change.changed_param)
+        self.assertEqual("new rpc docs", config_change.latest_value)
+        self.assertEqual("existing_library", config_change.library_name)
+
+    def test_compare_config_cloud_api_update(self):
+        self.latest_config.libraries[0].cloud_api = False
+        result = compare_config(
+            baseline_config=self.baseline_config,
+            latest_config=self.latest_config,
+        )
+        self.assertTrue(len(result[ChangeType.LIBRARY_LEVEL_CHANGE]) == 1)
+        config_change = result[ChangeType.LIBRARY_LEVEL_CHANGE][0]
+        self.assertEqual("cloud api", config_change.changed_param)
+        self.assertEqual("False", config_change.latest_value)
+        self.assertEqual("existing_library", config_change.library_name)
 
     def test_compare_config_requires_billing_update(self):
         self.latest_config.libraries[0].requires_billing = False
@@ -282,7 +430,11 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertEqual({ChangeType.REQUIRES_BILLING: ["existing_library"]}, result)
+        self.assertTrue(len(result[ChangeType.LIBRARY_LEVEL_CHANGE]) == 1)
+        config_change = result[ChangeType.LIBRARY_LEVEL_CHANGE][0]
+        self.assertEqual("requires billing", config_change.changed_param)
+        self.assertEqual("False", config_change.latest_value)
+        self.assertEqual("existing_library", config_change.library_name)
 
     def test_compare_config_extra_versioned_mod_update(self):
         self.latest_config.libraries[0].extra_versioned_modules = "extra module"
@@ -290,9 +442,11 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertEqual(
-            {ChangeType.EXTRA_VERSIONED_MODULES: ["existing_library"]}, result
-        )
+        self.assertTrue(len(result[ChangeType.LIBRARY_LEVEL_CHANGE]) == 1)
+        config_change = result[ChangeType.LIBRARY_LEVEL_CHANGE][0]
+        self.assertEqual("extra versioned modules", config_change.changed_param)
+        self.assertEqual("extra module", config_change.latest_value)
+        self.assertEqual("existing_library", config_change.library_name)
 
     def test_compare_config_version_addition(self):
         self.latest_config.libraries[0].gapic_configs = [
@@ -302,7 +456,11 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertEqual({ChangeType.GAPIC_ADDITION: ["existing_library"]}, result)
+        self.assertTrue(len(result[ChangeType.GAPIC_ADDITION]) == 1)
+        config_change = result[ChangeType.GAPIC_ADDITION][0]
+        self.assertEqual("", config_change.changed_param)
+        self.assertEqual("google/new/library/v1", config_change.latest_value)
+        self.assertEqual("existing_library", config_change.library_name)
 
     def test_compare_config_version_removal(self):
         self.baseline_config.libraries[0].gapic_configs = [
@@ -312,4 +470,8 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertEqual({ChangeType.GAPIC_REMOVAL: ["existing_library"]}, result)
+        self.assertTrue(len(result[ChangeType.GAPIC_REMOVAL]) == 1)
+        config_change = result[ChangeType.GAPIC_REMOVAL][0]
+        self.assertEqual("", config_change.changed_param)
+        self.assertEqual("google/old/library/v1", config_change.latest_value)
+        self.assertEqual("existing_library", config_change.library_name)
