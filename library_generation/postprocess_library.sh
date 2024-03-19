@@ -125,7 +125,7 @@ docker run --rm \
   --config-file="${owlbot_yaml_relative_path}"
 
 # clean the custom owlbot yaml
-if [[ "${is_monorepo}" ]]; then
+if [[ "${is_monorepo}" == "true" ]]; then
   rm "${postprocessing_target}/.OwlBot.hermetic.yaml"
 fi
 
