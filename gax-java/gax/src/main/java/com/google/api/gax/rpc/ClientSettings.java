@@ -31,7 +31,6 @@ package com.google.api.gax.rpc;
 
 import com.google.api.core.ApiClock;
 import com.google.api.core.ApiFunction;
-import com.google.api.core.InternalApi;
 import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.ExecutorProvider;
 import com.google.common.base.MoreObjects;
@@ -250,16 +249,6 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
     /** Sets the Universe Domain to configure the resolved endpoint */
     public B setUniverseDomain(String universeDomain) {
       stubSettings.setUniverseDomain(universeDomain);
-      return self();
-    }
-
-    /**
-     * Marked for internal use as it's not intended to be configured by users and is visible solely
-     * for testing purposes.
-     */
-    @InternalApi
-    public B setServiceName(String serviceName) {
-      stubSettings.setServiceName(serviceName);
       return self();
     }
 

@@ -1,11 +1,13 @@
 package com.google.showcase.v1beta1.it;
 
 import com.google.api.gax.core.NoCredentialsProvider;
+import com.google.api.gax.rpc.ClientContext;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.common.truth.Truth;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
+import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import org.junit.Test;
@@ -13,16 +15,50 @@ import org.junit.Test;
 /**
  * This IT tests the different user configurations allowed and their effects on endpoint and
  * universe domain resolution.
- *
- * <p>Inside all of the test cases below, we must explicitly configure serviceName. Normally this
- * should not be configured by the user at all, but showcase clients do not have a serviceName. We
- * must set this explicitly via the ClientSettings via {@link com.google.api.gax.rpc.ClientSettings.Builder#setServiceName(String)}
- * as setting this via {@link com.google.api.gax.rpc.StubSettings.Builder#setServiceName(String)} and passing the StubSettings
- * to the client will result in a null ClientSettings. Specifically, doing `Client.create(stubSettings.createStub())`
- * will result in a NPE when doing `Client.getSettings().get(Endpoint|UniverseDomain)` as the ClientSettings is
- * null.
  */
 public class ITEndpointContext {
+
+  /*
+   * Inside the test cases below, we must explicitly configure serviceName. Normally this should not be
+   * configured by the user at all, but showcase clients do not have a serviceName. This EchoSettings wrapper will
+   * set the ServiceName by defaultWithout this ClientSettings wrapper, we must set this explicitly via the ClientSettings
+   * via {@link com.google.api.gax.rpc.ClientSettings.Builder#setServiceName(String)} as setting this via
+   * {@link com.google.api.gax.rpc.StubSettings.Builder#setServiceName(String)} and passing the StubSettings
+   * to the client will result in a null ClientSettings. Specifically, doing `Client.create(stubSettings.createStub())`
+   * will result in a NPE when doing `Client.getSettings().get(Endpoint|UniverseDomain)` as the ClientSettings is
+   * null.
+   */
+  private static class ExtendedEchoSettings extends EchoSettings {
+
+    protected ExtendedEchoSettings(Builder settingsBuilder) throws IOException {
+      super(settingsBuilder);
+    }
+
+    public static EchoSettings.Builder newBuilder() {
+      return ExtendedEchoSettings.Builder.createDefault();
+    }
+
+    public static class Builder extends EchoSettings.Builder {
+      protected Builder() throws IOException {}
+
+      private static ExtendedEchoSettings.Builder createDefault() {
+        return new ExtendedEchoSettings.Builder(
+            EchoStubSettings.newBuilder().setServiceName("test"));
+      }
+
+      protected Builder(ClientContext clientContext) {
+        super(clientContext);
+      }
+
+      protected Builder(EchoSettings settings) {
+        super(settings);
+      }
+
+      protected Builder(EchoStubSettings.Builder stubSettings) {
+        super(stubSettings);
+      }
+    }
+  }
 
   private static final String DEFAULT_ENDPOINT = "test.googleapis.com:443";
 
@@ -35,9 +71,8 @@ public class ITEndpointContext {
       // but for showcase tests run in CI, the client must be supplied explicitly supplied with
       // NoCredentials.
       EchoSettings echoSettings =
-          EchoSettings.newBuilder()
+          ExtendedEchoSettings.newBuilder()
               .setCredentialsProvider(NoCredentialsProvider.create())
-              .setServiceName("test")
               .build();
       echoClient = EchoClient.create(echoSettings);
       Truth.assertThat(echoClient.getSettings().getEndpoint()).isEqualTo(DEFAULT_ENDPOINT);
@@ -59,9 +94,8 @@ public class ITEndpointContext {
     EchoClient echoClient = null;
     try {
       EchoSettings echoSettings =
-          EchoSettings.newBuilder()
+          ExtendedEchoSettings.newBuilder()
               .setCredentialsProvider(NoCredentialsProvider.create())
-              .setServiceName("test")
               .setEndpoint(customEndpoint)
               .build();
       echoClient = EchoClient.create(echoSettings);
@@ -83,9 +117,8 @@ public class ITEndpointContext {
     EchoClient echoClient = null;
     try {
       EchoSettings echoSettings =
-          EchoSettings.newBuilder()
+          ExtendedEchoSettings.newBuilder()
               .setCredentialsProvider(NoCredentialsProvider.create())
-              .setServiceName("test")
               .setUniverseDomain(customUniverseDomain)
               .build();
       echoClient = EchoClient.create(echoSettings);
@@ -110,9 +143,8 @@ public class ITEndpointContext {
     EchoClient echoClient = null;
     try {
       EchoSettings echoSettings =
-          EchoSettings.newBuilder()
+          ExtendedEchoSettings.newBuilder()
               .setCredentialsProvider(NoCredentialsProvider.create())
-              .setServiceName("test")
               .setEndpoint(customEndpoint)
               .setUniverseDomain(customUniverseDomain)
               .build();

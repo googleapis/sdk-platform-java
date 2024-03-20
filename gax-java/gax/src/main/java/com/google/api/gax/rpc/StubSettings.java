@@ -111,6 +111,8 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     this.deprecatedExecutorProviderSet = builder.deprecatedExecutorProviderSet;
     this.gdchApiAudience = builder.gdchApiAudience;
     this.universeDomain = builder.universeDomain;
+    // Attempt to build the EndpointContext from the Builder based on all the
+    // user configurations passed in to the Builder.
     try {
       this.endpointContext = builder.endpointContextBuilder.build();
     } catch (IOException e) {
