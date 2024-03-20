@@ -13,6 +13,13 @@ import org.junit.Test;
 /**
  * This IT tests the different user configurations allowed and their effects on endpoint and
  * universe domain resolution.
+ *
+ * <p>Inside all of the test cases below, we must explicitly configure serviceName. Normally this
+ * should not be configured by the user at all, but showcase clients do not have a serviceName. We
+ * must set this explicitly via the ClientSettings via {@link com.google.api.gax.rpc.ClientSettings.Builder#setServiceName(String)}
+ * as setting this via {@link com.google.api.gax.rpc.StubSettings.Builder#setServiceName(String)} and passing thee StubSettings
+ * to the client will result in a null ClientSettings. Specifically, doing `Client.create(stubSettings.createStub())`
+ * will result in a null ClientSettings when doing `Client.getSettings().get(Endpoint|UniverseDomain)`.
  */
 public class ITEndpointContext {
 
@@ -23,11 +30,9 @@ public class ITEndpointContext {
   public void endpointResolution_default() throws InterruptedException, IOException {
     EchoClient echoClient = null;
     try {
-      // This is not how a client is created by default:
-      // 1. The default usage is EchoClient.create(), but for showcase tests run in CI, the
-      // client must be supplied with Credentials.
-      // 2. Configure the serviceName. Normally this should be configured by the user at all,
-      // but showcase clients do not have a serviceName.
+      // This is not how a client is created by default. The default usage is EchoClient.create(),
+      // but for showcase tests run in CI, the client must be supplied explicitly supplied with
+      // NoCredentials.
       EchoSettings echoSettings =
           EchoSettings.newBuilder()
               .setCredentialsProvider(NoCredentialsProvider.create())

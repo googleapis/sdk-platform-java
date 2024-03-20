@@ -253,6 +253,10 @@ public abstract class ClientSettings<SettingsT extends ClientSettings<SettingsT>
       return self();
     }
 
+    /**
+     * Marked for internal use as it's not intended to be configured by users and is visible solely
+     * for testing purposes.
+     */
     @InternalApi
     public B setServiceName(String serviceName) {
       stubSettings.setServiceName(serviceName);
