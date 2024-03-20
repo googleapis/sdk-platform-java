@@ -133,6 +133,8 @@ public final class HttpJsonCallContext implements ApiCallContext {
     this.retrySettings = defaultRetrySettings;
     this.retryableCodes =
         defaultRetryableCodes == null ? null : ImmutableSet.copyOf(defaultRetryableCodes);
+    // Attempt to create an empty, non-functioning EndpointContext by default (if set to null).
+    // This will be configured and updated by the client with user configurations.
     try {
       this.endpointContext =
           endpointContext == null ? EndpointContext.newBuilder().build() : endpointContext;

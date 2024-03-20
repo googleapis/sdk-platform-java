@@ -161,7 +161,8 @@ public abstract class ClientContext {
 
     Credentials credentials = settings.getCredentialsProvider().getCredentials();
     boolean usingGDCH = credentials instanceof GdchCredentials;
-    // GDC-H is determined by the Credentials passed in
+    // GDC-H is determined by the Credentials passed in. The Credentials object is resolved here
+    // and must be set to the EndpointContext.
     EndpointContext endpointContext =
         settings.getEndpointContext().toBuilder().setUsingGDCH(usingGDCH).build();
     String endpoint = endpointContext.resolvedEndpoint();
