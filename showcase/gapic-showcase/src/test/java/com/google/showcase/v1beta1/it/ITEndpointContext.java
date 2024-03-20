@@ -17,9 +17,10 @@ import org.junit.Test;
  * <p>Inside all of the test cases below, we must explicitly configure serviceName. Normally this
  * should not be configured by the user at all, but showcase clients do not have a serviceName. We
  * must set this explicitly via the ClientSettings via {@link com.google.api.gax.rpc.ClientSettings.Builder#setServiceName(String)}
- * as setting this via {@link com.google.api.gax.rpc.StubSettings.Builder#setServiceName(String)} and passing thee StubSettings
+ * as setting this via {@link com.google.api.gax.rpc.StubSettings.Builder#setServiceName(String)} and passing the StubSettings
  * to the client will result in a null ClientSettings. Specifically, doing `Client.create(stubSettings.createStub())`
- * will result in a null ClientSettings when doing `Client.getSettings().get(Endpoint|UniverseDomain)`.
+ * will result in a NPE when doing `Client.getSettings().get(Endpoint|UniverseDomain)` as the ClientSettings is
+ * null.
  */
 public class ITEndpointContext {
 
