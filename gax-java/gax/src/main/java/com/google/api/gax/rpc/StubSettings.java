@@ -154,10 +154,12 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     return "";
   }
 
+  /** @return the fully resolved universe domain used by the client */
   public final String getUniverseDomain() {
     return endpointContext.resolvedUniverseDomain();
   }
 
+  /** @return the fully resolved endpoint used by the client */
   public String getEndpoint() {
     return endpointContext.resolvedEndpoint();
   }

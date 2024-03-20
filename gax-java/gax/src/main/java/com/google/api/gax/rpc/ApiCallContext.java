@@ -66,6 +66,7 @@ public interface ApiCallContext extends RetryingContext {
   /** Returns a new ApiCallContext with the given Endpoint Context. */
   ApiCallContext withEndpointContext(EndpointContext endpointContext);
 
+  /** Returns the EndpointContext stored in the ApiCallContext */
   EndpointContext getEndpointContext();
 
   /**
