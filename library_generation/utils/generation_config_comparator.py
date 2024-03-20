@@ -199,10 +199,16 @@ def __compare_changed_libraries(
     object.
     :param latest_libraries: a mapping from library_name to HashLibrary object.
     :param changed_libraries: a list of library_name of changed libraries.
+    :raise ValueError: if api_shortname of a library is changed but library_name
+    remains the same.
     """
     for library_name in changed_libraries:
         baseline_library = baseline_libraries[library_name].library
         latest_library = latest_libraries[library_name].library
+        if baseline_library.api_shortname != latest_library.api_shortname:
+            raise ValueError(
+                f"{library_name}: api_shortname must not change when library_name remains the same."
+            )
         if baseline_library.api_description != latest_library.api_description:
             config_change = ConfigChange(
                 changed_param="api description",

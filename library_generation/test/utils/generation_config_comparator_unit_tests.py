@@ -184,7 +184,7 @@ class GenerationConfigComparatorTest(unittest.TestCase):
         config_change = result[ChangeType.LIBRARIES_ADDITION][0]
         self.assertEqual("new_library", config_change.library_name)
 
-    def test_compare_config_api_shortname_update(self):
+    def test_compare_config_api_shortname_update_without_library_name(self):
         self.latest_config.libraries[0].api_shortname = "new_api_shortname"
         result = compare_config(
             baseline_config=self.baseline_config,
@@ -193,6 +193,18 @@ class GenerationConfigComparatorTest(unittest.TestCase):
         self.assertTrue(len(result[ChangeType.LIBRARIES_ADDITION]) == 1)
         config_change = result[ChangeType.LIBRARIES_ADDITION][0]
         self.assertEqual("new_api_shortname", config_change.library_name)
+
+    def test_compare_config_api_shortname_update_with_library_name_raise_error(self):
+        self.baseline_config.libraries[0].library_name = "old_library_name"
+        self.latest_config.libraries[0].library_name = "old_library_name"
+        self.latest_config.libraries[0].api_shortname = "new_api_shortname"
+        self.assertRaisesRegex(
+            ValueError,
+            r"api_shortname.*library_name",
+            compare_config,
+            self.baseline_config,
+            self.latest_config,
+        )
 
     def test_compare_config_library_name_update(self):
         self.latest_config.libraries[0].library_name = "new_library_name"
