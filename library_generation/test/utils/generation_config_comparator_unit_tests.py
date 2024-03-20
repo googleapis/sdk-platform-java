@@ -184,25 +184,12 @@ class GenerationConfigComparatorTest(unittest.TestCase):
         config_change = result[ChangeType.LIBRARIES_ADDITION][0]
         self.assertEqual("new_library", config_change.library_name)
 
-    def test_compare_config_library_removal(self):
-        self.latest_config.libraries = []
-        result = compare_config(
-            baseline_config=self.baseline_config,
-            latest_config=self.latest_config,
-        )
-        self.assertTrue(len(result[ChangeType.LIBRARIES_REMOVAL]) == 1)
-        config_change = result[ChangeType.LIBRARIES_REMOVAL][0]
-        self.assertEqual("existing_library", config_change.library_name)
-
     def test_compare_config_api_shortname_update(self):
         self.latest_config.libraries[0].api_shortname = "new_api_shortname"
         result = compare_config(
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertTrue(len(result[ChangeType.LIBRARIES_REMOVAL]) == 1)
-        config_change = result[ChangeType.LIBRARIES_REMOVAL][0]
-        self.assertEqual("existing_library", config_change.library_name)
         self.assertTrue(len(result[ChangeType.LIBRARIES_ADDITION]) == 1)
         config_change = result[ChangeType.LIBRARIES_ADDITION][0]
         self.assertEqual("new_api_shortname", config_change.library_name)
@@ -213,9 +200,6 @@ class GenerationConfigComparatorTest(unittest.TestCase):
             baseline_config=self.baseline_config,
             latest_config=self.latest_config,
         )
-        self.assertTrue(len(result[ChangeType.LIBRARIES_REMOVAL]) == 1)
-        config_change = result[ChangeType.LIBRARIES_REMOVAL][0]
-        self.assertEqual("existing_library", config_change.library_name)
         self.assertTrue(len(result[ChangeType.LIBRARIES_ADDITION]) == 1)
         config_change = result[ChangeType.LIBRARIES_ADDITION][0]
         self.assertEqual("new_library_name", config_change.library_name)
@@ -460,18 +444,4 @@ class GenerationConfigComparatorTest(unittest.TestCase):
         config_change = result[ChangeType.GAPIC_ADDITION][0]
         self.assertEqual("", config_change.changed_param)
         self.assertEqual("google/new/library/v1", config_change.latest_value)
-        self.assertEqual("existing_library", config_change.library_name)
-
-    def test_compare_config_version_removal(self):
-        self.baseline_config.libraries[0].gapic_configs = [
-            GapicConfig(proto_path="google/old/library/v1")
-        ]
-        result = compare_config(
-            baseline_config=self.baseline_config,
-            latest_config=self.latest_config,
-        )
-        self.assertTrue(len(result[ChangeType.GAPIC_REMOVAL]) == 1)
-        config_change = result[ChangeType.GAPIC_REMOVAL][0]
-        self.assertEqual("", config_change.changed_param)
-        self.assertEqual("google/old/library/v1", config_change.latest_value)
         self.assertEqual("existing_library", config_change.library_name)

@@ -25,10 +25,14 @@ class ChangeType(Enum):
     GOOGLEAPIS_COMMIT = 1
     REPO_LEVEL_CHANGE = 2
     LIBRARIES_ADDITION = 3
-    LIBRARIES_REMOVAL = 4
+    # As of Mar. 2024, we decide not to produce this type of change because we
+    # still need to manually remove the libray.
+    # LIBRARIES_REMOVAL = 4
     LIBRARY_LEVEL_CHANGE = 5
     GAPIC_ADDITION = 6
-    GAPIC_REMOVAL = 7
+    # As of Mar. 2024, we decide not to produce this type of change because we
+    # still need to manually remove the libray.
+    # GAPIC_REMOVAL = 7
 
 
 class HashLibrary:
@@ -129,11 +133,14 @@ def __compare_libraries(
         # 1. find any library removed from baseline_libraries.
         # a library is removed from baseline_libraries if the library_name
         # is not in latest_libraries.
-        if library_name not in latest_libraries:
-            config_change = ConfigChange(
-                changed_param="", latest_value="", library_name=library_name
-            )
-            diff[ChangeType.LIBRARIES_REMOVAL].append(config_change)
+        # please see the reason of comment out these lines of code in the
+        # comment of ChangeType.LIBRARIES_REMOVAL.
+        # if library_name not in latest_libraries:
+        #     config_change = ConfigChange(
+        #         changed_param="", latest_value="", library_name=library_name
+        #     )
+        #     diff[ChangeType.LIBRARIES_REMOVAL].append(config_change)
+
         # 2. find any library that exists in both configs but at least one
         # parameter is changed, which means the hash value is different.
         if (
@@ -360,13 +367,16 @@ def __compare_gapic_configs(
     latest_proto_paths = {config.proto_path for config in latest_gapic_configs}
     # 1st round of comparison, find any versioned proto_path is removed
     # from baseline gapic configs.
-    for proto_path in baseline_proto_paths:
-        if proto_path in latest_proto_paths:
-            continue
-        config_change = ConfigChange(
-            changed_param="", latest_value=proto_path, library_name=library_name
-        )
-        diff[ChangeType.GAPIC_REMOVAL].append(config_change)
+    # please see the reason of comment out these lines of code in the
+    # comment of ChangeType.GAPIC_REMOVAL.
+    # for proto_path in baseline_proto_paths:
+    #     if proto_path in latest_proto_paths:
+    #         continue
+    #     config_change = ConfigChange(
+    #         changed_param="", latest_value=proto_path, library_name=library_name
+    #     )
+    #     diff[ChangeType.GAPIC_REMOVAL].append(config_change)
+
     # 2nd round of comparison, find any versioned proto_path is added
     # to latest gapic configs.
     for proto_path in latest_proto_paths:
