@@ -121,7 +121,7 @@ public final class HttpJsonCallContext implements ApiCallContext {
       ApiTracer tracer,
       RetrySettings defaultRetrySettings,
       Set<StatusCode.Code> defaultRetryableCodes,
-      EndpointContext endpointContext) {
+      @Nullable EndpointContext endpointContext) {
     this.channel = channel;
     this.callOptions = callOptions;
     this.timeout = timeout;

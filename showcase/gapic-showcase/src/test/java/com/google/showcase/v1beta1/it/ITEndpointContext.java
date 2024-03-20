@@ -13,17 +13,12 @@ import org.junit.Test;
 /**
  * This IT tests the different user configurations allowed and their effects on endpoint and
  * universe domain resolution.
- *
- * <p>This test will be enhanced in the future when the settings are able to return the resolved
- * endpoint and universe domain values.
  */
 public class ITEndpointContext {
 
   private static final String DEFAULT_ENDPOINT = "test.googleapis.com:443";
 
   // Default (no configuration)
-  // This test is very similar to `endpointResolution_userConfiguration`. This test is kept
-  // as future enhancements could allow this test to not have to explicitly set the endpoint.
   @Test
   public void endpointResolution_default() throws InterruptedException, IOException {
     EchoClient echoClient = null;

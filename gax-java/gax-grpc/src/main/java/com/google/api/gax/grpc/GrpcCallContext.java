@@ -140,7 +140,7 @@ public final class GrpcCallContext implements ApiCallContext {
       ApiCallContextOptions options,
       @Nullable RetrySettings retrySettings,
       @Nullable Set<StatusCode.Code> retryableCodes,
-      EndpointContext endpointContext) {
+      @Nullable EndpointContext endpointContext) {
     this.channel = channel;
     this.credentials = credentials;
     this.callOptions = Preconditions.checkNotNull(callOptions);
