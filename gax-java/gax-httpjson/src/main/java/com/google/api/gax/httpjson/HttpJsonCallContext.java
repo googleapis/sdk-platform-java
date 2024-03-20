@@ -133,7 +133,12 @@ public final class HttpJsonCallContext implements ApiCallContext {
     this.retrySettings = defaultRetrySettings;
     this.retryableCodes =
         defaultRetryableCodes == null ? null : ImmutableSet.copyOf(defaultRetryableCodes);
-    this.endpointContext = endpointContext;
+    try {
+      this.endpointContext =
+          endpointContext == null ? EndpointContext.newBuilder().build() : endpointContext;
+    } catch (IOException ex) {
+      throw new RuntimeException(ex);
+    }
   }
 
   /**

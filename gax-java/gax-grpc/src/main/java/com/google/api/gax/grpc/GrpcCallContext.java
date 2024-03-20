@@ -152,7 +152,12 @@ public final class GrpcCallContext implements ApiCallContext {
     this.options = Preconditions.checkNotNull(options);
     this.retrySettings = retrySettings;
     this.retryableCodes = retryableCodes == null ? null : ImmutableSet.copyOf(retryableCodes);
-    this.endpointContext = endpointContext;
+    try {
+      this.endpointContext =
+          endpointContext == null ? EndpointContext.newBuilder().build() : endpointContext;
+    } catch (IOException ex) {
+      throw new RuntimeException(ex);
+    }
   }
 
   /**
