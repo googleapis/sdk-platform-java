@@ -21,7 +21,7 @@ public class ITEndpointContext {
   /*
    * Inside the test cases below, we must explicitly configure serviceName. Normally this should not be
    * configured by the user at all, but showcase clients do not have a serviceName. This EchoSettings wrapper will
-   * set the ServiceName by defaultWithout this ClientSettings wrapper, we must set this explicitly via the ClientSettings
+   * set the ServiceName by default. Without this ClientSettings wrapper, we must set this explicitly via the ClientSettings
    * via {@link com.google.api.gax.rpc.ClientSettings.Builder#setServiceName(String)} as setting this via
    * {@link com.google.api.gax.rpc.StubSettings.Builder#setServiceName(String)} and passing the StubSettings
    * to the client will result in a null ClientSettings. Specifically, doing `Client.create(stubSettings.createStub())`
