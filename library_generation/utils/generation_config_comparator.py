@@ -13,6 +13,8 @@
 # limitations under the License.
 from collections import defaultdict
 from enum import Enum
+from typing import Any
+
 from typing import Dict
 from typing import List
 
@@ -66,43 +68,19 @@ def compare_config(
     :return: a mapping from ConfigChange to a list of ConfigChange objects.
     """
     diff = defaultdict(list[ConfigChange])
-    if baseline_config.googleapis_commitish != latest_config.googleapis_commitish:
-        diff[ChangeType.GOOGLEAPIS_COMMIT] = []
-    if baseline_config.gapic_generator_version != latest_config.gapic_generator_version:
-        config_change = ConfigChange(
-            changed_param="GAPIC generator version",
-            latest_value=latest_config.gapic_generator_version,
-        )
-        diff[ChangeType.REPO_LEVEL_CHANGE].append(config_change)
-    if baseline_config.owlbot_cli_image != latest_config.owlbot_cli_image:
-        config_change = ConfigChange(
-            changed_param="OwlBot cli commit",
-            latest_value=latest_config.owlbot_cli_image,
-        )
-        diff[ChangeType.REPO_LEVEL_CHANGE].append(config_change)
-    if baseline_config.synthtool_commitish != latest_config.synthtool_commitish:
-        config_change = ConfigChange(
-            changed_param="Synthtool commit",
-            latest_value=latest_config.synthtool_commitish,
-        )
-        diff[ChangeType.REPO_LEVEL_CHANGE].append(config_change)
-    if baseline_config.protobuf_version != latest_config.protobuf_version:
-        config_change = ConfigChange(
-            changed_param="Protobuf version",
-            latest_value=latest_config.protobuf_version,
-        )
-        diff[ChangeType.REPO_LEVEL_CHANGE].append(config_change)
-    if baseline_config.grpc_version != latest_config.grpc_version:
-        config_change = ConfigChange(
-            changed_param="Grpc version", latest_value=latest_config.grpc_version
-        )
-        diff[ChangeType.REPO_LEVEL_CHANGE].append(config_change)
-    if baseline_config.template_excludes != latest_config.template_excludes:
-        config_change = ConfigChange(
-            changed_param="Template excludes",
-            latest_value=str(latest_config.template_excludes),
-        )
-        diff[ChangeType.REPO_LEVEL_CHANGE].append(config_change)
+    baseline_params = __convert_params_to_sorted_list(baseline_config)
+    latest_params = __convert_params_to_sorted_list(latest_config)
+    for baseline_param, latest_param in zip(baseline_params, latest_params):
+        if baseline_param == latest_param:
+            continue
+        if baseline_param[0] == "googleapis_commitish":
+            diff[ChangeType.GOOGLEAPIS_COMMIT] = []
+        else:
+            config_change = ConfigChange(
+                changed_param=latest_param[0],
+                latest_value=latest_param[1],
+            )
+            diff[ChangeType.REPO_LEVEL_CHANGE].append(config_change)
 
     __compare_libraries(
         diff=diff,
@@ -205,153 +183,23 @@ def __compare_changed_libraries(
     for library_name in changed_libraries:
         baseline_library = baseline_libraries[library_name].library
         latest_library = latest_libraries[library_name].library
-        if baseline_library.api_shortname != latest_library.api_shortname:
-            raise ValueError(
-                f"{library_name}: api_shortname must not change when library_name remains the same."
-            )
-        if baseline_library.api_description != latest_library.api_description:
-            config_change = ConfigChange(
-                changed_param="api description",
-                latest_value=latest_library.api_description,
-                library_name=library_name,
-            )
-            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
-        if baseline_library.name_pretty != latest_library.name_pretty:
-            config_change = ConfigChange(
-                changed_param="name pretty",
-                latest_value=latest_library.name_pretty,
-                library_name=library_name,
-            )
-            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
-        if (
-            baseline_library.product_documentation
-            != latest_library.product_documentation
-        ):
-            config_change = ConfigChange(
-                changed_param="product documentation",
-                latest_value=latest_library.product_documentation,
-                library_name=library_name,
-            )
-            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
-        if baseline_library.library_type != latest_library.library_type:
-            config_change = ConfigChange(
-                changed_param="library type",
-                latest_value=latest_library.library_type,
-                library_name=library_name,
-            )
-            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
-        if baseline_library.release_level != latest_library.release_level:
-            config_change = ConfigChange(
-                changed_param="release level",
-                latest_value=latest_library.release_level,
-                library_name=library_name,
-            )
-            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
-        if baseline_library.api_id != latest_library.api_id:
-            config_change = ConfigChange(
-                changed_param="api id",
-                latest_value=latest_library.api_id,
-                library_name=library_name,
-            )
-            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
-        if baseline_library.api_reference != latest_library.api_reference:
-            config_change = ConfigChange(
-                changed_param="api reference",
-                latest_value=latest_library.api_reference,
-                library_name=library_name,
-            )
-            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
-        if baseline_library.codeowner_team != latest_library.codeowner_team:
-            config_change = ConfigChange(
-                changed_param="code owner team",
-                latest_value=latest_library.codeowner_team,
-                library_name=library_name,
-            )
-            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
-        if (
-            baseline_library.excluded_dependencies
-            != latest_library.excluded_dependencies
-        ):
-            config_change = ConfigChange(
-                changed_param="excluded dependencies",
-                latest_value=latest_library.excluded_dependencies,
-                library_name=library_name,
-            )
-            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
-        if baseline_library.excluded_poms != latest_library.excluded_poms:
-            config_change = ConfigChange(
-                changed_param="excluded poms",
-                latest_value=latest_library.excluded_poms,
-                library_name=library_name,
-            )
-            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
-        if baseline_library.client_documentation != latest_library.client_documentation:
-            config_change = ConfigChange(
-                changed_param="client documentation",
-                latest_value=latest_library.client_documentation,
-                library_name=library_name,
-            )
-            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
-        if baseline_library.distribution_name != latest_library.distribution_name:
-            config_change = ConfigChange(
-                changed_param="distribution name",
-                latest_value=latest_library.distribution_name,
-                library_name=library_name,
-            )
-            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
-        if baseline_library.group_id != latest_library.group_id:
-            config_change = ConfigChange(
-                changed_param="group id",
-                latest_value=latest_library.group_id,
-                library_name=library_name,
-            )
-            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
-        if baseline_library.issue_tracker != latest_library.issue_tracker:
-            config_change = ConfigChange(
-                changed_param="issue tracker",
-                latest_value=latest_library.issue_tracker,
-                library_name=library_name,
-            )
-            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
-        if baseline_library.rest_documentation != latest_library.rest_documentation:
-            config_change = ConfigChange(
-                changed_param="rest documentation",
-                latest_value=latest_library.rest_documentation,
-                library_name=library_name,
-            )
-            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
-        if baseline_library.rpc_documentation != latest_library.rpc_documentation:
-            config_change = ConfigChange(
-                changed_param="rpc documentation",
-                latest_value=latest_library.rpc_documentation,
-                library_name=library_name,
-            )
-            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
-        if baseline_library.cloud_api != latest_library.cloud_api:
-            config_change = ConfigChange(
-                changed_param="cloud api",
-                latest_value=str(latest_library.cloud_api),
-                library_name=library_name,
-            )
-            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
-        if baseline_library.requires_billing != latest_library.requires_billing:
-            config_change = ConfigChange(
-                changed_param="requires billing",
-                latest_value=str(latest_library.requires_billing),
-                library_name=library_name,
-            )
-            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
+        baseline_params = __convert_params_to_sorted_list(baseline_library)
+        latest_params = __convert_params_to_sorted_list(latest_library)
+        for baseline_param, latest_param in zip(baseline_params, latest_params):
+            if baseline_param == latest_param:
+                continue
+            if baseline_param[0] == "api_shortname":
+                raise ValueError(
+                    f"{library_name}: api_shortname must not change when library_name remains the same."
+                )
+            else:
+                config_change = ConfigChange(
+                    changed_param=latest_param[0],
+                    latest_value=latest_param[1],
+                    library_name=library_name,
+                )
+                diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
 
-        if (
-            baseline_library.extra_versioned_modules
-            != latest_library.extra_versioned_modules
-        ):
-            config_change = ConfigChange(
-                changed_param="extra versioned modules",
-                latest_value=latest_library.extra_versioned_modules,
-                library_name=library_name,
-            )
-            diff[ChangeType.LIBRARY_LEVEL_CHANGE].append(config_change)
         # compare gapic_configs
         baseline_gapic_configs = baseline_library.gapic_configs
         latest_gapic_configs = latest_library.gapic_configs
@@ -392,3 +240,58 @@ def __compare_gapic_configs(
             changed_param="", latest_value=proto_path, library_name=library_name
         )
         diff[ChangeType.GAPIC_ADDITION].append(config_change)
+
+
+def __convert_params_to_sorted_list(obj: Any) -> List[tuple]:
+    """
+    Convert the parameter and its value of a given object to a sorted list of
+    tuples.
+
+    Only the following types of parameters will be considered:
+
+    - str
+    - bool
+    - list[str]
+    - None
+
+    Note that built-in params, e.g., __str__, and methods will be skipped.
+
+    :param obj: an object
+    :return: a sorted list of tuples.
+    """
+    param_and_values = []
+    for param, value in vars(obj).items():
+        if (
+            param.startswith("__")  # skip built-in params
+            or callable(getattr(obj, param))  # skip methods
+            # skip if the type of param is not one of the following types
+            # 1. str
+            # 2. bool
+            # 3. list[str]
+            # 4. None
+            or not (
+                isinstance(getattr(obj, param), str)
+                or isinstance(getattr(obj, param), bool)
+                or __is_list_of_str(obj=obj, param=param)
+                or getattr(obj, param) is None
+            )
+        ):
+            continue
+        param_and_values.append((param, value))
+    return sorted(param_and_values)
+
+
+def __is_list_of_str(obj: Any, param: str) -> bool:
+    """
+    Returns True if the type of param of a given object is a list of str; False
+    otherwise.
+
+    This method is a workaround of https://bugs.python.org/issue28339.
+    """
+    value = getattr(obj, param)
+    if not isinstance(value, list):
+        return False
+    for v in value:
+        if not isinstance(v, str):
+            return False
+    return True
