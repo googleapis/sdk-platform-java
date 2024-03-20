@@ -50,6 +50,7 @@ import com.google.api.gax.rpc.UnaryCallable;
 import com.google.api.generator.engine.ast.AnnotationNode;
 import com.google.api.generator.engine.ast.AnonymousClassExpr;
 import com.google.api.generator.engine.ast.AssignmentExpr;
+import com.google.api.generator.engine.ast.BlockComment;
 import com.google.api.generator.engine.ast.CastExpr;
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.CommentStatement;
@@ -1175,12 +1176,16 @@ public abstract class AbstractServiceStubSettingsClassComposer implements ClassC
         MethodDefinition.builder()
             .setHeaderCommentStatements(
                 SettingsCommentComposer.DEFAULT_SERVICE_ENDPOINT_METHOD_COMMENT)
-            .setScope(ScopeNode.PUBLIC)
+            .setScope(ScopeNode.PRIVATE)
             .setIsStatic(true)
             .setReturnType(returnType)
             .setName("getDefaultServiceName")
             .setReturnExpr(
                 ValueExpr.withValue(StringObjectValue.withValue(service.hostServiceName())))
+            .setHeaderCommentStatements(
+                CommentStatement.withComment(
+                    BlockComment.withComment(
+                        "Similar to {@link #getServiceName()} but is static. Intended to be set from inside the StubSettings.Builder")))
             .build());
 
     // Create the getDefaultEndpoint method.

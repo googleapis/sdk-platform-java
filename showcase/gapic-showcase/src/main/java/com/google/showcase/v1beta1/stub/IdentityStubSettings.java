@@ -308,8 +308,10 @@ public class IdentityStubSettings extends StubSettings<IdentityStubSettings> {
     return InstantiatingExecutorProvider.newBuilder();
   }
 
-  /** Returns the default service endpoint. */
-  public static String getDefaultServiceName() {
+  /*
+   * Similar to {@link #getServiceName()} but is static. Intended to be set from inside the StubSettings.Builder
+   */
+  private static String getDefaultServiceName() {
     return "";
   }
 
