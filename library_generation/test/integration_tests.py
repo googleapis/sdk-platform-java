@@ -29,7 +29,6 @@ from library_generation.generate_repo import generate_from_yaml
 from library_generation.model.generation_config import from_yaml, GenerationConfig
 from library_generation.test.compare_poms import compare_xml
 from library_generation.utilities import (
-    get_library_name,
     sh_util as shell_call,
     run_process_and_print_output,
 )
@@ -214,7 +213,7 @@ class IntegrationTest(unittest.TestCase):
     def __get_library_names_from_config(cls, config: GenerationConfig) -> List[str]:
         library_names = []
         for library in config.libraries:
-            library_names.append(f"java-{get_library_name(library)}")
+            library_names.append(f"java-{library.get_library_name()}")
 
         return library_names
 
@@ -248,7 +247,7 @@ class IntegrationTest(unittest.TestCase):
 
     @classmethod
     def __recursive_diff_files(
-        self,
+        cls,
         dcmp: dircmp,
         diff_files: List[str],
         left_only: List[str],
@@ -256,13 +255,14 @@ class IntegrationTest(unittest.TestCase):
         dirname: str = "",
     ):
         """
-        recursively compares two subdirectories. The found differences are passed to three expected list references
+        Recursively compares two subdirectories. The found differences are
+        passed to three expected list references.
         """
         append_dirname = lambda d: dirname + d
         diff_files.extend(map(append_dirname, dcmp.diff_files))
         left_only.extend(map(append_dirname, dcmp.left_only))
         right_only.extend(map(append_dirname, dcmp.right_only))
         for sub_dirname, sub_dcmp in dcmp.subdirs.items():
-            self.__recursive_diff_files(
+            cls.__recursive_diff_files(
                 sub_dcmp, diff_files, left_only, right_only, dirname + sub_dirname + "/"
             )

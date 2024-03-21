@@ -39,17 +39,6 @@ def create_argument(arg_key: str, arg_container: object) -> List[str]:
     return []
 
 
-def get_library_name(
-    library: LibraryConfig,
-) -> str:
-    """
-    Return the library name of a given LibraryConfig object
-    :param library: an object of LibraryConfig
-    :return: the library name
-    """
-    return library.library_name if library.library_name else library.api_shortname
-
-
 def run_process_and_print_output(arguments: List[str], job_name: str = "Job"):
     """
     Runs a process with the given "arguments" list and prints its output.
@@ -231,7 +220,7 @@ def generate_prerequisite_files(
     :return: None
     """
     cloud_prefix = "cloud-" if library.cloud_api else ""
-    library_name = get_library_name(library)
+    library_name = library.get_library_name()
     distribution_name = (
         library.distribution_name
         if library.distribution_name
@@ -341,7 +330,7 @@ def get_file_paths(config: GenerationConfig) -> Dict[str, str]:
     paths = {}
     for library in config.libraries:
         for gapic_config in library.gapic_configs:
-            paths[gapic_config.proto_path] = get_library_name(library)
+            paths[gapic_config.proto_path] = library.get_library_name()
     return paths
 
 
