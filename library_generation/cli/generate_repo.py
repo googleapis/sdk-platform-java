@@ -11,8 +11,8 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import ast
 import click
-
 from library_generation.generate_repo import generate_from_yaml
 
 
@@ -21,6 +21,15 @@ from library_generation.generate_repo import generate_from_yaml
 @click.version_option(message="%(version)s")
 def main(ctx):
     pass
+
+
+# https://stackoverflow.com/questions/47631914/how-to-pass-several-list-of-arguments-to-click-option
+class PythonLiteralOption(click.Option):
+    def type_cast_value(self, ctx, value):
+        try:
+            return ast.literal_eval(value)
+        except:
+            raise click.BadParameter(value)
 
 
 @main.command()
@@ -35,6 +44,7 @@ def main(ctx):
 )
 @click.option(
     "--target-library-names",
+    cls=PythonLiteralOption,
     required=False,
     default=None,
     type=list[str],
