@@ -12,6 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+from hashlib import sha1
 
 from typing import List, Optional
 from library_generation.model.gapic_config import GapicConfig
@@ -71,3 +72,70 @@ class LibraryConfig:
         self.cloud_api = cloud_api
         self.requires_billing = requires_billing
         self.extra_versioned_modules = extra_versioned_modules
+
+    def get_library_name(self) -> str:
+        """
+        Return the library name of a given LibraryConfig object
+        :return: the library name
+        """
+        return self.library_name if self.library_name else self.api_shortname
+
+    def __eq__(self, other):
+        return (
+            self.api_shortname == other.api_shortname
+            and self.api_description == other.api_description
+            and self.name_pretty == other.name_pretty
+            and self.product_documentation == other.product_documentation
+            and self.gapic_configs == other.gapic_configs
+            and self.library_type == other.library_type
+            and self.release_level == other.release_level
+            and self.api_id == other.api_id
+            and self.api_reference == other.api_reference
+            and self.codeowner_team == other.codeowner_team
+            and self.excluded_dependencies == other.excluded_dependencies
+            and self.excluded_poms == other.excluded_poms
+            and self.client_documentation == other.client_documentation
+            and self.distribution_name == other.distribution_name
+            and self.googleapis_commitish == other.googleapis_commitish
+            and self.group_id == other.group_id
+            and self.issue_tracker == other.issue_tracker
+            and self.library_name == other.library_name
+            and self.rest_documentation == other.rest_documentation
+            and self.rpc_documentation == other.rpc_documentation
+            and self.cloud_api == other.cloud_api
+            and self.requires_billing == other.requires_billing
+            and self.extra_versioned_modules == other.extra_versioned_modules
+        )
+
+    def __hash__(self):
+        m = sha1()
+        m.update(
+            str(
+                [
+                    self.api_shortname,
+                    self.api_description,
+                    self.name_pretty,
+                    self.product_documentation,
+                    self.library_type,
+                    self.release_level,
+                    self.api_id,
+                    self.api_reference,
+                    self.codeowner_team,
+                    self.excluded_dependencies,
+                    self.excluded_poms,
+                    self.client_documentation,
+                    self.distribution_name,
+                    self.googleapis_commitish,
+                    self.group_id,
+                    self.issue_tracker,
+                    self.library_name,
+                    self.rest_documentation,
+                    self.rpc_documentation,
+                    self.cloud_api,
+                    self.requires_billing,
+                    self.extra_versioned_modules,
+                ]
+                + [config.proto_path for config in self.gapic_configs]
+            ).encode("utf-8")
+        )
+        return int(m.hexdigest(), 16)
