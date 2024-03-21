@@ -23,6 +23,6 @@ for library in s.get_staging_dirs():
 s.remove_staging_dirs()
 {% if should_include_templates %}java.common_templates(monorepo=True, {% if template_excludes %}excludes=[
 {%- for exclude in template_excludes %}
-    "{{ exclude }}",
+    "{{ exclude }}"{% if not loop.last %},{% endif %}
 {%- endfor %}
 ]{% endif %}){% endif %}
