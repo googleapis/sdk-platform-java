@@ -151,13 +151,6 @@ public class IamCredentialsStubSettings extends StubSettings<IamCredentialsStubS
     return InstantiatingExecutorProvider.newBuilder();
   }
 
-  /*
-   * Similar to {@link #getServiceName()} but is static. Intended to be set from inside the StubSettings.Builder
-   */
-  private static String getDefaultServiceName() {
-    return "iamcredentials";
-  }
-
   /** Returns the default service endpoint. */
   public static String getDefaultEndpoint() {
     return "iamcredentials.googleapis.com:443";
@@ -334,7 +327,6 @@ public class IamCredentialsStubSettings extends StubSettings<IamCredentialsStubS
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setServiceName(getDefaultServiceName());
 
       return initDefaults(builder);
     }
@@ -347,7 +339,6 @@ public class IamCredentialsStubSettings extends StubSettings<IamCredentialsStubS
       builder.setInternalHeaderProvider(defaultHttpJsonApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setServiceName(getDefaultServiceName());
 
       return initDefaults(builder);
     }

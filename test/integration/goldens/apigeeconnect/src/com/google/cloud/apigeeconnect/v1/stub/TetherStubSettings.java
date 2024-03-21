@@ -112,13 +112,6 @@ public class TetherStubSettings extends StubSettings<TetherStubSettings> {
     return InstantiatingExecutorProvider.newBuilder();
   }
 
-  /*
-   * Similar to {@link #getServiceName()} but is static. Intended to be set from inside the StubSettings.Builder
-   */
-  private static String getDefaultServiceName() {
-    return "apigeeconnect";
-  }
-
   /** Returns the default service endpoint. */
   public static String getDefaultEndpoint() {
     return "apigeeconnect.googleapis.com:443";
@@ -236,7 +229,6 @@ public class TetherStubSettings extends StubSettings<TetherStubSettings> {
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setServiceName(getDefaultServiceName());
 
       return initDefaults(builder);
     }

@@ -164,7 +164,12 @@ public abstract class ClientContext {
     // Client can determine if the GDC-H is being used via the Credentials. The Credentials object
     // is resolved here and must be set to the EndpointContext.
     EndpointContext endpointContext =
-        settings.getEndpointContext().toBuilder().setUsingGDCH(usingGDCH).build();
+        settings
+            .getEndpointContext()
+            .toBuilder()
+            .setServiceName(settings.getServiceName())
+            .setUsingGDCH(usingGDCH)
+            .build();
     String endpoint = endpointContext.resolvedEndpoint();
 
     String settingsGdchApiAudience = settings.getGdchApiAudience();

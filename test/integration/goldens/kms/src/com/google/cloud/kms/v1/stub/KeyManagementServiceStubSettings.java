@@ -649,13 +649,6 @@ public class KeyManagementServiceStubSettings
     return InstantiatingExecutorProvider.newBuilder();
   }
 
-  /*
-   * Similar to {@link #getServiceName()} but is static. Intended to be set from inside the StubSettings.Builder
-   */
-  private static String getDefaultServiceName() {
-    return "cloudkms";
-  }
-
   /** Returns the default service endpoint. */
   public static String getDefaultEndpoint() {
     return "cloudkms.googleapis.com:443";
@@ -985,7 +978,6 @@ public class KeyManagementServiceStubSettings
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setServiceName(getDefaultServiceName());
 
       return initDefaults(builder);
     }

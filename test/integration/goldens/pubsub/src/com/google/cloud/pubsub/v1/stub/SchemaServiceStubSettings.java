@@ -341,13 +341,6 @@ public class SchemaServiceStubSettings extends StubSettings<SchemaServiceStubSet
     return InstantiatingExecutorProvider.newBuilder();
   }
 
-  /*
-   * Similar to {@link #getServiceName()} but is static. Intended to be set from inside the StubSettings.Builder
-   */
-  private static String getDefaultServiceName() {
-    return "pubsub";
-  }
-
   /** Returns the default service endpoint. */
   public static String getDefaultEndpoint() {
     return "pubsub.googleapis.com:443";
@@ -549,7 +542,6 @@ public class SchemaServiceStubSettings extends StubSettings<SchemaServiceStubSet
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setServiceName(getDefaultServiceName());
 
       return initDefaults(builder);
     }

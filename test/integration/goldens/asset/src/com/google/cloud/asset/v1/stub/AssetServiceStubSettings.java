@@ -582,13 +582,6 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
     return InstantiatingExecutorProvider.newBuilder();
   }
 
-  /*
-   * Similar to {@link #getServiceName()} but is static. Intended to be set from inside the StubSettings.Builder
-   */
-  private static String getDefaultServiceName() {
-    return "cloudasset";
-  }
-
   /** Returns the default service endpoint. */
   public static String getDefaultEndpoint() {
     return "cloudasset.googleapis.com:443";
@@ -970,7 +963,6 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setServiceName(getDefaultServiceName());
 
       return initDefaults(builder);
     }
@@ -983,7 +975,6 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
       builder.setInternalHeaderProvider(defaultHttpJsonApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setServiceName(getDefaultServiceName());
 
       return initDefaults(builder);
     }

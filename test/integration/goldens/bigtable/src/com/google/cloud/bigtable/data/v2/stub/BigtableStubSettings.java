@@ -176,13 +176,6 @@ public class BigtableStubSettings extends StubSettings<BigtableStubSettings> {
     return InstantiatingExecutorProvider.newBuilder();
   }
 
-  /*
-   * Similar to {@link #getServiceName()} but is static. Intended to be set from inside the StubSettings.Builder
-   */
-  private static String getDefaultServiceName() {
-    return "bigtable";
-  }
-
   /** Returns the default service endpoint. */
   public static String getDefaultEndpoint() {
     return "bigtable.googleapis.com:443";
@@ -392,7 +385,6 @@ public class BigtableStubSettings extends StubSettings<BigtableStubSettings> {
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setServiceName(getDefaultServiceName());
 
       return initDefaults(builder);
     }

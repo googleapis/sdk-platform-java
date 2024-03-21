@@ -557,13 +557,6 @@ public class ConfigServiceV2StubSettings extends StubSettings<ConfigServiceV2Stu
     return InstantiatingExecutorProvider.newBuilder();
   }
 
-  /*
-   * Similar to {@link #getServiceName()} but is static. Intended to be set from inside the StubSettings.Builder
-   */
-  private static String getDefaultServiceName() {
-    return "logging";
-  }
-
   /** Returns the default service endpoint. */
   public static String getDefaultEndpoint() {
     return "logging.googleapis.com:443";
@@ -879,7 +872,6 @@ public class ConfigServiceV2StubSettings extends StubSettings<ConfigServiceV2Stu
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setServiceName(getDefaultServiceName());
 
       return initDefaults(builder);
     }

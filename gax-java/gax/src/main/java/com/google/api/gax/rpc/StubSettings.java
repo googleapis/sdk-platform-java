@@ -150,10 +150,14 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     return clock;
   }
 
-  // Meant to be shared between StubSettings and ClientContext.
+  /**
+   * Marked with Internal Api as it's meant to be shared between StubSettings and ClientContext.
+   *
+   * @return the configured serviceName or an empty String otherwise.
+   */
   @InternalApi
   public String getServiceName() {
-    return "";
+    return serviceName;
   }
 
   /** @return the fully resolved universe domain used by the client */

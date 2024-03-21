@@ -273,13 +273,6 @@ public class SequenceServiceStubSettings extends StubSettings<SequenceServiceStu
     return InstantiatingExecutorProvider.newBuilder();
   }
 
-  /*
-   * Similar to {@link #getServiceName()} but is static. Intended to be set from inside the StubSettings.Builder
-   */
-  private static String getDefaultServiceName() {
-    return "";
-  }
-
   /** Returns the default service endpoint. */
   public static String getDefaultEndpoint() {
     return "localhost:7469";
@@ -514,7 +507,6 @@ public class SequenceServiceStubSettings extends StubSettings<SequenceServiceStu
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setServiceName(getDefaultServiceName());
 
       return initDefaults(builder);
     }
@@ -527,7 +519,6 @@ public class SequenceServiceStubSettings extends StubSettings<SequenceServiceStu
       builder.setInternalHeaderProvider(defaultHttpJsonApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setServiceName(getDefaultServiceName());
 
       return initDefaults(builder);
     }

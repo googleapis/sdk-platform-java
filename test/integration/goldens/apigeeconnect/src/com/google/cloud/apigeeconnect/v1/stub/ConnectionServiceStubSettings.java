@@ -193,13 +193,6 @@ public class ConnectionServiceStubSettings extends StubSettings<ConnectionServic
     return InstantiatingExecutorProvider.newBuilder();
   }
 
-  /*
-   * Similar to {@link #getServiceName()} but is static. Intended to be set from inside the StubSettings.Builder
-   */
-  private static String getDefaultServiceName() {
-    return "apigeeconnect";
-  }
-
   /** Returns the default service endpoint. */
   public static String getDefaultEndpoint() {
     return "apigeeconnect.googleapis.com:443";
@@ -356,7 +349,6 @@ public class ConnectionServiceStubSettings extends StubSettings<ConnectionServic
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setServiceName(getDefaultServiceName());
 
       return initDefaults(builder);
     }
@@ -369,7 +361,6 @@ public class ConnectionServiceStubSettings extends StubSettings<ConnectionServic
       builder.setInternalHeaderProvider(defaultHttpJsonApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setServiceName(getDefaultServiceName());
 
       return initDefaults(builder);
     }

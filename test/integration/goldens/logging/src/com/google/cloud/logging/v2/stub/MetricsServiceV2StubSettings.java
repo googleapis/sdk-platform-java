@@ -216,13 +216,6 @@ public class MetricsServiceV2StubSettings extends StubSettings<MetricsServiceV2S
     return InstantiatingExecutorProvider.newBuilder();
   }
 
-  /*
-   * Similar to {@link #getServiceName()} but is static. Intended to be set from inside the StubSettings.Builder
-   */
-  private static String getDefaultServiceName() {
-    return "logging";
-  }
-
   /** Returns the default service endpoint. */
   public static String getDefaultEndpoint() {
     return "logging.googleapis.com:443";
@@ -394,7 +387,6 @@ public class MetricsServiceV2StubSettings extends StubSettings<MetricsServiceV2S
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setServiceName(getDefaultServiceName());
 
       return initDefaults(builder);
     }

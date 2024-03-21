@@ -278,13 +278,6 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
     return InstantiatingExecutorProvider.newBuilder();
   }
 
-  /*
-   * Similar to {@link #getServiceName()} but is static. Intended to be set from inside the StubSettings.Builder
-   */
-  private static String getDefaultServiceName() {
-    return "";
-  }
-
   /** Returns the default service endpoint. */
   public static String getDefaultEndpoint() {
     return "localhost:7469";
@@ -523,7 +516,6 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setServiceName(getDefaultServiceName());
 
       return initDefaults(builder);
     }
@@ -536,7 +528,6 @@ public class ComplianceStubSettings extends StubSettings<ComplianceStubSettings>
       builder.setInternalHeaderProvider(defaultHttpJsonApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setServiceName(getDefaultServiceName());
 
       return initDefaults(builder);
     }

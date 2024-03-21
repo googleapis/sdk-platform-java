@@ -334,13 +334,6 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
     return InstantiatingExecutorProvider.newBuilder();
   }
 
-  /*
-   * Similar to {@link #getServiceName()} but is static. Intended to be set from inside the StubSettings.Builder
-   */
-  private static String getDefaultServiceName() {
-    return "redis";
-  }
-
   /** Returns the default service endpoint. */
   public static String getDefaultEndpoint() {
     return "redis.googleapis.com:443";
@@ -607,7 +600,6 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setServiceName(getDefaultServiceName());
 
       return initDefaults(builder);
     }
@@ -620,7 +612,6 @@ public class CloudRedisStubSettings extends StubSettings<CloudRedisStubSettings>
       builder.setInternalHeaderProvider(defaultHttpJsonApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setServiceName(getDefaultServiceName());
 
       return initDefaults(builder);
     }

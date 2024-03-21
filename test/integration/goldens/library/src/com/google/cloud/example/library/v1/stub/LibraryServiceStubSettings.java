@@ -317,13 +317,6 @@ public class LibraryServiceStubSettings extends StubSettings<LibraryServiceStubS
     return InstantiatingExecutorProvider.newBuilder();
   }
 
-  /*
-   * Similar to {@link #getServiceName()} but is static. Intended to be set from inside the StubSettings.Builder
-   */
-  private static String getDefaultServiceName() {
-    return "library-example";
-  }
-
   /** Returns the default service endpoint. */
   public static String getDefaultEndpoint() {
     return "library-example.googleapis.com:443";
@@ -557,7 +550,6 @@ public class LibraryServiceStubSettings extends StubSettings<LibraryServiceStubS
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setServiceName(getDefaultServiceName());
 
       return initDefaults(builder);
     }
@@ -570,7 +562,6 @@ public class LibraryServiceStubSettings extends StubSettings<LibraryServiceStubS
       builder.setInternalHeaderProvider(defaultHttpJsonApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setServiceName(getDefaultServiceName());
 
       return initDefaults(builder);
     }

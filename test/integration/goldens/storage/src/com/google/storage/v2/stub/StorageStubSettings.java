@@ -599,13 +599,6 @@ public class StorageStubSettings extends StubSettings<StorageStubSettings> {
     return InstantiatingExecutorProvider.newBuilder();
   }
 
-  /*
-   * Similar to {@link #getServiceName()} but is static. Intended to be set from inside the StubSettings.Builder
-   */
-  private static String getDefaultServiceName() {
-    return "storage";
-  }
-
   /** Returns the default service endpoint. */
   public static String getDefaultEndpoint() {
     return "storage.googleapis.com:443";
@@ -929,7 +922,6 @@ public class StorageStubSettings extends StubSettings<StorageStubSettings> {
       builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
       builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
       builder.setSwitchToMtlsEndpointAllowed(true);
-      builder.setServiceName(getDefaultServiceName());
 
       return initDefaults(builder);
     }
