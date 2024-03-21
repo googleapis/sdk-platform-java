@@ -101,7 +101,6 @@ public abstract class ClientContext {
   public abstract Duration getStreamWatchdogCheckInterval();
 
   // Package-Private scope for internal use only. Shared between StubSettings and ClientContext
-  @Nullable
   abstract String getServiceName();
 
   @Nullable
