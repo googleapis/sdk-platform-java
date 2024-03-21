@@ -7,6 +7,7 @@ import com.google.common.truth.Truth;
 import com.google.showcase.v1beta1.EchoClient;
 import com.google.showcase.v1beta1.EchoSettings;
 import com.google.showcase.v1beta1.it.util.TestClientInitializer;
+import com.google.showcase.v1beta1.stub.EchoStub;
 import com.google.showcase.v1beta1.stub.EchoStubSettings;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -18,15 +19,16 @@ import org.junit.Test;
  */
 public class ITEndpointContext {
 
-  /*
-   * Inside the test cases below, we must explicitly configure serviceName. Normally this should not be
-   * configured by the user at all, but showcase clients do not have a serviceName. This EchoSettings wrapper will
-   * set the ServiceName by default. Without this ClientSettings wrapper, we must set this explicitly via the ClientSettings
-   * via {@link com.google.api.gax.rpc.ClientSettings.Builder#setServiceName(String)} as setting this via
-   * {@link com.google.api.gax.rpc.StubSettings.Builder#setServiceName(String)} and passing the StubSettings
-   * to the client will result in a null ClientSettings. Specifically, doing `Client.create(stubSettings.createStub())`
-   * will result in a NPE when doing `Client.getSettings().get(Endpoint|UniverseDomain)` as the ClientSettings is
-   * null.
+  /**
+   * Inside the test cases below, we must explicitly configure serviceName. Normally this should not
+   * be configured by the user at all, but showcase clients do not have a serviceName. The
+   * ExtendSettings wrapper will set the ServiceName via an _enhanced_ ClientSettings.
+   *
+   * <p>Without this ClientSettings wrapper, we must set this explicitly via {@link
+   * com.google.api.gax.rpc.StubSettings.Builder#setServiceName(String)} and pass the StubSettings
+   * to the client. However, this will result in a null ClientSettings (See {@link
+   * EchoClient#create(EchoStub)}). Passing the stub to the Client will result in a NPE when doing
+   * `Client.getSettings().get(Endpoint|UniverseDomain)` as the ClientSettings is stored as null.
    */
   private static class ExtendedEchoSettings extends EchoSettings {
 

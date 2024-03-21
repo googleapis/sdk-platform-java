@@ -71,7 +71,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   private final HeaderProvider internalHeaderProvider;
   private final TransportChannelProvider transportChannelProvider;
   private final ApiClock clock;
-  private final String serviceName;
+  @Nonnull private final String serviceName;
   private final String endpoint;
   private final String mtlsEndpoint;
   private final String quotaProjectId;
@@ -152,8 +152,11 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
 
   /**
    * Marked with Internal Api as it's meant to be shared between StubSettings and ClientContext.
+   * GAPICs will override this implementation with the correct serviceName. This implementation is
+   * for other use cases (i.e Testing) which may set the ServiceName directly to the StubSettings
+   * and not the overridden implementation (i.e. FakeStubSettings)
    *
-   * @return the configured serviceName or an empty String otherwise.
+   * @return Returns the configured serviceName or empty string ("") if not configured.
    */
   @InternalApi
   public String getServiceName() {
@@ -247,7 +250,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     private HeaderProvider internalHeaderProvider;
     private TransportChannelProvider transportChannelProvider;
     private ApiClock clock;
-    private String serviceName;
+    @Nonnull private String serviceName;
     private String endpoint;
     private String mtlsEndpoint;
     private String quotaProjectId;
@@ -314,7 +317,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.headerProvider = new NoHeaderProvider();
         this.internalHeaderProvider = new NoHeaderProvider();
         this.clock = NanoClock.getDefaultClock();
-        this.serviceName = null;
+        this.serviceName = "";
         this.endpoint = null;
         this.mtlsEndpoint = null;
         this.quotaProjectId = null;
@@ -470,7 +473,8 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
      * this value may result in unintended client behavior.
      */
     @InternalApi
-    public B setServiceName(String serviceName) {
+    public B setServiceName(@Nonnull String serviceName) {
+      Preconditions.checkNotNull(serviceName, "Service Name cannot be null");
       this.serviceName = serviceName;
       this.endpointContextBuilder.setServiceName(serviceName);
       return self();
