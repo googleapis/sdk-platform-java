@@ -436,9 +436,8 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
      */
     public B setTransportChannelProvider(TransportChannelProvider transportChannelProvider) {
       this.transportChannelProvider = transportChannelProvider;
-      this.endpointContextBuilder =
-          this.endpointContextBuilder.setTransportChannelProviderEndpoint(
-              this.transportChannelProvider.getEndpoint());
+      this.endpointContextBuilder.setTransportChannelProviderEndpoint(
+          this.transportChannelProvider.getEndpoint());
       return self();
     }
 
@@ -469,13 +468,13 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     @InternalApi
     public B setServiceName(String serviceName) {
       this.serviceName = serviceName;
-      this.endpointContextBuilder = this.endpointContextBuilder.setServiceName(serviceName);
+      this.endpointContextBuilder.setServiceName(serviceName);
       return self();
     }
 
     public B setUniverseDomain(String universeDomain) {
       this.universeDomain = universeDomain;
-      this.endpointContextBuilder = this.endpointContextBuilder.setUniverseDomain(universeDomain);
+      this.endpointContextBuilder.setUniverseDomain(universeDomain);
       return self();
     }
 
@@ -485,24 +484,22 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       if (this.endpoint != null && this.mtlsEndpoint == null) {
         this.mtlsEndpoint = this.endpoint.replace("googleapis.com", "mtls.googleapis.com");
       }
-      this.endpointContextBuilder =
-          this.endpointContextBuilder
-              .setClientSettingsEndpoint(endpoint)
-              .setSwitchToMtlsEndpointAllowed(false)
-              .setMtlsEndpoint(this.mtlsEndpoint);
+      this.endpointContextBuilder
+          .setClientSettingsEndpoint(endpoint)
+          .setSwitchToMtlsEndpointAllowed(false)
+          .setMtlsEndpoint(this.mtlsEndpoint);
       return self();
     }
 
     protected B setSwitchToMtlsEndpointAllowed(boolean switchToMtlsEndpointAllowed) {
       this.switchToMtlsEndpointAllowed = switchToMtlsEndpointAllowed;
-      this.endpointContextBuilder =
-          this.endpointContextBuilder.setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed);
+      this.endpointContextBuilder.setSwitchToMtlsEndpointAllowed(switchToMtlsEndpointAllowed);
       return self();
     }
 
     public B setMtlsEndpoint(String mtlsEndpoint) {
       this.mtlsEndpoint = mtlsEndpoint;
-      this.endpointContextBuilder = this.endpointContextBuilder.setMtlsEndpoint(mtlsEndpoint);
+      this.endpointContextBuilder.setMtlsEndpoint(mtlsEndpoint);
       return self();
     }
 
