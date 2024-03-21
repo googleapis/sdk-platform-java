@@ -13,87 +13,33 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import click
 import library_generation.utilities as util
 import os
 from library_generation.generate_composed_library import generate_composed_library
+from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.generation_config import from_yaml
+from library_generation.model.library_config import LibraryConfig
 from library_generation.utils.monorepo_postprocessor import monorepo_postprocessing
-
-
-@click.group(invoke_without_command=False)
-@click.pass_context
-@click.version_option(message="%(version)s")
-def main(ctx):
-    pass
-
-
-@main.command()
-@click.option(
-    "--generation-config-yaml",
-    required=True,
-    type=str,
-    help="""
-    Path to generation_config.yaml that contains the metadata about
-    library generation
-    """,
-)
-@click.option(
-    "--target-library-api-shortname",
-    required=False,
-    type=str,
-    help="""
-    If specified, only the `library` whose api_shortname equals to
-    target-library-api-shortname will be generated.
-    If not specified, all libraries in the configuration yaml will be generated.
-    """,
-)
-@click.option(
-    "--repository-path",
-    required=False,
-    default=".",
-    type=str,
-    help="""
-    If specified, the generated files will be sent to this location.
-    If not specified, the repository will be generated to the current working
-    directory.
-    """,
-)
-def generate(
-    generation_config_yaml: str,
-    target_library_api_shortname: str,
-    repository_path: str,
-):
-    generate_from_yaml(
-        generation_config_yaml=generation_config_yaml,
-        repository_path=repository_path,
-        target_library_api_shortname=target_library_api_shortname,
-    )
 
 
 def generate_from_yaml(
     generation_config_yaml: str,
     repository_path: str,
-    target_library_api_shortname: str = None,
+    target_library_names: list[str] = None,
 ) -> None:
     """
     Parses a config yaml and generates libraries via
     generate_composed_library.py
     """
-    # convert paths to absolute paths so they can be correctly referenced in
+    # convert paths to absolute paths, so they can be correctly referenced in
     # downstream scripts
     generation_config_yaml = os.path.abspath(generation_config_yaml)
     repository_path = os.path.abspath(repository_path)
 
     config = from_yaml(generation_config_yaml)
-    target_libraries = config.libraries
-    if target_library_api_shortname is not None:
-        target_libraries = [
-            library
-            for library in config.libraries
-            if library.api_shortname == target_library_api_shortname
-        ]
-
+    target_libraries = __get_target_libraries(
+        config=config, target_library_names=target_library_names
+    )
     repo_config = util.prepare_repo(
         gen_config=config, library_config=target_libraries, repo_path=repository_path
     )
@@ -118,5 +64,21 @@ def generate_from_yaml(
     )
 
 
-if __name__ == "__main__":
-    main()
+def __get_target_libraries(
+    config: GenerationConfig, target_library_names: list[str] = None
+) -> list[LibraryConfig]:
+    """
+    Returns LibraryConfig objects whose library_name is in target_library_names.
+
+    :param config: a GenerationConfig object.
+    :param target_library_names: library_name of target libraries.
+    :return:
+    """
+    if target_library_names is None:
+        return config.libraries
+    target_libraries = set(target_library_names)
+    return [
+        library
+        for library in config.libraries
+        if library.get_library_name() in target_libraries
+    ]
