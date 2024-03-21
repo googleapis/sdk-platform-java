@@ -161,8 +161,11 @@ public abstract class ClientContext {
 
     Credentials credentials = settings.getCredentialsProvider().getCredentials();
     boolean usingGDCH = credentials instanceof GdchCredentials;
-    // Client can determine if the GDC-H is being used via the Credentials. The Credentials object
-    // is resolved here and must be set to the EndpointContext.
+    // Add two additional fields to the EndpointContext: 1. ServiceName and 2. usingGDCH field.
+    // The serviceName is overwritten in the child subclasses (GAPIC libraries will override the
+    // default StubSettings' serviceName). Client can determine if the GDC-H is being used via the
+    // Credentials. The Credentials object is resolved here and must be passed to the
+    // EndpointContext.
     EndpointContext endpointContext =
         settings
             .getEndpointContext()
