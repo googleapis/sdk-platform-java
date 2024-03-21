@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-import ast
 import click
 from library_generation.generate_repo import generate_from_yaml
 
@@ -21,15 +20,6 @@ from library_generation.generate_repo import generate_from_yaml
 @click.version_option(message="%(version)s")
 def main(ctx):
     pass
-
-
-# https://stackoverflow.com/questions/47631914/how-to-pass-several-list-of-arguments-to-click-option
-class PythonLiteralOption(click.Option):
-    def type_cast_value(self, ctx, value):
-        try:
-            return ast.literal_eval(value)
-        except:
-            raise click.BadParameter(value)
 
 
 @main.command()
@@ -44,11 +34,16 @@ class PythonLiteralOption(click.Option):
 )
 @click.option(
     "--target-library-names",
-    cls=PythonLiteralOption,
     required=False,
     default=None,
-    type=list[str],
+    type=str,
     help="""
+    The input string will be parsed to a list of string with comma as the
+    separator.
+    
+    For example, apigeeconnect,alloydb-connectors will be parsed as a
+    list of two strings, apigeeconnect and alloydb-connectors.
+    
     If specified, only the `library` whose library_name is in
     target-library-names will be generated.
     If not specified, all libraries in the configuration yaml will be generated.
@@ -67,13 +62,15 @@ class PythonLiteralOption(click.Option):
 )
 def generate(
     generation_config_yaml: str,
-    target_library_names: list[str],
+    target_library_names: str,
     repository_path: str,
 ):
     generate_from_yaml(
         generation_config_yaml=generation_config_yaml,
         repository_path=repository_path,
-        target_library_names=target_library_names,
+        target_library_names=target_library_names.split(",")
+        if target_library_names is not None
+        else target_library_names,
     )
 
 
