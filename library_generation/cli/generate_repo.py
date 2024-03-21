@@ -38,15 +38,17 @@ def main(ctx):
     default=None,
     type=str,
     help="""
+    A list of libraries will be generated.
+    
+    If specified, only the `library` whose library_name is in
+    target-library-names will be generated.
+    If not specified, all libraries in the configuration yaml will be generated.
+    
     The input string will be parsed to a list of string with comma as the
     separator.
     
     For example, apigeeconnect,alloydb-connectors will be parsed as a
     list of two strings, apigeeconnect and alloydb-connectors.
-    
-    If specified, only the `library` whose library_name is in
-    target-library-names will be generated.
-    If not specified, all libraries in the configuration yaml will be generated.
     """,
 )
 @click.option(
