@@ -56,7 +56,7 @@ public class Writer {
       List<ReflectConfig> reflectConfigInfo,
       String outputFilePath,
       JarOutputStream jos,
-      ByteString.Output output) {
+      ByteString.Output output) throws IOException {
     JavaWriterVisitor codeWriter = new JavaWriterVisitor();
 
     for (GapicClass gapicClazz : clazzes) {
@@ -72,12 +72,8 @@ public class Writer {
       writeReflectConfigFile(gapicPackageInfo.packageInfo().pakkage(), reflectConfigInfo, jos);
     }
 
-    try {
-      jos.finish();
-      jos.flush();
-    } catch (IOException e) {
-      throw new GapicWriterException(e.getMessage(), e);
-    }
+    jos.finish();
+    jos.flush();
 
     CodeGeneratorResponse.Builder response = CodeGeneratorResponse.newBuilder();
     response
