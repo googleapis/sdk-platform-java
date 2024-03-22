@@ -72,6 +72,13 @@ public class Writer {
       writeReflectConfigFile(gapicPackageInfo.packageInfo().pakkage(), reflectConfigInfo, jos);
     }
 
+    try {
+      jos.finish();
+      jos.flush();
+    } catch (IOException e) {
+      throw new GapicWriterException(e.getMessage(), e);
+    }
+
     CodeGeneratorResponse.Builder response = CodeGeneratorResponse.newBuilder();
     response
         .setSupportedFeatures(CodeGeneratorResponse.Feature.FEATURE_PROTO3_OPTIONAL_VALUE)
