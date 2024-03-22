@@ -56,7 +56,8 @@ public class Writer {
       List<ReflectConfig> reflectConfigInfo,
       String outputFilePath,
       JarOutputStream jos,
-      ByteString.Output output) throws IOException {
+      ByteString.Output output)
+      throws IOException {
     JavaWriterVisitor codeWriter = new JavaWriterVisitor();
 
     for (GapicClass gapicClazz : clazzes) {
