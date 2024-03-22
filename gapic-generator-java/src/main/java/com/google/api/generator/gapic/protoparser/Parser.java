@@ -1145,9 +1145,9 @@ public class Parser {
       return "";
     }
     return processedJavaPackageCount.entrySet().stream()
-            .max(Map.Entry.comparingByValue())
-            .get()
-            .getKey();
+        .max(Map.Entry.comparingByValue())
+        .get()
+        .getKey();
   }
 
   /**
