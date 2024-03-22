@@ -1140,14 +1140,11 @@ public class Parser {
       processedJavaPackageCount = javaPackageCount;
     }
 
-    String finalJavaPackage = "";
-    if (!processedJavaPackageCount.isEmpty()) {
-      finalJavaPackage =
-          processedJavaPackageCount.entrySet().stream()
-              .max(Map.Entry.comparingByValue())
-              .get()
-              .getKey();
-    }
+    String finalJavaPackage =
+        processedJavaPackageCount.entrySet().stream()
+            .max(Map.Entry.comparingByValue())
+            .get()
+            .getKey();
     if (!Strings.isNullOrEmpty(finalJavaPackage)) {
       LOGGER.warning("No service Java package found");
     }
