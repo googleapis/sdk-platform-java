@@ -2,6 +2,7 @@ package com.google.api.generator.gapic.protowriter;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
@@ -142,5 +143,25 @@ public class WriterTest {
     jarOutputStream.finish();
     jarOutputStream.flush();
     jarOutputStream.close();
+  }
+
+  @Test
+  public void productionWrite_emptyGapicContext_succeeds() throws IOException {
+    // This is a special case test to confirm the production function work as expected.
+    // We don't need the outputstream
+    jarOutputStream.close();
+
+    Exception unexpected = null;
+    try {
+      Writer.write(
+          GapicContext.empty(),
+          ImmutableList.of(GapicClass.createNonGeneratedGapicClass()),
+          GapicPackageInfo.with(PackageInfoDefinition.builder().setPakkage("com.test").build()),
+          Collections.emptyList(),
+          "temp-codegen.srcjar");
+    } catch (Exception ex) {
+      unexpected = ex;
+    }
+    assertNull(unexpected);
   }
 }
