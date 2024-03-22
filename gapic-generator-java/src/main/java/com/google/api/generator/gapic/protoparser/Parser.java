@@ -79,6 +79,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -1140,14 +1141,16 @@ public class Parser {
       processedJavaPackageCount = javaPackageCount;
     }
 
-    if (processedJavaPackageCount.isEmpty()) {
-      LOGGER.warning("No service Java package found");
-      return "";
+    String finalJavaPackage = "";
+    Optional<Entry<String, Integer>> finalPackageEntry =
+        processedJavaPackageCount.entrySet().stream().max(Map.Entry.comparingByValue());
+    if (finalPackageEntry.isPresent()) {
+      finalJavaPackage = finalPackageEntry.get().getKey();
     }
-    return processedJavaPackageCount.entrySet().stream()
-        .max(Map.Entry.comparingByValue())
-        .get()
-        .getKey();
+    if (Strings.isNullOrEmpty(finalJavaPackage)) {
+      LOGGER.warning("No service Java package found");
+    }
+    return finalJavaPackage;
   }
 
   /**
