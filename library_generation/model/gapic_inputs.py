@@ -54,6 +54,7 @@ class GapicInputs:
 
     def __init__(
         self,
+        proto_only="true",
         additional_protos="google/cloud/common_resources.proto",
         transport="",
         rest_numeric_enum="",
@@ -62,6 +63,7 @@ class GapicInputs:
         service_yaml="",
         include_samples="true",
     ):
+        self.proto_only = proto_only
         self.additional_protos = additional_protos
         self.transport = transport
         self.rest_numeric_enum = rest_numeric_enum
@@ -110,6 +112,7 @@ def parse(
     service_yaml = __parse_service_yaml(gapic_target[0], versioned_path)
 
     return GapicInputs(
+        proto_only="false",
         additional_protos=additional_protos,
         transport=transport,
         rest_numeric_enum=rest_numeric_enum,
