@@ -37,7 +37,7 @@ def generate_from_yaml(
     repository_path = os.path.abspath(repository_path)
 
     config = from_yaml(generation_config_yaml)
-    target_libraries = __get_target_libraries(
+    target_libraries = get_target_libraries(
         config=config, target_library_names=target_library_names
     )
     repo_config = util.prepare_repo(
@@ -64,7 +64,7 @@ def generate_from_yaml(
     )
 
 
-def __get_target_libraries(
+def get_target_libraries(
     config: GenerationConfig, target_library_names: list[str] = None
 ) -> list[LibraryConfig]:
     """
