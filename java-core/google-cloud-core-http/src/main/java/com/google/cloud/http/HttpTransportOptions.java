@@ -42,6 +42,7 @@ import java.util.Objects;
 public class HttpTransportOptions implements TransportOptions {
 
   private static final long serialVersionUID = 7890117765045419810L;
+  private static final String GOOGLE_CLOUD_UNIVERSE_DOMAIN = "GOOGLE_CLOUD_UNIVERSE_DOMAIN";
   private final int connectTimeout;
   private final int readTimeout;
   private final String httpTransportFactoryClassName;
@@ -153,9 +154,31 @@ public class HttpTransportOptions implements TransportOptions {
         serviceOptions.getMergedHeaderProvider(internalHeaderProvider);
 
     return new HttpRequestInitializer() {
+
+      private String determineUniverseDomain() {
+        String universeDomain = serviceOptions.getUniverseDomain();
+        if (universeDomain == null) {
+          universeDomain = System.getenv(GOOGLE_CLOUD_UNIVERSE_DOMAIN);
+        }
+        return universeDomain == null ? Credentials.GOOGLE_DEFAULT_UNIVERSE : universeDomain;
+      }
+
       @Override
       public void initialize(HttpRequest httpRequest) throws IOException {
         if (delegate != null) {
+          // delegate is always HttpCredentialsAdapter or null
+          HttpCredentialsAdapter httpCredentialsAdapter = (HttpCredentialsAdapter) delegate;
+          String credentialsUniverseDomain =
+              httpCredentialsAdapter.getCredentials().getUniverseDomain();
+          String configuredUniverseDomain = determineUniverseDomain();
+          if (!configuredUniverseDomain.equals(credentialsUniverseDomain)) {
+            throw new IllegalStateException(
+                String.format(
+                    "The configured universe domain (%s) does not match the universe domain found"
+                        + " in the credentials (%s). If you haven't configured the universe domain"
+                        + " explicitly, `googleapis.com` is the default.",
+                    configuredUniverseDomain, credentialsUniverseDomain));
+          }
           delegate.initialize(httpRequest);
         }
         if (connectTimeout >= 0) {
