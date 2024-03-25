@@ -155,8 +155,6 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
    * GAPICs will override this implementation with the correct serviceName. This implementation is
    * for other use cases (i.e Testing) which may set the ServiceName directly to the StubSettings
    * and not the overridden implementation (i.e. FakeStubSettings)
-   *
-   * @return Returns the configured serviceName or empty string ("") if not configured.
    */
   @InternalApi
   public String getServiceName() {
@@ -250,7 +248,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     private HeaderProvider internalHeaderProvider;
     private TransportChannelProvider transportChannelProvider;
     private ApiClock clock;
-    @Nonnull private String serviceName;
+    @Nullable private String serviceName;
     private String endpoint;
     private String mtlsEndpoint;
     private String quotaProjectId;
@@ -317,7 +315,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.headerProvider = new NoHeaderProvider();
         this.internalHeaderProvider = new NoHeaderProvider();
         this.clock = NanoClock.getDefaultClock();
-        this.serviceName = "";
+        this.serviceName = null;
         this.endpoint = null;
         this.mtlsEndpoint = null;
         this.quotaProjectId = null;
