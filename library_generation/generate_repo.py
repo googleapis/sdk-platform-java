@@ -144,7 +144,8 @@ def get_target_libraries(
 
     :param config: a GenerationConfig object.
     :param target_library_names: library_name of target libraries.
-    :return:
+    If not specified, all libraries in the given config will be returned.
+    :return: LibraryConfig objects.
     """
     if target_library_names is None:
         return config.libraries
