@@ -798,8 +798,7 @@ public class ClientContextTest {
     Credentials creds = getMockGdchCredentials();
 
     CredentialsProvider provider = FixedCredentialsProvider.create(creds);
-    StubSettings settings =
-        new FakeStubSettings.Builder().setGdchApiAudience(null).setServiceName("test").build();
+    StubSettings settings = new FakeStubSettings.Builder().setGdchApiAudience(null).build();
     FakeClientSettings.Builder clientSettingsBuilder = new FakeClientSettings.Builder(settings);
     clientSettingsBuilder.setCredentialsProvider(provider);
     clientSettingsBuilder.setTransportChannelProvider(transportChannelProvider);

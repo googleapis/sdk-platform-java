@@ -100,10 +100,6 @@ public abstract class ClientContext {
   @Nonnull
   public abstract Duration getStreamWatchdogCheckInterval();
 
-  // Package-Private scope for internal use only. Shared between StubSettings and ClientContext
-  @Nullable
-  abstract String getServiceName();
-
   @Nullable
   public abstract String getUniverseDomain();
 
@@ -161,18 +157,11 @@ public abstract class ClientContext {
 
     Credentials credentials = settings.getCredentialsProvider().getCredentials();
     boolean usingGDCH = credentials instanceof GdchCredentials;
-    // Add two additional fields to the EndpointContext: 1. ServiceName and 2. usingGDCH field.
-    // The serviceName is overwritten in the child subclasses (GAPIC libraries will override the
-    // default StubSettings' serviceName). Client can determine if the GDC-H is being used via the
-    // Credentials. The Credentials object is resolved here and must be passed to the
-    // EndpointContext.
+    // Add field to the EndpointContext `usingGDCH` field. Client can determine if the
+    // GDC-H is being used via the Credentials. The Credentials object is resolved here
+    // and must be passed to the EndpointContext.
     EndpointContext endpointContext =
-        settings
-            .getEndpointContext()
-            .toBuilder()
-            .setServiceName(settings.getServiceName())
-            .setUsingGDCH(usingGDCH)
-            .build();
+        settings.getEndpointContext().toBuilder().setUsingGDCH(usingGDCH).build();
     String endpoint = endpointContext.resolvedEndpoint();
 
     String settingsGdchApiAudience = settings.getGdchApiAudience();
@@ -271,8 +260,7 @@ public abstract class ClientContext {
         .setInternalHeaders(ImmutableMap.copyOf(settings.getInternalHeaderProvider().getHeaders()))
         .setClock(clock)
         .setDefaultCallContext(defaultCallContext)
-        .setServiceName(settings.getServiceName())
-        .setUniverseDomain(settings.getUniverseDomain())
+        .setUniverseDomain(endpointContext.universeDomain())
         .setEndpoint(settings.getEndpoint())
         .setQuotaProjectId(settings.getQuotaProjectId())
         .setStreamWatchdog(watchdog)
@@ -337,9 +325,6 @@ public abstract class ClientContext {
     public abstract Builder setClock(ApiClock clock);
 
     public abstract Builder setDefaultCallContext(ApiCallContext defaultCallContext);
-
-    // Package-Private scope for internal use only. Shared between StubSettings and ClientContext
-    abstract Builder setServiceName(String serviceName);
 
     public abstract Builder setUniverseDomain(String universeDomain);
 

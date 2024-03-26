@@ -19,16 +19,55 @@ import org.junit.Test;
  */
 public class ITEndpointContext {
 
+  private static class ExtendedEchoStubSettings extends EchoStubSettings {
+
+    protected ExtendedEchoStubSettings(Builder settingsBuilder) throws IOException {
+      super(settingsBuilder);
+    }
+
+    @Override
+    public String getServiceName() {
+      return "test";
+    }
+
+    public static ExtendedEchoStubSettings.Builder newBuilder() {
+      return ExtendedEchoStubSettings.Builder.createDefault();
+    }
+
+    public static class Builder extends EchoStubSettings.Builder {
+
+      protected Builder(ClientContext clientContext) {
+        super(clientContext);
+      }
+
+      private static ExtendedEchoStubSettings.Builder createDefault() {
+        Builder builder = new Builder(((ClientContext) null));
+        builder.setTransportChannelProvider(defaultTransportChannelProvider());
+        builder.setCredentialsProvider(defaultCredentialsProviderBuilder().build());
+        builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
+        builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
+        builder.setSwitchToMtlsEndpointAllowed(true);
+
+        return builder;
+      }
+
+      @Override
+      public ExtendedEchoStubSettings build() throws IOException {
+        return new ExtendedEchoStubSettings(this);
+      }
+    }
+  }
+
   /**
    * Inside the test cases below, we must explicitly configure serviceName. Normally this should not
    * be configured by the user at all, but showcase clients do not have a serviceName. The
    * ExtendSettings wrapper will set the ServiceName via an _enhanced_ ClientSettings.
    *
-   * <p>Without this ClientSettings wrapper, we must set this explicitly via {@link
-   * com.google.api.gax.rpc.StubSettings.Builder#setServiceName(String)} and pass the StubSettings
-   * to the client. However, this will result in a null ClientSettings (See {@link
-   * EchoClient#create(EchoStub)}). Passing the stub to the Client will result in a NPE when doing
-   * `Client.getSettings().get(Endpoint|UniverseDomain)` as the ClientSettings is stored as null.
+   * <p>Without this ClientSettings wrapper, we must expose a serviceName setter to StubSettings and
+   * pass the StubSettings to the client. However, this will result in a null ClientSettings (See
+   * {@link EchoClient#create(EchoStub)}). Passing the stub to the Client will result in a NPE when
+   * doing `Client.getSettings().get(Endpoint|UniverseDomain)` as the ClientSettings is stored as
+   * null.
    */
   private static class ExtendedEchoSettings extends EchoSettings {
 
@@ -44,8 +83,7 @@ public class ITEndpointContext {
       protected Builder() throws IOException {}
 
       private static ExtendedEchoSettings.Builder createDefault() {
-        return new ExtendedEchoSettings.Builder(
-            EchoStubSettings.newBuilder().setServiceName("test"));
+        return new ExtendedEchoSettings.Builder(ExtendedEchoStubSettings.newBuilder());
       }
 
       protected Builder(ClientContext clientContext) {
@@ -56,7 +94,7 @@ public class ITEndpointContext {
         super(settings);
       }
 
-      protected Builder(EchoStubSettings.Builder stubSettings) {
+      protected Builder(ExtendedEchoStubSettings.Builder stubSettings) {
         super(stubSettings);
       }
     }

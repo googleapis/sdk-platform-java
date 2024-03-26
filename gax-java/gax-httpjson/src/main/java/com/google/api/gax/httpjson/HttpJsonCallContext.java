@@ -274,11 +274,6 @@ public final class HttpJsonCallContext implements ApiCallContext {
   }
 
   @Override
-  public EndpointContext getEndpointContext() {
-    return endpointContext;
-  }
-
-  @Override
   public HttpJsonCallContext withTimeout(Duration timeout) {
     // Default RetrySettings use 0 for RPC timeout. Treat that as disabled timeouts.
     if (timeout != null && (timeout.isZero() || timeout.isNegative())) {
