@@ -79,8 +79,48 @@ class ConfigChangeTest(unittest.TestCase):
             config_change.get_changed_libraries(),
         )
 
+    def test_get_changed_libraries_with_mix_changes_returns_list(self):
+        config_change = ConfigChange(
+            change_to_libraries={
+                ChangeType.GOOGLEAPIS_COMMIT: [],
+                ChangeType.LIBRARY_LEVEL_CHANGE: [
+                    LibraryChange(
+                        changed_param="test",
+                        latest_value="test",
+                        library_name="a-library",
+                    )
+                ],
+                ChangeType.LIBRARIES_ADDITION: [
+                    LibraryChange(
+                        changed_param="test",
+                        latest_value="test",
+                        library_name="new-library",
+                    ),
+                ],
+            },
+            baseline_config=ConfigChangeTest.__get_a_gen_config(
+                googleapis_commitish="277145d108819fa30fbed3a7cbbb50f91eb6155e"
+            ),
+            latest_config=ConfigChangeTest.__get_a_gen_config(
+                googleapis_commitish="8984ddb508dea0e673b724c58338e810b1d8aee3",
+                libraries=[
+                    ConfigChangeTest.__get_a_library_config(
+                        library_name="gke-backup",
+                        gapic_configs=[
+                            GapicConfig(proto_path="google/cloud/gkebackup/v1")
+                        ],
+                    ),
+                ],
+            ),
+        )
+
+        self.assertEqual(
+            ["a-library", "gke-backup", "new-library"],
+            sorted(config_change.get_changed_libraries()),
+        )
+
     def test_get_qualified_commits_success(self):
-        config_config = ConfigChange(
+        config_change = ConfigChange(
             change_to_libraries={},
             baseline_config=ConfigChangeTest.__get_a_gen_config(
                 googleapis_commitish="277145d108819fa30fbed3a7cbbb50f91eb6155e"
@@ -112,7 +152,7 @@ class ConfigChangeTest(unittest.TestCase):
                 ],
             ),
         )
-        qualified_commits = config_config.get_qualified_commits()
+        qualified_commits = config_change.get_qualified_commits()
         self.assertEqual(3, len(qualified_commits))
         self.assertEqual({"gke-backup"}, qualified_commits[0].libraries)
         self.assertEqual(
@@ -129,6 +169,26 @@ class ConfigChangeTest(unittest.TestCase):
             "efad09c9f0d46ae0786d810a88024363e06c6ca3",
             qualified_commits[2].commit.hexsha,
         )
+
+    def test_get_qualified_commits_build_only_commit_returns_none(self):
+        config_change = ConfigChange(
+            change_to_libraries={},
+            baseline_config=ConfigChangeTest.__get_a_gen_config(
+                googleapis_commitish="bdda0174f68a738518ec311e05e6fd9bbe19cd78"
+            ),
+            latest_config=ConfigChangeTest.__get_a_gen_config(
+                googleapis_commitish="c9a5050ef225b0011603e1109cf53ab1de0a8e53",
+                libraries=[
+                    ConfigChangeTest.__get_a_library_config(
+                        library_name="chat",
+                        gapic_configs=[GapicConfig(proto_path="google/chat/v1")],
+                    )
+                ],
+            ),
+        )
+        # one commit between c9a5050 (latest) and c9a5050 (baseline) which only
+        # changed BUILD.bazel.
+        self.assertTrue(len(config_change.get_qualified_commits()) == 0)
 
     @staticmethod
     def __get_a_gen_config(
