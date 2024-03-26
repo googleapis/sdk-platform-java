@@ -157,10 +157,11 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   }
 
   /**
-   * Marked with Internal Api as it's meant to be shared between StubSettings and ClientContext.
-   * GAPICs will override this implementation with the correct serviceName. This implementation is
-   * for other use cases (i.e Testing) which may set the ServiceName directly to the StubSettings
-   * and not the overridden implementation (i.e. FakeStubSettings)
+   * Marked with Internal Api and meant to overriden by the generated subclasses. This getter is used
+   * to set the serviceName to the EndpointContext. The value in generated StubSettings subclasses
+   * comes from the proto files.
+   *
+   * <p>This should be effectively treated as an abstract method.
    */
   @InternalApi
   public String getServiceName() {
