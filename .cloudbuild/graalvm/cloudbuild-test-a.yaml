@@ -29,5 +29,6 @@ steps:
     args: [ './.kokoro/presubmit/downstream-build.sh' ]
     waitFor: [ "graalvm-a-build" ]
     env:
-      - 'MODULES_UNDER_TEST=java-kms'
-      - 'GOOGLE_CLOUD_PROJECT=cloud-java-ci-test'
+      - 'MODULES_UNDER_TEST=java-os-login'
+      - 'GOOGLE_CLOUD_PROJECT=mpeddada-test'
+      - 'GOOGLE_APPLICATION_CREDENTIALS=secret_manager/cloud-java-ci-it-service-account'

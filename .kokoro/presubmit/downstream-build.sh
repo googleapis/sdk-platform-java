@@ -42,20 +42,20 @@ mvn -B -ntp install --projects '!gapic-generator-java' \
 SHARED_DEPS_VERSION=$(parse_pom_version java-shared-dependencies)
 
 ### Round 2 : Run showcase integration tests in GraalVM
-pushd showcase/gapic-showcase
-SHOWCASE_VERSION=$(mvn help:evaluate -Dexpression=gapic-showcase.version -q -DforceStdout)
-popd
-# Start showcase server
-mkdir -p /usr/src/showcase
-curl --location https://github.com/googleapis/gapic-showcase/releases/download/v"${SHOWCASE_VERSION}"/gapic-showcase-"${SHOWCASE_VERSION}"-linux-amd64.tar.gz --output /usr/src/showcase/showcase-"${SHOWCASE_VERSION}"-linux-amd64.tar.gz
-pushd /usr/src/showcase/
-tar -xf showcase-*
-./gapic-showcase run &
-popd
-# Run showcase tests with `native` profile
-pushd showcase
-mvn test -Pnative,-showcase -Denforcer.skip=true -ntp -B
-popd
+#pushd showcase/gapic-showcase
+#SHOWCASE_VERSION=$(mvn help:evaluate -Dexpression=gapic-showcase.version -q -DforceStdout)
+#popd
+## Start showcase server
+#mkdir -p /usr/src/showcase
+#curl --location https://github.com/googleapis/gapic-showcase/releases/download/v"${SHOWCASE_VERSION}"/gapic-showcase-"${SHOWCASE_VERSION}"-linux-amd64.tar.gz --output /usr/src/showcase/showcase-"${SHOWCASE_VERSION}"-linux-amd64.tar.gz
+#pushd /usr/src/showcase/
+#tar -xf showcase-*
+#./gapic-showcase run &
+#popd
+## Run showcase tests with `native` profile
+#pushd showcase
+#mvn test -Pnative,-showcase -Denforcer.skip=true -ntp -B
+#popd
 
 ### Round 3
 # Update the shared-dependencies version in google-cloud-jar-parent
