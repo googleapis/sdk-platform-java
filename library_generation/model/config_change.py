@@ -11,11 +11,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import os
+import shutil
 from enum import Enum
 from typing import Optional
-from git import Commit
+from git import Commit, Repo
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
+from library_generation.utils.proto_path_utils import find_versioned_proto_path
+from library_generation.utils.proto_path_utils import get_proto_paths
 
 
 class ChangeType(Enum):
@@ -77,24 +81,64 @@ class ConfigChange:
         library_names = []
         for change_type, library_changes in self.change_to_libraries.items():
             if change_type == ChangeType.GOOGLEAPIS_COMMIT:
-                library_names.extend(
-                    self.__get_changed_libraries_in_googleapis_commit()
-                )
+                library_names.extend(self.__get_library_name_from_qualified_commits())
             else:
                 library_names.extend(
                     [library_change.library_name for library_change in library_changes]
                 )
         return library_names
 
-    def get_qualified_commits(self) -> list[QualifiedCommit]:
-        pass
+    def get_qualified_commits(
+        self,
+        repo_url: str = "https://github.com/googleapis/googleapis.git",
+    ) -> list[QualifiedCommit]:
+        """
+        Returns qualified commits from configuration change.
 
-    def __get_changed_libraries_in_googleapis_commit(self) -> list[str]:
-        pass
+        A qualified commit is a commit that changes at least one file (excluding
+        BUILD.bazel) within a versioned proto path in the given proto_paths.
+        :param repo_url: the repository contains the commit history.
+        :return: QualifiedCommit objects.
+        """
+        tmp_dir = "/tmp/repo"
+        shutil.rmtree(tmp_dir, ignore_errors=True)
+        os.mkdir(tmp_dir)
+        # we only need commit history, thus shadow clone is enough.
+        repo = Repo.clone_from(url=repo_url, to_path=tmp_dir, filter=["blob:none"])
+        commit = repo.commit(self.latest_config.googleapis_commitish)
+        proto_paths = get_proto_paths(self.latest_config)
+        qualified_commits = []
+        while str(commit.hexsha) != self.baseline_config.googleapis_commitish:
+            qualified_commit = ConfigChange.__create_qualified_commit(
+                proto_paths=proto_paths, commit=commit
+            )
+            if qualified_commit is not None:
+                qualified_commits.append(qualified_commit)
+            commit_parents = commit.parents
+            if len(commit_parents) == 0:
+                break
+            commit = commit_parents[0]
+        shutil.rmtree(tmp_dir, ignore_errors=True)
+        return qualified_commits
 
+    def __get_library_name_from_qualified_commits(self) -> list[str]:
+        qualified_commits = self.get_qualified_commits()
+        library_names = []
+        for qualified_commit in qualified_commits:
+            library_names.extend(qualified_commit.libraries)
+        return library_names
+
+    @staticmethod
     def __create_qualified_commit(
-        self, proto_paths: dict[str, str], commit: Commit
+        proto_paths: dict[str, str], commit: Commit
     ) -> Optional[QualifiedCommit]:
+        """
+        Returns a qualified commit from the given Commit object; otherwise None.
+
+        :param proto_paths:
+        :param commit:
+        :return:
+        """
         libraries = []
         for file in commit.stats.files.keys():
             if file.endswith("BUILD.bazel"):
@@ -105,8 +149,6 @@ class ConfigChange:
                 # library, we don't want to miss generating a
                 # library because the commit may change multiple
                 # libraries.
-                # Therefore, we keep a list of library_name to
-                # avoid missing changed libraries.
                 libraries.append(proto_paths[versioned_proto_path])
         if len(libraries) == 0:
             return None
