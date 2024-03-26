@@ -155,17 +155,18 @@ public abstract class ClientContext {
     ExecutorProvider backgroundExecutorProvider = settings.getBackgroundExecutorProvider();
     final ScheduledExecutorService backgroundExecutor = backgroundExecutorProvider.getExecutor();
 
-    Credentials credentials = settings.getCredentialsProvider().getCredentials();
-    boolean usingGDCH = credentials instanceof GdchCredentials;
-    // Add field to the EndpointContext `usingGDCH` field. Client can determine if the
-    // GDC-H is being used via the Credentials. The Credentials object is resolved here
-    // and must be passed to the EndpointContext.
-    EndpointContext endpointContext =
-        settings.getEndpointContext().toBuilder().setUsingGDCH(usingGDCH).build();
+    EndpointContext endpointContext = settings.getEndpointContext();
     String endpoint = endpointContext.resolvedEndpoint();
 
     String settingsGdchApiAudience = settings.getGdchApiAudience();
+    Credentials credentials = settings.getCredentialsProvider().getCredentials();
+    boolean usingGDCH = credentials instanceof GdchCredentials;
     if (usingGDCH) {
+      // Client can only determine if the GDC-H is being used via the Credentials. The Credentials
+      // object is resolved in the ClientContext and must be passed to the EndpointContext. Rebuild
+      // the endpointContext only on GDC-H flows.
+      endpointContext = endpointContext.toBuilder().setUsingGDCH(true).build();
+      endpoint = endpointContext.resolvedEndpoint();
       // We recompute the GdchCredentials with the audience
       String audienceString;
       if (!Strings.isNullOrEmpty(settingsGdchApiAudience)) {

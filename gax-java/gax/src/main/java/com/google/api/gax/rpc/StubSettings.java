@@ -110,7 +110,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     this.gdchApiAudience = builder.gdchApiAudience;
     this.universeDomain = builder.universeDomain;
     // Attempt to build the EndpointContext from the Builder based on all the
-    // user configurations passed in to the Builder.
+    // user configurations passed in.
     try {
       this.endpointContext =
           EndpointContext.newBuilder()
@@ -157,9 +157,9 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
   }
 
   /**
-   * Marked with Internal Api and meant to overriden by the generated subclasses. This getter is used
-   * to set the serviceName to the EndpointContext. The value in generated StubSettings subclasses
-   * comes from the proto files.
+   * Marked with Internal Api and meant to overriden by the generated subclasses. This getter is
+   * used to set the serviceName to the EndpointContext. The value in generated StubSettings
+   * subclasses comes from the proto files.
    *
    * <p>This should be effectively treated as an abstract method.
    */
@@ -178,7 +178,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     return endpointContext.resolvedEndpoint();
   }
 
-  // Intended for Internal Use and is the EndpointContext to be passed to all the Callables
+  /** @return the newly created EndpointContext */
   @InternalApi
   final EndpointContext getEndpointContext() {
     return endpointContext;
