@@ -93,8 +93,7 @@ class ConfigChange:
         pass
 
     def __create_qualified_commit(
-        self,
-        proto_paths: dict[str, str], commit: Commit
+        self, proto_paths: dict[str, str], commit: Commit
     ) -> Optional[QualifiedCommit]:
         libraries = []
         for file in commit.stats.files.keys():
