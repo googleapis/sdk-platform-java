@@ -170,7 +170,7 @@ class ConfigChangeTest(unittest.TestCase):
             qualified_commits[2].commit.hexsha,
         )
 
-    def test_get_qualified_commits_build_only_commit_returns_none(self):
+    def test_get_qualified_commits_build_only_commit_returns_empty_list(self):
         config_change = ConfigChange(
             change_to_libraries={},
             baseline_config=ConfigChangeTest.__get_a_gen_config(
