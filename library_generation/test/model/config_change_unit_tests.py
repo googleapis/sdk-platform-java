@@ -16,7 +16,9 @@ import unittest
 from library_generation.model.config_change import ChangeType
 from library_generation.model.config_change import ConfigChange
 from library_generation.model.config_change import LibraryChange
+from library_generation.model.gapic_config import GapicConfig
 from library_generation.model.generation_config import GenerationConfig
+from library_generation.model.library_config import LibraryConfig
 
 
 class ConfigChangeTest(unittest.TestCase):
@@ -77,16 +79,86 @@ class ConfigChangeTest(unittest.TestCase):
             config_change.get_changed_libraries(),
         )
 
+    def test_get_qualified_commits_success(self):
+        config_config = ConfigChange(
+            change_to_libraries={},
+            baseline_config=ConfigChangeTest.__get_a_gen_config(
+                googleapis_commitish="277145d108819fa30fbed3a7cbbb50f91eb6155e"
+            ),
+            latest_config=ConfigChangeTest.__get_a_gen_config(
+                googleapis_commitish="8984ddb508dea0e673b724c58338e810b1d8aee3",
+                libraries=[
+                    ConfigChangeTest.__get_a_library_config(
+                        library_name="gke-backup",
+                        gapic_configs=[
+                            GapicConfig(proto_path="google/cloud/gkebackup/v1")
+                        ],
+                    ),
+                    ConfigChangeTest.__get_a_library_config(
+                        library_name="aiplatform",
+                        gapic_configs=[
+                            GapicConfig(proto_path="google/cloud/aiplatform/v1beta1")
+                        ],
+                    ),
+                    ConfigChangeTest.__get_a_library_config(
+                        library_name="network-management",
+                        gapic_configs=[
+                            GapicConfig(proto_path="google/cloud/networkmanagement/v1"),
+                            GapicConfig(
+                                proto_path="google/cloud/networkmanagement/v1beta1"
+                            ),
+                        ],
+                    ),
+                ],
+            ),
+        )
+        qualified_commits = config_config.get_qualified_commits()
+        self.assertEqual(3, len(qualified_commits))
+        self.assertEqual({"gke-backup"}, qualified_commits[0].libraries)
+        self.assertEqual(
+            "b8691edb3f1d3c1583aa9cd89240eb359eebe9c7",
+            qualified_commits[0].commit.hexsha,
+        )
+        self.assertEqual({"aiplatform"}, qualified_commits[1].libraries)
+        self.assertEqual(
+            "b82095baef02e525bee7bb1c48911c33b66acdf0",
+            qualified_commits[1].commit.hexsha,
+        )
+        self.assertEqual({"network-management"}, qualified_commits[2].libraries)
+        self.assertEqual(
+            "efad09c9f0d46ae0786d810a88024363e06c6ca3",
+            qualified_commits[2].commit.hexsha,
+        )
+
     @staticmethod
-    def __get_a_gen_config() -> GenerationConfig:
+    def __get_a_gen_config(
+        googleapis_commitish="", libraries: list[LibraryConfig] = None
+    ) -> GenerationConfig:
+        if libraries is None:
+            libraries = []
         return GenerationConfig(
             gapic_generator_version="",
-            googleapis_commitish="",
+            googleapis_commitish=googleapis_commitish,
             owlbot_cli_image="",
             synthtool_commitish="",
             template_excludes=[],
             path_to_yaml="",
             grpc_version="",
             protobuf_version="",
-            libraries=[],
+            libraries=libraries,
+        )
+
+    @staticmethod
+    def __get_a_library_config(
+        library_name: str, gapic_configs: list[GapicConfig] = None
+    ) -> LibraryConfig:
+        if gapic_configs is None:
+            gapic_configs = []
+        return LibraryConfig(
+            api_shortname="existing_library",
+            api_description="",
+            name_pretty="",
+            product_documentation="",
+            gapic_configs=gapic_configs,
+            library_name=library_name,
         )

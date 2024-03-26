@@ -54,7 +54,7 @@ class LibraryChange:
 
 
 class QualifiedCommit:
-    def __init__(self, commit: Commit, libraries: list[str]):
+    def __init__(self, commit: Commit, libraries: set[str]):
         self.commit = commit
         self.libraries = libraries
 
@@ -139,7 +139,7 @@ class ConfigChange:
         :param commit:
         :return:
         """
-        libraries = []
+        libraries = set()
         for file in commit.stats.files.keys():
             if file.endswith("BUILD.bazel"):
                 continue
@@ -149,7 +149,7 @@ class ConfigChange:
                 # library, we don't want to miss generating a
                 # library because the commit may change multiple
                 # libraries.
-                libraries.append(proto_paths[versioned_proto_path])
+                libraries.add(proto_paths[versioned_proto_path])
         if len(libraries) == 0:
             return None
         return QualifiedCommit(commit=commit, libraries=libraries)
