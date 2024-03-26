@@ -17,7 +17,6 @@ import re
 from typing import Dict
 
 from library_generation.model.generation_config import GenerationConfig
-from library_generation.model.library_config import get_library_name
 
 
 def remove_version_from(proto_path: str) -> str:
@@ -43,7 +42,7 @@ def get_proto_paths(config: GenerationConfig) -> Dict[str, str]:
     paths = {}
     for library in config.libraries:
         for gapic_config in library.gapic_configs:
-            paths[gapic_config.proto_path] = get_library_name(library)
+            paths[gapic_config.proto_path] = library.get_library_name()
     return paths
 
 
