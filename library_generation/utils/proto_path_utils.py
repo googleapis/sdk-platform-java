@@ -13,9 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import re
-
-from typing import Dict
-
 from library_generation.model.generation_config import GenerationConfig
 
 
@@ -33,7 +30,7 @@ def remove_version_from(proto_path: str) -> str:
     return proto_path
 
 
-def get_proto_paths(config: GenerationConfig) -> Dict[str, str]:
+def get_proto_paths(config: GenerationConfig) -> dict[str, str]:
     """
     Get versioned proto_path to library_name mapping from configuration file.
     :param config: a GenerationConfig object.
