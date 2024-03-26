@@ -12,6 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from enum import Enum
+from typing import Optional
+from git import Commit
+from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
 
 
@@ -46,35 +49,66 @@ class LibraryChange:
         self.library_name = library_name
 
 
-class ConfigChange:
-    def __init__(self, change_to_libraries: dict[ChangeType, list[LibraryChange]]):
-        self.change_to_libraries = change_to_libraries
+class QualifiedCommit:
+    def __init__(self, commit: Commit, libraries: list[str]):
+        self.commit = commit
+        self.libraries = libraries
 
-    def get_changed_libraries(self):
+
+class ConfigChange:
+    def __init__(
+        self,
+        change_to_libraries: dict[ChangeType, list[LibraryChange]],
+        baseline_config: GenerationConfig,
+        latest_config: GenerationConfig,
+    ):
+        self.change_to_libraries = change_to_libraries
+        self.baseline_config = baseline_config
+        self.latest_config = latest_config
+
+    def get_changed_libraries(self) -> Optional[list[str]]:
+        """
+        Returns library name of changed libraries.
+        None if there is a repository level change.
+        :return: library names of change libraries.
+        """
+        if ChangeType.REPO_LEVEL_CHANGE in self.change_to_libraries:
+            return None
+        library_names = []
+        for change_type, library_changes in self.change_to_libraries.items():
+            if change_type == ChangeType.GOOGLEAPIS_COMMIT:
+                library_names.extend(
+                    self.__get_changed_libraries_in_googleapis_commit()
+                )
+            else:
+                library_names.extend(
+                    [library_change.library_name for library_change in library_changes]
+                )
+        return library_names
+
+    def get_qualified_commits(self) -> list[QualifiedCommit]:
         pass
 
+    def __get_changed_libraries_in_googleapis_commit(self) -> list[str]:
+        pass
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    def __create_qualified_commit(
+        self,
+        proto_paths: dict[str, str], commit: Commit
+    ) -> Optional[QualifiedCommit]:
+        libraries = []
+        for file in commit.stats.files.keys():
+            if file.endswith("BUILD.bazel"):
+                continue
+            versioned_proto_path = find_versioned_proto_path(file)
+            if versioned_proto_path in proto_paths:
+                # Even though a commit usually only changes one
+                # library, we don't want to miss generating a
+                # library because the commit may change multiple
+                # libraries.
+                # Therefore, we keep a list of library_name to
+                # avoid missing changed libraries.
+                libraries.append(proto_paths[versioned_proto_path])
+        if len(libraries) == 0:
+            return None
+        return QualifiedCommit(commit=commit, libraries=libraries)

@@ -57,7 +57,11 @@ def compare_config(
         baseline_library_configs=baseline_config.libraries,
         latest_library_configs=latest_config.libraries,
     )
-    return ConfigChange(change_to_libraries=diff)
+    return ConfigChange(
+        change_to_libraries=diff,
+        baseline_config=baseline_config,
+        latest_config=latest_config,
+    )
 
 
 def __compare_libraries(
