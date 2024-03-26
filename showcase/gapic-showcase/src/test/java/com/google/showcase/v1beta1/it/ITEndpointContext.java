@@ -16,9 +16,18 @@ import org.junit.Test;
 /**
  * This IT tests the different user configurations allowed and their effects on endpoint and
  * universe domain resolution.
+ *
+ * <p>In these tests, the client is not initialized with the default configuration:
+ * `EchoClient.create()`. For showcase tests run in CI, the client must be supplied explicitly
+ * supplied with NoCredentials.
  */
 public class ITEndpointContext {
 
+  /**
+   * Inside the test cases below, we must explicitly configure serviceName. Normally this should not
+   * be configured at all, but showcase clients do not have a serviceName. The ExtendStubSettings
+   * wrapper return the serviceName by overriding the `getServiceName()` result.
+   */
   private static class ExtendedEchoStubSettings extends EchoStubSettings {
 
     protected ExtendedEchoStubSettings(Builder settingsBuilder) throws IOException {
@@ -47,7 +56,6 @@ public class ITEndpointContext {
         builder.setInternalHeaderProvider(defaultApiClientHeaderProviderBuilder().build());
         builder.setMtlsEndpoint(getDefaultMtlsEndpoint());
         builder.setSwitchToMtlsEndpointAllowed(true);
-
         return builder;
       }
 
@@ -59,15 +67,11 @@ public class ITEndpointContext {
   }
 
   /**
-   * Inside the test cases below, we must explicitly configure serviceName. Normally this should not
-   * be configured by the user at all, but showcase clients do not have a serviceName. The
-   * ExtendSettings wrapper will set the ServiceName via an _enhanced_ ClientSettings.
-   *
-   * <p>Without this ClientSettings wrapper, we must expose a serviceName setter to StubSettings and
-   * pass the StubSettings to the client. However, this will result in a null ClientSettings (See
-   * {@link EchoClient#create(EchoStub)}). Passing the stub to the Client will result in a NPE when
-   * doing `Client.getSettings().get(Endpoint|UniverseDomain)` as the ClientSettings is stored as
-   * null.
+   * Without this ClientSettings wrapper, we must expose a serviceName setter to
+   * (Client|Stub)Settings and pass the StubSettings to the client. However, this will result in a
+   * null ClientSettings (See {@link EchoClient#create(EchoStub)}). Passing the stub to the Client
+   * will result in a NPE when doing `Client.getSettings().get(Endpoint|UniverseDomain)` as the
+   * ClientSettings is stored as null.
    */
   private static class ExtendedEchoSettings extends EchoSettings {
 
@@ -107,9 +111,6 @@ public class ITEndpointContext {
   public void endpointResolution_default() throws InterruptedException, IOException {
     EchoClient echoClient = null;
     try {
-      // This is not how a client is created by default. The default usage is EchoClient.create(),
-      // but for showcase tests run in CI, the client must be supplied explicitly supplied with
-      // NoCredentials.
       EchoSettings echoSettings =
           ExtendedEchoSettings.newBuilder()
               .setCredentialsProvider(NoCredentialsProvider.create())
