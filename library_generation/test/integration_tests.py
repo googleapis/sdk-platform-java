@@ -15,6 +15,7 @@ import json
 import os
 import shutil
 import unittest
+from click.testing import CliRunner
 from distutils.dir_util import copy_tree
 from distutils.file_util import copy_file
 from filecmp import cmp
@@ -24,8 +25,10 @@ from git import Repo
 from pathlib import Path
 from typing import List
 
-from library_generation.generate_pr_description import generate_pr_descriptions
-from library_generation.generate_repo import generate_from_yaml
+from library_generation.generate_pr_description import (
+    generate as generate_pr_descriptions,
+)
+from library_generation.generate_repo import generate as generate_repo
 from library_generation.model.generation_config import from_yaml, GenerationConfig
 from library_generation.test.compare_poms import compare_xml
 from library_generation.utilities import (
@@ -61,16 +64,18 @@ class IntegrationTest(unittest.TestCase):
                 if repo == "google-cloud-java"
                 else split_repo_baseline_commit
             )
-            description = generate_pr_descriptions(
-                generation_config_yaml=config_file,
-                repo_url=repo_url,
-                baseline_commit=baseline_commit,
-            )
-            description_file = f"{config_dir}/{repo}/pr-description.txt"
+            description_file = f"{config_dir}/{repo}/pr_description.txt"
             if os.path.isfile(f"{description_file}"):
                 os.remove(f"{description_file}")
-            with open(f"{description_file}", "w+") as f:
-                f.write(description)
+            CliRunner().invoke(
+                cli=generate_pr_descriptions,
+                args=[
+                    f"--generation-config-yaml={config_file}",
+                    f"--baseline-commit={baseline_commit}",
+                    f"--repo-url={repo_url}",
+                ],
+            )
+
             self.assertTrue(
                 cmp(
                     f"{config_dir}/{repo}/pr-description-golden.txt",
@@ -103,8 +108,12 @@ class IntegrationTest(unittest.TestCase):
                     copy_file(f"{repo_dest}/pom.xml", golden_dir)
                 else:
                     copy_tree(f"{repo_dest}", f"{golden_dir}/{library_name}")
-            generate_from_yaml(
-                generation_config_yaml=config_file, repository_path=repo_dest
+            CliRunner().invoke(
+                cli=generate_repo,
+                args=[
+                    f"--generation-config-yaml={config_file}",
+                    f"--repository-path={repo_dest}",
+                ],
             )
             # compare result
             print(
