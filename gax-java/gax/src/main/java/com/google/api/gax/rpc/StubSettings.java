@@ -290,10 +290,15 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
       this.tracerFactory = settings.tracerFactory;
       this.deprecatedExecutorProviderSet = settings.deprecatedExecutorProviderSet;
       this.gdchApiAudience = settings.gdchApiAudience;
+
+      // The follow settings will be set to the original user configurations as the
+      // EndpointContext will be rebuilt in the constructor.
       this.clientSettingsEndpoint = settings.getEndpointContext().clientSettingsEndpoint();
       this.transportChannelProviderEndpoint =
           settings.getEndpointContext().transportChannelProviderEndpoint();
       this.mtlsEndpoint = settings.getEndpointContext().mtlsEndpoint();
+      this.switchToMtlsEndpointAllowed =
+          settings.getEndpointContext().switchToMtlsEndpointAllowed();
       this.universeDomain = settings.getEndpointContext().universeDomain();
     }
 
@@ -344,18 +349,21 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.internalHeaderProvider =
             FixedHeaderProvider.create(clientContext.getInternalHeaders());
         this.clock = clientContext.getClock();
-        this.clientSettingsEndpoint = clientContext.getEndpointContext().clientSettingsEndpoint();
-        this.transportChannelProviderEndpoint =
-            clientContext.getEndpointContext().transportChannelProviderEndpoint();
-        this.mtlsEndpoint = clientContext.getEndpointContext().mtlsEndpoint();
-        this.switchToMtlsEndpointAllowed =
-            clientContext.getEndpointContext().switchToMtlsEndpointAllowed();
         this.streamWatchdogProvider =
             FixedWatchdogProvider.create(clientContext.getStreamWatchdog());
         this.streamWatchdogCheckInterval = clientContext.getStreamWatchdogCheckInterval();
         this.tracerFactory = clientContext.getTracerFactory();
         this.quotaProjectId = getQuotaProjectIdFromClientContext(clientContext);
         this.gdchApiAudience = clientContext.getGdchApiAudience();
+
+        // The follow settings will be set to the original user configurations as the
+        // EndpointContext will be rebuilt in the constructor.
+        this.clientSettingsEndpoint = clientContext.getEndpointContext().clientSettingsEndpoint();
+        this.transportChannelProviderEndpoint =
+            clientContext.getEndpointContext().transportChannelProviderEndpoint();
+        this.mtlsEndpoint = clientContext.getEndpointContext().mtlsEndpoint();
+        this.switchToMtlsEndpointAllowed =
+            clientContext.getEndpointContext().switchToMtlsEndpointAllowed();
         this.universeDomain = clientContext.getEndpointContext().universeDomain();
       }
     }
