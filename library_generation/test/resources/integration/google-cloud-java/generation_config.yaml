@@ -37,6 +37,7 @@ libraries:
     - proto_path: google/cloud/alloydb/v1beta
 
   - api_shortname: alloydb
+    # this is a proto_only library with which the gapic-generator should no-op
     name_pretty: AlloyDB connectors
     product_documentation: https://cloud.google.com/alloydb/docs
     api_description: AlloyDB is a fully-managed, PostgreSQL-compatible database for

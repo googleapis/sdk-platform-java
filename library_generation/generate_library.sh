@@ -28,10 +28,6 @@ case $key in
     grpc_version="$2"
     shift
     ;;
-  --proto_only)
-    proto_only="$2"
-    shift
-    ;;
   --gapic_additional_protos)
     gapic_additional_protos="$2"
     shift
@@ -88,10 +84,6 @@ fi
 
 if [ -z "${grpc_version}" ]; then
   grpc_version=$(get_grpc_version "${gapic_generator_version}")
-fi
-
-if [ -z "${proto_only}" ]; then
-  proto_only="false"
 fi
 
 if [ -z "${gapic_additional_protos}" ]; then
@@ -196,14 +188,19 @@ fi
 ###################### Section 2 #####################
 ## generate gapic-*/, part of proto-*/, samples/
 ######################################################
-if [[ "${proto_only}" == "false" ]]; then
-  "$protoc_path"/protoc --experimental_allow_proto3_optional \
-  "--plugin=protoc-gen-java_gapic=${script_dir}/gapic-generator-java-wrapper" \
-  "--java_gapic_out=metadata:${temp_destination_path}/java_gapic_srcjar_raw.srcjar.zip" \
-  "--java_gapic_opt=$(get_gapic_opts "${transport}" "${rest_numeric_enums}" "${gapic_yaml}" "${service_config}" "${service_yaml}")" \
-  ${proto_files} ${gapic_additional_protos}
+"$protoc_path"/protoc --experimental_allow_proto3_optional \
+"--plugin=protoc-gen-java_gapic=${script_dir}/gapic-generator-java-wrapper" \
+"--java_gapic_out=metadata:${temp_destination_path}/java_gapic_srcjar_raw.srcjar.zip" \
+"--java_gapic_opt=$(get_gapic_opts "${transport}" "${rest_numeric_enums}" "${gapic_yaml}" "${service_config}" "${service_yaml}")" \
+${proto_files} ${gapic_additional_protos}
 
-  unzip -o -q "${temp_destination_path}/java_gapic_srcjar_raw.srcjar.zip" -d "${temp_destination_path}"
+unzip -o -q "${temp_destination_path}/java_gapic_srcjar_raw.srcjar.zip" -d "${temp_destination_path}"
+
+# check if the generator produced any files into the srcjar
+did_generate_gapic="true"
+zipinfo -t "${temp_destination_path}/temp-codegen.srcjar" || did_generate_gapic="false"
+if [[ "${did_generate_gapic}" == "true" ]];
+then
   # Sync'\''d to the output file name in Writer.java.
   unzip -o -q "${temp_destination_path}/temp-codegen.srcjar" -d "${temp_destination_path}/java_gapic_srcjar"
   # Resource name source files.
@@ -247,7 +244,7 @@ case "${proto_path}" in
     ;;
 esac
 "$protoc_path"/protoc "--java_out=${temp_destination_path}/java_proto.jar" ${proto_files}
-if [[ "${proto_only}" == "false" ]]; then
+if [[ "${did_generate_gapic}" == "true" ]]; then
   # move java_gapic_srcjar/proto/src/main/java (generated resource name helper class)
   # to proto-*/src/main
   mv_src_files "proto" "main" "${temp_destination_path}"
