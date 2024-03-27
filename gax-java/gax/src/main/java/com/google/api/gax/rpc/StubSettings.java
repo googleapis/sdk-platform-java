@@ -106,24 +106,25 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
     this.endpointContext = buildEndpointContext(builder);
   }
 
+  /**
+   * Attempt to build the EndpointContext from the Builder based on all the user configurations
+   * passed in.
+   *
+   * @throws RuntimeException if there is an issue building the EndpointContext
+   */
   private EndpointContext buildEndpointContext(Builder builder) {
-    EndpointContext endpointContext;
-    // Attempt to build the EndpointContext from the Builder based on all the
-    // user configurations passed in.
     try {
-      endpointContext =
-          EndpointContext.newBuilder()
-              .setServiceName(getServiceName())
-              .setClientSettingsEndpoint(builder.clientSettingsEndpoint)
-              .setTransportChannelProviderEndpoint(builder.transportChannelProviderEndpoint)
-              .setMtlsEndpoint(builder.mtlsEndpoint)
-              .setSwitchToMtlsEndpointAllowed(builder.switchToMtlsEndpointAllowed)
-              .setUniverseDomain(builder.universeDomain)
-              .build();
+      return EndpointContext.newBuilder()
+          .setServiceName(getServiceName())
+          .setClientSettingsEndpoint(builder.clientSettingsEndpoint)
+          .setTransportChannelProviderEndpoint(builder.transportChannelProviderEndpoint)
+          .setMtlsEndpoint(builder.mtlsEndpoint)
+          .setSwitchToMtlsEndpointAllowed(builder.switchToMtlsEndpointAllowed)
+          .setUniverseDomain(builder.universeDomain)
+          .build();
     } catch (IOException e) {
       throw new RuntimeException(e);
     }
-    return endpointContext;
   }
 
   /** @deprecated Please use {@link #getBackgroundExecutorProvider()}. */
