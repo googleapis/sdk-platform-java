@@ -344,19 +344,19 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         this.internalHeaderProvider =
             FixedHeaderProvider.create(clientContext.getInternalHeaders());
         this.clock = clientContext.getClock();
-        this.clientSettingsEndpoint = clientContext.getEndpoint();
-        this.transportChannelProviderEndpoint = null;
-        if (this.clientSettingsEndpoint != null) {
-          this.mtlsEndpoint =
-              this.clientSettingsEndpoint.replace("googleapis.com", "mtls.googleapis.com");
-        }
+        this.clientSettingsEndpoint = clientContext.getEndpointContext().clientSettingsEndpoint();
+        this.transportChannelProviderEndpoint =
+            clientContext.getEndpointContext().transportChannelProviderEndpoint();
+        this.mtlsEndpoint = clientContext.getEndpointContext().mtlsEndpoint();
+        this.switchToMtlsEndpointAllowed =
+            clientContext.getEndpointContext().switchToMtlsEndpointAllowed();
         this.streamWatchdogProvider =
             FixedWatchdogProvider.create(clientContext.getStreamWatchdog());
         this.streamWatchdogCheckInterval = clientContext.getStreamWatchdogCheckInterval();
         this.tracerFactory = clientContext.getTracerFactory();
         this.quotaProjectId = getQuotaProjectIdFromClientContext(clientContext);
         this.gdchApiAudience = clientContext.getGdchApiAudience();
-        this.universeDomain = clientContext.getUniverseDomain();
+        this.universeDomain = clientContext.getEndpointContext().universeDomain();
       }
     }
 

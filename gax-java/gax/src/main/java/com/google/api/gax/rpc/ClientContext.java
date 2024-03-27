@@ -109,6 +109,9 @@ public abstract class ClientContext {
   @Nullable
   public abstract String getQuotaProjectId();
 
+  /** Package-Private as this is to be shared to StubSettings */
+  abstract EndpointContext getEndpointContext();
+
   /** Gets the {@link ApiTracerFactory} that will be used to generate traces for operations. */
   @BetaApi("The surface for tracing is not stable yet and may change in the future.")
   @Nonnull
@@ -121,18 +124,26 @@ public abstract class ClientContext {
   @Nullable
   public abstract String getGdchApiAudience();
 
+  /** Create a new ClientContext with default values */
   public static Builder newBuilder() {
-    return new AutoValue_ClientContext.Builder()
-        .setBackgroundResources(Collections.<BackgroundResource>emptyList())
-        .setExecutor(Executors.newScheduledThreadPool(0))
-        .setHeaders(Collections.<String, String>emptyMap())
-        .setInternalHeaders(Collections.<String, String>emptyMap())
-        .setClock(NanoClock.getDefaultClock())
-        .setStreamWatchdog(null)
-        .setStreamWatchdogCheckInterval(Duration.ZERO)
-        .setTracerFactory(BaseApiTracerFactory.getInstance())
-        .setQuotaProjectId(null)
-        .setGdchApiAudience(null);
+    try {
+      return new AutoValue_ClientContext.Builder()
+          .setBackgroundResources(Collections.<BackgroundResource>emptyList())
+          .setExecutor(Executors.newScheduledThreadPool(0))
+          .setHeaders(Collections.<String, String>emptyMap())
+          .setInternalHeaders(Collections.<String, String>emptyMap())
+          .setClock(NanoClock.getDefaultClock())
+          .setStreamWatchdog(null)
+          .setStreamWatchdogCheckInterval(Duration.ZERO)
+          .setTracerFactory(BaseApiTracerFactory.getInstance())
+          .setQuotaProjectId(null)
+          .setGdchApiAudience(null)
+          // Attempt to create an empty, non-functioning EndpointContext by default. This is
+          // not exposed to the user via getters/setters.
+          .setEndpointContext(EndpointContext.newBuilder().build());
+    } catch (IOException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   public abstract Builder toBuilder();
@@ -263,12 +274,13 @@ public abstract class ClientContext {
         .setInternalHeaders(ImmutableMap.copyOf(settings.getInternalHeaderProvider().getHeaders()))
         .setClock(clock)
         .setDefaultCallContext(defaultCallContext)
-        .setUniverseDomain(endpointContext.universeDomain())
+        .setUniverseDomain(settings.getUniverseDomain())
         .setEndpoint(settings.getEndpoint())
         .setQuotaProjectId(settings.getQuotaProjectId())
         .setStreamWatchdog(watchdog)
         .setStreamWatchdogCheckInterval(settings.getStreamWatchdogCheckInterval())
         .setTracerFactory(settings.getTracerFactory())
+        .setEndpointContext(endpointContext)
         .build();
   }
 
@@ -357,6 +369,9 @@ public abstract class ClientContext {
      * @param gdchApiAudience the audience to be used - must be a valid URI string
      */
     public abstract Builder setGdchApiAudience(String gdchApiAudience);
+
+    /** Package-Private as this is to be shared to StubSettings */
+    abstract Builder setEndpointContext(EndpointContext endpointContext);
 
     public abstract ClientContext build();
   }
