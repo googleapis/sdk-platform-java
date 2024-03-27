@@ -233,7 +233,7 @@ public abstract class StubSettings<SettingsT extends StubSettings<SettingsT>> {
         .add("headerProvider", headerProvider)
         .add("internalHeaderProvider", internalHeaderProvider)
         .add("clock", clock)
-        .add("universeDomain", this.endpointContext.resolvedUniverseDomain())
+        .add("universeDomain", endpointContext.resolvedUniverseDomain())
         .add("endpoint", endpointContext.resolvedEndpoint())
         .add("mtlsEndpoint", endpointContext.mtlsEndpoint())
         .add("switchToMtlsEndpointAllowed", switchToMtlsEndpointAllowed)
