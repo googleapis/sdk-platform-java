@@ -22,7 +22,6 @@ from library_generation.model.generation_config import from_yaml
 from library_generation.utilities import find_versioned_proto_path
 from library_generation.utils.commit_message_formatter import format_commit_message
 from library_generation.utilities import get_file_paths
-from library_generation.utils.commit_message_formatter import wrap_nested_commit
 from library_generation.utils.commit_message_formatter import wrap_override_commit
 
 
