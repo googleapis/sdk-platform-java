@@ -24,6 +24,7 @@ def _java_gapic_postprocess_srcjar_impl(ctx):
     output_samples = ctx.outputs.samples
     output_resource_name = ctx.outputs.resource_name
     formatter = ctx.executable.formatter
+    generator_version = "2.21.1-SNAPSHOT"  # {x-version-update:gapic-generator-java:current}
 
     output_dir_name = ctx.label.name
     output_dir_path = "%s/%s" % (output_main.dirname, output_dir_name)
@@ -35,6 +36,13 @@ def _java_gapic_postprocess_srcjar_impl(ctx):
     # This may fail if there are spaces and/or too many files (exceed max length of command length).
     {formatter} --replace $(find {output_dir_path} -type f -printf "%p ")
     WORKING_DIR=`pwd`
+
+    # Add a file indicating the version of the generator being used.
+    # Uses the location of gapic_metadata.json as a heuristic to the location of
+    # the version folder (e.g. v1, v1beta1, etc)
+    cd {output_dir_path}/src/main/java
+    ggj_version_location=$(dirname $(find -type f -name 'gapic_metadata.json'))
+    echo "{generator_version}" > $ggj_version_location/gapic-generator-java.version
 
     # Main source files.
     cd {output_dir_path}/src/main
@@ -72,6 +80,7 @@ def _java_gapic_postprocess_srcjar_impl(ctx):
     """.format(
         gapic_srcjar = gapic_srcjar.path,
         output_srcjar_name = output_srcjar_name,
+        generator_version = generator_version,
         formatter = formatter,
         output_dir_name = output_dir_name,
         output_dir_path = output_dir_path,
