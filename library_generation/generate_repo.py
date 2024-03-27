@@ -155,3 +155,7 @@ def get_target_libraries(
         for library in config.libraries
         if library.get_library_name() in target_libraries
     ]
+
+
+if __name__ == "__main__":
+    main()
