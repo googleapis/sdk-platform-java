@@ -84,7 +84,9 @@ class ConfigChangeTest(unittest.TestCase):
             config_change.get_changed_libraries(),
         )
 
-    def test_get_changed_libraries_with_duplicated_library_name_returns_unique_name(self):
+    def test_get_changed_libraries_with_duplicated_library_name_returns_unique_name(
+        self,
+    ):
         config_change = ConfigChange(
             change_to_libraries={
                 ChangeType.LIBRARY_LEVEL_CHANGE: [
