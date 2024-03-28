@@ -81,7 +81,7 @@ class ConfigChange:
         library_names = []
         for change_type, library_changes in self.change_to_libraries.items():
             if change_type == ChangeType.GOOGLEAPIS_COMMIT:
-                library_names.extend(self.__get_library_name_from_qualified_commits())
+                library_names.extend(self.__get_library_names_from_qualified_commits())
             else:
                 library_names.extend(
                     [library_change.library_name for library_change in library_changes]
@@ -121,7 +121,7 @@ class ConfigChange:
         shutil.rmtree(tmp_dir, ignore_errors=True)
         return qualified_commits
 
-    def __get_library_name_from_qualified_commits(self) -> list[str]:
+    def __get_library_names_from_qualified_commits(self) -> list[str]:
         qualified_commits = self.get_qualified_commits()
         library_names = []
         for qualified_commit in qualified_commits:
