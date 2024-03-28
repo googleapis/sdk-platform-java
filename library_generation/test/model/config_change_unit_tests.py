@@ -80,6 +80,8 @@ class ConfigChangeTest(unittest.TestCase):
         )
 
     def test_get_changed_libraries_with_mix_changes_returns_list(self):
+        baseline_commit = "277145d108819fa30fbed3a7cbbb50f91eb6155e"
+        latest_commit = "8984ddb508dea0e673b724c58338e810b1d8aee3"
         config_change = ConfigChange(
             change_to_libraries={
                 ChangeType.GOOGLEAPIS_COMMIT: [],
@@ -99,10 +101,10 @@ class ConfigChangeTest(unittest.TestCase):
                 ],
             },
             baseline_config=ConfigChangeTest.__get_a_gen_config(
-                googleapis_commitish="277145d108819fa30fbed3a7cbbb50f91eb6155e"
+                googleapis_commitish=baseline_commit
             ),
             latest_config=ConfigChangeTest.__get_a_gen_config(
-                googleapis_commitish="8984ddb508dea0e673b724c58338e810b1d8aee3",
+                googleapis_commitish=latest_commit,
                 libraries=[
                     ConfigChangeTest.__get_a_library_config(
                         library_name="gke-backup",
@@ -120,13 +122,18 @@ class ConfigChangeTest(unittest.TestCase):
         )
 
     def test_get_qualified_commits_success(self):
+        baseline_commit = "277145d108819fa30fbed3a7cbbb50f91eb6155e"
+        latest_commit = "8984ddb508dea0e673b724c58338e810b1d8aee3"
+        gke_backup_commit = "b8691edb3f1d3c1583aa9cd89240eb359eebe9c7"
+        aiplatform_commit = "b82095baef02e525bee7bb1c48911c33b66acdf0"
+        network_management_commit = "efad09c9f0d46ae0786d810a88024363e06c6ca3"
         config_change = ConfigChange(
             change_to_libraries={},
             baseline_config=ConfigChangeTest.__get_a_gen_config(
-                googleapis_commitish="277145d108819fa30fbed3a7cbbb50f91eb6155e"
+                googleapis_commitish=baseline_commit
             ),
             latest_config=ConfigChangeTest.__get_a_gen_config(
-                googleapis_commitish="8984ddb508dea0e673b724c58338e810b1d8aee3",
+                googleapis_commitish=latest_commit,
                 libraries=[
                     ConfigChangeTest.__get_a_library_config(
                         library_name="gke-backup",
@@ -156,28 +163,30 @@ class ConfigChangeTest(unittest.TestCase):
         self.assertEqual(3, len(qualified_commits))
         self.assertEqual({"gke-backup"}, qualified_commits[0].libraries)
         self.assertEqual(
-            "b8691edb3f1d3c1583aa9cd89240eb359eebe9c7",
+            gke_backup_commit,
             qualified_commits[0].commit.hexsha,
         )
         self.assertEqual({"aiplatform"}, qualified_commits[1].libraries)
         self.assertEqual(
-            "b82095baef02e525bee7bb1c48911c33b66acdf0",
+            aiplatform_commit,
             qualified_commits[1].commit.hexsha,
         )
         self.assertEqual({"network-management"}, qualified_commits[2].libraries)
         self.assertEqual(
-            "efad09c9f0d46ae0786d810a88024363e06c6ca3",
+            network_management_commit,
             qualified_commits[2].commit.hexsha,
         )
 
     def test_get_qualified_commits_build_only_commit_returns_empty_list(self):
+        baseline_commit = "bdda0174f68a738518ec311e05e6fd9bbe19cd78"
+        latest_commit = "c9a5050ef225b0011603e1109cf53ab1de0a8e53"
         config_change = ConfigChange(
             change_to_libraries={},
             baseline_config=ConfigChangeTest.__get_a_gen_config(
-                googleapis_commitish="bdda0174f68a738518ec311e05e6fd9bbe19cd78"
+                googleapis_commitish=baseline_commit
             ),
             latest_config=ConfigChangeTest.__get_a_gen_config(
-                googleapis_commitish="c9a5050ef225b0011603e1109cf53ab1de0a8e53",
+                googleapis_commitish=latest_commit,
                 libraries=[
                     ConfigChangeTest.__get_a_library_config(
                         library_name="chat",
@@ -186,7 +195,7 @@ class ConfigChangeTest(unittest.TestCase):
                 ],
             ),
         )
-        # one commit between c9a5050 (latest) and c9a5050 (baseline) which only
+        # one commit between latest_commit and baseline_commit which only
         # changed BUILD.bazel.
         self.assertTrue(len(config_change.get_qualified_commits()) == 0)
 
