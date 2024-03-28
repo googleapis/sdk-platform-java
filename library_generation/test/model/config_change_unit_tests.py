@@ -22,6 +22,8 @@ from library_generation.model.library_config import LibraryConfig
 
 
 class ConfigChangeTest(unittest.TestCase):
+    ALL_LIBRARIES_CHANGED = None
+
     def test_get_changed_libraries_with_repo_level_change_returns_none(self):
         config_change = ConfigChange(
             change_to_libraries={
@@ -39,7 +41,10 @@ class ConfigChangeTest(unittest.TestCase):
             baseline_config=ConfigChangeTest.__get_a_gen_config(),
             latest_config=ConfigChangeTest.__get_a_gen_config(),
         )
-        self.assertIsNone(config_change.get_changed_libraries())
+        self.assertEquals(
+            ConfigChangeTest.ALL_LIBRARIES_CHANGED,
+            config_change.get_changed_libraries(),
+        )
 
     def test_get_changed_libraries_with_library_level_change_returns_list(self):
         config_change = ConfigChange(
