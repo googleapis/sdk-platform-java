@@ -41,7 +41,7 @@
     <j2objc-annotations.version>3.0.0</j2objc-annotations.version>
     <opentelemetry.version>1.36.0</opentelemetry.version>
     <flogger.version>0.8</flogger.version>
-    <arrow.version>15.0.1</arrow.version>
+    <arrow.version>15.0.2</arrow.version>
   </properties>
 
   <dependencyManagement>
