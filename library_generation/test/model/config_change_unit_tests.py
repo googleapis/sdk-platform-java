@@ -80,7 +80,31 @@ class ConfigChangeTest(unittest.TestCase):
             latest_config=ConfigChangeTest.__get_a_gen_config(),
         )
         self.assertEqual(
-            ["a-library", "another-library", "new-library", "library-with-new-version"],
+            ["a-library", "another-library", "library-with-new-version", "new-library"],
+            config_change.get_changed_libraries(),
+        )
+
+    def test_get_changed_libraries_with_duplicated_library_name_returns_unique_name(self):
+        config_change = ConfigChange(
+            change_to_libraries={
+                ChangeType.LIBRARY_LEVEL_CHANGE: [
+                    LibraryChange(
+                        changed_param="a-param",
+                        latest_value="new_test",
+                        library_name="a-library",
+                    ),
+                    LibraryChange(
+                        changed_param="another-param",
+                        latest_value="new_value",
+                        library_name="a-library",
+                    ),
+                ],
+            },
+            baseline_config=ConfigChangeTest.__get_a_gen_config(),
+            latest_config=ConfigChangeTest.__get_a_gen_config(),
+        )
+        self.assertEqual(
+            ["a-library"],
             config_change.get_changed_libraries(),
         )
 

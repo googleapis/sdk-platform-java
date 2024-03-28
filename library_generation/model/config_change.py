@@ -74,22 +74,22 @@ class ConfigChange:
 
     def get_changed_libraries(self) -> Optional[list[str]]:
         """
-        Returns library name of changed libraries.
+        Returns a unique, sorted list of library name of changed libraries.
         None if there is a repository level change, which means all libraries
         in the latest_config will be generated.
         :return: library names of change libraries.
         """
         if ChangeType.REPO_LEVEL_CHANGE in self.change_to_libraries:
             return ConfigChange.ALL_LIBRARIES_CHANGED
-        library_names = []
+        library_names = set()
         for change_type, library_changes in self.change_to_libraries.items():
             if change_type == ChangeType.GOOGLEAPIS_COMMIT:
-                library_names.extend(self.__get_library_names_from_qualified_commits())
+                library_names.update(self.__get_library_names_from_qualified_commits())
             else:
-                library_names.extend(
+                library_names.update(
                     [library_change.library_name for library_change in library_changes]
                 )
-        return library_names
+        return sorted(list(library_names))
 
     def get_qualified_commits(
         self,
