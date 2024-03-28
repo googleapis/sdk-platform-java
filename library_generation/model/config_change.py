@@ -138,9 +138,9 @@ class ConfigChange:
         """
         Returns a qualified commit from the given Commit object; otherwise None.
 
-        :param proto_paths:
-        :param commit:
-        :return:
+        :param proto_paths: a mapping from versioned proto_path to library_name
+        :param commit: a GitHub commit object.
+        :return: qualified commits.
         """
         libraries = set()
         for file in commit.stats.files.keys():
