@@ -18,6 +18,7 @@ from typing import Optional
 from git import Commit, Repo
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
+from library_generation.utilities import sh_util
 from library_generation.utils.proto_path_utils import find_versioned_proto_path
 from library_generation.utils.proto_path_utils import get_proto_paths
 
@@ -103,7 +104,7 @@ class ConfigChange:
         :param repo_url: the repository contains the commit history.
         :return: QualifiedCommit objects.
         """
-        tmp_dir = "/tmp/repo"
+        tmp_dir = sh_util("get_output_folder")
         shutil.rmtree(tmp_dir, ignore_errors=True)
         os.mkdir(tmp_dir)
         # we only need commit history, thus shadow clone is enough.
