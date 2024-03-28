@@ -473,6 +473,13 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
     return maxInboundMetadataSize;
   }
 
+  /**
+   * The configured channel pool settings for gRPC channels
+   */
+  public ChannelPoolSettings getChannelPoolSettings() {
+    return channelPoolSettings;
+  }
+
   @Override
   public boolean shouldAutoClose() {
     return true;
