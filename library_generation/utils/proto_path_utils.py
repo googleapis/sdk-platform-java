@@ -43,19 +43,19 @@ def get_proto_paths(config: GenerationConfig) -> dict[str, str]:
     return paths
 
 
-def find_versioned_proto_path(file_path: str) -> str:
+def find_versioned_proto_path(proto_path: str) -> str:
     """
-    Returns a versioned proto_path from a given file_path; or file_path itself
+    Returns a versioned proto_path from a given proto_path; or proto_path itself
     if it doesn't contain a versioned proto_path.
-    :param file_path: a proto file path
+    :param proto_path: a proto file path
     :return: the versioned proto_path
     """
     version_regex = re.compile(r"^v[1-9].*")
-    directories = file_path.split("/")
+    directories = proto_path.split("/")
     for directory in directories:
         result = version_regex.search(directory)
         if result:
             version = result[0]
-            idx = file_path.find(version)
-            return file_path[:idx] + version
-    return file_path
+            idx = proto_path.find(version)
+            return proto_path[:idx] + version
+    return proto_path

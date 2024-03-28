@@ -43,22 +43,19 @@ class ProtoPathsUtilsTest(unittest.TestCase):
         )
 
     def test_find_versioned_proto_path_nested_version_success(self):
-        file_path = "google/cloud/aiplatform/v1/schema/predict/params/image_classification.proto"
+        proto_path = "google/cloud/aiplatform/v1/schema/predict/params/image_classification.proto"
         expected = "google/cloud/aiplatform/v1"
-        proto_path = find_versioned_proto_path(file_path)
-        self.assertEqual(expected, proto_path)
+        self.assertEqual(expected, find_versioned_proto_path(proto_path))
 
     def test_find_versioned_proto_path_success(self):
-        file_path = "google/cloud/asset/v1p2beta1/assets.proto"
+        proto_path = "google/cloud/asset/v1p2beta1/assets.proto"
         expected = "google/cloud/asset/v1p2beta1"
-        proto_path = find_versioned_proto_path(file_path)
-        self.assertEqual(expected, proto_path)
+        self.assertEqual(expected, find_versioned_proto_path(proto_path))
 
     def test_find_versioned_proto_without_version_return_itself(self):
-        file_path = "google/type/color.proto"
+        proto_path = "google/type/color.proto"
         expected = "google/type/color.proto"
-        proto_path = find_versioned_proto_path(file_path)
-        self.assertEqual(expected, proto_path)
+        self.assertEqual(expected, find_versioned_proto_path(proto_path))
 
     def test_remove_version_from_returns_non_versioned_path(self):
         proto_path = "google/cloud/aiplatform/v1"
