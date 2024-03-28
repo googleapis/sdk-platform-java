@@ -14,6 +14,8 @@
 
 package com.google.api.generator.gapic.composer;
 
+import static org.junit.Assert.assertTrue;
+
 import com.google.api.generator.engine.writer.JavaWriterVisitor;
 import com.google.api.generator.gapic.model.GapicContext;
 import com.google.api.generator.gapic.model.GapicPackageInfo;
@@ -38,5 +40,11 @@ public class ClientLibraryPackageInfoComposerTest {
         Paths.get(
             GoldenFileWriter.getGoldenDir(this.getClass()), "ShowcaseWithEchoPackageInfo.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
+  }
+
+  @Test
+  public void testGeneratePackageInfo_noServices_returnsEmptyPackageInfo() {
+    assertTrue(
+        ClientLibraryPackageInfoComposer.generatePackageInfo(GapicContext.empty()).isEmpty());
   }
 }

@@ -20,19 +20,29 @@ import com.google.auto.value.AutoValue;
 /** A thin wrapper around PackageInfoDefinition to maintain a clean separation of concerns. */
 @AutoValue
 public abstract class GapicPackageInfo {
+
   public abstract PackageInfoDefinition packageInfo();
+
+  public abstract boolean isEmpty();
 
   public static GapicPackageInfo with(PackageInfoDefinition packageInfo) {
     return builder().setPackageInfo(packageInfo).build();
   }
 
   static Builder builder() {
-    return new AutoValue_GapicPackageInfo.Builder();
+    return new AutoValue_GapicPackageInfo.Builder().setIsEmpty(false);
+  }
+
+  public static GapicPackageInfo empty() {
+    return builder().setPackageInfo(PackageInfoDefinition.empty()).setIsEmpty(true).build();
   }
 
   @AutoValue.Builder
   abstract static class Builder {
+
     abstract Builder setPackageInfo(PackageInfoDefinition packageInfo);
+
+    abstract Builder setIsEmpty(boolean isEmpty);
 
     abstract GapicPackageInfo build();
   }

@@ -26,6 +26,7 @@ import com.google.protobuf.compiler.PluginProtos.CodeGeneratorResponse;
 import java.util.List;
 
 public class Generator {
+
   public static CodeGeneratorResponse generateGapic(CodeGeneratorRequest request) {
     GapicContext context = Parser.parse(request);
     List<GapicClass> clazzes = Composer.composeServiceClasses(context);

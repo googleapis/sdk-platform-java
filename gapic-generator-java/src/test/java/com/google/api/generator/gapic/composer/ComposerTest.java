@@ -16,6 +16,8 @@ package com.google.api.generator.gapic.composer;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import com.google.api.generator.engine.ast.ClassDefinition;
 import com.google.api.generator.engine.ast.ScopeNode;
@@ -25,6 +27,7 @@ import com.google.api.generator.gapic.composer.grpc.GrpcServiceCallableFactoryCl
 import com.google.api.generator.gapic.model.GapicClass;
 import com.google.api.generator.gapic.model.GapicClass.Kind;
 import com.google.api.generator.gapic.model.GapicContext;
+import com.google.api.generator.gapic.model.GapicPackageInfo;
 import com.google.api.generator.gapic.model.RegionTag;
 import com.google.api.generator.gapic.model.Sample;
 import com.google.api.generator.gapic.model.Service;
@@ -35,6 +38,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import org.junit.Before;
 import org.junit.Test;
 
 public class ComposerTest {
@@ -53,8 +57,13 @@ public class ComposerTest {
           .build();
   private List<Sample> ListofSamples = Arrays.asList(new Sample[] {sample});
 
+  @Before
+  public void initialSanityCheck() {
+    assertFalse(context.isEmpty());
+  }
+
   @Test
-  public void gapicClass_addApacheLicense() {
+  public void gapicClass_addApacheLicense_validInput_succeeds() {
     ClassDefinition classDef =
         ClassDefinition.builder()
             .setPackageString("com.google.showcase.v1beta1.stub")
@@ -71,6 +80,11 @@ public class ComposerTest {
         Paths.get(
             GoldenFileWriter.getGoldenDir(this.getClass()), "ComposerPostProcOnFooBar.golden");
     Assert.assertCodeEquals(goldenFilePath, visitor.write());
+  }
+
+  @Test
+  public void testGapicPackageInfoAddLicense_emptyPackageInfo_noop() {
+    assertTrue(Composer.addApacheLicense(GapicPackageInfo.empty()).isEmpty());
   }
 
   @Test
@@ -152,6 +166,22 @@ public class ComposerTest {
       assertEquals("ApiShortName should be Vision", sample.regionTag().apiShortName(), "Vision");
       assertEquals("ApiVersion should be empty", sample.regionTag().apiVersion(), "");
     }
+  }
+
+  @Test
+  public void testEmptyGapicContext_succeeds() {
+    Exception unexpected = null;
+    try {
+      Composer.composeServiceClasses(GapicContext.empty());
+    } catch (Exception ex) {
+      unexpected = ex;
+    }
+    assertNull(unexpected);
+  }
+
+  @Test
+  public void gapicClass_addApacheLicense_emptyPackageInfo_noop() {
+    assertTrue(Composer.addApacheLicense(GapicPackageInfo.empty()).isEmpty());
   }
 
   private List<GapicClass> getTestClassListFromService(Service testService) {
