@@ -976,6 +976,7 @@ public class ClientContextTest {
 
   @Test
   public void testCreateClientContext_SetEndpointViaTransportChannelProvider() throws IOException {
+    String transportChannelProviderEndpoint = "transport.endpoint.com";
     TransportChannelProvider transportChannelProvider =
         new FakeTransportProvider(
             FakeTransportChannel.create(new FakeChannel()),
@@ -983,7 +984,7 @@ public class ClientContextTest {
             true,
             null,
             null,
-            DEFAULT_ENDPOINT);
+            transportChannelProviderEndpoint);
     StubSettings settings =
         new FakeStubSettings.Builder()
             .setEndpoint(null)
@@ -995,8 +996,7 @@ public class ClientContextTest {
         FixedCredentialsProvider.create(Mockito.mock(Credentials.class)));
     ClientSettings clientSettings = clientSettingsBuilder.build();
     ClientContext clientContext = ClientContext.create(clientSettings);
-    // ClientContext.getEndpoint() currently always refers to the ClientSettingsEndpoint value
-    assertThat(clientContext.getEndpoint()).isEqualTo(null);
+    assertThat(clientContext.getEndpoint()).isEqualTo(transportChannelProviderEndpoint);
     assertThat(clientContext.getUniverseDomain()).isEqualTo(DEFAULT_UNIVERSE_DOMAIN);
   }
 
@@ -1024,8 +1024,10 @@ public class ClientContextTest {
         FixedCredentialsProvider.create(Mockito.mock(Credentials.class)));
     ClientSettings clientSettings = clientSettingsBuilder.build();
     ClientContext clientContext = ClientContext.create(clientSettings);
-    // ClientContext.getEndpoint() currently always refers to the ClientSettingsEndpoint value
-    assertThat(clientContext.getEndpoint()).isEqualTo(clientSettingsEndpoint);
+    // ClientContext.getEndpoint() is the resolved endpoint. If both the client settings
+    // and transport channel provider's endpoints are set, the resolved endpoint will be
+    // the transport channel provider's endpoint.
+    assertThat(clientContext.getEndpoint()).isEqualTo(transportChannelProviderEndpoint);
     assertThat(clientContext.getUniverseDomain()).isEqualTo(DEFAULT_UNIVERSE_DOMAIN);
   }
 

@@ -571,15 +571,6 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
             "Transport not supported: %s", getTransportChannelProvider().getTransportName()));
   }
 
-  /** Returns the endpoint set by the user or the the service's default endpoint. */
-  @Override
-  public String getEndpoint() {
-    if (super.getEndpoint() != null) {
-      return super.getEndpoint();
-    }
-    return getDefaultEndpoint();
-  }
-
   /** Returns the default service name. */
   @Override
   public String getServiceName() {
@@ -1290,15 +1281,6 @@ public class AssetServiceStubSettings extends StubSettings<AssetServiceStubSetti
             BatchGetEffectiveIamPoliciesRequest, BatchGetEffectiveIamPoliciesResponse>
         batchGetEffectiveIamPoliciesSettings() {
       return batchGetEffectiveIamPoliciesSettings;
-    }
-
-    /** Returns the endpoint set by the user or the the service's default endpoint. */
-    @Override
-    public String getEndpoint() {
-      if (super.getEndpoint() != null) {
-        return super.getEndpoint();
-      }
-      return getDefaultEndpoint();
     }
 
     @Override
