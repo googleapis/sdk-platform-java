@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.39.0](https://github.com/googleapis/sdk-platform-java/compare/v2.38.1...v2.39.0) (2024-03-28)
+
+
+### Features
+
+* add generation config comparator ([#2587](https://github.com/googleapis/sdk-platform-java/issues/2587)) ([a94c2f0](https://github.com/googleapis/sdk-platform-java/commit/a94c2f0e8a99f0ddf17106cbc8117cefe6b0e127))
+* Add JavadocJar Task to build.gradle for self service libraries ([#2593](https://github.com/googleapis/sdk-platform-java/issues/2593)) ([993f5ac](https://github.com/googleapis/sdk-platform-java/commit/993f5acf91de3a9d2c7f9fdb10ea47387b240554))
+* generate selected libraries ([#2598](https://github.com/googleapis/sdk-platform-java/issues/2598)) ([739ddbb](https://github.com/googleapis/sdk-platform-java/commit/739ddbbbc662f43e46b9f420bbae685de9b3dbc6))
+
+
+### Bug Fixes
+
+* add main to `generate_repo.py` ([#2607](https://github.com/googleapis/sdk-platform-java/issues/2607)) ([fedeb32](https://github.com/googleapis/sdk-platform-java/commit/fedeb3237b6d25245f4d770ec105bd538dfee405))
+* correct deep-remove and deep-preserve regexes ([#2572](https://github.com/googleapis/sdk-platform-java/issues/2572)) ([4c7fd88](https://github.com/googleapis/sdk-platform-java/commit/4c7fd880a90d08448db366bde40d0d385b45f75e))
+
 ## [2.38.1](https://github.com/googleapis/sdk-platform-java/compare/v2.38.0...v2.38.1) (2024-03-15)
 
 
