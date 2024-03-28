@@ -18,12 +18,12 @@ import os
 import shutil
 import re
 from pathlib import Path
-from typing import Dict
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
 from typing import List
 from library_generation.model.repo_config import RepoConfig
 from library_generation.utils.file_render import render
+from library_generation.utils.proto_path_utils import remove_version_from
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 
@@ -91,20 +91,6 @@ def eprint(*args, **kwargs):
     prints to stderr
     """
     print(*args, file=sys.stderr, **kwargs)
-
-
-def remove_version_from(proto_path: str) -> str:
-    """
-    Remove the version of a proto_path
-    :param proto_path: versioned proto_path
-    :return: the proto_path without version
-    """
-    version_pattern = "^v[1-9]"
-    index = proto_path.rfind("/")
-    version = proto_path[index + 1 :]
-    if re.match(version_pattern, version):
-        return proto_path[:index]
-    return proto_path
 
 
 def prepare_repo(
@@ -314,36 +300,3 @@ def generate_prerequisite_files(
             should_include_templates=True,
             template_excludes=config.template_excludes,
         )
-
-
-def get_file_paths(config: GenerationConfig) -> Dict[str, str]:
-    """
-    Get versioned proto_path to library_name mapping from configuration file.
-
-    :param config: a GenerationConfig object.
-    :return: versioned proto_path to library_name mapping
-    """
-    paths = {}
-    for library in config.libraries:
-        for gapic_config in library.gapic_configs:
-            paths[gapic_config.proto_path] = library.get_library_name()
-    return paths
-
-
-def find_versioned_proto_path(file_path: str) -> str:
-    """
-    Returns a versioned proto_path from a given file_path; or file_path itself
-    if it doesn't contain a versioned proto_path.
-
-    :param file_path: a proto file path
-    :return: the versioned proto_path
-    """
-    version_regex = re.compile(r"^v[1-9].*")
-    directories = file_path.split("/")
-    for directory in directories:
-        result = version_regex.search(directory)
-        if result:
-            version = result[0]
-            idx = file_path.find(version)
-            return file_path[:idx] + version
-    return file_path

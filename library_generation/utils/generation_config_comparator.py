@@ -12,51 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from collections import defaultdict
-from enum import Enum
 from typing import Any
-
 from typing import Dict
 from typing import List
-
+from library_generation.model.config_change import ChangeType
+from library_generation.model.config_change import ConfigChange
+from library_generation.model.config_change import LibraryChange
+from library_generation.model.config_change import HashLibrary
 from library_generation.model.gapic_config import GapicConfig
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
 
 
-class ChangeType(Enum):
-    GOOGLEAPIS_COMMIT = 1
-    REPO_LEVEL_CHANGE = 2
-    LIBRARIES_ADDITION = 3
-    # As of Mar. 2024, we decide not to produce this type of change because we
-    # still need to manually remove the libray.
-    # LIBRARIES_REMOVAL = 4
-    LIBRARY_LEVEL_CHANGE = 5
-    GAPIC_ADDITION = 6
-    # As of Mar. 2024, we decide not to produce this type of change because we
-    # still need to manually remove the libray.
-    # GAPIC_REMOVAL = 7
-
-
-class HashLibrary:
-    """
-    Data class to group a LibraryConfig object and its hash value together.
-    """
-
-    def __init__(self, hash_value: int, library: LibraryConfig):
-        self.hash_value = hash_value
-        self.library = library
-
-
-class ConfigChange:
-    def __init__(self, changed_param: str, latest_value: str, library_name: str = ""):
-        self.changed_param = changed_param
-        self.latest_value = latest_value
-        self.library_name = library_name
-
-
 def compare_config(
     baseline_config: GenerationConfig, latest_config: GenerationConfig
-) -> Dict[ChangeType, list[ConfigChange]]:
+) -> ConfigChange:
     """
     Compare two GenerationConfig object and output a mapping from ConfigChange
     to a list of ConfigChange objects.
@@ -65,9 +35,9 @@ def compare_config(
 
     :param baseline_config: the baseline GenerationConfig object
     :param latest_config: the latest GenerationConfig object
-    :return: a mapping from ConfigChange to a list of ConfigChange objects.
+    :return: a ConfigChange objects.
     """
-    diff = defaultdict(list[ConfigChange])
+    diff = defaultdict(list[LibraryChange])
     baseline_params = __convert_params_to_sorted_list(baseline_config)
     latest_params = __convert_params_to_sorted_list(latest_config)
     for baseline_param, latest_param in zip(baseline_params, latest_params):
@@ -76,7 +46,7 @@ def compare_config(
         if baseline_param[0] == "googleapis_commitish":
             diff[ChangeType.GOOGLEAPIS_COMMIT] = []
         else:
-            config_change = ConfigChange(
+            config_change = LibraryChange(
                 changed_param=latest_param[0],
                 latest_value=latest_param[1],
             )
@@ -87,11 +57,15 @@ def compare_config(
         baseline_library_configs=baseline_config.libraries,
         latest_library_configs=latest_config.libraries,
     )
-    return diff
+    return ConfigChange(
+        change_to_libraries=diff,
+        baseline_config=baseline_config,
+        latest_config=latest_config,
+    )
 
 
 def __compare_libraries(
-    diff: Dict[ChangeType, list[ConfigChange]],
+    diff: Dict[ChangeType, list[LibraryChange]],
     baseline_library_configs: List[LibraryConfig],
     latest_library_configs: List[LibraryConfig],
 ) -> None:
@@ -132,7 +106,7 @@ def __compare_libraries(
         # a library is added to latest_libraries if the library_name
         # is not in baseline_libraries.
         if library_name not in baseline_libraries:
-            config_change = ConfigChange(
+            config_change = LibraryChange(
                 changed_param="", latest_value="", library_name=library_name
             )
             diff[ChangeType.LIBRARIES_ADDITION].append(config_change)
@@ -163,7 +137,7 @@ def __convert_to_hashed_library_dict(
 
 
 def __compare_changed_libraries(
-    diff: Dict[ChangeType, list[ConfigChange]],
+    diff: Dict[ChangeType, list[LibraryChange]],
     baseline_libraries: Dict[str, HashLibrary],
     latest_libraries: Dict[str, HashLibrary],
     changed_libraries: List[str],
@@ -193,7 +167,7 @@ def __compare_changed_libraries(
                     f"{library_name}: api_shortname must not change when library_name remains the same."
                 )
             else:
-                config_change = ConfigChange(
+                config_change = LibraryChange(
                     changed_param=latest_param[0],
                     latest_value=latest_param[1],
                     library_name=library_name,
@@ -212,7 +186,7 @@ def __compare_changed_libraries(
 
 
 def __compare_gapic_configs(
-    diff: Dict[ChangeType, list[ConfigChange]],
+    diff: Dict[ChangeType, list[LibraryChange]],
     library_name: str,
     baseline_gapic_configs: List[GapicConfig],
     latest_gapic_configs: List[GapicConfig],
@@ -236,7 +210,7 @@ def __compare_gapic_configs(
     for proto_path in latest_proto_paths:
         if proto_path in baseline_proto_paths:
             continue
-        config_change = ConfigChange(
+        config_change = LibraryChange(
             changed_param="", latest_value=proto_path, library_name=library_name
         )
         diff[ChangeType.GAPIC_ADDITION].append(config_change)

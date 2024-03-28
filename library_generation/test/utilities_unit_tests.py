@@ -30,8 +30,6 @@ from library_generation.model.generation_config import from_yaml
 from library_generation.model.library_config import LibraryConfig
 from library_generation.test.test_utils import FileComparator
 from library_generation.test.test_utils import cleanup
-from library_generation.utilities import find_versioned_proto_path
-from library_generation.utilities import get_file_paths
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 resources_dir = os.path.join(script_dir, "resources")
@@ -217,36 +215,6 @@ class UtilitiesTest(unittest.TestCase):
         self.assertEqual("google/cloud/asset/v1p5beta1", gapics[3].proto_path)
         self.assertEqual("google/cloud/asset/v1p7beta1", gapics[4].proto_path)
 
-    def test_get_file_paths_from_yaml_success(self):
-        paths = get_file_paths(from_yaml(f"{test_config_dir}/generation_config.yaml"))
-        self.assertEqual(
-            {
-                "google/cloud/asset/v1": "asset",
-                "google/cloud/asset/v1p1beta1": "asset",
-                "google/cloud/asset/v1p2beta1": "asset",
-                "google/cloud/asset/v1p5beta1": "asset",
-                "google/cloud/asset/v1p7beta1": "asset",
-            },
-            paths,
-        )
-
-    @parameterized.expand(
-        [
-            (
-                "google/cloud/aiplatform/v1/schema/predict/params/image_classification.proto",
-                "google/cloud/aiplatform/v1",
-            ),
-            (
-                "google/cloud/asset/v1p2beta1/assets.proto",
-                "google/cloud/asset/v1p2beta1",
-            ),
-            ("google/type/color.proto", "google/type/color.proto"),
-        ]
-    )
-    def test_find_versioned_proto_path(self, file_path, expected):
-        proto_path = find_versioned_proto_path(file_path)
-        self.assertEqual(expected, proto_path)
-
     @parameterized.expand(
         [
             ("BUILD_no_additional_protos.bazel", " "),
@@ -378,18 +346,6 @@ class UtilitiesTest(unittest.TestCase):
             build_file, "test/versioned/path", "BUILD_no_service_yaml.bazel"
         )
         self.assertEqual("", parsed.service_yaml)
-
-    def test_remove_version_from_returns_non_versioned_path(self):
-        proto_path = "google/cloud/aiplatform/v1"
-        self.assertEqual(
-            "google/cloud/aiplatform", util.remove_version_from(proto_path)
-        )
-
-    def test_remove_version_from_returns_self(self):
-        proto_path = "google/cloud/aiplatform"
-        self.assertEqual(
-            "google/cloud/aiplatform", util.remove_version_from(proto_path)
-        )
 
     def test_generate_prerequisite_files_non_monorepo_success(self):
         library_path = self.__setup_prerequisite_files(
