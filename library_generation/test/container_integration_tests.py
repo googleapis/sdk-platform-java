@@ -18,7 +18,6 @@ import subprocess
 import unittest
 from distutils.dir_util import copy_tree
 from distutils.file_util import copy_file
-import uuid
 from pathlib import Path
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.generation_config import from_yaml
@@ -30,7 +29,7 @@ repo_root_dir = os.path.join(script_dir, "..", "..")
 docker_file = os.path.join(
     repo_root_dir, ".cloudbuild", "library_generation", "library_generation.Dockerfile"
 )
-image_tag = f"test-{str(uuid.uuid4())[:7]}"
+image_tag = f"test-image:latest"
 repo_prefix = "https://github.com/googleapis"
 output_dir = shell_call("get_output_folder")
 # this map tells which branch of each repo should we use for our diff tests
