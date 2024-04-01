@@ -13,7 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 import re
-from library_generation.model.generation_config import GenerationConfig
 
 
 def remove_version_from(proto_path: str) -> str:
@@ -28,19 +27,6 @@ def remove_version_from(proto_path: str) -> str:
     if re.match(version_pattern, version):
         return proto_path[:index]
     return proto_path
-
-
-def get_proto_paths(config: GenerationConfig) -> dict[str, str]:
-    """
-    Get versioned proto_path to library_name mapping from configuration file.
-    :param config: a GenerationConfig object.
-    :return: versioned proto_path to library_name mapping
-    """
-    paths = {}
-    for library in config.libraries:
-        for gapic_config in library.gapic_configs:
-            paths[gapic_config.proto_path] = library.get_library_name()
-    return paths
 
 
 def find_versioned_proto_path(proto_path: str) -> str:

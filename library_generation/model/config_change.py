@@ -20,7 +20,6 @@ from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
 from library_generation.utilities import sh_util
 from library_generation.utils.proto_path_utils import find_versioned_proto_path
-from library_generation.utils.proto_path_utils import get_proto_paths
 
 
 class ChangeType(Enum):
@@ -110,7 +109,7 @@ class ConfigChange:
         # we only need commit history, thus shadow clone is enough.
         repo = Repo.clone_from(url=repo_url, to_path=tmp_dir, filter=["blob:none"])
         commit = repo.commit(self.latest_config.googleapis_commitish)
-        proto_paths = get_proto_paths(self.latest_config)
+        proto_paths = self.latest_config.get_proto_path_to_library_name()
         qualified_commits = []
         while str(commit.hexsha) != self.baseline_config.googleapis_commitish:
             qualified_commit = ConfigChange.__create_qualified_commit(

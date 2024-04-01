@@ -15,10 +15,7 @@
 import os
 import unittest
 from pathlib import Path
-
-from library_generation.model.generation_config import from_yaml
 from library_generation.utils.proto_path_utils import (
-    get_proto_paths,
     find_versioned_proto_path,
     remove_version_from,
 )
@@ -29,19 +26,6 @@ test_config_dir = Path(os.path.join(resources_dir, "test-config")).resolve()
 
 
 class ProtoPathsUtilsTest(unittest.TestCase):
-    def test_get_proto_paths_from_yaml_success(self):
-        paths = get_proto_paths(from_yaml(f"{test_config_dir}/generation_config.yaml"))
-        self.assertEqual(
-            {
-                "google/cloud/asset/v1": "asset",
-                "google/cloud/asset/v1p1beta1": "asset",
-                "google/cloud/asset/v1p2beta1": "asset",
-                "google/cloud/asset/v1p5beta1": "asset",
-                "google/cloud/asset/v1p7beta1": "asset",
-            },
-            paths,
-        )
-
     def test_find_versioned_proto_path_nested_version_success(self):
         proto_path = "google/cloud/aiplatform/v1/schema/predict/params/image_classification.proto"
         expected = "google/cloud/aiplatform/v1"
