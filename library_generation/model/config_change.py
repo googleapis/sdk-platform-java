@@ -18,7 +18,7 @@ from typing import Optional
 from git import Commit, Repo
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.library_config import LibraryConfig
-from library_generation.utilities import sh_util
+from library_generation.utils.utilities import sh_util
 from library_generation.utils.proto_path_utils import find_versioned_proto_path
 
 

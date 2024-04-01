@@ -22,7 +22,7 @@ import io
 import contextlib
 from pathlib import Path
 from parameterized import parameterized
-from library_generation import utilities as util
+from library_generation.utils import utilities as util
 from library_generation.model.gapic_config import GapicConfig
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.gapic_inputs import parse as parse_build_file

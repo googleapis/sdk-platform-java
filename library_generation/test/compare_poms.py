@@ -4,7 +4,7 @@ This focuses on the tree structure of both XML files, meaning that element order
 The only comparison points are: element path (e.g. project/dependencies) and element text
 There is a special case for `dependency`, where the maven coordinates are prepared as well
 """
-from library_generation.utilities import eprint
+from library_generation.utils.utilities import eprint
 import xml.etree.ElementTree as et
 from collections import Counter
 import sys
