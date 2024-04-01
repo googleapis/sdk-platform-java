@@ -474,6 +474,7 @@ public final class InstantiatingGrpcChannelProvider implements TransportChannelP
   }
 
   /** The configured channel pool settings used for gRPC's ChannelProvider */
+  @BetaApi("Channel pool sizing api is not yet stable")
   public ChannelPoolSettings getChannelPoolSettings() {
     return channelPoolSettings;
   }
