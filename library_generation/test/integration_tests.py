@@ -28,7 +28,7 @@ from library_generation.generate_pr_description import generate_pr_descriptions
 from library_generation.generate_repo import generate_from_yaml
 from library_generation.model.generation_config import from_yaml, GenerationConfig
 from library_generation.test.compare_poms import compare_xml
-from library_generation.utilities import (
+from library_generation.utils.utilities import (
     sh_util as shell_call,
     run_process_and_print_output,
 )
