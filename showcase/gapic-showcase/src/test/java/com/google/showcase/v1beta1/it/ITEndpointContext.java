@@ -34,8 +34,8 @@ import org.junit.Test;
  * (UniverseDomainCredentials and UniverseDomainCredentialsProvider) which allow for testing this.
  *
  * <p>Endpoint resolution has the same behavior for both gRPC and HttpJson. The showcase tests below
- * only use the gRPC transport for testing. HttpJson functionality exists inside the wrapper classes,
- * but is not being used.
+ * only use the gRPC transport for testing. HttpJson functionality exists inside the wrapper
+ * classes, but is not being used.
  */
 public class ITEndpointContext {
 
@@ -144,6 +144,9 @@ public class ITEndpointContext {
     }
   }
 
+  /**
+   * Credentials Wrapper for showcase testing which is used to override the Universe Domain value.
+   */
   private static class UniverseDomainCredentials extends Credentials {
 
     private final String universeDomain;
@@ -183,6 +186,10 @@ public class ITEndpointContext {
     }
   }
 
+  /**
+   * CredentialsProvider wrapper to return the wrapped Universe Domain Credentials. This will return
+   * the custom Universe Domain value.
+   */
   private static class UniverseDomainCredentialsProvider implements CredentialsProvider {
 
     private final String universeDomain;
@@ -246,7 +253,7 @@ public class ITEndpointContext {
   }
 
   @Test
-  public void endpointResolution_userSetUniverseDomainAndNoUserSetEndpoint() throws IOException, InterruptedException {
+  public void endpointResolution_userSetUniverseDomainAndNoUserSetEndpoint() throws IOException {
     String customUniverseDomain = "random.com";
     EchoSettings echoSettings =
         ExtendedEchoSettings.newBuilder()
@@ -282,7 +289,7 @@ public class ITEndpointContext {
     EchoSettings echoSettings =
         ExtendedEchoSettings.newBuilder()
             .setCredentialsProvider(UniverseDomainCredentialsProvider.create())
-            .setEndpoint("localhost:7469")
+            .setEndpoint(TestClientInitializer.DEFAULT_GRPC_ENDPOINT)
             .setTransportChannelProvider(
                 EchoSettings.defaultGrpcTransportProviderBuilder()
                     .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
@@ -300,7 +307,7 @@ public class ITEndpointContext {
     EchoSettings echoSettings =
         ExtendedEchoSettings.newBuilder()
             .setCredentialsProvider(UniverseDomainCredentialsProvider.create("random.com"))
-            .setEndpoint("localhost:7469")
+            .setEndpoint(TestClientInitializer.DEFAULT_GRPC_ENDPOINT)
             .setTransportChannelProvider(
                 EchoSettings.defaultGrpcTransportProviderBuilder()
                     .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
@@ -323,7 +330,7 @@ public class ITEndpointContext {
     EchoSettings echoSettings =
         ExtendedEchoSettings.newBuilder()
             .setCredentialsProvider(UniverseDomainCredentialsProvider.create(universeDomain))
-            .setEndpoint("localhost:7469")
+            .setEndpoint(TestClientInitializer.DEFAULT_GRPC_ENDPOINT)
             .setUniverseDomain(universeDomain)
             .setTransportChannelProvider(
                 EchoSettings.defaultGrpcTransportProviderBuilder()
@@ -345,7 +352,7 @@ public class ITEndpointContext {
     EchoSettings echoSettings =
         ExtendedEchoSettings.newBuilder()
             .setCredentialsProvider(UniverseDomainCredentialsProvider.create(universeDomain))
-            .setEndpoint("localhost:7469")
+            .setEndpoint(TestClientInitializer.DEFAULT_GRPC_ENDPOINT)
             .setUniverseDomain(userConfigurationUniverseDomain)
             .setTransportChannelProvider(
                 EchoSettings.defaultGrpcTransportProviderBuilder()
