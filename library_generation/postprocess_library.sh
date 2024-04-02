@@ -34,7 +34,7 @@ synthtool_commitish=$6
 is_monorepo=$7
 configuration_yaml_path=$8
 
-source "${scripts_root}"/utilities.sh
+source "${scripts_root}"/utils/utilities.sh
 
 declare -a required_inputs=("postprocessing_target" "versions_file" "owlbot_cli_image_sha" "synthtool_commitish" "is_monorepo")
 for required_input in "${required_inputs[@]}"; do
@@ -62,7 +62,22 @@ fi
 # we determine the location of the .OwlBot.yaml file by checking if the target
 # folder is a monorepo folder or not
 if [[ "${is_monorepo}" == "true" ]]; then
-  owlbot_yaml_relative_path=".OwlBot.yaml"
+  # the deep-remove-regex and deep-preserve-regex of the .OwlBot.yaml
+  # files in the monorepo libraries assume that `copy-code` is run
+  # from the root of the monorepo. However, we call `copy-code` from inside each
+  # library, so a path like `/java-asset/google-.*/src` will not have
+  # any effect. We solve this by creating a temporary owlbot yaml with
+  # the patched paths.
+  # For example, we convert 
+  # - "/java-asset/google-.*/src"
+  # to
+  # - "/google-.*/src"
+
+  library_name=$(basename "${postprocessing_target}")
+  cat "${postprocessing_target}/.OwlBot.yaml" \
+    | sed "s/- \"\/${library_name}/ - \"/" \
+    > "${postprocessing_target}/.OwlBot.hermetic.yaml"
+  owlbot_yaml_relative_path=".OwlBot.hermetic.yaml"
 else
   owlbot_yaml_relative_path=".github/.OwlBot.yaml"
 fi
@@ -108,6 +123,11 @@ docker run --rm \
   --source-repo-commit-hash=none \
   --source-repo="${preprocessed_libraries_binding}" \
   --config-file="${owlbot_yaml_relative_path}"
+
+# clean the custom owlbot yaml
+if [[ "${is_monorepo}" == "true" ]]; then
+  rm "${postprocessing_target}/.OwlBot.hermetic.yaml"
+fi
 
 # we clone the synthtool library and manually build it
 mkdir -p /tmp/synthtool

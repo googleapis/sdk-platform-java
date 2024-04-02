@@ -34,6 +34,15 @@ clean {
   delete 'all-jars'
 }
 
+task javadocJar(type: Jar) {
+  archiveClassifier = 'javadoc'
+  from javadoc
+}
+
+artifacts {
+  archives javadocJar
+}
+
 task allJars(type: Copy) {
   dependsOn test, jar
   into 'all-jars'
