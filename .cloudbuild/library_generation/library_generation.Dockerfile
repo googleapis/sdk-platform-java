@@ -14,22 +14,35 @@
 
 # build from the root of this repo:
 FROM gcr.io/cloud-devrel-public-resources/python
+ARG SYNTHTOOL_COMMITTISH=6612ab8f3afcd5e292aecd647f0fa68812c9f5b5
 
-# install tools
+# install OS tools
 RUN apt-get update && apt-get install -y \
 	unzip openjdk-17-jdk rsync maven jq \
 	&& apt-get clean
 
+# copy source code
 COPY library_generation /src
 
+# install synthtool
+WORKDIR /synthtool
+RUN git clone https://github.com/googleapis/synthtool
+WORKDIR /synthtool/synthtool
+RUN git checkout "${SYNTHTOOL_COMMITTISH}"
+RUN python3 -m pip install --no-deps -e .
+RUN python3 -m pip install -r requirements.in
+
+
+# use python 3.11 (the base image has several python versions; here we define the default one)
 RUN rm $(which python3)
 RUN ln -s $(which python3.11) /usr/local/bin/python
 RUN ln -s $(which python3.11) /usr/local/bin/python3
 RUN python -m pip install --upgrade pip
-RUN cd /src && python -m pip install -r requirements.in
-RUN cd /src && python -m pip install .
+WORKDIR /src
+RUN python -m pip install -r requirements.in
+RUN python -m pip install .
 
-# set dummy git credentials for empty commit used in postprocessing
+# set dummy git credentials for the empty commit used in postprocessing
 RUN git config --global user.email "cloud-java-bot@google.com"
 RUN git config --global user.name "Cloud Java Bot"
 
@@ -37,4 +50,6 @@ WORKDIR /workspace
 RUN chmod 750 /workspace
 RUN chmod 750 /src/generate_repo.py
 
+# define runtime env vars
+ENV RUNNING_IN_DOCKER=true
 CMD [ "/src/generate_repo.py" ]
