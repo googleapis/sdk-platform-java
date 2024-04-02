@@ -47,7 +47,7 @@ monorepo_baseline_commit = "a17d4caf184b050d50cacf2b0d579ce72c31ce74"
 split_repo_baseline_commit = "679060c64136e85b52838f53cfe612ce51e60d1d"
 
 
-class ContainerIntegrationTest(unittest.TestCase):
+class IntegrationTest(unittest.TestCase):
     def test_entry_point_running_in_container(self):
         self.__build_image(docker_file=build_file, tag=image_tag, cwd=repo_root_dir)
 
@@ -172,7 +172,6 @@ class ContainerIntegrationTest(unittest.TestCase):
                     "The generated PR description does not match the expected golden file",
                 )
                 print("  PR description comparison succeed.")
-                os.remove(description_file)
 
     @classmethod
     def __build_image(cls, docker_file: str, tag: str, cwd: str):
