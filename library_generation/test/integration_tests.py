@@ -49,7 +49,7 @@ split_repo_baseline_commit = "679060c64136e85b52838f53cfe612ce51e60d1d"
 
 class IntegrationTest(unittest.TestCase):
     def test_entry_point_running_in_container(self):
-        self.__build_image(docker_file=build_file, tag=image_tag, cwd=repo_root_dir)
+        self.__build_image(docker_file=build_file, cwd=repo_root_dir)
 
         shutil.rmtree(f"{golden_dir}", ignore_errors=True)
         os.makedirs(f"{golden_dir}", exist_ok=True)
@@ -173,9 +173,9 @@ class IntegrationTest(unittest.TestCase):
                 print("  PR description comparison succeed.")
 
     @classmethod
-    def __build_image(cls, docker_file: str, tag: str, cwd: str):
+    def __build_image(cls, docker_file: str, cwd: str):
         subprocess.check_call(
-            ["docker", "build", "--rm", "-f", docker_file, "-t", tag, "."],
+            ["docker", "build", "--rm", "-f", docker_file, "-t", image_tag, "."],
             cwd=cwd,
         )
 
