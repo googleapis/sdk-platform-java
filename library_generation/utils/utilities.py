@@ -57,7 +57,7 @@ def run_process_and_print_output(arguments: List[str], job_name: str = "Job"):
 
 def sh_util(statement: str, **kwargs) -> str:
     """
-    Calls a function defined in library_generation/utilities.sh
+    Calls a function defined in library_generation/utils/utilities.sh
     """
     if "stdout" not in kwargs:
         kwargs["stdout"] = subprocess.PIPE
