@@ -3,6 +3,7 @@ package com.google.showcase.v1beta1.it;
 import static org.junit.Assert.assertThrows;
 
 import com.google.api.gax.core.CredentialsProvider;
+import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.rpc.ClientContext;
 import com.google.api.gax.rpc.UnauthenticatedException;
 import com.google.auth.Credentials;
@@ -38,7 +39,6 @@ import org.junit.Test;
  * classes, but is not being used.
  */
 public class ITEndpointContext {
-
   /**
    * Inside the test cases below, we must explicitly configure serviceName. Normally this should not
    * be configured at all, but showcase clients do not have a serviceName. The ExtendStubSettings
@@ -146,6 +146,9 @@ public class ITEndpointContext {
 
   /**
    * Credentials Wrapper for showcase testing which is used to override the Universe Domain value.
+   *
+   * <p>For the tests below, it will act as a valid Credentials and is used to test the flows where
+   * the user passes in a Credentials (i.e. ServiceAccount, AccessToken, Oauth, etc.)
    */
   private static class UniverseDomainCredentials extends Credentials {
 
@@ -213,6 +216,9 @@ public class ITEndpointContext {
   }
 
   private static final String DEFAULT_ENDPOINT = "test.googleapis.com:443";
+  private static final EchoRequest DEFAULT_REQUEST =
+      EchoRequest.newBuilder().setContent("echo").build();
+
   private EchoClient echoClient;
 
   @After
@@ -297,9 +303,8 @@ public class ITEndpointContext {
             .build();
     echoClient = EchoClient.create(echoSettings);
 
-    EchoRequest request = EchoRequest.newBuilder().setContent("echo").build();
     // Does not throw an error
-    echoClient.echo(request);
+    echoClient.echo(DEFAULT_REQUEST);
   }
 
   @Test
@@ -315,9 +320,8 @@ public class ITEndpointContext {
             .build();
     echoClient = EchoClient.create(echoSettings);
 
-    EchoRequest request = EchoRequest.newBuilder().setContent("echo").build();
     UnauthenticatedException exception =
-        assertThrows(UnauthenticatedException.class, () -> echoClient.echo(request));
+        assertThrows(UnauthenticatedException.class, () -> echoClient.echo(DEFAULT_REQUEST));
     Truth.assertThat(exception.getMessage())
         .contains(
             "The configured universe domain (googleapis.com) does not match the universe domain found in the credentials (random.com).");
@@ -339,9 +343,8 @@ public class ITEndpointContext {
             .build();
     echoClient = EchoClient.create(echoSettings);
 
-    EchoRequest request = EchoRequest.newBuilder().setContent("echo").build();
     // Does not throw an error
-    echoClient.echo(request);
+    echoClient.echo(DEFAULT_REQUEST);
   }
 
   @Test
@@ -361,12 +364,52 @@ public class ITEndpointContext {
             .build();
     echoClient = EchoClient.create(echoSettings);
 
-    EchoRequest request = EchoRequest.newBuilder().setContent("echo").build();
     UnauthenticatedException exception =
-        assertThrows(UnauthenticatedException.class, () -> echoClient.echo(request));
+        assertThrows(UnauthenticatedException.class, () -> echoClient.echo(DEFAULT_REQUEST));
     Truth.assertThat(exception.getMessage())
         .contains(
             "The configured universe domain (test.com) does not match the universe domain found in the credentials (random.com).");
+  }
+
+  // This test uses NoCredentialsProvider (will default to GDU)
+  @Test
+  public void universeDomainValidation_noCredentials_noUserSetUniverseDomain() throws IOException {
+    EchoSettings echoSettings =
+        ExtendedEchoSettings.newBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setEndpoint(TestClientInitializer.DEFAULT_GRPC_ENDPOINT)
+            .setTransportChannelProvider(
+                EchoSettings.defaultGrpcTransportProviderBuilder()
+                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .build())
+            .build();
+    echoClient = EchoClient.create(echoSettings);
+
+    // Does not throw an error
+    echoClient.echo(DEFAULT_REQUEST);
+  }
+
+  // This test uses NoCredentialsProvider (will default to GDU)
+  @Test
+  public void universeDomainValidation_noCredentials_userSetUniverseDomain() throws IOException {
+    String universeDomain = "random.com";
+    EchoSettings echoSettings =
+        ExtendedEchoSettings.newBuilder()
+            .setCredentialsProvider(NoCredentialsProvider.create())
+            .setEndpoint(TestClientInitializer.DEFAULT_GRPC_ENDPOINT)
+            .setUniverseDomain(universeDomain)
+            .setTransportChannelProvider(
+                EchoSettings.defaultGrpcTransportProviderBuilder()
+                    .setChannelConfigurator(ManagedChannelBuilder::usePlaintext)
+                    .build())
+            .build();
+    echoClient = EchoClient.create(echoSettings);
+
+    UnauthenticatedException exception =
+        assertThrows(UnauthenticatedException.class, () -> echoClient.echo(DEFAULT_REQUEST));
+    Truth.assertThat(exception.getMessage())
+        .contains(
+            "The configured universe domain (random.com) does not match the universe domain found in the credentials (googleapis.com).");
   }
 
   // Default in Builder (no configuration)
