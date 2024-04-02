@@ -25,7 +25,7 @@ from pathlib import Path
 from library_generation.model.generation_config import GenerationConfig
 from library_generation.model.generation_config import from_yaml
 from library_generation.test.compare_poms import compare_xml
-from library_generation.utilities import sh_util as shell_call
+from library_generation.utils.utilities import sh_util as shell_call
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 golden_dir = os.path.join(script_dir, "resources", "integration", "golden")
@@ -214,11 +214,7 @@ class IntegrationTest(unittest.TestCase):
 
     @classmethod
     def __bind_device_to_volumes(cls, volume_name: str, device_dir: str):
-        if (
-            subprocess.check_output(["docker", "volume", "inspect", volume_name])
-            != "[]"
-        ):
-            subprocess.check_call(["docker", "volume", "rm", volume_name])
+        subprocess.run(["docker", "volume", "rm", volume_name])
         subprocess.check_call(
             [
                 "docker",
