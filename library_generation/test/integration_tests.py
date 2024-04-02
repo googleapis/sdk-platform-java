@@ -33,7 +33,7 @@ repo_root_dir = os.path.join(script_dir, "..", "..")
 build_file = os.path.join(
     repo_root_dir, ".cloudbuild", "library_generation", "library_generation.Dockerfile"
 )
-image_tag = f"test-image:latest"
+image_tag = "test-image:latest"
 repo_prefix = "https://github.com/googleapis"
 output_dir = shell_call("get_output_folder")
 # this map tells which branch of each repo should we use for our diff tests
@@ -80,7 +80,6 @@ class IntegrationTest(unittest.TestCase):
                 else split_repo_baseline_commit
             )
             self.__run_entry_point_in_docker_container(
-                tag=image_tag,
                 repo=repo,
                 repo_volumes=repo_volumes,
                 baseline_commit=baseline_commit,
@@ -244,7 +243,7 @@ class IntegrationTest(unittest.TestCase):
 
     @classmethod
     def __run_entry_point_in_docker_container(
-        cls, tag: str, repo: str, repo_volumes: str, baseline_commit: str
+        cls, repo: str, repo_volumes: str, baseline_commit: str
     ):
         subprocess.check_call(
             [
@@ -265,7 +264,7 @@ class IntegrationTest(unittest.TestCase):
                 f"REPO_BINDING_VOLUMES={repo_volumes}",
                 "-w",
                 "/src",
-                tag,
+                image_tag,
                 "python",
                 "/src/generate_repo.py",
                 "generate",
@@ -293,7 +292,7 @@ class IntegrationTest(unittest.TestCase):
                 f"REPO_BINDING_VOLUMES={repo_volumes}",
                 "-w",
                 "/src",
-                tag,
+                image_tag,
                 "python",
                 "/src/generate_pr_description.py",
                 "generate",
